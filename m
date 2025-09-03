@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEF9CA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA68CA100C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utjZi-000259-2I; Wed, 03 Sep 2025 05:14:43 -0400
+	id 1utjlW-0006vB-Fd; Wed, 03 Sep 2025 05:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utjZg-00024W-AO
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:14:40 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utjZd-0002HD-Vd
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:14:39 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-61cd1046d42so7672963a12.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:14:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756890876; x=1757495676; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QAlPJUk8nhpCIUro1gfebOjKqDGc9j5uBxOcgD/tjq8=;
- b=VFWZ+A0BfP2C9CiXQanBOQ5uophLu/wGiviixClg2xhdXcwt2tTRAZrh4OhsnIPCcv
- EPUC63AbPaljWQtY4h+YTU+Pq90AjytCO+hHTa8gvFIc4xDdJpzocdBrq/+oPYMc4QsY
- gBkc6gIt77nFwvK1gSYr7ij0jzOb9SZC6gXxlwLjv+phK1URDsDKiBEAKtJ4C7tVBbfb
- L4kdXgbNDWCHWGbGOGrkU2BrzEi8GIOddi6yXPvuL+wlSuH9FS5AFeVdGmFUj9+b5HBY
- D8rWujJLBSdSSOAOH87n3VCJq29F+fSeVO8nH6aYcwNSnB6WW4POzkNyZtV4Va7FFpjF
- md4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756890876; x=1757495676;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QAlPJUk8nhpCIUro1gfebOjKqDGc9j5uBxOcgD/tjq8=;
- b=RsMQg/c2H2KntIaZqNKPTmTJ6+2HpC6IDvhnS0TmR79DC2PMBh0Q+Ypj6riLS+YU71
- r4nwcrs9a4OnRxG4peeyuH5HscZ9shwiOEJeXKdbE03LEluVyk0itpZ1HNqFZg5jivpR
- KMh2/geZI4kBM/iFgFMVGW1ob0+inLx8JENiT3/kWq54LXEj6o9ECFGYsIkx7KqmxPWi
- Xt1g0N57mj9CQBdxrwiKVOiWb3DDzgK7gxfy4QcoO/fTZgyUPLPpFTurpOjuxjfJLsfG
- xC0M6Y2o2xgmaSiMEJe22WyGN0o2rXrBzRp3j6cBtGNIHgS7cIJa2Ag36xYoyC8nI9Y5
- sSGA==
-X-Gm-Message-State: AOJu0YyY2V9x70xLyoDp8ygQ4t1emDZql67VgedVTOFDLpJmkeWwYYna
- Hik4+K9OwbjmtNTv54z4HxTx+inuNL4QeKkcCSD6FCs4x4CijJMrFPCCvtBlUUCERjWlnxOXEty
- jYmRLOTU=
-X-Gm-Gg: ASbGnctq63UT/9AhOnQbHLZqFYGnvCAeOadosrMMIredZWCuaDCcQJP+Zmy8jO2sPcn
- D+vgSGohtwR5Fmvx9wDONW6UApx5lPtaRw/3evjdb33RA3rB8jJqrDwRaWSPoeO3byFb3TKMzFC
- Kw9MEuHBEvMGiLAeuco0yVWe40byK+vcs89audOdlAw4DYdy/amh7E1IiWUk1HN2IjCBHr6ZiaF
- Jb3Puh97EoQ1BIckKW8B3aAUoXHmzezP5ZFAPu4nuTKQ1GUquvhUGUhtD1bDo6a+4Km2fopYDKU
- 4wop1aOVDLjuzsyaWEfm82GfdXNkmdD48tVkmYRxURS4TPBOiH3nFtwwu+9WdE4PQkEdnUgmyXM
- sdF5KbKjI6hEgMikTUK4nklmBhVzOks+KBY20EufZ+sMqDmjw0EZSPm8WYF21Z0nNR0pEgCAipp
- SqA/DXGQ==
-X-Google-Smtp-Source: AGHT+IEVRvo+8ho74VeCkNY3t8k2duKnTxASGme94NZLi6wgFd6bJXO5yvP9uWX2CG0tOlYlLf78BA==
-X-Received: by 2002:a05:6402:13d5:b0:61c:768e:a86f with SMTP id
- 4fb4d7f45d1cf-61d26892f1cmr12597571a12.11.1756890875695; 
- Wed, 03 Sep 2025 02:14:35 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc4bbc6bsm11722524a12.29.2025.09.03.02.14.34
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 02:14:35 -0700 (PDT)
-Message-ID: <06afcbdc-28e2-4d13-81d4-26fd257ed8a3@linaro.org>
-Date: Wed, 3 Sep 2025 11:14:33 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1utjlU-0006uC-A4
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:26:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1utjlR-0005JQ-LA
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:26:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756891607;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RI8IhE5j0oxCvgXPoRZLfmHlfRULbbN0EcU/0WzB3eY=;
+ b=JghKv9XS+GF72ZKf1Qh1j8OCRbZSIQaFHvXudrB6VKqi3u5u7WDWxDUZ20Ud6/gzbHypgy
+ d2sZ83saJ4Sbl8lFl3xhn+coLjuOz6FiONYJDKBTDkEEDj1O99g7fEBQyL/u6i8O/mWMce
+ o32yYSMyEQnN8nWcKtOg0X7OOrJ58r8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-uWjinsm4Nr6b_wuPRWszFw-1; Wed,
+ 03 Sep 2025 05:26:43 -0400
+X-MC-Unique: uWjinsm4Nr6b_wuPRWszFw-1
+X-Mimecast-MFC-AGG-ID: uWjinsm4Nr6b_wuPRWszFw_1756891601
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCBA919560B2; Wed,  3 Sep 2025 09:26:40 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.9])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B9B5430001A4; Wed,  3 Sep 2025 09:26:38 +0000 (UTC)
+Date: Tue, 2 Sep 2025 22:47:05 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Wilfred Mallawa <wilfred.opensource@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH v3 3/5] hw/nvme: add NVMe Admin Security SPDM support
+Message-ID: <20250903024705.GA103624@fedora>
+References: <20250901034759.85042-2-wilfred.opensource@gmail.com>
+ <20250901034759.85042-5-wilfred.opensource@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] linux-user/riscv: Add vector state to signal context
-To: qemu-devel@nongnu.org
-References: <20250903042510.279954-1-npiggin@gmail.com>
- <20250903042510.279954-4-npiggin@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250903042510.279954-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="+WZD+vi3cRKPozWg"
+Content-Disposition: inline
+In-Reply-To: <20250901034759.85042-5-wilfred.opensource@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,200 +95,348 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 06:25, Nicholas Piggin wrote:
-> This enables vector state to be saved and restored across signals.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+
+--+WZD+vi3cRKPozWg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Sep 01, 2025 at 01:47:58PM +1000, Wilfred Mallawa wrote:
+> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+>=20
+> Adds the NVMe Admin Security Send/Receive command support with support
+> for DMTFs SPDM. The transport binding for SPDM is defined in the
+> DMTF DSP0286.
+>=20
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > ---
->   linux-user/riscv/signal.c | 130 ++++++++++++++++++++++++++++++++++++--
->   1 file changed, 126 insertions(+), 4 deletions(-)
-> 
-> diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
-> index 4ef55d0848..4acbabcbc9 100644
-> --- a/linux-user/riscv/signal.c
-> +++ b/linux-user/riscv/signal.c
-> @@ -41,7 +41,17 @@ struct target_fp_state {
->       uint32_t fcsr;
->   };
->   
-> +struct target_v_ext_state {
-> +    target_ulong vstart;
-> +    target_ulong vl;
-> +    target_ulong vtype;
-> +    target_ulong vcsr;
-> +    target_ulong vlenb;
-
-All abi_ulong.
-
-
-> +    target_ulong datap;
-
-abi_ptr.
-
-> +} __attribute__((aligned(16)));
-
-Where does this come from?
-
-As it happens, sizeof(struct target_v_ext_state) will be a multiple of 16 for riscv64. 
-however...
-
-> +
->   /* The Magic number for signal context frame header. */
-> +#define RISCV_V_MAGIC   0x53465457
->   #define END_MAGIC       0x0
->   
->   /* The size of END signal context header. */
-> @@ -106,6 +116,88 @@ static abi_ulong get_sigframe(struct target_sigaction *ka,
->       return sp;
->   }
->   
-> +static unsigned int get_v_state_size(CPURISCVState *env)
+>  hw/nvme/ctrl.c       | 188 ++++++++++++++++++++++++++++++++++++++++++-
+>  hw/nvme/nvme.h       |   5 ++
+>  include/block/nvme.h |  15 ++++
+>  3 files changed, 207 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index f5ee6bf260..557f634016 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -282,6 +282,8 @@ static const uint32_t nvme_cse_acs_default[256] =3D {
+>      [NVME_ADM_CMD_FORMAT_NVM]       =3D NVME_CMD_EFF_CSUPP | NVME_CMD_EF=
+F_LBCC,
+>      [NVME_ADM_CMD_DIRECTIVE_RECV]   =3D NVME_CMD_EFF_CSUPP,
+>      [NVME_ADM_CMD_DIRECTIVE_SEND]   =3D NVME_CMD_EFF_CSUPP,
+> +    [NVME_ADM_CMD_SECURITY_SEND]   =3D NVME_CMD_EFF_CSUPP,
+> +    [NVME_ADM_CMD_SECURITY_RECV]   =3D NVME_CMD_EFF_CSUPP,
+>  };
+> =20
+>  static const uint32_t nvme_cse_iocs_nvm_default[256] =3D {
+> @@ -7282,6 +7284,185 @@ static uint16_t nvme_dbbuf_config(NvmeCtrl *n, co=
+nst NvmeRequest *req)
+>      return NVME_SUCCESS;
+>  }
+> =20
+> +static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
 > +{
-> +    RISCVCPU *cpu = env_archcpu(env);
+> +    StorageSpdmTransportHeader hdr =3D {0};
+> +    g_autofree uint8_t *sec_buf =3D NULL;
+> +    uint32_t transfer_len =3D le32_to_cpu(req->cmd.cdw11);
+> +    uint32_t transport_transfer_len =3D transfer_len;
+> +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> +    uint32_t recvd;
+> +    uint16_t nvme_cmd_status, ret;
+> +    uint8_t secp =3D extract32(dw10, 24, 8);
+> +    uint8_t spsp1 =3D extract32(dw10, 16, 8);
+> +    uint8_t spsp0 =3D extract32(dw10, 8, 8);
+> +    bool spdm_res;
 > +
-> +    return sizeof(struct target_ctx_hdr) +
-> +           sizeof(struct target_v_ext_state) +
-> +           cpu->cfg.vlenb * 32;
+> +    transport_transfer_len +=3D sizeof(hdr);
+> +    if (transport_transfer_len > SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE) {
+
+An integer overflow check is needed since transfer_len comes from the
+untrusted guest. This will prevent the sec_buf buffer overflow below
+when nvme_h2c() is called.
+
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    /* Generate the NVMe transport header */
+> +    hdr.security_protocol =3D secp;
+> +    hdr.security_protocol_specific =3D cpu_to_le16((spsp1 << 8) | spsp0);
+> +    hdr.length =3D cpu_to_le32(transfer_len);
+> +
+> +    sec_buf =3D g_malloc0(transport_transfer_len);
+
+g_try_malloc0() is safer when using untrusted input from the guest.
+g_malloc0() aborts the process on failure, so it's disruptive.
+g_try_malloc0() allows you to handle allocation failures.
+
+> +
+> +    /* Attach the transport header */
+> +    memcpy(sec_buf, &hdr, sizeof(hdr));
+> +    ret =3D nvme_h2c(n, sec_buf + sizeof(hdr), transfer_len, req);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +
+> +    spdm_res =3D spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CM=
+D_IF_SEND,
+> +                                SPDM_SOCKET_TRANSPORT_TYPE_NVME, sec_buf,
+> +                                transport_transfer_len);
+> +    if (!spdm_res) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    /* The responder shall ack with message status */
+> +    recvd =3D spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_=
+TYPE_NVME,
+> +                                (uint8_t *)&nvme_cmd_status,
+> +                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+> +
+> +    nvme_cmd_status =3D cpu_to_be16(nvme_cmd_status);
+
+be16_to_cpu()?
+
+> +
+> +    if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    return nvme_cmd_status;
 > +}
 > +
-> +static struct target_ctx_hdr *save_v_state(CPURISCVState *env,
-> +                                           struct target_ctx_hdr *hdr)
+> +/* From host to controller */
+> +static uint16_t nvme_security_send(NvmeCtrl *n, NvmeRequest *req)
 > +{
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +    target_ulong vlenb = cpu->cfg.vlenb;
-> +    uint32_t riscv_v_sc_size = get_v_state_size(env);
-> +    struct target_v_ext_state *vs;
-> +    uint64_t *vdatap;
-> +    int i;
+> +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> +    uint8_t secp =3D (dw10 >> 24) & 0xff;
 > +
-> +    __put_user(RISCV_V_MAGIC, &hdr->magic);
-> +    __put_user(riscv_v_sc_size, &hdr->size);
-> +
-> +    vs = (struct target_v_ext_state *)(hdr + 1);
-> +    vdatap = (uint64_t *)(vs + 1);
-
-... if you wanted to ensure 16-byte alignment of the data for riscv32, you'd do it here. 
-I don't believe there's anything about RVV that would require 16-byte aligned data though.
-
-> +
-> +    __put_user(env->vstart, &vs->vstart);
-> +    __put_user(env->vl, &vs->vl);
-> +    __put_user(env->vtype, &vs->vtype);
-> +    target_ulong vcsr = riscv_csr_read(env, CSR_VCSR);
-> +    __put_user(vcsr, &vs->vcsr);
-> +    __put_user(vlenb, &vs->vlenb);
-> +    __put_user((target_ulong)vdatap, &vs->datap);
-
-h2g(vdatap)
-
-> +static void restore_v_state(CPURISCVState *env,
-> +                            struct target_ctx_hdr *hdr)
-> +{
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +    target_ulong vlenb = cpu->cfg.vlenb;
-> +    struct target_v_ext_state *vs;
-> +    uint64_t *vdatap;
-> +    int i;
-> +
-> +    uint32_t size;
-> +    __get_user(size, &hdr->size);
-> +    if (size != get_v_state_size(env)) {
-> +        g_assert_not_reached();
-> +        /* XXX: warn, bail */
-> +    }
-
-Do not assert.  The kernel simply fails the restore,
-
-     if (!(has_vector() || has_xtheadvector()) ||
-         !riscv_v_vstate_query(regs) ||
-         size != riscv_v_sc_size)
-         return -EINVAL;
-
-
-leading to SIGSEGV.
-
-> +
-> +    vs = (struct target_v_ext_state *)(hdr + 1);
-> +
-> +    __get_user(env->vstart, &vs->vstart);
-> +    __get_user(env->vl, &vs->vl);
-> +    __get_user(env->vtype, &vs->vtype);
-
-You're missing a step here.  The unsanitized values from vs should be processed as if 
-"vsetvl x0, vtype, vl".  In particular, if either input is garbage, vill will be set.  You 
-probably need a small wrapper around helper_vsetvl().
-
-Similarly vstart should be written with riscv_csr_write because it gets masked.
-
-> +    target_ulong vcsr;
-> +    __get_user(vcsr, &vs->vcsr);
-
-Do not intersperse declarations.  As much as I like them, qemu has denied them in 
-docs/devel/style.rst.
-
-> +    riscv_csr_write(env, CSR_VCSR, vcsr);
-> +    __get_user(vlenb, &vs->vlenb);
-> +    target_ulong __vdatap;
-
-No __, ever.  It's a reserved namespace in user-land.
-
-> +    __get_user(__vdatap, &vs->datap);
-> +    vdatap = (uint64_t *)__vdatap;
-
-Bad cast.  Since vdatap may be discontiguous, you need
-
-   host_vdatap = lock_user(VERIFY_READ, guest_vdatap, env->vlenb * 32);
-   if (!host_vdatap) {
-     goto badaddr;
-   }
-
-> +
-> +    for (i = 0; i < 32; i++) {
-> +        int j;
-> +        for (j = 0; j < vlenb; j += 8) {
-
-Feel free to use
-
-     for (int i = 0;
-         for (int j = 0;
-
-etc.
-
-> @@ -207,9 +308,30 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
->   
->       uint32_t magic;
->       __get_user(magic, &hdr->magic);
-> -    if (magic != END_MAGIC) {
-> -        qemu_log_mask(LOG_UNIMP, "signal: unknown extended context header: "
-> -                                 "0x%08x, ignoring", magic);
-> +    while (magic != END_MAGIC) {
-> +        if (magic == RISCV_V_MAGIC) {
-> +            if (riscv_has_ext(env, RVV)) {
-> +                restore_v_state(env, hdr);
-> +            } else {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext has V state "
-> +                                               "but CPU does not.");
-> +            }
-> +        } else {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "signal: unknown extended state in "
-> +                                           "sigcontext magic=0x%08x", magic);
-> +        }
-> +
-> +        if (hdr->size == 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state in sigcontext "
-> +                                           "has size 0");
-> +        }
-> +        hdr = (void *)hdr + hdr->size;
-> +        __get_user(magic, &hdr->magic);
+> +    switch (secp) {
+> +    case NVME_SEC_PROT_DMTF_SPDM:
+> +        return nvme_sec_prot_spdm_send(n, req);
+> +    default:
+> +        /* Unsupported Security Protocol Type */
+> +        return NVME_INVALID_FIELD | NVME_DNR;
 > +    }
 > +
-> +    if (hdr->size != END_HDR_SIZE) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state end header has "
-> +                                       "size=%u (should be 0)", hdr->size);
+> +    return NVME_INVALID_FIELD | NVME_DNR;
+> +}
+> +
+> +static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    StorageSpdmTransportHeader hdr;
+> +    g_autofree uint8_t *rsp_spdm_buf =3D NULL;
+> +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> +    uint32_t alloc_len =3D le32_to_cpu(req->cmd.cdw11);
+> +    uint32_t recvd, spdm_res;
+> +    uint16_t nvme_cmd_status, ret;
+> +    uint8_t secp =3D extract32(dw10, 24, 8);
+> +    uint8_t spsp1 =3D extract32(dw10, 16, 8);
+> +    uint8_t spsp0 =3D extract32(dw10, 8, 8);
+> +
+> +    if (!alloc_len) {
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    /* Generate the NVMe transport header */
+> +    hdr =3D (StorageSpdmTransportHeader) {
+> +        .security_protocol =3D secp,
+> +        .security_protocol_specific =3D cpu_to_le16((spsp1 << 8) | spsp0=
+),
+> +        .length =3D cpu_to_le32(alloc_len),
+> +    };
+> +
+> +    /* Forward if_recv to the SPDM Server with SPSP0 */
+> +    spdm_res =3D spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CM=
+D_IF_RECV,
+> +                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +                                (uint8_t *)&hdr, sizeof(hdr));
+> +    if (!spdm_res) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    /* The responder shall ack with message status */
+> +    recvd =3D spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_=
+TYPE_NVME,
+> +                                (uint8_t *)&nvme_cmd_status,
+> +                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+> +    if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    nvme_cmd_status =3D cpu_to_be16(nvme_cmd_status);
 
-All of these GUEST_ERROR should goto badaddr.  We haven't generally logged the reason for 
-this, though I don't have any particular objection to doing so.
+Should this be be16_to_cpu()?
 
+> +    /* An error here implies the prior if_recv from requester was spurio=
+us */
+> +    if (nvme_cmd_status !=3D NVME_SUCCESS) {
+> +        return nvme_cmd_status;
+> +    }
+> +
+> +    /* Clear to start receiving data from the server */
+> +    rsp_spdm_buf =3D g_malloc0(alloc_len);
 
-r~
+g_try_malloc0().
+
+> +
+> +    recvd =3D spdm_socket_receive(n->spdm_socket,
+> +                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +                                rsp_spdm_buf, alloc_len);
+> +    if (!recvd) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    ret =3D nvme_c2h(n, rsp_spdm_buf, MIN(recvd, alloc_len), req);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +
+> +    return NVME_SUCCESS;
+> +}
+> +
+> +static uint16_t nvme_get_sec_prot_info(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    uint32_t alloc_len =3D le32_to_cpu(req->cmd.cdw11);
+> +    uint8_t resp[10] =3D {
+> +        /* Support Security Protol List Length */
+> +        [6] =3D 0, /* MSB */
+> +        [7] =3D 2, /* LSB */
+> +        /* Support Security Protocol List */
+> +        [8] =3D SFSC_SECURITY_PROT_INFO,
+> +        [9] =3D NVME_SEC_PROT_DMTF_SPDM,
+> +    };
+> +
+> +    if (alloc_len < 10) {
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    return nvme_c2h(n, resp, sizeof(resp), req);
+> +}
+> +
+> +/* From controller to host */
+> +static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> +    uint16_t spsp =3D extract32(dw10, 8, 16);
+> +    uint8_t secp =3D extract32(dw10, 24, 8);
+> +
+> +    switch (secp) {
+> +    case SFSC_SECURITY_PROT_INFO:
+> +        switch (spsp) {
+> +        case 0:
+> +            /* Supported security protocol list */
+> +            return nvme_get_sec_prot_info(n, req);
+> +        case 1:
+> +            /* Certificate data */
+> +            /* fallthrough */
+> +        default:
+> +            return NVME_INVALID_FIELD | NVME_DNR;
+> +        }
+> +    case NVME_SEC_PROT_DMTF_SPDM:
+> +        return nvme_sec_prot_spdm_receive(n, req);
+> +    default:
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +}
+> +
+>  static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
+>  {
+>      return NVME_INVALID_FIELD | NVME_DNR;
+> @@ -7389,6 +7570,10 @@ static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRe=
+quest *req)
+>          return nvme_directive_send(n, req);
+>      case NVME_ADM_CMD_DIRECTIVE_RECV:
+>          return nvme_directive_receive(n, req);
+> +    case NVME_ADM_CMD_SECURITY_SEND:
+> +        return nvme_security_send(n, req);
+> +    case NVME_ADM_CMD_SECURITY_RECV:
+> +        return nvme_security_receive(n, req);
+>      default:
+>          g_assert_not_reached();
+>      }
+> @@ -8824,7 +9009,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *=
+pci_dev)
+>      id->mdts =3D n->params.mdts;
+>      id->ver =3D cpu_to_le32(NVME_SPEC_VER);
+> =20
+> -    oacs =3D NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DIRECTIVES;
+> +    oacs =3D NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DIRECTIVES |
+> +           NVME_OACS_SECURITY;
+> =20
+>      if (n->params.dbcs) {
+>          oacs |=3D NVME_OACS_DBCS;
+> diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+> index b5c9378ea4..67ed562e00 100644
+> --- a/hw/nvme/nvme.h
+> +++ b/hw/nvme/nvme.h
+> @@ -461,6 +461,8 @@ static inline const char *nvme_adm_opc_str(uint8_t op=
+c)
+>      case NVME_ADM_CMD_DIRECTIVE_RECV:   return "NVME_ADM_CMD_DIRECTIVE_R=
+ECV";
+>      case NVME_ADM_CMD_DBBUF_CONFIG:     return "NVME_ADM_CMD_DBBUF_CONFI=
+G";
+>      case NVME_ADM_CMD_FORMAT_NVM:       return "NVME_ADM_CMD_FORMAT_NVM";
+> +    case NVME_ADM_CMD_SECURITY_SEND:    return "NVME_ADM_CMD_SECURITY_SE=
+ND";
+> +    case NVME_ADM_CMD_SECURITY_RECV:    return "NVME_ADM_CMD_SECURITY_RE=
+CV";
+>      default:                            return "NVME_ADM_CMD_UNKNOWN";
+>      }
+>  }
+> @@ -648,6 +650,9 @@ typedef struct NvmeCtrl {
+>      } next_pri_ctrl_cap;    /* These override pri_ctrl_cap after reset */
+>      uint32_t    dn; /* Disable Normal */
+>      NvmeAtomic  atomic;
+> +
+> +    /* Socket mapping to SPDM over NVMe Security In/Out commands */
+> +    int spdm_socket;
+>  } NvmeCtrl;
+> =20
+>  typedef enum NvmeResetType {
+> diff --git a/include/block/nvme.h b/include/block/nvme.h
+> index 358e516e38..9fa2ecaf28 100644
+> --- a/include/block/nvme.h
+> +++ b/include/block/nvme.h
+> @@ -1779,6 +1779,21 @@ enum NvmeDirectiveOperations {
+>      NVME_DIRECTIVE_RETURN_PARAMS =3D 0x1,
+>  };
+> =20
+> +typedef enum SfscSecurityProtocol {
+> +    SFSC_SECURITY_PROT_INFO =3D 0x00,
+> +} SfscSecurityProtocol;
+> +
+> +typedef enum NvmeSecurityProtocols {
+> +    NVME_SEC_PROT_DMTF_SPDM    =3D 0xE8,
+> +} NvmeSecurityProtocols;
+> +
+> +typedef enum SpdmOperationCodes {
+> +    SPDM_STORAGE_DISCOVERY      =3D 0x1, /* Mandatory */
+> +    SPDM_STORAGE_PENDING_INFO   =3D 0x2, /* Optional */
+> +    SPDM_STORAGE_MSG            =3D 0x5, /* Mandatory */
+> +    SPDM_STORAGE_SEC_MSG        =3D 0x6, /* Optional */
+> +} SpdmOperationCodes;
+> +
+>  typedef struct QEMU_PACKED NvmeFdpConfsHdr {
+>      uint16_t num_confs;
+>      uint8_t  version;
+> --=20
+> 2.51.0
+>=20
+
+--+WZD+vi3cRKPozWg
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmi3rCkACgkQnKSrs4Gr
+c8hl7wgAyNe8IHlZqXCr2kIMak3WXD3OWhbFp02G3lwJ3wKVWLrZGEpSA1wk+2M8
+Qt5X1D6tHLPeKwknL+WtSppJzk79o19wqPwPbQqR6hwWt6b/eqByyA6H3bxN2hHh
+E+KZL4jQR1zoYlWlxf+wrxRjc5CtkeH4mnbnsJH78ySugpquP9GcPg579LdHTwSZ
+jL07Gq89EJaqA+M4MOtaRjxwqQIw2zpvK2YhFoOIPVy3zdpw42JSNA7H6MKsouoz
+Yi2a04dsyeH0jxjZofxEb9UMqsnT7LPeQkdG3kmr7MZK4wRdlvCVGrKB20a+I9Ug
+TqNmNkq9gZGGqroBZQdcnoZOjQ/AOQ==
+=Yc1Z
+-----END PGP SIGNATURE-----
+
+--+WZD+vi3cRKPozWg--
+
 
