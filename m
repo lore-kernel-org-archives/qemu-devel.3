@@ -4,137 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A59CA1011
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBE1CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utobb-0004Va-Jd; Wed, 03 Sep 2025 10:36:59 -0400
+	id 1utomW-00006L-Vo; Wed, 03 Sep 2025 10:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1utobU-0004V8-O6
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:36:52 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1utomR-00005N-GI
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:48:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1utobS-0002nn-9H
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:36:51 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1utomM-0006PI-Dj
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:48:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756910209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=07Tm0RoNjoLA3GT4e2R/HZf+vIgfuiSfnYjYd7CX3z8=;
- b=OSdbdDbFtTPZkp3x7fXF16+q3CMY16PjSF9ztGxqKS3xjHjSZnaS7w0v56PPvrpLhg/q8W
- 6UbnPZaCYZwpVIsCWbbwPTw2E8IsFMRZ6aShDRnbeXaX2WWWHVifgfifjiTYWllAEWD2Ec
- UIFDHEc43DYemItow5qiBfJuKeJ6MIs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-ioFJDs7_NEm_pyCcZ0Ubwg-1; Wed, 03 Sep 2025 10:36:47 -0400
-X-MC-Unique: ioFJDs7_NEm_pyCcZ0Ubwg-1
-X-Mimecast-MFC-AGG-ID: ioFJDs7_NEm_pyCcZ0Ubwg_1756910206
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3df07c967e9so371970f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 07:36:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756910206; x=1757515006;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=07Tm0RoNjoLA3GT4e2R/HZf+vIgfuiSfnYjYd7CX3z8=;
- b=PMr0Ib7QQJSZxvZCSGMjWrZt9mL0Oz37xUVHkhj+AwwwfkAMtYE2fgf6pNz0RjeuUD
- 7OKcnbYH2CC6L7EG6XIA6YOEH6JihE0kYtk7exPJBsmjMyczNn4oeqDdD2IkLe7FxQyA
- 3EvHtA17wNwGa7BjcdNgh8Dqtj31B7lmdXTnLEUkJjsOxxo0DSZU8qrBj9wfIiuJImh8
- jJGiIU9hKAvFugpXgx12JnEj3L7p6svUZoTeX66cu51YNpOlry5J/2l3JsKjgPnDW5Dn
- tSRizv0OXiZSDG2b+cuzEV8lybLdQBrvNUOfrvt0U7d+3dv1k39u1L+dvSEb7+jIo5dC
- tQlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRWxNnN8a4CCuLVOJeCTjYiJknibcTDoWWN46bCgh7PIYUlJU57cHm60dXuwbzeXfapZRXd9Ry+2aK@nongnu.org
-X-Gm-Message-State: AOJu0YxkPXRCg6tIOGJQuoMVB0vSbbzwA9U2tB4zsf25e014qYl2FMyo
- /OdzQh8Js8zRd4YhKhe7r2AFWtTxuwWy7Qvk6D/Li7UzYGmmJFI0P6/77Wq+UD4rrHlKdmeQi1j
- 3msyXrcHn4M8VoFPka01HLNuNgkzPGefuunp3qNXpAmtKb6jvqhBXSKjb
-X-Gm-Gg: ASbGncvOBrfrR+Rlz5GQi/xW4EqpHP8L4/WLx2lCRo3UfKpvO1jzO3kT2cXH1ocYXoS
- fL3MGbG3yu/b5ELcdGa+gbBJCeW/vgqT4Ws5LHP3gQ4DNHttoAHvfjK+wo0xctdEkMiO+fQy5xL
- m3NJOb7Kia2/RjPBb16gXMdcDChyMC50Ksa8KpIGYwZPbz3PVBJsffnCRn1YIpvkG89BIU4zhdk
- OfqnVeWmQCXdH8ZTlJwo7pbiepD0j5Ojv7pjO1A79hmErljVx/7a1Hit4D1BVe8ph/j4PFjHoUR
- BRhZuAq+pjg5ZQizZqNklaoZIJnbkB9uFs5D3LNb18GPBBhXa8cNP1YgGJ4PG2GWKYCGR82RVyz
- keFLRs2O25qEpyn1Ov5ruMtI55z7nFj1aALpqvsd49QUI9laVne1d0LRpvg9ydsgoCU8=
-X-Received: by 2002:a05:6000:3110:b0:3cd:6cd:8c2 with SMTP id
- ffacd0b85a97d-3d1df72effemr11938228f8f.60.1756910206320; 
- Wed, 03 Sep 2025 07:36:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWJSPVJRrLoBt79W5TaxdwacgTVsNRa61E1LSEAGw8R3surhBvLcuTTLtCJ85HSaKrACL6rQ==
-X-Received: by 2002:a05:6000:3110:b0:3cd:6cd:8c2 with SMTP id
- ffacd0b85a97d-3d1df72effemr11938200f8f.60.1756910205899; 
- Wed, 03 Sep 2025 07:36:45 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f09:9c00:8173:2a94:640d:dd31?
- (p200300d82f099c0081732a94640ddd31.dip0.t-ipconnect.de.
- [2003:d8:2f09:9c00:8173:2a94:640d:dd31])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf274dde69sm23775821f8f.14.2025.09.03.07.36.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 07:36:45 -0700 (PDT)
-Message-ID: <83bbb239-f879-4cb3-8c07-2417ad792f93@redhat.com>
-Date: Wed, 3 Sep 2025 16:36:44 +0200
+ s=mimecast20190719; t=1756910884;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=D9MwU7IKA98B3/gJ/+fPueAUtK8byrC29vPHBwx50f0=;
+ b=Ym4Ig8Je+Ur91UwdiUcmYq50k7wEwPi9WOUKETZC2aae9GBJV5mozrNF5YVbovAIYyQwZy
+ xYiHg3G7B9G7qoCa2R/cH10iimHoti99IJOoyUjQcy+h8KSh9AOcrbVvOHbhlnFKA3apIp
+ xGN6JBG2HPRO54kWcWkBWAS0FPIJCPo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-spzhsw-TPpie8ha0yxfBCQ-1; Wed,
+ 03 Sep 2025 10:48:03 -0400
+X-MC-Unique: spzhsw-TPpie8ha0yxfBCQ-1
+X-Mimecast-MFC-AGG-ID: spzhsw-TPpie8ha0yxfBCQ_1756910881
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B4D018002C3; Wed,  3 Sep 2025 14:48:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.63])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00E5D19560AB; Wed,  3 Sep 2025 14:47:55 +0000 (UTC)
+Date: Wed, 3 Sep 2025 16:47:51 +0200
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
+ steven.sistare@oracle.com, yc-core@yandex-team.ru,
+ peterx@redhat.com, mst@redhat.com, farosas@suse.de,
+ eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, philmd@linaro.org
+Subject: Re: [PATCH v2 8/8] tests/functional: add test_x86_64_tap_fd_migration
+Message-ID: <aLhVF3_OFMzKpuUW@redhat.com>
+References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
+ <20250903133706.1177633-9-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] memory: Fix addr/len for flatview_access_allowed()
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250903142932.1038765-1-peterx@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20250903142932.1038765-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250903133706.1177633-9-vsementsov@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,24 +85,408 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.09.25 16:29, Peter Xu wrote:
-> flatview_access_allowed() should pass in the address offset of the memory
-> region, rather than the global address space. Shouldn't be a major issue
-> yet, since the addr is only used in an error log.
+On Wed, Sep 03, 2025 at 04:37:05PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Add test for a new feature of local TAP migration with fd passing
+> through unix socket.
 > 
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Fixes: 3ab6fdc91b ("softmmu/physmem: Introduce MemTxAttrs::memory field and MEMTX_ACCESS_ERROR")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
+>  .../test_x86_64_tap_fd_migration.py           | 347 ++++++++++++++++++
+>  1 file changed, 347 insertions(+)
+>  create mode 100644 tests/functional/test_x86_64_tap_fd_migration.py
+> 
+> diff --git a/tests/functional/test_x86_64_tap_fd_migration.py b/tests/functional/test_x86_64_tap_fd_migration.py
+> new file mode 100644
+> index 0000000000..f6d18fe39f
+> --- /dev/null
+> +++ b/tests/functional/test_x86_64_tap_fd_migration.py
+> @@ -0,0 +1,347 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that tests TAP local migration
+> +# with fd passing
+> +#
+> +# Copyright (c) Yandex
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +import time
+> +import subprocess
+> +import signal
+> +from typing import Tuple
+> +
+> +from qemu_test import (
+> +    LinuxKernelTest,
+> +    Asset,
+> +    exec_command_and_wait_for_pattern,
+> +)
+> +
+> +GUEST_IP = "10.0.1.2"
+> +GUEST_IP_MASK = f"{GUEST_IP}/24"
+> +GUEST_MAC = "d6:0d:75:f8:0f:b7"
+> +HOST_IP = "10.0.1.1"
+> +HOST_IP_MASK = f"{HOST_IP}/24"
+> +TAP_ID = "tap0"
+> +TAP_MAC = "e6:1d:44:b5:03:5d"
+> +
+> +
+> +def run(cmd: str, check: bool = True) -> None:
+> +    subprocess.run(cmd, check=check, shell=True)
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+I don't see need to be using shell here - just use
+"check_call()" and pass the argv as an array instead
+of a string at which point this 'run' helper can be
+removed.
 
+> +
+> +
+> +def fetch(cmd: str, check: bool = True) -> str:
+> +    return subprocess.run(
+> +        cmd, check=check, shell=True, stdout=subprocess.PIPE, text=True
+> +    ).stdout
+> +
+> +
+> +def del_tap() -> None:
+> +    run(f"ip tuntap del {TAP_ID} mode tap multi_queue", check=False)
+> +
+> +
+> +def init_tap() -> None:
+> +    run(f"ip tuntap add dev {TAP_ID} mode tap multi_queue")
+> +    run(f"ip link set dev {TAP_ID} address {TAP_MAC}")
+> +    run(f"ip addr add {HOST_IP_MASK} dev {TAP_ID}")
+> +    run(f"ip link set {TAP_ID} up")
+
+$ ip tuntap add dev foo mode tap multi_queue
+ioctl(TUNSETIFF): Operation not permitted
+
+
+The functional tests run as the developer's normal unprivileged user
+account, so it doesn't look like this can work ?
+
+Were you testing this as root ?
+
+> +
+> +
+> +def parse_ping_line(line: str) -> float:
+> +    # suspect lines like
+> +    # [1748524876.590509] 64 bytes from 94.245.155.3 \
+> +    #      (94.245.155.3): icmp_seq=1 ttl=250 time=101 ms
+> +    spl = line.split()
+> +    return float(spl[0][1:-1])
+> +
+> +
+> +def parse_ping_output(out) -> Tuple[bool, float, float]:
+> +    lines = [x for x in out.split("\n") if x.startswith("[")]
+> +
+> +    try:
+> +        first_no_ans = next(
+> +            (ind for ind in range(len(lines)) if lines[ind][20:26] == "no ans")
+> +        )
+> +    except StopIteration:
+> +        return False, parse_ping_line(lines[0]), parse_ping_line(lines[-1])
+> +
+> +    last_no_ans = next(
+> +        (ind for ind in range(len(lines) - 1, -1, -1) if lines[ind][20:26] == "no ans")
+> +    )
+> +
+> +    return (
+> +        True,
+> +        parse_ping_line(lines[first_no_ans]),
+> +        parse_ping_line(lines[last_no_ans]),
+> +    )
+> +
+> +
+> +def wait_migration_finish(source_vm, target_vm):
+> +    migr_events = (
+> +        ("MIGRATION", {"data": {"status": "completed"}}),
+> +        ("MIGRATION", {"data": {"status": "failed"}}),
+> +    )
+> +
+> +    source_e = source_vm.events_wait(migr_events)["data"]
+> +    target_e = target_vm.events_wait(migr_events)["data"]
+> +
+> +    source_s = source_vm.cmd("query-status")["status"]
+> +    target_s = target_vm.cmd("query-status")["status"]
+> +
+> +    assert (
+> +        source_e["status"] == "completed"
+> +        and target_e["status"] == "completed"
+> +        and source_s == "postmigrate"
+> +        and target_s == "paused"
+> +    ), f"""Migration failed:
+> +    SRC status: {source_s}
+> +    SRC event: {source_e}
+> +    TGT status: {target_s}
+> +    TGT event:{target_e}"""
+> +
+> +
+> +class VhostUserBlkFdMigration(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL = Asset(
+> +        (
+> +            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
+> +            "/31/Server/x86_64/os/images/pxeboot/vmlinuz"
+> +        ),
+> +        "d4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129",
+> +    )
+> +
+> +    ASSET_INITRD = Asset(
+> +        (
+> +            "https://archives.fedoraproject.org/pub/archive/fedora/linux/releases"
+> +            "/31/Server/x86_64/os/images/pxeboot/initrd.img"
+> +        ),
+> +        "277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b",
+> +    )
+> +
+> +    ASSET_ALPINE_ISO = Asset(
+> +        (
+> +            "https://dl-cdn.alpinelinux.org/"
+> +            "alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
+> +        ),
+> +        "96d1b44ea1b8a5a884f193526d92edb4676054e9fa903ad2f016441a0fe13089",
+> +    )
+> +
+> +    def setUp(self):
+> +        super().setUp()
+> +
+> +        init_tap()
+> +
+> +        self.outer_ping_proc = None
+> +
+> +    def tearDown(self):
+> +        del_tap()
+> +
+> +        if self.outer_ping_proc:
+> +            self.stop_outer_ping()
+> +
+> +        super().tearDown()
+> +
+> +    def start_outer_ping(self) -> None:
+> +        assert self.outer_ping_proc is None
+> +        self.outer_ping_log = open("/tmp/ping.log", "w")
+> +        self.outer_ping_proc = subprocess.Popen(
+> +            ["ping", "-i", "0", "-O", "-D", GUEST_IP],
+> +            text=True,
+> +            stdout=self.outer_ping_log,
+> +        )
+
+Surely outer_ping_log can be closed immediately as the child
+process will keep the FD open ?
+
+> +
+> +    def stop_outer_ping(self) -> str:
+> +        assert self.outer_ping_proc
+> +        self.outer_ping_proc.send_signal(signal.SIGINT)
+> +
+> +        self.outer_ping_proc.communicate(timeout=5)
+> +        self.outer_ping_proc = None
+> +        self.outer_ping_log.close()
+> +
+> +        # We need the start, the end and several lines around "no answer"
+> +        cmd = "cat /tmp/ping.log | grep -A 4 -B 4 'PING\\|packets\\|no ans'"
+> +        return fetch(cmd)
+
+IMHO this can just read the whole of /tmp/ping.log directly into memory
+and then the parse_ping_output can jjust match on it with a regex,
+avoiding the pre-processing with grep.
+
+
+> +
+> +    def stop_ping_and_check(self, stop_time, resume_time):
+> +        ping_res = self.stop_outer_ping()
+> +
+> +        discon, a, b = parse_ping_output(ping_res)
+> +
+> +        if not discon:
+> +            text = f"STOP: {stop_time}, RESUME: {resume_time}," f"PING: {a} - {b}"
+> +            if a > stop_time or b < resume_time:
+> +                self.fail(f"PING failed: {text}")
+> +            self.log.info(f"PING: no packets lost: {text}")
+> +            return
+> +
+> +        text = (
+> +            f"STOP: {stop_time}, RESUME: {resume_time}," f"PING: disconnect: {a} - {b}"
+> +        )
+> +        self.log.info(text)
+> +        eps = 0.01
+> +        if a < stop_time - eps or b > resume_time + eps:
+> +            self.fail(text)
+> +
+> +    def one_ping_from_guest(self, vm) -> None:
+> +        exec_command_and_wait_for_pattern(
+> +            self,
+> +            f"ping -c 1 -W 1 {HOST_IP}",
+> +            "1 packets transmitted, 1 packets received",
+> +            "1 packets transmitted, 0 packets received",
+> +            vm=vm,
+> +        )
+> +        self.wait_for_console_pattern("# ", vm=vm)
+> +
+> +    def one_ping_from_host(self) -> None:
+> +        run(f"ping -c 1 -W 1 {GUEST_IP}")
+> +
+> +    def setup_shared_memory(self):
+> +        shm_path = f"/dev/shm/qemu_test_{os.getpid()}"
+> +
+> +        try:
+> +            with open(shm_path, "wb") as f:
+> +                f.write(b"\0" * (1024 * 1024 * 1024))  # 1GB
+> +        except Exception as e:
+> +            self.fail(f"Failed to create shared memory file: {e}")
+> +
+> +        return shm_path
+> +
+> +    def prepare_and_launch_vm(self, shm_path, vhost, incoming=False, vm=None):
+> +        if not vm:
+> +            vm = self.vm
+> +
+> +        vm.set_console()
+> +        vm.add_args("-accel", "kvm")
+> +        vm.add_args("-device", "pcie-pci-bridge,id=pci.1,bus=pcie.0")
+> +        vm.add_args("-m", "1G")
+> +
+> +        vm.add_args(
+> +            "-object",
+> +            f"memory-backend-file,id=ram0,size=1G,mem-path={shm_path},share=on",
+> +        )
+> +        vm.add_args("-machine", "memory-backend=ram0")
+> +
+> +        vm.add_args(
+> +            "-drive", f"file={self.ASSET_ALPINE_ISO.fetch()},media=cdrom,format=raw"
+> +        )
+> +
+> +        vm.add_args("-S")
+> +
+> +        if incoming:
+> +            vm.add_args("-incoming", "defer")
+> +
+> +        vm_s = "target" if incoming else "source"
+> +        self.log.info(f"Launching {vm_s} VM")
+> +        vm.launch()
+> +
+> +        self.set_migration_capabilities(vm)
+> +        self.add_virtio_net(vm, vhost, incoming)
+> +
+> +    def add_virtio_net(self, vm, vhost: bool, incoming: bool = False):
+> +        netdev_params = {
+> +            "id": "netdev.1",
+> +            "vhost": vhost,
+> +            "type": "tap",
+> +            "ifname": "tap0",
+> +            "downscript": "no",
+> +            "queues": 4,
+> +        }
+> +
+> +        if incoming:
+> +            netdev_params["local-incoming"] = True
+> +        else:
+> +            netdev_params["script"] = "no"
+> +
+> +        vm.cmd("netdev_add", netdev_params)
+> +
+> +        vm.cmd(
+> +            "device_add",
+> +            driver="virtio-net-pci",
+> +            romfile="",
+> +            id="vnet.1",
+> +            netdev="netdev.1",
+> +            mq=True,
+> +            vectors=18,
+> +            bus="pci.1",
+> +            mac=GUEST_MAC,
+> +            disable_legacy="off",
+> +        )
+> +
+> +    def set_migration_capabilities(self, vm):
+> +        capabilities = [
+> +            {"capability": "events", "state": True},
+> +            {"capability": "x-ignore-shared", "state": True},
+> +            {"capability": "local-tap", "state": True},
+> +        ]
+> +        vm.cmd("migrate-set-capabilities", {"capabilities": capabilities})
+> +
+> +    def setup_guest_network(self) -> None:
+> +        exec_command_and_wait_for_pattern(self, "ip addr", "# ")
+> +        exec_command_and_wait_for_pattern(
+> +            self,
+> +            f"ip addr add {GUEST_IP_MASK} dev eth0 && ip link set eth0 up && echo OK",
+> +            "OK",
+> +        )
+> +        self.wait_for_console_pattern("# ")
+> +
+> +    def do_test_tap_fd_migration(self, vhost):
+> +        self.require_accelerator("kvm")
+> +        self.set_machine("q35")
+> +
+> +        socket_dir = self.socket_dir()
+> +        migration_socket = os.path.join(socket_dir.name, "migration.sock")
+> +
+> +        shm_path = self.setup_shared_memory()
+> +
+> +        self.prepare_and_launch_vm(shm_path, vhost)
+> +        self.vm.cmd("cont")
+> +        self.wait_for_console_pattern("login:")
+> +        exec_command_and_wait_for_pattern(self, "root", "# ")
+> +
+> +        self.setup_guest_network()
+> +
+> +        self.one_ping_from_guest(self.vm)
+> +        self.one_ping_from_host()
+> +        self.start_outer_ping()
+> +
+> +        # Get some successful pings before migration
+> +        time.sleep(0.5)
+> +
+> +        target_vm = self.get_vm(name="target")
+> +        self.prepare_and_launch_vm(shm_path, vhost, incoming=True, vm=target_vm)
+> +
+> +        target_vm.cmd("migrate-incoming", {"uri": f"unix:{migration_socket}"})
+> +
+> +        self.log.info("Starting migration")
+> +        freeze_start = time.time()
+> +        self.vm.cmd("migrate", {"uri": f"unix:{migration_socket}"})
+> +
+> +        self.log.info("Waiting for migration completion")
+> +        wait_migration_finish(self.vm, target_vm)
+> +
+> +        target_vm.cmd("cont")
+> +        freeze_end = time.time()
+> +
+> +        self.vm.shutdown()
+> +
+> +        self.log.info("Verifying PING on target VM after migration")
+> +        self.one_ping_from_guest(target_vm)
+> +        self.one_ping_from_host()
+> +
+> +        # And a bit more pings after source shutdown
+> +        time.sleep(0.3)
+> +        self.stop_ping_and_check(freeze_start, freeze_end)
+> +
+> +        target_vm.shutdown()
+> +
+> +    def test_tap_fd_migration(self):
+> +        self.do_test_tap_fd_migration(False)
+> +
+> +    def test_tap_fd_migration_vhost(self):
+> +        self.do_test_tap_fd_migration(True)
+> +
+> +
+> +if __name__ == "__main__":
+> +    LinuxKernelTest.main()
+> -- 
+> 2.48.1
+> 
+
+With regards,
+Daniel
 -- 
-Cheers
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
