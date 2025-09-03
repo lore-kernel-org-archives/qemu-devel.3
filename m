@@ -4,145 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A47CA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA044CA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utiJK-0004kv-TE; Wed, 03 Sep 2025 03:53:44 -0400
+	id 1utiNM-0006hB-R4; Wed, 03 Sep 2025 03:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1utiJG-0004jv-Rq
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:53:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1utiJE-0004qL-VP
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:53:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756886014;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vIwKenhC8Vrbg0ooQhgtFA1AhsEbn3GoVDnCzgJTlO0=;
- b=Ul8+SKddmunKz1DcyQPm0b8FS9TBiQJVFuWsnwjXPFJj7pbnsfJlJ+DT3Vlv9G52CE0Ult
- skRWgCnSMWY7uPcSjCklqqlqiG5ph/1WGaTgKb1iGQdNPYt/Y5jS3Qvczc90fVC+Zxh/hD
- WDIZUgHvPUJ6pDNEzgwvC21uDBHmiEk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-5cs1vyh5Pf-aR1AvNT-m8g-1; Wed, 03 Sep 2025 03:53:33 -0400
-X-MC-Unique: 5cs1vyh5Pf-aR1AvNT-m8g-1
-X-Mimecast-MFC-AGG-ID: 5cs1vyh5Pf-aR1AvNT-m8g_1756886012
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45b96c2f4ccso9959185e9.0
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 00:53:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1utiNE-0006f5-NL
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:57:45 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1utiNC-0005MG-TB
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:57:44 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3d3ff4a4d6fso2343047f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 00:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=adacore.com; s=google; t=1756886259; x=1757491059; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xoqiRCIeftqYRC3cyuGguhcU16uTZEpaLr0NStN9JC0=;
+ b=Ak39iWYTQsvWXasSqU4yAP1IPehkpB1fpp7PgrUzwNYQzAOor+7io8tI/tCzyc6/it
+ fcDsNX+Tanr0kwTrDnoZ49ETPTnlJvMnLKfYHijyzizsGVil5S03d2fLUqRDmQL1uwgc
+ 6gLxrF3LnCY5b0uxHuxqRAXUhRc5zy66BdZ43DWsyAxz5JX00lVldpi4+p5A64KwkHuC
+ HXK8Mh2ztmNqT+lNx2HTKk17y7JNaHP4RmHcYjNjukMi3n33G7aRgV3mxr5EGfO3T9pL
+ C/V4XX0hdrrMDFyAFbOVsLyqx/ehQ8XSSsEvnl+UM9gDNnwvVnOXlNcnAJJHkV7AAZ1X
+ pXiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756886012; x=1757490812;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1756886259; x=1757491059;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vIwKenhC8Vrbg0ooQhgtFA1AhsEbn3GoVDnCzgJTlO0=;
- b=eYVlL0cqkB4wE05n+PMk8u7tVgxsljy/d/QPNtny3jsCceRHRcpOZgCEfXTQZiVX2l
- sKBTHkn3+wDCycG+JpuJWTKpHFltYVUH2NrYEgR6XEPwcNqoFhel5GP0HE2wXWmNIC2j
- oxM7jDTKFE+ciyKZVFMTzrhQIaH4OGjeOJTu+lWJkB73VwZ33RY7Iz7AfYTwivPcicDl
- GaCed2KGi96poXUcoSmEGHzmSpH/hk1bnCvRl9RFVWAAVq5eDTY4hnixdGf3FZz1FM09
- XboiaiDzmwrmrAWVC2r2pJU7i6EqqgIBeGka2XESSi84PZ/evbVu7A+kVIsE6RwbCbdn
- AWhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPXn69AXNx13U/RzXxJO2jcAxCM9z5bAdKR5SRDz8vVAyKPKsiml1VRqVRGl63KH5l8SU2DydAZIHb@nongnu.org
-X-Gm-Message-State: AOJu0YwzZ+uE8OZiU8trIZB3xGDJ7ZctH3ftdBm4Gg10EcJ3F0JIZGm8
- ewKO9VMLDSSDbEdG0fh4ygLc8ZvVV9ZmJ4DePXyF+Sti+04otbrnpDSySnnkONl+DvODiMJnmsc
- UuT3B7+BAUkArzi/m6Q+DbMhNvDhFQE8IK8099i7x4OFtA1+VshPjS+cE
-X-Gm-Gg: ASbGncu5prNgfq45ufGzBaxdfYSwhjhleqVLtlKT4PxECGWabQi9XWMpMLMGsbrIm2x
- aRDuhbpIex/XmiEy9KCDl47O9SOem4ZzUawVhZgb7mfybzSspt1dFy5zlbs6iwJiTQOtG/Ywu8B
- OKXNwyt0rkMBneHFQmY3kjxZBQtxw+C0n7PMpZE4FF7JxdE7OgSEkJKlv2ESZzn+rmyioztlqeR
- Vlu9iG2hb3nfhDP9vJI/IUauXV3B5gks5PRNh2vy+0Mc64Sf0EuxMsxCoSn3yyiA+k17vwtTvfk
- 3uXoGiLbpBL7B5Pd7e6viyflJPioyjXTdx0hRq6rsBcq9jFr6Nbe9uf0xmylhnhyqO+ww0zQW4e
- npqembsd5pCyuEoye+ahwUqFyAQMFUjNmAhLA1vQ1CLf3fSduwPMwqdXe4K0RtivrRwk=
-X-Received: by 2002:a5d:5d10:0:b0:3d4:1acb:aed1 with SMTP id
- ffacd0b85a97d-3d41acbb238mr8271164f8f.44.1756886011207; 
- Wed, 03 Sep 2025 00:53:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMJpNJ2EwbfO0BZC3DUlNBh7w82uZe2eV9sATGgedBJXjczxASzV1uFj7zdWEmjIDkhYZpOw==
-X-Received: by 2002:a5d:5d10:0:b0:3d4:1acb:aed1 with SMTP id
- ffacd0b85a97d-3d41acbb238mr8271112f8f.44.1756886010003; 
- Wed, 03 Sep 2025 00:53:30 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f09:9c00:8173:2a94:640d:dd31?
- (p200300d82f099c0081732a94640ddd31.dip0.t-ipconnect.de.
- [2003:d8:2f09:9c00:8173:2a94:640d:dd31])
+ bh=xoqiRCIeftqYRC3cyuGguhcU16uTZEpaLr0NStN9JC0=;
+ b=SiFpL7g3Nu8w5SvxeEUtR1iv1gmKVdgJRc2NtAx6H6UAKbna2TVBzlbZ0kwlsE7U4n
+ nfddKqGyuT6m0kWNmQ7POLJZlaYjFDdeyHV4dISrX+gOsaU0y27nQxL0DggWxrfSgxXL
+ VuX12GC/aAkPLO0vDTNfEKarXwoj0eTxzf71Mqrkew/yH0iSg+YggzyMr+HUUOYm9fRv
+ PpvOR9ufU96b5IvnWKbDyn4m/XD6ZXevrLcBcfLOlAdxbxtJQ70RAQcVLShKle09T2g1
+ MyohG0k62FRTg3DdRyh91l4hzHdhYpuFP0i5VkjdX8dbIQDHV84lM9y45wUBKRDy/qgl
+ 8BTw==
+X-Gm-Message-State: AOJu0YzMO1BzWXMz+yt+52b+gGSyvPVPw0tzRbRAZfoyxmPNrqDjjcB2
+ f9hjy+OuvOYd39wwNFn+fgrc9iUmr/2dzTIvo3kehK3hhxtc6924Jw2C5bvTSffd/XAGu8lNHq7
+ Da88=
+X-Gm-Gg: ASbGncvmgEMzh6ibuzEV0PzwzCHa/ZfX35l8mzT6+mIMd/ez2P8D0PQAHPkG0CBz0PJ
+ Lc7m7nkKfIqRMui9Z4+V5CvvZqckdTDMZORuxMw+fcCJvyAhaXZfLWczeAch2R6rSqIW7fkaY2Y
+ pQoVjDjbi8P1MTjwUFnnwhnYk2dRvyHLjcY1VfO493LjcFp3Jtt65Ogb2wejHW4dRV8uh3NohkC
+ 9LVb77IbTm4hwud53l9z64F34CK2oAXqk4RoFS0QTZtVNPxEcoMH1h46DZT6csXSu0h8ivCU5rn
+ 5hFWllkCHhBiT04yW6zZHt2Hp0ElTqBs4hYfao5Di0LOOivpYaZZ1VzoOsOWNzusOC8Jm9gtvwc
+ EO9DPnp/epitRKnlrOK4gFBsfSD98Zgo2TqlnICAw6g==
+X-Google-Smtp-Source: AGHT+IE4FDHFOKmrUgpMAO89HbxbExKy2f4D/xkHu7a+9vfHB1ihm0dAZfigSiuRUZ3QXMbOtDfk0w==
+X-Received: by 2002:a05:6000:230f:b0:3dc:eb5:501e with SMTP id
+ ffacd0b85a97d-3dc0eb5534cmr1650296f8f.18.1756886259569; 
+ Wed, 03 Sep 2025 00:57:39 -0700 (PDT)
+Received: from chigot-Dell.home ([2a01:cb15:80db:7c00:8880:8b9d:ac82:8ac6])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33fba9fbsm22608350f8f.50.2025.09.03.00.53.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 00:53:29 -0700 (PDT)
-Message-ID: <8e9c0cd0-048a-465e-8b97-9fecd559cb6a@redhat.com>
-Date: Wed, 3 Sep 2025 09:53:28 +0200
+ 5b1f17b1804b1-45b7e7d2393sm227923335e9.3.2025.09.03.00.57.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Sep 2025 00:57:39 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, qemu-block@nongnu.org,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PATCH 0/5] block/vvfat: introduce "size" option
+Date: Wed,  3 Sep 2025 09:57:16 +0200
+Message-Id: <20250903075721.77623-1-chigot@adacore.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] memory: Fix addr for flatview_access_allowed()
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20250902214005.730358-1-peterx@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20250902214005.730358-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=chigot@adacore.com; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,23 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.09.25 23:40, Peter Xu wrote:
-> flatview_access_allowed() should pass in the address offset of the memory
-> region, rather than the global address space.
-> 
-> Shouldn't be a major issue yet, since the addr is only used in an error
-> log.
-> 
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Fixes: 3ab6fdc91b ("softmmu/physmem: Introduce MemTxAttrs::memory field and MEMTX_ACCESS_ERROR")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
+The main goal of this series is to introduce a new option "size" within
+the vvfat backend (patch 5). It allows more control over SD cards' size.
+The value for "Number of Heads" and "Sectors per track" are based on SD
+specifications Part 2.
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+This series also includes minor patches:
+ - patch 1 introduces another option to remove the Master Boot Record
+   (this is mandatory for QNX)
+ - patch 2-4 are minor improvements easing the introducing of "size"
+   option
+
+This was tested on with a aarch64-linux kernel taken from
+functional/aarch64/test-virt and on aarch64-qnx over raspi4b with a
+workaround, not included here (the SD bus must be associated to the EMMC2
+port instead of through GPIOs).
+
+Clément Chigot (5):
+  vvfat: introduce no-mbr option
+  vvfat: move fat_type check prior to size setup
+  vvfat: add a define for SECTOR_SIZE
+  vvfat: move size parameters within driver structure
+  vvfat: add support for "size" options
+
+ block/vvfat.c | 279 ++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 213 insertions(+), 66 deletions(-)
 
 -- 
-Cheers
-
-David / dhildenb
+2.34.1
 
 
