@@ -4,91 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B1D4CA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 18:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF004CA1014
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 19:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utrxQ-0001I3-2o; Wed, 03 Sep 2025 14:11:44 -0400
+	id 1uttK0-0007ey-70; Wed, 03 Sep 2025 15:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1utrx9-0001DG-Ob; Wed, 03 Sep 2025 14:11:28 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1utrx7-0001D4-1m; Wed, 03 Sep 2025 14:11:27 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-4b490287648so3193931cf.2; 
- Wed, 03 Sep 2025 11:11:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756923083; x=1757527883; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZKjqJwC/8q/gwz7/7GMiCg/8F+ePG2Qt/FcNhSVg4AQ=;
- b=kCmqjK21qwk0YQIfIujsL3jFEPkmGp2PBMFYC1d6z45NBFta63wOd5iavxkHP89X50
- R2QjeMYD14D5Hs+rcCCiLgIWtWUNgMu2fCsX4yIIK4rP7wECmtcLab57WUwJU45IBtdR
- LNla39j5fyVByzanEMmLxznYWQvO6289sr+U4O6EIz5XPTl23B0kHFur1z7S/i/IuOIm
- TVYg3PVm4qrRJp7LzAvKoC8BMPZOabvvHF5Mjv8r/y23d4V6FGa6d3DknLISKG8BOlYe
- 4Jm7qKrT7+1+CeaxHGzR5Srm4TybKndIJR91bmEPD0n0COnGtHPeIhmk6ZKE5ZSjJEIb
- tTFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756923083; x=1757527883;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZKjqJwC/8q/gwz7/7GMiCg/8F+ePG2Qt/FcNhSVg4AQ=;
- b=mAIgEsNXVtb5OPsoqgyN4kYqsSy4TwmpeNteb+ySQGmR/zUIV3n7uuPkL4VfYx5mnC
- qf9zJeUggLB8unKlmnabTgT4S40BbfNLm1GOjJi0J9RmR9jB+iKXxFgF9WCZ9dv+Ox9Y
- zY54l6Ju7anZqAxqYuc75GD9JkpsM1H774WGigQIWTLS0HUNzGy/FXAQbbrQ5SePSy2C
- jQGJdjjfqD/GchMRmzkwF40kbjfnRD5Jl8RfoBUUGBeW0BAODid8MsPqgEXYJcU8ITui
- KQiLSOaTAxh0lS2Je0HGgn9MksQMkwdGtrLBWgPK5z9PDEuYocEKZ8geq4Sf6YOuv4j+
- E7HQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmWXN690he2QfgeWry/SfZ2MHXwYvOQQGhDHHJh++vytlXnsy9Xy8ziLqNOOLSwkmuE2by3QUCrpeU@nongnu.org
-X-Gm-Message-State: AOJu0YxnoHz/09zcARDzMkXljFW8DOV3f1ekjwdoUYPKDedshYH3+cZo
- i8JQs/GUYDXtsz06+FBjP8wJGVm4A2h5FshcfP4nGPQNQpG2ngsJMT6/
-X-Gm-Gg: ASbGncv7F3z7z51zLQOya7yFhhnGFK2J6nPdoisRHb1G0kWfHEbos7pDfyDiqv1RkVh
- aMJkaRnYpfGNHTSbMVHLIfDroXTmvdP9cHkpl3fLLAUweioF0NfeuZ9qlsOvth4lCOJlWAvu8Cu
- 47lvhFIt8UE/Aql09H0YZBXctxYQU5afwSkfJKWP1qsf3/mTAu89takiDJXDRyAN5HVxIXBt1G7
- PeNQ7hEUiBsDpUPvWRsJZOz/1Jc1748+CxVV1Gv4Z3FGKCOL+Nn3NH1LV7T8cpTR2b+enhc7DuC
- qXg+Lx1OfrMigOeCdsbKlSE1mfoRFWGv1GdAWLAYiGTkMOyu8ZZku939aqICKR8L3aeuFtQpvN9
- XqN5yjQ09eoyOAlX4J0E/
-X-Google-Smtp-Source: AGHT+IHLaZmPygeN6v9n9c9BtiyIUF0iquuf2sbVrwZcC4ACGBQljJv6ltibauQ9mgDfcKZgCZzEfQ==
-X-Received: by 2002:a05:622a:4008:b0:4b3:444d:d831 with SMTP id
- d75a77b69052e-4b3444ddad2mr106371391cf.77.1756923082875; 
- Wed, 03 Sep 2025 11:11:22 -0700 (PDT)
-Received: from [10.5.0.2] ([86.48.15.239]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b48f62aa29sm15248871cf.11.2025.09.03.11.11.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 11:11:22 -0700 (PDT)
-Message-ID: <55baf3e9-a14b-4ece-ab08-71e951f6998b@gmail.com>
-Date: Wed, 3 Sep 2025 14:11:21 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1uttJy-0007ea-8M
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 15:39:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1uttJu-0007Ft-Mk
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 15:39:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756928309;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7ViEPDnqnaUJlWIvLFiXQ+Pg2yfwJuliieVyNpBRLGw=;
+ b=Pw2hIPxRLYaBYB0k8xH73qEMHWtfdNDLLIaXMwmCGJSAUz7AkC493gfImKPUFLoQ2YEbUZ
+ bULWf1bT49hC2+T9lUAy7nTo87lhflL9iKMlsGXjmY8N+lTypEXIMAqitfWmYJ1QoFpaj/
+ H08Sqd/mDf3LxkJspS6Xyg2tSEFs87Q=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-d48-mJJdPiyPR46cz8U4eg-1; Wed,
+ 03 Sep 2025 15:38:26 -0400
+X-MC-Unique: d48-mJJdPiyPR46cz8U4eg-1
+X-Mimecast-MFC-AGG-ID: d48-mJJdPiyPR46cz8U4eg_1756928305
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3B0A195604F
+ for <qemu-devel@nongnu.org>; Wed,  3 Sep 2025 19:38:25 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.16])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C8BEA1800578; Wed,  3 Sep 2025 19:38:23 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] ui/spice: fix crash when disabling GL scanout on
+Date: Wed,  3 Sep 2025 23:38:18 +0400
+Message-ID: <20250903193818.2460914-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] export/fuse: Add FUSE-over-io_uring for Storage
- Exports
-Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
-References: <20250830025025.3610-1-hibriansong@gmail.com>
- <CAKWCU7VusNOUskuxc3RMTd+aLY6bSX+de-LiUhe9xpdmbzkn-Q@mail.gmail.com>
- <20250903094907.GA106431@fedora>
-From: Brian Song <hibriansong@gmail.com>
-In-Reply-To: <20250903094907.GA106431@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=hibriansong@gmail.com; helo=mail-qt1-x830.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,120 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+When spice_qxl_gl_scanout2() isn't available, the fallback code
+incorrectly handles NULL arguments to disable the scanout, leading to:
 
-On 9/3/25 5:49 AM, Stefan Hajnoczi wrote:
-> On Sat, Aug 30, 2025 at 08:00:00AM -0400, Brian Song wrote:
->> We used fio to test a 1 GB file under both traditional FUSE and
->> FUSE-over-io_uring modes. The experiments were conducted with the
->> following iodepth and numjobs configurations: 1-1, 64-1, 1-4, and 64-4,
->> with 70% read and 30% write, resulting in a total of eight test cases,
->> measuring both latency and throughput.
->>
->> Test results:
->>
->> https://gist.github.com/hibriansong/a4849903387b297516603e83b53bbde4
-> 
-> Hanna: You benchmarked the FUSE export coroutine implementation a little
-> while ago. What do you think about these results with
-> FUSE-over-io_uring?
-> 
-> What stands out to me is that iodepth=1 numjobs=4 already saturates the
-> system, so increasing iodepth to 64 does not improve the results much.
-> 
-> Brian: What is the qemu-storage-daemon command-line for the benchmark
-> and what are the details of /mnt/tmp/ (e.g. a preallocated 10 GB file
-> with an XFS file system mounted from the FUSE image)?
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  spice_server_gl_scanout (qxl=0x55a25ce57ae8, fd=0x0, width=0, height=0, offset=0x0, stride=0x0, num_planes=0, format=0, modifier=72057594037927935, y_0_top=0)
+    at ../ui/spice-display.c:983
+983         if (num_planes <= 1) {
 
-QMP script:
-https://gist.github.com/hibriansong/399f9564a385cfb94db58669e63611f8
+Fixes: https://bugzilla.redhat.com/show_bug.cgi?id=2391334
+Fixes: 98a050ca93afd8 ("ui/spice: support multi plane dmabuf scanout")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ ui/spice-display.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Or:
-### NORMAL
-./qemu/build/storage-daemon/qemu-storage-daemon \
-   --object iothread,id=iothread1 \
-   --object iothread,id=iothread2 \
-   --object iothread,id=iothread3 \
-   --object iothread,id=iothread4 \
-   --blockdev node-name=prot-node,driver=file,filename=ubuntu.qcow2 \
-   --blockdev node-name=fmt-node,driver=qcow2,file=prot-node \
-   --export 
-type=fuse,id=exp0,node-name=fmt-node,mountpoint=mount-point,writable=on,iothread.0=iothread1,iothread.1=iothread2,iothread.2=iothread3,iothread.3=iothread4
-
-### URING
-echo Y > /sys/module/fuse/parameters/enable_uring
-
-./qemu/build/storage-daemon/qemu-storage-daemon \
-   --object iothread,id=iothread1 \
-   --object iothread,id=iothread2 \
-   --object iothread,id=iothread3 \
-   --object iothread,id=iothread4 \
-   --blockdev node-name=prot-node,driver=file,filename=ubuntu.qcow2 \
-   --blockdev node-name=fmt-node,driver=qcow2,file=prot-node \
-   --export 
-type=fuse,id=exp0,node-name=fmt-node,mountpoint=mount-point,writable=on,io-uring=on,iothread.0=iothread1,iothread.1=iothread2,iothread.2=iothread3,iothread.3=iothread4
-
-ubuntu.qcow2 has been prealloacted and enlarge the space to 100GB by
-
-$ qemu-img resize ubuntu.qcow2 100G
-$ virt-customize \
-    --run-command '/bin/bash /bin/growpart /dev/sda 1' \
-    --run-command 'resize2fs /dev/sda1' -a ubuntu.qcow2
-
-The image file, formatted with an Ext4 filesystem, was mounted on 
-/mnt/tmp on my PC equipped with a Kingston PCIe 4.0 NVMe SSD
-
-$ sudo kpartx -av mount-point
-$ sudo mount /dev/mapper/loop31p1 /mnt/tmp/
-
-
-Unmount the partition after done using it.
-
-$ sudo umount /mnt/tmp
-# sudo kpartx -dv mount-point
-
-> 
-> Thanks,
-> Stefan
-> 
->>
->>
->>
->>
->> On 8/29/25 10:50 PM, Brian Song wrote:
->>> Hi all,
->>>
->>> This is a GSoC project. More details are available here:
->>> https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_exports
->>>
->>> This patch series includes:
->>> - Add a round-robin mechanism to distribute the kernel-required Ring
->>> Queues to FUSE Queues
->>> - Support multiple in-flight requests (multiple ring entries)
->>> - Add tests for FUSE-over-io_uring
->>>
->>> More detail in the v2 cover letter:
->>> https://lists.nongnu.org/archive/html/qemu-block/2025-08/msg00140.html
->>>
->>> And in the v1 cover letter:
->>> https://lists.nongnu.org/archive/html/qemu-block/2025-07/msg00280.html
->>>
->>>
->>> Brian Song (4):
->>>     export/fuse: add opt to enable FUSE-over-io_uring
->>>     export/fuse: process FUSE-over-io_uring requests
->>>     export/fuse: Safe termination for FUSE-uring
->>>     iotests: add tests for FUSE-over-io_uring
->>>
->>>    block/export/fuse.c                  | 838 +++++++++++++++++++++------
->>>    docs/tools/qemu-storage-daemon.rst   |  11 +-
->>>    qapi/block-export.json               |   5 +-
->>>    storage-daemon/qemu-storage-daemon.c |   1 +
->>>    tests/qemu-iotests/check             |   2 +
->>>    tests/qemu-iotests/common.rc         |  45 +-
->>>    util/fdmon-io_uring.c                |   5 +-
->>>    7 files changed, 717 insertions(+), 190 deletions(-)
->>>
->>
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 669832c561..db71e866f8 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -980,7 +980,9 @@ static void spice_server_gl_scanout(QXLInstance *qxl,
+     spice_qxl_gl_scanout2(qxl, fd, width, height, offset, stride,
+                           num_planes, format, modifier, y_0_top);
+ #else
+-    if (num_planes <= 1) {
++    if (fd == NULL) {
++        spice_qxl_gl_scanout(qxl, -1, 0, 0, 0, 0, false);
++    } else if (num_planes <= 1) {
+         spice_qxl_gl_scanout(qxl, fd[0], width, height, stride[0], format, y_0_top);
+     } else {
+         error_report("SPICE server does not support multi plane GL scanout");
+-- 
+2.51.0
 
 
