@@ -4,59 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FBACA100B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E59CA100C
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utgL7-0005U9-QB; Wed, 03 Sep 2025 01:47:25 -0400
+	id 1utgL7-0005Tg-E7; Wed, 03 Sep 2025 01:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgL2-0005SV-MN
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:20 -0400
+ id 1utgL0-0005Rm-GG
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:18 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgL0-00020Q-TC
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:20 -0400
+ id 1utgKy-00020Q-P0
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756878439; x=1788414439;
+ t=1756878437; x=1788414437;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=5Ayv9ykhpHFD10nLL3YGERsihuG+v7/E0vJkkQ01MWc=;
- b=IZpX1beXi6/onvk7SeznqjNeEeDsgYey3WfRUbY60RYCbG9Fdq9IC+c3
- DFV3gErTd1uysMm13FneaV25Ur8vsmCQrrhuK+4TauOG0wFYEX0TjpXGu
- ze+SPfpIV9w+91poICx7WjaJdNrl/z1B5Aiy4byBJeoRXrgowg2KIaoFH
- jHYmjD+sueP6PIz7zvHKXpYtUnBxbvDRRpqAdiK53sOEIJF3ySyEf8ulc
- BKa4v+zPVPb0l3WHFYCX6BaS/WMY4Jev++l88stajNy4Sw4EU3I9571fr
- yMSJlOGT/iysJgEd/op0q43DuuopsUk6oSGcXfESG2icK39KzvzBOMjyv g==;
-X-CSE-ConnectionGUID: Ln8jW7sISved5MaEdt6Ulg==
-X-CSE-MsgGUID: ppbpfPVMQwWMh8UwExcEvQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878205"
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878205"
+ bh=L8wsa5EiKVsZTTAjXcSAQwAl5L2jNrbI/NYMZNyKHtE=;
+ b=F467Gd/JI0PyGyk7OsGoGxsAtrx9E+9hJlnoSSJDX1IZS8YK6Msd6Ozn
+ SVHS6FRQY2TCUEZup+hGCM0Mi07Fj08WnDEJzNqBIbIIBsOMK9aGHVwpK
+ TvUlYTWvhg8HRmKURV6ZNvBE2bZEvbR/0rznZAJpOVhB8Q5ICyU3h3P7S
+ sPX2fAa3KRte6hc98PNBSU1DMLq3u2sj/7x82Jy+sSOAMtUj+GHjj0X30
+ uAGX1D0V8EkAzIu21DI4MAZd5fxSZLq9HGZZ1DnxoGLzUzLXrvV2zwItu
+ tK8smSdhP1Tn4DdRV9Ur1Hy7zSmepTBdGKapSdE7epJ/Sv52YyDoJcWYX A==;
+X-CSE-ConnectionGUID: 7M9uiSF5QLOxpLqZFLBO2g==
+X-CSE-MsgGUID: ZcrgeHNQQ4CehCl04/GTrA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878187"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878187"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2025 22:47:10 -0700
-X-CSE-ConnectionGUID: RRVBDD9OSwm6XsCCOHWCvw==
-X-CSE-MsgGUID: I9aLMdMSQpeoF1p8CM8ZMQ==
+ 02 Sep 2025 22:47:09 -0700
+X-CSE-ConnectionGUID: m6/wSRLwQ4KmS0uOH7X2dg==
+X-CSE-MsgGUID: y9dLOmXjTb2ChRg4VaroMg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634781"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634765"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Sep 2025 22:47:08 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [RFC 5/6] virtio-gpu: Recreate the resource's dmabuf if new backing
- is attached
-Date: Tue,  2 Sep 2025 22:42:18 -0700
-Message-ID: <20250903054438.1179384-6-vivek.kasireddy@intel.com>
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [RFC 2/6] vfio: Add support for VFIO_DEVICE_FEATURE_DMA_BUF
+Date: Tue,  2 Sep 2025 22:42:15 -0700
+Message-ID: <20250903054438.1179384-3-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
 References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
@@ -88,35 +85,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases when a blob resource's backing might get detached
-and re-attached again such as when the underlying object is getting
-migrated in the Guest. In these situations, we need to obtain a new
-dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
+In order to implement VFIO_DEVICE_FEATURE_DMA_BUF, we first need
+to identify the PCI region the buffer (represented by iovec) belongs
+to and then translate its addresses to offsets within that region.
 
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+The qemu_ram_block_from_host() API gives us both the region and the
+offset info we need to populate the dma ranges in order to invoke
+this feature.
+
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/vfio/region.c              | 49 +++++++++++++++++++++++++++++++++++
+ include/hw/vfio/vfio-device.h |  3 +++
+ 2 files changed, 52 insertions(+)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 2f9133c3b6..1654a417b8 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -938,6 +938,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
-+
-+    if (res->blob_size && res->dmabuf_fd < 0) {
-+        virtio_gpu_init_udmabuf(res);
-+    }
- }
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index d04c57db63..b58188147c 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -28,6 +28,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qemu/units.h"
++#include "system/ramblock.h"
+ #include "monitor/monitor.h"
+ #include "vfio-helpers.h"
  
- static void
+@@ -401,3 +402,51 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
+     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
+                                         enabled);
+ }
++
++int vfio_device_create_dmabuf(VFIODevice *vdev,
++                              struct iovec *iov, unsigned int iov_cnt)
++{
++    g_autofree struct vfio_device_feature *feature;
++    struct vfio_device_feature_dma_buf *dma_buf;
++    VFIORegion *region;
++    ram_addr_t offset;
++    MemoryRegion *mr;
++    RAMBlock *rb;
++    size_t argsz;
++    int i;
++
++    argsz = sizeof(*feature) + sizeof (*dma_buf) +
++            sizeof(struct vfio_region_dma_range) * iov_cnt;
++    feature = g_malloc0(argsz);
++    dma_buf = (struct vfio_device_feature_dma_buf *)feature->data;
++
++    for (i = 0; i < iov_cnt; i++) {
++        rcu_read_lock();
++        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
++        rcu_read_unlock();
++
++        if (!rb) {
++            return -1;
++        }
++
++        mr = rb->mr;
++        if (mr->ops != &vfio_region_ops) {
++            mr = mr->container;
++            if (mr->ops != &vfio_region_ops) {
++                return -1;
++            }
++        }
++
++        region = mr->opaque;
++        dma_buf->region_index = region->nr;
++        dma_buf->dma_ranges[i].offset = offset;
++        dma_buf->dma_ranges[i].length = iov[i].iov_len;
++    }
++
++    dma_buf->nr_ranges = iov_cnt;
++    dma_buf->open_flags = O_RDONLY | O_CLOEXEC;
++    feature->argsz = argsz;
++    feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF;
++
++    return ioctl(vdev->fd, VFIO_DEVICE_FEATURE, feature);
++}
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 6e4d5ccdac..e127abd5f0 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -277,6 +277,9 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
+ 
+ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_irq_info *info);
++
++int vfio_device_create_dmabuf(VFIODevice *vbasedev,
++                              struct iovec *iov, unsigned int iov_cnt);
+ #endif
+ 
+ /* Returns 0 on success, or a negative errno. */
 -- 
 2.50.1
 
