@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2403DCA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3B0CA1010
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utjnP-0007wq-Hg; Wed, 03 Sep 2025 05:28:51 -0400
+	id 1utjwV-0002ib-O9; Wed, 03 Sep 2025 05:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ysf.kya34@gmail.com>)
- id 1utjnO-0007wb-2p
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:28:50 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utjwL-0002hg-KK
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:38:07 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ysf.kya34@gmail.com>)
- id 1utjnM-0006XW-14
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:28:49 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5607c2f1598so2723976e87.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:28:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utjwJ-00076J-Jv
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:38:05 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-afcb7a16441so995892666b.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756891724; x=1757496524; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=LICDs7KnPkE2Fr+5AoSGw8r8AKcmZviS+ge2JF/hxdE=;
- b=LaT5BykIQtAYqimhNalhT/rYZyfuD4xxRct6o9XHW20vfVuRLn7rmsfBeCkJuoBAsd
- f9DbD6GwW4T+Jf4HZ8m6PgDJydXyfj2SBbyahC7bj3egQyWKWCvpoPUI03v0rdHvJ3+Y
- keoYv+EjbBqsmUQVvMR27uoxtsgn/WXNGNhN+ButWCTnHdsmMKV5TopWo0Zj/W0SI0UP
- k3ssCn25NjWbACF2QJPzz2ze+FcTtCd7pTRAqI76mZD+bbi9KHS9EXXflv5pwX7sgtHB
- mv0oa/cmLDaJ5PLxY6k6J3Q7U6At5Jtd+lDrgEn3MV+yIdnrPTsoJYsYBXPw8qGeKQk8
- ad0g==
+ d=linaro.org; s=google; t=1756892281; x=1757497081; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PVx28uNA0xbJOXxJcyu5rU5kNhMQ4PELIVd9+Dh5EcA=;
+ b=x47TITs7x7pUcjd6D0ETKv+KMiKXk9IACd+HwoBTfJy2wVUj/Ygp90pmDdyw8hWKBY
+ t5PNgCwW6lwC/rP/bi1qL8ctR6jxIazF8TPI8QQ5cSd0VMSEIs8FdQKMtOSWDOHDciEM
+ tTOULvV6wtB9cf1ekcz6KKYhud2NNVei1HxVrKSSvUX+KSaTisbYuIbCE5keH1IuoyB7
+ 81S1Agpc+Yx4y/oEP1prn4vaLGN1CnnHiOmQs6NHl+GntGQzjodrpYXoZmctYwKR46//
+ y0AA3LYY1K8b94UNL/poU5NjYwftAxc/bHZVXv8++ZInGKJGi76aNfzkKOAOpTgKQAp/
+ 4C0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756891724; x=1757496524;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LICDs7KnPkE2Fr+5AoSGw8r8AKcmZviS+ge2JF/hxdE=;
- b=PV4PguyeXVlxTFSNPjudYLpAjrl4EU2nJLfrAXQPk/BSI367j+E2YRqrUoSo6q+Umb
- dVG2hy29HxktgpVLO6/AanTlF5T74SKGekHwS2bN8NMklgouUSsP45RKiz4lz8aBj566
- WlqkA9F+dAtUAFCpZxeWMU2N3EmO1M6j75WwHXdhGvGE8AKBxvKGEa/OP/Y/Rl7l//f3
- 1Zuas6qYD7ERKzmgHQNBiNj2l8g58VJbiwOWpfRJ7cxaP4s4PaCfp2/L5eTH/N9J3NDR
- 7XnTWTRjNw/uB/UcYWOyUSGHURurRb0Xb2mEaE9kFIbqtihIaA0OrNyPtbSurLBbmquX
- 4pGQ==
-X-Gm-Message-State: AOJu0Yy0OcrsktriGcgrkW9rgHhWFSuF9jGrZEEqoIRLhacZwGSms42V
- EtVLx6+iCPe6eB1Y30Dvbzng8LeIwKW1uVJawiKrzJWXVk4oy5v++/xavhO/3X80VgHbnKclQvi
- irYosjf8lwhWviLJPjqwcJWwf87xLZFxiMg==
-X-Gm-Gg: ASbGnctnl35FKZX+XewKyRHSnJ8kuIBCgqvpFETJCasFF80lQvznim+Vvp10s1UnHYv
- TJArJzDij22bxUW3vF1x0KS3JOCrsKk+yZOoWQHzIrFv2+7lt7LrqYUlWlZ6YpB1fZsrqxW8vNn
- RqEgpUl64UnNECDfKECsG2bzWwrwc1lyk1DbUsxas0z8eXmJpQfskznZWqbLRLVraBXwJd0Sfyt
- 2qVIs5m0oWtju7w6MhuUVGDwL3O9bxFISB3IfJxvoFl91P9Og==
-X-Google-Smtp-Source: AGHT+IGOsyU50jwHVcRtTYW/aWAJRtVrGvYKEdzvz9QFl1OJghClDyYgEStGgeeZPkYpTqntH2E3eM1O2vWvvGFjOA0=
-X-Received: by 2002:a05:6512:639a:20b0:560:8b56:5dc6 with SMTP id
- 2adb3069b0e04-5608b565f03mr376701e87.19.1756891724027; Wed, 03 Sep 2025
- 02:28:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756892281; x=1757497081;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PVx28uNA0xbJOXxJcyu5rU5kNhMQ4PELIVd9+Dh5EcA=;
+ b=hjGzQYeg2mIN2oLBMiOVpRjRPQe+yn2A2vxc4Om/HUkmZOfejRH5rbQGGXjEkWx5E+
+ 9fy/h+Fu8lt6ImzWUTv+47OM94ZcTnOc3RDxLo+zpnaNFhKAEZ3aR5kWEb9pwurCFqKw
+ yNh8p5unMhXMVwUZ9mwm8A+jEZZlG9RKycpj/TWB53ew2YvdLjGGy+bicCOncLH30Awo
+ rEqXU98bIcTDI2ycw9ZsTedveOX7e0sjKvWL7agW3H/QsDU19j6fKLMez+YcZ5NBJrjE
+ MF4OW6LUcqE2ldN5yQ3+EEwHz5A9h/rL/t61uoINdl/kzD+sw9kqQ22NVRFxK/lxGcu0
+ DBqw==
+X-Gm-Message-State: AOJu0YyqyXrn0nV32tHfSPMWB0/cSh6itSCmj2cS87U2r5GGDZIhdrSW
+ 3fHGDdYNojJLg5bkZJitf2CMB7ZwuPEZb7+/Xxi6cTz8VrZ//7v2/3T80f8N4B34/reXOW3XvpS
+ AjqXJ7NU=
+X-Gm-Gg: ASbGncubM2PJ1943/0aXSZkG+q1+KlYVzmViV6MDXXswqlPuHjAAccme/7B7D3Dn/zC
+ POuW+uHulFy+OyGDB539U3mDf1eoGhnHgAAZaen03Wkk7BXU4Ww3xGwMS3p2v+q2stDgPT2MUZx
+ nNBO1wotP7ZWpgGnlelSnmX4BwRAGnpkRb0bapMdRSaPYEY+qArw6J+jsgWCaJCh9LEzP21iZzR
+ aDvJs56Y4C9O9uBfDxJCMmx7GSCJVIW+BGhubDqZvq21fMPWL4H9CI0n2hVfW9wWAjYuxTjD8TK
+ pyQ/y0jFXTbY7JxgEZE6gdDVSgyNak1pweBOjQIP4qALpsRJKUzT5qvrmRcAFDFaZ4ijIDPXlYt
+ hMOhuubCV+woKAm0S6fVMXdbKswl3fGL6cNOOICVJzE6iOHGJ4TTSnm8hZ9uf29uAynDszIo=
+X-Google-Smtp-Source: AGHT+IEsdz61X3OgnyrkLhV6hKMH1SeWVcAu9TcuXyy4UXduUPFIPSi4O/91duyYLxfVgn6FJAUsBA==
+X-Received: by 2002:a17:907:7ba0:b0:af9:76cd:d836 with SMTP id
+ a640c23a62f3a-b01d8a32278mr1581644866b.13.1756892280625; 
+ Wed, 03 Sep 2025 02:38:00 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b0445cb9296sm483831266b.61.2025.09.03.02.37.59
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Sep 2025 02:38:00 -0700 (PDT)
+Message-ID: <5b5055b2-fa80-4ca9-a5ea-3e65e617be92@linaro.org>
+Date: Wed, 3 Sep 2025 11:37:58 +0200
 MIME-Version: 1.0
-From: Yusuf Kaya <ysf.kya34@gmail.com>
-Date: Wed, 3 Sep 2025 12:28:32 +0300
-X-Gm-Features: Ac12FXyfepmnTdaYS3gsi4NgceqUaa3XT_-AlELVkB3A4sJ0kUqEd3V3xd8r9bE
-Message-ID: <CAHd9c1rBcf5SZFYQ2z0E86pmo9NPDTC7ScLMLzfg2yETz1whpQ@mail.gmail.com>
-Subject: [Question] Interest in IFC modeling or missing parts for T1042 SoC?
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/38] Misc HW patches for 2025-09-02
 To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000001e9aed063de23b2a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=ysf.kya34@gmail.com; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250902160004.3816-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250902160004.3816-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,50 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001e9aed063de23b2a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 9/2/25 18:00, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
+> 
+>    Merge tag 'qga-pull-2025-08-29-v2' ofhttps://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git tags/hw-misc-20250902
+> 
+> for you to fetch changes up to e502e614f4c3e5ee7b12cf1c926d9581262fd626:
+> 
+>    hw/i386/pc_piix.c: remove unnecessary if() from pc_init1() (2025-09-02 17:58:05 +0200)
+> 
+> v2: Dropped "hw/sd/sdcard: Fix size check for backing block image"
+> 
+> ----------------------------------------------------------------
+> Misc HW patches
+> 
+> - Compile various system files once
+> - Remove SDCard spec v1.10
+> - Remove mipssim machine and mipsnet device model
+> - Prevent crash in e1000e when legacy interrupt fires after enabling MSI-X
+> - Introduce qemu_init_irq_child()
+> - Remove various memory leaks reported by ASan
+> - Few Coverity fixes
+> - Use 74Kf CPU to run MIPS16e binaries and M14Kc for microMIPS ones
+> 
+> (a pair if spurious checkpatch.pl warnings ignored).
 
-Hi QEMU developers,
 
-I have experience with the T1042 SoC and I=E2=80=99d like to contribute to =
-the QEMU
-community. I couldn=E2=80=99t find any existing model of the IFC (Integrate=
-d Flash
-Controller). At first, I assumed it might be missing, but later I thought
-it could have been intentionally left out. However, I=E2=80=99m not sure.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-So I=E2=80=99d like to ask: is there any interest or need in the community =
-for
-modeling IFC? Perhaps since QEMU mostly targets systems at the OS level,
-early hardware bring-up stages (like IFC behavior or RCW loading) were
-intentionally not included.
-
-Also, if there=E2=80=99s anything else that you think is currently missing =
-or
-incomplete specifically regarding the T1042 SoC, I=E2=80=99d be happy to he=
-ar your
-thoughts.
-
-Thank you,
-Yusuf Kaya.
-
---0000000000001e9aed063de23b2a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi QEMU developers,<br><br>I have experience with the T10=
-42 SoC and I=E2=80=99d like to contribute to the QEMU community. I couldn=
-=E2=80=99t find any existing model of the IFC (Integrated Flash Controller)=
-. At first, I assumed it might be missing, but later I thought it could hav=
-e been intentionally left out. However, I=E2=80=99m not sure.<br><br>So I=
-=E2=80=99d like to ask: is there any interest or need in the community for =
-modeling IFC? Perhaps since QEMU mostly targets systems at the OS level, ea=
-rly hardware bring-up stages (like IFC behavior or RCW loading) were intent=
-ionally not included.<br><br>Also, if there=E2=80=99s anything else that yo=
-u think is currently missing or incomplete specifically regarding the T1042=
- SoC, I=E2=80=99d be happy to hear your thoughts.<br><br>Thank you,  <br>Yu=
-suf Kaya.</div>
-
---0000000000001e9aed063de23b2a--
+r~
 
