@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB029CA1010
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AAD8CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utmpi-0001bs-Iz; Wed, 03 Sep 2025 08:43:26 -0400
+	id 1utmtI-0003Q0-GU; Wed, 03 Sep 2025 08:47:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1utmpd-0001a9-18
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:43:21 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utmsq-0003Ik-79
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:46:41 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1utmpb-0006lG-9Q
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:43:20 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-74548a0b81fso4160548a34.2
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 05:43:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utmsn-0008Px-1y
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:46:39 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-61cf0901a72so10056645a12.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 05:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1756903396; x=1757508196; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TD7RSAs8lK0s4scvG5RhyQOCx+tpakZ0/0Gex9hKCn4=;
- b=RbDzgZZ9htmiDd+GMCYAlSq1Xs4wsEAnI/YmeJ5CSx/obTPg6m4dvNGEqE3UM3OpBT
- N5r2DFt+44EDEVHpAVcXZ/GdxdoKVzot/LMLL8QDquI6jmEBQSg4flzZ3N4SVr1GXQ7M
- /ZqMPUGrVZqK/l9cOyXowCw3wtFSVyHR5Of5eWVIYM2JWtJRjv4lP9xw/tnq4452Uq47
- opWxo1yQWfoHkob+Pj39ADQP7H8aK+UVkgP+XVe6m5FQQh7sG3fXvhlZBd4LWvAads+i
- KLBET5KKZfsN9jmCWI0TLim3rtg9eBVOMb+V3n5oBZ2Wnm8Vkf6ZUGC1iEpkUW8hrlkn
- +cBw==
+ d=linaro.org; s=google; t=1756903595; x=1757508395; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uiEPZYL3P5yfCnyWgxr/DplYOOXT+KOSq8kuFS9sW+c=;
+ b=WdvzxC2AyA1xGLikak6Lt0woJZb+YaqyVWXHpEk3jq9WdgmD7q6JGaUGJb/PCWgUv3
+ 1Bgl/gUVLmAQR/1r4JPv90mAwMaJpzBRNLfrGICqbXUdlUoao6g9OHPy31zsw9PqwJj+
+ /KvJ4ophN/B1U25C2AMKKnDzMTWU6MA2a24WirGfg9p+AfQv1zi6Ah0SQKpZTp15TkzG
+ vysmYF5Kwqu7fmw3t01dRLT/UVhm1hlpcLVYVqXZymGyyGiufStLnRh/R1dtF44J9mCH
+ qU5IOdWdQ3ia6lqc5vGrfDqjUH9xPVj5pNGHqjtJ7zZ5RL6k+R+xeCzCgu4WFhHn9Hmb
+ uDMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756903396; x=1757508196;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TD7RSAs8lK0s4scvG5RhyQOCx+tpakZ0/0Gex9hKCn4=;
- b=fHCX79quz06By9XgYtcjKSYcWErPHi+LMmoH0Co5qXqBhmpAUU1xCNf4tbRNQ9RHnT
- jpfvZ2tiwkP35YxDCoszzO1mXeoI2g9qQkWSkFuH+TEba5ZaGrP1A+u/gFRPkVpL5tk+
- qjYKoaYy4VlXojiThEo2CVUn3+W5OOB+9NrBanS45qB8zADkHXpIN5Tn5oe1uaxxfPji
- 7VHz1svpA88Hzgi2eKjIMXG1p6trUAqfaYO11oUa4uQgq0l6bGMdWaMv5KdnCPvRmHzh
- qWv+55s7hUDgo8MTI33ShcAfcj0trwG0f4GfBkh2yO7QoHPRc0MgYzj7nyypnGLCJX43
- BPwQ==
-X-Gm-Message-State: AOJu0YyOwo8/4vb2YLiC/6t/J40+2AC2oETnEFhU9Rz0DtjFuy2lFC0J
- Ca+TaulXO9EvapA2WMPU/pQrSr8l2cxKw4iHSBuV8NxPA3TK8tZKuEEJCoFSLQdUXqtKxnWdY42
- QqTl8WWH0OfXoNisVjbWZhbG3rUk4AQyyxzR6X76XSQ==
-X-Gm-Gg: ASbGncvvbb0yLw6pHSd6p0OrWxKnVjbgRBUdXUfJQQG03fCnRqZuoc29S03bY6TOr4r
- XMWZ6A3mihl8z4PlxMmhodTqfUNvkqoVbaS9g+q7pijsn8741HqgegaesxZfBwnHwZmkmdaY57r
- 9egFGBFG4ELSucKugikp6ngrsUH7M25UfbXHj+w/qMsFucPls6nzTvil8izRce2AvecHUe51Acf
- VR7kehWgudTsZGZ2M8=
-X-Google-Smtp-Source: AGHT+IH0gwnZfk1Hv7CKxrbUsBX1+Qoh3OYSq8nf8z4JE73WOKPJ6R0d90fu/I/2U1NpsN2xkT7sSpiBQucDangVK/M=
-X-Received: by 2002:a05:6808:48d4:b0:437:e5d6:8c2d with SMTP id
- 5614622812f47-437f7d20d05mr7031028b6e.2.1756903396593; Wed, 03 Sep 2025
- 05:43:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756903595; x=1757508395;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uiEPZYL3P5yfCnyWgxr/DplYOOXT+KOSq8kuFS9sW+c=;
+ b=dMEriVEIJdkCnUt3SzcmEWdoFKXqmC9Rqrgjou0C0rST5O3VFjpiwcpLoylDa1hRqq
+ cDQSCJxyfQgDInGZaNEnoPFWVDXFIULxWpTY2w/C5CU78QnUF8psyyoBbtrbwPW+R5lO
+ RagPr0p3+FZBFKKThYWqW+qz+dP9x2cj/8bI57EYy41RB0UYEnD/ML/Br20LyBxrZeR7
+ w581ng6BixhhGtaxvYcejF3FWz/VSRS1d0lGsbD9Lsyms0g4rlaaE/p02d5eOtBE/RXj
+ RXa/LLcB93xcIqfQ3XTat/b+srrb4ELzX4Z73D2VIFMXd2LwhDAkY3OOOn7cg4bpHEU1
+ wpBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoZO1PVGEu6mPLQAeq3Z6tVtyVFXARMeqGjhM2nXL+nZQK1Q0gK9Zhm9tiJ0ca5lM26/XSHlhjJyKg@nongnu.org
+X-Gm-Message-State: AOJu0YyARIL09D0nVWHW5w/ZB1nvTcHgkGxRKZ/6LIOW9nZE2+/KpaCX
+ 47MYDnVajnXLcNC4QuUeKTnKkkoGLJosXFomL76y9oyh7uoH2YcNYS5gKvq2GCxK9Pc=
+X-Gm-Gg: ASbGncsCHpApu3WjVhrqDTeNji+X7LhM6nWEPhsl3bFDLs2fWLh1Q8A+PNIMcekI0Tl
+ jQ/c/Ozuc9f9IY7Lhtt1wgJxPvaFuZxxENhNnvjioDvz9cVkJQwGG5h/iVGzAu2o1m5ZtoYkKbB
+ FhktqKA5HlMM86ayTRempVQ0MjCBP96dhM8Rnm7ypza8u2lBnHhtZER28flNkbdLHDXaEUxcYhA
+ 7oUd0iwXHkQUEgBPaQiNwh4aN7ZAegVbysZtawOwKlY4duWWKfTbH6VGDwvj/UFrhV0yv3qbS2y
+ 7qg6BL8gINwBJSwXf5ZpKwK0tHs7c1VDtPfFVk9ENjbTSIzPo0TyKjTAM/7Jl5/Xnd8qguNNRn8
+ ffGPGotncQ4HITzbGNogI+t9La+Ryymw/WrqvIspA8FNzpPzlEpwqlMMPDSIgv/wObHP7TNzkpg
+ 70yAB7Iw==
+X-Google-Smtp-Source: AGHT+IEi+V9LPxqnLn+jGHDZGr1XZHAxrhKBmRxRpdm2kmDUPWTkdnUxpP6VmrtVKgTZpuobGH9k0Q==
+X-Received: by 2002:a05:6402:84e:b0:61a:9385:c78b with SMTP id
+ 4fb4d7f45d1cf-61d26ecf561mr12776206a12.38.1756903594735; 
+ Wed, 03 Sep 2025 05:46:34 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-61cfc4e5229sm11814625a12.39.2025.09.03.05.46.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Sep 2025 05:46:34 -0700 (PDT)
+Message-ID: <bdd54f2f-a7a4-4e07-9223-0e32d73dc5b8@linaro.org>
+Date: Wed, 3 Sep 2025 14:46:32 +0200
 MIME-Version: 1.0
-References: <20250901133815.1693077-1-max.chou@sifive.com>
- <20250901133815.1693077-3-max.chou@sifive.com>
- <5d0fe741-9063-441d-8abc-3bb0662c1fbe@linaro.org>
- <CANiaA1sP1KvhFhOOZRYJPzb=cf1DwTJNMTgEx5j2oppFNj6mdA@mail.gmail.com>
- <54f806ed-a393-4ced-8343-877e5e76c586@linaro.org>
-In-Reply-To: <54f806ed-a393-4ced-8343-877e5e76c586@linaro.org>
-From: Max Chou <max.chou@sifive.com>
-Date: Wed, 3 Sep 2025 21:43:05 +0900
-X-Gm-Features: Ac12FXxJLhlDfUreUqcK8CJDePN7D4TV6viaCWLTkscTaIRmY7oSO7oqXNlOnCQ
-Message-ID: <CANiaA1veZq2YLg1E-3RjH8aZd91nck6XCoq3YdKrszFfN7gBUw@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/3] target/riscv: rvv: Add Zvqdotq support
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="000000000000dbe88f063de4f215"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=max.chou@sifive.com; helo=mail-ot1-x331.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/24] target/arm/hvf: Factor hvf_handle_exception() out
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250903100702.16726-1-philmd@linaro.org>
+ <20250903100702.16726-17-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250903100702.16726-17-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +111,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000dbe88f063de4f215
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 9/3/25 12:06, Philippe Mathieu-Daudé wrote:
+> +/* Must be called by the owning thread */
 
-On Wed, Sep 3, 2025 at 12:43=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+How could it not?
 
-> On 9/3/25 02:26, Max Chou wrote:
-> > The partial_sum and the final mask are created to ensure the behavior
-> described in the
-> > Zvqdotq isa spec section 3 as follows:
-> >
-> > =E2=80=9CFinally, the four products are accumulated into the correspond=
-ing
-> element of vd, wrapping
-> > around signed overflow.=E2=80=9D
->
-> This is accomplished by the -fwrapv argument to the compiler, with which
-> all of qemu is
-> compiled.
->
-Thanks for this information. It=E2=80=99s helpful.
-I=E2=80=99ll update version 2 to include this part.
+> +static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+>   {
+>       ARMCPU *arm_cpu = ARM_CPU(cpu);
+...
+> +int hvf_arch_vcpu_exec(CPUState *cpu)
+> +{
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
 
-Thanks,
-Max
+Don't dynamic cast twice.
+Pass down the ARMCPU, or use env_archcpu(cpu_env(cpu)).
 
---000000000000dbe88f063de4f215
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div>On Wed, Sep 3, 2025 at 12:43=E2=80=
-=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org"=
->richard.henderson@linaro.org</a>&gt; wrote:<br></div></div><div class=3D"g=
-mail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
-border-left-color:rgb(204,204,204);padding-left:1ex">On 9/3/25 02:26, Max C=
-hou wrote:<br>
-&gt; The partial_sum and the final mask are created to ensure the behavior =
-described in the <br>
-&gt; Zvqdotq isa spec section 3 as follows:<br>
-&gt; <br>
-&gt; =E2=80=9CFinally, the four products are accumulated into the correspon=
-ding element of vd, wrapping <br>
-&gt; around signed overflow.=E2=80=9D<br>
-<br>
-This is accomplished by the -fwrapv argument to the compiler, with which al=
-l of qemu is <br>
-compiled.<br></blockquote><div>Thanks for this information. It=E2=80=99s he=
-lpful.</div><div>I=E2=80=99ll update version 2 to include this part.</div><=
-div><br></div><div>Thanks,</div><div>Max</div></div></div>
-
---000000000000dbe88f063de4f215--
+r~
 
