@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90EE6CA0FF2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D8BCA100C
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 04:26:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utf4B-0005g5-Ah; Wed, 03 Sep 2025 00:25:51 -0400
+	id 1utf46-0005f5-Ro; Wed, 03 Sep 2025 00:25:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utf49-0005fn-DC; Wed, 03 Sep 2025 00:25:49 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1utf45-0005en-Br; Wed, 03 Sep 2025 00:25:45 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utf47-0004Mr-7d; Wed, 03 Sep 2025 00:25:49 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-24884d9e54bso61351725ad.0; 
- Tue, 02 Sep 2025 21:25:46 -0700 (PDT)
+ id 1utf43-0004M0-HT; Wed, 03 Sep 2025 00:25:45 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b4c3d8bd21eso3886155a12.2; 
+ Tue, 02 Sep 2025 21:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756873545; x=1757478345; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756873541; x=1757478341; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mxUu8KtKg576qtWPJVuUm9tnY/uckAzRXEPT4WQcHhg=;
- b=jZykDYcLouzdFplwiKmfzFGaHGCKfRCnBLxIL8VB/2MWB61Ar003weZRWido2DtHCE
- M7xzyGvmLLAk3zfUBcmTX2pbsyCn5CnrEYGp13fkn1oS1HcPQ5i5disqrNevdzYyVpwd
- 9+H+fQdmpvJ/6qzFn1nEaiLduVfrSPQZtjbvauhNRtGyShINcai8eIoX9yfNnb9j/mjU
- pOcHuX6y6TSEjIDR2jrVlL+bs/vaI57P80iJ3BSWflq1W1gdocukl4vvPDEsZwH2K9rV
- /v5x5W1qtEs+9NEFPhBCBdrKg5JqAVoxp/PakwRRZeEhNDg8jzFZjreIMSgw2IBvt+en
- QktQ==
+ bh=CQUkmVWzELLsrd5LFWN5qjCWWbc7bLPOMntiNkwPBtU=;
+ b=Fe/JgL4XQmT2D277yEJvgn0168B/cxbTHneyyHZmd7j5Gb5C3cvyn27iLK9HE4YCsg
+ 8CRJQWFj9tr82+Q6zA4Cc3xoUIFg+z+Bb9NLkze4pu202+Tpe5sB8jInjWHQ/3rsdylt
+ SVTu7ECyH/fUYy5fBKH6Bb4uSj+i6OjM/PL6YWSncdWfEMwfcn0a/CmQAIW7An99JnOZ
+ mKn+mX7tnLyC+DGK+lvQsScd3WF7Mo52kPVKEa7LhIOSh4Nne09U1YzSKKMxZdzoavua
+ q/sgFL3kKa3rVieGjQiRqqN/usZYsUlHWxMQgiTaqcB9iIn5wKL7JaBOEPpS461wUrDL
+ v3yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756873545; x=1757478345;
+ d=1e100.net; s=20230601; t=1756873541; x=1757478341;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mxUu8KtKg576qtWPJVuUm9tnY/uckAzRXEPT4WQcHhg=;
- b=VB04GwO14W//rT1GLczafttYmv5y7Xo+MGkCZLvL2MwkCPvDBxfaeoYvyojQG63XSY
- K70wJRNGdB058tEexu9GNbi1O/4T4aRHwOikuWqvjLPuEeueXAropfFBl7PIPV0a0WXt
- 1CV3b/KTx4I+nEVgFJXl39ReT+3mgN6FQ5rNwarWWY9XaL4uV17YpHUdqNFW8/s/JavK
- Jn8FfX/8sJH1G7mSUXxlsdxnIur0tSOw6shQaHZc/8/g74BgrwUzkyUp1s5+PGG+vZF6
- 2r3n1PAoUZT3Nwr/YaiZrb93ox8Zaii90vWuoMjS3+S4IRFv6COb8QJB0CgSGhRdN/cd
- IHOg==
+ bh=CQUkmVWzELLsrd5LFWN5qjCWWbc7bLPOMntiNkwPBtU=;
+ b=VcksQmrzKnm9X9acexhANE5FFCXF19XMXdO88+k9ZXyZsTgDXTRHhnHWoeOgmmDWJp
+ udMutvwgqDKGHK0EYrAeE9h7beY9OQ0jLeHX56Ek6nxGUwTmxdZlVRGhWlFmfE/rkZm2
+ UdT3VKBt0/1BYmQhTvFjbcEiFgtJFlHdCQxUY+oi1rxT+8epVsb+6wsG/f8tZzgppn7r
+ Dw9KRk+EvTAks1Z8F/wy3NEP7nPQ3YBeE2H3yvshvePcc6yCZBVOvF2iFKHcAsYUmuCP
+ B429jXSCT33HN5VTKH/DUPJJmWq307KVYqgbpFjSHLouAmH4iww8NcYA6qy8Ecc3ELPi
+ J0jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfL8cSXzpADY+3u+39eUwKOX4J55IdG/xxjIWoXZh24NGqURvoLQlsvzCU1mL/79uPILLKzDLF4W7Y@nongnu.org
-X-Gm-Message-State: AOJu0YyGpYowp5YQGKq7Bb+S7JbI3aRi1PMoj4oq20fbhBhMN8uMdl/f
- vZKtavf190vOiov2hnXs8Z7YJq+3B69tipTScjc4cRDnpGvyY/9VyWjPF9t+cg==
-X-Gm-Gg: ASbGnctqWaaf/ssPo9mgnWgFLYDBeugOMsJGPMkTFzTxrA4Ld6UHRNDNdeKvzs3pjHf
- tuoMpr7D7NjOFp5yfkdY1k6qD8GTWv/RqjrlibLsXlp5QfG04yBaunv4Rj4XuQQO1QQnjCByfDW
- bYaFZVHEvW96zUFlCyl1rnDjYRiI98s6MZgvEhtuXFjqLSRth+NWWf1phDnv1yDlgkHeNLRbpux
- WDL10QUngOYW/0ylELQJ1VwgH1lMO8qAHerxiMBgWiPj9TBcQqUxcy1SNKOeC9Gfjg3h9pU5Q4V
- 1fOHC6nDme5Dq7oWegYKG/E/MFfbU1tYT7gxkVVgg67wEXGNp7ApBe9fJlDb3s06ru3ultxCT2i
- t8OKxf06ukpN9b5S9a+j/K/cnljAucShRbQezcjk/qoGM9rPc5zbrZGR6KHljeFk5wH0d7xRDaA
- exRWSyjXsyBK1J+2CZ0gw=
-X-Google-Smtp-Source: AGHT+IFtImf3skzEelAtlWK1DLP0m+OGqhOZ+yqsgUw5n8kheFslAUzPVkxCe+sU1pvEtrO6hNMXsg==
-X-Received: by 2002:a17:902:d4c1:b0:24c:92b5:2175 with SMTP id
- d9443c01a7336-24c92b5262fmr7792215ad.24.1756873545146; 
- Tue, 02 Sep 2025 21:25:45 -0700 (PDT)
+ AJvYcCVWGD0r/HxwDGe9I0OgZ31pXu3vCdyLO0CkJZYc0L4XZ5ZCUho67Uql+FIZzmHHsFAyMhHDpdgMv0lh@nongnu.org
+X-Gm-Message-State: AOJu0Yxq6J6Qb471+GaNN4o+MnsBeWHwqDT49lP/WBqz3/+KZA2kKztu
+ oSVldYkj0S0Eu95mvGeUbQdEkZBPDUnG1F+YThklv8o5qNQITkkW2xdXqRKEWg==
+X-Gm-Gg: ASbGncuElV6uHWWajYX3rOyWr9H3MyZV14oTDmMss740uimSTulp263auT4MgniItsc
+ jEpz+I2uTbeqo4XgWJSH9vdHSmq4GFTt7iZg6xUnIfjqQaJ+YBjFo7ZelFPwaHj1rcC/H4LZbdJ
+ FzJc5gbUGm+qUf3zpWfSajZA6+VTQS0xlZWVzbhMT0TD/ukw396ElWDFKYvhxsjp3l+HFJiw2x5
+ ULwzoTcUf7m7OuRx7dvZd5Qw41lbXYDNhzo3H/fC+w70k+Io4rQR332wA8+5iplUZ+bBRL6dZrp
+ 6Y52pdYteYiZUJSEPitq8zNwOZ2ZKkVlsXCM3kR/EXRNaag43KclVfEpL65xgS0fjU4eBwmrfDn
+ Vf872zmfMW8hIPwktazvj6dK1ZIcMqaw8sD+URN2L9mZGI9i+9xBN2+YyC+1aplPBiYiyDxmczw
+ ==
+X-Google-Smtp-Source: AGHT+IHfrGvuwKAXsvJTngvXS5eTHKyFXxs9yF9Unu7oeQEklVsrz++56QrwuiBGxRXeQVb73zNGSw==
+X-Received: by 2002:a17:902:e888:b0:248:79d4:93ae with SMTP id
+ d9443c01a7336-24944a98674mr174291695ad.33.1756873540994; 
+ Tue, 02 Sep 2025 21:25:40 -0700 (PDT)
 Received: from lima-default (123.253.189.97.qld.leaptel.network.
  [123.253.189.97]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490370298dsm149002635ad.4.2025.09.02.21.25.41
+ d9443c01a7336-2490370298dsm149002635ad.4.2025.09.02.21.25.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 21:25:44 -0700 (PDT)
+ Tue, 02 Sep 2025 21:25:40 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -73,16 +73,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Subject: [PATCH 4/4] tests/tcg/riscv64: Add vector state to signal test
-Date: Wed,  3 Sep 2025 14:25:10 +1000
-Message-ID: <20250903042510.279954-5-npiggin@gmail.com>
+Subject: [PATCH 3/4] linux-user/riscv: Add vector state to signal context
+Date: Wed,  3 Sep 2025 14:25:09 +1000
+Message-ID: <20250903042510.279954-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250903042510.279954-1-npiggin@gmail.com>
 References: <20250903042510.279954-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,310 +105,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This enables vector state to be saved and restored across signals.
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/tcg/riscv64/test-signal-handling.c | 215 ++++++++++++++++++++++-
- 1 file changed, 209 insertions(+), 6 deletions(-)
+ linux-user/riscv/signal.c | 130 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 126 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/riscv64/test-signal-handling.c b/tests/tcg/riscv64/test-signal-handling.c
-index e9c0170c74..29b2fe169d 100644
---- a/tests/tcg/riscv64/test-signal-handling.c
-+++ b/tests/tcg/riscv64/test-signal-handling.c
-@@ -19,9 +19,16 @@
- #include <execinfo.h>
- #include <unistd.h>
- #include <assert.h>
-+#include <sys/auxv.h>
-+#include <elf.h>
- #include <sys/mman.h>
- #include <ucontext.h>
- #include <asm/sigcontext.h>
-+#include "riscv_vector.h"
+diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+index 4ef55d0848..4acbabcbc9 100644
+--- a/linux-user/riscv/signal.c
++++ b/linux-user/riscv/signal.c
+@@ -41,7 +41,17 @@ struct target_fp_state {
+     uint32_t fcsr;
+ };
+ 
++struct target_v_ext_state {
++    target_ulong vstart;
++    target_ulong vl;
++    target_ulong vtype;
++    target_ulong vcsr;
++    target_ulong vlenb;
++    target_ulong datap;
++} __attribute__((aligned(16)));
 +
-+#ifndef COMPAT_HWCAP_ISA_V
-+#define COMPAT_HWCAP_ISA_V (1 << ('V' - 'A'))
-+#endif
+ /* The Magic number for signal context frame header. */
++#define RISCV_V_MAGIC   0x53465457
+ #define END_MAGIC       0x0
  
- /*
-  * This horrible hack seems to be required when including
-@@ -41,6 +48,10 @@ static uint64_t *signal_gvalues;
- static double *initial_fvalues;
- static double *final_fvalues;
- static double *signal_fvalues;
-+static size_t vlenb;
-+static uint8_t *initial_vvalues;
-+static uint8_t *final_vvalues;
-+static uint8_t *signal_vvalues;
+ /* The size of END signal context header. */
+@@ -106,6 +116,88 @@ static abi_ulong get_sigframe(struct target_sigaction *ka,
+     return sp;
+ }
  
- extern unsigned long unimp_addr[];
- 
-@@ -64,6 +75,8 @@ static void ILL_handler(int signo, siginfo_t *info, void *context)
++static unsigned int get_v_state_size(CPURISCVState *env)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++
++    return sizeof(struct target_ctx_hdr) +
++           sizeof(struct target_v_ext_state) +
++           cpu->cfg.vlenb * 32;
++}
++
++static struct target_ctx_hdr *save_v_state(CPURISCVState *env,
++                                           struct target_ctx_hdr *hdr)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    target_ulong vlenb = cpu->cfg.vlenb;
++    uint32_t riscv_v_sc_size = get_v_state_size(env);
++    struct target_v_ext_state *vs;
++    uint64_t *vdatap;
++    int i;
++
++    __put_user(RISCV_V_MAGIC, &hdr->magic);
++    __put_user(riscv_v_sc_size, &hdr->size);
++
++    vs = (struct target_v_ext_state *)(hdr + 1);
++    vdatap = (uint64_t *)(vs + 1);
++
++    __put_user(env->vstart, &vs->vstart);
++    __put_user(env->vl, &vs->vl);
++    __put_user(env->vtype, &vs->vtype);
++    target_ulong vcsr = riscv_csr_read(env, CSR_VCSR);
++    __put_user(vcsr, &vs->vcsr);
++    __put_user(vlenb, &vs->vlenb);
++    __put_user((target_ulong)vdatap, &vs->datap);
++
++    for (i = 0; i < 32; i++) {
++        int j;
++        for (j = 0; j < vlenb; j += 8) {
++            size_t idx = (i * vlenb + j) / 8;
++            __put_user(env->vreg[idx], vdatap + idx);
++        }
++    }
++
++    return (void *)hdr + riscv_v_sc_size;
++}
++
++static void restore_v_state(CPURISCVState *env,
++                            struct target_ctx_hdr *hdr)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    target_ulong vlenb = cpu->cfg.vlenb;
++    struct target_v_ext_state *vs;
++    uint64_t *vdatap;
++    int i;
++
++    uint32_t size;
++    __get_user(size, &hdr->size);
++    if (size != get_v_state_size(env)) {
++        g_assert_not_reached();
++        /* XXX: warn, bail */
++    }
++
++    vs = (struct target_v_ext_state *)(hdr + 1);
++
++    __get_user(env->vstart, &vs->vstart);
++    __get_user(env->vl, &vs->vl);
++    __get_user(env->vtype, &vs->vtype);
++    target_ulong vcsr;
++    __get_user(vcsr, &vs->vcsr);
++    riscv_csr_write(env, CSR_VCSR, vcsr);
++    __get_user(vlenb, &vs->vlenb);
++    target_ulong __vdatap;
++    __get_user(__vdatap, &vs->datap);
++    vdatap = (uint64_t *)__vdatap;
++
++    for (i = 0; i < 32; i++) {
++        int j;
++        for (j = 0; j < vlenb; j += 8) {
++            size_t idx = (i * vlenb + j) / 8;
++            __get_user(env->vreg[idx], vdatap + idx);
++        }
++    }
++}
++
+ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
  {
-     ucontext_t *uc = context;
-     struct sigcontext *sc = (struct sigcontext *)&uc->uc_mcontext;
-+    struct __riscv_ctx_hdr *sc_ext = &sc->sc_extdesc.hdr;
-+    bool found_v = false;
+     struct target_ctx_hdr *hdr;
+@@ -124,7 +216,11 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+     __put_user(fcsr, &sc->sc_fpregs.fcsr);
  
-     got_signal = true;
+     __put_user(0, &sc->sc_extdesc.reserved);
++
+     hdr = &sc->sc_extdesc.hdr;
++    if (riscv_has_ext(env, RVV)) {
++        hdr = save_v_state(env, hdr);
++    }
+     __put_user(END_MAGIC, &hdr->magic);
+     __put_user(END_HDR_SIZE, &hdr->size);
+ }
+@@ -151,8 +247,13 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+ {
+     abi_ulong frame_addr;
+     struct target_rt_sigframe *frame;
++    size_t frame_size = sizeof(*frame);
  
-@@ -82,12 +95,47 @@ static void ILL_handler(int signo, siginfo_t *info, void *context)
-     }
-     /* Test sc->sc_fpregs.d.fcsr ? */
+-    frame_addr = get_sigframe(ka, env, sizeof(*frame));
++    if (riscv_has_ext(env, RVV)) {
++        frame_size += get_v_state_size(env);
++    }
++
++    frame_addr = get_sigframe(ka, env, frame_size);
+     trace_user_setup_rt_frame(env, frame_addr);
  
-+    assert(sc->sc_extdesc.reserved == 0);
-+    while (sc_ext->magic != END_MAGIC) {
-+        assert(sc_ext->size != 0);
-+
-+        if (sc_ext->magic == RISCV_V_MAGIC) {
-+            struct __sc_riscv_v_state *sc_v_state = (struct __sc_riscv_v_state *)(sc_ext + 1);
-+            struct __riscv_v_ext_state *v_state = &sc_v_state->v_state;
-+
-+            found_v = true;
-+
-+            assert(getauxval(AT_HWCAP) & COMPAT_HWCAP_ISA_V);
-+
-+            assert(v_state->vlenb == vlenb);
-+            assert(v_state->vtype == 0xc0); /* vma, vta */
-+            assert(v_state->vl == vlenb);
-+            assert(v_state->vstart == 0);
-+            assert(v_state->vcsr == 0);
-+
-+            uint64_t *vregs = v_state->datap;
-+            for (int i = 0; i < 32; i++) {
-+                for (int j = 0; j < vlenb; j += 8) {
-+                    size_t idx = (i * vlenb + j) / 8;
-+                    ((uint64_t *)signal_vvalues)[idx] = vregs[idx];
-+                }
+     if (!lock_user_struct(VERIFY_WRITE, frame, frame_addr, 0)) {
+@@ -207,9 +308,30 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
+ 
+     uint32_t magic;
+     __get_user(magic, &hdr->magic);
+-    if (magic != END_MAGIC) {
+-        qemu_log_mask(LOG_UNIMP, "signal: unknown extended context header: "
+-                                 "0x%08x, ignoring", magic);
++    while (magic != END_MAGIC) {
++        if (magic == RISCV_V_MAGIC) {
++            if (riscv_has_ext(env, RVV)) {
++                restore_v_state(env, hdr);
++            } else {
++                qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext has V state "
++                                               "but CPU does not.");
 +            }
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "signal: unknown extended state in "
++                                           "sigcontext magic=0x%08x", magic);
 +        }
 +
-+        sc_ext = (void *)sc_ext + sc_ext->size;
-+    }
-+
-+    assert(sc_ext->size == 0);
-+    if (getauxval(AT_HWCAP) & COMPAT_HWCAP_ISA_V) {
-+        assert(found_v);
-+    }
-+
-     sc->sc_regs.pc += 4;
- }
- 
- static void init_test(void)
- {
--    int i;
-+    int i, j;
- 
-     callchain_root = find_callchain_root();
- 
-@@ -107,6 +155,19 @@ static void init_test(void)
-     memset(final_fvalues, 0, 8 * 32);
-     signal_fvalues = malloc(8 * 32);
-     memset(signal_fvalues, 0, 8 * 32);
-+
-+    vlenb = __riscv_vlenb();
-+    initial_vvalues = malloc(vlenb * 32);
-+    memset(initial_vvalues, 0, vlenb * 32);
-+    for (i = 0; i < 32 ; i++) {
-+        for (j = 0; j < vlenb; j++) {
-+            initial_vvalues[i * vlenb + j] = i * vlenb + j;
++        if (hdr->size == 0) {
++            qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state in sigcontext "
++                                           "has size 0");
 +        }
++        hdr = (void *)hdr + hdr->size;
++        __get_user(magic, &hdr->magic);
 +    }
-+    final_vvalues = malloc(vlenb * 32);
-+    memset(final_vvalues, 0, vlenb * 32);
-+    signal_vvalues = malloc(vlenb * 32);
-+    memset(signal_vvalues, 0, vlenb * 32);
++
++    if (hdr->size != END_HDR_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state end header has "
++                                       "size=%u (should be 0)", hdr->size);
+     }
  }
  
- static void run_test(void)
-@@ -179,6 +240,72 @@ static void run_test(void)
- "    fld    f29, 0xe8(t0)            \n"
- "    fld    f30, 0xf0(t0)            \n"
- "    fld    f31, 0xf8(t0)            \n"
-+    /* Load initial values into vector registers */
-+"    mv    t0, %[initial_vvalues]    \n"
-+"    vsetvli x0,%[vlenb],e8,m1,ta,ma \n"
-+"    vle8.v    v0, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v1, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v2, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v3, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v4, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v5, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v6, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v7, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v8, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v9, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v10, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v11, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v12, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v13, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v14, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v15, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v16, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v17, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v18, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v19, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v20, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v21, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v22, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v23, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v24, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v25, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v26, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v27, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v28, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v29, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v30, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vle8.v    v31, (t0)             \n"
-     /* Trigger the SIGILL */
- ".global unimp_addr                  \n"
- "unimp_addr:                         \n"
-@@ -251,19 +378,93 @@ static void run_test(void)
- "    fsd    f29, 0xe8(t0)            \n"
- "    fsd    f30, 0xf0(t0)            \n"
- "    fsd    f31, 0xf8(t0)            \n"
-+    /* Save final values from vector registers */
-+"    mv    t0, %[final_vvalues]      \n"
-+"    vse8.v    v0, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v1, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v2, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v3, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v4, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v5, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v6, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v7, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v8, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v9, (t0)              \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v10, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v11, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v12, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v13, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v14, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v15, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v16, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v17, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v18, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v19, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v20, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v21, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v22, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v23, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v24, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v25, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v26, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v27, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v28, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v29, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v30, (t0)             \n"
-+"    add    t0, t0, %[vlenb]         \n"
-+"    vse8.v    v31, (t0)             \n"
-     : "=m" (initial_gvalues),
-       "=m" (final_gvalues),
--      "=m" (final_fvalues)
--    : "m" (initial_fvalues),
-+      "=m" (final_fvalues),
-+      "=m" (final_vvalues)
-+    : [vlenb] "r" (vlenb),
-+      "m" (initial_fvalues),
-+      "m" (initial_vvalues),
-       [initial_gvalues] "r" (initial_gvalues),
-       [initial_fvalues] "r" (initial_fvalues),
-+      [initial_vvalues] "r" (initial_vvalues),
-       [final_gvalues] "r" (final_gvalues),
--      [final_fvalues] "r" (final_fvalues)
-+      [final_fvalues] "r" (final_fvalues),
-+      [final_vvalues] "r" (final_vvalues)
-     : "t0",
-       "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7",
-       "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15",
-       "f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",
--      "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31");
-+      "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
-+      "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
-+      "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15",
-+      "v16", "v17", "v18", "v19", "v20", "v21", "v22", "v23",
-+      "v24", "v25", "v26", "v27", "v28", "v29", "v30", "v31");
- 
-     assert(got_signal);
- 
-@@ -272,7 +473,7 @@ static void run_test(void)
-      * and is not a simple equality.
-      */
-     assert(initial_gvalues[4] == (unsigned long)initial_gvalues);
--    assert(signal_gvalues[4] == (unsigned long)initial_fvalues);
-+    assert(signal_gvalues[4] == (unsigned long)initial_vvalues + 31 * vlenb);
-     assert(final_gvalues[4] == (unsigned long)final_gvalues);
-     initial_gvalues[4] = final_gvalues[4] = signal_gvalues[4] = 0;
- 
-@@ -284,6 +485,8 @@ static void run_test(void)
-     assert(!memcmp(initial_gvalues, signal_gvalues, 8 * 31));
-     assert(!memcmp(initial_fvalues, final_fvalues, 8 * 32));
-     assert(!memcmp(initial_fvalues, signal_fvalues, 8 * 32));
-+    assert(!memcmp(initial_vvalues, signal_vvalues, vlenb * 32));
-+    assert(!memcmp(initial_vvalues, final_vvalues, vlenb * 32));
- }
- 
- int main(void)
 -- 
 2.51.0
 
