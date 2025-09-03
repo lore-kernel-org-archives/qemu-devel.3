@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F52ECA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB8FCA1010
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utk0Y-0004Xy-AP; Wed, 03 Sep 2025 05:42:26 -0400
+	id 1utk1B-00056Y-Lu; Wed, 03 Sep 2025 05:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utk0W-0004XH-DX
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:42:24 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utk0U-0007ks-P9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:42:24 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-afcb7ace3baso534958366b.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:42:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756892540; x=1757497340; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qVloED/cCXklq1H9Q3/BOz+7rpEZkvOe1zzclFB3ykQ=;
- b=vovvx+KWO6NUhKwcOt1T4njyXjEEnyS2Uf8UAl5BY0K8aJu5sXXat3PzU8K2C/KjbD
- ro4tFxEuCUbzmIzTGzh/dF0BU4/RusbgKjQIAYOVUF3EYJE1diVrED1nRoFHWTpSzmzs
- e+8X5VIyxbhMWwHiZTz3uRT6H6J/vaUC3XPOrsZl8gO4jlbKWHUA+pX/pjfEgL6KNmEn
- XyQSQKFf+zbXyt0DlGANKTgDlTpz0RIQoeufkZmaFgci3VPPd9FYDaVJquwNj57uR4uf
- 7cnaDMAhXSY5HrA8XaVyHP2BoVC7m/9LmlyTuqAD5xVCGjBbBVd32D9BITfoHS+BV5nH
- hVKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756892540; x=1757497340;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qVloED/cCXklq1H9Q3/BOz+7rpEZkvOe1zzclFB3ykQ=;
- b=WciGsjXDlSqQG5aff+6fNR52y/ssLjocLtWupfbEFCxEO1KlRSgV3mEBMdWDnI4Jlb
- nQk/1+zBqPZV2jl5m3/C6Rr+mxAoyYRn/xZbuy4zYP9FM4We6cCaMYTn17q3RoKgFHvg
- 93prxefJLe+mO0TY+dzZnwHqN1rIqx7P9BHskFtvCu54ze+8scg0yoHeTjgXJP5/Wq1I
- +40Phd2VBf+eGEvgcsJhARGDPBTpTA64+ITlrMSb4Db/Pj/ik82l9zSp2EuReLVpbuiN
- WJ0I29lcYv1nscXgKvf2+cQLiGw072Q6YxahYijZtsxEu4HGwfmdX4Uh7Kkqvck3fi6f
- cApQ==
-X-Gm-Message-State: AOJu0YwHUx55I6Kd5idYq4w6mzR5ILoMwECcX8P1k5osUYhUu/dBUH6M
- 0KZ2N3Ekt+c0jjWEyERsQ49uy3b+8eeLhUf4c9gKpigSbA2aV+CrQ2zQVk55LbX5tr8Srb4d/5p
- ZZhViRe0=
-X-Gm-Gg: ASbGncvnVn+IWwkm/Q2U60HHeq05cqIb8R3eMrlrS9K7U4msgIaa7seqgJIAVD/ssQw
- /EbPRGywCBcL+N1iYDQzZMgPiPtvVrRdvwCaHlOnRKhQfHvgf0re7ya+RafOP7g0HomV1+zqVwI
- nQruHJGWzzWHIyFDQK9v1bPXf9qJj4ZUD86t38bNThLhoeSGK2nvzh3KSvyR5NL767bhRSQ9K+R
- YIq+rmSdoD7eRpSaXCtFU+s+Qgd0Hqzi24YGDa/oSUmL4i1D58DRuf58/wrmxAdnV6WHCbBAST6
- dzxApwztt3HGEd1W6G8DO0x9OsDeqmj7HFfnfzeFk/reE71sqQqE9VnOU/jSWpnAelkGq6U1z39
- bx8XhQOLGYdd4sN/iKnAIDh0W+jtorDS98EfNnCuETcIlhtGZFtfjv7mTwcLNZkttxCxznyAgNz
- 6/34Ejlg==
-X-Google-Smtp-Source: AGHT+IFRYp0GLDTomXrceVYe5TxDbzmUecBu1IfuaDCnlC2bv3G+PR4CSnDC4vqwBoDJghqJ/PsHxg==
-X-Received: by 2002:a17:906:9f92:b0:afe:a615:39ef with SMTP id
- a640c23a62f3a-b01d8a2667emr1504807166b.9.1756892540499; 
- Wed, 03 Sep 2025 02:42:20 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61edb0fdf1dsm1166351a12.18.2025.09.03.02.42.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 02:42:20 -0700 (PDT)
-Message-ID: <420e8b3e-9f59-4615-8f88-315f78200321@linaro.org>
-Date: Wed, 3 Sep 2025 11:42:18 +0200
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1utk19-0004x1-6l; Wed, 03 Sep 2025 05:43:03 -0400
+Received: from fout-a5-smtp.messagingengine.com ([103.168.172.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1utk16-0007nv-Sf; Wed, 03 Sep 2025 05:43:02 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.phl.internal (Postfix) with ESMTP id 1AB17EC02FE;
+ Wed,  3 Sep 2025 05:42:57 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Wed, 03 Sep 2025 05:42:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1756892577; x=
+ 1756978977; bh=F2UhSh9F8+9magCcLaC0S88kWc2QX3VMS9/j7/RxFt0=; b=b
+ PbnpAow6FbpIePovFwRXBtA0EjWydppJC9ebafPpeh0P8w9b8C6YakD2K9vjLAgK
+ PVPIvMwSppCQeNyoyOb3NCc18uCCiwb0o/M/fIkfDzCQPvn4cPtaC3J2Twfbn0Jr
+ DT2Z3cI+mbsd8lptStbEt4WahOG4u7I32s7wenyCcJJixhjplhaMEFurgZxm/6+H
+ ksjuQ5TpIRZHG/qN/vwPLcmWgQzG4GIknNtaOmtKRlk8v3ORYTYnHQLMJnHhthu6
+ GmiYMJobxsKw9Zw5mubnHVc9JLHsyXuXzC565XXzxRkBRQDRLsYcEmAggVvYDT/r
+ urIADp25RmasgfqxkxJcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1756892577; x=1756978977; bh=F2UhSh9F8+9magCcLaC0S88kWc2QX3VMS9/
+ j7/RxFt0=; b=AA9C/Az0P9MSLWkE7pbuOzLIuzF4iJhjVFhj7+MWJaU3WQR1CU1
+ RdcEr9hSNfLMejs6qK8BHAEsmCL9PJIFk8CzJVVGZxPtyL+phR/SQiQ4vS5hCIYE
+ G1KLFKZGD9okocXaPVy/TMHkY52JeKAY+Bg4wDMCpnaq1O5sbRgbryo+bUn1k/I3
+ 6S+7pePGsAGhPfonojwCo1gueAmfVu2JrPQDhxnAcHO8LRuPu6F/7XIJ2SIgyheS
+ VJ4y7EMdFn+OuipcUPko8ZS2OAXLhHbh07kw1lDuLdfsEgfo45okIzydI8Ao3vbw
+ 1cKdgg9z2loaTxj49r/Tmj5BDvoQJp8qp3w==
+X-ME-Sender: <xms:nw24aK4ncyxLdjahmcMwirvEKb0wOxubtnYLjkc3KOLrEd52pELMGw>
+ <xme:nw24aC0-QW9k1LNnJb-wVjgFJSDPa6GFa9HpGFPksXyKHwV0lU0g-2SMChNW4COCm
+ zkiq8G977arfq1qm-s>
+X-ME-Received: <xmr:nw24aFhayof1KWcZFbcjZaYHErM2ozZmJruza1oZRRIpgpZ-f9Mviudtq5BH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvkeduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+ lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+ epfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgv
+ nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
+ epjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesih
+ hrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhp
+ ohhuthdprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpth
+ htohepfihilhhfrhgvugdrohhpvghnshhouhhrtggvsehgmhgrihhlrdgtohhmpdhrtghp
+ thhtoheprghlihhsthgrihhrrdhfrhgrnhgtihhsseifuggtrdgtohhmpdhrtghpthhtoh
+ epkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehfohhsshesuggvfhhm
+ rggtrhhordhithdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvthdprhgtphhtth
+ hopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhifohhlfhesrhgv
+ ughhrghtrdgtohhmpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtghomh
+X-ME-Proxy: <xmx:nw24aKr3VphGixpjVwP9_rk6ybtz6Z3M80pwNA3RRsEO3BlAkwnPgA>
+ <xmx:nw24aAP_0xKQpN4cn7eNcwOX6N5sJUuhRxPwTrx1N9lYyg4w3N5_Kw>
+ <xmx:nw24aO1Qz0ZnRayElfQRrXrUX8R0FUT-WoMawXt4vEtArvlPHUPAAg>
+ <xmx:nw24aGrCKT2KPV-WCCOnNBWHAuSeBCm5_DVXkaeBSRbcWvg2b3iFVw>
+ <xmx:oQ24aFOHDZELE09F8NBkBaDggl7uScKQpE-Uq7PWS0cO8RQkDqsZrHNV>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Sep 2025 05:42:55 -0400 (EDT)
+Date: Wed, 3 Sep 2025 11:42:54 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Wilfred Mallawa <wilfred.opensource@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH v3 3/5] hw/nvme: add NVMe Admin Security SPDM support
+Message-ID: <aLgNns-n6pODC4JT@AALNPWKJENSEN.aal.scsc.local>
+References: <20250901034759.85042-2-wilfred.opensource@gmail.com>
+ <20250901034759.85042-5-wilfred.opensource@gmail.com>
+ <20250903024705.GA103624@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] linux-user/riscv: add vector state to signal
- context
-To: qemu-devel@nongnu.org
-References: <20250903081417.338515-1-npiggin@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="uGG/NEUv1tJA+MBX"
+Content-Disposition: inline
+In-Reply-To: <20250903024705.GA103624@fedora>
+Received-SPF: pass client-ip=103.168.172.148; envelope-from=its@irrelevant.dk;
+ helo=fout-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,46 +122,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 10:14, Nicholas Piggin wrote:
-> Changes in v2:
-> - Fix 32-bit compile
-> - Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
->    one that extends the size of rt_sigframe, patch 3 is adding new
->    extended state to the frame which is added dynamically).
-> 
-> This series adds vector state to the linux-user signal handler,
-> and adds a basic signal handling test case. As a sanity check, I
-> also verified the signal handling test works in the same way when
-> run under a real Linux kernel.
-> 
-> The signal handler test has some gross header hacks in it to make
-> it work for me (debian arm64->riscv64 cross compile environment),
-> I would not be surprised if it breaks in other environments, any
-> ideas or breakages let me know. May just have to define the types
-> by hand for now if it becomes intractable.
-> 
-> I couldn't find much in the way of previous discussion or work on
-> this, forgive me if I've missed it.
-> 
-> Thanks,
-> Nick
-> 
-> Nicholas Piggin (4):
->    tests/tcg/riscv64: Add a user signal handling test
->    linux-user/riscv: Add extended state to sigcontext
->    linux-user/riscv: Add vector state to signal context
->    tests/tcg/riscv64: Add vector state to signal test
-> 
->   linux-user/riscv/signal.c                | 197 ++++++++-
->   linux-user/riscv/vdso-asmoffset.h        |   4 +-
->   tests/tcg/riscv64/Makefile.target        |   5 +
->   tests/tcg/riscv64/test-signal-handling.c | 507 +++++++++++++++++++++++
->   4 files changed, 700 insertions(+), 13 deletions(-)
->   create mode 100644 tests/tcg/riscv64/test-signal-handling.c
-> 
 
-Whoops, v2 and my review of v1 passed in flight.
-There are a number of errors.
+--uGG/NEUv1tJA+MBX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-r~
+On Sep  2 22:47, Stefan Hajnoczi wrote:
+> On Mon, Sep 01, 2025 at 01:47:58PM +1000, Wilfred Mallawa wrote:
+> > From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> >=20
+> > Adds the NVMe Admin Security Send/Receive command support with support
+> > for DMTFs SPDM. The transport binding for SPDM is defined in the
+> > DMTF DSP0286.
+> >=20
+> > Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> > ---
+> >  hw/nvme/ctrl.c       | 188 ++++++++++++++++++++++++++++++++++++++++++-
+> >  hw/nvme/nvme.h       |   5 ++
+> >  include/block/nvme.h |  15 ++++
+> >  3 files changed, 207 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> > index f5ee6bf260..557f634016 100644
+> > --- a/hw/nvme/ctrl.c
+> > +++ b/hw/nvme/ctrl.c
+> > @@ -282,6 +282,8 @@ static const uint32_t nvme_cse_acs_default[256] =3D=
+ {
+> >      [NVME_ADM_CMD_FORMAT_NVM]       =3D NVME_CMD_EFF_CSUPP | NVME_CMD_=
+EFF_LBCC,
+> >      [NVME_ADM_CMD_DIRECTIVE_RECV]   =3D NVME_CMD_EFF_CSUPP,
+> >      [NVME_ADM_CMD_DIRECTIVE_SEND]   =3D NVME_CMD_EFF_CSUPP,
+> > +    [NVME_ADM_CMD_SECURITY_SEND]   =3D NVME_CMD_EFF_CSUPP,
+> > +    [NVME_ADM_CMD_SECURITY_RECV]   =3D NVME_CMD_EFF_CSUPP,
+> >  };
+> > =20
+> >  static const uint32_t nvme_cse_iocs_nvm_default[256] =3D {
+> > @@ -7282,6 +7284,185 @@ static uint16_t nvme_dbbuf_config(NvmeCtrl *n, =
+const NvmeRequest *req)
+> >      return NVME_SUCCESS;
+> >  }
+> > =20
+> > +static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
+> > +{
+> > +    StorageSpdmTransportHeader hdr =3D {0};
+> > +    g_autofree uint8_t *sec_buf =3D NULL;
+> > +    uint32_t transfer_len =3D le32_to_cpu(req->cmd.cdw11);
+> > +    uint32_t transport_transfer_len =3D transfer_len;
+> > +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> > +    uint32_t recvd;
+> > +    uint16_t nvme_cmd_status, ret;
+> > +    uint8_t secp =3D extract32(dw10, 24, 8);
+> > +    uint8_t spsp1 =3D extract32(dw10, 16, 8);
+> > +    uint8_t spsp0 =3D extract32(dw10, 8, 8);
+> > +    bool spdm_res;
+> > +
+> > +    transport_transfer_len +=3D sizeof(hdr);
+> > +    if (transport_transfer_len > SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE) {
+>=20
+> An integer overflow check is needed since transfer_len comes from the
+> untrusted guest. This will prevent the sec_buf buffer overflow below
+> when nvme_h2c() is called.
+>=20
+
+And it should not be allowed to exceed MDTS (see nvme_check_mdts). MDTS
+may be configured as zero, so g_try_malloc should still be used.
+
+--uGG/NEUv1tJA+MBX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmi4DZsACgkQTeGvMW1P
+DelmVwgAnz037DSLQQD53O/lqyvIgILtjSzWqu+LsFDhPCUFXTmrr+x5kG+ILULa
+SjMShLIN5v+hXEHMwVbivk+WyD/OIzBRENJyQf+elYdKwjx7VZon3PAdAn38VRyz
+saHHPUtDrAAZ0jqbtkVzAJQU/ilq+hPAO6dP8bc5/bWpcj6OO1sfq2YrQeMkKarI
+b4GzUrkGBnKibCc5GFUqoW7TzBH2k/2rUEKyY0MlvOHVc0WTN8Z/heTwj57qXzY2
+BCdXU6ku7fM4BPVhG5tTo4aXAzrEfv1bMsTBJuJFZAOcMAMiyaO1J9Stro0YvjVn
+PYPjqGSXsdN1M9xVZ5ray7kdWR/vNQ==
+=bA+k
+-----END PGP SIGNATURE-----
+
+--uGG/NEUv1tJA+MBX--
 
