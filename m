@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CCECA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB52DCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utmWT-0005H6-Eh; Wed, 03 Sep 2025 08:23:33 -0400
+	id 1utmcW-0007Ph-Mj; Wed, 03 Sep 2025 08:29:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utmWR-0005Gd-J9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:23:31 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1utmcT-0007Or-LQ
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:29:47 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utmWP-0007Iz-Lz
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:23:31 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-619487c8865so1623443a12.1
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 05:23:29 -0700 (PDT)
+ id 1utmcR-0001kQ-HS
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:29:45 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-61a8c134533so11731031a12.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 05:29:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756902208; x=1757507008; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756902580; x=1757507380; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/k+8rBSjGUJF9A4+Bn9MdIGi+Kz7W7DP/VPMUPug8Lw=;
- b=TxvbXH3QKlkYRojZWd7hfGewGW90JRaVszhcSLPO498U4ZJJZfB+Lc93Jpjso2qpf6
- 05jDU9/RijPHASBYG52w49fH9WzsDkE83MXjxbElbmOZOVkXqX7vTgjwYmTKVpw8b9s5
- Il9vyOnlFPTiFd5nfKXr/CRt0VI/+UKphTK9N7tvFP9xPTWLckirQUbnSL9LyxUVgn4N
- e7ZET0CkdDgNNuhnU7MI5GPL5jidjmFLK1FSrMZWgLIQDLgC9MrvMsG+TVr0HF0vwVfT
- QqLv0C9Jlbkiu/m6a87y6CRsNV5rx5VaJFOrT0rQGJj7D6JiWwkRY3fBO9DyKFX3HB8J
- Ygaw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ydnZO+VM3S3kIJv+S6YVLdhWmwHrGhN7NRWu1XKBpLk=;
+ b=rPUzAsG48Df5YWvDZUQ71JcjFMcOhUB3mMc5uQELX7LRkVlfu7Dq5LzpNCug1eydOE
+ iGKKyzjtnX0Hsm/N8bRTAQtdSEcqqdGs2/LlfhgMOt3lWEq2VUe8jUQg+7RuYEkw94Ym
+ 4D55ignPiUVz4PAL0GsKKaMWeYd8EB1QFoaXGC1zrrfO27X4KiJK/EesFA95AF0Can3z
+ DIydnaqEBfmLvjwVWsZFHyb2/3G/8ETXprs8ZytVWqrPqPIZLDRN2xOXjNPd1Yo8d3Iz
+ lrh6GQDuM5tOkNf9SW5UqmS/om6hno0k3EBpj7lMa9pPDu0a3o+6TezAvTTXy1eJN4wy
+ 3rVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756902208; x=1757507008;
+ d=1e100.net; s=20230601; t=1756902580; x=1757507380;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/k+8rBSjGUJF9A4+Bn9MdIGi+Kz7W7DP/VPMUPug8Lw=;
- b=PkqrcFQfq/tDzUS/eCEXqSjvq1maJztTnmX5cPb4CgW5ER+FpAqcvs+gXLPjuZhkHo
- ZGeiRMafRMWF0WAxqTuLdpSdQMmj32EAAVJ40XIutdZUuUuSoiVE5J0gnM2yJBvv7un7
- qW3Rm1qFs4ePd4bzqDClGl9NT6kOs6SkHzTXZsq318YkB8o73ULLsbDFuNh9XWT8KZGR
- rkxFHird/la+vD9NhkUatlUkXtjudhIOC1aAgGsMcUDEJ9xmDFaOZFxMr9AqyX7n+HcW
- sOeGdkoKsg9QErITAnf6RHyyYuGnjImEe0BhCFJ7Sy4Ve22EPaD89vHFd3+bZSam2mh7
- 0Zow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9iOXlWKYwIRP4taLL+Eh5Lq92TTzPUotL8dACcrwAiJNAnKoe1Lbp9L0YqueDCg70w3fFsqXj+QZ9@nongnu.org
-X-Gm-Message-State: AOJu0YwkAecbQJhbgWAipIkbNHyGV9aURzw2t7y+oyAZehnvFqBaBP3O
- IAPvTynxe49P8YYStT4StXZ4Ldbmr1Syxh+mJ9XCVv00SqUn8ogsULDAWEppUhnBeB4=
-X-Gm-Gg: ASbGncsGkAxUawNVqz0pClVUIRyFoQPW8iRzkUSKxZeGDeVUJHtpOzC4+9xa6osHatq
- bt1iKknPINZ89dNYT2tcnnr/ZHJ77RUKB7llibhOxkrpL7f0RxaRHdBvwBfmHz6Bp//nyKr6us6
- CZRTVVTXxIgRZzYSuxttJDsvq9yDpXCv/PeoGN6454/thDCHeE0oTvl/fI7WXUyvjzg9JcXF6mg
- cb0EnU6t09z9z+6kpdaxpGnK3pUCjGtlqBeYoDdxr9nWH1wDRWu3fQM+4pFbHwL7yqGCtsx4Ual
- SDua6PF+Hh/tstYf3VfQ4Qnz1CsxE/qyvGYstmlGfs/VyHtarQ8ThMzvSqH5ytmp+iTsoznO3hi
- uz3E88pvQgz9jvDQMCNkGmwKbLc3kUUQOn3sfrMwbzsmTpAMWm8SQYN3mo44fCi/ua1P4E18=
-X-Google-Smtp-Source: AGHT+IFg3UnH19w0F06rzJYm3pBdqa9kd1dutriLgj9UOASkQ5V1s1hJNOLIjQwhsSjvhxWcbBbf2A==
-X-Received: by 2002:a05:6402:5c9:b0:61d:3447:9375 with SMTP id
- 4fb4d7f45d1cf-61d3447a7f8mr13560148a12.6.1756902207758; 
- Wed, 03 Sep 2025 05:23:27 -0700 (PDT)
+ bh=ydnZO+VM3S3kIJv+S6YVLdhWmwHrGhN7NRWu1XKBpLk=;
+ b=AnRBIoRrWkquIfgrdRay+gQdtKeWMolA1hjgMe/NNlky0gwP2bPi1TzEZGsMcaxMVg
+ XIFn6RZwpjMYE3x6uenZdjDW34Z8NdHZB6jnanwtXBYQFzf4cFviG8HItaFCaKnUcKsk
+ 9PEnO/HcZ55mm1Fl8qdxRksfzfx0e7TpzeFsCmBg4U1jTLM0rb/SoVmY+3ZNOIZe8Xzz
+ N0S4DGvdRFwvFA/dRk5NuJUNOLFCwt2GUnk92IjPUpbnM35VVkfL+BJGnmaCw2uYWyue
+ 7afjQYtxuS/kqljS3fha9nX0teZjM18BUYfy40bbdmOGbN7mVNkaynOF4WsGoydbLZit
+ TJcQ==
+X-Gm-Message-State: AOJu0YwmhDztD33p2v+eB57XANVH1VRZw/C88R3d+Gfy20uiZkgznEfz
+ gSrBfFRz0Pao/FYX5FYhqaOuKGuTLVaDwU99TkI+k+aYD/MHRRPR8moMSCkU75ECCBSj4EgJ2IK
+ OrL08vw8=
+X-Gm-Gg: ASbGncsvevzdNdNjlHhh4MtzssRDhJNNBEAYLzL+FmbLC+Fv79advU0xrlNFUYK2f2/
+ a+I+UWPE3EJnKDdswg1lYeiPOg+Pab7lgrq8lF9sL6hCkKAQ5OpsSs4l2wA5u4In8Q6yzw/D+tH
+ O6wJjWYVwF102AdFnFUxiowZCKVEuw+ttCNZuPp73j+zgiW1afLwkNGGOQpcoFCIKKw8SbI/yF8
+ Aezc+iLfUOFzuidINhEIpRrjDVBIitO8FoCkhGszxypDPVJXJbrvbaTAgOA7WH3ZJIgz3Bd65kN
+ +pzrkIGq6LC3QHZGFxKmE3I9FjIuiBoJPoNxq7mVsYzLgOlicWRdJlGqHHeC38VylWUmes913dd
+ pnu+3jE2QYCQI2Cb8+w60amdD3HHXCeYaS6343w7usOsfjYrnJ5NPD7EeX48Y4BtcAoezz94=
+X-Google-Smtp-Source: AGHT+IHOpBELOIJRXqIyjGwQFiaUuW14fsZW9zzB0QuoHZIxrvW3UnwPloW285Y7xPB4tg5T0EI4qQ==
+X-Received: by 2002:a05:6402:44c2:b0:61c:c034:ba0 with SMTP id
+ 4fb4d7f45d1cf-61d26fe5e5fmr12664863a12.26.1756902580536; 
+ Wed, 03 Sep 2025 05:29:40 -0700 (PDT)
 Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
  [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc1c7edcsm12057998a12.6.2025.09.03.05.23.26
+ 4fb4d7f45d1cf-61cfc1c7ed1sm12140828a12.1.2025.09.03.05.29.39
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 05:23:27 -0700 (PDT)
-Message-ID: <5e6b598e-7fd1-47d2-99e1-dfcabc35b15a@linaro.org>
-Date: Wed, 3 Sep 2025 14:23:24 +0200
+ Wed, 03 Sep 2025 05:29:39 -0700 (PDT)
+Message-ID: <d51e36ca-5634-4b81-b537-297d728a3eb7@linaro.org>
+Date: Wed, 3 Sep 2025 14:29:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/24] target/arm/hvf: Check hv_vcpus_exit() returned value
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250903100702.16726-1-philmd@linaro.org>
- <20250903100702.16726-3-philmd@linaro.org>
+Subject: Re: [PULL 0/5] Trivial patches for 2025-09-03
+To: qemu-devel@nongnu.org
+References: <20250903075952.481585-1-mjt@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250903100702.16726-3-philmd@linaro.org>
+In-Reply-To: <20250903075952.481585-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,49 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 12:06, Philippe Mathieu-Daudé wrote:
-> hv_vcpus_exit() returns a hv_return_t enum type (defined
-> in <Hypervisor/hv_error.h>). Assert we succeeded, as we
-> are not ready to handle any error path.
+On 9/3/25 09:59, Michael Tokarev wrote:
+> The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
 > 
-> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/arm/hvf/hvf.c        | 5 ++++-
->   target/arm/hvf/trace-events | 1 +
->   2 files changed, 5 insertions(+), 1 deletion(-)
+>    Merge tag 'qga-pull-2025-08-29-v2' ofhttps://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+> 
+> for you to fetch changes up to 25fef09ce17ac1ae22638a0b57d97c2bd5cd7d83:
+> 
+>    docs: fix typo in xive doc (2025-09-03 10:57:50 +0300)
+> 
+> ----------------------------------------------------------------
+> trivial patches for 2025-09-03
+> 
+> A few assorted fixes.
+> Including not-so-trivial (but simple) fix for curl (https)
+> block protocol with recent curl versions.
 
-Tracing change not mentioned in commit message.
-Split to a separate patch?
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
-
-> 
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index d67372218de..65ac0bd71aa 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1086,8 +1086,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->   
->   void hvf_kick_vcpu_thread(CPUState *cpu)
->   {
-> +    hv_return_t ret;
-> +    trace_hvf_kick_vcpu_thread(cpu->cpu_index, cpu->stop);
->       cpus_kick_thread(cpu);
-> -    hv_vcpus_exit(&cpu->accel->fd, 1);
-> +    ret = hv_vcpus_exit(&cpu->accel->fd, 1);
-> +    assert_hvf_ok(ret);
->   }
->   
->   static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
-> diff --git a/target/arm/hvf/trace-events b/target/arm/hvf/trace-events
-> index b29a995f3d3..538af6e0707 100644
-> --- a/target/arm/hvf/trace-events
-> +++ b/target/arm/hvf/trace-events
-> @@ -12,3 +12,4 @@ hvf_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid
->   hvf_vgic_write(const char *name, uint64_t val) "vgic write to %s [val=0x%016"PRIx64"]"
->   hvf_vgic_read(const char *name, uint64_t val) "vgic read from %s [val=0x%016"PRIx64"]"
->   hvf_illegal_guest_state(void) "HV_ILLEGAL_GUEST_STATE"
-> +hvf_kick_vcpu_thread(unsigned cpuidx, bool stop) "cpu:%u stop:%u"
-
 
