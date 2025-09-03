@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAE9CA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A53CCA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utjAX-0003Jr-CH; Wed, 03 Sep 2025 04:48:41 -0400
+	id 1utjAZ-0003Ld-GH; Wed, 03 Sep 2025 04:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1utjAV-0003IZ-9d
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:39 -0400
+ id 1utjAW-0003Ja-VL
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:41 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1utjAT-0007Mv-9X
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:39 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1utjAU-0007NQ-RJ
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:40 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxSNHjALhoIScGAA--.12960S3;
- Wed, 03 Sep 2025 16:48:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxH9PkALhoKycGAA--.12671S3;
+ Wed, 03 Sep 2025 16:48:36 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJDxbMHcALhoc916AA--.5293S4;
- Wed, 03 Sep 2025 16:48:34 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxbMHcALhoc916AA--.5293S7;
+ Wed, 03 Sep 2025 16:48:35 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 02/12] target/loongarch: Add parameter tlb pointer with
- fill_tlb_entry
-Date: Wed,  3 Sep 2025 16:48:17 +0800
-Message-Id: <20250903084827.3085911-3-maobibo@loongson.cn>
+Subject: [PATCH v3 05/12] target/loongarch: Fix page size set issue with
+ CSR_STLBPS
+Date: Wed,  3 Sep 2025 16:48:20 +0800
+Message-Id: <20250903084827.3085911-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250903084827.3085911-1-maobibo@loongson.cn>
 References: <20250903084827.3085911-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxbMHcALhoc916AA--.5293S4
+X-CM-TRANSID: qMiowJDxbMHcALhoc916AA--.5293S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,49 +68,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With function fill_tlb_entry(), it will update LoongArch emulated
-TLB information. Here parameter tlb pointer is added so that TLB
-entry will be updated based on relative TLB CSR registers.
+When modify register CSR_STLBPS, the page size should come from
+input parameter rather than old value.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/loongarch/tcg/tlb_helper.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ target/loongarch/cpu-csr.h        | 1 +
+ target/loongarch/tcg/csr_helper.c | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index d58f447555..fcd03ca320 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -143,9 +143,8 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
-     invalidate_tlb_entry(env, index);
- }
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index 0834e91f30..1a311bf06a 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -106,6 +106,7 @@ FIELD(CSR_PWCH, DIR4_WIDTH, 18, 6)
  
--static void fill_tlb_entry(CPULoongArchState *env, int index)
-+static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb)
- {
--    LoongArchTLB *tlb = &env->tlb[index];
-     uint64_t lo0, lo1, csr_vppn;
-     uint16_t csr_asid;
-     uint8_t csr_ps;
-@@ -312,7 +311,7 @@ void helper_tlbwr(CPULoongArchState *env)
-         return;
+ #define LOONGARCH_CSR_STLBPS         0x1e /* Stlb page size */
+ FIELD(CSR_STLBPS, PS, 0, 5)
++FIELD(CSR_STLBPS, RESERVE, 5, 27)
+ 
+ #define LOONGARCH_CSR_RVACFG         0x1f /* Reduced virtual address config */
+ FIELD(CSR_RVACFG, RBITS, 0, 4)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 0d99e2c92b..eb60fefa82 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -26,13 +26,14 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+      * The real hardware only supports the min tlb_ps is 12
+      * tlb_ps=0 may cause undefined-behavior.
+      */
+-    uint8_t tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++    uint8_t tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
+     if (!check_ps(env, tlb_ps)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set ps %d\n", tlb_ps);
+     } else {
+         /* Only update PS field, reserved bit keeps zero */
+-        env->CSR_STLBPS = FIELD_DP64(old_v, CSR_STLBPS, PS, tlb_ps);
++        val = FIELD_DP64(val, CSR_STLBPS, RESERVE, 0);
++        env->CSR_STLBPS = val;
      }
  
--    fill_tlb_entry(env, index);
-+    fill_tlb_entry(env, env->tlb + index);
- }
- 
- void helper_tlbfill(CPULoongArchState *env)
-@@ -350,7 +349,7 @@ void helper_tlbfill(CPULoongArchState *env)
-     }
- 
-     invalidate_tlb(env, index);
--    fill_tlb_entry(env, index);
-+    fill_tlb_entry(env, env->tlb + index);
- }
- 
- void helper_tlbclr(CPULoongArchState *env)
+     return old_v;
 -- 
 2.39.3
 
