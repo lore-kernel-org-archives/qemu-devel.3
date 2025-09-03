@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233DBCA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B3DCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utnlp-0000ah-ML; Wed, 03 Sep 2025 09:43:29 -0400
+	id 1utnwk-0005dB-NG; Wed, 03 Sep 2025 09:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1utnlm-0000Kg-45
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:43:26 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1utnwe-0005al-Gd
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:54:41 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1utnlj-0007Un-PF
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:43:25 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-435de7dd94aso598743b6e.2
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:43:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1utnwc-0002pL-FJ
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:54:40 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4b32384e586so30646811cf.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:54:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1756907002; x=1757511802; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rtI1DNy9KozUlYQ60bsezYbhv0AWpcfWf+TP+E8/AOI=;
- b=CF24qxytURiaV0X7R+jdYYCzAba0PBJ8/kXc4odWHWY/07fN5QsjE8sEf8qV3porw9
- VcuXJ1YX7woC4bSIPJKLO0onx/Bkr3w2PIGorE9Qy8Fh+QQ2HLMZVh1nahr9JMjJ89Cf
- +v+CA/ztQHR0SJu6d/D62UFY5KfrzGns0eRW8afuJZ0Xq9dPXgCJ46DEJDuIe1zuTWr7
- 6d+QHF15DFbBPfi3gPRXKOFyHXtWUhwgUb0AzyPyEz6AgvbO6/qSVoNbWGW1SfcpMUwy
- 0TgbwrwcELPsCIRsruhHai6lECUVkJqsLmZqvr3ESE4XLkT6hZpg+Uu8oA92V5L59r+E
- b35A==
+ d=gmail.com; s=20230601; t=1756907676; x=1757512476; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oFOlvgvRlpuDjNUOH7VA/NtURUrolP2d9Qhif824Jgg=;
+ b=Kaw2BFhych0fiY1Hv459LEqjAg+urot6KwrKEnVt2aOJ3TG5N4jcHZNRkg8dEihalv
+ Xbz7/+hxmhLK9uY6VwKM+7WSVYtKXFYye3fGNsOSdO8TcwgWx8h535DdfGjdwk8amrRx
+ hwImqdY7LbLes7PqUz6miZTvAqFc1fP3+QjFoHAFASF4wbfYNnI/C/1KeHJ3KfOHYKHK
+ lFaoelytNLxDZ5D/iieEeJgfqf9+eR6dB7x7BPsXDmw+EmHD4qaWpwqQf5JeBcm13KRg
+ L5FGaSYl3eUmYVJYqFN7jFpu/RrGfyc9xQo5boefOfYBgOGC+5T8J0cczVCE4lRxpNez
+ 5iog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756907002; x=1757511802;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rtI1DNy9KozUlYQ60bsezYbhv0AWpcfWf+TP+E8/AOI=;
- b=NlH1mo22hiBFYXKPR+6xUqPduhRwtfdWa42evclWWiGnrKeWlEJLV8hb0+FapkgcUx
- wRlbHqhzPnISQJy2eYUgoXYzV6TLPrfU2WXpdG/wlK4Bkr2+Qqj7DO+BNMXTJAbJMkcQ
- FueIrw7kenSFO7y97LIa/NaqT2MywBqwGSRuad0x9gPbPLYtdVNVCj59RGUAsJ1A8w0/
- bzJNfHNaKwQUcvAmwlHrMU3FhRKCgu8gAEIucRsgZ0bGG1PDZIeDlelAbsfpzgw70JqX
- elcRo6m01nJtS2rpoihh0rmJ//DEkoe4aY3PjFyAsLZL67gUaJTAktxhDYyQ7vzzrs6w
- h+ew==
-X-Gm-Message-State: AOJu0Yw149C8Y/p2pQbmugphqDIJDElW8o3WztFxdoD2JRoULxc6c6Jt
- oi1LLQ8imea0sFVbeTHFMrJ9EKapT0HkqrTaxNNrDJpBgHcPQ77aOZY0Ko6hnEDMDSDy7xLF1TF
- 01/ZTa9c7NfJIVk9w72le8/lHrJ6j6jJEDTHGeCA3XQ==
-X-Gm-Gg: ASbGnctGgNhPRyT0y4z97FYnjOy4p/33W9/+OVEorEbqM1psN2OAt9uUwj7DMM9xTX7
- jGRBpFfdfPLzZwatRz/TIS7pm6rgkssvM5GoUnLdmku6fCeFJ/4zZ8tI8biUrX+HX5gB7ehazLx
- BFfUDPboH/5JkIPi+AV3JI9D8bEKdbqqt2+LRU8F7xVhMGH9d9dmQYQvwFetGGHXUa9EQWAHsCe
- JzJ/odIrp7wq2uytyQ=
-X-Google-Smtp-Source: AGHT+IEXdW4y6xj2RKYn+WakjSMt45BFcAvxmmDYS2yH1jGwoaCay0UGZxYY5Ulu6gLkV5ufcu0a7v18g35YGy7RY3E=
-X-Received: by 2002:a05:6808:199f:b0:437:e238:f50a with SMTP id
- 5614622812f47-437f7d7457cmr6787329b6e.30.1756907001829; Wed, 03 Sep 2025
- 06:43:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756907676; x=1757512476;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oFOlvgvRlpuDjNUOH7VA/NtURUrolP2d9Qhif824Jgg=;
+ b=ZmqU/fOqUaOhpnJBGLrWgKjqImbjp8oqchlZ0NyLAOrRfJZDJGEdxsTOCYkGDq+PQT
+ dDU6WSrGKlZbxgpdCmF/zlteXLZlXVYVavSPmSKjpcmH9x+XRBMTBMZ8oZTw3E4k/zUe
+ hQnn3aEKE59fvEoUhCKtzcYfescZCx5b/BdPmRAda696Sc6X9lv7xZpqBUvImGI1JrNJ
+ G3oZvRo8hoV+IBZkdwW7gTd7knm/UnLF3MsmcMO/upiGpPbdGmcEXznDOZHl3RJU7XIu
+ crPveMGTVM+mMUm75VX6xFlwt/ZZGQSpW8hImG2UuOwnERUM2FbS5FG5VyABcN6kyJCZ
+ NJ3g==
+X-Gm-Message-State: AOJu0YzS8lzH47XYJXbLlso7imKGDisQ51jfFhpi8pCWzGHsfeFoWVVo
+ 6lwL+KBE4Fikwj3kzn87u4cOYHDbVo7EebgJp2Ajy0kw7CuE9QfEng+qsRKfk3piBgz0DPLGFpt
+ Uj6khWQGc+XVqmkXEKFyfZjBzbh8KnaI=
+X-Gm-Gg: ASbGnctxQ3mUxYeACtrHQohdsf86spghq5WwBxSH92Uo5Loxskq2ytMFUYnXOFvhBbC
+ hmO/ChauNHnh1hNdEQ37fr1womBjInfNhnAddJLCZ58ZCto3oXFKgR80YlEd9b7mIPtX20TsVef
+ f45epKHGWORqsbnFQEKndRtcUx3EOjKS/2KMr91heztd9BqOP5VA1alZYP8zwyq8HBxp9KJ4VAE
+ EDsuTJNsqt2x5cwj/XfgGZ47eiRkCwbUA8b5rDs5DQfvPwMKhJOJgDtd6dsLg==
+X-Google-Smtp-Source: AGHT+IGSKSCxhIQNS9FKQDGipRGGeoDlKwtvsKmTW2d+X4LFpOhQ0TYFBtNxRgAYS93d3TbPHMqeM9XfBY7REFBMSRk=
+X-Received: by 2002:ac8:5789:0:b0:4b2:fd35:c687 with SMTP id
+ d75a77b69052e-4b31da23858mr181568401cf.42.1756907675600; Wed, 03 Sep 2025
+ 06:54:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250903130125.1701363-1-max.chou@sifive.com>
- <20250903130125.1701363-3-max.chou@sifive.com>
- <e4ce9ca2-9be7-4486-a1b5-1c5939f26989@linaro.org>
-In-Reply-To: <e4ce9ca2-9be7-4486-a1b5-1c5939f26989@linaro.org>
-From: Max Chou <max.chou@sifive.com>
-Date: Wed, 3 Sep 2025 22:43:10 +0900
-X-Gm-Features: Ac12FXzFiIgwDAPh3s1Yd7nmbE8NU4BLDhLW2QitL_TR6-KCtLNQwZwaBSEqphM
-Message-ID: <CANiaA1uXgp1o8UO2p9UArq1Bp0U9HNpwfqsJaNuYG_KOc+4xYg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/3] target/riscv: rvv: Add Zvqdotq support
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="000000000000bf7331063de5c9cf"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=max.chou@sifive.com; helo=mail-oi1-x22c.google.com
+References: <20250506152927.222671-1-pbonzini@redhat.com>
+ <20250506152927.222671-2-pbonzini@redhat.com>
+In-Reply-To: <20250506152927.222671-2-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 3 Sep 2025 17:54:24 +0400
+X-Gm-Features: Ac12FXyH0MulOovghJbKqwXRuzA4ukEzyF7OOK-5yaIIJgtUlsmQSXL9hdEiNak
+Message-ID: <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
+Subject: Re: [PULL 01/30] lcitool: use newer Rust for Debian and Ubuntu
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,106 +95,293 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bf7331063de5c9cf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Paolo
 
-On Wed, Sep 3, 2025 at 10:29=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> On 9/3/25 15:01, Max Chou wrote:
-> > +#define OPMVX_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)
-> \
-> > +static void do_##NAME(void *vd, target_long s1, void *vs2, int i)
->  \
-> > +{
->  \
-> > +    int idx;
-> \
-> > +    T1 r1;
-> \
-> > +    T2 r2;
-> \
-> > +    TX1 *r1_buf =3D (TX1 *)&s1;
->  \
-> > +    TX2 *r2_buf =3D (TX2 *)vs2 + HD(i);
->  \
-> > +    TD acc =3D ((TD *)vd)[HD(i)];
->  \
-> > +
-> \
-> > +    for (idx =3D 0; idx < 4; ++idx) {
->  \
-> > +        r1 =3D *((T1 *)r1_buf + HS1(idx));
-> \
-> > +        r2 =3D *((T2 *)r2_buf + HS2(idx));
-> \
-> > +        acc +=3D r1 * r2;
->  \
+On Tue, May 6, 2025 at 7:30=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
 >
-> One could argue for a missing widening cast to TD here.  You got away wit=
-h
-> it because the
-> only uses happen to have small inputs and "int" sized outputs, so C
-> arithmetic promotion
-> worked for you.
+> On Debian, the rustc-web package provides a newer Rust compiler (1.78)
+> for all architectures except mips64el.
+
+Unfortunately, rustc-web is not compatible with the cross/multiarch
+packages (it will remove all libstd-rust-dev:*).
+
+Should we switch to rustup in the meantime for debian cross-compilation tes=
+ting?
+
 >
-> You can move the variable declarations into the loop.
+> On Ubuntu, Rust versions up to 1.80 (?) are available as of this writing
+> for both Jammy (22.04) and Noble (24.04).  However, the path to rustc
+> and rustdoc must be provided by hand to the configure script using
+> either command line arguments or environment variables.
 >
-Thanks for the suggestions. I overlooked this part. I=E2=80=99ll update ver=
-sion 3
-to include this part.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  docs/about/build-platforms.rst                        | 11 ++++++++---
+>  scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      |  2 +-
+>  scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        |  2 +-
+>  tests/docker/dockerfiles/debian-amd64-cross.docker    |  2 +-
+>  tests/docker/dockerfiles/debian-arm64-cross.docker    |  2 +-
+>  tests/docker/dockerfiles/debian-armhf-cross.docker    |  2 +-
+>  tests/docker/dockerfiles/debian-i686-cross.docker     |  2 +-
+>  tests/docker/dockerfiles/debian-mips64el-cross.docker |  2 +-
+>  tests/docker/dockerfiles/debian-mipsel-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/debian-ppc64el-cross.docker  |  2 +-
+>  tests/docker/dockerfiles/debian-s390x-cross.docker    |  2 +-
+>  tests/docker/dockerfiles/debian.docker                |  2 +-
+>  tests/docker/dockerfiles/ubuntu2204.docker            |  3 ++-
+>  tests/lcitool/mappings.yml                            |  5 +++++
+>  tests/lcitool/refresh                                 |  5 +++--
+>  15 files changed, 29 insertions(+), 17 deletions(-)
+>
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.=
+rst
+> index c3651871d20..8ecbd6b26f7 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -118,9 +118,14 @@ Rust build dependencies
+>    include bindgen or have an older version, it is recommended to install
+>    a newer version using ``cargo install bindgen-cli``.
+>
+> -  Developers may want to use Cargo-based tools in the QEMU source tree;
+> -  this requires Cargo 1.74.0.  Note that Cargo is not required in order
+> -  to build QEMU.
+> +  QEMU requires Rust 1.77.0.  This is available on all supported platfor=
+ms
+> +  with one exception, namely the ``mips64el`` architecture on Debian boo=
+kworm.
+> +  For all other architectures, Debian bookworm provides a new-enough Rus=
+t
+> +  compiler in the ``rustc-web`` package.
+> +
+> +  Also, on Ubuntu 22.04 or 24.04 this requires the ``rustc-1.77``
+> +  (or newer) package.  The path to ``rustc`` and ``rustdoc`` must be
+> +  provided manually to the configure script.
+>
+>  Optional build dependencies
+>    Build components whose absence does not affect the ability to build QE=
+MU
+> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/c=
+i/setup/ubuntu/ubuntu-2204-aarch64.yaml
+> index dbcd2e076de..f11e9808267 100644
+> --- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+> +++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+> @@ -114,7 +114,7 @@ packages:
+>    - python3-venv
+>    - python3-yaml
+>    - rpm2cpio
+> -  - rustc
+> +  - rustc-1.77
+>    - sed
+>    - socat
+>    - sparse
+> diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/=
+setup/ubuntu/ubuntu-2204-s390x.yaml
+> index 4b8ee3d885d..6559cb29343 100644
+> --- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+> +++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+> @@ -112,7 +112,7 @@ packages:
+>    - python3-venv
+>    - python3-yaml
+>    - rpm2cpio
+> -  - rustc
+> +  - rustc-1.77
+>    - sed
+>    - socat
+>    - sparse
+> diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/d=
+ocker/dockerfiles/debian-amd64-cross.docker
+> index 05355854285..081f3e00f7b 100644
+> --- a/tests/docker/dockerfiles/debian-amd64-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/d=
+ocker/dockerfiles/debian-arm64-cross.docker
+> index 6b1e4fc8279..91c555a36e9 100644
+> --- a/tests/docker/dockerfiles/debian-arm64-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/d=
+ocker/dockerfiles/debian-armhf-cross.docker
+> index cf0fe63af91..f0e2efcda09 100644
+> --- a/tests/docker/dockerfiles/debian-armhf-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/do=
+cker/dockerfiles/debian-i686-cross.docker
+> index 1c84dfb9456..025beb1ce25 100644
+> --- a/tests/docker/dockerfiles/debian-i686-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/test=
+s/docker/dockerfiles/debian-mips64el-cross.docker
+> index 257204eae48..4a941dd870e 100644
+> --- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/=
+docker/dockerfiles/debian-mipsel-cross.docker
+> index 395c84d65bc..4d3e5d711bd 100644
+> --- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests=
+/docker/dockerfiles/debian-ppc64el-cross.docker
+> index 1ae227ccded..22b4457ba99 100644
+> --- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/d=
+ocker/dockerfiles/debian-s390x-cross.docker
+> index afa81a57ba8..13ec52c8ad0 100644
+> --- a/tests/docker/dockerfiles/debian-s390x-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
+> @@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/docker=
+files/debian.docker
+> index 5b3bac43ccb..0a57c1a1d37 100644
+> --- a/tests/docker/dockerfiles/debian.docker
+> +++ b/tests/docker/dockerfiles/debian.docker
+> @@ -122,7 +122,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-web \
+>                        sed \
+>                        socat \
+>                        sparse \
+> diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/do=
+ckerfiles/ubuntu2204.docker
+> index 88ce4ef9a9d..4a1cf2bdff3 100644
+> --- a/tests/docker/dockerfiles/ubuntu2204.docker
+> +++ b/tests/docker/dockerfiles/ubuntu2204.docker
+> @@ -121,7 +121,7 @@ RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+>                        python3-venv \
+>                        python3-yaml \
+>                        rpm2cpio \
+> -                      rustc \
+> +                      rustc-1.77 \
+>                        sed \
+>                        socat \
+>                        sparse \
+> @@ -150,6 +150,7 @@ ENV LANG "en_US.UTF-8"
+>  ENV MAKE "/usr/bin/make"
+>  ENV NINJA "/usr/bin/ninja"
+>  ENV PYTHON "/usr/bin/python3"
+> +ENV RUSTC=3D/usr/bin/rustc-1.77
+>  ENV CARGO_HOME=3D/usr/local/cargo
+>  ENV PATH=3D$CARGO_HOME/bin:$PATH
+>  RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+> diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+> index 74eb13d62b6..673baf39367 100644
+> --- a/tests/lcitool/mappings.yml
+> +++ b/tests/lcitool/mappings.yml
+> @@ -64,6 +64,11 @@ mappings:
+>    python3-wheel:
+>      OpenSUSELeap15: python311-pip
+>
+> +  rust:
+> +    Debian12: rustc-web
+> +    Ubuntu2204: rustc-1.77
+> +    Ubuntu2404: rustc-1.77
+> +
+>  pypi_mappings:
+>    # Request more recent version
+>    meson:
+> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+> index aa551aca9be..8474ea822f4 100755
+> --- a/tests/lcitool/refresh
+> +++ b/tests/lcitool/refresh
+> @@ -141,7 +141,8 @@ fedora_rustup_nightly_extras =3D [
+>      'RUN $CARGO --list\n',
+>  ]
+>
+> -ubuntu2204_bindgen_extras =3D [
+> +ubuntu2204_rust_extras =3D [
+> +    "ENV RUSTC=3D/usr/bin/rustc-1.77\n",
+>      "ENV CARGO_HOME=3D/usr/local/cargo\n",
+>      'ENV PATH=3D$CARGO_HOME/bin:$PATH\n',
+>      "RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \\\n",
+> @@ -170,7 +171,7 @@ try:
+>      generate_dockerfile("fedora", "fedora-40")
+>      generate_dockerfile("opensuse-leap", "opensuse-leap-15")
+>      generate_dockerfile("ubuntu2204", "ubuntu-2204",
+> -                        trailer=3D"".join(ubuntu2204_bindgen_extras))
+> +                        trailer=3D"".join(ubuntu2204_rust_extras))
+>
+>      #
+>      # Non-fatal Rust-enabled build
+> --
+> 2.49.0
+>
+>
 
-Thanks a lot,
-Max
 
---000000000000bf7331063de5c9cf
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdj5PbiBXZWQsIFNlcCAzLCAyMDI1IGF0
-IDEwOjI54oCvUE0gUmljaGFyZCBIZW5kZXJzb24gJmx0OzxhIGhyZWY9Im1haWx0bzpyaWNoYXJk
-LmhlbmRlcnNvbkBsaW5hcm8ub3JnIj5yaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPC9hPiZn
-dDsgd3JvdGU6PGJyPjwvZGl2PjwvZGl2PjxkaXYgY2xhc3M9ImdtYWlsX3F1b3RlIGdtYWlsX3F1
-b3RlX2NvbnRhaW5lciI+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFy
-Z2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0LXdpZHRoOjFweDtib3JkZXItbGVmdC1z
-dHlsZTpzb2xpZDtib3JkZXItbGVmdC1jb2xvcjpyZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVm
-dDoxZXgiPk9uIDkvMy8yNSAxNTowMSwgTWF4IENob3Ugd3JvdGU6PGJyPg0KJmd0OyArI2RlZmlu
-ZSBPUE1WWF9WUURPVFEoTkFNRSwgVEQsIFQxLCBUMiwgVFgxLCBUWDIsIEhELCBIUzEsIEhTMinC
-oCDCoCDCoCDCoCDCoCBcPGJyPg0KJmd0OyArc3RhdGljIHZvaWQgZG9fIyNOQU1FKHZvaWQgKnZk
-LCB0YXJnZXRfbG9uZyBzMSwgdm9pZCAqdnMyLCBpbnQgaSnCoCDCoCDCoCDCoFw8YnI+DQomZ3Q7
-ICt7wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBcPGJy
-Pg0KJmd0OyArwqAgwqAgaW50IGlkeDvCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBc
-PGJyPg0KJmd0OyArwqAgwqAgVDEgcjE7wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgXDxicj4NCiZndDsgK8KgIMKgIFQyIHIyO8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIFw8YnI+DQomZ3Q7ICvCoCDCoCBUWDEgKnIxX2J1ZiA9IChUWDEgKikmYW1wO3MxO8Kg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgXDxicj4NCiZndDsgK8KgIMKgIFRYMiAqcjJfYnVmID0gKFRYMiAqKXZzMiArIEhEKGkp
-O8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgXDxi
-cj4NCiZndDsgK8KgIMKgIFREIGFjYyA9ICgoVEQgKil2ZClbSEQoaSldO8KgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgXDxicj4NCiZn
-dDsgK8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIFw8
-YnI+DQomZ3Q7ICvCoCDCoCBmb3IgKGlkeCA9IDA7IGlkeCAmbHQ7IDQ7ICsraWR4KSB7wqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBcPGJyPg0K
-Jmd0OyArwqAgwqAgwqAgwqAgcjEgPSAqKChUMSAqKXIxX2J1ZiArIEhTMShpZHgpKTvCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBcPGJyPg0KJmd0OyArwqAg
-wqAgwqAgwqAgcjIgPSAqKChUMiAqKXIyX2J1ZiArIEhTMihpZHgpKTvCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBcPGJyPg0KJmd0OyArwqAgwqAgwqAgwqAg
-YWNjICs9IHIxICogcjI7wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBcPGJyPg0KPGJyPg0KT25lIGNvdWxkIGFy
-Z3VlIGZvciBhIG1pc3Npbmcgd2lkZW5pbmcgY2FzdCB0byBURCBoZXJlLsKgIFlvdSBnb3QgYXdh
-eSB3aXRoIGl0IGJlY2F1c2UgdGhlIDxicj4NCm9ubHkgdXNlcyBoYXBwZW4gdG8gaGF2ZSBzbWFs
-bCBpbnB1dHMgYW5kICZxdW90O2ludCZxdW90OyBzaXplZCBvdXRwdXRzLCBzbyBDIGFyaXRobWV0
-aWMgcHJvbW90aW9uIDxicj4NCndvcmtlZCBmb3IgeW91Ljxicj4NCjxicj4NCllvdSBjYW4gbW92
-ZSB0aGUgdmFyaWFibGUgZGVjbGFyYXRpb25zIGludG8gdGhlIGxvb3AuPGJyPjwvYmxvY2txdW90
-ZT48ZGl2PlRoYW5rcyBmb3IgdGhlIHN1Z2dlc3Rpb25zLiBJIG92ZXJsb29rZWQgdGhpcyBwYXJ0
-LiBJ4oCZbGwgdXBkYXRlIHZlcnNpb24gMyB0byBpbmNsdWRlIHRoaXMgcGFydC48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48ZGl2PlRoYW5rcyBhIGxvdCw8L2Rpdj48ZGl2Pk1heDwvZGl2PjwvZGl2Pjwv
-ZGl2Pg0K
---000000000000bf7331063de5c9cf--
+--=20
+Marc-Andr=C3=A9 Lureau
 
