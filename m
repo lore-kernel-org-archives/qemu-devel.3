@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8880DCA100B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB97ECA1007
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utfpP-0000Le-Ev; Wed, 03 Sep 2025 01:14:39 -0400
+	id 1utfnP-0006WO-AO; Wed, 03 Sep 2025 01:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmm-0006Fi-V6
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:12:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmf-0006Ec-Fl
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:11:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmk-0006Ts-Hr
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:11:56 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmX-0006Nu-Ji
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:11:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756876313;
+ s=mimecast20190719; t=1756876300;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tagIbdrrDMrYKknepF7MVfnL4rHnC0ypp6LupSkyNl8=;
- b=ePTqNglwl848Vygt9EVyGUoPeHL+OEJlIja7v71p5iFgPjTBaPvE3RZL4sC/b17iWfuUlU
- 0ZZuLPT5vkRzQWfYPCyxhkxcSWqp667oRDjFHMSAKpPI+ng82ajwWS7CUT/F00itJqw7HH
- rHDi0w8GjTloL9dqUjAHdglxAjEQSdY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=96fcc12r2NZGoWcAWvZ/2KcZ+/kTHQQsPcjDbDUtkY8=;
+ b=jJnC99kXzAkg43tLHH/6Vy/2zi6CBUZAm7XT4QVcmS9XpWZfdpgxVVSMnw9LW6Cbe2sT6p
+ V0FjOY/wSiNRYQ6PINZ8H1SJTrvA7Swb7QcQaQhCOmdjAEPBaK9XgoJQ8EAn0pi9vfSzxA
+ 8nEDNyHpxPf6qQUvI32XC1rmObMxD8w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-5dRiywpsPzmidlaGIJhjKQ-1; Wed,
- 03 Sep 2025 01:11:52 -0400
-X-MC-Unique: 5dRiywpsPzmidlaGIJhjKQ-1
-X-Mimecast-MFC-AGG-ID: 5dRiywpsPzmidlaGIJhjKQ_1756876311
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-04VxaiosPrKs-pW5y5GD1Q-1; Wed,
+ 03 Sep 2025 01:11:39 -0400
+X-MC-Unique: 04VxaiosPrKs-pW5y5GD1Q-1
+X-Mimecast-MFC-AGG-ID: 04VxaiosPrKs-pW5y5GD1Q_1756876298
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EFA1180034F; Wed,  3 Sep 2025 05:11:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2678F1956050; Wed,  3 Sep 2025 05:11:38 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4058F19560A2; Wed,  3 Sep 2025 05:11:49 +0000 (UTC)
+ id 4AACF19560A2; Wed,  3 Sep 2025 05:11:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Daniel=20Berrang=C3=A9?= <berrange@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v2 09/18] python: backport 'qmp-shell-wrap: handle missing
- binary gracefully'
-Date: Wed,  3 Sep 2025 01:11:15 -0400
-Message-ID: <20250903051125.3020805-10-jsnow@redhat.com>
+Subject: [PATCH v2 04/18] python: backport 'protocol: adjust logging name when
+ changing client name'
+Date: Wed,  3 Sep 2025 01:11:10 -0400
+Message-ID: <20250903051125.3020805-5-jsnow@redhat.com>
 In-Reply-To: <20250903051125.3020805-1-jsnow@redhat.com>
 References: <20250903051125.3020805-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,26 +85,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-cherry picked from commit 9c889dcbd58817b0c917a9d2dd16161f48ac8203
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- python/qemu/qmp/qmp_shell.py | 2 ++
- 1 file changed, 2 insertions(+)
+The client name is mutable, so the logging name should also change to
+reflect it when it changes.
 
-diff --git a/python/qemu/qmp/qmp_shell.py b/python/qemu/qmp/qmp_shell.py
-index 02028e94b5a..c923ff09e1f 100644
---- a/python/qemu/qmp/qmp_shell.py
-+++ b/python/qemu/qmp/qmp_shell.py
-@@ -607,6 +607,8 @@ def main_wrap() -> None:
+Signed-off-by: John Snow <jsnow@redhat.com>
+cherry picked from commit e10b73c633ce138ba30bc8beccd2ab31989eaf3d
+---
+ python/qemu/qmp/protocol.py | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
+index 86e588881b7..ec4762c567b 100644
+--- a/python/qemu/qmp/protocol.py
++++ b/python/qemu/qmp/protocol.py
+@@ -217,10 +217,8 @@ class AsyncProtocol(Generic[T]):
+     # -------------------------
  
-                 for _ in qemu.repl():
-                     pass
-+    except FileNotFoundError:
-+        sys.stderr.write(f"ERROR: QEMU executable '{cmd[0]}' not found.\n")
-     finally:
-         os.unlink(sockpath)
+     def __init__(self, name: Optional[str] = None) -> None:
+-        #: The nickname for this connection, if any.
+-        self.name: Optional[str] = name
+-        if self.name is not None:
+-            self.logger = self.logger.getChild(self.name)
++        self._name: Optional[str]
++        self.name = name
  
+         # stream I/O
+         self._reader: Optional[StreamReader] = None
+@@ -257,6 +255,24 @@ def __repr__(self) -> str:
+         tokens.append(f"runstate={self.runstate.name}")
+         return f"<{cls_name} {' '.join(tokens)}>"
+ 
++    @property
++    def name(self) -> Optional[str]:
++        """
++        The nickname for this connection, if any.
++
++        This name is used for differentiating instances in debug output.
++        """
++        return self._name
++
++    @name.setter
++    def name(self, name: Optional[str]) -> None:
++        logger = logging.getLogger(__name__)
++        if name:
++            self.logger = logger.getChild(name)
++        else:
++            self.logger = logger
++        self._name = name
++
+     @property  # @upper_half
+     def runstate(self) -> Runstate:
+         """The current `Runstate` of the connection."""
 -- 
 2.50.1
 
