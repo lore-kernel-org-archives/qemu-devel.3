@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FDFCA1007
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754FBCA100C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utgHG-0003Ry-WD; Wed, 03 Sep 2025 01:43:27 -0400
+	id 1utgL9-0005V8-2F; Wed, 03 Sep 2025 01:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1utgH4-0003NQ-O9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:43:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1utgL4-0005Sg-Gp
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:24 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1utgH2-0001IS-TM
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:43:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756878192;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mgqsI75Hl0hW/NIjUWACLG264Jdi2gE2F1X4FOrybOY=;
- b=SP2OwKhXAvLZsUqLq+Z1ER/Fv5BoIbX8KeDt68L5xht9xfTNzVsJPm/eBJu7Hs5Xl6YjFE
- PgTGybdrU7i5sxEi8hFOPWEg4bGLKeWlTQMg8eL0eBWf+Rxtdbw4dnHdhf+jnlsGOdYOa8
- 3EUZt0qwecE4AzYVNCPQmlTjpYr6jGk=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-gxSIDFKwOhWL9bH40sZieQ-1; Wed, 03 Sep 2025 01:43:10 -0400
-X-MC-Unique: gxSIDFKwOhWL9bH40sZieQ-1
-X-Mimecast-MFC-AGG-ID: gxSIDFKwOhWL9bH40sZieQ_1756878189
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-24b2336e513so17813015ad.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 22:43:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756878189; x=1757482989;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mgqsI75Hl0hW/NIjUWACLG264Jdi2gE2F1X4FOrybOY=;
- b=A9xrFV6iE4uFDEHz3nxYU+QfX2+88gzhqCK25eDnK7TWgn+CbE4N8ItLKEz52UeKcy
- UycbuDNZpaW9cpnrxBFKlawjQOiOlLb4T10jC+NjXOKxAWTYz+lb8QwGrtb8huRfUTVj
- LBoi843ufA7RJ1aeKtx8wM7KK/RODzJqHcOwcp1uU4w4tOxq7FAJ5mtKw73QFiWTlsPP
- R9rNuteqssqHAihFG3k//aOndbjokJssDa606DiMdWCLpBDtloJrrEXYC8NYEx3llIda
- 5x93PDglb9FqKvKjVCzcDagovlUOdGGUaRSeI2Nx5QdXaoi1rmKiag2btA+uOrQvl6b5
- w/6A==
-X-Gm-Message-State: AOJu0Yz+6X+3Hp10zlRDb76QBQSri4ZnFoj7sWmwASytLXlA/uyEIi6D
- zxgxuBS99hXO7OPtg2g455H034+MR/hbbPlhPz6yyBY/9+JgDYGlhXTGPKEwDfUzasnWXOB2+Ih
- YBpcY5/PncMXFkqhwPMvAvBeH/B6XhNj0CIcvg1vof4wHM1OvlJlqM+k1tqa9r6+L26B+ue1+2B
- Q00owbUF3t6mj/57w+NN+qvrQGe99G/cw=
-X-Gm-Gg: ASbGncs8KjGIiKEps8ffY9p6jiGjVAA4EoX+dtA8QbgnWTd9KLa8ZHxfAoQ0j1PClqV
- MzBcjvSbyAj6nPBBp+CuUki7haMF+RNMZwnbRdFBdQW3p0puI/nFKXoqkyL7An4WtjVxjuYT26A
- j+Xd//JWomxU2YfNKLp6Gc6w==
-X-Received: by 2002:a17:903:4b46:b0:240:48f4:40f7 with SMTP id
- d9443c01a7336-24944b29c03mr201973085ad.39.1756878189326; 
- Tue, 02 Sep 2025 22:43:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNPl9pHtGuHQ9xK7Yl3mwjeG04mEaBQ1oiEZ0io34um5H3KOC9wiOfJ5Ro+WPh+00QnSU2oL6h8gGULQa61us=
-X-Received: by 2002:a17:903:4b46:b0:240:48f4:40f7 with SMTP id
- d9443c01a7336-24944b29c03mr201972915ad.39.1756878188917; Tue, 02 Sep 2025
- 22:43:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1utgL2-000206-Qb
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756878441; x=1788414441;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=BU5RBu9Owyo/QkBmmzVDRxjd1vlxZzGymV4N3uTNCYw=;
+ b=ixBcuQYMlAQvnkDAh5ePmwhBqiSCIihrAcCs5UyinsvEobbuQEhfbVnY
+ 2UHESoEPk+Rpp06wXGGNW9IJfso+dnZcg9Idg8EEG7O3kg5zikkuqDZEM
+ wACDgEP9GWr0a2DMbExCsXqclI+mKLl1h6F/JG2Q+O15HNMIOcn3sv3Ro
+ 35Enuz88xS7Y8SuxQd0Vs/2dI4sMnhLsZRIf0HDqT1SgWrVpn5e36gA9w
+ fqTMc8+1X7/5yUEsi1RS/S50uQ6Y8ZzSm9eb7O65X+qzsEZYQJr15ivHq
+ 2gwKVLwuOwd5AYEnwefro7riPeOfKs73D+KVSy/lzDGMzKsATU3tcCpWB g==;
+X-CSE-ConnectionGUID: wFd46wkcQtyCybBAx3AJlQ==
+X-CSE-MsgGUID: XrrfRx8/Q8ygHSSXRmlaqA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878210"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878210"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2025 22:47:10 -0700
+X-CSE-ConnectionGUID: x09CrNPgQNey1k8mnzMB+A==
+X-CSE-MsgGUID: zRdOdsBqTTKKOP44V0peaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634784"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2025 22:47:09 -0700
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [RFC 6/6] virtio-gpu: Find the host addr given gpa associated with a
+ ram device
+Date: Tue,  2 Sep 2025 22:42:19 -0700
+Message-ID: <20250903054438.1179384-7-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-References: <20250821142641.359132-1-jonah.palmer@oracle.com>
-In-Reply-To: <20250821142641.359132-1-jonah.palmer@oracle.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 3 Sep 2025 13:42:57 +0800
-X-Gm-Features: Ac12FXygeeP4TIPmr5l8dS18luaHNxNZyTMEGIxEFY9DdLkEwShIhR5SF2q3hi8
-Message-ID: <CACGkMEtT-28W3Q1fgK0+n+r_9=s3MuteJHzSNC1pib6wnbVudQ@mail.gmail.com>
-Subject: Re: [PATCH] net/hub: make net_hub_port_cleanup idempotent
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, eperezma@redhat.com, leiyang@redhat.com, 
- dwmw2@infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.20;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,29 +88,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 21, 2025 at 10:28=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.=
-com> wrote:
->
-> Makes the net_hub_port_cleanup function idempotent to avoid double
-> removals by guarding its QLIST_REMOVE with a flag.
->
-> When using a Xen networking device with hubport backends, e.g.:
->
-> -accel kvm,xen-version=3D0x40011
-> -netdev hubport,...
-> -device xen-net-device,...
->
-> the shutdown order starts with net_cleanup, which walks the list and
-> deletes netdevs (including hubports). Then Xen's xen_device_unrealize is
-> called, which eventually leads to a second net_hub_port_cleanup call,
-> resulting in a segfault.
->
-> Fixes: e7891c57 ("net: move backend cleanup to NIC cleanup")
-> Reported-by: David Woodhouse <dwmw2@infradead.org>
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+If the Guest provides a gpa (guest physical address) associated with
+a PCI region, then we can obtain the hva (host virtual address) via
+gpa2hva() API instead of dma_memory_map(). Note that we would still
+call dma_memory_unmap() (to unref mr) regardless of how we obtained
+the hva.
 
-Queued.
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu.c | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
-Thanks
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 1654a417b8..4af8390bb5 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -32,6 +32,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "monitor/monitor.h"
+ 
+ #define VIRTIO_GPU_VM_VERSION 1
+ 
+@@ -799,6 +800,36 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+                               &fb, res, &ss.r, &cmd->error);
+ }
+ 
++static void *map_gpa2hva(VirtIOGPU *g,
++                         struct virtio_gpu_ctrl_command *cmd,
++                         uint64_t gpa, hwaddr *len)
++{
++    MemoryRegion *mr = NULL;
++    Error *errp = NULL;
++    void *map;
++
++    if (cmd->cmd_hdr.type != VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB) {
++        return dma_memory_map(VIRTIO_DEVICE(g)->dma_as, gpa, len,
++                              DMA_DIRECTION_TO_DEVICE,
++                              MEMTXATTRS_UNSPECIFIED);
++    }
++
++    map = gpa2hva(&mr, gpa, 1, &errp);
++    if (errp) {
++        error_report_err(errp);
++        return NULL;
++    }
++
++    if (!memory_region_is_ram_device(mr)) {
++        memory_region_unref(mr);
++        map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, gpa, len,
++                             DMA_DIRECTION_TO_DEVICE,
++                             MEMTXATTRS_UNSPECIFIED);
++    }
++
++    return map;
++}
++
+ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+                                   uint32_t nr_entries, uint32_t offset,
+                                   struct virtio_gpu_ctrl_command *cmd,
+@@ -840,9 +871,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+         do {
+             len = l;
+-            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+-                                 DMA_DIRECTION_TO_DEVICE,
+-                                 MEMTXATTRS_UNSPECIFIED);
++            map = map_gpa2hva(g, cmd, a, &len);
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-- 
+2.50.1
 
 
