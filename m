@@ -4,64 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349A8CA1007
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C051BCA1007
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utgLB-0005Vm-R0; Wed, 03 Sep 2025 01:47:29 -0400
+	id 1utgL4-0005Rz-Pz; Wed, 03 Sep 2025 01:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgL4-0005Sd-1O
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:24 -0400
+ id 1utgKz-0005RW-PC
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:17 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgL1-00020d-1J
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:21 -0400
+ id 1utgKx-000206-Vq
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756878440; x=1788414440;
+ t=1756878437; x=1788414437;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/b9BrS4N3IBhHzwSjL7/bGnI4s0+FhlyYtfD4N/KW4c=;
- b=JLF6/uZFmi1AwCPlpknmL5uxW8seIV1gcye1h6IoVlIzg7OzZnMFWO95
- xrCoYymUUVSKon9D4eAblD/uY2GIGy9w8xCmUOLujCptYyH4lsp9EL6Hm
- SPf+a+Ti/7IzoN2OYzfsu8DXf/JhiMWNrIUFv3nZiRDLNcBu2YUpwivom
- sJBDS6o6EU3IwvivKLzCEAABSDRv4Jki4IAX7GkqIQhs5B3I9J+pLqmBv
- i2RffkTxarBBmfHsRb3J0j6rcfEl5ygjNHx54JZNCKhh8+aVRSpsPAWCN
- Y8S9KQx8lVI+xl4RByFd6oRexjiw5Jk2LyawJsryiuoL8F8z5dVd2do5J A==;
-X-CSE-ConnectionGUID: lCz8yaA+T9OHmRcZb3b1PQ==
-X-CSE-MsgGUID: q2fkgIsZTO6NL5XJ6s97kw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878200"
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878200"
+ bh=9bqaUsWa3QbbmlyhD5WfWA5wuCxJhAlSjQHGJk486Wc=;
+ b=SNmt7GMeGCDdZ9gbMn+kE5+7Wh5s0V1+DkD+YtaRSpajaA1GL4r+Glql
+ oCKwzntId1DwTCQrBF9wnlK6Nu1tu3j1c09a+y2u1P3Y+4fSP/1hKp283
+ fhSYcWsUNp9QjP4QgP/1u/JUpM3rdnbXD+1+jwHcutNTbc/bamRC/139O
+ RHJSl7S8YrV1ANo8o7xmW5yymCTwL3WycxMs9lT41CmodC9iw2pAS3hmo
+ Gp7hEtSPhjTsJR9OGabHXDGhpCJW3INq59lHmApdDNRoxOzQBTsDTcz39
+ TmP1DFR34eCDzpRmxMVF6qt/qZ42ZsCbLDH0YSha10T7h/Nhdeg/azmnI A==;
+X-CSE-ConnectionGUID: 6V+KQSJKRGKNPz7W4o3RPw==
+X-CSE-MsgGUID: TdeHfOpxSEejC++lOagGJQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878186"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878186"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Sep 2025 22:47:09 -0700
-X-CSE-ConnectionGUID: PUiCqFV2RxuMYLNF1fZeEQ==
-X-CSE-MsgGUID: JvnLlx8tRxq656Pk+Y4qTQ==
+X-CSE-ConnectionGUID: Y08t34jhQcmKyODJS5b6yQ==
+X-CSE-MsgGUID: GDoKVTtqRY63G6SDifAzEg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634774"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634762"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Sep 2025 22:47:08 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
- resources
-Date: Tue,  2 Sep 2025 22:42:17 -0700
-Message-ID: <20250903054438.1179384-5-vivek.kasireddy@intel.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [RFC 1/6] linux-headers: Update vfio.h to include
+ VFIO_DEVICE_FEATURE_DMA_BUF
+Date: Tue,  2 Sep 2025 22:42:14 -0700
+Message-ID: <20250903054438.1179384-2-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
 References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.20;
  envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
@@ -88,106 +83,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The res->blob pointer is only valid for blobs that have their
-backing storage in memfd. Therefore, we cannot use it to determine
-if a resource is a blob or not. Instead, we could use res->blob_size
-to make this determination as it is non-zero for blob resources
-regardless of where their backing storage is located.
-
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ linux-headers/linux/vfio.h | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 0a1a625b0e..2f9133c3b6 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-     }
+diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
+index 79bf8c0cc5..d2177c9cba 100644
+--- a/linux-headers/linux/vfio.h
++++ b/linux-headers/linux/vfio.h
+@@ -1468,6 +1468,31 @@ struct vfio_device_feature_bus_master {
+ };
+ #define VFIO_DEVICE_FEATURE_BUS_MASTER 10
  
-     if (res->blob_size) {
--        if (res->blob_size < (s->current_cursor->width *
-+        if (!res->blob || res->blob_size < (s->current_cursor->width *
-                               s->current_cursor->height * 4)) {
-             return;
-         }
-@@ -144,7 +144,7 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
-     }
++/**
++ * Upon VFIO_DEVICE_FEATURE_GET create a dma_buf fd for the
++ * regions selected.
++ *
++ * open_flags are the typical flags passed to open(2), eg O_RDWR, O_CLOEXEC,
++ * etc. offset/length specify a slice of the region to create the dmabuf from.
++ * nr_ranges is the total number of (P2P DMA) ranges that comprise the dmabuf.
++ *
++ * Return: The fd number on success, -1 and errno is set on failure.
++ */
++#define VFIO_DEVICE_FEATURE_DMA_BUF 11
++
++struct vfio_region_dma_range {
++	__u64 offset;
++	__u64 length;
++};
++
++struct vfio_device_feature_dma_buf {
++	__u32	region_index;
++	__u32	open_flags;
++	__u32   flags;
++	__u32   nr_ranges;
++	struct vfio_region_dma_range dma_ranges[];
++};
++
+ /* -------- API for Type1 VFIO IOMMU -------- */
  
-     if (require_backing) {
--        if (!res->iov || (!res->image && !res->blob)) {
-+        if (!res->iov || (!res->image && !res->blob_size)) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage %d\n",
-                           caller, resource_id);
-             if (error) {
-@@ -444,7 +444,7 @@ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
- 
-     res = virtio_gpu_find_check_resource(g, t2d.resource_id, true,
-                                          __func__, &cmd->error);
--    if (!res || res->blob) {
-+    if (!res || res->blob_size) {
-         return;
-     }
- 
-@@ -507,7 +507,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-         return;
-     }
- 
--    if (res->blob) {
-+    if (res->blob_size) {
-         for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-             scanout = &g->parent_obj.scanout[i];
-             if (scanout->resource_id == res->resource_id &&
-@@ -538,7 +538,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-         }
-     }
- 
--    if (!res->blob &&
-+    if (!res->blob_size &&
-         (rf.r.x > res->width ||
-         rf.r.y > res->height ||
-         rf.r.width > res->width ||
-@@ -634,7 +634,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
- 
-     g->parent_obj.enable = 1;
- 
--    if (res->blob) {
-+    if (res->blob_size) {
-         if (console_has_gl(scanout->con)) {
-             if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
-                 virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-@@ -645,13 +645,16 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-             return true;
-         }
- 
-+        if (!res->blob) {
-+            return false;
-+        }
-         data = res->blob;
-     } else {
-         data = (uint8_t *)pixman_image_get_data(res->image);
-     }
- 
-     /* create a surface for this scanout */
--    if ((res->blob && !console_has_gl(scanout->con)) ||
-+    if ((res->blob_size && !console_has_gl(scanout->con)) ||
-         !scanout->ds ||
-         surface_data(scanout->ds) != data + fb->offset ||
-         scanout->width != r->width ||
-@@ -899,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-     g_free(res->addrs);
-     res->addrs = NULL;
- 
--    if (res->blob) {
-+    if (res->blob_size) {
-         virtio_gpu_fini_udmabuf(res);
-     }
- }
+ /**
 -- 
 2.50.1
 
