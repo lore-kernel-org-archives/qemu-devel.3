@@ -4,135 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7353ECA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C96ECA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uto1d-00018E-Vf; Wed, 03 Sep 2025 09:59:49 -0400
+	id 1uto56-0002vf-EG; Wed, 03 Sep 2025 10:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uto1c-00017h-31
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:59:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uto1Z-0004q6-W2
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:59:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756907981;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6Sr4LPeuhVaxzD3VvmMyYOP4t7wOQNLsdQaVXpHUftw=;
- b=A0idlBIV26t53SY6NPzHN+kgu8gsNvA2VC7tNKAYYXDavqnO40pRk9sFAB5sLw3VtBi2eF
- hhYeMvGlB0T1XPpyRYLcIeXvWP8LNXg32K0x1WTdtv9q0ZR4HUJpdw17IVM7DCAkz1tpWR
- r0XYN/VJzXDbVPZdt28+HUMAw7BLeNM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-BExEc5WaM_y7odUEMrnnsA-1; Wed, 03 Sep 2025 09:59:39 -0400
-X-MC-Unique: BExEc5WaM_y7odUEMrnnsA-1
-X-Mimecast-MFC-AGG-ID: BExEc5WaM_y7odUEMrnnsA_1756907978
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45b8af0b986so7616445e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:59:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1uto54-0002ub-FY
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:03:22 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1uto52-0005ro-Ix
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:03:22 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b4cf40cd0d1so4420184a12.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 07:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1756908198; x=1757512998; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=M3w8RPIf6POZ7C7KJr0+0dx8T0d/EoIA746DKMDQLsw=;
+ b=nIZwuSrwSu4YG9UYMiM7N6ijmsDno+rBaYxs1lT1G8gfRwuk8BCYENlFzPZeAXA7PT
+ 2hn++B9YVXNMrqmr2P2pOx1U2QndYGd7hCYorpOZOW6S1uH0PbwJD4JIGidKjAiowjGD
+ 8jhQFvGGAzsmB8xGwuVhrMyTz/AqBboBhGl79LBTYdrU6B9xNYP7jgQySWDepYmbrVg5
+ 5OxWyfScyp9+GaAxQrae4VficgvTMxCx6keCtrVHlmmQgIPJ5CukiZfn/Bv2hgeqOlJy
+ qRd4oUbs1iVBraRhKbSpxfM5EBmR3EADFOppfo6NDEeCkjAEabkf1OppKG0biZxiJWmn
+ fEkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756907978; x=1757512778;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1756908198; x=1757512998;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6Sr4LPeuhVaxzD3VvmMyYOP4t7wOQNLsdQaVXpHUftw=;
- b=RxJ/Tj+Gcmtq0Q+WHG505lHMQvamM8Y4c6OYlUZB/COZO2TBCf5sQQGEbBXs7YQZVR
- KkaPewKpWOXREMQ4qqzB6l3VN3WKw4BHBf30aaLWeim1uL6/RJyETBRv/zvzjSFS2lTR
- tlksl38HuSQkHZa8tTOE3GE12Kfy6Z8bFNEnqo6OViiauNoGtlvZWjc7fGMRM9yim+SH
- P3s6iuUlgtL69m5fPVYI5inCjRTNVRol23HohTU417nc4mM4SysDAAaPhiFeSvGh1eXD
- L5mJ3pEZlxj5zaJDtkWSWIM4ahiRV0z6caJlCywZY81pMvWRDkouHAtCykaKKtf0rQ3X
- NlBg==
-X-Gm-Message-State: AOJu0Ywhk3lmQcK2FcCELezbtBajdntgHQavxCzactem7sQiVd40ewL9
- f/wodm+0kUXNn3nszbPDMh1Rwx1Pj1mC+ew1rgu1Ap1I6NjJ8uVJGRCwfDFfA5cTPKcdvfiAfAE
- N1Qxk9YKxinmZdjV+hWm4aBe8jfBQ46v8p1lb6VwQnsDv+I7oYMVShqUz
-X-Gm-Gg: ASbGncvgxCRKrcn2l3ECoV8ZDzDnW6NsfPSNw0c8a1n+lybZG/Mhzhm607SJ0kVB3iQ
- fk+PkN8CtVrDOMrVI4skJW/mQAQOiNS2HWJ5w+bxi98qMcDadJ7wqapKvl2ihH1RuYCzJwAkCbh
- ezENQu4v34VK0kWHpSW35TiQ3V09UEHKNL7kSHlBPqH5l4l8wYciUkJqMNKqBJE4Saw1h9ec0Eu
- aHXvKzuoXBPosmsuMft3YWLCXPTmzZLqY22lnSa5gMsMl+prG78MXyWFStK9oGKio4kqOlinK01
- FejU/viyDKOYGycTlfJISM2mQDq56OcCgpJApjrG0hnhT2p7zosbM5mpLFGRCptJMMpdsce0MFO
- YEfEjaM6x75MwmeGLeFb4Y8Ype/Owi2ifsKUP6mlMInl4LHAYNt8HqnD30JCbp8VlH+4=
-X-Received: by 2002:a05:600c:4f83:b0:45b:7deb:3f0f with SMTP id
- 5b1f17b1804b1-45b84c2256bmr143241935e9.2.1756907978292; 
- Wed, 03 Sep 2025 06:59:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoCcQgY7XEj4fg/SZrc2TJX45FxjKGGm5bYB2CN3SFATgK/aR1lXRiQib/EDoePqQ1a9jjXg==
-X-Received: by 2002:a05:600c:4f83:b0:45b:7deb:3f0f with SMTP id
- 5b1f17b1804b1-45b84c2256bmr143241725e9.2.1756907977922; 
- Wed, 03 Sep 2025 06:59:37 -0700 (PDT)
-Received: from [10.32.181.22] (nat-pool-mxp-t.redhat.com. [149.6.153.186])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3deb99d10a0sm2255197f8f.37.2025.09.03.06.59.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 06:59:37 -0700 (PDT)
-Message-ID: <1546553e-a21a-4a0a-8bcc-6c4e23ff35e2@redhat.com>
-Date: Wed, 3 Sep 2025 15:59:36 +0200
+ bh=M3w8RPIf6POZ7C7KJr0+0dx8T0d/EoIA746DKMDQLsw=;
+ b=FHdO27O/+IicpD6j94cyZ71WfihBJ9WsMR2NPLws047LLmCl+1b680xQjYL9ehtiOS
+ 3gTxzBCBk2k3c2TLxNjGpqu0sgSsORgNvkhBpGvXuInVonhVWr6yK9wMpIyxpjgOKsFQ
+ GM/BcO4JYTmNu+LQiFWxFcFdTqkqbxvShAxogGtMhiXlQcCeEIz4Oi2j3ea0N5PN32lI
+ 58zDsgq2ds2T0Zq1zOpfiqnHu5xclzuZgw3mrCSR8bv8697p/GL+GkaBpAcQzyTWzK+5
+ xfzBPEITjJwK8eG5KCCi2kS0/vD+wUpe8ZNcMk+RTf4ydDcAlGkvo1bS3G5A1Y6Hx5QT
+ vFgQ==
+X-Gm-Message-State: AOJu0YzF3MRLYGm3ezQIft45KWzgiUjNVlj/4dLdjoLwOcPZ2bFVXaky
+ 82QmFdQetiANfH9ugnaezzquBUOjaArhT5r0GY63bP0olwiRbewXsQmPcv1oej4q1zt2sJDYHsi
+ veNT0sD5P+dTQMIgDpFjW02lBjzV3jG4SOtTbEVHfBXDSPonqQZRdSowEXNG5OLwSRUkoMUvvew
+ VIc2aznxm3rCqdPneGR368YGnUQy/VKMsF8IxzFwWMlg==
+X-Gm-Gg: ASbGncvciLFs3oObgfWrRh45nKLLfKfrWX+1LJ7eLdg54QV+CCcq22C1GzGMdoj3zcV
+ Br0toSsgHkMBh2cB2Co7lqzKzTXCdudftXS8FD6DjPbgNl+V+Bpy/glHNyiWqnsT3OAUabJuP7E
+ 75WG/w+giKx/s4lMyDIDz8QBUSuoJn7Btg41VmsOiXRByvZD75QsCWXuDgBWS7AokzAb6D02Nmm
+ Gu4bMbwCs8MYuQJaAfxzpuMeTNkvZTG1iBBFLIEiKrdrl8GTwDx/tYJ3llvReHLCjDp947kVoNm
+ jJo9s+h3DsOcXedCFhN3zUGG970gEh8X9cBEWW5+fhSFPbY4RsklubZgAcuUYnUmEWA/voMC18D
+ 3qcssROcoXj257Ih3XI9NzgnjLOSC89iIvhRdDL0RX3oeAO+wxZAd+Y+N7+096S4ckNc=
+X-Google-Smtp-Source: AGHT+IGmwPKj+NIB4ibRpFo+qrVCUgx3VQ4yjuv37nyVsu4JyUVD6hIv0tXX3cpri6qsihD+ULfZJw==
+X-Received: by 2002:a17:903:298f:b0:24c:9c29:c9d1 with SMTP id
+ d9443c01a7336-24c9c29cca0mr24237415ad.59.1756908196477; 
+ Wed, 03 Sep 2025 07:03:16 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24b14e1b097sm50720545ad.21.2025.09.03.07.03.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Sep 2025 07:03:16 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, richard.henderson@linaro.org,
+ Max Chou <max.chou@sifive.com>
+Subject: [RFC PATCH v3 0/3] Add Zvqdotq support
+Date: Wed,  3 Sep 2025 22:03:05 +0800
+Message-ID: <20250903140308.1705751-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 01/30] lcitool: use newer Rust for Debian and Ubuntu
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org
-References: <20250506152927.222671-1-pbonzini@redhat.com>
- <20250506152927.222671-2-pbonzini@redhat.com>
- <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=max.chou@sifive.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,21 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 15:54, Marc-André Lureau wrote:
-> Hi Paolo
-> 
-> On Tue, May 6, 2025 at 7:30 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> On Debian, the rustc-web package provides a newer Rust compiler (1.78)
->> for all architectures except mips64el.
-> 
-> Unfortunately, rustc-web is not compatible with the cross/multiarch
-> packages (it will remove all libstd-rust-dev:*).
-> 
-> Should we switch to rustup in the meantime for debian cross-compilation testing?
+This patch series adds Zvqdotq support.
 
-We should just switch to Trixie, which however needs some work in lcitool.
+The isa spec of Zvqdotq extension is not ratified yet, so this patch series
+is based on the latest draft of the spec (v0.0.2) and make the Zvqdotq
+extension as an experimental extension.
 
-Paolo
+The draft of the Zvqdotq isa spec:
+https://github.com/riscv/riscv-dot-product
+
+v3:
+* Fix casting and simplify vs1/vs2 access (Thanks for Richard Henderson's
+  suggestion)
+
+v2:
+* Remove unnecessary variable and mask (Thanks for Richard Henderson's
+  suggestion)
+
+Max Chou (3):
+  target/riscv: Add Zvqdotq cfg property
+  target/riscv: rvv: Add Zvqdotq support
+  target/riscv: Expose Zvqdotq extension as a cpu property
+
+ target/riscv/cpu.c                            |  2 +
+ target/riscv/cpu_cfg_fields.h.inc             |  1 +
+ target/riscv/helper.h                         | 10 +++
+ target/riscv/insn32.decode                    |  9 +++
+ target/riscv/insn_trans/trans_rvzvqdotq.c.inc | 61 +++++++++++++++++++
+ target/riscv/tcg/tcg-cpu.c                    |  5 ++
+ target/riscv/translate.c                      |  1 +
+ target/riscv/vector_helper.c                  | 57 +++++++++++++++++
+ 8 files changed, 146 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzvqdotq.c.inc
+
+--
+2.39.3
 
 
