@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BAA0CA1007
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:17:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8880DCA100B
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utfpR-0000Yn-0N; Wed, 03 Sep 2025 01:14:41 -0400
+	id 1utfpP-0000Le-Ev; Wed, 03 Sep 2025 01:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfnB-0006Ok-Fl
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:12:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmm-0006Fi-V6
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:12:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfn9-00074i-6y
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:12:21 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utfmk-0006Ts-Hr
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:11:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756876338;
+ s=mimecast20190719; t=1756876313;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c/lFu6o8E1HCKXvUoJO2x7slIVPWYpyPrHnksOMI3CY=;
- b=Oc4TPeAtS51G/Z8vrQGgjyJJjd54DWIkhq2oD783/xVzn++zxZMQT7a5g/iC3tfhf3IgSr
- 1vr+2tw+Bz2U5SYqgXOuVCY4Ju+OOrfemmC02g4WuNdkaeHr86WBYvR+apOtuKPWDMu/VC
- tvxQNE29REWC7QR/p2bdaLExG8VaK1k=
+ bh=tagIbdrrDMrYKknepF7MVfnL4rHnC0ypp6LupSkyNl8=;
+ b=ePTqNglwl848Vygt9EVyGUoPeHL+OEJlIja7v71p5iFgPjTBaPvE3RZL4sC/b17iWfuUlU
+ 0ZZuLPT5vkRzQWfYPCyxhkxcSWqp667oRDjFHMSAKpPI+ng82ajwWS7CUT/F00itJqw7HH
+ rHDi0w8GjTloL9dqUjAHdglxAjEQSdY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-TglZedj8NvCPIFRjtNReIw-1; Wed,
- 03 Sep 2025 01:12:14 -0400
-X-MC-Unique: TglZedj8NvCPIFRjtNReIw-1
-X-Mimecast-MFC-AGG-ID: TglZedj8NvCPIFRjtNReIw_1756876334
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-5dRiywpsPzmidlaGIJhjKQ-1; Wed,
+ 03 Sep 2025 01:11:52 -0400
+X-MC-Unique: 5dRiywpsPzmidlaGIJhjKQ-1
+X-Mimecast-MFC-AGG-ID: 5dRiywpsPzmidlaGIJhjKQ_1756876311
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01583180034D; Wed,  3 Sep 2025 05:12:14 +0000 (UTC)
+ id 1EFA1180034F; Wed,  3 Sep 2025 05:11:51 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.53])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8868219560A2; Wed,  3 Sep 2025 05:12:11 +0000 (UTC)
+ id 4058F19560A2; Wed,  3 Sep 2025 05:11:49 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Daniel=20Berrang=C3=A9?= <berrange@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v2 17/18] iotests/151: ensure subprocesses are cleaned up
-Date: Wed,  3 Sep 2025 01:11:23 -0400
-Message-ID: <20250903051125.3020805-18-jsnow@redhat.com>
+Subject: [PATCH v2 09/18] python: backport 'qmp-shell-wrap: handle missing
+ binary gracefully'
+Date: Wed,  3 Sep 2025 01:11:15 -0400
+Message-ID: <20250903051125.3020805-10-jsnow@redhat.com>
 In-Reply-To: <20250903051125.3020805-1-jsnow@redhat.com>
 References: <20250903051125.3020805-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,7 +69,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,36 +85,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
-
-The iotest 151 creates a bunch of subprocesses, with their stdout
-connected to a pipe but never reads any data from them and does
-not gurantee the processes are killed on cleanup.
-
-This triggers resource leak warnings from python when the
-subprocess.Popen object is garbage collected.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+cherry picked from commit 9c889dcbd58817b0c917a9d2dd16161f48ac8203
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/qemu-iotests/151 | 5 +++++
- 1 file changed, 5 insertions(+)
+ python/qemu/qmp/qmp_shell.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
-index f2ff9c5dac2..06ee3585db9 100755
---- a/tests/qemu-iotests/151
-+++ b/tests/qemu-iotests/151
-@@ -263,6 +263,11 @@ class TestThrottledWithNbdExportBase(iotests.QMPTestCase):
-                         break
-                     except subprocess.TimeoutExpired:
-                         self.vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
-+                try:
-+                    p.kill()
-+                    p.stdout.close()
-+                except:
-+                    pass
-         except IndexError:
-             pass
+diff --git a/python/qemu/qmp/qmp_shell.py b/python/qemu/qmp/qmp_shell.py
+index 02028e94b5a..c923ff09e1f 100644
+--- a/python/qemu/qmp/qmp_shell.py
++++ b/python/qemu/qmp/qmp_shell.py
+@@ -607,6 +607,8 @@ def main_wrap() -> None:
+ 
+                 for _ in qemu.repl():
+                     pass
++    except FileNotFoundError:
++        sys.stderr.write(f"ERROR: QEMU executable '{cmd[0]}' not found.\n")
+     finally:
+         os.unlink(sockpath)
  
 -- 
 2.50.1
