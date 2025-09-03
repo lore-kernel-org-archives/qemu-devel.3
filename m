@@ -4,72 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472DDCA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6698CA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 14:30:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utoRH-0005uZ-FM; Wed, 03 Sep 2025 10:26:19 -0400
+	id 1utoUi-00079J-Hx; Wed, 03 Sep 2025 10:29:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utoRE-0005sQ-7C
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:26:16 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utoUh-000793-D7
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:29:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utoRA-0008TA-NG
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:26:15 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B6C46804C0;
- Wed, 03 Sep 2025 17:26:06 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
- [2a02:6bf:8080:b8f::1:11])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5QhJWm3FoGk0-i7y2puo0; Wed, 03 Sep 2025 17:26:06 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1756909566;
- bh=4t/tqa61erdyiaHXxcDuRD7CM5gukSF82VZwrrfNiYg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=TaJHQoTl9lcm/pBA2BaWC+sr+i968BAiYHxjAx3ZlOJwrDbJdnQLTR7X4atuOVPt/
- lunyNFBvvsuWGQVVwg8Wb12TzpKwdqIwqaq8Xpm+ZbYnCIVQs+wZPTXji0yWgSTlsh
- foO8HD8X95Aum0LTGG69Qzr/pibtGNZrBnGijWNA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <d4d36bf5-9dd5-4bf6-8132-c12533a63295@yandex-team.ru>
-Date: Wed, 3 Sep 2025 17:26:05 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utoUa-00016Q-QP
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 10:29:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756909779;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ntVDfuFQrn0Zt+l60khLVsQmuaNIn9T0GzOlkvDv2zM=;
+ b=cNRUIKXH2ySPV4yVk2CsyUP3rTK5YWSfJVzO6yl2xa/RP/e2bceovvGsmTgbMXYg2vWYKl
+ keT5u8V8a428hIKxepKs0zv47/59XH1taQEVGSo1PCdkC+c1K/dU0SA6omAU65eWIQybpw
+ GBkaHG6ccCRCTWuBuMtUirOe/hL9lUY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-IZntmxJ7MUW5W1iZfl_T6A-1; Wed, 03 Sep 2025 10:29:38 -0400
+X-MC-Unique: IZntmxJ7MUW5W1iZfl_T6A-1
+X-Mimecast-MFC-AGG-ID: IZntmxJ7MUW5W1iZfl_T6A_1756909778
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b32d323297so70040581cf.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 07:29:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756909778; x=1757514578;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ntVDfuFQrn0Zt+l60khLVsQmuaNIn9T0GzOlkvDv2zM=;
+ b=r2UbYVsET5Rp2tbjWqSqAhx0tUtMwVpZq86CTtlBSd5p7KCKBoE6S/ZutnwkobeY9q
+ 5ggfVCv9nYDcSTABMqEnoCdfusiz5cBPZLBVEvPXiRgka/4PuRXskCmYt5OcBECmltzV
+ H5uEpEX7ZiZCbhGvPKgDPJDUnd4CxK2slfm5HmhNJa0Gb9zQYjKYDeJ03oCrzaJEkpik
+ Gv4t/tqfXaopaqQKAASoE+HaunUNAnZRtAgsdj4/ZHORzlbB29tvR+TAhIeh8EzUdV4d
+ /V//WEqxAz5xgAOLt4hgmXt8R6HgncVOEzdtWMLpgO6SSUhAEH4eJfQobZInCMyha08T
+ yv5A==
+X-Gm-Message-State: AOJu0YzG6mq3UJXY1/9o50hkGtpXbaxT8F1wocP2cCRPCUy5446sn9hg
+ DiJl9sqGCSUmGXsrEn1f02mnuA9oRcpPi+hMrR9m4RRcvsIlr5Y6u369aeJ1Rl1rVGx5AcBpIkF
+ Xb9NQUzOOEZgPMf45on8hvr27KUR9CCOlc9zYt8bodYwFq2eHNGW17T7Lz+JM6xbYFFaeN9QF7W
+ i1AH8jQTpT9Jk1Oc9iOkva96n8c53PAfE5DdtdXA==
+X-Gm-Gg: ASbGncu1Ss+kg96HF32y/Q62cUH9PofJOAnJpkPNIsFMrK0bit0v8CVGMVgDvbsVfO5
+ /p/WpvoCT9KSxg2bjcDVo+vktl0GZX1G5YMxobymcW6xuWmXChs7+PSKHANvpCXevxHWVVxNsJ4
+ aISpOoAJ6TGErnVz8IJ5YybSSGl+HKG4OaKVUEqh8Ulgo3sPFb9+9YkFhWvqqhUICZwEJN4L24p
+ j5V3U8otqLJne+5aYWUCUmmDPADuSOZXe7KNufGUCIkChiYGoXQswWUunQR62LL6mPPTzwI7LMG
+ 4RGr8JD8Gz5i5NvQ2VlcAB/rpRNA4fSq51LM5d9c41MeqqO6/dwUYzNFiOaEQtz1gYjaOv0A4at
+ aSqTzrZBqf1cqHo1pSFY=
+X-Received: by 2002:a05:622a:88:b0:4b2:9b6b:3e with SMTP id
+ d75a77b69052e-4b31d87474amr175450811cf.36.1756909777623; 
+ Wed, 03 Sep 2025 07:29:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9I24oatP0KK9PdanOfNNKlZHc9626N0828Ct5Xo1fbN003BqqNx25/lMcmZe9yMjt4tzhBQ==
+X-Received: by 2002:a05:622a:88:b0:4b2:9b6b:3e with SMTP id
+ d75a77b69052e-4b31d87474amr175450361cf.36.1756909777030; 
+ Wed, 03 Sep 2025 07:29:37 -0700 (PDT)
+Received: from x1.com
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b48f77f212sm12212121cf.35.2025.09.03.07.29.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Sep 2025 07:29:34 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2] memory: Fix addr/len for flatview_access_allowed()
+Date: Wed,  3 Sep 2025 10:29:32 -0400
+Message-ID: <20250903142932.1038765-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] net/tap: add some trace points
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
- steven.sistare@oracle.com, yc-core@yandex-team.ru, peterx@redhat.com,
- mst@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, philmd@linaro.org
-References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
- <20250903133706.1177633-2-vsementsov@yandex-team.ru>
- <aLhLvIts2vVl63Xr@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aLhLvIts2vVl63Xr@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,121 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.09.25 17:11, Daniel P. Berrangé wrote:
-> On Wed, Sep 03, 2025 at 04:36:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Add trace points to simplify debugging migration.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   net/tap.c        | 58 ++++++++++++++++++++++++++++++++++++++++++++++++
->>   net/trace-events |  7 ++++++
->>   2 files changed, 65 insertions(+)
->>
->> diff --git a/net/tap.c b/net/tap.c
->> index 2530627a9a..224fb37310 100644
->> --- a/net/tap.c
->> +++ b/net/tap.c
->> @@ -43,6 +43,7 @@
->>   #include "qemu/main-loop.h"
->>   #include "qemu/sockets.h"
->>   #include "hw/virtio/vhost.h"
->> +#include "trace.h"
->>   
->>   #include "net/tap.h"
->>   
->> @@ -148,6 +149,9 @@ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
->>       g_autofree struct iovec *iov_copy = NULL;
->>       struct virtio_net_hdr hdr = { };
->>   
->> +    trace_tap_receive_iov(s->using_vnet_hdr, s->host_vnet_hdr_len, iovcnt,
->> +                          iov->iov_len);
->> +
->>       if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
->>           iov_copy = g_new(struct iovec, iovcnt + 1);
->>           iov_copy[0].iov_base = &hdr;
->> @@ -183,6 +187,49 @@ static void tap_send_completed(NetClientState *nc, ssize_t len)
->>       tap_read_poll(s, true);
->>   }
->>   
->> +static char *tap_dump_packet(const uint8_t *buf, int size)
->> +{
->> +    int i, j;
->> +    char hex_line[80];  /* Enough space for hex pairs + spaces */
->> +    char ascii_line[17]; /* 16 + 1 for null terminator */
->> +    GString *dump_str = g_string_new(NULL);
->> +
->> +    g_string_append_printf(dump_str, "Packet dump (%d bytes):\n", size);
-> 
-> It occurrs to me that this ability to dump a buffer is likely useful for
-> other areas of QEMU. How about moving this to somewhere in util/ and
-> renaming it to something like "dump_buffer".
+flatview_access_allowed() should pass in the address offset of the memory
+region, rather than the global address space. Shouldn't be a major issue
+yet, since the addr is only used in an error log.
 
-Agreed, will do.
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 3ab6fdc91b ("softmmu/physmem: Introduce MemTxAttrs::memory field and MEMTX_ACCESS_ERROR")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+v2:
+- Fix len as well [Phil]
+---
+ system/physmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> 
-> You can drop the 'Packet dump' prefix, and bytes count, as you can
-> include that info in the trace-events format string instead.
-> 
->> +
->> +    for (i = 0; i < size; i += 16) {
->> +        memset(hex_line, 0, sizeof(hex_line));
->> +        memset(ascii_line, 0, sizeof(ascii_line));
->> +
->> +        /* Build hex line in groups of 2 bytes (4 hex chars) */
->> +        int hex_pos = 0;
->> +        for (j = 0; j < 16 && (i + j) < size; j += 2) {
->> +            if (i + j + 1 < size) {
->> +                /* Two bytes available */
->> +                hex_pos += snprintf(hex_line + hex_pos,
->> +                                    sizeof(hex_line) - hex_pos,
->> +                                    "%02x%02x ", buf[i + j], buf[i + j + 1]);
->> +            } else {
->> +                /* Only one byte left */
->> +                hex_pos += snprintf(hex_line + hex_pos,
->> +                                    sizeof(hex_line) - hex_pos,
->> +                                    "%02x   ", buf[i + j]);
->> +            }
->> +        }
->> +
->> +        /* Build ASCII line */
->> +        for (j = 0; j < 16 && (i + j) < size; j++) {
->> +            uint8_t byte = buf[i + j];
->> +            ascii_line[j] = (byte >= 32 && byte <= 126) ? byte : '.';
->> +        }
->> +
->> +        /* Add the line in tcpdump-like format */
->> +        g_string_append_printf(dump_str, "\t0x%04x:  %-40s %s\n",
->> +                               i, hex_line, ascii_line);
->> +    }
->> +
->> +    return g_string_free(dump_str, false);
->> +}
-> 
->> diff --git a/net/trace-events b/net/trace-events
->> index cda960f42b..b51427f539 100644
->> --- a/net/trace-events
->> +++ b/net/trace-events
->> @@ -29,3 +29,10 @@ vhost_vdpa_set_address_space_id(void *v, unsigned vq_group, unsigned asid_num) "
->>   vhost_vdpa_net_load_cmd(void *s, uint8_t class, uint8_t cmd, int data_num, int data_size) "vdpa state: %p class: %u cmd: %u sg_num: %d size: %d"
->>   vhost_vdpa_net_load_cmd_retval(void *s, uint8_t class, uint8_t cmd, int r) "vdpa state: %p class: %u cmd: %u retval: %d"
->>   vhost_vdpa_net_load_mq(void *s, int ncurqps) "vdpa state: %p current_qpairs: %d"
->> +
->> +# tap.c
->> +tap_receive_iov(bool using_vnet_hdr, uint32_t host_vnet_hdr_len, int iovcnt, size_t iov_len) "using_vnet_hdr:%d host_vnet_hdr_len:%u iovcnt:%d iov_len:%zu"
->> +tap_send_packet(bool using_vnet_hdr, uint32_t host_vnet_hdr_len, int size) "using_vnet_hdr:%d host_vnet_hdr_len:%u size:%d"
->> +tap_enable(void) "tap enabled"
->> +tap_disable(void) "tap disabled"
->> +tap_packet_dump(const char *dump_str) "%s"
-> 
-> This could be
-> 
->       tap_packet_dump(size_t bytes, const char *dump_str) "Package dump (%zu bytes) %s"
-> 
-> With regards,
-> Daniel
-
-
+diff --git a/system/physmem.c b/system/physmem.c
+index f498572fc8..d1cd85abd4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3027,7 +3027,7 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_write_continue(fv, addr, attrs, buf, len,
+@@ -3118,7 +3118,7 @@ static MemTxResult flatview_read(FlatView *fv, hwaddr addr,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_read_continue(fv, addr, attrs, buf, len,
 -- 
-Best regards,
-Vladimir
+2.50.1
+
 
