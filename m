@@ -4,96 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C94CA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 17:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6942CA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 17:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utr8k-00050C-Iv; Wed, 03 Sep 2025 13:19:22 -0400
+	id 1utrcz-00037b-QA; Wed, 03 Sep 2025 13:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1utr8g-0004z6-31
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 13:19:18 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1utr8d-0007xw-Qa
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 13:19:17 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-24c8ef94e5dso865525ad.1
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 10:19:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1756919953; x=1757524753; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hMiuVffIgpE15VRvxm6M0vZ5A6OdLUBM0JnSzEEV5Os=;
- b=msv8ouQ1a3LxY5eWIJVJmO6+D4zIheBvRC7pSBjlgd5btDPwXKZV/n4kw4A3n5++Yt
- +GvqpTOuLksBO8UiuFoHZFP5wP4N2tqHmeCCb20+DJsXkoFGZXimVacp86u1KJDvcCOH
- Xpb2Ejk9W7hQrCAoKiHEqPHP/2J0Lp7UODQntEb5DpjrO7adwKgx7TDVzj0idUWUpUcw
- I5PKwbwhStA9MsO6FTkmU84qds40akboiT7Gq7loDW1FgKXMgs0kkYuAe1EPkdf180Y+
- KiOn5XG6mNYASRly/+NB704D155vfVT3JqNbPIShaeA5Q4pDTvqGDSD9LXlmW8M90yiM
- jPwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756919953; x=1757524753;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hMiuVffIgpE15VRvxm6M0vZ5A6OdLUBM0JnSzEEV5Os=;
- b=aGxfl4YXwre0QZlVTg3rlkNe3P198GzOu74UiDXfCHmzsXyC1lXREe6/gcTd+yebvg
- cG/V09zKma4RnZxJ1MkZKpikkzSEkwgxBFGQiSUnbbnYDXqV55hD9SlaTLejzPsEOV4u
- y0VKx1OYb5r96xJISKec12koTBgkaifyw/1dANr1Z477wp/af3mzWu5scPPRP2w+JSgI
- K6PtNTuKQVeyjz/dXkQuot0+UiH4S3Xsu81B2mHK/eGWWvZrsYjdJqpeIsRH2C40MDvo
- yuFLZlry/n4yRhyXTX/MTYb/hqW/ba8+H13VjqaPdVjuR5tGzlr49vhle9A96WrKK7iL
- pVdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGJVu6Gx443Le6f4HHbnpbbON+b1bTg9z5NLlIL7Kwo8ZeGQwX+ACjcGvVbRZST0TyOv2D6uvdYBxg@nongnu.org
-X-Gm-Message-State: AOJu0YwTYzA8oTSCh6DaYj/w2wmsbLotc7AoSWFaLHlfu1O+lQ2FxiV6
- p5VEfs1Ce7jXcEOd7pgr/aYq9boq1C0Q+jCdprmW+O5++7MlzDQkU7UhWem3KhL8sco=
-X-Gm-Gg: ASbGncsfcsvC1ek8lNqWY6/fxofPC5AaYY5vYupZS3u13+eCkYH5bYd9w+IU91F1S/A
- WvgMOy19MFhtYxq5lyCZ4mDK+7UJByEtcMir9fJ0kdeY2zp05SHnOWaTK1qwu6lYLpa3ZphB3xy
- BSg1tEy0BpkoTvXKa87mpA8PDdm+WufZHl+OOkybAuuL3J7EM4RfGwlyW9qGMVRQh0XZyDIB4OY
- MR+q24Nho6jxCOkv4OmaTxFoaX3kDlL9JmmrZr1tWDva5Jz+6Amvt/8F/SSr9tmOY361aGuIT3W
- 8B5wzdARe0euskouvd+2CwnvNZ73b+DWuFJPYTQeG8Fr36aYTu0U4G+yBsDJN4O2MKnBiTgA07c
- TDE0zdT+DLVSv5O6DLRZjmaN1KYozlWBjmMomNWg+2U15/vg=
-X-Google-Smtp-Source: AGHT+IFFiIfHyaPkcqhvvUlPRFH2dNcM1d7gNp2tcJTXjm+EwPdIakB4C26rMLekxHA9x3IgsAqR9w==
-X-Received: by 2002:a17:902:dac7:b0:24b:1585:6350 with SMTP id
- d9443c01a7336-24b158566c4mr99468175ad.11.1756919953056; 
- Wed, 03 Sep 2025 10:19:13 -0700 (PDT)
-Received: from [192.168.68.110] ([187.10.187.251])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24903705b91sm167974185ad.12.2025.09.03.10.19.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 10:19:12 -0700 (PDT)
-Message-ID: <5cef4d88-9a4c-42a2-a405-debfe3a61497@ventanamicro.com>
-Date: Wed, 3 Sep 2025 14:19:08 -0300
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1utrcd-000301-Rf; Wed, 03 Sep 2025 13:50:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1utrcZ-0001xT-BD; Wed, 03 Sep 2025 13:50:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583En0dS000501;
+ Wed, 3 Sep 2025 17:50:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wlESbv
+ d+VLP5m9HFcsMeMBKR1U2NgmbferJSin1sTJE=; b=TxI+i6Y69lpKiWHsBDRUOy
+ t3Q9g5H0EbWXGlGGExppCDjhsfDqJyx2qshegUMZK7ebUjUIEIRBldbXfw57i11u
+ DNHcFv+0/Ew9p3AxYiNhlQPw/J60td5sf7xMVwXn/K/DHfvPxQeGZksgfjlIEkbS
+ IYpTVeZjErYyO35/Et+03u6cJmX8nrzX7DRLcpQ0lvgYgBhAnsPPbZEjSdGscmDB
+ RlKQA4/hToaNOzZNZkiCth0OI6EPFugQkFf+2zyAJo0q+bGx6viklShsNuytrno7
+ vTbhzQHgUbi6SuWv6RQErF1Nt4Gsr3AXNC7H+QPVBsomUfUZkaya5Tp1JbTDXkAg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48uswdduan-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Sep 2025 17:50:00 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 583EcmjA019313;
+ Wed, 3 Sep 2025 17:49:59 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48vd4n0he9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Sep 2025 17:49:59 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 583HnnqE24904308
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 3 Sep 2025 17:49:49 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7356E5804E;
+ Wed,  3 Sep 2025 17:49:58 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9E0335803F;
+ Wed,  3 Sep 2025 17:49:57 +0000 (GMT)
+Received: from [9.61.89.204] (unknown [9.61.89.204])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  3 Sep 2025 17:49:57 +0000 (GMT)
+Message-ID: <5ed9c5ef-cb1d-428c-a822-9f378fabd755@linux.ibm.com>
+Date: Wed, 3 Sep 2025 13:49:57 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/riscv: Fix IALIGN check in misa write
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-devel@nongnu.org, Chao Liu <chao.liu@zevorn.cn>,
- Nicholas Joaquin <njoaquin@tenstorrent.com>,
- Ganesh Valliappan <gvalliappan@tenstorrent.com>
-References: <20250903030114.274535-1-npiggin@gmail.com>
- <20250903030114.274535-2-npiggin@gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v2 3/4] s390x/pci: Add PCI error handling for vfio pci
+ devices
+To: Farhan Ali <alifm@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: thuth@redhat.com, alex.williamson@redhat.com
+References: <20250825212434.2255-1-alifm@linux.ibm.com>
+ <20250825212434.2255-4-alifm@linux.ibm.com>
+ <24333a79-2a49-4abb-8bb7-8e5b30a0d58b@redhat.com>
+ <d396992a-1412-433c-afa8-619c7574de29@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20250903030114.274535-2-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <d396992a-1412-433c-afa8-619c7574de29@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PeP/hjhd c=1 sm=1 tr=0 ts=68b87fc8 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=jTy7u8df8b6q5aTuflMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzNCBTYWx0ZWRfXxkkOOhKfMkjg
+ x3kOIWGIHE9bR3/cvrCcc2deTKM8+9hZZgQFWkgvF+qXgNxmcUjpDpHuBOjzth5kF9HO2nUX/jr
+ ZyrpT/blbjsprUHAhoH+obwF0zb/SGJPivoz53kZRP8mgKxaoWAPTW2Zio8HAO3IV+Nj0f957Sl
+ ARgX2wtCcjX1QHf2c70R+U/B5GBu5sryC696w/bR4qfpzdrvbpghz87Nc+1HnTCx3S+RhUfWjgM
+ 3720UqNucwUmg7LNT1Kei0I68cLUDHqGV+y3kuBxSFc/f29UiXFQTOwuBv/AU88N6Oc1QOJZjOH
+ 8QdgWH+vqNceazE/lm73cu28DzxY8pTyZrIcmyuNsIjKePkXkmohM2uQUD+ZxsL28j8QFdkb8ar
+ PkaLU18c
+X-Proofpoint-GUID: ASOolwTxc-2OBG7-iIoujXkoLE26bzz5
+X-Proofpoint-ORIG-GUID: ASOolwTxc-2OBG7-iIoujXkoLE26bzz5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_09,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300034
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,174 +123,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/3/25 12:01 AM, Nicholas Piggin wrote:
-> The instruction alignment check for the C extension was inverted.
-> The new value should be checked for C bit clear (thus increasing
-> IALIGN). If IALIGN is incompatible, then the write to misa should
-> be suppressed, not just ignoring the update to the C bit.
+On 9/3/25 1:12 PM, Farhan Ali wrote:
 > 
->  From the ISA:
+> On 9/1/2025 4:25 AM, Cédric Le Goater wrote:
+>> On 8/25/25 23:24, Farhan Ali wrote:
+>>> Add an s390x specific callback for vfio error handling. For s390x pci devices,
+>>> we have platform specific error information. We need to retrieve this error
+>>> information for passthrough devices. This is done via a memory region which
+>>> exposes that information.
+>>>
+>>> Once this error information is retrieved we can then inject an error into
+>>> the guest, and let the guest drive the recovery.
+>>>
+>>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+>>> ---
+>>>   hw/s390x/s390-pci-bus.c          |  5 +++
+>>>   hw/s390x/s390-pci-vfio.c         | 76 ++++++++++++++++++++++++++++++++
+>>>   include/hw/s390x/s390-pci-bus.h  |  1 +
+>>>   include/hw/s390x/s390-pci-vfio.h |  2 +
+>>>   4 files changed, 84 insertions(+)
+>>>
+>>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>>> index f87d2748b6..af42eb9938 100644
+>>> --- a/hw/s390x/s390-pci-bus.c
+>>> +++ b/hw/s390x/s390-pci-bus.c
+>>> @@ -158,6 +158,8 @@ static void s390_pci_perform_unplug(S390PCIBusDevice *pbdev)
+>>>   {
+>>>       HotplugHandler *hotplug_ctrl;
+>>>   +    qemu_mutex_destroy(&pbdev->err_handler_lock);
+>>> +
+>>>       if (pbdev->pft == ZPCI_PFT_ISM) {
+>>>           notifier_remove(&pbdev->shutdown_notifier);
+>>>       }
+>>> @@ -1140,6 +1142,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>>>           pbdev->iommu->pbdev = pbdev;
+>>>           pbdev->state = ZPCI_FS_DISABLED;
+>>>           set_pbdev_info(pbdev);
+>>> +        qemu_mutex_init(&pbdev->err_handler_lock);
+>>>             if (object_dynamic_cast(OBJECT(dev), "vfio-pci")) {
+>>>               /*
+>>> @@ -1164,6 +1167,8 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>>>               pbdev->iommu->dma_limit = s390_pci_start_dma_count(s, pbdev);
+>>>               /* Fill in CLP information passed via the vfio region */
+>>>               s390_pci_get_clp_info(pbdev);
+>>> +            /* Setup error handler for error recovery */
+>>> +            s390_pci_setup_err_handler(pbdev);
+>>
+>> This can fail. Please add an 'Error **' parameter and change the returned
+>> value to bool.
+>>
+> I wanted to avoid hard failing here as we can have mismatch in kernel and QEMU support for the feature. For example we can have a newer QEMU version with the feature running on an older kernel. So wanted to treat any error in setting up the error handler would be more of an info/warn message.
+
++1, please do not cause a hard failure if the underlying host kernel is simply missing support...
+
+>>> +void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev)
+>>> +{
+>>> +    int ret;
+>>> +    VFIOPCIDevice *vfio_pci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
+>>> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
+>>> +                              sizeof(uint64_t))] = {};
+>>> +    struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
+>>> +
+>>> +    feature->argsz = sizeof(buf);
+>>> +    feature->flags = VFIO_DEVICE_FEATURE_PROBE | VFIO_DEVICE_FEATURE_ZPCI_ERROR;
+>>> +
+>>> +    ret = vfio_pci->vbasedev.io_ops->device_feature(&vfio_pci->vbasedev,
+>>> +                                                     feature);
+>>
+>> Please introduce vfio helpers to hide the internal indirection :
+>>
+>>   ->vbasedev.io_ops->device_feature(...)
+>>
+>>> +
+>>> +    if (ret) {
+>>
+>> Shouldn't we test the return value to decide if the error is
+>> an unimplemented feature or an unexpected error ?
 > 
->    Writing misa may increase IALIGN, e.g., by disabling the "C"
->    extension. If an instruction that would write misa increases IALIGN,
->    and the subsequent instruction’s address is not IALIGN-bit aligned,
->    the write to misa is suppressed, leaving misa unchanged.
+> Yeah, I think it makes sense separate out error for unimplemented feature (ENOTTY) vs any other unexpected error. Will change this.
 > 
-> This was found with a verification test generator based on RiESCUE.
-> 
-> Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
-> Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Fixes: f18637cd61 ("RISC-V: Add misa runtime write support")
-
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/csr.c                        | 16 ++++-
->   tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
->   tests/tcg/riscv64/misa-ialign.S           | 88 +++++++++++++++++++++++
->   3 files changed, 106 insertions(+), 3 deletions(-)
->   create mode 100644 tests/tcg/riscv64/misa-ialign.S
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 8842e07a73..64b55b7add 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2140,9 +2140,19 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
->       /* Mask extensions that are not supported by this hart */
->       val &= env->misa_ext_mask;
->   
-> -    /* Suppress 'C' if next instruction is not aligned. */
-> -    if ((val & RVC) && (get_next_pc(env, ra) & 3) != 0) {
-> -        val &= ~RVC;
-> +    /*
-> +     * misa writes that increase IALIGN beyond alignment of the next
-> +     * instruction cause the write to misa to be suppressed. Clearing
-> +     * "C" extension increases IALIGN.
-> +     */
-> +    if (!(val & RVC) && (get_next_pc(env, ra) & 3) != 0) {
-> +        /*
-> +         * If the next instruction is unaligned mod 4 then "C" must be
-> +         * set or this instruction could not be executing, so we know
-> +         * this is is clearing "C" (and not just keeping it clear).
-> +         */
-> +        g_assert(env->misa_ext & RVC);
-> +        return RISCV_EXCP_NONE;
->       }
->   
->       /* Disable RVG if any of its dependencies are disabled */
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-> index 3ca595335d..6e470a028f 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -24,5 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
->   run-test-mepc-masking: test-mepc-masking
->   	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
->   
-> +EXTRA_RUNS += run-misa-ialign
-> +run-misa-ialign: QEMU_OPTS := -cpu rv64,c=true,v=true,x-misa-w=on $(QEMU_OPTS)
-> +run-misa-ialign: misa-ialign
-> +	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
-> +
->   # We don't currently support the multiarch system tests
->   undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/misa-ialign.S b/tests/tcg/riscv64/misa-ialign.S
-> new file mode 100644
-> index 0000000000..7f1eb30023
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/misa-ialign.S
-> @@ -0,0 +1,88 @@
-> +/*
-> + * Test for MISA changing C and related IALIGN alignment cases
-> + *
-> + * This test verifies that the "C" extension can be cleared and set in MISA,
-> + * that a branch to 2-byte aligned instructions can be executed when "C" is
-> + * enabled, and that a write to MISA which would increase IALIGN and cause
-> + * the next instruction to be unaligned is ignored.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#define RVC (1 << ('C'-'A'))
-> +#define RVV (1 << ('V'-'A'))
-> +
-> +.option norvc
-> +	.text
-> +	.global _start
-> +_start:
-> +	lla	t0, trap
-> +	csrw	mtvec, t0
-> +
-> +	csrr	t0, misa
-> +	li	t1, RVC
-> +	not	t1, t1
-> +	and	t0, t0, t1
-> +	csrw	misa, t0
-> +	csrr	t1, misa
-> +	li	a0, 2 # fail code
-> +	bne	t0, t1, _exit # Could not clear RVC in MISA
-> +
-> +	li	t1, RVC
-> +	or	t0, t0, t1
-> +	csrw	misa, t0
-> +	csrr	t1, misa
-> +	li	a0, 3 # fail code
-> +	bne	t0, t1, _exit # Could not set RVC in MISA
-> +
-> +	j	unalign
-> +. = . + 2
-> +unalign:
-> +
-> +	li	t1, RVC
-> +	not	t1, t1
-> +	and	t0, t0, t1
-> +	csrw	misa, t0
-> +	csrr	t1, misa
-> +	li	a0, 4 # fail code
-> +	beq	t0, t1, _exit # Was able to clear RVC in MISA
-> +
-> +	li	t0, (RVC|RVV)
-> +	not	t0, t0
-> +	and	t0, t0, t1
-> +	csrw	misa, t0
-> +	csrr	t0, misa
-> +	li	a0, 5 # fail code
-> +	bne	t0, t1, _exit # MISA write was not ignored (RVV was cleared)
-> +
-> +	j	realign
-> +. = . + 2
-> +realign:
-> +
-> +	# Success!
-> +	li	a0, 0
-> +	j	_exit
-> +
-> +trap:
-> +	# Any trap is a fail code 1
-> +	li	a0, 1
-> +
-> +# Exit code in a0
-> +_exit:
-> +	lla	a1, semiargs
-> +	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-> +	sd	t0, 0(a1)
-> +	sd	a0, 8(a1)
-> +	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-> +
-> +	# Semihosting call sequence
-> +	.balign	16
-> +	slli	zero, zero, 0x1f
-> +	ebreak
-> +	srai	zero, zero, 0x7
-> +	j	.
-> +
-> +	.data
-> +	.balign	16
-> +semiargs:
-> +	.space	16
-
+... But if you add differentiation here between the 2 types of errors then I would be fine with hard-fail for unexpected cases and info/warn for missing host kernel support.
 
