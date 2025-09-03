@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E4ECA100B
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E5BCA1007
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utg6I-0006p3-GW; Wed, 03 Sep 2025 01:32:06 -0400
+	id 1utg8s-0007mn-Lm; Wed, 03 Sep 2025 01:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utg6G-0006oq-Cc
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:32:04 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utg6E-0007H3-OK
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:32:04 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b0439098469so392696466b.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 22:32:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756877520; x=1757482320; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fdH062GXoHT4fnrcNCXci2q8mWrDc7rYeRbbnMb3rdg=;
- b=EJvfxuL7ANEbWD8LAd2jMTnP6BRojlo0a5NALHr9bIVOD3QkeQPvTt60L9e8+ZZRQr
- SiPGxXnWDqe7aokfu6aNJw2GZedXngy/wbK5y+rAQsx/zA09Wxh6Ai1nZ2IwKP0iCWYl
- G3Ji4sWRl4Xf/aPJqEcwgZV2R4/IUAwipF5jOjo5+jPRmdrMre7CnrHKUV9f4qbprAfg
- be3hmh1XWLlcRsE+xs9yG3E9p5OHNy/PPeW5n28LFIrr8Zy4arAb229dLe1QWvmwknbK
- yceKBs0BKlDg2/1n54X67LeHzvX0k/KeSd8cwxHTToYozYd630/w4+U6yTWcm0kD8M/8
- Xd2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756877520; x=1757482320;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fdH062GXoHT4fnrcNCXci2q8mWrDc7rYeRbbnMb3rdg=;
- b=TP4XBTWCIZYDA4+0c1Ao5AUiP6sDfKNk3Es7BgL4IsetFUH0QYoqzO8urBgj3KSwfB
- ASMwwYju5NMvGofci9BprT58kfGSNezQTz/Rb69b3e8FLnMxsv9OVoH+0pWGToIeLb2X
- s6ES3ivP3Yhn3jlByDhOM+aJvTWkbqmYDDt80I6lLUM73yKX49L3n3T6V3NsSGQGieZv
- a6SdkHykRKeqqfPISYLoiLKmIJBpw65c1E7RZdHA3vZtZ6LaE9QrZuop+V++8rFqtzxa
- o5ozdbd7gjSKLFvdgPD5EELTB5F9b9flBjelNO4DHc2iWedHheYrKlnojdPkV5Yc33hO
- k3kg==
-X-Gm-Message-State: AOJu0YwJeMXp+n0KZ+p06vTNpWOcR86zkatvjmkG0/XJ+YOeL65l4SA6
- 3Mzb/puWOniToGw2MRTi92XKDbw2jy06K6FHSBL1HwJO7agxMnZPrSyE8+lPgThxaIbXmwZXs48
- 5PsNdNLo=
-X-Gm-Gg: ASbGncszo/WwMuxorREurMRAFvlJdZHthJXDxBGNFRiw7SdpdsxJL6idNjWbI/bn2mJ
- QvjexVGZeBJXO62j+FvFBS/fl/fAplKAZAsaLDxYKIycDlKWWjKfhdQwdPBkEDIWikAGQNK0Ovu
- eQb2EeXqMfv/mdxAnl6kwlWF/Md9CsLK1jVPWMNbKhrBMQLnmqBEhN+83xD4uU9gQCb8KMqB5RJ
- wknLiCNKFJXSD/0mBolZIxOJRA6NbeRn3quERXJxbYzHr4wYi4wJjXI+NnmL76q2rFE4qq7HZbD
- bGyiBc4Zb28r7sBtoyvSyl7yhWlYUCw0AIInrRVsQVkD3LG4Y5OL3/Xox6RyVh4tw7wp8tR8UZN
- M8aa0D3DoZo5D0a5ar3ApprppHH29Q9/xvwCodG1E8ve8lZ5WrSVqrM6T1TSsCiTmcBmjeTh4Oz
- ByLuPyx9WJb++cp6hd
-X-Google-Smtp-Source: AGHT+IFroqKB/CZrAXJfbYEvcQ5fztwnqsN0+CZUEVcdHDBRocOZKomb2EpoC4Iu0y8jBU/XPBtAHg==
-X-Received: by 2002:a17:907:7ba0:b0:af9:6bfb:58b7 with SMTP id
- a640c23a62f3a-b01d8a30045mr1396311566b.5.1756877519922; 
- Tue, 02 Sep 2025 22:31:59 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b0432937e0esm633759466b.3.2025.09.02.22.31.59
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 22:31:59 -0700 (PDT)
-Message-ID: <49bf5320-37c9-4632-9165-0ced917ea64e@linaro.org>
-Date: Wed, 3 Sep 2025 07:31:57 +0200
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1utg8r-0007mR-4d
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:34:45 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1utg8p-0007yA-51
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:34:44 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 1CBD47A026D;
+ Wed,  3 Sep 2025 01:34:40 -0400 (EDT)
+Received: from phl-imap-08 ([10.202.2.84])
+ by phl-compute-06.internal (MEProxy); Wed, 03 Sep 2025 01:34:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1756877679;
+ x=1756964079; bh=YiNBx+5gE+2je0nmkePakqGfZ9tE/c4czo3b/MR9VuU=; b=
+ Elmufihe6kI6/OFbiWclECPZsXkT2xRWI8pVFUF/+gRg9nEKOblw2p7bgc7YjnCe
+ ah5/v8279UcmZLj6qt4OCR6kdDjiPTQtmRsSzMiRYjLQLE+0ii0QT5J2yXjT7Nb1
+ cUaEb97WZnmQVQxwHyLjCuP7aCiiq5fCpjXPWvqYFwjAMrnNGSHrBpjzK4JrlyIN
+ z9LLlQeDZo+kqVia02AJRgWVxuGm/B07s3kb6kIOkOMSo/59R4UO9w0/Lg2T73IA
+ hikjBjCgQGXXbD138VUtELgcEm03za2/Gb6ihkvf7mihOqeVvdDd+Um+tBC+frGy
+ Ks2corMfFmJUN77rtP5kaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756877679; x=
+ 1756964079; bh=YiNBx+5gE+2je0nmkePakqGfZ9tE/c4czo3b/MR9VuU=; b=h
+ LME9z9qn8NnixMxd4wOdZHboC1kuH2naq4K8JnBZwFJBx8zjWNasMd3fTGRNeQJi
+ cG50wy4/JEiZuGDQ7TfEsLW9iEU/JUe0LUDSQbuy4Gjv7tOMLfbqIK+mtcRsCW1i
+ yN1eQTGzSvVieJQfi3EZGqfkAddNGxytgjzj8+siidsan7DWZfqY+sdaeTnbFucY
+ AtPIb6uUqqufWpAroamkQmu+AjAeIvAX3SvJjfGT7lv3+6f203v4/aEfURcPNhry
+ KBr/pAhp9FdI9RUPFBF1LAP8jg9Nvj8iyxYBAHOSccfVj4+o2whZnKp40b7GWjPP
+ Vti58uW5BX8crijyUPxRw==
+X-ME-Sender: <xms:b9O3aK3-vnZ43PRShf7GxsYfjEpo9VYOIgQZGvuCDARs8hJHYUpBBg>
+ <xme:b9O3aNH5kz0IDaDJeZUacly8xncMN3VMe1p1dkCmAnEsd8fcLe9htFr48RN4eZKBj
+ ty68xOU1D8nl6yCB28>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+ lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+ epofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhirgiguhhn
+ ucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
+ ftrfgrthhtvghrnhepjeehfeduvddtgffgvdffkeethefhlefgvdevvdekuefffeekheeh
+ geevhfevteejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+ homhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomhdpnhgspghrtghpthht
+ ohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhvghnhhhurggtrghise
+ hkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhg
+ pdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
+X-ME-Proxy: <xmx:b9O3aF8-x7_-T45xvRC9FdHbGoxnpPg1bJSJSQLmO8juEmp-3qTA7g>
+ <xmx:b9O3aM_w8L-a1jsSeyw4vkgRQD4wspJ-NYACZTR0aw74mQQ4Yu4Eyw>
+ <xmx:b9O3aMcFj5ug8R8cpDVdoD-NKkz6BFPcql-nV-lJwBQ1GPC4o7CS4Q>
+ <xmx:b9O3aFG76wohDoAAm-TAazshMfT4eDyj7HwxHHvB_US6mgR9CIWLng>
+ <xmx:b9O3aNvJziqLlLIX8pBWJOR-GWdScLkuXanAIXSajJZ3cZmkYBHxxaxs>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 957912CE0072; Wed,  3 Sep 2025 01:34:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] linux-user/riscv: Add extended state to sigcontext
-To: qemu-devel@nongnu.org
-References: <20250903042510.279954-1-npiggin@gmail.com>
- <20250903042510.279954-3-npiggin@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250903042510.279954-3-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ThreadId: AWgixAIENElZ
+Date: Wed, 03 Sep 2025 13:34:18 +0800
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Message-Id: <a4918aba-bb20-4d21-8f72-eaf0329dd508@app.fastmail.com>
+In-Reply-To: <a972b6c1-5e66-41a9-b3ae-094fd98d6388@app.fastmail.com>
+References: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+ <a972b6c1-5e66-41a9-b3ae-094fd98d6388@app.fastmail.com>
+Subject: Re: [PATCH 0/5] hw/pci-host/bonito: Improve various emulation
+ functions
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=202.12.124.155;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +112,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 06:25, Nicholas Piggin wrote:
->   static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
->   {
-> +    struct target_ctx_hdr *hdr;
->       int i;
->   
-> -    __get_user(env->pc, &sc->pc);
-> +    __get_user(env->pc, &sc->sc_regs.pc);
->   
->       for (i = 1; i < 32; ++i) {
-> -        __get_user(env->gpr[i], &sc->gpr[i - 1]);
-> +        __get_user(env->gpr[i], &sc->sc_regs.gpr[i - 1]);
->       }
->       for (i = 0; i < 32; ++i) {
-> -        __get_user(env->fpr[i], &sc->fpr[i]);
-> +        __get_user(env->fpr[i], &sc->sc_fpregs.fpr[i]);
->       }
->   
->       uint32_t fcsr;
-> -    __get_user(fcsr, &sc->fcsr);
-> +    __get_user(fcsr, &sc->sc_fpregs.fcsr);
->       riscv_csr_write(env, CSR_FCSR, fcsr);
-> +
-> +    hdr = &sc->sc_extdesc.hdr;
-> +    uint32_t rsv;
-> +    __get_user(rsv, &sc->sc_extdesc.reserved);
-> +    if (rsv != 0) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext reserved field is "
-> +                                       "non-zero. Attempting restore anyway.");
-> +    }
-
-The kernel returns -EINVAL from restore_sigcontext, which causes rt_sigreturn to 
-force_sig(SIGSEGV).  We don't need -ERRNO here, but returning bool success would be proper.
 
 
-r~
+=E5=9C=A82025=E5=B9=B47=E6=9C=8816=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=
+=8D=883:09=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+> =E5=9C=A82025=E5=B9=B45=E6=9C=888=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=
+=E5=8D=883:46=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+>> Hi all,
+>>
+>> This series addressed a couple of missing Bonito functionalities
+>> I found when I was trying to test NetBSD against QEMU.
+>>
+>> Please review.
+>
+> Another ping :-)
+
+Ping :-)
+
+>
+> Thanks
+> Jiaxun
+>
+>>
+>> Thanks
+>> Jiaxun
+>>
+>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>> ---
+>> Jiaxun Yang (5):
+>>       hw/pci-host/bonito: Implement ICU
+>>       hw/pci-host/bonito: Implement PCIMAP register
+>>       hw/pci-host/bonito: Implement DMA address translation
+>>       hw/pci-host/bonito: Rework PCI config space accessor
+>>       hw/pci-host/bonito: Add comments about documentation
+>>
+>>  hw/pci-host/bonito.c     | 453 +++++++++++++++++++++++++++++--------=
+----------
+>>  hw/pci-host/trace-events |   3 -
+>>  2 files changed, 284 insertions(+), 172 deletions(-)
+>> ---
+>> base-commit: c5e2c4042e3c50b96cc5eaa9683325c5a96913b0
+>> change-id: 20250507-bonito-482759b2b52f
+>>
+>> Best regards,
+>> --=20
+>> Jiaxun Yang <jiaxun.yang@flygoat.com>
+>
+> --=20
+> - Jiaxun
+
+--=20
+- Jiaxun
 
