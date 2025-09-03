@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC6CCA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D5ACA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utidp-0002oZ-Is; Wed, 03 Sep 2025 04:14:53 -0400
+	id 1utieN-00030o-9w; Wed, 03 Sep 2025 04:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidn-0002np-4h; Wed, 03 Sep 2025 04:14:51 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidl-0001jk-5D; Wed, 03 Sep 2025 04:14:50 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-248df8d82e2so52931235ad.3; 
- Wed, 03 Sep 2025 01:14:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756887286; x=1757492086; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YvRVwijnneGWg1Edja7q4SQVpGJeMep01w/gAcM43ZQ=;
- b=Fs4nHkHpZkJPISI0OlZSYBi6nLoKf/v+FvR0dPrU/756fCFHkJz+SnFLe0KDJ2xHtW
- MyZow/aFnrGK42jlQSUrwq0n/ZV9R1qy8l/rUvsVIUzkW3gd5EJInCX3uorEosPP0y7w
- B2Em3fdB01IrWNJ3Y8X5LOWrTIYEyKiVZQhY4ueCPgak9J30WnzBBH46PnREJ5U5ccet
- AjYE0MM8MqfveAhQsRaoNsOJ8Ae1Dc4veIfReufA/rjtWNDTsZdSNn3jmcbdwNx3RM9m
- Bdw0y/G/WgKuWWureKJo0Zm3phzRJFWTJESg+O/S//Dw/MKr9o+O2OB+F60B7CJcie1C
- eRLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756887286; x=1757492086;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YvRVwijnneGWg1Edja7q4SQVpGJeMep01w/gAcM43ZQ=;
- b=WF532K4yGrlnQHEPenCLLDokjc853xjFOj0rBLRhU/9hFFuftkJz9uDODRBn0NiC2K
- JQKMu/ha6WSLbyiTCp1md2ddySLB2R84qtw1ftfTzUoGg9I4HxAyq5aEpYTpLA4Qsaql
- secNiNSxQ8dnhnRn9R4p/V170WI5q0rKRSgIJi5aYD5ompm45tcHZ+AFO/MHJjy+VC8c
- VdxE27yp6y82h1GWD/aXzsVzKizRFw89VDOjuzHNAeT9id1bFq9J61gnG4tI7LDxpA8c
- pbL87oFVW6lsDPx9uzzbesUULPxpT8sntYkLuGwouL5TkGE0c4dH4jt0RJIhxzlzezVn
- uKIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVF7E9XD7AbwSVz8lxNBNIHKLJelKKISlHGpx2T4CbH2YWRd6xT1taNfN6sHV/AYI3IRdjr4PP9Ckr4@nongnu.org
-X-Gm-Message-State: AOJu0YxgN5gzrrbM/rH3kgbM38VhwQnRIAfR4HlWiIZZ8A6eI/N67EAY
- kLSz8maTPpHctVXSkFwbyHHwmQkhOOewrdOSLD0nido/zakzn7K/EPwrWJ06RA==
-X-Gm-Gg: ASbGncsEpS9MuwmAbKMukBKwtRy2gEo3gCK99sb8cYrwU4djXUOYADkRLbD0iSIek1w
- /pRfLmVgeKkvZoVJ4xA9F1X4kKyuSQSYcmrLhTYqLJuho26dIQfxMMNq5HE0jgyheGq3Sgpasx7
- 8fTJS/1cPMbGAq94ffiiQdXVby2gq3pGdZ4L2oSpkbNxYHPeD9M5k25I5fS/hoFiJysEpa7uhin
- IIkxZYdJR7dLVxF0VfmhpsSwawfokp9M/o46g1LDfy8BYPGY78xjZYL8Pd8HJSNAX43l00qlFCr
- z8DeEZ72ZKFQ/FLOXdXsFMMXT0yiK9NeC3NYqFeDs9zY5G4/CWGO03fD2rqc/WzrMDpy+Sk1qc8
- L4q4E5vcrs+FfSZ7zmBaYFAtNt7qP+zaNptk8F8cVZgeC7J8OBB465E2bnrp1NU7PW55z
-X-Google-Smtp-Source: AGHT+IHDKngE7z+ISk9X7AAVoYQatEhKUjexYINGxIGIStv4iu8Z5qCxZ9UMqzrd2WYMFM5W/7Gv3Q==
-X-Received: by 2002:a17:902:f652:b0:249:3eec:15b8 with SMTP id
- d9443c01a7336-24944908a47mr194442395ad.24.1756887286150; 
- Wed, 03 Sep 2025 01:14:46 -0700 (PDT)
-Received: from lima-default (123.253.189.97.qld.leaptel.network.
- [123.253.189.97]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24c9a46bcf1sm8806555ad.3.2025.09.03.01.14.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Sep 2025 01:14:45 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-riscv@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 3/4] linux-user/riscv: Add vector state to signal context
-Date: Wed,  3 Sep 2025 18:14:16 +1000
-Message-ID: <20250903081417.338515-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
-References: <20250903081417.338515-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1utie1-0002rw-1J; Wed, 03 Sep 2025 04:15:05 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1utidz-0001kO-00; Wed, 03 Sep 2025 04:15:04 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E82E814F568;
+ Wed, 03 Sep 2025 11:14:52 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2611226E1A2;
+ Wed,  3 Sep 2025 11:14:54 +0300 (MSK)
+Message-ID: <1e96bf51-9b8f-4343-b43f-0c8f8dfb9c48@tls.msk.ru>
+Date: Wed, 3 Sep 2025 11:14:53 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qga/installer: Remove QGA VSS if QGA installation failed
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Yan Vugenfirer <yvugenfi@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250825143155.160913-1-kkostiuk@redhat.com>
+ <5d2f2ea7-07ee-438c-86d6-aff7a3ae7fff@tls.msk.ru>
+ <CAPMcbCpfSPPUOxFU9pw2UZFLDzeK0D71Lh5Gvy+sE-UtZPhuEw@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAPMcbCpfSPPUOxFU9pw2UZFLDzeK0D71Lh5Gvy+sE-UtZPhuEw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,188 +106,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables vector state to be saved and restored across signals.
+On 03.09.2025 11:01, Kostiantyn Kostiuk wrote:
+> Hi Michael,
+> 
+> Please also pick https://lore.kernel.org/qemu- 
+> devel/20250825135311.138330-1-kkostiuk@redhat.com/ <https:// 
+> lore.kernel.org/qemu-devel/20250825135311.138330-1-kkostiuk@redhat.com/> 
+> for stable as it provides more detailed error logs.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- linux-user/riscv/signal.c | 132 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 128 insertions(+), 4 deletions(-)
+Picked up edf3780a7dad4 "qga-vss: Write hex value of error in log"
+too (for 10.0 & 10.1).
 
-diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
-index 4ef55d0848..6af7f6b0f3 100644
---- a/linux-user/riscv/signal.c
-+++ b/linux-user/riscv/signal.c
-@@ -41,7 +41,17 @@ struct target_fp_state {
-     uint32_t fcsr;
- };
- 
-+struct target_v_ext_state {
-+    target_ulong vstart;
-+    target_ulong vl;
-+    target_ulong vtype;
-+    target_ulong vcsr;
-+    target_ulong vlenb;
-+    target_ulong datap;
-+} __attribute__((aligned(16)));
-+
- /* The Magic number for signal context frame header. */
-+#define RISCV_V_MAGIC   0x53465457
- #define END_MAGIC       0x0
- 
- /* The size of END signal context header. */
-@@ -106,6 +116,90 @@ static abi_ulong get_sigframe(struct target_sigaction *ka,
-     return sp;
- }
- 
-+static unsigned int get_v_state_size(CPURISCVState *env)
-+{
-+    RISCVCPU *cpu = env_archcpu(env);
-+
-+    return sizeof(struct target_ctx_hdr) +
-+           sizeof(struct target_v_ext_state) +
-+           cpu->cfg.vlenb * 32;
-+}
-+
-+static struct target_ctx_hdr *save_v_state(CPURISCVState *env,
-+                                           struct target_ctx_hdr *hdr)
-+{
-+    RISCVCPU *cpu = env_archcpu(env);
-+    target_ulong vlenb = cpu->cfg.vlenb;
-+    uint32_t riscv_v_sc_size = get_v_state_size(env);
-+    struct target_v_ext_state *vs;
-+    target_ulong datap;
-+    int i;
-+
-+    __put_user(RISCV_V_MAGIC, &hdr->magic);
-+    __put_user(riscv_v_sc_size, &hdr->size);
-+
-+    vs = (struct target_v_ext_state *)(hdr + 1);
-+    datap = (unsigned long)(vs + 1);
-+
-+    __put_user(env->vstart, &vs->vstart);
-+    __put_user(env->vl, &vs->vl);
-+    __put_user(env->vtype, &vs->vtype);
-+    target_ulong vcsr = riscv_csr_read(env, CSR_VCSR);
-+    __put_user(vcsr, &vs->vcsr);
-+    __put_user(vlenb, &vs->vlenb);
-+    __put_user(datap, &vs->datap);
-+
-+    for (i = 0; i < 32; i++) {
-+        int j;
-+        for (j = 0; j < vlenb; j += 8) {
-+            size_t idx = (i * vlenb + j);
-+            __put_user(env->vreg[idx / 8],
-+                       (uint64_t *)(unsigned long)(datap + idx));
-+        }
-+    }
-+
-+    return (void *)hdr + riscv_v_sc_size;
-+}
-+
-+static void restore_v_state(CPURISCVState *env,
-+                            struct target_ctx_hdr *hdr)
-+{
-+    RISCVCPU *cpu = env_archcpu(env);
-+    target_ulong vlenb = cpu->cfg.vlenb;
-+    struct target_v_ext_state *vs;
-+    target_ulong datap;
-+    int i;
-+
-+    uint32_t size;
-+    __get_user(size, &hdr->size);
-+    if (size != get_v_state_size(env)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "signal: restoring sigcontext vector "
-+                                       "state with wrong size header (%u)\n",
-+                                       size);
-+        return;
-+    }
-+
-+    vs = (struct target_v_ext_state *)(hdr + 1);
-+
-+    __get_user(env->vstart, &vs->vstart);
-+    __get_user(env->vl, &vs->vl);
-+    __get_user(env->vtype, &vs->vtype);
-+    target_ulong vcsr;
-+    __get_user(vcsr, &vs->vcsr);
-+    riscv_csr_write(env, CSR_VCSR, vcsr);
-+    __get_user(vlenb, &vs->vlenb);
-+    __get_user(datap, &vs->datap);
-+
-+    for (i = 0; i < 32; i++) {
-+        int j;
-+        for (j = 0; j < vlenb; j += 8) {
-+            size_t idx = (i * vlenb + j);
-+            __get_user(env->vreg[idx / 8],
-+                       (uint64_t *)(unsigned long)(datap + idx));
-+        }
-+    }
-+}
-+
- static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
- {
-     struct target_ctx_hdr *hdr;
-@@ -124,7 +218,11 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
-     __put_user(fcsr, &sc->sc_fpregs.fcsr);
- 
-     __put_user(0, &sc->sc_extdesc.reserved);
-+
-     hdr = &sc->sc_extdesc.hdr;
-+    if (riscv_has_ext(env, RVV)) {
-+        hdr = save_v_state(env, hdr);
-+    }
-     __put_user(END_MAGIC, &hdr->magic);
-     __put_user(END_HDR_SIZE, &hdr->size);
- }
-@@ -151,8 +249,13 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
- {
-     abi_ulong frame_addr;
-     struct target_rt_sigframe *frame;
-+    size_t frame_size = sizeof(*frame);
- 
--    frame_addr = get_sigframe(ka, env, sizeof(*frame));
-+    if (riscv_has_ext(env, RVV)) {
-+        frame_size += get_v_state_size(env);
-+    }
-+
-+    frame_addr = get_sigframe(ka, env, frame_size);
-     trace_user_setup_rt_frame(env, frame_addr);
- 
-     if (!lock_user_struct(VERIFY_WRITE, frame, frame_addr, 0)) {
-@@ -207,9 +310,30 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
- 
-     uint32_t magic;
-     __get_user(magic, &hdr->magic);
--    if (magic != END_MAGIC) {
--        qemu_log_mask(LOG_UNIMP, "signal: unknown extended context header: "
--                                 "0x%08x, ignoring", magic);
-+    while (magic != END_MAGIC) {
-+        if (magic == RISCV_V_MAGIC) {
-+            if (riscv_has_ext(env, RVV)) {
-+                restore_v_state(env, hdr);
-+            } else {
-+                qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext has V state "
-+                                               "but CPU does not.");
-+            }
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR, "signal: unknown extended state in "
-+                                           "sigcontext magic=0x%08x", magic);
-+        }
-+
-+        if (hdr->size == 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state in "
-+                                           "sigcontext has size 0");
-+        }
-+        hdr = (void *)hdr + hdr->size;
-+        __get_user(magic, &hdr->magic);
-+    }
-+
-+    if (hdr->size != END_HDR_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state end header has "
-+                                       "size=%u (should be 0)", hdr->size);
-     }
- }
- 
--- 
-2.51.0
+Thanks,
 
+/mjt
 
