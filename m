@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE81CA100B
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDECCA100B
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uthcz-0007zP-30; Wed, 03 Sep 2025 03:09:57 -0400
+	id 1uthe1-0000sN-57; Wed, 03 Sep 2025 03:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uthct-0007yF-Ow; Wed, 03 Sep 2025 03:09:51 -0400
+ id 1uthdy-0000nX-90; Wed, 03 Sep 2025 03:10:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uthcr-00060P-8L; Wed, 03 Sep 2025 03:09:50 -0400
+ id 1uthdv-0006LN-Hi; Wed, 03 Sep 2025 03:10:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ED33D14F4D1;
- Wed, 03 Sep 2025 10:09:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 23F3814F4D6;
+ Wed, 03 Sep 2025 10:10:52 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 389A126E136;
- Wed,  3 Sep 2025 10:09:46 +0300 (MSK)
-Message-ID: <5d2f2ea7-07ee-438c-86d6-aff7a3ae7fff@tls.msk.ru>
-Date: Wed, 3 Sep 2025 10:09:45 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6648426E13C;
+ Wed,  3 Sep 2025 10:10:53 +0300 (MSK)
+Message-ID: <61cc7fb6-ccc0-4361-9143-dd7f27a29a70@tls.msk.ru>
+Date: Wed, 3 Sep 2025 10:10:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qga/installer: Remove QGA VSS if QGA installation failed
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Yan Vugenfirer
- <yvugenfi@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250825143155.160913-1-kkostiuk@redhat.com>
+Subject: Re: [PATCH 1/2] i386/kvm/vmsr_energy: Plug memory leak on failure to
+ connect socket
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, kvm@vger.kernel.org,
+ aharivel@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20250723133257.1497640-1-armbru@redhat.com>
+ <20250723133257.1497640-2-armbru@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -78,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250825143155.160913-1-kkostiuk@redhat.com>
+In-Reply-To: <20250723133257.1497640-2-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -104,11 +106,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.08.2025 17:31, Kostiantyn Kostiuk wrote:
-> When QGA Installer failed to install QGA service but install
-> QGA VSS provider, provider should be removed before installer
-> exits. Otherwise QGA VSS will has broken infomation and
-> prevent QGA installation in next run.
+On 23.07.2025 16:32, Markus Armbruster wrote:
+> vmsr_open_socket() leaks the Error set by
+> qio_channel_socket_connect_sync().  Plug the leak by not creating the
+> Error.
+> 
+> Fixes: 0418f90809ae (Add support for RAPL MSRs in KVM/Qemu)
 
 I'm picking this up for qemu-stable (10.0 & 10.1).
 Please let me know if I shouldn't.
