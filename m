@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D149BCA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC6CCA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utidj-0002lm-3p; Wed, 03 Sep 2025 04:14:47 -0400
+	id 1utidp-0002oZ-Is; Wed, 03 Sep 2025 04:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidf-0002kp-El; Wed, 03 Sep 2025 04:14:43 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1utidn-0002np-4h; Wed, 03 Sep 2025 04:14:51 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidc-0001ic-GT; Wed, 03 Sep 2025 04:14:42 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-24c89867a17so5596995ad.1; 
- Wed, 03 Sep 2025 01:14:39 -0700 (PDT)
+ id 1utidl-0001jk-5D; Wed, 03 Sep 2025 04:14:50 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-248df8d82e2so52931235ad.3; 
+ Wed, 03 Sep 2025 01:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756887278; x=1757492078; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756887286; x=1757492086; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y8yvSBFdg6/w+t6lod7oj6WNKUXqjZ+id/3TLdUhnCs=;
- b=QD78kuM88NIjf1I582Or4hrgAXGFcElkDvv0RDSU975g3cHWTiaKk0sVm07Y+3QicC
- vGn1TUj2X7RJ8PlxbdaEiKEE4llYKZp74DLrRisn9sBRS/ezTeWlmlj3AUGbzi2tPAe8
- CYNz6PBdjL5XrK3vfBvXcwme2vUoeurOao1AYzQeqjp9T9JTGI8ZIcLGFTXTn3TBisi0
- cUYVH5ODJqMos/NJMrO7TxNJHqTr+HjmHj1TY/gqweCJdcLk6e2sHcuR8BdKLZ0A1JOc
- BGWupHf2xBSE54k7ZYXuoolxay2bltzceCBQRqhXWuDoB/eiJTKva4drDjE/KdgsqLV8
- PLBQ==
+ bh=YvRVwijnneGWg1Edja7q4SQVpGJeMep01w/gAcM43ZQ=;
+ b=Fs4nHkHpZkJPISI0OlZSYBi6nLoKf/v+FvR0dPrU/756fCFHkJz+SnFLe0KDJ2xHtW
+ MyZow/aFnrGK42jlQSUrwq0n/ZV9R1qy8l/rUvsVIUzkW3gd5EJInCX3uorEosPP0y7w
+ B2Em3fdB01IrWNJ3Y8X5LOWrTIYEyKiVZQhY4ueCPgak9J30WnzBBH46PnREJ5U5ccet
+ AjYE0MM8MqfveAhQsRaoNsOJ8Ae1Dc4veIfReufA/rjtWNDTsZdSNn3jmcbdwNx3RM9m
+ Bdw0y/G/WgKuWWureKJo0Zm3phzRJFWTJESg+O/S//Dw/MKr9o+O2OB+F60B7CJcie1C
+ eRLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756887278; x=1757492078;
+ d=1e100.net; s=20230601; t=1756887286; x=1757492086;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y8yvSBFdg6/w+t6lod7oj6WNKUXqjZ+id/3TLdUhnCs=;
- b=pZ0Xf8Vf43ck/GmzR+/JZ8M0Pm2KOkvGsMAvWn1tPKO8GEtnFvCkCsWjdCCl/8Qwt/
- nQsqtJelXoZ+zzKdwoH+Q/9qsZaBO203C5E9RmSwIdQQuL8Tyr81EbC55PclI6T1Awvh
- f8UeraBQTpx8GnPKPXeGvKxHfDglmYvw57UvRU8sgb9XDtDjaqKfOGO7rvVtVhT1hG1d
- hbmcLZ9AK5gCnRxC+4iPfdrXRxJSZ7SdYDGA5UXLGEkOu+MVqMi8bUuritTWT/HexnGL
- n8UbilMJVP9RDpj2t09KIQ9qAN/5bGde5CufKcW1cpVdcCi6QyAJJMuuyUlQprANHX6o
- UJDw==
+ bh=YvRVwijnneGWg1Edja7q4SQVpGJeMep01w/gAcM43ZQ=;
+ b=WF532K4yGrlnQHEPenCLLDokjc853xjFOj0rBLRhU/9hFFuftkJz9uDODRBn0NiC2K
+ JQKMu/ha6WSLbyiTCp1md2ddySLB2R84qtw1ftfTzUoGg9I4HxAyq5aEpYTpLA4Qsaql
+ secNiNSxQ8dnhnRn9R4p/V170WI5q0rKRSgIJi5aYD5ompm45tcHZ+AFO/MHJjy+VC8c
+ VdxE27yp6y82h1GWD/aXzsVzKizRFw89VDOjuzHNAeT9id1bFq9J61gnG4tI7LDxpA8c
+ pbL87oFVW6lsDPx9uzzbesUULPxpT8sntYkLuGwouL5TkGE0c4dH4jt0RJIhxzlzezVn
+ uKIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2QUXxvLC3jrfvgTpeGUM2nMiT77Hl8oc+eB9/acEYZdIeT4bQDezt3TDVTYo5vCZ/ji5uW1Z/Jre1@nongnu.org
-X-Gm-Message-State: AOJu0YzfgD4joUuPqnXZzq4/dNU0DwS9qPGN8vxuz6razTdi3hTEPftY
- QOvB8FPc0C5W63seruNOY/PJ2NE0jXFEi34N6ziA6+4KOXJ6xn/K/wglXwrCGA==
-X-Gm-Gg: ASbGncvY5ZsGb6iSuUSxb3q+pvKTzQ8l1UMxFsNt8aMZTDKDXTvcoDQ91O8WVhIY5Iu
- y6wz4UTN6o9aM6qwJEfKgFlKQZgaAZSqfpBb+ZPWpR9VgIqQK9cHjcrA/a+KugV/9Agv3s+zhTz
- a+uGAujRBrjLNvyCASm/dmLNbMW2Uw64sQwOdjaJLL/LOiao07Zd2axg1V5Ik6ID6oomO7JbZQa
- tb5BAEdxLG1rreLSWkV7dD81xCftZcf79MJdWfZX4FY/vZtv8uJiWZTXDbUETtfoxRJLIiR0ClA
- 75XoMZMy2N7NRpUllNHL8FhedNe4nWrre6qx4/AZef17DZnwZ3nYDJzM+OMdKRekgCo1o6+AX82
- rnnX5ZMlxLeOwx91k/ZNrpSAEHG51XiHjKTvJFDtsbuzQMVMwgCmZBXyKbh7p8t9KVcBkTSWmPQ
- Qvv9A=
-X-Google-Smtp-Source: AGHT+IGWlSzX5PITXxqII30tvw4U0jA/SpacMQqK+RBFUNSiiBT14jsJVm+aNonu5ibkMVIHcfFwEA==
-X-Received: by 2002:a17:902:dac2:b0:24a:b5a1:10cd with SMTP id
- d9443c01a7336-24ab5a1122fmr147329255ad.52.1756887277992; 
- Wed, 03 Sep 2025 01:14:37 -0700 (PDT)
+ AJvYcCVF7E9XD7AbwSVz8lxNBNIHKLJelKKISlHGpx2T4CbH2YWRd6xT1taNfN6sHV/AYI3IRdjr4PP9Ckr4@nongnu.org
+X-Gm-Message-State: AOJu0YxgN5gzrrbM/rH3kgbM38VhwQnRIAfR4HlWiIZZ8A6eI/N67EAY
+ kLSz8maTPpHctVXSkFwbyHHwmQkhOOewrdOSLD0nido/zakzn7K/EPwrWJ06RA==
+X-Gm-Gg: ASbGncsEpS9MuwmAbKMukBKwtRy2gEo3gCK99sb8cYrwU4djXUOYADkRLbD0iSIek1w
+ /pRfLmVgeKkvZoVJ4xA9F1X4kKyuSQSYcmrLhTYqLJuho26dIQfxMMNq5HE0jgyheGq3Sgpasx7
+ 8fTJS/1cPMbGAq94ffiiQdXVby2gq3pGdZ4L2oSpkbNxYHPeD9M5k25I5fS/hoFiJysEpa7uhin
+ IIkxZYdJR7dLVxF0VfmhpsSwawfokp9M/o46g1LDfy8BYPGY78xjZYL8Pd8HJSNAX43l00qlFCr
+ z8DeEZ72ZKFQ/FLOXdXsFMMXT0yiK9NeC3NYqFeDs9zY5G4/CWGO03fD2rqc/WzrMDpy+Sk1qc8
+ L4q4E5vcrs+FfSZ7zmBaYFAtNt7qP+zaNptk8F8cVZgeC7J8OBB465E2bnrp1NU7PW55z
+X-Google-Smtp-Source: AGHT+IHDKngE7z+ISk9X7AAVoYQatEhKUjexYINGxIGIStv4iu8Z5qCxZ9UMqzrd2WYMFM5W/7Gv3Q==
+X-Received: by 2002:a17:902:f652:b0:249:3eec:15b8 with SMTP id
+ d9443c01a7336-24944908a47mr194442395ad.24.1756887286150; 
+ Wed, 03 Sep 2025 01:14:46 -0700 (PDT)
 Received: from lima-default (123.253.189.97.qld.leaptel.network.
  [123.253.189.97]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24c9a46bcf1sm8806555ad.3.2025.09.03.01.14.34
+ d9443c01a7336-24c9a46bcf1sm8806555ad.3.2025.09.03.01.14.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Sep 2025 01:14:37 -0700 (PDT)
+ Wed, 03 Sep 2025 01:14:45 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -73,16 +72,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 1/4] tests/tcg/riscv64: Add a user signal handling test
-Date: Wed,  3 Sep 2025 18:14:14 +1000
-Message-ID: <20250903081417.338515-2-npiggin@gmail.com>
+Subject: [PATCH v2 3/4] linux-user/riscv: Add vector state to signal context
+Date: Wed,  3 Sep 2025 18:14:16 +1000
+Message-ID: <20250903081417.338515-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
 References: <20250903081417.338515-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,340 +104,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a few basic signal handling tests for user emulation.
+This enables vector state to be saved and restored across signals.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/tcg/riscv64/Makefile.target        |   5 +
- tests/tcg/riscv64/test-signal-handling.c | 303 +++++++++++++++++++++++
- 2 files changed, 308 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-signal-handling.c
+ linux-user/riscv/signal.c | 132 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 128 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
-index 8f4690ac57..0c89c46c4f 100644
---- a/tests/tcg/riscv64/Makefile.target
-+++ b/tests/tcg/riscv64/Makefile.target
-@@ -5,6 +5,11 @@ VPATH += $(SRC_PATH)/tests/tcg/riscv64
- TESTS += test-div
- TESTS += noexec
+diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+index 4ef55d0848..6af7f6b0f3 100644
+--- a/linux-user/riscv/signal.c
++++ b/linux-user/riscv/signal.c
+@@ -41,7 +41,17 @@ struct target_fp_state {
+     uint32_t fcsr;
+ };
  
-+# Test signal handling.
-+TESTS += test-signal-handling
-+test-signal-handling: CFLAGS += -march=rv64gcv
-+run-test-signal-handling: QEMU_OPTS += -cpu rv64,v=on
++struct target_v_ext_state {
++    target_ulong vstart;
++    target_ulong vl;
++    target_ulong vtype;
++    target_ulong vcsr;
++    target_ulong vlenb;
++    target_ulong datap;
++} __attribute__((aligned(16)));
 +
- # Disable compressed instructions for test-noc
- TESTS += test-noc
- test-noc: LDFLAGS = -nostdlib -static
-diff --git a/tests/tcg/riscv64/test-signal-handling.c b/tests/tcg/riscv64/test-signal-handling.c
-new file mode 100644
-index 0000000000..e9c0170c74
---- /dev/null
-+++ b/tests/tcg/riscv64/test-signal-handling.c
-@@ -0,0 +1,303 @@
-+/*
-+ * Test for linux-user signal handling.
-+ *
-+ * This ensures that integer and fp register values are
-+ * saved as expected in the sigcontext, created by a SIGILL.
-+ *
-+ * TODO: Register restore is not explicitly verified, except
-+ * for advancing pc, and the restoring of registers that were
-+ * clobbered by the compiler in the signal handler.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#define _GNU_SOURCE
-+#include <stdlib.h>
-+#include <stdint.h>
-+#include <string.h>
-+#include <stdbool.h>
-+#include <stdio.h>
-+#include <execinfo.h>
-+#include <unistd.h>
-+#include <assert.h>
-+#include <sys/mman.h>
-+#include <ucontext.h>
-+#include <asm/sigcontext.h>
-+
-+/*
-+ * This horrible hack seems to be required when including
-+ * signal.h and asm/sigcontext.h, to prevent sigcontext
-+ * redefinition by bits/sigcontext.h :(
-+ *
-+ * bits/sigcontext.h does not have the extended state or
-+ * RISCV_V_MAGIC, etc. It could have just been introduced
-+ * as a new type.
-+ */
-+#define _BITS_SIGCONTEXT_H 1
-+#include <signal.h>
-+
-+static uint64_t *initial_gvalues;
-+static uint64_t *final_gvalues;
-+static uint64_t *signal_gvalues;
-+static double *initial_fvalues;
-+static double *final_fvalues;
-+static double *signal_fvalues;
-+
-+extern unsigned long unimp_addr[];
-+
-+static bool got_signal = false;
-+
-+#define BT_BUF_SIZE 100
-+
-+static void *find_callchain_root(void)
+ /* The Magic number for signal context frame header. */
++#define RISCV_V_MAGIC   0x53465457
+ #define END_MAGIC       0x0
+ 
+ /* The size of END signal context header. */
+@@ -106,6 +116,90 @@ static abi_ulong get_sigframe(struct target_sigaction *ka,
+     return sp;
+ }
+ 
++static unsigned int get_v_state_size(CPURISCVState *env)
 +{
-+   int nptrs;
-+   void *buffer[BT_BUF_SIZE];
++    RISCVCPU *cpu = env_archcpu(env);
 +
-+   nptrs = backtrace(buffer, BT_BUF_SIZE);
-+
-+   return buffer[nptrs - 1];
++    return sizeof(struct target_ctx_hdr) +
++           sizeof(struct target_v_ext_state) +
++           cpu->cfg.vlenb * 32;
 +}
 +
-+static void *callchain_root;
-+
-+static void ILL_handler(int signo, siginfo_t *info, void *context)
++static struct target_ctx_hdr *save_v_state(CPURISCVState *env,
++                                           struct target_ctx_hdr *hdr)
 +{
-+    ucontext_t *uc = context;
-+    struct sigcontext *sc = (struct sigcontext *)&uc->uc_mcontext;
-+
-+    got_signal = true;
-+
-+    assert(unimp_addr == info->si_addr);
-+    assert(sc->sc_regs.pc == (unsigned long)info->si_addr);
-+
-+    /* Ensure stack unwind through the signal frame is not broken */
-+    assert(callchain_root == find_callchain_root());
-+
-+    for (int i = 0; i < 31; i++) {
-+        ((uint64_t *)signal_gvalues)[i] = ((unsigned long *)&sc->sc_regs.ra)[i];
-+    }
-+
-+    for (int i = 0; i < 32; i++) {
-+        ((uint64_t *)signal_fvalues)[i] = sc->sc_fpregs.d.f[i];
-+    }
-+    /* Test sc->sc_fpregs.d.fcsr ? */
-+
-+    sc->sc_regs.pc += 4;
-+}
-+
-+static void init_test(void)
-+{
++    RISCVCPU *cpu = env_archcpu(env);
++    target_ulong vlenb = cpu->cfg.vlenb;
++    uint32_t riscv_v_sc_size = get_v_state_size(env);
++    struct target_v_ext_state *vs;
++    target_ulong datap;
 +    int i;
 +
-+    callchain_root = find_callchain_root();
++    __put_user(RISCV_V_MAGIC, &hdr->magic);
++    __put_user(riscv_v_sc_size, &hdr->size);
 +
-+    initial_gvalues = malloc(8 * 31);
-+    memset(initial_gvalues, 0, 8 * 31);
-+    final_gvalues = malloc(8 * 31);
-+    memset(final_gvalues, 0, 8 * 31);
-+    signal_gvalues = malloc(8 * 31);
-+    memset(signal_gvalues, 0, 8 * 31);
++    vs = (struct target_v_ext_state *)(hdr + 1);
++    datap = (unsigned long)(vs + 1);
 +
-+    initial_fvalues = malloc(8 * 32);
-+    memset(initial_fvalues, 0, 8 * 32);
-+    for (i = 0; i < 32 ; i++) {
-+        initial_fvalues[i] = 3.142 * (i + 1);
-+    }
-+    final_fvalues = malloc(8 * 32);
-+    memset(final_fvalues, 0, 8 * 32);
-+    signal_fvalues = malloc(8 * 32);
-+    memset(signal_fvalues, 0, 8 * 32);
-+}
++    __put_user(env->vstart, &vs->vstart);
++    __put_user(env->vl, &vs->vl);
++    __put_user(env->vtype, &vs->vtype);
++    target_ulong vcsr = riscv_csr_read(env, CSR_VCSR);
++    __put_user(vcsr, &vs->vcsr);
++    __put_user(vlenb, &vs->vlenb);
++    __put_user(datap, &vs->datap);
 +
-+static void run_test(void)
-+{
-+    asm volatile(
-+    /* Save initial values from gp registers */
-+"    mv    t0, %[initial_gvalues]    \n"
-+"    sd    x1, 0x0(t0)               \n"
-+"    sd    x2, 0x8(t0)               \n"
-+"    sd    x3, 0x10(t0)              \n"
-+"    sd    x4, 0x18(t0)              \n"
-+"    sd    x5, 0x20(t0)              \n"
-+"    sd    x6, 0x28(t0)              \n"
-+"    sd    x7, 0x30(t0)              \n"
-+"    sd    x8, 0x38(t0)              \n"
-+"    sd    x9, 0x40(t0)              \n"
-+"    sd    x10, 0x48(t0)             \n"
-+"    sd    x11, 0x50(t0)             \n"
-+"    sd    x12, 0x58(t0)             \n"
-+"    sd    x13, 0x60(t0)             \n"
-+"    sd    x14, 0x68(t0)             \n"
-+"    sd    x15, 0x70(t0)             \n"
-+"    sd    x16, 0x78(t0)             \n"
-+"    sd    x17, 0x80(t0)             \n"
-+"    sd    x18, 0x88(t0)             \n"
-+"    sd    x19, 0x90(t0)             \n"
-+"    sd    x20, 0x98(t0)             \n"
-+"    sd    x21, 0xa0(t0)             \n"
-+"    sd    x22, 0xa8(t0)             \n"
-+"    sd    x23, 0xb0(t0)             \n"
-+"    sd    x24, 0xb8(t0)             \n"
-+"    sd    x25, 0xc0(t0)             \n"
-+"    sd    x26, 0xc8(t0)             \n"
-+"    sd    x27, 0xd0(t0)             \n"
-+"    sd    x28, 0xd8(t0)             \n"
-+"    sd    x29, 0xe0(t0)             \n"
-+"    sd    x30, 0xe8(t0)             \n"
-+"    sd    x31, 0xf0(t0)             \n"
-+    /* Load initial values into float registers */
-+"    mv    t0, %[initial_fvalues]    \n"
-+"    fld    f0, 0x0(t0)              \n"
-+"    fld    f1, 0x8(t0)              \n"
-+"    fld    f2, 0x10(t0)             \n"
-+"    fld    f3, 0x18(t0)             \n"
-+"    fld    f4, 0x20(t0)             \n"
-+"    fld    f5, 0x28(t0)             \n"
-+"    fld    f6, 0x30(t0)             \n"
-+"    fld    f7, 0x38(t0)             \n"
-+"    fld    f8, 0x40(t0)             \n"
-+"    fld    f9, 0x48(t0)             \n"
-+"    fld    f10, 0x50(t0)            \n"
-+"    fld    f11, 0x58(t0)            \n"
-+"    fld    f12, 0x60(t0)            \n"
-+"    fld    f13, 0x68(t0)            \n"
-+"    fld    f14, 0x70(t0)            \n"
-+"    fld    f15, 0x78(t0)            \n"
-+"    fld    f16, 0x80(t0)            \n"
-+"    fld    f17, 0x88(t0)            \n"
-+"    fld    f18, 0x90(t0)            \n"
-+"    fld    f19, 0x98(t0)            \n"
-+"    fld    f20, 0xa0(t0)            \n"
-+"    fld    f21, 0xa8(t0)            \n"
-+"    fld    f22, 0xb0(t0)            \n"
-+"    fld    f23, 0xb8(t0)            \n"
-+"    fld    f24, 0xc0(t0)            \n"
-+"    fld    f25, 0xc8(t0)            \n"
-+"    fld    f26, 0xd0(t0)            \n"
-+"    fld    f27, 0xd8(t0)            \n"
-+"    fld    f28, 0xe0(t0)            \n"
-+"    fld    f29, 0xe8(t0)            \n"
-+"    fld    f30, 0xf0(t0)            \n"
-+"    fld    f31, 0xf8(t0)            \n"
-+    /* Trigger the SIGILL */
-+".global unimp_addr                  \n"
-+"unimp_addr:                         \n"
-+"    unimp                           \n"
-+"    nop                             \n"
-+    /* Save final values from gp registers */
-+"    mv    t0, %[final_gvalues]      \n"
-+"    sd    x1, 0x0(t0)               \n"
-+"    sd    x2, 0x8(t0)               \n"
-+"    sd    x3, 0x10(t0)              \n"
-+"    sd    x4, 0x18(t0)              \n"
-+"    sd    x5, 0x20(t0)              \n"
-+"    sd    x6, 0x28(t0)              \n"
-+"    sd    x7, 0x30(t0)              \n"
-+"    sd    x8, 0x38(t0)              \n"
-+"    sd    x9, 0x40(t0)              \n"
-+"    sd    x10, 0x48(t0)             \n"
-+"    sd    x11, 0x50(t0)             \n"
-+"    sd    x12, 0x58(t0)             \n"
-+"    sd    x13, 0x60(t0)             \n"
-+"    sd    x14, 0x68(t0)             \n"
-+"    sd    x15, 0x70(t0)             \n"
-+"    sd    x16, 0x78(t0)             \n"
-+"    sd    x17, 0x80(t0)             \n"
-+"    sd    x18, 0x88(t0)             \n"
-+"    sd    x19, 0x90(t0)             \n"
-+"    sd    x20, 0x98(t0)             \n"
-+"    sd    x21, 0xa0(t0)             \n"
-+"    sd    x22, 0xa8(t0)             \n"
-+"    sd    x23, 0xb0(t0)             \n"
-+"    sd    x24, 0xb8(t0)             \n"
-+"    sd    x25, 0xc0(t0)             \n"
-+"    sd    x26, 0xc8(t0)             \n"
-+"    sd    x27, 0xd0(t0)             \n"
-+"    sd    x28, 0xd8(t0)             \n"
-+"    sd    x29, 0xe0(t0)             \n"
-+"    sd    x30, 0xe8(t0)             \n"
-+"    sd    x31, 0xf0(t0)             \n"
-+    /* Save final values from float registers */
-+"    mv    t0, %[final_fvalues]      \n"
-+"    fsd    f0, 0x0(t0)              \n"
-+"    fsd    f1, 0x8(t0)              \n"
-+"    fsd    f2, 0x10(t0)             \n"
-+"    fsd    f3, 0x18(t0)             \n"
-+"    fsd    f4, 0x20(t0)             \n"
-+"    fsd    f5, 0x28(t0)             \n"
-+"    fsd    f6, 0x30(t0)             \n"
-+"    fsd    f7, 0x38(t0)             \n"
-+"    fsd    f8, 0x40(t0)             \n"
-+"    fsd    f9, 0x48(t0)             \n"
-+"    fsd    f10, 0x50(t0)            \n"
-+"    fsd    f11, 0x58(t0)            \n"
-+"    fsd    f12, 0x60(t0)            \n"
-+"    fsd    f13, 0x68(t0)            \n"
-+"    fsd    f14, 0x70(t0)            \n"
-+"    fsd    f15, 0x78(t0)            \n"
-+"    fsd    f16, 0x80(t0)            \n"
-+"    fsd    f17, 0x88(t0)            \n"
-+"    fsd    f18, 0x90(t0)            \n"
-+"    fsd    f19, 0x98(t0)            \n"
-+"    fsd    f20, 0xa0(t0)            \n"
-+"    fsd    f21, 0xa8(t0)            \n"
-+"    fsd    f22, 0xb0(t0)            \n"
-+"    fsd    f23, 0xb8(t0)            \n"
-+"    fsd    f24, 0xc0(t0)            \n"
-+"    fsd    f25, 0xc8(t0)            \n"
-+"    fsd    f26, 0xd0(t0)            \n"
-+"    fsd    f27, 0xd8(t0)            \n"
-+"    fsd    f28, 0xe0(t0)            \n"
-+"    fsd    f29, 0xe8(t0)            \n"
-+"    fsd    f30, 0xf0(t0)            \n"
-+"    fsd    f31, 0xf8(t0)            \n"
-+    : "=m" (initial_gvalues),
-+      "=m" (final_gvalues),
-+      "=m" (final_fvalues)
-+    : "m" (initial_fvalues),
-+      [initial_gvalues] "r" (initial_gvalues),
-+      [initial_fvalues] "r" (initial_fvalues),
-+      [final_gvalues] "r" (final_gvalues),
-+      [final_fvalues] "r" (final_fvalues)
-+    : "t0",
-+      "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7",
-+      "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15",
-+      "f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",
-+      "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31");
-+
-+    assert(got_signal);
-+
-+    /*
-+     * x4 / t0 is used in the asm so it has to be handled specially
-+     * and is not a simple equality.
-+     */
-+    assert(initial_gvalues[4] == (unsigned long)initial_gvalues);
-+    assert(signal_gvalues[4] == (unsigned long)initial_fvalues);
-+    assert(final_gvalues[4] == (unsigned long)final_gvalues);
-+    initial_gvalues[4] = final_gvalues[4] = signal_gvalues[4] = 0;
-+
-+    /*
-+     * Ensure registers match before, inside, and after signal
-+     * handler.
-+     */
-+    assert(!memcmp(initial_gvalues, final_gvalues, 8 * 31));
-+    assert(!memcmp(initial_gvalues, signal_gvalues, 8 * 31));
-+    assert(!memcmp(initial_fvalues, final_fvalues, 8 * 32));
-+    assert(!memcmp(initial_fvalues, signal_fvalues, 8 * 32));
-+}
-+
-+int main(void)
-+{
-+    struct sigaction act = { 0 };
-+
-+    act.sa_flags = SA_SIGINFO;
-+    act.sa_sigaction = &ILL_handler;
-+    if (sigaction(SIGILL, &act, NULL) == -1) {
-+        perror("sigaction");
-+        exit(EXIT_FAILURE);
++    for (i = 0; i < 32; i++) {
++        int j;
++        for (j = 0; j < vlenb; j += 8) {
++            size_t idx = (i * vlenb + j);
++            __put_user(env->vreg[idx / 8],
++                       (uint64_t *)(unsigned long)(datap + idx));
++        }
 +    }
 +
-+    init_test();
-+
-+    run_test();
++    return (void *)hdr + riscv_v_sc_size;
 +}
++
++static void restore_v_state(CPURISCVState *env,
++                            struct target_ctx_hdr *hdr)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    target_ulong vlenb = cpu->cfg.vlenb;
++    struct target_v_ext_state *vs;
++    target_ulong datap;
++    int i;
++
++    uint32_t size;
++    __get_user(size, &hdr->size);
++    if (size != get_v_state_size(env)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "signal: restoring sigcontext vector "
++                                       "state with wrong size header (%u)\n",
++                                       size);
++        return;
++    }
++
++    vs = (struct target_v_ext_state *)(hdr + 1);
++
++    __get_user(env->vstart, &vs->vstart);
++    __get_user(env->vl, &vs->vl);
++    __get_user(env->vtype, &vs->vtype);
++    target_ulong vcsr;
++    __get_user(vcsr, &vs->vcsr);
++    riscv_csr_write(env, CSR_VCSR, vcsr);
++    __get_user(vlenb, &vs->vlenb);
++    __get_user(datap, &vs->datap);
++
++    for (i = 0; i < 32; i++) {
++        int j;
++        for (j = 0; j < vlenb; j += 8) {
++            size_t idx = (i * vlenb + j);
++            __get_user(env->vreg[idx / 8],
++                       (uint64_t *)(unsigned long)(datap + idx));
++        }
++    }
++}
++
+ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+ {
+     struct target_ctx_hdr *hdr;
+@@ -124,7 +218,11 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+     __put_user(fcsr, &sc->sc_fpregs.fcsr);
+ 
+     __put_user(0, &sc->sc_extdesc.reserved);
++
+     hdr = &sc->sc_extdesc.hdr;
++    if (riscv_has_ext(env, RVV)) {
++        hdr = save_v_state(env, hdr);
++    }
+     __put_user(END_MAGIC, &hdr->magic);
+     __put_user(END_HDR_SIZE, &hdr->size);
+ }
+@@ -151,8 +249,13 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+ {
+     abi_ulong frame_addr;
+     struct target_rt_sigframe *frame;
++    size_t frame_size = sizeof(*frame);
+ 
+-    frame_addr = get_sigframe(ka, env, sizeof(*frame));
++    if (riscv_has_ext(env, RVV)) {
++        frame_size += get_v_state_size(env);
++    }
++
++    frame_addr = get_sigframe(ka, env, frame_size);
+     trace_user_setup_rt_frame(env, frame_addr);
+ 
+     if (!lock_user_struct(VERIFY_WRITE, frame, frame_addr, 0)) {
+@@ -207,9 +310,30 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
+ 
+     uint32_t magic;
+     __get_user(magic, &hdr->magic);
+-    if (magic != END_MAGIC) {
+-        qemu_log_mask(LOG_UNIMP, "signal: unknown extended context header: "
+-                                 "0x%08x, ignoring", magic);
++    while (magic != END_MAGIC) {
++        if (magic == RISCV_V_MAGIC) {
++            if (riscv_has_ext(env, RVV)) {
++                restore_v_state(env, hdr);
++            } else {
++                qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext has V state "
++                                               "but CPU does not.");
++            }
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR, "signal: unknown extended state in "
++                                           "sigcontext magic=0x%08x", magic);
++        }
++
++        if (hdr->size == 0) {
++            qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state in "
++                                           "sigcontext has size 0");
++        }
++        hdr = (void *)hdr + hdr->size;
++        __get_user(magic, &hdr->magic);
++    }
++
++    if (hdr->size != END_HDR_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR, "signal: extended state end header has "
++                                       "size=%u (should be 0)", hdr->size);
+     }
+ }
+ 
 -- 
 2.51.0
 
