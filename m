@@ -4,105 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB09CA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119DBCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utnDT-0003ZV-Bb; Wed, 03 Sep 2025 09:07:59 -0400
+	id 1utnDb-0003hf-2Q; Wed, 03 Sep 2025 09:08:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utnDS-0003XT-1y
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:07:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utnDP-0001Wl-Bj
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:07:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756904872;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vaQTCENLxTOTgYR3oTKuqFdYGsr6IiWkQQSj1YETLag=;
- b=TTuo44P0qbP9CNw+yLhEhb+CFpmHsiMn2R6JZ5WiJ/ZhUACOfPXXxT19xu5Bo/vIB11AbO
- q1mj3bf2PmAj1+iPyqbxDFTFf9qV36e8kFVhTu3t49rKK9B9GNJiK615i9uG3sNggPtz+Y
- 0i9V4kUOyu8n9a5jwr1HMoCKg0BUFCQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-727xVynZPJ6zsUoh3bl5Pg-1; Wed, 03 Sep 2025 09:07:51 -0400
-X-MC-Unique: 727xVynZPJ6zsUoh3bl5Pg-1
-X-Mimecast-MFC-AGG-ID: 727xVynZPJ6zsUoh3bl5Pg_1756904870
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-80593bfe0a1so444810385a.1
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:07:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utnDZ-0003fv-EE
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:08:05 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utnDX-0001Xz-FU
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:08:05 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b0472bd218bso53499166b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:08:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756904881; x=1757509681; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7xNLtrB3tqw2BBsrA12DUE/ErdmpKDz1YLrJiGjTrbk=;
+ b=WolwQXELCgP6tgVIxTp0T0EqWOak7h5ob74ggVQ/bdqJwzG7asqDy44cRp1R2o/5K+
+ kKXZGmrxYla/kFGKD+gU5QEGKPraLwG8FWRQ7eKs9LEawxhgJU4YTk1K+exp6O83pyA7
+ BWZGg9QQWKIwixsB1k0aIxV5YnGGkuB3oMNFtowGi29Vc+GKDPmE8fPVKJLWlLq0Frvk
+ mDytVIxqftohPaYfm4svA+75p745x6Ca9DWg8SG3AZaz6YVJrVCN0fmwtDHJVvVoazq5
+ 6OxHpki08r8FjmDSMP8WWBeQ/O1cdEJvkO9AphIXNvkg1r6+p9w4+9ar8uJilrSFtW8m
+ jPTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756904870; x=1757509670;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vaQTCENLxTOTgYR3oTKuqFdYGsr6IiWkQQSj1YETLag=;
- b=rr/nisi/lkzIcoI9IZRb2Zh340+F+1WYVJ4RUIQ9TEv5yG5J+TIE/l5KbZ8mIVqhM8
- dD3dhYS+wsUUeAUPgiTHVq7NifsVHLAjoeJcF4v3ZmDDf2Q1eaLiQaCcdvE+jp3e3q7P
- g5LaElSstd8nItttPtJlkQCrDvflQgh2CkNl3LQjDibazCkeMJLngwzSuZEqzjM8Gc/o
- GKPQvY7T3bb28et1Te5ibiiskrV7Ow5s7plEgRn66aTy1ERxdScufgPLpbVNkIiAOT4C
- rG2fiPL5ryHmouGV5a5A0WK5aUJpkipQFcrUgdQh0uF9Rw3LWS3m/vZL6Ua/bjart87x
- tZ2w==
+ d=1e100.net; s=20230601; t=1756904881; x=1757509681;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7xNLtrB3tqw2BBsrA12DUE/ErdmpKDz1YLrJiGjTrbk=;
+ b=nKbUYtFDlM/5Ln4hDQChHttn6AmbWC9Ncx0AMU4w/znL4nvQ7dKQi/TJH5Ylr8CVEf
+ 7SWWYwqC/QHGp1/2kHpAw5o/k4q7dYjswOjLooVDk7WJS4Dfn4Jgef3WRdv1DU9dVDrm
+ TaHfr28aLkHf9uXf7vudEFZyF55kbMh9rWLnXn0EActElOvoj47So/Wk6lKkphLAFMqB
+ 5eX6EyPXPAQPwcDuEEPnKC4h5ImnJsN2NiCvXTwUtBfo1r7E0F0jiPVpZ5KjM5HpZQ4m
+ kOvJjNVOSaGPLZ5lcritx+jcoCzOh3uAhwgRv/INQoiChTCQdFCcDgYRAOZT2Yx56V3k
+ QQNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0BxY20fHoaCKcQ1R7MmgQofr5VLRuZmeuRMYXNkT9EkMSPUL/V5n9/tEZCHruVOyq5PvF5sA5i3TY@nongnu.org
-X-Gm-Message-State: AOJu0YxY0dILm6LFoKD+EKD5Mx8vFyRxL72LWxBz/WeYx1LMjB+wQujS
- 0vkaYi1TjIk2NO4YoG5cjBUDXB+3aMLYzpgNjtkdJQhjJhbjENom3EVYXFK3vZ68rrYzEhYpJ+u
- o2Jy+jHbypq0igKu59Jez2/ZDGfkqJHoS3whovu/o/QxFpZ6u8Kf+w9mi
-X-Gm-Gg: ASbGnctv77m45cyQHW/gWgB1GM4uJJcSXG/fL6FevavZaZ1n0XnhGrCGRluj1qOxZrQ
- HNIfHLHSfDycIJJa82WPcqrk2JM4kRCpeT+tOiVFAlV5s+i0/ynUg1B/FpFPGyjTAbC6NXeerCZ
- jET9b2hdyjlCJL6MX99pB1YfkgEOmFwvgIIPyVmaH91Ng+OLOebdBx7qBrzedxdVFK8yaciM/Au
- rCeGJZW+3ecPYWy0GlV3azjHt5PQkxNuDo5QJhgPBH9YL3TEFazgBx8/b0xGzhg9wm5iynItB0C
- ea0y2mTgsEw7u8UfizDrjdNdCrPPCY1MfNzvNqvJtV+FxEDDe1o0qoYK0bSzJZwvCKBovtUP94m
- xeg0HoSZNLsaQbmQV2+ibsQ==
-X-Received: by 2002:ac8:5a03:0:b0:4b3:48f2:b8d0 with SMTP id
- d75a77b69052e-4b348f2bc63mr69826121cf.59.1756904869903; 
- Wed, 03 Sep 2025 06:07:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGe/vEOFW0qUlcKR5G1KcM5rF0u2X75FgXcws5gDcgpDuRk0m29KurPtQ0yWOX4gta96PHMzw==
-X-Received: by 2002:ac8:5a03:0:b0:4b3:48f2:b8d0 with SMTP id
- d75a77b69052e-4b348f2bc63mr69823981cf.59.1756904867799; 
- Wed, 03 Sep 2025 06:07:47 -0700 (PDT)
-Received: from x1.local
- (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b48f76169fsm11053831cf.31.2025.09.03.06.07.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Sep 2025 06:07:46 -0700 (PDT)
-Date: Wed, 3 Sep 2025 09:07:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Juraj Marcin <jmarcin@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
- qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
- and state
-Message-ID: <aLg9oYlaougF1-dv@x1.local>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
- <aJoEJhJw-_rGVBbA@x1.local>
- <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
- <aJzOo7P8aA64AfY_@x1.local>
- <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
- <aJ43_JQct45mnVgV@x1.local> <aLXehgy3S5G6A3ub@gallifrey>
- <w6qkokuof6ge2gwajhcwul5boaqf57w6m4yzsbyljpgpnigc64@pw2unqceumjn>
- <aLgtyy_UAfsmOLET@gallifrey>
+ AJvYcCUSIUan0GwGalrGTXSdoRTx2lYPASLvF2brAcpUA2f8Ara5ZV8TjHkQznhn8tAmkkMykTB1dymgnHk2@nongnu.org
+X-Gm-Message-State: AOJu0YydtqJneIYLFsJFJGXcuc2VZsPrmw0/akJPIc+1ozGFam0tr0jw
+ T8RZF//XD/2lu9bDMm1h1j4yZnMSQ0oMQva+TRMs94GfsckjoUlYIKRBdR0H9agrrf+BksMQKSW
+ oD7tNqRQ=
+X-Gm-Gg: ASbGncvgXqxkVXvsNtsx1lpninq2kAivleOvjoJs41ViS4BY1vARXf0Fi5kqCceuRcl
+ hIIP+P0pDLJSa3X4NKjvzay5n3CC5bh85+jgA9Gzpcy+zFqLM5TalLWlVIC1OLNaQMlj4RVYLPz
+ BN4lj5sknJDvesR22JeK6KzkAhqRxQ/GvQ3ciQotMPtShUc+4TpwFTcOxn1g+507p76Xj5ZsG7y
+ Q32UyClX/+MLbjfPlZV6dFOE8eQy9C1BFXO6KLnjJ5cELLPlGuyakLokmTSRjDFF7lLeapq87+y
+ P5q8ZaCesckx/4g4XNSUzYD0AHtNV9/KU7AloPlZmFYTBwqEoij0ElTJfbn4OZmONvb+xFeBvY1
+ p7/lMa1rrCUC1zTLGbeyGwIxbZzOjdR90JN2ygrFZLDcJ8KC2gRkxEh3MgJ7BKTVEahkj/CP+qh
+ SfI4C99wPeWcrvx8wn
+X-Google-Smtp-Source: AGHT+IHVECJtDixky+miVbBIW/e38Ir8CMPKzBwb6x71MPbMzbXkknYYUyXCvctLYyzIThSyUjpXoA==
+X-Received: by 2002:a17:906:f586:b0:afe:e744:3058 with SMTP id
+ a640c23a62f3a-b01d976d94dmr1499520566b.50.1756904881264; 
+ Wed, 03 Sep 2025 06:08:01 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b0416842ffasm910351366b.38.2025.09.03.06.08.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Sep 2025 06:08:00 -0700 (PDT)
+Message-ID: <fc0eaa0c-252e-4c74-8a2c-ddf0f3b11bb4@linaro.org>
+Date: Wed, 3 Sep 2025 15:07:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aLgtyy_UAfsmOLET@gallifrey>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/12] target/loongarch: Reduce TLB flush with
+ helper_tlbwr
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250903084827.3085911-1-maobibo@loongson.cn>
+ <20250903084827.3085911-4-maobibo@loongson.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250903084827.3085911-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,25 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 12:00:11PM +0000, Dr. David Alan Gilbert wrote:
-> So I wonder what libvirt uses to trigger it starting the destination in
-> the postcopy case?  It's got to be after the device state has loaded.
+On 9/3/25 10:48, Bibo Mao wrote:
+> With function helper_tlbwr(), specified LoongArch TLB entry will be
+> updated. There are two PTE pages in one TLB entry called even/odd
+> pages. Supposing even/odd page is normal/none state, when odd page
+> is added, TLB entry is changed as normal/normal state and even page
+> keeps unchanged.
+> 
+> In this situation, it is not necessary to flush QEMU TLB since even
+> page keep unchanged and odd page is newly changed. Here check whether
+> PTE page is the same or not, TLB flush can be skipped if both are the
+> same or newly added.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/tcg/tlb_helper.c | 33 ++++++++++++++++++++++++++-----
+>   1 file changed, 28 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index fcd03ca320..331b485b1a 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -302,16 +302,39 @@ void helper_tlbrd(CPULoongArchState *env)
+>   void helper_tlbwr(CPULoongArchState *env)
+>   {
+>       int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+> +    LoongArchTLB *old, new;
 
-qmp_cont() supports the "autostart" variable:
+Perhaps "new = { }", then ...
 
-    if (runstate_check(RUN_STATE_INMIGRATE)) {
-        autostart = 1;
-    } else {
+> +    new.tlb_misc = 0;
+> +    new.tlb_entry0 = 0;
+> +    new.tlb_entry1 = 0;
 
-That's since commit 1e9981465f ("qmp: handle stop/cont in INMIGRATE
-state").  The commit message also mentioned libvirt used to use a loop
-somehow..  and I'm surprised to know it wasn't trying to fix the libvirt
-problem but something else..
+... this is unnecessary.
 
-That makes sense, as any delay on cont would be accounted as downtime (even
-if trivially), if only executed after loading complete event.
+> +    fill_tlb_entry(env, &new);
+> +    /* Check whether ASID/VPPN is the same */
+> +    if (old->tlb_misc == new.tlb_misc) {
+> +        /* Check whether both even/odd pages is the same or invalid */
+> +        tlb_v0 = FIELD_EX64(old->tlb_entry0, TLBENTRY, V);
+> +        tlb_v1 = FIELD_EX64(old->tlb_entry1, TLBENTRY, V);
+> +        if ((!tlb_v0 || new.tlb_entry0 == old->tlb_entry0) &&
+> +            (!tlb_v1 || new.tlb_entry1 == old->tlb_entry1)) {
+> +            skip_inv = true;
+> +        }
+> +    }
+> +
+> +    /* flush tlb before updating the entry */
+> +    if (!skip_inv) {
+> +        invalidate_tlb(env, index);
+> +    }
+> +    old->tlb_misc = new.tlb_misc;
+> +    old->tlb_entry0 = new.tlb_entry0;
+> +    old->tlb_entry1 = new.tlb_entry1;
 
--- 
-Peter Xu
+Perhaps better as "*old = new".
 
+Anyway,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
