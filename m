@@ -4,89 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834BACA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84479CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utnYM-0007p6-LL; Wed, 03 Sep 2025 09:29:34 -0400
+	id 1utng6-0005Gw-0T; Wed, 03 Sep 2025 09:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utnYK-0007oY-MX
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:29:32 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utnYF-0001o3-B9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:29:29 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b0473327e70so54203866b.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 06:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756906165; x=1757510965; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rpHPu9J6GDNgbxNG2nQVVjMbkf/TXAQEqUgx8DM4NIA=;
- b=Gji9lybdOVC2GFIt747Mukl/0OXaTFJSz+nhotsXiC3pZiRae241tGczaLUISypFT8
- hyTunungYlC8YQZ05j+XC1n+gdqB8qxTfrmQHzYT9NB2T55UAYOlY8yBu2hhnMFzBPug
- IgQSGFXRP4X5EDgoZx4ryY+9fJDXjMN0+0njRWRQ++IN121VkJ4FmefcMImCVEOlJ4Zi
- aDJY5SeZcs45bvQ0j73gGOWjfqLF1hLBi4iOeme1VHqVql67q2ihtv/pM7PxrDPIyvZz
- Rk3JdN/MeA69uffN2PsQqH4p6FWsUk4U+aLB2GXt8PAZxAdfXpPr++O+meum9hvk+4TE
- 0vYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756906165; x=1757510965;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rpHPu9J6GDNgbxNG2nQVVjMbkf/TXAQEqUgx8DM4NIA=;
- b=diDLrufh19npGweXl0EHq88n+ufVAHbY1GseAv/6YYEjGHxsNkhYWSPOaHQghjZ23e
- cHLzE4pf3hMvXcTQzFkNooQNnNtDJKvf5jqHqmGWFsvYx/dF3+5eeORcZQC6etpbAaJD
- 7GrHN2OAXXeylDBm55uvrfHCRyi2ggmrTcm6SclpYgwpUEYU6aMT0Tn3eMbShaW3F0pc
- Tnety6zQvxxwTIH8ZI9YmJilEFSCrjMt4I5fMSridR8u2M+Uh5qMTS5/FvsXI5gbIbgb
- dW4DKDi7SEM/Ums0k2gs6+7EiV0y5UsAMMZ1eY06Db4U/JiJHT5DekKy/Rw7+E2iUO1Q
- VqXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUx455R5N6UVqP9X+T3NmKiMLtt0U/bMT5Zngne7gidQ9IESD0jP0FtgY3gQzn1ETnCzVdokvkl+y7P@nongnu.org
-X-Gm-Message-State: AOJu0Yy4SYCy76/+WqYPE+vgloP67l9RT4Bgrg83+41lRT0waWbEsxLs
- Ngkh8pJ4auZ8SKGwGfrvgjHmM+fZ7T+CBM/uyN+0LDGmpvVkVlBt/EDXxQSDSewB4yc=
-X-Gm-Gg: ASbGnctW+rWwJ1nh4TUzCZR+vl2kBmoN6uqayl5UJ3xXJ8BaYg0yNxjUJ4F5dEJc+3/
- nQD4fkEOQC7Yqdd6bcSGV/PfAnc1SIwlgsjjj0xrJjIdDHwv5wssH8m9unD8/XnUjCKBP7fhKVr
- e4LAnVb2s8UyWIzh202wX9pItQV9irb++j431ixa//0Zfbzop8OJbhqzy7kGaPbx6udL9Y5plDJ
- sSA97K+aae+f0O29PP8/yrhZmbYK/1sOwipCE6d1nAbCJdirWWP/LmDVPXtuQvQzIm4e2/exEK+
- kvlf4WsRDb9Cfje2gjilKGdiG6B1jttQy/kgusN3+gXxFupvN59bcmA4eyetBB4PqG3Enl8dDUR
- 3xKdYAPtRG/D5Bnktgiog4y04ZQjZBzNsVSO2/KOVehrS+HnyGPLaA+BWGJtSA0HXAkys4W/SVH
- Y3LD48GA==
-X-Google-Smtp-Source: AGHT+IEkVxWNoV856q2bOmFFdaiy8HKx9k1ZiesXuQLKg87KaUHSd90wlJR2rqWNBdlsuyDPcyX5Ig==
-X-Received: by 2002:a17:907:9444:b0:b04:53cc:4400 with SMTP id
- a640c23a62f3a-b0453cc4661mr684654666b.27.1756906164695; 
- Wed, 03 Sep 2025 06:29:24 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b04093c9161sm1038073166b.54.2025.09.03.06.29.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 06:29:24 -0700 (PDT)
-Message-ID: <e4ce9ca2-9be7-4486-a1b5-1c5939f26989@linaro.org>
-Date: Wed, 3 Sep 2025 15:29:22 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1utnfu-00059S-QA
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:23 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1utnfp-0004w7-QZ
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1D5C2C01A4;
+ Wed, 03 Sep 2025 16:37:16 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b8f::1:11])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id BbgRSa3GomI0-Fv3Tkeen; Wed, 03 Sep 2025 16:37:15 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1756906635;
+ bh=ZIuITB1rd17BNdWGYUy9N1rTVr/YhJCJKjPp4gE6akA=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=na+wOSr64PlakhG5ElD/DgnHtD8yV5pfJdNHEm/CT9VaezRP8lqSV/XV0scoVGXPn
+ T/JyoUGjmih+Ul/bFRtJf70k3q+IpIK8t+q7BvSzpDPyZKMJEct7E+vNx67Y3Qq0Cc
+ 3kIR5RzjG9ubGURRfI3c0MQnIP03MPEpn062RE8I=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, peterx@redhat.com,
+ mst@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
+Subject: [PATCH v2 4/8] qapi: add interface for local TAP migration
+Date: Wed,  3 Sep 2025 16:37:01 +0300
+Message-ID: <20250903133706.1177633-5-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
+References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/3] target/riscv: rvv: Add Zvqdotq support
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250903130125.1701363-1-max.chou@sifive.com>
- <20250903130125.1701363-3-max.chou@sifive.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250903130125.1701363-3-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,7 +66,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -109,28 +77,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 15:01, Max Chou wrote:
-> +#define OPMVX_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
-> +static void do_##NAME(void *vd, target_long s1, void *vs2, int i)       \
-> +{                                                                       \
-> +    int idx;                                                            \
-> +    T1 r1;                                                              \
-> +    T2 r2;                                                              \
-> +    TX1 *r1_buf = (TX1 *)&s1;                                           \
-> +    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
-> +    TD acc = ((TD *)vd)[HD(i)];                                         \
-> +                                                                        \
-> +    for (idx = 0; idx < 4; ++idx) {                                     \
-> +        r1 = *((T1 *)r1_buf + HS1(idx));                                \
-> +        r2 = *((T2 *)r2_buf + HS2(idx));                                \
-> +        acc += r1 * r2;                                                 \
+To migrate TAP device (including open fds) locally, user should:
 
-One could argue for a missing widening cast to TD here.  You got away with it because the 
-only uses happen to have small inputs and "int" sized outputs, so C arithmetic promotion 
-worked for you.
+1. enable local-tap migration capability both on source and target
+2. use additional local-incoming=true option for tap on target
 
-You can move the variable declarations into the loop.
+Why capability is not enough? We need an option to modify early
+initialization of TAP, to avoid opening new fds. The capability
+may not be set at the moment of netdev initialization.
 
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ migration/options.c |  7 +++++++
+ migration/options.h |  1 +
+ qapi/migration.json |  9 ++++++++-
+ qapi/net.json       | 12 +++++++++++-
+ 4 files changed, 27 insertions(+), 2 deletions(-)
 
-r~
+diff --git a/migration/options.c b/migration/options.c
+index 4e923a2e07..6f5af52a5c 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -262,6 +262,13 @@ bool migrate_mapped_ram(void)
+     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
+ }
+ 
++bool migrate_local_tap(void)
++{
++    MigrationState *s = migrate_get_current();
++
++    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_TAP];
++}
++
+ bool migrate_ignore_shared(void)
+ {
+     MigrationState *s = migrate_get_current();
+diff --git a/migration/options.h b/migration/options.h
+index 82d839709e..08c0606072 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -30,6 +30,7 @@ bool migrate_colo(void);
+ bool migrate_dirty_bitmaps(void);
+ bool migrate_events(void);
+ bool migrate_mapped_ram(void);
++bool migrate_local_tap(void);
+ bool migrate_ignore_shared(void);
+ bool migrate_late_block_activate(void);
+ bool migrate_multifd(void);
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 2387c21e9c..992a5b1e2b 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -517,6 +517,12 @@
+ #     each RAM page.  Requires a migration URI that supports seeking,
+ #     such as a file.  (since 9.0)
+ #
++# @local-tap: Migrate TAPs locally, keeping backend alive. Open file
++#     descriptors and TAP-related state are migrated. Only may be
++#     used when migration channel is unix socket. For target device
++#     also @local-incoming option must be specified (since 10.2)
++#     (since 10.2)
++#
+ # Features:
+ #
+ # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+@@ -536,7 +542,8 @@
+            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+            'validate-uuid', 'background-snapshot',
+            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+-           'dirty-limit', 'mapped-ram'] }
++           'dirty-limit', 'mapped-ram',
++           { 'name': 'local-tap', 'features': [ 'unstable' ] } ] }
+ 
+ ##
+ # @MigrationCapabilityStatus:
+diff --git a/qapi/net.json b/qapi/net.json
+index 78bcc9871e..8f53549d58 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -353,6 +353,15 @@
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# @local-incoming: Do load open file descriptor for that TAP
++#     on incoming migration. May be used only if QEMU is started
++#     for incoming migration. Will work only together with local-tap
++#     migration capability enabled (default: false) (Since: 10.2)
++#
++# Features:
++#
++# @unstable: Member @local-incoming is experimental
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -371,7 +380,8 @@
+     '*vhostfds':   'str',
+     '*vhostforce': 'bool',
+     '*queues':     'uint32',
+-    '*poll-us':    'uint32'} }
++    '*poll-us':    'uint32',
++    '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } } }
+ 
+ ##
+ # @NetdevSocketOptions:
+-- 
+2.48.1
+
 
