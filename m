@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20454CA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E8CCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uti3u-0006Np-QD; Wed, 03 Sep 2025 03:37:48 -0400
+	id 1uti5G-0007BD-OE; Wed, 03 Sep 2025 03:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uti3r-0006N8-48; Wed, 03 Sep 2025 03:37:44 -0400
+ id 1uti5D-0007AT-8O; Wed, 03 Sep 2025 03:39:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uti3l-00077v-M0; Wed, 03 Sep 2025 03:37:42 -0400
+ id 1uti53-0007D4-Fr; Wed, 03 Sep 2025 03:38:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E40414F507;
- Wed, 03 Sep 2025 10:37:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C27AD14F50B;
+ Wed, 03 Sep 2025 10:38:52 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4EB326E15B;
- Wed,  3 Sep 2025 10:37:33 +0300 (MSK)
-Message-ID: <2441482f-2020-4b2c-b0bf-4c6e872afddd@tls.msk.ru>
-Date: Wed, 3 Sep 2025 10:37:33 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2691E26E15C;
+ Wed,  3 Sep 2025 10:38:54 +0300 (MSK)
+Message-ID: <4202d587-b779-47e4-aebe-c5aa753cf804@tls.msk.ru>
+Date: Wed, 3 Sep 2025 10:38:54 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vfio scsi ui: Error-check
- qio_channel_socket_connect_sync() the same way
+Subject: Re: [PATCH] Revert "tests/qtest: use qos_printf instead of
+ g_test_message"
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, kvm@vger.kernel.org,
- aharivel@redhat.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20250723133257.1497640-1-armbru@redhat.com>
- <20250723133257.1497640-3-armbru@redhat.com>
+Cc: alex.bennee@linaro.org, pbonzini@redhat.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250728145747.3165315-1-armbru@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250723133257.1497640-3-armbru@redhat.com>
+In-Reply-To: <20250728145747.3165315-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -90,7 +89,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,21 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.07.2025 16:32, Markus Armbruster wrote:
-> qio_channel_socket_connect_sync() returns 0 on success, and -1 on
-> failure, with errp set.  Some callers check the return value, and some
-> check whether errp was set.
+On 28.07.2025 17:57, Markus Armbruster wrote:
+> This reverts commit 30ea13e9d97dcbd4ea541ddf9e8857fa1d5cb30f.
 > 
-> For consistency, always check the return value, and always check it's
-> negative.
+> "make check" prints many lines like
+> 
+>      stdout: 138: UNKNOWN:     # # qos_test running single test in subprocess
 
-Ditto for this one - applying this for qemu-stable (10.0 & 10.1).
-It doesn't hurt, and the code in longer-supported branches will
-be less different from the master branch, making future changes,
-if any, easier to pick up (there were multiple fixes in this area
-recently).
-
-Please let me know if I shouldn't :)
+I'm picking this up for qemu-stable (10.0 & 10.1) too, since
+these messages are annoying there too.  It applies cleanly too.
 
 Thanks,
 
