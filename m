@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73893CA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D58FCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utiSG-00053U-RC; Wed, 03 Sep 2025 04:02:57 -0400
+	id 1utide-0002kW-OV; Wed, 03 Sep 2025 04:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1utiQy-0002nc-4s
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:01:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1utiQv-0006jF-RN
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:01:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756886491;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ldld9n2gWWwiOv5VN6eg5bBSoFDexYlgVkL2KSABJKo=;
- b=UFcVrTNuMqC851D0CuZiA9wCEd5hPBtB4mpjHyLUcirIYrbWFR7IZKqwEzalHTIrflhE3r
- cAa7gmNmSic5I3rwQdwuLx+RiSzZa8lb6443mMjSiWxqb//pp5UyZM74+DQWKKKHf4PN8B
- fytLnGXzdFTAzGL9g6Az++WR3oTWn7A=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-laIygS8zMDe0Fx4poIqjyg-1; Wed, 03 Sep 2025 04:01:29 -0400
-X-MC-Unique: laIygS8zMDe0Fx4poIqjyg-1
-X-Mimecast-MFC-AGG-ID: laIygS8zMDe0Fx4poIqjyg_1756886489
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-70dfcc589d8so61578456d6.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 01:01:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1utidb-0002je-Qi; Wed, 03 Sep 2025 04:14:39 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1utida-0001h5-1r; Wed, 03 Sep 2025 04:14:39 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-24456ce0b96so8388995ad.0; 
+ Wed, 03 Sep 2025 01:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1756887274; x=1757492074; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yCb97mwKl0zDXDe9mlZ6s8SrOQ+RIl2akiT0e1loX4I=;
+ b=E/uk+RyM8NCEbKfxF+Tlt3xgmfK843148tlLBGCPqYWfTpj9XCNdRnRLsf2yw57+yI
+ eP820js3sd8EoegAkcft1JJHD3bn+E/enF9RKIv2/wfpq2k8OaUchjukner2vkkX2O0v
+ huDNOAMGdTqrUmK2EaFmt6uaIFW+5fINihlg1aIrDpk9ORjbo6KVBmXyE4pLkGsxoMEf
+ m8RXPJrM2SCOHeBejqM3Jm/QlnYzsBhSt/ti0uUHC2fRcc3vTuTz2POsoD5lf2u9tIld
+ BY2pB/ej6Cp4pOQIClvRDAwGjtM8jV86Zr1886QebnaQFcn0zo2F4ZhZBMaCz+WK4b0W
+ dZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756886489; x=1757491289;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1756887274; x=1757492074;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ldld9n2gWWwiOv5VN6eg5bBSoFDexYlgVkL2KSABJKo=;
- b=wk/X9iqsBJApjpf7WCzYo2mDH63VcnC5BAZZe9Ycbum/q+wb+OSJM+0U1s0zq9+tif
- aVfkXc1rui+MRemLCSH7/q7cJ8weRhs+I2FpZOVchJPv8wVmPHx+Od+t4f6g73fhOVx8
- WqzXZTK6JSeEJELDQsUlw6k5NHJciwB42OC2Tt8Hu6ylmmma5KLexhEouwIVwoi6bBZP
- ah0mM3dDVa+XpLYSlrO7GiAxDHyHI4TVlY78csGIZVbYqe3vPHsjpOsZyOOtHyRXJ6V0
- VzSC1K9swlcRiiiqgaBczwvkyQnvb2XZ7aRgBopGuDAYXdbqK6twpdoarQCezQHrW2lM
- k5Cw==
-X-Gm-Message-State: AOJu0Yz5hLP9nplqrL4rZ3L3bB9tq5LwNjRyOplrDlOBkJZQ5rof28ho
- /Xn/OCrqXSTSncFpY3wfyFMYlYxxEouKhcG2hShtZmJ3eq41VSIsDE7YtxlRF7ZG1bPZOxwgJei
- VnT4WSrJ31kbvlHIdlBOfbySCBD/TZSGbmo3dhVpDoWLqg0Wk/pFPn83tUzCEPv5IokK7acjINn
- a4Q7axtuuq1NhhOTXq8GOwJHZ5IbLagP8=
-X-Gm-Gg: ASbGnctJRei9UON4bR1XS8PW0E7g77pxRgDMS83+LZkEYBTwzu1LwArMgBMkpj0clW0
- vPwX7/3qTRl7qBYB9zMrwhLqsrIocfOpnE6z85LleIxTguzXU3XGQxJ+SrCR6WHO9X0p60nz4aI
- 2x7yZT4nuKIYtM4ti1VWuwWVY=
-X-Received: by 2002:a05:6214:2249:b0:717:ccef:6ee8 with SMTP id
- 6a1803df08f44-717ccfeb40bmr101683436d6.37.1756886488596; 
- Wed, 03 Sep 2025 01:01:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpHngPJG7+iqx4K1UV6jGW4QN5x3yfPuBbnj/XyTVwYfYLvKfHKocn2qKrmUYTedwIzumcf2dsk79ILQMUFf0=
-X-Received: by 2002:a05:6214:2249:b0:717:ccef:6ee8 with SMTP id
- 6a1803df08f44-717ccfeb40bmr101682916d6.37.1756886487984; Wed, 03 Sep 2025
- 01:01:27 -0700 (PDT)
+ bh=yCb97mwKl0zDXDe9mlZ6s8SrOQ+RIl2akiT0e1loX4I=;
+ b=sG6DBoxOOeyrZB00hXo4Dub62VjoCnMDYGzjAZGIuHNew9PSuz8vk5j2HeoBzGdwN+
+ GchQ9xaC9DIhJk0rj1pvzSkA+VS85ZWocUOvtXoabN7B3LzlTv+eaVtxokat2j8Yz0Y3
+ SUXzRe3M+Y1XXMycwmNQfcfaaRmg86LUUCpMOT0VvsaLfDyBALmqn0d7Y5Eoq2hSNFdk
+ KbvDtRulae1Z0n0mXZgLTtw+w/CQXLMNrEFcVrlKpcTosbCLKR5Tqv+0tWgalAZ6DB75
+ uu6FKhwED7i2QuUTU8k/DvJbNZ/ADTwAzXvNataNFhwPUpYYknAxv4afcfxwHajRtQRQ
+ I4qA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcr5LvynZvrkeG10t98oFEsapw89huGFUidBzJpEwZRu+I4Thqev8SeZrRJBcSP0XjCSzmRjKJLlBW@nongnu.org
+X-Gm-Message-State: AOJu0Yx0ibGvezr2x61LpPBnUb2zWYgfoIZt7h4YJoox8hYMGWu8YNMG
+ jrZy2hSSLvjAyUKSuTLhY8KSKM8qNB1CoNsDJyo4NM6uS20audkkcL+qS3g4Rg==
+X-Gm-Gg: ASbGncuen8jyLliueDL+sh//i60CwyfrRIOJYnXI/l7BHnqKhDW26FGdI9ly8YUVjZc
+ WZ728GWzrcGcg4lFGjOEATiXhItzYi1eAc4LHHu/+oGwMiT0DKBI78ukHWjQdnClsec9HaddYsv
+ xu1C0032cYKr2uYQf9uUyBbTLltuqojHE16UtAGZiIbR7GwKKgU2HNSYwHUHRwnmhcuq0YQR4s2
+ b36B6iWoWot+dUu9/y/xP85wfTYZXpIcSFtfTYe6Pa6KxjLHKb9T+SGU5r8okdUKnfRuKRQll3h
+ ETXqs+fGm6aXG7OHERpSi27kP7cH2hTC4sSauVbr/mbmFGgpJ7xfuBdgkraNYMXkUUMicCvC94a
+ HVs9sqCyieqTVxBqaF15yn9cp2UOGuRaqL60T8eMB2GfzLhpdjyEL4uLkvJM8YGXp7+Fo
+X-Google-Smtp-Source: AGHT+IHJS5Lax5RuypX7/uvbB9Mw436f1+AytLFHTlk0k26/tlhMWv0Tr6dKvIUkYZlWi1Z7G0vmPA==
+X-Received: by 2002:a17:902:ecc3:b0:24b:eef:643c with SMTP id
+ d9443c01a7336-24b0eef6874mr83328945ad.5.1756887273762; 
+ Wed, 03 Sep 2025 01:14:33 -0700 (PDT)
+Received: from lima-default (123.253.189.97.qld.leaptel.network.
+ [123.253.189.97]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24c9a46bcf1sm8806555ad.3.2025.09.03.01.14.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Sep 2025 01:14:33 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-riscv@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/4] linux-user/riscv: add vector state to signal context
+Date: Wed,  3 Sep 2025 18:14:13 +1000
+Message-ID: <20250903081417.338515-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20250825143155.160913-1-kkostiuk@redhat.com>
- <5d2f2ea7-07ee-438c-86d6-aff7a3ae7fff@tls.msk.ru>
-In-Reply-To: <5d2f2ea7-07ee-438c-86d6-aff7a3ae7fff@tls.msk.ru>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 3 Sep 2025 11:01:16 +0300
-X-Gm-Features: Ac12FXzZ_AaiBbLhPsNh6Dwj3qs2e_COYJ31h7znRc5vu6ZuVO_3BGkzf4xtsLw
-Message-ID: <CAPMcbCpfSPPUOxFU9pw2UZFLDzeK0D71Lh5Gvy+sE-UtZPhuEw@mail.gmail.com>
-Subject: Re: [PATCH] qga/installer: Remove QGA VSS if QGA installation failed
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Yan Vugenfirer <yvugenfi@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000007028a063de103ef"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,70 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000007028a063de103ef
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Changes in v2:
+- Fix 32-bit compile
+- Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
+  one that extends the size of rt_sigframe, patch 3 is adding new
+  extended state to the frame which is added dynamically).
 
-Hi Michael,
+This series adds vector state to the linux-user signal handler,
+and adds a basic signal handling test case. As a sanity check, I
+also verified the signal handling test works in the same way when
+run under a real Linux kernel.
 
-Please also pick
-https://lore.kernel.org/qemu-devel/20250825135311.138330-1-kkostiuk@redhat.=
-com/
-for stable as it provides more detailed error logs.
+The signal handler test has some gross header hacks in it to make
+it work for me (debian arm64->riscv64 cross compile environment),
+I would not be surprised if it breaks in other environments, any
+ideas or breakages let me know. May just have to define the types
+by hand for now if it becomes intractable.
 
-Best Regards,
-Kostiantyn Kostiuk.
+I couldn't find much in the way of previous discussion or work on
+this, forgive me if I've missed it.
 
+Thanks,
+Nick
 
-On Wed, Sep 3, 2025 at 10:09=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
+Nicholas Piggin (4):
+  tests/tcg/riscv64: Add a user signal handling test
+  linux-user/riscv: Add extended state to sigcontext
+  linux-user/riscv: Add vector state to signal context
+  tests/tcg/riscv64: Add vector state to signal test
 
-> On 25.08.2025 17:31, Kostiantyn Kostiuk wrote:
-> > When QGA Installer failed to install QGA service but install
-> > QGA VSS provider, provider should be removed before installer
-> > exits. Otherwise QGA VSS will has broken infomation and
-> > prevent QGA installation in next run.
->
-> I'm picking this up for qemu-stable (10.0 & 10.1).
-> Please let me know if I shouldn't.
->
-> Thanks,
->
-> /mjt
->
->
+ linux-user/riscv/signal.c                | 197 ++++++++-
+ linux-user/riscv/vdso-asmoffset.h        |   4 +-
+ tests/tcg/riscv64/Makefile.target        |   5 +
+ tests/tcg/riscv64/test-signal-handling.c | 507 +++++++++++++++++++++++
+ 4 files changed, 700 insertions(+), 13 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-signal-handling.c
 
---00000000000007028a063de103ef
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi=C2=A0Michael,</div><div><br></div><div>Please also=
- pick=C2=A0<a href=3D"https://lore.kernel.org/qemu-devel/20250825135311.138=
-330-1-kkostiuk@redhat.com/">https://lore.kernel.org/qemu-devel/202508251353=
-11.138330-1-kkostiuk@redhat.com/</a> for stable as it provides=C2=A0more de=
-tailed error logs.</div><div><br></div><div><div dir=3D"ltr" class=3D"gmail=
-_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div>Best R=
-egards,</div><div>Kostiantyn Kostiuk.</div></div></div></div><br></div><br>=
-<div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"=
-gmail_attr">On Wed, Sep 3, 2025 at 10:09=E2=80=AFAM Michael Tokarev &lt;<a =
-href=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">On 25.08.2025 17:31, Kostianty=
-n Kostiuk wrote:<br>
-&gt; When QGA Installer failed to install QGA service but install<br>
-&gt; QGA VSS provider, provider should be removed before installer<br>
-&gt; exits. Otherwise QGA VSS will has broken infomation and<br>
-&gt; prevent QGA installation in next run.<br>
-<br>
-I&#39;m picking this up for qemu-stable (10.0 &amp; 10.1).<br>
-Please let me know if I shouldn&#39;t.<br>
-<br>
-Thanks,<br>
-<br>
-/mjt<br>
-<br>
-</blockquote></div>
-
---00000000000007028a063de103ef--
+-- 
+2.51.0
 
 
