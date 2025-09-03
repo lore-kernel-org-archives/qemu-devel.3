@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96DB0CA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C696CA100C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utidl-0002nC-HV; Wed, 03 Sep 2025 04:14:49 -0400
+	id 1utj18-000782-6b; Wed, 03 Sep 2025 04:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidi-0002lp-MZ; Wed, 03 Sep 2025 04:14:46 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1utidg-0001j9-PS; Wed, 03 Sep 2025 04:14:46 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-24a9ccbf10dso34895295ad.3; 
- Wed, 03 Sep 2025 01:14:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756887282; x=1757492082; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=C417OsYO0i831zsFFAbegUg0Ax4p35RqpiQra3XZSak=;
- b=lF8h/lTXbwtPJM4e0PZkl6kBA4j7WzKv5GJIQoxhWeD8IjuSNSevLEAVO/WErNWgAy
- ChA64LUAWwa7IpjU+FXoT8aZE6pSgKleIOq9hKQzVN84XuMOxD52cly4qIjkS7jxnQe5
- pyF/07db+GeAlnoI7AHntjBOp3iHaYkEjl+1jIr+p5Xp+3LLJnUlF+kBzVGI6HOES5qj
- l7j33kAWO3tW5QkYYbLVc73sYKRori+jWcHognaiArnsDAasdsErYy0/GFSbykbMhWdn
- EDQQRHUUxzbJF3TMojuLdTM8PIrvGnP822qFU5c4wQeaNxqrvTh0mWeg1g5et1u8bOSW
- LrbA==
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1utj16-00077c-5w
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:38:56 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1utj13-0007NR-L0
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:38:55 -0400
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 460773F46B
+ for <qemu-devel@nongnu.org>; Wed,  3 Sep 2025 08:38:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1756888730;
+ bh=RMgNKE2Ti7LH5wDEOvr/q2CopCD0HzNlWDo5eRVFx/8=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=VJv+UUCzREGM7awYKxFYG5a2WdKboRPAWQaRRIpqT/Mw8Elb8avC6Z8Dao6gy7OkQ
+ 2rPuM4cv28hGLxBkjdrtOcq/ApBWimbUpXkcW7HWkuSg16W9DIwNCJAjQDTB4JIE1z
+ mb37bixrkESTaNBotfmx0FHUikEjPV6aexH8LzvCRco9e2b9xuePcv7L2phjc6RgWp
+ HOxBSyZ7hu9JbelIQZvLq06rWWcyeRPPN8KlrtjsPiKuVAEFKAULuI1NM4YGAZuThw
+ /jQoZdB3lzgyRx5LlPlrHcTO7OnQVqOIZj32+k7Fx6tLbGczwlINxOjnd6IG4ZzPbd
+ +3plNePybDhdg==
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b044033b983so68125866b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 01:38:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756887282; x=1757492082;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756888730; x=1757493530;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C417OsYO0i831zsFFAbegUg0Ax4p35RqpiQra3XZSak=;
- b=EVWpk4UzLm3XKOrH8hZVHCp8hKIS5ypiBV8crXaWAzvDeFDZ0aklcJbJ8hPk0oJzkk
- on6oQ8b6PW8BAiuO5zOHj2Vig9kCOzgXtBHw9qdiCIqeqa0x8SL6V0MfdMysMvw/IGN1
- wta4kiP7SKqKfcY86dY/3mMSiZFMKPxOnINGdXzrXKybx5D76IzXBXNUs577ZvlURslz
- qHTXm+QxIr1SfXhehzSLs1oxY7S1FKkucdZXXB/m2S0BOdyHw2/WpXui7xhG5dcLjtcw
- EeKE2yLa7at2DY7xGfh8mqFUyzLaTjUnAe9iOWoVi41GafHTZiFdPE/0xeS6sDrSvP88
- xooA==
+ bh=RMgNKE2Ti7LH5wDEOvr/q2CopCD0HzNlWDo5eRVFx/8=;
+ b=Jbjgozu8nBQEtZQU+B1tCsjvrd9PoA03vUeedqRmsxzZitKbKSeawaof9RjUX4yrf7
+ OLwCEBLPjy95BUCLUZdXb/D6v/6yttg5rS17dkZMJ0BXAc0RFM6O6DTMTGFIFZhKSP1z
+ saz7F2BuzJsGLuRhrquych7fIUia65s3LCt0c2wl5fLGdJx9VPEkxozEFUyVd/hFkiig
+ D1QV3dylShobRSGbatV3kz6CJuTDx4KjZhr2Yujydi7NpCMuIj2JleTxMd8s+CTBfGoi
+ wjqr/AgdwQ/bMXpvVly8lKDSOBZqMvH/4VDBGbns7APnFucNPYNpJzobrfEphbcxBxwE
+ A+fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUh21UA+pdpASMGsFTtOpjeoQDmrj7BqQWKn5v/MTQFmm8n2eQZ+Jc8RSw6Nq1zUKfqGEzi5ooDrCnw@nongnu.org
-X-Gm-Message-State: AOJu0Yxyavk+x8wzhqBr+yIXJx2MQ6gnpIPKL9YoOg/k7nhcR7NknuLT
- 7S3081jPjQawHT0MwjxcehDEKkENtlvlPZuF0AG4BC5pWM0gmADW6i77A5v/7Q==
-X-Gm-Gg: ASbGncvW2kclcfQuOmhOmOsRTg3WaILIn9lddL75abEc86ouvtpAs3G5+LqBS9JCewT
- /SBvJSKNZ0XulPD40icHtW98l4DQobH42p4byUE25I9XAGUN2IJ8qEOAwHDIZUS8f8XWmkh+G9f
- RfDgKFkGVN0GEAzYugOrK8aFguNQZ6jVjrJbzAC0El7tV3TbjpDcVyCNoc4IoZLGSLqScU+7XYc
- zxD2btOty7ok51xKr2IHivekyXtsdgFMeJ/EzOkiUcVFwYTBqB1hpy6T3ZGoVOJvbVDeT12LEYz
- vwE/canx+u/oFotx6wsQNgMVvopFmOjrC6prl5iCyod5E8mt+uX7ElTd2gnoNgIXz9cGKQWhL9p
- 5ANuoaYL+pFlVgJ9uDaLdfMCV7YspMI+SRUc313SwUolWzeT9JniN2l1tftI3vzWcBop+YRypX1
- s21CI=
-X-Google-Smtp-Source: AGHT+IHbUrsbNIvdSnK/A2EmhCVdvU4vKnLsOywoKrYfS8w8aPPtCvwJq9411siQucImAiDDCudzOA==
-X-Received: by 2002:a17:902:ec85:b0:248:d84a:91df with SMTP id
- d9443c01a7336-24944a5c73cmr201795565ad.26.1756887282077; 
- Wed, 03 Sep 2025 01:14:42 -0700 (PDT)
-Received: from lima-default (123.253.189.97.qld.leaptel.network.
- [123.253.189.97]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24c9a46bcf1sm8806555ad.3.2025.09.03.01.14.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Sep 2025 01:14:41 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-riscv@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2 2/4] linux-user/riscv: Add extended state to sigcontext
-Date: Wed,  3 Sep 2025 18:14:15 +1000
-Message-ID: <20250903081417.338515-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
-References: <20250903081417.338515-1-npiggin@gmail.com>
+ AJvYcCVbytOEZHChDYCDtZWH+6SSlX4HN+1JtzaQUaZZNotMSl0IPxQjEx13u1Ik+7LwGMA3iUOqfbbTxabd@nongnu.org
+X-Gm-Message-State: AOJu0YzMiKRWSyk1ft9MNQ6qbYxH2sO1yBahH/a7tlsjUJCqSa8E72uC
+ +e+S0l0dKv67oRopqY3DJMiPiv+9WYWb5TyaTaFbRBRbMl7kD5TUJdh2B/9pobokclK5B+cBzyn
+ F9AXxra/NNTAWrMlqABbItEAKeT1TISAht0YWtFH5WCAEVezoqsfBFqfckmv3UaZIf1yS8UfKI+
+ 6ytF4zdK6CyzwJst6o2WIBGphDd9l6VmNLKpO1SEnA49ETLiA=
+X-Gm-Gg: ASbGncsUqU+7FWqPX3rfud7nLWaEE4jq2K+K41lIDPAP2KWIInupcFI1kqQPeWcBr1B
+ f+z9xd2EZMzRlzeaB4kh1VYI950euVbUxS4oy8TF646eOAjWb5BypqZ3Uwhy/XVmex2H3t4HBf1
+ qvxBlB6yYIsFj24Wx0ngA=
+X-Received: by 2002:a17:907:3f92:b0:b04:6c7a:dd0a with SMTP id
+ a640c23a62f3a-b046c7adfd4mr103335166b.8.1756888729500; 
+ Wed, 03 Sep 2025 01:38:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6o75AmbgZ9KhktV2XVBhZBSQEaJL8ReggFS6J1j0UeTR/gTRrCZ0V9Ira4r+J+60gZE/Wz18tWIS1JnINh/k=
+X-Received: by 2002:a17:907:3f92:b0:b04:6c7a:dd0a with SMTP id
+ a640c23a62f3a-b046c7adfd4mr103333366b.8.1756888728974; Wed, 03 Sep 2025
+ 01:38:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
+ <aJNDxxjeqkOLAO2r@redhat.com>
+ <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
+ <aJOqmxTimJ_mFCqp@redhat.com>
+ <ccabd72c-6f48-4be2-8bbd-44f28eb2cfd1@redhat.com>
+ <CAATJJ0KZDHqMHmpmfFySJjreqPMTHDiJLJM_zBdcr5CrzOL2tg@mail.gmail.com>
+In-Reply-To: <CAATJJ0KZDHqMHmpmfFySJjreqPMTHDiJLJM_zBdcr5CrzOL2tg@mail.gmail.com>
+From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+Date: Wed, 3 Sep 2025 10:38:22 +0200
+X-Gm-Features: Ac12FXzMXOaWHnKfTE-jwBNlrduwwfvnaZCbOuXfM1i6bgFliIMtkcfyBLFq9Ic
+Message-ID: <CAATJJ0Kz7Sdv-Dq0r0pGBXYgZbTbaC0fSQiVXoQides4pF=zXg@mail.gmail.com>
+Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
+To: Paolo Bonzini <pbonzini@redhat.com>, Hector Cao <hector.cao@canonical.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=christian.ehrhardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,155 +114,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux/riscv has extended the sigcontext with padding and an
-extended state structure that can save various optional
-features like vector in a flexible format. Update the
-linux-user signal handling to this new structure.
+On Wed, Aug 20, 2025 at 7:11=E2=80=AFAM Christian Ehrhardt
+<christian.ehrhardt@canonical.com> wrote:
+>
+> On Tue, Aug 19, 2025 at 4:51=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+> >
+> > On 8/6/25 21:18, Daniel P. Berrang=C3=A9 wrote:
+> > > On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
+> > >> On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berr=
+ange@redhat.com> wrote:
+> > >>>
+> > >>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
+> > >>>> Hi,
+> > >>>> I was unsure if this would be better sent to libvirt or qemu - the
+> > >>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
+> > >>>> behaving differently. I did not want to double post and gladly mos=
+t of
+> > >>>> the people are on both lists - since the switch in/out of the prob=
+lem
+> > >>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not=
+ yet
+> > >>>> having all the answers, I'm sure I could find more with debugging,=
+ but
+> > >>>> I also wanted to report early for your awareness while we are stil=
+l in
+> > >>>> the RC phase.
+> > >>>>
+> > >>>>
+> > >>>> # Problem
+> > >>>>
+> > >>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 =
+was:
+> > >>>>    error: operation failed: guest CPU doesn't match specification:
+> > >>>> missing features: pdcm
+> > >>>>
+> > >>>> This is behaving the same with libvirt 11.4 or the more recent 11.=
+6.
+> > >>>> But switching back to qemu 10.0 confirmed that this behavior is ne=
+w
+> > >>>> with qemu 10.1-rc.
+> > >>>
+> > >>>
+> > >>>> Without yet having any hard evidence against them I found a few pd=
+cm
+> > >>>> related commits between 10.0 and 10.1-rc1:
+> > >>>>    7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
+> > >>>>    00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not availa=
+ble
+> > >>>>    e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
+> > >>>> feature_dependencies[] check
+> > >>>>    0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+> > >>>>
+> > >>>>
+> > >>>> # Caveat
+> > >>>>
+> > >>>> My test environment is in LXD system containers, that gives me iss=
+ues
+> > >>>> in the power management detection
+> > >>>>    libvirtd[406]: error from service: GDBus.Error:System.Error.ERO=
+FS:
+> > >>>> Read-only file system
+> > >>>>    libvirtd[406]: Failed to get host power management capabilities
+> > >>>
+> > >>> That's harmless.
+> > >>
+> > >> Yeah, it always was for me - thanks for confirming.
+> > >>
+> > >>>> And the resulting host-model on a  rather old test server will the=
+refore have:
+> > >>>>    <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
+> > >>>>      <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
+> > >>>>      <vendor>Intel</vendor>
+> > >>>>      <feature policy=3D'require' name=3D'vmx'/>
+> > >>>>      <feature policy=3D'disable' name=3D'pdcm'/>
+> > >>>>       ...
+> > >>>>
+> > >>>> But that was fine in the past, and the behavior started to break
+> > >>>> save/restore or migrations just now with the new qemu 10.1-rc.
+> > >>>>
+> > >>>> # Next steps
+> > >>>>
+> > >>>> I'm soon overwhelmed by meetings for the rest of the day, but woul=
+d be
+> > >>>> curious if one has a suggestion about what to look at next for
+> > >>>> debugging or a theory about what might go wrong. If nothing else c=
+omes
+> > >>>> up I'll try to set up a bisect run tomorrow.
+> > >>>
+> > >>> Yeah, git bisect is what I'd start with.
+> > >>
+> > >> Bisect complete, identified this commit
+> > >>
+> > >> commit 00268e00027459abede448662f8794d78eb4b0a4
+> > >> Author: Xiaoyao Li <xiaoyao.li@intel.com>
+> > >> Date:   Tue Mar 4 00:24:50 2025 -0500
+> > >>
+> > >>      i386/cpu: Warn about why CPUID_EXT_PDCM is not available
+> > >>
+> > >>      When user requests PDCM explicitly via "+pdcm" without PMU enab=
+led, emit
+> > >>      a warning to inform the user.
+> > >>
+> > >>      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > >>      Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> > >>      Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao=
+.li@intel.com
+> > >>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > >>
+> > >>   target/i386/cpu.c | 3 +++
+> > >>   1 file changed, 3 insertions(+)
+> > >>
+> > >>
+> > >>
+> > >> Which is odd as it should only add a warning right?
+> > >
+> > > No, that commit message is misleading.
+> > >
+> > > IIUC mark_unavailable_features() actively blocks usage of the feature=
+,
+> > > so it is a functional change, not merely a emitting warning.
+> > >
+> > > It makes me wonder if that commit was actually intended to block the
+> > > feature or not, vs merely warning ?  CC'ing those involved in the
+> > > commit.
+> > We can revert the commit.  I'll send the revert to Stefan and let him
+> > decide whether to include it in 10.1-rc4 or delay to 10.2 and 10.1.1.
+>
+> Thanks Paolo for considering that.
+>
+> My steps to reproduce seemed really clear and are 100% reproducible
+> for me, but no one so far said "yeah they see it too", so I'm getting
+> unsure if it was not tried by anyone else or if there is more to it
+> than we yet know.
+> Further I tested more with the commit reverted, and found that at
+> least cross version migrations (9.2 -> 10.1) still have issues that
+> seem related - complaining about pdcm as missing feature.
+> But that was in a log of a test system that went away and ... you know
+> how these things can sometimes be, that new result is not yet very
+> reliable.
+>
+> I intended to check the following matrix more deeply again with and
+> without the reverted change and then come back to this thread:
+>
+> #1 Compare platforms
+> - Migrating between non containerized hosts to verify if they are
+> affected as well
+> - Power management explicitly switched off/on (vs the auto detect of
+> host-model) in the guest XML
+> #2 Retest the different Use-cases I've seen this pop up
+> - 10.1 managed save (broken unless reverting the commit that was identifi=
+ed)
+> - 9.2 -> 10.1 migration (seems broken even with the revert)
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- linux-user/riscv/signal.c         | 71 ++++++++++++++++++++++++++-----
- linux-user/riscv/vdso-asmoffset.h |  4 +-
- 2 files changed, 63 insertions(+), 12 deletions(-)
+I need to come back to this aspect of it - the cross release or cross
+qemu version migrations.
 
-diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
-index 358fa1d82d..4ef55d0848 100644
---- a/linux-user/riscv/signal.c
-+++ b/linux-user/riscv/signal.c
-@@ -31,14 +31,43 @@
- 
-    The code below is qemu re-implementation of arch/riscv/kernel/signal.c */
- 
--struct target_sigcontext {
-+struct target_gp_state {
-     abi_long pc;
-     abi_long gpr[31]; /* x0 is not present, so all offsets must be -1 */
-+};
-+
-+struct target_fp_state {
-     uint64_t fpr[32];
-     uint32_t fcsr;
-+};
-+
-+/* The Magic number for signal context frame header. */
-+#define END_MAGIC       0x0
-+
-+/* The size of END signal context header. */
-+#define END_HDR_SIZE    0x0
-+
-+struct target_ctx_hdr {
-+    uint32_t magic;
-+    uint32_t size;
-+};
-+
-+struct target_extra_ext_header {
-+    uint32_t __padding[129] __attribute__((aligned(16)));
-+    uint32_t reserved;
-+    struct target_ctx_hdr hdr;
-+};
-+
-+struct target_sigcontext {
-+    struct target_gp_state sc_regs;
-+    union {
-+        struct target_fp_state sc_fpregs;
-+        struct target_extra_ext_header sc_extdesc;
-+    };
- }; /* cf. riscv-linux:arch/riscv/include/uapi/asm/ptrace.h */
- 
--QEMU_BUILD_BUG_ON(offsetof(struct target_sigcontext, fpr) != offsetof_freg0);
-+QEMU_BUILD_BUG_ON(offsetof(struct target_sigcontext, sc_fpregs.fpr) !=
-+                  offsetof_freg0);
- 
- struct target_ucontext {
-     abi_ulong uc_flags;
-@@ -79,19 +108,25 @@ static abi_ulong get_sigframe(struct target_sigaction *ka,
- 
- static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
- {
-+    struct target_ctx_hdr *hdr;
-     int i;
- 
--    __put_user(env->pc, &sc->pc);
-+    __put_user(env->pc, &sc->sc_regs.pc);
- 
-     for (i = 1; i < 32; i++) {
--        __put_user(env->gpr[i], &sc->gpr[i - 1]);
-+        __put_user(env->gpr[i], &sc->sc_regs.gpr[i - 1]);
-     }
-     for (i = 0; i < 32; i++) {
--        __put_user(env->fpr[i], &sc->fpr[i]);
-+        __put_user(env->fpr[i], &sc->sc_fpregs.fpr[i]);
-     }
- 
-     uint32_t fcsr = riscv_csr_read(env, CSR_FCSR);
--    __put_user(fcsr, &sc->fcsr);
-+    __put_user(fcsr, &sc->sc_fpregs.fcsr);
-+
-+    __put_user(0, &sc->sc_extdesc.reserved);
-+    hdr = &sc->sc_extdesc.hdr;
-+    __put_user(END_MAGIC, &hdr->magic);
-+    __put_user(END_HDR_SIZE, &hdr->size);
- }
- 
- static void setup_ucontext(struct target_ucontext *uc,
-@@ -146,20 +181,36 @@ badframe:
- 
- static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
- {
-+    struct target_ctx_hdr *hdr;
-     int i;
- 
--    __get_user(env->pc, &sc->pc);
-+    __get_user(env->pc, &sc->sc_regs.pc);
- 
-     for (i = 1; i < 32; ++i) {
--        __get_user(env->gpr[i], &sc->gpr[i - 1]);
-+        __get_user(env->gpr[i], &sc->sc_regs.gpr[i - 1]);
-     }
-     for (i = 0; i < 32; ++i) {
--        __get_user(env->fpr[i], &sc->fpr[i]);
-+        __get_user(env->fpr[i], &sc->sc_fpregs.fpr[i]);
-     }
- 
-     uint32_t fcsr;
--    __get_user(fcsr, &sc->fcsr);
-+    __get_user(fcsr, &sc->sc_fpregs.fcsr);
-     riscv_csr_write(env, CSR_FCSR, fcsr);
-+
-+    hdr = &sc->sc_extdesc.hdr;
-+    uint32_t rsv;
-+    __get_user(rsv, &sc->sc_extdesc.reserved);
-+    if (rsv != 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "signal: sigcontext reserved field is "
-+                                       "non-zero. Attempting restore anyway.");
-+    }
-+
-+    uint32_t magic;
-+    __get_user(magic, &hdr->magic);
-+    if (magic != END_MAGIC) {
-+        qemu_log_mask(LOG_UNIMP, "signal: unknown extended context header: "
-+                                 "0x%08x, ignoring", magic);
-+    }
- }
- 
- static void restore_ucontext(CPURISCVState *env, struct target_ucontext *uc)
-diff --git a/linux-user/riscv/vdso-asmoffset.h b/linux-user/riscv/vdso-asmoffset.h
-index 123902ef61..92e8ac10ab 100644
---- a/linux-user/riscv/vdso-asmoffset.h
-+++ b/linux-user/riscv/vdso-asmoffset.h
-@@ -1,9 +1,9 @@
- #ifdef TARGET_ABI32
--# define sizeof_rt_sigframe     0x2b0
-+# define sizeof_rt_sigframe     0x3b0
- # define offsetof_uc_mcontext   0x120
- # define offsetof_freg0         0x80
- #else
--# define sizeof_rt_sigframe     0x340
-+# define sizeof_rt_sigframe     0x440
- # define offsetof_uc_mcontext   0x130
- # define offsetof_freg0         0x100
- #endif
--- 
-2.51.0
+Hector (on CC) helps me on that now - sadly we were able to confirm
+that migrations from older qemu versions no longer work.
+Yep 10.1 is released by now so it might end up as "The problem is what
+happens when we detect after we have done a release that something has
+gone wrong" from [2].
+But I still can't believe only we see this and therefore for now want
+to believe I messed up on our side when merging 10.1 :-)
 
+For now this is a call if others have also seen any older release
+migrating to 10.1 to throw:
+  error: operation failed: guest CPU doesn't match specification:
+missing features: pdcm,arch-capabilities
+
+Hector will later today reply here with a summary of what we found so
+far, to provide you a more complete picture to think about, without
+having to read through all the messy interim steps in the Ubuntu bug.
+
+[1]: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2121787
+[2]: https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/migratio=
+n/compatibility.rst?plain=3D1#L322
+
+> The hope was that these will help to further identify what is going
+> on, but despite the urgency of the release being imminent I have not
+> yet managed to find the time in the last two days :-/
+>
+> > Sorry for the delay in answering (and thanks Daniel for bringing this t=
+o
+> > my attention).
+> >
+> > Thanks,
+> >
+> > Paolo
+> >
+>
+>
+> --
+> Christian Ehrhardt
+> Director of Engineering, Ubuntu Server
+> Canonical Ltd
+
+
+
+--=20
+Christian Ehrhardt
+Director of Engineering, Ubuntu Server
+Canonical Ltd
 
