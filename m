@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E2BCA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26C56CA100C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 10:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utk7I-0006yY-9e; Wed, 03 Sep 2025 05:49:24 -0400
+	id 1utkJw-0003yh-BH; Wed, 03 Sep 2025 06:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1utk7D-0006tZ-7i
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:49:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1utkJt-0003xd-RS; Wed, 03 Sep 2025 06:02:25 -0400
+Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1utk7B-0001L4-Bb
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:49:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756892954;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HHMuG/ubf7QR4150GbYF3U76I8nyrdV1IZLpMXxZh5I=;
- b=JPe4YTADKZiwJ5UMEe/wkday0uBkxbu9CgBsiwjrGpazKy4sBuTCU7ojw8/7ULk9lDfKZs
- zzZx3m6O+TA5XkKd/4rlnG9Ezu+nzQKDjrdVlSFcw15xWY1opo5sTf8zWHaPsqab+4zkx4
- qjd9qDipbNuDGgAXpGp4G9xVwoqSVcM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-2hR7wc7KM_K0bbdfwUM8Sg-1; Wed,
- 03 Sep 2025 05:49:11 -0400
-X-MC-Unique: 2hR7wc7KM_K0bbdfwUM8Sg-1
-X-Mimecast-MFC-AGG-ID: 2hR7wc7KM_K0bbdfwUM8Sg_1756892950
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 268731956094; Wed,  3 Sep 2025 09:49:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD5E918003FC; Wed,  3 Sep 2025 09:49:08 +0000 (UTC)
-Date: Wed, 3 Sep 2025 11:49:07 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Brian Song <hibriansong@gmail.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
-Subject: Re: [PATCH 0/4] export/fuse: Add FUSE-over-io_uring for Storage
- Exports
-Message-ID: <20250903094907.GA106431@fedora>
-References: <20250830025025.3610-1-hibriansong@gmail.com>
- <CAKWCU7VusNOUskuxc3RMTd+aLY6bSX+de-LiUhe9xpdmbzkn-Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1utkJT-0004OS-2k; Wed, 03 Sep 2025 06:02:05 -0400
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id D39D21400378;
+ Wed,  3 Sep 2025 06:01:56 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-07.internal (MEProxy); Wed, 03 Sep 2025 06:01:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1756893716; x=
+ 1756980116; bh=vPf3MflgQDgEZwNguXj0iPV33GHQ5kWKwELMc6xB76U=; b=G
+ K3wyZ9YsUdEQLnJ2bfoedTc417dyYqtM2vJ8WeEtSb1eDub5B0ZUdIUiQg+ne84h
+ qUxH1KKVeRtzPr+17199Ja7hjPAoIJR2xhtOB8nIq0Bj0iciFebaFbJRchFoWiyv
+ F43Ab2E3CrjAsI3YoECJ1autNYsHDbY6tebcdheVbYeXaBPNAENoeTOPItSZwM7D
+ epS4j8qXuiGF/5/O7Y++0zbRT3sGQAytUDMe2BLVwQFlHlh1oK2lvrDzlBnY7yOW
+ 9NKqVwEtczAZx7oSEVyr8sbsAcf4k8WWiXkLWDrwZKgHL9b419zzqf9+0wbA0i4B
+ aaeyFfd5om7vgebRba5zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1756893716; x=1756980116; bh=vPf3MflgQDgEZwNguXj0iPV33GHQ5kWKwEL
+ Mc6xB76U=; b=J1SHCpTmNigHq/rmp6StCBD9v2RPjziZ4vrdxwwru0bvlPO29Ts
+ kOB8hEAOzUgaLNpBBGERaj5TALmzDVcCS7IUhfLREbVIK8HbknZDRnfsAIY2yV+/
+ wxGlUFN/lkCTSUMHd+KDNAqJZcf8C7u3/CUivS/vXPL5tddoK7M91Txc6elMHoQE
+ ZkASKSNpITmfXJw+ImOqbxRYYuGJAJihkLxNLYMZwrZv5XfhvHbYMU2e7KxZSWmf
+ L6Sngkbrk+vbcIcVcjS0KPcVa0K16fnpa73op3SYUpIsYY/IQiKcyD+iMB7wgAEI
+ xPRypZ3XdoRahg3LR19yUnqKptg8ysAH12Q==
+X-ME-Sender: <xms:ExK4aLkBGaZFign9UQh0K_5MaQ7dleHLXrwjNCn8l7_08gMj2w5gOQ>
+ <xme:ExK4aNz26Mjt3hN9UJcCZF7gq9wzhBdKd0N6K5f9LF80nCg4qX18xGQXplB8z1kjn
+ SzO1VxC1spIb-MDzxQ>
+X-ME-Received: <xmr:ExK4aNs2dWeRFHlwBmeJgJhF3x09ntC-7i-QAyV1eDN44HsOV9JghA89VloQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvkeegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+ lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+ epfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgv
+ nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
+ epjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesih
+ hrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhp
+ ohhuthdprhgtphhtthhopeifihhlfhhrvggurdhophgvnhhsohhurhgtvgesghhmrghilh
+ drtghomhdprhgtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesfigutgdrtgho
+ mhdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfh
+ hoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepshhtvghfrghnhhgrsehrvggu
+ hhgrthdrtghomhdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvthdprhgtphhtth
+ hopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhifohhlfhesrhgv
+ ughhrghtrdgtohhmpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtghomh
+X-ME-Proxy: <xmx:ExK4aHGN-DinqrrqHIF1bw-JuD8USttMkL2wJeeh1T4LKyzQtP5rvg>
+ <xmx:ExK4aL6OpUmsbKbjmSMiS4KAWKGQJT9EJIyXXJ2R3ZrJyrELh7LbzQ>
+ <xmx:ExK4aIyFj4-T_dodZcDbno7eNiH3Gc0R4qk1oCtSHBT-3kp7_qphmw>
+ <xmx:ExK4aB0E20plb2nGhF3PXYcNI7_3s8zWAe3Ugw-U9JlXAGDhSQBVpA>
+ <xmx:FBK4aItOhvnBDP9XIjDSQI54ZAWl5oBDJy6JgvHrwY1g1EBRev7ACdrg>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Sep 2025 06:01:54 -0400 (EDT)
+Date: Wed, 3 Sep 2025 12:01:53 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Wilfred Mallawa <wilfred.opensource@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH v3 3/5] hw/nvme: add NVMe Admin Security SPDM support
+Message-ID: <aLgOlzuRwi0-_cvy@AALNPWKJENSEN.aal.scsc.local>
+References: <20250901034759.85042-2-wilfred.opensource@gmail.com>
+ <20250901034759.85042-5-wilfred.opensource@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="TdlqfZfmZcK46Bp7"
+ protocol="application/pgp-signature"; boundary="lFuRYtVkxG59qMDw"
 Content-Disposition: inline
-In-Reply-To: <CAKWCU7VusNOUskuxc3RMTd+aLY6bSX+de-LiUhe9xpdmbzkn-Q@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250901034759.85042-5-wilfred.opensource@gmail.com>
+Received-SPF: pass client-ip=103.168.172.155; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,92 +121,58 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---TdlqfZfmZcK46Bp7
+--lFuRYtVkxG59qMDw
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 30, 2025 at 08:00:00AM -0400, Brian Song wrote:
-> We used fio to test a 1=E2=80=AFGB file under both traditional FUSE and
-> FUSE-over-io_uring modes. The experiments were conducted with the
-> following iodepth and numjobs configurations: 1-1, 64-1, 1-4, and 64-4,
-> with 70% read and 30% write, resulting in a total of eight test cases,
-> measuring both latency and throughput.
+On Sep  1 13:47, Wilfred Mallawa wrote:
+> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 >=20
-> Test results:
+> Adds the NVMe Admin Security Send/Receive command support with support
+> for DMTFs SPDM. The transport binding for SPDM is defined in the
+> DMTF DSP0286.
 >=20
-> https://gist.github.com/hibriansong/a4849903387b297516603e83b53bbde4
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> ---
 
-Hanna: You benchmarked the FUSE export coroutine implementation a little
-while ago. What do you think about these results with
-FUSE-over-io_uring?
+> +/* From host to controller */
+> +static uint16_t nvme_security_send(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> +    uint8_t secp =3D (dw10 >> 24) & 0xff;
+> +
+> +    switch (secp) {
+> +    case NVME_SEC_PROT_DMTF_SPDM:
+> +        return nvme_sec_prot_spdm_send(n, req);
 
-What stands out to me is that iodepth=3D1 numjobs=3D4 already saturates the
-system, so increasing iodepth to 64 does not improve the results much.
+If spdm_socket is not set, I think this should be Invalid Field in
+Command too, right? Same for receive.
 
-Brian: What is the qemu-storage-daemon command-line for the benchmark
-and what are the details of /mnt/tmp/ (e.g. a preallocated 10 GB file
-with an XFS file system mounted from the FUSE image)?
+> +    default:
+> +        /* Unsupported Security Protocol Type */
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    return NVME_INVALID_FIELD | NVME_DNR;
+> +}
+> +
 
-Thanks,
-Stefan
 
->=20
->=20
->=20
->=20
-> On 8/29/25 10:50 PM, Brian Song wrote:
-> > Hi all,
-> >
-> > This is a GSoC project. More details are available here:
-> > https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_exp=
-orts
-> >
-> > This patch series includes:
-> > - Add a round-robin mechanism to distribute the kernel-required Ring
-> > Queues to FUSE Queues
-> > - Support multiple in-flight requests (multiple ring entries)
-> > - Add tests for FUSE-over-io_uring
-> >
-> > More detail in the v2 cover letter:
-> > https://lists.nongnu.org/archive/html/qemu-block/2025-08/msg00140.html
-> >
-> > And in the v1 cover letter:
-> > https://lists.nongnu.org/archive/html/qemu-block/2025-07/msg00280.html
-> >
-> >
-> > Brian Song (4):
-> >    export/fuse: add opt to enable FUSE-over-io_uring
-> >    export/fuse: process FUSE-over-io_uring requests
-> >    export/fuse: Safe termination for FUSE-uring
-> >    iotests: add tests for FUSE-over-io_uring
-> >
-> >   block/export/fuse.c                  | 838 +++++++++++++++++++++------
-> >   docs/tools/qemu-storage-daemon.rst   |  11 +-
-> >   qapi/block-export.json               |   5 +-
-> >   storage-daemon/qemu-storage-daemon.c |   1 +
-> >   tests/qemu-iotests/check             |   2 +
-> >   tests/qemu-iotests/common.rc         |  45 +-
-> >   util/fdmon-io_uring.c                |   5 +-
-> >   7 files changed, 717 insertions(+), 190 deletions(-)
-> >
->=20
-
---TdlqfZfmZcK46Bp7
-Content-Type: application/pgp-signature; name=signature.asc
+--lFuRYtVkxG59qMDw
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmi4DxMACgkQnKSrs4Gr
-c8iK1Af/bJRa0Qz7zmmamIXJCfr2F+o3DKSjFGgdLm/DN8fO5weHIVYTPPwE/8vh
-OcEhVjaICU2RH6XnYSDv1jmdTIkpXt6b8lNDYM0TwAgq1vPyPGxvKYOuAiU/TVfa
-jG/PfLITJMUSzCQEDpwjlr1ox/LS47QZeejElvyavl0VpJsMKgy0IDCpv4UtoH66
-dnyRY8RPlapj9+FnhVdj1hfUB7AlBtiMjBEACBw+6742KDcNqtf7N9QkDNfu6Ln/
-GTvqVjL756f5YdclIgW15wgo6WLeQ1knzUBMA+4za59Tum48PptZ8RzYE48hGG+y
-pQ88FTdLNFwnZnLL8Jixx+skBv4MVw==
-=JXEY
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmi4Eg8ACgkQTeGvMW1P
+DekUYAgApTwcabaHUW/MGIYZdjRRcYgbSRrkQooCOXvnt/P9bto9Ov/xkBLd30Q6
+uNIJn+QAnweP0HIXSOgSQ1nvVjpB0ElWGDpD5dPoOl00FvERzFaOxcPmfPWtw+1h
+W/7Ux1wloAMIsNLPDrQ1KeCsT3gW7iX/mifhU9h30g/fnN8NFuoZFqpKhwaa4xig
+SyWo5eAH4bYNv+2/bJC4TIGEU4/MWCz5MfbJj1ynqcx1AR1HIjGFgkPkN5n3Ruq2
+IA2qk4z/M51I+V4qtXMC1RvCP8zbY3MYlGw8oMjR00mR8P4rSzv+Fgjvk6dglBGG
+mPtdHSinzzr0nIq2MqGyCQwT9qarMg==
+=oi4l
 -----END PGP SIGNATURE-----
 
---TdlqfZfmZcK46Bp7--
-
+--lFuRYtVkxG59qMDw--
 
