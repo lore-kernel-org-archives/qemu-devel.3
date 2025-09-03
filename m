@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C794CA100B
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE81CA100B
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uthbJ-0006hi-Ek; Wed, 03 Sep 2025 03:08:13 -0400
+	id 1uthcz-0007zP-30; Wed, 03 Sep 2025 03:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uthbH-0006fx-8t; Wed, 03 Sep 2025 03:08:11 -0400
+ id 1uthct-0007yF-Ow; Wed, 03 Sep 2025 03:09:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uthbF-0005pm-8P; Wed, 03 Sep 2025 03:08:11 -0400
+ id 1uthcr-00060P-8L; Wed, 03 Sep 2025 03:09:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8340A14F4C7;
- Wed, 03 Sep 2025 10:08:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ED33D14F4D1;
+ Wed, 03 Sep 2025 10:09:44 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C3BEE26E133;
- Wed,  3 Sep 2025 10:08:04 +0300 (MSK)
-Message-ID: <463f7e61-1ad1-4912-a764-179dff052219@tls.msk.ru>
-Date: Wed, 3 Sep 2025 10:08:04 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 389A126E136;
+ Wed,  3 Sep 2025 10:09:46 +0300 (MSK)
+Message-ID: <5d2f2ea7-07ee-438c-86d6-aff7a3ae7fff@tls.msk.ru>
+Date: Wed, 3 Sep 2025 10:09:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qga: Fix truncated output handling in guest-exec status
- reporting
-To: Minglei Liu <minglei.liu@smartx.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>, Daniel Xu <dxu@dxuuu.xyz>
-References: <20250711021714.91258-1-minglei.liu@smartx.com>
+Subject: Re: [PATCH] qga/installer: Remove QGA VSS if QGA installation failed
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Yan Vugenfirer
+ <yvugenfi@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250825143155.160913-1-kkostiuk@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -80,7 +78,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250711021714.91258-1-minglei.liu@smartx.com>
+In-Reply-To: <20250825143155.160913-1-kkostiuk@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -106,42 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.07.2025 05:17, Minglei Liu wrote:
-> From: "minglei.liu" <minglei.liu@smartx.com>
-> 
-> Signed-off-by: minglei.liu <minglei.liu@smartx.com>
-> ---
->   qga/commands.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/qga/commands.c b/qga/commands.c
-> index 5a5fad31f8..5f20af25d3 100644
-> --- a/qga/commands.c
-> +++ b/qga/commands.c
-> @@ -205,13 +205,15 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
->   #endif
->           if (gei->out.length > 0) {
->               ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
-> -            ges->has_out_truncated = gei->out.truncated;
-> +            ges->has_out_truncated = true;
-> +            ges->out_truncated = gei->out.truncated;
->           }
->           g_free(gei->out.data);
->   
->           if (gei->err.length > 0) {
->               ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
-> -            ges->has_err_truncated = gei->err.truncated;
-> +            ges->has_err_truncated = true;
-> +            ges->err_truncated = gei->err.truncated;
->           }
->           g_free(gei->err.data);
->   
+On 25.08.2025 17:31, Kostiantyn Kostiuk wrote:
+> When QGA Installer failed to install QGA service but install
+> QGA VSS provider, provider should be removed before installer
+> exits. Otherwise QGA VSS will has broken infomation and
+> prevent QGA installation in next run.
 
-I'm picking this up for all current active stable releases as well
-(with d6f67b83b81b "qga: Fix memory leak when output stream is unused"
-before it for 7.2).
-
-Please let me know if I shouldn't
+I'm picking this up for qemu-stable (10.0 & 10.1).
+Please let me know if I shouldn't.
 
 Thanks,
 
