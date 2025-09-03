@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE6CCA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2026DCA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 07:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uthmm-0004rX-7O; Wed, 03 Sep 2025 03:20:05 -0400
+	id 1uthqm-0007E3-Li; Wed, 03 Sep 2025 03:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uthme-0004q2-AF
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:19:56 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uthma-0008JK-Gb
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:19:55 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3cf991e8c82so3437408f8f.3
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 00:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756883989; x=1757488789; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j5B3rngysK6Msp6UaNHP1OsAO+7W5+EQJFiAuDon0mw=;
- b=LyGk6GA+dX6wBNpTTt4L8TVHgec72HNcRRYumz/Mh6LxVlis89fUgNxPAKiM+HbDCI
- p74HqOm+JXULFEACcnIhkJtoWRsMJv8sQOdp26fIy+0Qyd+aYL87AhP+agaFEqGlr8oW
- EFWzC/pLeTr4BGgpIeM+1AkXZNCe7TOyPj3lmSug9mqLyzNcqLx7akFoRJKLRzHDWHF7
- MXh0W9QxKrTNnxombAtofrGd7BEXE3MGjijXKA9lPn5bebA/uJ4DZHKxgeUl2T/rEfq7
- aRxVYK1CnKX8IgrTXaYOWjuYI/v+FkbuDSDCDCKtU0STTBVFQud0jrFl3HZksZ3vcdS2
- STaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756883989; x=1757488789;
- h=content-transfer-encoding:in-reply-to:cc:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j5B3rngysK6Msp6UaNHP1OsAO+7W5+EQJFiAuDon0mw=;
- b=PrdL/Djq+3N8A5MUN1GuVuDkdaHXCEx/jdeGVuitTYKqpmpIzhnZ4gbidkKAvUtu2j
- v/x3tF1jQZqCpz9OtRpQia+R+W9wOQFB08WUog39sAuc5TgwN2IZvNprMG+h+xp3H+sI
- 6TJhAn+MyVBK3zMJ6+Av0AAikUoTqyBoyEjPoFYrsavH0yHrvJVVk5HdkbeVegsHoDuO
- tE3PF+XpjlGnh57mIOisp3HY4/2Lvk5+W948soQ83pJGZZgNS3G/JqK8Ujw3M+xJCdxu
- RYYmhmcvK3WVEImxpcPdL3oqavHGbQdtScxzGtKo4jgdgVt5KU0Gi/dN7ujGBAF70E/9
- gkqg==
-X-Gm-Message-State: AOJu0Yy6H5E0JJ4f8e7OIErJwEg1rhT1/Q8YetmVVzD9rW/AyQ1tL5O4
- 18zAWheIrwxdxm2O4YGwD/Y6Eb3iMBQnac+rXFc4COLaLPiLyTO+KaBcB48vukHFxZU=
-X-Gm-Gg: ASbGncsS7w8jIefjKUllglqmhwenFePiUpd/f2CJ1f9fYSexcJ/dA+m35NdzN7WjqUO
- pdSoS4szt1t0wi9dXyb9ajdmghH/VyfnKiL0t9u+AdHaU9Wuz1VNtBdDgG69/4FylbZbjOg+P+v
- GCAUa8Kr9Y7eDCDivE0JGIU7L9miAhttNf3gKJrkTpW7T+P9t2MpaJboQqkS6cyL+siyrShhm67
- Dqo96EILxTMMVMV/jqiJ8JdCc6bHNZQGNfYEZliG8fv4S+BMZL4AIxL7B3mbhqrnM7zzUAQeDmA
- zEGjtiHz7MsrrbgN3veB3UoVuhwGDzn1bH2lSEu+GivJX12A87ZPgRTR61v8UOl7IY8ww5NN3jb
- 4yQoFkuFK9icd1WeWLzOK9RyXl0M/yD7YPER2lErpW3NrktbcgxWWq05IfE7yyCZkLznUEW3V
-X-Google-Smtp-Source: AGHT+IErjV+SNcclwRfDxO/jM2ZRg8T+A2nd0uauxdBrni14vjbW4X5Gk+Rao8wpknjof2iCNCjE/Q==
-X-Received: by 2002:a5d:5d0e:0:b0:3d7:df92:5e31 with SMTP id
- ffacd0b85a97d-3d7df9262ecmr6279336f8f.16.1756883989515; 
- Wed, 03 Sep 2025 00:19:49 -0700 (PDT)
-Received: from [10.223.47.213] (4.red-95-127-47.staticip.rima-tde.net.
- [95.127.47.4]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d520eada16sm13626531f8f.41.2025.09.03.00.19.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 00:19:48 -0700 (PDT)
-Message-ID: <3dc13fe2-4a9f-46bf-b033-81d41e322fea@linaro.org>
-Date: Wed, 3 Sep 2025 09:19:47 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uthqR-0007AA-Gc
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:23:56 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uthqO-0004Xx-QI
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 03:23:51 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C50E380841;
+ Wed, 03 Sep 2025 10:23:43 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
+ [2a02:6bf:8080:b8f::1:11])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id gNaH2b3GuGk0-gVaTXciQ; Wed, 03 Sep 2025 10:23:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1756884223;
+ bh=+YS3P42Pzsq/3U4RLjH6I+FFjMfLqS33XuUzumtuWVE=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=0QUvdBMPSDQD/MmOxKVcvDV0ITM6c6TVWFq4ZAbum1S3s1G/l/BzznGjXegjer84r
+ o+Aj3BTtaMQChNg9uUWCDYmsFNru6FC1rfuO3gS7gY9bSMWB9eEkvRJ9Z8IuImqd//
+ BujvFVGVHmkiEaTSbiMzw7diSxoMJJQgWGRP7/eU=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <49b05983-2b54-4aad-90f6-92a527b6698e@yandex-team.ru>
+Date: Wed, 3 Sep 2025 10:23:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/38] Misc HW patches for 2025-09-02
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-References: <20250902160004.3816-1-philmd@linaro.org>
+Subject: Re: [PATCH v2 11/20] net/tap: net_init_tap_one(): refactor to use
+ netdev as first arg
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, leiyang@redhat.com, steven.sistare@oracle.com
+References: <20250823160323.20811-1-vsementsov@yandex-team.ru>
+ <20250823160323.20811-12-vsementsov@yandex-team.ru>
+ <CACGkMEvOgLj0EjXOg6=fqcm08-5UY1JfQaOBKDQjfSJLk6zmLw@mail.gmail.com>
 Content-Language: en-US
-Cc: qemu-devel@nongnu.org
-In-Reply-To: <20250902160004.3816-1-philmd@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CACGkMEvOgLj0EjXOg6=fqcm08-5UY1JfQaOBKDQjfSJLk6zmLw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,39 +79,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On 03.09.25 08:19, Jason Wang wrote:
+> On Sun, Aug 24, 2025 at 12:03 AM Vladimir Sementsov-Ogievskiy
+> <vsementsov@yandex-team.ru> wrote:
+>>
+>> This is needed for further unification of bridge initialization in
+>> net_init_tap() and net_init_bridge().
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   net/tap.c | 13 ++++++++-----
+>>   1 file changed, 8 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/net/tap.c b/net/tap.c
+>> index eab0a86173..468dae7004 100644
+>> --- a/net/tap.c
+>> +++ b/net/tap.c
+>> @@ -692,15 +692,18 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+>>
+>>   #define MAX_TAP_QUEUES 1024
+>>
+>> -static int net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+>> +static int net_init_tap_one(const Netdev *netdev, NetClientState *peer,
+>>                               const char *model, const char *name,
+>>                               const char *ifname, const char *script,
+>>                               const char *downscript, const char *vhostfdname,
+>>                               int vnet_hdr, int fd, Error **errp)
+>>   {
+>> +    const NetdevTapOptions *tap = &netdev->u.tap;
+>>       TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
+>>       int vhostfd;
+>>
+>> +    assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+>> +
+> 
+> I think we should try our best to avoid assertions and return errors here.
+> 
 
-On 2/9/25 18:00, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
-> 
->    Merge tag 'qga-pull-2025-08-29-v2' of https://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git tags/hw-misc-20250902
-> 
-> for you to fetch changes up to e502e614f4c3e5ee7b12cf1c926d9581262fd626:
-> 
->    hw/i386/pc_piix.c: remove unnecessary if() from pc_init1() (2025-09-02 17:58:05 +0200)
-> 
-> v2: Dropped "hw/sd/sdcard: Fix size check for backing block image"
-> 
-> ----------------------------------------------------------------
-> Misc HW patches
-> 
-> - Compile various system files once
-> - Remove SDCard spec v1.10
-> - Remove mipssim machine and mipsnet device model
-> - Prevent crash in e1000e when legacy interrupt fires after enabling MSI-X
-> - Introduce qemu_init_irq_child()
-> - Remove various memory leaks reported by ASan
-> - Few Coverity fixes
-> - Use 74Kf CPU to run MIPS16e binaries and M14Kc for microMIPS ones
-> 
-> (a pair if spurious checkpatch.pl warnings ignored).
-> 
-> ----------------------------------------------------------------
+Hmm. But why? This is a static function that we call only for TAP. The error here
+is not logically possible.
 
-Could you restart this job that timeouted please?
-https://gitlab.com/qemu-project/qemu/-/jobs/11225398103
+The error here would mean:
+
+- either we have a terrible bug in code, so we don't understand which functions call which ones, so better to stop here (abort)
+- or it's a kind of memory corruption, and again, better to abort than continue damage users data
+
+The assert may be removed not breaking the logic. But it brings the best kind of documentation,
+that in this function we work only with TAP.
+
+Finally, there a lot of similar asserts already in net code and in tap.c:
+
+git grep 'assert.*== NET_CLIENT' | wc -l
+45
+
+> 
+>>       if (tap_set_sndbuf(s->fd, tap, errp) < 0) {
+>>           goto failed;
+>>       }
+>> @@ -826,7 +829,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>               return -1;
+>>           }
+>>
+>> -        ret = net_init_tap_one(tap, peer, "tap", name, NULL,
+>> +        ret = net_init_tap_one(netdev, peer, "tap", name, NULL,
+>>                                  NULL, NULL,
+>>                                  tap->vhostfd, vnet_hdr, fd, errp);
+>>           if (ret < 0) {
+>> @@ -875,7 +878,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>                   return -1;
+>>               }
+>>
+>> -            ret = net_init_tap_one(tap, peer, "tap", name, NULL,
+>> +            ret = net_init_tap_one(netdev, peer, "tap", name, NULL,
+>>                                      NULL, NULL,
+>>                                      vhost_fds ? vhost_fds[i] : NULL,
+>>                                      vnet_hdr, fd, errp);
+>> @@ -905,7 +908,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>               return -1;
+>>           }
+>>
+>> -        ret = net_init_tap_one(tap, peer, "bridge", name, NULL,
+>> +        ret = net_init_tap_one(netdev, peer, "bridge", name, NULL,
+>>                                  NULL, NULL, tap->vhostfd,
+>>                                  vnet_hdr, fd, errp);
+>>           if (ret < 0) {
+>> @@ -946,7 +949,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>                   return -1;
+>>               }
+>>
+>> -            ret = net_init_tap_one(tap, peer, "tap", name, ifname,
+>> +            ret = net_init_tap_one(netdev, peer, "tap", name, ifname,
+>>                                      i >= 1 ? "no" : script,
+>>                                      i >= 1 ? "no" : downscript,
+>>                                      tap->vhostfd, vnet_hdr, fd, errp);
+>> --
+>> 2.48.1
+>>
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
