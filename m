@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3B0CA1010
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F52ECA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utjwV-0002ib-O9; Wed, 03 Sep 2025 05:38:16 -0400
+	id 1utk0Y-0004Xy-AP; Wed, 03 Sep 2025 05:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utjwL-0002hg-KK
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:38:07 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1utk0W-0004XH-DX
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:42:24 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utjwJ-00076J-Jv
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:38:05 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-afcb7a16441so995892666b.2
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:38:02 -0700 (PDT)
+ id 1utk0U-0007ks-P9
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:42:24 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-afcb7ace3baso534958366b.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 02:42:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756892281; x=1757497081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756892540; x=1757497340; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PVx28uNA0xbJOXxJcyu5rU5kNhMQ4PELIVd9+Dh5EcA=;
- b=x47TITs7x7pUcjd6D0ETKv+KMiKXk9IACd+HwoBTfJy2wVUj/Ygp90pmDdyw8hWKBY
- t5PNgCwW6lwC/rP/bi1qL8ctR6jxIazF8TPI8QQ5cSd0VMSEIs8FdQKMtOSWDOHDciEM
- tTOULvV6wtB9cf1ekcz6KKYhud2NNVei1HxVrKSSvUX+KSaTisbYuIbCE5keH1IuoyB7
- 81S1Agpc+Yx4y/oEP1prn4vaLGN1CnnHiOmQs6NHl+GntGQzjodrpYXoZmctYwKR46//
- y0AA3LYY1K8b94UNL/poU5NjYwftAxc/bHZVXv8++ZInGKJGi76aNfzkKOAOpTgKQAp/
- 4C0A==
+ bh=qVloED/cCXklq1H9Q3/BOz+7rpEZkvOe1zzclFB3ykQ=;
+ b=vovvx+KWO6NUhKwcOt1T4njyXjEEnyS2Uf8UAl5BY0K8aJu5sXXat3PzU8K2C/KjbD
+ ro4tFxEuCUbzmIzTGzh/dF0BU4/RusbgKjQIAYOVUF3EYJE1diVrED1nRoFHWTpSzmzs
+ e+8X5VIyxbhMWwHiZTz3uRT6H6J/vaUC3XPOrsZl8gO4jlbKWHUA+pX/pjfEgL6KNmEn
+ XyQSQKFf+zbXyt0DlGANKTgDlTpz0RIQoeufkZmaFgci3VPPd9FYDaVJquwNj57uR4uf
+ 7cnaDMAhXSY5HrA8XaVyHP2BoVC7m/9LmlyTuqAD5xVCGjBbBVd32D9BITfoHS+BV5nH
+ hVKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756892281; x=1757497081;
+ d=1e100.net; s=20230601; t=1756892540; x=1757497340;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PVx28uNA0xbJOXxJcyu5rU5kNhMQ4PELIVd9+Dh5EcA=;
- b=hjGzQYeg2mIN2oLBMiOVpRjRPQe+yn2A2vxc4Om/HUkmZOfejRH5rbQGGXjEkWx5E+
- 9fy/h+Fu8lt6ImzWUTv+47OM94ZcTnOc3RDxLo+zpnaNFhKAEZ3aR5kWEb9pwurCFqKw
- yNh8p5unMhXMVwUZ9mwm8A+jEZZlG9RKycpj/TWB53ew2YvdLjGGy+bicCOncLH30Awo
- rEqXU98bIcTDI2ycw9ZsTedveOX7e0sjKvWL7agW3H/QsDU19j6fKLMez+YcZ5NBJrjE
- MF4OW6LUcqE2ldN5yQ3+EEwHz5A9h/rL/t61uoINdl/kzD+sw9kqQ22NVRFxK/lxGcu0
- DBqw==
-X-Gm-Message-State: AOJu0YyqyXrn0nV32tHfSPMWB0/cSh6itSCmj2cS87U2r5GGDZIhdrSW
- 3fHGDdYNojJLg5bkZJitf2CMB7ZwuPEZb7+/Xxi6cTz8VrZ//7v2/3T80f8N4B34/reXOW3XvpS
- AjqXJ7NU=
-X-Gm-Gg: ASbGncubM2PJ1943/0aXSZkG+q1+KlYVzmViV6MDXXswqlPuHjAAccme/7B7D3Dn/zC
- POuW+uHulFy+OyGDB539U3mDf1eoGhnHgAAZaen03Wkk7BXU4Ww3xGwMS3p2v+q2stDgPT2MUZx
- nNBO1wotP7ZWpgGnlelSnmX4BwRAGnpkRb0bapMdRSaPYEY+qArw6J+jsgWCaJCh9LEzP21iZzR
- aDvJs56Y4C9O9uBfDxJCMmx7GSCJVIW+BGhubDqZvq21fMPWL4H9CI0n2hVfW9wWAjYuxTjD8TK
- pyQ/y0jFXTbY7JxgEZE6gdDVSgyNak1pweBOjQIP4qALpsRJKUzT5qvrmRcAFDFaZ4ijIDPXlYt
- hMOhuubCV+woKAm0S6fVMXdbKswl3fGL6cNOOICVJzE6iOHGJ4TTSnm8hZ9uf29uAynDszIo=
-X-Google-Smtp-Source: AGHT+IEsdz61X3OgnyrkLhV6hKMH1SeWVcAu9TcuXyy4UXduUPFIPSi4O/91duyYLxfVgn6FJAUsBA==
-X-Received: by 2002:a17:907:7ba0:b0:af9:76cd:d836 with SMTP id
- a640c23a62f3a-b01d8a32278mr1581644866b.13.1756892280625; 
- Wed, 03 Sep 2025 02:38:00 -0700 (PDT)
+ bh=qVloED/cCXklq1H9Q3/BOz+7rpEZkvOe1zzclFB3ykQ=;
+ b=WciGsjXDlSqQG5aff+6fNR52y/ssLjocLtWupfbEFCxEO1KlRSgV3mEBMdWDnI4Jlb
+ nQk/1+zBqPZV2jl5m3/C6Rr+mxAoyYRn/xZbuy4zYP9FM4We6cCaMYTn17q3RoKgFHvg
+ 93prxefJLe+mO0TY+dzZnwHqN1rIqx7P9BHskFtvCu54ze+8scg0yoHeTjgXJP5/Wq1I
+ +40Phd2VBf+eGEvgcsJhARGDPBTpTA64+ITlrMSb4Db/Pj/ik82l9zSp2EuReLVpbuiN
+ WJ0I29lcYv1nscXgKvf2+cQLiGw072Q6YxahYijZtsxEu4HGwfmdX4Uh7Kkqvck3fi6f
+ cApQ==
+X-Gm-Message-State: AOJu0YwHUx55I6Kd5idYq4w6mzR5ILoMwECcX8P1k5osUYhUu/dBUH6M
+ 0KZ2N3Ekt+c0jjWEyERsQ49uy3b+8eeLhUf4c9gKpigSbA2aV+CrQ2zQVk55LbX5tr8Srb4d/5p
+ ZZhViRe0=
+X-Gm-Gg: ASbGncvnVn+IWwkm/Q2U60HHeq05cqIb8R3eMrlrS9K7U4msgIaa7seqgJIAVD/ssQw
+ /EbPRGywCBcL+N1iYDQzZMgPiPtvVrRdvwCaHlOnRKhQfHvgf0re7ya+RafOP7g0HomV1+zqVwI
+ nQruHJGWzzWHIyFDQK9v1bPXf9qJj4ZUD86t38bNThLhoeSGK2nvzh3KSvyR5NL767bhRSQ9K+R
+ YIq+rmSdoD7eRpSaXCtFU+s+Qgd0Hqzi24YGDa/oSUmL4i1D58DRuf58/wrmxAdnV6WHCbBAST6
+ dzxApwztt3HGEd1W6G8DO0x9OsDeqmj7HFfnfzeFk/reE71sqQqE9VnOU/jSWpnAelkGq6U1z39
+ bx8XhQOLGYdd4sN/iKnAIDh0W+jtorDS98EfNnCuETcIlhtGZFtfjv7mTwcLNZkttxCxznyAgNz
+ 6/34Ejlg==
+X-Google-Smtp-Source: AGHT+IFRYp0GLDTomXrceVYe5TxDbzmUecBu1IfuaDCnlC2bv3G+PR4CSnDC4vqwBoDJghqJ/PsHxg==
+X-Received: by 2002:a17:906:9f92:b0:afe:a615:39ef with SMTP id
+ a640c23a62f3a-b01d8a2667emr1504807166b.9.1756892540499; 
+ Wed, 03 Sep 2025 02:42:20 -0700 (PDT)
 Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
  [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b0445cb9296sm483831266b.61.2025.09.03.02.37.59
+ 4fb4d7f45d1cf-61edb0fdf1dsm1166351a12.18.2025.09.03.02.42.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Sep 2025 02:38:00 -0700 (PDT)
-Message-ID: <5b5055b2-fa80-4ca9-a5ea-3e65e617be92@linaro.org>
-Date: Wed, 3 Sep 2025 11:37:58 +0200
+ Wed, 03 Sep 2025 02:42:20 -0700 (PDT)
+Message-ID: <420e8b3e-9f59-4615-8f88-315f78200321@linaro.org>
+Date: Wed, 3 Sep 2025 11:42:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/38] Misc HW patches for 2025-09-02
+Subject: Re: [PATCH v2 0/4] linux-user/riscv: add vector state to signal
+ context
 To: qemu-devel@nongnu.org
-References: <20250902160004.3816-1-philmd@linaro.org>
+References: <20250903081417.338515-1-npiggin@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250902160004.3816-1-philmd@linaro.org>
+In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x632.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/25 18:00, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
+On 9/3/25 10:14, Nicholas Piggin wrote:
+> Changes in v2:
+> - Fix 32-bit compile
+> - Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
+>    one that extends the size of rt_sigframe, patch 3 is adding new
+>    extended state to the frame which is added dynamically).
 > 
->    Merge tag 'qga-pull-2025-08-29-v2' ofhttps://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
+> This series adds vector state to the linux-user signal handler,
+> and adds a basic signal handling test case. As a sanity check, I
+> also verified the signal handling test works in the same way when
+> run under a real Linux kernel.
 > 
-> are available in the Git repository at:
+> The signal handler test has some gross header hacks in it to make
+> it work for me (debian arm64->riscv64 cross compile environment),
+> I would not be surprised if it breaks in other environments, any
+> ideas or breakages let me know. May just have to define the types
+> by hand for now if it becomes intractable.
 > 
->    https://github.com/philmd/qemu.git tags/hw-misc-20250902
+> I couldn't find much in the way of previous discussion or work on
+> this, forgive me if I've missed it.
 > 
-> for you to fetch changes up to e502e614f4c3e5ee7b12cf1c926d9581262fd626:
+> Thanks,
+> Nick
 > 
->    hw/i386/pc_piix.c: remove unnecessary if() from pc_init1() (2025-09-02 17:58:05 +0200)
+> Nicholas Piggin (4):
+>    tests/tcg/riscv64: Add a user signal handling test
+>    linux-user/riscv: Add extended state to sigcontext
+>    linux-user/riscv: Add vector state to signal context
+>    tests/tcg/riscv64: Add vector state to signal test
 > 
-> v2: Dropped "hw/sd/sdcard: Fix size check for backing block image"
+>   linux-user/riscv/signal.c                | 197 ++++++++-
+>   linux-user/riscv/vdso-asmoffset.h        |   4 +-
+>   tests/tcg/riscv64/Makefile.target        |   5 +
+>   tests/tcg/riscv64/test-signal-handling.c | 507 +++++++++++++++++++++++
+>   4 files changed, 700 insertions(+), 13 deletions(-)
+>   create mode 100644 tests/tcg/riscv64/test-signal-handling.c
 > 
-> ----------------------------------------------------------------
-> Misc HW patches
-> 
-> - Compile various system files once
-> - Remove SDCard spec v1.10
-> - Remove mipssim machine and mipsnet device model
-> - Prevent crash in e1000e when legacy interrupt fires after enabling MSI-X
-> - Introduce qemu_init_irq_child()
-> - Remove various memory leaks reported by ASan
-> - Few Coverity fixes
-> - Use 74Kf CPU to run MIPS16e binaries and M14Kc for microMIPS ones
-> 
-> (a pair if spurious checkpatch.pl warnings ignored).
 
-
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Whoops, v2 and my review of v1 passed in flight.
+There are a number of errors.
 
 r~
 
