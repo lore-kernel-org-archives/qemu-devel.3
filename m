@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A1ACA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D4EACA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utngC-0005Hd-0u; Wed, 03 Sep 2025 09:37:41 -0400
+	id 1utngF-0005Rf-D6; Wed, 03 Sep 2025 09:37:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utnfu-00059V-Qi
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:23 -0400
+ id 1utnfw-0005Bl-3e
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:25 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utnfq-0004wY-PL
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:22 -0400
+ id 1utnfr-0004x8-Cw
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 71616C01A8;
- Wed, 03 Sep 2025 16:37:17 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 11156C01AA;
+ Wed, 03 Sep 2025 16:37:18 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b8f::1:11])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id BbgRSa3GomI0-J7CkUe3K; Wed, 03 Sep 2025 16:37:16 +0300
+ ESMTPSA id BbgRSa3GomI0-7JCLZnDD; Wed, 03 Sep 2025 16:37:17 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1756906636;
- bh=GftTvKuCJ/20RJKBye2/TezLhjc0gyXvfMSFYxlvOO8=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=y2zSpmtroCmqBEGOq0B5Fqc9nSNMvW+h/AkFw4Ry1kvlo4wrOul9+cpZxLT2KVY7z
- yBxJxHBX2vStSHYOgUMBhuv51u1Wm+3R1oTo6iFLWyGlF/KnDI5WAC2rRu9HH+Aqzq
- q0iHM3+i5a+PPChe15hNsT2WnYk1nwLblTCT6uTY=
+ s=default; t=1756906637;
+ bh=xzcdYCb73x3t/fdZEEKsSgOBm4tobZHvOXDAvGXSlv0=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=oe3WJG+ZmPzwZaZe0Tv0Ng300s0HzCGw8XCVGxrMlvJXl2HnOiD4sTPqW5Lwd3DAI
+ mtH4bn2eB1wty4t3z8MkyX5JafQp19maAvKIhCv+mtB7WIDdKx6ZaA53uJTMhA2tVg
+ cvGufUviIH1eEmKiYMlSEtO8LLh5wLfinEsfco1g=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,13 +46,15 @@ Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
  steven.sistare@oracle.com, yc-core@yandex-team.ru, peterx@redhat.com,
  mst@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
-Subject: [PATCH v2 6/8] virtio-net: support local tap migration
-Date: Wed,  3 Sep 2025 16:37:03 +0300
-Message-ID: <20250903133706.1177633-7-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 7/8] test/functional: exec_command_and_wait_for_pattern:
+ add vm arg
+Date: Wed,  3 Sep 2025 16:37:04 +0300
+Message-ID: <20250903133706.1177633-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
 References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
@@ -77,183 +79,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/net/virtio-net.c            | 100 ++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-net.h |   2 +
- 2 files changed, 101 insertions(+), 1 deletion(-)
+Allow to specify non default vm for the command.
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 6b5b5dace3..874e349fee 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -38,6 +38,8 @@
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
- #include "migration/misc.h"
-+#include "migration/migration.h"
-+#include "migration/options.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
- #include "system/replay.h"
-@@ -2999,7 +3001,13 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     n->multiqueue = multiqueue;
-     virtio_net_change_num_queues(n, max * 2 + 1);
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/qemu_test/cmd.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index dc5f422b77..28b36a3a54 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -172,7 +172,8 @@ def exec_command(test, command):
+     _console_interaction(test, None, None, command + '\r')
  
--    virtio_net_set_queue_pairs(n);
-+    /*
-+     * Called from set_features(0) on reset, when on target we
-+     * doesn't have fds yet
-+     */
-+    if (!n->tap_wait_incoming) {
-+        virtio_net_set_queue_pairs(n);
-+    }
- }
+ def exec_command_and_wait_for_pattern(test, command,
+-                                      success_message, failure_message=None):
++                                      success_message, failure_message=None,
++                                      vm=None):
+     """
+     Send a command to a console (appending CRLF characters), then wait
+     for success_message to appear on the console, while logging the.
+@@ -184,9 +185,11 @@ def exec_command_and_wait_for_pattern(test, command,
+     :param command: the command to send
+     :param success_message: if this message appears, test succeeds
+     :param failure_message: if this message appears, test fails
++    :param vm: the VM to use (defaults to test.vm if None)
+     """
+     assert success_message
+-    _console_interaction(test, success_message, failure_message, command + '\r')
++    _console_interaction(test, success_message, failure_message, command + '\r',
++                         vm=vm)
  
- static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-@@ -3009,6 +3017,19 @@ static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-     return 0;
- }
- 
-+static int virtio_net_pre_save_device(void *opaque)
-+{
-+    VirtIONet *n = opaque;
-+    int i, r;
-+
-+    for (i = 0; i < n->curr_queue_pairs; i++) {
-+        r = peer_detach(n, i);
-+        assert(!r);
-+    }
-+
-+    return 0;
-+}
-+
- static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-                                         Error **errp)
- {
-@@ -3028,6 +3049,11 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
- 
-     virtio_add_feature(&features, VIRTIO_NET_F_MAC);
- 
-+    if (n->tap_wait_incoming) {
-+        /* Excessive feature set is OK for early initialization */
-+        return features;
-+    }
-+
-     if (!peer_has_vnet_hdr(n)) {
-         virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
-         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
-@@ -3494,11 +3520,69 @@ static const VMStateDescription vhost_user_net_backend_state = {
-     }
- };
- 
-+static int virtio_net_tap_save(QEMUFile *f, void *pv, size_t size,
-+                                     const VMStateField *field,
-+                                     JSONWriter *vmdesc)
-+{
-+    VirtIONet *n = pv;
-+    int i;
-+
-+    for (i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *nc = qemu_get_subqueue(n->nic, i);
-+        assert(nc->peer->info->type == NET_CLIENT_DRIVER_TAP);
-+
-+        tap_save(nc->peer, f);
-+    }
-+
-+    return 0;
-+}
-+
-+static int virtio_net_tap_load(QEMUFile *f, void *pv, size_t size,
-+                                     const VMStateField *field)
-+{
-+    VirtIONet *n = pv;
-+    VirtIODevice *vdev = VIRTIO_DEVICE(n);
-+    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
-+    Error *local_err = NULL;
-+    int i;
-+
-+    for (i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *nc = qemu_get_subqueue(n->nic, i);
-+        assert(nc->peer->info->type == NET_CLIENT_DRIVER_TAP);
-+
-+        tap_load(nc->peer, f);
-+    }
-+
-+    peer_test_vnet_hdr(n);
-+    n->tap_wait_incoming = false;
-+
-+    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
-+                                            &local_err);
-+    if (local_err) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-+    return 0;
-+}
-+
-+static bool virtio_net_is_tap_local(void *opaque, int version_id)
-+{
-+    VirtIONet *n = opaque;
-+    NetClientState *nc;
-+
-+    nc = qemu_get_queue(n->nic);
-+
-+    return migrate_local_tap() && nc->peer &&
-+        nc->peer->info->type == NET_CLIENT_DRIVER_TAP;
-+}
-+
- static const VMStateDescription vmstate_virtio_net_device = {
-     .name = "virtio-net-device",
-     .version_id = VIRTIO_NET_VM_VERSION,
-     .minimum_version_id = VIRTIO_NET_VM_VERSION,
-     .post_load = virtio_net_post_load_device,
-+    .pre_save = virtio_net_pre_save_device,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT8_ARRAY(mac, VirtIONet, ETH_ALEN),
-         VMSTATE_STRUCT_POINTER(vqs, VirtIONet,
-@@ -3525,6 +3609,15 @@ static const VMStateDescription vmstate_virtio_net_device = {
-          * but based on the uint.
-          */
-         VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
-+        {
-+            .name = "tap",
-+            .info = &(const VMStateInfo) {
-+                .name = "virtio-net vhost-user backend state",
-+                .get = virtio_net_tap_load,
-+                .put = virtio_net_tap_save,
-+            },
-+            .field_exists = virtio_net_is_tap_local,
-+        },
-         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
-                          vmstate_virtio_net_has_vnet),
-         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
-@@ -3954,6 +4047,11 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         vhost_net_set_config(get_vhost_net(nc->peer),
-             (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
-     }
-+
-+    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_TAP) {
-+        n->tap_wait_incoming = tap_local_incoming(nc->peer);
-+    }
-+
-     QTAILQ_INIT(&n->rsc_chains);
-     n->qdev = dev;
- 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 73fdefc0dc..04ae0e4c06 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -231,6 +231,8 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+
-+    bool tap_wait_incoming;
- };
- 
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+ def get_qemu_img(test):
+     test.log.debug('Looking for and selecting a qemu-img binary')
 -- 
 2.48.1
 
