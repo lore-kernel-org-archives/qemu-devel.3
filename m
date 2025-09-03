@@ -4,63 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DC9CA100C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E2BCA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 09:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utk6c-0006J8-I1; Wed, 03 Sep 2025 05:48:42 -0400
+	id 1utk7I-0006yY-9e; Wed, 03 Sep 2025 05:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utk6a-0006Db-Mq; Wed, 03 Sep 2025 05:48:40 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1utk7D-0006tZ-7i
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:49:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utk6Y-0000zQ-R3; Wed, 03 Sep 2025 05:48:40 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1458780782;
- Wed, 03 Sep 2025 12:48:37 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
- [2a02:6bf:8080:b8f::1:11])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id amcqsq3Gk8c0-V24V4yl0; Wed, 03 Sep 2025 12:48:36 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1756892916;
- bh=YMa/x0ridEfQ5FbHXvxzJ9Rfar15+QUx0etXY3CGblQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=HZmxDKzpUho7cK7OfAw6bXiOt6bICjv3ip0ZXWPFcfF6pkNWN4Fpb8/8kiDR8pxbC
- sQea4a2UbWiQY3B4w2MjNhzUbY0mghr0xYu0Bbn9LrRobs492TTqvdqSEAV8+5Y9p8
- pGjR/ds5FSgwgPLPd3b3g+41aIh8qQ2yLr60UZ4Y=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <4f81e583-4da8-4921-9389-c05db9c99d65@yandex-team.ru>
-Date: Wed, 3 Sep 2025 12:48:36 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1utk7B-0001L4-Bb
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 05:49:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756892954;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HHMuG/ubf7QR4150GbYF3U76I8nyrdV1IZLpMXxZh5I=;
+ b=JPe4YTADKZiwJ5UMEe/wkday0uBkxbu9CgBsiwjrGpazKy4sBuTCU7ojw8/7ULk9lDfKZs
+ zzZx3m6O+TA5XkKd/4rlnG9Ezu+nzQKDjrdVlSFcw15xWY1opo5sTf8zWHaPsqab+4zkx4
+ qjd9qDipbNuDGgAXpGp4G9xVwoqSVcM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-2hR7wc7KM_K0bbdfwUM8Sg-1; Wed,
+ 03 Sep 2025 05:49:11 -0400
+X-MC-Unique: 2hR7wc7KM_K0bbdfwUM8Sg-1
+X-Mimecast-MFC-AGG-ID: 2hR7wc7KM_K0bbdfwUM8Sg_1756892950
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 268731956094; Wed,  3 Sep 2025 09:49:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD5E918003FC; Wed,  3 Sep 2025 09:49:08 +0000 (UTC)
+Date: Wed, 3 Sep 2025 11:49:07 +0200
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+Subject: Re: [PATCH 0/4] export/fuse: Add FUSE-over-io_uring for Storage
+ Exports
+Message-ID: <20250903094907.GA106431@fedora>
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <CAKWCU7VusNOUskuxc3RMTd+aLY6bSX+de-LiUhe9xpdmbzkn-Q@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] oslib-posix: add qemu_fds_set_blocking() helper
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-9-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250903094411.1029449-9-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="TdlqfZfmZcK46Bp7"
+Content-Disposition: inline
+In-Reply-To: <CAKWCU7VusNOUskuxc3RMTd+aLY6bSX+de-LiUhe9xpdmbzkn-Q@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,38 +87,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.09.25 12:44, Vladimir Sementsov-Ogievskiy wrote:
-> And use it in io/channel-socket.c. This simplifies the following
-> commit, which will move this functionality from io/channel-socket.c
-> to the callers.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   include/qemu/osdep.h |  7 +++++++
->   io/channel-socket.c  | 24 +++++++++++++-----------
->   util/oslib-posix.c   | 12 ++++++++++++
->   3 files changed, 32 insertions(+), 11 deletions(-)
-> 
-> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> index 1b38cb7e45..dde98d588c 100644
-> --- a/include/qemu/osdep.h
-> +++ b/include/qemu/osdep.h
-> @@ -689,6 +689,13 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
->   void qemu_set_cloexec(int fd);
->   bool qemu_set_blocking(int fd, bool block, Error **errp);
->   
-> +/*
-> + * qemu_fds_set_blockinging:
-> + * Call qemu_socket_set_block() on several fds.
-> + * When @nfds = 0, does nothing, @fds is not touched.
-> + */
-> +bool qemu_fds_set_blockinging(int *fds, int nfds, bool block, Error **errp);
 
-Oops. s/inging/ing/ is needed.
+--TdlqfZfmZcK46Bp7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Aug 30, 2025 at 08:00:00AM -0400, Brian Song wrote:
+> We used fio to test a 1=E2=80=AFGB file under both traditional FUSE and
+> FUSE-over-io_uring modes. The experiments were conducted with the
+> following iodepth and numjobs configurations: 1-1, 64-1, 1-4, and 64-4,
+> with 70% read and 30% write, resulting in a total of eight test cases,
+> measuring both latency and throughput.
+>=20
+> Test results:
+>=20
+> https://gist.github.com/hibriansong/a4849903387b297516603e83b53bbde4
 
+Hanna: You benchmarked the FUSE export coroutine implementation a little
+while ago. What do you think about these results with
+FUSE-over-io_uring?
 
--- 
-Best regards,
-Vladimir
+What stands out to me is that iodepth=3D1 numjobs=3D4 already saturates the
+system, so increasing iodepth to 64 does not improve the results much.
+
+Brian: What is the qemu-storage-daemon command-line for the benchmark
+and what are the details of /mnt/tmp/ (e.g. a preallocated 10 GB file
+with an XFS file system mounted from the FUSE image)?
+
+Thanks,
+Stefan
+
+>=20
+>=20
+>=20
+>=20
+> On 8/29/25 10:50 PM, Brian Song wrote:
+> > Hi all,
+> >
+> > This is a GSoC project. More details are available here:
+> > https://wiki.qemu.org/Google_Summer_of_Code_2025#FUSE-over-io_uring_exp=
+orts
+> >
+> > This patch series includes:
+> > - Add a round-robin mechanism to distribute the kernel-required Ring
+> > Queues to FUSE Queues
+> > - Support multiple in-flight requests (multiple ring entries)
+> > - Add tests for FUSE-over-io_uring
+> >
+> > More detail in the v2 cover letter:
+> > https://lists.nongnu.org/archive/html/qemu-block/2025-08/msg00140.html
+> >
+> > And in the v1 cover letter:
+> > https://lists.nongnu.org/archive/html/qemu-block/2025-07/msg00280.html
+> >
+> >
+> > Brian Song (4):
+> >    export/fuse: add opt to enable FUSE-over-io_uring
+> >    export/fuse: process FUSE-over-io_uring requests
+> >    export/fuse: Safe termination for FUSE-uring
+> >    iotests: add tests for FUSE-over-io_uring
+> >
+> >   block/export/fuse.c                  | 838 +++++++++++++++++++++------
+> >   docs/tools/qemu-storage-daemon.rst   |  11 +-
+> >   qapi/block-export.json               |   5 +-
+> >   storage-daemon/qemu-storage-daemon.c |   1 +
+> >   tests/qemu-iotests/check             |   2 +
+> >   tests/qemu-iotests/common.rc         |  45 +-
+> >   util/fdmon-io_uring.c                |   5 +-
+> >   7 files changed, 717 insertions(+), 190 deletions(-)
+> >
+>=20
+
+--TdlqfZfmZcK46Bp7
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmi4DxMACgkQnKSrs4Gr
+c8iK1Af/bJRa0Qz7zmmamIXJCfr2F+o3DKSjFGgdLm/DN8fO5weHIVYTPPwE/8vh
+OcEhVjaICU2RH6XnYSDv1jmdTIkpXt6b8lNDYM0TwAgq1vPyPGxvKYOuAiU/TVfa
+jG/PfLITJMUSzCQEDpwjlr1ox/LS47QZeejElvyavl0VpJsMKgy0IDCpv4UtoH66
+dnyRY8RPlapj9+FnhVdj1hfUB7AlBtiMjBEACBw+6742KDcNqtf7N9QkDNfu6Ln/
+GTvqVjL756f5YdclIgW15wgo6WLeQ1knzUBMA+4za59Tum48PptZ8RzYE48hGG+y
+pQ88FTdLNFwnZnLL8Jixx+skBv4MVw==
+=JXEY
+-----END PGP SIGNATURE-----
+
+--TdlqfZfmZcK46Bp7--
+
 
