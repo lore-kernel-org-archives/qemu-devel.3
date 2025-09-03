@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7D4CA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B6ECA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 08:49:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utjAd-0003Ma-1M; Wed, 03 Sep 2025 04:48:48 -0400
+	id 1utjAk-0003Q5-TJ; Wed, 03 Sep 2025 04:48:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1utjAX-0003KX-U2
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:41 -0400
+ id 1utjAY-0003LG-Iv
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:42 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1utjAV-0007NZ-Pp
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:41 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1utjAW-0007No-JJ
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 04:48:42 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axz7_kALhoLicGAA--.11659S3;
+ by gateway (Coremail) with SMTP id _____8AxRNDlALhoNycGAA--.12421S3;
  Wed, 03 Sep 2025 16:48:37 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJDxbMHcALhoc916AA--.5293S8;
- Wed, 03 Sep 2025 16:48:36 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxbMHcALhoc916AA--.5293S11;
+ Wed, 03 Sep 2025 16:48:37 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 06/12] target/loongarch: Add tlb search callback in
- loongarch_tlb_search()
-Date: Wed,  3 Sep 2025 16:48:21 +0800
-Message-Id: <20250903084827.3085911-7-maobibo@loongson.cn>
+Subject: [PATCH v3 09/12] target/loongarch: Use loongarch_tlb_search_cb in
+ helper_invtlb_page_asid
+Date: Wed,  3 Sep 2025 16:48:24 +0800
+Message-Id: <20250903084827.3085911-10-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250903084827.3085911-1-maobibo@loongson.cn>
 References: <20250903084827.3085911-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxbMHcALhoc916AA--.5293S8
+X-CM-TRANSID: qMiowJDxbMHcALhoc916AA--.5293S11
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,28 +68,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With function loongarch_tlb_search(), it is to search TLB entry with
-speficied virtual address, the difference is selection with asid and
-global bit. Here add selection callback with asid and global bit.
+With function helper_invtlb_page_asid(), currently it is to search
+TLB entry one by one. Instead STLB can be searched at first with hash
+method, and then search MTLB with one by one method
+
+Here common API loongarch_tlb_search_cb() is used in function
+helper_invtlb_page_asid()
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/tcg/tlb_helper.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 42 +++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
 diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 00422f259d..006fe1b207 100644
+index 620de85a3a..c074c956a2 100644
 --- a/target/loongarch/tcg/tlb_helper.c
 +++ b/target/loongarch/tcg/tlb_helper.c
-@@ -21,6 +21,17 @@
- #include "cpu-csr.h"
- #include "tcg/tcg_loongarch.h"
+@@ -32,6 +32,15 @@ static bool tlb_match_any(int global, int asid, int tlb_asid)
+     return false;
+ }
  
-+typedef bool (*tlb_match)(int global, int asid, int tlb_asid);
-+
-+static bool tlb_match_any(int global, int asid, int tlb_asid)
++static bool tlb_match_asid(int global, int asid, int tlb_asid)
 +{
-+    if (global == 1 || tlb_asid == asid) {
++    if (!global && tlb_asid == asid) {
 +        return true;
 +    }
 +
@@ -99,37 +100,48 @@ index 00422f259d..006fe1b207 100644
  bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
  {
      if (tlb_ps >= 64) {
-@@ -204,9 +215,11 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-     uint8_t tlb_e, tlb_ps, tlb_g, stlb_ps;
-     int i, compare_shift;
-     uint64_t vpn, tlb_vppn;
+@@ -531,30 +540,19 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
+ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+                              target_ulong addr)
+ {
+-    uint16_t asid = info & 0x3ff;
+-
+-    for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
+-        LoongArchTLB *tlb = &env->tlb[i];
+-        uint8_t tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+-        uint16_t tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
+-        uint64_t vpn, tlb_vppn;
+-        uint8_t tlb_ps, compare_shift;
+-        uint8_t tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+-
+-        if (!tlb_e) {
+-            continue;
+-        }
+-
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-        tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+-        vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+-        compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
++    int index, asid = info & 0x3ff;
++    LoongArchTLB *tlb;
 +    tlb_match func;
++    bool ret;
  
-+    func = tlb_match_any;
-     csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
--   stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-+    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
-     vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
-     stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
-     compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-@@ -220,7 +233,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-             tlb_asid = FIELD_EX64(tlb->tlb_misc, TLB_MISC, ASID);
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
+-        if (!tlb_g && (tlb_asid == asid) &&
+-           (vpn == (tlb_vppn >> compare_shift))) {
+-            tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+-        }
++    func = tlb_match_asid;
++    ret = loongarch_tlb_search_cb(env, addr, &index, asid, func);
++    if (!ret) {
++        return;
+     }
++
++    tlb = &env->tlb[index];
++    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 0);
+     tlb_flush(env_cpu(env));
+ }
  
--            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
-+            if (func(tlb_g, csr_asid, tlb_asid) &&
-                 (vpn == (tlb_vppn >> compare_shift))) {
-                 *index = i * 256 + stlb_idx;
-                 return true;
-@@ -239,7 +252,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-             tlb_g = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, G);
-             compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
-             vpn = (vaddr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
--            if ((tlb_g == 1 || tlb_asid == csr_asid) &&
-+            if (func(tlb_g, csr_asid, tlb_asid) &&
-                 (vpn == (tlb_vppn >> compare_shift))) {
-                 *index = i;
-                 return true;
 -- 
 2.39.3
 
