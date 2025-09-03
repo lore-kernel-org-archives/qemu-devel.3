@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9FCCA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 10:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2076CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 10:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utkQk-0003YJ-Ax; Wed, 03 Sep 2025 06:09:30 -0400
+	id 1utkQG-0001hl-3M; Wed, 03 Sep 2025 06:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utkQh-0003OO-N9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 06:09:27 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utkQE-0001Zt-7B
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 06:08:58 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utkQf-0008PF-O2
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 06:09:27 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-45cb659e858so2754595e9.2
- for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 03:09:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utkQC-0008IQ-GS
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 06:08:57 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45cb6180b60so2333345e9.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 03:08:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756894164; x=1757498964; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756894135; x=1757498935; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DAbnTqr7urlPKbd55OQGFVEMN5LG+0p4EnC3m2XGl0s=;
- b=Hc78KnHRwgGgFgRPFcrRTkBYMbKGymT240iHb38on5brbWQtD7liFHZzoRZYvHOfST
- sIJePLuc8qYljJvTDpTwmOm1cm5dIjXJSwVSiyvvDrpn3KcbvTvg6Ojfh9+iP/U5PlYe
- /y20ImUcGc8nIFlokKbQQumWGZQhRIQJOQU/JF4yqgUPPMu9cViuSMikY9gxeBgNY9QC
- of4T+NQa+eXQMpHxrB2/UvHOU8/faOLoJdayHLV0VVaPAbHDNdeDNPLo4EZ8V8j0rUAn
- 5f555KlqTeXMJxgGQjuCFWmWfu/FKe+2gMvcNUwlC7EVOrMjRHP0+AJUO6jRtrDHb2GH
- 8GCQ==
+ bh=0hJcWTbZNWpRlTWwFb3bqsHmH4PKWMku07t6H1FpspU=;
+ b=Lsi9HKvGx5UTBIGULwTZ/LN6vk+sDxTS7xh0UZFYlklpccygh4aOnpSBU6SBOl/6RT
+ 8oMMkTYwaTcee/5PHGnmLwB91owDfrSNP4gfLcx37E+nA102wK88l8u6nAhrGlLOD3iR
+ m1dpV4JTUon+4kkDNOfU51JIhz9kTWbqdyEA5N/ufWDPCsAo9qm6BN9tAEeIf7MzWXs+
+ hSkKl+z2KZHDNxKTvfMKtrXTLmaF//ywETiPIkKBbU3maKCCbFb+udr1wrm8GoHz8/6j
+ Ps0b40UwdAynTF7vw7WCuSlJT9Dx6D6gFyDXHiS3ITf8Clku3JswEcBng4D0yKZg32en
+ BZlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756894164; x=1757498964;
+ d=1e100.net; s=20230601; t=1756894135; x=1757498935;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DAbnTqr7urlPKbd55OQGFVEMN5LG+0p4EnC3m2XGl0s=;
- b=gzKaQarbBdFKCPy6wev2IyjrF59gwIiCHx9572TjsrhJgw+GZlfBFYl6jswc/PH+rl
- R15MlseKL0aG40QBCh8kH3hVAwkNQYl+jIRNo6tyPAJdrSqfFH+0cmYtRIbFyu4tw15G
- 4ODPJajcyGRK6irqMR6IoIC8C7Z7O3TTPIIjOSytLOCDzjL4rDLmLVEG42ReqYnBaIbX
- 1LpOG3KA3gW7kzJY/QD9YGRa+FfQxRNCHXp0Se9Ggv9FtG6BX5c+Ygl0vFQW8i8/i38G
- iNFZYkPeBja3DSXX5wfzDxw17uxs+Z+zckC6JAWVFK8nL/DOsyrEd/xd/KMwayo27W9v
- Pl5g==
-X-Gm-Message-State: AOJu0YwRTeivp+x2Y7aHMvrxoDQT4EwxlyQyk7c+4JNt2x9YXDYxE0wN
- tP9xPYP/sZ31AC7Fc7ukh44EwPexmD+/hQkCWPlKbnMKeukCbpAuwsBkVBBSeuUvcEC0SDU9QUG
- ChBmuLfIUww==
-X-Gm-Gg: ASbGnctywV1sOgm+6hxA2c1RdGy8SEtmX9v8ur4LaNeH3tQglJIAxbLDezH6Wqe0Ppm
- Q/VTtWQL8yVzCTjBYnlagUL1f6A5ljhyHTlN02VQ5XY7TNOx3axr9yN1fC5rAoeg+wB6TnAQo4D
- mnzceJm/61voHxRvWOqZ0C+0CGjKm9unwxgZRpr/cax647vCVdSrXMfMJE5T+stFE0bxdckZiEd
- O7CDflCQUZkiy4aory3BqVjGHKu8X2U6KtQSSgcfR9f/P98M1lEC5iap6THwv3C8Yzk+gtkbqeN
- l8Elan6l8DxfhpFCG3N/t92KsWzLY+YycJ8eDDOY/7wy4uv3wKMZmzIZopdwei3L0rm6sPbzBGl
- aYfH8HWG7DsWJGLoPgiRdyG7IcuPICuZdaWGnE7ETiJk57hfvGNVlQONfw0npYEQZjyD8Yd4rzs
- 14v0xXSP6EOXZPJMJb
-X-Google-Smtp-Source: AGHT+IH9EBQxYGmAzbfNSc3Dm9S9kuoWybahIB8kswVh6cEh6kV9F4zeeG1tt3vK9CUL1Ju+NWB5TQ==
-X-Received: by 2002:a05:600c:6308:b0:45b:8600:2bd5 with SMTP id
- 5b1f17b1804b1-45b86002d22mr128754975e9.5.1756894161949; 
- Wed, 03 Sep 2025 03:09:21 -0700 (PDT)
+ bh=0hJcWTbZNWpRlTWwFb3bqsHmH4PKWMku07t6H1FpspU=;
+ b=V86tyKMjXEs55OyqMv/yZyq+mHFULuG50+kP5j3f46dR7kMO5VntOQEv1whOLmvjc6
+ GyKFXECdPtg4GqrQi07eOtLJRlF56SgQr13x4Xyum4gBCLryOI8NGh6m7RvVaeK87S9A
+ Ur12bkWvTnV3vW14n4FaRMwSNCVzFDbFfzkEOyNsuvz3Ne631mXdezhuZxZ52iqlvwzC
+ 0ZnNgg29/Hags/Ewoae6wcm87n0TVmJHfKoCtWEvhgZsQG9xuAET23UUBWKFXQktPXxp
+ Ntno+p0VNEAuafJbCcLSi81cPjkGZ0uuiipdSUXPwXn+BHDfOGNeB/DGWFd64ZSgnOiG
+ FXiw==
+X-Gm-Message-State: AOJu0Yyy3K+MvN+1G0gZEkCzV5mluyuzLLz5tSGJ6SVSYOqWA5D6bUbJ
+ RczXwlqLGBXgGyrsfV+j1A5SR9e12U73T4ZXXnVjijtFiNFXKfhLCWYQDrdCaqghhettwRltbDA
+ bPN+1tn1Ywg==
+X-Gm-Gg: ASbGncttQcFkyMHFqBmV1CW3DWYK7EzZVi3O8U3yAeEM3UY5YuE8HHeyCf/TJ8+CJiF
+ WnMIlw+V0fSg6M/fQReZNkwbnU4gm78Qc4gFMfMrKWbQBzlUGHqFomcKKQ6weOibx7wCrUX/zyf
+ pfVviTpUQcNECqz1LqB3/RTGndd1eavWCW1L+aWynGkBIB2isPk25U4KJXI7+E238t4rfy1PdTv
+ yPAicUI8f7htUvUKXwHvsQceAKvzPHOEvIsT/lRY5pvRei/pUb4Y9cLy9O8dBrn37tQkH9EqCgB
+ 3aWr9pSqEnsAz2TjbNGRRxU0wCmOMQwxdRQ4Uunhy2JeXGapqZeR00gniRYpQh5mhwZy2do3FK8
+ 0kU6enXxbm8OOeAO7hV2lheVT9QJCp1cQsZvpyVyeJXTrK2HucCow8CIip9Et21MINSFuuBckAn
+ nN+vIXuw==
+X-Google-Smtp-Source: AGHT+IHJ2weooLV9lXzOzpv/5FibQGep5h6i2FsMKbl5JvOAlYDlifGXspkVb9JaSIw0knHeVP5dlg==
+X-Received: by 2002:a05:600c:46c8:b0:450:d386:1afb with SMTP id
+ 5b1f17b1804b1-45b85532ec8mr128525215e9.9.1756894134567; 
+ Wed, 03 Sep 2025 03:08:54 -0700 (PDT)
 Received: from localhost.localdomain (98.red-88-29-180.dynamicip.rima-tde.net.
  [88.29.180.98]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e886619sm230819655e9.15.2025.09.03.03.09.19
+ 5b1f17b1804b1-45cb619f321sm9982315e9.1.2025.09.03.03.08.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 03 Sep 2025 03:09:21 -0700 (PDT)
+ Wed, 03 Sep 2025 03:08:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -74,18 +74,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
  Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 15/24] target/arm/hvf: switch hvf_arm_get_host_cpu_features to
- not create a vCPU
-Date: Wed,  3 Sep 2025 12:06:51 +0200
-Message-ID: <20250903100702.16726-16-philmd@linaro.org>
+Subject: [PATCH 11/24] accel/hvf: Mention hvf_arch_update_guest_debug() must
+ run on vCPU
+Date: Wed,  3 Sep 2025 12:06:47 +0200
+Message-ID: <20250903100702.16726-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250903100702.16726-1-philmd@linaro.org>
 References: <20250903100702.16726-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,90 +108,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Since hvf_arch_update_guest_debug() calls hvf_arch_set_traps()
+and hvf_arch_update_guest_debug(), which must run on a vCPU, it
+also must. Mention it.
 
-Creating a vCPU locks out APIs such as hv_gic_create().
-
-As a result, switch to using the hv_vcpu_config_get_feature_reg interface.
-
-Besides, all the following methods must be run on a vCPU thread:
-
-  - hv_vcpu_create()
-  - hv_vcpu_get_sys_reg()
-  - hv_vcpu_destroy()
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250808070137.48716-3-mohamed@unpredictable.fr>
-[PMD: Release config calling os_release()]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 36 +++++++++++++++---------------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+ include/system/hvf_int.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 3039c0987dc..fd209d23c1e 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -869,24 +869,25 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     ARMISARegisters host_isar = {};
-     const struct isar_regs {
--        int reg;
-+        hv_feature_reg_t reg;
-         uint64_t *val;
-     } regs[] = {
--        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.idregs[ID_AA64DFR0_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.idregs[ID_AA64DFR1_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64ISAR1_EL1, &host_isar.idregs[ID_AA64ISAR1_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64DFR0_EL1, &host_isar.idregs[ID_AA64DFR0_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64DFR1_EL1, &host_isar.idregs[ID_AA64DFR1_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64ISAR1_EL1, &host_isar.idregs[ID_AA64ISAR1_EL1_IDX] },
-         /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
--        { HV_SYS_REG_ID_AA64MMFR0_EL1, &host_isar.idregs[ID_AA64MMFR0_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64MMFR1_EL1, &host_isar.idregs[ID_AA64MMFR1_EL1_IDX] },
--        { HV_SYS_REG_ID_AA64MMFR2_EL1, &host_isar.idregs[ID_AA64MMFR2_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64MMFR0_EL1, &host_isar.idregs[ID_AA64MMFR0_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64MMFR1_EL1, &host_isar.idregs[ID_AA64MMFR1_EL1_IDX] },
-+        { HV_FEATURE_REG_ID_AA64MMFR2_EL1, &host_isar.idregs[ID_AA64MMFR2_EL1_IDX] },
-         /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
-+        { HV_FEATURE_REG_CTR_EL0, &host_isar.idregs[CTR_EL0_IDX] },
-+        { HV_FEATURE_REG_CLIDR_EL1, &host_isar.idregs[CLIDR_EL1_IDX] },
-     };
--    hv_vcpu_t fd;
-     hv_return_t r = HV_SUCCESS;
--    hv_vcpu_exit_t *exit;
-+    hv_vcpu_config_t config = hv_vcpu_config_create();
-     uint64_t t;
-     int i;
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 0c335facc3b..241c668795e 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -83,6 +83,8 @@ int hvf_arch_vcpu_exec(CPUState *);
+ int hvf_arch_put_registers(CPUState *);
+ /* Must be called by the owning thread */
+ int hvf_arch_get_registers(CPUState *);
++/* Must be called by the owning thread */
++void hvf_arch_update_guest_debug(CPUState *cpu);
  
-@@ -897,17 +898,10 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-                      (1ULL << ARM_FEATURE_PMU) |
-                      (1ULL << ARM_FEATURE_GENERIC_TIMER);
+ struct hvf_sw_breakpoint {
+     vaddr pc;
+@@ -109,7 +111,6 @@ void hvf_arch_remove_all_hw_breakpoints(void);
+  * handled by calling down to hvf_arch_update_guest_debug.
+  */
+ int hvf_update_guest_debug(CPUState *cpu);
+-void hvf_arch_update_guest_debug(CPUState *cpu);
  
--    /* We set up a small vcpu to extract host registers */
--
--    if (hv_vcpu_create(&fd, &exit, NULL) != HV_SUCCESS) {
--        return false;
--    }
--
-     for (i = 0; i < ARRAY_SIZE(regs); i++) {
--        r |= hv_vcpu_get_sys_reg(fd, regs[i].reg, regs[i].val);
-+        r |= hv_vcpu_config_get_feature_reg(config, regs[i].reg, regs[i].val);
-     }
--    r |= hv_vcpu_get_sys_reg(fd, HV_SYS_REG_MIDR_EL1, &ahcf->midr);
--    r |= hv_vcpu_destroy(fd);
-+    os_release(config);
- 
-     /*
-      * Hardcode MIDR because Apple deliberately doesn't expose a divergent
+ /*
+  * Return whether the guest supports debugging.
 -- 
 2.51.0
 
