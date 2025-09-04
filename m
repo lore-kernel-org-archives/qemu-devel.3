@@ -4,63 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E17CA1002
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1A7CA1015
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu79A-00024R-QZ; Thu, 04 Sep 2025 06:24:53 -0400
+	id 1uu77v-00008A-9f; Thu, 04 Sep 2025 06:23:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uu794-0001q1-UV; Thu, 04 Sep 2025 06:24:47 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uu78x-00062U-3I; Thu, 04 Sep 2025 06:24:45 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cHbD85dtqz6L4sl;
- Thu,  4 Sep 2025 18:23:36 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 6EA021404C4;
- Thu,  4 Sep 2025 18:24:32 +0800 (CST)
-Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 4 Sep
- 2025 12:24:31 +0200
-Date: Thu, 4 Sep 2025 11:24:30 +0100
-To: Wilfred Mallawa <wilfred.opensource@gmail.com>
-CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
- <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
- <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
- <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
- <qemu-block@nongnu.org>, <dlemoal@kernel.org>, Wilfred Mallawa
- <wilfred.mallawa@wdc.com>
-Subject: Re: [PATCH v4 4/5] spdm: define SPDM transport enum types
-Message-ID: <20250904112430.00006b3b@huawei.com>
-In-Reply-To: <20250904031058.367667-6-wilfred.opensource@gmail.com>
-References: <20250904031058.367667-2-wilfred.opensource@gmail.com>
- <20250904031058.367667-6-wilfred.opensource@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uu77t-00006y-1M
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:23:33 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uu77i-0005Pk-C0
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:23:32 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45cb659e858so6887055e9.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 03:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756981396; x=1757586196; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=updEquFTYNbXcHlBVDd6fTmOXTS+3MFAS45UOphconU=;
+ b=A/KqPJbGuWp16IGrZJoirl7DN8zJE5Dn6K/g6rxImbINz0Nu22MFe2AVVZW0YYwN9o
+ WYjnMBrDnfP4S/Q3KI+yvZ+gDvECegmxrVM/732VpWuxkoEpQnLiZV2OORJhrHBov7y1
+ vr+H/0PQnrFw5w864svmtA0tqK67kJjgifolQ3rOuXKKem/iAMRN9OGjU37zhbryX5ue
+ Itct5C8vplgGoGc5Kr8bKecRuNUq4ic3kfPFLrFAiNMVfKgnCSn/hPQFuW1BEKwyoUsy
+ lfcBC9eB9qS6atEjwh4yPSYQ+Hdn6jHkh005WJCZyq0384rxPsG66ip6u6bBR64ABC9n
+ RQNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756981396; x=1757586196;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=updEquFTYNbXcHlBVDd6fTmOXTS+3MFAS45UOphconU=;
+ b=CQJaQ520z9MW++ooiXN4ENZPcvQL+lUoM7y3Nd+u7F8A7wxNPDl3SfMdNb2WLD42EC
+ FM7A92eOv9Kseu/PF0OLX0jhcHkRuXtiCF9lchfulsJK4854fQjufYXF4PgCTg6Lo+GE
+ ZY1xb28Hwolg+Zf2zExIGJ4l6BaV+pnTHIdFabkdkeNCbrJGY19opaTqRBJ9zz/ZX/sN
+ ky0JNuzVA/zFuVp6Gg/6+VhEHa8eFUnQRMZEUDLhfu4DXH6zMwnXzEx691drnYGEIDr0
+ tguEajHiuJdsXz5ckqr1MVTofBkaFeoCezHWr3C2BiKzMFS3ufPci3hFdjO/DYrbue94
+ hIng==
+X-Gm-Message-State: AOJu0YywevrfDEbedKW3YEK4iFarowAE62oyrCx+TIkedNgo4KAqXkUY
+ zPJtVYASh1d4XDWCRqdcfy6Tng1eF82wMxodF054kOP4jZVT9V/+8GfkPqJ4mIxgF1DhNtfW4sb
+ 5QsMfLRE=
+X-Gm-Gg: ASbGncsIHHyE0Sk3Y3tvKplUaUSI/XfOonx4v1IhKZT+cjWTibMTU9PMutsiXprGMVi
+ 03DBLB12RGz6jWPyHDWm+V48jB6b7haqm7NcvnOcrv8ySPNuP6MW92niREurice+S9p8ruu6b4f
+ fxia4+dT2CdcBUGHwzHDGt73uWdKtPkIGNOMVXAoZWjt92JDdCV+8aodtaZ9B1H4FPYvtkTgzeQ
+ WeV7Kq27hQ1E4CbV7cxCAIBiV77XgDFFHnxAmxO948SenP3Rzi6P4ihnHEeWEKVcn06p37aiFhp
+ 0azitb0Tg1rBwZTTMWtfQCySezJYW9lC4RAkah8qDX62h6kgR9fZGMS3NzeZovxIr69xWejXjiM
+ KYFseE8gyI/boQd1mEesnhMR8ERRIIlxN2qRRS4imvRpKsmWonLrkgcRX
+X-Google-Smtp-Source: AGHT+IGyz5/w1czOcMwStGo4u8wKeLM7Vg6N+pIRPJrmBEzkcXRK9lUrmxiwD8f7212Ppil54iw7JQ==
+X-Received: by 2002:a05:600c:3541:b0:45b:8a0e:cda9 with SMTP id
+ 5b1f17b1804b1-45b8a0ecfbcmr117867925e9.2.1756981396078; 
+ Thu, 04 Sep 2025 03:23:16 -0700 (PDT)
+Received: from stoup.dot1x.polimi.it ([131.175.126.3])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b8f2d3c88sm147699195e9.19.2025.09.04.03.23.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Sep 2025 03:23:15 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: floss@arusekk.pl
+Subject: [PATCH v4 2/4] linux-user: Populate sigreturn_region_{start,
+ end} in all vdso.S
+Date: Thu,  4 Sep 2025 12:23:08 +0200
+Message-ID: <20250904102311.57383-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250904102311.57383-1-richard.henderson@linaro.org>
+References: <20250904102311.57383-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,67 +98,396 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  4 Sep 2025 13:10:58 +1000
-Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
+Mark the regions which contain sigreturn syscalls within
+each vdso.  Rebuild the shared objects.
 
-> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-> 
-> SPDM maybe used over different transports, such as PCIe Data Object
-> Exchange (DoE) or Storage amongst others. This patch
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/vdso-be.so  | Bin 3224 -> 3320 bytes
+ linux-user/aarch64/vdso-le.so  | Bin 3224 -> 3320 bytes
+ linux-user/aarch64/vdso.S      |   2 ++
+ linux-user/arm/vdso-be32.so    | Bin 2648 -> 2724 bytes
+ linux-user/arm/vdso-be8.so     | Bin 2648 -> 2724 bytes
+ linux-user/arm/vdso-le.so      | Bin 2648 -> 2724 bytes
+ linux-user/arm/vdso.S          |   2 ++
+ linux-user/hppa/vdso.S         |   2 ++
+ linux-user/hppa/vdso.so        | Bin 2104 -> 2224 bytes
+ linux-user/i386/vdso.S         |   2 ++
+ linux-user/i386/vdso.so        | Bin 2672 -> 2792 bytes
+ linux-user/loongarch64/vdso.S  |   2 ++
+ linux-user/loongarch64/vdso.so | Bin 3560 -> 3712 bytes
+ linux-user/ppc/vdso-32.so      | Bin 3020 -> 3140 bytes
+ linux-user/ppc/vdso-64.so      | Bin 3896 -> 4048 bytes
+ linux-user/ppc/vdso-64le.so    | Bin 3896 -> 4048 bytes
+ linux-user/ppc/vdso.S          |   2 ++
+ linux-user/riscv/vdso-32.so    | Bin 2980 -> 3124 bytes
+ linux-user/riscv/vdso-64.so    | Bin 3944 -> 4104 bytes
+ linux-user/riscv/vdso.S        |   2 ++
+ linux-user/s390x/vdso.S        |   2 ++
+ linux-user/s390x/vdso.so       | Bin 3464 -> 3616 bytes
+ 22 files changed, 16 insertions(+)
 
-Odd line wrap.  I'd also drop the 'amongst others' as 'such as' already
-suggests there are others so t those extra words add no meaning.
+diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
+index d43c3b19cdf6588757f2039f2308a8bce21aed9c..4089838b30535738e89252a146a039af54ed8be1 100755
+GIT binary patch
+delta 372
+zcmbOs`9pGoKI4y#1`&)RyJD|o>HWC-e5%<G*&9N6e2+fgx7<93@ji>H5Ca1P4-f+Z
+z%LfPzCN+U1O#I8_0yb-3J4S~8A0a9j7eHt*=?)~hAbgezB=IPOdS(wK@d81hITIU&
+z>uZ5_!>qUgRUiPQCnJf!fr@hg>6J+0JCM}xM-o2)7f(($@JUXqDAdbmP)T7>sbDD1
+zOfO0;DJ{y2FG@|%%+HgKFD^+eD!~wsPt8l&T*;oqIB^2Y=Gz=9%$y5=hVlWi_+$<q
+Yea;zBE3Qp;;4$aSgYsG?H*iS+0NrRve*gdg
 
-> specifies such types as an enum with a qdev property definition such that
-> a user input transport type (string) can be mapped directly into the
-> respective SPDM transport enum for internal use.
-> 
-> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Trivial comment below.
+delta 303
+zcmew%IYV-SKI4py1`&)RPZQU!U8Q??61%0t;jr&#CkKX#p4vQz@jlDs)ocd7LW~Um
+zKQe#;;{pf`CZ&NS7lhAJfh4YnP|xgvB<>;zG-qO?aDAW<0|O6K;|-_+0U(`@B>n~}
+z&H<!rk;Hc(sh^A_egZC@oLuf=;8hT&m(QS*!k|*Y5bqM{=jiL{%n%>%?iU*Gy7?J<
+qAme6hP8DX(0-!EFAQqjR!K2Ta0X1XQ<OMwDoIu0Dpk?v{E(rh&zBJna
 
-> diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-> index 6c2cb7b926..8fb5f7cf40 100644
-> --- a/include/system/spdm-socket.h
-> +++ b/include/system/spdm-socket.h
-> @@ -110,12 +110,25 @@ typedef struct {
->  #define SPDM_SOCKET_COMMAND_UNKOWN                0xFFFF
->  #define SPDM_SOCKET_COMMAND_TEST                  0xDEAD
->  
-> -#define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
-> -#define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
-> -#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
-> -#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
-> -
->  #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
->  #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
->  
-> +typedef enum SpdmTransportType {
-> +    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
-> +    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
-> +    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
-> +    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
-> +    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-> +    SPDM_SOCKET_TRANSPORT_TYPE_MAX,
+diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
+index aaedc9d85e568d5dadc9c394e9c4459f1f0c8c88..240802821c32943170f7de64f8a0b3ab2a21cd13 100755
+GIT binary patch
+delta 284
+zcmbOs`9pGo2IG&7n(>SxE{t}Xmv61yy2m1;okeN+zms!1<2TP?yu+d>!~g<33?Ep)
+z3^<_)X7Mn5nViXHFKGwlF*1Dozkm_00L*Zoe2`6CG72i|!Hg<fF!>{!IA<+TPzY$l
+zjmeJe;*)PM2{5jl%*ZUxxPNjWyOdRaibY7VlU_c9N(zHY1w(OWdQoagX;EH$QEGZ-
+zeqMZWNn%k6rf_Or%H~S;c*cnnST^6_P+;a=zyz_I4@ikmX64c5oWTwexi<MDlknsM
+QW|qkTJPM3?lM8v&0bT`1PXGV_
 
-Given it will always be last element and I assume isn't a spec thing as such,
-but just a useful terminating entry, I'd drop that trailing comma.
+delta 217
+zcmew%IYV-S2IGv4n(>SxrfSl257}AgzHD2Uk@GeFM#i?fJDcY)-eH-%g3Uluh=GBD
+zk>TV21&lxj5|Ez!kxg7u4=4hX^<YMl0y14DE3%7A1_D_^3_J`sSRk?jP(|sJFEWWU
+z)=p+*7M~oz&M~=zU6{`?vZyG`MK7O0C51tyV)Iq@c*e~ZoC?gm1xyfKd_YQcaw?BD
+dX9hb&WYy%4Ou~~3m{}%o;89={ntYK*9RMCZFsuLo
 
-> +} SpdmTransportType;
-> +
-> +extern const PropertyInfo qdev_prop_spdm_trans;
-> +
-> +#define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
-> +    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
-> +                         qdev_prop_spdm_trans, SpdmTransportType)
-> +#define DEFINE_PROP_SPDM_TRANS_NODEFAULT(_name, _state, _field) \
-> +    DEFINE_PROP_SPDM_TRANS(_name, _state, _field, \
-> +                           SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC)
-> +
->  #endif
+diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
+index a0ac1487b0..59dd94dc8f 100644
+--- a/linux-user/aarch64/vdso.S
++++ b/linux-user/aarch64/vdso.S
+@@ -71,5 +71,7 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
+ __kernel_rt_sigreturn:
+ 	/* No BTI C insn here -- we arrive via RET. */
+ 	mov	x8, #__NR_rt_sigreturn
++sigreturn_region_start:
+ 	svc	#0
++sigreturn_region_end:
+ endf	__kernel_rt_sigreturn
+diff --git a/linux-user/arm/vdso-be32.so b/linux-user/arm/vdso-be32.so
+index b896d3d545ebf91942038831a9535b023137a86b..6d71cd9c36d185e48810140d6b1b12a1c8f95900 100755
+GIT binary patch
+delta 322
+zcmca1vP5)(GUK0#DhEXNi816dstG5g=$qZlvG_W5!PJ@GH~u)rBFECe00BHeN{xYm
+zWdRc3dh#At`FcB`$PbVxBg6lXK*}Acsu4&lFflNIbcHi8FoETPY%U<q0;;?Lq+#kC
+zKx_~Ygy`=A>dyyqIfNkk=K=YtKt30gzX`~XM({ltP67o2;R4CYRh3x*p%!}i3@RlI
+z#hK|vsU@XFdGST5>6!U?@x>*HMOcJW^HMgKu{APtUH}@z55y9axTIM-fQ);S6}Xf|
+O(}1igKnw$nAO-;P2tZ~4
+
+delta 232
+zcmZ1?dP8J_GUJAcDhEV9iF@2Qn5bfLZGwFE!TAAV%KxoCZv1hKW%4~%*?J)c28JI%
+z%)rR-|09r+W?*1x1kwsj3=BL#TAP7^2`mp}a{;j(P~{CE4O1TiVuOGnM1LGme?E}Q
+z0W=t-zX-@r1=3tlejAV<jo`~L%moSr!Ud9(10wR1Epzqq8B|I(A7X1{=G*|3<OgE0
+Y$v#}ttQkPorpY;6%8XKzCvb@X036{g_W%F@
+
+diff --git a/linux-user/arm/vdso-be8.so b/linux-user/arm/vdso-be8.so
+index 784b7bdb2a9308671bbc4c1e38ab4eac568ea6f7..6446a96fcf63747f1c171a1bc99210d2268d971a 100755
+GIT binary patch
+delta 322
+zcmca1vP5)(GUK0#DhEX5v@5rDpV-zdaE;R<z_ZbM!hvTqH~u)rBFECe00BHeN{xYm
+zWdRc3dh#At`FcB`$PbVxBg6lXK*}Acsu4&lFflNIbcHi8FoETPY%U<q0;;?Lq+#kC
+zKx_~Ygy`=A>dyyqIfNkk=K=YtKt30gzX`~XM({ltP67o2;R4CYsV*V8W`=tC3@RlI
+z#hK|vsU@XFdGST5>6!U?@x>*HMOcJW^HMgKu{APtUH}@z55y9axTIM-fQ);S6}Xf|
+O(}1igKnw$nAO-;BYCz-w
+
+delta 232
+zcmZ1?dP8J_GUJAcDhEW2jvP6cAn`ta_SEXT7Yg+lW8zuPZ2WPIW%4~%*?J)c28JI%
+z%)rR-|09r+W?*1x1kwsj3=BL#TAP7^2`mp}a{;j(P~{CE4O1TiVuOGnM1LGme?E}Q
+z0W=t-zX-@r1=3tlejAV<jo`~L%moSr!Ud9(&2t<BJc9J{8B|I(A7X1{=G*|3<OgE0
+Y$v#}ttQkPorpY;6%8XKzCvb@X05^>+%m4rY
+
+diff --git a/linux-user/arm/vdso-le.so b/linux-user/arm/vdso-le.so
+index 38d3d51047372391b3125c3f9f6ea5401f04bba1..d34e577b69e6cb22a90982570d5e66a1fa22e195 100755
+GIT binary patch
+delta 309
+zcmca1vP5)(0^^^Fiibto-btLS^tfAl`qJz2U8lY?Z_Q&mz46Bp7TE?C1}NZRPy@0S
+zAn~my?_`y)w*!j)fU03+`1s!)$ZiCxQUKCS3_J|sK>7z0kN^WNhAbd`gAu|5sc(QV
+z!K5IN-vwml1NCzNX(6Egc|bZ9$mfFcHv#Er1mBzCBv2p_A;7?poNQne6;a`(m(QS5
+z!cd%<UX)r=T9g-Gl$xHIpBG<Tl30XAI5jV2a~WG5Gv@`M<M@GQN=*LCDb3o!#=vlI
+OvMiS}W7=d#E^z=!FhsKe
+
+delta 239
+zcmZ1?dP8J_0^^2>iibs{A2M=DJTKY)!fEEqs*sO2HQxVB+W6xL%j7$(GW9|X3=BVj
+z7z7v@KK_>m(v2((3<^M+iGhbf8%Y0P0uo@r#b5`dZ!ki5AoU>-CYTfi^5cN4e4u^~
+zAT0#cUj(F6fqX6~zYR!7Blz+RbAbYZ2muC$<m61R;M}xKy?h3hlFf(M>X<n<04?MP
+fsuP>+$tBI2!N$O_Y4Sua;mI{z0*q3Vd%45`Chsqh
+
+diff --git a/linux-user/arm/vdso.S b/linux-user/arm/vdso.S
+index b3bb6491dc..d84d964730 100644
+--- a/linux-user/arm/vdso.S
++++ b/linux-user/arm/vdso.S
+@@ -140,6 +140,7 @@ SYSCALL __vdso_gettimeofday, __NR_gettimeofday
+ 
+ 	.balign	16
+ sigreturn_codes:
++sigreturn_region_start:
+ 	/* [EO]ABI sigreturn */
+ 	slot	0
+ 	raw_syscall __NR_sigreturn
+@@ -172,3 +173,4 @@ sigreturn_codes:
+ 
+ 	.balign	16
+ endf sigreturn_codes
++sigreturn_region_end:
+diff --git a/linux-user/hppa/vdso.S b/linux-user/hppa/vdso.S
+index 5be14d2f70..a6f8da2981 100644
+--- a/linux-user/hppa/vdso.S
++++ b/linux-user/hppa/vdso.S
+@@ -156,8 +156,10 @@
+ __kernel_sigtramp_rt:
+ 	ldi	0, %r25
+ 	ldi	__NR_rt_sigreturn, %r20
++sigreturn_region_start:
+ 	be,l	0x100(%sr2, %r0), %sr0, %r31
+ 	nop
++sigreturn_region_end:
+ 
+ 	.cfi_endproc
+ 	.size	__kernel_sigtramp_rt, . - __kernel_sigtramp_rt
+diff --git a/linux-user/hppa/vdso.so b/linux-user/hppa/vdso.so
+index e1ddd70c37e9eb6871c21d538dcce0a1e736a918..68baf80fd3943cc2d847744f13637810788fafc1 100755
+GIT binary patch
+delta 287
+zcmdlXut9Kw5)+%jM3n;~wM-GFSH2~uzvW>xy0IuFLc1|}=f)rNnd=!qfQ8}zM<B(+
+zz`#5KEC6ORC<FO3koZt0T)hQQ;0H*M5u)Fbfq@Am1_E3_90Jte0i*?(Am(KPRW1PX
+zVd{aF1GRvFAjp8^WN&ASB<~cxe1_u8^rF;~(xSZhqSW-v{Ji+$lEk7COyShLl+6!V
+rm>D-eV*Sd<nE*724~Ru4KVX+)V^sh$yC!ici>?APT7Vb^7(omG-<v%*
+
+delta 189
+zcmdlWxI<uq5)<o=i7E#~rvH6#AjIVmuSc*(c0!xlbp5Snr5k_DXZHNT00fK-|33mL
+zE(QiB3lJX&fNTa?1_tI1AT7Yez`z5fjesf_0BM+d4-gv!1cCZDhqE#>ZjNUA!l<bL
+q6ygI5Gcd3KX#pVS1Y%|&h60ucKt}N73JzsaV<4*qDh#3+K?DH%5g+>i
+
+diff --git a/linux-user/i386/vdso.S b/linux-user/i386/vdso.S
+index e7a1f333a1..8df77b5a94 100644
+--- a/linux-user/i386/vdso.S
++++ b/linux-user/i386/vdso.S
+@@ -114,6 +114,7 @@ vdso_syscall3 __vdso_getcpu, __NR_gettimeofday
+  */
+ 	nop
+ 
++sigreturn_region_start:
+ __kernel_sigreturn:
+ 	popl	%eax	/* pop sig */
+ 	.cfi_adjust_cfa_offset -4
+@@ -128,6 +129,7 @@ __kernel_rt_sigreturn:
+ 	movl	$__NR_rt_sigreturn, %eax
+ 	int	$0x80
+ endf	__kernel_rt_sigreturn
++sigreturn_region_end:
+ 
+ 	.cfi_endproc
+ 
+diff --git a/linux-user/i386/vdso.so b/linux-user/i386/vdso.so
+index bdece5dfcf8da036d013262d4e37208350283cfa..e01c3818d0d2e4871cf39b2ddd21043d0695d07e 100755
+GIT binary patch
+delta 444
+zcmew$@<Mci0^@{<iibs3xp}^6>=kzJ5{@jp{@LTJl;I7NjX(ad)H6T<3&Y3%JV5q2
+zR+tDkgEEkL4~Y+x0ns4!7C`z3RFIK@iNO)b=3s#eFmN)2z?eW<5U4&5NQVH;V+PVf
+z4BQL_3=H)QlYs&vP=OX8y&cFGgYqW<X&3+*FbBxF4wPpH(jWsi0qJ@q{l|d(Y$X0&
+zAU_<5{|U$kd5{B0gY>g9x-u{<2MP#41sIZ(!&1}2ybbm88HzL0i&9HUi}K=&Qqwc@
+z^Wuw35{pVOg;VoVHXmSXVBBoaah6d_fsuiM7ib#DiJ+hWnal~qAV0$aP*RX_vKg0>
+Rgdor<b#QS82B2;*008EUMTY<Y
+
+delta 302
+zcmaDM`axuZ0;9x4#ls?<CqE_{P2YA{=Ej`0AMPhV{I5Od%*G#oSn7W;Kma2H69X5J
+z$-x2@VBlnsg)xD&Aj8N1>OeY#m4Sg7NDDD=Ggt!Y$w0mcl<y0qw*&cNP<}L!h5?ZN
+zR3PU%P@Ww~gY;K3F!(amBN@;Sl*mTnF9Y(!k@&lT{BuA)2h@ObKzcclF979lHfL{O
+t+`NP13?t_Qpb#$*Gf(d2l4d)=#=vlkVe&dIC5c%;+v|W5Fu(|9003zeFOUEL
+
+diff --git a/linux-user/loongarch64/vdso.S b/linux-user/loongarch64/vdso.S
+index 780a5fda12..2409d95476 100644
+--- a/linux-user/loongarch64/vdso.S
++++ b/linux-user/loongarch64/vdso.S
+@@ -125,6 +125,8 @@ vdso_syscall __vdso_getcpu, __NR_getcpu
+ 
+ __vdso_rt_sigreturn:
+ 	li.w	$a7, __NR_rt_sigreturn
++sigreturn_region_start:
+ 	syscall	0
++sigreturn_region_end:
+ 	.cfi_endproc
+ endf __vdso_rt_sigreturn
+diff --git a/linux-user/loongarch64/vdso.so b/linux-user/loongarch64/vdso.so
+index 7c2de6c50e706164225e82f652d4becc04c71ff0..3704834f0d5d4439a5f1020e06d9a52c0a740555 100755
+GIT binary patch
+delta 358
+zcmaDM-5@(bgQ<aQqm~_`i0-YcC$ne2ny5DIdBUo>Yp!s=SQWathS7noo`vD#e+D$b
+z1LpHE)UcsSC_}{?(8NK)*vzp2iZcSuZ(sy#gcFW1aW;m@x7m3mqroy<3?EqFO2CY~
+z$&4K0j4hJ|nZ+4rOfCeH%O*Pl$z78ZIm9K;0o4dG@Gt~GT?2771H<FV6FDTzl9Nr!
+zl3X+W^zs>sGt-MwOG=CK;)_z#GxPJ}i%SxVN-%{}^HMgi;Amjntj?v#%-g{PaSR`j
+a5}h2%tIf&52@!cWxs%tN@!RBsyy^hfi%Eb0
+
+delta 205
+zcmZpWeIY$TgXsn5MlCx=5mA9%)#h=o$th|*U-GxV_f~Om__Vo((Sc2rk>TV221W)H
+zz%|*BLtIh?EXKv~fdxg9!F+Nehd86}WI<+e#>B~mKr(-_Bam#Kd=RK>I#96?0}n$0
+z8$=fmRP&n2A2}p8J8;%BZa%=Jz|5<`1d-qaQi7A;@@jLg;DCs1pRCAd&Kb`M;k8Uo
+H<dFveCI=^o
+
+diff --git a/linux-user/ppc/vdso-32.so b/linux-user/ppc/vdso-32.so
+index 0dc55e0dddff618b954dbb939335e99956daf64a..03476052fbeb13b7d54651ff9d2447a07ceca251 100755
+GIT binary patch
+delta 438
+zcmX>jenet|GUJhnDhEWA#S8BnzBO%iakv;8rJgEnt>YiE@dr0sJp%}^F#P`rq<9z@
+z*d)LLU^as?kgtQphce;nEr0?)K!S`63`{`Ek%58v4Tui}TtFNG6xIN7fbuLrDhtF0
+z0YQj;<qQn<tRM|MLJ$kv85md}Ao1q{9iRf_b3o-c0{I|=VCqi+)t^A(KLE-L0QoFX
+z_1}PekcXi98F_)~K@NuMXOw1eVqm=j7f4PvNz3(5E7Z$pD9%hTN-ZfZ%8M^bP0!5F
+zi!UxoEGoeiPR&c%e1?5B<K{BXuZ)@xfJX5Fu?P@@+zE0EClE6OF%)nB1DVli@)T|*
+SF-|+6SPM)7NCSh3fdK%|KS6c?
+
+delta 281
+zcmX>iaYlTCGNaE#l>;J~u3G}Hz1nkb!uCykg)t8^X6|Be-uQ!?t^NlC5HK<@Faaqp
+z1_tIgAU+TP*$lEkVGR%mD9-|<j6rM=5M=oO5lA^OFtCEu^9TVkkPZOyA0YA57#P@8
+zfP4<9d=-!nG6$x9G6RDb>j@-*l|TgoKt2mp!+s!N0?B}DKnp+)h8ge#$iD*PZ+7Nb
+o&A9nJ=NCrK1wb)AAQqVXhFgk_{S1)#domA?5);Sq$p$<k0B1NXbN~PV
+
+diff --git a/linux-user/ppc/vdso-64.so b/linux-user/ppc/vdso-64.so
+index ac1ab2582e4675979ffca3ce90dce17df579ab2a..b89f2a0e018a7bb6923db267a746006d341f6bb1 100755
+GIT binary patch
+delta 436
+zcmdlXcR_xFKI4Ur1{RDWTs14(R3|H4uzIPrn<4t+7Q5Ac<(q35C$O`yF#P{Gu~FER
+zhk=0sgn@wl1cU~Y%0Ln(egR3G0jAM{k%55;BEi^zq`(o#=7R89ULc8w2tsVEPZU6y
+zyaK8KWK$uM_#7nhb|mo@B=NaO;s>DOEI@iQk~qvq96<3?5b;=$QuZw%5(q#R-$2qZ
+z0W1m<PfpG*H7QI@*UM)p&P*>#Eh#O^i!Vw|&&<z@FD^+eD!~*^%}d$*gR_}&a}~EL
+lGiL|TC_W$-p1gujkBch;YV!NZ5BSWuxZR=LmdOgd5&*x7NI(Dp
+
+delta 307
+zcmca0ze8?<KBL7(0}Dox#cn4o*9x#KHrQ%*NT0FR@ARH07dO{1PGC1-WME)o00YJb
+z2n{B=fFuY50m};r4JKs;8UBBq*eG1DCBVSI1Cd}~0aXCvTOo<hK@tx@5^q5gPeT$v
+z02OBe(ltopC!pdSKzcGnTn!||z6B})vUnkqh6yn7&HY@>jGKjdRG2w6fMR?=%s<(I
+YUyqCP2UN+9$rb!&Ok5i#Z{Sw|0MvRWxBvhE
+
+diff --git a/linux-user/ppc/vdso-64le.so b/linux-user/ppc/vdso-64le.so
+index 424abb4290b7d3100e9dede2f3059483608ba703..22499d2701530ee2aa003ae5fecce695441a5f77 100755
+GIT binary patch
+delta 383
+zcmdlXcR_xF2IGZ|n)Zw$d#8TmX85vf$%g!(v+1T^wTi0NT-{v5IDx&Mh2i6W1~k9}
+z=JPO|U`LfuhKgT669)-nGsglb&d9*T(7*`R2qzrDEG~u@EDV#iIe8^RfP6tL?ns>c
+zkx5*#5GX6az{4;HYAeKb3=Hj)6`92)=R#!<KxJ9LW-~Bsp1hG$oblA;gG}O#Hzo%%
+zOPD1m8~At`n&j%`GZbg07p0bz7UjhkrKV@*=fxM7Bo>um3a93!Z2rO7z__`bTalT!
+kg9&0bACMBByp&IyGlB~u@_zD7K66fYZV0bsvLvrO0GX9Yi2wiq
+
+delta 220
+zcmca0ze8?<2BXDBO?yU>es=TCa!<lv%$)wF@KG}h)9a^|6F1i|PGA>hWME=wU}Qi6
+zT$39)#U*8dVuB1G|D#9&Ia-rHGKouC0a*eJJPdQ#A@V#>WdV~FnZ+g3pt1*`vMf;9
+zn#qD(;*66gA7qlA9KtNRc>-5G<7NRK1!i6iCWsO~AjLn~mS3Cm2PZ^i$K*nObIuK1
+L5MImVjlA*zt)(a1
+
+diff --git a/linux-user/ppc/vdso.S b/linux-user/ppc/vdso.S
+index 2e79ea9808..e9256a2dea 100644
+--- a/linux-user/ppc/vdso.S
++++ b/linux-user/ppc/vdso.S
+@@ -220,6 +220,7 @@ endf	__kernel_sync_dicache
+ 
+ 	nop
+ 
++sigreturn_region_start:
+ __kernel_sigtramp_rt:
+ 	raw_syscall __NR_rt_sigreturn
+ endf	__kernel_sigtramp_rt
+@@ -235,5 +236,6 @@ __kernel_sigtramp32:
+ 	raw_syscall __NR_sigreturn
+ endf	__kernel_sigtramp32
+ #endif
++sigreturn_region_end:
+ 
+ 	.cfi_endproc
+diff --git a/linux-user/riscv/vdso-32.so b/linux-user/riscv/vdso-32.so
+index c2ce2a4757900a16b891bb98f7a027ac30c47a5f..4818a994f0394d83ca5e8213f6e2d2d3ee2f504c 100755
+GIT binary patch
+delta 447
+zcmZ1?zC~h!0#gs?L?tIipNXmSMas5*X}YtK&*i=K5rz{7_FXjfZHe71!C1(`<ITXp
+zP?TAmT*koYIC(0oDQA3DZf<FgVS&NqMn=)e4_M#Sdjgd-umTA%;9*Dr(j7>Ah&Y5~
+zVfgsJ6v&idgzy=G{5l|W0#rSSKLg00!3>dSVBlg{4P-hnLHHo~gD@!|Ey(b({{I;u
+zqXcLG2apzG;9+<Gq<^q5FhoH4Ux0K5P@V_MX98LdaxhH27?2->B(DYJ2O#kol9OHh
+zi$k)E^zs>0DvHXCjWUf24C8Z+3Jl^CjV7;TRWyZ%3PW*bdQoagX;EH$QEGZ-eqMZW
+zNn%k6rf_Or%H~<@U5uNRIKMG6`b?h4Ej(F=TY&cp(BcO`2k-+OD?ZtiTbgYPI|G9~
+P<K!%ECC1N_d%48{U%FzB
+
+delta 322
+zcmdlYu|#}=0@ELkiAqk4&J$DTi!jW8dws_KY9IfGb=Q{hIhCuqgj#KuU@T<eabjR#
+zD9S8OE@NP{m^_u$bn<0Z(aFzQ-%kF*CQ#20l$2lu5<tMn@bSL{ke<K_=7RY~K;{f)
+z2%mw0i@_DhbYMcrN5iCmv>;G_8jvml>gNE`LJT|%RY3X&3j;$0l-~!WGl23u5WYRb
+z93Z0sNy7#pKL(+I;Rui)fW&7=PEO1*3&{4=%V$uj*sQ_P#khG3=NCps=gEpZ!jt!K
+m3-F!+Dn9`96Uc9(lW%fMv-YqvFx&*o^Y92TrcRdS5eESNR6iB~
+
+diff --git a/linux-user/riscv/vdso-64.so b/linux-user/riscv/vdso-64.so
+index ae49f5b043b5941b9d304a056c2b50c185f413b0..cc6f7e974be67bd08ed412eccb9af22138385e56 100755
+GIT binary patch
+delta 453
+zcmaDM*P$>$gYm>f&3s0mjWgL9MZUOZ%%7)STEdup@5PH(j}Av>WiW2u!l=l~<ITXp
+zP?TAmT*koYIQb!)DQA3DZf<FgVS&NqiA=JaP1sWy<voFF7#MgM&ai<Qa3TTB;+a@4
+zI(ZI<2xIBwjU3{VbwEKzhL8Urpedd)`5{ntHB|NhGgvR2I5=65Q=IY4<cZAUj1ML|
+za*Ee~0m=yhE!_e&hX<;bi4h_Wa|{PmTns9{0!_UZRD2GaI74!Bl1Xx+VT4{jgGxnF
+znVCtZQGsE6u2F$Oe4<go<Zo;Wrtq*}D9%hTN-ZfZ%8M^bP0!5Fi!UxoEGoeiPR&c%
+ze2jAu<K{GOC1ysS$(?-Wq6+K~CthHJ(ELD3eDYO3ZLSZT5D|OE$z1$qoci1l?zG9A
+Gyz&4^o?@H;
+
+delta 329
+zcmeBBcp*1IgHdCmW<I0y<U|hPiEF-ytaVNHbN5=kU~#zA*KgM@2P~MlaogrCjEby0
+zP7DkTMVZCPWekiKlOM8~PM*jlx7mh0g>mu)4hczqpe!T9$NxJRfea)dF`1E5T+#?E
+z!o{G#iX;VOx=uC(%0>fOf<V2fatsV<lP5BZOI87eg&24kCa^)|d7#SrCQsxPXPh%R
+zky)H^!(>BdakV2*m2=QkG9)Kwn!34I1nK27s8noD;abGFnS)1x8RF~7HvB5066_FD
+m7cfC+kat8Um-1_K?%;%o+ysTt<URZ<oD;bqBGVuuygUE^OF*#z
+
+diff --git a/linux-user/riscv/vdso.S b/linux-user/riscv/vdso.S
+index c37275233a..1d780db771 100644
+--- a/linux-user/riscv/vdso.S
++++ b/linux-user/riscv/vdso.S
+@@ -181,7 +181,9 @@ endf __vdso_flush_icache
+ 	nop
+ 
+ __vdso_rt_sigreturn:
++sigreturn_region_start:
+ 	raw_syscall __NR_rt_sigreturn
++sigreturn_region_end:
+ endf __vdso_rt_sigreturn
+ 
+ 	.cfi_endproc
+diff --git a/linux-user/s390x/vdso.S b/linux-user/s390x/vdso.S
+index 3332492477..c60e9ed086 100644
+--- a/linux-user/s390x/vdso.S
++++ b/linux-user/s390x/vdso.S
+@@ -52,6 +52,7 @@ vdso_syscall __kernel_getcpu, __NR_getcpu
+  * by all users.  Without it we get the fallback signal frame handling.
+  */
+ 
++sigreturn_region_start:
+ __kernel_sigreturn:
+ 	raw_syscall __NR_sigreturn
+ endf	__kernel_sigreturn
+@@ -59,3 +60,4 @@ endf	__kernel_sigreturn
+ __kernel_rt_sigreturn:
+ 	raw_syscall __NR_rt_sigreturn
+ endf	__kernel_rt_sigreturn
++sigreturn_region_end:
+diff --git a/linux-user/s390x/vdso.so b/linux-user/s390x/vdso.so
+index 64130f6f335269b03291653d006225b365be9cd9..a669a6b7dda7b60bb8aa125bd70c8ed3384da841 100755
+GIT binary patch
+delta 435
+zcmeB>ULZ3;kBLiRqk#pZh})fO-I~!HOHa>f*qfa!daD0cMEm9%#s{n{EDZlYPHYr5
+z<zZl80AV0tlY!7+QW;3X#1)Xl8K4^LEf|3&KqMF&kQ6uq*<27l%L^p&5QKVW2PE+<
+zA%sORVUR<r5aO&)pb{YQ2@r8TkPw?3RDuaeFGJF>0V*y5r1uCyyqa<np#bhxkj6U*
+zan=)1jWP_$$ze`ufq|xa`3%LG=|!m}rA2x1MXBkT`FZihC5c5Pn8K-fDVsewni)5r
+m;#6hk>;M|Y2gD+ifAHvYu7Dc+d9neoIp=IBuVr!pw*&xqqDfc)
+
+delta 305
+zcmZ1=(;+=UkBPHmqk#pZ$eP<0^W+mAZmVidw^)#U>fWD6>!)n4VSK<^&&crqBLf&P
+zHb7`F$ps`q7zkKiKxi;2i%`$(fFy1##K6D<;j_VnWq=H4ggEOHs02tn5-P3>WV6XZ
+zC76J8K9YtFP;m($-6{xl=)^{0-AM=qY#@_B0Hkp#LY(ykSd@W5X7hcHX2#9QTq?|*
+d8bC2VAQqTBfmff?1FB-r<P*H+j4YG*6acdvD)ayV
+
+-- 
+2.43.0
 
 
