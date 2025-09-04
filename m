@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7124CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 22:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742D4CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 22:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuINj-0001Wi-Bj; Thu, 04 Sep 2025 18:24:39 -0400
+	id 1uuIVI-00054O-UT; Thu, 04 Sep 2025 18:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuINc-0001V5-RG
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:24:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuIVG-00053Z-PU
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:32:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuINH-0004xh-M8
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:24:30 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuIV6-0006t2-6s
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:32:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757024636;
+ s=mimecast20190719; t=1757025123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=f57VVu5STfzYXpSSOAPl6mbL//ib+trgLvbz9yPsiqs=;
- b=KMFXHxvRQbtBzn7hI6eU81G1LVzXcwmGT9FlY9rsGxHnFY5FBGr/Yv4vY0rh7StnxMpdZy
- ED+jjyBXeXSMz07tAyNThIHVfffiwC7GVlrHmW2YTqMOXAtGV0yxIDxjay4RR91LrxKvYj
- fIaV0/k/CL1cDRp3m8Jq2fgB9qhTPJY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GMauJ16MY/NX9oxW4O4AYryWbtbAiPiqAFghBrOlrDE=;
+ b=H158CA1CqEZfN8MdLlv4Fci1YsW1VEFAQAbxEKkci5SSBYq6wL/+JxxnHrdAlat0kXkxs1
+ kkdIKJgnUJ7cYWejIwW5Lnoc0LI0X1nZZbGVy1nir7WTG9TLdFdOjN+2ruvsTtf6Y8akSq
+ IWw9LFmMLACMLHsfMCe9XRH776f4e0I=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-389-8Tv4p7SePamuUFl79Y8w6g-1; Thu, 04 Sep 2025 18:23:55 -0400
-X-MC-Unique: 8Tv4p7SePamuUFl79Y8w6g-1
-X-Mimecast-MFC-AGG-ID: 8Tv4p7SePamuUFl79Y8w6g_1757024635
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-725d32eaa99so34303146d6.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 15:23:55 -0700 (PDT)
+ us-mta-400-5OuNpohdN0alErEC8ikheg-1; Thu, 04 Sep 2025 18:32:02 -0400
+X-MC-Unique: 5OuNpohdN0alErEC8ikheg-1
+X-Mimecast-MFC-AGG-ID: 5OuNpohdN0alErEC8ikheg_1757025122
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b34c87dad0so31118891cf.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 15:32:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757024634; x=1757629434;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f57VVu5STfzYXpSSOAPl6mbL//ib+trgLvbz9yPsiqs=;
- b=XakqROlDFRQtE4RcW52eaLW0LmQppPYeTTkCV/FW60tPCUT3+7ZhDrP/c6STrJf9Sw
- YbFbe5Nxmd4RhuHr86cc5hT7mmEMy6fSTCb9NpVnnsG6HVJskRz3g4Hq8ixynsqOnJss
- RUsp/+nj8iWSUfhwICUT82CLyOGpbT4Xx5/W4PWHDCeYMMMKq6eDQB5Z0vzeCzZcC7xY
- vNBzeGlBrMbYVoLepqqZJyFmmlMvD+Pfydml5kLgcj+Rm1pDY3MoNH3r4wHzGYBLVWlu
- qSdSMAnm3164wRV/7DVJRWCLSW6jPuvOFTDCx1381nR8B1rinG6itttKY5uLJlgTEuER
- vLew==
-X-Gm-Message-State: AOJu0YyhQRFVcjiwaewsaPJ74MGWzEGVPgac18W6CCE0di7zvJ4jXpu2
- y30JRaOvJ7jboSuTuPBUmF6CIjLaGE1x8FsPV2zX7A4hbUrCVv8FNJA6lweCq0znCtRz2HQhZ1I
- xMV+od4togLomjnaQhUnJs1c+CWjP9fgdCwku5cZWuRNkrJbkTMZgO8oa
-X-Gm-Gg: ASbGncuFb/k2V8Ayo4zp/iT5G+DmzWvhDvz30QeppJ7PEtAu4Vl3W85zT0rXmvFwrn5
- I3Ni57/MUe9XSv/i1obahtWABUhAuNXokkDOV52QgWZx5QXKQPYio3P4x/ZSq/cTaJXn5WgJmY9
- sD8XlIplZFm3GHaYOKmKep48vkXjPvWvkv6QCcAI6Ckllk/TNPNuw6MZVd0saEFDcVqn3PzZedZ
- LChdygcScOGlCU754p+j5AjhvA96CEHXT7XZm51fFHK5RGAH7zTndWwLGHuMNflP2bNMYjU5VVu
- z+pnmG6g23O2W/of+KGB0NeBKy04k/LajdhhXCz//Kr3rziJdvnf3EFO0of+X6fBz7C8wkwfp/C
- xECHvCBwrDf3BYmv5VrDtFg==
-X-Received: by 2002:a05:6214:765:b0:70f:4416:ce2c with SMTP id
- 6a1803df08f44-70fac8940a3mr245519096d6.40.1757024633721; 
- Thu, 04 Sep 2025 15:23:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9gb+rvNjJrM2gtQfce5BlykSRlIKMrvO7wH3/3OVMJVOMAxFCbPJs9KPrSlmVaSUE+ZxDTw==
-X-Received: by 2002:a05:6214:765:b0:70f:4416:ce2c with SMTP id
- 6a1803df08f44-70fac8940a3mr245518836d6.40.1757024633264; 
- Thu, 04 Sep 2025 15:23:53 -0700 (PDT)
-Received: from x1.local
+ d=1e100.net; s=20230601; t=1757025122; x=1757629922;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GMauJ16MY/NX9oxW4O4AYryWbtbAiPiqAFghBrOlrDE=;
+ b=FfW8c71pMkfaqys0TTfBCMtGq6ziN6isTnix1wErnZc04gVWf60mquvppmWAPUibjF
+ UTqvK/bo7N6XQjhps274EwRURipUpFibHfty993xh0B7lZh32QaGAVxznQcLHU2Vgnoo
+ IEQJnDSTQgZfIr/fOuyKVU17FwUmOp5/nX3YLI9hYg3g/+RZklBp0oNHtCV6bATlHkco
+ q1JT5XZks/lsaxZfAHPir/bsOjsSZ1j9mM437cwMl31jxaGODKtA4DIlESC2UeJcabyf
+ bNAEDP6dTmL+HOZcODFxvnJg9oOvYpuE5WQ4MZTTTfLXAUUoivqhioXOss/N0pryEY75
+ 1E2Q==
+X-Gm-Message-State: AOJu0YwEWJP0L7HYWOnfeTUCrsdlQ7T/vyO/KpDTfhGZTciwJTxs7XCk
+ JabJyJBLFQ6fnXI7YFSlvZvBockYIFjEeUaob9PuJuR6cmDoO6kkDNZ9qJQFYekVZv+lpz/1gnN
+ TqUms5kkZlB2pZ0KgnyLnCFTc/y62NP9rYXIdWdmOZ0Rc1gcJtS2n5/xHft8NNf1R8n0iA+xlKP
+ ylnFtgAuW3FTstsbNPuE4AAhT0EKiBrx7MgM40Dw==
+X-Gm-Gg: ASbGnct0IQAoDd+Lh7Tv5Gh8XQcktEX5vwiGMpmV4AotF4hNpvig9LajAGu1/UrZhxG
+ //Vbf6rTHCHA+4nLz8ctsQ8Ej2ts+kN0y32r51pms78lLuYnrqBdOaSChUiR/wEcywciUTupq+9
+ AusZODr+GDzzGubpUd80/eSBvU2aQcJxHNOhmNOauMitU8ZtXYWUL65tdfxgGpI+4UmJEGvorS/
+ Ot3SYKWZY4Yh3un4svljsjUkp4hWbFhN5dhy/jYxTqlV0gHIRjUlSq0xfC3BH9IbRLxJg0ThbBw
+ GAvvEaMLtQvu3DJoRFcqk5KHMUn/JNqgXv6OW6ohGJbSgiFKY9kTWDMk4Ln1vuCERI+3YlsHbAp
+ pMi5KdhhBn0EZz6z+ud4=
+X-Received: by 2002:a05:622a:a13:b0:4b5:de12:4c34 with SMTP id
+ d75a77b69052e-4b5de1250c6mr34945641cf.75.1757025121631; 
+ Thu, 04 Sep 2025 15:32:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/DsK1lCNe/eKdcfe7iAu+t5FDa6/H8Z3POgqOnaZGVl8PzECAkNQNaN8/BEk94tEEeuDFRg==
+X-Received: by 2002:a05:622a:a13:b0:4b5:de12:4c34 with SMTP id
+ d75a77b69052e-4b5de1250c6mr34945221cf.75.1757025121001; 
+ Thu, 04 Sep 2025 15:32:01 -0700 (PDT)
+Received: from x1.com
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-720ad2cb78csm52565806d6.19.2025.09.04.15.23.52
+ 6a1803df08f44-7252d6ad05asm34200366d6.62.2025.09.04.15.31.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 15:23:52 -0700 (PDT)
-Date: Thu, 4 Sep 2025 18:23:50 -0400
+ Thu, 04 Sep 2025 15:32:00 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] memory: Fix leaks due to owner-shared MRs circular
- references
-Message-ID: <aLoRdtk4RGNMk_fN@x1.local>
-References: <20250826221750.285242-1-peterx@redhat.com>
- <CAFEAcA-4pqbqSwiHtpVnRE0taReP7evnwwTtekRMGo307NN=mQ@mail.gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] bql: Fix bql_locked status with condvar APIs
+Date: Thu,  4 Sep 2025 18:31:58 -0400
+Message-ID: <20250904223158.1276992-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-4pqbqSwiHtpVnRE0taReP7evnwwTtekRMGo307NN=mQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,159 +109,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 02, 2025 at 11:06:13AM +0100, Peter Maydell wrote:
-> On Tue, 26 Aug 2025 at 23:20, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > Currently, QEMU refcounts the MR by always taking it from the owner.
-> >
-> > It's common that one object will have multiple MR objects embeded in the
-> > object itself.  All the MRs in this case share the same lifespan of the
-> > owner object.
-> >
-> > It's also common that in the instance_init() of an object, MR A can be a
-> > container of MR B, C, D, by using memory_region_add_subregion*() set of
-> > memory region APIs.
-> >
-> > Now we have a circular reference issue, as when adding subregions for MR A,
-> > we essentially incremented the owner's refcount within the instance_init(),
-> > meaning the object will be self-boosted and its refcount can never go down
-> > to zero if the MRs won't get detached properly before object's finalize().
-> >
-> > Delete subregions within object's finalize() won't work either, because
-> > finalize() will be invoked only if the refcount goes to zero first.  What
-> > is worse, object_finalize() will do object_property_del_all() first before
-> > object_deinit().  Since embeded MRs will be properties of the owner object,
-> > it means they'll be freed _before_ the owner's finalize().
-> >
-> > To fix that, teach memory API to stop refcount on MRs that share the same
-> > owner.  Because if they share the lifecycle of the owner, then they share
-> > the same lifecycle between themselves, hence the refcount doesn't help but
-> > only introduce troubles.
-> >
-> > Meanwhile, allow auto-detachments of MRs during finalize() of MRs even
-> > against its container, as long as they belong to the same owner.
-> >
-> > The latter is needed because now it's possible to have MRs' finalize()
-> > happen in any order when they share the same lifespan with a same owner.
-> > In this case, we should allow finalize() to happen in any order of either
-> > the parent or child MR.  Loose the mr->container check in MR's finalize()
-> > to allow auto-detach.  Double check it shares the same owner.
-> >
-> > Proper document this behavior in code.
-> >
-> > This patch is heavily based on the work done by Akihiko Odaki:
-> >
-> > https://lore.kernel.org/r/CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> 
-> I have some wordsmithing review stuff for doc and comment text
-> below, but otherwise
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Tested-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> > ---
-> >  docs/devel/memory.rst |  7 +++++--
-> >  system/memory.c       | 45 ++++++++++++++++++++++++++++++++++---------
-> >  2 files changed, 41 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-> > index 57fb2aec76..a325e97d7b 100644
-> > --- a/docs/devel/memory.rst
-> > +++ b/docs/devel/memory.rst
-> > @@ -158,8 +158,11 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
-> >  as soon as the region is made visible.  This can be immediately, later,
-> >  or never.
-> >
-> > -Destruction of a memory region happens automatically when the owner
-> > -object dies.
-> > +Destruction of a memory region happens automatically when the owner object
-> > +dies.  When there are multiple memory regions under the same owner object,
-> > +the memory API will guarantee all memory regions will be properly detached
-> > +and finalized one by one.  The order which memory region will be finalized
-> 
-> "The order in which memory regions will be finalized is not
-> guaranteed."
-> 
-> > +first is not guaranteed.
-> >
-> >  If however the memory region is part of a dynamically allocated data
-> >  structure, you should call object_unparent() to destroy the memory region
-> > diff --git a/system/memory.c b/system/memory.c
-> > index 5646547940..d7f6ad9be2 100644
-> > --- a/system/memory.c
-> > +++ b/system/memory.c
-> > @@ -1796,16 +1796,36 @@ static void memory_region_finalize(Object *obj)
-> >  {
-> >      MemoryRegion *mr = MEMORY_REGION(obj);
-> >
-> > -    assert(!mr->container);
-> > -
-> > -    /* We know the region is not visible in any address space (it
-> > -     * does not have a container and cannot be a root either because
-> > -     * it has no references, so we can blindly clear mr->enabled.
-> > -     * memory_region_set_enabled instead could trigger a transaction
-> > -     * and cause an infinite loop.
-> > +    /*
-> > +     * Each memory region (that can be dynamically freed..) must has an
-> 
-> s/..//
-> s/must has/must have/
-> 
-> > +     * owner, and it always has the same lifecycle of its owner.  It means
-> > +     * when reaching here, the memory region's owner refcount is zero.
-> 
-> "region's owner's refcount"
-> 
-> > +     *
-> > +     * Here it is possible that the MR has:
-> > +     *
-> > +     * (1) mr->container set, which means this MR can be a subregion of a
-> 
-> "this MR is a subregion of"
-> 
-> > +     *     container MR, in this case it must share the same owner
-> 
-> s/, in/. In/
-> 
-> "same owner as that container"
-> 
-> > +     *     (otherwise the container should have kept a refcount of this
-> > +     *     MR's owner), or,
-> 
-> s/, or,/
-> 
-> (it's possible for both 1 and 2 to be true for an MR here)
-> 
-> > +     *
-> > +     * (2) mr->subregions non-empty, which means this MR can be a container
-> 
-> "is a container"
+QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
+whether the current thread is holding the BQL lock.
 
-I'll fix all things until here (including Clement's suggestions in the
-other email).
+It's a pretty handy variable.  Function-wise, QEMU have codes trying to
+conditionally take bql, relying on the var reflecting the locking status
+(e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look at
+the variable (in reality, co_tls_bql_locked), to see which thread is
+currently holding the bql.
 
-> 
-> > +     *     of other MRs (share the owner or not).
-> 
-> "of another MR (which might have the same owner as this MR, or
->  a different owner)"
+When using that as a debugging facility, sometimes we can observe multiple
+threads holding bql at the same time. It's because QEMU's condvar APIs
+bypassed the bql_*() API, hence they do not update bql_locked even if they
+have released the mutex while waiting.
 
-IIUC there can be one, or more than one MRs as children.  The finalize() of
-this MR should release the rest refcounts for all of them if applicable.
+It can cause confusion if one does "thread apply all p co_tls_bql_locked"
+and see multiple threads reporting true.
 
-Latest version of this paragraph looks like this now:
+Fix this by moving the bql status updates into the mutex debug hooks.  Now
+the variable should always reflect the reality.
 
-     * (2) mr->subregions non-empty, which means this MR is a container of
-     *     one or more other MRs (which might have the the owner as this
-     *     MR, or a different owner).
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+rfc->v1
+- Fix comment [Stefan]
+---
+ include/qemu/main-loop.h  | 18 ++++++++++++++++++
+ util/qemu-thread-common.h |  7 +++++++
+ stubs/iothread-lock.c     |  9 +++++++++
+ system/cpus.c             | 14 ++++++++++++--
+ 4 files changed, 46 insertions(+), 2 deletions(-)
 
-If above looks good I'll go ahead and merge this patch with the fixups.
-
-Thanks a lot to both for the careful reviews (and tests).
-
+diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+index 4e2436b196..0d55c636b2 100644
+--- a/include/qemu/main-loop.h
++++ b/include/qemu/main-loop.h
+@@ -270,6 +270,24 @@ void rust_bql_mock_lock(void);
+  */
+ bool bql_locked(void);
+ 
++/**
++ * mutex_is_bql:
++ *
++ * @mutex: the mutex pointer
++ *
++ * Returns whether the mutex is the BQL.
++ */
++bool mutex_is_bql(QemuMutex *mutex);
++
++/**
++ * bql_update_status:
++ *
++ * @locked: update status on whether the BQL is locked
++ *
++ * NOTE: this should normally only be invoked when the status changed.
++ */
++void bql_update_status(bool locked);
++
+ /**
+  * bql_block: Allow/deny releasing the BQL
+  *
+diff --git a/util/qemu-thread-common.h b/util/qemu-thread-common.h
+index 2af6b12085..09331843ba 100644
+--- a/util/qemu-thread-common.h
++++ b/util/qemu-thread-common.h
+@@ -14,6 +14,7 @@
+ #define QEMU_THREAD_COMMON_H
+ 
+ #include "qemu/thread.h"
++#include "qemu/main-loop.h"
+ #include "trace.h"
+ 
+ static inline void qemu_mutex_post_init(QemuMutex *mutex)
+@@ -39,6 +40,9 @@ static inline void qemu_mutex_post_lock(QemuMutex *mutex,
+     mutex->line = line;
+ #endif
+     trace_qemu_mutex_locked(mutex, file, line);
++    if (mutex_is_bql(mutex)) {
++        bql_update_status(true);
++    }
+ }
+ 
+ static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
+@@ -49,6 +53,9 @@ static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
+     mutex->line = 0;
+ #endif
+     trace_qemu_mutex_unlock(mutex, file, line);
++    if (mutex_is_bql(mutex)) {
++        bql_update_status(false);
++    }
+ }
+ 
+ #endif
+diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
+index 6050c081f5..c89c9c7228 100644
+--- a/stubs/iothread-lock.c
++++ b/stubs/iothread-lock.c
+@@ -34,3 +34,12 @@ void bql_block_unlock(bool increase)
+     assert((new_value > bql_unlock_blocked) == increase);
+     bql_unlock_blocked = new_value;
+ }
++
++bool mutex_is_bql(QemuMutex *mutex)
++{
++    return false;
++}
++
++void bql_update_status(bool locked)
++{
++}
+diff --git a/system/cpus.c b/system/cpus.c
+index 437848b5eb..9c066e1c08 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -524,6 +524,18 @@ bool qemu_in_vcpu_thread(void)
+ 
+ QEMU_DEFINE_STATIC_CO_TLS(bool, bql_locked)
+ 
++bool mutex_is_bql(QemuMutex *mutex)
++{
++    return mutex == &bql;
++}
++
++void bql_update_status(bool locked)
++{
++    /* This function should only be used when an update happened.. */
++    assert(bql_locked() != locked);
++    set_bql_locked(locked);
++}
++
+ static uint32_t bql_unlock_blocked;
+ 
+ void bql_block_unlock(bool increase)
+@@ -564,14 +576,12 @@ void bql_lock_impl(const char *file, int line)
+ 
+     g_assert(!bql_locked());
+     bql_lock_fn(&bql, file, line);
+-    set_bql_locked(true);
+ }
+ 
+ void bql_unlock(void)
+ {
+     g_assert(bql_locked());
+     g_assert(!bql_unlock_blocked);
+-    set_bql_locked(false);
+     qemu_mutex_unlock(&bql);
+ }
+ 
 -- 
-Peter Xu
+2.50.1
 
 
