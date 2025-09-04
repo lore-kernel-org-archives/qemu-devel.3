@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C88CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 19:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCC8CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuFnW-0002u7-8W; Thu, 04 Sep 2025 15:39:06 -0400
+	id 1uuGNU-0004F2-6K; Thu, 04 Sep 2025 16:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uuFnT-0002tc-3J
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 15:39:03 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uuFnP-0004nL-Ey
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 15:39:02 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-81076e81a23so49073985a.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 12:38:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757014736; x=1757619536; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zlwcQ9iBpWQwDKBRpIv1lZWDKLzWmBPuOfOcu4urf20=;
- b=LyArW9D1+Qdtwfm/BOerNIz+5TsOE8vL035TSBLG+hLuZWZb0pKjElo51dBYzU/fSj
- JHlB9wM+VqIYXv5B9VLCDQQMLC56A9ax2W23tV04xeHuMoKTeNDNEf/tzVl8z2Z707yy
- Nx1gVwuqUFOdtUZVRF6D6Pj1Nf5NN/J4quHxDES7veiVEQxYwlV8eRtJOt97oWXJ3XYn
- b7k2cunpcxf4pq8gFj28Mkt4Y3ilXlfjExKrXd0ztehg/NlNNFijNwUxfnK9xi64Pvp+
- 53AVfG6diJt05wsE6KXUM5Fdy9rqEhnherp8PESWu+Qp6vvh2KTmIISe8/Eoh1c6dpeq
- xsZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757014736; x=1757619536;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zlwcQ9iBpWQwDKBRpIv1lZWDKLzWmBPuOfOcu4urf20=;
- b=irAPYLjT22Nky6vE1i05a/fgQNmvudywsYhJ6P+9k+Ms7Nu8IBJC63quZDe0JyZ9ul
- ZZhf4z7kyiRYRp2UzQC4I02sa5nRzu6vh+xwRPqlivkiYm63tWa/G7Ibtwb9p0ERDbtW
- 7BDWXuTKqutTJYr1pLWnp/z0MAKsn9fFu5qDxgkfVzg6RJcDEcuGlPjvlCw9QQY4ucYi
- lQ7BM/V9HvdPMOtFb0ysZkToYpD7m8qkb05aVq6erJjyXRWV3P6ZmKzAG3g40SIDg+1Q
- QFMaPr/yCBoUgnndjJgNO3D/3lbuJy0xmPoTjHRfZMiiRawB/6+oVS6vJmNG9CrsabfU
- hDLA==
-X-Gm-Message-State: AOJu0YyOrVKFKdkgdMS1hBMtOk/buL0NAgztSzCQcBnsA61CU0iJsQY+
- W6eLrDZD016jyxxt2YUMo2tKI7CloPO72vDSIVRnIwvulIXpCSu3f5UZW3FZtVkwSqM8E3/MZob
- VgkWSmvUMKEIqZzP/zZr73juVCQPpMGg=
-X-Gm-Gg: ASbGncsLWt9baVKgjaH2ZeUgunGAbLNCscmdEtqOVq9VRsYEkz9fwCIpIpZMh9RgtMu
- Syr5tpNXz9uG82kKDNamCQgDJY50WhemcDiqCewMlX2BHov6Sltb9tBTx/HBBshLBPnfe/U1JhW
- UjJomjytG+Mg4GIt7dvz1Wjn4sr8M63WktC96fI29ID7A/4yO08qcnPQyZ8X/ySHhh78xBMNpKx
- DIBC/YziA25tfk0nNvEvrIK
-X-Google-Smtp-Source: AGHT+IFDcGIZj2VLW4xf5NTMGQWrLg3kWrIOiRersPsjOmjzRMxkFt2hld8KBagqGAxqWiDR6j76ojWUYPlgVbxwJQU=
-X-Received: by 2002:a05:620a:454d:b0:807:c011:4d94 with SMTP id
- af79cd13be357-807c0114e51mr1138573285a.15.1757014735649; Thu, 04 Sep 2025
- 12:38:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uuGND-0004Dv-Nj; Thu, 04 Sep 2025 16:16:00 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uuGNB-00051p-2K; Thu, 04 Sep 2025 16:15:59 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 27C6714FE30;
+ Thu, 04 Sep 2025 23:15:51 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9EF85271DD2;
+ Thu,  4 Sep 2025 23:15:51 +0300 (MSK)
+Message-ID: <5f3ccbec-5f6f-42c5-bb65-1139a7fe86a6@tls.msk.ru>
+Date: Thu, 4 Sep 2025 23:15:51 +0300
 MIME-Version: 1.0
-References: <20250506152927.222671-1-pbonzini@redhat.com>
- <20250506152927.222671-2-pbonzini@redhat.com>
- <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
- <1546553e-a21a-4a0a-8bcc-6c4e23ff35e2@redhat.com>
-In-Reply-To: <1546553e-a21a-4a0a-8bcc-6c4e23ff35e2@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 4 Sep 2025 23:38:43 +0400
-X-Gm-Features: Ac12FXxSdQm_oqj3GYB2KoXhHZGd7o38uNd9QP6n0WYnv0x7muc-Xe_8iZH_eCY
-Message-ID: <CAJ+F1CL+TxyRN0P2njCBRLigKe1tO1CyNOuCP1L5LHwE5FMEsQ@mail.gmail.com>
-Subject: Re: [PULL 01/30] lcitool: use newer Rust for Debian and Ubuntu
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x736.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250814070650.78657-1-philmd@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,38 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 14.08.2025 10:06, Philippe Mathieu-Daudé wrote:
+> We weren't parsing MIPS ASE in the ELF header, so couldn't
+> automatically pick an appropriate CPU.
+> 
+> Since we'll have a rc4, I propose these sensible patches
+> for 10.1, but both ASEs are available since 15 years in QEMU,
+> so this isn't something broken since the latest release, and
+> I don't mind holding it for 10.2.
 
-On Wed, Sep 3, 2025 at 5:59=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> On 9/3/25 15:54, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi Paolo
-> >
-> > On Tue, May 6, 2025 at 7:30=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.c=
-om> wrote:
-> >>
-> >> On Debian, the rustc-web package provides a newer Rust compiler (1.78)
-> >> for all architectures except mips64el.
-> >
-> > Unfortunately, rustc-web is not compatible with the cross/multiarch
-> > packages (it will remove all libstd-rust-dev:*).
-> >
-> > Should we switch to rustup in the meantime for debian cross-compilation=
- testing?
->
-> We should just switch to Trixie, which however needs some work in lcitool=
-.
->
+Now I wonder what should I do with this wrt qemu-stable series.
+Since no one complained (?) for so many years..  is it worth
+to add this to previous stable releases?
 
-Trixie no longer supports mips:
-https://www.debian.org/releases/trixie/release-notes/issues.html?utm_source=
-=3Dchatgpt.com#mips-architectures-removed
+(fwiw, all 3 patches are needed, obviously.  Also, for 7.2,
+the following 2 patches can also be picked up:
+f7e3d7521b4 "linux-user/mips: Use P5600 as default CPU to run NaN2008 
+ELF binaries"
+3e8130da7c9 "linux-user/mips: Do not try to use removed R5900 CPU")
 
-Can we simply drop it from our CI too, or do we want to keep
-cross-build testing on debian 12?
+What do you think?
 
+I picked all 3 up for 7.2, 10.0 and 10.1 series for now.
 
---
-Marc-Andr=C3=A9 Lureau
+Thanks,
+
+/mjt
 
