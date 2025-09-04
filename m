@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73494CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 07:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B745CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 07:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu4RA-0001Mb-MQ; Thu, 04 Sep 2025 03:31:16 -0400
+	id 1uu4bY-0005Pe-SH; Thu, 04 Sep 2025 03:42:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uu4Qy-0001G7-Nk
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:31:05 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uu4Qr-0001Rq-3J
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:31:04 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxaNEeQLlo2ZAGAA--.13881S3;
- Thu, 04 Sep 2025 15:30:38 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxocIbQLlo0259AA--.693S3;
- Thu, 04 Sep 2025 15:30:37 +0800 (CST)
-Subject: Re: [PATCH v3 03/12] target/loongarch: Reduce TLB flush with
- helper_tlbwr
-To: Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250903084827.3085911-1-maobibo@loongson.cn>
- <20250903084827.3085911-4-maobibo@loongson.cn>
- <fc0eaa0c-252e-4c74-8a2c-ddf0f3b11bb4@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <fa20a13f-b549-274f-6df3-3d26ddb1a9c9@loongson.cn>
-Date: Thu, 4 Sep 2025 15:28:35 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uu4bW-0005Oz-K9
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:41:58 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uu4bH-00088y-UT
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:41:47 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0393281331;
+ Thu, 04 Sep 2025 10:41:38 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
+ [2a02:6bf:8080:b8f::1:11])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id afbI464FtOs0-DfJXd3p1; Thu, 04 Sep 2025 10:41:37 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1756971697;
+ bh=il9Qr+WjbpC3eGvxiYNbHAq/J5/PYuZjMBtTCI675Ok=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=UyHsLqFX9UNtLTbrMk7ZIIUz81i4fDWUlnBIb9QbHntsf4cNmG/XV2hxgAQH3p6Lf
+ vjBf90qxBDC788BwOspVYWXbuNZ1dzfouvh/txQDFe3eCQ6mm4PUzLlodfeCVc0FMx
+ vQMETXLS7AP4wvLG6rNFC1EwHVvru4N3STMOScQU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <eeb8603e-f78b-48be-a2e7-0dd2e0e3c8e0@yandex-team.ru>
+Date: Thu, 4 Sep 2025 10:41:36 +0300
 MIME-Version: 1.0
-In-Reply-To: <fc0eaa0c-252e-4c74-8a2c-ddf0f3b11bb4@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/8] net/tap: implement interfaces for local migration
+To: Steven Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
+ yc-core@yandex-team.ru, peterx@redhat.com, mst@redhat.com, farosas@suse.de,
+ eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, philmd@linaro.org
+References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
+ <20250903133706.1177633-6-vsementsov@yandex-team.ru>
+ <aLhR2unpr2xg2MYl@redhat.com>
+ <16e31f9b-49ef-44a4-b9ad-0668e3c2c530@yandex-team.ru>
+ <12ec1ef1-9258-4ccb-9140-bbb6a2bd93af@oracle.com>
 Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <12ec1ef1-9258-4ccb-9140-bbb6a2bd93af@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxocIbQLlo0259AA--.693S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCr48uw1DArWkGrWDGryDArc_yoW5GrW7pr
- n7CrWDtFykGrnYyw13Xw15tFy3Zr18WanrXF1SgF15tr47Jr1Igr4kX3sYgFyUJr48JF4U
- tF4Y9r1DZFy7X3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
- xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jY38nU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.65,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,76 +83,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/9/3 下午9:07, Richard Henderson wrote:
-> On 9/3/25 10:48, Bibo Mao wrote:
->> With function helper_tlbwr(), specified LoongArch TLB entry will be
->> updated. There are two PTE pages in one TLB entry called even/odd
->> pages. Supposing even/odd page is normal/none state, when odd page
->> is added, TLB entry is changed as normal/normal state and even page
->> keeps unchanged.
+On 03.09.25 19:09, Steven Sistare wrote:
+> On 9/3/2025 11:31 AM, Vladimir Sementsov-Ogievskiy wrote:
+>> On 03.09.25 17:34, Daniel P. Berrangé wrote:
+>>> On Wed, Sep 03, 2025 at 04:37:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> Handle local-incoming option:
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> ---
+>>>>   include/net/tap.h |   4 ++
+>>>>   net/tap.c         | 136 +++++++++++++++++++++++++++++++++++++++-------
+>>>>   2 files changed, 119 insertions(+), 21 deletions(-)
+>>>>
+>>>> diff --git a/include/net/tap.h b/include/net/tap.h
+>>>> index 6f34f13eae..3ef2e2dbae 100644
+>>>> --- a/include/net/tap.h
+>>>> +++ b/include/net/tap.h
+>>>> @@ -30,7 +30,11 @@
+>>>>   int tap_enable(NetClientState *nc);
+>>>>   int tap_disable(NetClientState *nc);
+>>>> +bool tap_local_incoming(NetClientState *nc);
+>>>>   int tap_get_fd(NetClientState *nc);
+>>>> +int tap_load(NetClientState *nc, QEMUFile *f);
+>>>> +int tap_save(NetClientState *nc, QEMUFile *f);
+>>>> +
+>>>>   #endif /* QEMU_NET_TAP_H */
+>>>> diff --git a/net/tap.c b/net/tap.c
+>>>> index a9d955ac5f..499db756ea 100644
+>>>> --- a/net/tap.c
+>>>> +++ b/net/tap.c
+>>>> @@ -35,6 +35,8 @@
+>>>>   #include "net/eth.h"
+>>>>   #include "net/net.h"
+>>>>   #include "clients.h"
+>>>> +#include "migration/migration.h"
+>>>> +#include "migration/qemu-file.h"
+>>>>   #include "monitor/monitor.h"
+>>>>   #include "system/system.h"
+>>>>   #include "qapi/error.h"
+>>>> @@ -82,6 +84,7 @@ typedef struct TAPState {
+>>>>       VHostNetState *vhost_net;
+>>>>       unsigned host_vnet_hdr_len;
+>>>>       Notifier exit;
+>>>> +    bool local_incoming;
+>>>>   } TAPState;
+>>>>   static void launch_script(const char *setup_script, const char *ifname,
+>>>> @@ -803,6 +806,40 @@ static int net_tap_init_vhost(TAPState *s, Error **errp) {
+>>>>       return 0;
+>>>>   }
+>>>> +int tap_save(NetClientState *nc, QEMUFile *f)
+>>>> +{
+>>>> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+>>>> +
+>>>> +    qemu_file_put_fd(f, s->fd);
+>>>> +    qemu_put_byte(f, s->using_vnet_hdr);
+>>>> +    qemu_put_byte(f, s->has_ufo);
+>>>> +    qemu_put_byte(f, s->has_uso);
+>>>> +    qemu_put_byte(f, s->enabled);
+>>>> +    qemu_put_be32(f, s->host_vnet_hdr_len);
+>>>
+>>>
+>>> Is it neccessary to transfer that metadata, or is there perhaps a way
+>>> for the other side to query the TAP FD configuration from the kernel
+>>> to detect this ?
 >>
->> In this situation, it is not necessary to flush QEMU TLB since even
->> page keep unchanged and odd page is newly changed. Here check whether
->> PTE page is the same or not, TLB flush can be skipped if both are the
->> same or newly added.
+>> Oh, good question, thanks for it. I just added everything and then I was debugging other places.
 >>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> for hdr_len we have TUNGETVNETHDRSZ, so it's possible.
+>>
+>> using_vnet_hdr, seems is equal to initial vnet_hdr option (with default to 1 if not specified), will doublecheck
+>>
+>> for ufo/uso, which are set through TUNSETOFFLOAD, we don't have direct way to
+>> get the state. But we can use the fact, that qemu tries to set them once,
+>> and these variables are unchanged after initialization. So we can try set
+>> same flags on target the same way, to understand what we have. Still,
+>> this doesn't seem absolutely safe.. Kernel may behave differently than
+>> for previous initialization, probably due to some changed settings.
+>>
+>> for enabled it seems not possible, but we handle it in virtio layer.. Oops,
+>> probably I always migrate enabled=false with this code, will check.
+>>
 >> ---
->>   target/loongarch/tcg/tlb_helper.c | 33 ++++++++++++++++++++++++++-----
->>   1 file changed, 28 insertions(+), 5 deletions(-)
 >>
->> diff --git a/target/loongarch/tcg/tlb_helper.c 
->> b/target/loongarch/tcg/tlb_helper.c
->> index fcd03ca320..331b485b1a 100644
->> --- a/target/loongarch/tcg/tlb_helper.c
->> +++ b/target/loongarch/tcg/tlb_helper.c
->> @@ -302,16 +302,39 @@ void helper_tlbrd(CPULoongArchState *env)
->>   void helper_tlbwr(CPULoongArchState *env)
->>   {
->>       int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
->> +    LoongArchTLB *old, new;
+>> On the other hand, calling extra ioctls to learn something lead to extra downtime
+>> (should be measured to be a good argument).
+>>
+>> Also, just architecturally: seems better not ask third agent about metadata that we already know.
+>>
+>> ---
+>>
+>> About forward-compatibility (if we add new fields here) - agree.
+>>
+>> Maybe turn several boolean fields into one flags field. This way we'll get several "reserved" bits for future changes.
+>>
+>>>
+>>> I'm concerned that this code / wire format is not extensible if we ever
+>>> add another similar field to TAPState in the future.
 > 
-> Perhaps "new = { }", then ...
-> 
->> +    new.tlb_misc = 0;
->> +    new.tlb_entry0 = 0;
->> +    new.tlb_entry1 = 0;
-> 
-> ... this is unnecessary.
-yes, this is simpler with { }.  Will do.
-> 
->> +    fill_tlb_entry(env, &new);
->> +    /* Check whether ASID/VPPN is the same */
->> +    if (old->tlb_misc == new.tlb_misc) {
->> +        /* Check whether both even/odd pages is the same or invalid */
->> +        tlb_v0 = FIELD_EX64(old->tlb_entry0, TLBENTRY, V);
->> +        tlb_v1 = FIELD_EX64(old->tlb_entry1, TLBENTRY, V);
->> +        if ((!tlb_v0 || new.tlb_entry0 == old->tlb_entry0) &&
->> +            (!tlb_v1 || new.tlb_entry1 == old->tlb_entry1)) {
->> +            skip_inv = true;
->> +        }
->> +    }
->> +
->> +    /* flush tlb before updating the entry */
->> +    if (!skip_inv) {
->> +        invalidate_tlb(env, index);
->> +    }
->> +    old->tlb_misc = new.tlb_misc;
->> +    old->tlb_entry0 = new.tlb_entry0;
->> +    old->tlb_entry1 = new.tlb_entry1;
-> 
-> Perhaps better as "*old = new".
-Will do in this way.
+> tap_save and tap_load should be replaced with a VMStateDescription for future
+> extensibility.  Use VMSTATE_FD for the fd.  Define a postload hook for
+> tap_read_poll and net_tap_init_vhost.
 
-Regards
-Bibo Mao
-> 
-> Anyway,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> 
-> r~
+How it works? I thought, if I add new field to vmsd, destination will try to load it anyway (as it loads them in a loop in vmstate_load_state()).. So, we'll have to add same new capabilities anyway to "enable" new fields (with help of .field_exists)? Same way we can add new field to current realization, with new migration capability and "if" in _load() function..
 
+Still, seems using VMSD is better anyway, so I should do it.
+
+> 
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +int tap_load(NetClientState *nc, QEMUFile *f)
+>>>> +{
+>>>> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+>>>> +
+>>>> +    s->fd = qemu_file_get_fd(f);
+>>>> +    if (s->fd < 0) {
+>>>> +        return -1;
+>>>> +    }
+>>>> +
+>>>> +    s->using_vnet_hdr = qemu_get_byte(f);
+>>>> +    s->has_ufo = qemu_get_byte(f);
+>>>> +    s->has_uso = qemu_get_byte(f);
+>>>> +    s->enabled = qemu_get_byte(f);
+>>>> +    qemu_get_be32s(f, &s->host_vnet_hdr_len);
+>>>> +
+>>>> +    tap_read_poll(s, true);
+>>>> +
+>>>> +    return net_tap_init_vhost(s, NULL);
+>>>> +}
+>>>> +
+>>>>   static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+>>>>                                     const char *model, const char *name,
+>>>>                                     const char *ifname, const char *script,
+>>>
+>>> With regards,
+>>> Daniel
+>>
+>>
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
