@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037CBCA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBB0CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu5Aj-0000Oc-3R; Thu, 04 Sep 2025 04:18:21 -0400
+	id 1uu5Af-0000GQ-OH; Thu, 04 Sep 2025 04:18:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu55b-0006yP-3J
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:04 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1uu55e-000728-AY
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:06 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54y-0004Lb-0c
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:02 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-61ce4c32a36so1286322a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:12:15 -0700 (PDT)
+ id 1uu54y-0004Kj-35
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:04 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b042cc3954fso129341366b.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:12:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973534; x=1757578334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973533; x=1757578333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V5Zye4y6NxJaSczxcVcmt24avvGWMTOUTr/+SGRum6M=;
- b=oZhNqbatmZbF5XPkK5klFuGhvaJvT6KVFz3fRH5XG27CwSAMYzsM9qP3Z66ez/2krB
- 5CqKOiqSTDkzYL8UacVOA4M0qqv84l8ThZl82hpeftWyN8flWAMGoNPv+1PjHx13Hi2s
- ibd/bBmPAoWBHnyY5EoHa3mqel3RxePPgW/5d4UPDMopgAYqvY9+1BNM92n3AwXSoSg/
- /e/81SCMDBKmctQZKsiRKSfg3B7KIfSddVQn5+F2jXs+M4s+vsOHLjxxixd0NoEkx1GE
- j3IWQ1zF1RvTvW8vuXuO9TP1Frx2TBlXbpEm911qCY4hkqhue9i/eeZ0J42pAa7569Mi
- yOhQ==
+ bh=6EbVn5eJ4TWHIldxY30gfc+9eY3s2xC+za4HvKYilBo=;
+ b=gl0mOPL07G2HE3NCvmWd+aGklYmuARNHb3+uHuQXZ7QjHrq0oPBgo8q9I0eR2QXRVA
+ /9r3Md7QbkOsOXL2/ApZ3jhivD9E8Su0LpZbyPpEfxzdfqCegRsWkO6hukZQsUya07jI
+ 2Yja6NrB4XVM2ISHD8OyIKbnOgj8efr4UJFEWCI+6dHGYDWw/j5Pf880yHTvsZH/Xirl
+ OUP3wm9gcUtTfp59cgX64xOaRkay/DU58W7Bf9L/ZMOmhMg5e1N8tLcQuq6h05EwkiRP
+ f4fZvelbMWnlaqS41SCkH2nS4zW6w691LAwgkQxAStBwf7ubvaAK+Lin1UvPCCQvRMeR
+ IS8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973534; x=1757578334;
+ d=1e100.net; s=20230601; t=1756973533; x=1757578333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V5Zye4y6NxJaSczxcVcmt24avvGWMTOUTr/+SGRum6M=;
- b=Kr+vg1Y1/NX5UXZ+NmjiHez1H5m1zE9QS+jt887rq0k9JZaojveetF2sh+VkNMEXRE
- TdkhKC88fgr/TfeIK+NSJEC7aZgHrzFbYeE58tJTrg4XX5V8tAmGDjA4x1kFn2nBUtAZ
- 5BTf8WxMwa7BAUG9owITWrB1vb/obugoM0d6xC6or5lKgx6/cbJ50hc8/OCTui70booi
- Gh04lRSsuLKkWErVLN/ADbSIKzVGIkiVkdoM7V3g9/M9JqQwrOfRbqLkLbKbrgrBfcb6
- kZGmcZBGtc6Z7EPtvZhRjTRv1Ri+JPzpQR7oLpHHQwwgilLG/fzcpHfBRF/z419z58Hn
- fIGg==
-X-Gm-Message-State: AOJu0Yy8giDXe8RvlhJmDkT2AsaVdHhHMqA2j02Zt79Hon6LRvGDPSSN
- 45+lAFjGi2vGE56IKS43hhl6MKCBtfnemFJ+L8aMP5UkO/Xi5HIMo8hjcFM+gQWRBjhu92lQajG
- IF9/xGHvEmg==
-X-Gm-Gg: ASbGncuZOCwAUmr8KK5Eiz7CNU1o5h32hgrFP3YuTzG24XAc+oreeTQeuPsW+vBJJlt
- Q1ALSWpiDhI3ZbnGwfF/45pawmUBiAD/XK6oRIqxmZle5PZuMGu1MTvH+9vgsCWqeHj6kv5QaeK
- q/SlUwJz+SB6x9HpOOn4kVyS/hMGnivmxQSYQqjvHkLfJSgXeZHhPT5CqW8VaJLBKrtiBvrz/j6
- dzd4rZbUsNpsFfE7urzdQzV9LnfjZLFeQ0rSeaWe9fA2BMiUO0IWa+RvI14NvsVhEmRBVpQg1v3
- 41GAEfQSrt0Dft7a+5Od7XqTlleaoPou9mHem/8fiTKCmRMW/taW9MIIfKz+oysPICuHIRuGK2z
- NF+Tanlo4FUStgn2EUdjf2qyY/ar59EhREQ==
-X-Google-Smtp-Source: AGHT+IGvhyi3Ob8FQTO0E+SlWXz70PknUDYB759PnOR+EDDgh33qtQBCOSrVgpXzaEOgq2NGLcCnnA==
-X-Received: by 2002:a05:6402:2549:b0:618:afa:70b1 with SMTP id
- 4fb4d7f45d1cf-61d26c32e70mr15695243a12.20.1756973533908; 
+ bh=6EbVn5eJ4TWHIldxY30gfc+9eY3s2xC+za4HvKYilBo=;
+ b=bsJTcewQtjSiF5AvOBMhPozOM/uJvfDqVee9x/VtH1dg7WorzWNXkSQUhv365d7+8X
+ WthCeECuhlmT2U3UCfLMZ0xW933lKeO9ukFYyY4qakBecdCul6hImp+HPmU/N+HT80nL
+ ZfQ0yvpQcMzPxKdnn0Oht5H7TDDnmIcPq9raN4Yc7TXtMlW07pZtNa2YbV4Ku17ibxar
+ /lgSPm8xhsYhni18kJbfeyZzlG/mitnaz5W4yroJidVqLJfAUM9MAKDVp2n4v+MMjZ7/
+ Vo3epIQdahGMAwTwJ95ezJIZQqpTHc75y/ZLxW6uCjffgXp87jmZLwPWPr8VKmt65wdH
+ PlcA==
+X-Gm-Message-State: AOJu0YyhXyae5bbOdPJ5srlf9bWCEKXeJOfUtFOOLJ5JP2q0/KUaLbHv
+ axMyPqWKmUvtR2x9TXgUanQxpZCOJsVeQPJ5lsm9yZA0+TMMNkaNZjTlQ5EyrpzZv4t2zJoHRz8
+ rVoe2KdvvXw==
+X-Gm-Gg: ASbGncv94IuhW1qRUI1urk8lyqax0V2JiYlgjadQFhJ9b5/BZiv4XIajz/nd1Po/vGN
+ r4mFUFO2USCdUjqFbqIM2ywJii/ibNQrfQVRyPeQa/u0SWYSPZafyOnn4R/vaJnHpF8dBcPEzJ0
+ slTRMALXuM9GJCNIh3IbmHsKr83FmAgYhTsvT8ZlLmXi24LaCqAddDHQuGZMKoRYX2YXN+0RBkd
+ J8TxOenLjCSiSIOM5XafN+Pkv4ljTEzau770Kl8rD6SGhDCojT7o7QyYAS1bQaVNm+A95LY6ha1
+ fucxfRdXcYZqiwvTNgs9yOmqgM0se4CBxFLkTct+viSGpqlgwu9D4vC3TBkVbw8cjdPi/Opeuxa
+ 35g4LNdY/mQ2I/xyMQRA4Mcg=
+X-Google-Smtp-Source: AGHT+IGE72xujCzrpuvniQ2ueJZ4x/ss9sVMxOq4r/64b7nh3Vp6WuzYsL8MWp7c3HyS0dLplsfeZA==
+X-Received: by 2002:a17:907:7253:b0:af9:8438:de48 with SMTP id
+ a640c23a62f3a-b01d978f785mr1865512266b.48.1756973533095; 
  Thu, 04 Sep 2025 01:12:13 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc4bbc6bsm13985707a12.29.2025.09.04.01.12.03
+ a640c23a62f3a-b04190700a4sm1095117366b.63.2025.09.04.01.12.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 04 Sep 2025 01:12:10 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA7BD5F93B;
+ by draig.lan (Postfix) with ESMTP id F184860AED;
  Thu, 04 Sep 2025 09:11:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -129,16 +129,16 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
-Subject: [PATCH v2 082/281] linux-user/openrisc: Create init_main_thread
-Date: Thu,  4 Sep 2025 09:07:56 +0100
-Message-ID: <20250904081128.1942269-83-alex.bennee@linaro.org>
+Subject: [PATCH v2 084/281] linux-user/m68k: Create init_main_thread
+Date: Thu,  4 Sep 2025 09:07:58 +0100
+Message-ID: <20250904081128.1942269-85-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -169,49 +169,66 @@ There's no point going through a target_pt_regs intermediate.
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c           |  7 +------
- linux-user/openrisc/cpu_loop.c | 11 ++++-------
- 2 files changed, 5 insertions(+), 13 deletions(-)
+ linux-user/elfload.c       | 11 +----------
+ linux-user/m68k/cpu_loop.c | 25 ++++++-------------------
+ 2 files changed, 7 insertions(+), 29 deletions(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 3f9ec493595..03c95397744 100644
+index 8604308a310..46150586aff 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -673,12 +673,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMBState *env
- #define ELF_CLASS ELFCLASS32
- #define ELF_DATA  ELFDATA2MSB
+@@ -746,16 +746,7 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_68K
  
+-/* ??? Does this need to do anything?
+-   #define ELF_PLAT_INIT(_r) */
+-
 -static inline void init_thread(struct target_pt_regs *regs,
 -                               struct image_info *infop)
 -{
+-    regs->usp = infop->start_stack;
+-    regs->sr = 0;
 -    regs->pc = infop->entry;
--    regs->gpr[1] = infop->start_stack;
 -}
 +#define HAVE_INIT_MAIN_THREAD
  
- #define USE_ELF_CORE_DUMP
- #define ELF_EXEC_PAGESIZE 8192
-diff --git a/linux-user/openrisc/cpu_loop.c b/linux-user/openrisc/cpu_loop.c
-index 306b4f8eb43..8c72347a99a 100644
---- a/linux-user/openrisc/cpu_loop.c
-+++ b/linux-user/openrisc/cpu_loop.c
-@@ -83,13 +83,10 @@ void cpu_loop(CPUOpenRISCState *env)
+ /* See linux kernel: arch/m68k/include/asm/elf.h.  */
+ #define ELF_NREG 20
+diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
+index 23693f33582..aca0bf23dc6 100644
+--- a/linux-user/m68k/cpu_loop.c
++++ b/linux-user/m68k/cpu_loop.c
+@@ -92,24 +92,11 @@ void cpu_loop(CPUM68KState *env)
      }
  }
  
 -void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
 +void init_main_thread(CPUState *cs, struct image_info *info)
  {
--    int i;
-+    CPUArchState *env = cpu_env(cs);
- 
--    for (i = 0; i < 32; i++) {
--        cpu_set_gpr(env, i, regs->gpr[i]);
--    }
 -    env->pc = regs->pc;
--    cpu_set_sr(env, regs->sr);
+-    env->dregs[0] = regs->d0;
+-    env->dregs[1] = regs->d1;
+-    env->dregs[2] = regs->d2;
+-    env->dregs[3] = regs->d3;
+-    env->dregs[4] = regs->d4;
+-    env->dregs[5] = regs->d5;
+-    env->dregs[6] = regs->d6;
+-    env->dregs[7] = regs->d7;
+-    env->aregs[0] = regs->a0;
+-    env->aregs[1] = regs->a1;
+-    env->aregs[2] = regs->a2;
+-    env->aregs[3] = regs->a3;
+-    env->aregs[4] = regs->a4;
+-    env->aregs[5] = regs->a5;
+-    env->aregs[6] = regs->a6;
+-    env->aregs[7] = regs->usp;
+-    env->sr = regs->sr;
++    CPUArchState *env = cpu_env(cs);
++
 +    env->pc = info->entry;
-+    cpu_set_gpr(env, 1, info->start_stack);
++    env->aregs[7] = info->start_stack;
++    env->sr = 0;
  }
 -- 
 2.47.2
