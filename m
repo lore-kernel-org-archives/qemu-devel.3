@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6306CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F3F6CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu54H-0005tj-0C; Thu, 04 Sep 2025 04:11:41 -0400
+	id 1uu5BL-0001OE-9C; Thu, 04 Sep 2025 04:19:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54F-0005se-87
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:39 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1uu55h-00077A-8x
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:09 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu549-0003vk-3n
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:38 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6188b5ad681so1148827a12.0
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:32 -0700 (PDT)
+ id 1uu54z-0004JL-VR
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:13:08 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-afcb7ace3baso137904866b.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973491; x=1757578291; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973530; x=1757578330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BNEGVA0a3lSomvk/RYtnyV9U8MhQRFndjMqEzv6fEMo=;
- b=B5L2x+xNWWu/ohVHcXzYS6SoLd49RKD9rv9CHikeDtt2hXBIrk8r+rflRrfvcXmsEq
- /7xkFVW+HjZMfVrxhWN5CccdHnXtsu3XjrP6Y/zb7TEAQHLsZgUoWXR1mMHPsOy6IkKw
- 5MVoW/w9uwiPUdlsNf8m36Jm5zTJdYM0GCC1z7T11gXv8LpmIoN+53hvfO8DP0ppe+ZR
- KKWHYmaMzBKwsd8JnCdSEr4oPfKTccTFEinPm5jsEpbQyibNKYvm0nRCsUroGFbOK/Yq
- QjyVbnVjpM89OShLMhXaFngbxVTe0LoFkOxZGtAhUv7Yig3gwGtW042M0O5mWalf3ZNf
- nQpw==
+ bh=arwdiSLHZSf6gZ/oJp/0pmlfrIs2tD4nzezQj8ONLa8=;
+ b=mfrsU7Q6owDfBPScwGQxtT4RyEWegKmliZdTFUlePJV4WI2mkR3r/SGCTM/lIcsgB7
+ FxEQohX00KbyQpDTp7uuGvv9Dd6O/B/xzniI2yRzmfdLxiUdQl91nikzdVEdGPjx3q5y
+ uusgI/b/3DAviazmS1F6jeFStCQEBp/hZFI++vbv9g/BrvNLuVqgSrX5bT3t+53lniiL
+ jRGAAKUUd1J9iIztP2XEcnuL1BL2yan3XFI3pMUPZbhFY08KS2hB5Llo7ZsXf0QHYzK+
+ XYtQ+iOELZeBh+Nw9JDqmF/Yth72UjvZ9RlTPsCNzuHSGWJwGcZsNFHcoiIq2AQ18wds
+ hAHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973491; x=1757578291;
+ d=1e100.net; s=20230601; t=1756973530; x=1757578330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BNEGVA0a3lSomvk/RYtnyV9U8MhQRFndjMqEzv6fEMo=;
- b=sQ3b/+p31Mb9Ay5i9CBxWiBNfd3IxMduU1GOy/rdJJ52AtLrai19kaa4/BupYQe34M
- dSoT1zzpA5Il/ALbqMb9JOjRpAexEPQehs9a+ACTySqY2vlvH7nfMUmFFtiRNq2dafDB
- oce4Lb307SGgzxcFVAmlWJ5ZvQ8+YjgZRL2O0hGAwZNJQQ6E1zhOAnlca8S3CHeHjPO5
- aKaq6zKH2m11lulFvwIHY7Kxknmi3iUojENaQPIKe8mg2hwNezh13FKBxmxi3XjmKJJ7
- DM7CHU5mn4XqUKLYLgQ01zF5/yIsAG1kcMx2Nfv/Bd6FBHhbKZuRwnplZRmH5RwxFjRn
- KrZQ==
-X-Gm-Message-State: AOJu0YyBQw5qQt9VvebGL1Z5AInMF7ng1UrgsZuWA0BVhy61MCNYGY/v
- P9EsGmW8ZD4L69XW+UpNFLmdoBDlUZO8M4FIDycNHl8gaDGf5pkHeNitLFAURnNjmpY=
-X-Gm-Gg: ASbGnct+gflVV0WSxrYENGSyRYIUWOIWge136YSD3IUKyyOiInbomuhcVNNiOKvAMoU
- uRb+YlmloBdNskVF2Qmth2s9thfoQIIZiIunSEH5La2WrSLLFiVoltaN8jPXfxHNHCMSF645nSK
- 88UgDEyzNKHPF4y09E2j0ZOEKDJIN2Ah8y8fh1II382f2WLGo1rRSZzUDTaNpyFpPW8dhClkpDj
- lMy8GNzPzhgYQ5SbkTYPlt9d8sX0tVAmuh1tsRpKl/gP3aqXpDjpyvfOQumQFp7FSQpcBnnLAjW
- fUI5Q+rXkw4E53XghfgInhn9dFMkwyQtf7JsTj0heJ+vwhOJp9jPRwdAqxE5hk69qC1lE09KH62
- 0wU2kmQChWCmbw7rOrwTGQgL1H5tg+Bmj9g==
-X-Google-Smtp-Source: AGHT+IHexK94NPWoWCrwjuk3gIAjHKSuKZUcH35FtgtMhup7hPhQojKoYZ1y3LzApeF9bdhKrTjgdQ==
-X-Received: by 2002:a05:6402:1e8c:b0:620:894c:656c with SMTP id
- 4fb4d7f45d1cf-620894c7c6fmr28663a12.29.1756973490788; 
- Thu, 04 Sep 2025 01:11:30 -0700 (PDT)
+ bh=arwdiSLHZSf6gZ/oJp/0pmlfrIs2tD4nzezQj8ONLa8=;
+ b=W4Yu6fQ09fvPbKqUKi7gZySk2/1SHu3TWnaIT3xBXqydKJo9AeaIgj/8Hf+be43J/t
+ gBx8d98yBfHpM7jnsOSHSOi6LyGPaYBwpRmYsF/w8utscKHCqtcOYdZm/P/AE/ovZgtR
+ xDgwOePesdyKMAsg3Vv0XkDNxisWBQJB9eI1DxH1DGyP5NxLZgr8A19ndEZcdTviQs+P
+ dfb+8ueDPLt0yOWaMUllCgkPcsOpaZHYSo2wNnG5/CONs7kFCDP8mTfCbb8vB44CZrFb
+ 4hqSCDkSh08PmhReYQ7w8AI2sLlLdwimKKjReQxVfsKQ5OcooiTJF+Fszwd5WQHNKs06
+ R01Q==
+X-Gm-Message-State: AOJu0Yz+dVdRaKemIxrI9dbGEMCajmN5U2VV+zGH9uEY7PJhuhsgLUkR
+ k1tIimflUyLI5+ONqhiRDkkcqsKIEE4aWFYIY7zIUeH6lzRHLrs4ytkMPSpoM+J6jtAk/EoGnfs
+ mHMHmHKUU8Q==
+X-Gm-Gg: ASbGncu5uJUVM4F0eE1HAw5peZ3htICaOZfJ26Z17s0qJUSZSZ7k9pcUh6ami9Ie/s+
+ bPJsNHPlE55Fhu2d8ThWjDhowaccxTJtuIhz49bmxgSPxcXcAmjVhI2KHQx34HgZRjWcAIO9h9B
+ URhnYB4EN5JZwVTehb++81y99iWcwiWjOeGmTnNRJsiZmMgql5MzcdYMTkruPcFGKgjmOEb8MIR
+ KTP7LSWXgypREksff0a+U/2lGp8OkknNJIYUSLQPSjbYgOSar3JkD/BjuLRpIpnDLPm6pbw64T2
+ z03PLCi3z9hdnOAldVUP8rrsFnRrIZ0Cu57RPZH8tWKmQlZwNER4B28KfAVlveuRGJuxMcTNSiM
+ 2+6TcmTRBuoyK//rBIL9H7yHdkHSBjvj7tw==
+X-Google-Smtp-Source: AGHT+IFQfEnVE3jwf+K8A9mRCuKbsvAdVucPiFVZ9gLtG5kMjB7TuNZVupCy9McVaCvmyY+uZupkMA==
+X-Received: by 2002:a17:907:7f20:b0:afe:d62a:f04b with SMTP id
+ a640c23a62f3a-b01d8a25c7bmr1778270066b.3.1756973529775; 
+ Thu, 04 Sep 2025 01:12:09 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc5575dcsm13745805a12.49.2025.09.04.01.11.29
+ a640c23a62f3a-b04110b94cbsm1152568366b.93.2025.09.04.01.11.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 01:11:29 -0700 (PDT)
+ Thu, 04 Sep 2025 01:12:04 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4CE8D5F900;
- Thu, 04 Sep 2025 09:11:28 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 694A560AAF;
+ Thu, 04 Sep 2025 09:11:37 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -127,19 +128,18 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Xin Wang <wangxinxin.wang@huawei.com>
-Subject: [PATCH v2 001/281] target/i386: Add support for save/load of
- exception error code
-Date: Thu,  4 Sep 2025 09:06:35 +0100
-Message-ID: <20250904081128.1942269-2-alex.bennee@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
+Subject: [PATCH v2 071/281] linux-user: Move target_cpu_copy_regs decl to
+ qemu.h
+Date: Thu,  4 Sep 2025 09:07:45 +0100
+Message-ID: <20250904081128.1942269-72-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -162,67 +162,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xin Wang <wangxinxin.wang@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-For now, qemu save/load CPU exception info(such as exception_nr and
-has_error_code), while the exception error_code is ignored. This will
-cause the dest hypervisor reinject a vCPU exception with error_code(0),
-potentially causing a guest kernel panic.
+The function is not used by bsd-user, so placement
+within include/user/cpu_loop.h is not ideal.
 
-For instance, if src VM stopped with an user-mode write #PF (error_code 6),
-the dest hypervisor will reinject an #PF with error_code(0) when vCPU resume,
-then guest kernel panic as:
-  BUG: unable to handle page fault for address: 00007f80319cb010
-  #PF: supervisor read access in user mode
-  #PF: error_code(0x0000) - not-present page
-  RIP: 0033:0x40115d
-
-To fix it, support save/load exception error_code.
-
-Signed-off-by: Xin Wang <wangxinxin.wang@huawei.com>
-Link: https://lore.kernel.org/r/20250819145834.3998-1-wangxinxin.wang@huawei.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/machine.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/user/cpu_loop.h | 4 ----
+ linux-user/qemu.h       | 3 +++
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index dd2dac1d443..45b7cea80aa 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -462,6 +462,24 @@ static const VMStateDescription vmstate_exception_info = {
-     }
- };
+diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
+index ad8a1d711f0..346e37ede8b 100644
+--- a/include/user/cpu_loop.h
++++ b/include/user/cpu_loop.h
+@@ -81,8 +81,4 @@ void target_exception_dump(CPUArchState *env, const char *fmt, int code);
+ #define EXCP_DUMP(env, fmt, code) \
+     target_exception_dump(env, fmt, code)
  
-+static bool cpu_errcode_needed(void *opaque)
-+{
-+    X86CPU *cpu = opaque;
+-typedef struct target_pt_regs target_pt_regs;
+-
+-void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
+-
+ #endif
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 4d6fad28c63..0c3cfe93a14 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -359,4 +359,7 @@ void *lock_user_string(abi_ulong guest_addr);
+ /* Clone cpu state */
+ CPUArchState *cpu_copy(CPUArchState *env);
+ 
++typedef struct target_pt_regs target_pt_regs;
++void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
 +
-+    return cpu->env.has_error_code != 0;
-+}
-+
-+static const VMStateDescription vmstate_error_code = {
-+    .name = "cpu/error_code",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = cpu_errcode_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(env.error_code, X86CPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- /* Poll control MSR enabled by default */
- static bool poll_control_msr_needed(void *opaque)
- {
-@@ -1746,6 +1764,7 @@ const VMStateDescription vmstate_x86_cpu = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_exception_info,
-+        &vmstate_error_code,
-         &vmstate_async_pf_msr,
-         &vmstate_async_pf_int_msr,
-         &vmstate_pv_eoi_msr,
+ #endif /* QEMU_H */
 -- 
 2.47.2
 
