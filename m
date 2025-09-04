@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E392ACA1002
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 15:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BD8CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 15:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuBdS-0006Fq-7v; Thu, 04 Sep 2025 11:12:26 -0400
+	id 1uuBmq-0002Cx-6V; Thu, 04 Sep 2025 11:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3Qqy5aAcKCs08xy74xHz77z4x.v759x5D-wxEx4676z6D.7Az@flex--pefoley.bounces.google.com>)
- id 1uuBdP-0006FG-Co
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:12:23 -0400
+ <3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com>)
+ id 1uuBmm-0002Bs-3V
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:22:04 -0400
 Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3Qqy5aAcKCs08xy74xHz77z4x.v759x5D-wxEx4676z6D.7Az@flex--pefoley.bounces.google.com>)
- id 1uuBdE-00018f-Ba
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:12:23 -0400
+ <3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com>)
+ id 1uuBmi-0003xn-Mw
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:22:03 -0400
 Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e9bde4276dbso1822360276.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 08:12:05 -0700 (PDT)
+ 3f1490d57ef6-e970a7ece01so1867704276.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 08:21:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1756998722; x=1757603522; darn=nongnu.org;
+ d=google.com; s=20230601; t=1756999316; x=1757604116; darn=nongnu.org;
  h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=kN7lUoRYvH8LKnKK9JDuRnYX32aBqBHO9jKnHY8bcWI=;
- b=jF88tOQhe7rYwFDZYry/d1ouYLJ0ht4wPV909FUz+WxZIKwdP0xXc3Ni7xaPI65S/Q
- NcpIagrWKTPzjFrACVHw66T9EfiDYQRJmLUJAQgxqQz/oHSYdij8nzBSXrw1haOcc5n7
- oI2dAR5UqdRUxoqmlvPAF/kHtY/wMPD1NOE+JC9p/87/XInl+wavIwBu/lbHUBz8E2aR
- Adsw1B1BTdHkYIvtRtkET35tKhH1Q7NToMkwmAWwrfoXMi3eCyLjDJU2m/dWYsVg8w3z
- 59xsWyLI4xHd/Ruj6J06gBKAyYRh1DsAguEyFZ1b9AMSQJ6L947nGeOQZ7cTG5HPfMsw
- LDwA==
+ bh=dYzV/AQiEq78OD9b7CeZkT4qNCS4VNM0VZ+9D+2T0TM=;
+ b=dIdiC3AL9tgLaFF8hl9rbimi59pEh4nWPLcEe9VG5eKNVQCgxGNUibzgmp9wKPcrUH
+ uckfn6BtfYaaDb1VLFiyV60j5rBkOJ7IlNEz6Y3+GA1OJ4vWHbSZq5bDU3uKp0ol+teo
+ qQawoaJkWJXpCTw65EOWfYKgqNyvV5YQnRHt8YBmIrMWM4y/QRbGWXQ/v9jer4CxFnp1
+ IwTjnoZ5cDuYRFFJUqbPmn4DmSt/uKB+IUhCf+/xughrIRpgioQPuvIe17lPBpERMzKA
+ GQTPSnFl888v3aUxFHyb6M6z0GyD+/lI/vSBKGUg/pkE40QeSej5tLeq/ldQdGBXcBn9
+ kvoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756998722; x=1757603522;
+ d=1e100.net; s=20230601; t=1756999316; x=1757604116;
  h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kN7lUoRYvH8LKnKK9JDuRnYX32aBqBHO9jKnHY8bcWI=;
- b=e2f8A1YQpM5TATsGZmKzMPJoIpNCOd08UXQ2D0heiSCQzevs+8RAm3oiK6Is6pXLPp
- XkL8ktmFLx4LYNWGZM3K0PxlR9khYQlEth38GNdXNuEcWWo906FnPJ9GoY8JzsFrx4dU
- 6xF1JyfCdyzHY/a0c+MJ5yu9aHXp0oYMrJx59es9VAYKfSi27dIQjlEkg9tgI8XJdI5F
- fIL9iEisLZ/Un3K7YHcGKGRNECMIES20H2KLYuIVTFAWILupg7gtUvUR0dRAF/DLNmtF
- imAWpx/BBYtbADKV/ycvSRiQMvl3LzPSZMUebzgujPUlZ5fQPxLa03hVCGG+rsw8xOvw
- 3Xuw==
-X-Gm-Message-State: AOJu0YwOAPWCEflvT4CHyB3E34pjI2mh7NJpQ8NJmIEdOv6IRB2RtxFy
- MdKLL4DPnx7uBl792GjG9PDJwegXWGUHs2p/rPlzuKcwfnrOXyrdmUyD1dorhzsA8L+NrHs16Ml
- 7dBIIfJ6FBToRGx32hmzciqw6WVm7lAOmGV+vGwFh+teX2FkyNhiJ4ysAKB66updEF43ZzRM+3n
- RJHHnWcqn5zK2sXiykOiKLxNfKyVLJYsbTsDv8RhSL
-X-Google-Smtp-Source: AGHT+IEx++Le0vj2I+FWlk1R2Dz0Du7bDo5Fz50jemTAePzNyImhyKxXDNox3hHNTT4B9b76jfutTfUFab2E
-X-Received: from ybbha1.prod.google.com ([2002:a05:6902:4501:b0:e96:e1fd:d791])
+ bh=dYzV/AQiEq78OD9b7CeZkT4qNCS4VNM0VZ+9D+2T0TM=;
+ b=v3xI9Bzm2lqc0SaewUetU/6ekQ8I6zhzlo5Z/kcAkxfhwyVfJNcqU0nG9ucc1y28BN
+ 1rPL9HWaDbA6aPj8i5vL5hlVBCpf2+UNCf4uAImQM4X4Y6ExGSodLRfRaM5w2YWuZNiP
+ 9FgVBINn+PgthXXSk9CegRvt3r6pKfXItluI9ZboiK8lWPefCRw+HXM5XcIdpNwEMGuG
+ eHJHbkSrHsMEfFN2Bb7dCm6MykPcTH0Obk4+HJaZE/xmnHQtzIAtMIOVeB/u+xVj72JG
+ 90x3MhJpvmQMnb76ONclfsZDmf2IDbyWDm3dMSA81pUpnFiDI3j9j886AFUBbE+OMmwe
+ CCYg==
+X-Gm-Message-State: AOJu0YwgmIRp/KqSaUYTQqSiPM+L4DOt4RodZPuIvdZ6l9NLttlFnYf9
+ SbQv2wOCyOldflbubFLNkRQBNLpo6Oe9qFjVfjuYD5H1hrCre1rmYJVQYEpcTQKLG6ClDWfBKTq
+ gkCGlzVOMVXxHQnrpemPN5XE1fRyQO/acdJzS46ZSKLph4S6Dqt1KDLTughApiVB8/OFIW6tC4K
+ +CPMEASXJPMUJBWCsbI3lh8U7/qgCMLLHQsWByNZKl
+X-Google-Smtp-Source: AGHT+IFQnkBDn9rL3mIu+i76ZXO7mib5i8uRFdHv8iCdCjdOp9CSrKS6zBVlodvnUN0bCRBfw7dX/3/8ORBv
+X-Received: from ybk125.prod.google.com ([2002:a25:a83:0:b0:e98:a06d:acd7])
  (user=pefoley job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6902:440d:b0:e9d:6ab4:92ee
- with SMTP id 3f1490d57ef6-e9d6ab49a4emr2833666276.3.1756998722030; Thu, 04
- Sep 2025 08:12:02 -0700 (PDT)
-Date: Thu, 04 Sep 2025 11:11:49 -0400
+ 2002:a05:6902:708:b0:e98:a303:d1c
+ with SMTP id 3f1490d57ef6-e98a5820b92mr16812056276.32.1756999315856; Thu, 04
+ Sep 2025 08:21:55 -0700 (PDT)
+Date: Thu, 04 Sep 2025 11:21:44 -0400
 Mime-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIADSsuWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDSwMT3YLKkoz8PF1zi+Tk1KQUg7SU1BQloOKCotS0zAqwQdGxtbUA/VQ
- fcFgAAAA=
-X-Change-Id: 20250904-python-78ccebd0fded
+X-B4-Tracking: v=1; b=H4sIAIeuuWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDSwMT3cy85JzSlNRiXUPLFMvEtMTUFDPzRCWg8oKi1LTMCrBR0bG1tQA
+ Vj0yHWgAAAA==
+X-Change-Id: 20250904-includes-19d9afaed67a
 X-Mailer: b4 0.14.2
-Message-ID: <20250904-python-v1-1-c43b3209a0cd@google.com>
-Subject: [PATCH] Use meson's detected python installation
+Message-ID: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
+Subject: [PATCH] linux-user: Add missing includes
 From: Peter Foley <pefoley@google.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- "=?utf-8?q?Marc-Andr=C3=A9_Lureau?=" <marcandre.lureau@redhat.com>, 
- "=?utf-8?q?Daniel_P=2E_Berrang=C3=A9?=" <berrange@redhat.com>, 
- "=?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=" <philmd@linaro.org>,
- "=?utf-8?q?Alex_Benn=C3=A9e?=" <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org, 
- nabihestefan@google.com, Peter Foley <pefoley@google.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, nabihestefan@google.com, 
+ Peter Foley <pefoley@google.com>
 Content-Type: text/plain; charset="utf-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3Qqy5aAcKCs08xy74xHz77z4x.v759x5D-wxEx4676z6D.7Az@flex--pefoley.bounces.google.com;
+ envelope-from=3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com;
  helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,105 +96,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Relying on `python3` to be avilable in $PATH doesn't work in some build
-environments. Update the build files to use the found python binary
-explicitly.
+We're getting errors about this:
+linux-user/elfload.c:2770:36: error: use of undeclared identifier 'MAP_FIXED_NOREPLACE'
 
 Signed-off-by: Peter Foley <pefoley@google.com>
 ---
- block/meson.build   |  6 ++----
- meson.build         | 10 +++++-----
- plugins/meson.build |  2 +-
- 3 files changed, 8 insertions(+), 10 deletions(-)
+ linux-user/elfload.c | 1 +
+ linux-user/mmap.c    | 1 +
+ linux-user/syscall.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/block/meson.build b/block/meson.build
-index 34b1b2a30630214959630d5543181bc82a54d2b3..67e9bee1210307ff15ca87ba0f5e7f785df15042 100644
---- a/block/meson.build
-+++ b/block/meson.build
-@@ -139,14 +139,12 @@ if get_option('dmg').allowed()
-   endforeach
- endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 26c090c95d3e90ad4a23a927267e4106f68975b0..edbacf041f25d88472c95efb4eb9bdccd81e9902 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -5,6 +5,7 @@
+ #include <sys/prctl.h>
+ #include <sys/resource.h>
+ #include <sys/shm.h>
++#include <linux/mman.h>
  
--module_block_py = find_program('../scripts/modules/module_block.py')
- module_block_h = custom_target('module_block.h',
-                                output: 'module_block.h',
-                                input: modsrc,
--                               command: [module_block_py, '@OUTPUT0@', modsrc])
-+                               command: [python, files('../scripts/modules/module_block.py'), '@OUTPUT0@', modsrc])
- block_ss.add(module_block_h)
- 
--wrapper_py = find_program('../scripts/block-coroutine-wrapper.py')
- block_gen_c = custom_target('block-gen.c',
-                             output: 'block-gen.c',
-                             input: files(
-@@ -158,7 +156,7 @@ block_gen_c = custom_target('block-gen.c',
-                                       '../include/system/block-backend-io.h',
-                                       'coroutines.h'
-                                       ),
--                            command: [wrapper_py, '@OUTPUT@', '@INPUT@'])
-+                            command: [python, files('../scripts/block-coroutine-wrapper.py'), '@OUTPUT@', '@INPUT@'])
- block_ss.add(block_gen_c)
- 
- block_ss.add(files('stream.c'))
-diff --git a/meson.build b/meson.build
-index fa6186db33435c26d06dce2971a9f536250607e0..6e8baf3deb13c172eecd371ea302b1c2539048d0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -12,8 +12,6 @@ add_test_setup('slow', exclude_suites: ['thorough'],
- add_test_setup('thorough',
-                env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'])
- 
--meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
--
- ####################
- # Global variables #
- ####################
-@@ -76,6 +74,8 @@ have_user = have_linux_user or have_bsd_user
- sh = find_program('sh')
- python = import('python').find_installation()
- 
-+meson.add_postconf_script([python, 'scripts/symlink-install-tree.py'])
-+
- cc = meson.get_compiler('c')
- all_languages = ['c']
- if host_os == 'windows' and add_languages('cpp', required: false, native: false)
-@@ -3474,7 +3474,7 @@ foreach target : target_dirs
-       output: config_devices_mak,
-       depfile: config_devices_mak + '.d',
-       capture: true,
--      command: [minikconf,
-+      command: [python, minikconf,
-                 get_option('default_devices') ? '--defconfig' : '--allnoconfig',
-                 config_devices_mak, '@DEPFILE@', '@INPUT@',
-                 host_kconfig, target_kconfig])
-@@ -3545,8 +3545,8 @@ config_host_h = configure_file(output: 'config-host.h', configuration: config_ho
- genh += config_host_h
- 
- hxtool = find_program('scripts/hxtool')
--shaderinclude = find_program('scripts/shaderinclude.py')
--qapi_gen = find_program('scripts/qapi-gen.py')
-+shaderinclude = [python, 'scripts/shaderinclude.py']
-+qapi_gen = [python, 'scripts/qapi-gen.py']
- qapi_gen_depends = [ meson.current_source_dir() / 'scripts/qapi/__init__.py',
-                      meson.current_source_dir() / 'scripts/qapi/commands.py',
-                      meson.current_source_dir() / 'scripts/qapi/common.py',
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 62c991d87fcdd8bcde8edddcc73909c6133f5460..6bf72a69060414ba1b7c1857515eeceb5a2c7b7c 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -6,7 +6,7 @@ qemu_plugin_symbols = configure_file(
-   input: files('../include/qemu/qemu-plugin.h'),
-   output: 'qemu-plugin.symbols',
-   capture: true,
--  command: [files('../scripts/qemu-plugin-symbols.py'), '@INPUT@'])
-+  command: [python, files('../scripts/qemu-plugin-symbols.py'), '@INPUT@'])
- 
- # Modules need more symbols than just those in plugins/qemu-plugins.symbols
- if not enable_modules
+ #include "qemu.h"
+ #include "user/tswap-target.h"
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 002e1e668e631130526053599e1d18ffb4b4141a..9e92117ca3e8e4f45cb333366ecf3668b8986200 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -18,6 +18,7 @@
+  */
+ #include "qemu/osdep.h"
+ #include <sys/shm.h>
++#include <linux/mman.h>
+ #include "trace.h"
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 91360a072c7f478085ac1c7cc8bb2026f8b32038..4101b0e4e7812740afe7a4246a902a5364d7c331 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -101,6 +101,7 @@
+ #include <linux/soundcard.h>
+ #include <linux/kd.h>
+ #include <linux/mtio.h>
++#include <linux/mman.h>
+ #include <linux/fs.h>
+ #include <linux/fd.h>
+ #if defined(CONFIG_FIEMAP)
 
 ---
 base-commit: baa79455fa92984ff0f4b9ae94bed66823177a27
-change-id: 20250904-python-78ccebd0fded
+change-id: 20250904-includes-19d9afaed67a
 
 Best regards,
 -- 
