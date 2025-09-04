@@ -4,64 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48680CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 01:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC79CCA1015
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 02:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utyw2-0003g6-GG; Wed, 03 Sep 2025 21:38:46 -0400
+	id 1utzqc-0003di-8B; Wed, 03 Sep 2025 22:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1utyvp-0003dy-PL
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 21:38:37 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1utzqZ-0003dQ-Hk
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 22:37:11 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1utyvb-0002sq-O4
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 21:38:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=s+Ga8gmdtGmfYZ21d+wzaamBXZzHvE8qsDLQArH1yVg=; b=FT3VlXRSjRxRDoCJ
- Fa0t9+jqF6/NH5WRwzeFClFhkCditBTakSr/g2CK/MAUx11b5BKZKP3+H/GjA++zUrPfeHBQt2Bdi
- hOB85BLS8gM3skvL55D7J7oDKemVBdkOSSrgx2qi7APL/cIo9qZIxKSOTnLKDoifA8FoI2m5UBriU
- SioUx5xAhf/2goXgT12hmk5gt2qOBwHzLNDamBbAIHWQmw39/le7bqMTtDKIj/cfTlsxrmCMX2anR
- JPhguAUCzAa9uU6qxVJ1flNpDGmEeoOWqOWuJeHa0iudJmgs6GNaWbQRD5Gd4V5JBur9qTRYD5EId
- JTaH9byH3yeXuw495g==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1utyvW-008Tjy-2J;
- Thu, 04 Sep 2025 01:38:14 +0000
-Date: Thu, 4 Sep 2025 01:38:14 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Prasad Pandit <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
- Li Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 5/9] migration: Thread-ify precopy vmstate load process
-Message-ID: <aLjthngB19Lae0p2@gallifrey>
-References: <20250827205949.364606-1-peterx@redhat.com>
- <20250827205949.364606-6-peterx@redhat.com>
- <aK-Z6rARUbgNzy5Q@gallifrey> <aLHXVadC-sjxmu8x@x1.local>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1utzqW-00021c-0G
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 22:37:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756953428; x=1788489428;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=P6DL3WNTVvYlMSlCpUoUiu/kuxlXWLdSAL5VMPrqdrk=;
+ b=h0xoaXUu20crjIokwTsPvogu+VrVYGw4CqlWL6EIKDANuXC7vhKxZ/VB
+ mSbyz0Z1NJj0BEVdWUdOi6xm//ZJVIhubOg0xMlRmb7bvEseKksn4m7n7
+ L5GWxThVkNJYSkwkx+MV/EiRY8VutZUjWtPhlO9mCSA3msPFopYjYIfEn
+ 7Ap8hkQJ4fcE/ejaCQPrIRB0Z628oDvh6uYHnrqZ3kDRt0uWFHFTL75Ut
+ +9NLOWxK0wRzekxhoox8fzHESi7gZPi3PSwpDFlkUzM6+TuXXzSmeiyPC
+ 6/iDldSuJKpdBd+TGOumiKQ2VKNRsO17DVcnG2zTLkbmk4flMUV8I0hZI w==;
+X-CSE-ConnectionGUID: tLL+5OobTOe7Ptzn8t31jQ==
+X-CSE-MsgGUID: Anzn4885RsuBqocKPIhsxQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11542"; a="59137620"
+X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; d="scan'208";a="59137620"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Sep 2025 19:37:05 -0700
+X-CSE-ConnectionGUID: DLTz9PwWRQOQwGUgyLdLhA==
+X-CSE-MsgGUID: h9FJMt1hR1SPYI4L8uqK8g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; d="scan'208";a="171885205"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Sep 2025 19:37:04 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Wed, 3 Sep 2025 19:37:03 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Wed, 3 Sep 2025 19:37:03 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (40.107.93.80) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Wed, 3 Sep 2025 19:37:03 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yzcEys5SRYhJez+1QBaA1pFDauiByJJbAPzbKJAfGTLRkrl8aiKTxnuOFxRXDUe5axLnRx75fql3FJJFH1rdKCjrsAtRT856HvkIZ1lkmOEzO8dU+IxI3T/o1HjVAFNJfGO6js8/Te1nLy26juYPn4SgN9oWG4NcQ0T7+QwlQSQDVPYVGaHd9vn4kFLUyK2TAxMs/f1HP7VdwWL6FgbxJwu7BJolGB+9bhF+ItKiuVCGbSyQSAQpz+r5Jqb2ncRaK8lD8Sqt/t6/n499xGS8M7qFV3DbOAYjkpzkki93uZRLbZbRPSpbQ1OzR6Tj4/X+iY4Hl245rTmQPNywTZylHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=P6DL3WNTVvYlMSlCpUoUiu/kuxlXWLdSAL5VMPrqdrk=;
+ b=pR6QQxLtZB7rHUS1Dk2/6pATtQScsvKneedPIsA9aGNPInSY2n7nsskl8rjEBwZxyX9n/IoVBu8/HegNyii2c5lcM9snJqe3zXqBYIf5fjEzx8IO90Xd+ukodhzvStcJyo4l/xfZVMgQZ8vibO4+QFpkxskxT5gP30k3BQOlST63zGwokHl6sVoCBixA5S14fTbBbIaN3iVU8MxVkSvgaMljusZejOs514KmMcZajeZjMWkN18MELchtBfQiSq29tOMMHeZx3dSAMXPtAU4mUD9F7ElvMEP2m9M2i+JT5B22UoacF+cx0mRs2vC0XQuXT1xP/MJyWdFc83prgqZ2Sw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by LV3PR11MB8742.namprd11.prod.outlook.com (2603:10b6:408:212::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Thu, 4 Sep
+ 2025 02:37:01 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9073.026; Thu, 4 Sep 2025
+ 02:37:01 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>
+Subject: RE: [PATCH v5 11/21] intel_iommu: Handle PASID entry removal and
+ update
+Thread-Topic: [PATCH v5 11/21] intel_iommu: Handle PASID entry removal and
+ update
+Thread-Index: AQHcEy/oRsc7Lu/sH0aYzDboCey+yrR4Aa6AgAW195CAA3MFgIABOAyw
+Date: Thu, 4 Sep 2025 02:37:01 +0000
+Message-ID: <IA3PR11MB91365A557AC68953898F3CEB9200A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
+ <20250822064101.123526-12-zhenzhong.duan@intel.com>
+ <5ccc7892-2024-409b-b107-4ffa02e31b71@intel.com>
+ <IA3PR11MB9136FC723C303B92F4957C179207A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <7435cb2a-929d-4565-848d-8a4520ade461@intel.com>
+In-Reply-To: <7435cb2a-929d-4565-848d-8a4520ade461@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|LV3PR11MB8742:EE_
+x-ms-office365-filtering-correlation-id: 3dd095b4-ec10-4afb-3c92-08ddeb5bed57
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?Tk9QZ0t0OVAvckxlczJqZWRrMUpwVjdYVlJiTHVqTEQ0MVVTVGNaR09PVUc0?=
+ =?utf-8?B?bTE1UFE1VGYwdjZJN2lPSUxkZGhac3lPcUllK3hnNnIzVm0vS0tPeCtpZEhI?=
+ =?utf-8?B?dVcyRE1kZUU1L2xiLy9xMVZ2azJEWDhTMWYrMUp0My9oWHNsYVcrc3ZnaXlU?=
+ =?utf-8?B?OUd3S1lvN0JRSDJHVkFpaHJyOFYydktHMVhaK3ZJblh5MUtYR3llajZjNDc1?=
+ =?utf-8?B?SzlwNkRYSXZlL1l3ckM2amN3Z2pzR25sZmZVY0RoZkVBU2lMYzMxZ2pNT0lC?=
+ =?utf-8?B?VUdoZnBzUzkwSUNldllkUVBPK1ZUZnJ5YW42cjJtUzA1UVBwQUorUEN4TDhU?=
+ =?utf-8?B?a0l5cnZHSlliZDVnSmIzUUNIZ2dyd0Zoai9SL1diV29EL3d3azc5Q1JyWmpk?=
+ =?utf-8?B?STA1ZkpOdGlXZlowSEhBTnRaMlZHaU5OdGVNdENmeVZjejNaT2lPc2RJeERv?=
+ =?utf-8?B?OFJhNUVHc3g4MGZhRWRjMkNjWlgxTmRoUEo2SWl5dXk2bTU1NGduamRZWjZi?=
+ =?utf-8?B?Ky9jc1E0UEgyeG1jMGJBWFpKTUVLVE5KeEZEZTdlb092cFlEZlRDdm92UGtT?=
+ =?utf-8?B?VFFMNTg0Rm95TktVcE5zVlBhUGR0Q2svRFpDNzBMN2NNVVpLSnFBTVA4VFpC?=
+ =?utf-8?B?cUJ2ZTErWFpFblpYYjVsM0plRTJ0UzhHUzh6ekNXSGFzUHNSWkZCM0Zaak1M?=
+ =?utf-8?B?dG9hRWR3cGhDMnV3RzRRUi9NMjdEajZrTXcvaXZNYUhjNjVPdVUrUzZEcm1T?=
+ =?utf-8?B?UDN5endrM3JqNTd6cjVjenpUZVRyQVBRSE82L0dZZTBGQUFydjdKSTJSY2hY?=
+ =?utf-8?B?U3ZkYmVvSUc3Ymo5WkYvN3FYOVlTeVZja1FETmltaW4yRkFSc1dKS0cxa3pB?=
+ =?utf-8?B?ZEhzc2JwWTF5OEU5eERXQS9lMzlqNVZFa2VmcENDVDZDWHhwTWEzeVZYa2kx?=
+ =?utf-8?B?cmFRL3N4REVnUlpFc2VKSlgvR2YyRmVaTS9zTjBSbFhKak50bjhZL0M4YVEw?=
+ =?utf-8?B?U09ZaGVQT2YwY0h3bEhoUjBCanlyaE9PTWhOcU5NM3FXd0hPNUd2am1rdXEr?=
+ =?utf-8?B?UDlYeDhWMWVzRGp6OGV5TUpGVG1iNGJKdVR3dWxCZ1ZqdzBrNFlHK3hvUTZB?=
+ =?utf-8?B?KzhIeXE4QVRPd0xZOWVYa25adHVES0tXUXFuVUhKRFJtNGtWVERIWUF6Zldi?=
+ =?utf-8?B?dWg0ZHFEQnM0SGZHSDVSV1pOL1FDZDMzcVh3b3h0WTBUQmNBREhjVXB2bmpa?=
+ =?utf-8?B?TCs2cEdrcktmQ2NyeUFYRC9UWmZ4TGVSaFVSZ0UzOWRFWE05V3Zld2VNSHF0?=
+ =?utf-8?B?TG1PRTJmM0xZdmtTNXNSMlBhUXV2UUR3N1NVbE5FTE9HUVZUZHVOZU1RdU5S?=
+ =?utf-8?B?eUJHNmVMNjAvSDg0MXBjWmlMRGY3WE5oVkIzeDFLWExOMENSOEJOSWMrZzFV?=
+ =?utf-8?B?MUlhUG5ocmhFbHFhV1dxcXpFczNMdzVaTFp4RzJyRDAxdEtrcEZUS2t1ZnBz?=
+ =?utf-8?B?RGtpRzhGdHcrZWRiZ3YzV3psSEluUkpZbE5XQWwxSkZOZ2ViRko1eFRhRzEw?=
+ =?utf-8?B?VFkzejZCWlpLK0RLbEFaZkY0MGVTTVlrcnZ3TGdzaVBodXY3QWhTR3FXOEdy?=
+ =?utf-8?B?Ym5rSkF4djVxcWRNZ2VnZGtkNFlqQUkwUkJiQUw3dUxLZTZCbFhuc3ZyRVM0?=
+ =?utf-8?B?ZXEwZWh0MWlINnJwNVhJQ045U3dTWU5kMjk4TEJTdDZzRWYvaVN1QmwrMity?=
+ =?utf-8?B?dGs3b3U4YkFOalZEaHZ6bjc5RU5KTDh3c0pSVmJxUzVWK05rckVMWTh2Z0ZP?=
+ =?utf-8?B?Y1crT2ZkOHBsdXNKMDY4MHNKeEhYY0JWbXJBaklibWNJcm9PSjdlaEloTjJR?=
+ =?utf-8?B?cWdJa0RDdFFnR1ZmdWhMYmY1c3ZOVjRyOUZaWFU0RGVsbTZSbnlFQkp5UGRy?=
+ =?utf-8?B?R0czbnFNVEVFZWRIemJoYlZrb0wxMmtMckUyZEVIbWlQMnhTWWZva2JRUi9k?=
+ =?utf-8?B?ZlI3bFRieUhBPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Kzh0UHM0Q3ZwMEJyUWFSSVZONUphVzZKNjRHTHhKVXVmTjJBR2NiSVFHQnVS?=
+ =?utf-8?B?WTZIbnkybmZHNG4rdVBWendRbjhJTEo4UzZiRmNPeEYvQlVHNHVTRzZMN0hv?=
+ =?utf-8?B?a0FHRXlzRHAvK2hEdlVUU2NkVTY4RWo4enpoMm5ySUNFUjVUbyt5ZDFBOThn?=
+ =?utf-8?B?MkVBdU5QcVk4allJMVYxQ0hrcmh0M3R2OVF1Ym1yTXovUmZvVStWbDIrV3Ix?=
+ =?utf-8?B?ZGFWZ1UvNE8rZlJLTk9NekdYMmVqYVhOQ2JYaXIrODZIRFpzcnZzckp3Z21p?=
+ =?utf-8?B?QzlVVFBjZ2RkTkFqaE9sS3FPY3laa3RuSTlBdGFPNDE4dXFqTmdGWFU2L2xI?=
+ =?utf-8?B?dUxwQmc1T3JqaFZjMlVUcy9hYkJmYk5QYVNXRW1FbTN0WWpSMFpyRnZ4QUpa?=
+ =?utf-8?B?dSt4SHdTZjJodFJMSmsxbjJuMnNmamZHNitzaTJ6VjlpQXBMd2p3UVRlYjN1?=
+ =?utf-8?B?ZUE4UlR6Y3U0RDlBUEpOQUxaa0FZRnJUUTNaV0hSbENybDc4ZzM5cmQ4elBa?=
+ =?utf-8?B?ek9oV0VhWmxjNEQvMjhPZDh6R3RMcDk4OE1jZTFUSkQxcFl3dTIxRjhzTXFN?=
+ =?utf-8?B?ckVydmhhZWhjZHhYRXFEV213eXFKaXFtVWphVUVFVVBrWTRFWUhPYXFzYlNn?=
+ =?utf-8?B?Um50K2NRVUFEMFZISTFFWjZvNDRQKzVtSWlqU1ZFeUR2SEJlRmNsRndCV0hD?=
+ =?utf-8?B?aUVKZFhDVnBDdWkxZnVucWRvZzJ0WnZQWmlyTnV4bmZhcXpuaDVIb1NUQVho?=
+ =?utf-8?B?NnZ2MENLM2ZqaFU4dC9rbTh3eFp0TnRwdHBqK21kRjhpNGxBdUIrdytRVm9z?=
+ =?utf-8?B?ejBxTFNZenJoUFZzZHB3dEhod0VoYkVnMTlObXNoczcwRklUOFFvRmlBZHZ4?=
+ =?utf-8?B?TjhPNTRyaXgxT2hPRFYxdTF5R2h5UWYwWWRiYnRTbXdMV2VzUHp3alF4ZFRp?=
+ =?utf-8?B?LzFDeU9STkh0SDJPTS9GYzl5bGVvVVZpUi81bi9OUTVJWldlNDRhVjQzVWY3?=
+ =?utf-8?B?aUpJTXhKbkdPWHhUM2U2czZOaVp2YTZoT0g0QWpzNUpQc2JrRlhRWTV5TXpJ?=
+ =?utf-8?B?Ny9QdjF4WFZHTWY0M0ZqclA5V0NlWEtZKzlFVHQ3dUdBVEFaRXZqeE9OUm5T?=
+ =?utf-8?B?NG42dERXUTdidC9OaEJMcWdYdzBxQzUyR3M2ZDdidVdhd3ZIc2NxMWYrTUQr?=
+ =?utf-8?B?emRFN0xaVlN1Z2wyeFBTN3o1dVhIWUdtVEIyVWtlcjNSUmg0dVRtRWxQNHFB?=
+ =?utf-8?B?WU1GL28wUUI2WXBtb1cwNEExclM4Y2o0T1dBVHEwWGRmcXJjVGdwd1VtWTc0?=
+ =?utf-8?B?dDZXVUdmRXREcndMTzdSQ1lyQ2o4cXdySEovR2JUMld3clJEbDkwTGxPY0xI?=
+ =?utf-8?B?NytaRHRlVjlUVmFPdW1ZUDlYcTVXTGwvd0didWxvLzJudVhJWGhNNi9aZWo0?=
+ =?utf-8?B?OERSQlo1MEczWmsyZXJUVVFMTmozdXY3b0w0UWQ0VjIxbGxqa2ZSSkxYL1pp?=
+ =?utf-8?B?L2NMY1BGTGVIYUJVNGRyN1NuWXJ6SzRKQ0lwOVA1dFI0UFJEdmZsK29BZ3J3?=
+ =?utf-8?B?aXdUL25rQWtFb011cFRJMi95Z3VPZXZ4OFlLT0ZKN2NsUnUwdDRGTWFGdFlp?=
+ =?utf-8?B?QW8zckZ1TjhRL1pOMGFDemdUa3ZiRXQzTnBRSk11dlNvaS90N0ZlWFBBU01n?=
+ =?utf-8?B?U1BQdUxjRVhmRFhQRnBzY2xyNlNzRGlZZWFqMVBteVdPYXRiQVMyTG5RVnpR?=
+ =?utf-8?B?Z21rVHRuN3dhdmtMV01qWlNMTFU1SE1aQWE3Tk9xa1ZkbnBBbTNwbUlWdWZ5?=
+ =?utf-8?B?WE5IOWg2TDU5Vk50bmY3S3gxakhMUHB3Q0RVZkNyVHhPbm9QbldzRHNxTWxW?=
+ =?utf-8?B?c2FnWVpqMXBQTVgxSEJ0d01tT243QU5VRXhwOFVtSWVMQ0M4ejZCeSt0RDRT?=
+ =?utf-8?B?WUcrOXpaSnNmNndabnZzMWtxSWZCQ0JNMUVWbkxoT2RMQVBrVVV5d3JxSGpk?=
+ =?utf-8?B?azFmZmxRTnhFc2s5NE1ZWlNnMDNIREYySTA4aloxZzJVRHJ3UlUzS0tjM0ox?=
+ =?utf-8?B?V2dnY05sNjVFSmNmSGFOS1JtMDJEUytyZUlXN2RWN2JRdnhLcnV1eDV0QmZY?=
+ =?utf-8?Q?JBjRM5bDBKemm0pVVf3Vgn8u/?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <aLHXVadC-sjxmu8x@x1.local>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 01:33:05 up 129 days,  9:46,  1 user,  load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3dd095b4-ec10-4afb-3c92-08ddeb5bed57
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Sep 2025 02:37:01.2346 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Voi7Yh4TIgkVFoUInoOeTK7inDIbdTP1yJCA40LzCJ8Guw7zYmo7EebzNBHesWku4/msdH2t9OkVUVABhYHwE5xaQQmHJ+y+duLB5BhxdhQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR11MB8742
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,773 +229,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> On Wed, Aug 27, 2025 at 11:51:06PM +0000, Dr. David Alan Gilbert wrote:
-> > * Peter Xu (peterx@redhat.com) wrote:
-> > > Migration module was there for 10+ years.  Initially, it was in most cases
-> > > based on coroutines.  As more features were added into the framework, like
-> > > postcopy, multifd, etc.. it became a mixture of threads and coroutines.
-> > > 
-> > > I'm guessing coroutines just can't fix all issues that migration want to
-> > > resolve.
-> > 
-> > Yeh migration can happily eat a whole core.
-> > 
-> > > After all these years, migration is now heavily based on a threaded model.
-> > > 
-> > > Now there's still a major part of migration framework that is still not
-> > > thread-based, which is precopy load.  We do load in a separate thread in
-> > > postcopy since the 1st day postcopy was introduced, however that requires a
-> > > separate state transition from precopy loading all devices first, which
-> > > still happens in the main thread of a coroutine.
-> > 
-> > ...
-> > 
-> > > COLO
-> > > ====
-> > 
-> > If you can I suggest splitting the COLO stuff out as a separate thread,
-> > not many people understand it.
-> 
-> I can try this one, but then it'll be a bunch of "if (qemu_in_coroutine())"
-> checks all over the places.
-> 
-> For emample, this change of this patch:
-> 
-> -    assert(bql_locked());
->      assert(migration_incoming_colo_enabled());
-> 
->      qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
->                         colo_process_incoming_thread,
->                         mis, QEMU_THREAD_JOINABLE);
-> 
-> -    mis->colo_incoming_co = qemu_coroutine_self();
-> -    qemu_coroutine_yield();
-> -    mis->colo_incoming_co = NULL;
-> -
-> -    bql_unlock();
->      /* Wait checkpoint incoming thread exit before free resource */
->      qemu_thread_join(&th);
-> -    bql_lock();
-> 
-> Will become:
-> 
-> -    assert(bql_locked());
->      assert(migration_incoming_colo_enabled());
->  
->      qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
->                         colo_process_incoming_thread,
->                         mis, QEMU_THREAD_JOINABLE);
->  
-> -    mis->colo_incoming_co = qemu_coroutine_self();
-> -    qemu_coroutine_yield();
-> -    mis->colo_incoming_co = NULL;
-> +    if (qemu_in_coroutine()) {
-> +        assert(bql_locked());
-> +        mis->colo_incoming_co = qemu_coroutine_self();
-> +        qemu_coroutine_yield();
-> +        mis->colo_incoming_co = NULL;
-> +        bql_unlock();
-> +    }
->  
-> -    bql_unlock();
->      /* Wait checkpoint incoming thread exit before free resource */
->      qemu_thread_join(&th);
-> -    bql_lock();
-> +
-> +    if (qemu_in_coroutine()) {
-> +        bql_lock();
-> +    }
-> 
-> Then I'll add one more patch at last to remove all these "if" blocks.
-> 
-> Which one is better?
-
-Not much difference is there.
-> 
-> For the rest, I can still try to move things; migration_channel_read_peek()
-> change be a separate patch after this one, but that's pretty small..  not
-> so much like that, normally we'll still need such "if"s to be added prior
-> this patch, apply this patch, then removed those "if"s in another later patch.
-> 
-> > 
-> > > TODO
-> > > ====
-> > > 
-> > > Currently the BQL is taken during loading of a START|FULL section.  When
-> > > the IO hangs (e.g. network issue) during this process, it could potentially
-> > > block others like the monitor servers.  One solution is breaking BQL to
-> > > smaller granule and leave IOs to be always BQL-free.  That'll need more
-> > > justifications.
-> > > 
-> > > For example, there are at least four things that need some closer
-> > > attention:
-> > > 
-> > >   - SaveVMHandlers's load_state(): this likely DO NOT need BQL, but we need
-> > >   to justify all of them (not to mention, some of them look like prone to
-> > >   be rewritten as VMSDs..)
-> > > 
-> > >   - VMSD's pre_load(): in most cases, this DO NOT really need BQL, but
-> > >   sometimes maybe it will!  Double checking on this will be needed.
-> > > 
-> > >   - VMSD's post_load(): in many cases, this DO need BQL, for example on
-> > >   address space operations.  Likely we should just take it for any
-> > >   post_load().
-> > > 
-> > >   - VMSD field's get(): this is tricky!  It could internally be anything
-> > >   even if it was only a field.  E.g. there can be users to use a SINGLE
-> > >   field to load a whole VMSD, which can further introduce more
-> > >   possibilities.
-> > 
-> > Long long ago, I did convert some get's to structure; I got stuck on some
-> > though - some have pretty crazy hand built lists and things.
-> 
-> Yeah, I can feel it even though I didn't look into each of them yet. :)
-> 
-> Looks like they're all explicit VMS_SINGLE users; we have 22 instances.
-> Unfortunately, I still see new ones being added, latest one in
-> 5d56bff11e3d.  I wonder whether pre_save() + post_load() would have worked
-> there..
-
-I seem to remember the virtio stuff is particularly complicated, but remember
-other lists as well.
-
-> > 
-> > > In general, QEMUFile IOs should not need BQL, that is when receiving the
-> > > VMSD data and waiting for e.g. the socket buffer to get refilled.  But
-> > > that's the easy part.
-> > 
-> > It's probably generally a good thing to get rid of the BQL there, but I bet
-> > it's going to throw some surprises; maybe something like devices doing
-> > stuff before the migration has fully arrived
-> 
-> Is that pre_load() or.. maybe something else?
-> 
-> I should still look into each of them, but only if we want to further push
-> the bql to be at post_load() level.  I am not sure if some pre_load() would
-> assume BQL won't be released until post_load(), if so that'll be an issue,
-> and that will need some closer code observation...
-
-Well maybe pre_load; but anything that might start happening once the
-state has been loaded that shouldn't start happening until migration ends;
-I think there are some devices that do it properly and wait for end of migration.
-
-> > or incoming socket connections to non-migration stuff perhaps.
-> 
-> Any example for this one?
-
-I was just thinking aloud; but was thinking of NIC activity or maybe
-UI stuff?  But just guesses.
-
-Dave
-
-> Thanks!
-> 
-> > 
-> > Dave
-> > 
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > ---
-> > >  include/migration/colo.h |  6 ++--
-> > >  migration/migration.h    | 52 ++++++++++++++++++++++++++------
-> > >  migration/savevm.h       |  5 ++--
-> > >  migration/channel.c      |  7 ++---
-> > >  migration/colo-stubs.c   |  2 +-
-> > >  migration/colo.c         | 23 ++++-----------
-> > >  migration/migration.c    | 62 ++++++++++++++++++++++++++++----------
-> > >  migration/rdma.c         |  5 ----
-> > >  migration/savevm.c       | 64 ++++++++++++++++++++++++----------------
-> > >  migration/trace-events   |  4 +--
-> > >  10 files changed, 142 insertions(+), 88 deletions(-)
-> > > 
-> > > diff --git a/include/migration/colo.h b/include/migration/colo.h
-> > > index 43222ef5ae..bfb30eccf0 100644
-> > > --- a/include/migration/colo.h
-> > > +++ b/include/migration/colo.h
-> > > @@ -44,12 +44,10 @@ void colo_do_failover(void);
-> > >  void colo_checkpoint_delay_set(void);
-> > >  
-> > >  /*
-> > > - * Starts COLO incoming process. Called from process_incoming_migration_co()
-> > > + * Starts COLO incoming process. Called from migration_incoming_thread()
-> > >   * after loading the state.
-> > > - *
-> > > - * Called with BQL locked, may temporary release BQL.
-> > >   */
-> > > -void coroutine_fn colo_incoming_co(void);
-> > > +void colo_incoming_wait(void);
-> > >  
-> > >  void colo_shutdown(void);
-> > >  #endif
-> > > diff --git a/migration/migration.h b/migration/migration.h
-> > > index 01329bf824..c4a626eed4 100644
-> > > --- a/migration/migration.h
-> > > +++ b/migration/migration.h
-> > > @@ -42,6 +42,44 @@
-> > >  #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
-> > >  #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
-> > >  
-> > > +/**
-> > > + * WITH_BQL_HELD(): Run a task, making sure BQL is held
-> > > + *
-> > > + * @bql_held: Whether BQL is already held
-> > > + * @task:     The task to run within BQL held
-> > > + */
-> > > +#define  WITH_BQL_HELD(bql_held, task)          \
-> > > +    do {                                        \
-> > > +        if (!bql_held) {                        \
-> > > +            bql_lock();                         \
-> > > +        } else {                                \
-> > > +            assert(bql_locked());               \
-> > > +        }                                       \
-> > > +        task;                                   \
-> > > +        if (!bql_held) {                        \
-> > > +            bql_unlock();                       \
-> > > +        }                                       \
-> > > +    } while (0)
-> > > +
-> > > +/**
-> > > + * WITHOUT_BQL_HELD(): Run a task, making sure BQL is released
-> > > + *
-> > > + * @bql_held: Whether BQL is already held
-> > > + * @task:     The task to run making sure BQL released
-> > > + */
-> > > +#define  WITHOUT_BQL_HELD(bql_held, task)       \
-> > > +    do {                                        \
-> > > +        if (bql_held) {                         \
-> > > +            bql_unlock();                       \
-> > > +        } else {                                \
-> > > +            assert(!bql_locked());              \
-> > > +        }                                       \
-> > > +        task;                                   \
-> > > +        if (bql_held) {                         \
-> > > +            bql_lock();                         \
-> > > +        }                                       \
-> > > +    } while (0)
-> > > +
-> > >  struct PostcopyBlocktimeContext;
-> > >  typedef struct ThreadPool ThreadPool;
-> > >  
-> > > @@ -119,6 +157,10 @@ struct MigrationIncomingState {
-> > >      bool           have_listen_thread;
-> > >      QemuThread     listen_thread;
-> > >  
-> > > +    /* Migration main recv thread */
-> > > +    bool           have_recv_thread;
-> > > +    QemuThread     recv_thread;
-> > > +
-> > >      /* For the kernel to send us notifications */
-> > >      int       userfault_fd;
-> > >      /* To notify the fault_thread to wake, e.g., when need to quit */
-> > > @@ -177,15 +219,7 @@ struct MigrationIncomingState {
-> > >  
-> > >      MigrationStatus state;
-> > >  
-> > > -    /*
-> > > -     * The incoming migration coroutine, non-NULL during qemu_loadvm_state().
-> > > -     * Used to wake the migration incoming coroutine from rdma code. How much is
-> > > -     * it safe - it's a question.
-> > > -     */
-> > > -    Coroutine *loadvm_co;
-> > > -
-> > > -    /* The coroutine we should enter (back) after failover */
-> > > -    Coroutine *colo_incoming_co;
-> > > +    /* Notify secondary VM to move on */
-> > >      QemuEvent colo_incoming_event;
-> > >  
-> > >      /* Optional load threads pool and its thread exit request flag */
-> > > diff --git a/migration/savevm.h b/migration/savevm.h
-> > > index 2d5e9c7166..c07e14f61a 100644
-> > > --- a/migration/savevm.h
-> > > +++ b/migration/savevm.h
-> > > @@ -64,9 +64,10 @@ void qemu_savevm_send_colo_enable(QEMUFile *f);
-> > >  void qemu_savevm_live_state(QEMUFile *f);
-> > >  int qemu_save_device_state(QEMUFile *f);
-> > >  
-> > > -int qemu_loadvm_state(QEMUFile *f);
-> > > +int qemu_loadvm_state(QEMUFile *f, bool bql_held);
-> > >  void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
-> > > -int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
-> > > +int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
-> > > +                           bool bql_held);
-> > >  int qemu_load_device_state(QEMUFile *f);
-> > >  int qemu_loadvm_approve_switchover(void);
-> > >  int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-> > > diff --git a/migration/channel.c b/migration/channel.c
-> > > index a547b1fbfe..621f8a4a2a 100644
-> > > --- a/migration/channel.c
-> > > +++ b/migration/channel.c
-> > > @@ -136,11 +136,8 @@ int migration_channel_read_peek(QIOChannel *ioc,
-> > >          }
-> > >  
-> > >          /* 1ms sleep. */
-> > > -        if (qemu_in_coroutine()) {
-> > > -            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
-> > > -        } else {
-> > > -            g_usleep(1000);
-> > > -        }
-> > > +        assert(!qemu_in_coroutine());
-> > > +        g_usleep(1000);
-> > >      }
-> > >  
-> > >      return 0;
-> > > diff --git a/migration/colo-stubs.c b/migration/colo-stubs.c
-> > > index e22ce65234..ef77d1ab4b 100644
-> > > --- a/migration/colo-stubs.c
-> > > +++ b/migration/colo-stubs.c
-> > > @@ -9,7 +9,7 @@ void colo_shutdown(void)
-> > >  {
-> > >  }
-> > >  
-> > > -void coroutine_fn colo_incoming_co(void)
-> > > +void colo_incoming_wait(void)
-> > >  {
-> > >  }
-> > >  
-> > > diff --git a/migration/colo.c b/migration/colo.c
-> > > index e0f713c837..f5722d9d9d 100644
-> > > --- a/migration/colo.c
-> > > +++ b/migration/colo.c
-> > > @@ -147,11 +147,6 @@ static void secondary_vm_do_failover(void)
-> > >      }
-> > >      /* Notify COLO incoming thread that failover work is finished */
-> > >      qemu_event_set(&mis->colo_incoming_event);
-> > > -
-> > > -    /* For Secondary VM, jump to incoming co */
-> > > -    if (mis->colo_incoming_co) {
-> > > -        qemu_coroutine_enter(mis->colo_incoming_co);
-> > > -    }
-> > >  }
-> > >  
-> > >  static void primary_vm_do_failover(void)
-> > > @@ -686,7 +681,7 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
-> > >  
-> > >      bql_lock();
-> > >      cpu_synchronize_all_states();
-> > > -    ret = qemu_loadvm_state_main(mis->from_src_file, mis);
-> > > +    ret = qemu_loadvm_state_main(mis->from_src_file, mis, true);
-> > >      bql_unlock();
-> > >  
-> > >      if (ret < 0) {
-> > > @@ -854,10 +849,8 @@ static void *colo_process_incoming_thread(void *opaque)
-> > >          goto out;
-> > >      }
-> > >      /*
-> > > -     * Note: the communication between Primary side and Secondary side
-> > > -     * should be sequential, we set the fd to unblocked in migration incoming
-> > > -     * coroutine, and here we are in the COLO incoming thread, so it is ok to
-> > > -     * set the fd back to blocked.
-> > > +     * Here we are in the COLO incoming thread, so it is ok to set the fd
-> > > +     * to blocked.
-> > >       */
-> > >      qemu_file_set_blocking(mis->from_src_file, true);
-> > >  
-> > > @@ -930,26 +923,20 @@ out:
-> > >      return NULL;
-> > >  }
-> > >  
-> > > -void coroutine_fn colo_incoming_co(void)
-> > > +/* Wait for failover */
-> > > +void colo_incoming_wait(void)
-> > >  {
-> > >      MigrationIncomingState *mis = migration_incoming_get_current();
-> > >      QemuThread th;
-> > >  
-> > > -    assert(bql_locked());
-> > >      assert(migration_incoming_colo_enabled());
-> > >  
-> > >      qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
-> > >                         colo_process_incoming_thread,
-> > >                         mis, QEMU_THREAD_JOINABLE);
-> > >  
-> > > -    mis->colo_incoming_co = qemu_coroutine_self();
-> > > -    qemu_coroutine_yield();
-> > > -    mis->colo_incoming_co = NULL;
-> > > -
-> > > -    bql_unlock();
-> > >      /* Wait checkpoint incoming thread exit before free resource */
-> > >      qemu_thread_join(&th);
-> > > -    bql_lock();
-> > >  
-> > >      /* We hold the global BQL, so it is safe here */
-> > >      colo_release_ram_cache();
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index 10c216d25d..7e4d25b15c 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -494,6 +494,11 @@ void migration_incoming_state_destroy(void)
-> > >          mis->postcopy_qemufile_dst = NULL;
-> > >      }
-> > >  
-> > > +    if (mis->have_recv_thread) {
-> > > +        qemu_thread_join(&mis->recv_thread);
-> > > +        mis->have_recv_thread = false;
-> > > +    }
-> > > +
-> > >      cpr_set_incoming_mode(MIG_MODE_NONE);
-> > >      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> > >  }
-> > > @@ -864,30 +869,46 @@ static void process_incoming_migration_bh(void *opaque)
-> > >      migration_incoming_state_destroy();
-> > >  }
-> > >  
-> > > -static void coroutine_fn
-> > > -process_incoming_migration_co(void *opaque)
-> > > +static void migration_incoming_state_destroy_bh(void *opaque)
-> > > +{
-> > > +    struct MigrationIncomingState *mis = opaque;
-> > > +
-> > > +    if (mis->exit_on_error) {
-> > > +        /*
-> > > +         * NOTE: this exit() should better happen in the main thread, as
-> > > +         * the exit notifier may require BQL which can deadlock.  See
-> > > +         * commit e7bc0204e57836 for example.
-> > > +         */
-> > > +        exit(EXIT_FAILURE);
-> > > +    }
-> > > +
-> > > +    migration_incoming_state_destroy();
-> > > +}
-> > > +
-> > > +static void *migration_incoming_thread(void *opaque)
-> > >  {
-> > >      MigrationState *s = migrate_get_current();
-> > > -    MigrationIncomingState *mis = migration_incoming_get_current();
-> > > +    MigrationIncomingState *mis = opaque;
-> > >      PostcopyState ps;
-> > >      int ret;
-> > >      Error *local_err = NULL;
-> > >  
-> > > +    rcu_register_thread();
-> > > +
-> > >      assert(mis->from_src_file);
-> > > +    assert(!bql_locked());
-> > >  
-> > >      mis->largest_page_size = qemu_ram_pagesize_largest();
-> > >      postcopy_state_set(POSTCOPY_INCOMING_NONE);
-> > >      migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
-> > >                        MIGRATION_STATUS_ACTIVE);
-> > >  
-> > > -    mis->loadvm_co = qemu_coroutine_self();
-> > > -    ret = qemu_loadvm_state(mis->from_src_file);
-> > > -    mis->loadvm_co = NULL;
-> > > +    ret = qemu_loadvm_state(mis->from_src_file, false);
-> > >  
-> > >      trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
-> > >  
-> > >      ps = postcopy_state_get();
-> > > -    trace_process_incoming_migration_co_end(ret, ps);
-> > > +    trace_process_incoming_migration_end(ret, ps);
-> > >      if (ps != POSTCOPY_INCOMING_NONE) {
-> > >          if (ps == POSTCOPY_INCOMING_ADVISE) {
-> > >              /*
-> > > @@ -901,7 +922,7 @@ process_incoming_migration_co(void *opaque)
-> > >               * Postcopy was started, cleanup should happen at the end of the
-> > >               * postcopy thread.
-> > >               */
-> > > -            trace_process_incoming_migration_co_postcopy_end_main();
-> > > +            trace_process_incoming_migration_postcopy_end_main();
-> > >              goto out;
-> > >          }
-> > >          /* Else if something went wrong then just fall out of the normal exit */
-> > > @@ -913,8 +934,8 @@ process_incoming_migration_co(void *opaque)
-> > >      }
-> > >  
-> > >      if (migration_incoming_colo_enabled()) {
-> > > -        /* yield until COLO exit */
-> > > -        colo_incoming_co();
-> > > +        /* wait until COLO exits */
-> > > +        colo_incoming_wait();
-> > >      }
-> > >  
-> > >      migration_bh_schedule(process_incoming_migration_bh, mis);
-> > > @@ -926,19 +947,24 @@ fail:
-> > >      migrate_set_error(s, local_err);
-> > >      error_free(local_err);
-> > >  
-> > > -    migration_incoming_state_destroy();
-> > > -
-> > >      if (mis->exit_on_error) {
-> > >          WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> > >              error_report_err(s->error);
-> > >              s->error = NULL;
-> > >          }
-> > > -
-> > > -        exit(EXIT_FAILURE);
-> > >      }
-> > > +
-> > > +    /*
-> > > +     * There's some step of the destroy process that will need to happen in
-> > > +     * the main thread (e.g. joining this thread itself).  Leave to a BH.
-> > > +     */
-> > > +    migration_bh_schedule(migration_incoming_state_destroy_bh, (void *)mis);
-> > > +
-> > >  out:
-> > >      /* Pairs with the refcount taken in qmp_migrate_incoming() */
-> > >      migrate_incoming_unref_outgoing_state();
-> > > +    rcu_unregister_thread();
-> > > +    return NULL;
-> > >  }
-> > >  
-> > >  /**
-> > > @@ -956,8 +982,12 @@ static void migration_incoming_setup(QEMUFile *f)
-> > >  
-> > >  void migration_incoming_process(void)
-> > >  {
-> > > -    Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
-> > > -    qemu_coroutine_enter(co);
-> > > +    MigrationIncomingState *mis = migration_incoming_get_current();
-> > > +
-> > > +    mis->have_recv_thread = true;
-> > > +    qemu_thread_create(&mis->recv_thread, "mig/dst/main",
-> > > +                       migration_incoming_thread, mis,
-> > > +                       QEMU_THREAD_JOINABLE);
-> > >  }
-> > >  
-> > >  /* Returns true if recovered from a paused migration, otherwise false */
-> > > diff --git a/migration/rdma.c b/migration/rdma.c
-> > > index bcd7aae2f2..2b995513aa 100644
-> > > --- a/migration/rdma.c
-> > > +++ b/migration/rdma.c
-> > > @@ -3068,7 +3068,6 @@ static void rdma_cm_poll_handler(void *opaque)
-> > >  {
-> > >      RDMAContext *rdma = opaque;
-> > >      struct rdma_cm_event *cm_event;
-> > > -    MigrationIncomingState *mis = migration_incoming_get_current();
-> > >  
-> > >      if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
-> > >          error_report("get_cm_event failed %d", errno);
-> > > @@ -3087,10 +3086,6 @@ static void rdma_cm_poll_handler(void *opaque)
-> > >              }
-> > >          }
-> > >          rdma_ack_cm_event(cm_event);
-> > > -        if (mis->loadvm_co) {
-> > > -            qemu_coroutine_enter(mis->loadvm_co);
-> > > -        }
-> > > -        return;
-> > >      }
-> > >      rdma_ack_cm_event(cm_event);
-> > >  }
-> > > diff --git a/migration/savevm.c b/migration/savevm.c
-> > > index fabbeb296a..ad606c5425 100644
-> > > --- a/migration/savevm.c
-> > > +++ b/migration/savevm.c
-> > > @@ -154,11 +154,10 @@ static void qemu_loadvm_thread_pool_destroy(MigrationIncomingState *mis)
-> > >  }
-> > >  
-> > >  static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
-> > > -                                         MigrationIncomingState *mis)
-> > > +                                         MigrationIncomingState *mis,
-> > > +                                         bool bql_held)
-> > >  {
-> > > -    bql_unlock(); /* Let load threads do work requiring BQL */
-> > > -    thread_pool_wait(mis->load_threads);
-> > > -    bql_lock();
-> > > +    WITHOUT_BQL_HELD(bql_held, thread_pool_wait(mis->load_threads));
-> > >  
-> > >      return !migrate_has_error(s);
-> > >  }
-> > > @@ -2091,14 +2090,11 @@ static void *postcopy_ram_listen_thread(void *opaque)
-> > >      trace_postcopy_ram_listen_thread_start();
-> > >  
-> > >      rcu_register_thread();
-> > > -    /*
-> > > -     * Because we're a thread and not a coroutine we can't yield
-> > > -     * in qemu_file, and thus we must be blocking now.
-> > > -     */
-> > > +    /* Because we're a thread, making sure to use blocking mode */
-> > >      qemu_file_set_blocking(f, true);
-> > >  
-> > >      /* TODO: sanity check that only postcopiable data will be loaded here */
-> > > -    load_res = qemu_loadvm_state_main(f, mis);
-> > > +    load_res = qemu_loadvm_state_main(f, mis, false);
-> > >  
-> > >      /*
-> > >       * This is tricky, but, mis->from_src_file can change after it
-> > > @@ -2392,13 +2388,14 @@ static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-> > >   * Immediately following this command is a blob of data containing an embedded
-> > >   * chunk of migration stream; read it and load it.
-> > >   *
-> > > - * @mis: Incoming state
-> > > - * @length: Length of packaged data to read
-> > > + * @mis:      Incoming state
-> > > + * @bql_held: Whether BQL is held already
-> > >   *
-> > >   * Returns: Negative values on error
-> > >   *
-> > >   */
-> > > -static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-> > > +static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis,
-> > > +                                      bool bql_held)
-> > >  {
-> > >      int ret;
-> > >      size_t length;
-> > > @@ -2449,7 +2446,7 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-> > >          qemu_coroutine_yield();
-> > >      } while (1);
-> > >  
-> > > -    ret = qemu_loadvm_state_main(packf, mis);
-> > > +    ret = qemu_loadvm_state_main(packf, mis, bql_held);
-> > >      trace_loadvm_handle_cmd_packaged_main(ret);
-> > >      qemu_fclose(packf);
-> > >      object_unref(OBJECT(bioc));
-> > > @@ -2539,7 +2536,7 @@ static int loadvm_postcopy_handle_switchover_start(void)
-> > >   * LOADVM_QUIT All good, but exit the loop
-> > >   * <0          Error
-> > >   */
-> > > -static int loadvm_process_command(QEMUFile *f)
-> > > +static int loadvm_process_command(QEMUFile *f, bool bql_held)
-> > >  {
-> > >      MigrationIncomingState *mis = migration_incoming_get_current();
-> > >      uint16_t cmd;
-> > > @@ -2609,7 +2606,7 @@ static int loadvm_process_command(QEMUFile *f)
-> > >          break;
-> > >  
-> > >      case MIG_CMD_PACKAGED:
-> > > -        return loadvm_handle_cmd_packaged(mis);
-> > > +        return loadvm_handle_cmd_packaged(mis, bql_held);
-> > >  
-> > >      case MIG_CMD_POSTCOPY_ADVISE:
-> > >          return loadvm_postcopy_handle_advise(mis, len);
-> > > @@ -3028,7 +3025,8 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
-> > >      return true;
-> > >  }
-> > >  
-> > > -int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis)
-> > > +int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
-> > > +                           bool bql_held)
-> > >  {
-> > >      uint8_t section_type;
-> > >      int ret = 0;
-> > > @@ -3046,7 +3044,15 @@ retry:
-> > >          switch (section_type) {
-> > >          case QEMU_VM_SECTION_START:
-> > >          case QEMU_VM_SECTION_FULL:
-> > > -            ret = qemu_loadvm_section_start_full(f, section_type);
-> > > +            /*
-> > > +             * FULL should normally require BQL, e.g. during post_load()
-> > > +             * there can be memory region updates.  START may or may not
-> > > +             * require it, but just to keep it simple to always hold BQL
-> > > +             * for now.
-> > > +             */
-> > > +            WITH_BQL_HELD(
-> > > +                bql_held,
-> > > +                ret = qemu_loadvm_section_start_full(f, section_type));
-> > >              if (ret < 0) {
-> > >                  goto out;
-> > >              }
-> > > @@ -3059,7 +3065,11 @@ retry:
-> > >              }
-> > >              break;
-> > >          case QEMU_VM_COMMAND:
-> > > -            ret = loadvm_process_command(f);
-> > > +            /*
-> > > +             * Be careful; QEMU_VM_COMMAND can embed FULL sections, so it
-> > > +             * may internally need BQL.
-> > > +             */
-> > > +            ret = loadvm_process_command(f, bql_held);
-> > >              trace_qemu_loadvm_state_section_command(ret);
-> > >              if ((ret < 0) || (ret == LOADVM_QUIT)) {
-> > >                  goto out;
-> > > @@ -3103,7 +3113,7 @@ out:
-> > >      return ret;
-> > >  }
-> > >  
-> > > -int qemu_loadvm_state(QEMUFile *f)
-> > > +int qemu_loadvm_state(QEMUFile *f, bool bql_held)
-> > >  {
-> > >      MigrationState *s = migrate_get_current();
-> > >      MigrationIncomingState *mis = migration_incoming_get_current();
-> > > @@ -3131,9 +3141,10 @@ int qemu_loadvm_state(QEMUFile *f)
-> > >          qemu_loadvm_state_switchover_ack_needed(mis);
-> > >      }
-> > >  
-> > > -    cpu_synchronize_all_pre_loadvm();
-> > > +    /* run_on_cpu() requires BQL */
-> > > +    WITH_BQL_HELD(bql_held, cpu_synchronize_all_pre_loadvm());
-> > >  
-> > > -    ret = qemu_loadvm_state_main(f, mis);
-> > > +    ret = qemu_loadvm_state_main(f, mis, bql_held);
-> > >      qemu_event_set(&mis->main_thread_load_event);
-> > >  
-> > >      trace_qemu_loadvm_state_post_main(ret);
-> > > @@ -3149,7 +3160,7 @@ int qemu_loadvm_state(QEMUFile *f)
-> > >      /* When reaching here, it must be precopy */
-> > >      if (ret == 0) {
-> > >          if (migrate_has_error(migrate_get_current()) ||
-> > > -            !qemu_loadvm_thread_pool_wait(s, mis)) {
-> > > +            !qemu_loadvm_thread_pool_wait(s, mis, bql_held)) {
-> > >              ret = -EINVAL;
-> > >          } else {
-> > >              ret = qemu_file_get_error(f);
-> > > @@ -3196,7 +3207,8 @@ int qemu_loadvm_state(QEMUFile *f)
-> > >          }
-> > >      }
-> > >  
-> > > -    cpu_synchronize_all_post_init();
-> > > +    /* run_on_cpu() requires BQL */
-> > > +    WITH_BQL_HELD(bql_held, cpu_synchronize_all_post_init());
-> > >  
-> > >      return ret;
-> > >  }
-> > > @@ -3207,7 +3219,7 @@ int qemu_load_device_state(QEMUFile *f)
-> > >      int ret;
-> > >  
-> > >      /* Load QEMU_VM_SECTION_FULL section */
-> > > -    ret = qemu_loadvm_state_main(f, mis);
-> > > +    ret = qemu_loadvm_state_main(f, mis, true);
-> > >      if (ret < 0) {
-> > >          error_report("Failed to load device state: %d", ret);
-> > >          return ret;
-> > > @@ -3438,7 +3450,7 @@ void qmp_xen_load_devices_state(const char *filename, Error **errp)
-> > >      f = qemu_file_new_input(QIO_CHANNEL(ioc));
-> > >      object_unref(OBJECT(ioc));
-> > >  
-> > > -    ret = qemu_loadvm_state(f);
-> > > +    ret = qemu_loadvm_state(f, true);
-> > >      qemu_fclose(f);
-> > >      if (ret < 0) {
-> > >          error_setg(errp, "loading Xen device state failed");
-> > > @@ -3512,7 +3524,7 @@ bool load_snapshot(const char *name, const char *vmstate,
-> > >          ret = -EINVAL;
-> > >          goto err_drain;
-> > >      }
-> > > -    ret = qemu_loadvm_state(f);
-> > > +    ret = qemu_loadvm_state(f, true);
-> > >      migration_incoming_state_destroy();
-> > >  
-> > >      bdrv_drain_all_end();
-> > > diff --git a/migration/trace-events b/migration/trace-events
-> > > index 706db97def..eeb41e03f1 100644
-> > > --- a/migration/trace-events
-> > > +++ b/migration/trace-events
-> > > @@ -193,8 +193,8 @@ source_return_path_thread_resume_ack(uint32_t v) "%"PRIu32
-> > >  source_return_path_thread_switchover_acked(void) ""
-> > >  migration_thread_low_pending(uint64_t pending) "%" PRIu64
-> > >  migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidth, uint64_t avail_bw, uint64_t size) "transferred %" PRIu64 " time_spent %" PRIu64 " bandwidth %" PRIu64 " switchover_bw %" PRIu64 " max_size %" PRId64
-> > > -process_incoming_migration_co_end(int ret, int ps) "ret=%d postcopy-state=%d"
-> > > -process_incoming_migration_co_postcopy_end_main(void) ""
-> > > +process_incoming_migration_end(int ret, int ps) "ret=%d postcopy-state=%d"
-> > > +process_incoming_migration_postcopy_end_main(void) ""
-> > >  postcopy_preempt_enabled(bool value) "%d"
-> > >  migration_precopy_complete(void) ""
-> > >  
-> > > -- 
-> > > 2.50.1
-> > > 
-> > -- 
-> >  -----Open up your eyes, open up your mind, open up your code -------   
-> > / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-> > \        dave @ treblig.org |                               | In Hex /
-> >  \ _________________________|_____ http://www.treblig.org   |_______/
-> > 
-> 
-> -- 
-> Peter Xu
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
+aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMTEvMjFdIGludGVsX2lvbW11
+OiBIYW5kbGUgUEFTSUQgZW50cnkgcmVtb3ZhbCBhbmQNCj51cGRhdGUNCj4NCj5PbiAyMDI1Lzkv
+MSAxMTozMSwgRHVhbiwgWmhlbnpob25nIHdyb3RlOg0KPj4NCj4+DQo+Pj4gLS0tLS1PcmlnaW5h
+bCBNZXNzYWdlLS0tLS0NCj4+PiBGcm9tOiBMaXUsIFlpIEwgPHlpLmwubGl1QGludGVsLmNvbT4N
+Cj4+PiBTdWJqZWN0OiBSZTogW1BBVENIIHY1IDExLzIxXSBpbnRlbF9pb21tdTogSGFuZGxlIFBB
+U0lEIGVudHJ5IHJlbW92YWwNCj5hbmQNCj4+PiB1cGRhdGUNCj4+Pg0KPj4+IE9uIDIwMjUvOC8y
+MiAxNDo0MCwgWmhlbnpob25nIER1YW4gd3JvdGU6DQo+Pj4+IFRoaXMgYWRkcyBhbiBuZXcgZW50
+cnkgVlREUEFTSURDYWNoZUVudHJ5IGluIFZUREFkZHJlc3NTcGFjZSB0bw0KPmNhY2hlDQo+Pj4g
+dGhlDQo+Pj4+IHBhc2lkIGVudHJ5IGFuZCB0cmFjayBQQVNJRCB1c2FnZSBhbmQgZnV0dXJlIFBB
+U0lEIHRhZ2dlZCBETUEgYWRkcmVzcw0KPj4+PiB0cmFuc2xhdGlvbiBzdXBwb3J0IGluIHZJT01N
+VS4NCj4+Pg0KPj4+IEhhdmUgeW91IHNlZW4gYW55IGV4dHJhIGNvZGUgbmVlZGVkIGJhc2VkIG9u
+IHRoaXMgc2VyaWVzIHRvIHN1cHBvcnQgbm9uDQo+Pj4gcmlkX3Bhc2lkIFBBU0lEcz8gSWYgbm8s
+IG1heSBqdXN0IHJlbGF4IHRoZSBzY29wZSBvZiB0aGlzIHNlcmllcy4NCj4+PiBvdGhlcndpc2Us
+IHlvdSBtYXkgbmVlZCB0byB0d2VhayB0aGUgcGF0Y2ggYSBsaXR0bGUgYml0LiBlLmcuIGZhY3Rv
+cg0KPj4+IG91dCBzZXR0aW5nIHgtZmx0cyBhbmQgeC1wYXNpZC1tb2RlIGF0IHRoZSBzYW1lIHRp
+bWUuDQo+Pg0KPj4gVGhlcmUgYXJlIHF1aXRlIGEgZmV3IGNvZGUgYXJlIGNvbW1vbiBmb3IgYm90
+aCBub24tcmlkX3Bhc2lkIGFuZA0KPnJpZF9wYXNpZC4NCj4+IFNvIGluIHRoaXMgc2VyaWVzLCB0
+aGVyZSBhcmUgc29tZSBpbmZyYXN0cnVjdHVyZSBjb2RlIHRoYXQgbG9va3MgbGlrZSBpdCdzIGZv
+cg0KPm5vbi1yaWRfcGFzaWQuDQo+Pg0KPj4gQnV0IHRvIHN1cHBvcnQgbm9uLXJpZF9wYXNpZCwg
+d2UgbmVlZCBwYXNpZF9hdHRhY2gvZGV0YWNoKCkgd2hpY2ggaXMgbm90DQo+aW1wbGVtZW50ZWQg
+aW4gdGhpcyBzZXJpZXMuDQo+DQo+SSBzZWUuIEJlc2lkZXMgdGhhdCwgdGhlIHZJT01NVSBpbnRl
+cm5hbCBpbmZyYXN0cnVjdHVyZSBzaG91bGQgYmUgcmVhZHkNCj5mb3Igbm9uLXJpZF9wYXNpZCBh
+ZnRlciB0aGlzIHNlcmllcy4NCg0KT2tleSwgSSdsbCBmb2xsb3dpbmcgeW91IGFuZCBFcmljJ3Mg
+c3VnZ2VzdGlvbiB0byBzaW1wbGlmeSB0aGlzIHNlcmllcyB3aXRoIG9ubHkgcmlkX3Bhc2lkIHN1
+cHBvcnQuDQoNClRoYW5rcw0KDQo+DQo+PiBFdmVuIGlmIHgtZmx0cyBhbmQgeC1wYXNpZC1tb2Rl
+IGJvdGggb24sIHBhc2lkIGlzbid0IGVuYWJsZWQgc2luY2UgVkZJTw0KPmRldmljZSBkb2Vzbid0
+ID4gZXhwb3NlIHBhc2lkIGNhcGFiaWxpdHkgdG8gZ3Vlc3QsIHNvIGd1ZXN0IG5ldmVyIHVzZQ0K
+Pm5vbi1yaWRfcGFzaWQNCj53aXRoIHRoaXMgVkZJTyBkZXZpY2UuDQo+DQo+b2suIEdpdmVuIHRo
+YXQgMXN0IHN0YWdlIGZvciBlbXVsYXRlZCBkZXZpY2UgaGFzIGFscmVhZHkgc2JlZW4gdXBwb3J0
+ZWQsDQo+aXQncyBmaW5lIHRvIHJlbHkgb24gdGhlIGtub2IgaW4gZGV2aWNlIHNpZGUuDQo+DQo+
+Pj4+DQo+Pj4+IFZUREFkZHJlc3NTcGFjZSBvZiBQQ0lfTk9fUEFTSUQgaXMgYWxsb2NhdGVkIHdo
+ZW4gZGV2aWNlIGlzIHBsdWdnZWQNCj5hbmQNCj4+Pj4gbmV2ZXIgZnJlZWQuIEZvciBvdGhlciBw
+YXNpZCwgVlREQWRkcmVzc1NwYWNlIGluc3RhbmNlIGlzDQo+Pj4gY3JlYXRlZC9kZXN0cm95ZWQN
+Cj4+Pj4gcGVyIHRoZSBndWVzdCBwYXNpZCBlbnRyeSBzZXQgdXAvZGVzdHJveS4NCj4+Pg0KPj4+
+PiBXaGVuIGd1ZXN0IHJlbW92ZXMgb3IgdXBkYXRlcyBhIFBBU0lEIGVudHJ5LCBRRU1VIHdpbGwg
+Y2FwdHVyZSB0aGUNCj5ndWVzdA0KPj4+IHBhc2lkDQo+Pj4+IHNlbGVjdGl2ZSBwYXNpZCBjYWNo
+ZSBpbnZhbGlkYXRpb24sIHJlbW92ZXMgVlREQWRkcmVzc1NwYWNlIG9yIHVwZGF0ZQ0KPj4+IGNh
+Y2hlZA0KPj4+PiBQQVNJRCBlbnRyeS4NCj4+Pj4NCj4+Pj4gdklPTU1VIGVtdWxhdG9yIGNvdWxk
+IGZpZ3VyZSBvdXQgdGhlIHJlYXNvbiBieSBmZXRjaGluZyBsYXRlc3QgZ3Vlc3QNCj5wYXNpZA0K
+Pj4+IGVudHJ5DQo+Pj4+IGFuZCBjb21wYXJlIGl0IHdpdGggY2FjaGVkIFBBU0lEIGVudHJ5Lg0K
+Pj4+Pg0KPj4+PiBTaWduZWQtb2ZmLWJ5OiBZaSBMaXUgPHlpLmwubGl1QGludGVsLmNvbT4NCj4+
+Pj4gU2lnbmVkLW9mZi1ieTogWWkgU3VuIDx5aS55LnN1bkBsaW51eC5pbnRlbC5jb20+DQo+Pj4+
+IFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+
+DQo+Pj4+IC0tLQ0KPj4+PiAgICBody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAgMjcg
+KysrKy0NCj4+Pj4gICAgaW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmggIHwgICA2ICsNCj4+
+Pj4gICAgaHcvaTM4Ni9pbnRlbF9pb21tdS5jICAgICAgICAgIHwgMTk2DQo+Pj4gKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKy0tDQo+Pj4+ICAgIGh3L2kzODYvdHJhY2UtZXZlbnRzICAg
+ICAgICAgICB8ICAgMyArDQo+Pj4+ICAgIDQgZmlsZXMgY2hhbmdlZCwgMjIwIGluc2VydGlvbnMo
+KyksIDEyIGRlbGV0aW9ucygtKQ0KPj4+Pg0KPj4+PiBkaWZmIC0tZ2l0IGEvaHcvaTM4Ni9pbnRl
+bF9pb21tdV9pbnRlcm5hbC5oDQo+Pj4gYi9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgN
+Cj4+Pj4gaW5kZXggZjc1MTA4NjFkMS4uYjliNzZkZDk5NiAxMDA2NDQNCj4+Pj4gLS0tIGEvaHcv
+aTM4Ni9pbnRlbF9pb21tdV9pbnRlcm5hbC5oDQo+Pj4+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9t
+bXVfaW50ZXJuYWwuaA0KPj4+PiBAQCAtMzE2LDYgKzMxNiw3IEBAIHR5cGVkZWYgZW51bSBWVERG
+YXVsdFJlYXNvbiB7DQo+Pj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAq
+IHJlcXVlc3Qgd2hpbGUgZGlzYWJsZWQgKi8NCj4+Pj4gICAgICAgIFZURF9GUl9JUl9TSURfRVJS
+ID0gMHgyNiwgICAvKiBJbnZhbGlkIFNvdXJjZS1JRCAqLw0KPj4+Pg0KPj4+PiArICAgIFZURF9G
+Ul9SVEFERFJfSU5WX1RUTSA9IDB4MzEsICAvKiBJbnZhbGlkIFRUTSBpbiBSVEFERFIgKi8NCj4+
+Pj4gICAgICAgIC8qIFBBU0lEIGRpcmVjdG9yeSBlbnRyeSBhY2Nlc3MgZmFpbHVyZSAqLw0KPj4+
+PiAgICAgICAgVlREX0ZSX1BBU0lEX0RJUl9BQ0NFU1NfRVJSID0gMHg1MCwNCj4+Pj4gICAgICAg
+IC8qIFRoZSBQcmVzZW50KFApIGZpZWxkIG9mIHBhc2lkIGRpcmVjdG9yeSBlbnRyeSBpcyAwICov
+DQo+Pj4+IEBAIC00OTMsNiArNDk0LDE1IEBAIHR5cGVkZWYgdW5pb24gVlRESW52RGVzYyBWVERJ
+bnZEZXNjOw0KPj4+PiAgICAjZGVmaW5lIFZURF9JTlZfREVTQ19QSU9UTEJfUlNWRF9WQUwwDQo+
+Pj4gMHhmZmYwMDAwMDAwMDBmMWMwVUxMDQo+Pj4+ICAgICNkZWZpbmUgVlREX0lOVl9ERVNDX1BJ
+T1RMQl9SU1ZEX1ZBTDEgICAgIDB4ZjgwVUxMDQo+Pj4+DQo+Pj4+ICsvKiBQQVNJRC1jYWNoZSBJ
+bnZhbGlkYXRlIERlc2NyaXB0b3IgKHBjX2ludl9kc2MpIGZpZWxkcyAqLw0KPj4+PiArI2RlZmlu
+ZSBWVERfSU5WX0RFU0NfUEFTSURDX0coeCkgICAgICAgIGV4dHJhY3Q2NCgoeCktPnZhbFswXSwg
+NCwNCj4yKQ0KPj4+PiArI2RlZmluZSBWVERfSU5WX0RFU0NfUEFTSURDX0dfRFNJICAgICAgIDAN
+Cj4+Pj4gKyNkZWZpbmUgVlREX0lOVl9ERVNDX1BBU0lEQ19HX1BBU0lEX1NJICAxDQo+Pj4+ICsj
+ZGVmaW5lIFZURF9JTlZfREVTQ19QQVNJRENfR19HTE9CQUwgICAgMw0KPj4+PiArI2RlZmluZSBW
+VERfSU5WX0RFU0NfUEFTSURDX0RJRCh4KSAgICAgIGV4dHJhY3Q2NCgoeCktPnZhbFswXSwgMTYs
+DQo+Pj4gMTYpDQo+Pj4+ICsjZGVmaW5lIFZURF9JTlZfREVTQ19QQVNJRENfUEFTSUQoeCkgICAg
+ZXh0cmFjdDY0KCh4KS0+dmFsWzBdLCAzMiwNCj4+PiAyMCkNCj4+Pj4gKyNkZWZpbmUgVlREX0lO
+Vl9ERVNDX1BBU0lEQ19SU1ZEX1ZBTDANCj4weGZmZjAwMDAwMDAwMGYxYzBVTEwNCj4+Pj4gKw0K
+Pj4+PiAgICAvKiBJbmZvcm1hdGlvbiBhYm91dCBwYWdlLXNlbGVjdGl2ZSBJT1RMQiBpbnZhbGlk
+YXRlICovDQo+Pj4+ICAgIHN0cnVjdCBWVERJT1RMQlBhZ2VJbnZJbmZvIHsNCj4+Pj4gICAgICAg
+IHVpbnQxNl90IGRvbWFpbl9pZDsNCj4+Pj4gQEAgLTU1Myw2ICs1NjMsMjEgQEAgdHlwZWRlZiBz
+dHJ1Y3QgVlREUm9vdEVudHJ5IFZURFJvb3RFbnRyeTsNCj4+Pj4gICAgI2RlZmluZSBWVERfU01f
+Q09OVEVYVF9FTlRSWV9SU1ZEX1ZBTDAoYXcpICAoMHgxZTBVTEwgfA0KPj4+IH5WVERfSEFXX01B
+U0soYXcpKQ0KPj4+PiAgICAjZGVmaW5lIFZURF9TTV9DT05URVhUX0VOVFJZX1JTVkRfVkFMMQ0K
+Pj4+IDB4ZmZmZmZmZmZmZmUwMDAwMFVMTA0KPj4+Pg0KPj4+PiArdHlwZWRlZiBlbnVtIFZURFBD
+SW52VHlwZSB7DQo+Pj4+ICsgICAgLyogVlREIHNwZWMgZGVmaW5lZCBQQVNJRCBjYWNoZSBpbnZh
+bGlkYXRpb24gdHlwZSAqLw0KPj4+PiArICAgIFZURF9QQVNJRF9DQUNIRV9ET01TSSA9IFZURF9J
+TlZfREVTQ19QQVNJRENfR19EU0ksDQo+Pj4+ICsgICAgVlREX1BBU0lEX0NBQ0hFX1BBU0lEU0kg
+PQ0KPlZURF9JTlZfREVTQ19QQVNJRENfR19QQVNJRF9TSSwNCj4+Pj4gKyAgICBWVERfUEFTSURf
+Q0FDSEVfR0xPQkFMX0lOViA9DQo+Pj4gVlREX0lOVl9ERVNDX1BBU0lEQ19HX0dMT0JBTCwNCj4+
+Pj4gK30gVlREUENJbnZUeXBlOw0KPj4+PiArDQo+Pj4+ICt0eXBlZGVmIHN0cnVjdCBWVERQQVNJ
+RENhY2hlSW5mbyB7DQo+Pj4+ICsgICAgVlREUENJbnZUeXBlIHR5cGU7DQo+Pj4+ICsgICAgdWlu
+dDE2X3QgZGlkOw0KPj4+PiArICAgIHVpbnQzMl90IHBhc2lkOw0KPj4+PiArICAgIFBDSUJ1cyAq
+YnVzOw0KPj4+PiArICAgIHVpbnQxNl90IGRldmZuOw0KPj4+PiArfSBWVERQQVNJRENhY2hlSW5m
+bzsNCj4+Pj4gKw0KPj4+PiAgICAvKiBQQVNJRCBUYWJsZSBSZWxhdGVkIERlZmluaXRpb25zICov
+DQo+Pj4+ICAgICNkZWZpbmUgVlREX1BBU0lEX0RJUl9CQVNFX0FERFJfTUFTSyAgKH4weGZmZlVM
+TCkNCj4+Pj4gICAgI2RlZmluZSBWVERfUEFTSURfVEFCTEVfQkFTRV9BRERSX01BU0sgKH4weGZm
+ZlVMTCkNCj4+Pj4gQEAgLTU3NCw3ICs1OTksNyBAQCB0eXBlZGVmIHN0cnVjdCBWVERSb290RW50
+cnkgVlREUm9vdEVudHJ5Ow0KPj4+PiAgICAjZGVmaW5lIFZURF9TTV9QQVNJRF9FTlRSWV9QVCAg
+ICAgICAgICAoNFVMTCA8PCA2KQ0KPj4+Pg0KPj4+PiAgICAjZGVmaW5lIFZURF9TTV9QQVNJRF9F
+TlRSWV9BVyAgICAgICAgICA3VUxMIC8qIEFkanVzdGVkDQo+Pj4gZ3Vlc3QtYWRkcmVzcy13aWR0
+aCAqLw0KPj4+PiAtI2RlZmluZSBWVERfU01fUEFTSURfRU5UUllfRElEKHZhbCkgICAgKCh2YWwp
+ICYNCj4+PiBWVERfRE9NQUlOX0lEX01BU0spDQo+Pj4+ICsjZGVmaW5lIFZURF9TTV9QQVNJRF9F
+TlRSWV9ESUQoeCkgICAgICBleHRyYWN0NjQoKHgpLT52YWxbMV0sIDAsDQo+MTYpDQo+Pj4+DQo+
+Pj4+ICAgICNkZWZpbmUgVlREX1NNX1BBU0lEX0VOVFJZX0ZMUE0gICAgICAgICAgM1VMTA0KPj4+
+PiAgICAjZGVmaW5lIFZURF9TTV9QQVNJRF9FTlRSWV9GTFBUUFRSICAgICAgICh+MHhmZmZVTEwp
+DQo+Pj4+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L2kzODYvaW50ZWxfaW9tbXUuaA0KPj4+IGIv
+aW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmgNCj4+Pj4gaW5kZXggNTBmOWIyN2E0NS4uMGUz
+ODI2ZjZmMCAxMDA2NDQNCj4+Pj4gLS0tIGEvaW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmgN
+Cj4+Pj4gKysrIGIvaW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmgNCj4+Pj4gQEAgLTk1LDYg
+Kzk1LDExIEBAIHN0cnVjdCBWVERQQVNJREVudHJ5IHsNCj4+Pj4gICAgICAgIHVpbnQ2NF90IHZh
+bFs4XTsNCj4+Pj4gICAgfTsNCj4+Pj4NCj4+Pj4gK3R5cGVkZWYgc3RydWN0IFZURFBBU0lEQ2Fj
+aGVFbnRyeSB7DQo+Pj4+ICsgICAgc3RydWN0IFZURFBBU0lERW50cnkgcGFzaWRfZW50cnk7DQo+
+Pj4+ICsgICAgYm9vbCB2YWxpZDsNCj4+Pj4gK30gVlREUEFTSURDYWNoZUVudHJ5Ow0KPj4+PiAr
+DQo+Pj4+ICAgIHN0cnVjdCBWVERBZGRyZXNzU3BhY2Ugew0KPj4+PiAgICAgICAgUENJQnVzICpi
+dXM7DQo+Pj4+ICAgICAgICB1aW50OF90IGRldmZuOw0KPj4+PiBAQCAtMTA3LDYgKzExMiw3IEBA
+IHN0cnVjdCBWVERBZGRyZXNzU3BhY2Ugew0KPj4+PiAgICAgICAgTWVtb3J5UmVnaW9uIGlvbW11
+X2lyX2ZhdWx0OyAvKiBJbnRlcnJ1cHQgcmVnaW9uIGZvciBjYXRjaGluZw0KPj4+IGZhdWx0ICov
+DQo+Pj4+ICAgICAgICBJbnRlbElPTU1VU3RhdGUgKmlvbW11X3N0YXRlOw0KPj4+PiAgICAgICAg
+VlREQ29udGV4dENhY2hlRW50cnkgY29udGV4dF9jYWNoZV9lbnRyeTsNCj4+Pj4gKyAgICBWVERQ
+QVNJRENhY2hlRW50cnkgcGFzaWRfY2FjaGVfZW50cnk7DQo+Pj4+ICAgICAgICBRTElTVF9FTlRS
+WShWVERBZGRyZXNzU3BhY2UpIG5leHQ7DQo+Pj4+ICAgICAgICAvKiBTdXBlcnNldCBvZiBub3Rp
+ZmllciBmbGFncyB0aGF0IHRoaXMgYWRkcmVzcyBzcGFjZSBoYXMgKi8NCj4+Pj4gICAgICAgIElP
+TU1VTm90aWZpZXJGbGFnIG5vdGlmaWVyX2ZsYWdzOw0KPj4+PiBkaWZmIC0tZ2l0IGEvaHcvaTM4
+Ni9pbnRlbF9pb21tdS5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQo+Pj4+IGluZGV4IDE4MDFm
+MWNkZjYuLmEyZWU2ZDY4NGUgMTAwNjQ0DQo+Pj4+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUu
+Yw0KPj4+PiArKysgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCj4+Pj4gQEAgLTE2NzUsNyArMTY3
+NSw3IEBAIHN0YXRpYyB1aW50MTZfdA0KPj4+IHZ0ZF9nZXRfZG9tYWluX2lkKEludGVsSU9NTVVT
+dGF0ZSAqcywNCj4+Pj4NCj4+Pj4gICAgICAgIGlmIChzLT5yb290X3NjYWxhYmxlKSB7DQo+Pj4+
+ICAgICAgICAgICAgdnRkX2NlX2dldF9wYXNpZF9lbnRyeShzLCBjZSwgJnBlLCBwYXNpZCk7DQo+
+Pj4+IC0gICAgICAgIHJldHVybiBWVERfU01fUEFTSURfRU5UUllfRElEKHBlLnZhbFsxXSk7DQo+
+Pj4+ICsgICAgICAgIHJldHVybiBWVERfU01fUEFTSURfRU5UUllfRElEKCZwZSk7DQo+Pj4+ICAg
+ICAgICB9DQo+Pj4+DQo+Pj4+ICAgICAgICByZXR1cm4gVlREX0NPTlRFWFRfRU5UUllfRElEKGNl
+LT5oaSk7DQo+Pj4+IEBAIC0zMTEyLDYgKzMxMTIsMTgzIEBAIHN0YXRpYyBib29sDQo+Pj4gdnRk
+X3Byb2Nlc3NfcGlvdGxiX2Rlc2MoSW50ZWxJT01NVVN0YXRlICpzLA0KPj4+PiAgICAgICAgcmV0
+dXJuIHRydWU7DQo+Pj4+ICAgIH0NCj4+Pj4NCj4+Pj4gK3N0YXRpYyBpbmxpbmUgaW50IHZ0ZF9k
+ZXZfZ2V0X3BlX2Zyb21fcGFzaWQoVlREQWRkcmVzc1NwYWNlICp2dGRfYXMsDQo+Pj4+ICsgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHBhc2lkLA0K
+Pj4+IFZURFBBU0lERW50cnkgKnBlKQ0KPj4+PiArew0KPj4+PiArICAgIEludGVsSU9NTVVTdGF0
+ZSAqcyA9IHZ0ZF9hcy0+aW9tbXVfc3RhdGU7DQo+Pj4+ICsgICAgVlREQ29udGV4dEVudHJ5IGNl
+Ow0KPj4+PiArICAgIGludCByZXQ7DQo+Pj4+ICsNCj4+Pj4gKyAgICBpZiAoIXMtPnJvb3Rfc2Nh
+bGFibGUpIHsNCj4+Pj4gKyAgICAgICAgcmV0dXJuIC1WVERfRlJfUlRBRERSX0lOVl9UVE07DQo+
+Pj4+ICsgICAgfQ0KPj4+PiArDQo+Pj4+ICsgICAgcmV0ID0gdnRkX2Rldl90b19jb250ZXh0X2Vu
+dHJ5KHMsIHBjaV9idXNfbnVtKHZ0ZF9hcy0+YnVzKSwNCj4+PiB2dGRfYXMtPmRldmZuLA0KPj4+
+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAmY2UpOw0KPj4+PiArICAgIGlm
+IChyZXQpIHsNCj4+Pj4gKyAgICAgICAgcmV0dXJuIHJldDsNCj4+Pj4gKyAgICB9DQo+Pj4+ICsN
+Cj4+Pj4gKyAgICByZXR1cm4gdnRkX2NlX2dldF9wYXNpZF9lbnRyeShzLCAmY2UsIHBlLCBwYXNp
+ZCk7DQo+Pj4+ICt9DQo+Pj4+ICsNCj4+Pj4gK3N0YXRpYyBib29sIHZ0ZF9wYXNpZF9lbnRyeV9j
+b21wYXJlKFZURFBBU0lERW50cnkgKnAxLA0KPlZURFBBU0lERW50cnkNCj4+PiAqcDIpDQo+Pj4+
+ICt7DQo+Pj4+ICsgICAgcmV0dXJuICFtZW1jbXAocDEsIHAyLCBzaXplb2YoKnAxKSk7DQo+Pj4+
+ICt9DQo+Pj4+ICsNCj4+Pj4gKy8qDQo+Pj4+ICsgKiBUaGlzIGZ1bmN0aW9uIGlzIGEgbG9vcCBm
+dW5jdGlvbiB3aGljaCByZXR1cm4gdmFsdWUgZGV0ZXJtaW5lcyBpZg0KPj4+PiArICogdnRkX2Fz
+IGluY2x1ZGluZyBjYWNoZWQgcGFzaWQgZW50cnkgaXMgcmVtb3ZlZC4NCj4+Pj4gKyAqDQo+Pj4+
+ICsgKiBGb3IgUENJX05PX1BBU0lELCB3aGVuIGNvcnJlc3BvbmRpbmcgY2FjaGVkIHBhc2lkIGVu
+dHJ5IGlzDQo+Y2xlYXJlZCwNCj4+Pj4gKyAqIGl0IHJldHVybnMgZmFsc2Ugc28gdGhhdCB2dGRf
+YXMgaXMgcmVzZXJ2ZWQgYXMgaXQncyBvd25lZCBieSBQQ0kNCj4+Pj4gKyAqIHN1Yi1zeXN0ZW0u
+IEZvciBvdGhlciBwYXNpZCwgaXQgcmV0dXJucyB0cnVlIHNvIHZ0ZF9hcyBpcyByZW1vdmVkLg0K
+Pj4+DQo+Pj4gYWxzbywgdGhpcyBoZWxwZXIgd2lsbCBhbHdheXMgcmV0dXJuIHRydWUgaWYgdGhp
+cyBzZXJpZXMgZG9lcyBub3QNCj4+PiBzdXBwb3J0IG5vbi1yaWRfcGFzaWQgUEFTSUQuDQo+Pg0K
+Pj4gRG8geW91IG1lYW4gcmV0dXJuIGZhbHNlPyBJIGRvbid0IHRoaW5rIGl0IHdpbGwgcmV0dXJu
+IHRydWUuDQo+PiBGb3Igbm9uLXJpZF9wYXNpZCwgaXQgbWF5IHJldHVybiBmYWxzZS4NCj4NCj5h
+aGEsIHllcy4gZm9yIHJpZF9wYXNpZCwgeW91IG5lZWQgdG8ga2VlcCB0aGUgdnRkX2FzIGluc3Rh
+bmNlLg0KPg0KPlJlZ2FyZHMsDQo+WWkgTGl1DQo=
 
