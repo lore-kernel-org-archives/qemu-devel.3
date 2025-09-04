@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9515CCA1010
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 02:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03CEDCA1015
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 02:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu0AJ-0001Qm-Ih; Wed, 03 Sep 2025 22:57:36 -0400
+	id 1uu0Bt-0002hY-E0; Wed, 03 Sep 2025 22:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1uu0AG-0001Q1-Nz; Wed, 03 Sep 2025 22:57:32 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1uu0Bo-0002gK-Pc; Wed, 03 Sep 2025 22:59:08 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1uu0AF-0001Q7-3V; Wed, 03 Sep 2025 22:57:32 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-323266cdf64so360468a91.0; 
- Wed, 03 Sep 2025 19:57:28 -0700 (PDT)
+ id 1uu0Bl-0002Df-6L; Wed, 03 Sep 2025 22:59:06 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b4cf40cd0d1so444388a12.0; 
+ Wed, 03 Sep 2025 19:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756954647; x=1757559447; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756954743; x=1757559543; darn=nongnu.org;
  h=mime-version:user-agent:content-transfer-encoding:references
  :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
  :date:message-id:reply-to;
- bh=wcGY8/lyNOnDa+8Ee43172Au5C5YolnxWwM+ktO+Hz8=;
- b=EcLuyFmCEJQdzEh87JRWn+nMeTWKCWB5D3O0PTa948itNDjvEHdY9eUcvArE3vlqNg
- QUtkKfcNQQJvm9wiy2QeWoLLRwL0jJO4NjN4G4IJZbRhh97q6Ctebq+sOcKagsIjnZFC
- m1TeqWqhnfnKnKARbdlhuKb491GuYDa2/MS0JuQxk1PXrG9fIkBJvUkpJeSLQGun/3sC
- MojJOgTwzxYle2R2/vGgTtcFI5c3NC/XTpznPA/dIGwOnT0T895o0onkOa/PYLsat2pz
- w26lvn88saHw8PKF/4f1YopY4uTG9OZjEiPYhoYxMV7adakkZ5/KoQ73C698ZJ4e9i1N
- cPHA==
+ bh=6bhDyuP8uZ0IHn55YBLu4IA83FNFTTzPmIxfP2mLmW4=;
+ b=PiPPhk+Fk5o57OA7EGbjfm++O3GBsY+3nkVTTQrxiW0eIf7cigxmwwDCx/KUCZeJKG
+ j6QJh30CLhlkRdUi+gZbVc43bTs+ww1YiHNuyrsh01O/+hrwsIAJ0z+ic/q3mcedLE67
+ ModQIusSGeU1HgixmJMn0GZBeukFDAGw/ttylWpw42ERJCVqtx7LjgBdyjtldLo8ZPF7
+ 9IlggrU5G3UJbRaD71MexsM85wG4L3Sz9KJghZSCVod7PoJeBfU24AnkGlVRIbTrX8xG
+ OGmABmYA75wF+Pyi+QZ+6SIKu5d9Up2DbpPfwFwmhZJQDI+MvenHxknt+QhUqeuR9beR
+ cWhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756954647; x=1757559447;
+ d=1e100.net; s=20230601; t=1756954743; x=1757559543;
  h=mime-version:user-agent:content-transfer-encoding:references
  :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wcGY8/lyNOnDa+8Ee43172Au5C5YolnxWwM+ktO+Hz8=;
- b=jZDWPlbCmU2WAZ2DBmo6NtMH391Li5lnX2V3agWKUvmJxulob6Fn9eorfpk6WsaTcc
- w5tVdAjB4yidrKUHyZjHBPvoTfbFlWNA4NlpOwy7YjvLsUSGZ3Fkx74glpRWQDj6VEFJ
- /BRFWqCmQ8lxums6jqMoOnmdL1IkEYtEIycfaJBwc6AsOR0jdZnpbMPSGFD/ZpQfq6bQ
- wkTqSlBOvaZg6SMP5jpQDPAqnJwBtjFvgRT5dfAu7ksIVgpZtPK4DaCSuV7EWgQ1SbAX
- N/hHl2zZi5afHD8PCAGPgGsqItv76/rczhRgC3ylOQxkasguZg6nyZ0fkEeqTmwCo+pw
- EwjQ==
+ bh=6bhDyuP8uZ0IHn55YBLu4IA83FNFTTzPmIxfP2mLmW4=;
+ b=vogGDbr2fZM0VIApQ2Vso6sez250dlxd1kbgnRNYYv/l5xcugTGBJ4IhxIzbL8dC3L
+ 7jtWLLlZtkUlADf5qFtr9cUFu6c/GmeHUcdnZRF/F85fdrNRP4gLffwI9se5ipR9mDsf
+ Czx4xFary9gnw2GSuS0UQZjdV5m9c4ImD7dRfyTqxXo2KXHESjK2skXlZumzkNsDDzgi
+ NwaH2Ar04qAHiAcf00GWrnBas8/1m3+joJUNMRCHCAW0i6+F2zzPgZdklD14A1jnix52
+ MlOi6f8E+Ik3HKTR7wLnL+2I4uYD0aqxNab6YCVn0S80ZmKkFFCqDz885i8SeezVZjRD
+ 7smA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9R1ZqpiFYB1PA/9Bn04cPjkzaIrtB9Sxy8lwzCjqSs0xa2j3NXvGl0SjJGuVFS+WSlfdXzbSRq1Nefg==@nongnu.org,
- AJvYcCVYzcT7QKQYJ6+xoYMSk8YCLKHZEZ/XCXBAZin1tQxJKloGw3Z7Eck+xiYXe22YQEGBmJ76ou1KVIBl@nongnu.org
-X-Gm-Message-State: AOJu0YwD94FLAaNwOAnDyAuvXmJys99Hmt589xOvh/k+K6Xw/8R0+zss
- GlyUh1y/8lgUbjJQxKSmJxy9ELj+OewUlDaI59dE8qpxdSvu2KXouF6N
-X-Gm-Gg: ASbGncspZqmdOAjt5lTWZh+LxRUaaAz3Y+r7//EVJaISJpl9VKfU178CNhhnhNAnDQ3
- 7mIKqXaZd+RE6cl/RrH0s2Q8SMdBZmw1dMBp5LpCJxFcFKWDJZ4qt1r6Bug+8ZuU5tc0nN3DrV2
- Sph/q2kwQ2TvzMpKPqXkLRE/it5NTYmcXaABch1wGO//XHNdP1J1/Ce4eW8e9yS1NJBLgcpGQuq
- UHjKSbdxLwMIkasDMjIag2RHqa2mVNwK2AhLLeTtHW4wLa/HaVAUkHJ+e/uOis8q3VFVgsmOfKb
- 7aH4BzuN2FvZizmrlExMXMxgHfjL8BF9aQEwWzZWPUDVdGHu/HEFEOVd8i/SKU2iGO/d8CD0KeF
- WXHwduKdQZ9eGytKK8+qr+SLCAyjNo5WiCJ8m58phuclVr1s=
-X-Google-Smtp-Source: AGHT+IEDGczASuHQE5zuVGP4AxDAFpzPYqHC8yzwO6kRd5AcUh9CKOWyHf9ai1GOgbwjtF9k3CrQKA==
-X-Received: by 2002:a17:90b:17cd:b0:32a:e706:b7b6 with SMTP id
- 98e67ed59e1d1-32ae706be21mr7083547a91.11.1756954647100; 
- Wed, 03 Sep 2025 19:57:27 -0700 (PDT)
+ AJvYcCUok0Ey3kusTGNtdiM38HD68oRoT6qU5Kg1G6cKaRXz/j3VlBGZKBf7ZNKFNE3urC78HOz67FgQX2YgdQ==@nongnu.org,
+ AJvYcCV44ZLQpyMbdILgdvY0wBp4I0kdi7rjgLWD5fT24ttRvDHW2fwarbIFIDq1NzQhDLU+4KPj6lvZejoz@nongnu.org
+X-Gm-Message-State: AOJu0YzbCGcywXtCWjAr+5G3UW6qaxR2LZKB/103jGfZxYVcE0ty7h5d
+ 9wChNFAelq/T9uRNTfR1LxC6KtuW87yjBIrp3Y8M09YuHFUm9KtYkUqY
+X-Gm-Gg: ASbGnct4/vfIg+qmRoM2GAwUQafRL266rKH7zQvfE64xOwNGg/v3gv+uOErWAqfZH8X
+ /327RVTVL3jn6wGeDIqjxKwx/uomHEAXC2zrxaQh6M1SWIhPITzOU3jVtS9tPktJAfsCX+amABZ
+ SOytXc3MUTJIHF/3XWebZQjl2GXOkZ7tbkrj5n9AWN6jSzzVFwp/N9gdfaq2nnwcylxLTlzu9iS
+ dzs+CxPyTo++zmdD/Y6ReqxLYhxrfo+tWuXU9/OTH4wxhWEG1J5Ukjk76HmM4rlltUfKaGzXZuh
+ AtBVgLcQlgy8pzrtmAYg2+3aPZfxVIz1L60K+3xhhSRbBYnzbVcXhW04sjH/UgTcPhyKbi6SfgI
+ 9qV9dQrPIHM2EdV8NtCTAdL4ZlrzAyw2wyApAYvnUSfJuQ2c=
+X-Google-Smtp-Source: AGHT+IFJE02c1RcTWmdZ7oB4KhxjslF89qxqIbquEWfmzvvc1U/JuVe3cq4La9aTl40pe0FeaJLrAw==
+X-Received: by 2002:a17:903:3d0d:b0:24c:8984:5f9c with SMTP id
+ d9443c01a7336-24c898478c6mr61905715ad.36.1756954742968; 
+ Wed, 03 Sep 2025 19:59:02 -0700 (PDT)
 Received: from [192.168.0.69] ([159.196.5.243])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327daeeca1csm18596788a91.25.2025.09.03.19.57.22
+ d9443c01a7336-24cb28e33d7sm15660295ad.89.2025.09.03.19.58.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Sep 2025 19:57:26 -0700 (PDT)
-Message-ID: <593d87562d24498fead1467647966a7ea6545878.camel@gmail.com>
+ Wed, 03 Sep 2025 19:59:02 -0700 (PDT)
+Message-ID: <852755e33a0a6d1ca962283c7813b76fc5e5ef3f.camel@gmail.com>
 Subject: Re: [PATCH v3 3/5] hw/nvme: add NVMe Admin Security SPDM support
 From: Wilfred Mallawa <wilfred.opensource@gmail.com>
-To: Klaus Jensen <its@irrelevant.dk>, Stefan Hajnoczi <stefanha@redhat.com>
+To: Klaus Jensen <its@irrelevant.dk>
 Cc: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
- <kbusch@kernel.org>,  Jesper Devantier	 <foss@defmacro.it>, Fam Zheng
- <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
- <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz	
- <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, Marcel
- Apfelbaum	 <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org,  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Date: Thu, 04 Sep 2025 12:57:20 +1000
-In-Reply-To: <aLgNns-n6pODC4JT@AALNPWKJENSEN.aal.scsc.local>
+ <kbusch@kernel.org>,  Jesper Devantier	 <foss@defmacro.it>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Fam Zheng	 <fam@euphon.net>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,  Kevin Wolf
+ <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, Jonathan Cameron	
+ <Jonathan.Cameron@huawei.com>
+Date: Thu, 04 Sep 2025 12:58:56 +1000
+In-Reply-To: <aLgOlzuRwi0-_cvy@AALNPWKJENSEN.aal.scsc.local>
 References: <20250901034759.85042-2-wilfred.opensource@gmail.com>
  <20250901034759.85042-5-wilfred.opensource@gmail.com>
- <20250903024705.GA103624@fedora>
- <aLgNns-n6pODC4JT@AALNPWKJENSEN.aal.scsc.local>
+ <aLgOlzuRwi0-_cvy@AALNPWKJENSEN.aal.scsc.local>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=wilfred.opensource@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=wilfred.opensource@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,44 +110,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-09-03 at 11:42 +0200, Klaus Jensen wrote:
-> On Sep=C2=A0 2 22:47, Stefan Hajnoczi wrote:
-> > On Mon, Sep 01, 2025 at 01:47:58PM +1000, Wilfred Mallawa wrote:
-> > > From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-> > >=20
-[snip]
-> > > +static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest
-> > > *req)
-> > > +{
-> > > +=C2=A0=C2=A0=C2=A0 StorageSpdmTransportHeader hdr =3D {0};
-> > > +=C2=A0=C2=A0=C2=A0 g_autofree uint8_t *sec_buf =3D NULL;
-> > > +=C2=A0=C2=A0=C2=A0 uint32_t transfer_len =3D le32_to_cpu(req->cmd.cd=
-w11);
-> > > +=C2=A0=C2=A0=C2=A0 uint32_t transport_transfer_len =3D transfer_len;
-> > > +=C2=A0=C2=A0=C2=A0 uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
-> > > +=C2=A0=C2=A0=C2=A0 uint32_t recvd;
-> > > +=C2=A0=C2=A0=C2=A0 uint16_t nvme_cmd_status, ret;
-> > > +=C2=A0=C2=A0=C2=A0 uint8_t secp =3D extract32(dw10, 24, 8);
-> > > +=C2=A0=C2=A0=C2=A0 uint8_t spsp1 =3D extract32(dw10, 16, 8);
-> > > +=C2=A0=C2=A0=C2=A0 uint8_t spsp0 =3D extract32(dw10, 8, 8);
-> > > +=C2=A0=C2=A0=C2=A0 bool spdm_res;
-> > > +
-> > > +=C2=A0=C2=A0=C2=A0 transport_transfer_len +=3D sizeof(hdr);
-> > > +=C2=A0=C2=A0=C2=A0 if (transport_transfer_len >
-> > > SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE) {
+On Wed, 2025-09-03 at 12:01 +0200, Klaus Jensen wrote:
+> On Sep=C2=A0 1 13:47, Wilfred Mallawa wrote:
+> > From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > >=20
-> > An integer overflow check is needed since transfer_len comes from
-> > the
-> > untrusted guest. This will prevent the sec_buf buffer overflow
-> > below
-> > when nvme_h2c() is called.
+> > Adds the NVMe Admin Security Send/Receive command support with
+> > support
+> > for DMTFs SPDM. The transport binding for SPDM is defined in the
+> > DMTF DSP0286.
 > >=20
+> > Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> > ---
 >=20
-> And it should not be allowed to exceed MDTS (see nvme_check_mdts).
-> MDTS
-> may be configured as zero, so g_try_malloc should still be used.
-Okay that makes sense, I will fix this in V4. Thanks for the pointer!
+> > +/* From host to controller */
+> > +static uint16_t nvme_security_send(NvmeCtrl *n, NvmeRequest *req)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 uint32_t dw10 =3D le32_to_cpu(req->cmd.cdw10);
+> > +=C2=A0=C2=A0=C2=A0 uint8_t secp =3D (dw10 >> 24) & 0xff;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 switch (secp) {
+> > +=C2=A0=C2=A0=C2=A0 case NVME_SEC_PROT_DMTF_SPDM:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return nvme_sec_prot_spdm_s=
+end(n, req);
+>=20
+> If spdm_socket is not set, I think this should be Invalid Field in
+> Command too, right? Same for receive.
+Yeah! it should be. will fixup in V4.
 
-Cheers,
+Thanks,
 Wilfred
+>=20
 
