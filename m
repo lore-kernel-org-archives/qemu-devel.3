@@ -4,84 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF586CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E17CA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu77s-00005q-7H; Thu, 04 Sep 2025 06:23:32 -0400
+	id 1uu79A-00024R-QZ; Thu, 04 Sep 2025 06:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uu77l-0008W1-Qb
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:23:25 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uu77f-0005Pc-1K
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:23:25 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-45cb6428c46so6544915e9.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 03:23:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756981394; x=1757586194; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8WQ7LUh1A1KBG9tydBdEOxJ8dvprRw5xXuBpuRm8H6I=;
- b=qs3fC/GytVjqKJC5mpCN+3izQyKW2KXg5lv1xpsyaitfKRl/Ng7Q5KdGiPm53gGWel
- yBG2/BTuyZanHZoyD/dLCemMTZR+t1/o6cjPj5nQbZkpGNL7dK66jGU/TTqePQ/NIFl4
- AFrI3hGTF40IEiNuJUfO5nwND0EAsCmjVLT9T2G20ZCGaaM7Squ1rxZq4rVHYRSX0jRx
- MwxNt5JxRfLjBR1YB44I5lPKnFqVIT6RvFUoLPjHgt1e/6J8MJ4/yRcPqn97AHL0rrB8
- xFBI2/4Zv/0AQ7rqdOwyvWwV3tl1GU1+7rI3nmyrxgzoYpMlOombnE1xpfJ8B3bNwx6Z
- 7tUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756981394; x=1757586194;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8WQ7LUh1A1KBG9tydBdEOxJ8dvprRw5xXuBpuRm8H6I=;
- b=chO0IOLCToD4jMyv57rCaeUfBtIQ68U4ytPmWpbtCOqVc2qQuowVg1pm4huaV8cGHH
- 6wiXNplgm/7tcUrWo8zjinkX0L3IbdqwV+7K0hO2IdNPTHM7oq/SCGMLUtd2ibffUzX1
- 7LF/enAaIEFsBL+06gn/vF0rKD9TIpIxEf9STCQav+zkO1WbejJt8OqtZLmF9y2CubMR
- /p0JjyCHLHfGe5gnoSIgugUG/x0vgbqJ+ZEw6Rjpeyq2TheR+rLZwFg5fXyHJrutfXB+
- Tv6QxXu+lIckf0nNBuS7cxQHRaVNixT33Qir+jDjusjh78oxceq4rzaybmf2Nms5hhwr
- +PhA==
-X-Gm-Message-State: AOJu0YwJpZH2CHOBgukJ2BvFRbYhV8tBlVyQcDENv81NeqL/Axt07f5J
- TtaL7s2b2Z1jL12ebh7/SeOkFAfBCqlhd1b4Pl/vaX+7XivpIfP0gR7b7NpUOlJWiKBpVP6L1W0
- 5OW0dJAk=
-X-Gm-Gg: ASbGncurCl1irsZ7+723lOgeF4kmE9wbojXjLJva/SM+7JHlugZszGN6e1JLAiWd80k
- qjQdGopn7tOE1Idc5n7XyflPohoL2ZKCXKU0nuw9RljXVO/RMyyfqmTH1HE8pkREx0/gzmYlWxj
- oylZnwCCdTMCIsmScEKsZ8dBp7+bIBjzaKENkk0Q5+ndUhDxgU04mrHZDxBLPZkfp/C1nf2H2Bt
- o4hn4lrIUD4koNbFtUTflOTHqUyZ+Z8zOwlHHpB+EEDzwTVgi/6QsKS1hb03QEIVjNfAbI1YsO/
- 0rQmNbiImbHrqAfXHGPm17w0KNFbmXJoSVrCoA5oF2x9rvhpPySl67kZ3Z7ScSHr6UOCeK/1sfn
- Uk/WJhWA3jyLCM1lI6BUY+/642yV+WvmMDSLa8peJai0MhmLtJGOfm6JQh8tSXzDOADU=
-X-Google-Smtp-Source: AGHT+IFoXLkryOlq0QpiLfLcj5zpbQEEeO1Xso9OxwoDePLG+OK4Yagln/wU/oWnIx42eH1N8FZWbA==
-X-Received: by 2002:a05:600c:548b:b0:459:d8c2:80b2 with SMTP id
- 5b1f17b1804b1-45b85526618mr152606545e9.7.1756981394165; 
- Thu, 04 Sep 2025 03:23:14 -0700 (PDT)
-Received: from stoup.dot1x.polimi.it ([131.175.126.3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b8f2d3c88sm147699195e9.19.2025.09.04.03.23.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 03:23:13 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: floss@arusekk.pl
-Subject: [PATCH v4 0/4] linux-user: Add syscall dispatch support
-Date: Thu,  4 Sep 2025 12:23:06 +0200
-Message-ID: <20250904102311.57383-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uu794-0001q1-UV; Thu, 04 Sep 2025 06:24:47 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uu78x-00062U-3I; Thu, 04 Sep 2025 06:24:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cHbD85dtqz6L4sl;
+ Thu,  4 Sep 2025 18:23:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6EA021404C4;
+ Thu,  4 Sep 2025 18:24:32 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 4 Sep
+ 2025 12:24:31 +0200
+Date: Thu, 4 Sep 2025 11:24:30 +0100
+To: Wilfred Mallawa <wilfred.opensource@gmail.com>
+CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
+ <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
+ <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
+ <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-block@nongnu.org>, <dlemoal@kernel.org>, Wilfred Mallawa
+ <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH v4 4/5] spdm: define SPDM transport enum types
+Message-ID: <20250904112430.00006b3b@huawei.com>
+In-Reply-To: <20250904031058.367667-6-wilfred.opensource@gmail.com>
+References: <20250904031058.367667-2-wilfred.opensource@gmail.com>
+ <20250904031058.367667-6-wilfred.opensource@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,66 +74,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hiya,
+On Thu,  4 Sep 2025 13:10:58 +1000
+Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
 
-I have adjusted the signal return trampoline detection from
+> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> 
+> SPDM maybe used over different transports, such as PCIe Data Object
+> Exchange (DoE) or Storage amongst others. This patch
 
-  https://lore.kernel.org/qemu-devel/20250711225226.14652-1-floss@arusekk.pl/
+Odd line wrap.  I'd also drop the 'amongst others' as 'such as' already
+suggests there are others so t those extra words add no meaning.
 
-and tidied up a few other bits.  Would you please re-test this
-versus your plan9 emulator?  Thanks,
+> specifies such types as an enum with a qdev property definition such that
+> a user input transport type (string) can be mapped directly into the
+> respective SPDM transport enum for internal use.
+> 
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Trivial comment below.
 
+> diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+> index 6c2cb7b926..8fb5f7cf40 100644
+> --- a/include/system/spdm-socket.h
+> +++ b/include/system/spdm-socket.h
+> @@ -110,12 +110,25 @@ typedef struct {
+>  #define SPDM_SOCKET_COMMAND_UNKOWN                0xFFFF
+>  #define SPDM_SOCKET_COMMAND_TEST                  0xDEAD
+>  
+> -#define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
+> -#define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
+> -#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
+> -#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
+> -
+>  #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
+>  #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+>  
+> +typedef enum SpdmTransportType {
+> +    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
+> +    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
+> +    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
+> +    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
+> +    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +    SPDM_SOCKET_TRANSPORT_TYPE_MAX,
 
-r~
+Given it will always be last element and I assume isn't a spec thing as such,
+but just a useful terminating entry, I'd drop that trailing comma.
 
-
-Arusekk (1):
-  linux-user: Add syscall dispatch support
-
-Richard Henderson (3):
-  linux-user: Create vdso_sigreturn_region_{start,end}
-  linux-user: Populate sigreturn_region_{start,end} in all vdso.S
-  linux-user: Populate vdso_sigreturn_region_{start,end} from sigtramp
-    page
-
- linux-user/loader.h            |   2 +
- linux-user/qemu.h              |   5 +++
- linux-user/signal-common.h     |   7 +++
- linux-user/syscall_defs.h      |   6 +++
- linux-user/elfload.c           |   7 +++
- linux-user/gen-vdso.c          |   6 +++
- linux-user/main.c              |   2 +
- linux-user/signal.c            |   2 +
- linux-user/syscall.c           |  76 ++++++++++++++++++++++++++++++++-
- linux-user/aarch64/vdso-be.so  | Bin 3224 -> 3320 bytes
- linux-user/aarch64/vdso-le.so  | Bin 3224 -> 3320 bytes
- linux-user/aarch64/vdso.S      |   2 +
- linux-user/arm/vdso-be32.so    | Bin 2648 -> 2724 bytes
- linux-user/arm/vdso-be8.so     | Bin 2648 -> 2724 bytes
- linux-user/arm/vdso-le.so      | Bin 2648 -> 2724 bytes
- linux-user/arm/vdso.S          |   2 +
- linux-user/gen-vdso-elfn.c.inc |   7 ++-
- linux-user/hppa/vdso.S         |   2 +
- linux-user/hppa/vdso.so        | Bin 2104 -> 2224 bytes
- linux-user/i386/vdso.S         |   2 +
- linux-user/i386/vdso.so        | Bin 2672 -> 2792 bytes
- linux-user/loongarch64/vdso.S  |   2 +
- linux-user/loongarch64/vdso.so | Bin 3560 -> 3712 bytes
- linux-user/ppc/vdso-32.so      | Bin 3020 -> 3140 bytes
- linux-user/ppc/vdso-64.so      | Bin 3896 -> 4048 bytes
- linux-user/ppc/vdso-64le.so    | Bin 3896 -> 4048 bytes
- linux-user/ppc/vdso.S          |   2 +
- linux-user/riscv/vdso-32.so    | Bin 2980 -> 3124 bytes
- linux-user/riscv/vdso-64.so    | Bin 3944 -> 4104 bytes
- linux-user/riscv/vdso.S        |   2 +
- linux-user/s390x/vdso.S        |   2 +
- linux-user/s390x/vdso.so       | Bin 3464 -> 3616 bytes
- 32 files changed, 133 insertions(+), 3 deletions(-)
-
--- 
-2.43.0
+> +} SpdmTransportType;
+> +
+> +extern const PropertyInfo qdev_prop_spdm_trans;
+> +
+> +#define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
+> +    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
+> +                         qdev_prop_spdm_trans, SpdmTransportType)
+> +#define DEFINE_PROP_SPDM_TRANS_NODEFAULT(_name, _state, _field) \
+> +    DEFINE_PROP_SPDM_TRANS(_name, _state, _field, \
+> +                           SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC)
+> +
+>  #endif
 
 
