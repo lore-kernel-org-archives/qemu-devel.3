@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05A2CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5210DCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuGsB-0003XM-8n; Thu, 04 Sep 2025 16:47:59 -0400
+	id 1uuGsB-0003Y3-RU; Thu, 04 Sep 2025 16:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGs6-0003V5-Qh
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:54 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGs8-0003W3-FE
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:56 -0400
 Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrv-0000jw-2H
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:54 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrx-0000kk-ED
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:56 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 4A8F960C35
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id E0C2660BB4
  for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:47:23 +0200 (CEST)
-Received: (qmail 32710 invoked by uid 990); 4 Sep 2025 20:47:23 -0000
+Received: (qmail 32736 invoked by uid 990); 4 Sep 2025 20:47:23 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
@@ -30,32 +30,36 @@ Received: from unknown (HELO unkown) (::1)
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH v6 14/25] target/openrisc: call plugin trap callbacks
-Date: Thu,  4 Sep 2025 22:46:51 +0200
-Message-ID: <f5d3e08796e89ff7ce8dc08d351767273d665957.1757018626.git.neither@nut.email>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v6 16/25] target/riscv: call plugin trap callbacks
+Date: Thu,  4 Sep 2025 22:46:53 +0200
+Message-ID: <b2661be6d5851f5d070b90a6d3ac801b67e96929.1757018626.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1757018626.git.neither@nut.email>
 References: <cover.1757018626.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.990486) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.990391) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.590486
+X-Rspamd-Score: -5.590391
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=6By6W6p63fDAcZVupcavoMH8cQUKrNcCRvR5J3edyUo=;
- b=rBBYsB3eGh7DnQnVBzg45QkevES8TeWdPcAXgHQ960/tKcX3V/zjHM/YGBjiyL5bA9hNrgSRMi
- tHnumaVMwBjQLgGwWaMu0YGYyuebDrHuba/Cs6qpZ3n6owlHGfgmPPlqc+zOKCcygfFzWII8//cM
- AmmKY5NM66L2YjO3ohnTFZGfUaU+mieC/EHo/97pw6Df5w7OEsmwHAZi+kqjK7PIQ/+v8oYxgQGt
- zNNliqmRqA+ReBTFo7AsF8ZiAKtHTqDj2ohOsPNfiHwiFMCAsz6X9IH1UZHrpxmgwUIQkg2yg4vV
- nzYDE0p/6m+HwPpDcC8a/PQCFKxdxzenlKnwgpdPGmYNPbPu0yYxO/XlUKzJ1R1HG54I2w5uQ9F+
- IUk0GinqjkhFuMzF8rJ2Pj61QXRaY1Xme1acs4AsBEZv2tEBuFaWa7K4VFBnFMledMywRkbJY4v7
- Ioxm0jtEr3DZCQ1qPzrjqO86rZJunf4kdq8uSwbANovmpYOfTlazvMeaRVjDFHKQ9nJO5Noqe7mk
- 7j2aEEW6QarqXCcDZjRf75/BO2WdWdzCchx2PRzGw75UtAlqIKG/URPoFyo7/K2xZjXIdcQx6W2T
- foHOgBPt1tZxAlF1yYkiZRIN+gHcsqCR6sIQyFZvENYE312GnllcZhwcWGO9qFy5Dbnf3v2ivQ7G
- M=
+ bh=6jnG3wDchPvR9iC7OeKM71ZvHzTjOj/B4aMwSwCZlYo=;
+ b=oLgOyCO7C9M1gkLL/S0CJ9o/yrdfe7/Vd9aQR769jL0B18VeZ6F+L+DET46QiMoUAAJRXQwg8l
+ nv4m8LrHM3NICRZm8FsDzHpWgEADZP1EEERwNshRQt8BgngvNhoIE8Wc+ix5N8HVgJIevx+/sjxf
+ oxyPdLAS83YSuUqND3+lLkYngBdOQztzHGdCIO74oem1ARexkuL0v9m7Qk+xReT73IRX921Tz/IP
+ iJt8/5Jt980qy8GwKkODA6diT2PmZmlAVbU4ucOOF+a+KrG0le3ZHpjOctXCltptsRJ1JynrNmVQ
+ vHIV/Gxcf1edCEVC8OwlAn+UMYIbPD4DISxsT+1Sutb0geoc8MM8i2ZlMRz3EsyTJLONaaQsBNxx
+ VhE/WCEiVJFh+ByhIoH1OUR5rRDcmf85ACgb6LjgIQyHExvhKc+SLU36+VxT/gxmwZb2CEJAijQC
+ h/ixUij9dsak6x+pFK/bLfYHIIv03B41iigGgoHXiMqrUGEHzb7HlEh41zBlJN+Pe5GjfkyhBLiM
+ sdnulqtYv/eNE/nWKqJCbk6LS+CDFJzDYo/C0/hsElLnYv3uJVs3z9P/KCEVzCdb/z/6rZkmwyag
+ JFauhsu9sAjUF2GY3o+UN+lY5kj7DzFlTd9Mg/fpTKmHm8swwawQJhdl9h0tZdMyZ+NZfzNlfxa4
+ U=
 Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
  envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -84,52 +88,56 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places hooks for OpenRISC targets. We treat anything other
-than resets, timer and device interrupts as exceptions.
+This change places hooks for RISC-V targets.
 
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/openrisc/interrupt.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ target/riscv/cpu_helper.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/target/openrisc/interrupt.c b/target/openrisc/interrupt.c
-index 486823094c..d357aaa7da 100644
---- a/target/openrisc/interrupt.c
-+++ b/target/openrisc/interrupt.c
-@@ -25,11 +25,13 @@
- #ifndef CONFIG_USER_ONLY
- #include "hw/loader.h"
- #endif
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 3479a62cc7..10a10dcd90 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -36,6 +36,7 @@
+ #include "cpu_bits.h"
+ #include "debug.h"
+ #include "pmp.h"
 +#include "qemu/plugin.h"
  
- void openrisc_cpu_do_interrupt(CPUState *cs)
+ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
  {
-     CPUOpenRISCState *env = cpu_env(cs);
-     int exception = cs->exception_index;
+@@ -2176,6 +2177,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+     const bool prev_virt = env->virt_enabled;
+     const target_ulong prev_priv = env->priv;
 +    uint64_t last_pc = env->pc;
- 
-     env->epcr = env->pc;
- 
-@@ -98,6 +100,19 @@ void openrisc_cpu_do_interrupt(CPUState *cs)
-         cpu_abort(cs, "Unhandled exception 0x%x\n", exception);
+     target_ulong tval = 0;
+     target_ulong tinst = 0;
+     target_ulong htval = 0;
+@@ -2198,6 +2200,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         case RISCV_EXCP_SEMIHOST:
+             do_common_semihosting(cs);
+             env->pc += 4;
++            qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+             return;
+ #endif
+         case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
+@@ -2467,6 +2470,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                         prev_priv, prev_virt);
      }
  
-+    switch (exception) {
-+    case EXCP_RESET:
-+        /* Resets are already exposed to plugins through a dedicated callback */
-+        break;
-+    case EXCP_TICK:
-+    case EXCP_INT:
++    if (async) {
 +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-+        break;
-+    default:
++    } else {
 +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-+        break;
 +    }
 +
-     cs->exception_index = -1;
- }
- 
+     /*
+      * Interrupt/exception/trap delivery is asynchronous event and as per
+      * zicfilp spec CPU should clear up the ELP state. No harm in clearing
 -- 
 2.49.1
 
