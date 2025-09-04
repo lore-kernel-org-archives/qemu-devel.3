@@ -4,89 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65878CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 15:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107FFCA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 16:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuCBm-00050c-Q9; Thu, 04 Sep 2025 11:47:54 -0400
+	id 1uuCQZ-0006T8-KQ; Thu, 04 Sep 2025 12:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uuCBQ-0004nO-CZ
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:47:35 -0400
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uuCBF-0008QZ-Gn
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:47:31 -0400
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-544a55b84d8so461445e0c.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 08:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757000831; x=1757605631; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vYDFXmXqCAGa3H4P42CKPPrpxXB7rIYCvJObU3+Iajg=;
- b=r18vM5WKsi7cX9Tw91VlYUKwN37l5yqMGA9eAJQawp0yIPFoMwKY+ndzx2RBgpOY4N
- IRJcZDlamXiR+wo2RhE5BKFKLWUl9u55jRaXh6ZHoNEUKCw5Tjni1FCPMAJRv5UzoFHs
- WzsxmBywhHYPgSZtgqhvDTvgtTUK2COc6KmpvUlLtQpq6eNtIM+H9bAnIj6xfsKZAkV9
- UB9OROYp1nO1jcGIX0rJ/awMayYndxGzvg0me4qsZaSsdOV+7XyTcUWEfY6olt5VRLcu
- Ag7tVhxq8hQ/MoAGQ0Rap5IzFCh6LLBS9TOYZBQURFcQXEh37pA/6YOEB6H7Qm2oY0fk
- sdWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757000831; x=1757605631;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vYDFXmXqCAGa3H4P42CKPPrpxXB7rIYCvJObU3+Iajg=;
- b=YKkryFdKRN+13CGdLldEKobT7TOQrqqJlTWafE46CgOjLuRkd2XMRq3ELgfMp493sn
- ia19USripvNxQgcGspoILsYQ1rICKsVnxqtFKq62PUhithefeWmNHAZuFYgbVf4JCKd4
- 37A2FjSZ+a221KcbWq4hMD1SLB8RdQlZUBhrjukQC7u+nhVNyoC6NUWoHuMv0HAosdof
- KHEBL3ewU1NTY3pNDi1rKcGT8F/zc78C3c90nNbmq8Q8oaeJCPd4QSHoZQhxDbfckLeH
- dSFbgqOCizJi31tSpTznvUzQ3TkOdq44sa4Nmu/uv9dsHHrGO1aVvOTLATROROY85BjD
- WMHg==
-X-Gm-Message-State: AOJu0YwLxpHF/j1OSFceJFf1Ly9q9t4068gEEt8H+09TDaE7y3RIuQMi
- 9ezYR5foJOLqtHPYlOTJPmu5fDztt8zgMQmnPP/UzWbFLaCwXnNyaMOLHURAU3+68zkIuuX5hB/
- VmUKwkO3AJg==
-X-Gm-Gg: ASbGncv0lYuF3Qoqd23s6OL+wE2wiEkgt5je4biE8v5anbB+im8dB6Pl0AkP5wAEt5/
- Kc7SdYiPFotmZEwfub4EpWl8msk1q7Aydv49T3Q8IMS6Z1x2gNB933ssmA1FYt1y/D/k7aFWjRl
- eMJdWrVJQ3u6aPQlTuUyLbMV1gN/wUDRsMuPzBGLPhwGIZxPj4KXnmnYWvfenNNbiFKJuSYdS7X
- t1T6fQLwb2ViHv1Qk9rAaOcIpdpRbAK7UA/n3JZQJc9brDpEzBENMJhOR9iQp77Bub52Tf4u+Na
- FRuzJKcrNUai7wlmk0mcBSJZIlWbYdb0jYtYBX5GL6I9pY7ibMBb6kHpGc0sh8rZaGgx6CJyMnB
- SZxIYyiURR0nyglTuAaYz6FHtFV0x7oNH8DtK8LA=
-X-Google-Smtp-Source: AGHT+IEfdF/8MTudAgTz1GKf4FI7P0iY9BfPuKxefZGnKr/uKjEuglZ8oN5EPxrYTIZ4IfY4cxLhSw==
-X-Received: by 2002:a05:6122:1d8f:b0:531:2afc:4628 with SMTP id
- 71dfb90a1353d-544a0190d7amr6131606e0c.2.1757000829781; 
- Thu, 04 Sep 2025 08:47:09 -0700 (PDT)
-Received: from gromero0.. ([186.215.58.133]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-544a666da0csm6497022e0c.28.2025.09.04.08.47.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 08:47:09 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
- berrange@redhat.com
-Cc: qemu-arm@nongnu.org,
-	1844144@gmail.com,
-	gustavo.romero@linaro.org
-Subject: [PATCH v2 3/5] tests/guest-debug: Add quiet option to run-tests.py
-Date: Thu,  4 Sep 2025 15:46:38 +0000
-Message-Id: <20250904154640.52687-4-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250904154640.52687-1-gustavo.romero@linaro.org>
-References: <20250904154640.52687-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uuCQH-0006QT-SO; Thu, 04 Sep 2025 12:02:54 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uuCQ9-0007XV-I7; Thu, 04 Sep 2025 12:02:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7A87714FD94;
+ Thu, 04 Sep 2025 19:02:27 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A30D9271C8C;
+ Thu,  4 Sep 2025 19:02:27 +0300 (MSK)
+Message-ID: <7e761eec-1dc1-4891-8ff4-edbff0485268@tls.msk.ru>
+Date: Thu, 4 Sep 2025 19:02:27 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing
+ after MSI-X enable
+To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250807110806.409065-1-lvivier@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250807110806.409065-1-lvivier@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,57 +108,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a --quiet option to run-tests.py so it can run without printing any
-messages to the stdout.
+On 07.08.2025 14:08, Laurent Vivier wrote:
+> A race condition between guest driver actions and QEMU timers can lead
+> to an assertion failure when the guest switches the e1000e from legacy
+> interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+> RDTR) is active, but the guest enables MSI-X before the timer fires,
+> the pending interrupt cause can trigger an assert in
+> e1000e_intmgr_collect_delayed_causes().
+> 
+> This patch removes the assertion and executes the code that clears the
+> pending legacy causes. This change is safe and introduces no unintended
+> behavioral side effects, as it only alters a state that previously led
+> to termination.
+> 
+> - when core->delayed_causes == 0 the function was already a no-op and
+>    remains so.
+> 
+> - when core->delayed_causes != 0 the function would previously
+>    crash due to the assertion failure. The patch now defines a safe
+>    outcome by clearing the cause and returning. Since behavior after
+>    the assertion never existed, this simply corrects the crash.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- tests/guest-debug/run-test.py | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+It feels like this is a qemu-stable material.  Picking it up for
+10.0 & 10.1.  And for 7.2 too.
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index e051e8947c..cf8b37b8b8 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -39,15 +39,17 @@ def get_args():
-     parser.add_argument("--stderr", help="A file to redirect stderr to")
-     parser.add_argument("--no-suspend", action="store_true",
-                         help="Ask the binary to not wait for GDB connection")
-+    parser.add_argument("--quiet", action="store_true", default=False,
-+                        help="Don't print any messages to stdout")
- 
-     return parser.parse_args()
- 
- 
--def log(output, msg):
-+def log(output, msg, quiet):
-     if output:
-         output.write(msg + "\n")
-         output.flush()
--    else:
-+    elif not quiet:
-         print(msg)
- 
- 
-@@ -91,7 +93,7 @@ def log(output, msg):
-             cmd = f'{args.qemu} {args.qargs} -g {socket_name}{suspend}' \
-                 f' {args.binary}'
- 
--        log(output, "QEMU CMD: %s" % (cmd))
-+        log(output, "QEMU CMD: %s" % (cmd), args.quiet)
-         inferior = subprocess.Popen(shlex.split(cmd))
- 
-     # Now launch gdb with our test and collect the result.
-@@ -117,7 +119,7 @@ def log(output, msg):
- 
- 
-     sleep(1)
--    log(output, "GDB CMD: %s" % (gdb_cmd))
-+    log(output, "GDB CMD: %s" % (gdb_cmd), args.quiet)
- 
-     gdb_env = dict(os.environ)
-     gdb_pythonpath = gdb_env.get("PYTHONPATH", "").split(os.pathsep)
--- 
-2.34.1
+Please let me know if I shouldn't.
+
+Thanks,
+
+/mjt
+
+> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+> index 24138587905b..06657bb3ac5c 100644
+> --- a/hw/net/e1000e_core.c
+> +++ b/hw/net/e1000e_core.c
+> @@ -341,11 +341,6 @@ e1000e_intmgr_collect_delayed_causes(E1000ECore *core)
+>   {
+>       uint32_t res;
+>   
+> -    if (msix_enabled(core->owner)) {
+> -        assert(core->delayed_causes == 0);
+> -        return 0;
+> -    }
+> -
+>       res = core->delayed_causes;
+>       core->delayed_causes = 0;
+>   
 
 
