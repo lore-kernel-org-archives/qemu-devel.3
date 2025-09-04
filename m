@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEE2CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8231ACA101F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu58r-0003s9-GA; Thu, 04 Sep 2025 04:16:26 -0400
+	id 1uu5Cd-0003JT-Hb; Thu, 04 Sep 2025 04:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu553-0006Yg-Uu
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:30 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1uu5BG-0001Nm-Pk
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:18:56 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54X-0004Aw-E9
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:27 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-61ce4c32a36so1285805a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:57 -0700 (PDT)
+ id 1uu5B3-0008Et-15
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:18:54 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-6188b5b113eso1224557a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:18:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973515; x=1757578315; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973918; x=1757578718; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KKf3LX74QuDicrn7aIOxjy5IHw4dOUBMKNzlJ8lYJDM=;
- b=z1Ag0651Y2v/3qprg58MVyMZb7i7n7VpPzYCIGE9cnK1WFvH1O5rsK7t7TdzaaS0Dg
- iF99L71UuucQCnA6Gw+9f5/xOTsKwqOHgQ7EsiB7ds5khgvayYhnSn7NfIUnPl+XwKWo
- PpUv42c+t2XMZAuSh+R6nwnnINkdnx+bGDlxXumwkJXPSctDb2e6o+n4gClYRq43sKau
- lmE2h+0uBo3LlOhQd/uuc51BirZImDCL+oOz3e2IxQ7CHyZJ22td6IQxvCJwYuIOt2yR
- ommf1zCYM3KmoDjOGXbtr0wl4jthG+6dEQIus4w6YnXVPrLVOrESrB61fLGdbxsbRWqQ
- eVvQ==
+ bh=fTwVN2pdB6APtd4vJTidA71Ye17u96MfvC5vKsLhS50=;
+ b=p1ae7NMzRSWnpR4jVCWgQ3pev7i0v6m9jCE7rPMi8lVC0+tCsL3MG33Z/Yg8MQ+a/X
+ lJeUD+ekFS9ayuxSIp98rC6iYP5XDdnRy8M61+tNqbKM08ElbmzLZdR4TiQhQQw7ZC9i
+ MVuHp2KQ7LFd/SOwqYbfsMLxDfvGFL2zXUQQAA32hScVJZz678Dx9cW5Mzh6HisbWZzT
+ wQJn/EvajGpO5M1f5AQZO6fEJpSQKBE4DAvGSPoweM6MF1JuuVZxpx/IxBbbgl1O/a8d
+ peRzpvZChswNHdfwVBqVbgMwsezZgsve9ydxEuisSSIhN5BqaSQUbV6Iry2K0DHugEtz
+ WBIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973515; x=1757578315;
+ d=1e100.net; s=20230601; t=1756973918; x=1757578718;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KKf3LX74QuDicrn7aIOxjy5IHw4dOUBMKNzlJ8lYJDM=;
- b=CqtbDVNVlxp1EZNBPxHeGwYUFHsaI4m51By5xbuiT0q4/gb+dUIOYO0KU73EakDvLr
- GeDLxPUk/Id6X6Q3Zt3MoKBbCLbzUwJHHAt14iOxBv2RMQUaGKmXESgx1XeFbY/8yzxN
- mqu23wTb8IYpJXTD+4WEKsDkxyNtlErTTBP3pZcJGEU7t+9MnDxiPj8xkfFsaBxwzMQg
- utdzrN6WqA+z1dKwUUYLPiICU2zZ7IeHUGdP71um9H+h0N62K+gUP6bdeDjcl/TKOA3f
- 6hiNfZRUCoItNvPmvoZvm/ElWQ/80LuTC+/YA8D8Tfid4nd69d1sEeE0HDHUknK8TMPp
- MxkQ==
-X-Gm-Message-State: AOJu0Yxyg+oo064b09byMFGxm5YGKbKJjsufFFNr4Iqp3qz0GWqpralg
- zox5H80TGcX9lGJ2xeAFPqqiIUvnE0MhgeSiJ7+8fhitH2NtW9YQmw2cAs8p/FRxQk7AUH7pA2T
- cNXxAjgBNtA==
-X-Gm-Gg: ASbGncs8qHYiGV2L6AsC66RgyVVO+0WuytxfUOQwEoohlHaNH7PScB9wUN4+hoxREZK
- XonPGESBxZGUbvetdTjS22Z9CXfUfDXzVDWHYXL3PHllJOitAdFJSp0H6UTpj6K1V5WhL+rqo0o
- 2UHzlliR8IUWTAt+rLFNl35rake1AdPFHKwE5oRYHAy2bKlBDkD6UDzEEuNnjLmbv7+uVuddmBI
- 1YfNWNButSAWbWJ6eQQii/lxEGDWPr/i/0hYMRW3kFw9xg9IbYhPu/DJhALu8IgIv2acAUL4YzK
- 1qe7KezwIuCAxFW3bguT7U8dTAQxuVEak5VM5DcR091C36ne/9pNANx2xPuLAW8vWiMNZp4c3jp
- MI9Lsx2ojBlWvH4BRaLdOQQDLQna1p2YAFw==
-X-Google-Smtp-Source: AGHT+IGx8ZJxjps5cff/PZm9JBRuTzbh2ffGQw/tl1lRzj/lZpIUq6TJ0w2xsdrM6qRT2xpIi5PODA==
-X-Received: by 2002:a05:6402:1e8c:b0:620:894c:656c with SMTP id
- 4fb4d7f45d1cf-620894c7c6fmr30028a12.29.1756973515184; 
- Thu, 04 Sep 2025 01:11:55 -0700 (PDT)
+ bh=fTwVN2pdB6APtd4vJTidA71Ye17u96MfvC5vKsLhS50=;
+ b=QfieYO08ZcYt9U8TJfT93tlhwswBrXlZ78QJZL2gPBBtZ8aGWvYJPDAT9tuEo1MYCB
+ TIaYakDwOn5jQ16QRGlcTnNKVl+tgnzuitKEmX5/QD6HdkMkf+39pgdNtPmUB9oDlmi2
+ DDLeRA7eR+a1bGn+QtffRNfMkV98gNohbsoupYan60aRDKEBmsO8ANQs6yYLDf50T6ZY
+ wDgDvnvLU9xyUqj3Jks85p6i0LA+a4LFnck8jvmu/KkxyWnsoTY2Y2/Kc3igxyNbp5hV
+ v+5c/mre2LTcKA13SC5Oth4CCZiVNaXcqbfcEKsHq6F56QtZ1mIsOjqy28ZRPKeW06Ky
+ MgQg==
+X-Gm-Message-State: AOJu0YyLWs2p1lFshfbHTzGnhes2ft06clvQseFFo3SM5AtOB3BiOrxs
+ srFQKKjNDFtPzYnkJCoE0CAGt/Q9huGfu6dy4j9V8e9VjdzF6GmqXml+416ScOZ9UruM68RfBwn
+ YkxIZBGCGyQ==
+X-Gm-Gg: ASbGncv4TfAUFc7F/l+m9qHmtz3/AgSA0OK7OWJpXe+e/iczonz/Sya9q92em8KGGzQ
+ pF3wrPhVW2M2dLwYDixxvxVzYyoo/RsivSLokUVrGy0BrCwVF0J8tz4UyXf1MThwXCD64c3lpyf
+ I2VCHamunWOTNWiXGDUKc83VWFKnx9T2ZOG6n41v3Msz4LLotKqU2D8/Dv3UKaMYXzNqqWTQlet
+ REZ8HN/zf7uzXJLtZVC6PIZjiD5nqeOAebN9+MPjFqa46+uUoG3KAUrlf7RYIB9dOmkBaqLuymf
+ NV6uhSoMVHX4QEMdTgLr7l8H8NoOde4w4VgrcDUcbuYBWRkNB6gOFSfxsHZQ5MCxmcf/tTJ6WXO
+ QRNcOAVR0fYiQeCWMSzlvguswbvVlFJz5kQ==
+X-Google-Smtp-Source: AGHT+IF1g0xPlQZwXvixbktzxWp7pylp9yJpF3ozVocEpxZl4vhVy/vLrP8CDNUZO12I//3cD7pawA==
+X-Received: by 2002:a17:907:7e86:b0:afe:ad18:8662 with SMTP id
+ a640c23a62f3a-b01d8c74c8emr1897318666b.23.1756973918422; 
+ Thu, 04 Sep 2025 01:18:38 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc5622f0sm13427169a12.51.2025.09.04.01.11.48
+ a640c23a62f3a-aff12a6b404sm1396323866b.88.2025.09.04.01.18.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 01:11:49 -0700 (PDT)
+ Thu, 04 Sep 2025 01:18:37 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A1FB260193;
- Thu, 04 Sep 2025 09:11:33 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5CC61601C5;
+ Thu, 04 Sep 2025 09:11:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -129,18 +129,16 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
-Subject: [PATCH v2 045/281] rust/qemu-api-macros: make derive(Object) friendly
- when missing parent
-Date: Thu,  4 Sep 2025 09:07:19 +0100
-Message-ID: <20250904081128.1942269-46-alex.bennee@linaro.org>
+Subject: [PATCH v2 055/281] linux-user: Move get_elf_hwcap to sparc/elfload.c
+Date: Thu,  4 Sep 2025 09:07:29 +0100
+Message-ID: <20250904081128.1942269-56-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -163,36 +161,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250826133132.4064478-5-marcandre.lureau@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Change the return type to abi_ulong, and pass in the cpu.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- rust/qemu-api-macros/src/lib.rs | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ linux-user/loader.h           |  3 ++-
+ linux-user/sparc/target_elf.h |  2 ++
+ linux-user/elfload.c          | 30 +-----------------------------
+ linux-user/sparc/elfload.c    | 27 +++++++++++++++++++++++++++
+ 4 files changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index b525d89c09e..a6147418891 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -85,7 +85,15 @@ fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream
-     is_c_repr(&input, "#[derive(Object)]")?;
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 151a06f5db5..2c8414e0e53 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -101,7 +101,8 @@ extern unsigned long guest_stack_size;
+ /* Note that Elf32 and Elf64 use uint32_t for e_flags. */
+ const char *get_elf_cpu_model(uint32_t eflags);
  
-     let name = &input.ident;
--    let parent = &get_fields(&input, "#[derive(Object)]")?[0].ident;
-+    let parent = &get_fields(&input, "#[derive(Object)]")?
-+        .get(0)
-+        .ok_or_else(|| {
-+            Error::new(
-+                input.ident.span(),
-+                "#[derive(Object)] requires a parent field",
-+            )
-+        })?
-+        .ident;
+-#if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM)
++#if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
++    || defined(TARGET_SPARC)
+ abi_ulong get_elf_hwcap(CPUState *cs);
+ abi_ulong get_elf_hwcap2(CPUState *cs);
+ #endif
+diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
+index 7e46748d261..b7544db0a1c 100644
+--- a/linux-user/sparc/target_elf.h
++++ b/linux-user/sparc/target_elf.h
+@@ -8,4 +8,6 @@
+ #ifndef SPARC_TARGET_ELF_H
+ #define SPARC_TARGET_ELF_H
  
-     Ok(quote! {
-         ::qemu_api::assert_field_type!(#name, #parent,
++#define HAVE_ELF_HWCAP          1
++
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 149d1313c0a..16709865f78 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -565,35 +565,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
+ # define ELF_ARCH   EM_SPARCV9
+ #endif
+ 
+-#include "elf.h"
+-
+-#define ELF_HWCAP get_elf_hwcap()
+-
+-static uint32_t get_elf_hwcap(void)
+-{
+-    /* There are not many sparc32 hwcap bits -- we have all of them. */
+-    uint32_t r = HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR |
+-                 HWCAP_SPARC_SWAP | HWCAP_SPARC_MULDIV;
+-
+-#ifdef TARGET_SPARC64
+-    CPUSPARCState *env = cpu_env(thread_cpu);
+-    uint32_t features = env->def.features;
+-
+-    r |= HWCAP_SPARC_V9 | HWCAP_SPARC_V8PLUS;
+-    /* 32x32 multiply and divide are efficient. */
+-    r |= HWCAP_SPARC_MUL32 | HWCAP_SPARC_DIV32;
+-    /* We don't have an internal feature bit for this. */
+-    r |= HWCAP_SPARC_POPC;
+-    r |= features & CPU_FEATURE_FSMULD ? HWCAP_SPARC_FSMULD : 0;
+-    r |= features & CPU_FEATURE_VIS1 ? HWCAP_SPARC_VIS : 0;
+-    r |= features & CPU_FEATURE_VIS2 ? HWCAP_SPARC_VIS2 : 0;
+-    r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
+-    r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
+-    r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
+-#endif
+-
+-    return r;
+-}
++#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+ 
+ static inline void init_thread(struct target_pt_regs *regs,
+                                struct image_info *infop)
+diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
+index 243e6f9b66a..32ca1b05b1a 100644
+--- a/linux-user/sparc/elfload.c
++++ b/linux-user/sparc/elfload.c
+@@ -3,6 +3,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -13,3 +14,29 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     return "Fujitsu MB86904";
+ #endif
+ }
++
++abi_ulong get_elf_hwcap(CPUState *cs)
++{
++    /* There are not many sparc32 hwcap bits -- we have all of them. */
++    uint32_t r = HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR |
++                 HWCAP_SPARC_SWAP | HWCAP_SPARC_MULDIV;
++
++#ifdef TARGET_SPARC64
++    CPUSPARCState *env = cpu_env(cs);
++    uint32_t features = env->def.features;
++
++    r |= HWCAP_SPARC_V9 | HWCAP_SPARC_V8PLUS;
++    /* 32x32 multiply and divide are efficient. */
++    r |= HWCAP_SPARC_MUL32 | HWCAP_SPARC_DIV32;
++    /* We don't have an internal feature bit for this. */
++    r |= HWCAP_SPARC_POPC;
++    r |= features & CPU_FEATURE_FSMULD ? HWCAP_SPARC_FSMULD : 0;
++    r |= features & CPU_FEATURE_VIS1 ? HWCAP_SPARC_VIS : 0;
++    r |= features & CPU_FEATURE_VIS2 ? HWCAP_SPARC_VIS2 : 0;
++    r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
++    r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
++    r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
++#endif
++
++    return r;
++}
 -- 
 2.47.2
 
