@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F0D7CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B56CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu5Cl-000400-Lv; Thu, 04 Sep 2025 04:20:28 -0400
+	id 1uu58u-00042D-2u; Thu, 04 Sep 2025 04:16:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu5BN-0001at-Qe
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:19:04 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1uu558-0006ba-8A
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:37 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu5B4-0008Fc-Ku
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:19:00 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-afec5651966so144540266b.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:18:42 -0700 (PDT)
+ id 1uu54Z-0004Cg-RB
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:32 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b043da5a55fso107840166b.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973920; x=1757578720; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973518; x=1757578318; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ToC1ebEyvx+viBNvPFVlKTy11Wh6Rf+bOVhd1Ayq6zY=;
- b=JREWPnnO7PFdFJs7t/Oq51rhUCmvheKqiCpT7lSQt8pw+qvHROpGoTss4ravxqMOCz
- Xia0SzewkbhtIsSPQYd0RvXkdSVE9ewwi1q982HVNtzQkwbtV/79zs7ZbJXB5kT2pw5g
- wnCO8ZS/oAlhIoMfJqkwf6r+C6afaCPdGWbv+EF24GIraa2xOhoBFZ3alsqLDVNzQ8Sd
- 14Oilr4BB2jdnfooHInWMzxOMKjactMnzvK20bz8I0RlJllxAiEP/vPVCnZnQSBn80EY
- 39FSJLmVFdgMOoVi/LYv+166aKqLF34lt96tvddZ73aS048VzQm5tliQcwRBltI1Y3sz
- jZKw==
+ bh=KM2ZDhNYkLW1KWUOdLmFVe8gLAQ7wgd1StjOThDS9B0=;
+ b=JISPeP60TaaTAmN88DaImEbB/tI2yBQj4Bl+oV9mNYxY66JWiLSm9X6Lp4NmPIPjgG
+ Kz4yRRBqXIS2ymgpsfyHUHauwsqPGk9d18Xo983MlC6PR/2JMXkNexjsI5qDQlSAJhPK
+ rS7OZfTGP4/vXI2VKK9gRN0saArVXaXABOWncUXXqoeXRBZR198DYyeqQaVnNxvYodr1
+ cPB0vVoiP3Ahid7IZXqVitFSg98hdzws24587LeOV0jHRlV0q2IJbQxKKEoZwylO1OG3
+ mj+98AxuFMvQAgDr8PkpaNts7tW9NDN0YAngMuzEomhLHGL3MqGAyM++bYy15IRqlifG
+ Mbvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973920; x=1757578720;
+ d=1e100.net; s=20230601; t=1756973518; x=1757578318;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ToC1ebEyvx+viBNvPFVlKTy11Wh6Rf+bOVhd1Ayq6zY=;
- b=xLbCrDcZLpd2G32OTAn1EpxLHTvE7RI3RpgnpenJ5l0DiM1jEFJRhoS9TmCpduZXlv
- a3eNNjr4UWtqTf2xl2FDIhASEgL1l5xyhvwH7n/REp26bHNSBV7gNaS/1MDiMg5XxFXO
- ItYAiNG+6yrSmRi9qrOykgkD5trJchkPTjQoGlfpawNYo5LGlDwPCiUaHJXt8w9RqU4a
- AEJC55lYB07GgTouLSTWIUMnH/lntONHwR0P+tliqFphFgwpHaUA6g9YZRk728wQkuxc
- EnJS/VHrUw5yy4FCBFAPpzpvv0pYcfuCMTXGNUak9qD2qg1l7cCU/WkZXHdG39C+jj4O
- WfSQ==
-X-Gm-Message-State: AOJu0YwfcmmHDP7vtyUa39HuS/z5qfRWG1S991XwPRNAnsSVTnj3tNHO
- Z7ED62fUshdhFuVzwXVKoxeEbIWIqmbNOqv3aR94mQ7PFQtBROFIYX6gM/NlQcmEXVQ=
-X-Gm-Gg: ASbGncvuxAZHFoGenZc7Dby2dCiGG1yA5tYzcd8atc+ZG0pfcxhoMZxkAH7kSjnmXTM
- 61cYa8HA77tBbjvXoQkvLel1UfJPnPE+xzi3pXbwOUysyKo5AekmgGwshoSgXQOU7D3eDYIB5jY
- 3nJ+xBZXbTqPG61SlfX0Mnoo2a/Vxldy6iOcGHVF/FnhKJJGZjEsEZ/9Gjc7Q5FZki5znAboDe+
- afJz0bQax8ra2DZ4MMPpar2UKjykH7bXQuiMQLF3+rHzM3OA7FNGq63e3kgHp9nVlmVBKRiyyI2
- iT6MNHENsH5FmuiPZAMErhUil1wG0sdtJmXUF7QskroiUFEXtqgoqF0/pyJr8Kx1hV/2ii3FGzs
- RrHncGHWGYok6LK13mTmoAgKkOT3PcPepMQ==
-X-Google-Smtp-Source: AGHT+IHlrSAwTwlNPjt0KEhJGII6rpJIpVADSO6/94IfYv3scTnJu8lfG5J1x+SaVAePVJ42+HN21Q==
-X-Received: by 2002:a17:907:1ca8:b0:aff:321:c31d with SMTP id
- a640c23a62f3a-b01d8a277c5mr1841124666b.7.1756973920286; 
- Thu, 04 Sep 2025 01:18:40 -0700 (PDT)
+ bh=KM2ZDhNYkLW1KWUOdLmFVe8gLAQ7wgd1StjOThDS9B0=;
+ b=vVI3Rk0vHFxDMqE5K1XQokHhoqew4So4kdD8ZWPjZqRdaNzeUncNs9DhSE4As5I5mh
+ GzDJQWcIIvNEC3YAogXwzoyS9tr9JMJ7V42aQR5MqYeWZ38xNZXAW5EzytbE7tarKisi
+ QSfBhghECRM+/AApdsqrbrkYtsJZslfALl9uo7GLSrEDSK7aBjJsAQRXeIyU+1Ehduzz
+ +APkV6G++HPchDo9cLcfM5kKJxVDqyJNyXWrX1E90C/znQDeBYuiwR2Fsl7RadOdLfV/
+ /0/JK1Y/NAchBlNL5jiXWgc3WZHV26PL29t+v8/YApTSZZ0Th2Oh9NXN7RHwB0yZNv8Q
+ Mk+w==
+X-Gm-Message-State: AOJu0YzE3BmEmo93Sv4N0VZ3IITASfx3GeVOH5PDAPmM0x9k0OfrTEg8
+ i0cC2P3ZTPPhcyx0Gusj/tSue+59M3NXgDIwNrGesA+BMpNSzzsxKAdHq95ENQREwicIE200rsO
+ AQiiGpRisaQ==
+X-Gm-Gg: ASbGnculkVvBfvvIbgvA2yPHOk3r/RXT5HjKpz04U1l1A2KXiY5YKLQVN3fEjhC6tML
+ 6EPi0IzcoaQGI7UmKqltIFRYu2ov3hl2/LHd2CMH6czN2WHPh6m1O1DOt02EJIPlVcb4YhQnHGh
+ r5U+5XTgnGDXEYdRL9mq5DnNl//oD+qqLb/BfAsHGmVm5ZSWIyf0dnkeOjXF3/2Aqf1JAdOAG6F
+ JktP49qo2F3ElsJRr66B7BwbChR/tv5A63QKKAz6KvOTW9Prjt019it4raCrMMvUZZMpgG0ltoE
+ yaCZeR07Im61JcnARAZKK3Uds0pPGN4NCqZ/WP4U3rHMXH43NRsjC3afhcNRVQon0BuebSaLZ1w
+ l5Skoaxvut6zTKvTjozUxukHd2LQatoKXPw==
+X-Google-Smtp-Source: AGHT+IE6k0GqNytWpGYUw8aMikHxjbuztoWFqvzmVO/on4V3dK6nYD0ba2/sDJcNk3Tb6kLpXPbyDw==
+X-Received: by 2002:a17:907:961a:b0:b04:2edd:280b with SMTP id
+ a640c23a62f3a-b042edd2a50mr1478196866b.39.1756973517480; 
+ Thu, 04 Sep 2025 01:11:57 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b02a090339esm1254356466b.37.2025.09.04.01.18.36
+ a640c23a62f3a-b041f6fb232sm1080452766b.87.2025.09.04.01.11.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 01:18:37 -0700 (PDT)
+ Thu, 04 Sep 2025 01:11:55 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 595EA5FA5C;
- Thu, 04 Sep 2025 09:11:30 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 30E81601A8;
+ Thu, 04 Sep 2025 09:11:34 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -127,20 +128,17 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 018/281] tests/functional: Move alpha tests into
- architecture specific folder
-Date: Thu,  4 Sep 2025 09:06:52 +0100
-Message-ID: <20250904081128.1942269-19-alex.bennee@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
+Subject: [PATCH v2 049/281] semihosting: Initialize heap once per process
+Date: Thu,  4 Sep 2025 09:07:23 +0100
+Message-ID: <20250904081128.1942269-50-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -163,106 +161,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The tests/functional folder has become quite crowded already, some
-restructuring would be helpful here. Thus move the alpha tests into
-a target-specific subfolder.
+While semihosting isn't really thread aware, the current
+implementation allocates space for the heap per-thread.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250819112403.432587-7-thuth@redhat.com>
+Remove the heap_base and heap_limit fields from TaskState.
+Replace with static variables within do_common_semihosting.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- MAINTAINERS                                            |  3 ++-
- tests/functional/alpha/meson.build                     | 10 ++++++++++
- .../{test_alpha_clipper.py => alpha/test_clipper.py}   |  0
- .../test_migration.py}                                 |  0
- .../{test_alpha_replay.py => alpha/test_replay.py}     |  0
- tests/functional/meson.build                           | 10 +---------
- 6 files changed, 13 insertions(+), 10 deletions(-)
- create mode 100644 tests/functional/alpha/meson.build
- rename tests/functional/{test_alpha_clipper.py => alpha/test_clipper.py} (100%)
- rename tests/functional/{test_alpha_migration.py => alpha/test_migration.py} (100%)
- rename tests/functional/{test_alpha_replay.py => alpha/test_replay.py} (100%)
+ linux-user/qemu.h             |  5 -----
+ linux-user/aarch64/cpu_loop.c |  7 -------
+ linux-user/arm/cpu_loop.c     | 25 +++++++++++--------------
+ linux-user/m68k/cpu_loop.c    |  8 --------
+ linux-user/riscv/cpu_loop.c   |  4 ----
+ semihosting/arm-compat-semi.c | 22 +++++++++-------------
+ 6 files changed, 20 insertions(+), 51 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a2a5ccea7b6..8115aae6183 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -189,6 +189,7 @@ M: Richard Henderson <richard.henderson@linaro.org>
- S: Maintained
- F: target/alpha/
- F: tests/tcg/alpha/
-+F: tests/functional/alpha/
- F: disas/alpha.c
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index b6621536b36..4d6fad28c63 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -121,11 +121,6 @@ struct TaskState {
+     abi_ulong child_tidptr;
+ #ifdef TARGET_M68K
+     abi_ulong tp_value;
+-#endif
+-#if defined(TARGET_ARM) || defined(TARGET_M68K) || defined(TARGET_RISCV)
+-    /* Extra fields for semihosted binaries.  */
+-    abi_ulong heap_base;
+-    abi_ulong heap_limit;
+ #endif
+     int used; /* non zero if used */
+     struct image_info *info;
+diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
+index b65999a75bf..030a630c936 100644
+--- a/linux-user/aarch64/cpu_loop.c
++++ b/linux-user/aarch64/cpu_loop.c
+@@ -140,9 +140,6 @@ void cpu_loop(CPUARMState *env)
+ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    CPUState *cs = env_cpu(env);
+-    TaskState *ts = get_task_state(cs);
+-    struct image_info *info = ts->info;
+     int i;
  
- ARM TCG CPUs
-@@ -656,7 +657,7 @@ S: Maintained
- F: hw/alpha/
- F: hw/isa/smc37c669-superio.c
- F: tests/tcg/alpha/system/
--F: tests/functional/test_alpha_clipper.py
-+F: tests/functional/alpha/test_clipper.py
- 
- ARM Machines
- ------------
-diff --git a/tests/functional/alpha/meson.build b/tests/functional/alpha/meson.build
-new file mode 100644
-index 00000000000..26a5b3f2e4b
---- /dev/null
-+++ b/tests/functional/alpha/meson.build
-@@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+tests_alpha_system_quick = [
-+  'migration',
-+]
-+
-+tests_alpha_system_thorough = [
-+  'clipper',
-+  'replay',
-+]
-diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/alpha/test_clipper.py
-similarity index 100%
-rename from tests/functional/test_alpha_clipper.py
-rename to tests/functional/alpha/test_clipper.py
-diff --git a/tests/functional/test_alpha_migration.py b/tests/functional/alpha/test_migration.py
-similarity index 100%
-rename from tests/functional/test_alpha_migration.py
-rename to tests/functional/alpha/test_migration.py
-diff --git a/tests/functional/test_alpha_replay.py b/tests/functional/alpha/test_replay.py
-similarity index 100%
-rename from tests/functional/test_alpha_replay.py
-rename to tests/functional/alpha/test_replay.py
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 9cb6325360f..a7f8c88a078 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -10,6 +10,7 @@ if get_option('tcg_interpreter')
- endif
- 
- subdir('aarch64')
-+subdir('alpha')
- 
- test_arm_timeouts = {
-   'arm_aspeed_palmetto' : 120,
-@@ -96,15 +97,6 @@ tests_generic_linuxuser = [
- tests_generic_bsduser = [
- ]
- 
--tests_alpha_system_quick = [
--  'alpha_migration',
--]
+     if (!(arm_feature(env, ARM_FEATURE_AARCH64))) {
+@@ -167,8 +164,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+     if (cpu_isar_feature(aa64_pauth, cpu)) {
+         qemu_guest_getrandom_nofail(&env->keys, sizeof(env->keys));
+     }
 -
--tests_alpha_system_thorough = [
--  'alpha_clipper',
--  'alpha_replay',
--]
+-    ts->heap_base = info->brk;
+-    /* This will be filled in on the first SYS_HEAPINFO call.  */
+-    ts->heap_limit = 0;
+ }
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index e40d6beafa2..9d54422736c 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -492,19 +492,16 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+     for(i = 0; i < 16; i++) {
+         env->regs[i] = regs->uregs[i];
+     }
+-#if TARGET_BIG_ENDIAN
+-    /* Enable BE8.  */
+-    if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
+-        && (info->elf_flags & EF_ARM_BE8)) {
+-        env->uncached_cpsr |= CPSR_E;
+-        env->cp15.sctlr_el[1] |= SCTLR_E0E;
+-    } else {
+-        env->cp15.sctlr_el[1] |= SCTLR_B;
+-    }
+-    arm_rebuild_hflags(env);
+-#endif
+ 
+-    ts->heap_base = info->brk;
+-    /* This will be filled in on the first SYS_HEAPINFO call.  */
+-    ts->heap_limit = 0;
++    if (TARGET_BIG_ENDIAN) {
++        /* Enable BE8.  */
++        if (EF_ARM_EABI_VERSION(info->elf_flags) >= EF_ARM_EABI_VER4
++            && (info->elf_flags & EF_ARM_BE8)) {
++            env->uncached_cpsr |= CPSR_E;
++            env->cp15.sctlr_el[1] |= SCTLR_E0E;
++        } else {
++            env->cp15.sctlr_el[1] |= SCTLR_B;
++        }
++        arm_rebuild_hflags(env);
++    }
+ }
+diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
+index 3aaaf02ca4e..23693f33582 100644
+--- a/linux-user/m68k/cpu_loop.c
++++ b/linux-user/m68k/cpu_loop.c
+@@ -94,10 +94,6 @@ void cpu_loop(CPUM68KState *env)
+ 
+ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+ {
+-    CPUState *cpu = env_cpu(env);
+-    TaskState *ts = get_task_state(cpu);
+-    struct image_info *info = ts->info;
 -
- tests_arm_system_quick = [
-   'arm_migration',
- ]
+     env->pc = regs->pc;
+     env->dregs[0] = regs->d0;
+     env->dregs[1] = regs->d1;
+@@ -116,8 +112,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+     env->aregs[6] = regs->a6;
+     env->aregs[7] = regs->usp;
+     env->sr = regs->sr;
+-
+-    ts->heap_base = info->brk;
+-    /* This will be filled in on the first SYS_HEAPINFO call.  */
+-    ts->heap_limit = 0;
+ }
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index 541de765ffa..2dd30c7b288 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -108,8 +108,4 @@ void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
+         error_report("Incompatible ELF: RVE cpu requires RVE ABI binary");
+         exit(EXIT_FAILURE);
+     }
+-
+-    ts->heap_base = info->brk;
+-    /* This will be filled in on the first SYS_HEAPINFO call.  */
+-    ts->heap_limit = 0;
+ }
+diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
+index bc04b02eba8..bcd13cd6dfd 100644
+--- a/semihosting/arm-compat-semi.c
++++ b/semihosting/arm-compat-semi.c
+@@ -666,7 +666,7 @@ void do_common_semihosting(CPUState *cs)
+             int i;
+ #ifdef CONFIG_USER_ONLY
+             TaskState *ts = get_task_state(cs);
+-            target_ulong limit;
++            static abi_ulong heapbase, heaplimit;
+ #else
+             LayoutInfo info = common_semi_find_bases(cs);
+ #endif
+@@ -678,24 +678,20 @@ void do_common_semihosting(CPUState *cs)
+              * Some C libraries assume the heap immediately follows .bss, so
+              * allocate it using sbrk.
+              */
+-            if (!ts->heap_limit) {
+-                abi_ulong ret;
+-
+-                ts->heap_base = do_brk(0);
+-                limit = ts->heap_base + COMMON_SEMI_HEAP_SIZE;
++            if (!heaplimit) {
++                heapbase = do_brk(0);
+                 /* Try a big heap, and reduce the size if that fails.  */
+-                for (;;) {
+-                    ret = do_brk(limit);
++                for (abi_ulong size = COMMON_SEMI_HEAP_SIZE; ; size >>= 1) {
++                    abi_ulong limit = heapbase + size;
++                    abi_ulong ret = do_brk(limit);
+                     if (ret >= limit) {
++                        heaplimit = limit;
+                         break;
+                     }
+-                    limit = (ts->heap_base >> 1) + (limit >> 1);
+                 }
+-                ts->heap_limit = limit;
+             }
+-
+-            retvals[0] = ts->heap_base;
+-            retvals[1] = ts->heap_limit;
++            retvals[0] = heapbase;
++            retvals[1] = heaplimit;
+             /*
+              * Note that semihosting is *not* thread aware.
+              * Always return the stack base of the main thread.
 -- 
 2.47.2
 
