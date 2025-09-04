@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2F1CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A20ECA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuGrt-0003RA-Gt; Thu, 04 Sep 2025 16:47:42 -0400
+	id 1uuGsN-0003ct-8Z; Thu, 04 Sep 2025 16:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrq-0003Q0-V7
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:38 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGsL-0003cD-Ce
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:48:09 -0400
 Received: from mailgate01.uberspace.is ([95.143.172.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGro-0000iT-IL
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:38 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGsC-0000m6-6D
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:48:07 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 201CD60BF4
- for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:47:21 +0200 (CEST)
-Received: (qmail 32593 invoked by uid 990); 4 Sep 2025 20:47:21 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 1B71E60C5C
+ for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:47:25 +0200 (CEST)
+Received: (qmail 346 invoked by uid 990); 4 Sep 2025 20:47:25 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 04 Sep 2025 22:47:20 +0200
+ Thu, 04 Sep 2025 22:47:24 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH v6 06/25] target/arm: call plugin trap callbacks
-Date: Thu,  4 Sep 2025 22:46:43 +0200
-Message-ID: <3230bddf690d5facd44fb22da9cc006ddb46465b.1757018626.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v6 20/25] target/sparc: call plugin trap callbacks
+Date: Thu,  4 Sep 2025 22:46:57 +0200
+Message-ID: <e5ecf7f7ed5242809abec86a27cb284d321950c1.1757018626.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1757018626.git.neither@nut.email>
 References: <cover.1757018626.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999952) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.999829) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.599952
+X-Rspamd-Score: -5.599829
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=xNEb41Bq4Z4GtsJUyqVZtleo7SkSVedY+dily4e9McM=;
- b=bCcF3/o0Z94dGhWKbCz2jVr7BUjNzc7jNGTJCuuMtEzon5CC+TATf5FfDduAmedkHw9hRaI42X
- 5aMwMxeGArVX8jM8fx5rDoWlPSujptgRyG9XMK/kVVmO6I3ntdgfeRhFOMipDVJZ+CdmrmKQvTxv
- 2KW9YK1vG0bksKWvjnt9av2qWke1ZajkrdqCFI3/zW/feTurptErGquRtAu3wNjAzRR+NgiD7zU/
- FyHiN2hNndijPNpXwhNc2ffRlb3TmdO3aRawW02yNFZwmVo6xQKTlEkRfb8mAa3qL0OMjOQst1qQ
- W/et+OTpBIxnaob13HrVf88LGQyIFuFkF5H8Ofn7UtIIpztsjr2q+3NMuk2Zuc1XB3vmond2clkW
- 9/Uc5OUGOcVY+VuFEpQrjquiTBHlB7FFb3iey/BDsUAbgsD/Lo2aD5zVnxErhaFA/TpItyCJp3x+
- h7S6G5uyRbFJrzmkuddwZHPn2A/Ly5vRnDDSU04zASM/dq2Nxwo4QnNuhwffxnBKPDyObX4syDSV
- /YJXHpJqPqNMVGatO+2xcmas++4kl/dg4kGSJcZD649dMXu1McnHLa+Uq1fkY6EEKLJyJWejve1r
- wkoO6P1UxGIsCXnfoDxfPC+RfUvzbF11ZMRwvSU+RkWfHu2W9lRWbSHQbjmezNu1tIpBAP/eywY9
- s=
+ bh=sUcYG7ruyA+9QHxAzSD9HdeHOhM3xRfzfStnbhoeH60=;
+ b=kQ6EQ44QRV0p254UZmu+Cj/1T5/wp7VRimKsqGZ/ayVaF3gKLcdoF/hEaWwPRkfF67y78RVD3t
+ TNfTZAvsJ3mgTj/lIxzLHyLGu33N5F5FjDnWfIkQKCFYqIe5efE3ZGyRgt91QaKM6BxqlJk8tjBt
+ qz9wyMaqXZu/dvndb9XsuDTxyu0mLnXV9EqAu1OvMccD4+yTv1Kwi8N74o6rOeroW7Puso60DtQB
+ LzdztEJ4u9tiUm5msY32p0iLKlJV4rResbnP3U1MWFf2kJT9nn8r+8XUKpypy6RpwYOy7C/UQ5nU
+ a4PsEMNE6XNz+WgltldPv0XEIJXkVA/vEVNCFWFSvT8zhyoX2gpNTwMjw2f2AJIc4a9eAb/NGRp4
+ fFotEA9YlpWQEmcFLLcEIpJaFihEb55StH6IiGZFwzOWfMRuSAUSPwSJHJWWRdiKrLCZv3RkbXvQ
+ 7HvphoWpALu1tqYTeEOGNLgVg7FjIo+V4ciN8i7fRCJtl7mCoSJiVfyYvhJDe2xWzsZThhPS/2DW
+ pPJJkjyhA0TYP11IFLSMRhUDO5gy2GbOlbL7fw3EE++Z+AOxCYqj44liiohUAj3cyFqZDwkkFzj2
+ LpzQ22Fo6TRsMSFfigIN8pLMxClJfPsGGANHZJWdxBQx6a09vhvPV+YajBfJi06iPCRZs48mL9MJ
+ o=
 Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
  helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -85,136 +87,68 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places hooks for ARM (and Aarch64) targets. We decided to
-treat the (V)IRQ, (VI/VF)NMI, (V)FIQ and VSERR exceptions as interrupts
-since they are, presumably, async in nature.
+This change places hooks for SPARC (32bit and 64bit) targets. We treat
+any interrupt other than EXTINT and IVEC as exceptions as they appear to
+be synchroneous events.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/arm/helper.c       | 24 ++++++++++++++++++++++++
- target/arm/internals.h    |  1 +
- target/arm/tcg/m_helper.c |  5 +++++
- 3 files changed, 30 insertions(+)
+ target/sparc/int32_helper.c |  7 +++++++
+ target/sparc/int64_helper.c | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 19637e7301..4812b30d64 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -34,6 +34,7 @@
- #endif
- #include "cpregs.h"
- #include "target/arm/gtimer.h"
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index 39db4ffa70..634439ab2a 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -24,6 +24,7 @@
+ #include "accel/tcg/cpu-ldst.h"
+ #include "exec/log.h"
+ #include "system/runstate.h"
 +#include "qemu/plugin.h"
  
- #define HELPER_H "tcg/helper.h"
- #include "exec/helper-proto.h.inc"
-@@ -8585,6 +8586,24 @@ static void take_aarch32_exception(CPUARMState *env, int new_mode,
+ static const char * const excp_names[0x80] = {
+     [TT_TFAULT] = "Instruction Access Fault",
+@@ -172,4 +173,10 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+         env->qemu_irq_ack(env, intno);
      }
+ #endif
++
++    if (intno == TT_EXTINT) {
++        qemu_plugin_vcpu_interrupt_cb(cs, env->regwptr[9]);
++    } else {
++        qemu_plugin_vcpu_exception_cb(cs, env->regwptr[9]);
++    }
  }
+diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
+index 49e4e51c6d..1de9de0961 100644
+--- a/target/sparc/int64_helper.c
++++ b/target/sparc/int64_helper.c
+@@ -23,6 +23,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/log.h"
+ #include "trace.h"
++#include "qemu/plugin.h"
  
-+void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from)
-+{
-+    switch (cs->exception_index) {
-+    case EXCP_IRQ:
-+    case EXCP_VIRQ:
-+    case EXCP_NMI:
-+    case EXCP_VINMI:
-+    case EXCP_FIQ:
-+    case EXCP_VFIQ:
-+    case EXCP_VFNMI:
-+    case EXCP_VSERR:
-+        qemu_plugin_vcpu_interrupt_cb(cs, from);
+ #define DEBUG_PCALL
+ 
+@@ -253,6 +254,15 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+     }
+     env->npc = env->pc + 4;
+     cs->exception_index = -1;
++
++    switch (intno) {
++    case TT_EXTINT:
++    case TT_IVEC:
++        qemu_plugin_vcpu_interrupt_cb(cs, tsptr->tpc);
 +        break;
 +    default:
-+        qemu_plugin_vcpu_exception_cb(cs, from);
++        qemu_plugin_vcpu_exception_cb(cs, tsptr->tpc);
 +    }
-+}
-+
- static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
- {
-     /*
-@@ -9251,6 +9270,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-     unsigned int new_el = env->exception.target_el;
-+    uint64_t last_pc = cs->cc->get_pc(cs);
- 
-     assert(!arm_feature(env, ARM_FEATURE_M));
- 
-@@ -9267,6 +9287,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (tcg_enabled() && arm_is_psci_call(cpu, cs->exception_index)) {
-         arm_handle_psci_call(cpu);
-         qemu_log_mask(CPU_LOG_INT, "...handled as PSCI call\n");
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     }
- 
-@@ -9278,6 +9299,7 @@ void arm_cpu_do_interrupt(CPUState *cs)
- #ifdef CONFIG_TCG
-     if (cs->exception_index == EXCP_SEMIHOST) {
-         tcg_handle_semihosting(cs);
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     }
- #endif
-@@ -9303,6 +9325,8 @@ void arm_cpu_do_interrupt(CPUState *cs)
-     if (!kvm_enabled()) {
-         cpu_set_interrupt(cs, CPU_INTERRUPT_EXITTB);
-     }
-+
-+    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
- }
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f5a1e75db3..369ec2912b 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -373,6 +373,7 @@ static inline int r14_bank_number(int mode)
- 
- void arm_cpu_register(const ARMCPUInfo *info);
- 
-+void arm_do_plugin_vcpu_discon_cb(CPUState *cs, uint64_t from);
- void register_cp_regs_for_features(ARMCPU *cpu);
- void init_cpreg_list(ARMCPU *cpu);
- 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index 28307b5615..31d9a59ed6 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -23,6 +23,7 @@
- #if !defined(CONFIG_USER_ONLY)
- #include "hw/intc/armv7m_nvic.h"
- #endif
-+#include "qemu/plugin.h"
- 
- static void v7m_msr_xpsr(CPUARMState *env, uint32_t mask,
-                          uint32_t reg, uint32_t val)
-@@ -2194,6 +2195,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
-     CPUARMState *env = &cpu->env;
-     uint32_t lr;
-     bool ignore_stackfaults;
-+    uint64_t last_pc = env->regs[15];
- 
-     arm_log_exception(cs);
- 
-@@ -2361,6 +2363,7 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
-         g_assert_not_reached();
- #endif
-         env->regs[15] += env->thumb ? 2 : 4;
-+        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-         return;
-     case EXCP_BKPT:
-         armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_DEBUG, false);
-@@ -2427,6 +2430,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cs)
- 
-     ignore_stackfaults = v7m_push_stack(cpu);
-     v7m_exception_taken(cpu, lr, false, ignore_stackfaults);
-+
-+    arm_do_plugin_vcpu_discon_cb(cs, last_pc);
  }
  
- uint32_t HELPER(v7m_mrs)(CPUARMState *env, uint32_t reg)
+ trap_state *cpu_tsptr(CPUSPARCState* env)
 -- 
 2.49.1
 
