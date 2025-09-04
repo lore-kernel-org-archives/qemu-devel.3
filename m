@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B23CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB809CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu54X-0006CM-Qb; Thu, 04 Sep 2025 04:11:57 -0400
+	id 1uu54g-0006Mx-TH; Thu, 04 Sep 2025 04:12:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54V-0006Ab-Nx
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:55 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1uu54a-0006GC-8n
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:00 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54H-00040M-U0
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:55 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b0428b537e5so122683866b.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:40 -0700 (PDT)
+ id 1uu54J-00041e-O4
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:59 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-61cb4374d2fso1072226a12.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973499; x=1757578299; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973501; x=1757578301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JNutAIaXOMQtmCL/HAblUioHloxc8S7R+7KvtZJ66hg=;
- b=WELSlFtnFMupd5sqLHWtp02i//6odsSXXrotDo50BaGuGqhK6gx47RO6P8p80vgWyi
- JTx/DoQ8vbPmIog8yXfdjSsPBzoq9Y4apzi3aMh6dzF+67TDi3jrs5vIwa5ecXt0YznJ
- zUgN+4D4Z/jWn7WSPbBAZWWwmQPZXyQVbHbFWD2z4WvKVpHLK3g+ei/Di+7/3SAgKzbN
- 2+03SqGkQ5vc0MDwP4j/ViAxhkQkRg+5ZQj9oOem3yS6hb0iwcDj0nFZH/LJgvVSQyIk
- kOv2yRCNB+EaS3HqFiEs54QJVL+ZblJTvFOZIDrRm28enddR0AfRuQsCNhCg+L9xKtq0
- JQvw==
+ bh=3j1jG2MY/WGcH+crz7CtyaM5tw55oKFFqSyUb2OGtbM=;
+ b=xNT+gtAKGeol2h2GXBI9/QpScgbWnH/9lYAyf+ydexCHyJR3MbG6diaU1f4RciO8i3
+ J/+j5W9wYbqQvWrjCoDcHJqpvZPD0GcTDdv0kRK0WMjAvFUPR6PMm4p3df1Z+G9n7Lpg
+ GAWIXEsoQTLL5qFU68EUiRf8yDlPBYYSF6AwIecc3Vai9YtQjXnIESEVREzinjxeaZq8
+ nXqqaeLLmrkBHC3ufD6qGwmZYmdRetEhVicmqw5UpaNMDp3BLiL7mk9X952FgozqcShp
+ 2aFk6nMDm2h8l4C+O7RBouylyPQBeujvUEt50j5P8RZMxB/Gqs9IP+2B9KGcLO8fLjw5
+ e5tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973499; x=1757578299;
+ d=1e100.net; s=20230601; t=1756973501; x=1757578301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JNutAIaXOMQtmCL/HAblUioHloxc8S7R+7KvtZJ66hg=;
- b=IZXNnxIscOLGvM6tV/Wm2jabt8Vbuj/DUsVMOdL1c21GSB/UDmkDmJwsNtVLs27/JO
- G4aDosHQ+9bOHzYvQOlB5zcb9ne9jz9CBdUeTXcNvyP8g2c7NiGf52KTwV9mQ/JNBmXX
- TgszNanxqSUXnGwG28YG+OA/7W0oOWEow/LdIYardfBCptgxngou+zKmNG4m3EvrjNWb
- 7k78hC8MBP/WtgGWMtfGJtY8IWaxMgwqvhWSNYqdgfpLpQbp9KkHXvYUDGlHUM9t9E0L
- 7Htmzix5LJ1neA0xc+7XDDVjK5bpVxWy8mQ0diBe6XCBFW9quJ4vjMdMl7J5zsAI1QzR
- RZpw==
-X-Gm-Message-State: AOJu0Yxsshv0+/qn93WZ9SlQS2S+S6Uf0JbINLl7xTkcIs86VfClB+K0
- xAJWDLdXHOtYdLl8cZuMUIZnghCoPNv3BrchLqcaRPs4+2LnQzlRkxSRC8avhRkxOHWtEjfQH1f
- qZvIuKL8PaA==
-X-Gm-Gg: ASbGncuM8vSqJfGFAgFJFoJlcd8K1NukBeVHQRZVTjDNo8sYbngYa1sgYuJp4emUQE0
- saQmSdunnR79jZqdodFRdr7uWwF9ASjT11I7UP0ueOnA1cjdHUc60zYEP5bjvTOEXD7nDNjREKL
- 6v8O/AS9/ggj7hT6cHNntNKxcvqDTcWJOZcQ/e7xY/wOM57XvijlAv/jMq8gS/pmUvMj9qsfiK8
- bgX2W/ID3ssNZZvYnzSs/CMc6gKkp/yP72HiWFl6I1hFDnq/u7PrjdYLKUZhu9THMXzxLjOQaEb
- TkyQNUrSmw7IAd6bSufM/iMX76wWLTkyaKLcZxLPi6FDVWhUZZ9cZHlZbWDTTFnSryC2vNs/qzA
- WWIWFGp0B5QYKuL2KjXsMkCj03+NGp89r6e5l2lYUSJOw
-X-Google-Smtp-Source: AGHT+IFJkCbW6+YbkwCqXH5HqGu4cDJmqLYEEKmaO7rAylz2zE8LC1W+s4a2pcKUaXmJqvD/qrocUg==
-X-Received: by 2002:a17:907:948a:b0:afe:93e2:3984 with SMTP id
- a640c23a62f3a-b01d8a321f3mr1572672866b.8.1756973498594; 
- Thu, 04 Sep 2025 01:11:38 -0700 (PDT)
+ bh=3j1jG2MY/WGcH+crz7CtyaM5tw55oKFFqSyUb2OGtbM=;
+ b=XmQ8aKLpPYwMii9Nn56b2dcwW3xhDPDFVhG+Sn7mYTDcjt3eqy+hVeuR+OjVAISEsh
+ 2Z4T++yZ0FSGx0Y4ugEJmBbsVGRcKzai2E58eneNCT96UDJR0d9JXmLL5u128FbrFdeC
+ SfZv1GyEDpIhVHkTg2W5Kc+lyyo4FKj7UUgkC2mxVEJXSNjxxGTM0E1pIgeuhqTrDzcb
+ cWhQSy2IFBYj49mC95WeIq05ovuQTuD8C3ylwl8aAHwYA9Hi3a/zNCXGyP/BxUBXBdJa
+ f5+m4GqePRJQ3kpW69QpNY5ywKnZRbYnCTKT3/xmDeZGoKZ6h+boLN1Lcf1i0QwU9tYh
+ 2cXQ==
+X-Gm-Message-State: AOJu0YxODD4XGRh0VB2R5To9jo0mMJfTkPoJ57fwF+8F5xrMRXI7tQJQ
+ Oljp7l71yLwwLDCjZk9OF3b2y/A/fMP/wUjyjuPER2loRyOy/2ngjqFjys10vRm+mtU=
+X-Gm-Gg: ASbGncv1eWLWiTVtIGWrQEVGojNI5ADgSOp7EEdJWjOQOFsnUjFpRsrUtcrFgRPtmQJ
+ xpQLN6v3O6XRwAvroZJXg6zrbMP0Ycm4vP1s1alKYQjHa3ryHPpXNwrGt9zQrkLnQFklL/LvReJ
+ 3ZISD3Oo8hHjQJqIRPuDpyoiZHEuYoLb0O5wlJY1T3DMYq78qi4Q6RgftUd0oS7mZRptZy/0kYg
+ taIv1UoaQoKsHnWCGx6ZWHamdjEFjpplIYozYciSVJcTgqhwJCjMDu3vhVDVAaDeNf3l6lXAhwf
+ +2LuSmnnfOMIRWNAkDvxJ3rhNFpovJ8YA6A4WZv/kQ5nOGZuT1NfKUqY0gxRpMjibBctbjQNp0n
+ dHqaqNYkLWhKSyF/FT26Zz0RlH9U9PjxJ0A==
+X-Google-Smtp-Source: AGHT+IHtaOAptd/dOyrxka90iG+Ickwt+7m6mDEjwCXtB/2x+x0WNk1ZvG1BgsoUzoIQQ2o03oW8Ow==
+X-Received: by 2002:a17:906:4789:b0:b04:1a1c:cb5b with SMTP id
+ a640c23a62f3a-b041a1ccc38mr1426344866b.7.1756973501036; 
+ Thu, 04 Sep 2025 01:11:41 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aff0971379esm1438937866b.102.2025.09.04.01.11.33
+ a640c23a62f3a-b03ab857474sm1225662366b.89.2025.09.04.01.11.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 04 Sep 2025 01:11:37 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EA7D95F93B;
- Thu, 04 Sep 2025 09:11:28 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 71DFF5F9F7;
+ Thu, 04 Sep 2025 09:11:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -129,24 +128,25 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 007/281] Open 10.2 development tree
-Date: Thu,  4 Sep 2025 09:06:41 +0100
-Message-ID: <20250904081128.1942269-8-alex.bennee@linaro.org>
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH v2 011/281] tests/functional: Fix reverse_debugging asset
+ precaching
+Date: Thu,  4 Sep 2025 09:06:45 +0100
+Message-ID: <20250904081128.1942269-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,20 +162,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+This commit fixes the asset precaching in the reverse_debugging test on
+aarch64.
+
+QemuBaseTest.main() precaches assets (kernel, rootfs, DT blobs, etc.)
+that are defined in variables with the ASSET_ prefix. This works because
+it ultimately calls Asset.precache_test(), which relies on introspection
+to locate these variables.
+
+If an asset variable is not named with the ASSET_ prefix, precache_test
+cannot find the asset and precaching silently fails. Hence, fix the
+asset precaching by fixing the asset variable name.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20250827001008.22112-1-gustavo.romero@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- VERSION | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/test_aarch64_reverse_debug.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/VERSION b/VERSION
-index 4149c39eec6..9856be5dd98 100644
---- a/VERSION
-+++ b/VERSION
-@@ -1 +1 @@
--10.1.0
-+10.1.50
+diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/test_aarch64_reverse_debug.py
+index 58d45328350..8bc91ccfde7 100755
+--- a/tests/functional/test_aarch64_reverse_debug.py
++++ b/tests/functional/test_aarch64_reverse_debug.py
+@@ -21,7 +21,7 @@ class ReverseDebugging_AArch64(ReverseDebugging):
+ 
+     REG_PC = 32
+ 
+-    KERNEL_ASSET = Asset(
++    ASSET_KERNEL = Asset(
+         ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
+          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+@@ -30,7 +30,7 @@ class ReverseDebugging_AArch64(ReverseDebugging):
+     def test_aarch64_virt(self):
+         self.set_machine('virt')
+         self.cpu = 'cortex-a53'
+-        kernel_path = self.KERNEL_ASSET.fetch()
++        kernel_path = self.ASSET_KERNEL.fetch()
+         self.reverse_debugging(args=('-kernel', kernel_path))
+ 
+ 
 -- 
 2.47.2
 
