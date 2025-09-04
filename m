@@ -4,68 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC972CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3093DCA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 21:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuGu0-0006Xg-Pn; Thu, 04 Sep 2025 16:49:53 -0400
+	id 1uuHM3-0006g0-U7; Thu, 04 Sep 2025 17:18:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGtl-0005wi-Ay
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:49:41 -0400
-Received: from mailgate01.uberspace.is ([95.143.172.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGta-0000zm-Ae
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:49:37 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id B376560C05
- for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:49:17 +0200 (CEST)
-Received: (qmail 2379 invoked by uid 990); 4 Sep 2025 20:49:17 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 04 Sep 2025 22:49:17 +0200
-From: Julian Ganz <neither@nut.email>
-To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 21/25] target/tricore: call plugin trap callbacks
-Date: Thu,  4 Sep 2025 22:48:56 +0200
-Message-ID: <69d6bef3b97f71e6caa2de246d300912c037698e.1757018626.git.neither@nut.email>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <cover.1757018626.git.neither@nut.email>
-References: <cover.1757018626.git.neither@nut.email>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuHLz-0006fR-Ns
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 17:18:48 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuHLg-0004sD-JC
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 17:18:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=5wi/zBe21XDKb4RY8qQ7VN1YZGBMBYdBZo6OxVVAWZE=; b=DiLueFpNwcixvq3vkoD/tJFR5Q
+ UxJs6yCfEz1HKtumLCdCmNeimvbfmuRpp0TSMVyPlZmUBGt+U/BBNDFok8/X4aDmbOQzCGf/kXo4L
+ znuykDQw/RhZ/zFGZrebZbmneqOAeofQpB5SQBiI9gpdsuoCeFzVBeQtNpjOHA/NSK8q4a3fr0E74
+ etzl2Q9LqKqR/uVFAahUvmDSX08kVVdQBUuWj29/y9ploUNkETWjxLyr/3zu1ahpqu6oe6SzQiBvS
+ Qs9fXOqT4dMb+jo7yy7h8vPEZVNiuLeVzSvmgR/ZAP5+BvmapP+Cjg2lhbeabvEdK2rJP/6amy6r4
+ TuIUWS6bL3pzt3fsswNSrvivKUdL5WJMZl6HHzYz4HF3jQKuvBkhaE7FCWy+AP7f8eQdoCdMV/W+c
+ pJiPYfhEuixqB0GNMXhwmxmrVKUleDpbVUmDLleBdy8gnvUCDpgTFYzyy//xtX5wGWcqGusag2dPI
+ YAFWkPrGNEgFDkEM6ha1VQFhLSIFOvzRGbNRWhxBrZc8n3OpQGt2yarhEAf/iaIH5k0/zTOIao8S1
+ lEKG68bQLDEESbM3QS5uzPKCMMn8rJmhIFmrCWo8dJxdrUN2tSW8dzCTaEyiMuf217LwZZiEMU0sq
+ OhNHDBUiq7/vNvdbJYWDl1+yResczRct8iW+99QDM=;
+Received: from [217.155.175.48] (helo=[10.8.0.6])
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuHJU-0003YS-QG; Thu, 04 Sep 2025 22:16:13 +0100
+Message-ID: <992d997e-b4a0-49df-8e49-4b5c8bd362c0@ilande.co.uk>
+Date: Thu, 4 Sep 2025 22:18:05 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250904161026.804239-1-mark.cave-ayland@ilande.co.uk>
+ <611cba04-c567-439e-8f52-4d5f74828083@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <611cba04-c567-439e-8f52-4d5f74828083@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.993729) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.593729
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=sikDKxVdoH/tFrpwzH0GPVt3AT9j5FuE97/PA4t+p6A=;
- b=HbwJ1KlyH0jessT85JTQ8RyjUFprsOgDzDvKQq/zmlStOf9jHZ8dwhssZfcQD5AYZnQXxA+QcB
- os/BqjW5XiYsAeJ0R/udZGK8rAwH8wpdCOjmccv6u8UTnQHajlvOAtzkH/rrhZ7/qM2EetYDFJEC
- 5mP7G+KU4SfqudEyENHvhK/c4hAPsOFATAX+G7NTr9IftKTvjGBUnV+SFsmrBASD7Mr3O7TP9KUE
- x1RQM0i3QnuKV2fEPr19vW7WHirwt0u2Gv7+J7DJcRfQzsbzp25FZGM9CY1QjwAxdMm2lsi954Jf
- OlM5Rxmk/4Uo2tjAij19BYkDBeSpYyH4w1DN958DYfxiKVviCXyr1d6xF/FM265WdSY8KMyFE77o
- MDu/6vMhsbS19AD6Qujg2h3CE7hijym7x+USeN1Tqttj2i3b5hD0LN/PpoaAguSVZmrqdY/yYBKJ
- ZI4wrIVArzNep7Q8onBv0z8nbBUdnlPpKKfXnVHLECuvU8nwnc+O1OmmwnJ4au1PpHv4ERnzInsU
- aal2E4HD3HUoFPYLEJpr9TCjjleTtXzuHRln+bHX+HYcCNnII3pQJhlsunW8tq3uuduW0gRQmLvF
- k5PJBDG//wleUYLtQZAji9ImLl5r+BTMdb1uq3OWVmOJK3P1vmneLapjntgIrjNqfelSoPuqW0qH
- w=
-Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
- helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SA-Exim-Connect-IP: 217.155.175.48
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] target/sparc: allow partial decode of v8 STBAR
+ instructions
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,54 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+On 04/09/2025 17:44, Richard Henderson wrote:
 
-This change places an exception hook for TriCore targets. Interrupts are
-not implemented for this target and it has no host calls.
+> On 9/4/25 18:10, Mark Cave-Ayland wrote:
+>> Solaris 8 appears to have a bug whereby it executes v9 MEMBAR instructions
+>> when booting a freshly installed image. According to the SPARC v8
+>> architecture manual, whilst bits 14 and bits 13-0 of the "Read State Register
+>> Instructions" are notionally zero, they are marked as unused (i.e. ignored).
+>> In effect the v9 MEMBAR instruction becomes a v8 STBAR instruction on a 32-bit
+>> SPARC CPU.
+>>
+>> Adjust the avail_32() logic in trans_MEMBAR() so that if a v9 MEMBAR
+>> instruction is executed on 32-bit SPARC, the equivalent of a v8 STBAR
+>> instruction is executed instead.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3097
+>> ---
+>>   target/sparc/translate.c | 10 +++++++++-
+>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+>> index b922e53bf1..9efefe41c6 100644
+>> --- a/target/sparc/translate.c
+>> +++ b/target/sparc/translate.c
+>> @@ -2832,7 +2832,15 @@ static bool trans_STBAR(DisasContext *dc, arg_STBAR *a)
+>>   static bool trans_MEMBAR(DisasContext *dc, arg_MEMBAR *a)
+>>   {
+>>       if (avail_32(dc)) {
+>> -        return false;
+>> +        /*
+>> +         * At least Solaris 8 executes v9 MEMBAR instructions such as
+>> +         * 0x8143e008 during boot. According to the SPARC v8 architecture
+>> +         * manual, bits 13 and 12-0 are unused (notionally zero) so in
+>> +         * this case if we assume the unused bits are not decoded then
+>> +         * the instruction becomes 0x8143c000, or the equivalent of STBAR.
+>> +         */
+>> +        tcg_gen_mb(TCG_MO_ST_ST | TCG_BAR_SC);
+>> +        return advance_pc(dc);
+>>       }
+> 
+> You could avoid replicating this and do
+> 
+>      return trans_STBAR(dc, NULL);
+> 
+> Anyway,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> r~
 
-Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
----
- target/tricore/op_helper.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Agreed, I think your suggestion is semantically clearer. I'll send a v2 shortly.
 
-diff --git a/target/tricore/op_helper.c b/target/tricore/op_helper.c
-index 9910c13f4b..9bd6ce55d1 100644
---- a/target/tricore/op_helper.c
-+++ b/target/tricore/op_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/host-utils.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "qemu/plugin.h"
- #include <zlib.h> /* for crc32 */
- 
- 
-@@ -29,8 +30,11 @@ void raise_exception_sync_internal(CPUTriCoreState *env, uint32_t class, int tin
-                                    uintptr_t pc, uint32_t fcd_pc)
- {
-     CPUState *cs = env_cpu(env);
-+    uint64_t last_pc;
-+
-     /* in case we come from a helper-call we need to restore the PC */
-     cpu_restore_state(cs, pc);
-+    last_pc = env->PC;
- 
-     /* Tin is loaded into d[15] */
-     env->gpr_d[15] = tin;
-@@ -90,6 +94,7 @@ void raise_exception_sync_internal(CPUTriCoreState *env, uint32_t class, int tin
-     /* Update PC using the trap vector table */
-     env->PC = env->BTV | (class << 5);
- 
-+    qemu_plugin_vcpu_exception_cb(cs, last_pc);
-     cpu_loop_exit(cs);
- }
- 
--- 
-2.49.1
+
+ATB,
+
+Mark.
 
 
