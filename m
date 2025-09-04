@@ -4,73 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B063CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 07:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068F1CA1015
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 07:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu4hz-0007J7-JP; Thu, 04 Sep 2025 03:48:39 -0400
+	id 1uu4oh-0001Ad-IW; Thu, 04 Sep 2025 03:55:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uu4hq-0007Hj-27
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:48:32 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uu4hm-0002fB-OM
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:48:29 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxP_BBRLlo3JIGAA--.13820S3;
- Thu, 04 Sep 2025 15:48:17 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxrcE9RLloPnd9AA--.44366S3;
- Thu, 04 Sep 2025 15:48:16 +0800 (CST)
-Subject: Re: [PATCH v3 06/12] target/loongarch: Add tlb search callback in
- loongarch_tlb_search()
-To: Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250903084827.3085911-1-maobibo@loongson.cn>
- <20250903084827.3085911-7-maobibo@loongson.cn>
- <58318cbc-05fe-4de5-bc1a-f68bfb30ebaf@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <21849d27-fba7-b121-f31e-dbfb113c8412@loongson.cn>
-Date: Thu, 4 Sep 2025 15:46:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uu4of-0001AF-56
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:55:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uu4oc-0005cB-5N
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 03:55:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756972527;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TV/JkLPsplmb7MZakCOP37DHgaUkD9O13bJkEPqbPmE=;
+ b=M7j4DkzeOpx2Q9vYFduveQOM8YBE4MMIdLBsO1+gnt/ZYGDoLi0RR8LPqMNXbyGb/Mb2Kz
+ ZpmHSSbXnJsyDMdJevg6tqzlWuhOwSeat5u9hejlRtIVhP/JrBvzyTXcnsGxIin1yCZdTi
+ 9igPjGFjA7ZSPrHVIkhc1zx1mj8qhCU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-104-UecA-NzMPumc0-9jAohKiQ-1; Thu, 04 Sep 2025 03:55:26 -0400
+X-MC-Unique: UecA-NzMPumc0-9jAohKiQ-1
+X-Mimecast-MFC-AGG-ID: UecA-NzMPumc0-9jAohKiQ_1756972525
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a15f10f31so11569545e9.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 00:55:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756972525; x=1757577325;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TV/JkLPsplmb7MZakCOP37DHgaUkD9O13bJkEPqbPmE=;
+ b=qBlgLsf29pnbpMAr1hoI/j6PI99MbVOyW3l1yzLImY3IBYSdl4QYEIXEV0GyurWWsu
+ laEqwJRaRcN7nNHsvG19zNOrs4aupouKgngQnKbZMsYKwz2sQoJXcibQ3ClVIDwKgqgf
+ sXrA8kDTlaBM18xr8OEYW3m0h+Jbq2MZ+dVe9kmHKiL4NXqDmfbBmPPnSPJyAuMi/kxn
+ szhKIU6dVZ6+Ul7zg5ENKuXRg+uB2laqvcCQ0tKnrB4NwIQDP9vN2tKiefwJr9yvMaHP
+ 6RSRXxRTWHQJ8r7VLBGlN+/TT2SmU+XOrKXx7vAZkxxG/9gq05GBRLpcsovcTx7WB5Zx
+ Nu6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4UbVjqwCKsnd2KuzuoX3HS8IPFy4qNGu/DqpyFZWzqpDXMNtSl/3ZzO/+b2a1l5vvuOFUNtA6502L@nongnu.org
+X-Gm-Message-State: AOJu0YyVJvVdyRXfiY3tvWXZeBC0Dhi9CY9iO/PE/zMA5oe80AJNH1Fi
+ vEcq9wR5jlSvv8vorqt+1n9TOGPc/3+GejMt8APPECsLalXSRMVuXAr1E7DhNr9oWWbXqTjn93Y
+ D+mjph0b/2tez0QRxQo3+Wi0DPfyGaBwbn3kCl/touxSStf9EM7JwEl0X
+X-Gm-Gg: ASbGncuTKfEermUXNNu+47PEMaW1vJ2pBBvPKBMSic1dlBtjb7qWpQMRFwgCpLH21OY
+ 5OUQOH3zUMAHSOt7BMTgF7Csfneq150D9FQoWHIBhX4nU8T0KB9J1cXW5eSfg4sJF2yub18dDcD
+ E64UfYg+5H/8nxj3u5W50Sj0CTtjTdr2NWMbw7JAe19k+XJ9DQa8FFDxGKJACvAbGWCr5Y8c9PJ
+ XZxro1VhQ2OlrcHO6YmH4E4VwyH/tTEVc90l0nuiYdcZN9xufXFDa10PHd4ZH82DDySTjEKOPx3
+ 7e56nEHOBr15S2hA3Hl+3aAaLt3q8437mlnfjHI7UJ9qv+AVvcaM+MtO7gHCYqKVBPiT542xMJI
+ tMGep1cJpIMI=
+X-Received: by 2002:a5d:5d10:0:b0:3d3:1ad0:e8a2 with SMTP id
+ ffacd0b85a97d-3d31b2c7b3bmr9077068f8f.27.1756972524859; 
+ Thu, 04 Sep 2025 00:55:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYRZGnlAhVz/CqbddOvVxz2RHMiNNcgUs/INAahbhakPgWqumCOz9hj8nyL+USHn3UoJpWiA==
+X-Received: by 2002:a5d:5d10:0:b0:3d3:1ad0:e8a2 with SMTP id
+ ffacd0b85a97d-3d31b2c7b3bmr9077043f8f.27.1756972524414; 
+ Thu, 04 Sep 2025 00:55:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45dcfd000dasm13089105e9.5.2025.09.04.00.55.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Sep 2025 00:55:23 -0700 (PDT)
+Message-ID: <ba0763fd-6f87-47cf-b425-91f096fadc12@redhat.com>
+Date: Thu, 4 Sep 2025 09:55:22 +0200
 MIME-Version: 1.0
-In-Reply-To: <58318cbc-05fe-4de5-bc1a-f68bfb30ebaf@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 04/15] hw/arm/smmu-common: Introduce
+ smmu_iommu_ops_by_type() helper
 Content-Language: en-US
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org, skolothumtho@nvidia.com
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, shameerkolothum@gmail.com
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-5-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250714155941.22176-5-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxrcE9RLloPnd9AA--.44366S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJr4UXF1xJw4rWr4DCrykJFc_yoW8GrW5pr
- 97CrWUKF4UJFn3J3sagw15ZFn8Zr4kJa1jqFnav34rCrnxJwnFqr4vqw4v9Fy8Xa1xXF1j
- qr4Fvr1xZFW7X3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOF4_U
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.65,
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,57 +119,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2025/9/3 下午9:14, Richard Henderson wrote:
-> On 9/3/25 10:48, Bibo Mao wrote:
->> With function loongarch_tlb_search(), it is to search TLB entry with
->> speficied virtual address, the difference is selection with asid and
->> global bit. Here add selection callback with asid and global bit.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   target/loongarch/tcg/tlb_helper.c | 19 ++++++++++++++++---
->>   1 file changed, 16 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/loongarch/tcg/tlb_helper.c 
->> b/target/loongarch/tcg/tlb_helper.c
->> index 00422f259d..006fe1b207 100644
->> --- a/target/loongarch/tcg/tlb_helper.c
->> +++ b/target/loongarch/tcg/tlb_helper.c
->> @@ -21,6 +21,17 @@
->>   #include "cpu-csr.h"
->>   #include "tcg/tcg_loongarch.h"
->> +typedef bool (*tlb_match)(int global, int asid, int tlb_asid);
-> 
-> Should global parameter be bool?
-Will do.
-> 
->> +
->> +static bool tlb_match_any(int global, int asid, int tlb_asid)
->> +{
->> +    if (global == 1 || tlb_asid == asid) {
->> +        return true;
->> +    }
->> +
->> +    return false;
->> +}
-> 
-> More compact as
-> 
->      return global || tlb_asid == asid;
-yes, this is better. Will do in next version.
+On 7/14/25 5:59 PM, Shameer Kolothum wrote:
+> Allows to retrieve the PCIIOMMUOps based on the SMMU type. This will be
+> useful when we add support for accelerated SMMUV3 in subsequent patches
+> as that requires a different set of callbacks for iommu ops.
+>
+> No special handling is required for now and returns the default ops
+> in base SMMU Class.
+>
+> No functional changes intended.
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Regards
-Bibo Mao
-> 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> 
-> r~
+Thanks
+
+Eric
+> ---
+>  hw/arm/smmu-common.c         | 17 +++++++++++++++--
+>  include/hw/arm/smmu-common.h |  1 +
+>  2 files changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 0f1a06cec2..3a1080773a 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -934,6 +934,16 @@ void smmu_inv_notifiers_all(SMMUState *s)
+>      }
+>  }
+>  
+> +static const PCIIOMMUOps *smmu_iommu_ops_by_type(SMMUState *s)
+> +{
+> +    SMMUBaseClass *sbc;
+> +
+> +    sbc = ARM_SMMU_CLASS(object_class_by_name(TYPE_ARM_SMMU));
+> +    assert(sbc->iommu_ops);
+> +
+> +    return sbc->iommu_ops;
+> +}
+> +
+>  static void smmu_base_realize(DeviceState *dev, Error **errp)
+>  {
+>      SMMUState *s = ARM_SMMU(dev);
+> @@ -962,6 +972,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+>       */
+>      if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
+>          object_dynamic_cast(OBJECT(pci_bus)->parent, TYPE_PCI_HOST_BRIDGE)) {
+> +        const PCIIOMMUOps  *iommu_ops;
+>          /*
+>           * This condition matches either the default pcie.0, pxb-pcie, or
+>           * pxb-cxl. For both pxb-pcie and pxb-cxl, parent_dev will be set.
+> @@ -974,10 +985,11 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+>              }
+>          }
+>  
+> +        iommu_ops = smmu_iommu_ops_by_type(s);
+>          if (s->smmu_per_bus) {
+> -            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
+> +            pci_setup_iommu_per_bus(pci_bus, iommu_ops, s);
+>          } else {
+> -            pci_setup_iommu(pci_bus, &smmu_ops, s);
+> +            pci_setup_iommu(pci_bus, iommu_ops, s);
+>          }
+>          return;
+>      }
+> @@ -1018,6 +1030,7 @@ static void smmu_base_class_init(ObjectClass *klass, const void *data)
+>      device_class_set_parent_realize(dc, smmu_base_realize,
+>                                      &sbc->parent_realize);
+>      rc->phases.exit = smmu_base_reset_exit;
+> +    sbc->iommu_ops = &smmu_ops;
+>  }
+>  
+>  static const TypeInfo smmu_base_info = {
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index c6f899e403..eb94623555 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -171,6 +171,7 @@ struct SMMUBaseClass {
+>      /*< public >*/
+>  
+>      DeviceRealize parent_realize;
+> +    const PCIIOMMUOps *iommu_ops;
+>  
+>  };
+>  
 
 
