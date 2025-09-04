@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CF0CA1002
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E29ECA1015
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu6z3-0003w3-QF; Thu, 04 Sep 2025 06:14:25 -0400
+	id 1uu6yx-0003pf-R2; Thu, 04 Sep 2025 06:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uu6z2-0003vc-7Y
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:24 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1uu6yu-0003oS-Ln
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:16 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uu6yw-0008Ch-Om
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:23 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-61e526608f3so588923eaf.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 03:14:18 -0700 (PDT)
+ id 1uu6yq-0008By-EP
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:16 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7454a992f7dso688247a34.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 03:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1756980857; x=1757585657; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1756980850; x=1757585650; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=l/yR6M74PCFzVjAUqQfwhFVlLv7FromAIG+fewQNg3Q=;
- b=ARd5/EiPtPQfZzwIxLg6Et9LphXrPWaOrKzkX14Wd9X1voUKDqIZTUYRmzdzenBEFw
- kchOpRSjcRiiPAsDKfaV6wXXL1GZUavBJokmuS7TJQr9h2tQTQV3UTVM/ZcR4pjlXqHY
- bOtRdQ618zGxzk58oVQScQ5CfbikYNH/nSakme4c9phxRFteNuENUAYBxP0RhXTMSTR5
- gdQ+EbS2pkUprU6fouzMIPZqqhPSVez2ovonifz/JTpnpRIasRexArGhOTvrYldn1ZoY
- XgvfShzp9GPNPeKE8tqibmIJwfJ0mx1YqDvqKKBbohIff5rNNsxzaWbWlHW0GIxzgamd
- me0w==
+ bh=F9GxhJmWfwBye7noMnqDJZ/ZX2guxAEgJ0FNB26d/OM=;
+ b=B/oxHCGFptNR2Ph8rqWP4ECYJi+kJzJyfKBiPMmzLKb5N+phWMVrw4vpeSaajIP4SL
+ WEnODLSc9p83pnmFenXLI7wNuXGuJx9OlWfezPjtU/Mxp1qS9JIRhfh5Jk4k9SQjaCMc
+ O5AFmAdRXjATws1dJOlLtglvDh9ZclAl0ssM9Yv2NLuXrcadRu8lr+dXzRTG/KR1rQok
+ C1RUTpdJzncSM/McUiIc2YKwfFMNE0obyFR25ywxPdsUkzTyXKDt/7v37DnIMxHNPV4y
+ Th4KPSGZZAIWVa/fgJB4yTQF0gTT50ZUjT/Lq27nFQOQEa7VRicUxORmfoxH+06hiLc4
+ /GIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756980857; x=1757585657;
+ d=1e100.net; s=20230601; t=1756980850; x=1757585650;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l/yR6M74PCFzVjAUqQfwhFVlLv7FromAIG+fewQNg3Q=;
- b=iZOKx1ybw6mN4Zj8fem9ZYtiYul8r8+mXJSyR4o+3uQr5ktEX+u5T5TQYJ6Cm8e8RS
- W+nuLYApi90jwrTgXgWsE1HcUobyhoEvE+w2Qopz5JiZ8XgzFgcX8Jkspr1PeAG8vQrQ
- zwuSVOfSs3GE5RszUnG5+NkFzkbdoU2T3g+XTVoMMAV2AqaH4zd1SOq425SgWVDiRUR0
- ENzYFkmRxBBr0PZKEWSy2bIpx4SZ6pBoUqr3wXiwNnB3/++2wcagATlnOglw104/rfZs
- VCMgpqFqQnZ3eIabT1YqpxtPNZvsxhzyb/rLAbdImgUVtrp8lTX85OuaOitPAmjPH+HK
- +cKw==
+ bh=F9GxhJmWfwBye7noMnqDJZ/ZX2guxAEgJ0FNB26d/OM=;
+ b=uwiYiWkGFkWyxzcPQtUnIx7nV+7J+/h0FMrvuZz1zsRe7apSDymcF8u+WIeKmQ1D5e
+ TbLNpgaCyPtSnN37zOyj4dmitdOza/xYs/+jooqoKn2Yuq/Z2LG0oID0P9NLdjpj77pJ
+ hZ/TWbOsRFP2jE2/jrEItdBZwxQt70saVtxM9SZUNuDh13QW2S8SXDOTS2ZvFmzyIqP1
+ L8I8E7Lnz+9GDwxYYsEuTZc0wfr7WoGuK3WutiiQKC5zY9hzCnALV/3lrxtmO9IS7ylH
+ 3+w5CA4AD9akW+mwwUsK45S8gJfI28KvongPB1K17l5pLcTqqTbZzi8iuBoelxPHgf+R
+ M49Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5lUF3bpdcDZMAzqS/yo/3LBTrB9qmaXyFhZ3m6T8moVQ7lXSmcwFgVVRdPI5LGcb9eBiYu/l2Allv@nongnu.org
-X-Gm-Message-State: AOJu0YyKa34OJgVIsbsirVEPrHiIiLh/ze5EhJGQbAzqHYZY+eziIIon
- arNLrLCGETe+xpvzeVTXYBcMcIK9Jl8Iwk2cba1WxBo6l/FLFn3no78Yo+xQ6Jvk6A4=
-X-Gm-Gg: ASbGncsoM72HzxpQ7+tcnWlvis2tMTI8juytyJbgbX+/EgFiqA65SDtIjLJK238OX/Q
- HbkUrmVNlteKFHbPb+jpmMS3iHsj5qZFZ4+aHybf6UdqWGAIVAnNZmcFGWEIwhMOF5oG8IQxbmu
- D9PBJZuRCrKziMOW+J8OyjrdUuryUrzcobBR24ZdEZRA+oLhWocdPR6fRG+v/gQfem9wv8UmJL0
- M7AWXhQsGKZ2OQP6X5NUSeF7rpqI554lLMh2INsvzC6CDEUkAfRT1NfPoh1Uv1H2vdtvdSbwwpY
- q5cTsi9N+7p2xt3s7XAHqLT7F4nL3pPN4RrvWp8VeCPkL93QIUONK5lJJzBi2JB/Ybjr0xoS19+
- dgBXX27obKsNn/R7bFnpQU5zUjsExh8Ld+z+ePWF19JXAaMo=
-X-Google-Smtp-Source: AGHT+IFtHENZmou+j3cb+4+f/VxqCNMwFnjmLRlw2wlo3gsYwArBnDXB+G6cwJqCiDVRXRv4cBaV3A==
-X-Received: by 2002:a05:6871:4186:b0:2bc:918c:ee04 with SMTP id
- 586e51a60fabf-319630cafbcmr11118579fac.14.1756980856729; 
- Thu, 04 Sep 2025 03:14:16 -0700 (PDT)
+ AJvYcCVYlIt5I7i5s1+DeBHPaDlLqP80tvcxb/CKDT+gcPhiHl1fRCcbT8I5i0PVNzx9lg8QkR/oIf7cWXTf@nongnu.org
+X-Gm-Message-State: AOJu0YxImZc09cSnZiWg1at1YdkukFsN9Pl6+dU85kegAIV9t3kBp3nH
+ m2bFBCYWA3eZq35yYH7cymubuTOJ+aS2hBh0+2PdQcGribr2X0VxP1vpeJrvIFsEynw=
+X-Gm-Gg: ASbGncvZHfbR4ty6R1un/Qvy3I3MSVL2D7JSnjXjaHWunnIW76v5EO/lAPIWVTy3E1e
+ rn7M+fIjVJlXPRuQp3Hgh0Jm0u7BY6Qc8LCynYziOU5SVJ2Wb380auCKbD8zZ4emker8PM7Tra8
+ +MvW07aiktB9B22Z7rB50nhQGlyJvUELS/FMinwqTP4vocn/JcZh0xCCGUn62/B0XbmI+ePvP0R
+ PsbEW4xJGVguYm3wgtWofnsZ7JZQRYQxQQMm7cCjVZZ6UJ1x9kPh5eSV1YLiLSRBMwtdOzCUXOd
+ 7velN4T3bYlV5nRkCZ4UjsTxqNye1DKHRIRILrniWzG2WpLhBCjkzhjAV44pwdOiicKpo8QyeQi
+ S3t4FcUsdg3IjHmWnaASzSUv7c4k7wf6vGrRWg7kp9J9/QJY=
+X-Google-Smtp-Source: AGHT+IFMxCTjr2ulg1tUf6aQ5+QiW5mTfsn/q3zJ6U9Y39MM6DVTIllosa8QvDq4q3MRLNV+oh6wyg==
+X-Received: by 2002:a05:6830:648e:b0:745:615a:fe6f with SMTP id
+ 46e09a7af769-74569db5623mr10148022a34.11.1756980849845; 
+ Thu, 04 Sep 2025 03:14:09 -0700 (PDT)
 Received: from [192.168.68.110] ([187.10.187.251])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-319b6063d3dsm2049136fac.26.2025.09.04.03.14.12
+ 586e51a60fabf-319b6063d3dsm2049136fac.26.2025.09.04.03.14.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Sep 2025 03:14:15 -0700 (PDT)
-Message-ID: <2f2cafa3-0017-4fa9-8766-554556a9aa8b@ventanamicro.com>
-Date: Thu, 4 Sep 2025 07:14:12 -0300
+ Thu, 04 Sep 2025 03:14:09 -0700 (PDT)
+Message-ID: <da524d10-fee5-45f2-ba9e-23f66a754e9b@ventanamicro.com>
+Date: Thu, 4 Sep 2025 07:14:03 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 3/3] target/riscv: Expose Zvqdotq extension as a
- cpu property
+Subject: Re: [RFC PATCH v3 1/3] target/riscv: Add Zvqdotq cfg property
 To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -79,21 +78,21 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  richard.henderson@linaro.org
 References: <20250903140308.1705751-1-max.chou@sifive.com>
- <20250903140308.1705751-4-max.chou@sifive.com>
+ <20250903140308.1705751-2-max.chou@sifive.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20250903140308.1705751-4-max.chou@sifive.com>
+In-Reply-To: <20250903140308.1705751-2-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,25 +111,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/3/25 11:03 AM, Max Chou wrote:
+> The Zvqdotq extension is the vector dot-product extension of RISC-V.
+> 
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/cpu.c | 1 +
->   1 file changed, 1 insertion(+)
+>   target/riscv/cpu.c                | 1 +
+>   target/riscv/cpu_cfg_fields.h.inc | 1 +
+>   target/riscv/tcg/tcg-cpu.c        | 5 +++++
+>   3 files changed, 7 insertions(+)
 > 
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 95edd02e68..ed486113ba 100644
+> index d055ddf462..95edd02e68 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -1373,6 +1373,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
->   /* These are experimental so mark with 'x-' */
->   const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
->       MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
-> +    MULTI_EXT_CFG_BOOL("x-zvqdotq", ext_zvqdotq, false),
+> @@ -187,6 +187,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(zvksg, PRIV_VERSION_1_12_0, ext_zvksg),
+>       ISA_EXT_DATA_ENTRY(zvksh, PRIV_VERSION_1_12_0, ext_zvksh),
+>       ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+> +    ISA_EXT_DATA_ENTRY(zvqdotq, PRIV_VERSION_1_12_0, ext_zvqdotq),
+
+Is this really 1.12? If it's marked as experimental I would expect it be a new
+extension, e.g. 1.13.
+
+
+Thanks,
+
+Daniel
+
+>       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+>       ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index e2d116f0df..5da59c22d6 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -100,6 +100,7 @@ BOOL_FIELD(ext_zvfbfmin)
+>   BOOL_FIELD(ext_zvfbfwma)
+>   BOOL_FIELD(ext_zvfh)
+>   BOOL_FIELD(ext_zvfhmin)
+> +BOOL_FIELD(ext_zvqdotq)
+>   BOOL_FIELD(ext_smaia)
+>   BOOL_FIELD(ext_ssaia)
+>   BOOL_FIELD(ext_smctr)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 78fb279184..7015370ab0 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -767,6 +767,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>           return;
+>       }
 >   
->       { },
->   };
+> +    if (cpu->cfg.ext_zvqdotq && !cpu->cfg.ext_zve32x) {
+> +        error_setg(errp, "Zvqdotq extension requires V or Zve* extensions");
+> +        return;
+> +    }
+> +
+>       if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64x) {
+>           error_setg(
+>               errp,
 
 
