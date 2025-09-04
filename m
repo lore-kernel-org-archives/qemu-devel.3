@@ -4,103 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC37CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 12:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7836CA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 12:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu8j0-0006fB-K6; Thu, 04 Sep 2025 08:06:00 -0400
+	id 1uu8ma-0008PS-Kr; Thu, 04 Sep 2025 08:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uu8is-0006e1-1l; Thu, 04 Sep 2025 08:05:50 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uu8ij-0002G5-IG; Thu, 04 Sep 2025 08:05:49 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3da4c14a5f9so1300694f8f.0; 
- Thu, 04 Sep 2025 05:05:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756987533; x=1757592333; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ufZsmMFnzrfsnrJ0QfuR5ArbfcZcnQouoWareruaNfg=;
- b=Gx+01y5ET72nTf3OHYkHqPF5nD1R1Ek/IyzjeHHeXKFb0yGS8n33dvpXgwOHVzuzuY
- 2TcA6KktC+nNWNugeohShhB3CcO/VmyHH8UlaxJg4yfEaVMWvzZZqYf6U/B9cJjiOrNL
- ZxswRXnwgYrzaMbj3X8/b3Mf+p5fY+9cRD3XCGG2WmBuV+d6MO/d9Kw4rl9rVX+Qtdnk
- J6NafII4YEfXtfCYz1FOHu6hySCwqjP7W6zW3HVkcNts3eVcSkWmQZm4dplq7FfWVioa
- eyvD0UZQQrWwrL+Pm7NQ9pGE4Jtc2rtAsQkXMM7JTtoOtETStKNeD2Wl0+mSOlVz/G/S
- 8DfA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uu8mG-0008Md-5v
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 08:09:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uu8lz-0003yH-3y
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 08:09:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756987740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RGfsbECkN8yDi9zfYlQG8Tqcfjb7p7ijr5WocyCehHg=;
+ b=N3OpXnB5C99ONu8j1eaM5TXj0EEeRyBKKjwTbLoThxg1FmFdgaZIvd8ZjD7ynAEoxB4UZ0
+ ECBoDhp4RJOIT1sZPjRvYcmoK6p3Zts7iLul8dvyKlzjLTitIQd/1fnaf2zHbAwF13G3VQ
+ 6iTS8wFEmBn7Mcl0RDA1fGRH+z5kJHQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-646-1U8ze165OL-Oo4fze-zXMw-1; Thu, 04 Sep 2025 08:08:56 -0400
+X-MC-Unique: 1U8ze165OL-Oo4fze-zXMw-1
+X-Mimecast-MFC-AGG-ID: 1U8ze165OL-Oo4fze-zXMw_1756987730
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45dcfc6558cso6155435e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 05:08:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756987533; x=1757592333;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756987729; x=1757592529;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ufZsmMFnzrfsnrJ0QfuR5ArbfcZcnQouoWareruaNfg=;
- b=M+IRq7fZVjU4XnsEMY0suSHdBp9hvoBG4ZVbSpqJBGuxmhT/v5R9+EQH73xp4IM3gu
- VogqgDC8hoZT7LEuUe2F7v4JmDrVVKPemhEw3tuY82GKE+NZQLbKmairKrlv49111dbl
- cw7ECIqh77EQakCno6T4uB3/eqrXlJlNg+q/7SL45EkDwoA1Jnp8TCv6FaeElopEoXu8
- t/+WcArfxXUDVP6DQDeOEVpq7JIlISJi/P6gL3QhkSfivF/YN5wvHEXg1zU7+aNmSJMs
- DWPchFkUF5cSDwu7Qd88CmAfn+P+obLgudTY+twW2vN5MfCTnaArKtrNiqfHb2DAVEzZ
- hFzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDxUAu7BgnOkR/dvBc/3I+g5QB4y1uNDkDNm92JsHrG449XKfPgSJsgCngl2vWPtUznjEnpLBBfg==@nongnu.org
-X-Gm-Message-State: AOJu0YyFlVVTKSEl/nbj3pXOpPqCWHNa0aplAm0s1iadOODOF7beALUG
- VmdpfjHV59HhgRBlRpD7aex5G2EvGXSYrZAyojiVGc00WEWp8no0VW2AEZFqYg==
-X-Gm-Gg: ASbGncvwDARfVuDm/vRtjU2tYyCYcAtXJ1wYbB8EtMHeRogZIsjysmHtBvDd/HZerZF
- jJ3DPcEvosLJ4/+0hYjB7FeDUYfQFmVSri48ZpMcSPEWYySo5hU3gtATXZO/M5Jh5V4bmQHurBZ
- rJLdz7OJ3pDI6B0m24ndgJlCiAXVD+3TqBNR0wObUs+B2cnbYFmAo+Z8UmcvKdGKm0t2i40JpQ3
- jPyukaZvtedRW0p+HzZvXbI6cifrW3sY+F50FybOPtW7vNnLRq3QIX7KKbd6quGrxL0Xwux/Jy0
- cKbZCX6DnX4Da1fWez3xCC2Qp8aYDOzGvsxxUh3uj0t6We9K+dNNNdWj27TdewY+gMItNcz6LIg
- DtyTzVB4v80yo0JeicBOWEp268dKG
-X-Google-Smtp-Source: AGHT+IEEVcjWqtv3SltDYk6ZXLD/ziHDak5rA3h4+2eWMcg+y/A4e62bvy0S4ll9I8P1hzGIHdUbkA==
-X-Received: by 2002:a05:6000:1ac8:b0:3c7:244:a4be with SMTP id
- ffacd0b85a97d-3d1dd04e24bmr16738549f8f.10.1756987532508; 
- Thu, 04 Sep 2025 05:05:32 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([131.175.126.3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d92d51982bsm12187594f8f.21.2025.09.04.05.05.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Sep 2025 05:05:32 -0700 (PDT)
-Date: Thu, 04 Sep 2025 12:05:37 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v5 05/18] whpx: ifdef out winhvemulation on non-x86_64
-In-Reply-To: <20250808065419.47415-6-mohamed@unpredictable.fr>
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-6-mohamed@unpredictable.fr>
-Message-ID: <CE7E1531-FEAA-4E85-9CE9-2F5D8E3ABCB2@gmail.com>
+ bh=RGfsbECkN8yDi9zfYlQG8Tqcfjb7p7ijr5WocyCehHg=;
+ b=CmSNToprnlc3Z/o5ZNivLRIHehvCOUeoTFLh0E/uEMwlz7tAR10ybhwItEPwO2HmP5
+ gnM2SNzJm6thp7LLSiL65Ib/AJQVr2MviNioXexKCaGsPwy/2D/gkVrjh+KxC7di+cds
+ WuFZ4DYOupRkYKiagxmrHnNCI0UvpIqPjLbHd43hE/qMAZdUZ82i6VrHvPtEi1yagev1
+ z83Qt9SIBNqFaCcqlrZAMvgFR0CzbwR0sZRDOTIcnjtRxhwCvGECOnA1r401tWrLZtJB
+ THKZKDYzdF3E6D4vwBsngBWEoZDdmHbcrPBgQyHYAAzn5zPX4bQAsozrX+zVwvnlKzL3
+ /Ytg==
+X-Gm-Message-State: AOJu0YzdxA2tZ7dBL7m6QD8sA0D+s/80Z0o2FJC6FlcjZ1ZELOlYw87v
+ roxQb9vpUDm8BBuquGVZnPFNca8kO6IDafpZsx7xpN/cW/SDea3IVEIzhRSA23wy1ptxjMcxzSV
+ tmLDUHYNTNcuuPVLrl6y2HL11nW2H3RrAW+3lF1Hby2xuj6KqseKrraU0j1z0GBKGmcA=
+X-Gm-Gg: ASbGncu+b9nGrWGy+aDt13C8qp+1ox4+Jx47XPbntYXRNqUpxNX/O1rgi8KumhuS1OG
+ BFzWshkN9wZT4TTnAdfsB20tGPmubAPvXDYy4jBUktwotOsxoPD+VaVt/pi4dUj8IAren1QXHdn
+ pvuZmrMo/ByV2B22wyXFYhV2giKW9UDjlWS1u+8IfXRe7dcx8px7CWV+cUCsviCYItAM6SdiiH6
+ ByC9d7XO3fDmtPKTfzbsTmDzBaXizFIhUu29ZC00Z76xFKPGWJSs33PdSvHcFvZzZwhwPjREd64
+ K/BGHSdli0gVFOjOXuzgNcclf1UxGw==
+X-Received: by 2002:a05:6000:2681:b0:3df:1a8b:ff40 with SMTP id
+ ffacd0b85a97d-3df1a8c028amr3675212f8f.43.1756987729331; 
+ Thu, 04 Sep 2025 05:08:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGX0PPz3yh7ncUtLm/xW0ZxJtT+AldckvinW77LYH+EITFhgO23Jx24JW/wmCpN9gO6bSEhZg==
+X-Received: by 2002:a05:6000:2681:b0:3df:1a8b:ff40 with SMTP id
+ ffacd0b85a97d-3df1a8c028amr3675186f8f.43.1756987728720; 
+ Thu, 04 Sep 2025 05:08:48 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d53fda847dsm18324880f8f.0.2025.09.04.05.08.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Sep 2025 05:08:48 -0700 (PDT)
+Date: Thu, 4 Sep 2025 14:08:44 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>, Peter Xu
+ <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Reinoud Zandijk <reinoud@netbsd.org>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Huacai Chen
+ <chenhuacai@kernel.org>, Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-arm@nongnu.org, Fam Zheng <fam@euphon.net>, Helge Deller
+ <deller@gmx.de>, Matthew Rosato <mjrosato@linux.ibm.com>, Fabiano Rosas
+ <farosas@suse.de>, qemu-rust@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
+ qemu-riscv@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>, Liu
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
+ Laurent Vivier <lvivier@redhat.com>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, qemu-ppc@nongnu.org, Stafford Horne
+ <shorne@gmail.com>, Sunil Muthuswamy <sunilmut@microsoft.com>, Jagannathan
+ Raman <jag.raman@oracle.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, devel@lists.libvirt.org, Mads
+ Ynddal <mads@ynddal.dk>, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Laurent Vivier <laurent@vivier.eu>, Ilya
+ Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org, Peter Maydell
+ <peter.maydell@linaro.org>, Kostiantyn Kostiuk <kkostiuk@redhat.com>, Kyle
+ Evans <kevans@freebsd.org>, David Hildenbrand <david@redhat.com>, "Edgar E.
+ Iglesias" <edgar.iglesias@gmail.com>, Warner Losh <imp@bsdimp.com>, Daniel
+ Henrique Barboza <dbarboza@ventanamicro.com>, John Snow <jsnow@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Alistair Francis <alistair@alistair23.me>, Marcelo
+ Tosatti <mtosatti@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ Radoslaw Biernacki <rad@semihalf.com>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Aurelien Jarno <aurelien@aurel32.net>, Richard
+ Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org, Alex
+ Williamson <alex.williamson@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Roman Bolshakov
+ <rbolshakov@ddn.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, Cleber
+ Rosa <crosa@redhat.com>, kvm@vger.kernel.org, Song Gao
+ <gaosong@loongson.cn>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Halil Pasic <pasic@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, Palmer Dabbelt <palmer@dabbelt.com>, Leif Lindholm
+ <leif.lindholm@oss.qualcomm.com>, Christian Borntraeger
+ <borntraeger@linux.ibm.com>, Michael Roth <michael.roth@amd.com>, Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
+ <marcandre.lureau@redhat.com>, Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, John
+ Levon <john.levon@nutanix.com>, Xin Wang <wangxinxin.wang@huawei.com>
+Subject: Re: [PATCH v2 001/281] target/i386: Add support for save/load of
+ exception error code
+Message-ID: <20250904140844.5b670290@fedora>
+In-Reply-To: <20250904081128.1942269-2-alex.bennee@linaro.org>
+References: <20250904081128.1942269-1-alex.bennee@linaro.org>
+ <20250904081128.1942269-2-alex.bennee@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,140 +155,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu,  4 Sep 2025 09:06:35 +0100
+Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
 
+> From: Xin Wang <wangxinxin.wang@huawei.com>
+>=20
+> For now, qemu save/load CPU exception info(such as exception_nr and
+> has_error_code), while the exception error_code is ignored. This will
+> cause the dest hypervisor reinject a vCPU exception with error_code(0),
+> potentially causing a guest kernel panic.
+>=20
+> For instance, if src VM stopped with an user-mode write #PF (error_code 6=
+),
+> the dest hypervisor will reinject an #PF with error_code(0) when vCPU res=
+ume,
+> then guest kernel panic as:
+>   BUG: unable to handle page fault for address: 00007f80319cb010
+>   #PF: supervisor read access in user mode
+>   #PF: error_code(0x0000) - not-present page
+>   RIP: 0033:0x40115d
+>=20
+> To fix it, support save/load exception error_code.
 
-Am 8=2E August 2025 06:54:06 UTC schrieb Mohamed Mediouni <mohamed@unpredi=
-ctable=2Efr>:
->winhvemulation is x86_64 only=2E
->
->In the future, we might want to get rid of winhvemulation usage
->entirely=2E
->
->Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
->
->Reviewed-by: Pierrick Bouvier <pierrick=2Ebouvier@linaro=2Eorg>
->---
-> accel/whpx/whpx-common=2Ec       | 14 ++++++++++++--
-> include/system/whpx-common=2Eh   |  2 ++
-> include/system/whpx-internal=2Eh |  7 ++++++-
-> 3 files changed, 20 insertions(+), 3 deletions(-)
->
->diff --git a/accel/whpx/whpx-common=2Ec b/accel/whpx/whpx-common=2Ec
->index 66c9238586=2E=2Ee2d692126a 100644
->--- a/accel/whpx/whpx-common=2Ec
->+++ b/accel/whpx/whpx-common=2Ec
->@@ -41,7 +41,9 @@
-> bool whpx_allowed;
-> static bool whp_dispatch_initialized;
-> static HMODULE hWinHvPlatform;
->+#ifdef __x86_64__
-> static HMODULE hWinHvEmulation;
->+#endif
->=20
-> struct whpx_state whpx_global;
-> struct WHPDispatch whp_dispatch;
->@@ -236,8 +238,10 @@ void whpx_destroy_vcpu(CPUState *cpu)
->     struct whpx_state *whpx =3D &whpx_global;
->=20
->     whp_dispatch=2EWHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_i=
-ndex);
->+#ifdef __x86_64__
->     AccelCPUState *vcpu =3D cpu->accel;
->     whp_dispatch=2EWHvEmulatorDestroyEmulator(vcpu->emulator);
->+#endif
->     g_free(cpu->accel);
-> }
->=20
->@@ -412,8 +416,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
->         LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
->         break;
->     case WINHV_EMULATION_FNS_DEFAULT:
->+#ifdef __x86_64__
->         WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
->         LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
->+#else
->+        abort();
+this potentially will break migration between new/old QEMU versions
+due to presence new subsection. But then according to commit message
+the guest might panic (on dst) when resumed anyways.
 
-In the sense of g_assert_not_reached()? Then it is preferred=2E
+So patch changes how guest will fail
+(panic: old =3D> old, old =3D> new
+ vs migration error: new =3D> old ).
 
->+#endif
->         break;
->     case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
->         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
->@@ -539,11 +547,11 @@ bool init_whp_dispatch(void)
->     if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAU=
-LT)) {
->         goto error;
->     }
->-
->+#ifdef __x86_64__
->     if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEF=
-AULT)) {
->         goto error;
->     }
->-
->+#endif
->     assert(load_whp_dispatch_fns(&hWinHvPlatform,
->         WINHV_PLATFORM_FNS_SUPPLEMENTAL));
->     whp_dispatch_initialized =3D true;
->@@ -553,9 +561,11 @@ error:
->     if (hWinHvPlatform) {
->         FreeLibrary(hWinHvPlatform);
->     }
->+#ifdef __x86_64__
->     if (hWinHvEmulation) {
->         FreeLibrary(hWinHvEmulation);
->     }
->+#endif
->     return false;
-> }
+Peter,
+do we care and do we need a compat knob to make existing
+machine type behave old way?
+
 >=20
->diff --git a/include/system/whpx-common=2Eh b/include/system/whpx-common=
-=2Eh
->index e549c7539c=2E=2E7a7c607e0a 100644
->--- a/include/system/whpx-common=2Eh
->+++ b/include/system/whpx-common=2Eh
->@@ -3,7 +3,9 @@
-> #define SYSTEM_WHPX_COMMON_H
+> Signed-off-by: Xin Wang <wangxinxin.wang@huawei.com>
+> Link: https://lore.kernel.org/r/20250819145834.3998-1-wangxinxin.wang@hua=
+wei.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/machine.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 >=20
-> struct AccelCPUState {
->+#ifdef __x86_64__
->     WHV_EMULATOR_HANDLE emulator;
->+#endif
->     bool window_registered;
->     bool interruptable;
->     bool ready_for_pic_interrupt;
->diff --git a/include/system/whpx-internal=2Eh b/include/system/whpx-inter=
-nal=2Eh
->index e61375d554=2E=2Ee57d2c8526 100644
->--- a/include/system/whpx-internal=2Eh
->+++ b/include/system/whpx-internal=2Eh
->@@ -4,8 +4,9 @@
->=20
-> #include <windows=2Eh>
-> #include <winhvplatform=2Eh>
->+#ifdef __x86_64__
-> #include <winhvemulation=2Eh>
->-
->+#endif
-> typedef enum WhpxBreakpointState {
->     WHPX_BP_CLEARED =3D 0,
->     WHPX_BP_SET_PENDING,
->@@ -98,12 +99,16 @@ void whpx_apic_get(DeviceState *s);
->=20
-> /* Define function typedef */
-> LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
->+#ifdef __x86_64__
-> LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
->+#endif
-> LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
->=20
-> struct WHPDispatch {
->     LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
->+#ifdef __x86_64__
->     LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
->+#endif
->     LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
-> };
->=20
+> diff --git a/target/i386/machine.c b/target/i386/machine.c
+> index dd2dac1d443..45b7cea80aa 100644
+> --- a/target/i386/machine.c
+> +++ b/target/i386/machine.c
+> @@ -462,6 +462,24 @@ static const VMStateDescription vmstate_exception_in=
+fo =3D {
+>      }
+>  };
+> =20
+> +static bool cpu_errcode_needed(void *opaque)
+> +{
+> +    X86CPU *cpu =3D opaque;
+> +
+> +    return cpu->env.has_error_code !=3D 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_error_code =3D {
+> +    .name =3D "cpu/error_code",
+> +    .version_id =3D 1,
+> +    .minimum_version_id =3D 1,
+> +    .needed =3D cpu_errcode_needed,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_INT32(env.error_code, X86CPU),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  /* Poll control MSR enabled by default */
+>  static bool poll_control_msr_needed(void *opaque)
+>  {
+> @@ -1746,6 +1764,7 @@ const VMStateDescription vmstate_x86_cpu =3D {
+>      },
+>      .subsections =3D (const VMStateDescription * const []) {
+>          &vmstate_exception_info,
+> +        &vmstate_error_code,
+>          &vmstate_async_pf_msr,
+>          &vmstate_async_pf_int_msr,
+>          &vmstate_pv_eoi_msr,
+
 
