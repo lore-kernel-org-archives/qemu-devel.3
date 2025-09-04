@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D922CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 16:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EB0CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 18:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuD4P-0006bJ-1F; Thu, 04 Sep 2025 12:44:21 -0400
+	id 1uuEeX-00015X-TM; Thu, 04 Sep 2025 14:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuD4M-0006ab-7D
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 12:44:18 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uuEeH-00012f-9l
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 14:25:30 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuD4G-0000tf-Sl
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 12:44:17 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3df2f4aedc7so767767f8f.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 09:44:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uuEeE-00032r-7O
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 14:25:29 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-61c0b41ddd9so719619eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 11:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757004249; x=1757609049; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1757010321; x=1757615121; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WOnq3LCrEezycwHF3OwLwEhdgJXDrimxklj4eNyqm8A=;
- b=CUbli+KDREYEMVx2JIQKdMKbcobGpNAH8Q0/+l05/D0Nhxq1c1Z1iZDGLbWHBA/8+c
- Qus2/+s/jff5scyO1cFoXiyWJTs2qMTLD8+XW5uqbLLPuffwQiBYRVpotjt0eySTidYD
- +Q5BoxD6QaDgzn4j9hyavT9Sig01vrYuzORrV6nJXKmYvLJJZposGvzhYZbcw7EQyX3y
- PImK/ASVm0ZdwnfkNdURwQ8BFnbQA2O+xn+LiRHxeT9opYlhjjZyZ8uwzhxOBIlE1aqn
- sO9je7l1ekAY0SySiGQpw8DjoJmRa3T+RNKKsqFRzgI2Ezk8bzeff9J9SODsMCNDwwFU
- O9Uw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QlJKr2kmzgorUOed1s1i1UOCBvvJOz6cxURcHJe4XYs=;
+ b=KTlq2D6jBlEhQkgCwRd0U/6ZnjloFvVAzAhnUXejoiUdIsJacWaYSDWNoeOwwlKDJW
+ qXpMl6SyAkSI9PBPh1d5/pJEei6x2HEqjW2nOMvjNLY4H4RTLe9fODJBThXMkUxsfCfG
+ UN93Xyd0mo6hYdSL0BO7G9eJ/yupZ8NR8h8WuQdDqdDFxKIqkCu57CWC498teQ7F53BK
+ CQUGEsboGi/wl+apzwk2KHN2CmhMBejxK4ct6hDTRsTeGCRHXg15P31PLjgHWgB9VxOm
+ vi2VCLwnOfoVUkUL4KWwOQizuQUqcMJQpgYZHVEs1413ZbuSjMqrv1JiENSAth6C7Iab
+ TiJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757004249; x=1757609049;
+ d=1e100.net; s=20230601; t=1757010321; x=1757615121;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WOnq3LCrEezycwHF3OwLwEhdgJXDrimxklj4eNyqm8A=;
- b=Mf9dtknwfQ/ZZlWzOC7S5YuyIE+vvWjO9DkBvPrklj9LXDMNKzkFsTTvvMRZyftzZ1
- lLD00MDqnRfAmwCA257FDomagMvUYwACAipt/C+FrPZRh8D3ftW7cxjsuQBWDDVhAtB7
- ociw3AS9qk9gahsJLlFTiZmSWmfdJOPldF8/GovLvG/rEUVHSjGspuAtWAFyemO41YZI
- hGjVcRxVTAkHTXFI0ulSPnDkqXm1AQZKttvLwsArLQckvRtaCsQtZDKII1T2lAMnVmJt
- EBdFNm3Vs2znhVGgHVfPaNrOR7AzgRIrB211PDVwTsqDoqWv/9IRZqTMZuxnL3vmWv5s
- f3ZA==
+ bh=QlJKr2kmzgorUOed1s1i1UOCBvvJOz6cxURcHJe4XYs=;
+ b=VTWLemvtytvtNne+qHI/xUj83DKLn3WYwsYjmjvX14R7TUtbgz2HwXYct9BpRulX0c
+ 9u/llRpxMqRxXiQg6F74lZrrkclJSKlFUP9LdQKGSf10KybvBRiwU5/zplt2uLE5lUMs
+ uKGgeU6OLF82IkwmwiKCp90nPApPZ9B8apXEd8arsiSbxtF2cg9cULLa/HiYmshQFcVj
+ bkbw6VVlYuQ5j/qIef6QJL49ibpeDWYeDI8kMU/JGMwaGoCj9jCZEsDiu8vU2GeLa3OZ
+ 60CWLves1vcd+ouHn9oHH/ZwMvKFIYf6/ksh69kACd0HZyJKrPLEWz7A6rd4hwjPadds
+ OKtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnKpbzOTyNBZ//aFime2cmDLh1xdm2YDExcNmgs9SHbz2fugk2pXVEzI9G8ClWmQBA/LnUrrdIq3vd@nongnu.org
-X-Gm-Message-State: AOJu0Yw4PLV9/x4AR3BePVjSS2Q8SgD4YwSNVZAqMKn3bzc0igZpfkd6
- pJsS9UIKImozWgeh5ifCLpRgj+Lf8cRad+Sf0G96vQaP64OgUMN6wGCWywFvcE5HPRw=
-X-Gm-Gg: ASbGncsdUWXg0G72ySa4pTpITkftion6MQyoADF4lVm1ZOrBRehrwZcAlQzUCS2oXua
- CN+oOcHLUyB3g68wHMdR/DGUGQ5ARYSpd03DNXV4cZE2ZzI/KgSfXyCV3yd+Ktlbmp3mwbgxpaZ
- qkxLW1cSw3G1M4ajQEASYYdJjc03J8EEgJ+EUxucFpspNsXRZJrj9y7Sv+DbFzQIQiZV/wHa7iw
- 59gnaVHJvNfbdmwBZCvRj8wzUXmRakQf/V9nGaFdVH7l+FQEcN8lvs0FQOTYeuusoPhfoIUBujQ
- BAacDsy4Nt8rI8GFxclXcKfTNGm0NQNoid4YcMzLSs25/mZR5gu/ZT1zoKR2NKGJQGWMV1Lw7Qf
- NvaBBnRwnnmoB/Wov2n68HPmUMEbLjvbHHF4/vdFSBVnRK0dRHItHfz/TWubfSRhH384+CEx83M
- xTcGdDRQ==
-X-Google-Smtp-Source: AGHT+IHxjQ5+a4YzLzDnVdOHgY8Xjt47xIeZJgc3RnhGOJblnyyvj74JjU0mWG44JoDP/qMlx/Up/A==
-X-Received: by 2002:a05:6000:2011:b0:3cd:edee:c7f1 with SMTP id
- ffacd0b85a97d-3d1e07a4d63mr14279747f8f.56.1757004248988; 
- Thu, 04 Sep 2025 09:44:08 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f30fe02sm365769355e9.18.2025.09.04.09.44.08
+ AJvYcCWBpiOAeA37xZ1oX/xbWf9eugbfmlduhvEKxLQ67kkUieNyrr4X1wCIHgCBixsRSZSxe0sLJQ7X9qhi@nongnu.org
+X-Gm-Message-State: AOJu0YxgYcJNgEnwj3tz6oJmdMFaFFOMJRB51QS6/EDjHAaV36VrbuAB
+ cpGJpMw+4jFpylbUr5TsOy4LLayP3lmrEF7rdXt3Vzn+0zr4MF9SEcirzR5JjdCMuRI=
+X-Gm-Gg: ASbGncvJnLuVwVfviZcddD4HHUwmXL1HsO0bSFasEpKjGX9r51cJC4UhY5AQxn8meSz
+ 6+dCbPKNTmpmeWHp5XF22yhgKiesUDnA740FwR8uXKwuRSSiSPFBp3HhCA4D7hmZ4JI9nDwoSxz
+ QqSfr+2ZBy2f3wqos7mln65/Va8+JwSOPiXixYDZBCLmvcVE3JPA8tPKrND7+kUHcIWLuLxFDdu
+ GDvjay+epzPTdmhzdIhVxRGUDoFSbXA6skWodKyG3CajjUaReNClV8dKY+p/EbTVMv2jAshgaUE
+ SuQbd13Rl2uchFsuuLV/hozVsaXIQdy8bHusATdkAJQWSi7wzW3tHkL19qz8vvkWYpMK4+yFELE
+ ZYu42P80itwc9PF+g9AgOf146ykmcKOJzTJA80NIRQloSFPk=
+X-Google-Smtp-Source: AGHT+IFLw3TQMTfpx+cJkppoUUAqm5Q4zZTbL/JMwk3ieho7jIC7WVCuBL/8naeSUbmZRjKQOKSRwQ==
+X-Received: by 2002:a05:6820:1c9e:b0:61e:7139:b476 with SMTP id
+ 006d021491bc7-61e7139b79dmr3362647eaf.1.1757010321137; 
+ Thu, 04 Sep 2025 11:25:21 -0700 (PDT)
+Received: from [192.168.68.110] ([187.10.187.251])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-61e723d320asm698009eaf.18.2025.09.04.11.25.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Sep 2025 09:44:08 -0700 (PDT)
-Message-ID: <611cba04-c567-439e-8f52-4d5f74828083@linaro.org>
-Date: Thu, 4 Sep 2025 18:44:06 +0200
+ Thu, 04 Sep 2025 11:25:20 -0700 (PDT)
+Message-ID: <b60684bb-da89-4c35-a523-b22387c44dda@ventanamicro.com>
+Date: Thu, 4 Sep 2025 15:25:16 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: allow partial decode of v8 STBAR
- instructions
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
-References: <20250904161026.804239-1-mark.cave-ayland@ilande.co.uk>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MSI table size limit
+To: Andrew Jones <ajones@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, tjeznach@rivosinc.com
+References: <20250904132723.614507-2-ajones@ventanamicro.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20250904161026.804239-1-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20250904132723.614507-2-ajones@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,52 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/25 18:10, Mark Cave-Ayland wrote:
-> Solaris 8 appears to have a bug whereby it executes v9 MEMBAR instructions
-> when booting a freshly installed image. According to the SPARC v8
-> architecture manual, whilst bits 14 and bits 13-0 of the "Read State Register
-> Instructions" are notionally zero, they are marked as unused (i.e. ignored).
-> In effect the v9 MEMBAR instruction becomes a v8 STBAR instruction on a 32-bit
-> SPARC CPU.
+
+
+On 9/4/25 10:27 AM, Andrew Jones wrote:
+> The MSI table is not limited to 4k. The only constraint the table has
+> is that its base address must be aligned to its size, ensuring no
+> offsets of the table size will overrun when added to the base address
+> (see "8.5. MSI page tables" of the AIA spec).
 > 
-> Adjust the avail_32() logic in trans_MEMBAR() so that if a v9 MEMBAR
-> instruction is executed on 32-bit SPARC, the equivalent of a v8 STBAR
-> instruction is executed instead.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3097
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 > ---
->   target/sparc/translate.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   hw/riscv/riscv-iommu.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
 > 
-> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> index b922e53bf1..9efefe41c6 100644
-> --- a/target/sparc/translate.c
-> +++ b/target/sparc/translate.c
-> @@ -2832,7 +2832,15 @@ static bool trans_STBAR(DisasContext *dc, arg_STBAR *a)
->   static bool trans_MEMBAR(DisasContext *dc, arg_MEMBAR *a)
->   {
->       if (avail_32(dc)) {
-> -        return false;
-> +        /*
-> +         * At least Solaris 8 executes v9 MEMBAR instructions such as
-> +         * 0x8143e008 during boot. According to the SPARC v8 architecture
-> +         * manual, bits 13 and 12-0 are unused (notionally zero) so in
-> +         * this case if we assume the unused bits are not decoded then
-> +         * the instruction becomes 0x8143c000, or the equivalent of STBAR.
-> +         */
-> +        tcg_gen_mb(TCG_MO_ST_ST | TCG_BAR_SC);
-> +        return advance_pc(dc);
->       }
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 96a7fbdefcf3..155190d032dd 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -558,6 +558,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+>       MemTxResult res;
+>       dma_addr_t addr;
+>       uint64_t intn;
+> +    size_t offset;
+>       uint32_t n190;
+>       uint64_t pte[2];
+>       int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+> @@ -565,16 +566,18 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+>   
+>       /* Interrupt File Number */
+>       intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
+> -    if (intn >= 256) {
+> -        /* Interrupt file number out of range */
+> -        res = MEMTX_ACCESS_ERROR;
+> -        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> -        goto err;
+> -    }
+> +    offset = intn * sizeof(pte);
+>   
+>       /* fetch MSI PTE */
+>       addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
+> -    addr = addr | (intn * sizeof(pte));
+> +    if (addr & offset) {
+> +        /* Interrupt file number out of range */
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    addr |= offset;
+>       res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
+>               MEMTXATTRS_UNSPECIFIED);
+>       if (res != MEMTX_OK) {
 
-You could avoid replicating this and do
-
-     return trans_STBAR(dc, NULL);
-
-Anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
 
