@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B27CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 14:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1032CA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 14:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuB4W-0003Iz-DZ; Thu, 04 Sep 2025 10:36:20 -0400
+	id 1uuB73-0006OO-AP; Thu, 04 Sep 2025 10:38:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uuB4S-0003FY-AO
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:36:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uuB6z-0006H0-Ic
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:38:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uuB4G-0007h1-JR
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:36:15 -0400
+ id 1uuB6q-0000hS-U9
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:38:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756996560;
+ s=mimecast20190719; t=1756996713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=moUisWZWUUBf6YwwL0HMsWPgBN9IM6SMgClxgAoZCss=;
- b=hQhUXC9gl06UpzqZr0jyZuo1xiRyntN5IOk39vqQcw5GKcoKHhDnIukuOgpt3Sir3yjlVL
- s/LAUus5wb/YGT4S9vv5WuNHVHkY6Yh5Avu6y2kejSv3f0r73Er8RcuB/EURFLIRR1CPJN
- OjcKAfQZgGFYzZ1XL8AOoN/+bMZRnUk=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VMo4xE6hWWWNBmr/ZvpjR2KNC034GlAUtLNDz6XtR7Y=;
+ b=Ts3GwkBh5N7ZFXIhriEgkEJxzW22469bImWMTBFZCUfLjAZTp5FJL/q9ewxcLBRx/ltI8n
+ ziTF7CXH9O40ilbncTahIt7yTg4d9VSz3Swa+bzH0iGUN25VIOryWWnJCEV3EuohMuKYI5
+ 4Fp6F35NoH7xLQmLWWOmx9CQMMv/vKY=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-W7p2jIldMR6piI89PkAVQA-1; Thu, 04 Sep 2025 10:35:58 -0400
-X-MC-Unique: W7p2jIldMR6piI89PkAVQA-1
-X-Mimecast-MFC-AGG-ID: W7p2jIldMR6piI89PkAVQA_1756996558
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-61d2ab4bb96so1157305a12.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 07:35:58 -0700 (PDT)
+ us-mta-213-JBSKTua_Nby_oIyNwYnT_A-1; Thu, 04 Sep 2025 10:38:32 -0400
+X-MC-Unique: JBSKTua_Nby_oIyNwYnT_A-1
+X-Mimecast-MFC-AGG-ID: JBSKTua_Nby_oIyNwYnT_A_1756996711
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-61cd0c61472so1014536a12.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 07:38:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756996558; x=1757601358;
+ d=1e100.net; s=20230601; t=1756996711; x=1757601511;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=moUisWZWUUBf6YwwL0HMsWPgBN9IM6SMgClxgAoZCss=;
- b=gBche/KQhRbXpKRXLAuEPP7S0pdsUe4MQYcirBFNdRmYNKRULtvxS7OIhkrvMCJ5e2
- Hq7a3GSf+HpgjxKW669A+7jWOzH0VEpQBd+KebC9ip26xHyxgqMvCGDHDr1VcsyQOJpG
- Yu0A3dk6WjZDm9YP6jQxxCRUlVdeGcbwihaSxyOaeDVkYybdjjaxwLaa2q9+UDmrwgY/
- cPxUZgOA+fAypHgGUY7aKCyZ1aE4yef4zEEytoo8j8tgI8GBikarck0wYo3ohXdFoskU
- 5imRfRUUkzfY5I2gT9mQVShcUkIFNSlA+dM7BQaqXKhGe/Y5EpEszBstrzBIR+KtnGvJ
- GWkA==
+ bh=VMo4xE6hWWWNBmr/ZvpjR2KNC034GlAUtLNDz6XtR7Y=;
+ b=XCy2mhWcl1hvA92eY2uXSDCyYdmRu05z4F34nHVzgTa71oXDPHpgswJLtKzZ/OGMRw
+ CEVsGxwLl9lEzTfgw53TpbI2zz5hOxlqGHOe/QWFRASTX4icMBQLJucPpkDGNfoq75SQ
+ rlTyaP4Rn/z0IQW84KG4uKSYuMoAq7ABrb7PbtIFQ2pTHjRsp+qgC795aOPpDQ1RM5Ko
+ flgX5LHXWZ4v87tQs4QXdxyScXKIZQe+gGXs7D5phW9k0TeJqMX9OBklKJdVEf4G9EkI
+ BiyfnbQGL/CeoDbLgUD20S/G9hMh4x7rDQAgcGjM4pLc+E1huGLILW3TCoAzpYRwwmuQ
+ zjTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgW92vidzzJ/EJJHMgYQc53hxNQF0fawsLVBZWCXg+1LAsQ/4Q7P+uSL8TYD5mj2S+4+X8rkL+LdAu@nongnu.org
-X-Gm-Message-State: AOJu0YzvxxrylT5U64iK7ZdTaPrQDdK96DdMKEtVdK45J8OXK0snKUh7
- v/dzEfeKYQwS+E7fSuMCfXRLTJ9r8yOuQLiFyGHPViRo2eLERdVm7U2vFDeXCfX/AJx6u/Ux1ef
- NIqZ9WvGEA9hefr2z+gk5X9K0waRS46VDnZVg9gJzaxg/SySnzCQOHjvLTUVoYO3RTc0KPgLBqc
- pdgWaTflcZcqz3BLEnIu2tRuoYmJXH7a8=
-X-Gm-Gg: ASbGncsbYPcUoUwvIz+IYfRxDRC567ImJe1g9zXDb+1IFX+cCiWcDZGaj2YyFGv6nL5
- 94uMNceeQ+b8OIpKTA08KkQjrO+xptJnjD+kRz0dUh6CL6gMorGKNq8NKtC/qdpwTIl6Zro9eeI
- vjPE6Aea4RqQPiesvy5eSvFQ==
-X-Received: by 2002:a05:6402:2714:b0:61d:feb:67fb with SMTP id
- 4fb4d7f45d1cf-61d26d9c672mr15229048a12.34.1756996557674; 
- Thu, 04 Sep 2025 07:35:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6pv32c2YnCpF2P9MA2XEB9wA9IVo0SSt9lFl+O++4Vy0ykRu7b24484ztC+Qqxx3hJyERI7gkLPWLcLy7Duk=
-X-Received: by 2002:a05:6402:2714:b0:61d:feb:67fb with SMTP id
- 4fb4d7f45d1cf-61d26d9c672mr15229024a12.34.1756996557201; Thu, 04 Sep 2025
- 07:35:57 -0700 (PDT)
+ AJvYcCXwurdn3xBBLP2qaODTSo32O3Tra5Xxs+nc8rED2rrDXav6XB+9NL/OWcaNO5Q2D6h/MaJ2nttKDGdV@nongnu.org
+X-Gm-Message-State: AOJu0YyPpv/qpPk3EOFZ40MxThQeMRSnmW57wctdzlyMq59JlMd6M8Iw
+ rmRdl6mhqVd9Mt1Mf0G5zfE4CvMZv11V2PZMIRQsEnxftZxRZ9ilzPgyLBJ+5m5JnkHyzL81hFQ
+ ek/Xm40vbwC+b1IHv/IhZ03t4kzYcSnJ7CbWewpla/EM85jO1H6qjPQNRTOZL6P8VdTYUwycNwM
+ GeG2ey8AmQJOskgEkl0o0f7ARTXt3L0Bs=
+X-Gm-Gg: ASbGncujNxBqeNZPrK81edVjFWKCgqf5zptj1KV9X5f0F+tkfb1jZAGRYv5cSyw9cse
+ 4uDc3uO6C6VpzOFTZj7vSIKNsY4O2mrG8RjyboCke++TahrQO8ZkJuT1I0uGxcI8QgjPZdzrw1k
+ Gkq2h7Fg8VpH6LpbHc4+zChQ==
+X-Received: by 2002:a05:6402:1e90:b0:61e:c5d4:1435 with SMTP id
+ 4fb4d7f45d1cf-61ec5d41547mr9006408a12.19.1756996710766; 
+ Thu, 04 Sep 2025 07:38:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAbiwwqaX2QjXtnvNZ2n6P+14TM6gmEnzxxHBudtyci0l3Mv3DGH1VAb7LeBwJcFJsYaw0d/LuJ5+WjII1qpk=
+X-Received: by 2002:a05:6402:1e90:b0:61e:c5d4:1435 with SMTP id
+ 4fb4d7f45d1cf-61ec5d41547mr9006378a12.19.1756996710322; Thu, 04 Sep 2025
+ 07:38:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
+References: <20250903124934.1169899-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20250903124934.1169899-1-vsementsov@yandex-team.ru>
 From: Lei Yang <leiyang@redhat.com>
-Date: Thu, 4 Sep 2025 22:35:20 +0800
-X-Gm-Features: Ac12FXxYPcT-vMylpmxGOdo6K3OwVB1Xq61jLbRhPB9Pj-r6FLP_yb-xbH_mFxA
-Message-ID: <CAPpAL=wG_LptUhVGDSnwfkCizKk8t55Z3EKFqeTOcNYgM5EjhA@mail.gmail.com>
-Subject: Re: [PATCH 00/10] io: deal with blocking/non-blocking fds
+Date: Thu, 4 Sep 2025 22:37:52 +0800
+X-Gm-Features: Ac12FXy_ubbNO86pIu7J8pU8tGZqpn84vg44x9kglOfaYYdze_rBpRZZZ9g5xy8
+Message-ID: <CAPpAL=zt7VQWE=H4YKSsy0HZGb4bx5dqe0m-3V_Z-h_4dZLFUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/19] TAP initialization refactoring
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- peterx@redhat.com
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org, steven.sistare@oracle.com, 
+ yc-core@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,8 +89,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,89 +110,170 @@ Tested the current series of patches, mixed with patches from series
 local VM migration under multiple NIC queues enabled and disabled, it
 also passed.
 
-[1] https://patchwork.ozlabs.org/project/qemu-devel/cover/20250903124934.11=
-69899-1-vsementsov@yandex-team.ru/
+[1] https://patchwork.ozlabs.org/project/qemu-devel/cover/20250903094411.10=
+29449-1-vsementsov@yandex-team.ru/
 [2] https://patchwork.ozlabs.org/project/qemu-devel/cover/20250903133706.11=
 77633-1-vsementsov@yandex-team.ru/
 
 Tested-by: Lei Yang <leiyang@redhat.com>
 
-On Wed, Sep 3, 2025 at 5:46=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+On Wed, Sep 3, 2025 at 8:49=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
 > Hi all!
 >
-> The series brings two things:
+> Here is a refactoring of initialization code, to improve its
+> readability and get rid of duplication.
 >
-> 1. unify code which sets fds blocking/non-blocking through the whole
-> source
+> v3:
+> - rebase on top of [PATCH 00/10] io: deal with blocking/non-blocking fds
+> - improve some commit messages
+> - add t-b marks by Lei Yang (hope, they still counts after rebasing :)
 >
-> 2. for fds, which comes from qio_channel_readv_full(), stop making
-> them blocking in generic code, and move this logic to the callers,
-> all except coming from migration qemu-file (see last patch)
+> v2:
+> 01,03: improve commit msg
+> 14: fix return value for new net_tap_init_one()
+> 15: add return statements to other cases, to not break them
+> 20: new
 >
-> Vladimir Sementsov-Ogievskiy (10):
->   io/channel: document how qio_channel_readv_full() handles fds
->   char-socket: rework tcp_chr_recv()
->   util: add qemu_set_blocking() function
->   util: drop qemu_socket_set_nonblock()
->   util: drop qemu_socket_try_set_nonblock()
->   util: drop qemu_socket_set_block()
->   use qemu_set_blocking instead of g_unix_set_fd_nonblocking
->   oslib-posix: add qemu_fds_set_blocking() helper
->   qio_channel_readv_full(): move setting fd blocking to callers
->   migration/qemu-file: don't make incoming fds blocking again
+> Below are the initialization flow diagrams showing the changes.
 >
->  chardev/char-fd.c                       |  4 +--
->  chardev/char-pty.c                      |  3 +-
->  chardev/char-serial.c                   |  3 +-
->  chardev/char-socket.c                   | 45 ++++++++++++-------------
->  chardev/char-stdio.c                    |  3 +-
->  contrib/ivshmem-server/ivshmem-server.c |  5 ++-
->  hw/hyperv/syndbg.c                      |  4 ++-
->  hw/input/virtio-input-host.c            |  3 +-
->  hw/misc/ivshmem-flat.c                  |  4 ++-
->  hw/misc/ivshmem-pci.c                   |  8 ++++-
->  hw/remote/mpqemu-link.c                 |  3 ++
->  hw/vfio-user/proxy.c                    |  4 +++
->  hw/virtio/vhost-user.c                  | 10 +++++-
->  hw/virtio/vhost-vsock.c                 |  8 ++---
->  include/io/channel.h                    | 12 +++++++
->  include/qemu/osdep.h                    |  8 +++++
->  include/qemu/sockets.h                  |  3 --
->  io/channel-command.c                    |  9 +++--
->  io/channel-file.c                       |  3 +-
->  io/channel-socket.c                     | 26 +++++++-------
->  net/dgram.c                             | 28 ++++++++-------
->  net/l2tpv3.c                            |  5 +--
->  net/socket.c                            | 27 ++++++++++-----
->  net/stream.c                            |  9 ++---
->  net/stream_data.c                       | 10 +++---
->  net/tap-bsd.c                           | 12 +++++--
->  net/tap-linux.c                         |  8 ++++-
->  net/tap-solaris.c                       |  7 +++-
->  net/tap.c                               | 21 ++++--------
->  qga/channel-posix.c                     |  7 +++-
->  qga/commands-posix.c                    |  3 +-
->  scsi/qemu-pr-helper.c                   |  4 +++
->  tests/qtest/fuzz/virtio_net_fuzz.c      |  2 +-
->  tests/qtest/tpm-emu.c                   |  1 +
->  tests/qtest/vhost-user-test.c           |  3 +-
->  tests/unit/socket-helpers.c             |  5 ++-
->  tests/unit/test-crypto-tlssession.c     |  8 ++---
->  tests/unit/test-io-channel-socket.c     |  1 +
->  tests/unit/test-iov.c                   |  5 +--
->  ui/input-linux.c                        |  3 +-
->  util/event_notifier-posix.c             |  5 +--
->  util/main-loop.c                        |  6 +++-
->  util/oslib-posix.c                      | 27 +++++++++------
->  util/oslib-win32.c                      | 25 ++++++--------
->  util/vhost-user-server.c                |  9 +++--
->  45 files changed, 244 insertions(+), 165 deletions(-)
+> BEFORE REFACTORING:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> ```
+> net_init_tap()
+>     |
+>     +-- if (tap->fd)
+>     |   +-- duplicated logic*
+>     |   +-- net_init_tap_one()
+>     |
+>     +-- else if (tap->fds)
+>     |   +-- for each fd:
+>     |       +-- duplicated logic*
+>     |       +-- net_init_tap_one()
+>     |
+>     +-- else if (tap->helper)
+>     |   +-- duplicated logic*
+>     |   +-- net_init_bridge()
+>     |
+>     +-- else (normal case)
+>         +-- for each queue:
+>             +-- net_tap_init()
+>             +-- net_init_tap_one()
+>
+> net_init_bridge()
+>     |
+>     +-- duplicated logic*
+>     +-- net_tap_fd_init()
+>
+> net_init_tap_one()
+>     |
+>     +-- net_tap_fd_init()
+>
+> net_tap_init()
+>     |
+>     +-- tap_open()
+>
+> net_tap_fd_init()
+>     |
+>     +-- qemu_new_net_client()
+>     +-- Initialize TAPState
+>
+> * duplicated logic: set fd nonblocking + probe vnet_hdr
+> ```
+>
+> AFTER REFACTORING:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> ```
+> net_init_tap()
+>     |
+>     +-- if (tap->fd)
+>     |   +-- net_tap_from_monitor_fd()
+>     |
+>     +-- else if (tap->fds)
+>     |   +-- for each fd:
+>     |       +-- net_tap_from_monitor_fd()
+>     |
+>     +-- else if (tap->helper)
+>     |   +-- net_init_bridge()
+>     |
+>     +-- else (normal case)
+>         +-- net_tap_open()
+>
+> net_tap_open()
+>     |
+>     +-- for each queue:
+>         +-- net_tap_open_one()
+>
+> net_tap_open_one()
+>     |
+>     +-- tap_open()
+>     +-- net_tap_fd_init_common()
+>
+> net_tap_from_monitor_fd()
+>     |
+>     +-- net_tap_fd_init_external()
+>
+> net_tap_fd_init_external()
+>     |
+>     +-- net_tap_fd_init_common()
+>
+> net_init_bridge()
+>     |
+>     +-- net_tap_fd_init_external()
+>
+> net_tap_fd_init_common()
+>     |
+>     +-- qemu_new_net_client()
+>     +-- Initialize TAPState
+> ```
+>
+> Solved problems:
+>
+> - duplicated logic to handle external
+>   file descriptors (set nonblocking, probe vnet_hdr)
+>
+> - duplication between tap/helper case in
+>   net_init_tap() and net_init_bridge()
+>
+> - confusing naming and functionality spread between functions (we had
+>   net_init_tap(), together with net_tap_init(); also main central
+>   function was net_init_tap_one(), and part of its logic (not clear
+>   why) moved to separate net_tap_fd_init()),
+>
+> - net_init_tap() was just too big
+>
+> Vladimir Sementsov-Ogievskiy (19):
+>   net/tap: net_init_tap_one(): add return value
+>   net/tap: tap_set_sndbuf(): add return value
+>   net/tap: net_init_tap_one(): drop extra error propagation
+>   net/tap: net_init_tap_one(): move parameter checking earlier
+>   net/tap: net_init_tap(): refactor parameter checking
+>   net/tap: net_init_tap(): drop extra variable vhostfdname
+>   net/tap: move local variables related to the latter case to else
+>     branch
+>   net/tap: use glib strings vector and g_strsplit for fds case
+>   net/tap: drop extra tap_fd_get_ifname() call
+>   net/tap: net_init_tap_one(): refactor to use netdev as first arg
+>   net/tap: net_init_tap_one(): support bridge
+>   net/tap: net_init_bridge(): support tap
+>   net/tap: refactor net_tap_init() into net_tap_open_one()
+>   net/tap: introduce net_tap_open()
+>   net/tap: introduce net_tap_fd_init_external()
+>   net/tap: introduce net_tap_from_monitor_fd() helper
+>   net/tap: split net_tap_setup_vhost() separate function
+>   net/tap: drop net_tap_fd_init()
+>   net/tap: introduce net_init_tap_fds()
+>
+>  net/tap-linux.c |   5 +-
+>  net/tap.c       | 553 ++++++++++++++++++++++--------------------------
+>  net/tap_int.h   |   2 +-
+>  3 files changed, 263 insertions(+), 297 deletions(-)
 >
 > --
 > 2.48.1
->
 >
 
 
