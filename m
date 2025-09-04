@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 004B8CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788A6CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuGu1-0006bX-I0; Thu, 04 Sep 2025 16:49:53 -0400
+	id 1uuGsG-0003a0-Tx; Thu, 04 Sep 2025 16:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGti-0005ss-S0
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:49:36 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1uuGsD-0003YO-3g
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:48:01 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGtX-0000zw-VF
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:49:34 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 4C3FA60C14
- for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:49:18 +0200 (CEST)
-Received: (qmail 2422 invoked by uid 990); 4 Sep 2025 20:49:18 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 04 Sep 2025 22:49:18 +0200
-From: Julian Ganz <neither@nut.email>
-To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v6 23/25] tests: add plugin asserting correctness of discon
- event's to_pc
-Date: Thu,  4 Sep 2025 22:48:58 +0200
-Message-ID: <073cad7dd8ae509ff64a2835fd146833b60c1f60.1757018626.git.neither@nut.email>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <cover.1757018626.git.neither@nut.email>
-References: <cover.1757018626.git.neither@nut.email>
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1uuGs7-0000mX-V9
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:48:00 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-560885b40e2so2969e87.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 13:47:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1757018869; x=1757623669; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dr49+/TE2wXDXE1qirriA0xB62DpArjWBKhXglp+OL8=;
+ b=PE9vMdywX8A+sJUJFzu6//jnrYPGVY+rocqM0y/Z6VzycP5a71tIxWXVNEWI+XeO1O
+ o8Ywh+Tba8SqdldqkQl3KBpqJBAFvgX8X0GnnXs8OThSX4jVfjpMuMvIeJ1Ql47t9SD2
+ oX7Yhm7Rp3fep/8yH+WgxUMzWGXlQuPtZUFlGJwAKBoMqGoYRITUs0q4apIRGlVzRnVz
+ wZ4LIJXeLzjEka+iQoJ6zE4Hnco72Sehy/Unv3InTYRw/oVhWDG0BrQ6r2TDM/S6xznl
+ tGDIby7EXpwMVmnlPqy/573OfpEBJDqqLChC6AJEbaJPKIrNavmhP1U6YhfHgDWoXZ9K
+ HT6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757018869; x=1757623669;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dr49+/TE2wXDXE1qirriA0xB62DpArjWBKhXglp+OL8=;
+ b=E+eZ2PUt6PRqxwW3nAcQvfScYxRTIsaOEngBOX+WMhNMc2eqykWwlwgSoo+4QGFr6I
+ wN+N7f1xJWneAWNeyebR9TOO756tel/pWV7QvKA6VHmx4+mdn7d/2BvUW/9k843bnp+C
+ dpHC9dkjRL6pPbnhqJnwtaleEAyQmA4uGAKPbF8G+ZdilXPXnEpD7jcac4slovBI8D/o
+ 2RNlOG16U13ZMayq7sLMipZcGudHgKQ28KxifL9ZVFFz6vZI2pV70uQ6ywKIBMRFuZvc
+ hF329IZb71k/YEBDIlHzr4FZIH5x2D1Js8edMNR3dzFAtVHJ6MjlvIRQkWAuUSv6AIk2
+ O7GA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9LgLNSIUwOKXCdBbc6tANlpc9wawCMMbfWpOZB9P3LtW7C5LqtYbSEUqDYIojhys64vcd19dBb252@nongnu.org
+X-Gm-Message-State: AOJu0YyS4ACyQgP47+VogS5f04oBTlSQz2ozjUHZxk/rMJ3Cqmq/v2/G
+ FnJL0deN1Yq7rqPmBm+taQD33UIi3eEsVdT3VE4yJj3Hfw4fSfiCdnYinQDRxIRdgMh1Ak9l4PK
+ 5Z3XovWEBEaKo2EH2+gFkZG6dEEzRmNr9CA+WSi1f
+X-Gm-Gg: ASbGncv0OYwLbzkEWqFyof3xkVV/y+wz+NWmD4/t4O8WuNEZmv77BchInFdS3pH/U/U
+ rJ/AjN/Y2hGV3Pd32n2DJX/Nqc28DR6KjibTRt0ZO4psFjB97Dp6SMuezbpYX9Bws8f+bQJc4+S
+ MnsoRbBVCvIcMxZsY3Gzh7or1uGf0AMV+UD5a91Ls4V6saCVJCig/czXbOIRdQ8HuqmKppMQ/3M
+ bWrw4V36i0FOFNasVz7ZvbOhleOYd5nS7OLGOQYV1mX
+X-Google-Smtp-Source: AGHT+IE2r9g4TdemD6DpGjvEnlfAQ4oOc6iES/Hfhgn9iGUKHmC1rqNCh4nms5fJ1yGozYzm3xIm5r6UkXT0QlrMv9k=
+X-Received: by 2002:a05:6512:1145:b0:55f:6cac:c94 with SMTP id
+ 2adb3069b0e04-56136fa0033mr8837e87.7.1757018868973; Thu, 04 Sep 2025 13:47:48
+ -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ----
-X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) BAYES_HAM(-2.999961) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -4.099961
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=6bA+cSQ7uPfSE8TI1kgQE3TU/Q1amvHJS4CJP6CUHhY=;
- b=WTZ7xm88MIV6WY40wFQVcP2XxGLacJlQ1Lvbkkx6xGI5l19aN7bBBmr/GRtzrO1TldpadAAb4P
- uF+uF9hjwodDbs3G2WX9PQIFEgGVfhBxzT+MdfZs56qElQTMbdcB3GQABIoJT110x4Bkz1K34Mjj
- klFZVZGYG8EULKE1XpWDZ86dKGMydnFgrnXHwqi11xgTKMEFR2eWY1ksoNCWykvGvVf4zCLdFaO8
- 4fojI9yEu29/P5XgQBtzBYruubyQaXw3ZKKM1sdN9xCQJPjoAUP402/OBV1xy2zdj9c7sN2HevmN
- ZJWA8yNkh7QdeDEnRCh/1kTkzGdAr2/A4IdpHTFcAnPiZOo0aKuPalSF9hPtVOsmsK7Np45yIM2X
- Du8qKrcMTHZiQM2UveiKTaiwYgq3wo47UldGyLF/Op5aXAzH/QMoX2/HLwrVk45Q6kSeSphSnUWj
- HWvV3C7hT8FLepuT7z18nlrNDdwpAePt9ufbLeRG30rb8kAsP3scLMemq/a4UI7eBDEu6jnnLjiJ
- wSIIGf8K/VIXCyobNDWm5BCTh6Rc3I3uPdtWDyQl+dHX5EULc6kNNLrta18RKcHVjHyuU2hot4bu
- DcAb1gyP4n/1NcvUXDquxoatHSKbcIVhM0E/cKxt18vblvKhHqvBRXLFA4CgRSteTWoXpfzRCtfs
- 0=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20210708172556.1868139-1-titusr@google.com>
+ <20210708172556.1868139-2-titusr@google.com>
+ <472194f0-5853-4c7f-8b52-3c85e902097d@linaro.org>
+In-Reply-To: <472194f0-5853-4c7f-8b52-3c85e902097d@linaro.org>
+From: Titus Rwantare <titusr@google.com>
+Date: Thu, 4 Sep 2025 13:47:11 -0700
+X-Gm-Features: Ac12FXzTh9240eK_bGZv7iMuuv-ehW3FRorzo6SsQlIAFycz0vrM6HMW1704DG0
+Message-ID: <CAMvPwGqcn8fs0JWdcG1zsjZr_=Hny58Zuu=+wN_FRgvL-yTpUQ@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] hw/i2c: add support for PMBus
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Corey Minyard <minyard@acm.org>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=titusr@google.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,251 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced plugin API for the registration of callbacks for
-discontinuity events, specifically for interrupts, exceptions and host
-call events. The callback receives various bits of information,
-including the VCPU index and PCs.
+On Fri, 29 Aug 2025 at 09:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Titus,
+>
+> On 8/7/21 19:25, Titus Rwantare wrote:
+> > QEMU has support for SMBus devices, and PMBus is a more specific
+> > implementation of SMBus. The additions made in this commit makes it eas=
+ier to
+> > add new PMBus devices to QEMU.
+> >
+> > https://pmbus.org/specification-archives/
+> >
+> > Reviewed-by: Joel Stanley <joel@jms.id.au>
+> > Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> > Signed-off-by: Titus Rwantare <titusr@google.com>
+> > ---
+> >   include/hw/i2c/pmbus_device.h |  517 +++++++++++
+> >   hw/i2c/pmbus_device.c         | 1612 ++++++++++++++++++++++++++++++++=
++
+> >   hw/arm/Kconfig                |    1 +
+> >   hw/i2c/Kconfig                |    4 +
+> >   hw/i2c/meson.build            |    1 +
+> >   5 files changed, 2135 insertions(+)
+> >   create mode 100644 include/hw/i2c/pmbus_device.h
+> >   create mode 100644 hw/i2c/pmbus_device.c
+>
+>
+> > +static uint8_t pmbus_receive_byte(SMBusDevice *smd)
+> > +{
+> > +    PMBusDevice *pmdev =3D PMBUS_DEVICE(smd);
+> > +    PMBusDeviceClass *pmdc =3D PMBUS_DEVICE_GET_CLASS(pmdev);
 
-This change introduces a test plugin asserting the correctness of that
-behaviour in cases where this is possible with reasonable effort.
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: reading from write only register 0x%02x\n",
+> > +                      __func__, pmdev->code);
+> > +        break;
+> > +
+> > +passthough:
+> > +    default:
+> > +        /* Pass through read request if not handled */
+> > +        if (pmdc->receive_byte) {
+> > +            ret =3D pmdc->receive_byte(pmdev);
+>
+> This returned value ...
+>
+> > +        }
+> > +        break;
+> > +    }
+> > +
+> > +    if (pmdev->out_buf_len !=3D 0) {
+> > +        ret =3D pmbus_out_buf_pop(pmdev);
+>
+> ... is overwritten here, is that expected?
+>
+> > +        return ret;
+> > +    }
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Julian Ganz <neither@nut.email>
----
- tests/tcg/plugins/discons.c   | 210 ++++++++++++++++++++++++++++++++++
- tests/tcg/plugins/meson.build |   2 +-
- 2 files changed, 211 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/plugins/discons.c
-
-diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
-new file mode 100644
-index 0000000000..f185e3948b
---- /dev/null
-+++ b/tests/tcg/plugins/discons.c
-@@ -0,0 +1,210 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2025, Julian Ganz <neither@nut.email>
-+ *
-+ * This plugin exercises the discontinuity plugin API and asserts some
-+ * of its behaviour regarding reported program counters.
-+ */
-+#include <stdio.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+struct cpu_state {
-+    uint64_t last_pc;
-+    uint64_t from_pc;
-+    uint64_t next_pc;
-+    uint64_t has_from;
-+    bool has_next;
-+    enum qemu_plugin_discon_type next_type;
-+};
-+
-+struct insn_data {
-+    uint64_t addr;
-+    uint64_t next_pc;
-+    bool next_valid;
-+};
-+
-+static struct qemu_plugin_scoreboard *states;
-+
-+static qemu_plugin_u64 last_pc;
-+static qemu_plugin_u64 from_pc;
-+static qemu_plugin_u64 has_from;
-+
-+static bool abort_on_mismatch;
-+static bool trace_all_insns;
-+
-+static bool addr_eq(uint64_t a, uint64_t b)
-+{
-+    if (a == b) {
-+        return true;
-+    }
-+
-+    uint64_t a_hw;
-+    uint64_t b_hw;
-+    if (!qemu_plugin_translate_vaddr(a, &a_hw) ||
-+        !qemu_plugin_translate_vaddr(b, &b_hw))
-+    {
-+        return false;
-+    }
-+
-+    return a_hw == b_hw;
-+}
-+
-+static void report_mismatch(const char *pc_name, unsigned int vcpu_index,
-+                            enum qemu_plugin_discon_type type, uint64_t last,
-+                            uint64_t expected, uint64_t encountered)
-+{
-+    GString *report;
-+    const char *discon_type_name = "unknown";
-+
-+    if (addr_eq(expected, encountered)) {
-+        return;
-+    }
-+
-+    switch (type) {
-+    case QEMU_PLUGIN_DISCON_INTERRUPT:
-+        discon_type_name = "interrupt";
-+        break;
-+    case QEMU_PLUGIN_DISCON_EXCEPTION:
-+        discon_type_name = "exception";
-+        break;
-+    case QEMU_PLUGIN_DISCON_HOSTCALL:
-+        discon_type_name = "hostcall";
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    report = g_string_new(NULL);
-+    g_string_append_printf(report,
-+                           "Discon %s PC mismatch on VCPU %d\nExpected:      %"
-+                           PRIx64"\nEncountered:   %"PRIx64"\nExecuted Last: %"
-+                           PRIx64"\nEvent type:    %s\n",
-+                           pc_name, vcpu_index, expected, encountered, last,
-+                           discon_type_name);
-+    qemu_plugin_outs(report->str);
-+    if (abort_on_mismatch) {
-+        g_abort();
-+    }
-+    g_string_free(report, true);
-+}
-+
-+static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
-+                        enum qemu_plugin_discon_type type, uint64_t from_pc,
-+                        uint64_t to_pc)
-+{
-+    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-+
-+    if (type == QEMU_PLUGIN_DISCON_EXCEPTION &&
-+        addr_eq(state->last_pc, from_pc))
-+    {
-+        /*
-+         * For some types of exceptions, insn_exec will be called for the
-+         * instruction that caused the exception. This is valid behaviour and
-+         * does not need to be reported.
-+         */
-+    } else if (state->has_next) {
-+        /*
-+         * We may encounter discontinuity chains without any instructions
-+         * being executed in between.
-+         */
-+        report_mismatch("source", vcpu_index, type, state->last_pc,
-+                        state->next_pc, from_pc);
-+    } else if (state->has_from) {
-+        report_mismatch("source", vcpu_index, type, state->last_pc,
-+                        state->from_pc, from_pc);
-+    }
-+
-+    state->has_from = false;
-+
-+    state->next_pc = to_pc;
-+    state->next_type = type;
-+    state->has_next = true;
-+}
-+
-+static void insn_exec(unsigned int vcpu_index, void *userdata)
-+{
-+    struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
-+
-+    if (state->has_next) {
-+        report_mismatch("target", vcpu_index, state->next_type, state->last_pc,
-+                        state->next_pc, state->last_pc);
-+        state->has_next = false;
-+    }
-+
-+    if (trace_all_insns) {
-+        g_autoptr(GString) report = g_string_new(NULL);
-+        g_string_append_printf(report, "Exec insn at %"PRIx64" on VCPU %d\n",
-+                               state->last_pc, vcpu_index);
-+        qemu_plugin_outs(report->str);
-+    }
-+}
-+
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-+    for (size_t i = 0; i < n_insns; i++) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-+        uint64_t pc = qemu_plugin_insn_vaddr(insn);
-+        uint64_t next_pc = pc + qemu_plugin_insn_size(insn);
-+        uint64_t has_next = (i + 1) < n_insns;
-+
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-+                                                            QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                            last_pc, pc);
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-+                                                            QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                            from_pc, next_pc);
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-+                                                            QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                            has_from, has_next);
-+        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
-+                                               QEMU_PLUGIN_CB_NO_REGS, NULL);
-+    }
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    /* Set defaults */
-+    abort_on_mismatch = true;
-+    trace_all_insns = false;
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "abort") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-+                                        &abort_on_mismatch)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-+        } else if (g_strcmp0(tokens[0], "trace-all") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-+                                        &trace_all_insns)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    states = qemu_plugin_scoreboard_new(sizeof(struct cpu_state));
-+    last_pc = qemu_plugin_scoreboard_u64_in_struct(states, struct cpu_state,
-+                                                   last_pc);
-+    from_pc = qemu_plugin_scoreboard_u64_in_struct(states, struct cpu_state,
-+                                                   from_pc);
-+    has_from = qemu_plugin_scoreboard_u64_in_struct(states, struct cpu_state,
-+                                                    has_from);
-+
-+    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
-+                                        vcpu_discon);
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 61a007d9e7..561584159e 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-+  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
--- 
-2.49.1
-
+Yes, this is expected but it could be done more cleanly. I can only
+return a byte out of pmbus_receive_byte() and this is sometimes data,
+sometimes -1 for an error. At the time, I decided the valid data in
+out_buf should take precedence over returns from the device
+receive_byte.
+-Titus
 
