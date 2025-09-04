@@ -4,87 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354E4CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 864B6CA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu5Ke-00060R-Su; Thu, 04 Sep 2025 04:28:36 -0400
+	id 1uu5VP-0001DT-Js; Thu, 04 Sep 2025 04:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1uu5Ka-0005y7-Ln
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:28:32 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1uu5KX-0002k5-BH
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:28:32 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-61d3d622a2bso2420694a12.0
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:28:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756974500; x=1757579300; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WhnWyfs8YQKivkjEPCJWjC00mHB5PyHjOo9mWUimrLs=;
- b=VBK78DgUIFsUvURzeQX28mhIlTPQqmg4w+BsU7zaxxoeVoh845Lx8oWBP/jl+2c1g1
- 34YzuLngdrfJh9pH7duEiYMQxIqc1YFmifDYfKlkQV9RjtF5k4D1eV3aaDrvNMgHw5sR
- xkQkmKgBXT0iDWGbEN0JvRRmQeqwapAk4t7pnlLIRAtlYKm2v4zVydNw/oxVpArCBfBX
- xJT1hkJO+LPR3DJJ5MS2tu42SluPDDAQX/9MTm3CJCGdzw27DXyZoemXODfAHYwVbw3p
- /7hBK3g0EOSChdH4LPOu/XCyjdmPRFA3vVkxnivwFYD7LESkQK1Wxh1RKz/3v0pBN0nr
- 5I5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756974500; x=1757579300;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WhnWyfs8YQKivkjEPCJWjC00mHB5PyHjOo9mWUimrLs=;
- b=e9iSvyBkpxDEqmaRAHiIztqqMvLEEO2rGxTmsHtAsUGYcjyTuuwZVZy+ecroQaYHDK
- uiXOCMmtNDvDJbXvKZ1x89t8PMEJAOljSkz/JdPgFTvy+oVYPKI4nUbVZhs1EWpkNTmG
- olILFJ5YzKNLbXnfV+afqOqFeBn/Xa3Eo51issHhh9W9+ou/8vOVW+rxsWVO3aOSbA3D
- rA+c0RN4htHAEwYubhuTuGvKVGwbB0XaAxqvhZk75aX3u1bAPPe1qqw13osqLZbleuJe
- N+maRfunvy4sk6JyG4IJQpZo8iA5jBcrvdW+m5z59b64BH4+SJ2klHIo6BPJSgUlmksJ
- QHnw==
-X-Gm-Message-State: AOJu0YxcApNT5W/1xDs3QfyQjH6BM4NLuaTcMHfdALF/9aWz+5PWC6FQ
- ycPRhWgpJ6IxMHu5ffmyxV5c9dqQS80iNJbPpVm4Cb5ahiqDmNMJIxHr3OLMcC4cm6HY7egIrzH
- vZ8kECDh+WZt/GOgb/tZM/ClJokem5qc=
-X-Gm-Gg: ASbGnctwWOuZJZ8ua4LTgugeMKfaJ3l3F8Tt5WzNoKUpXHkM3S3U68n0dUZ4G5jhBzu
- C1VvaKvutd3Mp3hJ5A70qQOJq4bveR8ACxj9rwmjP2fiTEZHQ5hL/51dhQ1zPsHqjPJEjIVjhfO
- f2Rh92yciKFU8THsB2FW6bvayqOSE8/KZO+ZsRVhMnejGE6pF91/2D25C24dHyk8hFUuS4Wk8Fk
- Y2nmJz3acXdKt9r2wY=
-X-Google-Smtp-Source: AGHT+IHJAGZCReM/Q7M4tXpMlIg2E8yZ91ha/AEvXBjfgKrqCvZA5yabG/pshkYqcBGWi4Sfl1fvBwsBWH0HLS3Thd0=
-X-Received: by 2002:a17:907:7e82:b0:afe:6648:a243 with SMTP id
- a640c23a62f3a-b00f67e0eb3mr2076761266b.3.1756974499932; Thu, 04 Sep 2025
- 01:28:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1uu5VO-0001CX-83; Thu, 04 Sep 2025 04:39:42 -0400
+Received: from [115.124.28.59] (helo=out28-59.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1uu5VE-0006t8-AM; Thu, 04 Sep 2025 04:39:41 -0400
+Received: from 10.13.14.160(mailfrom:chao.liu@zevorn.cn
+ fp:SMTPD_---.eXFRmBL_1756974909 cluster:ay29) by smtp.aliyun-inc.com;
+ Thu, 04 Sep 2025 16:35:10 +0800
+Message-ID: <46df01bf-8885-4834-bf51-8bc304f2aa47@zevorn.cn>
+Date: Thu, 4 Sep 2025 16:35:09 +0800
 MIME-Version: 1.0
-References: <20250827205949.364606-1-peterx@redhat.com>
-In-Reply-To: <20250827205949.364606-1-peterx@redhat.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 4 Sep 2025 16:27:39 +0800
-X-Gm-Features: Ac12FXzMEA9Fkcja9O3MB6rcW8SlP9wlY1kfNqGL57esD_mgDpOiU0s404nSn0M
-Message-ID: <CAK3tnvKa=C-9qkOuyB+sZB8+o6YU0V+qaYheK-h9KBEumpyfBw@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/9] migration: Threadify loadvm process
-To: Peter Xu <peterx@redhat.com>, Hailiang Zhang <zhanghailiang@xfusion.com>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Yury Kotov <yury-kotov@yandex-team.ru>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Prasad Pandit <ppandit@redhat.com>, 
- Li Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/2] target/riscv: Generate strided vector loads/stores
+ with tcg nodes.
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: richard.henderson@linaro.org, paolo.savini@embecosm.com,
+ ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@yeah.net>
+References: <cover.1756906528.git.chao.liu@zevorn.cn>
+ <bcb383174cf82be8116685273e271cdbdda28a59.1756906528.git.chao.liu@zevorn.cn>
+ <eimd6dqomns6jqkh4rnma42lxlzlroyibbgm32yb7oztljensy@gw4u4flnwpwo>
+From: Chao Liu <chao.liu@zevorn.cn>
+In-Reply-To: <eimd6dqomns6jqkh4rnma42lxlzlroyibbgm32yb7oztljensy@gw4u4flnwpwo>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.59 (deferred)
+Received-SPF: pass client-ip=115.124.28.59; envelope-from=chao.liu@zevorn.cn;
+ helo=out28-59.mail.aliyun.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,147 +64,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 28, 2025 at 4:59=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
->
-> [this is an early RFC, not for merge, but to collect initial feedbacks]
->
-> Background
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Nowadays, live migration heavily depends on threads. For example, most of
-> the major features that will be used nowadays in live migration (multifd,
-> postcopy, mapped-ram, vfio, etc.) all work with threads internally.
->
-> But still, from time to time, we'll see some coroutines floating around t=
-he
-> migration context.  The major one is precopy's loadvm, which is internall=
-y
-> a coroutine.  It is still a critical path that any live migration depends=
- on.
->
-> A mixture of using both coroutines and threads is prone to issues.  Some
-> examples can refer to commit e65cec5e5d ("migration/ram: Yield periodical=
-ly
-> to the main loop") or commit 7afbdada7e ("migration/postcopy: ensure
-> preempt channel is ready before loading states").
->
-> Overview
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> This series tries to move migration further into the thread-based model, =
-by
-> allowing the loadvm process to happen in a thread rather than in the main
-> thread with a coroutine.
->
-> Luckily, since the qio channel code is always ready for both cases, IO
-> paths should all be fine.
->
-> Note that loadvm for postcopy already happens in a ram load thread which =
-is
-> separate.  However, RAM is just the simple case here, even it has its own
-> challenges (on atomically update of the pgtables), its complexity lies in
-> the kernel.
->
-> For precopy, loadvm has quite a few operations that will need BQL.  The
-> question is we can't take BQL for the whole process of loadvm, because
-> that'll block the main thread from executions (e.g. QMP hangs).  Here, th=
-e
-> finer granule we can push BQL the better.  This series so far chose
-> somewhere in the middle, by taking BQL on majorly these two places:
->
->   - CPU synchronizations
->   - Device START/FULL sections
->
-> After this series applied, most of the rest loadvm path will run without
-> BQL anymore.  There is a more detailed discussion / todo in the commit
-> message of patch "migration: Thread-ify precopy vmstate load process"
-> explaning how to further split the BQL critical sections.
->
-> I was trying to split the patches into smaller ones if possible, but it's
-> still quite challenging so there's one major patch that does the work.
->
-> After the series applied, the only leftover pieces in migration/ that wou=
-ld
-> use a coroutine is snapshot save/load/delete jobs.
->
-> Tests
-> =3D=3D=3D=3D=3D
->
-> Default CI passes.
->
-> RDMA unit tests pass as usual. I also tried out cancellation / failure
-> tests over RDMA channels, making sure nothing is stuck.
->
-> I also roughly measured how long it takes to run the whole 80+ migration
-> qtest suite, and see no measurable difference before / after this series.
->
-> Risks
-> =3D=3D=3D=3D=3D
->
-> This series has the risk of breaking things.  I would be surprised if it
-> didn't..
->
-> I confess I didn't test anything on COLO but only from code observations
-> and analysis.  COLO maintainers: could you add some unit tests to QEMU's
-> qtests?
+On 2025/9/4 13:05, Nicholas Piggin wrote:
+> On Wed, Sep 03, 2025 at 09:52:01PM +0800, Chao Liu wrote:
+>> From: Chao Liu <chao.liu@yeah.net>
+> 
+>> +static void gen_ldst_stride_main_loop(DisasContext *s, TCGv dest, uint32_t rs1,
+>> +                                      uint32_t rs2, uint32_t vm, uint32_t nf,
+>> +                                      gen_tl_ldst *ld_fn, gen_tl_ldst *st_fn,
+>> +                                      bool is_load)
+>> +{
+>> +    TCGv addr = tcg_temp_new();
+>> +    TCGv base = get_gpr(s, rs1, EXT_NONE);
+>> +    TCGv stride = get_gpr(s, rs2, EXT_NONE);
+>> +
+>> +    TCGv i = tcg_temp_new();
+>> +    TCGv i_esz = tcg_temp_new();
+>> +    TCGv k = tcg_temp_new();
+>> +    TCGv k_esz = tcg_temp_new();
+>> +    TCGv k_max = tcg_temp_new();
+>> +    TCGv mask = tcg_temp_new();
+>> +    TCGv mask_offs = tcg_temp_new();
+>> +    TCGv mask_offs_64 = tcg_temp_new();
+>> +    TCGv mask_elem = tcg_temp_new();
+>> +    TCGv mask_offs_rem = tcg_temp_new();
+>> +    TCGv vreg = tcg_temp_new();
+>> +    TCGv dest_offs = tcg_temp_new();
+>> +    TCGv stride_offs = tcg_temp_new();
+>> +
+>> +    uint32_t max_elems = MAXSZ(s) >> s->sew;
+>> +
+>> +    TCGLabel *start = gen_new_label();
+>> +    TCGLabel *end = gen_new_label();
+>> +    TCGLabel *start_k = gen_new_label();
+>> +    TCGLabel *inc_k = gen_new_label();
+>> +    TCGLabel *end_k = gen_new_label();
+>> +
+>> +    MemOp atomicity = MO_ATOM_NONE;
+>> +    if (s->sew == 0) {
+>> +        atomicity = MO_ATOM_NONE;
+>> +    } else {
+>> +        atomicity = MO_ATOM_IFALIGN_PAIR;
+>> +    }
+>> +
+>> +    tcg_gen_addi_tl(mask, (TCGv)tcg_env, vreg_ofs(s, 0));
+>> +
+>> +    /* Start of outer loop. */
+>> +    tcg_gen_mov_tl(i, cpu_vstart);
+>> +    gen_set_label(start);
+>> +    tcg_gen_brcond_tl(TCG_COND_GE, i, cpu_vl, end);
+>> +    tcg_gen_shli_tl(i_esz, i, s->sew);
+>> +    /* Start of inner loop. */
+>> +    tcg_gen_movi_tl(k, 0);
+>> +    gen_set_label(start_k);
+>> +    tcg_gen_brcond_tl(TCG_COND_GE, k, tcg_constant_tl(nf), end_k);
+>> +    /*
+>> +     * If we are in mask agnostic regime and the operation is not unmasked we
+>> +     * set the inactive elements to 1.
+>> +     */
+>> +    if (!vm && s->vma) {
+>> +        TCGLabel *active_element = gen_new_label();
+>> +        /* (i + k * max_elems) * esz */
+>> +        tcg_gen_shli_tl(mask_offs, k, get_log2(max_elems << s->sew));
+>> +        tcg_gen_add_tl(mask_offs, mask_offs, i_esz);
+>> +
+>> +        /*
+>> +         * Check whether the i bit of the mask is 0 or 1.
+>> +         *
+>> +         * static inline int vext_elem_mask(void *v0, int index)
+>> +         * {
+>> +         *     int idx = index / 64;
+>> +         *     int pos = index  % 64;
+>> +         *     return (((uint64_t *)v0)[idx] >> pos) & 1;
+>> +         * }
+>> +         */
+>> +        tcg_gen_shri_tl(mask_offs_64, mask_offs, 3);
+>> +        tcg_gen_add_tl(mask_offs_64, mask_offs_64, mask);
+>> +        tcg_gen_ld_i64((TCGv_i64)mask_elem, (TCGv_ptr)mask_offs_64, 0);
+>> +        tcg_gen_rem_tl(mask_offs_rem, mask_offs, tcg_constant_tl(8));
+> 
+> Could this be faster with tcg_gen_andi_tl(mask_offs_rem, mask_offs, 7)?
+> 
 
-For the COLO part, I think remove the coroutines related code is OK for me.
-Because the original coroutine still need to call the
-"colo_process_incoming_thread".
+This is a good catch! I'll include this change in the next patch version.
 
-Hi Hailiang, any comments for this part?
 
-Thanks
-Chen
+>> +        tcg_gen_shr_tl(mask_elem, mask_elem, mask_offs_rem);
+>> +        tcg_gen_andi_tl(mask_elem, mask_elem, 1);
+>> +        tcg_gen_brcond_tl(TCG_COND_NE, mask_elem, tcg_constant_tl(0),
+>> +                          active_element);
+>> +        /*
+>> +         * Set masked-off elements in the destination vector register to 1s.
+>> +         * Store instructions simply skip this bit as memory ops access memory
+>> +         * only for active elements.
+>> +         */
+>> +        if (is_load) {
+>> +            tcg_gen_shli_tl(mask_offs, mask_offs, s->sew);
+>> +            tcg_gen_add_tl(mask_offs, mask_offs, dest);
+>> +            st_fn(tcg_constant_tl(-1), (TCGv_ptr)mask_offs, 0);
+> 
+> One more small thing. This is implementing load and store instructions,
+> yet there are these ld_fn and st_fn, which makes it a bit confusing.
+> Calling them something like read_vreg / write_vreg might help make them
+> a bit clearer.
+> 
 
->
-> The current way of taking BQL during FULL section load may cause issues, =
-it
-> means when the IOs are unstable we could be waiting for IO (in the new
-> migration incoming thread) with BQL held.  This is low possibility, thoug=
-h,
-> only happens when the network halts during flushing the device states.
-> However still possible.  One solution is to further breakdown the BQL
-> critical sections to smaller sections, as mentioned in TODO.
->
-> Anything more than welcomed: suggestions, questions, objections, tests..
->
-> Todo
-> =3D=3D=3D=3D
->
-> - Test COLO?
-> - Finer grained BQL breakdown
-> - More..
->
-> Thanks,
->
-> Peter Xu (9):
->   migration/vfio: Remove BQL implication in
->     vfio_multifd_switchover_start()
->   migration/rdma: Fix wrong context in qio_channel_rdma_shutdown()
->   migration/rdma: Allow qemu_rdma_wait_comp_channel work with thread
->   migration/rdma: Change io_create_watch() to return immediately
->   migration: Thread-ify precopy vmstate load process
->   migration/rdma: Remove coroutine path in qemu_rdma_wait_comp_channel
->   migration/postcopy: Remove workaround on wait preempt channel
->   migration/ram: Remove workaround on ram yield during load
->   migration/rdma: Remove rdma_cm_poll_handler
->
->  include/migration/colo.h    |   6 +-
->  migration/migration.h       |  52 +++++++--
->  migration/savevm.h          |   5 +-
->  hw/vfio/migration-multifd.c |   9 +-
->  migration/channel.c         |   7 +-
->  migration/colo-stubs.c      |   2 +-
->  migration/colo.c            |  23 +---
->  migration/migration.c       |  62 ++++++++---
->  migration/ram.c             |  13 +--
->  migration/rdma.c            | 206 ++++++++----------------------------
->  migration/savevm.c          |  85 +++++++--------
->  migration/trace-events      |   4 +-
->  12 files changed, 196 insertions(+), 278 deletions(-)
->
-> --
-> 2.50.1
->
+I think the current names are okay? After splitting the vector and mask access
+code into smaller functions, it's already much easier to read. Let's review the
+next patch version first, then decide if we need to change the names.
+
+> I also suggest try to split the at generation of access for the vector
+> data and mask registers to see if you can split them into helper
+> functions. That could make this function smaller and a bit nicer to
+> review.
+> 
+
+Get, I'll split the check for vext_elem_mask() and the Load/Store of the vector
+register into separate sub-functions to make review easier.
+
+Thanks,
+Chao
 
