@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5706CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 13:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37341CA1002
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 13:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuA06-00017y-EL; Thu, 04 Sep 2025 09:27:42 -0400
+	id 1uuAP7-0001iN-Vh; Thu, 04 Sep 2025 09:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uuA03-00017V-6m
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 09:27:39 -0400
-Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuAP5-0001ht-5e
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 09:53:31 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uu9zs-0004GD-DB
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 09:27:38 -0400
-Received: by mail-il1-x136.google.com with SMTP id
- e9e14a558f8ab-3f663c57226so5125305ab.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 06:27:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuAOv-0004P1-5P
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 09:53:30 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-45cb5492350so7284345e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 06:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1756992445; x=1757597245; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=g+Z6by8yj153dStYnaj/Rum+7G7Oqf9yATcM8/24AcA=;
- b=Ghq6kNxfU1szQUulPI4Qg1CAl84Vtl/ntfEQWUwN0Evd/CJL+8caSSJq5A7KzOjrWa
- H+ySBZm0Z+ZIGds+K5Z1fjCSpcC0Yi+HTmu6fAy5DPSw3J1mU7Cc6AQEzyL/pxuu0XFV
- CcQg7EkWEhDw2ssUfzozds7ss1yew5ZrYZ3bsaCfNJqfpEJVXfLhDyEGL27ErE5aFO6L
- rWlhxGluBRXKQzeYX5Q7FD2/6DWXlXCDx/C3f1cRvaTsSKgh1C+RCVk5Elaxi1MTg33h
- Y5D/oMcrW9lALKu8XEIlYKoOOcgp+Fh4DghWktUTGDNDDaGzgoUZGErv+3xWT0VZf51n
- 42ag==
+ d=linaro.org; s=google; t=1756993992; x=1757598792; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OKAPIZ+2d+SRV7Nywa5xA97xiji6grigfAj+yO0mBIg=;
+ b=WtVWDw9taCjyT3mgrlm5nAj6shwXSTsMl4u0tFnm377Vdk7JSv/EFFhZyopd+YOFjA
+ QrDrV4g/TO8sAeyvXP/6+g8b6eiSWdidFBncu4fMD2x6C88ai85zWP1Y+rQGVHFINeSu
+ qb/wCYjFijbl8jXhT9zgknLBpvyV3K1uosnLB0Tsr/rr4Xmt24ZgTiVQC4iqP2U45Vtm
+ s1K5Ssr4TJNdliXag4FrIr/o0e9z2GP7e/hlgOndjNQeYp7UPUZ59uamdppDtgomy3VS
+ X3bOW7Kvzkad1m9K2WXL6j82+wG/b+bsvQSWscw8by4EP9UbnsEZ9Dc8bq7YdP0wGHVX
+ +3Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756992445; x=1757597245;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g+Z6by8yj153dStYnaj/Rum+7G7Oqf9yATcM8/24AcA=;
- b=Merhm6vMRLq4QagvaflctcpB82mj/I5cBfsjTR0oFTgY8I9/fK/FqAmS2lHhcLbOUk
- eSAGA4lQYRi36Ip5XD/zbMxvnDp61C+tMuxK9umVX7YEIb/Y55flRWeu2GaJro3bkBBi
- A+iRAFHCVcHn2ywv3hE+JFyRTYQSngVJtujDbG2cYeSIOVh/ZbbjSFtLp2BkoGIR3jU1
- bmetJFiBdu7Qp8Npu4Z5i79e2yjYojEf+ai7ISS93OrBZmC6UPucKMSvtFkngiRdCXZq
- cOsgHVbohs8UMwQHlGSZEbhNnW8wRm0l/2P5AB2tr8Afh+tIqLWNGZi2gmcp0GZxZw1u
- c9aw==
-X-Gm-Message-State: AOJu0YyHLiQ87n/jx0l8RHVhSTQuilE+99gl8hVDKm9+QdLvcGNdxLYz
- m2o2S/grK1vL78nWRBZj/Kqr7QnqALmGDY0D7gENYnQYrjqWU23ynTyLN/yDx7pjTYU4QLyG7SL
- OTQFpIJY=
-X-Gm-Gg: ASbGnctLSFi5bg31rRh3gM4TSgLZu3kZPXuVxsTWrxHflGD9KpJTvo/yn4V3+Yzos40
- 7DYIo1/SIhDh4pN3JIT+eYWhs94ilSF6OC42H4b/vs1zLVExSlA141RXE//F13MDp/sZlRcq/bq
- EnaRXQSQqMWAiwatFmgFhFVqgBdDcGjXv/xvqrbyJItjDK1qEyMKdcuzfz5yD1Hba3MS4zBhDo4
- ijZq7vF/BpZ4IXSgvfvUlZtcBc2GJZAcgWfAX19Q4Q88CX7QvqJYtaTNAUnLvwCNPFo2CBShErF
- s7DwTWV+2JiCZKvJ3sNGWaBaPrpLvpRZk01DIKajYXk3LInk5frJN5CHL5Pgdw3SivpYjw+3XzL
- u6xcTPRE1sjz3cBZeF+VXS5OUl5rI+nE1pfU=
-X-Google-Smtp-Source: AGHT+IHeetYnpOzcl8+XrEPSiIS2VwZYvR6BTeXnZz8w/uHdiBgapf7uUhLxAXbewd882R8wqoZZ1w==
-X-Received: by 2002:a05:6e02:4614:b0:3f6:546b:5c9a with SMTP id
- e9e14a558f8ab-3f6546b5d53mr152829605ab.19.1756992444706; 
- Thu, 04 Sep 2025 06:27:24 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-5104c5a4d0dsm679121173.0.2025.09.04.06.27.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 06:27:24 -0700 (PDT)
-From: Andrew Jones <ajones@ventanamicro.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: alistair.francis@wdc.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, tjeznach@rivosinc.com
-Subject: [PATCH] hw/riscv/riscv-iommu: Fix MSI table size limit
-Date: Thu,  4 Sep 2025 08:27:24 -0500
-Message-ID: <20250904132723.614507-2-ajones@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
+ d=1e100.net; s=20230601; t=1756993992; x=1757598792;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OKAPIZ+2d+SRV7Nywa5xA97xiji6grigfAj+yO0mBIg=;
+ b=XmL9DNaidvPAcFc7+sqx+zxk9zMHY1IwKFNTtUW4Fei1mkcO6vxa4X2e5Ed4cH2C6M
+ tKNHbJfLWrKrPrh0ayegpMoZlB//Bii5SpG1ZEqjrTUCu0rF15E2+Je6K8F/Df3j/anL
+ kYgxPKU6klFum2qjw63Aba1YYfvU74CKKRSRRPZDE4EUqTj2HIJLjCAYY2OwKumJ9VF0
+ vt2v8DRG6DywdRlWAwV6xL63pfFTl/yDHMUsqksPdpFxf0oEDLta1kE2uMcABHNxrxMh
+ Uwqhxv04SeSVl4DmdHoa7vI5HpkEtngmFWy8OA65xpt1HueSLMOb6/v8NKNHvpLqpdIq
+ mPrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1gwP6eRR2nn34/A53FpY6d+Wz3FQ91RIIeUrF1DAUVtogI4ia96BS/0GGHS+eBZH+vvw6tnFhw6Ge@nongnu.org
+X-Gm-Message-State: AOJu0Yz9eRS3DEq/pQGLsF4/C+PJCzb5neCmOXee53HsJq2Sw3SOo3mJ
+ lUE+N+9NmgjOJhWJw8BjFUZr5nd5bHjVux8RRBemnwvNdx/KNkvu8QZ4TQTSftoH1eA=
+X-Gm-Gg: ASbGncu3YAxABFARcn3DMZbY2AGnR4rrOgVOkyzBfyE3ikA/XDI/cGY2PFyMy1esKRR
+ uGmWWTL/YrsII2DGlSvS2I+0S98Gy2wMpWgVaEEjpb0Ani899EYp77ObVhoCHuFDNjlbTWGJuZW
+ jbb8oIe1Voo1HUuM/OJb3kWrda2t4KEVEMugoxNHbgTZQ7fV9WtStsi3dFjh123xou/KSG5+tpY
+ AwJE9PquYHYu5PSKh96MJy8XW3Jsdu/EPnsUzABjjd27161WmKxU2Vk5kfLZ0e+DJyiJd4lk6Uh
+ iuuW1SNKBKDmqLGpjGy8u+afGQx11+/Jptxg63LakAidItRCxOp2SNWIgHaFCR48OEKGH/fSRY9
+ 7ZyMyFKaqsNrLtBj3txpsQyMf+70SLTr4s6LF
+X-Google-Smtp-Source: AGHT+IEqcbTkt6qSg7YMb9qbRE2hplP7bBwMzR5RZT602EFr+jx4t84q17B3Qyfjns8Yyr40PzcLAA==
+X-Received: by 2002:a05:600c:3b89:b0:45c:b580:f7a5 with SMTP id
+ 5b1f17b1804b1-45dcfa3eb0cmr27104165e9.28.1756993991999; 
+ Thu, 04 Sep 2025 06:53:11 -0700 (PDT)
+Received: from [10.175.133.6] ([131.175.126.3])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b6f0c6fe5sm368513785e9.5.2025.09.04.06.53.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Sep 2025 06:53:11 -0700 (PDT)
+Message-ID: <0cb963d6-744b-4181-b590-08fee5516e30@linaro.org>
+Date: Thu, 4 Sep 2025 15:53:07 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
- envelope-from=ajones@ventanamicro.com; helo=mail-il1-x136.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/2] target/riscv: Use tcg nodes for strided vector
+ ld/st generation
+To: Chao Liu <chao.liu@zevorn.cn>, paolo.savini@embecosm.com,
+ npiggin@gmail.com, ebiggers@kernel.org, dbarboza@ventanamicro.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <cover.1756975571.git.chao.liu@zevorn.cn>
+ <74e3337dfebbeb29667492a1e57e87c75b55c725.1756975571.git.chao.liu@zevorn.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <74e3337dfebbeb29667492a1e57e87c75b55c725.1756975571.git.chao.liu@zevorn.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,56 +108,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MSI table is not limited to 4k. The only constraint the table has
-is that its base address must be aligned to its size, ensuring no
-offsets of the table size will overrun when added to the base address
-(see "8.5. MSI page tables" of the AIA spec).
+On 9/4/25 11:13, Chao Liu wrote:
+> +/*
+> + * Check whether the i bit of the mask is 0 or 1.
+> + *
+> + * static inline int vext_elem_mask(void *v0, int index)
+> + * {
+> + *     int idx = index / 64;
+> + *     int pos = index % 64;
+> + *     return (((uint64_t *)v0)[idx] >> pos) & 1;
+> + * }
+> + *
+> + * And
+> + *
+> + * if (vext_elem_mask(v0, i) != 0) {
+> + *     goto label;
+> + * }
+> + */
+> +static void gen_check_vext_elem_mask(TCGLabel *label, TCGv mask, TCGv mask_offs)
+> +{
+> +    TCGv mask_offs_64 = tcg_temp_new();
+> +    TCGv mask_offs_rem = tcg_temp_new();
+> +    TCGv mask_elem = tcg_temp_new();
+> +
+> +    tcg_gen_shri_tl(mask_offs_64, mask_offs, 3);
+> +    tcg_gen_add_tl(mask_offs_64, mask_offs_64, mask);
+> +    tcg_gen_ld_i64((TCGv_i64)mask_elem, (TCGv_ptr)mask_offs_64, 0);
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
----
- hw/riscv/riscv-iommu.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+Each and every time you cast a TCGv, you're doing something wrong.
+There are a lot of them in this patch.
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 96a7fbdefcf3..155190d032dd 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -558,6 +558,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
-     MemTxResult res;
-     dma_addr_t addr;
-     uint64_t intn;
-+    size_t offset;
-     uint32_t n190;
-     uint64_t pte[2];
-     int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
-@@ -565,16 +566,18 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
- 
-     /* Interrupt File Number */
-     intn = riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
--    if (intn >= 256) {
--        /* Interrupt file number out of range */
--        res = MEMTX_ACCESS_ERROR;
--        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
--        goto err;
--    }
-+    offset = intn * sizeof(pte);
- 
-     /* fetch MSI PTE */
-     addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
--    addr = addr | (intn * sizeof(pte));
-+    if (addr & offset) {
-+        /* Interrupt file number out of range */
-+        res = MEMTX_ACCESS_ERROR;
-+        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
-+        goto err;
-+    }
-+
-+    addr |= offset;
-     res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
-             MEMTXATTRS_UNSPECIFIED);
-     if (res != MEMTX_OK) {
--- 
-2.49.0
+Your host pointer arithmetic should be using TCGv_ptr and tcg_gen_*_ptr().
+This mask_elem should itself be TCGv_i64.
 
+> +    tcg_gen_andi_tl(mask_elem, mask_elem, 1);
+> +    tcg_gen_brcond_tl(TCG_COND_NE, mask_elem, tcg_constant_tl(0), label);
+
+This should be
+
+     tcg_gen_brcond_i64(TCG_COND_TSTNE, mask_elem, tcg_constant_i64(1), label);
+
+
+> +/*
+> + * Simulate the strided load/store main loop:
+> + *
+> + * for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+> + *     k = 0;
+> + *     while (k < nf) {
+> + *         if (!vm && !vext_elem_mask(v0, i)) {
+> + *             vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
+> + *                               (i + k * max_elems + 1) * esz);
+> + *             k++;
+> + *             continue;
+> + *         }
+> + *         target_ulong addr = base + stride * i + (k << log2_esz);
+> + *         ldst(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
+> + *         k++;
+> + *     }
+> + * }
+
+The form of this loop causes you to do more reads for vext_elem_mask than necessary.
+
+Better to test once outside of the loop over K:
+
+     for (i in vl) {
+         if (!vm && !vext_elem_mask(v0, i)) {
+             for (k in nf) {
+                 vd[i, k] = -1;
+             }
+         } else {
+             for (k in nf) {
+                 vd[i, k] = ld(addr);
+             }
+         }
+     }
+
+If vl_eq_vlmax, and VL is a multiple of 64, you can structure this loop like:
+
+     i = 0;
+     do {
+         mask = v0[i / 64];
+         do {
+             if (mask & 1) {
+                 ...
+             }
+             mask >>= 1;
+         } while (++i & 63);
+     } while (i < vl);
+
+If VL is a smaller power of 2, you can load smaller units of mask to match.  Though beware 
+of the big-endian host addressing fixup.
+
+If VM, you should fuse I and K into a single loop over all elements.
+
+
+r~
 
