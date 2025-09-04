@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA1B4CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06842CA101F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu587-0001FT-7b; Thu, 04 Sep 2025 04:15:39 -0400
+	id 1uu59d-0005Lq-0J; Thu, 04 Sep 2025 04:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54r-0006Qz-Ph
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:20 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1uu55J-0006kA-PE
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:49 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54P-00045p-Ej
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:15 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b02c719a117so132858966b.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:48 -0700 (PDT)
+ id 1uu54h-0004G4-17
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:42 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-61e8fdfd9b4so1639226a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973508; x=1757578308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973524; x=1757578324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cDNuaOsGD6r42U8ngLUfY1h4DF7myqs0cRJmalDhUb4=;
- b=rOj6rEcYdEpabrkFEyMLtS4l+OwKcqZX9pjTONuBlvCEwecszV115VfMTXuONev5Zj
- KwsY1uCrH8lEtFdYKy6HGaX5UBlgi2VcUSiMCuNWTmdOa6cdw5dlBLbDL//KdUGwNj39
- 5q9oKfhsoAhofV13yOKEpQ41suxyeRCK4HOuhe/FBGAYlUiPYN2GHwE74x5jlq2S1JSa
- lCwuJ7Z0OOKu1h3cRi1JalttEcqy5K5Nht3yt4kRoS3l6G/mmzAphDVyRmbi/STQSURr
- Qdnms7oUNHCMdksIaQ9hbBF3WPbOhwreWVo+dHcW2UG0T7D/bA043jVhYWf0CwK1wkul
- hDyQ==
+ bh=JLxFb3NYbTS9f/pm1eUqTOiDM/5DBuFeeS5GZ+vjJzw=;
+ b=ip+lrQZDNSFNY4DI7P4Y3AQgARPPBv4N05IrOFKAAaxL4csVrkMOykOJ9MKFM/kAKS
+ iLWItl/58o+eTJgBRfXa8n2x74YYPz/WMDl5uGp56VbeZPzUjodQHKKVWePZfjDBbDb/
+ K8Cf+eLR3eief69E17hnxioUDfwisFFfeablYXK7wARiOvZrjo5fJ0/WDIoRgTfUMTsN
+ 9KWayY29cfjj0RLDw2ypbj2tILsvKKmLqI9qRPqDZlodkoJ0O2DTrHTU/C0Q+DoqTVCW
+ HLVXiYXNbqD8tNyoKGW5Y4DBSlKNJAsKd0eNCnMV10orGSyp4myU99UQVsewCuoMLwU4
+ xzBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973508; x=1757578308;
+ d=1e100.net; s=20230601; t=1756973524; x=1757578324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cDNuaOsGD6r42U8ngLUfY1h4DF7myqs0cRJmalDhUb4=;
- b=F72dyGQr3w420HFH64ag4gNcqx7M2sPbbUNCZLYQY5vKPNZNrvX1LR/oDugNxH/kD+
- kWTCnBGJXclZMuW6eGpsZHS2Kkumo499/Cgw4SHbGT/Up8f6IotSQtY9Wh3FPGQ5o2I1
- aO5cUFe8Z7VWGiu3UbKVJLrxJvcGWlmA5i9tNBmVldo0kT1HMZeFkj8LxgclYrLiQ+9U
- uEDZK35eCQargKMbIAPHNTboXUi43aXarGipmrM3A0uHPPOe/ErmckO8CvuBRwk6kewL
- LwbDBs/5kvw0Dz4koYPTR6zKw1f1EQth4h5vjYHWEaL6SgeMVhyRMMiUvdm49DneWuwO
- /C3w==
-X-Gm-Message-State: AOJu0YygonSXZgIDgGWj9PJkhr/RMdV9IA9HIGbC8ZmhoYOdJjh9usOM
- rYEbdwBzx1a1vAtYUsINoCTODXNNTej/H0yYcsyldcxqmbb3082saxmiSH46FfQACUw=
-X-Gm-Gg: ASbGnctas313380uaWGQJ+Qr4tY6LGqrbktHd+YW6Ivw9wYJzxreav6pGF7Es0Vrgtq
- VJ/OSabn8pe3LNbYHtHCFV5uL81BzFHg4up1sJoJNjrL7yZVyxk0454sXkPEcwJkEmeDnBGsRr4
- +fLfh1nHcCKCINaF3aawgQob3l74ZDqTnmO9FPUtj0I84wjj3/zJKLdMsjBmaOWdX3bn41FGdeD
- uk35aqy/0DGArHF5fUDrLxH1QEXUCMa8Gc4AOW9nqMGp26MoXQZKtKg5fPEbB1U6X00qisZeMng
- P03aIjFSANt8qc6K2AAexTwrG9Knlvv5wCVw/EFaYaAg2ZgxHj3WU5IyZ14JauoLo/3Hb72fgyF
- rC/5yFECxSaSyW+PvlrR/xHYQYrZ8ez0y4VNl87FKB2Dv
-X-Google-Smtp-Source: AGHT+IEuGPLBjng4TGodrmsMkqQv/1x2d0i2N2XuU6rOMtEyrvdgiQZZOH9o9y1LB92mX/fQfkpwaw==
-X-Received: by 2002:a17:906:9f92:b0:afe:a615:39ef with SMTP id
- a640c23a62f3a-b01d8a2667emr1911016566b.9.1756973507309; 
- Thu, 04 Sep 2025 01:11:47 -0700 (PDT)
+ bh=JLxFb3NYbTS9f/pm1eUqTOiDM/5DBuFeeS5GZ+vjJzw=;
+ b=V2iI3ksNpginYqF3uMSxLxGIems3WnNwebCpCahuVa7WEcOIyZ07ukccqNeo5mjZ+U
+ 0CGQqSESOTmzCXIuLMzdT5wZpHPyHr/DCqRSvbwWxZpc1YJwnT3uMACDUWUjViR5fif6
+ Pnw1TPLSUs6e1CyiYMFBA5BuWLwPlvoNr0Yhq/qfvTAI/vqpw0b2zUX/TSwIIsHYnFJE
+ DJl/Y9mTLFv21DjznOODmaVgfrjZOac1Cnu0meyTedzX/gl0mRu4LF0D+6AYdvHwocGh
+ m5vJyBMCukqrXkc+mRMiI7RVbSQYXxLcj1w6Pz9W47kNgRS7chJSZDpkok+dQwDUYrpE
+ MKaQ==
+X-Gm-Message-State: AOJu0YzOsR+egzdGRGuFXZoy498VxOMaxQbd1jJNPoJbNGyBLOvZO/PP
+ 6DM1f4dttY4nu7LOuVZ/WNGkfyfnHP+DHFCLvmOqUqLJBWpKb7Qowm1lxQc8IE2hQAu2OMN5d9+
+ ZUkQefs3V+A==
+X-Gm-Gg: ASbGnctDhCAcPQzzp11dThr2JDCXh9grBdDHommuSNyVFEYRVOSDF7IYKMoOLBRFMzU
+ HvvWc5eyrMoBmxw1vJU2DQACOTdBaMeGMl7IJsF/KNHZxb0s5zqJmi9iKvuINHuTvDsRkgfooOq
+ ofFZxpJeI+FX4qGnM6zv0lJ1tEM4nFCSGaeckEHerpiwLMemJaRJl43Z4FDv110afFAeq8GioxD
+ Zi4CmxNcrNYehVyYFyOPVd2FJwfG8U9lhk1F97+LpcvdN2yDmSOjFXUEvR76Nkpevl2t1FJc6Lj
+ RF0ZQLB5ufRxHx6iqx1pUol7duJZH/S351VmYzFYUyM/2kw3PJPMkxEzLcLL7VIp/KZV6CWRgt/
+ JZ3T/E5ZxE8nYE5+0y9tcGbI=
+X-Google-Smtp-Source: AGHT+IGCIzSs++vG4Q/r44POEQofytYBuUaIuGpsL8NKxkWgprP60aqkJ1SOMVPil+NtFGgd+q+1ug==
+X-Received: by 2002:a05:6402:2356:b0:61c:e287:7ad3 with SMTP id
+ 4fb4d7f45d1cf-61d22dfbd0emr19350555a12.6.1756973524107; 
+ Thu, 04 Sep 2025 01:12:04 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b0416e878a2sm1085838766b.95.2025.09.04.01.11.40
+ 4fb4d7f45d1cf-61cfc216304sm12809226a12.19.2025.09.04.01.11.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 01:11:43 -0700 (PDT)
+ Thu, 04 Sep 2025 01:11:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 19D475FAD0;
- Thu, 04 Sep 2025 09:11:31 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BE271603EE;
+ Thu, 04 Sep 2025 09:11:35 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>,
@@ -127,20 +128,17 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 024/281] tests/functional: Move m68k tests into
- architecture specific folder
-Date: Thu,  4 Sep 2025 09:06:58 +0100
-Message-ID: <20250904081128.1942269-25-alex.bennee@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
+Subject: [PATCH v2 058/281] linux-user: Move get_elf_hwcap to mips/elfload.c
+Date: Thu,  4 Sep 2025 09:07:32 +0100
+Message-ID: <20250904081128.1942269-59-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -163,134 +161,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The tests/functional folder has become quite crowded, thus move the
-m68k tests into a target-specific subfolder.
+Change the return type to abi_ulong, and pass in the cpu.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250819112403.432587-13-thuth@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- MAINTAINERS                                              | 8 ++++----
- tests/functional/m68k/meson.build                        | 9 +++++++++
- .../{test_m68k_mcf5208evb.py => m68k/test_mcf5208evb.py} | 0
- .../{test_m68k_nextcube.py => m68k/test_nextcube.py}     | 0
- .../functional/{test_m68k_q800.py => m68k/test_q800.py}  | 0
- .../{test_m68k_replay.py => m68k/test_replay.py}         | 0
- .../{test_m68k_tuxrun.py => m68k/test_tuxrun.py}         | 0
- tests/functional/meson.build                             | 9 +--------
- 8 files changed, 14 insertions(+), 12 deletions(-)
- create mode 100644 tests/functional/m68k/meson.build
- rename tests/functional/{test_m68k_mcf5208evb.py => m68k/test_mcf5208evb.py} (100%)
- rename tests/functional/{test_m68k_nextcube.py => m68k/test_nextcube.py} (100%)
- rename tests/functional/{test_m68k_q800.py => m68k/test_q800.py} (100%)
- rename tests/functional/{test_m68k_replay.py => m68k/test_replay.py} (100%)
- rename tests/functional/{test_m68k_tuxrun.py => m68k/test_tuxrun.py} (100%)
+ linux-user/loader.h            |  2 +-
+ linux-user/mips/target_elf.h   |  2 ++
+ linux-user/mips64/target_elf.h |  2 ++
+ linux-user/elfload.c           | 52 +---------------------------------
+ linux-user/mips/elfload.c      | 50 ++++++++++++++++++++++++++++++++
+ 5 files changed, 56 insertions(+), 52 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 716127e831d..e188de813fb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1312,7 +1312,7 @@ F: hw/m68k/mcf_intc.c
- F: hw/char/mcf_uart.c
- F: hw/net/mcf_fec.c
- F: include/hw/m68k/mcf*.h
--F: tests/functional/test_m68k_mcf5208evb.py
-+F: tests/functional/m68k/test_mcf5208evb.py
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 92b6d41145e..04457737dd4 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -103,7 +103,7 @@ const char *get_elf_cpu_model(uint32_t eflags);
  
- NeXTcube
- M: Thomas Huth <huth@tuxfamily.org>
-@@ -1320,7 +1320,7 @@ S: Odd Fixes
- F: hw/m68k/next-*.c
- F: hw/display/next-fb.c
- F: include/hw/m68k/next-cube.h
--F: tests/functional/test_m68k_nextcube.py
-+F: tests/functional/m68k/test_nextcube.py
+ #if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
+     || defined(TARGET_SPARC) || defined(TARGET_PPC) \
+-    || defined(TARGET_LOONGARCH64)
++    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS)
+ abi_ulong get_elf_hwcap(CPUState *cs);
+ abi_ulong get_elf_hwcap2(CPUState *cs);
+ #endif
+diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
+index febf710c7ae..877f8347d70 100644
+--- a/linux-user/mips/target_elf.h
++++ b/linux-user/mips/target_elf.h
+@@ -8,4 +8,6 @@
+ #ifndef MIPS_TARGET_ELF_H
+ #define MIPS_TARGET_ELF_H
  
- q800
- M: Laurent Vivier <laurent@vivier.eu>
-@@ -1346,7 +1346,7 @@ F: include/hw/m68k/q800-glue.h
- F: include/hw/misc/djmemc.h
- F: include/hw/misc/iosb.h
- F: include/hw/audio/asc.h
--F: tests/functional/test_m68k_q800.py
-+F: tests/functional/m68k/test_q800.py
- 
- virt
- M: Laurent Vivier <laurent@vivier.eu>
-@@ -1361,7 +1361,7 @@ F: include/hw/intc/goldfish_pic.h
- F: include/hw/intc/m68k_irqc.h
- F: include/hw/misc/virt_ctrl.h
- F: docs/specs/virt-ctlr.rst
--F: tests/functional/test_m68k_tuxrun.py
-+F: tests/functional/m68k/test_tuxrun.py
- 
- MicroBlaze Machines
- -------------------
-diff --git a/tests/functional/m68k/meson.build b/tests/functional/m68k/meson.build
-new file mode 100644
-index 00000000000..e29044a6d73
---- /dev/null
-+++ b/tests/functional/m68k/meson.build
-@@ -0,0 +1,9 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
++#define HAVE_ELF_HWCAP          1
 +
-+tests_m68k_system_thorough = [
-+  'mcf5208evb',
-+  'nextcube',
-+  'replay',
-+  'q800',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/m68k/test_mcf5208evb.py
-similarity index 100%
-rename from tests/functional/test_m68k_mcf5208evb.py
-rename to tests/functional/m68k/test_mcf5208evb.py
-diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/m68k/test_nextcube.py
-similarity index 100%
-rename from tests/functional/test_m68k_nextcube.py
-rename to tests/functional/m68k/test_nextcube.py
-diff --git a/tests/functional/test_m68k_q800.py b/tests/functional/m68k/test_q800.py
-similarity index 100%
-rename from tests/functional/test_m68k_q800.py
-rename to tests/functional/m68k/test_q800.py
-diff --git a/tests/functional/test_m68k_replay.py b/tests/functional/m68k/test_replay.py
-similarity index 100%
-rename from tests/functional/test_m68k_replay.py
-rename to tests/functional/m68k/test_replay.py
-diff --git a/tests/functional/test_m68k_tuxrun.py b/tests/functional/m68k/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_m68k_tuxrun.py
-rename to tests/functional/m68k/test_tuxrun.py
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index e2e66dcf523..d32dd4a371f 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -16,6 +16,7 @@ subdir('avr')
- subdir('hppa')
- subdir('i386')
- subdir('loongarch64')
-+subdir('m68k')
+ #endif
+diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
+index 02e6d14840a..c0347e5cb6e 100644
+--- a/linux-user/mips64/target_elf.h
++++ b/linux-user/mips64/target_elf.h
+@@ -8,4 +8,6 @@
+ #ifndef MIPS64_TARGET_ELF_H
+ #define MIPS64_TARGET_ELF_H
  
- test_mips_timeouts = {
-   'mips_malta' : 480,
-@@ -81,14 +82,6 @@ tests_generic_linuxuser = [
- tests_generic_bsduser = [
- ]
++#define HAVE_ELF_HWCAP          1
++
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 574b37a22c1..dc3f502277a 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -834,57 +834,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUMIPSState *e
+ #define USE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE        4096
  
--tests_m68k_system_thorough = [
--  'm68k_mcf5208evb',
--  'm68k_nextcube',
--  'm68k_replay',
--  'm68k_q800',
--  'm68k_tuxrun',
--]
+-/* See arch/mips/include/uapi/asm/hwcap.h.  */
+-enum {
+-    HWCAP_MIPS_R6           = (1 << 0),
+-    HWCAP_MIPS_MSA          = (1 << 1),
+-    HWCAP_MIPS_CRC32        = (1 << 2),
+-    HWCAP_MIPS_MIPS16       = (1 << 3),
+-    HWCAP_MIPS_MDMX         = (1 << 4),
+-    HWCAP_MIPS_MIPS3D       = (1 << 5),
+-    HWCAP_MIPS_SMARTMIPS    = (1 << 6),
+-    HWCAP_MIPS_DSP          = (1 << 7),
+-    HWCAP_MIPS_DSP2         = (1 << 8),
+-    HWCAP_MIPS_DSP3         = (1 << 9),
+-    HWCAP_MIPS_MIPS16E2     = (1 << 10),
+-    HWCAP_LOONGSON_MMI      = (1 << 11),
+-    HWCAP_LOONGSON_EXT      = (1 << 12),
+-    HWCAP_LOONGSON_EXT2     = (1 << 13),
+-    HWCAP_LOONGSON_CPUCFG   = (1 << 14),
+-};
 -
- tests_microblaze_system_thorough = [
-   'microblaze_replay',
-   'microblaze_s3adsp1800'
+-#define ELF_HWCAP get_elf_hwcap()
+-
+-#define GET_FEATURE_INSN(_flag, _hwcap) \
+-    do { if (cpu->env.insn_flags & (_flag)) { hwcaps |= _hwcap; } } while (0)
+-
+-#define GET_FEATURE_REG_SET(_reg, _mask, _hwcap) \
+-    do { if (cpu->env._reg & (_mask)) { hwcaps |= _hwcap; } } while (0)
+-
+-#define GET_FEATURE_REG_EQU(_reg, _start, _length, _val, _hwcap) \
+-    do { \
+-        if (extract32(cpu->env._reg, (_start), (_length)) == (_val)) { \
+-            hwcaps |= _hwcap; \
+-        } \
+-    } while (0)
+-
+-static uint32_t get_elf_hwcap(void)
+-{
+-    MIPSCPU *cpu = MIPS_CPU(thread_cpu);
+-    uint32_t hwcaps = 0;
+-
+-    GET_FEATURE_REG_EQU(CP0_Config0, CP0C0_AR, CP0C0_AR_LENGTH,
+-                        2, HWCAP_MIPS_R6);
+-    GET_FEATURE_REG_SET(CP0_Config3, 1 << CP0C3_MSAP, HWCAP_MIPS_MSA);
+-    GET_FEATURE_INSN(ASE_LMMI, HWCAP_LOONGSON_MMI);
+-    GET_FEATURE_INSN(ASE_LEXT, HWCAP_LOONGSON_EXT);
+-
+-    return hwcaps;
+-}
+-
+-#undef GET_FEATURE_REG_EQU
+-#undef GET_FEATURE_REG_SET
+-#undef GET_FEATURE_INSN
++#define ELF_HWCAP get_elf_hwcap(thread_cpu)
+ 
+ #endif /* TARGET_MIPS */
+ 
+diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
+index 04e3b767401..739f71c21b1 100644
+--- a/linux-user/mips/elfload.c
++++ b/linux-user/mips/elfload.c
+@@ -42,3 +42,53 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     return "24Kf";
+ #endif
+ }
++
++/* See arch/mips/include/uapi/asm/hwcap.h.  */
++enum {
++    HWCAP_MIPS_R6           = (1 << 0),
++    HWCAP_MIPS_MSA          = (1 << 1),
++    HWCAP_MIPS_CRC32        = (1 << 2),
++    HWCAP_MIPS_MIPS16       = (1 << 3),
++    HWCAP_MIPS_MDMX         = (1 << 4),
++    HWCAP_MIPS_MIPS3D       = (1 << 5),
++    HWCAP_MIPS_SMARTMIPS    = (1 << 6),
++    HWCAP_MIPS_DSP          = (1 << 7),
++    HWCAP_MIPS_DSP2         = (1 << 8),
++    HWCAP_MIPS_DSP3         = (1 << 9),
++    HWCAP_MIPS_MIPS16E2     = (1 << 10),
++    HWCAP_LOONGSON_MMI      = (1 << 11),
++    HWCAP_LOONGSON_EXT      = (1 << 12),
++    HWCAP_LOONGSON_EXT2     = (1 << 13),
++    HWCAP_LOONGSON_CPUCFG   = (1 << 14),
++};
++
++#define GET_FEATURE_INSN(_flag, _hwcap) \
++    do { if (cpu->env.insn_flags & (_flag)) { hwcaps |= _hwcap; } } while (0)
++
++#define GET_FEATURE_REG_SET(_reg, _mask, _hwcap) \
++    do { if (cpu->env._reg & (_mask)) { hwcaps |= _hwcap; } } while (0)
++
++#define GET_FEATURE_REG_EQU(_reg, _start, _length, _val, _hwcap) \
++    do { \
++        if (extract32(cpu->env._reg, (_start), (_length)) == (_val)) { \
++            hwcaps |= _hwcap; \
++        } \
++    } while (0)
++
++abi_ulong get_elf_hwcap(CPUState *cs)
++{
++    MIPSCPU *cpu = MIPS_CPU(cs);
++    abi_ulong hwcaps = 0;
++
++    GET_FEATURE_REG_EQU(CP0_Config0, CP0C0_AR, CP0C0_AR_LENGTH,
++                        2, HWCAP_MIPS_R6);
++    GET_FEATURE_REG_SET(CP0_Config3, 1 << CP0C3_MSAP, HWCAP_MIPS_MSA);
++    GET_FEATURE_INSN(ASE_LMMI, HWCAP_LOONGSON_MMI);
++    GET_FEATURE_INSN(ASE_LEXT, HWCAP_LOONGSON_EXT);
++
++    return hwcaps;
++}
++
++#undef GET_FEATURE_REG_EQU
++#undef GET_FEATURE_REG_SET
++#undef GET_FEATURE_INSN
 -- 
 2.47.2
 
