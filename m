@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CA6CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 14:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40725CA1017
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 14:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuAXW-0005fK-KJ; Thu, 04 Sep 2025 10:02:14 -0400
+	id 1uuAeS-0000ew-Ju; Thu, 04 Sep 2025 10:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuAXT-0005eT-QR
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:02:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uuAeQ-0000dq-3K
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:09:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuAXJ-0001sR-VU
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:02:11 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uuAeF-0004GQ-N8
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 10:09:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756994512;
+ s=mimecast20190719; t=1756994944;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n2FF7QYh1G4sd68hTZrP6WTKiZuCRd21KT76pY9ILtQ=;
- b=eHcHHZQVldfylr0nC0J3Kr2WIq0fYWEMNeELDDDpoRwp2hIOfLALFpwc4wxz9Jg4LAd6YL
- c3E0Wkzx26VwFmBkW0Zd9mguJ4rtvHJ8Hk5aTmyapFc2YEhs1AMbWiBC122cG4LbgNURu3
- pf7DLYXfR8nlj6R4ESVqznO//fclBSI=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r/EUi8Y9shTFGtRNWqHWvth/iLI5Wr8UxERmm/ziFj8=;
+ b=bG99dMxro/hgAeR/l8BcrYafiiHs1HSbDLwJtMqXGUcA54N7/1Fw/GvwoB+Ohe5ZKr6NSt
+ B4F/Su4NM9lcXlzhtL5/TxuJtGmrt5x7Jec9WYv3wyPhxFWIlIbJEhHnaUF4t8H8r92Egu
+ l/cThpIt/BA3BjJt8k6xikoS8UVeZT4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-9jwLEU8XMoGzpySsPbmpJg-1; Thu, 04 Sep 2025 10:01:51 -0400
-X-MC-Unique: 9jwLEU8XMoGzpySsPbmpJg-1
-X-Mimecast-MFC-AGG-ID: 9jwLEU8XMoGzpySsPbmpJg_1756994510
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-80fcac99fe1so30578385a.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 07:01:51 -0700 (PDT)
+ us-mta-127-s-OqbN9eM2iwN5bHzUlaQQ-1; Thu, 04 Sep 2025 10:09:02 -0400
+X-MC-Unique: s-OqbN9eM2iwN5bHzUlaQQ-1
+X-Mimecast-MFC-AGG-ID: s-OqbN9eM2iwN5bHzUlaQQ_1756994942
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45b7c01a6d3so6041945e9.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 07:09:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756994510; x=1757599310;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n2FF7QYh1G4sd68hTZrP6WTKiZuCRd21KT76pY9ILtQ=;
- b=xRGaYwYQ0XMZxenzhok1HuHCRmGRBHl3k44VDnLkTxAknD/VvgR9NXz0JhBQrf0PLS
- c61VASI0z7RIp6fa0/sACoJ1aXV6EFWv0lgrG3d2HzKRMXVnqw5YlOf+PsAWWDr4oUhz
- z3jpPYSusmkO02f1N/dPHdMM7CMyCfS8rckKhvrvxAFyK/3LAmcjHEM4SopIxYVtAvG4
- IL99ZtuWgKHGAIIsP+v+PUOLOadhk/jJ17UGdHqpgNfq1/cX1B4aB+ZgOodOVj8UMW4u
- CrA/syHry25IO32LvilFCFU4q0dFV85drZTdXcLCkVBv5otagGNaV972Wc5Tw3tBFuxn
- 0O9A==
+ d=1e100.net; s=20230601; t=1756994942; x=1757599742;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=r/EUi8Y9shTFGtRNWqHWvth/iLI5Wr8UxERmm/ziFj8=;
+ b=W8H4jAsCwBO1O9dC3ar8zjGdeYL9Kat7dynfZcnCQgAgbwXbo8hnj3AFV9/yU3TFtE
+ EdqtFBTCl+jPRXgRWY7eBJx2olNkLqqI2Jm5MvmpKecCrNo5k0qkAtLNGeRPIl26hun4
+ OUkKgZHDqTbZvhUI2fcug0+wwySNIaW5vm2ze8nnsIx4T6EG+h7qaOm1DCQpqwMIR5Ry
+ kM1CIElad6qsmekvVqKWD8IC5L2ZvWV0gwBM3xanqwqwl3y/7huxtwiND+ms9XC4+MdO
+ 6X7F4t9zsnTMYdyE6xidp+S1rh9+egAX/HLuBueXg8DM638ueWirKvgPHm5xGMhdSPLT
+ j0mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBALuMTZjMM8wCikiaofGLa/DBiYEZXLwPsvLQ7lOy1wOJvmAWD7RzZyJlLi1En0Q9jG5BJlcbkvMN@nongnu.org
-X-Gm-Message-State: AOJu0YzIbpExJ0U21AJIlTcM4G9AiU3PKaFbg+M1xkaQHqoPqR3QduSG
- AaaP13h/hXakNRKFwtf7q3l+nK9LRQIYoey8MPzjZtjH9T2u95t3IxL5ys4z5F5fKGmT02AtGVH
- HRSikU+9g6ZJGCOvt0kU/yQsXwOwjvzIhVilL3dUk505FYKrSvuLnjq4N
-X-Gm-Gg: ASbGncv6Tt0qx49/wX2WZXItCaU+5VnTE33glmn65u+bWc8lfgze7YBbMvD7kH/0um5
- /jTi+w9+aLOu8DPDISXyf3fODv26crlZTxARorRzODrwgFPXGRu58Ex86RKNmBM14x45xnQFN8C
- LSB3RZcT+xqa0O8mE+HGDpyBhs31ALn2zKbJYgYdDBmK4kiLo+0/b6rYZpih/zCbRM9R7/O4qFr
- YecRaxWYdh5b2Wel5SEpCDDrW8IZOHl7ZGdKFfHQf2c5X1D6I3iJiIe2hurpmAphftxccIXS8yg
- aiQt5KgnXaKavHxTOe1mqgoaB+LyeU24
-X-Received: by 2002:a05:620a:2954:b0:809:8ccc:ba7c with SMTP id
- af79cd13be357-8098cccbb97mr872332885a.29.1756994509990; 
- Thu, 04 Sep 2025 07:01:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMNV+IYKzorYL3x13harapQjY27o7mbqLf8/D+PtqSi5EgT37hw9CVgjbMnql3fCapJDAllw==
-X-Received: by 2002:a05:620a:2954:b0:809:8ccc:ba7c with SMTP id
- af79cd13be357-8098cccbb97mr872324985a.29.1756994509259; 
- Thu, 04 Sep 2025 07:01:49 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-80aa6e4914csm282846485a.16.2025.09.04.07.01.46
+ AJvYcCWOFuFpBKliS+al8GijLZP0cMVCjeFo4Ledi01/kQUwFSSFc/r8BHB7ttpPCm3X0ScmxIvbFfH16G7j@nongnu.org
+X-Gm-Message-State: AOJu0YwbqfFeVvZ815tHcxVRPOVmmBWAh+1IdTDwN5/hKiABXAu9GeIg
+ Du3OMZuyNIWFFbJA0mf4Bt5fGeN9tpavDAOvJ9Hb46J4AJyv7iSVuoNIfUeEEyH3jKwQPbAq2Vy
+ e+YRUmvuAb1FDwnS4Csm6pa+VuI3Mjno0kCXiBfdofYS/oL3/flgtEA+0
+X-Gm-Gg: ASbGncvtY6lka4Qful8yv227WRPJC/p8++5osDLQ7IpKuc3w2K5sNezEBDIK7rRRdN2
+ iCWkRoJEDkXUZjgTpWpqRDyAzPWyRnHnKY4WdD1IHxGxAJiOsFlbw6pOCbWd3ipvNF//ud0QhXJ
+ W5MhrqT7CRcS+qz33zkXtJhU7LGlULdpoTndwV+supRqCOLP4wrqkghm2DqU4uyyIIrbq/Y5EYV
+ B35CM27pK0OtljZA2SWsNq/ggI1tFfcdJZFbMLDVSOhfap+lcRW5rS35TLp0iDwuiUYa1cBP0d6
+ jvgemv20lniqkFcWnlNeFRgNT/USgA==
+X-Received: by 2002:a05:600c:5303:b0:45b:86ee:415f with SMTP id
+ 5b1f17b1804b1-45b86ee43ebmr164563855e9.6.1756994941607; 
+ Thu, 04 Sep 2025 07:09:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5JfmxRjhlf/pDvW4qlKtipg2aA8IZDlzhFd/a780Kmt2I7lBn2ArTdTZo3Gi2nySW8gwQiw==
+X-Received: by 2002:a05:600c:5303:b0:45b:86ee:415f with SMTP id
+ 5b1f17b1804b1-45b86ee43ebmr164563445e9.6.1756994941179; 
+ Thu, 04 Sep 2025 07:09:01 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b81a9e971sm299723275e9.18.2025.09.04.07.09.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 07:01:48 -0700 (PDT)
-Date: Thu, 4 Sep 2025 10:01:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: CJ Chen <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Max Filippov <jcmvbkbc@gmail.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Subject: Re: [RFC PATCH v2 8/9] hw/misc: add test device for memory access
-Message-ID: <aLmbv0ZEKjPFuYxt@x1.local>
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <20250822092410.25833-9-cjchen@igel.co.jp>
- <CAFEAcA9FAnnQrAf1eUPr1=FQ+=Wbu13gyfj3T3z+k6BhxHj6uQ@mail.gmail.com>
+ Thu, 04 Sep 2025 07:09:00 -0700 (PDT)
+Date: Thu, 4 Sep 2025 16:08:59 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
+ =?UTF-8?B?w6k=?= <philmd@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Xianglai Li <lixianglai@loongson.cn>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 3/3] hw/loongarch/virt: Register reset interface with
+ CPU object
+Message-ID: <20250904160859.6cacea91@fedora>
+In-Reply-To: <5be0c9ed-d572-42e0-e6aa-607483410bea@loongson.cn>
+References: <20250903023556.3082693-1-maobibo@loongson.cn>
+ <20250903023556.3082693-4-maobibo@loongson.cn>
+ <20250904101347.0599daab@fedora>
+ <5be0c9ed-d572-42e0-e6aa-607483410bea@loongson.cn>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9FAnnQrAf1eUPr1=FQ+=Wbu13gyfj3T3z+k6BhxHj6uQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,8 +100,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,123 +116,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 01, 2025 at 06:03:41PM +0100, Peter Maydell wrote:
-> Could we have a comment in this header file that documents
-> what interface the test device presents to tests, please?
-> Both this patch and the test-case patch are hard to
-> review, because I don't know what the test device is
-> trying to do or what the test code is able to assume
-> about the test device.
+On Thu, 4 Sep 2025 19:55:49 +0800
+Bibo Mao <maobibo@loongson.cn> wrote:
 
-Since the series is withdrawed.. but still I feel like I'll need to read
-this series when it's picked up again, I took some time (while the brain
-cache is still around..) study the code, I think I get the rough idea of
-what this testdev is about.  If it's gonna be picked up by anyone, hope
-below could help a bit.  Also for future myself..
+> On 2025/9/4 =E4=B8=8B=E5=8D=884:13, Igor Mammedov wrote:
+> > On Wed,  3 Sep 2025 10:35:56 +0800
+> > Bibo Mao <maobibo@loongson.cn> wrote:
+> >  =20
+> >> With cpu hotplug is implemented on LoongArch virt machine, reset
+> >> interface with hot-added CPU should be registered. Otherwise there
+> >> will be problem if system reboots after cpu is hot-added.
+> >>
+> >> Now register reset interface with CPU object is realized and remove
+> >> the reset interface with CPU object unrealizd.
+> >>
+> >> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> >> ---
+> >>   hw/loongarch/boot.c    | 13 -------------
+> >>   target/loongarch/cpu.c |  4 ++++
+> >>   2 files changed, 4 insertions(+), 13 deletions(-)
+> >>
+> >> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> >> index 5799b4c75c..a516415822 100644
+> >> --- a/hw/loongarch/boot.c
+> >> +++ b/hw/loongarch/boot.c
+> >> @@ -350,13 +350,6 @@ static int64_t load_kernel_info(struct loongarch_=
+boot_info *info)
+> >>       return kernel_entry;
+> >>   }
+> >>  =20
+> >> -static void reset_load_elf(void *opaque)
+> >> -{
+> >> -    LoongArchCPU *cpu =3D opaque;
+> >> -
+> >> -    cpu_reset(CPU(cpu));
+> >> -}
+> >> -
+> >>   static void fw_cfg_add_kernel_info(struct loongarch_boot_info *info,
+> >>                                      FWCfgState *fw_cfg)
+> >>   {
+> >> @@ -439,12 +432,6 @@ static void loongarch_direct_kernel_boot(MachineS=
+tate *ms,
+> >>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_i=
+nfo *info)
+> >>   {
+> >>       LoongArchVirtMachineState *lvms =3D LOONGARCH_VIRT_MACHINE(ms);
+> >> -    int i;
+> >> -
+> >> -    /* register reset function */
+> >> -    for (i =3D 0; i < ms->smp.cpus; i++) {
+> >> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cp=
+u(i)));
+> >> -    }
+> >>  =20
+> >>       info->kernel_filename =3D ms->kernel_filename;
+> >>       info->kernel_cmdline =3D ms->kernel_cmdline;
+> >> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> >> index 3a7621c0ea..9edb8ebc4d 100644
+> >> --- a/target/loongarch/cpu.c
+> >> +++ b/target/loongarch/cpu.c
+> >> @@ -668,6 +668,9 @@ static void loongarch_cpu_realizefn(DeviceState *d=
+ev, Error **errp)
+> >>  =20
+> >>       qemu_init_vcpu(cs);
+> >>       cpu_reset(cs);
+> >> + #ifndef CONFIG_USER_ONLY
+> >> +    qemu_register_resettable(OBJECT(dev));
+> >> + #endif =20
+> >=20
+> > I'd put this in virt_cpu_plug() as last step, which should work both for
+> > cold and hotpluged cpus. And drop CONFIG_USER_ONLY while at it. =20
+> With symmetry is the same with qemu_unregister_resettable()=20
+> Symmetrically, to put it in virt_cpu_unplug()?
 
-Firstly, the testdev creates a bunch of MRs, with all kinds of the
-attributes to cover all max/min access sizes possible & unaligned access &
-endianess.  The test cases are exactly tailored for this testdev, as the
-testcase needs to know exactly which offset contains which type of MR.  The
-tests must be run correspondingly on the paired MR to work.
+yep
 
-There're 16 groups of MRs / tests, each group contains below num of MRs:
+>=20
+> If there are many boards in future, the boards do not need to care about=
+=20
+> registering cpu reset interface, which is done in CPU object already.
 
-#define N_OPS_LIST_LITTLE_B_VALID   80
-#define N_OPS_LIST_LITTLE_B_INVALID 40
-#define N_OPS_LIST_LITTLE_W_VALID   60
-#define N_OPS_LIST_LITTLE_W_INVALID 30
-#define N_OPS_LIST_LITTLE_L_VALID   40
-#define N_OPS_LIST_LITTLE_L_INVALID 20
-#define N_OPS_LIST_LITTLE_Q_VALID   20
-#define N_OPS_LIST_LITTLE_Q_INVALID 10
-#define N_OPS_LIST_BIG_B_VALID      80
-#define N_OPS_LIST_BIG_B_INVALID    40
-#define N_OPS_LIST_BIG_W_VALID      60
-#define N_OPS_LIST_BIG_W_INVALID    30
-#define N_OPS_LIST_BIG_L_VALID      40
-#define N_OPS_LIST_BIG_L_INVALID    20
-#define N_OPS_LIST_BIG_Q_VALID      20
-#define N_OPS_LIST_BIG_Q_INVALID    10
+lets worry about more boards when that arrives.
+that said, yanking reset pin on CPU is usually the board/firmware responsib=
+ility.
 
-That's a total of 600 (which is, N_OPS_LIST) MRs at the base address of the
-testdev, specified by, for example:
+PS:
+we have reset registered in realizefn() across QEMU, largely due to histori=
+cal reasons.
 
-  -device memaccess-testdev,address=0x10000000
-
-Each MR will be 32B (MEMACCESS_TESTDEV_REGION_SIZE) in size, sequentially
-appended and installed to base address offset. All of them internally
-backed by:
-
-    testdev->mr_data = g_malloc(MEMACCESS_TESTDEV_MR_DATA_SIZE);
-
-Here, BIG/LITTLE decides the endianess of the MR, B/W/L/Q decides the
-min_access_size of the MR, which isn't clear at all to me..  IIUC it's
-hidden inside the skip_core() check where it skips anything except when
-valid_min == required_min.  So only those MRs that satisfy will be created.
-
-And just to mention, IIUC these numbers are not random either, they are
-exactly how many possible MRs that we can create under the specific
-category of MR group.  Changing that could either causing uninitialized MRs
-(under some group) or trigger assertions saying MR list too small:
-
-fill_ops_list:
-        if (idx > ops_len) {
-                g_assert_not_reached();
-        }
-
-This is not clear either.. better document this if it will be picked up one
-day.
-
-An example for definition of N_OPS_LIST_LITTLE_B_VALID: we can create 80
-such MRs when the MR is (1) LITTLE (2) min_access_size=1 (3) allows
-.valid.unaligned.  We'll skip the rest in skip_core() when building the
-list of MRs.  And yes, here (3) isn't clear either: VALID here means "the
-MR allows unaligned access from API level", which implies
-.valid.unaligned=true.  OTOH, INVALID implies .valid.unaligned=false.
-NOTE: it doesn't imply at all about .impl.unaligned.
-
-The test case should be tailored for this device, because for each test it
-will run, it'll run exactly on top of the group of MRs that the test case
-pairs with.
-
-Taking example of big_w_valid(): it'll run the test on all MRs that is (1)
-BIG, (2) min_access_size=2, (3) VALID to use unaligned access, aka,
-.valid.unaligned=true.
-
-Said above, I'll also raise a question that I don't understand, on the
-testdev implementation.  It's about endianess of the MR and how data
-endianess is processed in the test dev.  Please shoot if anyone knows.
-
-Again, taking the example of BIG write() of a test MR, I wonder why the
-testdev has this:
-
-static void memaccess_testdev_write_big(void *opaque, hwaddr addr,
-                                        uint64_t data, unsigned int size)
-{
-    g_assert(addr + size < MEMACCESS_TESTDEV_REGION_SIZE);
-    void *d = (uint8_t *)opaque + addr;
-    stn_be_p(d, size, data);
-}
-
-It means when the ->write() triggers, it assumes "data" here is host
-endianess, then convert that to MR's endianess, which is BE in this case.
-
-But haven't we already done that before reaching ->write()?  Memory core
-will do the endianess conversion (from HOST -> MR endianess) already here
-before reaching the write() hook, AFAICT:
-
-memory_region_dispatch_write()
-    adjust_endianness(mr, &data, op);
-        if ((op & MO_BSWAP) != devend_memop(mr->ops->endianness)) {
-
-Here, MO_BSWAP shouldn't normally be set. devend_memop() should read BE.
-On my host (x86_64) it means it'll swap once to MR endianess.  IIUC, now
-the whole "data" field already in MR endianess and should be directly put
-into the backend memdev storage.  I don't think I understand why above
-stn_be_p() is not a memcpy().  Answers welcomed..
-
--- 
-Peter Xu
+>=20
+> Regards
+> Bibo Mao
+> >=20
+> > with that
+> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> >=20
+> > PS:
+> > the rest of the patches are very arch specific so I won't review them.
+> >  =20
+> >>  =20
+> >>       lacc->parent_realize(dev, errp);
+> >>   }
+> >> @@ -678,6 +681,7 @@ static void loongarch_cpu_unrealizefn(DeviceState =
+*dev)
+> >>  =20
+> >>   #ifndef CONFIG_USER_ONLY
+> >>       cpu_remove_sync(CPU(dev));
+> >> +    qemu_unregister_resettable(OBJECT(dev));
+> >>   #endif
+> >>  =20
+> >>       lacc->parent_unrealize(dev); =20
+> >  =20
+>=20
 
 
