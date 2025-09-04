@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63484CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D19C0CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu55w-0007TI-Cy; Thu, 04 Sep 2025 04:13:24 -0400
+	id 1uu54a-0006Gd-Tp; Thu, 04 Sep 2025 04:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54g-0006N4-5q
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:06 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1uu54Y-0006Co-5T
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:58 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54K-00043D-UC
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:12:05 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-afcb7ace3baso137843366b.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:44 -0700 (PDT)
+ id 1uu54J-00040u-5N
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:57 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-619487c8865so3298491a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973503; x=1757578303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973500; x=1757578300; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KFEhhh8NSACPPy03lAUeW1WvXOIqiNIP9Gmw/5CKVpI=;
- b=pzzLfY7qD0RusmvLWQi6qIhUK5qTZsgYjX90c6w9sYL/esVsGSUkzXzx7KaxQU7BtW
- K5oeSQT/cL6nFA0fhgbaWuVZ2no3RwcrVuqTRiDe+bJ4c2Q6D0z/4xTJaQVpL4fchrFf
- EqBlig8boICIE7nUoodDs5pS2WwudMzre2Yo6DPiyn10nhC62GflOvV1BH5klfXwhwn5
- 6liX4HuWMjmWIEqVfRS9Hd7wi10Y4MTCM1KCVNvD0ZY7ROPXytjYm/IY+awMEgacwZ3J
- gy1NycRCgUu6p01kSm0hhtGLH0xxK8luqkAWuAsiABpabKMooNOzBlYSbhcv32O1vKb3
- RwUQ==
+ bh=ZYVyVNsFyTXeOSFCWu8uUvsiqoxRwuwTGPuSI8iWgeI=;
+ b=rZ4ZeC78nxBSs7Hm28KPJA5UJ9/lmcd+qT6HI2dPYRgjbSbw8vupniVlEUHXvqpbsn
+ 6MeEkMYeEq/YchF968lN9sYtAbppFqVpYC/43sQmjCIMFtH9d3RCZy0CjSbJlH0COMkO
+ p+fkLqifdJb4uTSQDeYHOcAWBNd15ftan2CM9gzXQNY4LC9D918wKhTnIoynp/txtjm8
+ Zmzu4E1LcDGH1WKI8qe9NIZZhVPWdReTtf8tfSByB9PJuRE25pirUXXDydE/M97AnMaN
+ eInmWkGSTDl936dtve9BqbQUbseczCRXpssU3GICm/dRQ/c6TRcMGz/ZdIfHPbM+58zL
+ qIEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973503; x=1757578303;
+ d=1e100.net; s=20230601; t=1756973500; x=1757578300;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KFEhhh8NSACPPy03lAUeW1WvXOIqiNIP9Gmw/5CKVpI=;
- b=tw2ufiXRDTaVRIRFmwhXIueG7qaKT4MJZvTAKeL9VkZSFvvmktPnzisAoXq5sobFEH
- nuRzSe0JGcofQ4Y0kjb8us5JCza1kBSztbVPRrexpDvXMUNPZ2LOoS9sRLKN1NAQBgNQ
- omzMUKxHesBw3K6hFcS333sKKTjBjP7MW8smQvAXK/O1F4fhsKeAvdBdhIfDqaVMt2z0
- QxpD7OaJPlGrWmN9WWVgCHH6nmv/bUPXUYnmHJSLcTEzxqNUNJwLvRG67CPZH6Gvhnck
- LyDNmggeOE1oihhChZOOfNJzdOnAsAfHu7pkgcNvp39AVqe+8RoMcJvdKFbUr6M0SZOV
- QWfg==
-X-Gm-Message-State: AOJu0Yxk4eFZtIZz9kS0keI3ERiIIgUmr/Fd8joOQnpIpLBXughw+19h
- QfNcshd/BiEDGpoQhg2F4jdJ7Kd8WueKtLKoT9LNZ6Jm3DCiyieupH2U14pgN09GBWo=
-X-Gm-Gg: ASbGnctmDXtDurZnhcLJv9IKmPm1WsuJwspmhQp+iOEb1cdZliuYPDbwA2wZwyY46vh
- 8PL7sCjbUNfuWznXja6o1Y+cg9Kiy2K3Kyk0eVHN6wHLwlS5OsWXDZx08BTWKURQX2jRiPqMNWM
- T62GBgayJRlao67rAxRsH2EshsxhRtChbi4wAb7dxdGqqTvCK8VpD2BijniX/lmPFWiWDsQbb1x
- NBD6hAEAF0Ib7f+a+++dIO4a3bKwALJZMHgNor/TcHtfGePeR6VKUceHshecfYO9pY57Xt9JXx3
- fxFtama9Xrolp6aaOfSijpPKi9OkKgqVgEMMLN0oGvBg0/I/CHo32vWuPyJn9xzixPX8uZ/s599
- a4pZ0CLE6pUW9Og9uju8d5ZUS4Fp66dXhzA==
-X-Google-Smtp-Source: AGHT+IFlmoTtWtJZg3Geb0kfl+Z+ucuFEHRktCaxjXa7c0bTRextSI2xhSOy4rmatDTUkMpDVjITog==
-X-Received: by 2002:a17:907:3e8f:b0:b04:6c19:ed8d with SMTP id
- a640c23a62f3a-b046c19eea9mr457804566b.26.1756973503102; 
- Thu, 04 Sep 2025 01:11:43 -0700 (PDT)
+ bh=ZYVyVNsFyTXeOSFCWu8uUvsiqoxRwuwTGPuSI8iWgeI=;
+ b=HVeT957DZvH+IeWoMsexbuae3UsJ5lcsFgwqZ65/AGP9STTd85RFR2zR8RJ+1fieN1
+ +SF0X+vRXdjnkp63w4U5W67W9hCWqfKcICiICrQ9uq/4kykIldHgc0gzWt6ckQV3bdvC
+ rpXYcZYpxLd0WEx7i6plD0xuyw6c6bV/EBwR4yE7fqLq8pWVw+ZbEW/HzE3Z0UDoB60b
+ jUJn99PWH1EIcnCZz6LUlwW342CVKKfhMfjI2bzjVDUdwaVZ725kMh/2hI5GkTmcJlY0
+ dvomh8XdRod5mg+igZauqg3Oal81MgPeEAMnRqt0gNOsMYNP18/cSZ0Men2qHP8toPJW
+ dUPQ==
+X-Gm-Message-State: AOJu0YzCONoUr7rhOW9DMXWxLISTMM1ZFmJLoKO5/Q/Zd4wNJDzZQLVK
+ EusPsj9oLea5EmaJDmRNAFyM+9XAK+r8azhgpcY9+ylqCtcvjjgGY+k1LpkFM9XGpZyqDwrZvKd
+ 9bhvWCN2c7A==
+X-Gm-Gg: ASbGncvaNq0VYr65rpmP+uJmn4ELOykJvW+2kqwSdCr9K/UXjLLFyMoiSMnIrPIutdu
+ Xax3K/QD4jTH3vWnKd3IW9GfSaNoZ+UZ38ZSWnFjGXlOT9DYbcd/r3f30d5OgWEbgOmxdGstcgW
+ liTTKFS+7F/eYUWhfD6cwpuzm+YAJAL/isedxYFHU63wL+qT1ExBFeLW4J+ic2xYJz8o9aaeah1
+ OSqfPeRT3a38i0tIS0ZIQYaqkR9Etq+doG16eoMSSyQ2TFn6kW68SdAB1zzTIg/QEqV9wEI74+W
+ kc11kbMUdW3gNqRFj5XyywSwBkSa4sI04TaZsQWuJrbuCdxQZm8dTDtplbAXj/PZ1YRs+gkaVQH
+ Z9lR/lzWH8lPiW8J/DBuhEv2ks8U78RKlbA==
+X-Google-Smtp-Source: AGHT+IFieb+gm+rWJ0Oa45cj1KjcPCC4rl/ynxe9G4bgf3W7srLgMSyNw8FhmhZu6eY5HA4lnrH5tA==
+X-Received: by 2002:a17:907:9729:b0:af9:8739:10ca with SMTP id
+ a640c23a62f3a-b01083235f9mr1709209966b.28.1756973499527; 
+ Thu, 04 Sep 2025 01:11:39 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc4e50fbsm13438274a12.38.2025.09.04.01.11.37
+ a640c23a62f3a-b047011daa1sm275133966b.79.2025.09.04.01.11.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 04 Sep 2025 01:11:37 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F0D1B5FA1B;
+ by draig.lan (Postfix) with ESMTP id 2163E5F93E;
  Thu, 04 Sep 2025 09:11:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -128,18 +129,17 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 015/281] tests/functional/meson.build: Split timeout
- settings by target
-Date: Thu,  4 Sep 2025 09:06:49 +0100
-Message-ID: <20250904081128.1942269-16-alex.bennee@linaro.org>
+ Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v2 008/281] hw: add compat machines for 10.2
+Date: Thu,  4 Sep 2025 09:06:42 +0100
+Message-ID: <20250904081128.1942269-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -162,124 +162,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Cornelia Huck <cohuck@redhat.com>
 
-We are going to move these settings into target-specific subfolders.
-As a first step, split the big test_timeouts array up into individual
-ones.
+Add 10.2 machine types for arm/i440fx/m68k/q35/s390x/spapr.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20250805095616.1168905-1-cohuck@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250819112403.432587-4-thuth@redhat.com>
 ---
- tests/functional/meson.build | 50 +++++++++++++++++++++++++++++++-----
- 1 file changed, 44 insertions(+), 6 deletions(-)
+ include/hw/boards.h        |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ hw/arm/virt.c              |  9 ++++++++-
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 13 +++++++++++--
+ hw/i386/pc_q35.c           | 13 +++++++++++--
+ hw/m68k/virt.c             |  9 ++++++++-
+ hw/ppc/spapr.c             | 15 +++++++++++++--
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ 10 files changed, 76 insertions(+), 9 deletions(-)
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 38ae0d6cd3b..356aad12dee 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -10,7 +10,7 @@ if get_option('tcg_interpreter')
- endif
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index f94713e6e29..665b6201214 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -779,6 +779,9 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
  
- # Timeouts for individual tests that can be slow e.g. with debugging enabled
--test_timeouts = {
-+test_aarch64_timeouts = {
-   'aarch64_aspeed_ast2700' : 600,
-   'aarch64_aspeed_ast2700fc' : 600,
-   'aarch64_device_passthrough' : 720,
-@@ -25,7 +25,9 @@ test_timeouts = {
-   'aarch64_tuxrun' : 240,
-   'aarch64_virt' : 360,
-   'aarch64_virt_gpu' : 480,
--  'acpi_bits' : 420,
-+}
++extern GlobalProperty hw_compat_10_1[];
++extern const size_t hw_compat_10_1_len;
 +
-+test_arm_timeouts = {
-   'arm_aspeed_palmetto' : 120,
-   'arm_aspeed_romulus' : 120,
-   'arm_aspeed_witherspoon' : 120,
-@@ -44,24 +46,55 @@ test_timeouts = {
-   'arm_replay' : 240,
-   'arm_tuxrun' : 240,
-   'arm_sx1' : 360,
--  'intel_iommu': 300,
-+}
-+
-+test_mips_timeouts = {
-   'mips_malta' : 480,
-+}
-+
-+test_mipsel_timeouts = {
-   'mipsel_malta' : 420,
-   'mipsel_replay' : 480,
-+}
-+
-+test_mips64_timeouts = {
-   'mips64_malta' : 240,
-+}
-+
-+test_mips64el_timeouts = {
-   'mips64el_malta' : 420,
-   'mips64el_replay' : 180,
--  'netdev_ethtool' : 180,
-+}
-+
-+test_ppc_timeouts = {
-   'ppc_40p' : 240,
-+}
-+
-+test_ppc64_timeouts = {
-   'ppc64_hv' : 1000,
-   'ppc64_powernv' : 480,
-   'ppc64_pseries' : 480,
-   'ppc64_replay' : 210,
-   'ppc64_tuxrun' : 420,
-   'ppc64_mac99' : 120,
-+}
-+
-+test_riscv64_timeouts = {
-   'riscv64_tuxrun' : 120,
-+}
-+
-+test_s390x_timeouts = {
-   's390x_ccw_virtio' : 420,
-+}
-+
-+test_sh4_timeouts = {
-   'sh4_tuxrun' : 240,
-+}
-+
-+test_x86_64_timeouts = {
-+  'acpi_bits' : 420,
-+  'intel_iommu': 300,
-+  'netdev_ethtool' : 180,
-   'virtio_balloon': 120,
-   'x86_64_kvm_xen' : 180,
-   'x86_64_replay' : 480,
-@@ -404,6 +437,11 @@ foreach speed : ['quick', 'thorough']
-                                build_by_default: false,
-                                env: test_precache_env)
-       precache_all += precache
-+      if is_variable('test_' + target_base + '_timeouts')
-+        time_out = get_variable('test_' + target_base + '_timeouts').get(test, 90)
-+      else
-+        time_out = 90
-+      endif
+ extern GlobalProperty hw_compat_10_0[];
+ extern const size_t hw_compat_10_0_len;
  
-       # Ideally we would add 'precache' to 'depends' here, such that
-       # 'build_by_default: false' lets the pre-caching automatically
-@@ -419,8 +457,8 @@ foreach speed : ['quick', 'thorough']
-            env: test_env,
-            args: [testpath],
-            protocol: 'tap',
--           timeout: test_timeouts.get(test, 90),
--           priority: test_timeouts.get(test, 90),
-+           timeout: time_out,
-+           priority: time_out,
-            suite: suites)
-     endforeach
-   endforeach
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 79b72c54dd3..e83157ab358 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -214,6 +214,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_10_1[];
++extern const size_t pc_compat_10_1_len;
++
+ extern GlobalProperty pc_compat_10_0[];
+ extern const size_t pc_compat_10_0_len;
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ef6be3660f5..9326cfc895f 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3455,10 +3455,17 @@ static void machvirt_machine_init(void)
+ }
+ type_init(machvirt_machine_init);
+ 
++static void virt_machine_10_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
++
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
++    virt_machine_10_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
++DEFINE_VIRT_MACHINE(10, 1)
+ 
+ static void virt_machine_10_0_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index bd47527479a..38c949c4f2c 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -37,6 +37,9 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
+ 
++GlobalProperty hw_compat_10_1[] = {};
++const size_t hw_compat_10_1_len = G_N_ELEMENTS(hw_compat_10_1);
++
+ GlobalProperty hw_compat_10_0[] = {
+     { "scsi-hd", "dpofua", "off" },
+     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2f58e73d334..bc048a6d137 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -81,6 +81,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
++GlobalProperty pc_compat_10_1[] = {};
++const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
++
+ GlobalProperty pc_compat_10_0[] = {
+     { TYPE_X86_CPU, "x-consistent-cache", "false" },
+     { TYPE_X86_CPU, "x-vendor-cpuid-only-v2", "false" },
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index c03324281bd..d165ac72ed7 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -504,12 +504,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
+ }
+ 
+-static void pc_i440fx_machine_10_1_options(MachineClass *m)
++static void pc_i440fx_machine_10_2_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+ }
+ 
+-DEFINE_I440FX_MACHINE_AS_LATEST(10, 1);
++DEFINE_I440FX_MACHINE_AS_LATEST(10, 2);
++
++static void pc_i440fx_machine_10_1_options(MachineClass *m)
++{
++    pc_i440fx_machine_10_2_options(m);
++    compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
++    compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
++}
++
++DEFINE_I440FX_MACHINE(10, 1);
+ 
+ static void pc_i440fx_machine_10_0_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index b309b2b378d..e89951285e5 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -374,12 +374,21 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_machine_10_1_options(MachineClass *m)
++static void pc_q35_machine_10_2_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+ }
+ 
+-DEFINE_Q35_MACHINE_AS_LATEST(10, 1);
++DEFINE_Q35_MACHINE_AS_LATEST(10, 2);
++
++static void pc_q35_machine_10_1_options(MachineClass *m)
++{
++    pc_q35_machine_10_2_options(m);
++    compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
++    compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
++}
++
++DEFINE_Q35_MACHINE(10, 1);
+ 
+ static void pc_q35_machine_10_0_options(MachineClass *m)
+ {
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 875fd00ef8d..98cfe43c73a 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -367,10 +367,17 @@ type_init(virt_machine_register_types)
+ #define DEFINE_VIRT_MACHINE(major, minor) \
+     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+ 
++static void virt_machine_10_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
++
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
++    virt_machine_10_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
++DEFINE_VIRT_MACHINE(10, 1)
+ 
+ static void virt_machine_10_0_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 1855a3cd8d0..eb22333404d 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4761,15 +4761,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+ #define DEFINE_SPAPR_MACHINE(major, minor) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+ 
++/*
++ * pseries-10.2
++ */
++static void spapr_machine_10_2_class_options(MachineClass *mc)
++{
++    /* Defaults for the latest behaviour inherited from the base class */
++}
++
++DEFINE_SPAPR_MACHINE_AS_LATEST(10, 2);
++
+ /*
+  * pseries-10.1
+  */
+ static void spapr_machine_10_1_class_options(MachineClass *mc)
+ {
+-    /* Defaults for the latest behaviour inherited from the base class */
++    spapr_machine_10_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+ 
+-DEFINE_SPAPR_MACHINE_AS_LATEST(10, 1);
++DEFINE_SPAPR_MACHINE(10, 1);
+ 
+ /*
+  * pseries-10.0
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index a79bd13275b..d0c6e80cb05 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -911,14 +911,26 @@ static const TypeInfo ccw_machine_info = {
+     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
+ 
+ 
++static void ccw_machine_10_2_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_10_2_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE_AS_LATEST(10, 2);
++
+ static void ccw_machine_10_1_instance_options(MachineState *machine)
+ {
++    ccw_machine_10_2_instance_options(machine);
+ }
+ 
+ static void ccw_machine_10_1_class_options(MachineClass *mc)
+ {
++    ccw_machine_10_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+-DEFINE_CCW_MACHINE_AS_LATEST(10, 1);
++DEFINE_CCW_MACHINE(10, 1);
+ 
+ static void ccw_machine_10_0_instance_options(MachineState *machine)
+ {
 -- 
 2.47.2
 
