@@ -4,94 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E29ECA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84622CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 10:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu6yx-0003pf-R2; Thu, 04 Sep 2025 06:14:19 -0400
+	id 1uu76o-0008BD-DN; Thu, 04 Sep 2025 06:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uu6yu-0003oS-Ln
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:16 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uu6yq-0008By-EP
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 06:14:16 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7454a992f7dso688247a34.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 03:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1756980850; x=1757585650; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F9GxhJmWfwBye7noMnqDJZ/ZX2guxAEgJ0FNB26d/OM=;
- b=B/oxHCGFptNR2Ph8rqWP4ECYJi+kJzJyfKBiPMmzLKb5N+phWMVrw4vpeSaajIP4SL
- WEnODLSc9p83pnmFenXLI7wNuXGuJx9OlWfezPjtU/Mxp1qS9JIRhfh5Jk4k9SQjaCMc
- O5AFmAdRXjATws1dJOlLtglvDh9ZclAl0ssM9Yv2NLuXrcadRu8lr+dXzRTG/KR1rQok
- C1RUTpdJzncSM/McUiIc2YKwfFMNE0obyFR25ywxPdsUkzTyXKDt/7v37DnIMxHNPV4y
- Th4KPSGZZAIWVa/fgJB4yTQF0gTT50ZUjT/Lq27nFQOQEa7VRicUxORmfoxH+06hiLc4
- /GIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756980850; x=1757585650;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F9GxhJmWfwBye7noMnqDJZ/ZX2guxAEgJ0FNB26d/OM=;
- b=uwiYiWkGFkWyxzcPQtUnIx7nV+7J+/h0FMrvuZz1zsRe7apSDymcF8u+WIeKmQ1D5e
- TbLNpgaCyPtSnN37zOyj4dmitdOza/xYs/+jooqoKn2Yuq/Z2LG0oID0P9NLdjpj77pJ
- hZ/TWbOsRFP2jE2/jrEItdBZwxQt70saVtxM9SZUNuDh13QW2S8SXDOTS2ZvFmzyIqP1
- L8I8E7Lnz+9GDwxYYsEuTZc0wfr7WoGuK3WutiiQKC5zY9hzCnALV/3lrxtmO9IS7ylH
- 3+w5CA4AD9akW+mwwUsK45S8gJfI28KvongPB1K17l5pLcTqqTbZzi8iuBoelxPHgf+R
- M49Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYlIt5I7i5s1+DeBHPaDlLqP80tvcxb/CKDT+gcPhiHl1fRCcbT8I5i0PVNzx9lg8QkR/oIf7cWXTf@nongnu.org
-X-Gm-Message-State: AOJu0YxImZc09cSnZiWg1at1YdkukFsN9Pl6+dU85kegAIV9t3kBp3nH
- m2bFBCYWA3eZq35yYH7cymubuTOJ+aS2hBh0+2PdQcGribr2X0VxP1vpeJrvIFsEynw=
-X-Gm-Gg: ASbGncvZHfbR4ty6R1un/Qvy3I3MSVL2D7JSnjXjaHWunnIW76v5EO/lAPIWVTy3E1e
- rn7M+fIjVJlXPRuQp3Hgh0Jm0u7BY6Qc8LCynYziOU5SVJ2Wb380auCKbD8zZ4emker8PM7Tra8
- +MvW07aiktB9B22Z7rB50nhQGlyJvUELS/FMinwqTP4vocn/JcZh0xCCGUn62/B0XbmI+ePvP0R
- PsbEW4xJGVguYm3wgtWofnsZ7JZQRYQxQQMm7cCjVZZ6UJ1x9kPh5eSV1YLiLSRBMwtdOzCUXOd
- 7velN4T3bYlV5nRkCZ4UjsTxqNye1DKHRIRILrniWzG2WpLhBCjkzhjAV44pwdOiicKpo8QyeQi
- S3t4FcUsdg3IjHmWnaASzSUv7c4k7wf6vGrRWg7kp9J9/QJY=
-X-Google-Smtp-Source: AGHT+IFMxCTjr2ulg1tUf6aQ5+QiW5mTfsn/q3zJ6U9Y39MM6DVTIllosa8QvDq4q3MRLNV+oh6wyg==
-X-Received: by 2002:a05:6830:648e:b0:745:615a:fe6f with SMTP id
- 46e09a7af769-74569db5623mr10148022a34.11.1756980849845; 
- Thu, 04 Sep 2025 03:14:09 -0700 (PDT)
-Received: from [192.168.68.110] ([187.10.187.251])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-319b6063d3dsm2049136fac.26.2025.09.04.03.14.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Sep 2025 03:14:09 -0700 (PDT)
-Message-ID: <da524d10-fee5-45f2-ba9e-23f66a754e9b@ventanamicro.com>
-Date: Thu, 4 Sep 2025 07:14:03 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uu76m-0008A7-5w; Thu, 04 Sep 2025 06:22:24 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uu76g-00059y-Ra; Thu, 04 Sep 2025 06:22:23 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cHb611NkNz6J6yc;
+ Thu,  4 Sep 2025 18:18:17 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id DF8AB1402F5;
+ Thu,  4 Sep 2025 18:22:07 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 4 Sep
+ 2025 12:22:07 +0200
+Date: Thu, 4 Sep 2025 11:22:05 +0100
+To: Wilfred Mallawa <wilfred.opensource@gmail.com>
+CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
+ <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
+ <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
+ <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-block@nongnu.org>, <dlemoal@kernel.org>, Wilfred Mallawa
+ <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH v4 3/5] hw/nvme: add NVMe Admin Security SPDM support
+Message-ID: <20250904112205.00007e47@huawei.com>
+In-Reply-To: <20250904031058.367667-5-wilfred.opensource@gmail.com>
+References: <20250904031058.367667-2-wilfred.opensource@gmail.com>
+ <20250904031058.367667-5-wilfred.opensource@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/3] target/riscv: Add Zvqdotq cfg property
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- richard.henderson@linaro.org
-References: <20250903140308.1705751-1-max.chou@sifive.com>
- <20250903140308.1705751-2-max.chou@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250903140308.1705751-2-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,69 +74,198 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu,  4 Sep 2025 13:10:57 +1000
+Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
 
-
-On 9/3/25 11:03 AM, Max Chou wrote:
-> The Zvqdotq extension is the vector dot-product extension of RISC-V.
+> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
+> Adds the NVMe Admin Security Send/Receive command support with support
+> for DMTFs SPDM. The transport binding for SPDM is defined in the
+> DMTF DSP0286.
+> 
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Hi Wilfred, 
+
+I haven't even opened the nvme spec on basis others are covering that
+part well. So this is just a review based on the code in this patch
+so mostly style stuff.
+
+Jonathan
+
 > ---
->   target/riscv/cpu.c                | 1 +
->   target/riscv/cpu_cfg_fields.h.inc | 1 +
->   target/riscv/tcg/tcg-cpu.c        | 5 +++++
->   3 files changed, 7 insertions(+)
+>  hw/nvme/ctrl.c       | 213 ++++++++++++++++++++++++++++++++++++++++++-
+>  hw/nvme/nvme.h       |   5 +
+>  include/block/nvme.h |  15 +++
+>  3 files changed, 232 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index d055ddf462..95edd02e68 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -187,6 +187,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zvksg, PRIV_VERSION_1_12_0, ext_zvksg),
->       ISA_EXT_DATA_ENTRY(zvksh, PRIV_VERSION_1_12_0, ext_zvksh),
->       ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
-> +    ISA_EXT_DATA_ENTRY(zvqdotq, PRIV_VERSION_1_12_0, ext_zvqdotq),
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index f5ee6bf260..df72599bcc 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -282,6 +282,8 @@ static const uint32_t nvme_cse_acs_default[256] = {
+>      [NVME_ADM_CMD_FORMAT_NVM]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
+>      [NVME_ADM_CMD_DIRECTIVE_RECV]   = NVME_CMD_EFF_CSUPP,
+>      [NVME_ADM_CMD_DIRECTIVE_SEND]   = NVME_CMD_EFF_CSUPP,
+> +    [NVME_ADM_CMD_SECURITY_SEND]   = NVME_CMD_EFF_CSUPP,
+> +    [NVME_ADM_CMD_SECURITY_RECV]   = NVME_CMD_EFF_CSUPP,
 
-Is this really 1.12? If it's marked as experimental I would expect it be a new
-extension, e.g. 1.13.
+Maybe it's an email thing but that alignment of = looks off by one space.
 
+>  };
+>  
+>  static const uint32_t nvme_cse_iocs_nvm_default[256] = {
+> @@ -7282,6 +7284,210 @@ static uint16_t nvme_dbbuf_config(NvmeCtrl *n, const NvmeRequest *req)
+>      return NVME_SUCCESS;
+>  }
+>  
+> +static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    StorageSpdmTransportHeader hdr = {0};
+> +    g_autofree uint8_t *sec_buf = NULL;
+> +    uint32_t transfer_len = le32_to_cpu(req->cmd.cdw11);
+> +    uint32_t transport_transfer_len = transfer_len;
+> +    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
+> +    uint32_t recvd;
+> +    uint16_t nvme_cmd_status, ret;
+> +    uint8_t secp = extract32(dw10, 24, 8);
+> +    uint8_t spsp1 = extract32(dw10, 16, 8);
+> +    uint8_t spsp0 = extract32(dw10, 8, 8);
 
-Thanks,
+See below. 16 bit field seems more logical to me.
 
-Daniel
-
->       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
->       ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index e2d116f0df..5da59c22d6 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -100,6 +100,7 @@ BOOL_FIELD(ext_zvfbfmin)
->   BOOL_FIELD(ext_zvfbfwma)
->   BOOL_FIELD(ext_zvfh)
->   BOOL_FIELD(ext_zvfhmin)
-> +BOOL_FIELD(ext_zvqdotq)
->   BOOL_FIELD(ext_smaia)
->   BOOL_FIELD(ext_ssaia)
->   BOOL_FIELD(ext_smctr)
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 78fb279184..7015370ab0 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -767,6 +767,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
->           return;
->       }
->   
-> +    if (cpu->cfg.ext_zvqdotq && !cpu->cfg.ext_zve32x) {
-> +        error_setg(errp, "Zvqdotq extension requires V or Zve* extensions");
-> +        return;
+> +    bool spdm_res;
+> +
+> +    if (transport_transfer_len > UINT32_MAX - sizeof(hdr)) {
+> +        return NVME_INVALID_FIELD | NVME_DNR;
 > +    }
 > +
->       if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64x) {
->           error_setg(
->               errp,
+> +    transport_transfer_len += sizeof(hdr);
+> +    if (transport_transfer_len > SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE) {
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    ret = nvme_check_mdts(n, transport_transfer_len);
+> +    if (ret != NVME_SUCCESS) {
+> +        return ret;
+> +    }
+> +
+> +    /* Generate the NVMe transport header */
+> +    hdr.security_protocol = secp;
+> +    hdr.security_protocol_specific = cpu_to_le16((spsp1 << 8) | spsp0);
+> +    hdr.length = cpu_to_le32(transfer_len);
+> +
+> +    sec_buf = g_try_malloc0(transport_transfer_len);
+> +    if (!sec_buf) {
+> +        return NVME_INTERNAL_DEV_ERROR;
+> +    }
+> +
+> +    /* Attach the transport header */
+> +    memcpy(sec_buf, &hdr, sizeof(hdr));
+> +    ret = nvme_h2c(n, sec_buf + sizeof(hdr), transfer_len, req);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +
+> +    spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_SEND,
+> +                                SPDM_SOCKET_TRANSPORT_TYPE_NVME, sec_buf,
+> +                                transport_transfer_len);
+> +    if (!spdm_res) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    /* The responder shall ack with message status */
+> +    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +                                (uint8_t *)&nvme_cmd_status,
+
+As in earlier patch, spdm_socket_receive() seems to take a void * so no cast
+should be needed and definitely not to a uint8_t *!
+
+> +                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+> +
+> +    nvme_cmd_status = be16_to_cpu(nvme_cmd_status);
+> +
+> +    if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    return nvme_cmd_status;
+> +}
+> +
+> +/* From host to controller */
+> +static uint16_t nvme_security_send(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
+> +    uint8_t secp = (dw10 >> 24) & 0xff;
+
+Used extract32() below. Why not for this one?
+
+> +
+> +    switch (secp) {
+> +    case NVME_SEC_PROT_DMTF_SPDM:
+> +        if (n->spdm_socket <= 0) {
+> +            return NVME_INVALID_FIELD | NVME_DNR;
+> +        }
+> +        return nvme_sec_prot_spdm_send(n, req);
+> +    default:
+> +        /* Unsupported Security Protocol Type */
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    return NVME_INVALID_FIELD | NVME_DNR;
+> +}
+> +
+> +static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
+> +{
+> +    StorageSpdmTransportHeader hdr;
+> +    g_autofree uint8_t *rsp_spdm_buf = NULL;
+> +    uint32_t dw10 = le32_to_cpu(req->cmd.cdw10);
+> +    uint32_t alloc_len = le32_to_cpu(req->cmd.cdw11);
+> +    uint32_t recvd, spdm_res;
+> +    uint16_t nvme_cmd_status, ret;
+> +    uint8_t secp = extract32(dw10, 24, 8);
+> +    uint8_t spsp1 = extract32(dw10, 16, 8);
+> +    uint8_t spsp0 = extract32(dw10, 8, 8);
+
+This is a little odd. You break out two 8 bit fields here just
+to combine them again below.  Why not a 16bit field?
+If its about spec alignment maybe call that field spsp0_1
+
+
+> +
+> +    if (!alloc_len) {
+> +        return NVME_INVALID_FIELD | NVME_DNR;
+> +    }
+> +
+> +    /* Generate the NVMe transport header */
+> +    hdr = (StorageSpdmTransportHeader) {
+> +        .security_protocol = secp,
+> +        .security_protocol_specific = cpu_to_le16((spsp1 << 8) | spsp0),
+> +        .length = cpu_to_le32(alloc_len),
+> +    };
+> +
+> +    /* Forward if_recv to the SPDM Server with SPSP0 */
+> +    spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_RECV,
+> +                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +                                (uint8_t *)&hdr, sizeof(hdr));
+
+As above.
+
+> +    if (!spdm_res) {
+> +        return NVME_DATA_TRAS_ERROR | NVME_DNR;
+> +    }
+> +
+> +    /* The responder shall ack with message status */
+> +    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+> +                                (uint8_t *)&nvme_cmd_status,
+
+As above - seems to be a spurious cast.
+
+> +                                SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+
 
 
