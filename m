@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E93CA1015
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C351CA1012
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 08:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uu54c-0006In-UQ; Thu, 04 Sep 2025 04:12:02 -0400
+	id 1uu54W-0006As-Jq; Thu, 04 Sep 2025 04:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54Y-0006DE-Mn
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:58 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1uu54T-00066y-Qa
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:54 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uu54J-000415-6i
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:58 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-afec5651966so143299366b.2
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:41 -0700 (PDT)
+ id 1uu54G-0003z1-9d
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 04:11:53 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6188b5ad4f0so1271189a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 01:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756973500; x=1757578300; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756973497; x=1757578297; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YHrtANvKFxNzkcAR0b6AvL2FoL97RQya7kVY684YbqM=;
- b=SEQkebx0f+a2248VgstBtza4jORb0i7e7R7xUbUN1rdFAHXcFfebXhdT+9rTtAgh2L
- /ub5rvBndNE30JwVRtOxMnNuwDDRGDIb8AWnsQQBpX7sTkckbkTMkkZTSBf2FmbmH1C0
- pEZsJx1szvd9YA+Se9tq76IWZROoa0pQ0ygYpA5dJ6r0Ao3LHpTZBxxmsIlzMHtDenv0
- hKyoOR+dKQTGGPt8xqrGB/O3y6BfjBCO2mxMj/YBQdHOOVAr9gnVbPHMRY9SIyZME/LC
- ZWu6gi1otc0iSGjcLVNAnUWN7qvLlX152oiRT9ZBR9vJsanBTFwXX13dZEApi17lxUBq
- 7kDQ==
+ bh=npkBvBgQubJv2X1tCwkde0FzzeXErtznEAkpfHdfgYk=;
+ b=YJSqYBGfJzloAoEmG4V4W4s/srpTTlggN2pwLVIhrqC0ZPRVs+AUNZxQ8tOoi40Hld
+ 9KPpn+z2rxryeH4fczClJx/AXVQ15eixEPElawdRXTBsBJzkbbPf5mNmZRTqaII/29QP
+ GaqF7dDlMRi1zoBQHHbCutZ5Ar1Y/fNqfCiMno2IQRYGk+hhTfxU91rwAQKJYmOW/1My
+ pfys+jbx2MoxgjBb9DDosJiBMG2rU11sQyZKYiwOfYsoOH1KVA2bu1dkNhE/bRc1v4w8
+ riNwQxQiZc4SGEkvKlV2/FSp4/n4Tx53/zrAl7o8f2AYAJ5rhpfdyLupqr4gl7OAzqa1
+ hHmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756973500; x=1757578300;
+ d=1e100.net; s=20230601; t=1756973497; x=1757578297;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YHrtANvKFxNzkcAR0b6AvL2FoL97RQya7kVY684YbqM=;
- b=tmp+uqKgsFwVdiXL3lX473W+6zlcNTi6HEEK4vr8yQpC96qI80UgWYiYEJJwIOtzNe
- AT+HbQ4wxZzKBf6xTX452O1iCaWSnaHgfFlzOnIxvzo7i6fz0Uw9K1BQxraU5Hcbkw4A
- CuEdRhAruBbIwBStu+eEjIsj6ASEnKn6HBgrKNT00QnON2nVUXApPtDt5RNqlmmxnAw6
- KybLgOf0+wNZL1Dm5NLkllAWj5hi5+hGNa1mC/DJsKQS+Cqh5GDpXDsKq9WtGtmqeqnO
- BKb5hEaoZW35VihCvw9mor/b9fT/9mL2CT29PTuRQaobhoprSHI7q/gvOfo5DcfvdP3E
- o5nQ==
-X-Gm-Message-State: AOJu0YwFXk12gcpJQebD+hq6p/fzG5Nuo5sEWWJRoZBbxmJRG09YvVJD
- e0exdjFqAZIid1JIvDlSVuQraeo7pg6X11lq6ZTBbmJu6MBUoN/UxVBgLVY8Hu+NjdRIfkyroGN
- RcBsBM7F6bg==
-X-Gm-Gg: ASbGncsd+an1Mz49UFUOUCltRdTlL2wjwBboR3oEIqMBlJJxXl/oGWHjsuR4KGyhjQO
- MsEBXGRTQP4UDWtVDhJbiz2LmdVMs4EQbc21LpdFwcTYwd5QOt5zen0hhWGG5rZk361bQKfD8Zd
- wTT8Q3smAbWF8ITiZd9JJJnh96pUNHakZUJjgo6gqJPb25DtYWIW83SCiAllU48Frqou7iV4xT6
- DsTSR8PJ4D0FyCbZjI9Dktd9OJ/iJOHqHcREgJCcWgsUDJwBbq/hLKLxI9zPQxB+MColJBWNv7U
- LGxYHCtcZdTlmB6pqh8sa0D0Ejckjshk8hCJHYMY9ycen6pMQdHogXyeelW/Zk2mS4PKxEFEIyx
- wIpUv8LsHqgTjce/6woeUceg=
-X-Google-Smtp-Source: AGHT+IHWlLajDsQ384nIBXustMLg5QOay+NZ7bnHzT4T4G8CTt2TPFaQ6+dQTw7Hxia/vwaMzjizQQ==
-X-Received: by 2002:a17:906:12cf:b0:b04:11e5:9a8e with SMTP id
- a640c23a62f3a-b0411e59b44mr1462147366b.40.1756973499887; 
- Thu, 04 Sep 2025 01:11:39 -0700 (PDT)
+ bh=npkBvBgQubJv2X1tCwkde0FzzeXErtznEAkpfHdfgYk=;
+ b=JiwEKHeb7Leq6LS9qgQQY4QkBUOZkUh85W5w8jdLJPW8hMm8Fs22Zg9e/KJMdf7dxv
+ sT7183QA9PUDjyT9nuQPS6sgpYujq6LwUw1/PeMgRR8JmGF4gxCSYGrEIsSG4Io9YwBd
+ cqJwGhh3AARLmb71kIIUioJDJlSRUcOg9nLh86oJ20Kf/g9T9r8E758ttJZxPXhdLsVy
+ lBz7KYKdjsnzKqQzYuWLZfmkt+nHsEhx8ekAk8IvMBDVobN/YMn1yZOTZtSaYIAKDlTW
+ /axXFsmVRM+2QWdl0j5Yb0/wniaDVqIYJU8cIoQH2hZgec3P7ZHz2iQuvzelZ3QLaj40
+ F3gQ==
+X-Gm-Message-State: AOJu0YzwqakRbIYT1qsvWT06PI4Ofxo5pX1dBFCNuBspZGrZLFfZD+t8
+ KBMtaeP0lxFe9M4ktoP4fW9bDEdTS33mcM7t5NUZ1epWd8Fj6G/kPc+TXeIrpIwmMZxazkM6vyr
+ lzs+T9qQKXg==
+X-Gm-Gg: ASbGncst9YOXx0Vai09aoLnXgoWXxslU55aSQywYCk+FhV1t1cqyxRjIxZzbo6bHa/A
+ /PjZ2DRC7jfiAfZOi2ZmzCALQiGUjJlGO6nuCPq7pWFTyqT6vHhfFp5QxxaQMffT0t3Rrxl7Fia
+ AXTHInGGKmBU6PtltTElWsIFak+cROfD7Er+uMN6Y3h6jS43lJ9vpmnz05D4JR+EqFqCEvaxQHx
+ AVcUp+0LCgHWOmlQxnMGc87X+sAWoINRbKdK4mqorw7RhoTilo5z4gGjJVHSz4gVYJU7G4482GZ
+ pJQW9a17CP5z1Wn2CxE+5+f21ucIUqJ9wycenWXvP03XqUcYdkA3EsCzNs3rZHLbs+1lXDQdMHh
+ bQwxUhtNgYr35yQGv7Q7oNYE=
+X-Google-Smtp-Source: AGHT+IGEHcZDYSofdWUr8Bqng6QeMWXp/4Bc/tOlM+ePo4sSl/15T602ad6FUMUNNzOlh6Biq8rLZw==
+X-Received: by 2002:a17:907:c1f:b0:af6:a10a:d795 with SMTP id
+ a640c23a62f3a-b01df90c1e4mr1937783366b.55.1756973496744; 
+ Thu, 04 Sep 2025 01:11:36 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b046d420e02sm306741066b.39.2025.09.04.01.11.32
+ a640c23a62f3a-aff9918dbd2sm1326671166b.103.2025.09.04.01.11.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 01:11:37 -0700 (PDT)
+ Thu, 04 Sep 2025 01:11:32 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D1C1B5F93A;
+ by draig.lan (Postfix) with ESMTP id B4E6D5F937;
  Thu, 04 Sep 2025 09:11:28 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -128,18 +128,19 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 006/281] Update version for the v10.1.0 release
-Date: Thu,  4 Sep 2025 09:06:40 +0100
-Message-ID: <20250904081128.1942269-7-alex.bennee@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>
+Subject: [PATCH v2 005/281] MAINTAINERS: add a few more files to "Top Level
+ Makefile and configure"
+Date: Thu,  4 Sep 2025 09:06:39 +0100
+Message-ID: <20250904081128.1942269-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250904081128.1942269-1-alex.bennee@linaro.org>
 References: <20250904081128.1942269-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=true
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -162,20 +163,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+A few files in scripts, and the list of packages in pythondeps.toml, are
+strictly related to the toplevel build scripts.  Add them to the
+MAINTAINERS file stanza.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- VERSION | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/VERSION b/VERSION
-index dadcbd47d3c..4149c39eec6 100644
---- a/VERSION
-+++ b/VERSION
-@@ -1 +1 @@
--10.0.94
-+10.1.0
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a07086ed762..0f3e55b51e8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4392,7 +4392,6 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: meson.build
+ F: meson_options.txt
+-F: scripts/meson-buildoptions.*
+ F: scripts/check_sparse.py
+ F: scripts/symlink-install-tree.py
+ 
+@@ -4403,6 +4402,9 @@ R: Thomas Huth <thuth@redhat.com>
+ S: Maintained
+ F: Makefile
+ F: configure
++F: pythondeps.toml
++F: scripts/git-submodule.sh
++F: scripts/meson-buildoptions.*
+ F: scripts/mtest2make.py
+ F: tests/Makefile.include
+ 
 -- 
 2.47.2
 
