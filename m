@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD33ECA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379C2CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 20:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuGs4-0003UQ-LO; Thu, 04 Sep 2025 16:47:52 -0400
+	id 1uuGsD-0003Yy-Mz; Thu, 04 Sep 2025 16:48:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrw-0003SC-8e
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:45 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGs8-0003Vu-Be
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:57 -0400
 Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrp-0000id-Jd
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:43 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uuGrx-0000ki-Qj
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 16:47:56 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 6FB2360BF8
- for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:47:21 +0200 (CEST)
-Received: (qmail 32607 invoked by uid 990); 4 Sep 2025 20:47:21 -0000
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 2DC2560C55
+ for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 22:47:24 +0200 (CEST)
+Received: (qmail 32755 invoked by uid 990); 4 Sep 2025 20:47:24 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 04 Sep 2025 22:47:21 +0200
+ Thu, 04 Sep 2025 22:47:24 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
 Cc: Julian Ganz <neither@nut.email>,
  Richard Henderson <richard.henderson@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>
-Subject: [PATCH v6 07/25] target/avr: call plugin trap callbacks
-Date: Thu,  4 Sep 2025 22:46:44 +0200
-Message-ID: <20cc1b234a31dd02dfb36702ebe2fc68e18ceb75.1757018626.git.neither@nut.email>
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH v6 17/25] target/rx: call plugin trap callbacks
+Date: Thu,  4 Sep 2025 22:46:54 +0200
+Message-ID: <fa4c16b7bf86ceea1b0f7f3f95a9d0e917f6e5fa.1757018626.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.1
 In-Reply-To: <cover.1757018626.git.neither@nut.email>
 References: <cover.1757018626.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.997689) MID_CONTAINS_FROM(1)
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.995166) MID_CONTAINS_FROM(1)
  MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.597689
+X-Rspamd-Score: -5.595166
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=aiXM/t745WPvpZ4qvo3agcHEz8akJ3QnkTB+iJHf8wQ=;
- b=KI4lCuOI3w4zzugOoGzG6e3YaCMrfbDo37yfm/9bkigeUKhN5waQRp+xLLsFc4N5mgOLcMFsVW
- 5+1qNfi/hOI4rPJK8k3iH5dtnpyUV1Oo0zhwbfYtvTSFa+axoKenC9Jz+V4dFEhBh2pXtAo8Z1se
- msNCXbWJmpd4O7szg/qbMH6M3u2NsMkR+L3gH9xJpgPFDnCUUjoHurl6IaSLEfil3Lj8kGvpDEPh
- lN6PaCVbofYhtIEopD8p7oj0iyFnN2voe89LVNcyhZxijI8dWNIF/v4sqX0mgZMgqfHbbRXYRZTd
- RMU+sG9Jv+w/L+W1E+VwAFNN+kSTq3H2I11rLehQz5hPxYsCjJkIJqhgIThY2S0yshCvVJxDxneC
- lvQ5GAPf3Y9rC9SlwhGHfisOGf9ai1vUScppoREsO7Qw3FcONiWepwSuiyHPUAyWOVW+y/b+g8XP
- hHH9uimPjgwLJAexqUpjgu2iwFcjncZ3JPcQt85fWi4/L0Ql97h1UNWGq+onsUK+SGuDWPmNnI9A
- hO1GbO+cGP3vGbN6vjDfA2rt6sBTYzMmuUcni7TVZxv1PWTNWy5HYd4zvPB2728iTrIb8Rh/EemN
- nDdIx6nYwDDEpGHQrLol/3mhtuFbNO/Zg2faCiZ9MkE7K69xdN15ywKgiTcSv1OCrzPf4udfktT+
- I=
+ bh=O2XE4lw8lRTZO91tPzs5hLNcmDOO/lAMqHonY1qYSvs=;
+ b=dLUk+7bquaq6c/x9RvBJ8aMGAblc1xmRBg00+54bdP8TY++k7Xcl+P6hmD8A0RH9cGcITfjBGR
+ qJNcR4kz4oQlBC55OG1uqP05EjBlK2mmweF274ruK/vS2vxMcorFDnkf6N8AyJMelLsurZzKf2Qq
+ aUZrhuT+wWNETSIkr6F+R1V+TpFlgD0TrvuEf0Fwd7XKNABMBw6loHXTOFdtfAJaNdGCPjqKlS42
+ dn+uCkl/O1FO1TtsWXgDZlBUkjVksj6VgPVbMNYg2X+K8yGSmgU/8/3xQA8YwR4KFXN7SJ2Pe5pv
+ jrJZU+8H2ptHhvJiqfLeKnzatmZ1P2l/KLwwZQZI2FlToFSJiopw7e+s1ATITbYczW+c3UtV37Ne
+ 2Hu7KXMP6yX0trgP5fiNK+KbCajSzzSbsTeVyGt8iOjs5EaLFmFNtxxe17YH7tGpS5SsJ1xaPsQ+
+ WxSYYo84Crtipa8UtmrlyGu6iWero1iu5yGpUeD//nUA/u4ruoS6mAVFDZCjgbV/pOzjy7JU9Mue
+ lpKKEDYO7QruohUF0PwJPeSXyRbuQi14lO/Hbi7RNmJH/GhOTY3iVWmB0elu6U1TZJu5fvPaM7CB
+ PYxH2p+X2XtTyGhaxkmEDjJ8MbZn/8OGkT59co3npZGVKaXaaNbY/dqqqVVN1Zjqt8sDfqmpomar
+ A=
 Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
  envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
@@ -85,36 +85,65 @@ events as well as the corresponding hook functions. Due to differences
 between architectures, the latter need to be called from target specific
 code.
 
-This change places the hook for AVR targets. That architecture appears
-to only know interrupts.
+This change places hooks for Renesas Xtreme targets.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/avr/helper.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/rx/helper.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index b9cd6d5ef2..f28cc08637 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -28,6 +28,7 @@
- #include "exec/target_page.h"
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index ce003af421..054bfdff57 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -22,6 +22,7 @@
+ #include "exec/log.h"
  #include "accel/tcg/cpu-ldst.h"
- #include "exec/helper-proto.h"
+ #include "hw/irq.h"
 +#include "qemu/plugin.h"
  
- bool avr_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte)
  {
-@@ -102,6 +103,8 @@ void avr_cpu_do_interrupt(CPUState *cs)
-     env->sregI = 0; /* clear Global Interrupt Flag */
+@@ -46,6 +47,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
+     CPURXState *env = cpu_env(cs);
+     int do_irq = cpu_test_interrupt(cs, INT_FLAGS);
+     uint32_t save_psw;
++    uint64_t last_pc = env->pc;
  
-     cs->exception_index = -1;
+     env->in_sleep = 0;
+ 
+@@ -65,6 +67,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
+             env->psw_ipl = 15;
+             cs->interrupt_request &= ~CPU_INTERRUPT_FIR;
+             qemu_set_irq(env->ack, env->ack_irq);
++            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+             qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
+         } else if (do_irq & CPU_INTERRUPT_HARD) {
+             env->isp -= 4;
+@@ -75,6 +78,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
+             env->psw_ipl = env->ack_ipl;
+             cs->interrupt_request &= ~CPU_INTERRUPT_HARD;
+             qemu_set_irq(env->ack, env->ack_irq);
++            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+             qemu_log_mask(CPU_LOG_INT,
+                           "interrupt 0x%02x raised\n", env->ack_irq);
+         }
+@@ -92,6 +96,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         } else {
+             env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
+         }
 +
-+    qemu_plugin_vcpu_interrupt_cb(cs, ret);
- }
- 
- hwaddr avr_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
++        if (vec == 30) {
++            /* Non-maskable interrupt */
++            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
++        } else {
++            qemu_plugin_vcpu_exception_cb(cs, last_pc);
++        }
++
+         switch (vec) {
+         case 20:
+             expname = "privilege violation";
 -- 
 2.49.1
 
