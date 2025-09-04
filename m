@@ -4,83 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BD8CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 15:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F96BCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 15:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuBmq-0002Cx-6V; Thu, 04 Sep 2025 11:22:08 -0400
+	id 1uuBuT-0004ac-Af; Thu, 04 Sep 2025 11:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com>)
- id 1uuBmm-0002Bs-3V
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:22:04 -0400
-Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com>)
- id 1uuBmi-0003xn-Mw
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:22:03 -0400
-Received: by mail-yb1-xb4a.google.com with SMTP id
- 3f1490d57ef6-e970a7ece01so1867704276.1
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 08:21:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1756999316; x=1757604116; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=dYzV/AQiEq78OD9b7CeZkT4qNCS4VNM0VZ+9D+2T0TM=;
- b=dIdiC3AL9tgLaFF8hl9rbimi59pEh4nWPLcEe9VG5eKNVQCgxGNUibzgmp9wKPcrUH
- uckfn6BtfYaaDb1VLFiyV60j5rBkOJ7IlNEz6Y3+GA1OJ4vWHbSZq5bDU3uKp0ol+teo
- qQawoaJkWJXpCTw65EOWfYKgqNyvV5YQnRHt8YBmIrMWM4y/QRbGWXQ/v9jer4CxFnp1
- IwTjnoZ5cDuYRFFJUqbPmn4DmSt/uKB+IUhCf+/xughrIRpgioQPuvIe17lPBpERMzKA
- GQTPSnFl888v3aUxFHyb6M6z0GyD+/lI/vSBKGUg/pkE40QeSej5tLeq/ldQdGBXcBn9
- kvoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756999316; x=1757604116;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dYzV/AQiEq78OD9b7CeZkT4qNCS4VNM0VZ+9D+2T0TM=;
- b=v3xI9Bzm2lqc0SaewUetU/6ekQ8I6zhzlo5Z/kcAkxfhwyVfJNcqU0nG9ucc1y28BN
- 1rPL9HWaDbA6aPj8i5vL5hlVBCpf2+UNCf4uAImQM4X4Y6ExGSodLRfRaM5w2YWuZNiP
- 9FgVBINn+PgthXXSk9CegRvt3r6pKfXItluI9ZboiK8lWPefCRw+HXM5XcIdpNwEMGuG
- eHJHbkSrHsMEfFN2Bb7dCm6MykPcTH0Obk4+HJaZE/xmnHQtzIAtMIOVeB/u+xVj72JG
- 90x3MhJpvmQMnb76ONclfsZDmf2IDbyWDm3dMSA81pUpnFiDI3j9j886AFUBbE+OMmwe
- CCYg==
-X-Gm-Message-State: AOJu0YwgmIRp/KqSaUYTQqSiPM+L4DOt4RodZPuIvdZ6l9NLttlFnYf9
- SbQv2wOCyOldflbubFLNkRQBNLpo6Oe9qFjVfjuYD5H1hrCre1rmYJVQYEpcTQKLG6ClDWfBKTq
- gkCGlzVOMVXxHQnrpemPN5XE1fRyQO/acdJzS46ZSKLph4S6Dqt1KDLTughApiVB8/OFIW6tC4K
- +CPMEASXJPMUJBWCsbI3lh8U7/qgCMLLHQsWByNZKl
-X-Google-Smtp-Source: AGHT+IFQnkBDn9rL3mIu+i76ZXO7mib5i8uRFdHv8iCdCjdOp9CSrKS6zBVlodvnUN0bCRBfw7dX/3/8ORBv
-X-Received: from ybk125.prod.google.com ([2002:a25:a83:0:b0:e98:a06d:acd7])
- (user=pefoley job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6902:708:b0:e98:a303:d1c
- with SMTP id 3f1490d57ef6-e98a5820b92mr16812056276.32.1756999315856; Thu, 04
- Sep 2025 08:21:55 -0700 (PDT)
-Date: Thu, 04 Sep 2025 11:21:44 -0400
-Mime-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIAIeuuWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDSwMT3cy85JzSlNRiXUPLFMvEtMTUFDPzRCWg8oKi1LTMCrBR0bG1tQA
- Vj0yHWgAAAA==
-X-Change-Id: 20250904-includes-19d9afaed67a
-X-Mailer: b4 0.14.2
-Message-ID: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
-Subject: [PATCH] linux-user: Add missing includes
-From: Peter Foley <pefoley@google.com>
+ (Exim 4.90_1) (envelope-from <l.stelmach@samsung.com>)
+ id 1uuBuP-0004aN-JS
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:29:57 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <l.stelmach@samsung.com>)
+ id 1uuBuE-0000OX-Hv
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 11:29:57 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+ by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id
+ 20250904152929euoutp023d75478e14f093aa6e13ad3db61b020b~iHfsy-4DF0550205502euoutp02e
+ for <qemu-devel@nongnu.org>; Thu,  4 Sep 2025 15:29:29 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com
+ 20250904152929euoutp023d75478e14f093aa6e13ad3db61b020b~iHfsy-4DF0550205502euoutp02e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1756999769;
+ bh=kS1RgeBBP9GXxsBqvz2fPMIRhTPgLNrw74fxVaxHOqA=;
+ h=From:To:Cc:Subject:Date:References:From;
+ b=oRiKV3kPP6t/ygvKa0qQHdGVcAl3FGRTkUV2HluQ7idCeXoN+8VP+hVbdUFTKmHss
+ 283zsanH2STi8V15Jef4jXmun82ClV4aMhf7ZgEEw+nUXXFXVTF/X9d2i3KCXKv6h7
+ WLv15VDN2rxtSZW46ANSHfECU7z2rPKAMBkSArrI=
+Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
+ eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250904152929eucas1p19fabb7cc807c83ca18b5fcd5edcec2ff~iHfslYmI_0168501685eucas1p1w;
+ Thu,  4 Sep 2025 15:29:29 +0000 (GMT)
+Received: from localhost (unknown [106.120.51.111]) by eusmtip1.samsung.com
+ (KnoxPortal) with ESMTPA id
+ 20250904152928eusmtip1fde7d546671dd4ca8e737c3bf7b86ebc~iHfscXuf92348523485eusmtip1S;
+ Thu,  4 Sep 2025 15:29:28 +0000 (GMT)
+From: =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, nabihestefan@google.com, 
- Peter Foley <pefoley@google.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, =?UTF-8?q?=C5=81ukasz=20Stelmach?=
+ <l.stelmach@samsung.com>
+Subject: [PATCH v2] linux-user: add y2038 safe socket timeout options
+Date: Thu,  4 Sep 2025 17:29:22 +0200
+Message-Id: <20250904152922.2949232-1-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Organization: Samsung R&D Institute Poland
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250904152929eucas1p19fabb7cc807c83ca18b5fcd5edcec2ff
+X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
- envelope-from=3k665aAcKCiQPEFOLEYGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--pefoley.bounces.google.com;
- helo=mail-yb1-xb4a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-RootMTR: 20250904152929eucas1p19fabb7cc807c83ca18b5fcd5edcec2ff
+X-EPHeader: CA
+X-CMS-RootMailID: 20250904152929eucas1p19fabb7cc807c83ca18b5fcd5edcec2ff
+References: <CGME20250904152929eucas1p19fabb7cc807c83ca18b5fcd5edcec2ff@eucas1p1.samsung.com>
+Received-SPF: pass client-ip=210.118.77.12;
+ envelope-from=l.stelmach@samsung.com; helo=mailout2.w1.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,59 +84,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're getting errors about this:
-linux-user/elfload.c:2770:36: error: use of undeclared identifier 'MAP_FIXED_NOREPLACE'
+Linux kernel has redefined some socket options values and
+introduces y2038 safe code paths on 32-bit architectures.
+See include/uapi/asm-generic/socket.h in the kernel sources.
 
-Signed-off-by: Peter Foley <pefoley@google.com>
+The argument for SO_RCVTIMEO_NEW (66) SO_SNDTIMEO_NEW (67) is
+struct __kernel_sock_timeval which always comprises two 64-bit
+fields regardless of the architecture.
+
+Unlike the kernel QEMU needs to support both old and new values
+so SO_SNDTIME and SO_RCVTIMEO have been renamed to *_OLD,
+but neither old nor new values have been marked as "default".
+
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
 ---
- linux-user/elfload.c | 1 +
- linux-user/mmap.c    | 1 +
- linux-user/syscall.c | 1 +
- 3 files changed, 3 insertions(+)
+v2:
+ - added missing TARGET_ prefix in header files
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 26c090c95d3e90ad4a23a927267e4106f68975b0..edbacf041f25d88472c95efb4eb9bdccd81e9902 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -5,6 +5,7 @@
- #include <sys/prctl.h>
- #include <sys/resource.h>
- #include <sys/shm.h>
-+#include <linux/mman.h>
+ linux-user/alpha/sockbits.h   |  8 ++++--
+ linux-user/generic/sockbits.h |  8 ++++--
+ linux-user/hppa/sockbits.h    |  8 ++++--
+ linux-user/mips/sockbits.h    |  8 ++++--
+ linux-user/ppc/sockbits.h     |  8 +++---
+ linux-user/sparc/sockbits.h   |  8 ++++--
+ linux-user/strace.c           |  6 +++--
+ linux-user/syscall.c          | 47 +++++++++++++++++++++--------------
+ 8 files changed, 67 insertions(+), 34 deletions(-)
+
+diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
+index d54dc98c09..114e808693 100644
+--- a/linux-user/alpha/sockbits.h
++++ b/linux-user/alpha/sockbits.h
+@@ -28,8 +28,8 @@
+ #define TARGET_SO_RCVBUFFORCE   0x100b
+ #define TARGET_SO_RCVLOWAT  0x1010
+ #define TARGET_SO_SNDLOWAT  0x1011
+-#define TARGET_SO_RCVTIMEO  0x1012
+-#define TARGET_SO_SNDTIMEO  0x1013
++#define TARGET_SO_RCVTIMEO_OLD  0x1012
++#define TARGET_SO_SNDTIMEO_OLD  0x1013
+ #define TARGET_SO_ACCEPTCONN    0x1014
+ #define TARGET_SO_PROTOCOL  0x1028
+ #define TARGET_SO_DOMAIN    0x1029
+@@ -75,6 +75,10 @@
+ /* Instruct lower device to use last 4-bytes of skb data as FCS */
+ #define TARGET_SO_NOFCS     43
  
- #include "qemu.h"
- #include "user/tswap-target.h"
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 002e1e668e631130526053599e1d18ffb4b4141a..9e92117ca3e8e4f45cb333366ecf3668b8986200 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -18,6 +18,7 @@
++/* New socket timeout options that are y2038 safe. */
++#define TARGET_SO_RCVTIMEO_NEW 66
++#define TARGET_SO_SNDTIMEO_NEW 67
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
   */
- #include "qemu/osdep.h"
- #include <sys/shm.h>
-+#include <linux/mman.h>
- #include "trace.h"
- #include "exec/log.h"
- #include "exec/page-protection.h"
+diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
+index b3b4a8e44c..7b78b9dcaa 100644
+--- a/linux-user/generic/sockbits.h
++++ b/linux-user/generic/sockbits.h
+@@ -34,8 +34,8 @@
+ #define TARGET_SO_PEERCRED     17
+ #define TARGET_SO_RCVLOWAT     18
+ #define TARGET_SO_SNDLOWAT     19
+-#define TARGET_SO_RCVTIMEO     20
+-#define TARGET_SO_SNDTIMEO     21
++#define TARGET_SO_RCVTIMEO_OLD 20
++#define TARGET_SO_SNDTIMEO_OLD 21
+ 
+ /* Security levels - as per NRL IPv6 - don't actually do anything */
+ #define TARGET_SO_SECURITY_AUTHENTICATION              22
+@@ -58,4 +58,8 @@
+ 
+ #define TARGET_SO_PROTOCOL             38
+ #define TARGET_SO_DOMAIN               39
++
++/* New socket timeout options that are y2038 safe. */
++#define TARGET_SO_RCVTIMEO_NEW 66
++#define TARGET_SO_SNDTIMEO_NEW 67
+ #endif
+diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
+index 23f69a3293..bb98a8c8be 100644
+--- a/linux-user/hppa/sockbits.h
++++ b/linux-user/hppa/sockbits.h
+@@ -17,8 +17,8 @@
+ #define TARGET_SO_RCVBUFFORCE  0x100b
+ #define TARGET_SO_SNDLOWAT     0x1003
+ #define TARGET_SO_RCVLOWAT     0x1004
+-#define TARGET_SO_SNDTIMEO     0x1005
+-#define TARGET_SO_RCVTIMEO     0x1006
++#define TARGET_SO_SNDTIMEO_OLD 0x1005
++#define TARGET_SO_RCVTIMEO_OLD 0x1006
+ #define TARGET_SO_ERROR        0x1007
+ #define TARGET_SO_TYPE         0x1008
+ #define TARGET_SO_PROTOCOL     0x1028
+@@ -67,6 +67,10 @@
+ 
+ #define TARGET_SO_CNX_ADVICE           0x402E
+ 
++/* New socket timeout options that are y2038 safe. */
++#define TARGET_SO_RCVTIMEO_NEW 0x4040
++#define TARGET_SO_SNDTIMEO_NEW 0x4041
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
+index 562cad88e2..11d25a5066 100644
+--- a/linux-user/mips/sockbits.h
++++ b/linux-user/mips/sockbits.h
+@@ -37,8 +37,8 @@
+ #define TARGET_SO_RCVBUF       0x1002  /* Receive buffer. */
+ #define TARGET_SO_SNDLOWAT     0x1003  /* send low-water mark */
+ #define TARGET_SO_RCVLOWAT     0x1004  /* receive low-water mark */
+-#define TARGET_SO_SNDTIMEO     0x1005  /* send timeout */
+-#define TARGET_SO_RCVTIMEO     0x1006  /* receive timeout */
++#define TARGET_SO_SNDTIMEO_OLD 0x1005  /* send timeout */
++#define TARGET_SO_RCVTIMEO_OLD 0x1006  /* receive timeout */
+ #define TARGET_SO_ACCEPTCONN   0x1009
+ #define TARGET_SO_PROTOCOL     0x1028  /* protocol type */
+ #define TARGET_SO_DOMAIN       0x1029  /* domain/socket family */
+@@ -71,6 +71,10 @@
+ #define TARGET_SO_RCVBUFFORCE          33
+ #define TARGET_SO_PASSSEC              34
+ 
++/* New socket timeout options that are y2038 safe. */
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /** sock_type - Socket types
+  *
+  * Please notice that for binary compat reasons MIPS has to
+diff --git a/linux-user/ppc/sockbits.h b/linux-user/ppc/sockbits.h
+index ee453347a3..25455a948e 100644
+--- a/linux-user/ppc/sockbits.h
++++ b/linux-user/ppc/sockbits.h
+@@ -14,10 +14,10 @@
+ #define TARGET_SO_RCVLOWAT     16
+ #undef  TARGET_SO_SNDLOWAT
+ #define TARGET_SO_SNDLOWAT     17
+-#undef  TARGET_SO_RCVTIMEO
+-#define TARGET_SO_RCVTIMEO     18
+-#undef  TARGET_SO_SNDTIMEO
+-#define TARGET_SO_SNDTIMEO     19
++#undef  TARGET_SO_RCVTIMEO_OLD
++#define TARGET_SO_RCVTIMEO_OLD 18
++#undef  TARGET_SO_SNDTIMEO_OLD
++#define TARGET_SO_SNDTIMEO_OLD 19
+ #undef  TARGET_SO_PASSCRED
+ #define TARGET_SO_PASSCRED     20
+ #undef  TARGET_SO_PEERCRED
+diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
+index 0a822e3e1f..8fce0e5373 100644
+--- a/linux-user/sparc/sockbits.h
++++ b/linux-user/sparc/sockbits.h
+@@ -24,8 +24,8 @@
+ #define TARGET_SO_BSDCOMPAT    0x0400
+ #define TARGET_SO_RCVLOWAT     0x0800
+ #define TARGET_SO_SNDLOWAT     0x1000
+-#define TARGET_SO_RCVTIMEO     0x2000
+-#define TARGET_SO_SNDTIMEO     0x4000
++#define TARGET_SO_RCVTIMEO_OLD 0x2000
++#define TARGET_SO_SNDTIMEO_OLD 0x4000
+ #define TARGET_SO_ACCEPTCONN   0x8000
+ 
+ #define TARGET_SO_SNDBUF       0x1001
+@@ -104,6 +104,10 @@
+ 
+ #define TARGET_SO_ZEROCOPY             0x003e
+ 
++/* New socket timeout options that are y2038 safe. */
++#define TARGET_SO_RCVTIMEO_NEW         0x0044
++#define TARGET_SO_SNDTIMEO_NEW         0x0045
++
+ /* Security levels - as per NRL IPv6 - don't actually do anything */
+ #define TARGET_SO_SECURITY_AUTHENTICATION              0x5001
+ #define TARGET_SO_SECURITY_ENCRYPTION_TRANSPORT        0x5002
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 1233ebceb0..9639d47d70 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -2970,11 +2970,13 @@ print_optint:
+         case TARGET_SO_RCVLOWAT:
+             qemu_log("SO_RCVLOWAT,");
+             goto print_optint;
+-        case TARGET_SO_RCVTIMEO:
++        case TARGET_SO_RCVTIMEO_OLD:
++        case TARGET_SO_RCVTIMEO_NEW:
+             qemu_log("SO_RCVTIMEO,");
+             print_timeval(optval, 0);
+             break;
+-        case TARGET_SO_SNDTIMEO:
++        case TARGET_SO_SNDTIMEO_OLD:
++        case TARGET_SO_SNDTIMEO_NEW:
+             qemu_log("SO_SNDTIMEO,");
+             print_timeval(optval, 0);
+             break;
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c7f478085ac1c7cc8bb2026f8b32038..4101b0e4e7812740afe7a4246a902a5364d7c331 100644
+index 91360a072c..fb37b516db 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -101,6 +101,7 @@
- #include <linux/soundcard.h>
- #include <linux/kd.h>
- #include <linux/mtio.h>
-+#include <linux/mman.h>
- #include <linux/fs.h>
- #include <linux/fd.h>
- #if defined(CONFIG_FIEMAP)
-
----
-base-commit: baa79455fa92984ff0f4b9ae94bed66823177a27
-change-id: 20250904-includes-19d9afaed67a
-
-Best regards,
+@@ -1132,7 +1132,8 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
+     return 0;
+ }
+ 
+-#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
++#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME) || \
++    defined(TARGET_NR_getsockopt) || defined(TARGET_NR_setsockopt)
+ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+                                                 abi_ulong target_tv_addr)
+ {
+@@ -2358,21 +2359,28 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+ #endif
+     case TARGET_SOL_SOCKET:
+         switch (optname) {
+-        case TARGET_SO_RCVTIMEO:
+-        case TARGET_SO_SNDTIMEO:
++        case TARGET_SO_RCVTIMEO_OLD:
++        case TARGET_SO_SNDTIMEO_OLD:
++        case TARGET_SO_RCVTIMEO_NEW:
++        case TARGET_SO_SNDTIMEO_NEW:
+         {
+                 struct timeval tv;
++                bool old_timeval = (optname == TARGET_SO_RCVTIMEO_OLD ||
++                                    optname == TARGET_SO_SNDTIMEO_OLD);
+ 
+-                if (optlen != sizeof(struct target_timeval)) {
++                if (optlen != (old_timeval ? sizeof(struct target_timeval) : \
++                               sizeof(struct target__kernel_sock_timeval))) {
+                     return -TARGET_EINVAL;
+                 }
+ 
+-                if (copy_from_user_timeval(&tv, optval_addr)) {
++                if ((old_timeval && copy_from_user_timeval(&tv, optval_addr)) ||
++                    (!old_timeval && copy_from_user_timeval64(&tv, optval_addr))) {
+                     return -TARGET_EFAULT;
+                 }
+ 
+                 ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
+-                                optname == TARGET_SO_RCVTIMEO ?
++                                optname == TARGET_SO_RCVTIMEO_OLD || \
++                                optname == TARGET_SO_RCVTIMEO_NEW ?
+                                     SO_RCVTIMEO : SO_SNDTIMEO,
+                                 &tv, sizeof(tv)));
+                 return ret;
+@@ -2590,13 +2598,16 @@ static abi_long do_getsockopt(int sockfd, int level, int optname,
+         /* These don't just return a single integer */
+         case TARGET_SO_PEERNAME:
+             goto unimplemented;
+-        case TARGET_SO_RCVTIMEO: {
++        case TARGET_SO_RCVTIMEO_OLD:
++        case TARGET_SO_RCVTIMEO_NEW:
++        case TARGET_SO_SNDTIMEO_OLD:
++        case TARGET_SO_SNDTIMEO_NEW:
++        {
+             struct timeval tv;
+             socklen_t tvlen;
++            bool old_timeval = (optname == TARGET_SO_RCVTIMEO_OLD ||
++                                optname == TARGET_SO_SNDTIMEO_OLD);
+ 
+-            optname = SO_RCVTIMEO;
+-
+-get_timeout:
+             if (get_user_u32(len, optlen)) {
+                 return -TARGET_EFAULT;
+             }
+@@ -2605,15 +2616,18 @@ get_timeout:
+             }
+ 
+             tvlen = sizeof(tv);
+-            ret = get_errno(getsockopt(sockfd, level, optname,
++            ret = get_errno(getsockopt(sockfd, level,
++                                       optname == TARGET_SO_RCVTIMEO_OLD || \
++                                       optname == TARGET_SO_RCVTIMEO_NEW ?
++                                       SO_RCVTIMEO : SO_SNDTIMEO,
+                                        &tv, &tvlen));
+             if (ret < 0) {
+                 return ret;
+             }
+-            if (len > sizeof(struct target_timeval)) {
+-                len = sizeof(struct target_timeval);
+-            }
+-            if (copy_to_user_timeval(optval_addr, &tv)) {
++            len = MIN(len, (old_timeval ? sizeof(struct target_timeval) : \
++                            sizeof(struct target__kernel_sock_timeval)));
++            if ((old_timeval && copy_to_user_timeval(optval_addr, &tv)) ||
++                (!old_timeval && copy_to_user_timeval64(optval_addr, &tv))) {
+                 return -TARGET_EFAULT;
+             }
+             if (put_user_u32(len, optlen)) {
+@@ -2621,9 +2635,6 @@ get_timeout:
+             }
+             break;
+         }
+-        case TARGET_SO_SNDTIMEO:
+-            optname = SO_SNDTIMEO;
+-            goto get_timeout;
+         case TARGET_SO_PEERCRED: {
+             struct ucred cr;
+             socklen_t crlen;
 -- 
-Peter Foley <pefoley@google.com>
+2.39.5
 
 
