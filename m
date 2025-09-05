@@ -4,60 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF58ECA1010
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 17:11:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52ED3CA1010
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 17:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuZwb-0001KY-3A; Fri, 05 Sep 2025 13:09:49 -0400
+	id 1uuaZF-0004r6-Q7; Fri, 05 Sep 2025 13:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uuZwW-0001JL-1u
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 13:09:44 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuaZ0-0004pR-QO
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 13:49:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uuZwM-0005S9-Br
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 13:09:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=jP2U6R93yMT0Rx+zrwNBIHOLhbux+QNJkFxMXHgpcQ4=; b=gAh4Z2Y+5nxAWL6L
- a1J6F00wnQTq0i3xAWsVyXt/KvYBU7MV9XZTJnUaHwJ4ck7bp3mwIenh6xYLi9925bEt7HbKbrW9C
- ZO9GdS2jGB9Ie0wJ8v3YNXcfjqq5yOUMwaNs1z4l/w4BPORlhpE2QPXfSM08FlMMX7z6HDn9tPbiC
- HXDSESsgXI+aRXdebnbEOL/wBiyjB+41yL1mqnl8SaJtYvZ0AsbjTsPkQXrQuutm3HsEc2uNVsx0n
- /M9kOWI7pf739LvfdX5Xbwr+ANRMTMcHDIOnX4UTYyIC4B4mtkYJGbEPoluJNPZIweQIK1zRSIJS3
- 9Dp8sNO/wksmBffL9w==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uuZvt-008xWV-2Q;
- Fri, 05 Sep 2025 17:09:05 +0000
-Date: Fri, 5 Sep 2025 17:09:05 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuaYp-0000ll-PT
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 13:49:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757094549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zc/ajDUuJDrcMGD8BS6x8rKKjj+4v6vcCVK/3cz7bls=;
+ b=Wa9t5KVwl1QUK8pKK5obikmakSuEAeRgRKLpAYg48K3pyB+0cZDgsPfqly/ZIdUiEEVfi3
+ Qm6NE/27lR3eCqIfhukvgcroM5jnUfOSbn1YvEMCnMBbI4CKbAMpqM+4BRykcbhBZVzCEU
+ 5Yh/jG8W6AGK13Zvd4lFJFdom2M3htc=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-634-wMnUBFIMPyWxsMX5n0GUUQ-1; Fri, 05 Sep 2025 13:49:08 -0400
+X-MC-Unique: wMnUBFIMPyWxsMX5n0GUUQ-1
+X-Mimecast-MFC-AGG-ID: wMnUBFIMPyWxsMX5n0GUUQ_1757094548
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7e86f8f27e1so594689485a.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 10:49:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757094548; x=1757699348;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zc/ajDUuJDrcMGD8BS6x8rKKjj+4v6vcCVK/3cz7bls=;
+ b=jhrXJ/AW8D5mFNySvHjC+qSYh3R6NLeiEKrY5cEI6aAuJAYkpQFZo93CA5AzJG6zoY
+ mVfTd8id0m23YeFC1pPcXnCVz5ZaE50fSp087pdjwksHpVVQ0v6RT+lqj0ROJaz9f1fD
+ oa58fdLHF9oXIf7oqalDEA9t5TNBdHhiX3ZcJgJpwhmRymTRtTD6a5CyLrKXt9IJZB1X
+ 6TqFyXXnpXIp8fgYq6evTD1eqsacnO+gSHFMlnHGVmeeWkxfyHe0BmfMCrJfdVfoHKln
+ E7CEdJ22UEIZlRxqOd+YKowBnptAziKms/dWyamCg0HHUNWWS1sdLqUTkHMjLnqjKYo2
+ Hd6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXB/YlBcjeqK3gwMN/i8lEHYP1EYsfZsY3jI3EQ6sJ1AiusVTyH8OKzsc2f9NPr9u/KvQsJyrpLQMxg@nongnu.org
+X-Gm-Message-State: AOJu0Yz+Lt7+f/nbznRGG50p9GAkSm4BRRZJ8gN5cgqdSrE/2+S4d6Wm
+ N7Xx2ZL6exKqGpja7a5WHBJqS8ulHIzFrFJUmPfRlX2gIFcnhrzNmViBuFXip6UceHAp+S4Izd4
+ lR9ZHOE1unJ2AQC13K3SQgvHg2G7368KNmn+TXQrk8SpjGKUYZJ5CGpQm
+X-Gm-Gg: ASbGncsN23FKyUO69gPIaCp0lHeE8QW2fWpBw7DKSQIye2ceLLgTwD+dSjyEGlrv38K
+ iuNKzVI6eV1ZfV3Uf0oTkWMyCIA2gkUEw496dntduXV7ehsmt/hAZehT4ZkmGHMokhyEdNSAJEs
+ P9F6nX3vP+i+hWDKlaRvY8wvxO3zEQOLkZVXew1LWEd/cVE3HYt0IqfhpId5ALs+blinmXynOfG
+ fXCgzV43d3H5hJ2JfzWsvA4t3B56VXCmPh4bc485uHpPCf5C42vg9e12SRbAvrrDca5dCxpJANq
+ e9o69Egv0nPTakisnSveioEqVy1Udq+x
+X-Received: by 2002:a05:620a:1a18:b0:80a:407a:d64d with SMTP id
+ af79cd13be357-8109be46779mr579263185a.30.1757094547737; 
+ Fri, 05 Sep 2025 10:49:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVIz5Q6eBjPHCQa899QEK5T/ytDvinA4bY2EPdst+w0MfjHXJ+7mEJbTlXqdhsVUyjqX7S7Q==
+X-Received: by 2002:a05:620a:1a18:b0:80a:407a:d64d with SMTP id
+ af79cd13be357-8109be46779mr579259585a.30.1757094547332; 
+ Fri, 05 Sep 2025 10:49:07 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b48f635cbesm50832661cf.5.2025.09.05.10.49.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 05 Sep 2025 10:49:06 -0700 (PDT)
+Date: Fri, 5 Sep 2025 13:48:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
 Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
-Message-ID: <aLsZMXHDc4uKMkyx@gallifrey>
+Message-ID: <aLsihr0-Y3pynmxe@x1.local>
 References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
- <aLsUQWjW8gyZjySs@x1.local>
+ <aLsUQWjW8gyZjySs@x1.local> <aLsZMXHDc4uKMkyx@gallifrey>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aLsUQWjW8gyZjySs@x1.local>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 17:05:18 up 131 days,  1:18,  1 user,  load average: 0.00, 0.04, 0.01
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aLsZMXHDc4uKMkyx@gallifrey>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,130 +110,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> Add Vladimir and Dan.
-> 
-> On Thu, Aug 14, 2025 at 10:17:14AM -0700, Steve Sistare wrote:
-> > This patch series adds the live migration cpr-exec mode.  
-> > 
-> > The new user-visible interfaces are:
-> >   * cpr-exec (MigMode migration parameter)
-> >   * cpr-exec-command (migration parameter)
-> > 
-> > cpr-exec mode is similar in most respects to cpr-transfer mode, with the 
-> > primary difference being that old QEMU directly exec's new QEMU.  The user
-> > specifies the command to exec new QEMU in the migration parameter
-> > cpr-exec-command.
-> > 
-> > Why?
-> > 
-> > In a containerized QEMU environment, cpr-exec reuses an existing QEMU
-> > container and its assigned resources.  By contrast, cpr-transfer mode
-> > requires a new container to be created on the same host as the target of
-> > the CPR operation.  Resources must be reserved for the new container, while
-> > the old container still reserves resources until the operation completes.
-> > Avoiding over commitment requires extra work in the management layer.
-> 
-> Can we spell out what are these resources?
-> 
-> CPR definitely relies on completely shared memory.  That's already not a
-> concern.
-> 
-> CPR resolves resources that are bound to devices like VFIO by passing over
-> FDs, these are not over commited either.
-> 
-> Is it accounting QEMU/KVM process overhead?  That would really be trivial,
-> IMHO, but maybe something else?
-> 
-> > This is one reason why a cloud provider may prefer cpr-exec.  A second reason
-> > is that the container may include agents with their own connections to the
-> > outside world, and such connections remain intact if the container is reused.
-> 
-> We discussed about this one.  Personally I still cannot understand why this
-> is a concern if the agents can be trivially started as a new instance.  But
-> I admit I may not know the whole picture.  To me, the above point is more
-> persuasive, but I'll need to understand which part that is over-commited
-> that can be a problem.
+On Fri, Sep 05, 2025 at 05:09:05PM +0000, Dr. David Alan Gilbert wrote:
+> k8s used to find it very hard to change the amount of memory allocated to a
+> container after launch (although I heard that's getting fixed); so you'd
+> need more excess at the start even if your peek during hand over is only
+> very short.
 
-> After all, cloud hosts should preserve some extra memory anyway to make
-> sure dynamic resources allocations all the time (e.g., when live migration
-> starts, KVM pgtables can drastically increase if huge pages are enabled,
-> for PAGE_SIZE trackings), I assumed the over-commit portion should be less
-> that those.. and when it's also temporary (src QEMU will release all
-> resources after live upgrade) then it looks manageable.
+When kubevirt will need to support cpr, it needs to do live migration as
+usual, normally by creating a separate container to put dest QEMU.  So the
+hope is there's no need to change the memory setup.
 
-k8s used to find it very hard to change the amount of memory allocated to a
-container after launch (although I heard that's getting fixed); so you'd
-need more excess at the start even if your peek during hand over is only
-very short.
+I think it's not yet possible to start two QEMUs in one container after
+all, because QEMU, in case of kubevirt, is always paired with a libvirt
+instance. And AFAICT libvirt still doesn't support two instances appear in
+the same container..  So another container should be required to trigger a
+live migration, for CPR or not.
 
-Dave
-> 
-> > 
-> > How?
-> > 
-> > cpr-exec preserves descriptors across exec by clearing the CLOEXEC flag,
-> > and by sending the unique name and value of each descriptor to new QEMU
-> > via CPR state.
-> > 
-> > CPR state cannot be sent over the normal migration channel, because devices
-> > and backends are created prior to reading the channel, so this mode sends
-> > CPR state over a second migration channel that is not visible to the user.
-> > New QEMU reads the second channel prior to creating devices or backends.
-> > 
-> > The exec itself is trivial.  After writing to the migration channels, the
-> > migration code calls a new main-loop hook to perform the exec.
-> > 
-> > Example:
-> > 
-> > In this example, we simply restart the same version of QEMU, but in
-> > a real scenario one would use a new QEMU binary path in cpr-exec-command.
-> > 
-> >   # qemu-kvm -monitor stdio
-> >   -object memory-backend-memfd,id=ram0,size=1G
-> >   -machine memory-backend=ram0 -machine aux-ram-share=on ...
-> > 
-> >   QEMU 10.1.50 monitor - type 'help' for more information
-> >   (qemu) info status
-> >   VM status: running
-> >   (qemu) migrate_set_parameter mode cpr-exec
-> >   (qemu) migrate_set_parameter cpr-exec-command qemu-kvm ... -incoming file:vm.state
-> >   (qemu) migrate -d file:vm.state
-> >   (qemu) QEMU 10.1.50 monitor - type 'help' for more information
-> >   (qemu) info status
-> >   VM status: running
-> > 
-> > Steve Sistare (9):
-> >   migration: multi-mode notifier
-> >   migration: add cpr_walk_fd
-> >   oslib: qemu_clear_cloexec
-> >   vl: helper to request exec
-> >   migration: cpr-exec-command parameter
-> >   migration: cpr-exec save and load
-> >   migration: cpr-exec mode
-> >   migration: cpr-exec docs
-> >   vfio: cpr-exec mode
-> 
-> The other thing is, as Vladimir is working on (looks like) a cleaner way of
-> passing FDs fully relying on unix sockets, I want to understand better on
-> the relationships of his work and the exec model.
-> 
-> I still personally think we should always stick with unix sockets, but I'm
-> open to be convinced on above limitations.  If exec is better than
-> cpr-transfer in any way, the hope is more people can and should adopt it.
-> 
-> We also have no answer yet on how cpr-exec can resolve container world with
-> seccomp forbidding exec.  I guess that's a no-go.  It's definitely a
-> downside instead.  Better mention that in the cover letter.
-> 
-> Thanks,
-> 
-> -- 
-> Peter Xu
-> 
+PS: I never fully understood why that's a challenge btw, especially on mem
+growing not shrinking.  For CPU resources we have the same issue that
+container cannot easily hot plug CPU resources into one container, that
+made multifd almost useless for kubevirt when people use dedicated CPU
+topology, it means all multifd threads will be run either on one physical
+core (together with all the rest of QEMU mgmt threads, like main thread),
+or directly run on vCPU threads which is even worse..
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Peter Xu
+
 
