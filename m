@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA2FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 11:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C071CA1013
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 11:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuUz0-0001bS-2R; Fri, 05 Sep 2025 07:51:58 -0400
+	id 1uuUzE-0001em-Jg; Fri, 05 Sep 2025 07:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuUyw-0001Zm-Go
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:54 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1uuUz1-0001bY-4Y
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:59 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuUyh-0003YN-Sz
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:53 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45b7722ea37so10957455e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 04:51:33 -0700 (PDT)
+ id 1uuUym-0003Z3-7Y
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:57 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-45b83ae1734so12213075e9.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 04:51:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757073091; x=1757677891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757073096; x=1757677896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xlzJQOFlorrMw5CndfvG4jengOA2DFNt3pdatOiYndA=;
- b=d0puMIR9dvQmvt4Y2caxHiScWvI6PQMnH44my797pWyr2CeWmVfU0saq/S8M4/07LC
- hM1QAVs7Z0KCcR+BJC7OyMvmVu5hVwp9FiA0c3GE/3Fei0yWEJVVeQZ5kDmBgf5D0P56
- AUjOIT+5v1x4+RxI86tTHY8ppPj1LNuw/uFjMiDjZV4QZcfAU3RfGjR1p9fNx/VRgmY3
- Ar9JtzNWCvJWxvEL0Tc2+Oycv35WxsmddvQF7rKLU1n/wXeewyxVK65hNf+O+DvlwxQt
- 4OEYR0R4/r6+Z137vgTRgAhAPiC9C/EwBdoVAruSBm3eILowuX8bR+qCRq7lT7YGm/07
- mEHA==
+ bh=B99K9Dv9ZtO1Q8pfxV+jw9jadiWOHe4ZFjv0MH8KRzU=;
+ b=jRgSsno4U4GNhK4I5m+383DJmwnVwBVmsCu0hGEgJc7d7HkRucNbkYYHNoM9XK8LLO
+ AL7zlaqFOQvCdru2Ygodcfa05GteoiwFITHXmjyiJ+eLPNWF9lxrDM3mLRwfx3r3Yc4+
+ aj4UWjxZ2g3ZuqxY0rYrnsPF1g3RJee6hLB5VLrn0T+D9fsd7SehaM+7LUpghZr35oGA
+ Bv7o2ySwsf/HfiVbY5TJD8GJHb1wALPY9sq2PTNpJzoNw5urKhNyw8f9cq+Ck3Ex0Xft
+ lEoU+EPVPiTJjcrtdgFXdxSzD9qbnql3o6e101SqW2tq894zyr6J7ifbssnibs2pbhdV
+ q+UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757073091; x=1757677891;
+ d=1e100.net; s=20230601; t=1757073096; x=1757677896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xlzJQOFlorrMw5CndfvG4jengOA2DFNt3pdatOiYndA=;
- b=aDslgtHOv2z6CnnluEToOAuXbyypHKY03JDEAq0ggbokQFegsnzDiDQF511V0jGBwg
- 2BG5WE6wwaEQg8W788dF4ImCDr3BlCiSX5PjX4OQEJGXyx8lz/SzRaDMP1wq1mZekw3H
- PdeFfVBhnDPZsXFT/nEaDKXi4zc4FfJyA9BEzDL+yBTQ4KxFeyqj3g3UiSZiE7y2ZzxH
- kX8hrb6yLMXUDKQWA+oWipnHQ+/xD3zX8ZfZRXXzbsoyDxXOsSxVzFtHcEWQxOJ/ETm+
- N53zMUf9p/rjGIt9Ve4rv73GbV0+IqqT8DGgXwI+BA9cnLKtz1NkNmkXN3g8lQv7A/H8
- OhkA==
-X-Gm-Message-State: AOJu0YySIz8aFz7W2wKS1ZyUg1W8oaN2pjqMcGMv5d7WFOjdSkeqsXBJ
- DIyirqe7ewWXeD7TKKNgjLpROHh2FqU61JDlHBlz107FTOHeXLNKfJxkr0uTarm0M0QYmHTsgP7
- wTDMmBN4=
-X-Gm-Gg: ASbGncuJUtVYi79Tp0NC5MI60FqnFoMCjxzD12dIqX+HrUfCR9E3M6VL+uc6XeN95oE
- UtycBIVVWaFxMujJlUzWGeEdELxf6uNIC7ykaxbQU40+bnSbqebEjKagfX0ozrRoCLy+SdDBpel
- adZ7gqdJGT6wIsIMljDojLV3ccY8iAGp0iDJCzQAAIKvILNQrw40X5x4uiaQnvHYqYY/A2UPeaI
- 4zj9tDNR0dn0kp4Bbg9tkwECmA9M/oKsw9XmnIl4vbEIGnjI96hy9KtDrqczPJoUoa+CcYEUDDS
- LbuGxmUMbA/1JjtkgHwFTNgXOVHKsbuSEWX0CimRwvSJJOyuekI+C3OH0HB714BAiQ3LXF+k177
- woAGdHsazyWp7nZN7MUK7tAQllD6Puvm3sdCzuwGoU9bBy2eGAdGxwjFS
-X-Google-Smtp-Source: AGHT+IEBa4QclhZsjHuBj4L+oqb4qsbaioZfkhBNDnOIMF7Jxb64n3elhC/sm1WQWRI5aIcSakTX1g==
-X-Received: by 2002:a05:600c:8706:b0:45c:b523:5a09 with SMTP id
- 5b1f17b1804b1-45dd5b52cacmr29819905e9.16.1757073091228; 
- Fri, 05 Sep 2025 04:51:31 -0700 (PDT)
+ bh=B99K9Dv9ZtO1Q8pfxV+jw9jadiWOHe4ZFjv0MH8KRzU=;
+ b=wOo2+bOR01HxGMSOgdDlFRHgQNuCcl+JgHVV9x0LtqHhfUcDXqqBnDh2LqOhuKYbHz
+ L9ZrSIMUyGMk5+nAs7U/D0yjOf5uNZP6SGsU07xjShsYidYmIucSGBiWY04g5rs/xF/X
+ 1HeIqaOotstMcZrvenLhPsIYt8++wOgzVG2ePSSwWTnuUM8iQLYgEMGpgL1cpqVvPpcV
+ zxaQkQwoEvas1R80pfRBtlPFxI91lYe1JZ5mYJTe7XzoDWObloFVtMc8iIpK468xRDnX
+ cj68VKPqqLYML1G8TLhD4fQ65WijmfBPt1kf4EI2Ik+BRnHmEXhpJd8Jx9PR+fHCaoIr
+ q8iw==
+X-Gm-Message-State: AOJu0YxTwLmP0lb19G1JiZt/wG5bBBGsfB/mOPan9Oe0STBK1UhJTks6
+ TFNuDZv+aGo5/IVzn6e0zekuAK+HGbR9EYlua1kXng3tUVCUZH2mIRLaD2zjRAlEPEG5a9i28qS
+ aB9UKrmU=
+X-Gm-Gg: ASbGnctSwvNLusLRWzsEck/POA3uN7nvnF2DP4H+7mw5THxF13OqiOzWJb7aPV4Wakr
+ zaUBO9dCE5jFoViQ8fltpkG7dfVEj4+4ubLNqFvaAhN2424Wio0BLFH64ItoZuxiPC4mc+vJaU1
+ gGuxp/GJKOi6CCU6VTtQ2RPxd3782Pwch/txW/DOeqGeU69CFldaRhdBCdvZI4fW5Je2QKTYHrs
+ /8nfCt0P9cSP3yfwDAmQ8/7kLcQW7y0wF7exqiZwtOCfhuovmRvrsk93Y6TiCmTayNgr4TaOWa6
+ HcMQxUpZMZZgnh+OyRoFiKXVNJkxXEQXdwdON7hH5U2brUTMi2RlBr0WMZ72G/7xPcps4kIHXxh
+ L+0UCEwbz7IHcQH8PQvWlcHSb5pr1dxrJwEDWrqkS5yhZ2VvTU3QOUkIJ
+X-Google-Smtp-Source: AGHT+IG98cPYSN61pNWZAn9mgybnfPrmrqP/rL0L0ltI0bEapIFp9wTv/gnxd2M6Py+INCMUDip85Q==
+X-Received: by 2002:a05:600c:1e89:b0:45d:d903:beea with SMTP id
+ 5b1f17b1804b1-45dd903c5admr21045525e9.30.1757073095918; 
+ Fri, 05 Sep 2025 04:51:35 -0700 (PDT)
 Received: from stoup.dot1x.polimi.it ([131.175.126.3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b8f2d3c88sm194285115e9.19.2025.09.05.04.51.30
+ 5b1f17b1804b1-45b8f2d3c88sm194285115e9.19.2025.09.05.04.51.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 04:51:30 -0700 (PDT)
+ Fri, 05 Sep 2025 04:51:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk,
 	atar4qemu@gmail.com
-Subject: [PATCH v2 2/7] target/sparc: Loosen decode of STBAR for v8
-Date: Fri,  5 Sep 2025 13:51:23 +0200
-Message-ID: <20250905115128.376295-3-richard.henderson@linaro.org>
+Subject: [PATCH v2 7/7] target/sparc: Relax decode of rs2_or_imm for v7
+Date: Fri,  5 Sep 2025 13:51:28 +0200
+Message-ID: <20250905115128.376295-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250905115128.376295-1-richard.henderson@linaro.org>
 References: <20250905115128.376295-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,74 +101,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Solaris 8 appears to have a bug whereby it executes v9 MEMBAR
-instructions when booting a freshly installed image. According
-to the SPARC v8 architecture manual, whilst bits 13 and bits 12-0
-of the "Read State Register Instructions" are notionally zero,
-they are marked as unused (i.e. ignored).
+For v7, bits [13:5] are ignored for !imm.
+For v8, those same bits are reserved, but are not trapped.
 
-Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3097
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- target/sparc/translate.c  |  5 ++++-
- target/sparc/insns.decode | 13 ++++++++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ target/sparc/translate.c | 56 ++++++++++++++++++++++++++--------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 336583beab..ece393fffc 100644
+index cfdd9c1ce4..810e2491a6 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -2823,12 +2823,15 @@ static bool trans_Tcc_i_v9(DisasContext *dc, arg_Tcc_i_v9 *a)
-     return do_tcc(dc, a->cond, a->cc, a->rs1, true, a->i);
- }
+@@ -2526,6 +2526,32 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS4(C)    false
+ #endif
  
--static bool trans_STBAR(DisasContext *dc, arg_STBAR *a)
-+static bool do_stbar(DisasContext *dc)
- {
-     tcg_gen_mb(TCG_MO_ST_ST | TCG_BAR_SC);
-     return advance_pc(dc);
- }
- 
-+TRANS(STBAR_v8, 32, do_stbar)
-+TRANS(STBAR_v9, 64, do_stbar)
++/*
++ * We decoded bit 13 as imm, and bits [12:0] as rs2_or_imm.
++ * For v9, if !imm, then the unused bits [12:5] must be zero.
++ * For v7 and v8, the unused bits are ignored; clear them here.
++ */
++static bool check_rs2(DisasContext *dc, int *rs2)
++{
++    if (unlikely(*rs2 & ~0x1f)) {
++        if (avail_64(dc)) {
++            return false;
++        }
++        *rs2 &= 0x1f;
++    }
++    return true;
++}
 +
- static bool trans_MEMBAR(DisasContext *dc, arg_MEMBAR *a)
- {
-     if (avail_32(dc)) {
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 9e39d23273..1b1b85e9c2 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -88,7 +88,7 @@ CALL    01 i:s30
- 
- {
-   [
--    STBAR           10 00000 101000 01111 0 0000000000000
-+    STBAR_v9        10 00000 101000 01111 0 0000000000000
-     MEMBAR          10 00000 101000 01111 1 000000 cmask:3 mmask:4
- 
-     RDCCR           10 rd:5  101000 00010 0 0000000000000
-@@ -107,6 +107,17 @@ CALL    01 i:s30
-     RDSTICK_CMPR    10 rd:5  101000 11001 0 0000000000000
-     RDSTRAND_STATUS 10 rd:5  101000 11010 0 0000000000000
-   ]
++static bool check_r_r_ri(DisasContext *dc, arg_r_r_ri *a)
++{
++    return a->imm || check_rs2(dc, &a->rs2_or_imm);
++}
 +
-+  # The v8 manual, section B.30 STBAR instruction, says
-+  # bits [12:0] are ignored, but bit 13 must be 0.
-+  # However, section B.28 Read State Register Instruction has a
-+  # comment that RDASR with rs1 = 15, rd = 0 is STBAR.  Here,
-+  # bit 13 is also ignored and rd != 0 is merely reserved.
-+  #
-+  # Solaris 8 executes v9 MEMBAR instruction 0x8143e008 during boot.
-+  # This confirms that bit 13 is ignored, as 0x8143c000 is STBAR.
-+  STBAR_v8          10 ----- 101000 01111 - -------------
++static bool check_r_r_ri_cc(DisasContext *dc, arg_r_r_ri_cc *a)
++{
++    return a->imm || check_rs2(dc, &a->rs2_or_imm);
++}
 +
-   # Before v8, all rs1 accepted; otherwise rs1==0.
-   RDY               10 rd:5  101000 rs1:5 0 0000000000000
- }
+ /* Default case for non jump instructions. */
+ static bool advance_pc(DisasContext *dc)
+ {
+@@ -3249,8 +3275,7 @@ static bool do_wr_special(DisasContext *dc, arg_r_r_ri *a, bool priv,
+ {
+     TCGv src;
+ 
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && (a->rs2_or_imm & ~0x1f)) {
++    if (!check_r_r_ri(dc, a)) {
+         return false;
+     }
+     if (!priv) {
+@@ -3693,8 +3718,7 @@ static bool do_arith_int(DisasContext *dc, arg_r_r_ri_cc *a,
+ {
+     TCGv dst, src1;
+ 
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && a->rs2_or_imm & ~0x1f) {
++    if (!check_r_r_ri_cc(dc, a)) {
+         return false;
+     }
+ 
+@@ -3778,11 +3802,11 @@ static bool trans_OR(DisasContext *dc, arg_r_r_ri_cc *a)
+ {
+     /* OR with %g0 is the canonical alias for MOV. */
+     if (!a->cc && a->rs1 == 0) {
++        if (!check_r_r_ri_cc(dc, a)) {
++            return false;
++        }
+         if (a->imm || a->rs2_or_imm == 0) {
+             gen_store_gpr(dc, a->rd, tcg_constant_tl(a->rs2_or_imm));
+-        } else if (a->rs2_or_imm & ~0x1f) {
+-            /* For simplicity, we under-decoded the rs2 form. */
+-            return false;
+         } else {
+             gen_store_gpr(dc, a->rd, cpu_regs[a->rs2_or_imm]);
+         }
+@@ -3799,8 +3823,7 @@ static bool trans_UDIV(DisasContext *dc, arg_r_r_ri *a)
+     if (!avail_DIV(dc)) {
+         return false;
+     }
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && a->rs2_or_imm & ~0x1f) {
++    if (!check_r_r_ri(dc, a)) {
+         return false;
+     }
+ 
+@@ -3851,8 +3874,7 @@ static bool trans_UDIVX(DisasContext *dc, arg_r_r_ri *a)
+     if (!avail_64(dc)) {
+         return false;
+     }
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && a->rs2_or_imm & ~0x1f) {
++    if (!check_r_r_ri(dc, a)) {
+         return false;
+     }
+ 
+@@ -3889,8 +3911,7 @@ static bool trans_SDIVX(DisasContext *dc, arg_r_r_ri *a)
+     if (!avail_64(dc)) {
+         return false;
+     }
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && a->rs2_or_imm & ~0x1f) {
++    if (!check_r_r_ri(dc, a)) {
+         return false;
+     }
+ 
+@@ -4186,8 +4207,7 @@ TRANS(SRA_i, ALL, do_shift_i, a, false, false)
+ 
+ static TCGv gen_rs2_or_imm(DisasContext *dc, bool imm, int rs2_or_imm)
+ {
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!imm && rs2_or_imm & ~0x1f) {
++    if (!imm && !check_rs2(dc, &rs2_or_imm)) {
+         return NULL;
+     }
+     if (imm || rs2_or_imm == 0) {
+@@ -4250,8 +4270,7 @@ static bool do_add_special(DisasContext *dc, arg_r_r_ri *a,
+ {
+     TCGv src1, sum;
+ 
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!a->imm && a->rs2_or_imm & ~0x1f) {
++    if (!check_r_r_ri(dc, a)) {
+         return false;
+     }
+ 
+@@ -4369,8 +4388,7 @@ static TCGv gen_ldst_addr(DisasContext *dc, int rs1, bool imm, int rs2_or_imm)
+ {
+     TCGv addr, tmp = NULL;
+ 
+-    /* For simplicity, we under-decoded the rs2 form. */
+-    if (!imm && rs2_or_imm & ~0x1f) {
++    if (!imm && !check_rs2(dc, &rs2_or_imm)) {
+         return NULL;
+     }
+ 
 -- 
 2.43.0
 
