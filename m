@@ -4,69 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB42CA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 09:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A4ACA1013
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 09:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuT9d-0008G3-HJ; Fri, 05 Sep 2025 05:54:49 -0400
+	id 1uuTCy-0001gC-BB; Fri, 05 Sep 2025 05:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uuT9Y-0008Ez-LQ
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 05:54:45 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uuT9U-000751-Uu
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 05:54:44 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxRNBWs7pogAgHAA--.14458S3;
- Fri, 05 Sep 2025 17:54:30 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxT+ZUs7poH95_AA--.9433S3;
- Fri, 05 Sep 2025 17:54:30 +0800 (CST)
-Subject: Re: [PATCH v6 08/11] hw/loongarch: Implement avec set irq
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250904121840.2023683-1-gaosong@loongson.cn>
- <20250904121840.2023683-9-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <fee2b81c-324f-f73f-b5d1-72109461baf9@loongson.cn>
-Date: Fri, 5 Sep 2025 17:52:27 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uuTCv-0001fa-IP
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 05:58:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uuTCq-0007bL-6e
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 05:58:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757066285;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qsUQ1LMSridGG2fTjqZ7lAQ7dbV+z1PP8SvETu6DOIc=;
+ b=hqYskuzgzJal7/wiG8wlc21VoKtGHgh7RQ4t08wqTszcfo1oeuDLoCbvCJuB2KEaAAhcg/
+ x/jrTzDqTHecWbCUqukIMliYHgoHRhhQBp+ylrBIb3wekxnO3F0qG5ThmaWew7Na5phlg/
+ aPH5jl4sO+HZgDtIISDK3qsBm/EjQoE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-hUqPQiAPNvqttL76hREveQ-1; Fri, 05 Sep 2025 05:58:03 -0400
+X-MC-Unique: hUqPQiAPNvqttL76hREveQ-1
+X-Mimecast-MFC-AGG-ID: hUqPQiAPNvqttL76hREveQ_1757066282
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45cb604427fso10225725e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 02:58:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757066281; x=1757671081;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qsUQ1LMSridGG2fTjqZ7lAQ7dbV+z1PP8SvETu6DOIc=;
+ b=NdiXovpfDbE+rMeXKfyAvOsR+2m8NT1ZWvA/pLfSk4USLKXf0YXeU2rkNwj7RmjIgr
+ fgXRTkv2oQOVuYyZGdc+ihAMLtzNC4Ylals7CobwKJZRAd623kX5pXNHFJAqX9IB/3Jo
+ qZEeXG20/YFJOzajXJ5l+/ZL1IMk9R+G9Kis0BrX98TvDl9QVTgqWqMF/4ARmmmRc6iA
+ aGzVd8TRRRQLp3o3RE+k2E6WBF0B7ZRZ9Vp3orCWOVPf5oyD9U10mLaOJNQiK4zCKjQG
+ NhfJi93WFVm1glt+kE5mzkIAdiEfVxkQDrT30l2etb0LyYV+7eBJPpntXRtPycJfS8j8
+ ZZkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXxBYS0TRHmRZ1S5tHUy+YJ04k4Ne3Axf18wZvCmRXsQTxuVM2c0gfWytoT7JzyqxHLs+k7UQutOwW@nongnu.org
+X-Gm-Message-State: AOJu0Yx0TNXqvytlnXrDQcd/VK3tH6j3nW44tcJqTnrOD0Y1zM9b3ZhU
+ KHhRyZ5qa019QNZ1GOO/JzRLJfVEVOBpmD8Y5WCslPqosssSdXwB+niQ6/f4hU3pwx51TrNajc3
+ iXsFpcCF+45tWDS/zLd3DaxToU3OlGoKlnTNxrh+z+8/EzcpzSn/iqjb8N/V9DTRpDKI=
+X-Gm-Gg: ASbGncuODb74LafPSsPznFVnnWmtucMkoV9Oe9/qMUVhk7ZN6jLyzBp6al7Hx0Dj9qQ
+ 5t9q8JiK8towIFVh7y4jOcyZ08wLA3XwAuiO2auxNLOWMa03Yb6QfhwYxe4EkyvNT5wphZQDKiq
+ J73HnCM744nFrlvn0/B7U7c1Oiw2Dx8zcNHHTlisIc2zOMG+V/XmbfYBkRZHXxdA4TaKGtk5KXo
+ 3SGH/UxbTanE0HQ5k1zFyu32pP9RP1FXeojN/8efMz7GiQ1RgM3QdMch0PRFe+H5JbnMXb3Nd09
+ HG+SAifntNOy0lJ8sH7Rr7O5sO3VUiY/E+Z0NqbbbftaUu5raNRCqGK6cyxKJZO6+xHQii/OM5d
+ EKxOk7ic3HhU=
+X-Received: by 2002:a05:600c:a47:b0:458:bc3f:6a7b with SMTP id
+ 5b1f17b1804b1-45b85571260mr174585145e9.18.1757066281319; 
+ Fri, 05 Sep 2025 02:58:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/oQOw6D7kr5zPOJhs/mWByAYxEtGYy4q3TQfvcv9jKGWW7RGVIOjhfqD2NhE89631nD9H6w==
+X-Received: by 2002:a05:600c:a47:b0:458:bc3f:6a7b with SMTP id
+ 5b1f17b1804b1-45b85571260mr174584795e9.18.1757066280887; 
+ Fri, 05 Sep 2025 02:58:00 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b9a6ecfafsm164487515e9.21.2025.09.05.02.57.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Sep 2025 02:58:00 -0700 (PDT)
+Message-ID: <2bc9b909-e25b-4b4d-b4db-0cf1d10a339b@redhat.com>
+Date: Fri, 5 Sep 2025 11:57:59 +0200
 MIME-Version: 1.0
-In-Reply-To: <20250904121840.2023683-9-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 10/15] hw/arm/smmuv3-accel: Allocate a vDEVICE
+ object for device
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxT+ZUs7poH95_AA--.9433S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCF45Kr4rWF45GF45Gr4rZwc_yoW5Kr4Dpa
- 97CFs0gF48Jr47Zwnaq3s8Z3Z8ZF4xWry2vanI9r9akF4xWr1kXrykt39rZF48C3ykZw40
- vr1rWa15ua47JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU83UUUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, shameerkolothum@gmail.com
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-11-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250714155941.22176-11-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,128 +120,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Shameer,
 
+On 7/14/25 5:59 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> Allocate and associate a vDEVICE object for the Guest device
+> with the vIOMMU. This will help the kernel to do the
+> vSID --> sid translation whenever required (eg: device specific
+I am not sure I get this. Do you mean translation between the vSID and
+the pSID?
 
-On 2025/9/4 下午8:18, Song Gao wrote:
-> Implement avec set irq and update CSR_MSIS.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> invalidations).
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > ---
->   hw/intc/loongarch_avec.c         | 58 ++++++++++++++++++++++++++++++--
->   include/hw/intc/loongarch_avec.h |  3 ++
->   2 files changed, 59 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-> index 1f9f376898..03a20a7b60 100644
-> --- a/hw/intc/loongarch_avec.c
-> +++ b/hw/intc/loongarch_avec.c
-> @@ -16,6 +16,13 @@
->   #include "migration/vmstate.h"
->   #include "trace.h"
->   #include "hw/qdev-properties.h"
-> +#include "target/loongarch/cpu.h"
-> +#include "qemu/error-report.h"
+>  hw/arm/smmuv3-accel.c    | 25 +++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h    |  1 +
+>  include/system/iommufd.h |  5 +++++
+>  3 files changed, 31 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 74bf20cfaf..f1584dd775 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -93,6 +93,23 @@ void smmuv3_accel_install_nested_ste(SMMUState *bs, SMMUDevice *sdev, int sid)
+>          return;
+>      }
+>  
+> +    if (!accel_dev->vdev && accel_dev->idev) {
+> +        IOMMUFDVdev *vdev;
+> +        uint32_t vdev_id;
+> +        SMMUViommu *viommu = accel_dev->viommu;
 > +
-> +/* msg addr field */
-> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
-> +FIELD(MSG_ADDR, FIX, 28, 12)
->   
->   static uint64_t loongarch_avec_mem_read(void *opaque,
->                                           hwaddr addr, unsigned size)
-> @@ -23,13 +30,60 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
->       return 0;
->   }
->   
-> +static void do_set_vcpu_avec_irq(CPUState *cs, run_on_cpu_data data)
-> +{
-> +    AVECCore *core = data.host_ptr;
-> +    CPULoongArchState *env;
-> +
-> +    assert(cs->cpu_index == core->dest_cpu);
-cpu_synchronize_state(cs) is needed even with TCG mode.
-
-> +    env = &LOONGARCH_CPU(cs)->env;
-> +    if (core->level) {
-> +        set_bit(core->pending, &env->CSR_MSGIS[core->pending / 64]);
-why it is core->pending / 64 here, I think it should be
-            set_bit(core->pending, &env->CSR_MSGIS);
+> +        iommufd_backend_alloc_vdev(viommu->core.iommufd, accel_dev->idev->devid,
+> +                                   viommu->core.viommu_id, sid, &vdev_id,
+> +                                   &error_abort);
+error_abort vs error handling
+> +        vdev = g_new(IOMMUFDVdev, 1);
+> +        vdev->vdev_id = vdev_id;
+> +        vdev->dev_id = sid;
+> +        accel_dev->vdev = vdev;
+> +        host_iommu_device_iommufd_attach_hwpt(accel_dev->idev,
+> +                                              accel_dev->viommu->bypass_hwpt_id,
+> +                                              &error_abort);
 > +    }
-> +    g_free(core);
-> +}
 > +
-> +
-> +static void avec_update_csr(AVECCore *core, int cpu_num,
-> +                            int irq_num, int level)
-> +{
-> +    CPUState *cs = qemu_get_cpu(cpu_num);
-> +
-> +    core->pending = irq_num;
-> +    core->dest_cpu = cpu_num;
-> +    core->level = level;
-> +    async_run_on_cpu(cs, do_set_vcpu_avec_irq,
-> +                         RUN_ON_CPU_HOST_PTR(core));
-> +}
-> +
-> +static void avec_set_irq(LoongArchAVECState *s, int cpu_num,
-> +                         int irq_num, int level)
-> +{
-> +    AVECCore *core;
-> +
-> +    core = g_new(AVECCore, 1);
-malloc/free memory in irq inject context may expensive.
-
-how about using irq_num directly if the condition level == 0 is not 
-necessary, such as
-   async_run_on_cpu(cs, do_set_vcpu_avec_irq,
-                          RUN_ON_CPU_HOST_INT(irq_num));
-
-Regards
-Bibo Mao
-> +
-> +    if (level) {
-> +        avec_update_csr(core, cpu_num, irq_num, level);
+>      ret = smmu_find_ste(sdev->smmu, sid, &ste, &event);
+>      if (ret) {
+>          error_report("failed to find STE for sid 0x%x", sid);
+> @@ -287,6 +304,7 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+>      SMMUPciBus *sbus = g_hash_table_lookup(bs->smmu_pcibus_by_busptr, bus);
+>      SMMUv3AccelDevice *accel_dev;
+>      SMMUViommu *viommu;
+> +    IOMMUFDVdev *vdev;
+>      SMMUDevice *sdev;
+>  
+>      if (!sbus) {
+> @@ -310,6 +328,13 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+>      trace_smmuv3_accel_unset_iommu_device(devfn, smmu_get_sid(sdev));
+>  
+>      viommu = s->s_accel->viommu;
+> +    vdev = accel_dev->vdev;
+> +    if (vdev) {
+> +        iommufd_backend_free_id(viommu->iommufd, vdev->vdev_id);
+> +        g_free(vdev);
+> +        accel_dev->vdev = NULL;
 > +    }
-> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
-> +}
 > +
->   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->                                        uint64_t val, unsigned size)
->   {
-> -    return;
-> +    int irq_num, cpu_num = 0;
-> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
-> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
-> +    CPUState *cs;
+>      if (QLIST_EMPTY(&viommu->device_list)) {
+>          iommufd_backend_free_id(viommu->iommufd, viommu->bypass_hwpt_id);
+>          iommufd_backend_free_id(viommu->iommufd, viommu->abort_hwpt_id);
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index 06e81b630d..21028e60c8 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -40,6 +40,7 @@ typedef struct SMMUv3AccelDevice {
+>      HostIOMMUDeviceIOMMUFD *idev;
+>      SMMUS1Hwpt  *s1_hwpt;
+>      SMMUViommu *viommu;
+> +    IOMMUFDVdev  *vdev;
+>      QLIST_ENTRY(SMMUv3AccelDevice) next;
+>  } SMMUv3AccelDevice;
+>  
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index b7ad2cf10c..8de559d448 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -44,6 +44,11 @@ typedef struct IOMMUFDViommu {
+>      uint32_t viommu_id;
+>  } IOMMUFDViommu;
+>  
+> +typedef struct IOMMUFDVdev {
+> +    uint32_t vdev_id;
+> +    uint32_t dev_id;
+> +} IOMMUFDVdev;
+Given the jungle of devices and dev_ids we have, I think we need to have
+either proper doc comments explaining what the objects abstracts and role
+
+Thanks
+
+Eric
 > +
-> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> +    cs = cpu_by_arch_id(cpu_num);
-> +    cpu_num = cs->cpu_index;
-> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
-> +    avec_set_irq(s, cpu_num, irq_num, 1);
->   }
->   
-> -
->   static const MemoryRegionOps loongarch_avec_ops = {
->       .read = loongarch_avec_mem_read,
->       .write = loongarch_avec_mem_write,
-> diff --git a/include/hw/intc/loongarch_avec.h b/include/hw/intc/loongarch_avec.h
-> index 3e8cf7d2c1..83656f8df4 100644
-> --- a/include/hw/intc/loongarch_avec.h
-> +++ b/include/hw/intc/loongarch_avec.h
-> @@ -18,6 +18,9 @@ OBJECT_DECLARE_TYPE(LoongArchAVECState, LoongArchAVECClass, LOONGARCH_AVEC)
->   typedef struct AVECCore {
->       CPUState *cpu;
->       qemu_irq parent_irq;
-> +    uint64_t pending;
-> +    uint64_t dest_cpu;
-> +    bool   level;
->       uint64_t arch_id;
->   } AVECCore;
->   
-> 
+>  bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+>  void iommufd_backend_disconnect(IOMMUFDBackend *be);
+>  
 
 
