@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2487BCA1013
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 12:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1980CA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 12:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuVgC-0005SI-52; Fri, 05 Sep 2025 08:36:36 -0400
+	id 1uuVpB-0000T7-GL; Fri, 05 Sep 2025 08:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uuVg9-0005Qh-M2
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:36:33 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uuVfz-0008A9-4w
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:36:33 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-61d7b2ec241so2501127a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 05:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757075779; x=1757680579; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pb6OHHH0GbwSnYSTxdh1Uy266GBfyqWbgQuTH1ReFls=;
- b=abw3RgSDii7Cw4dM9YoLBQigk3rZbx3QKVFls9tSfIenv4ZThf+4Xn4b5+U5O7shzg
- TdQNbn9hiWNxOcW4WWDvdSxevqrVw9opIqPCVi3CiPHDURjGOrQfOwGWEfgBVUKvM8e7
- 4jub2bHlrbs2HbiolXXTyeAx0YIL/FG8xTCilBo42TfgUQ6xF3NiYqGcQKLpgARybAmK
- twcGMagQB6gf6QXxBmAvBaeNi3u4Au7TFf1XEkvkg5rivLn6f14tkCj5YdspKRHpY/9G
- tlF1GcXOq2F6IeNo7WwR4okpQi/ElN4TEmq8t55ozGe0B7Q2OLN7Gn3NwysR88rOOD+H
- CSsw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uuVp7-0000SQ-Fz
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:45:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uuVp2-0002EQ-Oq
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:45:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757076339;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dpcpljMfUMh20mBtGWOGNHZROKSL8KX1CovFcEkH7OA=;
+ b=ODGqLmJBd55VT7BZoqKnqc8Kk4BiTzn4v3vWyi06e8thwSA/XwJgWimGn9XT/lKKl4Pjre
+ Pmh6/SmgTONygMj2IC+QiKW9wRyjbyxbq3bBNCipEoOthyHkl7TDhWaAb+SyZFUUPQWrHk
+ wIT77wtyV5bYmegcNaYi7fltD5PCxCY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-311-5xEXIx5zMRmgs_yTHQ3GrQ-1; Fri, 05 Sep 2025 08:45:38 -0400
+X-MC-Unique: 5xEXIx5zMRmgs_yTHQ3GrQ-1
+X-Mimecast-MFC-AGG-ID: 5xEXIx5zMRmgs_yTHQ3GrQ_1757076337
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b99c18484so8695655e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 05:45:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757075779; x=1757680579;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Pb6OHHH0GbwSnYSTxdh1Uy266GBfyqWbgQuTH1ReFls=;
- b=dsWFVLc/5Uc0cbcrnn4Cil68v/usZ9Oq6cIRiJ65lg5vE0+AI8Q9eOzYGgyIkEH33Y
- LvEZD3w2BAxAe9NiEc8KL2Bgvnk7cnGUnji28L8XytyezfImSm2csSsOPUE6lBLwe9rg
- AVBcixZLDpg4pq0ji9BG3jGNwfpJaxMhmml+EX8sMEpV2FVn3uVXQJa3HI4R9PrIW6Y2
- Ztobfp4TC6bJ9vlWZ7a0yOg4goPthpT1rK1Fq5lE4dPDlYtW1faI1bfvuc73TRXNZXbM
- mOrNip1rg3GFQ2i+9I5e5ecrZzD4wViaiAx9s4ZYNWdUPG/DZ2tADKyQWa85KNgPgI+K
- 0Dvg==
-X-Gm-Message-State: AOJu0Yy1nYTwaMQyJEj55DlcjtMpEq5xhY1mlODbFhkS3DTWa5DgtTjJ
- JuZPi4wYQnkt6n6qjVUsAmP0jBDPgrjnVa+YwpCvWaDVm8oH8Du6qIY40p1eNjjm/VY=
-X-Gm-Gg: ASbGncswr/H7VRQB1ZvhjdOSkXy5lwHNGK6xVIxxPSH8V/zIlEO+OMpJmwD/t4qbYGJ
- UWRlU4GrkAeP2SUfB1rMPLANke/ms1nufv8iVuJIlA0Bg7IVjMHbpHQzAm52qtwdsRC0nF+Cg/i
- knLdVmvZUYHoO7iZ1bFbrUM5NPXUbeQHvrbF4NdMNHp/MET9iXWLlR+9kxLFPjOBBkBHAuOAI7C
- ODIoX4zctZoHc69Vz2qKKE14bntlM0BvORkXY0jA/PB62cLfc7fI+PJ9qFqnQdnj/+63kwEbNSZ
- BlAIHlFV3PbQuWzXY6No8ur4GDJsuuY4G9+q4fw5Cu0HwFW7Kk0w1G4ldhIfp3EIvZUVssxv0Mb
- EJrInfniOQoiBJhjBV5oMxglUs7vVeZdAMA==
-X-Google-Smtp-Source: AGHT+IF1xNk7vuC7eHQ26fRIq75spIeVK5vgqryYGaHRGVjM8eNLZe2i9TKiz3ooRN3JdTnS93qKDA==
-X-Received: by 2002:a05:6402:26cf:b0:61d:30b0:da43 with SMTP id
- 4fb4d7f45d1cf-61d30b0e1a9mr18492585a12.33.1757075779490; 
- Fri, 05 Sep 2025 05:36:19 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6222f293a31sm493115a12.12.2025.09.05.05.36.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 05:36:18 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6C5925F879;
- Fri, 05 Sep 2025 13:36:17 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Xin Wang <wangxinxin.wang@huawei.com>
-Subject: Re: [PATCH v2 001/281] target/i386: Add support for save/load of
- exception error code
-In-Reply-To: <20250904140844.5b670290@fedora> (Igor Mammedov's message of
- "Thu, 4 Sep 2025 14:08:44 +0200")
-References: <20250904081128.1942269-1-alex.bennee@linaro.org>
- <20250904081128.1942269-2-alex.bennee@linaro.org>
- <20250904140844.5b670290@fedora>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Fri, 05 Sep 2025 13:36:17 +0100
-Message-ID: <87a539vzy6.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1757076337; x=1757681137;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dpcpljMfUMh20mBtGWOGNHZROKSL8KX1CovFcEkH7OA=;
+ b=KWsDIS+Jp20EPyCDHOriZPlJ9jZ9mEfNnoWYOg1H73NyD76v87OUyvOeWAO5EsDz4s
+ qFTFJpwjYqAOT3/8J1ZpCPkmPCShjvkRRRc6BZr8lRydBGZzsXXYAjk0qqyMcdHCjzfp
+ lWLbs87gN8VTLuDI3czloAXclu2FystPvMPw645L9bWP2aefjvkZN1XrLz7+ArrYqdxG
+ tNOGDj+e5l6Xq0vjWKw9sQDnO5NqXjqYGTcK1MS0jj7L7oOban8suCtxZoRw285Ls1mo
+ XdJSFAPhi9prny5n98fL7gg2Uvny2hjYE8LHrBYCuBZRxHGVmISuX7RB76xQFpVDOkT2
+ aXfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVf971qChZh2in6wTL07uOf7eeohZQ3b3AU8Pch79CssybScSoNEU/fty/bS/6cSf+jys9tCsaWJkAk@nongnu.org
+X-Gm-Message-State: AOJu0Yz2yJPyxIr9fvd67vxB8IqCKOJJwpwe5F4R3fBwl3jHAOa0407G
+ 3h8Mgxum23p9uQfZDPfHaEQTksei/bkw31WoN74Xtu2LKB9fcj81WosnYXuiKD8E/7XxB9a+Aj8
+ 3NCRnRqvzGnKARK0179QCryXQ2Ef9G7e2kwDAoBuZX+lmGP2gV4flaUOd
+X-Gm-Gg: ASbGncuvBtGtTVTllWW8ClfEalp5WmDArHpJVI5Rhld9wf+FrevQfUlI5qqREfdIXgF
+ Klw1M6QXYOsf7tqeE1M8xkocTif8JzfgfudAcDLyAEoMH3JMSfid72LjFz9QXcbhm4pmC8dMuxA
+ 9rxC6YGtrvjif3XO8aJGbBD8XAE85oKMsLXlt0GTDoJ5woXyDsn/jKv4U0O4t8w61d+LejfZSi2
+ 4dB6cdTMani9shipN4xO63lCiRQHJ0O+UTxdTe1b0ZP/GjqcYgDeQ/SZQdVMoTyIOtZklG/XjBI
+ zsR4ANMSG1Qk7r8TCDMIz2pPPNMpQzHxkAeRPhO0LKbP1vr/dCEXzyOEu8z2kHog33B946FE3iL
+ bdmw/q1fHbxY=
+X-Received: by 2002:a05:600c:1d06:b0:45b:6275:42cc with SMTP id
+ 5b1f17b1804b1-45b8557a3f7mr178186745e9.28.1757076336923; 
+ Fri, 05 Sep 2025 05:45:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPol9Apl4omw6SWkoYNvJJs9ckstWhFG2gxiVrGGSMNeipnZU64NdnnvW6yD+Gwgb9cvBZWg==
+X-Received: by 2002:a05:600c:1d06:b0:45b:6275:42cc with SMTP id
+ 5b1f17b1804b1-45b8557a3f7mr178186485e9.28.1757076336417; 
+ Fri, 05 Sep 2025 05:45:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b93fae643sm174502675e9.3.2025.09.05.05.45.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Sep 2025 05:45:35 -0700 (PDT)
+Message-ID: <5ab38eaa-b005-432a-9de7-fae3e6096f89@redhat.com>
+Date: Fri, 5 Sep 2025 14:45:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 13/15] hw/arm/smmuv3: Forward invalidation commands
+ to hw
+Content-Language: en-US
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, shameerkolothum@gmail.com
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-14-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250714155941.22176-14-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,104 +120,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Igor Mammedov <imammedo@redhat.com> writes:
+Hi Shameer,
 
-(trim the CC list somewhat)
-
-> On Thu,  4 Sep 2025 09:06:35 +0100
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+On 7/14/25 5:59 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
 >
->> From: Xin Wang <wangxinxin.wang@huawei.com>
->>=20
->> For now, qemu save/load CPU exception info(such as exception_nr and
->> has_error_code), while the exception error_code is ignored. This will
->> cause the dest hypervisor reinject a vCPU exception with error_code(0),
->> potentially causing a guest kernel panic.
->>=20
->> For instance, if src VM stopped with an user-mode write #PF (error_code =
-6),
->> the dest hypervisor will reinject an #PF with error_code(0) when vCPU re=
-sume,
->> then guest kernel panic as:
->>   BUG: unable to handle page fault for address: 00007f80319cb010
->>   #PF: supervisor read access in user mode
->>   #PF: error_code(0x0000) - not-present page
->>   RIP: 0033:0x40115d
->>=20
->> To fix it, support save/load exception error_code.
+> Use the provided smmuv3-accel helper functions to issue the
+> invalidation commands to host SMMUv3.
 >
-> this potentially will break migration between new/old QEMU versions
-> due to presence new subsection. But then according to commit message
-> the guest might panic (on dst) when resumed anyways.
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3-internal.h | 11 +++++++++++
+>  hw/arm/smmuv3.c          | 28 ++++++++++++++++++++++++++++
+>  2 files changed, 39 insertions(+)
 >
-> So patch changes how guest will fail
-> (panic: old =3D> old, old =3D> new
->  vs migration error: new =3D> old ).
->
-> Peter,
-> do we care and do we need a compat knob to make existing
-> machine type behave old way?
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index 8cb6a9238a..f3aeaf6375 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -233,6 +233,17 @@ static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
+>  #define Q_CONS_WRAP(q) (((q)->cons & WRAP_MASK(q)) >> (q)->log2size)
+>  #define Q_PROD_WRAP(q) (((q)->prod & WRAP_MASK(q)) >> (q)->log2size)
+>  
+> +static inline int smmuv3_q_ncmds(SMMUQueue *q)
+> +{
+> +    uint32_t prod = Q_PROD(q);
+> +    uint32_t cons = Q_CONS(q);
+> +
+> +    if (Q_PROD_WRAP(q) == Q_CONS_WRAP(q))
+> +        return prod - cons;
+> +    else
+> +        return WRAP_MASK(q) - cons + prod;
+> +}
+> +
+>  static inline bool smmuv3_q_full(SMMUQueue *q)
+>  {
+>      return ((q->cons ^ q->prod) & WRAP_INDEX_MASK(q)) == WRAP_MASK(q);
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index c94bfe6564..97ecca0764 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1285,10 +1285,17 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>      SMMUCmdError cmd_error = SMMU_CERROR_NONE;
+>      SMMUQueue *q = &s->cmdq;
+>      SMMUCommandType type = 0;
+> +    SMMUCommandBatch batch = {};
+> +    uint32_t ncmds;
+>  
+>      if (!smmuv3_cmdq_enabled(s)) {
+>          return 0;
+>      }
+> +
+> +    ncmds = smmuv3_q_ncmds(q);
+> +    batch.cmds = g_new0(Cmd, ncmds);
+> +    batch.cons = g_new0(uint32_t, ncmds);
+so you are provisionning space for n commands found in the queue,
+independently on knowing whether they will be batched, ie. only
+invalidation commands are. Then commands are added in the batch one by
+one and you increment batch->ncmds in smmuv3_accel_batch_cmd. I agree
+with Jonathan. This looks weird. AT least I would introduce a kelper
+that inits a Back of ncmds and I would make all the batch fields
+private. You you end up with the init +
+smmuv3_accel_add_cmd_to_batch(batch, cmd). Then independently on the
+ncmds you can issue a smmuv3_accel_issue_cmd_batch that would return if
+there is nothing in the batch. You also need a batch deallocation
+helper. I remember I expressed in the past my concern about having
+commands executed out of order. I don't remember out conclusion on that
+but this shall be clearly studied and conclusion shall be put in the
+commit message.
+> +
+>      /*
+>       * some commands depend on register values, typically CR0. In case those
+>       * register values change while handling the command, spec says it
+> @@ -1383,6 +1390,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>  
+>              trace_smmuv3_cmdq_cfgi_cd(sid);
+>              smmuv3_flush_config(sdev);
+> +            smmuv3_accel_batch_cmd(sdev->smmu, sdev, &batch, &cmd, &q->cons);
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ASID:
+> @@ -1406,6 +1414,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              trace_smmuv3_cmdq_tlbi_nh_asid(asid);
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_asid_vmid(bs, asid, vmid);
+> +            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+>              break;
+>          }
+>          case SMMU_CMD_TLBI_NH_ALL:
+> @@ -1433,6 +1442,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>              trace_smmuv3_cmdq_tlbi_nsnh();
+>              smmu_inv_notifiers_all(&s->smmu_state);
+>              smmu_iotlb_inv_all(bs);
+> +            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+>              break;
+>          case SMMU_CMD_TLBI_NH_VAA:
+>          case SMMU_CMD_TLBI_NH_VA:
+> @@ -1441,6 +1451,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>                  break;
+>              }
+>              smmuv3_range_inval(bs, &cmd, SMMU_STAGE_1);
+> +            smmuv3_accel_batch_cmd(bs, NULL, &batch, &cmd, &q->cons);
+>              break;
+>          case SMMU_CMD_TLBI_S12_VMALL:
+>          {
+> @@ -1499,12 +1510,29 @@ static int smmuv3_cmdq_consume(SMMUv3State *s)
+>          queue_cons_incr(q);
+>      }
+>  
+> +    qemu_mutex_lock(&s->mutex);
+> +    if (!cmd_error && batch.ncmds) {
+> +        if (!smmuv3_accel_issue_cmd_batch(bs, &batch)) {
+> +            if (batch.ncmds) {
+> +                q->cons = batch.cons[batch.ncmds - 1];
+> +            } else {
+> +                q->cons = batch.cons[0]; /* FIXME: Check */
+> +            }
+> +            qemu_log_mask(LOG_GUEST_ERROR, "Illegal command type: %d\n",
+> +                          CMD_TYPE(&batch.cmds[batch.ncmds]));
+Can't you have other error types returned?
 
-Igor,
+Thanks
 
-So this patch is already in master, it was only posted in this series
-because my master is never upto date with origin/master.
+Eric
+> +            cmd_error = SMMU_CERROR_ILL;
+> +        }
+> +    }
+> +    qemu_mutex_unlock(&s->mutex);
+> +
+>      if (cmd_error) {
+>          trace_smmuv3_cmdq_consume_error(smmu_cmd_string(type), cmd_error);
+>          smmu_write_cmdq_err(s, cmd_error);
+>          smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
+>      }
+>  
+> +    g_free(batch.cmds);
+> +    g_free(batch.cons);
+>      trace_smmuv3_cmdq_consume_out(Q_PROD(q), Q_CONS(q),
+>                                    Q_PROD_WRAP(q), Q_CONS_WRAP(q));
+>  
 
-Apologies again for the noise.
-
->
->>=20
->> Signed-off-by: Xin Wang <wangxinxin.wang@huawei.com>
->> Link: https://lore.kernel.org/r/20250819145834.3998-1-wangxinxin.wang@hu=
-awei.com
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>  target/i386/machine.c | 19 +++++++++++++++++++
->>  1 file changed, 19 insertions(+)
->>=20
->> diff --git a/target/i386/machine.c b/target/i386/machine.c
->> index dd2dac1d443..45b7cea80aa 100644
->> --- a/target/i386/machine.c
->> +++ b/target/i386/machine.c
->> @@ -462,6 +462,24 @@ static const VMStateDescription vmstate_exception_i=
-nfo =3D {
->>      }
->>  };
->>=20=20
->> +static bool cpu_errcode_needed(void *opaque)
->> +{
->> +    X86CPU *cpu =3D opaque;
->> +
->> +    return cpu->env.has_error_code !=3D 0;
->> +}
->> +
->> +static const VMStateDescription vmstate_error_code =3D {
->> +    .name =3D "cpu/error_code",
->> +    .version_id =3D 1,
->> +    .minimum_version_id =3D 1,
->> +    .needed =3D cpu_errcode_needed,
->> +    .fields =3D (const VMStateField[]) {
->> +        VMSTATE_INT32(env.error_code, X86CPU),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->> +};
->> +
->>  /* Poll control MSR enabled by default */
->>  static bool poll_control_msr_needed(void *opaque)
->>  {
->> @@ -1746,6 +1764,7 @@ const VMStateDescription vmstate_x86_cpu =3D {
->>      },
->>      .subsections =3D (const VMStateDescription * const []) {
->>          &vmstate_exception_info,
->> +        &vmstate_error_code,
->>          &vmstate_async_pf_msr,
->>          &vmstate_async_pf_int_msr,
->>          &vmstate_pv_eoi_msr,
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
