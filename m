@@ -4,150 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AD4CA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 18:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93ABDCA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 19:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uubJW-0004RI-DR; Fri, 05 Sep 2025 14:37:34 -0400
+	id 1uuc4a-0003sV-TB; Fri, 05 Sep 2025 15:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uubJQ-0004QQ-9n; Fri, 05 Sep 2025 14:37:29 -0400
-Received: from mail-bn8nam11on2062d.outbound.protection.outlook.com
- ([2a01:111:f403:2414::62d]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uuc4D-0003ol-Cu
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 15:25:53 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uubJ9-0005Oo-Af; Fri, 05 Sep 2025 14:37:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zTLBbA1y6xbix+/tbEPyR607DxRGaFW2YNy1s584olb247qWAyGenLjBTXhe5BwZdmYykvkWhZfXdJ+NVce81enPz7C/MCRUc7+z4h/vzCB8uYvxWfp8EemGz+arnBzmbhWLgeBHwowQQkyjoTmfDpS83pVib7YuyB506otWoVmPt59nRZuumMu9LJ5aQd1pZNeBc2P7yp/EX7xrwXgK9ZweoieHIOUHtzDtRlsTjrSJJp5qIIDbxJCtQl5BJlHsZcpu3Zaaq0IXXe/oqXWpPU7DrUyhi2HhqjjeaR8lTTKCMcGzRmfqrVMXqNtS54rKbnVQFZvWrbt1g6y5NulNvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yKr/0Opa1vkktKpLul8iXasjmQOoXLQQmW38q33MDsU=;
- b=FCqUclBVlkSK0yAH+M1gUNYvQWkx8k/OJfEc8/yUQ6grszC/jnlmXD6xbmwS1zxXXfvAnpUJUR1pTHmofH8kDzvujEONKCbz2m38MqKDxTZ4Xxkmmk12Va3IMfPmx9trFUFdE9qeT9u0Jv+fMfrBxsNQTaabr5NYwX0VnNrEUqfiBMMX698JhlHlksGZIHZ5KdaSetNF/pAg03laDsVwFRAgpVEzExWeVtnz/fC79pIcDYNb8PZgq9+nlN8a6EECnmwoVQbp5W6vxsDbYVAuW+R4jdpMwfK6Hb14S8Tib03fykwRDC5BJE3X0LgkScllMsPmd+KGRLsdKoPEGOw9EQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yKr/0Opa1vkktKpLul8iXasjmQOoXLQQmW38q33MDsU=;
- b=OCqecu9wK6BUftp1Esdlftnd9s/wjND/7KnZmdIUfSs4aITNKmQPxEM2l0tsxNtRHzfsACc8EFRN1Ee5iSHBXuTHF2kEBfWHUzzrrN+LVG+RrO9Oqv3O+O4IeOGkJnY0UUNm1wqTw3u9IN8mMj1dxTY5T9i/20g+EmiW/dAS6h9LZJ0FZ03XZZPljvezjP4BXH528OuqJjucxS5Ucbs/Fbustz7mW9Jh9EW3bg5PBRDxGnqvZj4BJTLzZmqOuNbz5ZlHhBxHO9vOPlor1tVeLvF71R0OTg2vDeimX+XKx6nIGPJdN/EpDEH/Qu7FppT7NUI36//RCAH2CNKw9r0xgw==
-Received: from CH0PR07CA0022.namprd07.prod.outlook.com (2603:10b6:610:32::27)
- by MN2PR12MB4334.namprd12.prod.outlook.com (2603:10b6:208:1d1::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Fri, 5 Sep
- 2025 18:36:57 +0000
-Received: from CH2PEPF0000014A.namprd02.prod.outlook.com
- (2603:10b6:610:32:cafe::f5) by CH0PR07CA0022.outlook.office365.com
- (2603:10b6:610:32::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9094.19 via Frontend Transport; Fri,
- 5 Sep 2025 18:36:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CH2PEPF0000014A.mail.protection.outlook.com (10.167.244.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Fri, 5 Sep 2025 18:36:57 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 5 Sep
- 2025 11:36:40 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Fri, 5 Sep 2025 11:36:40 -0700
-Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.126.190.180)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Fri, 5 Sep 2025 11:36:23 -0700
-Date: Fri, 5 Sep 2025 11:36:15 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
- <jgg@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 10/15] hw/arm/smmuv3-accel: Allocate a vDEVICE
- object for device
-Message-ID: <aLstn2coK3AMRCES@nvidia.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-11-shameerali.kolothum.thodi@huawei.com>
- <2bc9b909-e25b-4b4d-b4db-0cf1d10a339b@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uuc40-0001YL-3D
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 15:25:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 74EC056F29E;
+ Fri, 05 Sep 2025 21:25:27 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id uD5FRGSnOGZ7; Fri,  5 Sep 2025 21:25:25 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6423656F30D; Fri, 05 Sep 2025 21:25:25 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 623B656F288;
+ Fri, 05 Sep 2025 21:25:25 +0200 (CEST)
+Date: Fri, 5 Sep 2025 21:25:25 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Julian Ganz <neither@nut.email>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v6 00/25] tcg-plugins: add hooks for discontinuities
+In-Reply-To: <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
+Message-ID: <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
+References: <cover.1757018626.git.neither@nut.email>
+ <a1c2d356-e664-2632-002f-d0b9bea06e1e@eik.bme.hu>
+ <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <2bc9b909-e25b-4b4d-b4db-0cf1d10a339b@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000014A:EE_|MN2PR12MB4334:EE_
-X-MS-Office365-Filtering-Correlation-Id: f7c28f80-1484-4620-f733-08ddecab31fa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|7416014|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?e9NgTk+ikd8CJfvFbuNkIbs1HghKbzEuDFiDxT07VcDGhplJ0EbAqzpfB/yE?=
- =?us-ascii?Q?QLtKpqzE9yGsaA8aRfdc3Gxra73H4BxkACONt5OmMCZTi1KYX7dv+t4JPSqu?=
- =?us-ascii?Q?akG8Cyer/ciYD/JvzorasLGCg4ErTAyBRynxvVtkpZz335INjaBJNMov2e0A?=
- =?us-ascii?Q?3AwopQ3RDJzYCU1rceAukmPsFsTzzS/mHPNQhJkcAaihEVdm+3qBVjMXvb0k?=
- =?us-ascii?Q?INczlvhvL4be9DeeKwo51hcHUG/1pgv5+eHYC9ho5CmD2HiAiLnFtl0nLv8W?=
- =?us-ascii?Q?OFZ+SkWChpcbUiyo5ZzQ+n8CFm52HIyrY5qw3rmiV5PHjNLg5zArq16vmlQr?=
- =?us-ascii?Q?24IQwcBn33rd94onBalwesP8z0LWxUuqrv76PO4Pwx9DOokRhjwqh0xPtW1l?=
- =?us-ascii?Q?8qHdld5xCRK/9oJbzWeejzhe8NM/ixcg4ZJrkBSqcK+5TBfnefDCmwViOC2G?=
- =?us-ascii?Q?/hoKs4jeGtlXUmJEreuWQc4GRkraVXIs//W+yviBN3r8HZZxSpfBaOPzIwGQ?=
- =?us-ascii?Q?yph1cuil6UKyvbzC1nKoczCHYvpNPiwe7fO/BbVs5ff/K/nT3G7ufIa6iG9P?=
- =?us-ascii?Q?YVvdtVQdRujF+cSuS9n8E8uKRgc/fiuHUqYh+khfILKPOCwQFrhWCcg20M9l?=
- =?us-ascii?Q?TQfCSY95j2Ad8hH6XBT/e+ntNzhEjMPLCkn3Ie0FjtqjUXf+57uBUatjL4TG?=
- =?us-ascii?Q?tMS88Oboj1h8oxYf22S+d4gyYnBzUW3KbLprFyfCmttpJVTYI6uzu/Zu52lM?=
- =?us-ascii?Q?VB19OeqaJ/9WUxnf49DShivE272EnFi36js+iv3ptKR3En1Kz4Ge+FiEyHR0?=
- =?us-ascii?Q?Uo3ktdOnuDr9qYv+8tJ/8FozYKt0TdXXUUenVDNXVWFEe1jQkd+iohuOt8OS?=
- =?us-ascii?Q?6ixd35kiR7fsjBkX9WJghjakLz0EuO6Dlbi7toWTj69rYUqM+nuMp27jDyx2?=
- =?us-ascii?Q?hSezM3F6SNlrnorkwbQUUmvmVTEe4DlBdzsGilzGECduQmh72sO1MwUm2MMp?=
- =?us-ascii?Q?LaOZKO59ZosRqXJHy17MbfjR0SduYyPpb27VaENSgKIuJl4mynmpiYmJpo5P?=
- =?us-ascii?Q?engUCx0njs5PGbyQ9+ps/cSNa3OP++bryAXJKMR70rXTNMuuqMguvThIS0he?=
- =?us-ascii?Q?DcL+Z+he+9MK5fGOQZVbVIb0w8XfBQCeQYc1FgqvIujuwGN1RwLaHz04jCdf?=
- =?us-ascii?Q?2YOhXyANf9PRtCdcy7ieGJIV2woRM2diR0AjW+RDdF6Rqt5JcTqZk2Xd4Xl1?=
- =?us-ascii?Q?OJ+QRblne2SWDCIxG+jZUyiFOYKhtiJsyL1pfAUhGawUBG07qhmx/RV7Yc+5?=
- =?us-ascii?Q?M68F/5DCY2jPjVFx3Ryipey39P0lPTAmdNWt0llHGld7l++yuar5L85S4j/g?=
- =?us-ascii?Q?40h3/88iHPtsFw6jyXDLqLcPVdtIs+ZSPxXQ8heyVSPRUZWm6PKV6LnK/R28?=
- =?us-ascii?Q?gV75vQiR94/pozCA4eDQpdGyo4RF0GJk24m7klrURDlc1Nmr3/9IGZkLyG0I?=
- =?us-ascii?Q?Z3kfVKgY01ubK41qs+oRAFKBBibMXoK7yybg?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(7416014)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2025 18:36:57.7034 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f7c28f80-1484-4620-f733-08ddecab31fa
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000014A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4334
-Received-SPF: permerror client-ip=2a01:111:f403:2414::62d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-1581212006-1757099900=:18226"
+Content-ID: <768701e5-ec6c-a40f-cad4-7a5ae99f18a8@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,27 +69,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 05, 2025 at 11:57:59AM +0200, Eric Auger wrote:
-> Hi Shameer,
-> 
-> On 7/14/25 5:59 PM, Shameer Kolothum wrote:
-> > From: Nicolin Chen <nicolinc@nvidia.com>
-> >
-> > Allocate and associate a vDEVICE object for the Guest device
-> > with the vIOMMU. This will help the kernel to do the
-> > vSID --> sid translation whenever required (eg: device specific
-> I am not sure I get this. Do you mean translation between the vSID and
-> the pSID?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, the kernel requires VMID for all TLBI commands and pSID for
-device cache (ATC, CD) invalidations.
+--3866299591-1581212006-1757099900=:18226
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <e5f23854-ee6f-4828-93af-9840ae19de24@eik.bme.hu>
 
-QEMU only forwards raw guest commands to the host, leaving vSIDs
-in those ATC_INV and CD_CFGI commands. So, kernel will need the
-vSID->pSID mapping to overwrite the SID fields.
+On Fri, 5 Sep 2025, Julian Ganz wrote:
+> September 5, 2025 at 1:38 PM, "BALATON Zoltan" wrote:
+>> On Thu, 4 Sep 2025, Julian Ganz wrote:
+>>>  Even with the existing interfaces, it is more or less possible to
+>>>  discern these situations, e.g. as done by the cflow plugin. However,
+>>>  this process poses a considerable overhead to the core analysis one may
+>>>  intend to perform.
+>>>
+>> I'd rather have overhead in the plugin than in interrupt and exception
+>> handling on every target unless this can be completely disabled
+>> somehow when not needed to not pose any overhead on interrupt handling
+>> in the guest.
+>
+> The "more or less" is rather heavy here: with the current API there is
+> no way to distinguish between interrupts and exceptions. Double-traps
+> can probably only be detected if you don't rely on weird, very error
+> prone heuristics around TB translations.
+>
+> And as Alex Benée pointed out, qemu can be easily built with plugins
+> disabled.
+>
+>> Have you done any testing on how much overhead this adds
+>> to interrupt heavy guest workloads? At least for PPC these are already
+>> much slower than real CPU so I'd like it to get faster not slower.
+>
+> No, I have not made any performance measurements. However, given that
+> for every single TB execution a similar hook is called already, the
+> impact related to other existing plugin infrastructure _should_ be
+> neglectible.
+>
+> That is, if your workload actually runs any code and is not constantly
+> bombarded with interrupts that _do_ result in a trap (which _may_ happen
+> during some tests).
+>
+> So if you are performance sensitive enough to care, you will very likely
+> want to disable plugins anyway.
 
-I think we should have spared a few more words :)
+I can disable plugins and do that normally but that does not help those 
+who get QEMU from their distro (i.e. most users). If this infrastructure 
+was disabled in default builds and needed an explicit option to enable 
+then those who need it could enable it and not imposed it on everyone else 
+who just get a default build from a distro and never use plugins. Having 
+an option which needs rebuild is like not having the option for most 
+people. I guess the question is which is the larger group? Those who just 
+run guests or those who use this instrumentation with plugins. The default 
+may better be what the larger group needs. Even then distros may still 
+change the default so it would be best if the overhead can be minimised 
+even if enabled. I think the log infrastructure does that, would a similar 
+solution work here?
 
-Thanks
-Nicolin
+For testing I've found that because embedded PPC CPUs have a software 
+controlled MMU (and in addition to that QEMU may flush TLB entries too 
+often) running something that does a lot of memory access like runnung the 
+STREAM benchmark on sam460ex is hit by this IIRC but anything else causing 
+a lot of interrupts like reading from emulated disk or sound is probably 
+affected as well. I've tried to optimise PPC exception handling a bit 
+before but whenever I optimise something it is later undone by other 
+changes not caring about performance.
+
+Regards,
+BALATON Zoltan
+--3866299591-1581212006-1757099900=:18226--
 
