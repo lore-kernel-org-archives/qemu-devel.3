@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32BD3CA1010
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 14:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566B1CA1010
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 14:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuXJp-0007XK-Eb; Fri, 05 Sep 2025 10:21:37 -0400
+	id 1uuXUl-0004LZ-BW; Fri, 05 Sep 2025 10:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuXJn-0007WR-3e
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:21:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuXUi-0004Jl-Vt
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:32:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuXJc-0008FI-3T
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:21:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuXUb-0003I3-NR
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:32:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757082082;
+ s=mimecast20190719; t=1757082761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eUnAleF54zHWLtK6x5C95lNix9wdJClggXJb7jgC2Dc=;
- b=QHXUqvxcU8Em9B3L0FvDmG2gintALc51RuBFvPheM0OJ6pgRDusIeRS+3Y3zhDma5cz2mH
- WPchTdymD6b4v1amf88Pqtfsd7Q/mBG1kquGuj5AG25WoGU2is1AbjTGF2EqbGkfg8Rvlb
- Q1TkhI+myjXtSPqUhW6ltvnak67b0V8=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AJYsQ0k41dYEtEm+qEtpIcG16VDv3rXSXQjY6KH6CC8=;
+ b=SbN27ZXSN7kWZgZQiH6Q3umAKvh6BoA+ctWFRc0qZh5DP6Pc0MXMvbGH1LMgH8EhFx4QhZ
+ O7tDgeb7ZzuD8/yCL+/ZNj5GRgHgiBMVvQF2oHTzBA8ukCRZYRi+v5OsoFCQuNY5vTNAhW
+ oJvHIgVItRUwgEOtHOdfh7jBSnvS37U=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-QnwSxdfiM2S47VFFMM1W1w-1; Fri, 05 Sep 2025 10:21:19 -0400
-X-MC-Unique: QnwSxdfiM2S47VFFMM1W1w-1
-X-Mimecast-MFC-AGG-ID: QnwSxdfiM2S47VFFMM1W1w_1757082078
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4b345aff439so56547571cf.0
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 07:21:18 -0700 (PDT)
+ us-mta-654-tQLGaMKJM-mmsi-iikyoPA-1; Fri, 05 Sep 2025 10:32:40 -0400
+X-MC-Unique: tQLGaMKJM-mmsi-iikyoPA-1
+X-Mimecast-MFC-AGG-ID: tQLGaMKJM-mmsi-iikyoPA_1757082760
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b5e9b60ce6so23522121cf.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 07:32:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757082078; x=1757686878;
+ d=1e100.net; s=20230601; t=1757082760; x=1757687560;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eUnAleF54zHWLtK6x5C95lNix9wdJClggXJb7jgC2Dc=;
- b=FMUokYkgLAn67Z+QNVMx2YH9HDQ406HS7sogGHl8VDWTRoT757M4itSu3Fpw5dFiAL
- +6EhIDh74XcwkPSH/b187/lY6k5vHqhBB4AnHWxmfdASJsea+moH0GXu/W/FzxySHfRC
- pQRj0Ss6rovo9/Ef9N/yT0Gul5iYc7GMjgyQcKpe6WwOGrm/KNHRUfnt8Mg0LrsP7zJH
- tH98DHftmpKOkfyWicRyrszOtWi4xjt7EgupyKfsrJj0BG9pujxuM9OUOZN/2JbasGmK
- FzjH4XKMiS+dxNig4MKX28nUxFhsi2TSWMwxm41bI5PZdlPdiPXSxgOCXqSMAbehxo42
- i0Ig==
+ bh=AJYsQ0k41dYEtEm+qEtpIcG16VDv3rXSXQjY6KH6CC8=;
+ b=Tm/kYaqzM6hmn0qpPgMzNdluCt7LK4DdE/wmxiM0KTHDodSaKxfuy3O80LddMxdwnj
+ YAKRPpp6erwmXj939aZXRRlPjz9dPgGk4+pZz/yGwixbZyZTofA07/2N3jvIpEYGdmof
+ wxWepuN0UzU85u8A90XkwVOv89FS18yDAbj2zJGsTNkQqQNLOvEbrEG1sqVTzt5Kjhhj
+ Q8V7HuuK7eT2oM54Rb3imUIPZ7e2mNwzGFRHj+KqAgh3wSxiDjG0oKr2pSGYTBjDVhrl
+ 6aGaMw6tsJh265fb2chEGRC2+w92XUnXsYfKsWLG9M41EkdWehSg7F2v0ug3RhQ10NFx
+ PC0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXyqZ4eJi5AvDQX81Fgzb8s5jcOMp+we9XsE2UZau5RKgLHp9fj0xNZR59qja550FOZ7njgTBzyzT+@nongnu.org
-X-Gm-Message-State: AOJu0YykqT3srvc1vjZZHGzyC2lLf37JU7SlpyJd3iK+Vo0PsJtWgoU+
- 029A11TeCl3zlYQQEAyVNdb8ahINxxDXB1NqQnogNUZiWgImP03Io8gllThRSqJM455dK3nsI+I
- Dl94qIlNN3JEwEExbvJ7xoHDz6YDS8taIvSJj+LfIcDVpMPRcaD95/obX
-X-Gm-Gg: ASbGncvqCUeM/bEt6yQmiH6fvB3B5Rp5NqwJE54PSWCgRPm3GzB73ZW68xEm9fdUqUl
- 6eAIEHl2Ji8y28Gxk7hPE5W22jK5P+X7EQpeP3i5Kp3XP2/aeZnVJgVbcVna6bVlsVr9X5BiRZB
- m2vhMoIxvx0CnTiFkx44LJ9deZmlEcqE1JxhNhRx0ID2A3Tgp3HRVg876V123B/nhLEwN/J8wM9
- 7ETa8frG5Zsbe/Xhcu+PHnItG76R0DwFH4cngk6jwSkaZDa5H6sv3MSLsBn8Hi0EPVd1RuLIk1M
- SXUts4MhZlMFUKttFmUgkWU6fNEJYWr2
-X-Received: by 2002:a05:622a:47c4:b0:4b3:4c51:643e with SMTP id
- d75a77b69052e-4b34c516d88mr151826961cf.68.1757082078248; 
- Fri, 05 Sep 2025 07:21:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEapsx7hdiwyAtz86wiBs5ovYT7iicwjCRqOzxZu4Gh3/sDmYc1nsrF6JpCKn3Fs+++gIlX/Q==
-X-Received: by 2002:a05:622a:47c4:b0:4b3:4c51:643e with SMTP id
- d75a77b69052e-4b34c516d88mr151826171cf.68.1757082077635; 
- Fri, 05 Sep 2025 07:21:17 -0700 (PDT)
+ AJvYcCV8zjhoMMILi+YOSujvjDxdjoI8uTAifrov9kCJe3wnToTDf8JDhSikkUL5j2ZGmSITbKVU21LOhSBV@nongnu.org
+X-Gm-Message-State: AOJu0YwlU/u2AEZkH7h7EKqTVOPXkJw12rPaPzSXEyPHlE/JSZunha6J
+ lZqvyh/jzEhO9dL3pDrtlZ4qVxEDzYwhNgqbBtmhG1g4N/nZUPoZsQ6p39UuRfRpA6E0MGdKnQa
+ 7/Gck+p5QufxVj1NH6bKI7QyHctq0uiXFETqgR8A1vCgNOUOcJ75aKUC4
+X-Gm-Gg: ASbGncviHyHUlNqWQ7ksJ1o/zphkqQ0jz7SzPeytS3yDP/fCSCuqAfhHlqQ1MoMx0oc
+ sYE1aLKCF92TKIKFTWADFNgqlwJ2Id5AORDtNYTWgOdtUR43t5B36a5ARPkWZKxP5kC8QiE4Nmt
+ k9rMkri3uZ5t8SalZ77d84K9nV6WUZJvOBFLmQQZtoZ6mwq1L8WWIMc0FF0kNNcGMQyHjwKV0GA
+ niR9EPzqjYooGtB51h0AtcHpvCy2MFd1L0eur55jmLoPze0NIQvvYUeEMrR4iIgy0gbaLJ45ARd
+ ktxFVW1CqRawMSq+AH+oe02jZ9q2FPbm
+X-Received: by 2002:a05:622a:10c:b0:4b0:69d6:85a2 with SMTP id
+ d75a77b69052e-4b31d86175amr301290701cf.31.1757082759510; 
+ Fri, 05 Sep 2025 07:32:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGW45Sakcic0/au626zXwdL13HxP0OyaIYT2HgE/EM8+kHYAiCyErP6T4Qce2avfFhoAv8oA==
+X-Received: by 2002:a05:622a:10c:b0:4b0:69d6:85a2 with SMTP id
+ d75a77b69052e-4b31d86175amr301289721cf.31.1757082758538; 
+ Fri, 05 Sep 2025 07:32:38 -0700 (PDT)
 Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b48f780b9fsm45731361cf.41.2025.09.05.07.21.15
+ d75a77b69052e-4b48f673fecsm45984731cf.21.2025.09.05.07.32.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 07:21:16 -0700 (PDT)
-Date: Fri, 5 Sep 2025 10:21:03 -0400
+ Fri, 05 Sep 2025 07:32:37 -0700 (PDT)
+Date: Fri, 5 Sep 2025 10:32:25 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: CJ Chen <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
+Cc: chen CJ <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
@@ -86,25 +86,26 @@ Cc: CJ Chen <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Subject: Re: [PATCH RFC v2 9/9] tests/qtest: add test for memory region access
-Message-ID: <aLrxz-ULSP3rrm8p@x1.local>
+Subject: Re: [Withdrawn] [RFC PATCH v2 0/9] support unaligned access to xHCI
+ Capability
+Message-ID: <aLr0eTjUe8FXkQmV@x1.local>
 References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <20250822092410.25833-10-cjchen@igel.co.jp>
- <CAFEAcA-r5DdZj-+BxBkN+XqWJ3QrN6g+RshjShVoD-Zf1weYPg@mail.gmail.com>
+ <CAAMq-Y86UY7LNe-p2P_d8mw7FgTqLm=HQdqbMvV8xxTdsZmx1A@mail.gmail.com>
+ <CAFEAcA_EZxgnSHOEwdF5QayAxsncYnGGe4RDPP-vwYTqwU+dNA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA-r5DdZj-+BxBkN+XqWJ3QrN6g+RshjShVoD-Zf1weYPg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_EZxgnSHOEwdF5QayAxsncYnGGe4RDPP-vwYTqwU+dNA@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,116 +121,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 01, 2025 at 05:57:57PM +0100, Peter Maydell wrote:
-> On Fri, 22 Aug 2025 at 10:26, CJ Chen <cjchen@igel.co.jp> wrote:
+On Wed, Sep 03, 2025 at 10:47:17AM +0100, Peter Maydell wrote:
+> On Wed, 3 Sept 2025 at 06:03, chen CJ <cjchen@igel.co.jp> wrote:
 > >
-> > From: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> > I would like to withdraw this patch series.
 > >
-> > This commit adds a qtest for accessing various memory regions. The
-> > qtest checks the correctness of handling the access to memory regions
-> > by using 'memaccess-testdev'.
-> >
-> > Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-> > Co-developed-by: CJ Chen <cjchen@igel.co.jp>
-> > Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> > ---
-> >  tests/qtest/memaccess-test.c | 597 +++++++++++++++++++++++++++++++++++
-> >  tests/qtest/meson.build      |   9 +
-> >  2 files changed, 606 insertions(+)
-> >  create mode 100644 tests/qtest/memaccess-test.c
+> > Sorry for the inconvenience, and thank you for your understanding.
 > 
-> There seems to be a lot of duplication in these test functions
-> (for instance, aren't all of little_b_valid(), little_b_invalid(),
-> big_b_valid() and big_b_invalid() identical?  and the various
-> _invalid functions seem to have if() blocks where the code in
-> the if and the else halves is the same).
+> That's unfortunate; I think it's an issue we really do need to fix,
+> but I entirely understand if you don't have the time to work
+> on it further.
+> 
+> I might pick it up if I have the time to do so.
 
-Besides that, I don't yet understand some of the test code on endianess,
-this might be relevant to the question I raised in the other reply.
+I worked on this problem a bit more in the past few days while almost
+everyone will be at the forum.  It's almost because I saw similar issues
+that I have commented before on old versions, but they still existed in the
+core patch 5.  Then I found more issues.  Keep commenting on that might be
+awkward because there will be quite a few dependency changes.  One example
+is, I kept thinking we should not worry about MMIO out-of-bound over
+mr->size when reaching as deep as access_with_adjusted_size().  There are
+still quite a few places in patch 5 of this series that does the
+calculation and it's not obvious what happens if mr->size violated.
 
-Taking example of big_w_valid() test:
+Peter, if you want to pick it up, please consider reading the replies I
+left in this series, alone with this version below as comparison reading
+material.  The hope is the reworked patchset below _might_ be easier to
+read (at least I did add rich comments, because the unaligned changes are
+tricky and not easy to follow):
 
-static void big_w_valid(QTestState *qts, hwaddr offset)
-{
-    if (qtest_big_endian(qts)) {
-        qtest_writew(qts, base + offset + 0, 0x1100);                     <--- [1]
-        qtest_writew(qts, base + offset + 1, 0x3322);                     <--- [2]
-        qtest_writew(qts, base + offset + 2, 0x5544);
-        qtest_writew(qts, base + offset + 3, 0x7766);
-        qtest_writew(qts, base + offset + 4, 0x9988);
-        qtest_writew(qts, base + offset + 5, 0xbbaa);
-        qtest_writew(qts, base + offset + 6, 0xddcc);
-        qtest_writew(qts, base + offset + 7, 0xffee);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x1133); <--- [3]
-        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x3355);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x5577);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x7799);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0x99bb);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xbbdd);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xddff);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
-    } else {
-        qtest_writew(qts, base + offset + 0, 0x1100);                     <--- [4]
-        qtest_writew(qts, base + offset + 1, 0x3322);                     <--- [5]
-        qtest_writew(qts, base + offset + 2, 0x5544);
-        qtest_writew(qts, base + offset + 3, 0x7766);
-        qtest_writew(qts, base + offset + 4, 0x9988);
-        qtest_writew(qts, base + offset + 5, 0xbbaa);
-        qtest_writew(qts, base + offset + 6, 0xddcc);
-        qtest_writew(qts, base + offset + 7, 0xffee);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 0), ==, 0x2200); <--- [6]
-        g_assert_cmphex(qtest_readw(qts, base + offset + 1), ==, 0x4422);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 2), ==, 0x6644);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 3), ==, 0x8866);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 4), ==, 0xaa88);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 5), ==, 0xccaa);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 6), ==, 0xeecc);
-        g_assert_cmphex(qtest_readw(qts, base + offset + 7), ==, 0xffee);
-    }
-}
+https://gitlab.com/peterx/qemu/-/commits/mem-unaligned-fix-v0.1?ref_type=tags
 
-It tests on all MRs that are (1) device using big endianess, (2)
-.valid.min_access_size=2, (3) .valid.unaligned=true.
+Especially this patch:
 
-First of all, I don't understand why a test case needs to behave
-differently according to the TARGET endianess, aka, qtest_big_endian().
-IIUC, each of the qtest_writew() should request a WRITE with an integer
-value to be applied to the MMIO region, when we know the endianess of the
-region (in this case, big endian), we know exactly how it will be read out.
+https://gitlab.com/peterx/qemu/-/commit/8a8f0f5728a7adc6ecb2cf4358366d2d663a5ed9
 
-Taking above steps [1-3] as example.  Here [1+2] will write two words to
-offset 0x0, 0x1 correspondingly:
+However that won't pass the test cases.  I still doubt the test case is
+wrong but I didn't go further modifying the test cases yet (or any better
+way to test this as you suggested in the other reply).  I think that can be
+the 1st thing we figure out, not the best way to test, but the correctness
+of the current test case, because IIUC it shouldn't be relevant to impl of
+unaligned access.  To me, if we can reach a consensus on what is the
+correct (test) behavior on all kinds of unaligned access emulations, fixing
+the impl should be relatively easy.
 
-  - [1] WRITE(addr=0x0, size=2, data=0x1100)
-  - [2] WRITE(addr=0x1, size=2, data=0x3322)
-
-Here, IMHO the result should not depend on the internal property of the
-systems (e.g. MR .impl values, after we have unaligned support memory core
-should resolve all of these issues by either split 2B MMIO into two 1B, or
-do proper padding on start/end to amplify the write if necessary).  Because
-we know the device / MR is big endianess, so we should know the result of
-the write already, as below:
-
-  - After [1] WRITE(addr=0x0, size=2, data=0x1100), data should look like:
-
-    [0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ...]
-     ^^^^^^^^^^^
-    Here it should always follow device's endianess.
-
-  - After [2] WRITE(addr=0x1, size=2, data=0x3322), data should look like:
-
-    [0x11, 0x33, 0x22, 0x00, 0x00, 0x00, 0x00, 0x00, ...]
-           ^^^^^^^^^^^
-    Here it should always follow device's endianess.
-
-Above would be verified by step [3].  Basically it verifies READ(addr=0x0,
-size=2) would result in 0x1133, which looks correct.
-
-However the problem is, when GUEST is little endian, the test, even if
-written the same data [4-5], expecting different results [6].  That's the
-part I don't understand.  I think it would make sense if [6] should also
-verify the same as [3].  IOW, the chunk in the "if" section looks like the
-right thing to test for both big/little GUEST endianess.
+Thanks,
 
 -- 
 Peter Xu
