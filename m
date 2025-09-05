@@ -4,96 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742D4CA1012
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Sep 2025 22:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98241CA1002
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 01:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuIVI-00054O-UT; Thu, 04 Sep 2025 18:32:29 -0400
+	id 1uuKnr-0008Im-GL; Thu, 04 Sep 2025 20:59:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuIVG-00053Z-PU
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:32:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuIV6-0006t2-6s
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 18:32:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757025123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=GMauJ16MY/NX9oxW4O4AYryWbtbAiPiqAFghBrOlrDE=;
- b=H158CA1CqEZfN8MdLlv4Fci1YsW1VEFAQAbxEKkci5SSBYq6wL/+JxxnHrdAlat0kXkxs1
- kkdIKJgnUJ7cYWejIwW5Lnoc0LI0X1nZZbGVy1nir7WTG9TLdFdOjN+2ruvsTtf6Y8akSq
- IWw9LFmMLACMLHsfMCe9XRH776f4e0I=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-5OuNpohdN0alErEC8ikheg-1; Thu, 04 Sep 2025 18:32:02 -0400
-X-MC-Unique: 5OuNpohdN0alErEC8ikheg-1
-X-Mimecast-MFC-AGG-ID: 5OuNpohdN0alErEC8ikheg_1757025122
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4b34c87dad0so31118891cf.3
- for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 15:32:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757025122; x=1757629922;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GMauJ16MY/NX9oxW4O4AYryWbtbAiPiqAFghBrOlrDE=;
- b=FfW8c71pMkfaqys0TTfBCMtGq6ziN6isTnix1wErnZc04gVWf60mquvppmWAPUibjF
- UTqvK/bo7N6XQjhps274EwRURipUpFibHfty993xh0B7lZh32QaGAVxznQcLHU2Vgnoo
- IEQJnDSTQgZfIr/fOuyKVU17FwUmOp5/nX3YLI9hYg3g/+RZklBp0oNHtCV6bATlHkco
- q1JT5XZks/lsaxZfAHPir/bsOjsSZ1j9mM437cwMl31jxaGODKtA4DIlESC2UeJcabyf
- bNAEDP6dTmL+HOZcODFxvnJg9oOvYpuE5WQ4MZTTTfLXAUUoivqhioXOss/N0pryEY75
- 1E2Q==
-X-Gm-Message-State: AOJu0YwEWJP0L7HYWOnfeTUCrsdlQ7T/vyO/KpDTfhGZTciwJTxs7XCk
- JabJyJBLFQ6fnXI7YFSlvZvBockYIFjEeUaob9PuJuR6cmDoO6kkDNZ9qJQFYekVZv+lpz/1gnN
- TqUms5kkZlB2pZ0KgnyLnCFTc/y62NP9rYXIdWdmOZ0Rc1gcJtS2n5/xHft8NNf1R8n0iA+xlKP
- ylnFtgAuW3FTstsbNPuE4AAhT0EKiBrx7MgM40Dw==
-X-Gm-Gg: ASbGnct0IQAoDd+Lh7Tv5Gh8XQcktEX5vwiGMpmV4AotF4hNpvig9LajAGu1/UrZhxG
- //Vbf6rTHCHA+4nLz8ctsQ8Ej2ts+kN0y32r51pms78lLuYnrqBdOaSChUiR/wEcywciUTupq+9
- AusZODr+GDzzGubpUd80/eSBvU2aQcJxHNOhmNOauMitU8ZtXYWUL65tdfxgGpI+4UmJEGvorS/
- Ot3SYKWZY4Yh3un4svljsjUkp4hWbFhN5dhy/jYxTqlV0gHIRjUlSq0xfC3BH9IbRLxJg0ThbBw
- GAvvEaMLtQvu3DJoRFcqk5KHMUn/JNqgXv6OW6ohGJbSgiFKY9kTWDMk4Ln1vuCERI+3YlsHbAp
- pMi5KdhhBn0EZz6z+ud4=
-X-Received: by 2002:a05:622a:a13:b0:4b5:de12:4c34 with SMTP id
- d75a77b69052e-4b5de1250c6mr34945641cf.75.1757025121631; 
- Thu, 04 Sep 2025 15:32:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/DsK1lCNe/eKdcfe7iAu+t5FDa6/H8Z3POgqOnaZGVl8PzECAkNQNaN8/BEk94tEEeuDFRg==
-X-Received: by 2002:a05:622a:a13:b0:4b5:de12:4c34 with SMTP id
- d75a77b69052e-4b5de1250c6mr34945221cf.75.1757025121001; 
- Thu, 04 Sep 2025 15:32:01 -0700 (PDT)
-Received: from x1.com
- (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7252d6ad05asm34200366d6.62.2025.09.04.15.31.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Sep 2025 15:32:00 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH] bql: Fix bql_locked status with condvar APIs
-Date: Thu,  4 Sep 2025 18:31:58 -0400
-Message-ID: <20250904223158.1276992-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uuKne-0008Gm-6f
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 20:59:34 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uuKnX-0004FI-U7
+ for qemu-devel@nongnu.org; Thu, 04 Sep 2025 20:59:33 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxaNHmNbpotOIGAA--.14640S3;
+ Fri, 05 Sep 2025 08:59:18 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxH8LjNbpoRSp_AA--.20551S3;
+ Fri, 05 Sep 2025 08:59:18 +0800 (CST)
+Subject: Re: [PATCH v3 3/3] hw/loongarch/virt: Register reset interface with
+ CPU object
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+References: <20250903023556.3082693-1-maobibo@loongson.cn>
+ <20250903023556.3082693-4-maobibo@loongson.cn>
+ <20250904101347.0599daab@fedora>
+ <5be0c9ed-d572-42e0-e6aa-607483410bea@loongson.cn>
+ <20250904160859.6cacea91@fedora>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <9f3c1e32-989c-f3b3-9509-e5de12466cb3@loongson.cn>
+Date: Fri, 5 Sep 2025 08:57:15 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20250904160859.6cacea91@fedora>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qMiowJCxH8LjNbpoRSp_AA--.20551S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxuryDXF4rur4fJrWfXw17twc_yoWrJrW7pr
+ WxCF4YyF4ktr1UZ3y2q3WYyF1qqw1xKr1fZF1ftryFyws0qr1jqF10vFy7uFy8Cw1rWF1F
+ qrn0kw1ava1UJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,154 +88,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
-whether the current thread is holding the BQL lock.
 
-It's a pretty handy variable.  Function-wise, QEMU have codes trying to
-conditionally take bql, relying on the var reflecting the locking status
-(e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look at
-the variable (in reality, co_tls_bql_locked), to see which thread is
-currently holding the bql.
 
-When using that as a debugging facility, sometimes we can observe multiple
-threads holding bql at the same time. It's because QEMU's condvar APIs
-bypassed the bql_*() API, hence they do not update bql_locked even if they
-have released the mutex while waiting.
+On 2025/9/4 下午10:08, Igor Mammedov wrote:
+> On Thu, 4 Sep 2025 19:55:49 +0800
+> Bibo Mao <maobibo@loongson.cn> wrote:
+> 
+>> On 2025/9/4 下午4:13, Igor Mammedov wrote:
+>>> On Wed,  3 Sep 2025 10:35:56 +0800
+>>> Bibo Mao <maobibo@loongson.cn> wrote:
+>>>    
+>>>> With cpu hotplug is implemented on LoongArch virt machine, reset
+>>>> interface with hot-added CPU should be registered. Otherwise there
+>>>> will be problem if system reboots after cpu is hot-added.
+>>>>
+>>>> Now register reset interface with CPU object is realized and remove
+>>>> the reset interface with CPU object unrealizd.
+>>>>
+>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>>> ---
+>>>>    hw/loongarch/boot.c    | 13 -------------
+>>>>    target/loongarch/cpu.c |  4 ++++
+>>>>    2 files changed, 4 insertions(+), 13 deletions(-)
+>>>>
+>>>> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+>>>> index 5799b4c75c..a516415822 100644
+>>>> --- a/hw/loongarch/boot.c
+>>>> +++ b/hw/loongarch/boot.c
+>>>> @@ -350,13 +350,6 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>>>>        return kernel_entry;
+>>>>    }
+>>>>    
+>>>> -static void reset_load_elf(void *opaque)
+>>>> -{
+>>>> -    LoongArchCPU *cpu = opaque;
+>>>> -
+>>>> -    cpu_reset(CPU(cpu));
+>>>> -}
+>>>> -
+>>>>    static void fw_cfg_add_kernel_info(struct loongarch_boot_info *info,
+>>>>                                       FWCfgState *fw_cfg)
+>>>>    {
+>>>> @@ -439,12 +432,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+>>>>    void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>>>>    {
+>>>>        LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+>>>> -    int i;
+>>>> -
+>>>> -    /* register reset function */
+>>>> -    for (i = 0; i < ms->smp.cpus; i++) {
+>>>> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
+>>>> -    }
+>>>>    
+>>>>        info->kernel_filename = ms->kernel_filename;
+>>>>        info->kernel_cmdline = ms->kernel_cmdline;
+>>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>>> index 3a7621c0ea..9edb8ebc4d 100644
+>>>> --- a/target/loongarch/cpu.c
+>>>> +++ b/target/loongarch/cpu.c
+>>>> @@ -668,6 +668,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>>>>    
+>>>>        qemu_init_vcpu(cs);
+>>>>        cpu_reset(cs);
+>>>> + #ifndef CONFIG_USER_ONLY
+>>>> +    qemu_register_resettable(OBJECT(dev));
+>>>> + #endif
+>>>
+>>> I'd put this in virt_cpu_plug() as last step, which should work both for
+>>> cold and hotpluged cpus. And drop CONFIG_USER_ONLY while at it.
+>> With symmetry is the same with qemu_unregister_resettable()
+>> Symmetrically, to put it in virt_cpu_unplug()?
+> 
+> yep
+Will do in next version.
+> 
+>>
+>> If there are many boards in future, the boards do not need to care about
+>> registering cpu reset interface, which is done in CPU object already.
+> 
+> lets worry about more boards when that arrives.
+> that said, yanking reset pin on CPU is usually the board/firmware responsibility.
+> 
+> PS:
+> we have reset registered in realizefn() across QEMU, largely due to historical reasons.
+Ok, thanks for your explanation.
 
-It can cause confusion if one does "thread apply all p co_tls_bql_locked"
-and see multiple threads reporting true.
-
-Fix this by moving the bql status updates into the mutex debug hooks.  Now
-the variable should always reflect the reality.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-rfc->v1
-- Fix comment [Stefan]
----
- include/qemu/main-loop.h  | 18 ++++++++++++++++++
- util/qemu-thread-common.h |  7 +++++++
- stubs/iothread-lock.c     |  9 +++++++++
- system/cpus.c             | 14 ++++++++++++--
- 4 files changed, 46 insertions(+), 2 deletions(-)
-
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 4e2436b196..0d55c636b2 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -270,6 +270,24 @@ void rust_bql_mock_lock(void);
-  */
- bool bql_locked(void);
- 
-+/**
-+ * mutex_is_bql:
-+ *
-+ * @mutex: the mutex pointer
-+ *
-+ * Returns whether the mutex is the BQL.
-+ */
-+bool mutex_is_bql(QemuMutex *mutex);
-+
-+/**
-+ * bql_update_status:
-+ *
-+ * @locked: update status on whether the BQL is locked
-+ *
-+ * NOTE: this should normally only be invoked when the status changed.
-+ */
-+void bql_update_status(bool locked);
-+
- /**
-  * bql_block: Allow/deny releasing the BQL
-  *
-diff --git a/util/qemu-thread-common.h b/util/qemu-thread-common.h
-index 2af6b12085..09331843ba 100644
---- a/util/qemu-thread-common.h
-+++ b/util/qemu-thread-common.h
-@@ -14,6 +14,7 @@
- #define QEMU_THREAD_COMMON_H
- 
- #include "qemu/thread.h"
-+#include "qemu/main-loop.h"
- #include "trace.h"
- 
- static inline void qemu_mutex_post_init(QemuMutex *mutex)
-@@ -39,6 +40,9 @@ static inline void qemu_mutex_post_lock(QemuMutex *mutex,
-     mutex->line = line;
- #endif
-     trace_qemu_mutex_locked(mutex, file, line);
-+    if (mutex_is_bql(mutex)) {
-+        bql_update_status(true);
-+    }
- }
- 
- static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
-@@ -49,6 +53,9 @@ static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
-     mutex->line = 0;
- #endif
-     trace_qemu_mutex_unlock(mutex, file, line);
-+    if (mutex_is_bql(mutex)) {
-+        bql_update_status(false);
-+    }
- }
- 
- #endif
-diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
-index 6050c081f5..c89c9c7228 100644
---- a/stubs/iothread-lock.c
-+++ b/stubs/iothread-lock.c
-@@ -34,3 +34,12 @@ void bql_block_unlock(bool increase)
-     assert((new_value > bql_unlock_blocked) == increase);
-     bql_unlock_blocked = new_value;
- }
-+
-+bool mutex_is_bql(QemuMutex *mutex)
-+{
-+    return false;
-+}
-+
-+void bql_update_status(bool locked)
-+{
-+}
-diff --git a/system/cpus.c b/system/cpus.c
-index 437848b5eb..9c066e1c08 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -524,6 +524,18 @@ bool qemu_in_vcpu_thread(void)
- 
- QEMU_DEFINE_STATIC_CO_TLS(bool, bql_locked)
- 
-+bool mutex_is_bql(QemuMutex *mutex)
-+{
-+    return mutex == &bql;
-+}
-+
-+void bql_update_status(bool locked)
-+{
-+    /* This function should only be used when an update happened.. */
-+    assert(bql_locked() != locked);
-+    set_bql_locked(locked);
-+}
-+
- static uint32_t bql_unlock_blocked;
- 
- void bql_block_unlock(bool increase)
-@@ -564,14 +576,12 @@ void bql_lock_impl(const char *file, int line)
- 
-     g_assert(!bql_locked());
-     bql_lock_fn(&bql, file, line);
--    set_bql_locked(true);
- }
- 
- void bql_unlock(void)
- {
-     g_assert(bql_locked());
-     g_assert(!bql_unlock_blocked);
--    set_bql_locked(false);
-     qemu_mutex_unlock(&bql);
- }
- 
--- 
-2.50.1
+Regards
+Bibo Mao
+> 
+>>
+>> Regards
+>> Bibo Mao
+>>>
+>>> with that
+>>> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+>>>
+>>> PS:
+>>> the rest of the patches are very arch specific so I won't review them.
+>>>    
+>>>>    
+>>>>        lacc->parent_realize(dev, errp);
+>>>>    }
+>>>> @@ -678,6 +681,7 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
+>>>>    
+>>>>    #ifndef CONFIG_USER_ONLY
+>>>>        cpu_remove_sync(CPU(dev));
+>>>> +    qemu_unregister_resettable(OBJECT(dev));
+>>>>    #endif
+>>>>    
+>>>>        lacc->parent_unrealize(dev);
+>>>    
+>>
+> 
 
 
