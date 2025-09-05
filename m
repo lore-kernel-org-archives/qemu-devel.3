@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B6DCCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6258DCA1015
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuRMD-0001aN-3e; Fri, 05 Sep 2025 03:59:41 -0400
+	id 1uuRNz-0002hf-SL; Fri, 05 Sep 2025 04:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uuRM3-0001X2-2Q; Fri, 05 Sep 2025 03:59:31 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuRNt-0002fd-Tt
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:01:27 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uuRLw-00022R-G2; Fri, 05 Sep 2025 03:59:30 -0400
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 5C63614000CE;
- Fri,  5 Sep 2025 03:59:20 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-07.internal (MEProxy); Fri, 05 Sep 2025 03:59:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1757059160; x=
- 1757145560; bh=+2bR5nK6iyFz9Ed9n3w6YoWp1/wQG+r8Tz4VCeQod3U=; b=e
- GFlwULRZADrcl5q8G0SzENZ5+QSMPJGs/1g9aN3+MGEbBHPo+g8yn5SKdrggUINT
- xYI34hRk9Izb5+CzhZfsamJKt5PIpowcBndWZ08f6tA3jDTVkChwPzMzUR4XQm/I
- VgWx7usTkWlieHPNNrNk6J2Q9SMpneL+alo7ZsbzbhihlyhnKymSiOhEsclsF9xB
- vZb3ZTDCEbjWz6968NCSANMTLf7/hlAk8bB/HBsdl4snqTIy2KTpKhMlUSO9WpZy
- 8nU6iGIzACqt335jlRUNpE7IGeNzH5+ax7U49A0IUVghSW7YinBjtvkmVLX0FeGe
- JvEQSTaikzz3kaGLfY46w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1757059160; x=1757145560; bh=+2bR5nK6iyFz9Ed9n3w6YoWp1/wQG+r8Tz4
- VCeQod3U=; b=C4IAco/y7uutdaEMxYKvryIK2kucKoJoFZrCxlhSudU83C64p7P
- elKKzRLMaixLLzUsRtM9e2qULLpXDHEU0EfFdm5mUOKNZoCYpM4oYYMxHQktSWVf
- h4H6Ev9gYYTopTCpeH8LPf9SwwY7nPxqfU/d60j3fumrG4cPKG+mbvuu0h9eYcsf
- hzytIZb/nE0kx37yQObt2HrsBWw+7Ki/SfxMWAIM3pI3rhSfQrTkMPKTMPBr2I85
- d/npzErrdssmkv0a+IUd5qVyFGJj3FBjEw12dmgsnX5wn0d3SD813E6FmDkGg5e5
- Grd+b36yrFAQpRUUWQr55t4DnjnuX5L/qWQ==
-X-ME-Sender: <xms:V5i6aO3A4nsWV7BV9dCHw2B0FEXo3p3N2hqENlNAAv_7x-plJuaMYg>
- <xme:V5i6aJhtICIZ_sBmKD9ntn2Ol1hfbCAM4x6Y4WtXj8EqUNQiccMMyBoqWd9fMUCz_
- 3r1Xa8dQIhH_ikQqWc>
-X-ME-Received: <xmr:V5i6aHWpUmbKOIlQqyGfq5fiEPpxNGEtV2c2s-QMUoXEPO2Ge9vvCipQ0QVB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekfeehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
- lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
- epfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgv
- nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
- epjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecu
- vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesih
- hrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphho
- uhhtpdhrtghpthhtohepmhhjthesthhlshdrmhhskhdrrhhupdhrtghpthhtohepqhgvmh
- huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgih
- uggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmh
- hsuhhnghdrtghomhdprhgtphhtthhopehqvghmuhdqshhtrggslhgvsehnohhnghhnuhdr
- ohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:V5i6aAUUw-lGGwak5lvr7eB5AA-g6CPJLzQtiQ3tCbDEuVfeqSw7mA>
- <xmx:V5i6aPgi2CWsMAzQc4imWwXkhP8dE43T-9GBOYZJdMEpiRXnQg6r2Q>
- <xmx:V5i6aDYqGqeEfKkZ_K7Mxy_GPH6F2Oyw3nrq2GpVQfXr7xloJQz_5g>
- <xmx:V5i6aEqBpmQRZRYzRsHXBXiupsBu72SD4cWJZDlMPEllRyAXTbE7DQ>
- <xmx:WJi6aB-Sc0-t4-ef88ar1vi9pp5FFqVflVJdFvyxiwngF6x5OkAfcJUn>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 03:59:18 -0400 (EDT)
-Date: Fri, 5 Sep 2025 09:59:17 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL 0/3] nvme fixes
-Message-ID: <aLqYVZ63dDNyg_D1@AALNPWKJENSEN.aal.scsc.local>
-References: <20250811112557.521-1-its@irrelevant.dk>
- <986bb1ea-b889-4c06-a2fd-92c76496e0f1@tls.msk.ru>
- <bf8d4aa4-cbb2-4973-8541-0c4aaf2e12d2@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuRNi-0002NJ-In
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:01:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=OEiEyhP9HcL9wnz8QXioPuJtTk9Mz6fPcXsvPlijUQs=; b=Fp//zeczAj4GglOA3kEUFdQMkW
+ /9LdDtXqSH9bsbGlO9YvM9G8DwhMttLa69KskNthkcd4s26+U9uTqeS08DCwnNPDlzuwd4uCxxnl4
+ nKFEBguUZ4jufoD6RGMWocLlPCVvkoxubG4NZGazuhTGZDt774e6vm45d36UDiP2hUaejRuW1JgNc
+ X944BS9rGb0jwrw5eKzAQphZwhsj3KbT9tPCBdX6tWdbEF03sbrjY6YIot3cK1M8ZBai3Xdvr2Yyc
+ 7kXQy/bfx4y0xbX8bU2CzD/V/0r+GDnmNmoSv5i27kJBTU/0OVJHocwUiQZaPVqD/ZKuzU3ckqaDf
+ TUMDcW8qwOrBvtgrBbRTvNj3WF+JX+fgOTF+8hNzSGsCr774tXoUNbLDyZ7K64QIylMX4jZoLTUU9
+ IKmtM5EwBZst0yyQzLq0TW/VNiWxnQcPyyPhkiBjRl/FwN4xwJZPFfRzKGy1Qo4nqkhhiZ3+TOhat
+ u7vQdEns4XxFEOFuKxUWQW2tKASDl+RFxxP5Z/j+19tKxF2BHEXIUqPpoKDy6NtZ7Zhrz2ZW1PxZS
+ 4/3Ii4BrDUoKKeeBG00gKhkHOW0+sAtR4iySO3dCo0MXTAILxESJpB56mj1Dpqxh1uuKLTsHCafim
+ 49ZucxOyP7c79GY3LOGZre3bUMjXzww3D1SZEerk0=;
+Received: from [131.175.126.3] (helo=[10.175.135.66])
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uuRLm-0006HH-2w; Fri, 05 Sep 2025 08:59:14 +0100
+Message-ID: <c0e7ff81-a772-4995-b253-38684ff77867@ilande.co.uk>
+Date: Fri, 5 Sep 2025 09:01:03 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="jeFfMnPgcInw95kf"
-Content-Disposition: inline
-In-Reply-To: <bf8d4aa4-cbb2-4973-8541-0c4aaf2e12d2@tls.msk.ru>
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: atar4qemu@gmail.com
+References: <20250905051936.92815-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20250905051936.92815-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 131.175.126.3
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 0/2] target/sparc: Loosen decode of STBAR/RDY for v7/v8
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,53 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 05/09/2025 06:19, Richard Henderson wrote:
 
---jeFfMnPgcInw95kf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hi Mark,
+> 
+> Here's an alternative to your recent STBAR patch.  It goes further
+> and adjusts RDY as well for really old machines.
+> 
+> r~
+> 
+> 
+> Richard Henderson (2):
+>    target/sparc: Loosen decode of STBAR for v8
+>    target/sparc: Loosen decode of RDY for v7
+> 
+>   target/sparc/translate.c  | 36 ++++++++++++++++++++++++------------
+>   target/sparc/insns.decode | 25 ++++++++++++++++++++++---
+>   2 files changed, 46 insertions(+), 15 deletions(-)
 
-On Sep  5 10:57, Michael Tokarev wrote:
-> On 12.08.2025 08:49, Michael Tokarev wrote:
-> > On 11.08.2025 14:25, Klaus Jensen wrote:
-> >=20
-> > > Keith Busch (1):
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/nvme: cap MDTS value for inte=
-rnal limitation
-> > >=20
-> > > Klaus Jensen (2):
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/nvme: fix namespace attachment
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/nvme: revert CMIC behavior
-> > >=20
-> > > =C2=A0 hw/nvme/ctrl.c | 43 ++++++++++++++++++++++++++++---------------
-> > > =C2=A0 1 file changed, 28 insertions(+), 15 deletions(-)
-> >=20
-> > Is there anything there which should be applied to qemu stable
-> > series?=C2=A0 Or *not* to be applied? :)
-> >=20
-> > (current relevant stable series is 10.0, which is supposed to be LTS).
->=20
-> I'm picking this up for stable-10.0.x, together with 53493c1f83
-> "hw/nvme: cap MDTS value for internal limitation".  Please let me
-> know if I shouldn't.
->=20
+Thanks! I've booted some test images (along with the original test case) and it looks 
+good to me, so:
 
-Thanks Michael, that is perfect.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
---jeFfMnPgcInw95kf
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+ATB,
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmi6mFMACgkQTeGvMW1P
-DekDDAgAtIOr1wQOPVdHUo+JaJbDyky4EVAY1l72h69KHYOSbOVB27B9/T+r9RPM
-X2MehfhSaUTtwp6iGeBNXTcXYHFG0o8Gbj+nOxykJOKH5kC7PzTmgBvo3HV5EqCr
-3de5ntjBdxr7JeXANWClWe44tdsejrRonGD9jnDh7bdTOxD4QnuoGcoIhWq+wc4S
-CMsFilbpi7g4dc/MAyN6OyCxYJpT/r7b42dOYFw0IPOilQIy6qb//ZUAGf0ClMya
-vMpEdM5SxL4seSmnPSJADSs+1Ob0K0HkwO/UooGiMevAoqAK4ns/QtNqqxBHDnW8
-6frrJwV7JiBDrqFB4hI22heIgKaB9A==
-=p953
------END PGP SIGNATURE-----
+Mark.
 
---jeFfMnPgcInw95kf--
 
