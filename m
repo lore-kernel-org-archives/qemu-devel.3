@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE39CA1013
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D952ACA101F
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 15:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuY62-0000Qw-CJ; Fri, 05 Sep 2025 11:11:26 -0400
+	id 1uuY5o-0008Fp-B1; Fri, 05 Sep 2025 11:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY4u-0007bi-3Y; Fri, 05 Sep 2025 11:10:20 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1uuY58-0007jF-Jm; Fri, 05 Sep 2025 11:10:31 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY4U-0005mq-MJ; Fri, 05 Sep 2025 11:10:05 -0400
+ id 1uuY4z-0006Sb-NO; Fri, 05 Sep 2025 11:10:28 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 8AD3B43E70;
- Fri,  5 Sep 2025 15:09:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57370C4CEF9;
+ by tor.source.kernel.org (Postfix) with ESMTP id 1A1D5602A5;
+ Fri,  5 Sep 2025 15:09:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D782C4CEFE;
  Fri,  5 Sep 2025 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1757084974;
- bh=1oIvO1QlVhXqBtPnlpZJlpicVsSB40ZDaezNm9AW8H0=;
- h=From:To:Cc:Subject:Date:From;
- b=Q73rMczLQ8YiDF0dgBPQBRkjuUlz4jtHbOU/+fLi22st/qwfhAYLwNFM6sFJCWuQI
- Rj+z/Fv62ImYHlemRTRuJxmzMy3muDpIzMIyw35C8856DZouxDrsM0LX7Z+QpfYmp3
- FnGwNUciTimYfUhzIpZtq8+oRvPtAHprMyl8agkn9I9MjYxPGWuVFqoNa+Jgw0Eb6t
- OGZ75S0UGZW+PrylYbi5oK/SZceVm+bQvkv0CPtwksDVc4SaNIfPL7vNVOLnoVR5Fx
- HSjzjuZqne3UuSf7B9qBeW76AxNvac/eaoSu87B/WYV544IKlOIncJAeVB6vgCnFWI
- DUqtkHPNfvAhA==
+ bh=vkA1o0znGRjyhhtNzdfejtgyyr3pTeXE9OdT6tqAXB8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=AIWWg5fzGt5455gYDkXh+2aSgZGK8/hNfJSpX6VWFlG3FXtuA7OJZt7xJoRBYYGnW
+ IWGz24g4ye4QGF18NWdQ/+2RhXip+tJeiJeunyUFqS85mOTtkv08jclDC9uKFMlCUo
+ bm7dZLHwm24KBt/NhVavhwOj0xxJunaEzAUS3BpLHnAXo1SJGtitWDE05SvtmEih6+
+ zKO4B6F4vIGu4GipVc4/V2hdxzbyg21kLqKCZVl2r9fzbY72JBXVl5pOlcsdE58HAi
+ 3wx2VZP94p3xWJo5q1ouNmX+ub86DiuHwFSoPkalOmMp/rt3PPcLO6n3HiPzsQHIoW
+ 8zbAYEfhQe8pw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY49-0000000HEUc-2U7N; Fri, 05 Sep 2025 17:09:29 +0200
+ id 1uuY49-0000000HEVF-3eqE; Fri, 05 Sep 2025 17:09:29 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH v11 00/17] Change ghes to use HEST-based offsets and add
- support for error inject
-Date: Fri,  5 Sep 2025 17:09:07 +0200
-Message-ID: <cover.1757084668.git.mchehab+huawei@kernel.org>
+ qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH v11 10/17] acpi/generic_event_device: add an APEI error device
+Date: Fri,  5 Sep 2025 17:09:17 +0200
+Message-ID: <8af9f08ce09dea849d146ccecda93df33cd3c2cd.1757084668.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1757084668.git.mchehab+huawei@kernel.org>
+References: <cover.1757084668.git.mchehab+huawei@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,163 +75,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+Adds a generic error device to handle generic hardware error
+events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+using HID PNP0C33.
 
-This is v11 of the patch series, rebased to apply after release
-10.1. Just like v1, the difference against v10 is a minor conflict
-resolution.
+The PNP0C33 device is used to report hardware errors to
+the guest via ACPI APEI Generic Hardware Error Source (GHES).
 
-Please apply as soon as possible to avoid new conflicts.
-
-Thanks!
-
--
-
-As ghes_record_cper_errors() was written since the beginning
-to be public and used by ghes-cper.c. It ended being meged
-earlier because the error-injection series become too big,
-so it was decided last year to split in two to make easier for
-reviewers and maintainers to discuss.
-
-This series change the way HEST table offsets are calculated,
-making them identical to what an OSPM would do and allowing
-multiple HEST entries without causing migration issues. It open
-space to add HEST support for non-arm architectures, as now
-the number and type of HEST notification entries are not
-hardcoded at ghes.c. Instead, they're passed as a parameter
-from the arch-dependent init code.
-
-With such issue addressed, it adds a new notification type and
-add support to inject errors via a Python script. The script
-itself is at the final patch.
-
+Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
+ hw/acpi/aml-build.c                    | 10 ++++++++++
+ hw/acpi/generic_event_device.c         | 13 +++++++++++++
+ include/hw/acpi/acpi_dev_interface.h   |  1 +
+ include/hw/acpi/aml-build.h            |  2 ++
+ include/hw/acpi/generic_event_device.h |  1 +
+ 5 files changed, 27 insertions(+)
 
-v11:
-- rebased on the top of current upstream:
-  baa79455fa92 ("Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging")
-- backward-compatibility logic moved to version 10.1;
-- BIOS test tables re-generated, as DSDT tables changed on 10.0;
-- added a missing SPDX tag on a new file.
-
-
-v10:
-- rebased on the top of current upstream:
-  d9ce74873a6a ("Merge tag 'pull-vfio-20250611' of https://github.com/legoater/qemu into staging")
-- solved a minor conflict
-
-v9:
-- backward compatibility logic moved to version 10.0;
-- fixed a compilation issue with target/arm/kvm.c (probably
-  caused by some rebase - funny enough, incremental 
-  compilation was fine here);
-- added two missing SPDX comments.
-
-v8:
-  - added a patch to revert recently-added changeset causing a
-    conflict with these. All remaining patches are identical.
-
-v7:
-  - minor editorial change at the patch updating HEST doc spec
-   with the new workflow
-
-v6:
-- some minor nits addressed:
-   - use GPA instead of offset;
-   - merged two patches;
-   - fixed a couple of long line coding style issues;
-   - the HEST/DSDT diff inside a patch was changed to avoid troubles
-     applying it.
-
-v5:
-- make checkpatch happier;
-- HEST table is now tested;
-- some changes at HEST spec documentation to align with code changes;
-- extra care was taken with regards to git bisectability.
-
-v4:
-- added an extra comment for AcpiGhesState structure;
-- patches reordered;
-- no functional changes, just code shift between the patches in this series.
-
-v3:
-- addressed more nits;
-- hest_add_le now points to the beginning of HEST table;
-- removed HEST from tests/data/acpi;
-- added an extra patch to not use fw_cfg with virt-10.0 for hw_error_le
-
-v2:
-- address some nits;
-- improved ags cleanup patch and removed ags.present field;
-- added some missing le*_to_cpu() calls;
-- update date at copyright for new files to 2024-2025;
-- qmp command changed to: inject-ghes-v2-error ans since updated to 10.0;
-- added HEST and DSDT tables after the changes to make check target happy.
-  (two patches: first one whitelisting such tables; second one removing from
-   whitelist and updating/adding such tables to tests/data/acpi)
-
-Mauro Carvalho Chehab (17):
-  Revert "hw/acpi/ghes: Make ghes_record_cper_errors() static"
-  acpi/ghes: Cleanup the code which gets ghes ged state
-  acpi/ghes: prepare to change the way HEST offsets are calculated
-  acpi/ghes: add a firmware file with HEST address
-  acpi/ghes: Use HEST table offsets when preparing GHES records
-  acpi/ghes: don't hard-code the number of sources for HEST table
-  acpi/ghes: add a notifier to notify when error data is ready
-  acpi/generic_event_device: Update GHES migration to cover hest addr
-  acpi/generic_event_device: add logic to detect if HEST addr is
-    available
-  acpi/generic_event_device: add an APEI error device
-  tests/acpi: virt: allow acpi table changes at DSDT and HEST tables
-  arm/virt: Wire up a GED error device for ACPI / GHES
-  qapi/acpi-hest: add an interface to do generic CPER error injection
-  acpi/generic_event_device.c: enable use_hest_addr for QEMU 10.x
-  tests/acpi: virt: update HEST and DSDT tables
-  docs: hest: add new "etc/acpi_table_hest_addr" and update workflow
-  scripts/ghes_inject: add a script to generate GHES error inject
-
- MAINTAINERS                                   |  10 +
- docs/specs/acpi_hest_ghes.rst                 |  28 +-
- hw/acpi/Kconfig                               |   5 +
- hw/acpi/aml-build.c                           |  10 +
- hw/acpi/generic_event_device.c                |  44 ++
- hw/acpi/ghes-stub.c                           |   7 +-
- hw/acpi/ghes.c                                | 233 ++++--
- hw/acpi/ghes_cper.c                           |  39 +
- hw/acpi/ghes_cper_stub.c                      |  20 +
- hw/acpi/meson.build                           |   2 +
- hw/arm/virt-acpi-build.c                      |  35 +-
- hw/arm/virt.c                                 |  19 +-
- hw/core/machine.c                             |   5 +-
- include/hw/acpi/acpi_dev_interface.h          |   1 +
- include/hw/acpi/aml-build.h                   |   2 +
- include/hw/acpi/generic_event_device.h        |   1 +
- include/hw/acpi/ghes.h                        |  51 +-
- include/hw/arm/virt.h                         |   2 +
- qapi/acpi-hest.json                           |  36 +
- qapi/meson.build                              |   1 +
- qapi/qapi-schema.json                         |   1 +
- scripts/arm_processor_error.py                | 476 ++++++++++++
- scripts/ghes_inject.py                        |  51 ++
- scripts/qmp_helper.py                         | 703 ++++++++++++++++++
- target/arm/kvm.c                              |   7 +-
- tests/data/acpi/aarch64/virt/DSDT             | Bin 5293 -> 5337 bytes
- .../data/acpi/aarch64/virt/DSDT.acpihmatvirt  | Bin 5379 -> 5423 bytes
- tests/data/acpi/aarch64/virt/DSDT.acpipcihp   | Bin 6202 -> 6246 bytes
- .../acpi/aarch64/virt/DSDT.hpoffacpiindex     | Bin 5347 -> 5391 bytes
- tests/data/acpi/aarch64/virt/DSDT.memhp       | Bin 6654 -> 6698 bytes
- tests/data/acpi/aarch64/virt/DSDT.pxb         | Bin 7768 -> 7812 bytes
- tests/data/acpi/aarch64/virt/DSDT.topology    | Bin 5495 -> 5539 bytes
- tests/data/acpi/aarch64/virt/DSDT.viot        | Bin 5310 -> 5354 bytes
- tests/data/acpi/aarch64/virt/HEST             | Bin 132 -> 224 bytes
- 34 files changed, 1699 insertions(+), 90 deletions(-)
- create mode 100644 hw/acpi/ghes_cper.c
- create mode 100644 hw/acpi/ghes_cper_stub.c
- create mode 100644 qapi/acpi-hest.json
- create mode 100644 scripts/arm_processor_error.py
- create mode 100755 scripts/ghes_inject.py
- create mode 100755 scripts/qmp_helper.py
-
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 1e685f982f31..2d5826a8f134 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2629,3 +2629,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+ 
+     return var;
+ }
++
++/* ACPI 5.0b: 18.3.2.6.2 Event Notification For Generic Error Sources */
++Aml *aml_error_device(void)
++{
++    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
++    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
++    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
++
++    return dev;
++}
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index b1ff6ab74d8f..e575b9404be4 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -30,6 +30,7 @@ static const uint32_t ged_supported_events[] = {
+     ACPI_GED_NVDIMM_HOTPLUG_EVT,
+     ACPI_GED_CPU_HOTPLUG_EVT,
+     ACPI_GED_PCI_HOTPLUG_EVT,
++    ACPI_GED_ERROR_EVT,
+ };
+ 
+ /*
+@@ -120,6 +121,16 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+                                       aml_int(0x80)));
+                 break;
++            case ACPI_GED_ERROR_EVT:
++                /*
++                 * ACPI 5.0b: 5.6.6 Device Object Notifications
++                 * Table 5-135 Error Device Notification Values
++                 * Defines 0x80 as the value to be used on notifications
++                 */
++                aml_append(if_ctx,
++                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
++                                      aml_int(0x80)));
++                break;
+             case ACPI_GED_NVDIMM_HOTPLUG_EVT:
+                 aml_append(if_ctx,
+                            aml_notify(aml_name("\_SB.NVDR"),
+@@ -320,6 +331,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+         sel = ACPI_GED_MEM_HOTPLUG_EVT;
+     } else if (ev & ACPI_POWER_DOWN_STATUS) {
+         sel = ACPI_GED_PWR_DOWN_EVT;
++    } else if (ev & ACPI_GENERIC_ERROR) {
++        sel = ACPI_GED_ERROR_EVT;
+     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
+diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+index 68d9d15f50aa..8294f8f0ccca 100644
+--- a/include/hw/acpi/acpi_dev_interface.h
++++ b/include/hw/acpi/acpi_dev_interface.h
+@@ -13,6 +13,7 @@ typedef enum {
+     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+     ACPI_VMGENID_CHANGE_STATUS = 32,
+     ACPI_POWER_DOWN_STATUS = 64,
++    ACPI_GENERIC_ERROR = 128,
+ } AcpiEventStatusBits;
+ 
+ #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index c18f68134246..f38e12971932 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -252,6 +252,7 @@ struct CrsRangeSet {
+ /* Consumer/Producer */
+ #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
+ 
++#define ACPI_APEI_ERROR_DEVICE   "GEDD"
+ /**
+  * init_aml_allocator:
+  *
+@@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
+              uint8_t channel);
+ Aml *aml_sleep(uint64_t msec);
+ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
++Aml *aml_error_device(void);
+ 
+ /* Block AML object primitives */
+ Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index 2c5b055327a4..130c014d3f0e 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -103,6 +103,7 @@ OBJECT_DECLARE_TYPE(AcpiGedState, AcpiGedClass, ACPI_GED)
+ #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+ #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+ #define ACPI_GED_PCI_HOTPLUG_EVT    0x10
++#define ACPI_GED_ERROR_EVT          0x20
+ 
+ typedef struct GEDState {
+     MemoryRegion evt;
 -- 
 2.51.0
 
