@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6452CA1015
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D28DDCA1015
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuRpr-0004Un-9e; Fri, 05 Sep 2025 04:30:20 -0400
+	id 1uuRui-0006ug-P5; Fri, 05 Sep 2025 04:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uuRpX-0004Of-Rj
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:30:01 -0400
+ id 1uuRud-0006t2-M5
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:35:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uuRpO-0003KJ-GC
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:29:58 -0400
+ id 1uuRuY-00053V-QY
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:35:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757060985;
+ s=mimecast20190719; t=1757061305;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANz24xGTmMw8EbUDpPAhuSYFUDV4bq3DLZrSflrKfAk=;
- b=hz2Y1QkQdvD+Z16dXbgGeKeJaAjO2RczKgsidpEaerXTdeMOcZUqIAjazAjSw6xk11wvuM
- X77PQVt6LjI4C9P1NBVdlnSn8ntlvHO8EJywNrYjeNbG6Afl1PmbFfbzPXxUu6CEfvlgKr
- pb/ir/ZkRyzG2eqYVByOhZmmDLVntN8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=d5R1ozEOGiftEhMlw5PpLG8LK23YADtHKCGXnoZsK4g=;
+ b=gzHb+gydmOgTnYWYl0d4Culk+O6BxdR17aftKXK84kNmkwfLmyM1wbWJc9c3nvBzJkgNYt
+ RNQGvrjDFnJQFhCFlAkjXj4sYiA6Fr1BEL+wupD0GUf8vAcimjzaN6XNvMJX2PAfh+VPwk
+ 8QeZpojZIjmMxkAdIKic1RM4lYBBWNA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-X2P-fR54PsW5h0FytfrBIw-1; Fri, 05 Sep 2025 04:29:43 -0400
-X-MC-Unique: X2P-fR54PsW5h0FytfrBIw-1
-X-Mimecast-MFC-AGG-ID: X2P-fR54PsW5h0FytfrBIw_1757060983
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ce3e098c48so900372f8f.2
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 01:29:43 -0700 (PDT)
+ us-mta-93-9XZVIfKwNny6FbJ2OXJAXQ-1; Fri, 05 Sep 2025 04:35:03 -0400
+X-MC-Unique: 9XZVIfKwNny6FbJ2OXJAXQ-1
+X-Mimecast-MFC-AGG-ID: 9XZVIfKwNny6FbJ2OXJAXQ_1757061302
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45dd62a0dd2so2655175e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 01:35:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757060982; x=1757665782;
+ d=1e100.net; s=20230601; t=1757061302; x=1757666102;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ANz24xGTmMw8EbUDpPAhuSYFUDV4bq3DLZrSflrKfAk=;
- b=YN/hIYCPEPeuAds/yCNeLcpTNuEh3AtvK0S/tLlJyD4H0lbS7ikGr7X4I30BpvMt8p
- x+jT0N2GIDMufArYJirSxLWhnJY9W0lBxCYSWq9NJUmESa0z/uqfryFWkR1osyRudv3w
- Uv8kHAp9HEPocSZEewKuN6rSm4iSL8+pU4t4b0nxlxe43+v7rRCUEENaZLm8bhqS2JGb
- bQZibuzHDYkJL9EPkIsd9V/VOfNJgcKv6VMauOKumLKjCPM86pr+EEe+uc5innSW4CxO
- nhvThW63Vr0JOF+Pyjk4ibUD7IzxIbzrmgEBeu/8Rzp9J3r6MK/crzwbgWoIp+ahFiNC
- FY/Q==
+ bh=d5R1ozEOGiftEhMlw5PpLG8LK23YADtHKCGXnoZsK4g=;
+ b=VYVSQJhsrPrRd6SNVME51MDk63PGjoAZXFgUfveFV9RD3x6niTOADuJgXsv057zP00
+ ZnqNwPRIxOXpgAaDoMjT/5ngAucuinUOh13lHIcbzosFReGnDBptYiiaCJzkyVo0uSRL
+ m+bJOpNl6jIOdGUFCEESZG0el8HloBZyaaE77QmRlrpuOYh977st/7OQkH0imMW78FSF
+ eObNg7kCWyiefL2eEdDHgYW77NgT1b/uIZjGgMwAWotD/F4H4XxAxrCVEOfHtqmg66TA
+ QHJhK9Tu8nec46D0DDz3c+busGVnI59UhgoqYgWIKhAzqrB7TYR2D2Xohx52VCV4bYxs
+ G14w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK/5jWQP/KktqxTvqaSRAR+LH/9Fu8Vw9an37B+7IltIH4X2sJT099cyAoCihSY5ecLMhJqw4GGuLh@nongnu.org
-X-Gm-Message-State: AOJu0YyMGqLF6PNjyioGNrcmgFbmaJwE0yGHM9h7mBh6Gee4xm8R+Ic5
- FaK9DCjVCaxVb/riRtaKxObRTRUHOIZVkPSYZWaMkwnfqOAHD3QmqHvg3l4RZtv05vGayPtVCCC
- S7dyxF4+ZFG8zQ3eIMiRMu3dez2xQ4w5uvIE8y9olOzWAyI985iACdULH
-X-Gm-Gg: ASbGncvq5ObE58+4K7VSodn1qArz+wCilytKKSwOvlO56UUOdDLai0jEd4FSYCy3NoI
- pCJMmBsUohZrbGf6RbNlq9jSFAxBxQVKNi5ilHqASTn5+6Id6uQhiocnrC6smGtCMwvERIDwPz2
- xTwxgv855e6Z1O9dGLOBjG7nTbtcg1DlYlzYMzWUaKFqR2C/19hEGT+B0EIINkwcFG9Osjmwtjc
- MO41533btxvwUrL2NWfXLQWXJm/ZExOWJIddRJrYEH0X3Vzxe+V3Ad2tFPM8JPM2z9tSKAihQvp
- TD7RM4oezf+/m8Jc0I+K+vgxLIY1HGNRfZTRDfkjXjd74pIeFDUOus3WJDLZzsDmEyZAZcYOuuD
- Azpt7FfbDYME=
-X-Received: by 2002:adf:a15b:0:b0:3e1:6b:bb27 with SMTP id
- ffacd0b85a97d-3e1006bbe0bmr2308997f8f.4.1757060982513; 
- Fri, 05 Sep 2025 01:29:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/c/9inFXKtY1A0tOkt5IyweE6DaANYzxUR2ry6IWMBP8cStuPMZ/UVxnBn2fcEjufW+cRnQ==
-X-Received: by 2002:adf:a15b:0:b0:3e1:6b:bb27 with SMTP id
- ffacd0b85a97d-3e1006bbe0bmr2308986f8f.4.1757060982058; 
- Fri, 05 Sep 2025 01:29:42 -0700 (PDT)
+ AJvYcCWfu5iH3rIdHQRrEhlczzFIj+u5eWs6bWnKp7i4LWo498mOvpNGgVauYosaYb1mg6YozSHKQDbMSrMO@nongnu.org
+X-Gm-Message-State: AOJu0Ywhldt5dG/iWm91PaDq+KSA9mX8/sAyJckBy5F6q2ZAoqNaQXgi
+ cxwzaIE3cHK/aMsAQuVMZ/2n8Dwor73ka31NLle7oH27oBHaVsBfr+Twqb8nr3/r17Pk1MBhTry
+ aE9eBXdKFkFUzj4k5kOK35s9/uQNgogPtWclsP9LkebGlGETG54gyfb3r
+X-Gm-Gg: ASbGncusCnEMDFOc/F56bW6PfBaPHWMiFPxREywJi8ev5L5O5s/LHMEfQplmxabhGFQ
+ Ym/fsEA4mZM92AqdlTvTA2k9OwsYpb4V3nun+fdwimc8GdX2uVz5sFeK/ArAFwV/0Eiog7EV3T+
+ 9CrvYK5m1Pb1QnUK9Zp4iMzs+yJji12lSNRLnx13h0sLt61mIM0sWV6m7QfICoOUcnsZrc6XG6k
+ XL3P+Hw5PXnBugFVDGXpuBHG5r6Fyjh1otWNdbI5WrBVHMujp0wjBIiXk/9G4FZTFXGgEW1rJkU
+ S0mpAj7Y56jyEp3TpcakkiiE1lPPnkGnTlGinmiC2aLGS3dI3xD2/CDs/I/p6ahF2g5frkX3leg
+ TIXM1lBO2J1Q=
+X-Received: by 2002:a05:600c:3b01:b0:45d:d202:77f0 with SMTP id
+ 5b1f17b1804b1-45dd5b3c05fmr20470945e9.5.1757061302355; 
+ Fri, 05 Sep 2025 01:35:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+LR3/jbP3yoAyvxK+7HO6EG5KUTPtKcL7xxaBopvBTP+E2DDLLj3PHzBiAMBtFQ64e8aL/g==
+X-Received: by 2002:a05:600c:3b01:b0:45d:d202:77f0 with SMTP id
+ 5b1f17b1804b1-45dd5b3c05fmr20470475e9.5.1757061301871; 
+ Fri, 05 Sep 2025 01:35:01 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45d468dbf48sm81911265e9.11.2025.09.05.01.29.40
+ 5b1f17b1804b1-45dd0869b33sm69347195e9.9.2025.09.05.01.35.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Sep 2025 01:29:41 -0700 (PDT)
-Message-ID: <27f2cf53-cfe8-45ea-8df9-d5afccbc43e4@redhat.com>
-Date: Fri, 5 Sep 2025 10:29:40 +0200
+ Fri, 05 Sep 2025 01:35:01 -0700 (PDT)
+Message-ID: <4e93485f-0dc5-4708-958e-4cb4162fc922@redhat.com>
+Date: Fri, 5 Sep 2025 10:34:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
  SMMUv3 to vfio-pci endpoints with iommufd
 Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>,
- "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, skolothumtho@nvidia.com
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+To: Nicolin Chen <nicolinc@nvidia.com>, skolothumtho@nvidia.com
+Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
  "jgg@nvidia.com" <jgg@nvidia.com>, "ddutile@redhat.com"
@@ -103,9 +103,11 @@ References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
  <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
  <IA3PR11MB9136A660E9FAE540037986FB9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
  <aHaW9IpjbaVcRUpA@Asurada-Nvidia>
- <756cf804fbd14d66ba8f23358524fe96@huawei.com>
+ <IA3PR11MB9136E0D793F99E3837D208229256A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <798f739303f74fbca49a09a623a0a118@huawei.com>
+ <aHfmmdXXKcFDnJLP@Asurada-Nvidia>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <756cf804fbd14d66ba8f23358524fe96@huawei.com>
+In-Reply-To: <aHfmmdXXKcFDnJLP@Asurada-Nvidia>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -117,7 +119,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,114 +136,74 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+Hi Nicolin
 
-On 7/16/25 10:06 AM, Shameerali Kolothum Thodi wrote:
+On 7/16/25 7:51 PM, Nicolin Chen wrote:
+> On Wed, Jul 16, 2025 at 09:34:04AM +0000, Shameerali Kolothum Thodi wrote:
+>>>>> Seems aggressive for a hotplug, could we fail hotplug instead of kill
+>>> QEMU?
+>>>> Hotplug will unlikely be supported well, as it would introduce
+>>>> too much complication.
+>>>>
+>>>> With iommufd, a vIOMMU object is allocated per device (vfio). If
+>>>> the device fd (cdev) is not yet given to the QEMU. It isn't able
+>>>> to allocate a vIOMMU object when creating a VM.
+>>>>
+>>>> While a vIOMMU object can be allocated at a later stage once the
+>>>> device is hotplugged. But things like IORT mappings aren't able
+>>>> to get refreshed since the OS is likely already booted. Even an
+>>>> IOMMU capability sync via the hw_info ioctl will be difficult to
+>>>> do at the runtime post the guest iommu driver's initialization.
+>>>>
+>>>> I am not 100% sure. But I think Intel model could have a similar
+>>>> problem if the guest boots with zero cold-plugged device and then
+>>>> hot-plugs a PASID-capable device at the runtime, when the guest-
+>>>> level IOMMU driver is already inited?
+>>> For vtd we define a property for each capability we care about.
+>>> When hotplug a device, we get hw_info through ioctl and compare
+>>> host's capability with virtual vtd's property setting, if incompatible,
+>>> we fail the hotplug.
+>>>
+>>> In old implementation we sync host iommu caps into virtual vtd's cap,
+>>> but that's Naked by maintainer. The suggested way is to define property
+>>> for each capability we care and do compatibility check.
+>>>
+>>> There is a "pasid" property in virtual vtd, only when it's true, the PASID-
+>>> capable
+>>> device can work with pasid.
+>> Thanks for this information. I think probably we need to take a look at this as
+>> this doesn't have a dependency on cold-plug device to be present for SMMUv3.
+>> Will go through intel vtd implementation.
+> I see. A compatibility test sounds promising.
 >
->> -----Original Message-----
->> From: Nicolin Chen <nicolinc@nvidia.com>
->> Sent: Tuesday, July 15, 2025 6:59 PM
->> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>
->> Cc: Shameerali Kolothum Thodi
->> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
->> qemu-devel@nongnu.org; eric.auger@redhat.com;
->> peter.maydell@linaro.org; jgg@nvidia.com; ddutile@redhat.com;
->> berrange@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
->> smostafa@google.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
->> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
->> Jonathan Cameron <jonathan.cameron@huawei.com>;
->> zhangfei.gao@linaro.org; shameerkolothum@gmail.com
->> Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict
->> accelerated SMMUv3 to vfio-pci endpoints with iommufd
-> ...
->
->>>> +    if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
->>>> +        error_report("Device(%s) not allowed. Only PCIe root complex
->>>> devices "
->>>> +                     "or PCI bridge devices or vfio-pci endpoint devices
->>>> with "
->>>> +                     "iommufd as backend is allowed with
->>>> arm-smmuv3,accel=on",
->>>> +                     pdev->name);
->>>> +        exit(1);
->>> Seems aggressive for a hotplug, could we fail hotplug instead of kill
->> QEMU?
-> That's right. I will try to see whether it is possible to do a dev->hotplugged
-> check here.
->  
->> Hotplug will unlikely be supported well, as it would introduce
->> too much complication.
->>
->> With iommufd, a vIOMMU object is allocated per device (vfio). If
->> the device fd (cdev) is not yet given to the QEMU. It isn't able
->> to allocate a vIOMMU object when creating a VM.
->>
->> While a vIOMMU object can be allocated at a later stage once the
->> device is hotplugged. But things like IORT mappings aren't able
->> to get refreshed since the OS is likely already booted.
-> Why do we need IORT mappings to be refreshed during hotplug?
-> AFAICS, the mappings are created per host bridge Ids. And how is this
-> different from a host machine doing hotplug?
->
->  Even an
->> IOMMU capability sync via the hw_info ioctl will be difficult to
->> do at the runtime post the guest iommu driver's initialization.
-> We had some discussion on this "at least one vfio-pci" restriction
-> for accelerated mode previously here.
-> https://lore.kernel.org/qemu-devel/Z6TtCLQ35UI12T77@redhat.com/#t
->
-> I am not sure we reached any consensus on that. The 3 different approaches
-> discussed were,
->
-> 1. The current one used here. At least one cold plugged vfio-pci device
->    so that  we can retrieve the host SMMUV3 HW_INFO as per current
->   IOMMUFD APIs.
+> It still feels tricky when dealing with multi vSMMU instances, if
+> some instances don't have a cold-plug device to poll hw_info. We
+> would need to pre-define all the feature bits. Then, run the test
+> on every hotplug device attached later to the vSMMU instance.
 
-I do not get why you can't wait for the 1st device to be attached to
-"freeze" the settings. Is it because you may also have some bridges /
-root ports also attached to the same viommu. As those latter do not have
-any adherence to the host SMMU, is that a problem?
+This is what looks the most sensible to me
 >
-> 2. A new IOMMUFD API to retrieve HW_INFO without a device. 
-this can only be possible if, on the command line you connect the vsmmu
-to a sysfs path to the host iommu (or maybe this is what you meant in
-3). This would be another option we also evoked in the past. But this is
-not very user friendly for the guy who launches the VM to care both the
-device and the associated physical SMMU. Logically we could build that
-relationship automatically.
->
-> 3. A fully specified vSMMUv3 through Qemu command line so that we
->    don't need HW_INFO from kernel.
+> Maybe we could do something wise:
+> The sysfs node provides all the IOMMU nodes. So, we could compare
+> the node names to see if they are likely symmetric or not. Nodes
+> sharing the same naming pattern are more likely created by the
+> same IOMMU driver. So, as a speculation, a vSMMU instance with no
+> coldplug device could borrow the bits from a vSMMU instance with
+> a device?
+Then instead of trying to match names, I think it would be cleaner to
+pass the sysfs path. But I would rather explore the "collect info as the
+come" way
 
-I don't think this is sensible as there may be plenty of those, each
-requirement a libvirt adaptation
+Thanks
 
 Eric
 >
-> We're going with option one for now, but completely blocking hotplug
-> because of it  feels a bit too restrictive to me.
+> Sure, individual IOMMU instances could differ in specific fields
+> despite using the same node name. This would unfortunately lead
+> to hotplug failure upon the compatibility check.
 >
-> The real issue (for now), as I see it, is that we need some way to remember
-> the Guest SMMUv3 <-> Host SMMUv3 mapping after the guest has booted.
-> That way, even if all devices tied to a Guest SMMUv3 get hot-unplugged,
-> QEMU can still block attaching a device that belongs to a different Host
-> SMMUv3.
+> Thanks
+> Nicolin
 >
-> Thanks,
-> Shameer
->
->> I am not 100% sure. But I think Intel model could have a similar
->> problem if the guest boots with zero cold-plugged device and then
->> hot-plugs a PASID-capable device at the runtime, when the guest-
->> level IOMMU driver is already inited?
->>
->> FWIW, Shameer's cover-letter has the following line:
->>  "At least one vfio-pci device must currently be cold-plugged to
->>   a PCIe root complex associated with arm-smmuv3,accel=on."
->>
->> Perhaps there should be a similar highlight in this smmuv3-accel
->> file as well (@Shameer).
->>
->> Nicolin
 
 
