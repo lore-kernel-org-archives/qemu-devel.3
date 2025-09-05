@@ -4,122 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D28DDCA1015
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A20D7CA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 08:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuRui-0006ug-P5; Fri, 05 Sep 2025 04:35:20 -0400
+	id 1uuRwp-00008w-Vr; Fri, 05 Sep 2025 04:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uuRud-0006t2-M5
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:35:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uuRuY-00053V-QY
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:35:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757061305;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d5R1ozEOGiftEhMlw5PpLG8LK23YADtHKCGXnoZsK4g=;
- b=gzHb+gydmOgTnYWYl0d4Culk+O6BxdR17aftKXK84kNmkwfLmyM1wbWJc9c3nvBzJkgNYt
- RNQGvrjDFnJQFhCFlAkjXj4sYiA6Fr1BEL+wupD0GUf8vAcimjzaN6XNvMJX2PAfh+VPwk
- 8QeZpojZIjmMxkAdIKic1RM4lYBBWNA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-9XZVIfKwNny6FbJ2OXJAXQ-1; Fri, 05 Sep 2025 04:35:03 -0400
-X-MC-Unique: 9XZVIfKwNny6FbJ2OXJAXQ-1
-X-Mimecast-MFC-AGG-ID: 9XZVIfKwNny6FbJ2OXJAXQ_1757061302
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45dd62a0dd2so2655175e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 01:35:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757061302; x=1757666102;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d5R1ozEOGiftEhMlw5PpLG8LK23YADtHKCGXnoZsK4g=;
- b=VYVSQJhsrPrRd6SNVME51MDk63PGjoAZXFgUfveFV9RD3x6niTOADuJgXsv057zP00
- ZnqNwPRIxOXpgAaDoMjT/5ngAucuinUOh13lHIcbzosFReGnDBptYiiaCJzkyVo0uSRL
- m+bJOpNl6jIOdGUFCEESZG0el8HloBZyaaE77QmRlrpuOYh977st/7OQkH0imMW78FSF
- eObNg7kCWyiefL2eEdDHgYW77NgT1b/uIZjGgMwAWotD/F4H4XxAxrCVEOfHtqmg66TA
- QHJhK9Tu8nec46D0DDz3c+busGVnI59UhgoqYgWIKhAzqrB7TYR2D2Xohx52VCV4bYxs
- G14w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfu5iH3rIdHQRrEhlczzFIj+u5eWs6bWnKp7i4LWo498mOvpNGgVauYosaYb1mg6YozSHKQDbMSrMO@nongnu.org
-X-Gm-Message-State: AOJu0Ywhldt5dG/iWm91PaDq+KSA9mX8/sAyJckBy5F6q2ZAoqNaQXgi
- cxwzaIE3cHK/aMsAQuVMZ/2n8Dwor73ka31NLle7oH27oBHaVsBfr+Twqb8nr3/r17Pk1MBhTry
- aE9eBXdKFkFUzj4k5kOK35s9/uQNgogPtWclsP9LkebGlGETG54gyfb3r
-X-Gm-Gg: ASbGncusCnEMDFOc/F56bW6PfBaPHWMiFPxREywJi8ev5L5O5s/LHMEfQplmxabhGFQ
- Ym/fsEA4mZM92AqdlTvTA2k9OwsYpb4V3nun+fdwimc8GdX2uVz5sFeK/ArAFwV/0Eiog7EV3T+
- 9CrvYK5m1Pb1QnUK9Zp4iMzs+yJji12lSNRLnx13h0sLt61mIM0sWV6m7QfICoOUcnsZrc6XG6k
- XL3P+Hw5PXnBugFVDGXpuBHG5r6Fyjh1otWNdbI5WrBVHMujp0wjBIiXk/9G4FZTFXGgEW1rJkU
- S0mpAj7Y56jyEp3TpcakkiiE1lPPnkGnTlGinmiC2aLGS3dI3xD2/CDs/I/p6ahF2g5frkX3leg
- TIXM1lBO2J1Q=
-X-Received: by 2002:a05:600c:3b01:b0:45d:d202:77f0 with SMTP id
- 5b1f17b1804b1-45dd5b3c05fmr20470945e9.5.1757061302355; 
- Fri, 05 Sep 2025 01:35:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+LR3/jbP3yoAyvxK+7HO6EG5KUTPtKcL7xxaBopvBTP+E2DDLLj3PHzBiAMBtFQ64e8aL/g==
-X-Received: by 2002:a05:600c:3b01:b0:45d:d202:77f0 with SMTP id
- 5b1f17b1804b1-45dd5b3c05fmr20470475e9.5.1757061301871; 
- Fri, 05 Sep 2025 01:35:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45dd0869b33sm69347195e9.9.2025.09.05.01.35.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Sep 2025 01:35:01 -0700 (PDT)
-Message-ID: <4e93485f-0dc5-4708-958e-4cb4162fc922@redhat.com>
-Date: Fri, 5 Sep 2025 10:34:59 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uuRwk-00007k-3D
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:37:27 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uuRwd-0005Q0-2E
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 04:37:24 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Dxvr81obpozQAHAA--.13717S3;
+ Fri, 05 Sep 2025 16:37:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxfcExobpodsJ_AA--.22259S3;
+ Fri, 05 Sep 2025 16:37:09 +0800 (CST)
+Subject: Re: [PATCH v6 02/11] hw/loongarch: add virt feature avecintc support
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250904121840.2023683-1-gaosong@loongson.cn>
+ <20250904121840.2023683-3-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <60a83694-107d-d80e-fbb7-04d9685152a5@loongson.cn>
+Date: Fri, 5 Sep 2025 16:35:05 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
- SMMUv3 to vfio-pci endpoints with iommufd
+In-Reply-To: <20250904121840.2023683-3-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>, skolothumtho@nvidia.com
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "ddutile@redhat.com"
- <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>,
- jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
- <IA3PR11MB9136A660E9FAE540037986FB9257A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <aHaW9IpjbaVcRUpA@Asurada-Nvidia>
- <IA3PR11MB9136E0D793F99E3837D208229256A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <798f739303f74fbca49a09a623a0a118@huawei.com>
- <aHfmmdXXKcFDnJLP@Asurada-Nvidia>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aHfmmdXXKcFDnJLP@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxfcExobpodsJ_AA--.22259S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCFy3Cw4UGr4fXr13Gr43twc_yoWrZrWfpa
+ y5CFZ5uF1UJr4Ig3sxt3Z8uF15Aws7K3WagF43urW0kF1DWr1UWr1DCwsxtFWkA3ykZFy0
+ v3WvkrsruFsxZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,78 +79,133 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin
 
-On 7/16/25 7:51 PM, Nicolin Chen wrote:
-> On Wed, Jul 16, 2025 at 09:34:04AM +0000, Shameerali Kolothum Thodi wrote:
->>>>> Seems aggressive for a hotplug, could we fail hotplug instead of kill
->>> QEMU?
->>>> Hotplug will unlikely be supported well, as it would introduce
->>>> too much complication.
->>>>
->>>> With iommufd, a vIOMMU object is allocated per device (vfio). If
->>>> the device fd (cdev) is not yet given to the QEMU. It isn't able
->>>> to allocate a vIOMMU object when creating a VM.
->>>>
->>>> While a vIOMMU object can be allocated at a later stage once the
->>>> device is hotplugged. But things like IORT mappings aren't able
->>>> to get refreshed since the OS is likely already booted. Even an
->>>> IOMMU capability sync via the hw_info ioctl will be difficult to
->>>> do at the runtime post the guest iommu driver's initialization.
->>>>
->>>> I am not 100% sure. But I think Intel model could have a similar
->>>> problem if the guest boots with zero cold-plugged device and then
->>>> hot-plugs a PASID-capable device at the runtime, when the guest-
->>>> level IOMMU driver is already inited?
->>> For vtd we define a property for each capability we care about.
->>> When hotplug a device, we get hw_info through ioctl and compare
->>> host's capability with virtual vtd's property setting, if incompatible,
->>> we fail the hotplug.
->>>
->>> In old implementation we sync host iommu caps into virtual vtd's cap,
->>> but that's Naked by maintainer. The suggested way is to define property
->>> for each capability we care and do compatibility check.
->>>
->>> There is a "pasid" property in virtual vtd, only when it's true, the PASID-
->>> capable
->>> device can work with pasid.
->> Thanks for this information. I think probably we need to take a look at this as
->> this doesn't have a dependency on cold-plug device to be present for SMMUv3.
->> Will go through intel vtd implementation.
-> I see. A compatibility test sounds promising.
->
-> It still feels tricky when dealing with multi vSMMU instances, if
-> some instances don't have a cold-plug device to poll hw_info. We
-> would need to pre-define all the feature bits. Then, run the test
-> on every hotplug device attached later to the vSMMU instance.
 
-This is what looks the most sensible to me
->
-> Maybe we could do something wise:
-> The sysfs node provides all the IOMMU nodes. So, we could compare
-> the node names to see if they are likely symmetric or not. Nodes
-> sharing the same naming pattern are more likely created by the
-> same IOMMU driver. So, as a speculation, a vSMMU instance with no
-> coldplug device could borrow the bits from a vSMMU instance with
-> a device?
-Then instead of trying to match names, I think it would be cleaner to
-pass the sysfs path. But I would rather explore the "collect info as the
-come" way
-
-Thanks
-
-Eric
->
-> Sure, individual IOMMU instances could differ in specific fields
-> despite using the same node name. This would unfortunately lead
-> to hotplug failure upon the compatibility check.
->
-> Thanks
-> Nicolin
->
+On 2025/9/4 下午8:18, Song Gao wrote:
+> Avecintc feature is added in LoongArchVirtMachinState, and it is used
+> to check whether virt machine supports the advanced interrupt controller
+> and by default set avecintc with ON_OFF_AUTO_ON.
+> LoongArchVirtMachineState adds misc_feature and misc_status for misc
+> features and status. and set the default avec feature bit.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/loongarch/virt.c         | 30 ++++++++++++++++++++++++++++++
+>   include/hw/loongarch/virt.h | 14 ++++++++++++++
+>   2 files changed, 44 insertions(+)
+> 
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index b15ada2078..1a2aa92c25 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -47,6 +47,27 @@
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "qemu/error-report.h"
+>   
+> +static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
+> +                             void *opaque, Error **errp)
+> +{
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> +    OnOffAuto avecintc = lvms->avecintc;
+> +
+> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
+> +
+> +}
+> +static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
+> +                              void *opaque, Error **errp)
+> +{
+> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+> +
+> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
+> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
+> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
+> +    }
+> +}
+> +
+>   static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
+>                                 void *opaque, Error **errp)
+>   {
+> @@ -846,6 +867,9 @@ static void virt_initfn(Object *obj)
+>       if (tcg_enabled()) {
+>           lvms->veiointc = ON_OFF_AUTO_OFF;
+>       }
+> +
+> +    lvms->misc_feature = BIT(IOCSRF_AVEC);
+> +    lvms->avecintc = ON_OFF_AUTO_ON;
+>       lvms->acpi = ON_OFF_AUTO_AUTO;
+>       lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+>       lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+> @@ -1238,6 +1262,12 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>           NULL, NULL);
+>       object_class_property_set_description(oc, "v-eiointc",
+>                               "Enable Virt Extend I/O Interrupt Controller.");
+> +    if (tcg_enabled()) {
+> +        object_class_property_add(oc, "avecintc", "OnOffAuto",
+> +            virt_get_avecintc, virt_set_avecintc, NULL, NULL);
+> +        object_class_property_set_description(oc, "avecintc",
+> +                                "Enable Advance Interrupt Controller.");
+> +    }
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>   #ifdef CONFIG_TPM
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 7120b46714..68b8e92e99 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -23,6 +23,7 @@
+>   #define IOCSRF_DVFSV1           7
+>   #define IOCSRF_GMOD             9
+>   #define IOCSRF_VM               11
+> +#define IOCSRF_AVEC             15
+>   
+>   #define VERSION_REG             0x0
+>   #define FEATURE_REG             0x8
+> @@ -31,6 +32,7 @@
+>   #define MISC_FUNC_REG           0x420
+>   #define IOCSRM_EXTIOI_EN        48
+>   #define IOCSRM_EXTIOI_INT_ENCODE 49
+> +#define IOCSRM_AVEC_EN          51
+>   
+>   #define LOONGARCH_MAX_CPUS      256
+>   
+> @@ -69,6 +71,7 @@ struct LoongArchVirtMachineState {
+>       Notifier     powerdown_notifier;
+>       OnOffAuto    acpi;
+>       OnOffAuto    veiointc;
+> +    OnOffAuto    avecintc;
+>       char         *oem_id;
+>       char         *oem_table_id;
+>       DeviceState  *acpi_ged;
+> @@ -84,6 +87,8 @@ struct LoongArchVirtMachineState {
+>       DeviceState *extioi;
+>       struct memmap_entry *memmap_table;
+>       unsigned int memmap_entries;
+> +    uint64_t misc_feature;
+> +    uint64_t misc_status;
+>   };
+>   
+>   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+> @@ -91,6 +96,15 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
+>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+>   
+> +static inline bool virt_has_avecintc(LoongArchVirtMachineState *lvms)
+> +{
+> +    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>   {
+>       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
