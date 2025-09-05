@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A973CA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 07:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851DFCA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 07:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuQrW-0004ER-Fs; Fri, 05 Sep 2025 03:27:58 -0400
+	id 1uuQv4-0006gb-69; Fri, 05 Sep 2025 03:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uuQrU-0004Dp-5T
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:27:56 -0400
+ id 1uuQuw-0006fV-Cw
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:31:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uuQrR-0000TO-W6
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:27:55 -0400
+ id 1uuQuo-00016E-UX
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:31:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757057272;
+ s=mimecast20190719; t=1757057479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0OOgrywLrTBv8v3f5936EmlOXrkza95Ygb/uLIFiQl4=;
- b=cIJhySkBrZiAOR2px8hRjHzRXqq0pig4JbP5W8jF/P26ugJLr7a/5MeohD9W0NyKAvL0jP
- PbyluCwa0EVyy9QNaXU/VBzo3hitzT8Wjp96uYkbn4KatR5jmDK53IiHIM84GZAZba4EDZ
- cO4J9fdJ9RkItyq11cfMkt0tOknzmzI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dwi9XmN4n+EEr3+CrAx1bsV0jC1knD4qOO3eFVR4LqA=;
+ b=IvkHf3UvhkJ+FDCaVuA2zldAFVAfT2bmhkSytaCNfcFQMfehjnmcPh1Pdnxconk08qgBPv
+ qIBNEmEC1nbB78TDj/jVwLytvZA8igfCTemZ9PrBEamdzooFQKpsgqmXn+i/obq8IchBdA
+ ZiN2wlmDi+7nDfCIAxGniyWOrOziq5I=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-OvL_EdMQNdKQjFMIrsOoqA-1; Fri, 05 Sep 2025 03:27:50 -0400
-X-MC-Unique: OvL_EdMQNdKQjFMIrsOoqA-1
-X-Mimecast-MFC-AGG-ID: OvL_EdMQNdKQjFMIrsOoqA_1757057270
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b9dc5c2ba0so962188f8f.1
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 00:27:50 -0700 (PDT)
+ us-mta-654-vuo5iKMCOpy9093KyBnPQA-1; Fri, 05 Sep 2025 03:31:17 -0400
+X-MC-Unique: vuo5iKMCOpy9093KyBnPQA-1
+X-Mimecast-MFC-AGG-ID: vuo5iKMCOpy9093KyBnPQA_1757057476
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45cb6d8f42bso15329245e9.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 00:31:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757057269; x=1757662069;
+ d=1e100.net; s=20230601; t=1757057475; x=1757662275;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0OOgrywLrTBv8v3f5936EmlOXrkza95Ygb/uLIFiQl4=;
- b=klTXS0H2dtNWrhX9/QR2p/15Tn/mngCwiXPUbSF8GEZQH2caH4dCS0VPMtG20My/AG
- 65CPOHfeizl5mYTtemfHqknNEWcaP2KdCqiOQfHSM4sCNaCn0el7S0BiPNv736gwPl4r
- QHQ7mt5UxLfzgydoNjo78MAJVu+rlaiM+ThdIf2EJDFq1D21nQjUNRgJBUwa+YpTXNPC
- xV2dwVFcez0218gHoZ/vdZuMJDl5m+BgbnSJ8nyRLcbIMu5H6GwbEvYxYyvQwkax/Cql
- 6XCamNigK3myrRX3WAhxQnCmEayvxg318wRRAv5rlD8tKOndGniVuMoXd06spcTv3Kvr
- kf5A==
+ bh=dwi9XmN4n+EEr3+CrAx1bsV0jC1knD4qOO3eFVR4LqA=;
+ b=tbGFaCwumDjaS8FBWjA+EgMPgO1j/qtai2n1duTrLBdADQUOJipk6hlJ5bq8fcj8Py
+ haA1JZJPQppqthV28CTSnC9by+1gp/V9N/wp4SgDqDRvi+j0XIHjulHLqUxCNIweKJXe
+ RqiQTRW4hhotMf7Xbsyu7wPzLtgnQR8kviiYhbALqb+5r912z1x3I5K3c2+QIeOzQwCL
+ PjVsiS8s7ljD7Hv3Rw5f8jeGCxtdw41gFkwmt2sLl8V2Sy1fUZ0ddCG4aR35gOOw+lju
+ 0TQsSl6i0F9fVhTEUy+iDJ8BfVXXK3J7TzRTLJOQi20jkQ/HpF1G7uKjaC6K22fJhCSN
+ NDDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMuhhUxDnKTrq1v0XG7lgIKUsPggVYp6ZrLLhx89jLZPANeC/tgH+TI4rwrSnhADWrnRZ1seY6S39N@nongnu.org
-X-Gm-Message-State: AOJu0Yyb6vAyJ/9S2hqMUwcl8jC9y8s0/385lcAFdRXXY5RiDmeuanMx
- ni+FAbY6AvXvMDS6AZNUuuHzyRdyFaVKMP4VlN265XeV0ckSKoXOMbKx6GPpEdEBGvT32j9l7g6
- EymqIVqLJoFZLL+LoyPjtkE/HaptMux/xbbYzOddUrt/melhwXbjoosor
-X-Gm-Gg: ASbGncsRR5MruWHZwRCy7uamrW53ZHrd/awUHEzfSuFNAV7TOS0pZ5zBXlaE8RNzra+
- WG6yiUoT2zz/7jGuXh71iLVXJAJWB8jlHVMt3ikB23CUy86I/ggN3AYnqfzxkcyattmzKT9Admu
- fT7h+QCRrNuOP1BsqFoowrluBT6D+XUCw9/zaz5pZNj8KajProLL5fUw6OB0Al5aFD2DofvpUEd
- 9EuEUxUE/Ce3JbQFhLUnqXQgOmVYodVe/ppHbN5A+gLwhQPAoQ7D8Cj2pp9SXjSPdcbt86teZwi
- ARfzdZC3wWGVtj04tz2WuS9ppP/0Xvc4j8BGvcphwvKOpASlp1jZyQYLqudqxhkHO1pgTUL0Yz3
- FJ3W8HPgf4BxvRxMABEMZChoPI+/DFifsp9EQPH4Oc1U=
-X-Received: by 2002:adf:a19d:0:b0:3de:78c8:11fc with SMTP id
- ffacd0b85a97d-3de78c81422mr5347895f8f.63.1757057269475; 
- Fri, 05 Sep 2025 00:27:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8YTdeAdKU0bCFQmMiy7xGsjFlz9U0V7vXFegtTWlxYpBxrxutr3MKd0nVrstGC/gBIqklfA==
-X-Received: by 2002:adf:a19d:0:b0:3de:78c8:11fc with SMTP id
- ffacd0b85a97d-3de78c81422mr5347883f8f.63.1757057269056; 
- Fri, 05 Sep 2025 00:27:49 -0700 (PDT)
+ AJvYcCWJTeNkw4L/8grHuqb8Xduxos8aITFu7OiTBxm5Jc7Y0XVyhEi98fthfZOfY4mCaYB87nvR6F4EtU/B@nongnu.org
+X-Gm-Message-State: AOJu0YybN5JVjRNl0K6ILDLstRLcruBYV+Lg7vHtiUcg9a+0mPIVt9R6
+ ipptM8wJPIaq7f6DQEx6GgBFr9rZDBcNXEhVWLu81V+GtH07oM9/6tnI3noNFAAj7a9Epq7RnnF
+ D/3UnB3KgJYP3qS+73HboVCuZuYvzPX6hfNhzhuPPe0vwtaabsn4+vJ9RdRSLpc79
+X-Gm-Gg: ASbGncuvc5njzMGrFU0fTBKddISnvXPxUOjOPwMG4cyiRujAHZpcTWQy5oyUtWQJnq0
+ +HIhDgHl4UC0E1EHFxHoRppFtLpB37QjgwtilfhYq1X7XA51FT59k6l1yxlsjF/WdO7aTe51yNy
+ ar5iJK6TgNnDes+DtFkdmTGcljdR6vnCggO5rO/sbcnIPb6Trnv4sFSMDDcXZlPLYOcqJBTTdE0
+ 7/ZJEp1h9949NOf1TDwKHLnkoYIn7nzWmhNWKoXwmRy3c76e6dXpYzDGozZK94fR8R/8W5mzMwH
+ sSsgM4sGPiaj5cYbg9NHPZn7Zw33tE+4HVFzUAiMuwGEo/3a62AOwc2mjwdgVNlIyMbX6vR2LJW
+ UPXevRwdwMlQXJp9fFGgdDXYxAIM24ctdB15tOx6aK2A=
+X-Received: by 2002:a05:600c:4512:b0:458:bfb1:1fb6 with SMTP id
+ 5b1f17b1804b1-45b8555070fmr179043015e9.2.1757057475477; 
+ Fri, 05 Sep 2025 00:31:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHhnPkn1mDBP3IyJWBXRAdD4KlkY5UIgt1UxsKGlPdu+yHY4AXtAK9vw+swsjJ5rMUS3PnUg==
+X-Received: by 2002:a05:600c:4512:b0:458:bfb1:1fb6 with SMTP id
+ 5b1f17b1804b1-45b8555070fmr179042655e9.2.1757057475037; 
+ Fri, 05 Sep 2025 00:31:15 -0700 (PDT)
 Received: from [10.173.24.179] ([131.175.126.3])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-45dda4f2a0dsm9192885e9.2.2025.09.05.00.27.48
+ 5b1f17b1804b1-45dcfca0aefsm36708675e9.1.2025.09.05.00.31.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Sep 2025 00:27:48 -0700 (PDT)
-Message-ID: <10c9a015-16a1-4f5a-a0fc-85d01cef8651@redhat.com>
-Date: Fri, 5 Sep 2025 09:27:47 +0200
+ Fri, 05 Sep 2025 00:31:14 -0700 (PDT)
+Message-ID: <687f76dc-769d-4e8d-9281-5e5f10361bfe@redhat.com>
+Date: Fri, 5 Sep 2025 09:31:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] 9pfs: Include glib.h
+Subject: Re: [PATCH] linux-user: Add missing includes
 To: Peter Foley <pefoley@google.com>, qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz
- <groug@kaod.org>, nabihestefan@google.com
-References: <20250904-9p-v1-1-e634cb374c80@google.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, nabihestefan@google.com
+References: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -121,7 +120,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20250904-9p-v1-1-e634cb374c80@google.com>
+In-Reply-To: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -149,39 +148,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/25 16:30, Peter Foley wrote:
-> gstrfuncs.h is not intended to be included directly.
+On 9/4/25 17:21, Peter Foley wrote:
+> We're getting errors about this:
+> linux-user/elfload.c:2770:36: error: use of undeclared identifier 'MAP_FIXED_NOREPLACE'
 
-Indeed -- it works only because qemu/osdep.h actually already includes 
-glib.h.  So the line can be removed altogether.
-
-Thanks for looking at these papercuts and bringing attention to the QEMU 
-upstream developers.
+Queued, thanks.
 
 Paolo
 
+> 
 > Signed-off-by: Peter Foley <pefoley@google.com>
 > ---
->   hw/9pfs/9p-util-generic.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   linux-user/elfload.c | 1 +
+>   linux-user/mmap.c    | 1 +
+>   linux-user/syscall.c | 1 +
+>   3 files changed, 3 insertions(+)
 > 
-> diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
-> index 4c1e9c887d00c44bc073bec00c07ed09d3868bf5..93c38e40f693a945f979ca89555cd9b1ea3175d6 100644
-> --- a/hw/9pfs/9p-util-generic.c
-> +++ b/hw/9pfs/9p-util-generic.c
-> @@ -2,7 +2,7 @@
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index 26c090c95d3e90ad4a23a927267e4106f68975b0..edbacf041f25d88472c95efb4eb9bdccd81e9902 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -5,6 +5,7 @@
+>   #include <sys/prctl.h>
+>   #include <sys/resource.h>
+>   #include <sys/shm.h>
+> +#include <linux/mman.h>
 >   
+>   #include "qemu.h"
+>   #include "user/tswap-target.h"
+> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+> index 002e1e668e631130526053599e1d18ffb4b4141a..9e92117ca3e8e4f45cb333366ecf3668b8986200 100644
+> --- a/linux-user/mmap.c
+> +++ b/linux-user/mmap.c
+> @@ -18,6 +18,7 @@
+>    */
 >   #include "qemu/osdep.h"
->   #include "9p-util.h"
-> -#include <glib/gstrfuncs.h>
-> +#include <glib.h>
->   
->   char *qemu_open_flags_tostr(int flags)
->   {
+>   #include <sys/shm.h>
+> +#include <linux/mman.h>
+>   #include "trace.h"
+>   #include "exec/log.h"
+>   #include "exec/page-protection.h"
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 91360a072c7f478085ac1c7cc8bb2026f8b32038..4101b0e4e7812740afe7a4246a902a5364d7c331 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -101,6 +101,7 @@
+>   #include <linux/soundcard.h>
+>   #include <linux/kd.h>
+>   #include <linux/mtio.h>
+> +#include <linux/mman.h>
+>   #include <linux/fs.h>
+>   #include <linux/fd.h>
+>   #if defined(CONFIG_FIEMAP)
 > 
 > ---
 > base-commit: baa79455fa92984ff0f4b9ae94bed66823177a27
-> change-id: 20250904-9p-11c0405ae7c5
+> change-id: 20250904-includes-19d9afaed67a
 > 
 > Best regards,
 
