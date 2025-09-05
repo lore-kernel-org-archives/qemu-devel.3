@@ -4,67 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F031CA1013
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 13:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE37CA1010
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 14:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuWqN-0001jh-EX; Fri, 05 Sep 2025 09:51:11 -0400
+	id 1uuXIk-0006kO-7G; Fri, 05 Sep 2025 10:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uuWqK-0001iB-QG
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 09:51:09 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1uuXIh-0006ja-B3
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:20:28 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uuWq2-0006XE-Mz
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 09:51:07 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 224AEC108F;
- Fri, 05 Sep 2025 16:50:44 +0300 (MSK)
+ id 1uuXIU-0007wi-SC
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 10:20:26 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B98A882595;
+ Fri, 05 Sep 2025 17:20:08 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b8f::1:11])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id foiXcl3Gh8c0-5dQR3RFv; Fri, 05 Sep 2025 16:50:43 +0300
-Precedence: bulk
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 7KjETd4Ft4Y0-N13GkYh7; Fri, 05 Sep 2025 17:20:08 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757080243;
- bh=Eu31Z84cv7HW21LtKBhasXjdiIYgRYFKi7HX9Rx+K30=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=AziRMqq4QwEcPwXORTUOAUDMw9mG9z12zfp2fS1LKD0HJW3toMI5QlyptkhrfypNH
- IT3gohqYj6mpRaDFLbEcS/5cxltcCcm6+s+iZxaLz8X9geLtJZvncj7vNFfu156IpM
- 1AHSxCZ+ikj5ld1qK331EirAhHJhPG1g1ksXY/LY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ s=default; t=1757082008;
+ bh=N+I1NJouYOnrrHASJrjD5TNHeMpicQO5xeT8Na9pxR0=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=z27zLHzkGSMZhdHIMtWjMSM5SUNXC1iqeZZ/XLtuJRlzg0XiCIyFl3hpUkt/v4AYL
+ orfjurf3HzwkxvdbhG7F42tvWidSi+wGMzXNU+BLOFdhiWiCtWIjE6t3+vhlH3JzQu
+ n9zkQZBQ47xfWJFk1vKbzKW18Sw8tBSeWbr99fJI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: jasowang@redhat.com
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
- steven.sistare@oracle.com, yc-core@yandex-team.ru, peterx@redhat.com,
- mst@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
-Subject: [PATCH v3 2/9] net/tap: keep exit notifier only when downscript set
-Date: Fri,  5 Sep 2025 16:50:32 +0300
-Message-ID: <20250905135039.2202924-3-vsementsov@yandex-team.ru>
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH] util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic
+Date: Fri,  5 Sep 2025 17:20:06 +0300
+Message-ID: <20250905142006.2230345-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
-References: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,51 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The notifier is used only to call the downscript. Avoid extra
-notifier for other cases.
+QEMU_HEXDUMP_LINE_WIDTH calculation doesn't correspond to
+qemu_hexdump_line(). This leads to last line of the dump (when
+length is not multiply of 16) has badly aligned ASCII part.
+
+Let's calculate length the same way.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ util/hexdump.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index 151fb73820..4f3512a831 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -336,8 +336,10 @@ static void tap_cleanup(NetClientState *nc)
+diff --git a/util/hexdump.c b/util/hexdump.c
+index f29ffceb74..7cfc547261 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -22,6 +22,19 @@ static inline char hexdump_nibble(unsigned x)
+     return (x < 10 ? '0' : 'a' - 10) + x;
+ }
  
-     qemu_purge_queued_packets(nc);
- 
--    tap_exit_notify(&s->exit, NULL);
--    qemu_remove_exit_notifier(&s->exit);
-+    if (s->exit.notify) {
-+        tap_exit_notify(&s->exit, NULL);
-+        qemu_remove_exit_notifier(&s->exit);
++static size_t hexdump_line_length(size_t buf_len, size_t unit_len,
++                                  size_t block_len)
++{
++    size_t est = buf_len * 2;
++    if (unit_len) {
++        est += buf_len / unit_len;
 +    }
++    if (block_len) {
++        est += buf_len / block_len;
++    }
++    return est;
++}
++
+ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
+                            size_t unit_len, size_t block_len)
+ {
+@@ -30,14 +43,8 @@ GString *qemu_hexdump_line(GString *str, const void *vbuf, size_t len,
  
-     tap_read_poll(s, false);
-     tap_write_poll(s, false);
-@@ -727,9 +729,7 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+     if (str == NULL) {
+         /* Estimate the length of the output to avoid reallocs. */
+-        size_t est = len * 2;
+-        if (unit_len) {
+-            est += len / unit_len;
+-        }
+-        if (block_len) {
+-            est += len / block_len;
+-        }
+-        str = g_string_sized_new(est + 1);
++        str = g_string_sized_new(hexdump_line_length(len, unit_len, block_len)
++                                 + 1);
      }
-     tap_read_poll(s, true);
-     s->vhost_net = NULL;
--
--    s->exit.notify = tap_exit_notify;
--    qemu_add_exit_notifier(&s->exit);
-+    s->exit.notify = NULL;
  
-     if (netdev->type == NET_CLIENT_DRIVER_BRIDGE) {
-         const NetdevBridgeOptions *bridge = &netdev->u.bridge;
-@@ -757,6 +757,8 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
-             snprintf(s->down_script, sizeof(s->down_script), "%s", downscript);
-             snprintf(s->down_script_arg, sizeof(s->down_script_arg),
-                      "%s", ifname);
-+            s->exit.notify = tap_exit_notify;
-+            qemu_add_exit_notifier(&s->exit);
-         }
+     for (u = 0, b = 0; len; u++, b++, len--, buf++) {
+@@ -76,13 +83,16 @@ static void asciidump_line(char *line, const void *bufptr, size_t len)
+ }
+ 
+ #define QEMU_HEXDUMP_LINE_BYTES 16
+-#define QEMU_HEXDUMP_LINE_WIDTH \
+-    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
++#define QEMU_HEXDUMP_UNIT 1
++#define QEMU_HEXDUMP_BLOCK 4
+ 
+ void qemu_hexdump(FILE *fp, const char *prefix,
+                   const void *bufptr, size_t size)
+ {
+-    g_autoptr(GString) str = g_string_sized_new(QEMU_HEXDUMP_LINE_WIDTH + 1);
++    int width = hexdump_line_length(QEMU_HEXDUMP_LINE_BYTES,
++                                    QEMU_HEXDUMP_UNIT,
++                                    QEMU_HEXDUMP_BLOCK);
++    g_autoptr(GString) str = g_string_sized_new(width + 1);
+     char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
+     size_t b, len;
+ 
+@@ -90,11 +100,11 @@ void qemu_hexdump(FILE *fp, const char *prefix,
+         len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
+ 
+         g_string_truncate(str, 0);
+-        qemu_hexdump_line(str, bufptr + b, len, 1, 4);
++        qemu_hexdump_line(str, bufptr + b, len,
++                          QEMU_HEXDUMP_UNIT, QEMU_HEXDUMP_BLOCK);
+         asciidump_line(ascii, bufptr + b, len);
+ 
+-        fprintf(fp, "%s: %04zx: %-*s %s\n",
+-                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, str->str, ascii);
++        fprintf(fp, "%s: %04zx: %-*s %s\n", prefix, b, width, str->str, ascii);
      }
  
+ }
 -- 
 2.48.1
 
