@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB3CCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 15:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A38CCA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 15:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuY5E-0007rX-Tr; Fri, 05 Sep 2025 11:10:36 -0400
+	id 1uuY5H-0007ug-AK; Fri, 05 Sep 2025 11:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY4t-0007ax-13; Fri, 05 Sep 2025 11:10:15 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1uuY4n-0007Yp-KR; Fri, 05 Sep 2025 11:10:11 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY4T-0005n1-Ii; Fri, 05 Sep 2025 11:10:01 -0400
+ id 1uuY4T-0005n3-6D; Fri, 05 Sep 2025 11:09:59 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id AD5D660280;
+ by sea.source.kernel.org (Postfix) with ESMTP id DC36144DCF;
  Fri,  5 Sep 2025 15:09:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F31C4AF0E;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FC4C4AF10;
  Fri,  5 Sep 2025 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1757084974;
- bh=bw0Q2E0+itMzHZTFAgZh+1sOTDglfoHnBNJIaey2lsE=;
+ bh=Mdj2a4iktIlCJVRabLqbV2B0aHf4LGa+lcTLFh4Jhus=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=JFCRmL/2wq2P3x+GjTghShmRyUd7j8waFh5sa9NC2cotgcLWN3PjFpvE/S7+YUEyC
- AORAkSh2WHTJUIL4B1/zxWXMIrahlBmuwLF+DpHKiUVbdTU8dGcZjYbGrOrZKwlqWO
- PP8ro5+sq4TK+Q0fApYkWYOZCXhgu7DfKMoZ38BNsxcs5q23kW8h/fURLapxCOUrHj
- 5HFgSuq7wA5wLrsA+/1mqkqBIt7ZCeMHtO2qwtqP50ef0/WCFNPydWDUpQr9t42B7w
- oxt/JBGcUsOxQk3jsvO3c8sKLhATlpOxiDe4Kxl4SKlXMJAYZCr7y4H1T4HlK5MwT8
- YOxw4npAgvm7Q==
+ b=uWB/bxWrRh8ukZ8ISs9JCw1sl87hedoZVbm5LtNyuqgR0BQ+IJdVShWZFyJUrmSD4
+ J9Vnq723TpAgMZ46bZhUsWsAj9OOdOoHX/EqbphjD5xsUylGUl1wG4++mUjOeh4yUN
+ Z0VavHt/K7WNpZNGRbKW2iSNRKor7yN6z5ZYtfmQHWfPa+zo+1lWJOzbuaFrRz8qeg
+ 62P3fBYYhYt2CEdekA6tc5nzH2/S7Bz0Q5TczKIVQXxRqzZtO4S4XtmsX6UYZxYOJL
+ KCuQ3BImS3L4FhKmxPpkcjXZ3UmBzSRP6ZNxwbHgWk9y8+r/4bwvRiayMHMRDyG67L
+ 6H/EHz4s6mR+Q==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1uuY49-0000000HEVN-3smh; Fri, 05 Sep 2025 17:09:29 +0200
+ id 1uuY49-0000000HEUf-2dth; Fri, 05 Sep 2025 17:09:29 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH v11 12/17] arm/virt: Wire up a GED error device for ACPI / GHES
-Date: Fri,  5 Sep 2025 17:09:19 +0200
-Message-ID: <6d9e4571289317f708700f195b39e541c2b86fbf.1757084668.git.mchehab+huawei@kernel.org>
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>
+Subject: [PATCH v11 01/17] Revert "hw/acpi/ghes: Make
+ ghes_record_cper_errors() static"
+Date: Fri,  5 Sep 2025 17:09:08 +0200
+Message-ID: <93975d96b193d1d7261fe404e43821aa13c59580.1757084668.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1757084668.git.mchehab+huawei@kernel.org>
 References: <cover.1757084668.git.mchehab+huawei@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,85 +75,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds support to ARM virtualization to allow handling
-generic error ACPI Event via GED & error source device.
+The ghes_record_cper_errors() function was introduced to be used
+by other types of errors, as part of the error injection
+patch series. That's why it is not static.
 
-It is aligned with Linux Kernel patch:
-https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.huang@intel.com/
+Make it non-static again to allow its usage outside ghes.c
 
-Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This reverts commit 611f3bdb20f7828b0813aa90d47d1275ef18329b.
+
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/arm/virt-acpi-build.c |  1 +
- hw/arm/virt.c            | 12 +++++++++++-
- include/hw/arm/virt.h    |  1 +
- 3 files changed, 13 insertions(+), 1 deletion(-)
+ hw/acpi/ghes.c         | 6 ++++--
+ include/hw/acpi/ghes.h | 2 ++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 9a94e3993be9..2080d535c476 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -955,6 +955,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     }
- 
-     acpi_dsdt_add_power_button(scope);
-+    aml_append(scope, aml_error_device());
- #ifdef CONFIG_TPM
-     acpi_dsdt_add_tpm(scope, vms);
- #endif
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index e5c4142e822d..dc6634a6a6c5 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -691,7 +691,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
-     MachineState *ms = MACHINE(vms);
-     SysBusDevice *sbdev;
-     int irq = vms->irqmap[VIRT_ACPI_GED];
--    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
-+    uint32_t event = ACPI_GED_PWR_DOWN_EVT | ACPI_GED_ERROR_EVT;
-     bool acpi_pcihp;
- 
-     if (ms->ram_slots) {
-@@ -1048,6 +1048,13 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
-     }
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index b85bb48195a0..b709c177cdea 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -390,8 +390,8 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+     *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
  }
  
-+static void virt_generic_error_req(Notifier *n, void *opaque)
-+{
-+    VirtMachineState *s = container_of(n, VirtMachineState, generic_error_notifier);
-+
-+    acpi_send_event(s->acpi_dev, ACPI_GENERIC_ERROR);
-+}
-+
- static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-                              uint32_t phandle)
+-static void ghes_record_cper_errors(const void *cper, size_t len,
+-                                    uint16_t source_id, Error **errp)
++void ghes_record_cper_errors(const void *cper, size_t len,
++                             uint16_t source_id, Error **errp)
  {
-@@ -2470,6 +2477,9 @@ static void machvirt_init(MachineState *machine)
+     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
+     AcpiGedState *acpi_ged_state;
+@@ -440,6 +440,8 @@ static void ghes_record_cper_errors(const void *cper, size_t len,
  
-     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-         vms->acpi_dev = create_acpi_ged(vms);
-+        vms->generic_error_notifier.notify = virt_generic_error_req;
-+        notifier_list_add(&acpi_generic_error_notifiers,
-+                          &vms->generic_error_notifier);
-     } else {
-         create_gpio_devices(vms, VIRT_GPIO, sysmem);
-     }
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 365a28b082ca..91e2ac7e3e80 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -174,6 +174,7 @@ struct VirtMachineState {
-     DeviceState *gic;
-     DeviceState *acpi_dev;
-     Notifier powerdown_notifier;
-+    Notifier generic_error_notifier;
-     PCIBus *bus;
-     char *oem_id;
-     char *oem_table_id;
+     /* Write the generic error data entry into guest memory */
+     cpu_physical_memory_write(cper_addr, cper, len);
++
++    return;
+ }
+ 
+ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 578a582203ce..39619a2457cb 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -75,6 +75,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+ void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
+                           GArray *hardware_errors);
+ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_addr);
++void ghes_record_cper_errors(const void *cper, size_t len,
++                             uint16_t source_id, Error **errp);
+ 
+ /**
+  * acpi_ghes_present: Report whether ACPI GHES table is present
 -- 
 2.51.0
 
