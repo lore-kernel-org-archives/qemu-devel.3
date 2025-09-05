@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD89BCA1013
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 11:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4275CA1013
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 12:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuUz6-0001dY-94; Fri, 05 Sep 2025 07:52:04 -0400
+	id 1uuVDW-0001Xl-P2; Fri, 05 Sep 2025 08:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuUyw-0001Zn-K2
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uuVDG-0001Se-0H
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:06:45 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuUyh-0003YW-E8
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:51:53 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45b83ae1734so12212725e9.0
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 04:51:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uuVD2-0006Xr-TJ
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 08:06:40 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b0418f6fc27so323365166b.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 05:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757073092; x=1757677892; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1757073980; x=1757678780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QRAc5xsl1m+VhgQiShnpQM6Hj9dAAWKFHFsWJQupR0Q=;
- b=RKywCmrWEqtA63n0aOWj+eMGkPSTDQ/NQbhYLwrcwG7UnVaak9vyagvyDKfuAcAurh
- nWS4K3R0WLenjMMwJeE/Ayy1Y0AskCQEkBvne6LjND4s6A5lFky/4gINYdNErIH7Y+cB
- jSrq46Yw55iF6+Nzkg3+b1RqeXYi/z8NYboYIiHEyaId5nUMoGUmMepfl6X2Wkl+2TGr
- 1V+VcFZLBITQcGr9gcU/stSIF2fDhF0/EhDR6XsaaBFu0wFw5G41uLpaSxMx20XmBgwY
- bdbb8WUse0/8716uHO8YWs6PrkL1ZDfWDyW2LaLpmr4fGDjSG2w3qKyFhb9244ES7CrH
- aTQA==
+ bh=2/VTBHhluly/DAj5y9pk8ACPeBIO54fxP3G69hsnvQc=;
+ b=DkwkrwygTlNmBARirtWl9Bu8BIYoz444MLnNDlSsHSOdfjohDOvz9RC1iH4EYHyesV
+ aVqlJ6+4K1R9Q2gCdlYGMfBhgJ79BscDu1tnSLQG3SdJ4C9DZjaO5ELKZuva9WCIiQE2
+ dwRnN0UdFaTb/5wKWwI7tP1zIbfSK3Z8XUgxCy48CuZmF/bHcVHK4+LKhZr9NlC12zCs
+ sro9MRTkhDcYlMA7/9QhZbTJCzjCDx4A4aIMcZdv1i75ZshdLCNQ6qRpoqLaI0HqteDj
+ /PVAMWxCOI+S59ZViKkUiRdmw/QMfUQrpFea9K770VwQAxRLdrwmQ0RDaNW8eLSutHnM
+ fCjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757073092; x=1757677892;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QRAc5xsl1m+VhgQiShnpQM6Hj9dAAWKFHFsWJQupR0Q=;
- b=uaMSz+prQcHMeeapGhJsKRbzr4Ie0fPCgEe0MEBgUY6uq0ZxYtlGpfI0Tzl5pUXqu5
- bVaR2fOJ7PorVd8NVAion90UrOdok1pHYBzuB3DPOP7a6FtNQ0Hi3TSb6aE5NlDapTYV
- SI2bH0Qfg+7UmXpsDmx2KQcBENWyuXMzgynngIoOu26avQH6QCSeyv/QL/jFDdliXT50
- +7BV0JeZUMHABdrM09Qxbo/I0HAwFvfESz8F4cL2/h1/+LFLjkGGETaCD227DL24VyiI
- b0jvMDQxc21SLGqcQ3c/O0xyxEMOdNW4QXbE/oCB3rv8qJypcCTvA+Eccfuv3k37Zx08
- k1dQ==
-X-Gm-Message-State: AOJu0YwjpfpHtqFVm/vqBCiGxVzKeoYxIvOUAlBFzLwZ+JD/QyX2U4gM
- /YAr0drcN7HFc9WdD6vE478kNhcWtyBlaHeEMiwAufCp+uAicKtUptmQ/WWHf68TfP91tmQLHAx
- MT3txFqI=
-X-Gm-Gg: ASbGnctDSvRf7Gcy40YOvolWSI49q06CFMUYfKnocScL2pL0XbimRNYtgv4JFpiJuIu
- zfZwNXGm+ndqmBjduCIkx4h0bQl+j1pIkhD0lTBwMiLxj9fTrDKdvYBvgcCOQVzWtVja4shG/7+
- NDakl9nZ52a257WUf/M8NnwDiFYm/9kmkm3AsKRDYZu7+6Cb7uAJLRy1srtGHaNrMmgSlBQs7w/
- jEW4owF0IOmy9xmlOUxGSuE5PiEmE2oDHlw9cyjjRuxQTh0rQ6IyjXH/MxAEh8VgEBrjEBJMD5Q
- E3tm8kH3BAU0DOX6O3FBTFTvwH3FQzxwXJHmwf87Gm8tbWctXlBuGJaphbcWjhh9D+eIhepiM10
- wkPKBfWYlAN+XvtRflQ3qHktJHw/7HtaIxfQMLOwrK3hddw==
-X-Google-Smtp-Source: AGHT+IECuoN9SI3WJVaYQ8UbPL01dMYz7L+gYRudquYjCkk0F3MMQAmJ8sb2A0h8U5VkNznuy7Jv9A==
-X-Received: by 2002:a05:600c:1914:b0:45b:8a6f:c6de with SMTP id
- 5b1f17b1804b1-45b8a6fc825mr157000985e9.29.1757073092245; 
- Fri, 05 Sep 2025 04:51:32 -0700 (PDT)
-Received: from stoup.dot1x.polimi.it ([131.175.126.3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b8f2d3c88sm194285115e9.19.2025.09.05.04.51.31
+ d=1e100.net; s=20230601; t=1757073980; x=1757678780;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2/VTBHhluly/DAj5y9pk8ACPeBIO54fxP3G69hsnvQc=;
+ b=i8UWZrHSNzadPgS7Pvl65KAU6nXV8OkaQDlu2ZjDFPcTz0cqImtQA1YLLOdYm/KLZF
+ D2UQqlnrYRC7xssGvMh1S8oS9j7GK8EHfkvSOianjZ5YLBIiB9QQbcqS8mTXArZcy998
+ HplH+wvxlAwOE8LDiDOqd8nqQvOBLpu0x+D0nHqBM2CLg9O3c1UN4P77B28FVEkAGlnh
+ 2oOGpMOxTQD+BozBXYrBu4jz3ayVS7Zzf3s53iYG1fWBVFzt1qtxgTnXmgmlNK+VBHTW
+ nuG7ZgtU25TRCQGCLz1kmc+RJKM24g9wGvk61LwodALrlqBkibUh4Nej6o55hEpSJ7ke
+ +L0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDSRf4jQOyllCzDfudI8l1J/z1PUkheVaay8fbb26KSeLGlVj92E163i8loObeFSz+Ed8MMKCOtnGe@nongnu.org
+X-Gm-Message-State: AOJu0YwDcNmvkT44xFFbbflTkaIx6M/7SBX+xhT3xQFatj1e031SEAmL
+ iJmYiQzrXh9s5OEP6s21kkijTekr6ky12VwNzhz5IJHY8tBk6NvwzYYdiSrbVoIoZDzqvKbZq0w
+ 6xZ88WvAcEA==
+X-Gm-Gg: ASbGncu3zzEpnqJF4Sp71vkwndxTouyPgP1oSwJehvtQWVeFumO5M3VJU4ZnmNecvD9
+ e+P+hMShFv43kAHR72B1xW3G7/Z8PHX+ySe/nqTARR+1dZYkENEaZia6KcC1CW0spEskSnY2Kd2
+ YC0Qxb6s2T33hgWW1SNWw8eFQ6hjzSntIoemLW3vv4RMdMEROz568FyXUF8P4bsyv4sjadp6s+l
+ KNbrLIjyLGBluXn/kFU/1YSpvDiXFvAHdwWTzydTXFhUE+r0UuMGPq0PVoKZPVhukJ5YIbViJJx
+ Fva95kNY/AtxangRFGDjzqvMvx+YSh7fWp9K9ib73IvGfDznWoMqMzspIc/kpZdAdxBimibiHfG
+ 8Gpm3yn8ZNaM8Csoljhrl5f4=
+X-Google-Smtp-Source: AGHT+IESSYx9h6xQ7wV6xYhHzVotds8AKwOPYSGVgbGvMx3gpwoXADukfqmbeIlTVhxGvuWl3hsK9w==
+X-Received: by 2002:a17:906:6a20:b0:afe:90d2:b952 with SMTP id
+ a640c23a62f3a-b045bc3622emr1246530066b.29.1757073979525; 
+ Fri, 05 Sep 2025 05:06:19 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b046d420e02sm594047066b.39.2025.09.05.05.06.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 04:51:31 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk,
-	atar4qemu@gmail.com
-Subject: [PATCH v2 3/7] target/sparc: Loosen decode of RDY for v7
-Date: Fri,  5 Sep 2025 13:51:24 +0200
-Message-ID: <20250905115128.376295-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250905115128.376295-1-richard.henderson@linaro.org>
-References: <20250905115128.376295-1-richard.henderson@linaro.org>
+ Fri, 05 Sep 2025 05:06:18 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 70E125F879;
+ Fri, 05 Sep 2025 13:06:17 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PULL 01/30] lcitool: use newer Rust for Debian and Ubuntu
+In-Reply-To: <CAJ+F1CL+TxyRN0P2njCBRLigKe1tO1CyNOuCP1L5LHwE5FMEsQ@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Thu, 4 Sep 2025
+ 23:38:43 +0400")
+References: <20250506152927.222671-1-pbonzini@redhat.com>
+ <20250506152927.222671-2-pbonzini@redhat.com>
+ <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
+ <1546553e-a21a-4a0a-8bcc-6c4e23ff35e2@redhat.com>
+ <CAJ+F1CL+TxyRN0P2njCBRLigKe1tO1CyNOuCP1L5LHwE5FMEsQ@mail.gmail.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Fri, 05 Sep 2025 13:06:17 +0100
+Message-ID: <87qzwlw1c6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,74 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bits [18:0] are not decoded with v7, and for v8 unused values
-of rs1 simply produce undefined results.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
 
-Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- target/sparc/translate.c  | 14 ++------------
- target/sparc/insns.decode | 12 ++++++++++--
- 2 files changed, 12 insertions(+), 14 deletions(-)
+> Hi
+>
+> On Wed, Sep 3, 2025 at 5:59=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>>
+>> On 9/3/25 15:54, Marc-Andr=C3=A9 Lureau wrote:
+>> > Hi Paolo
+>> >
+>> > On Tue, May 6, 2025 at 7:30=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.=
+com> wrote:
+>> >>
+>> >> On Debian, the rustc-web package provides a newer Rust compiler (1.78)
+>> >> for all architectures except mips64el.
+>> >
+>> > Unfortunately, rustc-web is not compatible with the cross/multiarch
+>> > packages (it will remove all libstd-rust-dev:*).
+>> >
+>> > Should we switch to rustup in the meantime for debian cross-compilatio=
+n testing?
+>>
+>> We should just switch to Trixie, which however needs some work in lcitoo=
+l.
+>>
+>
+> Trixie no longer supports mips:
+> https://www.debian.org/releases/trixie/release-notes/issues.html?utm_sour=
+ce=3Dchatgpt.com#mips-architectures-removed
+>
+> Can we simply drop it from our CI too, or do we want to keep
+> cross-build testing on debian 12?
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index ece393fffc..cfdd9c1ce4 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -2863,18 +2863,8 @@ static TCGv do_rdy(DisasContext *dc, TCGv dst)
-     return cpu_y;
- }
- 
--static bool trans_RDY(DisasContext *dc, arg_RDY *a)
--{
--    /*
--     * TODO: Need a feature bit for sparcv8.  In the meantime, treat all
--     * 32-bit cpus like sparcv7, which ignores the rs1 field.
--     * This matches after all other ASR, so Leon3 Asr17 is handled first.
--     */
--    if (avail_64(dc) && a->rs1 != 0) {
--        return false;
--    }
--    return do_rd_special(dc, true, a->rd, do_rdy);
--}
-+TRANS(RDY_v7, 32, do_rd_special, true, a->rd, do_rdy)
-+TRANS(RDY_v9, 64, do_rd_special, true, a->rd, do_rdy)
- 
- static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
- {
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 1b1b85e9c2..74848996ae 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -91,6 +91,7 @@ CALL    01 i:s30
-     STBAR_v9        10 00000 101000 01111 0 0000000000000
-     MEMBAR          10 00000 101000 01111 1 000000 cmask:3 mmask:4
- 
-+    RDY_v9          10 rd:5  101000 00000 0 0000000000000
-     RDCCR           10 rd:5  101000 00010 0 0000000000000
-     RDASI           10 rd:5  101000 00011 0 0000000000000
-     RDTICK          10 rd:5  101000 00100 0 0000000000000
-@@ -118,8 +119,15 @@ CALL    01 i:s30
-   # This confirms that bit 13 is ignored, as 0x8143c000 is STBAR.
-   STBAR_v8          10 ----- 101000 01111 - -------------
- 
--  # Before v8, all rs1 accepted; otherwise rs1==0.
--  RDY               10 rd:5  101000 rs1:5 0 0000000000000
-+  # For v7, bits [18:0] are ignored.
-+  # For v8, bits [18:14], aka rs1, are repurposed and rs1 = 0 is RDY,
-+  # and other values are RDASR.  However, the v8 manual explicitly
-+  # says that rs1 in 1..14 yield undefined results and do not cause
-+  # an illegal instruction trap, and rs1 in 16..31 are available for
-+  # implementation specific usage.
-+  # Implement not causing an illegal instruction trap for v8 by
-+  # continuing to interpret unused values per v7, i.e. as RDY.
-+  RDY_v7            10 rd:5  101000 ----- - -------------
- }
- 
- {
--- 
-2.43.0
+We do this already for sh4 and alpha which have the
+debian-legacy-test-cross container. We can easily move mips out into its
+own container when we update debian-all-test-cross to trixie.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
