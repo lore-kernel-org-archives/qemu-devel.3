@@ -4,56 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93ABDCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 19:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DCCCA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 23:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuc4a-0003sV-TB; Fri, 05 Sep 2025 15:26:14 -0400
+	id 1uufrC-0000tQ-1i; Fri, 05 Sep 2025 19:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uuc4D-0003ol-Cu
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 15:25:53 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uuc40-0001YL-3D
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 15:25:48 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 74EC056F29E;
- Fri, 05 Sep 2025 21:25:27 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id uD5FRGSnOGZ7; Fri,  5 Sep 2025 21:25:25 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6423656F30D; Fri, 05 Sep 2025 21:25:25 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 623B656F288;
- Fri, 05 Sep 2025 21:25:25 +0200 (CEST)
-Date: Fri, 5 Sep 2025 21:25:25 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Julian Ganz <neither@nut.email>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uufr8-0000sW-Qq
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 19:28:36 -0400
+Received: from mailgate01.uberspace.is ([95.143.172.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uufqx-0000GG-UJ
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 19:28:32 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id 6DC5060B4B
+ for <qemu-devel@nongnu.org>; Sat,  6 Sep 2025 01:28:03 +0200 (CEST)
+Received: (qmail 32358 invoked by uid 990); 5 Sep 2025 23:28:03 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sat, 06 Sep 2025 01:28:02 +0200
+MIME-Version: 1.0
+Date: Fri, 05 Sep 2025 23:28:01 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <3c8d0c3733edc984937ac33a417488f92dccb148@nut.email>
+TLS-Required: No
 Subject: Re: [PATCH v6 00/25] tcg-plugins: add hooks for discontinuities
-In-Reply-To: <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
-Message-ID: <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, "=?utf-8?B?QWxleCBCZW5uw6ll?="
+ <alex.bennee@linaro.org>
+In-Reply-To: <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
 References: <cover.1757018626.git.neither@nut.email>
  <a1c2d356-e664-2632-002f-d0b9bea06e1e@eik.bme.hu>
  <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="3866299591-1581212006-1757099900=:18226"
-Content-ID: <768701e5-ec6c-a40f-cad4-7a5ae99f18a8@eik.bme.hu>
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
+X-Rspamd-Bar: /
+X-Rspamd-Report: BAYES_HAM(-0.000318) MIME_GOOD(-0.1)
+X-Rspamd-Score: -0.100318
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=3nY0oqHmg6ZXBcRdFkyWIcyEaIoaVe0F6FZFKuOU09E=;
+ b=qOn7jsvI3yEZSX2AvKHK8NNEDf7lYwwS9KwoGdICCNpnChUKOSpX6z2NzmQunYy4DeXvYB90lA
+ UnBn3WmIOXEdyHbrG4KZraRTEc92magDlNgUTBAgunF4owIrjCC182mgrr6KwKUsCSCLxc+/hym8
+ 4YvSPvvP1u33smyjfs1otepG4S5Osj81QYY0JdLYL/neCLneiB3xeJnNvgKzX9MBPhQtXnLLJSVb
+ sERRuDKwL+vWnGWf4i9jG0u7GM5o8rdGyiCFGueyW1WkMLsXnSp2Z9jjM5awQm3YdoVt6I4PnxGD
+ ApgMjLefXdTcmkEI6BeelQSnB+HknnFvGfqlQn7hwI5FZDDroTQOZSFQ7hTKp8WGzzjNwraMT1qg
+ IDEfs29bU8WY28LIry5JYGdLXPH2a6HrO3p30rvtBoYzmhZqajnd/PwJtQrlILj98RlwJ+cwAAC/
+ pWQCDL9F8gPtHmc6Cm4dsIt40gKu8USMPy6FSb0tMp9h+Aunj34Au95PdcKuPclRi2vA+8HcTvyA
+ rT246Vh2cXxP1jxtaH0HonlXn6hBcQdXfmcDC6x+IYJDShHfVZXM1+M1MBpCLan8ko9iUFeq8vPR
+ n/4qanMGYvX3i0dhN5qVc0PaUofFhHzdmvof1xF7wr+codh0kEga60K78P85KD+rTPQax7m4TXkq
+ U=
+Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
+ helo=mailgate01.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,74 +83,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+September 5, 2025 at 9:25 PM, "BALATON Zoltan" wrote:
+> On Fri, 5 Sep 2025, Julian Ganz wrote:
+> > September 5, 2025 at 1:38 PM, "BALATON Zoltan" wrote:
+> > > Have you done any testing on how much overhead this adds
+> > >  to interrupt heavy guest workloads? At least for PPC these are alr=
+eady
+> > >  much slower than real CPU so I'd like it to get faster not slower.
+> > >=20
+>=20>  No, I have not made any performance measurements. However, given t=
+hat
+> >  for every single TB execution a similar hook is called already, the
+> >  impact related to other existing plugin infrastructure _should_ be
+> >  neglectible.
+> >=20
+>=20>  That is, if your workload actually runs any code and is not consta=
+ntly
+> >  bombarded with interrupts that _do_ result in a trap (which _may_ ha=
+ppen
+> >  during some tests).
+> >=20
+>=20>  So if you are performance sensitive enough to care, you will very =
+likely
+> >  want to disable plugins anyway.
+> >=20
+>=20I can disable plugins and do that normally but that does not help tho=
+se who get QEMU from their distro (i.e. most users). If this infrastructu=
+re was disabled in default builds and needed an explicit option to enable=
+ then those who need it could enable it and not imposed it on everyone el=
+se who just get a default build from a distro and never use plugins. Havi=
+ng an option which needs rebuild is like not having the option for most p=
+eople. I guess the question is which is the larger group? Those who just =
+run guests or those who use this instrumentation with plugins.
 
---3866299591-1581212006-1757099900=:18226
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <e5f23854-ee6f-4828-93af-9840ae19de24@eik.bme.hu>
+Hard to say.
 
-On Fri, 5 Sep 2025, Julian Ganz wrote:
-> September 5, 2025 at 1:38 PM, "BALATON Zoltan" wrote:
->> On Thu, 4 Sep 2025, Julian Ganz wrote:
->>>  Even with the existing interfaces, it is more or less possible to
->>>  discern these situations, e.g. as done by the cflow plugin. However,
->>>  this process poses a considerable overhead to the core analysis one may
->>>  intend to perform.
->>>
->> I'd rather have overhead in the plugin than in interrupt and exception
->> handling on every target unless this can be completely disabled
->> somehow when not needed to not pose any overhead on interrupt handling
->> in the guest.
->
-> The "more or less" is rather heavy here: with the current API there is
-> no way to distinguish between interrupts and exceptions. Double-traps
-> can probably only be detected if you don't rely on weird, very error
-> prone heuristics around TB translations.
->
-> And as Alex Benée pointed out, qemu can be easily built with plugins
-> disabled.
->
->> Have you done any testing on how much overhead this adds
->> to interrupt heavy guest workloads? At least for PPC these are already
->> much slower than real CPU so I'd like it to get faster not slower.
->
-> No, I have not made any performance measurements. However, given that
-> for every single TB execution a similar hook is called already, the
-> impact related to other existing plugin infrastructure _should_ be
-> neglectible.
->
-> That is, if your workload actually runs any code and is not constantly
-> bombarded with interrupts that _do_ result in a trap (which _may_ happen
-> during some tests).
->
-> So if you are performance sensitive enough to care, you will very likely
-> want to disable plugins anyway.
+> The default may better be what the larger group needs. Even then distro=
+s may still change the default so it would be best if the overhead can be=
+ minimised even if enabled. I think the log infrastructure does that, wou=
+ld a similar solution work here?
+>=20
+>=20For testing I've found that because embedded PPC CPUs have a software=
+ controlled MMU (and in addition to that QEMU may flush TLB entries too o=
+ften) running something that does a lot of memory access like runnung the=
+ STREAM benchmark on sam460ex is hit by this IIRC but anything else causi=
+ng a lot of interrupts like reading from emulated disk or sound is probab=
+ly affected as well. I've tried to optimise PPC exception handling a bit =
+before but whenever I optimise something it is later undone by other chan=
+ges not caring about performance.
 
-I can disable plugins and do that normally but that does not help those 
-who get QEMU from their distro (i.e. most users). If this infrastructure 
-was disabled in default builds and needed an explicit option to enable 
-then those who need it could enable it and not imposed it on everyone else 
-who just get a default build from a distro and never use plugins. Having 
-an option which needs rebuild is like not having the option for most 
-people. I guess the question is which is the larger group? Those who just 
-run guests or those who use this instrumentation with plugins. The default 
-may better be what the larger group needs. Even then distros may still 
-change the default so it would be best if the overhead can be minimised 
-even if enabled. I think the log infrastructure does that, would a similar 
-solution work here?
+I could try running the benchmark on multiple versions:
 
-For testing I've found that because embedded PPC CPUs have a software 
-controlled MMU (and in addition to that QEMU may flush TLB entries too 
-often) running something that does a lot of memory access like runnung the 
-STREAM benchmark on sam460ex is hit by this IIRC but anything else causing 
-a lot of interrupts like reading from emulated disk or sound is probably 
-affected as well. I've tried to optimise PPC exception handling a bit 
-before but whenever I optimise something it is later undone by other 
-changes not caring about performance.
+* qemu with plugins disabled,
+* with plugins enabled but without these patches and
+* with plugins enabled and with these patches.
+
+However, I'll likely only report back with results next week, though.
+Do you happen to have an image you can point me to? Either something
+that has the benchmark already or some unixoid running on the platform?
+I'm currently not motivated enough to cook up some bare-metal testbed
+for a platform I'm not familiar with.
 
 Regards,
-BALATON Zoltan
---3866299591-1581212006-1757099900=:18226--
+Julian
 
