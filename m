@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AE8CA1013
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 11:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA5ACCA1013
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 11:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuUD1-0006Si-Qb; Fri, 05 Sep 2025 07:02:23 -0400
+	id 1uuUUC-0006h8-9e; Fri, 05 Sep 2025 07:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philipp.schock@tu-ilmenau.de>)
- id 1uuUCu-0006RM-4r
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:02:20 -0400
-Received: from mail-router1.rz.tu-ilmenau.de ([141.24.179.34])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1uuUU5-0006gH-0s
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:20:01 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philipp.schock@tu-ilmenau.de>)
- id 1uuUCa-0004yQ-5I
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:02:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tu-ilmenau.de;
- i=@tu-ilmenau.de; q=dns/txt; s=tuil-dkim-1; t=1757070098;
- h=mime-version : date : from : to : subject : message-id :
- content-type : from; bh=cVonwVo4aoapS1wGxVRhntouVw8eNKdslJIdSLRlfK0=;
- b=BrUVSierffVv2PmaJ7PCi0BZa/CYimSDPIe8zSUEcEUfFWbmDzg3OzwY1FamuFeaEszr4
- HGs2bMKzqreNGrrI9DoFfBvoI20iypRbloEJnx6okL0ae4adb8xbJlYMKffgBGTxm/szn9f
- 4oQ+5+Kalx1+cnQiREKiCxo7TAbk8w1NTCi6mCLACvkvu3hhETXc0HAXClnSJ1T+tuNWutY
- KtVj6i256ZPgCN7xyaLDm7VrKlPmtlOStXNqW3UXpGz7VJ8+i4BsKlYNEmSc7Zd1AXynnzy
- OuB6tzobxBdhwZkdHGvZllgtc47kZDKF8ZMsSu6bRH5VU3D//ERu7BexYH8A==
-Received: from mail-front1.rz.tu-ilmenau.de (mail-front1.rz.tu-ilmenau.de
- [141.24.179.32])
- by mail-router1.rz.tu-ilmenau.de (Postfix) with ESMTPS id C40D95FDAB
- for <qemu-devel@nongnu.org>; Fri,  5 Sep 2025 13:01:38 +0200 (CEST)
-Received: from webmail.tu-ilmenau.de (unknown [141.24.179.39])
- by mail-front1.rz.tu-ilmenau.de (Postfix) with ESMTPSA id B2BF25FC47
- for <qemu-devel@nongnu.org>; Fri,  5 Sep 2025 13:01:38 +0200 (CEST)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1uuUTw-0002gR-P4
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 07:19:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=b17pRwn5KLiL7q7nj3aTyiWlCuyji6QmPemLU7fpB/s=; b=wL36ziDK5j9a3nEnX3KVkChrWV
+ mMXumcuOgNvWyMjPQr2DdUMT/MOFewLtDBJi/AzFjqd2A2QpgNlBnQPtZIzk1coLtvqHs4pkteO82
+ 7CKCW6pq03CVEJJDQRjXcZQ27LHdTL0rr3o45JcAgD3klG2HzSbD3r6QtliTvciqGX1+pqo9uVwtU
+ NKqQA1Lutnv9ZLEFSW6rhD1MzBDdbz74MPOc85vmSRIZHYkObGJdrmIjUSjaZXWZY60FOcuQwo5jA
+ VG5IJGmQs5aOJ/eS4dM6d7QlGo4xEcTDLfkqhcUizPXbEbPwHSyCe+uHb2PI9ZdjgBM1ttA7Fv50K
+ grF/JzLKnpX84XnaTxexvWp8rMMZtozk2kUYYcP2tf/JhRE7LV6u6/y/B3SE57dZfjYS6fGQQSuXt
+ x/ZD5INx802tQetawOhu6ie4qVz0MF+TMtu2DTNbiD62cchVabPrtgqWjVvBL1PyytQLJ4kwBdcsD
+ DcbqBssyKJMfC8Xu0ahyifyvJk6FpKrwxjPvR7NgaCXPzP/RjPUp9YAmXByG/HJNTwifUlDaLs+sr
+ gnSpLCd35z6ii1WRKOOwPQdJJlfD/yaPFuEddEj6G5tirEqWJJL68+wVqy2XzJ26i70rfwCP/vNHL
+ SExyslQPscAW8RbF6HW5cyE5XhJKMELeXUE9pfzCQ=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Mark Johnston <markj@freebsd.org>
+Cc: Greg Kurz <groug@kaod.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Marc=2DAndr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?ISO-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] 9pfs: Add FreeBSD support
+Date: Fri, 05 Sep 2025 13:19:39 +0200
+Message-ID: <2537259.JahZeRKPxa@silver>
+In-Reply-To: <aJOWhHB2p-fbueAm@nuc>
+References: <aJOWhHB2p-fbueAm@nuc>
 MIME-Version: 1.0
-Date: Fri, 05 Sep 2025 13:01:38 +0200
-From: Philipp Schock <philipp.schock@tu-ilmenau.de>
-To: qemu-devel@nongnu.org
-Subject: NVMe/TCP block driver multi-queuing
-Message-ID: <17974825f5b1b600ccf9d5eaacb46dc5@tu-ilmenau.de>
-X-Sender: philipp.schock@tu-ilmenau.de
-Content-Type: multipart/alternative;
- boundary="=_a20bddfa1befbeef209543f14f278982"
-Received-SPF: pass client-ip=141.24.179.34;
- envelope-from=philipp.schock@tu-ilmenau.de; helo=mail-router1.rz.tu-ilmenau.de
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,73 +72,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=_a20bddfa1befbeef209543f14f278982
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+On Wednesday, August 6, 2025 7:53:08 PM CEST Mark Johnston wrote:
+> This is largely derived from existing Darwin support.  FreeBSD
+> apparently has better support for *at() system calls so doesn't require
+> workarounds for a missing mknodat().  The implementation has a couple of
+> warts however:
+> - The extattr(2) system calls don't support anything akin to
+>   XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
+> - Attribute names cannot begin with "user." on ZFS, so the prefix is
+>   trimmed off.  FreeBSD's extattr system calls sport an extra
+>   "namespace" identifier, and attributes created by the 9pfs backend
+>   live in the universal user namespace, so this seems innocent enough.
+> 
+> The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
+> filesystems.
+> 
+> Signed-off-by: Mark Johnston <markj@FreeBSD.org>
+> ---
 
-Hi all,
+Queued on 9p.next:
+https://github.com/cschoenebeck/qemu/commits/9p.next
 
-I'm currently working on an NVMe/TCP driver for the QEMU block layer. 
-I'm mostly done with basic functionality and now working on the 
-performance side of things. There is a lot of optimization to be done 
-with regards to performance with a single NVMe i/o queue pair, but I 
-want to work on introducing more queue pairs first.
+Thanks!
 
-Since the multi-threading capabilities of QEMU have expanded since the 
-NVMe/PCI driver was implemented a few years ago, I would like to make as 
-much use of them as I can. The ideal would be to have a dedicated NVMe 
-i/o queue pair for every thread executing i/o, which are in turn pinned 
-to host cores, inspired by SPDK's NMVe driver. Or, at least, have 
-something like this be user-configurable like with virtio-blk. Is that 
-even possible? If yes, could you point me to some documentation or 
-example code on how to achieve this?
+/Christian
 
-If you want to try the block driver, the code is at
-     https://github.com/phschck/qemu
-and you can use it by adding one of
-     -drive driver=nvme-tcp,ip=x.x.x.x,port=x,subsysnqn=nqn.xxx...
-     -drive file=nvme-tcp://x.x.x.x:x/nqn.xxx...
-to your invocation. Though it might not work on every setup yet (I 
-tested it on x86_64 and with SPDK's nvmf target) and booting from it 
-will take a while if you have any sort of latency beyond what you'd get 
-on a loopback interface (because requests are blocking and sequential 
-for the moment).
 
-/phschck
---=_a20bddfa1befbeef209543f14f278982
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
-=3DUTF-8" /></head><body style=3D'font-size: 10pt; font-family: Verdana,Gen=
-eva,sans-serif'>
-<p>Hi all,</p>
-<p>I'm currently working on an NVMe/TCP driver for the QEMU block layer. I'=
-m mostly done with basic functionality and now working on the performance s=
-ide of things. There is a lot of optimization to be done with regards to pe=
-rformance with a single NVMe i/o queue pair, but I want to work on introduc=
-ing more queue pairs first.</p>
-<p>Since the multi-threading capabilities of QEMU have expanded since the N=
-VMe/PCI driver was implemented a few years ago, I would like to make as muc=
-h use of them as I can. The ideal would be to have a dedicated NVMe i/o que=
-ue pair for every thread executing i/o, which are in turn pinned to host co=
-res, inspired by SPDK's NMVe driver. Or, at least, have something like this=
- be user-configurable like with virtio-blk. Is that even possible? If yes, =
-could you point me to some documentation or example code on how to achieve =
-this?</p>
-<p>If you want to try the block driver, the code is at<br />&nbsp; &nbsp; h=
-ttps://github.com/phschck/qemu<br />and you can use it by adding one of<br =
-/>&nbsp; &nbsp; -drive driver=3Dnvme-tcp,ip=3Dx.x.x.x,port=3Dx,subsysnqn=3D=
-nqn.xxx...<br />&nbsp; &nbsp; -drive file=3Dnvme-tcp://x.x.x.x:x/nqn.xxx...=
-<br />to your invocation. Though it might not work on every setup yet (I te=
-sted it on x86_64 and with SPDK's nvmf target) and booting from it will tak=
-e a while if you have any sort of latency beyond what you'd get on a loopba=
-ck interface (because requests are blocking and sequential for the moment).=
-</p>
-<p>/phschck</p>
-
-</body></html>
-
---=_a20bddfa1befbeef209543f14f278982--
 
