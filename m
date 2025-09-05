@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A512CA1015
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 07:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEBACA1010
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 07:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuRDq-0003A7-OW; Fri, 05 Sep 2025 03:51:02 -0400
+	id 1uuRDq-00038u-0S; Fri, 05 Sep 2025 03:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuRDl-00036p-Al
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:50:58 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1uuRDk-00036f-Dw
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:50:56 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uuRDh-0008Ri-M7
+ id 1uuRDh-0008RZ-FV
  for qemu-devel@nongnu.org; Fri, 05 Sep 2025 03:50:56 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3df15fdf0caso1462318f8f.0
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 00:50:53 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45b87bc67a4so13041545e9.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 00:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757058651; x=1757663451; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qiesEZLirOm2kTsIFlH0zMZ4nblsrNRxWqDrcxVvyy8=;
- b=quYVr8DlxY+QsRZd2wAP5xudJ9snwpr0VrHUBgE0ACJ8q9v9QNW9w3qSrqW1uRIxdL
- nu9UC9dNCCpGItk1tVPgx5PfQtnFiOBq807nqsXdYsoHx2iX+j9Zv6z0pmfekBIlEUtS
- ySzUzE2V972hfn0hjGBKJ1l7QX2+FaSvEZU4zD65nkpUWnerDMLzdSx2cGewvStImnSJ
- YDz/114A+2xtK7dTGbOo9LBrpy4Wsy8AfuEcm+UeisYuY02COdRzqyFtMJc/gXxqbCNh
- S7EducGTSMlBB5qNKB3dT71+Oo5DWOKKgGLV2Tdxw+/ZM5gvRR4gzOpeyJZzFdQf9q+N
- RT4w==
+ d=linaro.org; s=google; t=1757058650; x=1757663450; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=en/zZvGh5vb77Zx8HQQIP67quTNtVCsQSktFVoRlQXM=;
+ b=OC4jrob+6jN4rzdzPmRCraGUw+UmlA9icfglmTnOwtcs8orRiIezyCFm8NWtCBg7n8
+ +gJfie28H8BoaFChB8MCzmUevFCsLZz4OjRe1h4OUcHGfQzadUgQ8UCU/ZIV7XVLDDsa
+ WxTb8QC5B5Fwdb0wTH9A0LbXrl44g5loKIdsHlHMC176x26p5BQ1/WpmK9T4HbqIBtYj
+ dKfPoKTxYvWwq4BEv4pD4BDnn9sN0poxdOFyFW5lNhuXJGebRBr1KBipg+5YA4g9m+Mh
+ 2U4eDhkWAExwgEmWngOicuEXOMm6Z3p9V4aQn7AkPrMjPvCJz08NFNVRERHDKn6N9N3E
+ N07Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757058651; x=1757663451;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qiesEZLirOm2kTsIFlH0zMZ4nblsrNRxWqDrcxVvyy8=;
- b=QLHYMOJNCY6EdwDqwKekT6tKsClNTNPYXbP4BvVV0gSC8+Qa3QUvy71l+ZU4Cb2/36
- tAM/BrHoUhUn2HhK4KoSBroyqUhuWWE1qB79YSsEO8EE94cVASHwT/shDJ3TH9g1TAFe
- ySOFyRusIwGG3sNrJdBEU4H6JJ/m6bnF0+t5pQpfGMFgsr/oXBb/AK3WSlh4/SKPaGNg
- tyNxavPY1kFXdUgg/i4t1u9HcxLaBCDCruXtzaP8lTOVavDaxx/RjQqusRb39M9FUsKM
- +okdqoAd5LROt7xzhWdVfkLV5bSFtM5Hwwc8sFyacRN19wFEA8gQtqAYtoZzAqMDG9Ll
- hvug==
-X-Gm-Message-State: AOJu0YynVchPl5cXQkUXXJ3IsHWKhXyn55PntM0uAyvp1UKFOpoExD3B
- 4wXqnwxfADfB/6m30CDEjv67cPof6V9Un3ECE9IA/TKfquT3Rf65Q85byqWMNalTspjHGFzqHTI
- 9gWIdn98=
-X-Gm-Gg: ASbGncvMpREv262ay1yqDUIRH0xlmPt9kqtM6ZqMn4De7EgsDWXuCpitRm1rGSNp0su
- NsOmRoymc21VGcruJQZ0oAiNGqNcF35EVOvs7ZYlZ/XFXfnpLiMwygRbQMTnE493gztuCk+UzDp
- SjCyPE7aDWIarKrPVEgvs1zDAmLiHPCKoVLLaudpGPnEMSPhThHZYwZxbrQs6yEyvqlcLH/lVkc
- 2CWHi1KxejxX8mvB5HdxxujCtZt/UoeuIzzepgSuJuCeD0SRyCp5JtnjF9aI0Ua9ZoItT6kfrcC
- CMxKmTUkxsa/HatA1OcJ6kVwcDEAUra7Zxrmdk67IrNLiZlo390G0X0ZFa1R+Hylzid1JKbJ3mK
- AN8AjehZ9zx4h0y3T6YXFNEbxtgZR3YbjXKWS+4HAtx/DzYQCPtyPr7Jq
-X-Google-Smtp-Source: AGHT+IFS+TUkbReBXgSNM5gI8IX7DOG28oU8k0IZ03l+BOKO+bNFMel9Nhah4LHCC3rTZNsaiRqxSA==
-X-Received: by 2002:a05:6000:2c0c:b0:3e3:a839:c648 with SMTP id
- ffacd0b85a97d-3e3a839c9c7mr944114f8f.27.1757058651319; 
- Fri, 05 Sep 2025 00:50:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757058650; x=1757663450;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=en/zZvGh5vb77Zx8HQQIP67quTNtVCsQSktFVoRlQXM=;
+ b=v9ZjQGnWXQZ6Jy48v9Qh+zxNsFOvBhD4VolZhYlcodli81nvbuo6cEKGbG0twwIHuP
+ wmBy6ax5/IBhyxtnj/kZq8iTDj+GAugN3P3HAZyyohoecq7bTDHEAuXL03AdKTAxO+7m
+ 4tXQXu5V1YSnr4bDGFALxZrLzZyJT0/KdmuKTc7rmJsIHIIEzi5j5OokC90YPlHMgW9Y
+ N568Ni9kHPstGAbTzTrN3Tz0U2miPunIxZyBbJXsTaQHp+6BzPXdRpG/skT7Eks6rQJS
+ enbBB4bFaomDu5IPiSWDQLvcLo0BG1teXpsfInES/0ovDyvivm8COm2mKFyKKLoFNw0Y
+ FL7Q==
+X-Gm-Message-State: AOJu0Yyt7xhnUWAZPYYH3Lf8EuepD8ZS4iK1wL8D2Zb4u9LxLngPQtEB
+ IxAVN5KlGXZ1bLA7yZRFqoTLpzE9+x/yQWE5kHh9pDfTMBSQuJ9RkViFd5DSiHNSETFyHAeum+j
+ jo0h1U3I=
+X-Gm-Gg: ASbGncv5OHy/rnLwucsT3u1HlJMwFviyXDoDmG3k2jqH9DW54HUkBQY6TVwwhfpA/HH
+ mApWvwbqtxJ9FHSbly0z6VWAFaw5zKmnCO18vngyo1UKwFHvbfPSpp29NqPfRtrSamloKhsgDVa
+ W5gZbaoVXdr9SHkc0AEWxOAX29oAjQVSLDkgbQ8AukXTE7VJcj2uqFUU46JPlE96rrqHHQrP7lQ
+ 2Ng09WcpSZdm/Zx/3FXsuqYOxGFcWXyjkTedT06+fEyiyiWzDDBo7jJGmRNprRkYT0GtEy3fyH5
+ AmBbkkjY7pxtjREvDo5VN/QCCQozTEXJ/aA/4xprj52e9co9w+UDNYpR5vl1mlkpMjqnBtm/YgD
+ CGMMGBXKiVvcKzWN4bQDlUZaYNkxkStHIaMU7TiuFphFvJqQuoA/5Kabe
+X-Google-Smtp-Source: AGHT+IHdKbfKc8azpcfoe2BdCGzO1U/RNFCYfdVZ6oWLwaGj69Fe1r1EHXEGzvCnol/w/t3lFvtUcw==
+X-Received: by 2002:a05:600c:4ecf:b0:45d:d5c6:97b4 with SMTP id
+ 5b1f17b1804b1-45dd5c69aa1mr17259915e9.9.1757058650241; 
+ Fri, 05 Sep 2025 00:50:50 -0700 (PDT)
 Received: from stoup.dot1x.polimi.it ([131.175.126.3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b98e77231sm143760715e9.12.2025.09.05.00.50.50
+ 5b1f17b1804b1-45b98e77231sm143760715e9.12.2025.09.05.00.50.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 00:50:50 -0700 (PDT)
+ Fri, 05 Sep 2025 00:50:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] target/sparc: Loosen decode of STBAR for v8
-Date: Fri,  5 Sep 2025 09:50:41 +0200
-Message-ID: <20250905075048.100496-2-richard.henderson@linaro.org>
+Subject: [PULL 0/6] tcg patch queue
+Date: Fri,  5 Sep 2025 09:50:40 +0200
+Message-ID: <20250905075048.100496-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250905075048.100496-1-richard.henderson@linaro.org>
-References: <20250905075048.100496-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,80 +97,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Solaris 8 appears to have a bug whereby it executes v9 MEMBAR
-instructions when booting a freshly installed image. According
-to the SPARC v8 architecture manual, whilst bits 13 and bits 12-0
-of the "Read State Register Instructions" are notionally zero,
-they are marked as unused (i.e. ignored).
+The following changes since commit baa79455fa92984ff0f4b9ae94bed66823177a27:
 
-Fixes: af25071c1d ("target/sparc: Move RDASR, STBAR, MEMBAR to decodetree")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3097
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sparc/translate.c  | 12 +++++++++++-
- target/sparc/insns.decode | 13 ++++++++++++-
- 2 files changed, 23 insertions(+), 2 deletions(-)
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2025-09-03 11:39:16 +0200)
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index b922e53bf1..c2ffd965d8 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -2823,12 +2823,22 @@ static bool trans_Tcc_i_v9(DisasContext *dc, arg_Tcc_i_v9 *a)
-     return do_tcc(dc, a->cond, a->cc, a->rs1, true, a->i);
- }
- 
--static bool trans_STBAR(DisasContext *dc, arg_STBAR *a)
-+static bool do_stbar(DisasContext *dc)
- {
-     tcg_gen_mb(TCG_MO_ST_ST | TCG_BAR_SC);
-     return advance_pc(dc);
- }
- 
-+static bool trans_STBAR_v8(DisasContext *dc, arg_STBAR_v8 *a)
-+{
-+    return avail_32(dc) && do_stbar(dc);
-+}
-+
-+static bool trans_STBAR_v9(DisasContext *dc, arg_STBAR_v9 *a)
-+{
-+    return avail_64(dc) && do_stbar(dc);
-+}
-+
- static bool trans_MEMBAR(DisasContext *dc, arg_MEMBAR *a)
- {
-     if (avail_32(dc)) {
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 9e39d23273..1b1b85e9c2 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -88,7 +88,7 @@ CALL    01 i:s30
- 
- {
-   [
--    STBAR           10 00000 101000 01111 0 0000000000000
-+    STBAR_v9        10 00000 101000 01111 0 0000000000000
-     MEMBAR          10 00000 101000 01111 1 000000 cmask:3 mmask:4
- 
-     RDCCR           10 rd:5  101000 00010 0 0000000000000
-@@ -107,6 +107,17 @@ CALL    01 i:s30
-     RDSTICK_CMPR    10 rd:5  101000 11001 0 0000000000000
-     RDSTRAND_STATUS 10 rd:5  101000 11010 0 0000000000000
-   ]
-+
-+  # The v8 manual, section B.30 STBAR instruction, says
-+  # bits [12:0] are ignored, but bit 13 must be 0.
-+  # However, section B.28 Read State Register Instruction has a
-+  # comment that RDASR with rs1 = 15, rd = 0 is STBAR.  Here,
-+  # bit 13 is also ignored and rd != 0 is merely reserved.
-+  #
-+  # Solaris 8 executes v9 MEMBAR instruction 0x8143e008 during boot.
-+  # This confirms that bit 13 is ignored, as 0x8143c000 is STBAR.
-+  STBAR_v8          10 ----- 101000 01111 - -------------
-+
-   # Before v8, all rs1 accepted; otherwise rs1==0.
-   RDY               10 rd:5  101000 rs1:5 0 0000000000000
- }
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20250905
+
+for you to fetch changes up to cb2540979264c8d3984e26c5dd90a840e47ec5dd:
+
+  tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts (2025-09-04 09:49:30 +0200)
+
+----------------------------------------------------------------
+tcg/arm: Fix tgen_deposit
+tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+
+----------------------------------------------------------------
+Richard Henderson (6):
+      tcg/arm: Fix tgen_deposit
+      cpuinfo/i386: Detect GFNI as an AVX extension
+      tcg/i386: Expand sari of bits-1 as pcmpgt
+      tcg/i386: Use canonical operand ordering in expand_vec_sari
+      tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
+      tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+
+ host/include/i386/host/cpuinfo.h |  1 +
+ include/qemu/cpuid.h             |  3 ++
+ util/cpuinfo-i386.c              |  1 +
+ tcg/arm/tcg-target.c.inc         |  3 +-
+ tcg/i386/tcg-target-opc.h.inc    |  1 +
+ tcg/i386/tcg-target.c.inc        | 91 +++++++++++++++++++++++++++++++++++++---
+ 6 files changed, 93 insertions(+), 7 deletions(-)
 
