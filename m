@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203BECA1010
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266C7CA1015
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 07:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuRGN-0006lT-Hs; Fri, 05 Sep 2025 03:53:39 -0400
+	id 1uuRGd-0006qk-1H; Fri, 05 Sep 2025 03:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uuRGI-0006kJ-39; Fri, 05 Sep 2025 03:53:34 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1uuRGZ-0006oj-N8; Fri, 05 Sep 2025 03:53:51 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uuRGF-0000ES-Tp; Fri, 05 Sep 2025 03:53:33 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-32b959b4895so1058099a91.1; 
- Fri, 05 Sep 2025 00:53:30 -0700 (PDT)
+ id 1uuRGU-0000GA-Au; Fri, 05 Sep 2025 03:53:50 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7723cf6e4b6so1505302b3a.3; 
+ Fri, 05 Sep 2025 00:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757058807; x=1757663607; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757058819; x=1757663619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r9fobgHF8BPoZ4YDoGnftfY3pCQ30cooqytFfFW2iyM=;
- b=LDMwTJShM8jdFpJD6W0mcPQhzWiYPqEwhz3UwvLOcPjGzJuvyvukyyNSz1Tm3MnVCb
- WY3IVVrcniZtmYZxuEtymubFVT3FALb49yfUILez36gzw2favLSDRXQcvLOUuabqqI0n
- GUjkXh5KnAltyLpkY5LNUH+HJw1ULLm90wd0xW9uOgHg285DVCeCCrmP33U24WlD5XPp
- XW45Xl2ghOr9Dgb9tasV/w9HGe4+elpYfFRnbD3jl6Fu/YuSBd6tJobGXO8gtmVaAu9D
- s8lWG/IYhd0U2ltWgF3xiSXH//1CM9XsZ0pZZbR8q1LKNc+2Y848jOoZCAydzNunS8WC
- NN+w==
+ bh=L40FU+2cHE+gg1yQw5PftfosyZFsMHdenZ9sL/QL4tM=;
+ b=jzQk5tqmY+BaNcWC5LiZ0MXFggK/iann+8rqoFDZNEopGjGhZpWAyx5OZLTRh4YqZG
+ NlL9Fly4P0tQMHbP9z2N0yJYVg/ASytcd5f1kYddeIJGmRi+m1EyUjGP0Hbl0IUT67Se
+ I5SHmWvAFInmDr1biQDg7bNKyBqQ77pmPPT55NxHh4x7VFNpn8TXjxfpAN4hP9e9HG52
+ PmC1Aq7twGUMjN7DqibTqEMz/B7AYhKVlWNJMki4svx/bqLbOL5ljQv4cm2Kes7kC5MK
+ 6v4ua2GyS762LCN8vu5xmaL51jAScB7I4htBImO2NELuyS8hPkBym7vMYF2V5RIIgJQp
+ DbiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757058807; x=1757663607;
+ d=1e100.net; s=20230601; t=1757058819; x=1757663619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r9fobgHF8BPoZ4YDoGnftfY3pCQ30cooqytFfFW2iyM=;
- b=gM9TPO8QxcLjVsldtOM3Ndsp11gDa4hsc7P0Q2YETqJkrxyL52sKUZ0No99ZTR/XrJ
- 18LOnqwenEQUDgiOGloUzAU9K+s2WWPo7unRKAyXFN5VheEZf59FZ8B4BDu6cKspEYdk
- wyOQ4NNpkDw0DyXIPY/5sBAmFGEubvFQJ0lpLV3rkM+L6gbcGVFes3Ou2nRy5u9SvMvW
- zMrNWeu7UQ0ehbLXlCafZf1g0sD4mDJI46Vz+oCTMndPCLlw0h451uWvoCt+Q+fooZJb
- Y6/K2vKeDVVauRKxHZD4BTZFFO1bWDD92Vmbj+kNDrCNyHelUOce5bf4N7XSiZ8p+8Pe
- ISQQ==
+ bh=L40FU+2cHE+gg1yQw5PftfosyZFsMHdenZ9sL/QL4tM=;
+ b=Rcu8v/CXZbB13R0K+W3i1+GiLg96Qi0hAM8z2Lciqf3j3z/wM3vTAKixWX6G3Hjdb9
+ hOXKvymqQUvscOnsMfG75//AJsJiaWtFfZAy7tTU7QwCQZqOWyD+BJLHrBGQY0WC8RsH
+ vtS4eSvTyTRcWSHTWa9WQQn31yc+ebNaEvgLDeIeOYF3dTAg1fzTxKQIOxgmGWG2ywx6
+ Z0YyDg3ZzPHr4YUFJaMUr7UCayc32ZOVxmT7QlAs26fp4R9bpnTPMy7lruFRmEFsZJor
+ zf2uMnrfK7k7ucdlAf6FeRW43wpTD523gRcVkgMU9UzFrzsfKlT2dV7F4pd9/cty9c84
+ EUQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWngyA6Vs+TGS+IiOAvmQAbWx6uWmAnoAZomtUo4U+NiTzmjHWiLrj/n3TeQj4Hkz/eiPF/9s84otwC@nongnu.org
-X-Gm-Message-State: AOJu0YzGzX4gmqmvpnncKswrqXYbKfElCe+ZgY9arFqlQhgTfdziEBAW
- twg+6upGv+YAccze7DucJVYLET1RjydI72UwHsIBn+j6LQvgfobvbMT4ZnNoHAu7
-X-Gm-Gg: ASbGncsXWxD+4BUpbd8a8iNM1MtACh9cCcqok5NC8YYgMY9QK469htMJ7/ClwTOtXoM
- v/dHpm6p95RfJ609CRMh5PkXOLg0qo5zPwBpw2AwYbzTUNgzyqTTJU0GVFCP1RzIHbMG6IOEJ8R
- G+CGVzANaifYxQ9aVMYcWIFaIoDNNsNyJedKyyNoDTZmkGfHF2WeYyzV2GRRPdB23NmWH1a1mX1
- SWPEQFyRS/UI7VXVKTUfgD8Nmt1+gpiDkHOh8uOUAt/uHMV/JAG8JPfRefA3dEsX2pl4xODygC9
- /gGweOn5fktFPmx+aF2nBXvX4yxIBbOVFqxc0CVddXuq1RMNJNu1CmYeMvenWXANDz4cmtEsPfg
- jlOrIZlo3gLbr3wXho41VFM0E+WvVi+LjBzFYHg==
-X-Google-Smtp-Source: AGHT+IGCOqZQMTCQrOpjHbRzmqi7x7hlF2DY8tT6/nPVA1T14lb+e36kYx0agwxoWC9AGTJWuLJjgA==
-X-Received: by 2002:a17:90b:394f:b0:32b:c9fc:8aa2 with SMTP id
- 98e67ed59e1d1-32bc9fc8db5mr2583906a91.20.1757058806866; 
- Fri, 05 Sep 2025 00:53:26 -0700 (PDT)
+ AJvYcCVzPcoG1YIqvm+7yY+UsUNKBe5ewv0JA8tSsk1bYctwn08DndGi894t5+SYY/GxGA+jpenwhN5aziD0@nongnu.org
+X-Gm-Message-State: AOJu0Yw7N7EtDTTovuKt1AKz73ThUCbUJeGbwyAQX2tsg4+6yme7PLZu
+ 7P8W60GH37O133EWrqVBD1Fj5zo6W9I1UpO7J6hMcp+XDOHe9kTdXehboBuULeae
+X-Gm-Gg: ASbGncuOkRWz95DdFHJwSD9bwyWtScPjOmbANo//1xqsd7lYliWEBV7Js6Kdd9HCKtX
+ K9qlaEpJ4ZLo6oOFC0yuIhOrcDdZx6rC/y9DsxzJ2VWmaFVKheJkiW64siFCO64YOUlMwttS+bO
+ McFRdb88E1ZG6GvpOrTkLOofWsWvd3Ysp4Iq7rHT/kec4VqrUKZ4uUrSbEXZ9skguU4QNi52YB9
+ b11yT9+fBImGtPCSwTwx1ay9NZmoLj+80M6SbDCBWkrotcI65jpbieMNbAXsASd0FCkK+ik6oo1
+ G6YdAUTEG4cE0GiC1HTfofXBkrEUCoIIpnnpAQ4v95RqgF8TdkaaJsvTGFvmE8h57CqYmkdKybQ
+ iOXSh+0W3NGKJnZSvxTvJZKZKobM=
+X-Google-Smtp-Source: AGHT+IFB/vw9mwESMq8P1KFJ3RDS9liUVu3YjWlHP1w2GiV13wL4Gv0V1T+Q1l2vIegPidE9ccXMDg==
+X-Received: by 2002:a05:6a00:23c7:b0:771:e434:6c7d with SMTP id
+ d2e1a72fcca58-7723e262b24mr25194459b3a.12.1757058818929; 
+ Fri, 05 Sep 2025 00:53:38 -0700 (PDT)
 Received: from lima-default ([1.146.99.18]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a26ae02sm20967560b3a.21.2025.09.05.00.53.21
+ d2e1a72fcca58-7722a26ae02sm20967560b3a.21.2025.09.05.00.53.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 00:53:26 -0700 (PDT)
+ Fri, 05 Sep 2025 00:53:38 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -70,20 +70,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Alistair Francis <alistair.francis@wdc.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- Nicholas Joaquin <njoaquin@tenstorrent.com>,
- Ganesh Valliappan <gvalliappan@tenstorrent.com>
-Subject: [PATCH v2 1/3] target/riscv: Fix IALIGN check in misa write
-Date: Fri,  5 Sep 2025 17:49:56 +1000
-Message-ID: <20250905074959.426911-2-npiggin@gmail.com>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 3/3] tests/tcg: Add riscv test for interrupted vector ops
+Date: Fri,  5 Sep 2025 17:49:58 +1000
+Message-ID: <20250905074959.426911-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250905074959.426911-1-npiggin@gmail.com>
 References: <20250905074959.426911-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,166 +103,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The instruction alignment check for the C extension was inverted.
-The new value should be checked for C bit clear (thus increasing
-IALIGN). If IALIGN is incompatible, then the write to misa should
-be suppressed, not just ignoring the update to the C bit.
+riscv vector instructions can be interrupted with a trap, and partial
+completion is recorded in the vstart register. Some causes are
+implementation dependent, for example an asynchronous interrupt (which I
+don't think TCG allows). Others are architectural, typically memory
+access faults on vector load/store instructions.
 
-From the ISA:
+Add some TCG tests for interrupting vector load instructions and
+resuming partially completed ones.
 
-  Writing misa may increase IALIGN, e.g., by disabling the "C"
-  extension. If an instruction that would write misa increases IALIGN,
-  and the subsequent instruction’s address is not IALIGN-bit aligned,
-  the write to misa is suppressed, leaving misa unchanged.
+This would have caught a recent (now reverted) regression in vector
+stride load implementation, commit 28c12c1f2f50d ("Generate strided
+vector loads/stores with tcg nodes.")
 
-This was found with a verification test generator based on RiESCUE.
-
-Reported-by: Nicholas Joaquin <njoaquin@tenstorrent.com>
-Reported-by: Ganesh Valliappan <gvalliappan@tenstorrent.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/riscv/csr.c                        | 16 ++++-
- tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
- tests/tcg/riscv64/misa-ialign.S           | 88 +++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 3 deletions(-)
- create mode 100644 tests/tcg/riscv64/misa-ialign.S
+ tests/tcg/riscv64/Makefile.target      |   5 +
+ tests/tcg/riscv64/test-interrupted-v.c | 208 +++++++++++++++++++++++++
+ 2 files changed, 213 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-interrupted-v.c
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 8842e07a73..64b55b7add 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2140,9 +2140,19 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
-     /* Mask extensions that are not supported by this hart */
-     val &= env->misa_ext_mask;
- 
--    /* Suppress 'C' if next instruction is not aligned. */
--    if ((val & RVC) && (get_next_pc(env, ra) & 3) != 0) {
--        val &= ~RVC;
-+    /*
-+     * misa writes that increase IALIGN beyond alignment of the next
-+     * instruction cause the write to misa to be suppressed. Clearing
-+     * "C" extension increases IALIGN.
-+     */
-+    if (!(val & RVC) && (get_next_pc(env, ra) & 3) != 0) {
-+        /*
-+         * If the next instruction is unaligned mod 4 then "C" must be
-+         * set or this instruction could not be executing, so we know
-+         * this is is clearing "C" (and not just keeping it clear).
-+         */
-+        g_assert(env->misa_ext & RVC);
-+        return RISCV_EXCP_NONE;
-     }
- 
-     /* Disable RVG if any of its dependencies are disabled */
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 3ca595335d..6e470a028f 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -24,5 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-misa-ialign
-+run-misa-ialign: QEMU_OPTS := -cpu rv64,c=true,v=true,x-misa-w=on $(QEMU_OPTS)
-+run-misa-ialign: misa-ialign
-+	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index daa0c6688f..45a76e75ef 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -27,4 +27,9 @@ ifeq ($(HAVE_RISCV_VECTOR_INTRINSICS),y)
+ TESTS += test-vstart-overflow
+ test-vstart-overflow: CFLAGS += -march=rv64gcv
+ run-test-vstart-overflow: QEMU_OPTS += -cpu rv64,v=on
 +
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/misa-ialign.S b/tests/tcg/riscv64/misa-ialign.S
++# Test for interrupted vector instructions
++TESTS += test-interrupted-v
++test-interrupted-v: CFLAGS += -march=rv64gcv
++run-test-interrupted-v: QEMU_OPTS += -cpu rv64,v=on
+ endif
+diff --git a/tests/tcg/riscv64/test-interrupted-v.c b/tests/tcg/riscv64/test-interrupted-v.c
 new file mode 100644
-index 0000000000..7f1eb30023
+index 0000000000..db4fb6092f
 --- /dev/null
-+++ b/tests/tcg/riscv64/misa-ialign.S
-@@ -0,0 +1,88 @@
++++ b/tests/tcg/riscv64/test-interrupted-v.c
+@@ -0,0 +1,208 @@
 +/*
-+ * Test for MISA changing C and related IALIGN alignment cases
++ * Test for interrupted vector operations.
 + *
-+ * This test verifies that the "C" extension can be cleared and set in MISA,
-+ * that a branch to 2-byte aligned instructions can be executed when "C" is
-+ * enabled, and that a write to MISA which would increase IALIGN and cause
-+ * the next instruction to be unaligned is ignored.
++ * Some vector instructions can be interrupted partially complete, vstart will
++ * be set to where the operation has progressed to, and the instruction can be
++ * re-executed with vstart != 0. It is implementation dependent as to what
++ * instructions can be interrupted and what vstart values are permitted when
++ * executing them. Vector memory operations can typically be interrupted
++ * (as they can take page faults), so these are easy to test.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
++#include <stdlib.h>
++#include <stdint.h>
++#include <stdbool.h>
++#include <string.h>
++#include <sys/mman.h>
++#include <stdio.h>
++#include <assert.h>
++#include <signal.h>
++#include <unistd.h>
++#include <riscv_vector.h>
 +
-+#define RVC (1 << ('C'-'A'))
-+#define RVV (1 << ('V'-'A'))
++static unsigned long page_size;
 +
-+.option norvc
-+	.text
-+	.global _start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
++static volatile int nr_segv;
++static volatile unsigned long fault_start, fault_end;
 +
-+	csrr	t0, misa
-+	li	t1, RVC
-+	not	t1, t1
-+	and	t0, t0, t1
-+	csrw	misa, t0
-+	csrr	t1, misa
-+	li	a0, 2 # fail code
-+	bne	t0, t1, _exit # Could not clear RVC in MISA
++/*
++ * Careful: qemu-user does not save/restore vector state in
++ * signals yet, so any library or compiler autovec code will
++ * corrupt our test.
++ *
++ * Do only minimal work in the signal handler.
++ */
++static void SEGV_handler(int signo, siginfo_t *info, void *context)
++{
++    unsigned long page = (unsigned long)info->si_addr &
++                             ~(unsigned long)(page_size - 1);
 +
-+	li	t1, RVC
-+	or	t0, t0, t1
-+	csrw	misa, t0
-+	csrr	t1, misa
-+	li	a0, 3 # fail code
-+	bne	t0, t1, _exit # Could not set RVC in MISA
++    assert((unsigned long)info->si_addr >= fault_start);
++    assert((unsigned long)info->si_addr < fault_end);
++    mprotect((void *)page, page_size, PROT_READ);
++    nr_segv++;
++}
 +
-+	j	unalign
-+. = . + 2
-+unalign:
++/* Use noinline to make generated code easier to inspect */
++static __attribute__((noinline))
++uint8_t unit_load(uint8_t *mem, size_t nr, bool ff)
++{
++    size_t vl;
++    vuint8m1_t vec, redvec, sum;
 +
-+	li	t1, RVC
-+	not	t1, t1
-+	and	t0, t0, t1
-+	csrw	misa, t0
-+	csrr	t1, misa
-+	li	a0, 4 # fail code
-+	beq	t0, t1, _exit # Was able to clear RVC in MISA
++    vl = __riscv_vsetvl_e8m1(nr);
++    if (ff) {
++        vec = __riscv_vle8ff_v_u8m1(mem, &vl, vl);
++    } else {
++        vec = __riscv_vle8_v_u8m1(mem, vl);
++    }
++    redvec = __riscv_vmv_v_x_u8m1(0, vl);
++    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
++    return __riscv_vmv_x_s_u8m1_u8(sum);
++}
 +
-+	li	t0, (RVC|RVV)
-+	not	t0, t0
-+	and	t0, t0, t1
-+	csrw	misa, t0
-+	csrr	t0, misa
-+	li	a0, 5 # fail code
-+	bne	t0, t1, _exit # MISA write was not ignored (RVV was cleared)
++static __attribute__((noinline))
++uint8_t seg2_load(uint8_t *mem, size_t nr, bool ff)
++{
++    size_t vl;
++    vuint8m1x2_t segvec;
++    vuint8m1_t vec, redvec, sum;
 +
-+	j	realign
-+. = . + 2
-+realign:
++    vl = __riscv_vsetvl_e8m1(nr);
++    if (ff) {
++        segvec = __riscv_vlseg2e8ff_v_u8m1x2(mem, &vl, vl);
++    } else {
++        segvec = __riscv_vlseg2e8_v_u8m1x2(mem, vl);
++    }
++    vec = __riscv_vadd_vv_u8m1(__riscv_vget_v_u8m1x2_u8m1(segvec, 0),
++                   __riscv_vget_v_u8m1x2_u8m1(segvec, 1), vl);
++    redvec = __riscv_vmv_v_x_u8m1(0, vl);
++    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
++    return __riscv_vmv_x_s_u8m1_u8(sum);
++}
 +
-+	# Success!
-+	li	a0, 0
-+	j	_exit
++static __attribute__((noinline))
++uint8_t strided_load(uint8_t *mem, size_t nr, size_t stride)
++{
++    size_t vl;
++    vuint8m1_t vec, redvec, sum;
 +
-+trap:
-+	# Any trap is a fail code 1
-+	li	a0, 1
++    vl = __riscv_vsetvl_e8m1(nr);
++    vec = __riscv_vlse8_v_u8m1(mem, stride, vl);
++    redvec = __riscv_vmv_v_x_u8m1(0, vl);
++    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
++    return __riscv_vmv_x_s_u8m1_u8(sum);
++}
 +
-+# Exit code in a0
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++static __attribute__((noinline))
++uint8_t indexed_load(uint8_t *mem, size_t nr, uint32_t *indices)
++{
++    size_t vl;
++    vuint32m4_t idx;
++    vuint8m1_t vec, redvec, sum;
 +
-+	# Semihosting call sequence
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
++    vl = __riscv_vsetvl_e8m1(nr);
++    idx = __riscv_vle32_v_u32m4(indices, vl);
++    vec = __riscv_vloxei32_v_u8m1(mem, idx, vl);
++    redvec = __riscv_vmv_v_x_u8m1(0, vl);
++    sum = __riscv_vredsum_vs_u8m1_u8m1(vec, redvec, vl);
++    return __riscv_vmv_x_s_u8m1_u8(sum);
++}
 +
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
++/* Use e8 elements, 128-bit vectors */
++#define NR_ELEMS 16
++
++static int run_interrupted_v_tests(void)
++{
++    struct sigaction act = { 0 };
++    uint8_t *mem;
++    uint32_t indices[NR_ELEMS];
++    int i;
++
++    page_size = sysconf(_SC_PAGESIZE);
++
++    act.sa_flags = SA_SIGINFO;
++    act.sa_sigaction = &SEGV_handler;
++    if (sigaction(SIGSEGV, &act, NULL) == -1) {
++        perror("sigaction");
++        exit(EXIT_FAILURE);
++    }
++
++    mem = mmap(NULL, NR_ELEMS * page_size, PROT_READ | PROT_WRITE,
++               MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    assert(mem != MAP_FAILED);
++    madvise(mem, NR_ELEMS * page_size, MADV_NOHUGEPAGE);
++
++    /* Unit-stride tests load memory crossing a page boundary */
++    memset(mem, 0, NR_ELEMS * page_size);
++    for (i = 0; i < NR_ELEMS; i++) {
++        mem[page_size - NR_ELEMS + i] = 3;
++    }
++    for (i = 0; i < NR_ELEMS; i++) {
++        mem[page_size + i] = 5;
++    }
++
++    nr_segv = 0;
++    fault_start = (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
++    fault_end = fault_start + NR_ELEMS;
++    mprotect(mem, page_size * 2, PROT_NONE);
++    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, false)
++                    == 8 * NR_ELEMS / 2);
++    assert(nr_segv == 2);
++
++    nr_segv = 0;
++    fault_start = (unsigned long)&mem[page_size - NR_ELEMS];
++    fault_end = fault_start + NR_ELEMS * 2;
++    mprotect(mem, page_size * 2, PROT_NONE);
++    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS, false)
++                    == 8 * NR_ELEMS);
++    assert(nr_segv == 2);
++
++    nr_segv = 0;
++    fault_start = (unsigned long)&mem[page_size - (NR_ELEMS / 2)];
++    fault_end = fault_start + (NR_ELEMS / 2);
++    mprotect(mem, page_size * 2, PROT_NONE);
++    assert(unit_load(&mem[page_size - (NR_ELEMS / 2)], NR_ELEMS, true)
++                    == 3 * NR_ELEMS / 2);
++    assert(nr_segv == 1); /* fault-first does not fault the second page */
++
++    nr_segv = 0;
++    fault_start = (unsigned long)&mem[page_size - NR_ELEMS];
++    fault_end = fault_start + NR_ELEMS;
++    mprotect(mem, page_size * 2, PROT_NONE);
++    assert(seg2_load(&mem[page_size - NR_ELEMS], NR_ELEMS * 2, true)
++                    == 3 * NR_ELEMS);
++    assert(nr_segv == 1); /* fault-first does not fault the second page */
++
++    /* Following tests load one element from first byte of each page */
++    mprotect(mem, page_size * 2, PROT_READ | PROT_WRITE);
++    memset(mem, 0, NR_ELEMS * page_size);
++    for (i = 0; i < NR_ELEMS; i++) {
++        mem[i * page_size] = 3;
++        indices[i] = i * page_size;
++    }
++
++    nr_segv = 0;
++    fault_start = (unsigned long)mem;
++    fault_end = fault_start + NR_ELEMS * page_size;
++    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
++    assert(strided_load(mem, NR_ELEMS, page_size) == 3 * NR_ELEMS);
++    assert(nr_segv == NR_ELEMS);
++
++    nr_segv = 0;
++    fault_start = (unsigned long)mem;
++    fault_end = fault_start + NR_ELEMS * page_size;
++    mprotect(mem, NR_ELEMS * page_size, PROT_NONE);
++    assert(indexed_load(mem, NR_ELEMS, indices) == 3 * NR_ELEMS);
++    assert(nr_segv == NR_ELEMS);
++
++    munmap(mem, NR_ELEMS * page_size);
++
++    return 0;
++}
++
++int main(void)
++{
++    return run_interrupted_v_tests();
++}
 -- 
 2.51.0
 
