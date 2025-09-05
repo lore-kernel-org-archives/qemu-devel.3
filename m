@@ -4,75 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98241CA1002
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 01:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E700CA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 05:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuKnr-0008Im-GL; Thu, 04 Sep 2025 20:59:47 -0400
+	id 1uuOp3-0001Gc-IV; Fri, 05 Sep 2025 01:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uuKne-0008Gm-6f
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 20:59:34 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uuKnX-0004FI-U7
- for qemu-devel@nongnu.org; Thu, 04 Sep 2025 20:59:33 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxaNHmNbpotOIGAA--.14640S3;
- Fri, 05 Sep 2025 08:59:18 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxH8LjNbpoRSp_AA--.20551S3;
- Fri, 05 Sep 2025 08:59:18 +0800 (CST)
-Subject: Re: [PATCH v3 3/3] hw/loongarch/virt: Register reset interface with
- CPU object
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20250903023556.3082693-1-maobibo@loongson.cn>
- <20250903023556.3082693-4-maobibo@loongson.cn>
- <20250904101347.0599daab@fedora>
- <5be0c9ed-d572-42e0-e6aa-607483410bea@loongson.cn>
- <20250904160859.6cacea91@fedora>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <9f3c1e32-989c-f3b3-9509-e5de12466cb3@loongson.cn>
-Date: Fri, 5 Sep 2025 08:57:15 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uuOp1-0001G6-8J
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 01:17:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uuOoy-0006kU-Gp
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 01:17:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757049428;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vkpgVcfz6oR1kCFOVA9xEFfmrqict1Ne7GVKoL3AeFo=;
+ b=e2CxLCStJopOI78ddkKGjwIWD3Ql/uBrzs9w5dYDljfPQlcYHohVnKkKeTamNU038I/ii4
+ ZiLu8TUFn8+1SVEf9qinqfDI32uku43DsiwGujN/gPiIGn7pK3yE9KOq7m8zcRrtoQvkjY
+ HdwBaK/Jrk/PKPLJhOJ/QXgOxzk3lUA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-un7yXF2wP1yucPpOjFrw-A-1; Fri, 05 Sep 2025 01:17:06 -0400
+X-MC-Unique: un7yXF2wP1yucPpOjFrw-A-1
+X-Mimecast-MFC-AGG-ID: un7yXF2wP1yucPpOjFrw-A_1757049425
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45b9ca27a11so12636555e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Sep 2025 22:17:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757049425; x=1757654225;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vkpgVcfz6oR1kCFOVA9xEFfmrqict1Ne7GVKoL3AeFo=;
+ b=eOzLoJMWJEYzb+3JVQuleOSN8z6uKdPTiRuLRBdeLjuUxMmiG1cpSEXsSkXzb3rHji
+ cNg5POxrab1robqO4C8VqKwMSA6gJfAUBfXrxn/EG0Hm+k27JwgKcARdIJyLp6gzqNWm
+ Dh0sabXP8Ws757HUQ3dseD5xtvpp7zEJ3C75iYKGB381QOg98rrMurgRDPGkgiklSLeM
+ PUtUIRLlKXU1LaR4w1yadnidb5zi643eJJtSPiLU79B+jcgXg3j6UtURRz5vaJXucXC8
+ zPueNVdcgSXnDT3JxHKMbVGefCQvuxXkZV1ldQ6vrJL0cTa0PO9GMxYJwrcEQx5CLdCE
+ Js/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVeoFJgccsG5AAqhlbMs7IInxf1/co2tSAFh2HcBirSM4egEzbNGIO/gpOB2XLntQh/9ayOnpgcTaE@nongnu.org
+X-Gm-Message-State: AOJu0YyF7kmg3MqssHIQoHbB2au1c3MiYZ0HjkeFeN6tvjoq91N5Vn8i
+ iQFhYSPh6ikZ6zULK3DpCFszKKUR+QRUNTkOZJENG+Zti9J71uNJzjrndNREw5k1scpRRQipFcg
+ zgNySa0/rTclAqsajrPeJMLrg4dcM+4+1TDunuQHL4FM5FqNRpv23INd0rbojKCEjgHL3r7oKAC
+ TjktXHIp8SrDSCcyq8eWqcxKR9nEPADBM=
+X-Gm-Gg: ASbGnctDXfX/sI44q1VrldzGDF3s6Y9OW2c/wAuRrX0gIEfmvv96GFg5lBPNkvkrZPn
+ TbrIGaq6qQWUf/Vw7vcEUUyzzeOG6BwHxBWcQjgxnWEf+lPTIZVlE32ZuC1BnpPZrAbfycpBVTW
+ KjaE7/9mwcOt5+LJ02WWEFK8h21cW3KW7+/ZZo+vRS+JL7o8K7sRTRKF+HGmLMOOSaUkEl4qXjW
+ dcIZK0nPNwkeG6FwyJOQQ==
+X-Received: by 2002:a05:6000:2312:b0:3e0:34f4:31f9 with SMTP id
+ ffacd0b85a97d-3e30033c90amr1293649f8f.1.1757049425392; 
+ Thu, 04 Sep 2025 22:17:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOAWH+CuX8XMUtbyIDDN9bhG1xLGWNoa+LDlpuEBl+PUcPMnbeVhmZp57j1fmJqmEuc9N2KDRi6ota5YMJiI8=
+X-Received: by 2002:a05:6000:2312:b0:3e0:34f4:31f9 with SMTP id
+ ffacd0b85a97d-3e30033c90amr1293635f8f.1.1757049425031; Thu, 04 Sep 2025
+ 22:17:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250904160859.6cacea91@fedora>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxH8LjNbpoRSp_AA--.20551S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuryDXF4rur4fJrWfXw17twc_yoWrJrW7pr
- WxCF4YyF4ktr1UZ3y2q3WYyF1qqw1xKr1fZF1ftryFyws0qr1jqF10vFy7uFy8Cw1rWF1F
- qrn0kw1ava1UJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
+References: <20250506152927.222671-1-pbonzini@redhat.com>
+ <20250506152927.222671-2-pbonzini@redhat.com>
+ <CAJ+F1CKZr2PZbXvi8OZ9O=QaGv4WUmLPofBzqDv4VAV64y9EnA@mail.gmail.com>
+ <1546553e-a21a-4a0a-8bcc-6c4e23ff35e2@redhat.com>
+ <CAJ+F1CL+TxyRN0P2njCBRLigKe1tO1CyNOuCP1L5LHwE5FMEsQ@mail.gmail.com>
+In-Reply-To: <CAJ+F1CL+TxyRN0P2njCBRLigKe1tO1CyNOuCP1L5LHwE5FMEsQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 5 Sep 2025 07:16:53 +0200
+X-Gm-Features: Ac12FXyiRMMjkNld7HVxq_yf7u9cCU1d5NsYkZimpR5kOrj7DmMlItt-H_DonhU
+Message-ID: <CABgObfY87q19jxOw_tv86dzBkd1AbhjKN6rNqjeh+yFguYizhA@mail.gmail.com>
+Subject: Re: [PULL 01/30] lcitool: use newer Rust for Debian and Ubuntu
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,117 +110,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Big-endian MIPS is already deprecated in preparation for Trixie. Until
+it's removed we can keep that target, or all cross-build testing as
+you suggested, on Bookworm.
 
+Paolo
 
-On 2025/9/4 下午10:08, Igor Mammedov wrote:
-> On Thu, 4 Sep 2025 19:55:49 +0800
-> Bibo Mao <maobibo@loongson.cn> wrote:
-> 
->> On 2025/9/4 下午4:13, Igor Mammedov wrote:
->>> On Wed,  3 Sep 2025 10:35:56 +0800
->>> Bibo Mao <maobibo@loongson.cn> wrote:
->>>    
->>>> With cpu hotplug is implemented on LoongArch virt machine, reset
->>>> interface with hot-added CPU should be registered. Otherwise there
->>>> will be problem if system reboots after cpu is hot-added.
->>>>
->>>> Now register reset interface with CPU object is realized and remove
->>>> the reset interface with CPU object unrealizd.
->>>>
->>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>> ---
->>>>    hw/loongarch/boot.c    | 13 -------------
->>>>    target/loongarch/cpu.c |  4 ++++
->>>>    2 files changed, 4 insertions(+), 13 deletions(-)
->>>>
->>>> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->>>> index 5799b4c75c..a516415822 100644
->>>> --- a/hw/loongarch/boot.c
->>>> +++ b/hw/loongarch/boot.c
->>>> @@ -350,13 +350,6 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
->>>>        return kernel_entry;
->>>>    }
->>>>    
->>>> -static void reset_load_elf(void *opaque)
->>>> -{
->>>> -    LoongArchCPU *cpu = opaque;
->>>> -
->>>> -    cpu_reset(CPU(cpu));
->>>> -}
->>>> -
->>>>    static void fw_cfg_add_kernel_info(struct loongarch_boot_info *info,
->>>>                                       FWCfgState *fw_cfg)
->>>>    {
->>>> @@ -439,12 +432,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
->>>>    void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
->>>>    {
->>>>        LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
->>>> -    int i;
->>>> -
->>>> -    /* register reset function */
->>>> -    for (i = 0; i < ms->smp.cpus; i++) {
->>>> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
->>>> -    }
->>>>    
->>>>        info->kernel_filename = ms->kernel_filename;
->>>>        info->kernel_cmdline = ms->kernel_cmdline;
->>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>>> index 3a7621c0ea..9edb8ebc4d 100644
->>>> --- a/target/loongarch/cpu.c
->>>> +++ b/target/loongarch/cpu.c
->>>> @@ -668,6 +668,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>>>    
->>>>        qemu_init_vcpu(cs);
->>>>        cpu_reset(cs);
->>>> + #ifndef CONFIG_USER_ONLY
->>>> +    qemu_register_resettable(OBJECT(dev));
->>>> + #endif
->>>
->>> I'd put this in virt_cpu_plug() as last step, which should work both for
->>> cold and hotpluged cpus. And drop CONFIG_USER_ONLY while at it.
->> With symmetry is the same with qemu_unregister_resettable()
->> Symmetrically, to put it in virt_cpu_unplug()?
-> 
-> yep
-Will do in next version.
-> 
->>
->> If there are many boards in future, the boards do not need to care about
->> registering cpu reset interface, which is done in CPU object already.
-> 
-> lets worry about more boards when that arrives.
-> that said, yanking reset pin on CPU is usually the board/firmware responsibility.
-> 
-> PS:
-> we have reset registered in realizefn() across QEMU, largely due to historical reasons.
-Ok, thanks for your explanation.
-
-Regards
-Bibo Mao
-> 
->>
->> Regards
->> Bibo Mao
->>>
->>> with that
->>> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
->>>
->>> PS:
->>> the rest of the patches are very arch specific so I won't review them.
->>>    
->>>>    
->>>>        lacc->parent_realize(dev, errp);
->>>>    }
->>>> @@ -678,6 +681,7 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
->>>>    
->>>>    #ifndef CONFIG_USER_ONLY
->>>>        cpu_remove_sync(CPU(dev));
->>>> +    qemu_unregister_resettable(OBJECT(dev));
->>>>    #endif
->>>>    
->>>>        lacc->parent_unrealize(dev);
->>>    
->>
-> 
+On Thu, Sep 4, 2025 at 9:39=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi
+>
+> On Wed, Sep 3, 2025 at 5:59=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+> >
+> > On 9/3/25 15:54, Marc-Andr=C3=A9 Lureau wrote:
+> > > Hi Paolo
+> > >
+> > > On Tue, May 6, 2025 at 7:30=E2=80=AFPM Paolo Bonzini <pbonzini@redhat=
+.com> wrote:
+> > >>
+> > >> On Debian, the rustc-web package provides a newer Rust compiler (1.7=
+8)
+> > >> for all architectures except mips64el.
+> > >
+> > > Unfortunately, rustc-web is not compatible with the cross/multiarch
+> > > packages (it will remove all libstd-rust-dev:*).
+> > >
+> > > Should we switch to rustup in the meantime for debian cross-compilati=
+on testing?
+> >
+> > We should just switch to Trixie, which however needs some work in lcito=
+ol.
+> >
+>
+> Trixie no longer supports mips:
+> https://www.debian.org/releases/trixie/release-notes/issues.html?utm_sour=
+ce=3Dchatgpt.com#mips-architectures-removed
+>
+> Can we simply drop it from our CI too, or do we want to keep
+> cross-build testing on debian 12?
+>
+>
+> --
+> Marc-Andr=C3=A9 Lureau
+>
 
 
