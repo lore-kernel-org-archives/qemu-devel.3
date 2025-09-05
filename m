@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3E1CA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 16:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286E9CA0FED
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 16:15:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuYxe-0002AQ-2g; Fri, 05 Sep 2025 12:06:50 -0400
+	id 1uuZ40-0004eS-Jf; Fri, 05 Sep 2025 12:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1uuYxb-00029v-CB
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:06:47 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pefoley@google.com>)
- id 1uuYxO-0006iS-Hm
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:06:46 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-3197f534179so1971857fac.2
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 09:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1757088391; x=1757693191; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZkwYenxbNptuB5XO2JT/ncPJyISuD2ZsJZv7biEBP7k=;
- b=3BmMjjd97PGltpHPB8FKgQ6UinXJ0K7Dn3HXrqG6hej3Jnp5GNha4KkAhi6m2KFrX6
- rLfs6T8ObxeJI1pYXhoVTUTG4Yc064/8Y4GmJoZhP7X9f3DuXnI6eNabubmRhWHbWyjJ
- piS5nWRUAaNvWjObHC7GQnTgckIryf2fniG83Q6bdfPBU0Aww1OQSW7Bc+Mc7cHWfwBq
- igWJZL58YTlQe6RC/jz7L5BN5BBZU1ONnB0YU4NzrCP6d2z2+tcveA1nFkesUVb3dRDF
- 53Ay7EQmm2y4yHDxcwVh/atOOXhDfVrVNGm5C/Ldrud2W7nmK5krsmp9T6o611bTr8Wr
- YUDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757088391; x=1757693191;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZkwYenxbNptuB5XO2JT/ncPJyISuD2ZsJZv7biEBP7k=;
- b=N+q9V8+jGZl64sOzHKbsi91qUEemuN7NWBrUysGffvz6GM6VMRvv22HR218Xt9caoU
- xDxQdMXCI3yhTLi8HqK5nJ3zjWCxz0czf9T4B1ms3e3wHNw3tKk6AR0vnKBHEEi64KPf
- bMLP/OL/yYtRbU1hag9cs8KDNjT4Q+ZH673pJw01BlmNhPtL7TMyFRC8ZwX7sThNhWZ9
- IxLqBPGrXumPeV4MJ73NATZicJ6YNcGvIJtdsFq+nsSQSR4LCE383Q0Xvf5ISNU5K8R3
- EqU355rI0Z2OJh4cEazSNoghDLE2Ao7drEy29b96Hy8LmUOEK3HmrMoMZwQierH0ym28
- RQEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXnjBG8MToAg0KIgq1YA+Wo+0d6Y8jvsZylRkJAmn/XftZlKR+yx81p7y6cnQXgk5CNURn4YS5OMXr@nongnu.org
-X-Gm-Message-State: AOJu0Yyj7Sl3clTKRLOWpv8E99YTx39HrGbhN9Xc/P+GJpo2qcl/5iMt
- T+SWc92bk/E0ty8scT3ObSdprOwfjozxD5N2WUAjWcGHLc9TI+npdBnCtqVkyaOCFuOelbxa2VO
- H+b6tjqasIwKdE9c05Xn72kuNGjFAN3xZ6Xo/o5jyht39ffhsXqUQnfyIAXw=
-X-Gm-Gg: ASbGnctm94h7VQU2/qJfrixdW/CFi+2h/ZeJDGzQbjqHqfxmu9QKUice68EPehte0U4
- ZJpkDKhf/4PS6Ao/l9R0qTQCcm25Qo4tAO1p+uvQ0zknoRK1eEG2LMi2Uh65RvkiKx9I8a/qvr7
- dE1xiMcm7nOD0JMDtUtFimm725ousio208xV9Gj0Y7CgM2C3By5eJ+dn8KmOfdIyhPb+gHmNVz0
- aDZfZdq5w152WS5tYqKyJr+jFLVCH7beIcvm0BFfufcZLWWBnrplzc=
-X-Google-Smtp-Source: AGHT+IF4iNHpSUur+DRUbeIaNgTK4VKyTBZKX+8gGCqktOahIzCASnJvvBMdC1IHlFusZDhLRJMT0ZxdhHin8IsA6Go=
-X-Received: by 2002:a05:6870:1494:b0:315:c0bc:4bb6 with SMTP id
- 586e51a60fabf-3196306b5e2mr13119778fac.5.1757088390555; Fri, 05 Sep 2025
- 09:06:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uuZ3w-0004e8-At
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:13:20 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uuZ3m-0007o3-Rv
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:13:19 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cJLsp6Nj1z6M54c;
+ Sat,  6 Sep 2025 00:10:22 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 57554140159;
+ Sat,  6 Sep 2025 00:12:54 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 5 Sep
+ 2025 18:12:53 +0200
+Date: Fri, 5 Sep 2025 17:12:52 +0100
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v3 0/2] FM-API Physical Switch Command Set Support
+Message-ID: <20250905171252.00004c72@huawei.com>
+In-Reply-To: <20250904131904.725758-1-arpit1.kumar@samsung.com>
+References: <CGME20250904131926epcas5p2a363cf0604a4801038d32e7da5397da1@epcas5p2.samsung.com>
+ <20250904131904.725758-1-arpit1.kumar@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
- <687f76dc-769d-4e8d-9281-5e5f10361bfe@redhat.com>
- <80ba3dae-0bb9-4a45-b1f9-5b80f4fdc47b@linaro.org>
- <CAAAKUPPbiQnCzkmnL0Luww1qeFQxVojzfkgJPrGgphXpkrXMGQ@mail.gmail.com>
-In-Reply-To: <CAAAKUPPbiQnCzkmnL0Luww1qeFQxVojzfkgJPrGgphXpkrXMGQ@mail.gmail.com>
-From: Peter Foley <pefoley@google.com>
-Date: Fri, 5 Sep 2025 12:06:19 -0400
-X-Gm-Features: Ac12FXySkWd3jiAQko5gZJFVxOk6NZZ2q8-sDz1cp2CcZmRNnLYt601OVTTeTt8
-Message-ID: <CAAAKUPO+OnFtkwydwqnj53BZuBsiNKxrb+E8A7kc5H4zbkMQgg@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Add missing includes
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, nabihestefan@google.com
-Content-Type: multipart/alternative; boundary="0000000000005c7e66063e100554"
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=pefoley@google.com; helo=mail-oa1-x2b.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,167 +71,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005c7e66063e100554
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu,  4 Sep 2025 18:49:02 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 
-On Fri, Sep 5, 2025 at 12:00=E2=80=AFPM Peter Foley <pefoley@google.com> wr=
-ote:
+> This patch series refactor existing support for Identify Switch Device
+> and Get Physical Port State by utilizing physical ports (USP & DSP)
+> information stored during enumeration. 
+> 
+> Additionally, it introduces new support for Physical Port Control
+> of FM-API based physical switch command set as per CXL spec r3.2 
+> Table 8-230:Physical Switch. It primarily constitutes two logic:
+> -Assert-Deassert PERST: Assert PERST involves physical port to be in 
+>  hold reset phase for minimum 100ms. No other physical port control
+>  request are entertained until Deassert PERST command for the given 
+>  port is issued.
+> -Reset PPB: cold reset of physical port (completing enter->hold->exit phases).
+> 
+> Tested using libcxl-mi interface[1]:
+> All active ports and all opcodes per active port is tested. Also, tested
+> against possible edge cases manually since the interface currently dosen't
+> support run time input.
+> 
+> Example topology (1 USP + 3 DSP's->switch with 2 CXLType3 devices connected
+> to 2 DSP's):
+> FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
+>     -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
+>     -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
+>     -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
+>     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+>     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+>     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
+>     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
+>     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+>     -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+>     -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
+>     -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
+>     -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
+>     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
+>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
+>     -device virtio-rng-pci,bus=swport1"
+> 
+> Multiple Qemu Topologies tested:
+> -without any devices connected to downstream ports.
+> -with virtio-rng-pci devices connected to downstream ports.
+> -with CXLType3 devices connected to downstream ports.
+> -with different unique values of ports (both upstream and downstream).
+> 
+> Changes from v2->v3:
+> -cxl_set_port_type(): optimized storing of strucutre members.
+> -namespace defines instead of enum.
+> -Calculating size for active_port_bitmask than hardcoding to 0x20.
+> -Defined struct phy_port directly inside struct CXLUpstreamPort as pports.
+> -Renamed struct pperst to struct CXLPhyPortPerst.
+> -Optimized perst member initializations for ports inside
+>  cxl_initialize_usp_mctpcci() using active_port_bitmask.
+> 
+> [1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
+> 
+> The patches are generated against the Johnathan's tree
+> https://gitlab.com/jic23/qemu.git and branch cxl-2025-07-03.
+> 
+> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
 
->
->
-> On Fri, Sep 5, 2025 at 4:48=E2=80=AFAM Richard Henderson <
-> richard.henderson@linaro.org> wrote:
->
->> On 9/5/25 09:31, Paolo Bonzini wrote:
->> > On 9/4/25 17:21, Peter Foley wrote:
->> >> We're getting errors about this:
->> >> linux-user/elfload.c:2770:36: error: use of undeclared identifier
->> 'MAP_FIXED_NOREPLACE'
->> >
->> > Queued, thanks.
->> >
->> > Paolo
->> >
->> >>
->> >> Signed-off-by: Peter Foley <pefoley@google.com>
->> >> ---
->> >>   linux-user/elfload.c | 1 +
->> >>   linux-user/mmap.c    | 1 +
->> >>   linux-user/syscall.c | 1 +
->> >>   3 files changed, 3 insertions(+)
->> >>
->> >> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
->> >> index
->> 26c090c95d3e90ad4a23a927267e4106f68975b0..edbacf041f25d88472c95efb4eb9bd=
-ccd81e9902
->>
->> >> 100644
->> >> --- a/linux-user/elfload.c
->> >> +++ b/linux-user/elfload.c
->> >> @@ -5,6 +5,7 @@
->> >>   #include <sys/prctl.h>
->> >>   #include <sys/resource.h>
->> >>   #include <sys/shm.h>
->> >> +#include <linux/mman.h>
->>
->> There's no reason to include <linux/mman.h>.
->>
->> This value is provided by <sys/mman.h> directly for musl and by
->> <sys/mman.h> via
->> <bits/mman-map-flags*> for glibc.
->>
->> Are you using some other libc?  You're solidly in non-standard territory
->> there.
->> Perhaps that other libc needs updating.
->>
->
-> We're using glibc 2.27.
-> I definitely saw build failures earlier without this patch, but I'm now
-> unable to reproduce them at head.
-> So maybe there was an issue with our headers at an earlier point that has
-> since been fixed?
-> I'll revert this patch from our local fork and you should probably drop i=
-t
-> upstream as well.
->
->
-Oh, I figured out why I couldn't reproduce the issue.
-We had a separate patch we were carrying that added linux/mman.h
-to linux-user/user-mmap.h.
-If I revert both patches, I see this:
-third_party/qemu/linux-user/mmap.c:602:40: error: use of undeclared
-identifier 'MAP_FIXED_NOREPLACE'
-  602 |     if (start || (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
+Hi Arpit,
+
+I'll have a go (probably next week) at rebasing this rather earlier in my tree as I'd
+like to get this upstream without it having a dependency on the MCTP support.
+
+That means bring it up with the switch-cci / pcie mailbox CCI and squashing
+the MCTP bit into the patch that brings that support up later in my tree.
+
+I do plan to fix up the remaining 'feature' gap on the FMAPI/MCTP/USB 
+emulation which is that it's ignoring the MTU to the host and so not
+breaking messages up as it should.  Linux doesn't care but maybe some other
+OS will. Not entirely sure when I'll get to that though and I'd like to
+move your work forward before that.
+
+Jonathan
 
 
+> 
+> Arpit Kumar (2):
+>   hw/cxl: Refactored Identify Switch Device & Get Physical Port State
+>   hw/cxl: Add Physical Port Control (Opcode 5102h)
+> 
+>  hw/cxl/cxl-mailbox-utils.c                | 368 +++++++++++++++-------
+>  include/hw/cxl/cxl_device.h               |  76 +++++
+>  include/hw/cxl/cxl_mailbox.h              |   1 +
+>  include/hw/pci-bridge/cxl_upstream_port.h |   9 +
+>  4 files changed, 347 insertions(+), 107 deletions(-)
+> 
 
->
->>
->> r~
->>
->
-
---0000000000005c7e66063e100554
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 5, =
-2025 at 12:00=E2=80=AFPM Peter Foley &lt;<a href=3D"mailto:pefoley@google.c=
-om">pefoley@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div =
-class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 5, =
-2025 at 4:48=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailto:richard.hen=
-derson@linaro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 9/5/25 =
-09:31, Paolo Bonzini wrote:<br>
-&gt; On 9/4/25 17:21, Peter Foley wrote:<br>
-&gt;&gt; We&#39;re getting errors about this:<br>
-&gt;&gt; linux-user/elfload.c:2770:36: error: use of undeclared identifier =
-&#39;MAP_FIXED_NOREPLACE&#39;<br>
-&gt; <br>
-&gt; Queued, thanks.<br>
-&gt; <br>
-&gt; Paolo<br>
-&gt; <br>
-&gt;&gt;<br>
-&gt;&gt; Signed-off-by: Peter Foley &lt;<a href=3D"mailto:pefoley@google.co=
-m" target=3D"_blank">pefoley@google.com</a>&gt;<br>
-&gt;&gt; ---<br>
-&gt;&gt; =C2=A0 linux-user/elfload.c | 1 +<br>
-&gt;&gt; =C2=A0 linux-user/mmap.c=C2=A0=C2=A0=C2=A0 | 1 +<br>
-&gt;&gt; =C2=A0 linux-user/syscall.c | 1 +<br>
-&gt;&gt; =C2=A0 3 files changed, 3 insertions(+)<br>
-&gt;&gt;<br>
-&gt;&gt; diff --git a/linux-user/elfload.c b/linux-user/elfload.c<br>
-&gt;&gt; index 26c090c95d3e90ad4a23a927267e4106f68975b0..edbacf041f25d88472=
-c95efb4eb9bdccd81e9902 <br>
-&gt;&gt; 100644<br>
-&gt;&gt; --- a/linux-user/elfload.c<br>
-&gt;&gt; +++ b/linux-user/elfload.c<br>
-&gt;&gt; @@ -5,6 +5,7 @@<br>
-&gt;&gt; =C2=A0 #include &lt;sys/prctl.h&gt;<br>
-&gt;&gt; =C2=A0 #include &lt;sys/resource.h&gt;<br>
-&gt;&gt; =C2=A0 #include &lt;sys/shm.h&gt;<br>
-&gt;&gt; +#include &lt;linux/mman.h&gt;<br>
-<br>
-There&#39;s no reason to include &lt;linux/mman.h&gt;.<br>
-<br>
-This value is provided by &lt;sys/mman.h&gt; directly for musl and by &lt;s=
-ys/mman.h&gt; via <br>
-&lt;bits/mman-map-flags*&gt; for glibc.<br>
-<br>
-Are you using some other libc?=C2=A0 You&#39;re solidly in non-standard ter=
-ritory there.<br>
-Perhaps that other libc needs updating.<br></blockquote><div><br></div><div=
->We&#39;re using glibc 2.27.</div><div>I definitely=C2=A0saw build failures=
- earlier without=C2=A0this patch, but I&#39;m now unable to reproduce them =
-at head.</div><div>So maybe there was an issue with our headers at an earli=
-er point that has since been fixed?</div><div>I&#39;ll revert this patch fr=
-om our local fork and you should probably drop it upstream as well.</div><d=
-iv><br></div></div></div></blockquote><div><br></div><div>Oh, I figured out=
- why I couldn&#39;t reproduce the issue.</div><div>We had a separate patch =
-we were carrying that added=C2=A0linux/mman.h to=C2=A0linux-user/user-mmap.=
-h.</div><div>If I revert both patches, I see this:</div><div>third_party/qe=
-mu/linux-user/mmap.c:602:40: error: use of undeclared identifier &#39;MAP_F=
-IXED_NOREPLACE&#39;<br>=C2=A0 602 | =C2=A0 =C2=A0 if (start || (flags &amp;=
- (MAP_FIXED | MAP_FIXED_NOREPLACE))) {<br></div><div><br></div><div>=C2=A0<=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><di=
-v class=3D"gmail_quote"><div></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-<br>
-r~<br>
-</blockquote></div></div>
-</blockquote></div></div>
-
---0000000000005c7e66063e100554--
 
