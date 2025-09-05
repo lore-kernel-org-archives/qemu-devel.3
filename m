@@ -4,103 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF12FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 16:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA022CA1010
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 16:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuZ7z-0006BD-15; Fri, 05 Sep 2025 12:17:31 -0400
+	id 1uuZGl-0000yQ-OQ; Fri, 05 Sep 2025 12:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuZ7w-0006Al-RH
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:17:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uuZ7o-0001NJ-BA
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:17:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757089035;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f8MAC8ElrJn1dAORTS1vdpw/u+ze1PFqh427Y/h5vPU=;
- b=HhLsD3dYbXnCYdEvAWWL31lO30vhT/K8OYK0qfr0m2t0/Vm8dlrr+Nxj3gn+LajQM2/3UU
- XVkm28ln51llmJHLLsb6/IYLbtora8EIb0XArcLBo5FcQiVKx6k7rbl3SOXbMhJ1/nQFG6
- isKHoIKVAi6qysrd/S0JnMpcgwWWd3E=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-587-Ja_6YUTJMBSHGLc470BNdg-1; Fri, 05 Sep 2025 12:17:13 -0400
-X-MC-Unique: Ja_6YUTJMBSHGLc470BNdg-1
-X-Mimecast-MFC-AGG-ID: Ja_6YUTJMBSHGLc470BNdg_1757089033
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-72023d1be83so63885226d6.3
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 09:17:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuZGa-0000ve-Bi
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:26:28 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuZGV-0004F5-Da
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 12:26:23 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3d44d734cabso1634301f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 09:26:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757089570; x=1757694370; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/aJT5kj/X0VjoycfEh/4yw8Kx/fcFYJpYop+XmItbMQ=;
+ b=KPyPyRGol51tC3lGsiJ8kUg7jxHtVcwXv+3wmUbHN2F+rk9n7QAdCE6cdQ+2h5HY6j
+ e4rQ14FIYlLcb7/2Qx/8R8LizFJP/lsjQIfXvCreQZhQblsoZqc25PUy2JO2v3mtzn1P
+ 9gzIT29WJY5423907Gmk38vmqE7ayWbE74Mkso74w5pO5ZUwTPw5HQUji26pnsPxA/uf
+ MQn2XL9A6dnt7OXSFSpwnC2mZZ4HR57M0LEHLp3OeipWu7QHMosXAoXGqddGH0xX+e6K
+ 3aLlJa9QE29mq7LHRseSamQWtj65UduGuiasVshq5vnRTfUUso7kXGZJNEaUWSBOMIM8
+ 0qeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757089033; x=1757693833;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1757089570; x=1757694370;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f8MAC8ElrJn1dAORTS1vdpw/u+ze1PFqh427Y/h5vPU=;
- b=kezfhDIEMkejahvHfULslxZQXYccsi1UrSXMkzSGgcVyW0deuKfmQmL13NRsjp9wm2
- 1LBbjSv0MFambNyhdPA+k56qm1fkl5/dbjBnMozzkIAz44QhIKPffnKQLtMmcn2kE4bP
- SUw35Z3bdT0+qBeZQpf4u/RT+LObiO2TPUzC6bjpCzXP5v+aAfBxSzWP4PTxZJU8mjyc
- fSUTXWQNt3m0BuOx+k+a4EK0n8YA6eeA8gyYfh2I45Oz3MWyHa67OQUusDw84TM4G7mn
- rOnr1yfmAdbEiVYDGXTZIPowRiZEQUCnN2BweU8Qsj05T3Gmurn4RRV8zPcCvwjxfg5H
- ZIHQ==
+ bh=/aJT5kj/X0VjoycfEh/4yw8Kx/fcFYJpYop+XmItbMQ=;
+ b=H2rB2xOcbT6Bc84TerNvrlyenwHAYkaA4vYopyxBPPII1FvUNDtVCWD/4FCgi2liyC
+ aXrIJawXqtqQVX7JOSniWF/5fj/8XvJVjYTyD1NJU+iZqP8G6msIwWHuY5ur+5HkyJYt
+ yha+UlZmKL7rSWpqjitAAsK9P0WkXAkk2NSnVCb1tNTr8NwN6owP1rGHfBMAJ6aBBqwl
+ gG0jepUg0dVTBaPBTFPvssTVrpENlRXwufK0geWOUmFWeEZWFxRoF5gsA6JiJD3tYcMA
+ Z5mq+arMgALelZqr4G26aRXPAcTsQeyu1AyEMN9vFAJMy69pyOfilsleI3JckD4m/KQu
+ JDdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/bxRO1XY6/BIFPNG8e+TeUuW3MdYK6z0VjadJvrxS6PDgsTPSMXm24Loch310+d9dj0Sx1eFOFmHG@nongnu.org
-X-Gm-Message-State: AOJu0YwZRRuYV8j4bagGQtk94MKjrhojvlntUszVcQ+V2SiTSSZtmWrh
- Kg5cPNWufmcfQDIdisMNsN4PcXct7LCcEEqoUzRZLG43DbFBXEy0PXVJq8iG5SeH6F4lDv95/E6
- rTtFugzcsVAjklEYn9eUV5HOy3qalOksca1Ey0liVFq5Ks8WdEixvZ52k
-X-Gm-Gg: ASbGncuURW9Y+YZDptUYpG4OEKzRyFTK/VErwGo2qyCCJ/m5CK4YTuHc8mOHcXPAj3t
- mclyZgpHuny86fEZ39JI2VZPkgq6AakcQapnx52jKYhBtNlMVnWkYV0nDXqieRMxZeqz43jcajq
- 833i2xZRD/Cj6qeg4P4foUmUzIQb71MR5b2skVxKgEUK5CtuadNSKjCSR12d3yYbNu9VPVnYW/Z
- T6U127UyxSbXsf30kyyaqYDfD44lm70NF7MC/8ds/AOK2uV2Y/bEkfvaChFMsOcjAiWQnrbCF08
- 2p0axzXGHPqNSs4Zgpl2HqYK5XuWb3E8
-X-Received: by 2002:ad4:5aa6:0:b0:722:52ac:12ea with SMTP id
- 6a1803df08f44-72252ac2f5dmr162555366d6.4.1757089033157; 
- Fri, 05 Sep 2025 09:17:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAch8Pd0KpWlHuBfqbQSgo+ODREG9mhCXNMEOfugEFSPdsFCBPSKbwIwcsvTiW0nZW1RgJ0w==
-X-Received: by 2002:ad4:5aa6:0:b0:722:52ac:12ea with SMTP id
- 6a1803df08f44-72252ac2f5dmr162554866d6.4.1757089032436; 
- Fri, 05 Sep 2025 09:17:12 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-72a2d06b9b5sm28144516d6.70.2025.09.05.09.17.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 09:17:11 -0700 (PDT)
-Date: Fri, 5 Sep 2025 12:16:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- "Chaney, Ben" <bchaney@akamai.com>, Jason Wang <jasowang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hamza Khan <hamza.khan@nutanix.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC V2 0/8] Live update: tap and vhost
-Message-ID: <aLsM-_Bfj2bYtwSX@x1.local>
-References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
- <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
- <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
- <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
- <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
- <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
- <c8b799f7-c549-4534-a156-99df204e62ec@yandex-team.ru>
+ AJvYcCUlLWvhxHgJnxifLR218jjdVyS6gcVae6V/5g3O/+2c8OeH5A6H+ixzKTpOcZCmNV62ACso3sYbadtU@nongnu.org
+X-Gm-Message-State: AOJu0YyGdiS5Qr5BrgIECn1M8xlU/ONIJcMUwXx/8TxHdOEF6EkBcnMF
+ /LzB7e3jHvUdSMpPph6klvxAqWPW0/6R0F0mYhWUiM4pcg2O+DNDeyu10gURv167V/s=
+X-Gm-Gg: ASbGncsV6rbUgFTT6uJaUxXoTgPcxubktFHFExNM9lkyaplNaLmESax9GuIvBs6DNsU
+ GSkgNxCAUF2sa4EV22IN7DVLHORFrhuf2CwTUE3s0WvKahS2q6uI67uPnN5X217+QeVzF8wBlPB
+ kw50L0vhpygqMKdiSZHQaLL/uUMuaCbIlGu8o36I8u+eb9eO7p/kTahl9ZOdoNn0dgNHIxbcoMm
+ J0e8kG2w141HKO35PD0gzpRc5yqsvLzsMYfzjXjA7CjtM8AZX07FOIfKd5QK7+6z9/WO2oGtGNc
+ 0MavPTywSe7wQoQyoUr9/SqNO/7TGqFDBzGFE8eUdc2b8aeg6ucY/FRwNSliruzFyVImgsvZAg2
+ iQMolbZ3rx2956tGfmMPm9Wcbchrvwa1ZpPVWMuCndEmOopkLyxg+Aew7JYfD5yoWRrn+8Xo=
+X-Google-Smtp-Source: AGHT+IEaDWT8LFy1uZ6AfEJ9cUV8EgDcQuPC2laByBaei24aAc6READpWPi5hMo0ELTxzQOvfAjagw==
+X-Received: by 2002:a05:6000:26c4:b0:3d0:e908:a10b with SMTP id
+ ffacd0b85a97d-3d1e0a98afdmr19162969f8f.56.1757089570536; 
+ Fri, 05 Sep 2025 09:26:10 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d690f2ebb9sm22264342f8f.20.2025.09.05.09.26.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Sep 2025 09:26:09 -0700 (PDT)
+Message-ID: <6be94329-73c5-425a-a890-1199ddcfe1f4@linaro.org>
+Date: Fri, 5 Sep 2025 18:26:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Add missing includes
+To: Peter Foley <pefoley@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, nabihestefan@google.com
+References: <20250904-includes-v1-1-a04a0ea14fd1@google.com>
+ <687f76dc-769d-4e8d-9281-5e5f10361bfe@redhat.com>
+ <80ba3dae-0bb9-4a45-b1f9-5b80f4fdc47b@linaro.org>
+ <CAAAKUPPbiQnCzkmnL0Luww1qeFQxVojzfkgJPrGgphXpkrXMGQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAAAKUPPbiQnCzkmnL0Luww1qeFQxVojzfkgJPrGgphXpkrXMGQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8b799f7-c549-4534-a156-99df204e62ec@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,216 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 02, 2025 at 08:09:44PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 02.09.25 18:33, Steven Sistare wrote:
-> > On 9/1/2025 7:44 AM, Vladimir Sementsov-Ogievskiy wrote:
-> > > On 29.08.25 22:37, Steven Sistare wrote:
-> > > > On 8/28/2025 11:48 AM, Steven Sistare wrote:
-> > > > > On 8/23/2025 5:53 PM, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > > On 17.07.25 21:39, Steve Sistare wrote:
-> > > > > > > Tap and vhost devices can be preserved during cpr-transfer using
-> > > > > > > traditional live migration methods, wherein the management layer
-> > > > > > > creates new interfaces for the target and fiddles with 'ip link'
-> > > > > > > to deactivate the old interface and activate the new.
-> > > > > > > 
-> > > > > > > However, CPR can simply send the file descriptors to new QEMU,
-> > > > > > > with no special management actions required.  The user enables
-> > > > > > > this behavior by specifing '-netdev tap,cpr=on'.  The default
-> > > > > > > is cpr=off.
-> > > > > > 
-> > > > > > Hi Steve!
-> > > > > > 
-> > > > > > First, me trying to test the series:
-> > > > > 
-> > > > > Thank-you Vladimir for all the work you are doing in this area.  I have
-> > > > > reproduced the "virtio_net_set_queue_pairs: Assertion `!r' failed." bug.
-> > > > > Let me dig into that before I study the larger questions you pose
-> > > > > about preserving tap/vhost-user-blk in local migration versus cpr.
-> > > > 
-> > > > I have reproduced your journey!  I fixed the assertion, the vnet_hdr, and
-> > > > the blocking fd problems which you allude to.  The attached patch fixes
-> > > > them, and will be squashed into the series.
-> > > > 
-> > > > Ben, you also reported the !r assertion failure, so this fix should help
-> > > > you also.
-> > > > 
-> > > > > > SOURCE:
-> > > > > > 
-> > > > > > sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :0 -nodefaults -vga std -qmp stdio -msg timestamp -S -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on
-> > > > > > 
-> > > > > > {"execute": "qmp_capabilities"}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "cont"}
-> > > > > > {"timestamp": {"seconds": 1755977653, "microseconds": 248749}, "event": "RESUME"}
-> > > > > > {"return": {}}
-> > > > > > {"timestamp": {"seconds": 1755977657, "microseconds": 366274}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "vnet.1", "path": "/machine/peripheral/vnet.1/virtio-backend"}}
-> > > > > > {"execute": "migrate-set-parameters", "arguments": {"mode": "cpr-transfer"}}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "migrate", "arguments": {"channels": [{"channel-type": "main", "addr": {"path": "/tmp/migr.sock", "transport": "socket", "type": "unix"}}, {"channel-type": "cpr", "addr": {"path": "/tmp/cpr.sock", "transport": "socket", "type": "unix"}}]}}
-> > > > > > {"timestamp": {"seconds": 1755977767, "microseconds": 835571}, "event": "STOP"}
-> > > > > > {"return": {}}
-> > > > > > 
-> > > > > > TARGET:
-> > > > > > 
-> > > > > > sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :1 -nodefaults -vga std -qmp stdio -S -object memory-backend-file,id=ram0,size=4G,mem-p
-> > > > > > ath=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on -incoming defer -incoming '{"channel-type": "cpr","addr": { "transport": "socket","type": "unix", "path": "/tmp/cpr.sock"}}'
-> > > > > > 
-> > > > > > <need to wait until "migrate" on source>
-> > > > > > 
-> > > > > > {"execute": "qmp_capabilities"}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
-> > > > > > {"return": {}}
-> > > > > > {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
-> > > > > > could not disable queue
-> > > > > > qemu-system-x86_64: ../hw/net/virtio-net.c:771: virtio_net_set_queue_pairs: Assertion `!r' failed.
-> > > > > > fish: Job 1, 'sudo build/qemu-system-x86_64 -…' terminated by signal SIGABRT (Abort)
-> > > > > > 
-> > > > > > So, it crashes on device_add..
-> > > > > > 
-> > > > > > Second, I've come a long way, backporting you TAP v1 series together with needed parts of CPR and migration channels to QEMU 7.2, fixing different issues (like, avoid reinitialization of vnet_hdr length on target, avoid simultaneous use of tap on source an target, avoid making the fd blocking again on target), and it finally started to work.
-> > > > > > 
-> > > > > > But next, I went to support similar migration for vhost-user-blk, and that was a lot more complex. No reason to pass an fd in preliminary stage, when source is running (like in CPR), because:
-> > > > > > 
-> > > > > > 1. we just can't use the fd on target at all, until we stop use it on source, otherwise we just break vhost-user-blk protocol on the wire (unlike TAP, where some ioctls called on target doesn't break source)
-> > > > > > 2. we have to pass enough additional variables, which are simpler to pass through normal migration channel (how to pass anything except fds through cpr channel?)
-> > > > 
-> > > > You can pass extra state through the cpr channel.  See for example vmstate_cpr_vfio_device,
-> > > > and how vmstate_cpr_vfio_devices is defined as a sub-section of vmstate_cpr_state.
-> > > 
-> > > O, I missed this.
-> > > 
-> > > Hmm. Still, finally CPR becomes just an additional stage of migration, which is done prior device initialization on target..
-> > > 
-> > > Didn't you think of integrating it to the common scheme: so that devices may have .vmsd_cpr in addition to .vmsd? This way we don't need a global CPR state, and CPR stage of migration will work the same way as normal migration?
-> > 
-> > I proposed a single migration stream containing pre-create state that was read early,
-> > but that was rejected as too complex.
-> > 
-> > I also proposed refactoring initialization so the monitor and migration streams
-> > could be opened earlier, but again rejected as too complex and/or not consistent with
-> > a long term vision for reworking initialization.
-> > 
-> > > Still2, if we pass some state in CPR it should be a kind of constant. We need a guarantee that it will not change between migration start and source stop.
-> > > 
-> > > > 
-> > > > > > So, I decided to go another way, and just migrate everything backend-related including fds through main migration channel. Of course, this requires deep reworking of device initialization in case of incoming migration (but for vhost-user-blk we need it anyway). The feature is in my series "[PATCH 00/33] vhost-user-blk: live-backend local migration" (you are in CC).
-> > > > 
-> > > > You did a lot of work in those series!
-> > > > I suspect much less rework of initialization is required if you pass variables in cpr state.
-> > > 
-> > > Not sure. I had to rework initialization anyway, as initialization damaged the connection. And this lead me to idea "if rework anyway, why not to go with one migration channel".
-> > > 
-> > > > 
-> > > > > > The success with vhost-user-blk (of-course) make me rethink TAP migration too: try to avoid using additional cpr channel and unusual waiting for QMP interface on target. And, I've just sent an RFC: "[RFC 0/7] virtio-net: live-TAP local migration"
-> > > > 
-> > > > Is there a use case for this outside of CPR?
-> > > 
-> > > It just works without CPR.. Will CPR bring more benefit if I enable it in the setup with my local-tap + local-vhost-user-blk capabilities ( + ignore-shared of-course)?
-> > > 
-> > > 
-> > > > CPR is intended to be the "local migration" solution that does it all :)
-> > > > But if you do proceed with your local migration tap solution, I would want
-> > > > to see that CPR could also use your code paths.
-> > > > 
-> > > CPR can transparently use my code: you may enable both CPR and
-> > > local-tap capability and it should work. Some devices will migrate
-> > > their fds through CPR, TAP fds amd state will migrate through main
-> > > migration channel.
-> > 
-> > OK, I believe that.
-> > 
-> > I also care about cpr-exec mode.  We use it internally, and I am trying to push
-> > it upstream:
-> >    https://lore.kernel.org/qemu-devel/1755191843-283480-8-git-send-email-steven.sistare@oracle.com/
-> > I believe it would work with your code.  Migrated fd's in both the cpr channel and
-> > the main migration channel would be handled differently as shown in vmstate-types.c
-> > get_fd() and put_fd().  The fd is kept open across execv(), and vmstate represents
-> > the fd by its value (eg a small integer), rather than as an object in the unix channel.
-> 
-> I'm close to publish new version, which will include
-> 
-> > 
-> > > Making both channels to be unix-sockets should not be a considerable overhead I think.
-> > > 
-> > > Why I like my solution more:
-> > > 
-> > > - no additional channel
-> > > - no additional logic in management software (to handle target start with no QMP access until "migrate" command on source)
-> > > - less code to backport (that's personal, of course not an argument for final upstream solution)
-> > > 
-> > > It seems that CPR is simpler to support as we don't need to do deep rework of initialization code.. But in reality, there is a lot of work anyway: TAP, vhost-user-blk cases proves this. You series about vfio are also huge.
-> > 
-> > TAP is the only case where we can compare both approaches, and the numbers tell
-> > the story:
-> > 
-> >    TAP initialization refactoring: 277 insertions(+), 308 deletions(-)
-> 
-> Actually, I've done a lot more refactoring than required for TAP local migration, trying to make the whole initialization more clear and consistent. And it's a good base for any modification of TAP device I think.
-> 
-> >    live-TAP local migration:       681 insertions(+), 72 deletions(-)
-> 
-> But 369 is last patch which is not for commit, and 65 a first patch with tracepoints (look at it tap_dump_packet() - thanks to AI, really helps to debug network problems, when you see packet dumps in QEMU log)
-> So, more honest estimate is ~250, which is in good accordance with Live update tap.
-> 
-> >                          total:    958 insertions(+), 380 deletions(-)
-> > 
-> >    Live update tap and vhost:      223 insertions(+), 55 deletions(-)
-> > 
-> > For any given system, if the maintainers accept the larger amount of change,
-> > then local migration is cool (and CPR made it possible by adding fd support
-> > to vmstate+QEMUFile)
-> 
-> Yes, native support for fds in migration API opens the doors:)
-> 
-> > .  But the amount of change is a harder sell.
-> 
-> Yes, that's right. But live-TAP isn't really big. Unlike live-vhost-user-blk unfortunately.
-> 
-> > > What is the benefit of CPR against simple (unix-socket) migration?
-> 
-> > CPR supports vfio, iommufd, and pinned memory.  Memory backend objects are
-> > created early, before the main migration stream is read, and squashing
-> > CPR into migration for those cases would require a major change in how
-> > qemu creates objects during live migration.
-> 
-> Yes, understand: less things to change in initialization code = we can cover more things..
-> 
-> For my downstream I need TAP, vhost-user-blk and vfio. So vfio would be the most interesting challenge, if I try to make a kind of live-vfio local migration.
-> 
-> - it already supported by CPR, so it would be really hard to cell 1-2 thousands of additional code lines) But I'll see, may be it will not be so much.
-> - we already have support in downstream, which we've never tried to send. It based on getting fds from source and passing them to target by management software.. But of course one day we should sync with upstream.
+On 9/5/25 18:00, Peter Foley wrote:
+> We're using glibc 2.27.
 
-Sorry to jump in as late.  Just want to say that using LOCs to compare
-solutions is not fair above, IMHO: we could have hacks that is a single
-liner, but maintaining those can be nightmare.
+That's just too old.
 
-PS: totally not saying that CPR is hackish! :-)
+commit c42e77a90d9244c8caf76fe0e54f84200430a4e1
+Author: Richard Henderson <richard.henderson@linaro.org>
+Date:   Tue Aug 8 09:44:18 2023 -0700
 
-I didn't read any new code at all, I apologize if I would say stupid
-things, but.. if we have cleaner way to do all of these, and if that can
-happen in one channel that sounds ideal.
+     qemu/osdep: Remove fallback for MAP_FIXED_NOREPLACE
 
-IIUC then we can save the is_cpr_incoming() checks all over the places -
-frankly, that's part of pure hack.  It's extremely hard to maintain
-longterm, IMO.
+     In order for our emulation of MAP_FIXED_NOREPLACE to succeed within
+     linux-user target_mmap, we require a non-zero value.  This does not
+     require host kernel support, merely the bit being defined.
 
-I wished devices could opt-in to provide its own model so that it is
-prepared to boot the QEMU without FDs being there and pause itself at that
-stage if a load would happen.  If all such is possible for all device
-emulations that we would care, it'll be perfect, IMHO.  More LOCs would
-deserve such refactoring (and if there're even more benefits besides
-migration, which I don't know about device code but I feel so).
+     MAP_FIXED_NOREPLACE was added with glibc 2.28.  From repology.org:
 
-So I wished more of Vladimir's work land, if my understanding is correct,
-and if that can competely replace the early channel some day (when every
-device FDs will be able to be migrated via main channel - is it possible)?
+                       Fedora 36: 2.35
+               CentOS 8 (RHEL-8): 2.28
+                       Debian 11: 2.31
+              OpenSUSE Leap 15.4: 2.31
+                Ubuntu LTS 20.04: 2.31
 
--- 
-Peter Xu
+     Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+     Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+     Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+     Message-Id: <20230808164418.69989-1-richard.henderson@linaro.org>
+
+
+r~
 
 
