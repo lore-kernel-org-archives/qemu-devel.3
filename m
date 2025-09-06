@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3865BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1E0CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiVV-0000DB-Ts; Fri, 05 Sep 2025 22:18:25 -0400
+	id 1uuiWD-0001Ng-8N; Fri, 05 Sep 2025 22:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiVD-0008Iz-Uk; Fri, 05 Sep 2025 22:18:11 -0400
+ id 1uuiW5-0001AF-Qa; Fri, 05 Sep 2025 22:19:01 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiUz-00084H-Kp; Fri, 05 Sep 2025 22:18:07 -0400
+ id 1uuiVr-0008BC-EM; Fri, 05 Sep 2025 22:18:58 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnr041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862BtnX041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:16:39 +0900 (JST)
+ Sat, 6 Sep 2025 11:12:29 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mKUX+37+W6DCHXaSHKP3HQpAh7aEXoOw1LuL7ABZjxU=; 
+DKIM-Signature: a=rsa-sha256; bh=pI7a0m1fI57fmHlHi8KpEqhcrE4H2Aca0FHoIemSJqk=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757125010; v=1;
- b=X4P99cfpv2KVAQ+iA9GpqPomBdeTqycoyv0wgE8iFi6mxeHHZ/C9chaeY6HNkJ8Y
- 9nY/TAtkaeRBx3q8bDU732SbNfzaT0n7iOeG3lGnDrXUGQwE8TH04cJWlgPykR2F
- 7apmFBSWJob0OmDlYGaroLYuMjRMERfe6XTlxU7SMu5Q4uUSjoAHCWNJnFsMsQG/
- Z3Yh/3TlQF9oNXt8wa5AouFw37soDbhVmrrjYJV7YmrhxUgMBXZS23ipsjCst+Cq
- /dUGTWNxD1BW4zN4y0lBn4dbw8fQwHkN0WUN5HW46E5tCJvRIlpuD3eJD3Vw/+Qy
- 04wSJ8/6cW6evV77Khie6A==
+ s=rs20250326; t=1757124761; v=1;
+ b=aJNzl5jgDVDS16/icaYiiXgvoNmwSF4RsDf72tV8ZCNl9ziQ341OIP79qT+fTjGr
+ T1gI9kKnXZ44BWbJEplqWshoA+YYb07m3isKndtH/JJUnI7shAHdZQROvaA15Z9X
+ qOOIcLB262MjRI45RA7TwSTVcaedtta4b+CUk9Sbm0bxmzIw6A1tPkR8B1Ul3hgZ
+ OL31nmRtDCl082icfGLWOT/JKLSKc3x2wo8EzT8XHfu1EDiso9tchWmuV/CX51Y1
+ JOZhJJCj6aFdtjO51RL3IhpJhf6S+pnx2gD/0DVDRMQ/rRe3y+LQvDZQTb2Fwod4
+ J6Ny4XRZ5QUBfWDclSCO2g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:31 +0200
-Subject: [PATCH 22/22] hw/usb/hcd-xhci: Do not delete the subregions
+Date: Sat, 06 Sep 2025 04:11:11 +0200
+Subject: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-22-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -87,7 +87,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,34 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+Children are automatically unparented so manually unparenting is
+unnecessary.
+
+Worse, automatic unparenting happens before the insntance_finalize()
+callback of the parent gets called, so object_unparent() calls in
+the callback will refer to objects that are already unparented, which
+is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-xhci.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ hw/vfio/pci.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 292c378bfc98bf458f7f760cdb6f1f21f23a7633..b68a2aec317107ec36736f762b9dccd71b53dc3e 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -3454,16 +3454,6 @@ static void usb_xhci_unrealize(DeviceState *dev)
-         xhci->mfwrap_timer = NULL;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 07257d0fa049b09fc296ac2279a6fafbdf93d277..2e909c190f86a722e1022fa7c45a96d2dde8d58e 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+         vfio_region_finalize(&bar->region);
+         if (bar->mr) {
+             assert(bar->size);
+-            object_unparent(OBJECT(bar->mr));
+             g_free(bar->mr);
+             bar->mr = NULL;
+         }
+@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+ 
+     if (vdev->vga) {
+         vfio_vga_quirk_finalize(vdev);
+-        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+-            object_unparent(OBJECT(&vdev->vga->region[i].mem));
+-        }
+         g_free(vdev->vga);
      }
- 
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_cap);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_oper);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_runtime);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_doorbell);
--
--    for (i = 0; i < xhci->numports; i++) {
--        XHCIPort *port = &xhci->ports[i];
--        memory_region_del_subregion(&xhci->mem, &port->mem);
--    }
--
-     usb_bus_release(&xhci->bus);
  }
- 
 
 -- 
 2.51.0
