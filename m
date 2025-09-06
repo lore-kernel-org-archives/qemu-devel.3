@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D83CA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DD5CA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiWD-0001KZ-Lh; Fri, 05 Sep 2025 22:19:09 -0400
+	id 1uuiTn-0005MV-Uk; Fri, 05 Sep 2025 22:16:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiW6-00018D-Ki; Fri, 05 Sep 2025 22:19:02 -0400
+ id 1uuiTe-0005Jo-CG; Fri, 05 Sep 2025 22:16:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiVl-0008B1-UN; Fri, 05 Sep 2025 22:18:58 -0400
+ id 1uuiTO-0007Wf-MQ; Fri, 05 Sep 2025 22:16:28 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862BtnW041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnk041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:12:17 +0900 (JST)
+ Sat, 6 Sep 2025 11:15:11 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=OpbiSE5+GXh5qnILBgOZBDeiwND16PW2eHMIA2V3CbU=; 
+DKIM-Signature: a=rsa-sha256; bh=Ku5gTVgI2eFOcSa5Fx00WOVlDLfLzBXwYcYASIz2wj0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124749; v=1;
- b=cLzNLHV0X/VsUfNw2mQh1HtI5aCZb6q3ApnGcXbyGjQ9pSX20u4igAU/fsXzzVKI
- nOTd8OL26HTOQA8uwUrLzswa3oCHdLeNMdwckWF4XIgz2Hz6vdrft5w8YTGhf2mG
- RapeDBuv0CIiMcBya1Bg3kINSUNc0yRqYjtMOSmjTyqDHjx/ufXP5NL7tK16aef1
- V2VnpxIuPX7ke4KPO70P6qOFlzVQUfZ58bLrgeHp0YTDBUnd5g6lj97ok8UpLttf
- HF3w26SWKDGBBl/mrKAUM1AxGCsjVYUfMCCBrcbo8iPaMc7usDcXSkJEAix1p96L
- 8Kjany8RBqz4LLHH6mmMxA==
+ s=rs20250326; t=1757124923; v=1;
+ b=C9i1wiIYsM4ULhuUI81VR7QzMhK/9MBwGmWPSfNNnGzUUQnWSWVGE8zaNzPPaTo7
+ 5giqdd3GoxmsooOrZCnqQrVHrkEGgLDDx6HiOaYLUGA0p5cu4Ce+sqOcs6NO5VQ0
+ bQqCj6guxNHcqr0FDunqVDyFZtxRERz1T3V1AdhBDmP+uhi0ZQFP3NphP001r25q
+ dcFGoQGtJa8MwGPIKUg/2LHhdeGfAaFpUjDzaccA7XWYtY/mb1MUhKPe2o8aBvda
+ wBlJ3oVaxrLdp4PXsBFmLXgNIuRFXUcsDnaTBzdLFaQAWNF42XSFK7EiyBOvlBh8
+ F7k1rw+cLhjY/zWK7Enudg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:10 +0200
-Subject: [PATCH 01/22] docs/devel: Do not unparent in instance_finalize()
+Date: Sat, 06 Sep 2025 04:11:24 +0200
+Subject: [PATCH 15/22] cmd646: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-1-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-15-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -86,8 +86,8 @@ X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Children are automatically unparented so manually unparenting is
-unnecessary.
-
-Worse, automatic unparenting happens before the insntance_finalize()
-callback of the parent gets called, so object_unparent() calls in
-the callback will refer to objects that are already unparented, which
-is semantically incorrect.
-
-Remove the instruction to call object_unparent(), and the exception
-of the "do not call object_unparent()" rule for instance_finalize.
+It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- docs/devel/memory.rst | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ hw/ide/cmd646.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 57fb2aec76e066236d33efe1033d2e73c7f7c295..749f11d8a4ddc80f2d44b66fa41fb12c0fa54006 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -161,18 +161,11 @@ or never.
- Destruction of a memory region happens automatically when the owner
- object dies.
+diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
+index 2a59516a9ddbc0a7d40400f521b9cef07006b76a..ea4d501c5e40b0f7f5fcd5c025c113d97d89f5b7 100644
+--- a/hw/ide/cmd646.c
++++ b/hw/ide/cmd646.c
+@@ -302,17 +302,6 @@ static void pci_cmd646_ide_realize(PCIDevice *dev, Error **errp)
+     }
+ }
  
--If however the memory region is part of a dynamically allocated data
--structure, you should call object_unparent() to destroy the memory region
--before the data structure is freed.  For an example see VFIOMSIXInfo
--and VFIOQuirk in hw/vfio/pci.c.
+-static void pci_cmd646_ide_exitfn(PCIDevice *dev)
+-{
+-    PCIIDEState *d = PCI_IDE(dev);
+-    unsigned i;
 -
- You must not destroy a memory region as long as it may be in use by a
- device or CPU.  In order to do this, as a general rule do not create or
--destroy memory regions dynamically during a device's lifetime, and only
--call object_unparent() in the memory region owner's instance_finalize
--callback.  The dynamically allocated data structure that contains the
--memory region then should obviously be freed in the instance_finalize
--callback as well.
-+destroy memory regions dynamically during a device's lifetime.
-+The dynamically allocated data structure that contains the
-+memory region should be freed in the instance_finalize callback.
- 
- If you break this rule, the following situation can happen:
- 
-@@ -198,9 +191,9 @@ this exception is rarely necessary, and therefore it is discouraged,
- but nevertheless it is used in a few places.
- 
- For regions that "have no owner" (NULL is passed at creation time), the
--machine object is actually used as the owner.  Since instance_finalize is
--never called for the machine object, you must never call object_unparent
--on regions that have no owner, unless they are aliases or containers.
-+machine object is actually used as the owner.  You must never call
-+object_unparent on regions that have no owner, unless they are aliases
-+or containers.
- 
- 
- Overlapping regions and priority
+-    for (i = 0; i < 2; ++i) {
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
+-    }
+-}
+-
+ static const Property cmd646_ide_properties[] = {
+     DEFINE_PROP_UINT32("secondary", PCIIDEState, secondary, 0),
+ };
+@@ -325,7 +314,6 @@ static void cmd646_ide_class_init(ObjectClass *klass, const void *data)
+     device_class_set_legacy_reset(dc, cmd646_reset);
+     dc->vmsd = &vmstate_ide_pci;
+     k->realize = pci_cmd646_ide_realize;
+-    k->exit = pci_cmd646_ide_exitfn;
+     k->vendor_id = PCI_VENDOR_ID_CMD;
+     k->device_id = PCI_DEVICE_ID_CMD_646;
+     k->revision = 0x07;
 
 -- 
 2.51.0
