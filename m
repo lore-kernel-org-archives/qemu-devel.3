@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB69CA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA15CA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiUS-0006QT-Ck; Fri, 05 Sep 2025 22:17:20 -0400
+	id 1uuiRv-00043t-HG; Fri, 05 Sep 2025 22:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiUI-0006EB-Dz; Fri, 05 Sep 2025 22:17:11 -0400
+ id 1uuiRl-0003zB-Di; Fri, 05 Sep 2025 22:14:34 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiTz-0007ky-TQ; Fri, 05 Sep 2025 22:17:09 -0400
+ id 1uuiRZ-0006Xq-Ts; Fri, 05 Sep 2025 22:14:32 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnm041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btna041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:15:36 +0900 (JST)
+ Sat, 6 Sep 2025 11:13:07 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Sc8FTNaJ6chbtPcBo7M9g5GEXppq2W5QBLE99E5rkoE=; 
+DKIM-Signature: a=rsa-sha256; bh=VCWgUoTRg/k1AUk49wkoQFRWzcXCqr+AZelXZUH2ZBE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124949; v=1;
- b=UbLW/JGhHYQWeZJvt1ev6c4iWB3IPKiL6+yx7Hp8mDcrv3NwOY9xLxbOGCWwwSVU
- x1JMP6EqByi8E4wgsnEdmx5gZDbzG9PC0Ee3Ce2rwQYsBdxTOCb0kKt8KVIchTXA
- gARYoDuGpE2lplQbAcTn+zqdJ/FXMIa7+ejzr0xWbGIewt+POAtHolhMeREgQBrM
- uPN+1FbTAwQhXQzNb5GiMw5yZ2UERwHD7klgptlvYwjNK4INK5S7WOAaflMKDjec
- 3WLukRt1Y7cP56ZcyQ+LZ1Rm2z1PIrEwfO3rBqSHQ7Wf7czBs+8vBj+L4zf038A4
- DDS+55rb8Tcls+IYyXFcxA==
+ s=rs20250326; t=1757124799; v=1;
+ b=Mb9LKHOE4d7dnUuZfJWLY/3080nZZk1K5DYfN8zw6rcWo6d3kX8Vdajif3FrTqmu
+ RGLaMlcLa27yhYLG+iOQW853AAxlfsA7WDaaG5agvDj8v5zRxAxtjMaA7k41Lh5+
+ mB4u3VwytzA1F3ytFldPs4XjNywaXEXqbaStkX8wl2tYMRwqe7mrVzivSJ7rRJVn
+ Cgre/iR7Slo0EpzeeZ7kemPrJWyclDIEdCcFbrGEL1PLtnnGTg0PqkpCpf0/E7he
+ u9a9GlApmfSfeQc3E/7Len0lX2K67MUrdTJP0c950cumwFfu4AcWPEU9Et5CPSRJ
+ FSC3GnsAgG+kiCBMyoriDw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:26 +0200
-Subject: [PATCH 17/22] hw/ide/via: Do not delete the subregions
+Date: Sat, 06 Sep 2025 04:11:14 +0200
+Subject: [PATCH 05/22] target/xtensa: Fix AddressSpace exposure timing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-17-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-5-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -86,8 +86,8 @@ X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+xtensa-cpu is not hotpluggable but its instance can still be created and
+finalized when processing the device-list-properties QMP command.
+Exposing such a temporary instance to AddressSpace should be
+avoided because it leaks the instance.
+
+Expose instances to the AddressSpace at their realization time so that
+it won't happen for the temporary instances.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ide/via.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ target/xtensa/cpu.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ide/via.c b/hw/ide/via.c
-index dedc2674c002f9de8894e6c49cdb3989cb0deccc..cbaf4ad1548b94afa14809930729eba169f1b061 100644
---- a/hw/ide/via.c
-+++ b/hw/ide/via.c
-@@ -234,17 +234,6 @@ static void via_ide_realize(PCIDevice *dev, Error **errp)
-     }
- }
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index ea9b6df3aa24178c8e6a88b02afda5db659199da..63edc3a5b2778c8379a30125481f65361655fe1c 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -243,7 +243,11 @@ static void xtensa_cpu_realizefn(DeviceState *dev, Error **errp)
+     Error *local_err = NULL;
  
--static void via_ide_exitfn(PCIDevice *dev)
--{
--    PCIIDEState *d = PCI_IDE(dev);
--    unsigned i;
--
--    for (i = 0; i < ARRAY_SIZE(d->bmdma); ++i) {
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
--    }
--}
--
- static void via_ide_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -258,7 +247,6 @@ static void via_ide_class_init(ObjectClass *klass, const void *data)
-     k->config_read = via_ide_cfg_read;
-     k->config_write = via_ide_cfg_write;
-     k->realize = via_ide_realize;
--    k->exit = via_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_VIA;
-     k->device_id = PCI_DEVICE_ID_VIA_IDE;
-     k->revision = 0x06;
+ #ifndef CONFIG_USER_ONLY
+-    xtensa_irq_init(&XTENSA_CPU(dev)->env);
++    CPUXtensaState *env = &XTENSA_CPU(dev)->env;
++
++    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
++    address_space_init(env->address_space_er, env->system_er, "ER");
++    xtensa_irq_init(env);
+ #endif
+ 
+     cpu_exec_realizefn(cs, &local_err);
+@@ -268,11 +272,9 @@ static void xtensa_cpu_initfn(Object *obj)
+     env->config = xcc->config;
+ 
+ #ifndef CONFIG_USER_ONLY
+-    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
+     env->system_er = g_malloc(sizeof(*env->system_er));
+     memory_region_init_io(env->system_er, obj, NULL, env, "er",
+                           UINT64_C(0x100000000));
+-    address_space_init(env->address_space_er, env->system_er, "ER");
+ 
+     cpu->clock = qdev_init_clock_in(DEVICE(obj), "clk-in", NULL, cpu, 0);
+     clock_set_hz(cpu->clock, env->config->clock_freq_khz * 1000);
 
 -- 
 2.51.0
