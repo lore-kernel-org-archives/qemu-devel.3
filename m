@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA15CA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C36CA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiRv-00043t-HG; Fri, 05 Sep 2025 22:14:44 -0400
+	id 1uuiRu-00043S-7B; Fri, 05 Sep 2025 22:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiRl-0003zB-Di; Fri, 05 Sep 2025 22:14:34 -0400
+ id 1uuiRd-0003wZ-J6; Fri, 05 Sep 2025 22:14:27 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiRZ-0006Xq-Ts; Fri, 05 Sep 2025 22:14:32 -0400
+ id 1uuiRO-0006PE-FA; Fri, 05 Sep 2025 22:14:25 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btna041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862BtnV041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:13:07 +0900 (JST)
+ Sat, 6 Sep 2025 11:12:04 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=VCWgUoTRg/k1AUk49wkoQFRWzcXCqr+AZelXZUH2ZBE=; 
+DKIM-Signature: a=rsa-sha256; bh=fp/49Htcu3bFrQ3I9AAANI36POmz44LdypKV4NzMOks=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124799; v=1;
- b=Mb9LKHOE4d7dnUuZfJWLY/3080nZZk1K5DYfN8zw6rcWo6d3kX8Vdajif3FrTqmu
- RGLaMlcLa27yhYLG+iOQW853AAxlfsA7WDaaG5agvDj8v5zRxAxtjMaA7k41Lh5+
- mB4u3VwytzA1F3ytFldPs4XjNywaXEXqbaStkX8wl2tYMRwqe7mrVzivSJ7rRJVn
- Cgre/iR7Slo0EpzeeZ7kemPrJWyclDIEdCcFbrGEL1PLtnnGTg0PqkpCpf0/E7he
- u9a9GlApmfSfeQc3E/7Len0lX2K67MUrdTJP0c950cumwFfu4AcWPEU9Et5CPSRJ
- FSC3GnsAgG+kiCBMyoriDw==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1757124736; v=1;
+ b=HSEinkOnDD9ic82KdilmWuOGMgUvH88twoJAPV3vpSUHd/UK6I8/MfmHKgRTKNah
+ Osoc2XWWpFEV7QPaY47cqeX6CZhZ2Zv8aqzNoP2ByymZATm2m1Ce1KDAJEvHPP5A
+ 6DYhAp+AhBPOgvVK0TawbuVyrFhPcYHVxrubewoAvIsHRVGki+OzF4qda9JB5yeq
+ Hd2HTB7uivngsJ2LzhXmAWV0TJWUWBb90Ew8pjKE4cYFoWnuER7B6brSOcBXeTjN
+ Qoh+GbeiWvxED4TDwc65P6IzsdgUaspUFGcXeyHmZhufuHuzs0doPJZlkTqX6nnB
+ MlQyypJHIZhAXVPQunDy/g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:14 +0200
-Subject: [PATCH 05/22] target/xtensa: Fix AddressSpace exposure timing
+Subject: [PATCH 00/22] Fix memory region leaks and use-after-finalization
+Date: Sat, 06 Sep 2025 04:11:09 +0200
+Message-Id: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-5-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAD2Yu2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDSwMz3dLiVF1j89TkZEsD40TLVAMloMqCotS0zAqwKdGxtbUAKPJ67VU
+ AAAA=
+X-Change-ID: 20250906-use-37ecc903a9e0
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -103,50 +105,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-xtensa-cpu is not hotpluggable but its instance can still be created and
-finalized when processing the device-list-properties QMP command.
-Exposing such a temporary instance to AddressSpace should be
-avoided because it leaks the instance.
+When developing the next version of "[PATCH 00/16] memory: Stop
+piggybacking on memory region owners*", I faced multiple memory region
+leaks and use-after-finalization. This series extracts their fixes so
+that the number of Cc: won't explode.
 
-Expose instances to the AddressSpace at their realization time so that
-it won't happen for the temporary instances.
+Patch "qdev: Automatically delete memory subregions" and the succeeding
+patches are for refactoring, but patch "vfio-user: Do not delete the
+subregion" does fix use-after-finalization.
+
+* https://lore.kernel.org/qemu-devel/20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp/
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- target/xtensa/cpu.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Akihiko Odaki (22):
+      docs/devel: Do not unparent in instance_finalize()
+      vfio/pci: Do not unparent in instance_finalize()
+      hw/pci-bridge: Do not assume immediate MemoryRegion finalization
+      target/mips: Fix AddressSpace exposure timing
+      target/xtensa: Fix AddressSpace exposure timing
+      auxbus: Fix AddressSpace exposure timing
+      hw/pci-host/raven: Fix AddressSpace exposure timing
+      sun4m: Fix AddressSpace exposure timing
+      sun4u: Fix AddressSpace exposure timing
+      qdev: Automatically delete memory subregions
+      vfio-user: Do not delete the subregion
+      hw/char/diva-gsp: Do not delete the subregion
+      hw/char/serial-pci-multi: Do not delete the subregion
+      secondary-vga: Do not delete the subregions
+      cmd646: Do not delete the subregions
+      hw/ide/piix: Do not delete the subregions
+      hw/ide/via: Do not delete the subregions
+      hw/nvme: Do not delete the subregion
+      pci: Do not delete the subregions
+      hw/ppc/spapr_pci: Do not delete the subregions
+      hw/usb/hcd-ehci: Do not delete the subregions
+      hw/usb/hcd-xhci: Do not delete the subregions
 
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index ea9b6df3aa24178c8e6a88b02afda5db659199da..63edc3a5b2778c8379a30125481f65361655fe1c 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -243,7 +243,11 @@ static void xtensa_cpu_realizefn(DeviceState *dev, Error **errp)
-     Error *local_err = NULL;
- 
- #ifndef CONFIG_USER_ONLY
--    xtensa_irq_init(&XTENSA_CPU(dev)->env);
-+    CPUXtensaState *env = &XTENSA_CPU(dev)->env;
-+
-+    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
-+    address_space_init(env->address_space_er, env->system_er, "ER");
-+    xtensa_irq_init(env);
- #endif
- 
-     cpu_exec_realizefn(cs, &local_err);
-@@ -268,11 +272,9 @@ static void xtensa_cpu_initfn(Object *obj)
-     env->config = xcc->config;
- 
- #ifndef CONFIG_USER_ONLY
--    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
-     env->system_er = g_malloc(sizeof(*env->system_er));
-     memory_region_init_io(env->system_er, obj, NULL, env, "er",
-                           UINT64_C(0x100000000));
--    address_space_init(env->address_space_er, env->system_er, "ER");
- 
-     cpu->clock = qdev_init_clock_in(DEVICE(obj), "clk-in", NULL, cpu, 0);
-     clock_set_hz(cpu->clock, env->config->clock_freq_khz * 1000);
+ MAINTAINERS                |  1 +
+ docs/devel/memory.rst      | 19 +++------
+ include/hw/pci/pci.h       |  1 +
+ include/hw/qdev-core.h     |  1 +
+ hw/char/diva-gsp.c         |  1 -
+ hw/char/serial-pci-multi.c |  1 -
+ hw/core/qdev.c             | 14 +++++++
+ hw/display/vga-pci.c       |  8 ----
+ hw/ide/cmd646.c            | 12 ------
+ hw/ide/piix.c              | 13 -------
+ hw/ide/via.c               | 12 ------
+ hw/misc/auxbus.c           |  2 +-
+ hw/nvme/ctrl.c             |  2 -
+ hw/pci-host/raven.c        | 27 ++++++-------
+ hw/pci/pci.c               | 22 +----------
+ hw/pci/pci_bridge.c        | 96 +++++++++++++++++++++++++---------------------
+ hw/ppc/spapr_pci.c         | 22 -----------
+ hw/sparc/sun4m_iommu.c     |  9 ++++-
+ hw/sparc64/sun4u_iommu.c   |  9 ++++-
+ hw/usb/hcd-ehci.c          |  4 --
+ hw/usb/hcd-xhci.c          | 10 -----
+ hw/vfio-user/pci.c         |  6 ---
+ hw/vfio/pci.c              |  4 --
+ stubs/memory.c             |  9 +++++
+ target/mips/cpu.c          |  9 ++++-
+ target/xtensa/cpu.c        |  8 ++--
+ stubs/meson.build          |  1 +
+ 27 files changed, 129 insertions(+), 194 deletions(-)
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250906-use-37ecc903a9e0
 
+Best regards,
 -- 
-2.51.0
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
