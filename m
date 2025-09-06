@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98363CA1002
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88476CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv03p-0003y0-5b; Sat, 06 Sep 2025 17:03:01 -0400
+	id 1uv04U-0004b3-RK; Sat, 06 Sep 2025 17:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv03l-0003rf-PJ; Sat, 06 Sep 2025 17:02:57 -0400
+ id 1uv04Q-0004a5-MT; Sat, 06 Sep 2025 17:03:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv03b-00063n-Sh; Sat, 06 Sep 2025 17:02:55 -0400
+ id 1uv04K-0006D5-2N; Sat, 06 Sep 2025 17:03:38 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9093C150F8A;
- Sun, 07 Sep 2025 00:00:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 00CF3150F8F;
+ Sun, 07 Sep 2025 00:00:56 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5673E278693;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B01ED278697;
  Sun,  7 Sep 2025 00:00:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Denis Rastyogin <gerben@altlinux.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 29/34] linux-user/mips: Do not try to use removed
- R5900 CPU
-Date: Sun,  7 Sep 2025 00:00:49 +0300
-Message-ID: <20250906210056.127031-11-mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 33/34] target/mips: fix TLB huge page check to use
+ 64-bit shift
+Date: Sun,  7 Sep 2025 00:00:53 +0300
+Message-ID: <20250906210056.127031-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
@@ -63,51 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Denis Rastyogin <gerben@altlinux.org>
 
-R5900 emulation was removed in commit 823f2897bd.
-Remove it from ELF parsing in order to avoid:
+Use extract64(entry, psn, 1) instead of (entry & (1 << psn)) to avoid
+undefined behavior for shifts by 32–63 and to make bit extraction intent explicit.
 
-  $ qemu-mipsn32 ./test5900
-  qemu-mipsn32: unable to find CPU model 'R5900'
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This reverts commit 4d9e5a0eb7df6e98ac6cf5e16029f35dd05b9537.
-
-Fixes: 823f2897bd ("target/mips: Disable R5900 support")
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Message-ID: <20250814104914.13101-1-gerben@altlinux.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240814133928.6746-2-philmd@linaro.org>
-(cherry picked from commit f7e3d7521b41ada97c5344914d3c9bc6ed04c82a)
+(cherry picked from commit 1f82ca723478f44823a18e7151e487d58da03659)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index b965e86b2b..71a32315a8 100644
---- a/linux-user/mips/target_elf.h
-+++ b/linux-user/mips/target_elf.h
-@@ -12,9 +12,6 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
-         return "mips32r6-generic";
+diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+index cce3dcdc0e..a502426be6 100644
+--- a/target/mips/tcg/sysemu/tlb_helper.c
++++ b/target/mips/tcg/sysemu/tlb_helper.c
+@@ -653,7 +653,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+         return 0;
      }
--    if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
--        return "R5900";
--    }
-     if (eflags & EF_MIPS_NAN2008) {
-         return "P5600";
-     }
-diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index 5f2f2df29f..ec55d8542a 100644
---- a/linux-user/mips64/target_elf.h
-+++ b/linux-user/mips64/target_elf.h
-@@ -12,9 +12,6 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
-         return "I6400";
-     }
--    if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
--        return "R5900";
--    }
-     return "5KEf";
- }
- #endif
+ 
+-    if ((entry & (1 << psn)) && hugepg) {
++    if (extract64(entry, psn, 1) && hugepg) {
+         *huge_page = true;
+         *hgpg_directory_hit = true;
+         entry = get_tlb_entry_layout(env, entry, leafentry_size, pf_ptew);
 -- 
 2.47.3
 
