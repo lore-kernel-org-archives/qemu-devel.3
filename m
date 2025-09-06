@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63919CA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D64CA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiVA-00083U-0g; Fri, 05 Sep 2025 22:18:04 -0400
+	id 1uuiZv-0006mW-IX; Fri, 05 Sep 2025 22:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiUv-0007c2-UQ; Fri, 05 Sep 2025 22:17:50 -0400
+ id 1uuiZt-0006jy-Fv; Fri, 05 Sep 2025 22:22:57 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiUl-00083n-0s; Fri, 05 Sep 2025 22:17:44 -0400
+ id 1uuiZf-0000N4-7B; Fri, 05 Sep 2025 22:22:56 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnq041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btno041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:16:26 +0900 (JST)
+ Sat, 6 Sep 2025 11:16:02 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=YjEOA88OVLGi9vWo20mvtb9700xqRArT+mSkxNVX9R4=; 
+DKIM-Signature: a=rsa-sha256; bh=XLOh5bKdwPf/hM03cxDhD82xMWslxlka8JwWwK6/WQo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124998; v=1;
- b=ETeEpAt1bGU2DbBlOM8mK2CG0q8PVJOTb6xffWxfjU5mf95gdcsPQib9KUbgQoLK
- StyJ6EMYFQdZzgrVNh9JsxV+FYvIyJVAYe/00kW1naO38clE51XqqU8klZ+uPBG3
- qk5sxih8B6M1C8uYNJKsAHTHEgQYVxBt+DyCZxUGcCDU9/WDNUHndO+xgdTGrCgc
- U5n6buxRYQ9F9sM4CnoSHvOHTt17Jhd0eyVRq0EeoAkO33qmaSw7M0iVY5CqT5UT
- 8Y5m39+CKRtCUw0bb61+yUAI0nprFdEtJ0YUSkQ/uhQsjR1xM3bsOMOS61Oki6I/
- mA72NTvSzqUqItw64aubxQ==
+ s=rs20250326; t=1757124973; v=1;
+ b=wWdrdFC6ii7rM83GuNMZL9HjwJwbZY+dMMVO2CaVBqFt/r10XsscTTdUQHiEyx81
+ kAHM6G8XJXriQGKQxn7ZIW1EjdkusrznjgnMsydO196i2Anw85gFaZALai5U13ot
+ lyrD/871G6yFdLLjRzbuNvbbQ5lbRo4ecR37GuYvaY9eUdlHvzH5qGwHFb02SHVG
+ DGi+nRCI+N1qTqzpgbVkcj88o3c+/D/qO+DEYB5ok8V4fkPvtp7pEbo3ICANJUFY
+ Ra1upp3np9pTXS4akT5W4xFuuPqcDcxjYaOoqQbp0jwdIxnOaysZNFzjSbYVNl0t
+ IGSq4E6smU3VA34qGmj1Qg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:30 +0200
-Subject: [PATCH 21/22] hw/usb/hcd-ehci: Do not delete the subregions
+Date: Sat, 06 Sep 2025 04:11:28 +0200
+Subject: [PATCH 19/22] pci: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-21-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-19-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,24 +107,52 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-ehci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/pci/pci.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-index b090f253656ba17c7c6b3b805235a9360334baf5..21c3501455b5705b5e155acf9df2156b653f69bf 100644
---- a/hw/usb/hcd-ehci.c
-+++ b/hw/usb/hcd-ehci.c
-@@ -2557,10 +2557,6 @@ void usb_ehci_unrealize(EHCIState *s, DeviceState *dev)
-     ehci_queues_rip_all(s, 0);
-     ehci_queues_rip_all(s, 1);
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 516029f66cda6705bded15322cb6f7eb3d42f82c..2b408c7ec336df08086f1be9a5bd2555e2e906b7 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1188,10 +1188,6 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
+     if (xen_mode == XEN_EMULATE) {
+         xen_evtchn_remove_pci_device(pci_dev);
+     }
+-    if (memory_region_is_mapped(&pci_dev->bus_master_enable_region)) {
+-        memory_region_del_subregion(&pci_dev->bus_master_container_region,
+-                                    &pci_dev->bus_master_enable_region);
+-    }
+     address_space_destroy(&pci_dev->bus_master_as);
+ }
  
--    memory_region_del_subregion(&s->mem, &s->mem_caps);
--    memory_region_del_subregion(&s->mem, &s->mem_opreg);
--    memory_region_del_subregion(&s->mem, &s->mem_ports);
+@@ -1417,27 +1413,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+     return pci_dev;
+ }
+ 
+-static void pci_unregister_io_regions(PCIDevice *pci_dev)
+-{
+-    PCIIORegion *r;
+-    int i;
 -
-     usb_bus_release(&s->bus);
+-    for(i = 0; i < PCI_NUM_REGIONS; i++) {
+-        r = &pci_dev->io_regions[i];
+-        if (!r->size || r->addr == PCI_BAR_UNMAPPED)
+-            continue;
+-        memory_region_del_subregion(r->address_space, r->memory);
+-    }
+-
+-    pci_unregister_vga(pci_dev);
+-}
+-
+ static void pci_qdev_unrealize(DeviceState *dev)
+ {
+     PCIDevice *pci_dev = PCI_DEVICE(dev);
+     PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
  
-     if (s->vmstate) {
+-    pci_unregister_io_regions(pci_dev);
+     pci_del_option_rom(pci_dev);
+     pcie_sriov_unregister_device(pci_dev);
+ 
 
 -- 
 2.51.0
