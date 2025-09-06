@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6DFCA1012
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 08:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3206CA1002
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 09:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuoKN-0008B2-HR; Sat, 06 Sep 2025 04:31:23 -0400
+	id 1uuopc-0001d5-Fm; Sat, 06 Sep 2025 05:03:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uuoK0-00089E-O3
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 04:30:56 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uuoJt-000480-0k
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 04:30:56 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxT_Aw8bto_lsHAA--.15601S3;
- Sat, 06 Sep 2025 16:30:40 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJBxzsEu8btoxMiBAA--.56114S3;
- Sat, 06 Sep 2025 16:30:40 +0800 (CST)
-Subject: Re: [PATCH v6 08/11] hw/loongarch: Implement avec set irq
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250904121840.2023683-1-gaosong@loongson.cn>
- <20250904121840.2023683-9-gaosong@loongson.cn>
- <6e1546d3-d9d3-a1ba-5373-ad826017ad93@loongson.cn>
- <76d3a4e9-bb71-1c4a-1fc7-de5d7937b94b@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <e5720551-5645-e82e-c0c2-6092c2fe3aa4@loongson.cn>
-Date: Sat, 6 Sep 2025 16:33:54 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uuopa-0001cM-F8; Sat, 06 Sep 2025 05:03:34 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uuopQ-0001T8-Ll; Sat, 06 Sep 2025 05:03:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5841756F36F;
+ Sat, 06 Sep 2025 11:03:13 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id M1Z96xIIw63k; Sat,  6 Sep 2025 11:03:11 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 0AFF356F318; Sat, 06 Sep 2025 11:03:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 072FC56F30D;
+ Sat, 06 Sep 2025 11:03:11 +0200 (CEST)
+Date: Sat, 6 Sep 2025 11:03:10 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ John Snow <jsnow@redhat.com>, qemu-block@nongnu.org, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, 
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH 07/22] hw/pci-host/raven: Fix AddressSpace exposure timing
+In-Reply-To: <20250906-use-v1-7-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <cd21698f-db77-eb75-6966-d559fdcab835@eik.bme.hu>
+References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <20250906-use-v1-7-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-In-Reply-To: <76d3a4e9-bb71-1c4a-1fc7-de5d7937b94b@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJBxzsEu8btoxMiBAA--.56114S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCF4xAw1fZry3KF1fZr4rXrc_yoWrtr47pr
- ykAFZ8GrW5Jrn5Jr17Wa45JFy5Ar1xX3W7Xr1I9Fy8Arsrtr12gry8Xr1qgF1UCw48Xr1j
- vr1rWwsxZF13JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU8vD73UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,132 +95,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/9/6 下午3:13, Bibo Mao 写道:
->
->
-> On 2025/9/5 下午6:05, Bibo Mao wrote:
->>
->>
->> On 2025/9/4 下午8:18, Song Gao wrote:
->>> Implement avec set irq and update CSR_MSIS.
->>>
->>> Signed-off-by: Song Gao <gaosong@loongson.cn>
->>> ---
->>>   hw/intc/loongarch_avec.c         | 58 
->>> ++++++++++++++++++++++++++++++--
->>>   include/hw/intc/loongarch_avec.h |  3 ++
->>>   2 files changed, 59 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
->>> index 1f9f376898..03a20a7b60 100644
->>> --- a/hw/intc/loongarch_avec.c
->>> +++ b/hw/intc/loongarch_avec.c
->>> @@ -16,6 +16,13 @@
->>>   #include "migration/vmstate.h"
->>>   #include "trace.h"
->>>   #include "hw/qdev-properties.h"
->>> +#include "target/loongarch/cpu.h"
->>> +#include "qemu/error-report.h"
->>> +
->>> +/* msg addr field */
->>> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->>> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
->>> +FIELD(MSG_ADDR, FIX, 28, 12)
->>>   static uint64_t loongarch_avec_mem_read(void *opaque,
->>>                                           hwaddr addr, unsigned size)
->>> @@ -23,13 +30,60 @@ static uint64_t loongarch_avec_mem_read(void 
->>> *opaque,
->>>       return 0;
->>>   }
->>> +static void do_set_vcpu_avec_irq(CPUState *cs, run_on_cpu_data data)
->>> +{
->>> +    AVECCore *core = data.host_ptr;
->>> +    CPULoongArchState *env;
->>> +
->>> +    assert(cs->cpu_index == core->dest_cpu);
->>> +    env = &LOONGARCH_CPU(cs)->env;
->>> +    if (core->level) {
->>> +        set_bit(core->pending, &env->CSR_MSGIS[core->pending / 64]);
->>> +    }
->>> +    g_free(core);
->>> +}
->>> +
->>> +
->>> +static void avec_update_csr(AVECCore *core, int cpu_num,
->>> +                            int irq_num, int level)
->>> +{
->>> +    CPUState *cs = qemu_get_cpu(cpu_num);
->>> +
->>> +    core->pending = irq_num;
->>> +    core->dest_cpu = cpu_num;
->>> +    core->level = level;
->>> +    async_run_on_cpu(cs, do_set_vcpu_avec_irq,
->>> +                         RUN_ON_CPU_HOST_PTR(core));
->>> +}
->>> +
->>> +static void avec_set_irq(LoongArchAVECState *s, int cpu_num,
->>> +                         int irq_num, int level)
->>> +{
->>> +    AVECCore *core;
->>> +
->>> +    core = g_new(AVECCore, 1);
->>> +
->>> +    if (level) {
->>> +        avec_update_csr(core, cpu_num, irq_num, level);
->>> +    }
->>> +    qemu_set_irq(s->cpu[cpu_num].parent_irq, level);
->>
->> Is it possible that qemu_set_irq reaches before async_run_on_cpu?
->> since it is async function.
-> qemu_set_irq() is also async CPU interrupt inject function with IPI 
-> interrupt, avec irq and CPU interrupt can be handled together when 
-> vCPU returns to VM. There should be no problem.
->
-Thanks for your explanation.
+On Sat, 6 Sep 2025, Akihiko Odaki wrote:
+> raven-pcihost is not hotpluggable but its instance can still be created
+> and finalized when processing the device-list-properties QMP command.
+> Exposing such a temporary instance to AddressSpace should be
+> avoided because it leaks the instance.
 
-Thanks.
-Song Gao
-> Regards
-> Bibo MAo
->>
->> Regargs
->> Bibo Mao
->>> +}
->>> +
->>>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->>>                                        uint64_t val, unsigned size)
->>>   {
->>> -    return;
->>> +    int irq_num, cpu_num = 0;
->>> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
->>> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
->>> +    CPUState *cs;
->>> +
->>> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
->>> +    cs = cpu_by_arch_id(cpu_num);
->>> +    cpu_num = cs->cpu_index;
->>> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->>> +    avec_set_irq(s, cpu_num, irq_num, 1);
->>>   }
->>> -
->>>   static const MemoryRegionOps loongarch_avec_ops = {
->>>       .read = loongarch_avec_mem_read,
->>>       .write = loongarch_avec_mem_write,
->>> diff --git a/include/hw/intc/loongarch_avec.h 
->>> b/include/hw/intc/loongarch_avec.h
->>> index 3e8cf7d2c1..83656f8df4 100644
->>> --- a/include/hw/intc/loongarch_avec.h
->>> +++ b/include/hw/intc/loongarch_avec.h
->>> @@ -18,6 +18,9 @@ OBJECT_DECLARE_TYPE(LoongArchAVECState, 
->>> LoongArchAVECClass, LOONGARCH_AVEC)
->>>   typedef struct AVECCore {
->>>       CPUState *cpu;
->>>       qemu_irq parent_irq;
->>> +    uint64_t pending;
->>> +    uint64_t dest_cpu;
->>> +    bool   level;
->>>       uint64_t arch_id;
->>>   } AVECCore;
->>>
+This may suggest there's an issue with freeing address spaces that should 
+be fixed there at one place if possible rather than adding a new rule to 
+remember not to create address spaces in init methods. Should adress space 
+be a child of the device too so it's freed with it? This series simplifies 
+some devices removing the rule to remember to unparent memory regions but 
+this now adds another rule to remember avoid creating address spaces in 
+init so overall we're in the same situation and still have to work around 
+issues. This trades one workaround for another so still cannot fix all 
+issues with freeing all created objects.
 
+> Expose instances to the AddressSpace at their realization time so that
+> it won't happen for the temporary instances.
+
+I had a series here: 
+https://patchew.org/QEMU/cover.1751493467.git.balaton@eik.bme.hu/
+that changes this for raven (among other clean ups) but I could not get 
+that merged in the last devel cycle because of PPC being a bit 
+unmaintained. I'd prefer that series to be taken first instead of this 
+patch so I don't have to rebase that.
+
+Regards,
+BALATON Zoltan
+
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+> hw/pci-host/raven.c | 27 ++++++++++++++-------------
+> 1 file changed, 14 insertions(+), 13 deletions(-)
+>
+> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+> index f8c0be5d21c351305742a696a65f70f87b546b0c..82f245c91cf267cdc6a518765a8c31d06eac7228 100644
+> --- a/hw/pci-host/raven.c
+> +++ b/hw/pci-host/raven.c
+> @@ -233,6 +233,20 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>     MemoryRegion *address_space_mem = get_system_memory();
+>     int i;
+>
+> +    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+> +
+> +    /* CPU address space */
+> +    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+> +                                &s->pci_io);
+> +    memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
+> +                                        &s->pci_io_non_contiguous, 1);
+> +    memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+> +    pci_root_bus_init(&s->pci_bus, sizeof(s->pci_bus), DEVICE(d), NULL,
+> +                      &s->pci_memory, &s->pci_io, 0, TYPE_PCI_BUS);
+> +
+> +    address_space_init(&s->bm_as, &s->bm, "raven-bm");
+> +    pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
+> +
+>     /*
+>      * According to PReP specification section 6.1.6 "System Interrupt
+>      * Assignments", all PCI interrupts are routed via IRQ 15
+> @@ -276,14 +290,12 @@ static void raven_pcihost_initfn(Object *obj)
+> {
+>     PCIHostState *h = PCI_HOST_BRIDGE(obj);
+>     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
+> -    MemoryRegion *address_space_mem = get_system_memory();
+>     DeviceState *pci_dev;
+>
+>     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+>     memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
+>                           "pci-io-non-contiguous", 0x00800000);
+>     memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+> -    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+>
+>     /*
+>      * Raven's raven_io_ops use the address-space API to access pci-conf-idx
+> @@ -292,15 +304,6 @@ static void raven_pcihost_initfn(Object *obj)
+>      */
+>     s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+>
+> -    /* CPU address space */
+> -    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+> -                                &s->pci_io);
+> -    memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
+> -                                        &s->pci_io_non_contiguous, 1);
+> -    memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+> -    pci_root_bus_init(&s->pci_bus, sizeof(s->pci_bus), DEVICE(obj), NULL,
+> -                      &s->pci_memory, &s->pci_io, 0, TYPE_PCI_BUS);
+> -
+>     /* Bus master address space */
+>     memory_region_init(&s->bm, obj, "bm-raven", 4 * GiB);
+>     memory_region_init_alias(&s->bm_pci_memory_alias, obj, "bm-pci-memory",
+> @@ -310,8 +313,6 @@ static void raven_pcihost_initfn(Object *obj)
+>                              get_system_memory(), 0, 0x80000000);
+>     memory_region_add_subregion(&s->bm, 0         , &s->bm_pci_memory_alias);
+>     memory_region_add_subregion(&s->bm, 0x80000000, &s->bm_ram_alias);
+> -    address_space_init(&s->bm_as, &s->bm, "raven-bm");
+> -    pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
+>
+>     h->bus = &s->pci_bus;
+>
+>
+>
 
