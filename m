@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E10CA1002
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 07:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6C1CA1002
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 07:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uumyu-0001IR-IH; Sat, 06 Sep 2025 03:05:05 -0400
+	id 1uumz4-0001b3-46; Sat, 06 Sep 2025 03:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uumyn-0001H8-14
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 03:04:57 -0400
+ id 1uumyp-0001IO-Vi
+ for qemu-devel@nongnu.org; Sat, 06 Sep 2025 03:05:00 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uumyg-0003LK-18
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 03:04:55 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1uumyd-0003L7-TB
+ for qemu-devel@nongnu.org; Sat, 06 Sep 2025 03:04:57 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxRNAN3bton1gHAA--.15131S3;
- Sat, 06 Sep 2025 15:04:45 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxrr8K3btom1gHAA--.14674S3;
+ Sat, 06 Sep 2025 15:04:42 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJDx_8MJ3btoC6OBAA--.17248S3;
- Sat, 06 Sep 2025 15:04:44 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDx_8MJ3btoC6OBAA--.17248S2;
+ Sat, 06 Sep 2025 15:04:42 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 01/13] target/loongarch: Use mmu idx bitmap method when
- flush TLB
-Date: Sat,  6 Sep 2025 15:04:29 +0800
-Message-Id: <20250906070441.3749413-2-maobibo@loongson.cn>
+Subject: [PATCH v4 00/13] target/loongarch: Small enhancement about TLB flush
+Date: Sat,  6 Sep 2025 15:04:28 +0800
+Message-Id: <20250906070441.3749413-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250906070441.3749413-1-maobibo@loongson.cn>
-References: <20250906070441.3749413-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDx_8MJ3btoC6OBAA--.17248S3
+X-CM-TRANSID: qMiowJDx_8MJ3btoC6OBAA--.17248S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,45 +65,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With API tlb_flush_range_by_mmuidx(), bitmap of mmu idx should be used
-rather than itself. Also bitmap of MMU_KERNEL_IDX and MMU_USER_IDX are
-used rather than that of current running mmu idx when flush TLB.
+This patch set is continuous MMU enhancement, it is focused on TLB
+search, especially on function helper_invtlb_page_asid() and function
+helper_invtlb_page_asid_or_g(). The code is similiar with function
+loongarch_tlb_search(), one common API loongarch_tlb_search_cb() is
+added for these functions.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Also there is optimization with qemu TLB flush, invalidate_tlb_entry()
+is used to flush one TLB entry rather than flush all TLB entries.
 ---
- target/loongarch/tcg/tlb_helper.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+v3 ... v4:
+  1. Change return value from bool type to pointer type with function
+     loongarch_tlb_search_cb() in newly added patch 8.
+  2. Modification with code view comments from Richard
 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 9365860c8c..0c31a346fe 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -101,8 +101,7 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
-     target_ulong addr, mask, pagesize;
-     uint8_t tlb_ps;
-     LoongArchTLB *tlb = &env->tlb[index];
--
--    int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-+    int idxmap = BIT(MMU_KERNEL_IDX) | BIT(MMU_USER_IDX);
-     uint8_t tlb_v0 = FIELD_EX64(tlb->tlb_entry0, TLBENTRY, V);
-     uint8_t tlb_v1 = FIELD_EX64(tlb->tlb_entry1, TLBENTRY, V);
-     uint64_t tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
-@@ -120,12 +119,12 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
- 
-     if (tlb_v0) {
-         tlb_flush_range_by_mmuidx(env_cpu(env), addr, pagesize,
--                                  mmu_idx, TARGET_LONG_BITS);
-+                                  idxmap, TARGET_LONG_BITS);
-     }
- 
-     if (tlb_v1) {
-         tlb_flush_range_by_mmuidx(env_cpu(env), addr + pagesize, pagesize,
--                                  mmu_idx, TARGET_LONG_BITS);
-+                                  idxmap, TARGET_LONG_BITS);
-     }
- }
- 
+v2 ... v3:
+  1. Remove optimization to flush QEMU TLB with MMU_USER_IDX, now both
+     MMU_KERNEL_IDX and MMU_USER_IDX bitmap is added.
+  2. Add field RESERVE with register CSR_STLBPS, field RESERVE keeps
+     zero when change register CSR_STLBPS.
+
+v1 ... v2:
+  1. Add bugfix patch with CSR_STLBPS page size set issue.
+  2. Add tlb entry invalidation in function invalidate_tlb(), it can be
+     used in both helper_invtlb_page_asid() and function
+     helper_invtlb_page_asid_or_g().
+---
+Bibo Mao (13):
+  target/loongarch: Use mmu idx bitmap method when flush TLB
+  target/loongarch: Add parameter tlb pointer with fill_tlb_entry
+  target/loongarch: Reduce TLB flush with helper_tlbwr
+  target/loongarch: Update TLB index selection method
+  target/loongarch: Fix page size set issue with CSR_STLBPS
+  target/loongarch: Add tlb search callback in loongarch_tlb_search()
+  target/loongarch: Add common API loongarch_tlb_search_cb()
+  target/loongarch: Change return value type with
+    loongarch_tlb_search_cb()
+  target/loongarch: Use loongarch_tlb_search_cb in
+    helper_invtlb_page_asid_or_g
+  target/loongarch: Use loongarch_tlb_search_cb in
+    helper_invtlb_page_asid
+  target/loongarch: Invalid tlb entry in invalidate_tlb()
+  target/loongarch: Only flush one TLB entry in
+    helper_invtlb_page_asid_or_g()
+  target/loongarch: Only flush one TLB entry in
+    helper_invtlb_page_asid()
+
+ target/loongarch/cpu-csr.h        |   1 +
+ target/loongarch/tcg/csr_helper.c |   5 +-
+ target/loongarch/tcg/tlb_helper.c | 205 ++++++++++++++++++------------
+ 3 files changed, 131 insertions(+), 80 deletions(-)
+
+
+base-commit: baa79455fa92984ff0f4b9ae94bed66823177a27
 -- 
 2.39.3
 
