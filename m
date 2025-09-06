@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88476CA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F82CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv04U-0004b3-RK; Sat, 06 Sep 2025 17:03:42 -0400
+	id 1uv02t-0003fw-2f; Sat, 06 Sep 2025 17:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv04Q-0004a5-MT; Sat, 06 Sep 2025 17:03:39 -0400
+ id 1uv02r-0003fi-Jn; Sat, 06 Sep 2025 17:02:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv04K-0006D5-2N; Sat, 06 Sep 2025 17:03:38 -0400
+ id 1uv02h-0005so-5W; Sat, 06 Sep 2025 17:02:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00CF3150F8F;
- Sun, 07 Sep 2025 00:00:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 439D0150F83;
+ Sun, 07 Sep 2025 00:00:55 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B01ED278697;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0740C27868E;
  Sun,  7 Sep 2025 00:00:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Denis Rastyogin <gerben@altlinux.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 33/34] target/mips: fix TLB huge page check to use
- 64-bit shift
-Date: Sun,  7 Sep 2025 00:00:53 +0300
-Message-ID: <20250906210056.127031-15-mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 24/34] hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ
+ objects
+Date: Sun,  7 Sep 2025 00:00:44 +0300
+Message-ID: <20250906210056.127031-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
@@ -46,7 +46,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,32 +62,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis Rastyogin <gerben@altlinux.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Use extract64(entry, psn, 1) instead of (entry & (1 << psn)) to avoid
-undefined behavior for shifts by 32–63 and to make bit extraction intent explicit.
+In stm32f250_soc_initfn() we mostly use the standard pattern
+for child objects of calling object_initialize_child(). However
+for s->adc_irqs we call object_new() and then later qdev_realize(),
+and we never unref the object on deinit. This causes a leak,
+detected by ASAN on the device-introspect-test:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Indirect leak of 10 byte(s) in 1 object(s) allocated from:
+    #0 0x5b9fc4789de3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (BuildId: 267a2619a026ed91c78a07b1eb2ef15381538efe)
+    #1 0x740de3f28b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x740de3f3e4d8 in g_strdup (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x784d8) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #3 0x5b9fc70159e1 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+    #4 0x5b9fc70159e1 in object_property_try_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1276:18
+    #5 0x5b9fc7015f94 in object_property_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1294:12
+    #6 0x5b9fc701b900 in object_add_link_prop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2021:10
+    #7 0x5b9fc701b3fc in object_property_add_link /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2037:12
+    #8 0x5b9fc4c299fb in qdev_init_gpio_out_named /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:90:9
+    #9 0x5b9fc4c29b26 in qdev_init_gpio_out /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:101:5
+    #10 0x5b9fc4c0f77a in or_irq_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/or-irq.c:70:5
+    #11 0x5b9fc70257e1 in object_init_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:428:9
+    #12 0x5b9fc700cd4b in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:570:5
+    #13 0x5b9fc700e66d in object_new_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:774:5
+    #14 0x5b9fc700e750 in object_new /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:789:12
+    #15 0x5b9fc68b2162 in stm32f205_soc_initfn /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/stm32f205_soc.c:69:26
 
-Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
-Message-ID: <20250814104914.13101-1-gerben@altlinux.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 1f82ca723478f44823a18e7151e487d58da03659)
+Switch to using object_initialize_child() like all our
+other child objects for this SoC object.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b63041c8f6b ("STM32F205: Connect the ADC devices")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250821154229.2417453-1-peter.maydell@linaro.org
+(cherry picked from commit 2e27650bddd35477d994a795a3b1cb57c8ed5c76)
+(Mjt: adjust for 7.2, for before qemu_or_irq rename to OrIRQState)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index cce3dcdc0e..a502426be6 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -653,7 +653,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
-         return 0;
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index c6b75a381d..bd2f8b5996 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -66,7 +66,7 @@ static void stm32f205_soc_initfn(Object *obj)
+                                 TYPE_STM32F2XX_TIMER);
      }
  
--    if ((entry & (1 << psn)) && hugepg) {
-+    if (extract64(entry, psn, 1) && hugepg) {
-         *huge_page = true;
-         *hgpg_directory_hit = true;
-         entry = get_tlb_entry_layout(env, entry, leafentry_size, pf_ptew);
+-    s->adc_irqs = OR_IRQ(object_new(TYPE_OR_IRQ));
++    object_initialize_child(obj, "adc-irq-orgate", &s->adc_irqs, TYPE_OR_IRQ);
+ 
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+         object_initialize_child(obj, "adc[*]", &s->adc[i], TYPE_STM32F2XX_ADC);
+@@ -170,12 +170,12 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+     }
+ 
+     /* ADC 1 to 3 */
+-    object_property_set_int(OBJECT(s->adc_irqs), "num-lines", STM_NUM_ADCS,
++    object_property_set_int(OBJECT(&s->adc_irqs), "num-lines", STM_NUM_ADCS,
+                             &error_abort);
+-    if (!qdev_realize(DEVICE(s->adc_irqs), NULL, errp)) {
++    if (!qdev_realize(DEVICE(&s->adc_irqs), NULL, errp)) {
+         return;
+     }
+-    qdev_connect_gpio_out(DEVICE(s->adc_irqs), 0,
++    qdev_connect_gpio_out(DEVICE(&s->adc_irqs), 0,
+                           qdev_get_gpio_in(armv7m, ADC_IRQ));
+ 
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+@@ -186,7 +186,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+         busdev = SYS_BUS_DEVICE(dev);
+         sysbus_mmio_map(busdev, 0, adc_addr[i]);
+         sysbus_connect_irq(busdev, 0,
+-                           qdev_get_gpio_in(DEVICE(s->adc_irqs), i));
++                           qdev_get_gpio_in(DEVICE(&s->adc_irqs), i));
+     }
+ 
+     /* SPI 1 and 2 */
+diff --git a/include/hw/arm/stm32f205_soc.h b/include/hw/arm/stm32f205_soc.h
+index 849d3ed889..d7e839ab14 100644
+--- a/include/hw/arm/stm32f205_soc.h
++++ b/include/hw/arm/stm32f205_soc.h
+@@ -63,7 +63,7 @@ struct STM32F205State {
+     STM32F2XXADCState adc[STM_NUM_ADCS];
+     STM32F2XXSPIState spi[STM_NUM_SPIS];
+ 
+-    qemu_or_irq *adc_irqs;
++    qemu_or_irq adc_irqs;
+ 
+     MemoryRegion sram;
+     MemoryRegion flash;
 -- 
 2.47.3
 
