@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF95CCAC580
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F8ECA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiS7-00046x-FZ; Fri, 05 Sep 2025 22:14:55 -0400
+	id 1uuiSo-0004Pc-9o; Fri, 05 Sep 2025 22:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiS3-00045I-8L; Fri, 05 Sep 2025 22:14:53 -0400
+ id 1uuiSW-0004GD-Po; Fri, 05 Sep 2025 22:15:24 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiRt-0006fG-IC; Fri, 05 Sep 2025 22:14:48 -0400
+ id 1uuiSE-0006iM-Bj; Fri, 05 Sep 2025 22:15:18 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnb041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btne041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:13:20 +0900 (JST)
+ Sat, 6 Sep 2025 11:13:57 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=cN5bYCz95z43poG/hzCshYc7BVuKfAjXwSqQcnCNxz0=; 
+DKIM-Signature: a=rsa-sha256; bh=hDE6MDpM29+rIuyhBoh3MNFBBlYhx+hw3yC0XNEvU1Q=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124812; v=1;
- b=X97E9C/vFb4eJOPvohkQT/b+9jdqfQ43r0a5eDgVdCJ4tR2NDK1QcBJ8cpSGbakF
- xE6Q7dHSO8LsCTYGTMKlmP3zLsXm/yGeqhYwrfNnTEsysPudx0eHkoEdw6B/DWYk
- TAxeyTGBoVa2EgQLAI7mzI5GHcxNp/fAZ/KY5j4HQkeZuI71btpcNK/udyWc3Pqz
- 7nzbnda6P2rnddo67xWjDzww9kX8WBBLtaBx+uy2nLWBlPrCWQLL/LwLyS4hJ3PY
- fgpeS53PRmSPTO5D2nptdeK8kKGFZNeGr1kK2DR2yEI+9UrunR68JEVwWf6nmZe+
- aV6HJXyXFfo6lR6BVjJK7g==
+ s=rs20250326; t=1757124848; v=1;
+ b=nFA5MOO20dSmu7eWfkEOMBJkLjqOhBgI9IwVe4vUjoynwuZr+VjaxaINCnzlkord
+ /gIx4xPOw2FU+fxMrtzmT1hvKwN4HflElC/F8vpjuE79/LkJ0zZfn3H12Dvkqli4
+ bpV9bm2hXPI6ciyUOI07VTHy/kLys8kilnvHEyCIQ+ZuqZH9Qsij1Qv5Eef5Zw8Y
+ qeZQfKZOwnbTE5vX7crC1BcgycCMIf0aRdwJ8e8jExmagy1FYQDcAM2TU3FUy1ZP
+ 69ganHHlKW0io3aUmAWOzCmNW1w84MoL47s4yaHIx5GcaJ8Mi9DGWfX4CHieypyn
+ VwlhGeGXaAbUmyigyzS1cQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:15 +0200
-Subject: [PATCH 06/22] auxbus: Fix AddressSpace exposure timing
+Date: Sat, 06 Sep 2025 04:11:18 +0200
+Subject: [PATCH 09/22] sun4u: Fix AddressSpace exposure timing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-6-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -103,8 +103,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-aux-bus is not hotpluggable but its instance can still be created and
-finalized when processing the device-list-properties QMP command.
+sun4u-iommu is not hotpluggable but its instance can still be created
+and destroyed when processing the device-list-properties QMP command.
 Exposing such a temporary instance to AddressSpace should be
 avoided because it leaks the instance.
 
@@ -113,27 +113,40 @@ it won't happen for the temporary instances.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/misc/auxbus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/sparc64/sun4u_iommu.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
-index 877f34560626f0ef741f00bb6c7272135d264399..c47db4da985d8e81f9eb49542279499c931aac6c 100644
---- a/hw/misc/auxbus.c
-+++ b/hw/misc/auxbus.c
-@@ -74,12 +74,12 @@ AUXBus *aux_bus_init(DeviceState *parent, const char *name)
-     /* Memory related. */
-     bus->aux_io = g_malloc(sizeof(*bus->aux_io));
-     memory_region_init(bus->aux_io, OBJECT(bus), "aux-io", 1 * MiB);
--    address_space_init(&bus->aux_addr_space, bus->aux_io, "aux-io");
-     return bus;
+diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
+index 14645f475a09ed3a6bef77f8d8b4b6b4b36ae40a..b6568551935610116d33481ae8d9fc08f02ecf7b 100644
+--- a/hw/sparc64/sun4u_iommu.c
++++ b/hw/sparc64/sun4u_iommu.c
+@@ -298,18 +298,25 @@ static void iommu_init(Object *obj)
+     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+                              TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
+                              "iommu-sun4u", UINT64_MAX);
+-    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+ 
+     memory_region_init_io(&s->iomem, obj, &iommu_mem_ops, s, "iommu",
+                           IOMMU_NREGS * sizeof(uint64_t));
+     sysbus_init_mmio(sbd, &s->iomem);
  }
  
- void aux_bus_realize(AUXBus *bus)
++static void iommu_realize(DeviceState *dev, Error **errp)
++{
++    IOMMUState *s = SUN4U_IOMMU(dev);
++
++    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
++}
++
+ static void iommu_class_init(ObjectClass *klass, const void *data)
  {
-+    address_space_init(&bus->aux_addr_space, bus->aux_io, "aux-io");
-     qdev_realize(DEVICE(bus->bridge), BUS(bus), &error_fatal);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     device_class_set_legacy_reset(dc, iommu_reset);
++    dc->realize = iommu_realize;
  }
  
+ static const TypeInfo iommu_info = {
 
 -- 
 2.51.0
