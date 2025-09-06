@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F48ACA1002
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA07BCA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv04E-0004Cv-0l; Sat, 06 Sep 2025 17:03:26 -0400
+	id 1uv03Z-0003ot-Vs; Sat, 06 Sep 2025 17:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv04B-0004CB-8u; Sat, 06 Sep 2025 17:03:23 -0400
+ id 1uv03X-0003oD-6N; Sat, 06 Sep 2025 17:02:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv03s-00068z-Ul; Sat, 06 Sep 2025 17:03:23 -0400
+ id 1uv03N-00062E-8G; Sat, 06 Sep 2025 17:02:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C3324150F8C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 83A28150F87;
  Sun, 07 Sep 2025 00:00:55 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C644278695;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 46E2B278692;
  Sun,  7 Sep 2025 00:00:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Justin Applegate <justink.applegate@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 31/34] linux-user/mips: Select 74Kf CPU to run MIPS16e
- binaries
-Date: Sun,  7 Sep 2025 00:00:51 +0300
-Message-ID: <20250906210056.127031-13-mjt@tls.msk.ru>
+ Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 28/34] linux-user/mips: Use P5600 as default CPU to
+ run NaN2008 ELF binaries
+Date: Sun,  7 Sep 2025 00:00:48 +0300
+Message-ID: <20250906210056.127031-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
@@ -48,8 +48,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,35 +66,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The 74Kf is our latest CPU supporting MIPS16e ASE.
+Per the release 6.06 revision history:
 
-Note, currently QEMU doesn't have 64-bit CPU supporting MIPS16e ASE.
+ 5.03 August 21, 2013
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6ea219d0196..d19954f46df ("target-mips: MIPS16 support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3054
-Reported-by: Justin Applegate <justink.applegate@gmail.com>
+ • ABS2008 and NAN2008 fields of Table 5.7 “FCSR RegisterField
+   Descriptions” were optional in release 3 and could be R/W,
+   but as of release 5 are required, read-only, and preset by
+   hardware.
+
+The P5600 core implements the release 5, and has the ABS2008
+and NAN2008 bits set in CP1_fcr31. Therefore it is able to run
+ELF binaries compiled with EF_MIPS_NAN2008, such the CIP United
+Debian NaN2008 distribution:
+http://repo.oss.cipunited.com/mipsel-nan2008/README.txt
+
+In order to run such compiled binaries, select by default the
+P5600 core when the ELF 'MIPS_NAN2008' flag is set.
+
+Reported-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250814070650.78657-3-philmd@linaro.org>
-(cherry picked from commit 7a09b3cc70ab6d717b18dec5c5995f7a06af4593)
-(Mjt: in 10.1 and before the code is in linux-user/mips/target_elf.h)
+Acked-by: Laurent Vivier <laurent@vivier.eu>
+Message-Id: <20230327162444.388-1-philmd@linaro.org>
+(cherry picked from commit 450cb7ec2c5fda51b9650ca25e59ac9deeb60d1b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index 71a32315a8..cd8622ce28 100644
+index a98c9bd6ad..b965e86b2b 100644
 --- a/linux-user/mips/target_elf.h
 +++ b/linux-user/mips/target_elf.h
-@@ -12,6 +12,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
-         return "mips32r6-generic";
+@@ -15,6 +15,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
+     if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
+         return "R5900";
      }
-+    if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_M16) {
-+        return "74Kf";
++    if (eflags & EF_MIPS_NAN2008) {
++        return "P5600";
 +    }
-     if (eflags & EF_MIPS_NAN2008) {
-         return "P5600";
-     }
+     return "24Kf";
+ }
+ #endif
 -- 
 2.47.3
 
