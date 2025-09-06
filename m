@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BACFCA1016
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3F1CA1016
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuirX-0001VP-Mj; Fri, 05 Sep 2025 22:41:11 -0400
+	id 1uuits-0003F3-Bj; Fri, 05 Sep 2025 22:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuirT-0001Sw-HE; Fri, 05 Sep 2025 22:41:07 -0400
+ id 1uuitb-00036s-Og; Fri, 05 Sep 2025 22:43:21 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuirE-0005hJ-0z; Fri, 05 Sep 2025 22:41:07 -0400
+ id 1uuitV-0005pH-DN; Fri, 05 Sep 2025 22:43:19 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862dKwa051529
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862dKwZ051529
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:39:37 +0900 (JST)
+ Sat, 6 Sep 2025 11:39:27 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=0Wmecb1gZcgzIN0AvJLb87Mi6Fw68Dtp7HJg/gw6MA8=; 
+DKIM-Signature: a=rsa-sha256; bh=DICOysjlnRT5HnoCRMBRPDLSC40s3EH7K+pp1h59vjc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757126387; v=1;
- b=etjyPR3my23ArPJxSoWy39JBX4jZVpZJUtMMBy8EjJ6GQioXfkvarpAoPRvQGdnX
- 8Ei/TWA/xCh3NdIN5ih+dBjJPIM3qpoK2udM+qhMMCAeKeYhcioJB1Yke1yVZEDS
- eulwEDKtTnj5RxHV/6mG/FLC5HeOPLAOcji6SuKhHvJ6uv1VGz/zPewDXA59DytL
- wVoLEfwe/gU7vSVNbp/M/kp2v1mTJzNbeOj08CqDfpvTKHgXdJTqBb+B/OenjNx0
- kQeebQZ4GHmkvkkMD52Od58z34PNG2B6D8EADn8lGd7GcKf76XcCtehWpAYqAo3i
- RYJj0GS15GU1gdBDFAATVg==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1757126377; v=1;
+ b=eV0AOTG4o9tIgBsNeUVLRbdyP9pk77Q79QQf3f541WFhN7KPUuJcTXHi7wc1nVMq
+ TfFA6G2DxkruuoQaQss1/3V31S4C+GIVXr3T10s8uM53nSGK2gWocikCCRra/ZYe
+ xDR3qF8F1IksB1ys3CMZ3KXNjHDf8wI2o60GASGsGdF0oF/y+7BPd7bwQtQs/U56
+ NFzSLuxB4BBLxLwoXiD5GqvqtkV0HjEHX38QtUIfx3gYveD5utschDWu/l1EVm4W
+ zrOW4l9Fmk5yykTELCwB3q8iwjK7WUK1OnjQSgJ+uVOJyG4uv++YqHwM4tVE9taT
+ Vck4092Mg+UnIer5x+vbAg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:39:04 +0200
-Subject: [PATCH v2 1/3] qom: Do not finalize twice
+Subject: [PATCH v2 0/3] memory: Stop piggybacking on memory region owners
+Date: Sat, 06 Sep 2025 04:39:03 +0200
+Message-Id: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-mr-v2-1-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAMieu2gC/3WPSW7DMAxFr2JoXRmkJXlCUeQeQRYaqEQtHKWSb
+ TQIcvcqdrddfoL/8fHBMqVAmY3VgyVaQw7xWkLzVjF70dcz8eBKZg00CnqBfErcgbNyUEY7RFY
+ Wb4l8+Nkgx1PJl5DnmO4bc8XXdK8PsNVX5MCd66xpDcoezCHlc21DHeqFz/HrHmtt688bOz13e
+ KLvpYjN+wVmdCZu4zSFeawIAZ0Q3dAoATAIr8GAbkl5KUi63nqSqkd6eU6Us94+Gqv3P6OWL4W
+ 2KVmFVmvvkEz3j9JHcXr+At2t4F00AQAA
+X-Change-ID: 20250831-mr-d0dc495bad11
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -83,7 +87,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,66 +103,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The next change adds code to retain references from an object to the
-parent when it is being unparented to ensure that the parent outlive
-them. This change handles the following scenario with the code:
+Supersedes: <20250828-san-v9-0-c0dff4b8a487@rsg.ci.i.u-tokyo.ac.jp>
+("[PATCH v9 0/2] Fix check-qtest-ppc64 sanitizer errors")
 
-1. The parent starts being finalized without unparenting.
-2. Unparenting happens during finalization.
-3. The child retains the reference to the parent.
-4. The child gets finalized, and releases the reference.
+Based-on: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+("[PATCH 00/22] Fix memory region leaks and use-after-finalization")
 
-In this scenario, the reference counter of the parent reaches to zero,
-gets incremented, and gets decremented to reach to zero again. This
-change ensures that finalization will be triggered again in the
-scenario.
+MemoryRegions used to "piggyback" on their owners instead of using their
+reference counters due to the circular dependencies between them, which
+caused memory leak.
 
-Note that the reference counter needs to reach to zero again before
-finalization ends; otherwise the object will be "resurrected", which
-is not clearly defined and prohibited with an existing assertion.
+I tried to fix it with "[PATCH v9 0/2] Fix check-qtest-ppc64 sanitizer
+errors" but it resulted in a lengthy discussion; ultimately it is
+attributed to the fact that "piggybacking" is hard to understand and
+forces us design trade-offs. It was also insufficient because it only
+deals with the container/subregion pattern and did not deal with
+AddressSpace and DMA. Fixing all possible memory leaks require checking
+the referrer at many places where memory_region_ref() is called.
 
-One thing that looks concerning with this change is that it adds a bool
-to Object. This is not a problem in the most situations where the host
-uses 64-bit addressing because the member is added to a gap needed for
-alignment, and possible double-free scenarios handled with this change
-are more serious than the extra memory usage for 32-bit hosts.
+With this series, I remove the "piggyback" hack altogather.
+The key insight here is that the unparented devices have the finalizable
+MemoryRegions and they do not need them. I code the fact by calling
+object_unparent() in device_unparent(). This eliminates the entire class
+of memory leaks caused by references from owners to their MemoryRegions.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/qom/object.h | 1 +
- qom/object.c         | 5 +++++
- 2 files changed, 6 insertions(+)
+Changes in v2:
+- Expanded the message of patch
+  "vfio/pci: Do not unparent in instance_finalize()".
+- Changed to exploit the unparenting timing instead of the unrealization
+  timing.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 26df6137b911..7f7b1ffea8fe 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -158,6 +158,7 @@ struct Object
-     ObjectFree *free;
-     GHashTable *properties;
-     uint32_t ref;
-+    bool finalizing;
-     Object *parent;
- };
- 
-diff --git a/qom/object.c b/qom/object.c
-index 1856bb36c74c..b766b2e9baa7 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -725,6 +725,11 @@ static void object_finalize(void *data)
-     Object *obj = data;
-     TypeImpl *ti = obj->class->type;
- 
-+    if (obj->finalizing) {
-+        return;
-+    }
-+
-+    obj->finalizing = true;
-     object_property_del_all(obj);
-     object_deinit(obj, ti);
- 
+---
+Akihiko Odaki (3):
+      qom: Do not finalize twice
+      virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
+      memory: Stop piggybacking on memory region owners
 
--- 
-2.51.0
+ docs/devel/memory.rst         | 41 +++++++++++++++++-----------------
+ include/qom/object.h          |  1 +
+ include/system/memory.h       | 51 +++++++++++++++++++++----------------------
+ hw/core/qdev.c                | 16 ++++++++++++++
+ hw/display/virtio-gpu-virgl.c | 50 ++++++++++++++++++++++++++++++------------
+ qom/object.c                  |  5 +++++
+ system/memory.c               | 33 ++++++++++++++++++++--------
+ 7 files changed, 127 insertions(+), 70 deletions(-)
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250831-mr-d0dc495bad11
+prerequisite-message-id: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+prerequisite-patch-id: d464fda86a3c79ff8e6d7a2e623d979b2a47019b
+prerequisite-patch-id: 17b153237f69c898b9c5b93aad0d5116d0bfe49f
+prerequisite-patch-id: a323f67e01c672ab2958a237ea54b77f1443e2d1
+prerequisite-patch-id: 019969fe248bd57ddcda1ff5fc960b214ccffefe
+prerequisite-patch-id: 74ded25b212b75b2f7d1859fedc601cf33d59107
+prerequisite-patch-id: 43f841a1924749e2a5a3b74b35e54f89afb7e3c5
+prerequisite-patch-id: 44300da5065efee0390be5d450225868e01cecfc
+prerequisite-patch-id: 4af306d6f3d0a4585015c5907ca1e1dcfced77d3
+prerequisite-patch-id: fff78c7af9b0a56190a1b4afbb122c460a6b0e7d
+prerequisite-patch-id: 3d38803ce09ba9c93f2a876f54309e673b396ab1
+prerequisite-patch-id: 822094864ad7a6a702fee098e4835621bd8092fe
+prerequisite-patch-id: 5757efd81557b060257b5db6dec6fd189076ee77
+prerequisite-patch-id: bd912830a326f13186bf38e916655ec980e11af8
+prerequisite-patch-id: fe6b92112288829e60f10c305742a544f45e8984
+prerequisite-patch-id: ac4ff0c11dcc1fc5d08b4fc480c14721fde574ad
+prerequisite-patch-id: ff398fa97b5f2feee85372fdf108d82d8d5526b0
+prerequisite-patch-id: 7ac446ae76e05dd267a63889ff775ac609712c31
+prerequisite-patch-id: b49a74cd5f31348c3dc13dcfd1dad629e6b30387
+prerequisite-patch-id: 8f61fe1b81cf3ec906ebbf61776573edd96c1e8c
+prerequisite-patch-id: 01fb8ccbe7326021a94a8d7531189568d2e311a7
+prerequisite-patch-id: 974b0fc6d7c8d6d56b8f44597260647e1a53cf38
+prerequisite-patch-id: 55c4711a2a4e6b02b8b512e0283f8feaf7d3bfa3
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
