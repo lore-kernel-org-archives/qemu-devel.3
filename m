@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFF6CA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4BACA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiZ1-0005A5-GD; Fri, 05 Sep 2025 22:22:05 -0400
+	id 1uuiZG-0005za-QR; Fri, 05 Sep 2025 22:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiYv-0004um-HP; Fri, 05 Sep 2025 22:21:57 -0400
+ id 1uuiZC-0005rv-Dg; Fri, 05 Sep 2025 22:22:14 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiYa-0000IJ-NX; Fri, 05 Sep 2025 22:21:55 -0400
+ id 1uuiYv-0000KS-KW; Fri, 05 Sep 2025 22:22:11 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnl041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnn041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:15:24 +0900 (JST)
+ Sat, 6 Sep 2025 11:15:49 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=AMIrLUwGb20DCX2QJ9sI6hzRgdwLBWo6KaejLtXVMas=; 
+DKIM-Signature: a=rsa-sha256; bh=A2GlR2TJmK/k+sr8q7+ruESRjTfRwEx+idAZUzdfRKY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124935; v=1;
- b=MODj2VFVvsW/BnObGWOT3kdITg9LLUJsuB+kt+WlGCJwuoCVuSiGPXfxG/wjYUIZ
- OC0jFdulkatqESlsI/sleeXNCmuxR/zDFseuWk4h10Kx8MpxdSO6BULNRY3+F7ro
- s3Ilfr5rPeaarYyB5T4vT61JXG0JYGicngXbD97HQiiFXSUkNGUK30dQvdTguKGI
- bH8GVfggSHYEnxXQC2GeRn4ilDU0TSTpyAbBhg/JOAD9jMy+boZ3eqs5FasodiXn
- gniBFhD7awMZEO5eTDjY6L2oI8xhx+MNwuRxhvrDoEtkNDN+5RXaQWCzoylumgR4
- oGyTAn7dCskJL64dEPO8Hg==
+ s=rs20250326; t=1757124961; v=1;
+ b=gQKGhaqM8Sqqe4hAJLZMUDcHa9pb5UIADjzTtI8YoxiPLRC8PE8/Pwt+bX0SYC5b
+ NhoX+2gYZfdSx49NeaAIy3wRkoXfxnrVrrV7x9yUn9HEn59Flx8cw3mVzYBxrQ4m
+ +7XdyRHgfbD660pTtzhwpt3uxLoO8eHhLwW8cY7b4FT9LUJAr4RnW1qCRqe0e5OX
+ kpvAFSbTXI0Wv1HFvq7DbLIqG1V0u5hsB+JK4E2gaCkvplBMicCSG+MxvQ89hso9
+ 74G3EqtN7MrccHE9V/uRv7s1ygYKzxcd6tDEEUxBIv7VZfZBi0Fl+nQq7wj/T6cV
+ i9RUb03uyHO8MqTfuDK+8A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:25 +0200
-Subject: [PATCH 16/22] hw/ide/piix: Do not delete the subregions
+Date: Sat, 06 Sep 2025 04:11:27 +0200
+Subject: [PATCH 18/22] hw/nvme: Do not delete the subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-16-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-18-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -85,7 +85,8 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,47 +107,22 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ide/piix.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ hw/nvme/ctrl.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/ide/piix.c b/hw/ide/piix.c
-index a0f2709c6973420b9e07fc5cc3fa1ef12a8e3d42..138f8e1936b448cb9185018ba5744d3c5445abd9 100644
---- a/hw/ide/piix.c
-+++ b/hw/ide/piix.c
-@@ -166,17 +166,6 @@ static void pci_piix_ide_realize(PCIDevice *dev, Error **errp)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f5ee6bf260f159249204571a366472f3e0d16dea..eebce1f787f464978f535356533294c5a0c7bea8 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9058,8 +9058,6 @@ static void nvme_exit(PCIDevice *pci_dev)
+     } else {
+         msix_uninit(pci_dev, &n->bar0, &n->bar0);
      }
+-
+-    memory_region_del_subregion(&n->bar0, &n->iomem);
  }
  
--static void pci_piix_ide_exitfn(PCIDevice *dev)
--{
--    PCIIDEState *d = PCI_IDE(dev);
--    unsigned i;
--
--    for (i = 0; i < 2; ++i) {
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
--    }
--}
--
- /* NOTE: for the PIIX3, the IRQs and IOports are hardcoded */
- static void piix3_ide_class_init(ObjectClass *klass, const void *data)
- {
-@@ -186,7 +175,6 @@ static void piix3_ide_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, piix_ide_reset);
-     dc->vmsd = &vmstate_ide_pci;
-     k->realize = pci_piix_ide_realize;
--    k->exit = pci_piix_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_INTEL;
-     k->device_id = PCI_DEVICE_ID_INTEL_82371SB_1;
-     k->class_id = PCI_CLASS_STORAGE_IDE;
-@@ -209,7 +197,6 @@ static void piix4_ide_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, piix_ide_reset);
-     dc->vmsd = &vmstate_ide_pci;
-     k->realize = pci_piix_ide_realize;
--    k->exit = pci_piix_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_INTEL;
-     k->device_id = PCI_DEVICE_ID_INTEL_82371AB;
-     k->class_id = PCI_CLASS_STORAGE_IDE;
+ static const Property nvme_props[] = {
 
 -- 
 2.51.0
