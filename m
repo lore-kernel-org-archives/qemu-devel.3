@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8965CA1012
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 05:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 126CCCA1012
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 05:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uulKA-0000ML-HK; Sat, 06 Sep 2025 01:18:54 -0400
+	id 1uulK6-0000E7-KZ; Sat, 06 Sep 2025 01:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uulK5-0000Ku-Mo
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 01:18:50 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1uulK0-0000Bs-Kl
+ for qemu-devel@nongnu.org; Sat, 06 Sep 2025 01:18:44 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uulJt-0006p8-1y
- for qemu-devel@nongnu.org; Sat, 06 Sep 2025 01:18:49 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45dd5e24d16so14961225e9.3
- for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 22:18:31 -0700 (PDT)
+ id 1uulJo-0006oT-Qu
+ for qemu-devel@nongnu.org; Sat, 06 Sep 2025 01:18:43 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3c46686d1e6so1934194f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 22:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757135909; x=1757740709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757135903; x=1757740703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=si78m6k1/2WbkO3UQheH+as6HI/9NYY7KBL//tRndmo=;
- b=BvB8/ev3YciUkNkE3cQSsdVl7ev+kME0QMLkoxVgMxGUpSmFsaePE6u0F77wFbtk2S
- nK5CIF0VIvvKCCr5Y31GdJIrivRvioWUqOKzwKdDhQVKhMETY+lbJgQchFhAMI89yLOK
- iaxdlUxGB2D7D/zuz8T95bVA7uyHacGueMAOe6M9lNN/kruBORU+1KfklpmiRww5vxzY
- PIxjfZey7RbthsUbMMH/eMIc4vTrg5SNF7oO9LT8TYlQWLsV6I0OwFPrSOJzefw6G28n
- YhAR39fevYZ8YPh5pfllZt3DMvcIFNsxXcOLdFjzOKbONvmLR2foFCGtl5b61fdaPkwD
- HMXg==
+ bh=HNqFZV35YOrj/F9z9dCSnDx2HfCCFDbc6LDsUqT3M/g=;
+ b=a5U9vOiPJLdU6NxidmKmqZrWV+VxgI+sprCPYxrMK9q2rOpZp88XkIIbAQxH9PQJQD
+ rVcLO4A5kUFUwe3EJ80k3Bv23ef7Th37jZounM0Mw24leIGdw5ImJZN3uT8mwmT1cs+D
+ nR6tpgknI9URQUYHXUYaiK4RKu/NFJYeH9khVtQzFzp1T6xL+G7DPy6hUlQ6vvPkTJqb
+ mk69tkf4twK+mOg2e/azLAwYe1wj9wu3Mrak2wFiNLE1d5AnusNpn+7DysOAxALyCiw3
+ m9Yt79aaGlqb6ARdKnfeZVAjyx9DWZCAMn5MBxY9T6Z6PwzJ0wxxaymJOQYGiErquwHQ
+ 1coQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757135909; x=1757740709;
+ d=1e100.net; s=20230601; t=1757135903; x=1757740703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=si78m6k1/2WbkO3UQheH+as6HI/9NYY7KBL//tRndmo=;
- b=w9mSxk2nMc88l3pHiuFURSx2kVaU/Q3XIGIfWpSsIBvColqdNs5z0D/HRknlUqRx0u
- 7axokhvTbGjGnWcqI/pT9ptGYrHLZingKOnBTVuq9iZd75XBOZOxlSqEfsmhUb7IZp5p
- hXf+A4KD9mw2vILksrOcUkvnxscqKZRvnhAzZS6d/iW/i73M9I963v3o93qazjQp8OCP
- PCNAKP4b987wtG+aWfRV5pJ3aj/T8ERMQCdM1dh6nhhC1YI7y5PE6obzKhhYxCYzn+1h
- 0+TcySZ17WzwO4E3Ez5FEBDBgiY10B6YEQS0UKuhJAIttTwmaZeTtBtCAEIsqJvE+dRJ
- 8+Og==
-X-Gm-Message-State: AOJu0YyAL3GG2cyEP1RGla43UkPvPRxKD/MpgG2GcPml/P886o2WQ/gZ
- hRRhoZ+ABkdXMgmS8Mq47jvSIEojdYgHT9N6AuzBqLAXpdRR9aAr4M0NQg4tmjItEpejIm5EDNB
- JMME+EKg=
-X-Gm-Gg: ASbGncsDF/NGx1WPf1AwYBScWrIN3XtWgviymjK28A9vzvWCL99RDUR5PTvv4DkLUFS
- CHZWuDahK16O8FyRaR+v8uUNfALlfwztAx2zP/+HSLndawv5cTQqzk6lpuC8ejeGu1L8vI/mI06
- rU6a5AvVkJoiUV61wRPy973fszOqhmrvuUaYijgIIn8GIecSmbNz52dyWwbWE7R9zqqxhHKDNhk
- L/XqFd25bryC/ggIRoMDayYlKnZFSY6h9w3bqDV4f+CoBAu5iuoGFJf080Bdc55qI+3j1kWC+0y
- tpYefPNnYtCjLuTV9TO08o0Q6fJtDZktqr8Wd8iy6JzolwKCXX6q/KHh9WP4Qd8pxJka8HZR3Jt
- yr4Fly5CAYOwzoE/6gPuOKO5fH5rjcStGOwWF1X4YGk9DoNCAylweujnoi3GrQr9BjSQDh83C
-X-Google-Smtp-Source: AGHT+IHOQ0PxvYVG4jc+CmlT03Svxo6xfEZfCvrU0SodIDtu7O6oiqd6S6g/7rjChaRqvWpihPFT4Q==
-X-Received: by 2002:a05:600c:4e91:b0:45d:7d88:edcd with SMTP id
- 5b1f17b1804b1-45dddef8115mr9943125e9.30.1757135909498; 
- Fri, 05 Sep 2025 22:18:29 -0700 (PDT)
+ bh=HNqFZV35YOrj/F9z9dCSnDx2HfCCFDbc6LDsUqT3M/g=;
+ b=V9brZLRz7wqbh4XS52+H4MdqhrHg/Kpvkz8pK7nprsAcKVzjZXxcHEWOzGSSwziiYK
+ a0ZIQWlSBilN88JD6ZFhEO8f0GzHKCSy4J5rYgtKJmORjUWnn1oDB7wg5vAMh4p3hkNj
+ Fr/2qup/1iqvlhKlNP6i8pSNquOQcB5tOYjUGY9h701/rXWEWx3cdEILxKQFD69t55ZL
+ kIZJ80Iurj46cHrOJKo1us0XYXXCFMhKMSJxd6YNBei/EaXYLVXGgfs/5A29hs96wcET
+ oOfNvrFpGwoH8rBSTelNKqBsEt82avnH+PrJhTrjOtglfvrq2Rxc9eqXEG3aBeBqd/6r
+ 0MnA==
+X-Gm-Message-State: AOJu0YxxO8OnQD+tT/b6ajaz5K5ntIZfMKA5qfz3HXAOjHOuS68qWsYN
+ lq2M5+cqFft223+CSp4v7DSgcGwCxQ5s9WXcCMbxnSYr5AbDXtD4nxkr/A5HroeT1dGQFYFiXrP
+ AJl4QZrQ=
+X-Gm-Gg: ASbGncsByIJUjq5BDi8UgfxaWHQtb3syklQF8uCjXBbNrjC6tRfT658zGQr7xvEuc0b
+ YMiWRzVEcJX5/MQo5FXSX7jSynq6FaZaRn1DN3uSuqy3vsASXnODf7x4NHtb5OASYpkAw0YO09Y
+ SiQc2HgGD+z6bWxXNczJ+LTFx+txL0WFh8MHp4oHA9x3sHpQob2lrfEHqNmbjxOj/sJgU7kukyE
+ 01SMTwNRW8JlztK4TLcLGtwvEDPUWMGokn46eoFsQAOmRai5Gtn25+XeNATZOGAjCvNIuFTD9TY
+ hm1rDttg/AgbTtAhyaOBdelW1hYPtPxMcaVj5DjgcVD2srWZvMw181ty+CHLzRr23hlBMqFInl7
+ lI3UFooBJb4qJQExa0oK5nz9zMEMAsmcdh04GW+z3zqR7ScTX+UZ+ARvuegigPuw+FQzT9GAGlH
+ q4oQwSOg8=
+X-Google-Smtp-Source: AGHT+IGtt5iyMs11Oc6J7K5A55NfbYz8ZigGo9LLRqb+A2698A9SnNL9xtaz5gvCXtH5IqlB1eoS+Q==
+X-Received: by 2002:a05:6000:2013:b0:3d4:a64:6754 with SMTP id
+ ffacd0b85a97d-3e643ff3b6fmr566630f8f.62.1757135903251; 
+ Fri, 05 Sep 2025 22:18:23 -0700 (PDT)
 Received: from stoup.21wol.it (93-51-222-138.ip268.fastwebnet.it.
  [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f306c22sm441197735e9.13.2025.09.05.22.18.28
+ 5b1f17b1804b1-45b6f306c22sm441197735e9.13.2025.09.05.22.18.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Sep 2025 22:18:29 -0700 (PDT)
+ Fri, 05 Sep 2025 22:18:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH 09/11] accel/tcg: Introduce EXCP_TB_FLUSH
-Date: Sat,  6 Sep 2025 07:18:18 +0200
-Message-ID: <20250906051820.160432-10-richard.henderson@linaro.org>
+Subject: [PATCH 01/11] gdbstub: Remove tb_flush uses
+Date: Sat,  6 Sep 2025 07:18:10 +0200
+Message-ID: <20250906051820.160432-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250906051820.160432-1-richard.henderson@linaro.org>
 References: <20250906051820.160432-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,87 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to disallow tb_flush from within the context
-of a running cpu.  Introduce a tcg-internal exception to
-return out of the cpu run loop and perform the flush there.
+This hasn't been needed since d828b92b8a6
+("accel/tcg: Introduce CF_BP_PAGE").
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/cpu-common.h       | 1 +
- accel/tcg/tcg-accel-ops-mttcg.c | 7 +++++++
- accel/tcg/tcg-accel-ops-rr.c    | 9 +++++++--
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ gdbstub/system.c | 4 ----
+ gdbstub/user.c   | 3 ---
+ 2 files changed, 7 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 9b658a3f48..ce9f116ac3 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -20,6 +20,7 @@
- #define EXCP_HALTED     0x10003 /* cpu is halted (waiting for external event) */
- #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
- #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
-+#define EXCP_TB_FLUSH   0x10006 /* stop-the-world and flush all tb */
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 5be0d3c58c..df3514dc74 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -18,7 +18,6 @@
+ #include "gdbstub/syscalls.h"
+ #include "gdbstub/commands.h"
+ #include "exec/hwaddr.h"
+-#include "exec/tb-flush.h"
+ #include "accel/accel-ops.h"
+ #include "accel/accel-cpu-ops.h"
+ #include "system/cpus.h"
+@@ -174,9 +173,6 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+         } else {
+             trace_gdbstub_hit_break();
+         }
+-        if (tcg_enabled()) {
+-            tb_flush(cpu);
+-        }
+         ret = GDB_SIGNAL_TRAP;
+         break;
+     case RUN_STATE_PAUSED:
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 67403e5a25..2e14ded3f0 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -15,7 +15,6 @@
+ #include "qemu/sockets.h"
+ #include "qapi/error.h"
+ #include "exec/hwaddr.h"
+-#include "exec/tb-flush.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/commands.h"
+ #include "gdbstub/syscalls.h"
+@@ -220,7 +219,6 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
  
- void cpu_exec_init_all(void);
- void cpu_exec_step_atomic(CPUState *cpu);
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 337b993d3d..f21c86dc84 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -27,6 +27,7 @@
- #include "system/tcg.h"
- #include "system/replay.h"
- #include "exec/icount.h"
-+#include "exec/tb-flush.h"
- #include "qemu/main-loop.h"
- #include "qemu/notify.h"
- #include "qemu/guest-random.h"
-@@ -107,6 +108,12 @@ static void *mttcg_cpu_thread_fn(void *arg)
-                 bql_unlock();
-                 cpu_exec_step_atomic(cpu);
-                 bql_lock();
-+                break;
-+            case EXCP_TB_FLUSH:
-+                start_exclusive();
-+                tb_flush__exclusive();
-+                end_exclusive();
-+                break;
-             default:
-                 /* Ignore everything else? */
-                 break;
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index 6eec5c9eee..d4bf092736 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -32,6 +32,7 @@
- #include "qemu/notify.h"
- #include "qemu/guest-random.h"
- #include "exec/cpu-common.h"
-+#include "exec/tb-flush.h"
- #include "tcg/startup.h"
- #include "tcg-accel-ops.h"
- #include "tcg-accel-ops-rr.h"
-@@ -264,14 +265,18 @@ static void *rr_cpu_thread_fn(void *arg)
-                 }
-                 bql_lock();
+     /* disable single step if it was enabled */
+     cpu_single_step(cpu, 0);
+-    tb_flush(cpu);
  
--                if (r == EXCP_DEBUG) {
-+                switch (r) {
-+                case EXCP_DEBUG:
-                     cpu_handle_guest_debug(cpu);
-                     break;
--                } else if (r == EXCP_ATOMIC) {
-+                case EXCP_ATOMIC:
-                     bql_unlock();
-                     cpu_exec_step_atomic(cpu);
-                     bql_lock();
-                     break;
-+                case EXCP_TB_FLUSH:
-+                    tb_flush__exclusive();
-+                    break;
-                 }
-             } else if (cpu->stop) {
-                 if (cpu->unplug) {
+     if (sig != 0) {
+         gdb_set_stop_cpu(cpu);
+@@ -539,7 +537,6 @@ static void disable_gdbstub(CPUState *thread_cpu)
+         /* no cpu_watchpoint_remove_all for user-mode */
+         cpu_single_step(cpu, 0);
+     }
+-    tb_flush(thread_cpu);
+ }
+ 
+ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
 -- 
 2.43.0
 
