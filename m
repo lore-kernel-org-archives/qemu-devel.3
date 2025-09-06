@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DCCCA0FED
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Sep 2025 23:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C5B6CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 01:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uufrC-0000tQ-1i; Fri, 05 Sep 2025 19:28:39 -0400
+	id 1uuhts-0006Vj-IW; Fri, 05 Sep 2025 21:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uufr8-0000sW-Qq
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 19:28:36 -0400
-Received: from mailgate01.uberspace.is ([95.143.172.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uufqx-0000GG-UJ
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 19:28:32 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 6DC5060B4B
- for <qemu-devel@nongnu.org>; Sat,  6 Sep 2025 01:28:03 +0200 (CEST)
-Received: (qmail 32358 invoked by uid 990); 5 Sep 2025 23:28:03 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 06 Sep 2025 01:28:02 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uuhtm-0006Uk-Om
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 21:39:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uuhtX-00076I-Df
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 21:39:23 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Cx6tGzkLtoGkwHAA--.15645S3;
+ Sat, 06 Sep 2025 09:38:59 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJCxXMGwkLtoyyuBAA--.27145S3;
+ Sat, 06 Sep 2025 09:38:58 +0800 (CST)
+Subject: Re: [PATCH v6 03/11] hw/loongarch: add misc register supoort avecintc
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250904121840.2023683-1-gaosong@loongson.cn>
+ <20250904121840.2023683-4-gaosong@loongson.cn>
+ <f84a1c1b-ddfe-bfe7-b40f-bbc10b5e6434@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <038b07e2-2d37-2980-af71-547612cfd692@loongson.cn>
+Date: Sat, 6 Sep 2025 09:42:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Date: Fri, 05 Sep 2025 23:28:01 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <3c8d0c3733edc984937ac33a417488f92dccb148@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v6 00/25] tcg-plugins: add hooks for discontinuities
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, "=?utf-8?B?QWxleCBCZW5uw6ll?="
- <alex.bennee@linaro.org>
-In-Reply-To: <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
-References: <cover.1757018626.git.neither@nut.email>
- <a1c2d356-e664-2632-002f-d0b9bea06e1e@eik.bme.hu>
- <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
- <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.000318) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.100318
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=3nY0oqHmg6ZXBcRdFkyWIcyEaIoaVe0F6FZFKuOU09E=;
- b=qOn7jsvI3yEZSX2AvKHK8NNEDf7lYwwS9KwoGdICCNpnChUKOSpX6z2NzmQunYy4DeXvYB90lA
- UnBn3WmIOXEdyHbrG4KZraRTEc92magDlNgUTBAgunF4owIrjCC182mgrr6KwKUsCSCLxc+/hym8
- 4YvSPvvP1u33smyjfs1otepG4S5Osj81QYY0JdLYL/neCLneiB3xeJnNvgKzX9MBPhQtXnLLJSVb
- sERRuDKwL+vWnGWf4i9jG0u7GM5o8rdGyiCFGueyW1WkMLsXnSp2Z9jjM5awQm3YdoVt6I4PnxGD
- ApgMjLefXdTcmkEI6BeelQSnB+HknnFvGfqlQn7hwI5FZDDroTQOZSFQ7hTKp8WGzzjNwraMT1qg
- IDEfs29bU8WY28LIry5JYGdLXPH2a6HrO3p30rvtBoYzmhZqajnd/PwJtQrlILj98RlwJ+cwAAC/
- pWQCDL9F8gPtHmc6Cm4dsIt40gKu8USMPy6FSb0tMp9h+Aunj34Au95PdcKuPclRi2vA+8HcTvyA
- rT246Vh2cXxP1jxtaH0HonlXn6hBcQdXfmcDC6x+IYJDShHfVZXM1+M1MBpCLan8ko9iUFeq8vPR
- n/4qanMGYvX3i0dhN5qVc0PaUofFhHzdmvof1xF7wr+codh0kEga60K78P85KD+rTPQax7m4TXkq
- U=
-Received-SPF: pass client-ip=95.143.172.20; envelope-from=neither@nut.email;
- helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <f84a1c1b-ddfe-bfe7-b40f-bbc10b5e6434@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxXMGwkLtoyyuBAA--.27145S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAr13uFW8Xr1xtry7XFyfXwc_yoW5XF18pr
+ 1kJryUGryUGr1kJr1UGr1UXryUJr1Dt3Wqqr1UJFyUJr4UJr1jvr1UXryqgryUAw48Jr1U
+ Jr1UJr17ZF1UXrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.794,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,67 +83,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-September 5, 2025 at 9:25 PM, "BALATON Zoltan" wrote:
-> On Fri, 5 Sep 2025, Julian Ganz wrote:
-> > September 5, 2025 at 1:38 PM, "BALATON Zoltan" wrote:
-> > > Have you done any testing on how much overhead this adds
-> > >  to interrupt heavy guest workloads? At least for PPC these are alr=
-eady
-> > >  much slower than real CPU so I'd like it to get faster not slower.
-> > >=20
->=20>  No, I have not made any performance measurements. However, given t=
-hat
-> >  for every single TB execution a similar hook is called already, the
-> >  impact related to other existing plugin infrastructure _should_ be
-> >  neglectible.
-> >=20
->=20>  That is, if your workload actually runs any code and is not consta=
-ntly
-> >  bombarded with interrupts that _do_ result in a trap (which _may_ ha=
-ppen
-> >  during some tests).
-> >=20
->=20>  So if you are performance sensitive enough to care, you will very =
-likely
-> >  want to disable plugins anyway.
-> >=20
->=20I can disable plugins and do that normally but that does not help tho=
-se who get QEMU from their distro (i.e. most users). If this infrastructu=
-re was disabled in default builds and needed an explicit option to enable=
- then those who need it could enable it and not imposed it on everyone el=
-se who just get a default build from a distro and never use plugins. Havi=
-ng an option which needs rebuild is like not having the option for most p=
-eople. I guess the question is which is the larger group? Those who just =
-run guests or those who use this instrumentation with plugins.
+在 2025/9/5 下午4:40, Bibo Mao 写道:
+>
+>
+> On 2025/9/4 下午8:18, Song Gao wrote:
+>> Add feature register and misc register for avecintc feature checking and
+>> setting
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 1a2aa92c25..124f96af03 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -560,6 +560,10 @@ static MemTxResult virt_iocsr_misc_write(void 
+>> *opaque, hwaddr addr,
+>>               return MEMTX_OK;
+>>           }
+>>   +        if (val & BIT(IOCSRM_AVEC_EN)) {
+>> +            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
+>> +        }
+>> +
+> how about adding virt_has_avecintc(lvms) here, such as
+>            if (virt_has_avecintc(lvms) && val & BIT(IOCSRM_AVEC_EN)) {
+>                lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
+>            }
+>
+Got it , I will correct it on v7.
 
-Hard to say.
+Thanks.
+Song Gao
+> Otherwise looks good to me.
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>
+>
+> Regards
+> Bibo Mao
+>
+>>           features = address_space_ldl(&lvms->as_iocsr,
+>>                                        EXTIOI_VIRT_BASE + 
+>> EXTIOI_VIRT_CONFIG,
+>>                                        attrs, NULL);
+>> @@ -595,6 +599,9 @@ static MemTxResult virt_iocsr_misc_read(void 
+>> *opaque, hwaddr addr,
+>>           break;
+>>       case FEATURE_REG:
+>>           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | 
+>> BIT(IOCSRF_CSRIPI);
+>> +        if (virt_has_avecintc(lvms)) {
+>> +            ret |= BIT(IOCSRF_AVEC);
+>> +        }
+>>           if (kvm_enabled()) {
+>>               ret |= BIT(IOCSRF_VM);
+>>           }
+>> @@ -624,6 +631,10 @@ static MemTxResult virt_iocsr_misc_read(void 
+>> *opaque, hwaddr addr,
+>>           if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+>>               ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+>>           }
+>> +        if (virt_has_avecintc(lvms) &&
+>> +            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
+>> +            ret |= BIT_ULL(IOCSRM_AVEC_EN);
+>> +        }
+>>           break;
+>>       default:
+>>           g_assert_not_reached();
+>>
 
-> The default may better be what the larger group needs. Even then distro=
-s may still change the default so it would be best if the overhead can be=
- minimised even if enabled. I think the log infrastructure does that, wou=
-ld a similar solution work here?
->=20
->=20For testing I've found that because embedded PPC CPUs have a software=
- controlled MMU (and in addition to that QEMU may flush TLB entries too o=
-ften) running something that does a lot of memory access like runnung the=
- STREAM benchmark on sam460ex is hit by this IIRC but anything else causi=
-ng a lot of interrupts like reading from emulated disk or sound is probab=
-ly affected as well. I've tried to optimise PPC exception handling a bit =
-before but whenever I optimise something it is later undone by other chan=
-ges not caring about performance.
-
-I could try running the benchmark on multiple versions:
-
-* qemu with plugins disabled,
-* with plugins enabled but without these patches and
-* with plugins enabled and with these patches.
-
-However, I'll likely only report back with results next week, though.
-Do you happen to have an image you can point me to? Either something
-that has the benchmark already or some unixoid running on the platform?
-I'm currently not motivated enough to cook up some bare-metal testbed
-for a platform I'm not familiar with.
-
-Regards,
-Julian
 
