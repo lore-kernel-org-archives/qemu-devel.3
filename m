@@ -4,64 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE30CA1002
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 03:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2BB7CA1012
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 03:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuk0y-000453-ML; Fri, 05 Sep 2025 23:55:01 -0400
+	id 1uuk1o-0004C9-UE; Fri, 05 Sep 2025 23:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuk0u-00044d-KV
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:54:58 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuk0k-0004Ko-Q2
- for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:54:55 -0400
-Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5863sDe4081769
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 12:54:15 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=k/LWNAQJEmyj9eb7zRTXTmjD82biz8dh1vsbAorJHvA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1757130857; v=1;
- b=P9Nd4uE01EjC6SG3dVpr6wgIFVefeX0EpY3KFADQfdxBzYiqqVH+jdtEMqTwCPDo
- R4+FFb2DGML6yHA1ZH9xhR1O6qJtWV/zXeBx5F23RcvhPnGJIhDHbILkioQJ3Tx9
- ohT0WHfZB94r73hMLSmCGnlYvH+w4HDHkE1BY26S57tbi2QJaoW/vnvwnnu55kkF
- 41XLFZc4O5bNxFZ56nJAWYk8v0DFTrKpFpkj9iuJI/C34DRah1AMLZqXRawRvxxs
- QtZI8NJg8ToIuUuM19eZRY28XSnedDS9KYFsgfEtrPlElunq4H5EjEmj/20hcJMJ
- dU4wAUc1vj9drgRXsSbtFA==
-Message-ID: <26c02124-eb57-4d50-bf8d-1fa809984adc@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 6 Sep 2025 05:54:11 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuk1m-0004Bu-KL
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:55:50 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uuk1g-0004by-Cl
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:55:49 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45dcfecdc0fso22044985e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Sep 2025 20:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757130939; x=1757735739; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cMNbQdyvig1pWMnqCdPug6JCakAUrMnQwJfoArd5FKs=;
+ b=iiE4oGchNqLt9megzPSDCyAMtDXUc8aPxLi1pKpzyqXA2GR8xVvBYPP7sTnMZaR6P2
+ NQe4DRqhsGK4DNq1zd0imOaR0AlQ1s0ZzqpswhBM0Lew6BDL+K9L2vQskzwfhz9HiSQQ
+ 7810Cz/ct7u+gkyhb24ZHKU/kiM+vgbmUnOOu0QJT5KrYTCYYQIN1UbaaTLonPSrng/d
+ h7BLs6AjxFzYPqaaObKlZ/RwXKqFjZAdWml4Gvq6Azy9E9R5RbMo7lM4+BLSQfCDylEF
+ yMzDh7zJWc84QCp+5Q0XsUzR34UUuVamVQHI43PEXf8HnGmIKVUMCDLkMnqskU5yI2vl
+ nXiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757130939; x=1757735739;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cMNbQdyvig1pWMnqCdPug6JCakAUrMnQwJfoArd5FKs=;
+ b=sVYIFDJMPwBg3E/QDXv+POk2+3nrgYB22P87MSkgoIEKl8dnqmV6M0BuOj/tCdkQZ/
+ lAzFfjsI5xnP8JNkayr2FZAFPRzz2ukTVJPohigL8S2BQ0QFmm/WKNzU//ZnjOtEB7sD
+ fKt7to3yWo5VQDWLMZ1vHvx9tOP8ylNov7qYj7XwRqQ1UWPBaAQ9s+J+DAQwjxjs6nEv
+ Nq6FXkRcJGgGgC5BUQDtB7BIbDJWRw6wtqGautZgxTTcf86jR3a/tOqmOEpdQJ2N1gIS
+ rQOeqCQ1spniLSoVOji4HqQnpoyoobSMNiOvg/R5qhLki/wAHp9Av9VAiblJ4+cdPJgS
+ we/w==
+X-Gm-Message-State: AOJu0Yz1OBmymHIL19gTgBp4r8nLqAsOC0CfwDA7E47fPwFRD/+WguSA
+ MKeqq2RmN5gbNFLjTQs3kxmOXGeOosHJ1YSABDi6KVpMVrTWODguprH/A4A1MTc0RGFT9GqVtp2
+ vjSssgSM=
+X-Gm-Gg: ASbGncuCZM1SuVP3n//aeAqGHv9AflVfjHJ1gm64CND6O0axyUWk7LbwHKr3mGRCNz+
+ FZnjSx8lS+6xvLphyua5iWGVft9MiixlckZP9sdO4vAeRuZtudzMPD1uodyg+RI8biOPG5HKBmG
+ 5mtU6ib96fCnto3+TTdQBzPhijLGRn8uvdjCDM+mjtl7+qlzEDDAx2rt2MffBjuT7sXBkQFCpQE
+ FHQM9AhJG/EN8CXameMMfgiFmMJl97WmBei3ZJqRHZqOWgFPrzcvj4LcgbcnzvPH90i50dyFFT2
+ 2AGaGw3z8l4zLUqqheS+TU+SdhaWvJeoukkHfzKDvQGURoS/lwm/8FxMMhYg4Av242wvyx5pVCT
+ R0QPoOJKvsutqRvCF5S1oznvd7+3wSLzvVhEISz57FDSrTHea6iwDyRPIA4dEaL2gbt1wbUv2GI
+ 3uzvfRoA==
+X-Google-Smtp-Source: AGHT+IGpavGZckllj9nEoYODG/4YvTbSfcbnrKjNEdlx8DojVrkeXy3h2hk2KCk92n4n7U7EhVt/VQ==
+X-Received: by 2002:a05:600c:3b8b:b0:458:a7b5:9f6c with SMTP id
+ 5b1f17b1804b1-45dddec2e09mr7413825e9.11.1757130938980; 
+ Fri, 05 Sep 2025 20:55:38 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b98e77231sm178086815e9.12.2025.09.05.20.55.38
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Sep 2025 20:55:38 -0700 (PDT)
+Message-ID: <1237bdeb-c98b-4ec6-8926-85c71f7331f5@linaro.org>
+Date: Sat, 6 Sep 2025 05:55:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
- resources
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
- <20250903054438.1179384-5-vivek.kasireddy@intel.com>
+Subject: Re: [PATCH v2] 9pfs: Stop including gstrfuncs.h
+To: qemu-devel@nongnu.org
+References: <20250905-9p-v2-1-2ad31999684d@google.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250903054438.1179384-5-vivek.kasireddy@intel.com>
+In-Reply-To: <20250905-9p-v2-1-2ad31999684d@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,116 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/03 7:42, Vivek Kasireddy wrote:
-> The res->blob pointer is only valid for blobs that have their
-> backing storage in memfd. Therefore, we cannot use it to determine
-> if a resource is a blob or not. Instead, we could use res->blob_size
-> to make this determination as it is non-zero for blob resources
-> regardless of where their backing storage is located.
-
-I guess this change needs to be applied before "[RFC 3/6] 
-virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO 
-devices"; without this patch, the "create dmabuf" patch will probably 
-create an invalid blob.
-
+On 9/5/25 17:17, Peter Foley wrote:
+> gstrfuncs.h is not intended to be included directly.
+> In fact this only works because glib.h is already included by osdep.h.
+> Just remove the include.
 > 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Peter Foley <pefoley@google.com>
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
+
 > ---
->   hw/display/virtio-gpu.c | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+> Changes in v2:
+> - Just remove the include entirely in favor of osdep.h
+> - Link to v1: https://lore.kernel.org/qemu-devel/20250904-9p-v1-1-e634cb374c80@google.com
+> ---
+>   hw/9pfs/9p-util-generic.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 0a1a625b0e..2f9133c3b6 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
->       }
+> diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
+> index 4c1e9c887d00c44bc073bec00c07ed09d3868bf5..b71fa2cb3785349c6b4d2b9591f5ea4f917844d0 100644
+> --- a/hw/9pfs/9p-util-generic.c
+> +++ b/hw/9pfs/9p-util-generic.c
+> @@ -2,7 +2,6 @@
 >   
->       if (res->blob_size) {
-> -        if (res->blob_size < (s->current_cursor->width *
-> +        if (!res->blob || res->blob_size < (s->current_cursor->width *
-
-I doubt that rejecting a valid blob due to an implementation concern 
-(whether the backing storage is in memfd) is tolerated in the specification.
-
->                                 s->current_cursor->height * 4)) {
->               return;
->           }
-> @@ -144,7 +144,7 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
->       }
+>   #include "qemu/osdep.h"
+>   #include "9p-util.h"
+> -#include <glib/gstrfuncs.h>
 >   
->       if (require_backing) {
-> -        if (!res->iov || (!res->image && !res->blob)) {
-> +        if (!res->iov || (!res->image && !res->blob_size)) {
->               qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage %d\n",
->                             caller, resource_id);
->               if (error) {
-> @@ -444,7 +444,7 @@ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
->   
->       res = virtio_gpu_find_check_resource(g, t2d.resource_id, true,
->                                            __func__, &cmd->error);
-> -    if (!res || res->blob) {
-> +    if (!res || res->blob_size) {
->           return;
->       }
->   
-> @@ -507,7 +507,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
->           return;
->       }
->   
-> -    if (res->blob) {
-> +    if (res->blob_size) {
->           for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
->               scanout = &g->parent_obj.scanout[i];
->               if (scanout->resource_id == res->resource_id &&
-> @@ -538,7 +538,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
->           }
->       }
->   
-> -    if (!res->blob &&
-> +    if (!res->blob_size &&
->           (rf.r.x > res->width ||
->           rf.r.y > res->height ||
->           rf.r.width > res->width ||
-> @@ -634,7 +634,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->   
->       g->parent_obj.enable = 1;
->   
-> -    if (res->blob) {
-> +    if (res->blob_size) {
->           if (console_has_gl(scanout->con)) {
->               if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
->                   virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-> @@ -645,13 +645,16 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->               return true;
->           }
->   
-> +        if (!res->blob) {
-> +            return false;
-> +        }
->           data = res->blob;
->       } else {
->           data = (uint8_t *)pixman_image_get_data(res->image);
->       }
->   
->       /* create a surface for this scanout */
-> -    if ((res->blob && !console_has_gl(scanout->con)) ||
-> +    if ((res->blob_size && !console_has_gl(scanout->con)) ||
->           !scanout->ds ||
->           surface_data(scanout->ds) != data + fb->offset ||
->           scanout->width != r->width ||
-> @@ -899,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
->       g_free(res->addrs);
->       res->addrs = NULL;
->   
-> -    if (res->blob) {
-> +    if (res->blob_size) {
->           virtio_gpu_fini_udmabuf(res);
->       }
->   }
+>   char *qemu_open_flags_tostr(int flags)
+>   {
+> 
+> ---
+> base-commit: baa79455fa92984ff0f4b9ae94bed66823177a27
+> change-id: 20250904-9p-11c0405ae7c5
+> 
+> Best regards,
 
 
