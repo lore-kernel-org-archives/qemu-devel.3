@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D64CA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BACFCA1016
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiZv-0006mW-IX; Fri, 05 Sep 2025 22:22:59 -0400
+	id 1uuirX-0001VP-Mj; Fri, 05 Sep 2025 22:41:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiZt-0006jy-Fv; Fri, 05 Sep 2025 22:22:57 -0400
+ id 1uuirT-0001Sw-HE; Fri, 05 Sep 2025 22:41:07 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiZf-0000N4-7B; Fri, 05 Sep 2025 22:22:56 -0400
+ id 1uuirE-0005hJ-0z; Fri, 05 Sep 2025 22:41:07 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btno041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862dKwa051529
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:16:02 +0900 (JST)
+ Sat, 6 Sep 2025 11:39:37 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=XLOh5bKdwPf/hM03cxDhD82xMWslxlka8JwWwK6/WQo=; 
+DKIM-Signature: a=rsa-sha256; bh=0Wmecb1gZcgzIN0AvJLb87Mi6Fw68Dtp7HJg/gw6MA8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124973; v=1;
- b=wWdrdFC6ii7rM83GuNMZL9HjwJwbZY+dMMVO2CaVBqFt/r10XsscTTdUQHiEyx81
- kAHM6G8XJXriQGKQxn7ZIW1EjdkusrznjgnMsydO196i2Anw85gFaZALai5U13ot
- lyrD/871G6yFdLLjRzbuNvbbQ5lbRo4ecR37GuYvaY9eUdlHvzH5qGwHFb02SHVG
- DGi+nRCI+N1qTqzpgbVkcj88o3c+/D/qO+DEYB5ok8V4fkPvtp7pEbo3ICANJUFY
- Ra1upp3np9pTXS4akT5W4xFuuPqcDcxjYaOoqQbp0jwdIxnOaysZNFzjSbYVNl0t
- IGSq4E6smU3VA34qGmj1Qg==
+ s=rs20250326; t=1757126387; v=1;
+ b=etjyPR3my23ArPJxSoWy39JBX4jZVpZJUtMMBy8EjJ6GQioXfkvarpAoPRvQGdnX
+ 8Ei/TWA/xCh3NdIN5ih+dBjJPIM3qpoK2udM+qhMMCAeKeYhcioJB1Yke1yVZEDS
+ eulwEDKtTnj5RxHV/6mG/FLC5HeOPLAOcji6SuKhHvJ6uv1VGz/zPewDXA59DytL
+ wVoLEfwe/gU7vSVNbp/M/kp2v1mTJzNbeOj08CqDfpvTKHgXdJTqBb+B/OenjNx0
+ kQeebQZ4GHmkvkkMD52Od58z34PNG2B6D8EADn8lGd7GcKf76XcCtehWpAYqAo3i
+ RYJj0GS15GU1gdBDFAATVg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:28 +0200
-Subject: [PATCH 19/22] pci: Do not delete the subregions
+Date: Sat, 06 Sep 2025 04:39:04 +0200
+Subject: [PATCH v2 1/3] qom: Do not finalize twice
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-19-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-mr-v2-1-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
+References: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -72,13 +72,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.14.2
+X-Mailer: b4 0.15-dev-179e8
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -87,7 +83,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,55 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+The next change adds code to retain references from an object to the
+parent when it is being unparented to ensure that the parent outlive
+them. This change handles the following scenario with the code:
+
+1. The parent starts being finalized without unparenting.
+2. Unparenting happens during finalization.
+3. The child retains the reference to the parent.
+4. The child gets finalized, and releases the reference.
+
+In this scenario, the reference counter of the parent reaches to zero,
+gets incremented, and gets decremented to reach to zero again. This
+change ensures that finalization will be triggered again in the
+scenario.
+
+Note that the reference counter needs to reach to zero again before
+finalization ends; otherwise the object will be "resurrected", which
+is not clearly defined and prohibited with an existing assertion.
+
+One thing that looks concerning with this change is that it adds a bool
+to Object. This is not a problem in the most situations where the host
+uses 64-bit addressing because the member is added to a gap needed for
+alignment, and possible double-free scenarios handled with this change
+are more serious than the extra memory usage for 32-bit hosts.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/pci/pci.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ include/qom/object.h | 1 +
+ qom/object.c         | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 516029f66cda6705bded15322cb6f7eb3d42f82c..2b408c7ec336df08086f1be9a5bd2555e2e906b7 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1188,10 +1188,6 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
-     if (xen_mode == XEN_EMULATE) {
-         xen_evtchn_remove_pci_device(pci_dev);
-     }
--    if (memory_region_is_mapped(&pci_dev->bus_master_enable_region)) {
--        memory_region_del_subregion(&pci_dev->bus_master_container_region,
--                                    &pci_dev->bus_master_enable_region);
--    }
-     address_space_destroy(&pci_dev->bus_master_as);
- }
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 26df6137b911..7f7b1ffea8fe 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -158,6 +158,7 @@ struct Object
+     ObjectFree *free;
+     GHashTable *properties;
+     uint32_t ref;
++    bool finalizing;
+     Object *parent;
+ };
  
-@@ -1417,27 +1413,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-     return pci_dev;
- }
+diff --git a/qom/object.c b/qom/object.c
+index 1856bb36c74c..b766b2e9baa7 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -725,6 +725,11 @@ static void object_finalize(void *data)
+     Object *obj = data;
+     TypeImpl *ti = obj->class->type;
  
--static void pci_unregister_io_regions(PCIDevice *pci_dev)
--{
--    PCIIORegion *r;
--    int i;
--
--    for(i = 0; i < PCI_NUM_REGIONS; i++) {
--        r = &pci_dev->io_regions[i];
--        if (!r->size || r->addr == PCI_BAR_UNMAPPED)
--            continue;
--        memory_region_del_subregion(r->address_space, r->memory);
--    }
--
--    pci_unregister_vga(pci_dev);
--}
--
- static void pci_qdev_unrealize(DeviceState *dev)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(dev);
-     PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
- 
--    pci_unregister_io_regions(pci_dev);
-     pci_del_option_rom(pci_dev);
-     pcie_sriov_unregister_device(pci_dev);
++    if (obj->finalizing) {
++        return;
++    }
++
++    obj->finalizing = true;
+     object_property_del_all(obj);
+     object_deinit(obj, ti);
  
 
 -- 
