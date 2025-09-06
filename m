@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA07BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69981CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv03Z-0003ot-Vs; Sat, 06 Sep 2025 17:02:46 -0400
+	id 1uv03N-0003mt-U8; Sat, 06 Sep 2025 17:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv03X-0003oD-6N; Sat, 06 Sep 2025 17:02:43 -0400
+ id 1uv03J-0003m6-Q7; Sat, 06 Sep 2025 17:02:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv03N-00062E-8G; Sat, 06 Sep 2025 17:02:40 -0400
+ id 1uv03G-00061g-4t; Sat, 06 Sep 2025 17:02:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 83A28150F87;
+ by isrv.corpit.ru (Postfix) with ESMTP id 73B1E150F86;
  Sun, 07 Sep 2025 00:00:55 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 46E2B278692;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36CC0278691;
  Sun,  7 Sep 2025 00:00:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 28/34] linux-user/mips: Use P5600 as default CPU to
- run NaN2008 ELF binaries
-Date: Sun,  7 Sep 2025 00:00:48 +0300
-Message-ID: <20250906210056.127031-10-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 27/34] e1000e: Prevent crash from legacy interrupt
+ firing after MSI-X enable
+Date: Sun,  7 Sep 2025 00:00:47 +0300
+Message-ID: <20250906210056.127031-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
@@ -64,48 +64,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Per the release 6.06 revision history:
+A race condition between guest driver actions and QEMU timers can lead
+to an assertion failure when the guest switches the e1000e from legacy
+interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+RDTR) is active, but the guest enables MSI-X before the timer fires,
+the pending interrupt cause can trigger an assert in
+e1000e_intmgr_collect_delayed_causes().
 
- 5.03 August 21, 2013
+This patch removes the assertion and executes the code that clears the
+pending legacy causes. This change is safe and introduces no unintended
+behavioral side effects, as it only alters a state that previously led
+to termination.
 
- • ABS2008 and NAN2008 fields of Table 5.7 “FCSR RegisterField
-   Descriptions” were optional in release 3 and could be R/W,
-   but as of release 5 are required, read-only, and preset by
-   hardware.
+- when core->delayed_causes == 0 the function was already a no-op and
+  remains so.
 
-The P5600 core implements the release 5, and has the ABS2008
-and NAN2008 bits set in CP1_fcr31. Therefore it is able to run
-ELF binaries compiled with EF_MIPS_NAN2008, such the CIP United
-Debian NaN2008 distribution:
-http://repo.oss.cipunited.com/mipsel-nan2008/README.txt
+- when core->delayed_causes != 0 the function would previously
+  crash due to the assertion failure. The patch now defines a safe
+  outcome by clearing the cause and returning. Since behavior after
+  the assertion never existed, this simply corrects the crash.
 
-In order to run such compiled binaries, select by default the
-P5600 core when the ELF 'MIPS_NAN2008' flag is set.
-
-Reported-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20250807110806.409065-1-lvivier@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Laurent Vivier <laurent@vivier.eu>
-Message-Id: <20230327162444.388-1-philmd@linaro.org>
-(cherry picked from commit 450cb7ec2c5fda51b9650ca25e59ac9deeb60d1b)
+(cherry picked from commit 8e4649cac9bcddc050d2df07908075e9e69bccc7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index a98c9bd6ad..b965e86b2b 100644
---- a/linux-user/mips/target_elf.h
-+++ b/linux-user/mips/target_elf.h
-@@ -15,6 +15,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_MACH) == EF_MIPS_MACH_5900) {
-         return "R5900";
-     }
-+    if (eflags & EF_MIPS_NAN2008) {
-+        return "P5600";
-+    }
-     return "24Kf";
- }
- #endif
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 742f5ec800..5def4cfc1c 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -336,11 +336,6 @@ e1000e_intmgr_collect_delayed_causes(E1000ECore *core)
+ {
+     uint32_t res;
+ 
+-    if (msix_enabled(core->owner)) {
+-        assert(core->delayed_causes == 0);
+-        return 0;
+-    }
+-
+     res = core->delayed_causes;
+     core->delayed_causes = 0;
+ 
 -- 
 2.47.3
 
