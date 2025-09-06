@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84497CA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFCECA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiTQ-0004nj-UQ; Fri, 05 Sep 2025 22:16:19 -0400
+	id 1uuiS3-00045B-RZ; Fri, 05 Sep 2025 22:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiTD-0004gm-PF; Fri, 05 Sep 2025 22:16:04 -0400
+ id 1uuiRp-0003za-3n; Fri, 05 Sep 2025 22:14:37 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiT2-0007Es-Tf; Fri, 05 Sep 2025 22:16:02 -0400
+ id 1uuiRQ-0006St-Le; Fri, 05 Sep 2025 22:14:34 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btni041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862BtnZ041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:14:47 +0900 (JST)
+ Sat, 6 Sep 2025 11:12:55 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=yVddGPFKHGH7ywDN+5LX7u8IS3es11FFm1EZQqc1z24=; 
+DKIM-Signature: a=rsa-sha256; bh=/uPgwcc3IWq7aKQRv1rX6E+OqnUwtEP9BCpfmuk3Vig=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124898; v=1;
- b=H8HkDND2ESMbtvU6rJuUxKIIt9vdJ2P/rnymFHUM62yPF1Vy+KztifEiGgL3DVuy
- q1GZA5HYJyDsA94OujFDK2RBVXAFrSjWKCxjaNlHW0koxJ75P2CIFE+dVhH2NWLB
- 1BfXhVxvCdZSWUbqIPLfKcJOFlTZjlny771UyTjQnge6QaYDgnnWS8dYAnBDjCdh
- j6kUTAuwAH3QHa8wxHRatXpbtPFIuF+AV7xzzHiryFzS3r+sefmrteCdKsLl0DYg
- MG7MWXliWV/i+lXTvvcyZ+rz4b7uKYpO07fd4Weppc1wGooqpWNg+zqwEfHSkIJK
- FEJ1XcW4qp7N9qfHKXifaA==
+ s=rs20250326; t=1757124787; v=1;
+ b=dQKGD+G85Gety2SkYn0HeaNZABHMSfa57XczRQ4L6Kl2fiGsdrddphwf1Lw46KcL
+ T5duX2QxlOmxT8ZXEN+tt+3J/+VodoeLSYYZ3fOasnuF95TH+8Sz6q0AGlWeSSTE
+ rPHEZr6FYcC2D9G1iOzAUk3tbDGuKX2Y66iBLLku7Ro70juTPDcXvfuJXbaSjmQ/
+ YvksUuvFdM9yRQBlRMOD1CtfEMAxepDSh5KT4TZMCpT9khJy475XDxL1GHrrwa7g
+ BNP7NQGaTDFdw8HENfByts5IWB16JW/t9yWgHmE4/lmrddfRCVFMNBfV9t5MgJxv
+ QliZQS29gQVsgFEjjm5y0w==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:22 +0200
-Subject: [PATCH 13/22] hw/char/serial-pci-multi: Do not delete the
- subregion
+Date: Sat, 06 Sep 2025 04:11:13 +0200
+Subject: [PATCH 04/22] target/mips: Fix AddressSpace exposure timing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-13-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-4-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -88,7 +87,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,24 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+mips-cpu is not hotpluggable but its instance can still be created and
+finalized when processing the device-list-properties QMP command.
+Exposing such a temporary instance to AddressSpace should be
+avoided because it leaks the instance.
+
+Expose instances to the AddressSpace at their realization time so that
+it won't happen for the temporary instances.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/char/serial-pci-multi.c | 1 -
- 1 file changed, 1 deletion(-)
+ target/mips/cpu.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index 13df272691a64f14ca3597174815653a01fbd381..3132ca90cebfe411cd3333b62ed75dd01f501067 100644
---- a/hw/char/serial-pci-multi.c
-+++ b/hw/char/serial-pci-multi.c
-@@ -57,7 +57,6 @@ static void multi_serial_pci_exit(PCIDevice *dev)
-     for (i = 0; i < pci->ports; i++) {
-         s = pci->state + i;
-         qdev_unrealize(DEVICE(s));
--        memory_region_del_subregion(&pci->iobar, &s->io);
-         g_free(pci->name[i]);
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 1f6c41fd3401e88637c2c0d8fe3fcf4a38370288..e166b570984a40fba2ef417799a267eac9bff7d3 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -457,6 +457,13 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
+     MIPSCPUClass *mcc = MIPS_CPU_GET_CLASS(dev);
+     Error *local_err = NULL;
+ 
++#ifndef CONFIG_USER_ONLY
++    if (mcc->cpu_def->lcsr_cpucfg2 & (1 << CPUCFG2_LCSRP)) {
++        address_space_init(&env->iocsr.as,
++                            &env->iocsr.mr, "IOCSR");
++    }
++#endif
++
+     if (!clock_get(cpu->clock)) {
+ #ifndef CONFIG_USER_ONLY
+         if (!qtest_enabled()) {
+@@ -505,8 +512,6 @@ static void mips_cpu_initfn(Object *obj)
+     if (mcc->cpu_def->lcsr_cpucfg2 & (1 << CPUCFG2_LCSRP)) {
+         memory_region_init_io(&env->iocsr.mr, OBJECT(cpu), NULL,
+                                 env, "iocsr", UINT64_MAX);
+-        address_space_init(&env->iocsr.as,
+-                            &env->iocsr.mr, "IOCSR");
      }
+ #endif
  }
 
 -- 
