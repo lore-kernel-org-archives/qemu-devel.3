@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4BACA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4B7CA101F
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiZG-0005za-QR; Fri, 05 Sep 2025 22:22:18 -0400
+	id 1uuiTo-0005bF-DE; Fri, 05 Sep 2025 22:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiZC-0005rv-Dg; Fri, 05 Sep 2025 22:22:14 -0400
+ id 1uuiTh-0005LV-Ks; Fri, 05 Sep 2025 22:16:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiYv-0000KS-KW; Fri, 05 Sep 2025 22:22:11 -0400
+ id 1uuiTT-0007SE-5c; Fri, 05 Sep 2025 22:16:31 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnn041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnj041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:15:49 +0900 (JST)
+ Sat, 6 Sep 2025 11:14:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=A2GlR2TJmK/k+sr8q7+ruESRjTfRwEx+idAZUzdfRKY=; 
+DKIM-Signature: a=rsa-sha256; bh=kn8Bqoxi+tjKwwRXg2cZTs8dYOv2Ly9ES2G+ar9juS0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124961; v=1;
- b=gQKGhaqM8Sqqe4hAJLZMUDcHa9pb5UIADjzTtI8YoxiPLRC8PE8/Pwt+bX0SYC5b
- NhoX+2gYZfdSx49NeaAIy3wRkoXfxnrVrrV7x9yUn9HEn59Flx8cw3mVzYBxrQ4m
- +7XdyRHgfbD660pTtzhwpt3uxLoO8eHhLwW8cY7b4FT9LUJAr4RnW1qCRqe0e5OX
- kpvAFSbTXI0Wv1HFvq7DbLIqG1V0u5hsB+JK4E2gaCkvplBMicCSG+MxvQ89hso9
- 74G3EqtN7MrccHE9V/uRv7s1ygYKzxcd6tDEEUxBIv7VZfZBi0Fl+nQq7wj/T6cV
- i9RUb03uyHO8MqTfuDK+8A==
+ s=rs20250326; t=1757124911; v=1;
+ b=HQjxGqD12yYJnl2RNyQVgOtvRMBViN66R2En+XHIxXv6NqZg0zUl/uoMYoTxaaJl
+ nqLni1wd2RUF5KDR3YFn4h6ExtN5G7S21ap058gwjW6L6BtLqbKSQhNi3OLFQaRg
+ bc2Tzed4dUrx2I9axF5ImF/n4Zus7Tp1d1mqGzNXAsgJxu2Tl3HgcnRdEZ3f96d3
+ B7p6RBOtZLUbujouL5l8wr9hmcmTJF8+iddjOKx9gV/JL2KFpIeld56bskrXEQS9
+ c7RdlY10sXOSXU/yYtaOoMBIq4Ljvwhk9HYNC1J+067la24+aRPLLMryDMd2cdYI
+ KqwS/Q1ydQkR+cuAw+hQVA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:27 +0200
-Subject: [PATCH 18/22] hw/nvme: Do not delete the subregion
+Date: Sat, 06 Sep 2025 04:11:23 +0200
+Subject: [PATCH 14/22] secondary-vga: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-18-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-14-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -87,7 +87,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,22 +107,28 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/nvme/ctrl.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/display/vga-pci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f5ee6bf260f159249204571a366472f3e0d16dea..eebce1f787f464978f535356533294c5a0c7bea8 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9058,8 +9058,6 @@ static void nvme_exit(PCIDevice *pci_dev)
-     } else {
-         msix_uninit(pci_dev, &n->bar0, &n->bar0);
-     }
--
--    memory_region_del_subregion(&n->bar0, &n->iomem);
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index b81f7fd2d0fd11913e6b132897028ca490e74b95..90b4545d382135b109e3bbc880bb8fe1a4fc5275 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -307,14 +307,6 @@ static void pci_secondary_vga_exit(PCIDevice *dev)
+     VGACommonState *s = &d->vga;
+ 
+     graphic_console_close(s->con);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[0]);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[1]);
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[2]);
+-    }
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_EDID)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[3]);
+-    }
  }
  
- static const Property nvme_props[] = {
+ static void pci_secondary_vga_init(Object *obj)
 
 -- 
 2.51.0
