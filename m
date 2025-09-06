@@ -4,76 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D4FCA1013
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 03:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6C2CA1002
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 03:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uujWu-0008Jj-JU; Fri, 05 Sep 2025 23:23:56 -0400
+	id 1uujrd-0000dT-18; Fri, 05 Sep 2025 23:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uujWd-00089J-5d; Fri, 05 Sep 2025 23:23:41 -0400
+ id 1uujra-0000ci-0r
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:45:18 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uujWP-0005rq-Qy; Fri, 05 Sep 2025 23:23:35 -0400
+ id 1uujrN-00026g-NE
+ for qemu-devel@nongnu.org; Fri, 05 Sep 2025 23:45:17 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5863MW9H068354
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5863icmY078629
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 12:22:35 +0900 (JST)
+ Sat, 6 Sep 2025 12:44:40 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=XS469z0Ht9Df9W1ut/pYAjS81NRiUAr/l0269Wbvq2U=; 
+DKIM-Signature: a=rsa-sha256; bh=vuhuUShb+yatkUlypys7SXtm9589K6E0v2oYxvSdaN4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1757128963; v=1;
- b=vOsFYEeHUXYPUGsfbqxW+FMco27wa2six3TWy9bnuEolUEA2hpb8RX2aUO4+/aYl
- OE7DJVPOvvioOCptCn2cnL4aZXJk3K328uMb6XFvVhzasCVOVEM/S6WZJzQDW6Io
- w5dZCcPCiibnFJIsffO2Cw0NXOIi9q8ctS3EP2sAnhMix4tUqmq89n33gEQkQexY
- cpvdxTwdXHm2aB4dtSb8/XdrhPwi5TkNJbNIqxvfsp1wnCDXD8/v1AAISggwMi1n
- HC2wt5+R0FscehBDSwOCEuoyQHw13DcnFonohJAgdYCXcGtjDzRMisjVR4d4s2aA
- KIGMe9GoteKkVZBBLA8XSA==
-Message-ID: <201bb795-57af-4614-8ef1-e5218108c13f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 6 Sep 2025 05:22:31 +0200
+ s=rs20250326; t=1757130282; v=1;
+ b=jFi1Ot8HChoaf7kjkdErORbzyNGqad56R2jeSCDpPIS7iR1Uxj1fow2EIFnqKmqA
+ vVKCm2xsl+uqC+gFbh+on+4rZ1QCa5yOW8WXgid7EDwM01qachg8Vivj9LLjIO8t
+ DNoMWQAztDRGqYncr1xt9F9aTgrPNXY9c7MN+IzUhfh4CKwvnyQZBfjT64R+lERd
+ JXGRR1+ZCOS2wKcAl8CAkEZfkM0trIf/6jaTHXEz3RUlXnGgsTB7G8HJjt36GWKV
+ 5FcUQOPBb+zTRNA6nLRJxmL/PIHEFrkeiUmeS1nzg2FqNtXs+qY001oR6OlsqyS2
+ lY+GP3uZrD9whfJCgrh+Tw==
+Message-ID: <684609f1-bc19-4c28-8ae1-802fc9a1ad6f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 6 Sep 2025 05:44:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 07/27] migration: push Error **errp into
- qemu_loadvm_state()
-To: armenon@redhat.com
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
- <20250830-propagate_tpm_error-v13-7-a4e777b7eb2c@redhat.com>
- <078e2ef1-fbfa-450a-a2ab-d1e77cc8e850@rsg.ci.i.u-tokyo.ac.jp>
- <aLRt_G-pOH1rwJbb@armenon-kvm.bengluru.csb>
- <017c40a6-3347-43e7-b7b7-9e2e2130d19e@rsg.ci.i.u-tokyo.ac.jp>
- <aLR6mKJyVPZ4bqnZ@armenon-kvm.bengluru.csb>
- <6bee20a5-6f12-4b12-aab3-1a2019418611@rsg.ci.i.u-tokyo.ac.jp>
- <aLfklAy0qqetX8_K@armenon-kvm.bengluru.csb>
+Subject: Re: [RFC 3/6] virtio-gpu-udmabuf: Create dmabuf for blobs associated
+ with VFIO devices
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+ <20250903054438.1179384-4-vivek.kasireddy@intel.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aLfklAy0qqetX8_K@armenon-kvm.bengluru.csb>
+In-Reply-To: <20250903054438.1179384-4-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -100,186 +77,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/03 8:47, Arun Menon wrote:
-> Hi Akihiko,
+On 2025/09/03 7:42, Vivek Kasireddy wrote:
+> In addition to memfd, a blob resource can also have its backing
+> storage in a VFIO device region. Therefore, we first need to figure
+> out if the blob is backed by a VFIO device region or a memfd before
+> we can call the right API to get a dmabuf fd created.
 > 
-> It took some time to set up the machines; apologies for the delay in response.
+> So, once we have the ramblock and the associated mr, we rely on
+> memory_region_is_ram_device() to tell us where the backing storage
+> is located. If the blob resource is VFIO backed, we try to find the
+> right VFIO device that contains the blob and then invoke the API
+> vfio_create_dmabuf().
 > 
-> On Mon, Sep 01, 2025 at 02:12:54AM +0900, Akihiko Odaki wrote:
->> On 2025/09/01 1:38, Arun Menon wrote:
->>> Hi,
->>>
->>> On Mon, Sep 01, 2025 at 01:04:40AM +0900, Akihiko Odaki wrote:
->>>> On 2025/09/01 0:45, Arun Menon wrote:
->>>>> Hi Akihiko,
->>>>> Thanks for the review.
->>>>>
->>>>> On Sat, Aug 30, 2025 at 02:58:05PM +0900, Akihiko Odaki wrote:
->>>>>> On 2025/08/30 5:01, Arun Menon wrote:
->>>>>>> This is an incremental step in converting vmstate loading
->>>>>>> code to report error via Error objects instead of directly
->>>>>>> printing it to console/monitor.
->>>>>>> It is ensured that qemu_loadvm_state() must report an error
->>>>>>> in errp, in case of failure.
->>>>>>>
->>>>>>> When postcopy live migration runs, the device states are loaded by
->>>>>>> both the qemu coroutine process_incoming_migration_co() and the
->>>>>>> postcopy_ram_listen_thread(). Therefore, it is important that the
->>>>>>> coroutine also reports the error in case of failure, with
->>>>>>> error_report_err(). Otherwise, the source qemu will not display
->>>>>>> any errors before going into the postcopy pause state.
->>>>>>>
->>>>>>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->>>>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
->>>>>>> ---
->>>>>>>      migration/migration.c |  9 +++++----
->>>>>>>      migration/savevm.c    | 30 ++++++++++++++++++------------
->>>>>>>      migration/savevm.h    |  2 +-
->>>>>>>      3 files changed, 24 insertions(+), 17 deletions(-)
->>>>>>>
->>>>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>>>> index 10c216d25dec01f206eacad2edd24d21f00e614c..c6768d88f45c870c7fad9b9957300766ff69effc 100644
->>>>>>> --- a/migration/migration.c
->>>>>>> +++ b/migration/migration.c
->>>>>>> @@ -881,7 +881,7 @@ process_incoming_migration_co(void *opaque)
->>>>>>>                            MIGRATION_STATUS_ACTIVE);
->>>>>>>          mis->loadvm_co = qemu_coroutine_self();
->>>>>>> -    ret = qemu_loadvm_state(mis->from_src_file);
->>>>>>> +    ret = qemu_loadvm_state(mis->from_src_file, &local_err);
->>>>>>>          mis->loadvm_co = NULL;
->>>>>>>          trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
->>>>>>> @@ -908,7 +908,8 @@ process_incoming_migration_co(void *opaque)
->>>>>>>          }
->>>>>>>          if (ret < 0) {
->>>>>>> -        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->>>>>>> +        error_prepend(&local_err, "load of migration failed: %s: ",
->>>>>>> +                      strerror(-ret));
->>>>>>>              goto fail;
->>>>>>>          }
->>>>>>> @@ -924,13 +925,13 @@ fail:
->>>>>>>          migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->>>>>>>                            MIGRATION_STATUS_FAILED);
->>>>>>>          migrate_set_error(s, local_err);
->>>>>>> -    error_free(local_err);
->>>>>>> +    error_report_err(local_err);
->>>>>>
->>>>>> This is problematic because it results in duplicate error reports when
->>>>>> !mis->exit_on_error; in that case the query-migrate QMP command reports the
->>>>>> error and this error reporting is redundant.
->>>>>
->>>>> If I comment this change, then all of the errors propagated up to now, using
->>>>> error_setg() will not be reported. This is the place where it is finally reported,
->>>>> when qemu_loadvm_state() fails. In other words, all the error_reports() we removed
->>>>> from all the files, replacing them with error_setg(), will finally be reported here
->>>>> using error_report_err().
->>>>
->>>> My understanding of the code without these two changes is:
->>>> - If the migrate-incoming QMP command is used with false as
->>>>     exit-on-error, this function will not report the error but
->>>>     the query-migrate QMP command will report the error.
->>>> - Otherwise, this function reports the error.
->>>
->>> With my limited experience in testing, I have a question,
->>> So there are 2 scenarios,
->>> 1. running the virsh migrate command on the source host. Something like the following,
->>>     virsh -c 'qemu:///system' migrate --live --verbose --domain guest-vm --desturi qemu+ssh://10.6.120.20/system
->>>     OR for postcopy-ram,
->>>     virsh migrate guest-vm --live qemu+ssh://10.6.120.20/system --verbose --postcopy --timeout 10 --timeout-postcopy
->>>
->>> 2. Using QMP commands, performing a migration from source to destination.
->>>     Running something like the following on the destination:
->>>     {
->>>       "execute": "migrate-incoming",
->>>       "arguments": {
->>>         "uri": "tcp:127.0.0.1:7777",
->>>         "exit-on-error": false
->>>       }
->>>     }
->>>     {
->>>       "execute": "migrate-incoming",
->>>       "arguments": {
->>>         "uri": "tcp:127.0.0.1:7777",
->>>         "exit-on-error": false
->>>       }
->>>     }
->>>     and the somthing like the following on source:
->>>     {
->>>       "execute": "migrate",
->>>       "arguments": {
->>>         "uri": "tcp:127.0.0.1:7777"
->>>       }
->>>     }
->>>     {"execute" : "query-migrate"}
->>>
->>> In 1, previously, the user used to get an error message on migration failure.
->>> This was because there were error_report() calls in all of the files.
->>> Now that they are replaced with error_setg() and the error is stored in errp,
->>> we need to display that using error_report_err(). Hence I introduced an error_report_err()
->>> call in the fail section.
->>>
->>> In 2, we have 2 QMP sessions, one for the source and another for the destination.
->>> The QMP command migrate will be issued on the source, and the errp will be set.
->>> I did not understand the part where the message will be displayed because of the
->>> error_report_err() call. I did not see such a message on failure scenario on both
->>> the sessions.
->>> If the user wants to check for errors, then the destination qemu will not exit
->>> (exit-on-error = false ) and we can retrieve it using {"execute" : "query-migrate"}
->>>
->>> Aren't the 2 scenarios different by nature?
->>
->> In 1, doesn't libvirt query the error with query-migrate and print it?
+> Note that we only call virtio_gpu_remap_udmabuf() if the blob is
+> backed by a memfd. This is because the VFIO dmabuf implementation
+> may not support mmap.
 > 
-> Ideally it should find the the error, and print the whole thing. It does work
-> in the normal scenario. However, the postcopy scenario does not show the same result,
-> which is mentioned in the commit message.
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> ---
+>   hw/display/virtio-gpu-udmabuf.c | 60 ++++++++++++++++++++++++++++-----
+>   1 file changed, 52 insertions(+), 8 deletions(-)
 > 
->>
->> In any case, it would be nice if you describe how libvirt interacts with
->> QEMU in 1.
-> 
-> Please find below the difference in the command output at source, when we run a live migration
-> with postcopy enabled.
-> 
-> =========
-> With the current changes:
-> [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
-> 
-> [root@dell-per750-42 build]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
-> root@10.6.120.9's password:
-> Migration: [ 1.26 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:19:15.076547Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
-> 2025-09-03T06:19:15.076586Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
-> 2025-09-03T06:19:27.776715Z qemu-system-x86_64: load of migration failed: Input/output error: error while loading state for instance 0x0 of device 'tpm-emulator': post load hook failed for: tpm-emulator, version_id: 0, minimum_version: 0, ret: -5: tpm-emulator: Setting the stateblob (type 1) failed with a TPM error 0x21 decryption error
-> 
-> [root@dell-per750-42 build]#
-> 
-> =========
-> 
-> Without the current changes:
-> [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
-> 
-> [root@dell-per750-42 qemu-priv]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
-> root@10.6.120.9's password:
-> Migration: [ 1.28 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:26:17.733786Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
-> 2025-09-03T06:26:17.733830Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
-> 
-> [root@dell-per750-42 qemu-priv]#
-> 
-> =========
-> The original behavior was to print the error to the console regardless of whether the migration is normal or postcopy.
+> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+> index d804f321aa..0390a8f488 100644
+> --- a/hw/display/virtio-gpu-udmabuf.c
+> +++ b/hw/display/virtio-gpu-udmabuf.c
+> @@ -18,6 +18,7 @@
+>   #include "ui/console.h"
+>   #include "hw/virtio/virtio-gpu.h"
+>   #include "hw/virtio/virtio-gpu-pixman.h"
+> +#include "hw/vfio/vfio-device.h"
+>   #include "trace.h"
+>   #include "system/ramblock.h"
+>   #include "system/hostmem.h"
+> @@ -27,6 +28,32 @@
+>   #include "standard-headers/linux/udmabuf.h"
+>   #include "standard-headers/drm/drm_fourcc.h"
+>   
+> +static void vfio_create_dmabuf(VFIODevice *vdev,
+> +                               struct virtio_gpu_simple_resource *res)
+> +{
+> +    res->dmabuf_fd = vfio_device_create_dmabuf(vdev, res->iov, res->iov_cnt);
+> +    if (res->dmabuf_fd < 0) {
+> +        warn_report("%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s", __func__,
+> +                    strerror(errno));
+> +    }
+> +}
+> +
+> +static VFIODevice *vfio_device_lookup(MemoryRegion *mr)
+> +{
+> +    VFIODevice *vdev;
+> +
+> +    if (QLIST_EMPTY(&vfio_device_list)) {
+> +        return NULL;
+> +    }
 
-This was true for messages in qemu_loadvm_state(), but the message "load 
-of migration failed" was printed or queried with query-migrate, not 
-both. We should think of which behavior is more appropriate, and I think 
-we should avoid duplicate reports.
+I think this QLIST_EMPTY() check can be removed.
 
-> The source machine goes in to a paused state after this.
+> +
+> +    QLIST_FOREACH(vdev, &vfio_device_list, next) {
+> +        if (vdev->dev == mr->dev) {
+> +            return vdev;
+> +        }
+> +    }
+> +    return NULL;
+> +}
+> +
+>   static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+>       struct udmabuf_create_list *list;
+> @@ -130,6 +157,9 @@ bool virtio_gpu_have_udmabuf(void)
+>   
+>   void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+> +    bool memfd_blob = false;
+> +    ram_addr_t offset;
+> +    RAMBlock *rb;
+>       void *pdata = NULL;
+>   
+>       res->dmabuf_fd = -1;
+> @@ -137,15 +167,31 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+>           res->iov[0].iov_len < 4096) {
+>           pdata = res->iov[0].iov_base;
+>       } else {
+> -        virtio_gpu_create_udmabuf(res);
+> +        rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
+> +        if (rb && memory_region_is_ram_device(rb->mr)) {
+> +            VFIODevice *vdev = vfio_device_lookup(rb->mr);
+> +
+> +            if (!vdev) {
+> +                warn_report("Could not find device to create dmabuf");
 
-The output is informative. It implies the destination machine exited, 
-and it makes sense to print error messages as it is done for
-mis->exit_on_error. I wonder if it is possible to detect the condition 
-and treat it identically to mis->exit_on_error.
+It is odd to print a warning only when the memory region is a RAM device 
+not backed by VFIO while it prints no warning for the other incompatible 
+memory regions. It is better to keep the behavior for the incompatible 
+memory regions consistent.
 
-Regards,
-Akihiko Odaki
+> +                return;
+> +            }
+> +            vfio_create_dmabuf(vdev, res);
+> +        } else {
+> +            virtio_gpu_create_udmabuf(res);
+> +            memfd_blob = true;
+> +        }
+> +
+>           if (res->dmabuf_fd < 0) {
+>               return;
+>           }
+> -        virtio_gpu_remap_udmabuf(res);
+> -        if (!res->remapped) {
+> -            return;
+> +
+> +        if (memfd_blob) {
+> +            virtio_gpu_remap_udmabuf(res);
+> +            if (!res->remapped) {
+> +                return;
+> +            }
+> +            pdata = res->remapped;
+>           }
+> -        pdata = res->remapped;
+>       }
+>   
+>       res->blob = pdata;
+> @@ -153,9 +199,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>   void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+> -    if (res->remapped) {
+> -        virtio_gpu_destroy_udmabuf(res);
+> -    }
+> +    virtio_gpu_destroy_udmabuf(res);
+>   }
+>   
+>   static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+
 
