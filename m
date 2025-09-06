@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04BD9CA1002
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA59CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 21:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv04b-0004kl-Oq; Sat, 06 Sep 2025 17:03:49 -0400
+	id 1uv03I-0003lV-6M; Sat, 06 Sep 2025 17:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv04Y-0004gU-N9; Sat, 06 Sep 2025 17:03:46 -0400
+ id 1uv03F-0003kr-S6; Sat, 06 Sep 2025 17:02:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv04L-0006DK-Cv; Sat, 06 Sep 2025 17:03:44 -0400
+ id 1uv038-0005yA-8I; Sat, 06 Sep 2025 17:02:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0FCFE150F90;
- Sun, 07 Sep 2025 00:00:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6388F150F85;
+ Sun, 07 Sep 2025 00:00:55 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C88A7278698;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 27207278690;
  Sun,  7 Sep 2025 00:00:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- qemu-stable@qemu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [Stable-7.2.20 34/34] block/curl: fix curl internal handles handling
-Date: Sun,  7 Sep 2025 00:00:54 +0300
-Message-ID: <20250906210056.127031-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "minglei.liu" <minglei.liu@smartx.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 26/34] qga: Fix truncated output handling in
+ guest-exec status reporting
+Date: Sun,  7 Sep 2025 00:00:46 +0300
+Message-ID: <20250906210056.127031-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250906235950@cover.tls.msk.ru>
@@ -61,55 +62,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
-According to the documentation, this callback is called not just with
-application-created sockets but also with internal curl sockets, - and
-for such sockets, user data pointer is not set by the application, so
-the result qemu crashing.
+From: "minglei.liu" <minglei.liu@smartx.com>
 
-Pass BDRVCURLState directly to the callback function as user pointer,
-instead of relying on CURLINFO_PRIVATE.
-
-This problem started happening with update of libcurl from 8.9 to 8.10 --
-apparently with this change curl started using private handles more.
-
-(CURLINFO_PRIVATE is used in one more place, in curl_multi_check_completion() -
-it might need a similar fix too)
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
-Cc: qemu-stable@qemu.org
+Signed-off-by: minglei.liu <minglei.liu@smartx.com>
+Fixes: a1853dca743
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 606978500c3d18fb89a49844f253097b17f757de)
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250711021714.91258-1-minglei.liu@smartx.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index 0b125095e3..f9c5a1c182 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -161,13 +161,9 @@ static int curl_timer_cb(CURLM *multi, long timeout_ms, void *opaque)
- static int curl_sock_cb(CURL *curl, curl_socket_t fd, int action,
-                         void *userp, void *sp)
- {
--    BDRVCURLState *s;
--    CURLState *state = NULL;
-+    BDRVCURLState *s = userp;
-     CURLSocket *socket;
+diff --git a/qga/commands.c b/qga/commands.c
+index ca63fe6e15..fb1251111f 100644
+--- a/qga/commands.c
++++ b/qga/commands.c
+@@ -207,14 +207,16 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
+         if (gei->out.length > 0) {
+             ges->has_out_data = true;
+             ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
+-            ges->has_out_truncated = gei->out.truncated;
++            ges->has_out_truncated = true;
++            ges->out_truncated = gei->out.truncated;
+         }
+         g_free(gei->out.data);
  
--    curl_easy_getinfo(curl, CURLINFO_PRIVATE, (char **)&state);
--    s = state->s;
--
-     socket = g_hash_table_lookup(s->sockets, GINT_TO_POINTER(fd));
-     if (!socket) {
-         socket = g_new0(CURLSocket, 1);
-@@ -612,6 +608,7 @@ static void curl_attach_aio_context(BlockDriverState *bs,
-     assert(!s->multi);
-     s->multi = curl_multi_init();
-     s->aio_context = new_context;
-+    curl_multi_setopt(s->multi, CURLMOPT_SOCKETDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_SOCKETFUNCTION, curl_sock_cb);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERFUNCTION, curl_timer_cb);
+         if (gei->err.length > 0) {
+             ges->has_err_data = true;
+             ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
+-            ges->has_err_truncated = gei->err.truncated;
++            ges->has_err_truncated = true;
++            ges->err_truncated = gei->err.truncated;
+         }
+         g_free(gei->err.data);
+ 
 -- 
 2.47.3
 
