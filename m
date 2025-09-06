@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1E0CA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFF6CA1013
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiWD-0001Ng-8N; Fri, 05 Sep 2025 22:19:12 -0400
+	id 1uuiZ1-0005A5-GD; Fri, 05 Sep 2025 22:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiW5-0001AF-Qa; Fri, 05 Sep 2025 22:19:01 -0400
+ id 1uuiYv-0004um-HP; Fri, 05 Sep 2025 22:21:57 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiVr-0008BC-EM; Fri, 05 Sep 2025 22:18:58 -0400
+ id 1uuiYa-0000IJ-NX; Fri, 05 Sep 2025 22:21:55 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862BtnX041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btnl041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:12:29 +0900 (JST)
+ Sat, 6 Sep 2025 11:15:24 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=pI7a0m1fI57fmHlHi8KpEqhcrE4H2Aca0FHoIemSJqk=; 
+DKIM-Signature: a=rsa-sha256; bh=AMIrLUwGb20DCX2QJ9sI6hzRgdwLBWo6KaejLtXVMas=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124761; v=1;
- b=aJNzl5jgDVDS16/icaYiiXgvoNmwSF4RsDf72tV8ZCNl9ziQ341OIP79qT+fTjGr
- T1gI9kKnXZ44BWbJEplqWshoA+YYb07m3isKndtH/JJUnI7shAHdZQROvaA15Z9X
- qOOIcLB262MjRI45RA7TwSTVcaedtta4b+CUk9Sbm0bxmzIw6A1tPkR8B1Ul3hgZ
- OL31nmRtDCl082icfGLWOT/JKLSKc3x2wo8EzT8XHfu1EDiso9tchWmuV/CX51Y1
- JOZhJJCj6aFdtjO51RL3IhpJhf6S+pnx2gD/0DVDRMQ/rRe3y+LQvDZQTb2Fwod4
- J6Ny4XRZ5QUBfWDclSCO2g==
+ s=rs20250326; t=1757124935; v=1;
+ b=MODj2VFVvsW/BnObGWOT3kdITg9LLUJsuB+kt+WlGCJwuoCVuSiGPXfxG/wjYUIZ
+ OC0jFdulkatqESlsI/sleeXNCmuxR/zDFseuWk4h10Kx8MpxdSO6BULNRY3+F7ro
+ s3Ilfr5rPeaarYyB5T4vT61JXG0JYGicngXbD97HQiiFXSUkNGUK30dQvdTguKGI
+ bH8GVfggSHYEnxXQC2GeRn4ilDU0TSTpyAbBhg/JOAD9jMy+boZ3eqs5FasodiXn
+ gniBFhD7awMZEO5eTDjY6L2oI8xhx+MNwuRxhvrDoEtkNDN+5RXaQWCzoylumgR4
+ oGyTAn7dCskJL64dEPO8Hg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:11 +0200
-Subject: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
+Date: Sat, 06 Sep 2025 04:11:25 +0200
+Subject: [PATCH 16/22] hw/ide/piix: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-16-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,7 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,41 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Children are automatically unparented so manually unparenting is
-unnecessary.
-
-Worse, automatic unparenting happens before the insntance_finalize()
-callback of the parent gets called, so object_unparent() calls in
-the callback will refer to objects that are already unparented, which
-is semantically incorrect.
+It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/vfio/pci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/ide/piix.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 07257d0fa049b09fc296ac2279a6fafbdf93d277..2e909c190f86a722e1022fa7c45a96d2dde8d58e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
-         vfio_region_finalize(&bar->region);
-         if (bar->mr) {
-             assert(bar->size);
--            object_unparent(OBJECT(bar->mr));
-             g_free(bar->mr);
-             bar->mr = NULL;
-         }
-@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
- 
-     if (vdev->vga) {
-         vfio_vga_quirk_finalize(vdev);
--        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
--            object_unparent(OBJECT(&vdev->vga->region[i].mem));
--        }
-         g_free(vdev->vga);
+diff --git a/hw/ide/piix.c b/hw/ide/piix.c
+index a0f2709c6973420b9e07fc5cc3fa1ef12a8e3d42..138f8e1936b448cb9185018ba5744d3c5445abd9 100644
+--- a/hw/ide/piix.c
++++ b/hw/ide/piix.c
+@@ -166,17 +166,6 @@ static void pci_piix_ide_realize(PCIDevice *dev, Error **errp)
      }
  }
+ 
+-static void pci_piix_ide_exitfn(PCIDevice *dev)
+-{
+-    PCIIDEState *d = PCI_IDE(dev);
+-    unsigned i;
+-
+-    for (i = 0; i < 2; ++i) {
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
+-    }
+-}
+-
+ /* NOTE: for the PIIX3, the IRQs and IOports are hardcoded */
+ static void piix3_ide_class_init(ObjectClass *klass, const void *data)
+ {
+@@ -186,7 +175,6 @@ static void piix3_ide_class_init(ObjectClass *klass, const void *data)
+     device_class_set_legacy_reset(dc, piix_ide_reset);
+     dc->vmsd = &vmstate_ide_pci;
+     k->realize = pci_piix_ide_realize;
+-    k->exit = pci_piix_ide_exitfn;
+     k->vendor_id = PCI_VENDOR_ID_INTEL;
+     k->device_id = PCI_DEVICE_ID_INTEL_82371SB_1;
+     k->class_id = PCI_CLASS_STORAGE_IDE;
+@@ -209,7 +197,6 @@ static void piix4_ide_class_init(ObjectClass *klass, const void *data)
+     device_class_set_legacy_reset(dc, piix_ide_reset);
+     dc->vmsd = &vmstate_ide_pci;
+     k->realize = pci_piix_ide_realize;
+-    k->exit = pci_piix_ide_exitfn;
+     k->vendor_id = PCI_VENDOR_ID_INTEL;
+     k->device_id = PCI_DEVICE_ID_INTEL_82371AB;
+     k->class_id = PCI_CLASS_STORAGE_IDE;
 
 -- 
 2.51.0
