@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F8ECA0FED
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD983CA0FED
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Sep 2025 02:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uuiSo-0004Pc-9o; Fri, 05 Sep 2025 22:15:38 -0400
+	id 1uuiTB-0004d6-UW; Fri, 05 Sep 2025 22:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiSW-0004GD-Po; Fri, 05 Sep 2025 22:15:24 -0400
+ id 1uuiT2-0004Yt-Sw; Fri, 05 Sep 2025 22:15:53 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uuiSE-0006iM-Bj; Fri, 05 Sep 2025 22:15:18 -0400
+ id 1uuiSm-00076p-7b; Fri, 05 Sep 2025 22:15:50 -0400
 Received: from [10.40.4.92] (93-51-222-138.ip268.fastwebnet.it [93.51.222.138])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btne041566
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5862Btng041566
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 6 Sep 2025 11:13:57 +0900 (JST)
+ Sat, 6 Sep 2025 11:14:21 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=hDE6MDpM29+rIuyhBoh3MNFBBlYhx+hw3yC0XNEvU1Q=; 
+DKIM-Signature: a=rsa-sha256; bh=JRn9IlAuuwcjgZFjdSaO6s+DIIBhc0p+mDtciOTKUsA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757124848; v=1;
- b=nFA5MOO20dSmu7eWfkEOMBJkLjqOhBgI9IwVe4vUjoynwuZr+VjaxaINCnzlkord
- /gIx4xPOw2FU+fxMrtzmT1hvKwN4HflElC/F8vpjuE79/LkJ0zZfn3H12Dvkqli4
- bpV9bm2hXPI6ciyUOI07VTHy/kLys8kilnvHEyCIQ+ZuqZH9Qsij1Qv5Eef5Zw8Y
- qeZQfKZOwnbTE5vX7crC1BcgycCMIf0aRdwJ8e8jExmagy1FYQDcAM2TU3FUy1ZP
- 69ganHHlKW0io3aUmAWOzCmNW1w84MoL47s4yaHIx5GcaJ8Mi9DGWfX4CHieypyn
- VwlhGeGXaAbUmyigyzS1cQ==
+ s=rs20250326; t=1757124874; v=1;
+ b=gR4PLgVdik3WXu2M6/F5aqckz1HPM4XSUTlxuvNj7HA3N6nYzbTuCAcQ1zCkWgX0
+ 5NLx32dnO3hmseqJa7dLijG35W6DCFDa4uBMmPCqxc5kgvZilS2Fu0slV7l6cBz/
+ JQ7UNbAvG6BZkKBHVGGPzLobYfalqYrBBUdqwrr0JpUTCIn37W0D5XtUWhdo+M38
+ AW82QxDO30KRPSSFJKvzQ/oWMPkVX6DUn8kPDRiJoTk1CAsSYASoU3z6LOV56qAi
+ g5s8s5cYK+spQ4UARohq10ltMd6yKt7quQC5tHTG1LFHiJU4eLaWTeV3DRdwsBYC
+ CTx7FO93pAbnsVg+vDDawQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 06 Sep 2025 04:11:18 +0200
-Subject: [PATCH 09/22] sun4u: Fix AddressSpace exposure timing
+Date: Sat, 06 Sep 2025 04:11:20 +0200
+Subject: [PATCH 11/22] vfio-user: Do not delete the subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250906-use-v1-11-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -103,50 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sun4u-iommu is not hotpluggable but its instance can still be created
-and destroyed when processing the device-list-properties QMP command.
-Exposing such a temporary instance to AddressSpace should be
-avoided because it leaks the instance.
-
-Expose instances to the AddressSpace at their realization time so that
-it won't happen for the temporary instances.
+It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/sparc64/sun4u_iommu.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/vfio-user/pci.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
-index 14645f475a09ed3a6bef77f8d8b4b6b4b36ae40a..b6568551935610116d33481ae8d9fc08f02ecf7b 100644
---- a/hw/sparc64/sun4u_iommu.c
-+++ b/hw/sparc64/sun4u_iommu.c
-@@ -298,18 +298,25 @@ static void iommu_init(Object *obj)
-     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
-                              TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
-                              "iommu-sun4u", UINT64_MAX);
--    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index be71c777291f0c68b01b54029612c4dbc6aa86e2..0b6c6a1c5ed327ec53b119a799976a0823e304c3 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -73,12 +73,6 @@ static void vfio_user_msix_setup(VFIOPCIDevice *vdev)
  
-     memory_region_init_io(&s->iomem, obj, &iommu_mem_ops, s, "iommu",
-                           IOMMU_NREGS * sizeof(uint64_t));
-     sysbus_init_mmio(sbd, &s->iomem);
- }
- 
-+static void iommu_realize(DeviceState *dev, Error **errp)
-+{
-+    IOMMUState *s = SUN4U_IOMMU(dev);
-+
-+    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
-+}
-+
- static void iommu_class_init(ObjectClass *klass, const void *data)
+ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, iommu_reset);
-+    dc->realize = iommu_realize;
+-    MemoryRegion *mr, *sub;
+-
+-    mr = vdev->bars[vdev->msix->pba_bar].mr;
+-    sub = vdev->msix->pba_region;
+-    memory_region_del_subregion(mr, sub);
+-
+     g_free(vdev->msix->pba_region);
+     vdev->msix->pba_region = NULL;
  }
- 
- static const TypeInfo iommu_info = {
 
 -- 
 2.51.0
