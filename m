@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CDDCA1013
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 07:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52AACA1013
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 07:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv9QI-00086T-II; Sun, 07 Sep 2025 03:02:51 -0400
+	id 1uv9QK-00088B-Tj; Sun, 07 Sep 2025 03:02:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9QF-00085o-Gg; Sun, 07 Sep 2025 03:02:47 -0400
+ id 1uv9QF-000862-Vw; Sun, 07 Sep 2025 03:02:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9Q7-0004K6-IB; Sun, 07 Sep 2025 03:02:46 -0400
+ id 1uv9QD-0004KM-2V; Sun, 07 Sep 2025 03:02:47 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 388C715104C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A0F115104D;
  Sun, 07 Sep 2025 10:02:04 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2EA722793B9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 496762793BA;
  Sun,  7 Sep 2025 10:02:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Steve Sistare <steven.sistare@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 62/81] linux-user: Add strace for rseq
-Date: Sun,  7 Sep 2025 10:01:41 +0300
-Message-ID: <20250907070205.135289-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 63/81] hw/intc/arm_gicv3_kvm: preserve pending
+ interrupts during cpr
+Date: Sun,  7 Sep 2025 10:01:42 +0300
+Message-ID: <20250907070205.135289-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
@@ -60,34 +61,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+From: Steve Sistare <steven.sistare@oracle.com>
 
- build/qemu-riscv64 -cpu rv64,v=on -d strace  build/tests/tcg/riscv64-linux-user/test-vstart-overflow
- 1118081 riscv_hwprobe(0xffffbc038200,1,0,0,0,0) = 0
- 1118081 brk(NULL) = 0x0000000000085000
- 1118081 brk(0x0000000000085b00) = 0x0000000000085b00
- 1118081 set_tid_address(0x850f0) = 1118081
- 1118081 set_robust_list(0x85100,24) = -1 errno=38 (Function not implemented)
- 1118081 rseq(0x857c0,32,0,0xf1401073) = -1 errno=38 (Function not implemented)
+Close a race condition that causes cpr-transfer to lose VFIO
+interrupts on ARM.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250826060341.1118670-1-joel@jms.id.au>
-(cherry picked from commit f91563d011a0439cd6709e169cdfac268779d562)
+CPR stops VCPUs but does not disable VFIO interrupts, which may continue
+to arrive throughout the transition to new QEMU.
+
+CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
+future interrupts to the producer eventfd, where they are preserved.
+Old QEMU then destroys the old KVM instance.  However, interrupts may
+already be pending in KVM state.  To preserve them, call ioctl
+KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
+they will be picked up when the new KVM+VCPU instance is created.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-id: 1754936384-278328-1-git-send-email-steven.sistare@oracle.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 376cdd7e9c94f1e03b2c58e068e8ebfe78b49514)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index ab818352a9..51b5ead969 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1719,3 +1719,6 @@
- #ifdef TARGET_NR_riscv_hwprobe
- { TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_rseq
-+{ TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
-+#endif
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index d6e23426c0..4f1e5b5c77 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -30,6 +30,7 @@
+ #include "gicv3_internal.h"
+ #include "vgic_common.h"
+ #include "migration/blocker.h"
++#include "migration/misc.h"
+ #include "qom/object.h"
+ #include "target/arm/cpregs.h"
+ 
+@@ -777,6 +778,17 @@ static void vm_change_state_handler(void *opaque, bool running,
+     }
+ }
+ 
++static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
++                                  MigrationEvent *e, Error **errp)
++{
++    if (e->type == MIG_EVENT_PRECOPY_DONE) {
++        GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
++        return kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
++                                 KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
++                                 NULL, true, errp);
++    }
++    return 0;
++}
+ 
+ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+ {
+@@ -890,6 +902,9 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+     if (kvm_device_check_attr(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
+                               KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES)) {
+         qemu_add_vm_change_state_handler(vm_change_state_handler, s);
++        migration_add_notifier_mode(&s->cpr_notifier,
++                                    kvm_arm_gicv3_notifier,
++                                    MIG_MODE_CPR_TRANSFER);
+     }
+ }
+ 
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index a3d6a0e507..75bbc403c7 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -27,6 +27,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/intc/arm_gic_common.h"
+ #include "qom/object.h"
++#include "qemu/notify.h"
+ 
+ /*
+  * Maximum number of possible interrupts, determined by the GIC architecture.
+@@ -270,6 +271,8 @@ struct GICv3State {
+     GICv3CPUState *cpu;
+     /* List of all ITSes connected to this GIC */
+     GPtrArray *itslist;
++
++    NotifierWithReturn cpr_notifier;
+ };
+ 
+ #define GICV3_BITMAP_ACCESSORS(BMP)                                     \
 -- 
 2.47.3
 
