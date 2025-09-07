@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C18CA1017
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 08:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AC2CA1013
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 08:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv9Qx-0008S8-Fz; Sun, 07 Sep 2025 03:03:31 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1uv9S5-0001iU-BR; Sun, 07 Sep 2025 03:04:43 -0400
+Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9Qu-0008NK-G5; Sun, 07 Sep 2025 03:03:28 -0400
+ id 1uv9Ry-0001ea-FX; Sun, 07 Sep 2025 03:04:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9Qq-0004OV-RR; Sun, 07 Sep 2025 03:03:27 -0400
+ id 1uv9Ri-0004Vy-PG; Sun, 07 Sep 2025 03:04:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BB85D151054;
- Sun, 07 Sep 2025 10:02:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D8F015105B;
+ Sun, 07 Sep 2025 10:02:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BC3662793C1;
- Sun,  7 Sep 2025 10:02:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 530DF2793C8;
+ Sun,  7 Sep 2025 10:02:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "minglei.liu" <minglei.liu@smartx.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 70/81] qga: Fix truncated output handling in
- guest-exec status reporting
-Date: Sun,  7 Sep 2025 10:01:49 +0300
-Message-ID: <20250907070205.135289-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Justin Applegate <justink.applegate@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 77/81] linux-user/mips: Select M14Kc CPU to run
+ microMIPS binaries
+Date: Sun,  7 Sep 2025 10:01:56 +0300
+Message-ID: <20250907070205.135289-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
@@ -62,39 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "minglei.liu" <minglei.liu@smartx.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Signed-off-by: minglei.liu <minglei.liu@smartx.com>
-Fixes: a1853dca743
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250711021714.91258-1-minglei.liu@smartx.com
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-(cherry picked from commit 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec)
+The M14Kc is our latest CPU supporting the microMIPS ASE.
+
+Note, currently QEMU doesn't have 64-bit CPU supporting microMIPS ASE.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3054
+Reported-by: Justin Applegate <justink.applegate@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250814070650.78657-4-philmd@linaro.org>
+(cherry picked from commit 51c3aebfda6489b49cebef593a1ceb597cb97a7e)
+(Mjt: in 10.1 and before, the code is in linux-user/mips/target_elf.h)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qga/commands.c b/qga/commands.c
-index 5a5fad31f8..5f20af25d3 100644
---- a/qga/commands.c
-+++ b/qga/commands.c
-@@ -205,13 +205,15 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
- #endif
-         if (gei->out.length > 0) {
-             ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
--            ges->has_out_truncated = gei->out.truncated;
-+            ges->has_out_truncated = true;
-+            ges->out_truncated = gei->out.truncated;
-         }
-         g_free(gei->out.data);
- 
-         if (gei->err.length > 0) {
-             ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
--            ges->has_err_truncated = gei->err.truncated;
-+            ges->has_err_truncated = true;
-+            ges->err_truncated = gei->err.truncated;
-         }
-         g_free(gei->err.data);
- 
+diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
+index cd8622ce28..d20c6080cc 100644
+--- a/linux-user/mips/target_elf.h
++++ b/linux-user/mips/target_elf.h
+@@ -12,6 +12,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
+     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
+         return "mips32r6-generic";
+     }
++    if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_MICROMIPS) {
++        return "M14Kc";
++    }
+     if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_M16) {
+         return "74Kf";
+     }
 -- 
 2.47.3
 
