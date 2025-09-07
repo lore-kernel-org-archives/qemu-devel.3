@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D582CA1013
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 08:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C737CA1017
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 08:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uv9Rl-0000yM-Qg; Sun, 07 Sep 2025 03:04:22 -0400
+	id 1uv9SX-00027d-3b; Sun, 07 Sep 2025 03:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9Rc-0000lQ-FG; Sun, 07 Sep 2025 03:04:12 -0400
+ id 1uv9SL-00022S-Ln; Sun, 07 Sep 2025 03:05:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uv9RO-0004UM-Mk; Sun, 07 Sep 2025 03:04:12 -0400
+ id 1uv9S6-0004Z5-OA; Sun, 07 Sep 2025 03:04:47 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 27CAB151059;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A49D15105E;
  Sun, 07 Sep 2025 10:02:05 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1ECD12793C6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B75A2793CB;
  Sun,  7 Sep 2025 10:02:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Glenn Miles <milesg@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 75/81] elf: Add EF_MIPS_ARCH_ASE definitions
-Date: Sun,  7 Sep 2025 10:01:54 +0300
-Message-ID: <20250907070205.135289-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 80/81] hw/gpio/pca9554: Avoid leak in pca9554_set_pin()
+Date: Sun,  7 Sep 2025 10:01:59 +0300
+Message-ID: <20250907070205.135289-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250907000448@cover.tls.msk.ru>
@@ -45,8 +45,8 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,35 +62,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Include MIPS ASE ELF definitions from binutils:
-https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=include/elf/mips.h;h=4fc190f404d828ded84e621bfcece5fa9f9c23c8;hb=HEAD#l210
+In pca9554_set_pin() we have a string property which we parse in
+order to set some non-string fields in the device state.  So we call
+visit_type_str(), passing it the address of the local variable
+state_str.
 
+visit_type_str() will allocate a new copy of the string; we
+never free this string, so the result is a memory leak, detected
+by ASAN during a "make check" run:
+
+Direct leak of 5 byte(s) in 1 object(s) allocated from:
+    #0 0x5d605212ede3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (
+BuildId: 3d5373c89317f58bfcd191a33988c7347714be14)
+    #1 0x7f7edea57b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b68282
+9a6913cf682d75)
+    #2 0x7f7edea6d4d8 in g_strdup (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x784d8) (BuildId: 1eb6131419edb83b2178b68282
+9a6913cf682d75)
+    #3 0x5d6055289a91 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+    #4 0x5d6055289a91 in qobject_input_type_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qapi/qo
+bject-input-visitor.c:542:12
+    #5 0x5d605528479c in visit_type_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qapi/qapi-visit
+-core.c:349:10
+    #6 0x5d60528bdd87 in pca9554_set_pin /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/gpio/pca9554.c:179:10
+    #7 0x5d60549bcbbb in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1450:5
+    #8 0x5d60549d2055 in object_property_set_qobject /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/qom-qobject.c:28:10
+    #9 0x5d60549bcdf1 in object_property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1458:15
+    #10 0x5d605439d077 in gb200nvl_bmc_i2c_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/aspeed.c:1267:5
+    #11 0x5d60543a3bbc in aspeed_machine_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/aspeed.c:493:9
+
+Make the state_str g_autofree, so that we will always free
+it, on both error-exit and success codepaths.
+
+Cc: qemu-stable@nongnu.org
+Fixes: de0c7d543bca ("misc: Add a pca9554 GPIO device model")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250821154459.2417976-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250814070650.78657-2-philmd@linaro.org>
-(cherry picked from commit 14ab44b96d5bf761af81cc723314ef5ecf73ed17)
+(cherry picked from commit 3284d1c07cfd8d42aa27d1cf83d3e65fcd62e35e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/elf.h b/include/elf.h
-index e7259ec366..bbfac055de 100644
---- a/include/elf.h
-+++ b/include/elf.h
-@@ -56,6 +56,13 @@ typedef int64_t  Elf64_Sxword;
- #define EF_MIPS_ARCH_32R6     0x90000000      /* MIPS32r6 code.  */
- #define EF_MIPS_ARCH_64R6     0xa0000000      /* MIPS64r6 code.  */
+diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+index fe03bb4b5e..735d26b4c3 100644
+--- a/hw/gpio/pca9554.c
++++ b/hw/gpio/pca9554.c
+@@ -177,7 +177,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+     PCA9554State *s = PCA9554(obj);
+     int pin, rc, val;
+     uint8_t state, mask;
+-    char *state_str;
++    g_autofree char *state_str = NULL;
  
-+/* MIPS Architectural Extensions. */
-+#define EF_MIPS_ARCH_ASE      0x0f000000
-+
-+#define EF_MIPS_ARCH_ASE_MICROMIPS 0x02000000
-+#define EF_MIPS_ARCH_ASE_M16  0x04000000
-+#define EF_MIPS_ARCH_ASE_MDMX 0x08000000
-+
- /* The ABI of a file. */
- #define EF_MIPS_ABI_O32       0x00001000      /* O32 ABI.  */
- #define EF_MIPS_ABI_O64       0x00002000      /* O32 extended for 64 bit.  */
+     if (!visit_type_str(v, name, &state_str, errp)) {
+         return;
 -- 
 2.47.3
 
