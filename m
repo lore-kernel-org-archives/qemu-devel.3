@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D8BCA101F
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 14:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B666ACA1017
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Sep 2025 14:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvGGB-0005qm-Md; Sun, 07 Sep 2025 10:20:51 -0400
+	id 1uvGGH-0005rp-ER; Sun, 07 Sep 2025 10:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
- id 1uvGG8-0005qL-CU
- for qemu-devel@nongnu.org; Sun, 07 Sep 2025 10:20:48 -0400
+ id 1uvGGF-0005rZ-An
+ for qemu-devel@nongnu.org; Sun, 07 Sep 2025 10:20:55 -0400
 Received: from ik1-413-38519.vs.sakura.ne.jp ([153.127.30.23]
  helo=sakura.ysato.name) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <yoshinori.sato@nifty.com>) id 1uvGFw-00067g-Cb
- for qemu-devel@nongnu.org; Sun, 07 Sep 2025 10:20:46 -0400
+ (envelope-from <yoshinori.sato@nifty.com>) id 1uvGG1-00068u-EE
+ for qemu-devel@nongnu.org; Sun, 07 Sep 2025 10:20:55 -0400
 Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
- by sakura.ysato.name (Postfix) with ESMTPSA id 7411C1C0015;
- Sun,  7 Sep 2025 23:20:25 +0900 (JST)
-Date: Sun, 07 Sep 2025 23:20:24 +0900
-Message-ID: <87bjnmibtj.wl-yoshinori.sato@nifty.com>
+ by sakura.ysato.name (Postfix) with ESMTPSA id 0AABA1C0277;
+ Sun,  7 Sep 2025 23:20:36 +0900 (JST)
+Date: Sun, 07 Sep 2025 23:20:35 +0900
+Message-ID: <87a536ibt8.wl-yoshinori.sato@nifty.com>
 From: yoshinori.sato@nifty.com
 To: Julian Ganz <neither@nut.email>
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Yoshinori Sato <yoshinori.sato@nifty.com>
-Subject: Re: [PATCH v6 17/25] target/rx: call plugin trap callbacks
-In-Reply-To: <fa4c16b7bf86ceea1b0f7f3f95a9d0e917f6e5fa.1757018626.git.neither@nut.email>
+Subject: Re: [PATCH v6 19/25] target/sh4: call plugin trap callbacks
+In-Reply-To: <177329512e608b42c573385ca610b5a87fb2dc15.1757018626.git.neither@nut.email>
 References: <cover.1757018626.git.neither@nut.email>
- <fa4c16b7bf86ceea1b0f7f3f95a9d0e917f6e5fa.1757018626.git.neither@nut.email>
+ <177329512e608b42c573385ca610b5a87fb2dc15.1757018626.git.neither@nut.email>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
  Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -44,7 +44,8 @@ X-Spam_score: -1.5
 X-Spam_bar: -
 X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.398,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,7 +61,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 05 Sep 2025 05:46:54 +0900,
+On Fri, 05 Sep 2025 05:46:56 +0900,
 Julian Ganz wrote:
 > 
 > We recently introduced API for registering callbacks for trap related
@@ -68,66 +69,50 @@ Julian Ganz wrote:
 > between architectures, the latter need to be called from target specific
 > code.
 > 
-> This change places hooks for Renesas Xtreme targets.
+> This change places hooks for SuperH targets.
 > 
 Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Julian Ganz <neither@nut.email>
 > ---
->  target/rx/helper.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>  target/sh4/helper.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/target/rx/helper.c b/target/rx/helper.c
-> index ce003af421..054bfdff57 100644
-> --- a/target/rx/helper.c
-> +++ b/target/rx/helper.c
-> @@ -22,6 +22,7 @@
+> diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+> index 1744ef0e6d..fb26d5c35d 100644
+> --- a/target/sh4/helper.c
+> +++ b/target/sh4/helper.c
+> @@ -24,6 +24,7 @@
+>  #include "exec/page-protection.h"
+>  #include "exec/target_page.h"
 >  #include "exec/log.h"
->  #include "accel/tcg/cpu-ldst.h"
->  #include "hw/irq.h"
 > +#include "qemu/plugin.h"
 >  
->  void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte)
->  {
-> @@ -46,6 +47,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
->      CPURXState *env = cpu_env(cs);
->      int do_irq = cpu_test_interrupt(cs, INT_FLAGS);
->      uint32_t save_psw;
+>  #if !defined(CONFIG_USER_ONLY)
+>  #include "hw/sh4/sh_intc.h"
+> @@ -60,6 +61,7 @@ void superh_cpu_do_interrupt(CPUState *cs)
+>      CPUSH4State *env = cpu_env(cs);
+>      int do_irq = cpu_test_interrupt(cs, CPU_INTERRUPT_HARD);
+>      int do_exp, irq_vector = cs->exception_index;
 > +    uint64_t last_pc = env->pc;
 >  
->      env->in_sleep = 0;
+>      /* prioritize exceptions over interrupts */
 >  
-> @@ -65,6 +67,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
->              env->psw_ipl = 15;
->              cs->interrupt_request &= ~CPU_INTERRUPT_FIR;
->              qemu_set_irq(env->ack, env->ack_irq);
-> +            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
->              qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
->          } else if (do_irq & CPU_INTERRUPT_HARD) {
->              env->isp -= 4;
-> @@ -75,6 +78,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
->              env->psw_ipl = env->ack_ipl;
->              cs->interrupt_request &= ~CPU_INTERRUPT_HARD;
->              qemu_set_irq(env->ack, env->ack_irq);
-> +            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
->              qemu_log_mask(CPU_LOG_INT,
->                            "interrupt 0x%02x raised\n", env->ack_irq);
+> @@ -176,12 +178,14 @@ void superh_cpu_do_interrupt(CPUState *cs)
+>              env->pc = env->vbr + 0x100;
+>              break;
 >          }
-> @@ -92,6 +96,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
->          } else {
->              env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
->          }
-> +
-> +        if (vec == 30) {
-> +            /* Non-maskable interrupt */
-> +            qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> +        } else {
-> +            qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> +        }
-> +
->          switch (vec) {
->          case 20:
->              expname = "privilege violation";
+> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+>          return;
+>      }
+>  
+>      if (do_irq) {
+>          env->intevt = irq_vector;
+>          env->pc = env->vbr + 0x600;
+> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+>          return;
+>      }
+>  }
 > -- 
 > 2.49.1
 > 
