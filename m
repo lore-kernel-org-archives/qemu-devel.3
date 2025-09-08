@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1400CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 15:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 617D2CA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 15:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uve0s-0001a8-LA; Mon, 08 Sep 2025 11:42:38 -0400
+	id 1uve2H-00026F-SD; Mon, 08 Sep 2025 11:44:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve0r-0001Zn-BS
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:42:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve29-00021L-2p
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:43:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve0m-0006HH-JV
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:42:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve24-0006Lp-OV
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:43:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757346147;
+ s=mimecast20190719; t=1757346230;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=if19pmcHZ2lgYCxalY3B8NtguCsBYfluVuEXviZT2WA=;
- b=dAPA470Re0cLLsOwb4I7wgKgLTpGP9Q97q87B8oCDPftSzPaYzyFV0vt6OgTEvS7B88gmV
- cRbzI5r2vJkIUxBuC9Cwu3UFkzxyeSIPyxp13yuIk5g24u1TFnUNpHFRE2q9MN/Xjry1uW
- jhWmU5YhFbJBhaq14yZ+R+CQvDr6e10=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=22+7tnTQEOBpRkEwDFkpmV9p8xLXN6CJm8/tz4g0+Ek=;
+ b=Tqdw5yEJtJXLpVQDFkYKQvI4PEUcWkeAifPpxGgCIho5YhhU3KtZs2aTcgtT4kLaf/iUAD
+ 3itjfgTcAbphbTsgroiIGy34q4ZdM3frgnMFjlty2hcuboHAYjqwtiViN2u2I6vhKdwLoM
+ f8dY8s9/IzoZPMY4Q+m9Zq9iPJiJ+aM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-6u6OqP2BMQulxwSAlWL2Pw-1; Mon, 08 Sep 2025 11:42:26 -0400
-X-MC-Unique: 6u6OqP2BMQulxwSAlWL2Pw-1
-X-Mimecast-MFC-AGG-ID: 6u6OqP2BMQulxwSAlWL2Pw_1757346146
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-806f812a0aaso1172795885a.3
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 08:42:26 -0700 (PDT)
+ us-mta-111-Qdm9AdzPP--HXFixHLYeXA-1; Mon, 08 Sep 2025 11:43:48 -0400
+X-MC-Unique: Qdm9AdzPP--HXFixHLYeXA-1
+X-Mimecast-MFC-AGG-ID: Qdm9AdzPP--HXFixHLYeXA_1757346228
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-807802c9c85so1172624685a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 08:43:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757346146; x=1757950946;
+ d=1e100.net; s=20230601; t=1757346228; x=1757951028;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=if19pmcHZ2lgYCxalY3B8NtguCsBYfluVuEXviZT2WA=;
- b=Ohi2zTt2EQcQz3/+Bq4YB7oLHpTo0VZ7C4Td6/rGi9+92+zEpHxu3BjdQoP2N9ZCYy
- 7Ac41bgMgo2Wddb2N9pRRMVzc3Zc9rELmNU65ROG8KnqrJGe58jwJW20YfE6H5SMkONm
- aGyf3eiUIrOa7MqE9DDAg1n62IBM6O5WdJijF6TTYQ7k/SHBB7XCJereaXjzWVqLRS3r
- MznOIe4K9TxMXJU+OTBcLav1yIV0R5Jn/2l3pp+iJy6HH5dlaPCwfc+bMXX2/noS1g/B
- 2mMlDUeCBW7PeCT6ZgbEcYREM091H6enKs9mDaNQVJm9qS3LFGJZXcpcfuxV1bLBMLYA
- c4Jg==
+ bh=22+7tnTQEOBpRkEwDFkpmV9p8xLXN6CJm8/tz4g0+Ek=;
+ b=n28uq7bdRonyou7qHNehZb7V1TWudfFvz9mApPjq07ln/xbhFyZ/HSPWu5CrzK27ev
+ AkjmdwkGsi/D38d83Gxh1Fo9/evRoMgq6ocgKvytjR/YrPJimcnxxKVUy24zKxfdbRKy
+ 2XdPXMRwljOk4efAEvtfxvTE6skjMba9lKOYowRKUI9nccsut2YIlLb8VZReO/yaRgmL
+ UzITA07C1HEwI/rxeYwIMHJ0tXMjkHFGqeGKPgLMX87aBQX7RuWPz+OzE4GW128HWVvW
+ m+VS/7UifnB+9EXqnxEFxogE8Mu7i2TOJcYUdz2RgseaN1Dc9VcStqtVKZtr5GWoDPn4
+ 5ZaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjPmCMZ62QNeARN0JFWlbUMp4aTEDBGROsssC8wvEhE5Wo9QLwcK8dslMQJh9vSbMtQJJbr88wUGF6@nongnu.org
-X-Gm-Message-State: AOJu0Yz7VOi5Ag7GSWFdeXU40Z2ewxWvlGyWWNNJgDA+CK5+3YhuRf41
- vAMc2pXUzOov7qqbfWxjnv5sAa+HyvkARrjh3MRz/51eILDbTdo5Y59Anzz+1M7ofxb/vNNeKEC
- EKJc0uMm2CprnpITx3Kv8bLjgVdADpjpav3F13BXGXsWLZZAXFWoDsD2x
-X-Gm-Gg: ASbGnctbh43WGy1Frm9SbgTUvLYnEmPZIOUCGorzfWncCD4vlq0glBfr/bGsWbSGuEI
- RJaB/QWuKA4d8lAdz5jHahRRZ5M+RHFDZEt1MuBkKEbO/wKYUhceXbGxUFbb/wvVuH5B4eb9VUu
- N5lDatHLa9jG4j4BZXn8ScuY07UDWnJUrNwbdT5/iFrbYlZxpKPBfdJrXzh0LSzHqkCcwB26PI9
- 4zjrfM3BkRkQIpMjg17tv8YhvUuD6rmltkc7+sUhnCQp6ldk7Xz7arve6V60SRwNbiqgpgczbg2
- gyp4DEzEMcEm0lmYsf/a+CRilc8Q2kdfPPT8pyewopFsKAWwVDPgiCm1+ZS754SyQ/bM5xKa9Om
- fDpQX8d0De/JllGte7FQBdg==
-X-Received: by 2002:a05:620a:25c9:b0:816:b56d:2103 with SMTP id
- af79cd13be357-816b56d2a38mr474421985a.53.1757346145478; 
- Mon, 08 Sep 2025 08:42:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwfzvHcSNZBXqHnsRvIckAtGYWnfmjTeuHo+YSv9WpDMFQuyptW0betzYcQM8XeZuU0acNZA==
-X-Received: by 2002:a05:620a:25c9:b0:816:b56d:2103 with SMTP id
- af79cd13be357-816b56d2a38mr474416785a.53.1757346144806; 
- Mon, 08 Sep 2025 08:42:24 -0700 (PDT)
+ AJvYcCVdLtyp9qbD0cJqnnc73F5tWxLUDs6h+5JMuVIyRNegDnoVyKhxWlZdgrorJyLDBS6+V+aWIxItbEUT@nongnu.org
+X-Gm-Message-State: AOJu0Yw0YseN7Joq6OMTdm9JkHJeUWtDz0VnURGtwz+1lrNhSP2RkL5O
+ b5kQuK11cZQu/zLeAznZ/OdmBISuXfnHYT1fAib8jBROu1ZccyZA0zn1oqQdiNUsPlKBaoomvYH
+ +qyKcS+30TN7qGAQiGj9zfU5kPgOqfN9SaHiohrXnn6fOrS1TfwXLwjmQ
+X-Gm-Gg: ASbGnctnwCwnt9g1WfoNEtSoyQBkJ28QbZYpbtJAJNN5CTBJALZPhBsJjFeOjzk0M6t
+ yo/acBKW5INEd51XIB9NNEvpkDtL9c8oiXM+EZd/NUXETI8nkARMdlhyQ169JoJDQoNikLKkr2S
+ aAHtAym7fgAwnH1DXkSgzmw9vqCfhH/gTq9x4fZmbey7P6bbIJ7xfVR34ggyWC4mVarQr34M9e/
+ 3b9THGo13HDt0UaEuw2NNke9WaJ9UqGZ7E3Qeh657AAyrdGoZeiIWASEDUNwA1/beZF6L0kdEGA
+ TMUfxKfizWCUnIlARYajKFCRJtN4LuYf9D7g0zGj2Q1lCp8yWsbKLQJyUR5sy0mXE6uApeodaZA
+ yOU5q6p60UmOvk5My7zUD/g==
+X-Received: by 2002:a05:620a:1a23:b0:810:a206:7e0f with SMTP id
+ af79cd13be357-813c0d092d7mr875249085a.26.1757346227862; 
+ Mon, 08 Sep 2025 08:43:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQS0pK2V1XM0husk41Q8iHOu1C3//SVnFhfiEMrSA1NN327jU5r8UhMTKPPqmv4els2etDhw==
+X-Received: by 2002:a05:620a:1a23:b0:810:a206:7e0f with SMTP id
+ af79cd13be357-813c0d092d7mr875245085a.26.1757346227303; 
+ Mon, 08 Sep 2025 08:43:47 -0700 (PDT)
 Received: from x1.local
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-816be049587sm353587285a.70.2025.09.08.08.42.23
+ af79cd13be357-80aa712bc92sm1088982885a.27.2025.09.08.08.43.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 08:42:24 -0700 (PDT)
-Date: Mon, 8 Sep 2025 11:42:23 -0400
+ Mon, 08 Sep 2025 08:43:46 -0700 (PDT)
+Date: Mon, 8 Sep 2025 11:43:45 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
  steven.sistare@oracle.com, yc-core@yandex-team.ru, mst@redhat.com,
  farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
-Subject: Re: [PATCH v3 5/9] net/tap: implement interfaces for local migration
-Message-ID: <aL75XyzSI6lEOKF3@x1.local>
+Subject: Re: [PATCH v3 6/9] virtio-net: support local tap migration
+Message-ID: <aL75seOzauBDqk5j@x1.local>
 References: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
- <20250905135039.2202924-6-vsementsov@yandex-team.ru>
+ <20250905135039.2202924-7-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250905135039.2202924-6-vsementsov@yandex-team.ru>
+In-Reply-To: <20250905135039.2202924-7-vsementsov@yandex-team.ru>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,48 +112,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 05, 2025 at 04:50:35PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> +static const VMStateDescription vmstate_tap = {
-> +    .name = "virtio-net-device",
-> +    .post_load = tap_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_FD(fd, TAPState),
-> +        VMSTATE_BOOL(using_vnet_hdr, TAPState),
-> +        VMSTATE_BOOL(has_ufo, TAPState),
-> +        VMSTATE_BOOL(has_uso, TAPState),
-> +        VMSTATE_BOOL(enabled, TAPState),
-> +        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +int tap_save(NetClientState *nc, QEMUFile *f)
-> +{
-> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> +
-> +    return vmstate_save_state(f, &vmstate_tap, s, 0);
-> +}
-> +
-> +int tap_load(NetClientState *nc, QEMUFile *f)
-> +{
-> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> +
-> +    return vmstate_load_state(f, &vmstate_tap, s, 0);
-> +}
+On Fri, Sep 05, 2025 at 04:50:36PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> @@ -3525,6 +3609,15 @@ static const VMStateDescription vmstate_virtio_net_device = {
+>           * but based on the uint.
+>           */
+>          VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
+> +        {
+> +            .name = "tap",
+> +            .info = &(const VMStateInfo) {
+> +                .name = "virtio-net vhost-user backend state",
 
-Instead of hard-coding vmstate_save_state() / vmstate_load_state(), could
-we make tap's VMSD to be a subsection of virtio-net's?
+Just randomly spot this line; likely we need s/vhost-user/tap/..
 
-Multifd already doesn't support qemufile, but only iochannels (which is the
-internal impl of qemufiles).  We might at some point start to concurrently
-load devices with multifd, then anything with qemufile will be a no-go and
-need to be serialized as legacy code in the main channel, or rewritten.
+But of course it'll be much better if this can be a subsection, as
+commented previous..
 
-IMHO it'll be great if we can avoid adding new codes operating on
-qemufiles, and also avoid adding any new custom VMSD fields' put()/get() if
-ever possible.
-
-Thanks,
+> +                .get = virtio_net_tap_load,
+> +                .put = virtio_net_tap_save,
+> +            },
+> +            .field_exists = virtio_net_is_tap_local,
+> +        },
 
 -- 
 Peter Xu
