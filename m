@@ -4,145 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5383FCA1013
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 08:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD495CA1013
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 08:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvXMC-0002wE-QN; Mon, 08 Sep 2025 04:36:12 -0400
+	id 1uvXYJ-0000YX-CG; Mon, 08 Sep 2025 04:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvXM6-0002va-Tp
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 04:36:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvXLy-0004EM-Ic
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 04:36:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757320548;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AVJhT1nItVfj9XVv+qUuQEILIU4O9PBApB6jvceYtGo=;
- b=d+jCJ8jA/d8jtuWL4Qm4ddyQEL3sAWXz7yhqfCzluSxEbqgaZK7JS141D2SgkeU7JYmohO
- Oy62/uqZozlBnb5x4fwxEDrvbkQrTSB+E8KhthkCtFsmYLjn0sk563RobNEXrjRYtXxA82
- U0owPTnIgPc9ygh1Ww+iSSzZUR+ZRno=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-IUjcqi5bMfCdf5PHFv7a6g-1; Mon, 08 Sep 2025 04:35:47 -0400
-X-MC-Unique: IUjcqi5bMfCdf5PHFv7a6g-1
-X-Mimecast-MFC-AGG-ID: IUjcqi5bMfCdf5PHFv7a6g_1757320546
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3db89e4f443so2528959f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 01:35:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uvXYH-0000Y6-7a
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 04:48:41 -0400
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uvXYB-0005jI-IL
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 04:48:40 -0400
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e96dc26dfa2so3372132276.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 01:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757321307; x=1757926107; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FDAuu3CNUOZCBZYFCrwtCnwWR/rvhmhkm5xrPmzubrM=;
+ b=VCnWL41LqJy6jknqGLya0bEI0DtG+2GH7m1JMCKW/ScCPSZWMOfCieeOB8S1zgT7cx
+ LT6q9puGWBND3oXRgdaERBWJvpCLPhRVab8hNX0NHZ1aI4KHWxwxbfAP7ujtrOmdeaeJ
+ 4ZgZqWjrgXmXYK5U7zquhJmnJwhfeRcHPYNOvBcIV948jJILbSp9c9HfWXt8e8Y37Mvt
+ 5s5C0mv3+OTbARyWBNVs+meuDCNAXIrzHf/nTUWSGlmVtvE34pk1Oo2etWigLVd7LEoi
+ r2nTasKnVFYzKgHT+Uta0rGO+6iDCVlRsGc5iiQtpMA3HEARdOgISs41jCbySgkx2dem
+ iokw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757320546; x=1757925346;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1757321307; x=1757926107;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=AVJhT1nItVfj9XVv+qUuQEILIU4O9PBApB6jvceYtGo=;
- b=WpiRUzOWcBGIuVyhFzkGVY3kwFJ6ZMy7rcTdJrhHECGXCTpYSCdLZ4VyqkDvf7MQO6
- NTghepoEbxeAdUAr9duWNQVCGlW9ZOpvwYlTLUIzEmEg+pa9q4R2rkIp/L5zX0QGtA3T
- SuDEhw4lz1lx6WOQTHkuJlCHwtnHRrR12ArH+gcUU11TE8BoL3ZhytHgmNJR3E9MAZoN
- 4kQqcupuSTUCuz7bZ5jovp39H9h2JgSv87KeEV083xXKrNIMGoJ9JglaTQqQmlZ4rgZz
- tkEKgn6+T7N5pqlPOevbXB9NZLjsIcNIlD9MjXptR/+jUgeZYDkcN/pJUenj25PIFlny
- Z1yg==
+ bh=FDAuu3CNUOZCBZYFCrwtCnwWR/rvhmhkm5xrPmzubrM=;
+ b=K0mrTz58vTDBjvmGktUj17QeJQJHGWKQ/erF8IKRDwZVMS/fwRH4xtkVhdfoZ42Q73
+ FVLTysqMdGDZf2ePyYZitdr8y4cJG246KD+0wuDgiqSiKQFLCGQkmAdBpjsKaaGer6zU
+ LzBWbYArw/QjpTqDveZ6haWAsa+QxjKVQPjtg5PhNuuHFKA0S1zDiiyqq57Pycj18PB/
+ IscOwGt4ONjBYSjmLJWqrbS3cQVbr6PUeM4hdmKnwiMBY1eIc2jzxpeoxYmoYjnOg+RK
+ sas+EYdp+Fq4Xdr1Hmv7yp9tka1Kq5E/9YdyoKKjMptN9ym4asADNL0TwpiBoH5Yhj76
+ pHOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZV6I1usdqrHpTzn73bi5OqBxVqUepVHoOjt0FVcaUE7Cth+8w3UBb0o0dX0U1Ygr/elRinPutu+KD@nongnu.org
-X-Gm-Message-State: AOJu0YyXWp8bEcEjiscftmMkZEuMNXWOw74ApoQaTQx1flR7sfaVXFHB
- zO4tePIUU/GgEpEnLA2QLzJB69ZreuF9u28QGa626jARgSKV8ebvT0tViGVzVi2xrt7b3OMBnFs
- xDbRRFCdiu4ceaeIO9iUnSL+zFe91i/ply4pSs+the1QmHdU3PyjUVTJe
-X-Gm-Gg: ASbGncsvm1MRpDG1Sjh8JK7TfXeavSPWVjTuma5uRRLE2ziM5fhAOCd3znlyMf7IfzI
- F+undO/k1/hiSB1RsNXT5520CYuAwSJAEC/N9Qd28HRqvI2E9Hj02kYwsfFg4ee1ul2fX6kLij3
- qWOfyphBTZtKPVw3bKv5yslAwvkwyzMisn054eYDEKNt9IO2leS6eKiy+UOnqV0NQP5v3iorawW
- faZHHgZE+BAIGjXvDnpc0dZjf6PgDNkrzY7kB+abZINqBe9PgFnrFNs0ybDatCKhA8TiVtVMnym
- WHNZv0v//WUSysHUdwHZjezYkqKRpcKJQEhHQeU+H0iuzcamdVz1zLC30MnWDgxEEtPkStiyUxx
- yyJY=
-X-Received: by 2002:a05:6000:210e:b0:3e7:4071:188c with SMTP id
- ffacd0b85a97d-3e740711d79mr3670430f8f.60.1757320545804; 
- Mon, 08 Sep 2025 01:35:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRohu/92Z3UreFx8UvlkJCpbGLBzZ1/OT9XUxKef7kB1P6TxC1ZtABUwrJL3CJvHJAl/q/pQ==
-X-Received: by 2002:a05:6000:210e:b0:3e7:4071:188c with SMTP id
- ffacd0b85a97d-3e740711d79mr3670404f8f.60.1757320545364; 
- Mon, 08 Sep 2025 01:35:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b8f2d3c88sm299631675e9.19.2025.09.08.01.35.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 01:35:44 -0700 (PDT)
-Message-ID: <59816b95-28dd-45c9-82d4-f72ba2ec88d7@redhat.com>
-Date: Mon, 8 Sep 2025 10:35:43 +0200
+ AJvYcCWobkMnMD8HrTmw8IYo/NmI8cL6soSYawS2dgEXy5JtkA4dFu1+EwUmjhfuQpqVu0ewtt8Pk6WwQPY9@nongnu.org
+X-Gm-Message-State: AOJu0YzDqpGWsYeFxdSSb1p8Tc4pLeXAw3dwnx06vwrnkFKpcw+giZhJ
+ /cQBm41skcTJBh5TnmLo5IywEjFKn7/gzfx6vTjSpnxQaWMaGc8/+2HCrKqoMFAKRq42MK3pmSY
+ aPaeEemIAEg2vcyqjWX0yR4Uqjp3XWUJdKaUkTB8EuA==
+X-Gm-Gg: ASbGncsq0+LzOMmo1/NKLGpDLA1f41Se30eCQMw3nTJtz+NHQGqnb/ovPQ0tXyx/ZV+
+ gT8lL0dGBf4qZgQRX+HAyneX3BWTuw3JHtaO/QhpU3CXq6Fg7V2sGCu+Klv4Y/5RvsIbENXNMgp
+ z4tHSFLjUni49gOpf1nxylZVUgyXlIniZm6NsamC9D/uzex25pBIGVsEdhn+mbhjewiMMNx3QQ4
+ ko4OCr/cwzCOhaBmDg=
+X-Google-Smtp-Source: AGHT+IGGHjfKjfu8fLIrQa7IeZstcCOQDWsBW9EKrwmICkuRRMl4GUynqDORa02yj6DOaJsoUUnuqYmLEO5qjyoSxJA=
+X-Received: by 2002:a05:690e:14c9:b0:604:3ec3:95f with SMTP id
+ 956f58d0204a3-610223a8245mr5955630d50.6.1757321307229; Mon, 08 Sep 2025
+ 01:48:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/9] vfio: Check compatibility of CPU and IOMMU address
- space width
-To: Daniel Kral <d.kral@proxmox.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-References: <20250130134346.1754143-1-clg@redhat.com>
- <20250130134346.1754143-9-clg@redhat.com>
- <DCKVZLRURSRN.2J420LH4UWMIS@proxmox.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <DCKVZLRURSRN.2J420LH4UWMIS@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250904-python-v1-1-c43b3209a0cd@google.com>
+ <6e43209d-645f-46e4-a23a-2a1ec149dfe8@redhat.com>
+In-Reply-To: <6e43209d-645f-46e4-a23a-2a1ec149dfe8@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Sep 2025 09:48:15 +0100
+X-Gm-Features: Ac12FXy6a21uRcANmXYIHCACwnCjwek8oj6_F67s_dNQR0v0TF0voNNoFpz3do8
+Message-ID: <CAFEAcA8r_dw1bBrVr1vexCb0QOm1NFmo2FPMpQEFP8RGwgqcEA@mail.gmail.com>
+Subject: Re: [PATCH] Use meson's detected python installation
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Foley <pefoley@google.com>, qemu-devel@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-block@nongnu.org, 
+ nabihestefan@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,49 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/5/25 15:04, Daniel Kral wrote:
-> On Thu Jan 30, 2025 at 2:43 PM CET, Cédric Le Goater wrote:
->> Print a warning if IOMMU address space width is smaller than the
->> physical address width. In this case, PCI peer-to-peer transactions on
->> BARs are not supported and failures of device MMIO regions are to be
->> expected.
->>
->> This can occur with the 39-bit IOMMU address space width as found on
->> consumer grade processors or when using a vIOMMU device with default
->> settings.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> 
-> Hi Cédric!
-> 
-> Some of our users are running into this with Proxmox VE, where they get
-> vfio_container_dma_map(...) = -22 errors, which are likely caused by
-> this issue of the mismatch mentioned above. Setting the guest-phys-bits
-> in accordance to the iommu aw-bits seems to fix that for users, e.g.
-> [0].
-> 
-> Before applying this downstream for pve-qemu, I saw that this patch was
-> dropped in the v3 [1], but you mentioned that this is addressed in a
-> later series. I couldn't find a direct follow-up in the archive, are
-> there any updates on this?
+On Fri, 5 Sept 2025 at 08:26, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On 9/4/25 17:11, Peter Foley wrote:
+> > Relying on `python3` to be avilable in $PATH doesn't work in some build
+> > environments. Update the build files to use the found python binary
+> > explicitly.
+>
+> Meson already does this, if the file is not executable.  See
+> docs/devel/build-system.rst:
+>
+>    Meson has a special convention for invoking Python scripts: if their
+>    first line is ``#! /usr/bin/env python3`` and the file is *not*
+>    executable, find_program() arranges to invoke the script under the
+>    same Python interpreter that was used to invoke Meson.  This is the
+>    most common and preferred way to invoke support scripts from Meson
+>    build files, because it automatically uses the value of configure's
+>    --python= option.
+>
+> Using "[python, 'foo']" is only needed for scripts "where it is
+> desirable to make the script executable (for example for test scripts
+> that developers may want to invoke from the command line, such as
+> tests/qapi-schema/test-qapi.py)".
 
+Wow, this seems like a super fragile way to do things. My
+natural expectation would be that scripts generally would
+be executable. If we accidentally make a script executable
+that meson is invoking without explicit [python, ...]
+then everything continues to work for almost everybody,
+except in this corner case where the 'python3' on the path
+is sufficiently wrong to not work: so we're likely to not
+notice the mistake for ages.
 
-Hello Daniel,
-
-There have been several changes in VFIO since this patch was
-submitted. The code will need to be reworked, as it is no longer
-possible to check the IOMMU address space width before attaching
-the device. At that stage, the IOVA ranges are still unknown.
-
-Since this affects older Intel consumer-grade CPUs (~ 12th gen),
-the priority is low. Please open an issue if this support is
-important for your users.
-
-That said, vfio_device_get_aw_bits() needs to be improved to be
-more robust. I will work on that.
-
-Thanks,
-
-C.
-
+-- PMM
 
