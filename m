@@ -4,79 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4694CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 11:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286BBCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 11:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvZbq-0003ug-5f; Mon, 08 Sep 2025 07:00:31 -0400
+	id 1uvZTR-0006xB-Gk; Mon, 08 Sep 2025 06:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvZbm-0003rc-HA
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 07:00:26 -0400
-Received: from p-east1-cluster4-host11-snip4-10.eps.apple.com ([57.103.89.113]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uvZTO-0006vI-VT
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvZbc-0007XN-RV
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 07:00:25 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPS id
- DFEAD18041AA; Mon,  8 Sep 2025 11:00:05 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=ZhcvMHIeLtSYdW7P/KUJmlBVtKauwK8EsDK0M+QAk8k=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=sWqZqhG1Toha0hCDqcgWuTZyjym5twWJmaoCi2wnXNVVJR3ELa7NuiaBXB7tWGOvZSMQfYMHzwh7cIXkJSfH71O+ZNFNjIx3hMuAZkuOG3bpvkM6fjVem2ZlMseSiRCnqlJmPgmorbSyn5nfo81k6LEh6mt0dEYoV/IyAik6DiuVu0kXdx/eRc5vGbR0p9Rka/8fLH0DcrnvvdAlrKYxYCLy4+zJD05Xa3iot8aeftPuMNhvl9y3jMTBQIEw20MV1+FZFNOkUZrPArBAfyIU3dkZccGQc20/4UoZ8jF5lxjU2eGAobSqycdgrDzoBtboU8xLFVOt0U39sMz/Ul+qbA==
-mail-alias-created-date: 1632407063367
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-10-percent-2 (Postfix) with ESMTPSA id
- C924018028A0; Mon,  8 Sep 2025 11:00:03 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH 12/24] target/arm/hvf: Mention hvf_inject_interrupts()
- must run on vCPU thread
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250903100702.16726-13-philmd@linaro.org>
-Date: Mon, 8 Sep 2025 13:00:02 +0200
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <28FD3EBA-5904-4ED6-8803-DDA6C51D1D9A@ynddal.dk>
-References: <20250903100702.16726-1-philmd@linaro.org>
- <20250903100702.16726-13-philmd@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: kDf3wwXH7nwmMi15Kr9Ud8p-rlh8abin
-X-Proofpoint-ORIG-GUID: kDf3wwXH7nwmMi15Kr9Ud8p-rlh8abin
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDExMiBTYWx0ZWRfXx2ZluTbyiRhC
- HJ8QxJqvK86IYvnDEtCg0mJuJWA42Dt7w9RMnbB+oC96+eBohIx61TBXkbZ+kbSQ9viH7sCxhPa
- xKSCzs0MgxBjhOk8O6FNOMsp/BgOGIagVuKzw1k5ALkw49XmEKP2mjlSlwDBhkUfd59bg44jbhS
- Dc70qD1k6B5mXS+opF+Gia0jn8shM4Xiw1tRIvfVE3PX/GDL7RoM2uF0Wbz9/zRSW9pZikNFgEo
- RbeGzNQGWLK865Ro0WahPemafEukk30/euhq6AXLiIkNjmGs5U4qA8eIO0cC/s9QhtASkshzA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_04,2025-09-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxlogscore=760 clxscore=1030 malwarescore=0 mlxscore=0 phishscore=0
- adultscore=0 suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2509080112
-X-JNJ: AAAAAAABd7nN5T+/pmO6W1VJefeRJbW3Jzg/y/U79dJbhD/qyuY3haTjtvmAxGH13Art7P1t4jqDrUooIcy+98eFcc+lemGOvBfv+lQ29PsaQbNkcPhDY4WxMu5mD3t4ggj0UKzLPQcdEtTE+T8DiYnup0HNOCgbx8Dv7iG+i6wH+euAriOv5gzYfZo0+dQSPrgy6B80VmEoZBcNkuyALC4EQnzptNzgNCKERqGRwOLwUyfikVZSx1m24YySzIuRNK9IVyrq35aEqJIiHs1DO6TZY997ZRUM429z4RUxraVivvDux7cunv6cdQDX9roK//5O5q+jFFOL8wryvvJgznnoYmXS9NBIu4hpXJ0q2dz9Hivq0Qxs9aHp/bQjLHVyPPm+UyqV/A48er8ZBDNoQK9LuNoWuOm1kt56OEQSK+HOib3GOjQQGzW1MRJW0tK6OIQ2JYK5izX63Jw8Z0+OOyjhuWj9PFWYHDWyvInzYwb2i9pkziRdeZnDUPppNeHoayx/RCk8oiuDNIBP2bbMz5F38Fzxvw5XemcnlRI2Fa7ETWoooc2KqLy8IBbu0sKke7NSuc4unXuEKB6c+8JEJnw/ObnIea5WuSVtPOnG0iuC/Hozs6Ja/gVv5i9aCvJHg9D/lqgDOpRsnFEMkwraMwE597zjIhXmGK3dJP5JNiYnX/XZN0UzRAT6788xkKZ6RbCWR134JlqOzdP4tBrqa653b2Ek1W+A5ABtmjIUCJN3jgtpUPA=
-Received-SPF: pass client-ip=57.103.89.113; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uvZT9-0006Cz-30
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757328686;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Mxvf/JAkYelSTZETYkXyIfdcO2Wx1B9vDdDIc3VMLwg=;
+ b=DiXYc5Im8dkLjMTKDiVeH7/wEG8FYmDDK27SaLdV0jMRQLjvvMbFbwqL6P/ZdUX1j+T0xw
+ nkNef/eVJ9xi8OsdQcwqsY2v6Lk4XVuL7QceHAoTtxwpNaZ+p6UYYBmjlT8idwbRrtY+Eo
+ nIx+5hwfIcLTfTJ5y2EOidUcmUaREYI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-5-6sIqnsdGPtqP7D3GMJsRVQ-1; Mon, 08 Sep 2025 06:51:25 -0400
+X-MC-Unique: 6sIqnsdGPtqP7D3GMJsRVQ-1
+X-Mimecast-MFC-AGG-ID: 6sIqnsdGPtqP7D3GMJsRVQ_1757328684
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3e40057d90aso1419476f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:51:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757328683; x=1757933483;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Mxvf/JAkYelSTZETYkXyIfdcO2Wx1B9vDdDIc3VMLwg=;
+ b=cWLh728r+ZaOcyv594jc6ptE4O/ygBp1K7sfMnJe4vRuIFzKgbGmP/p7KbCsaei+Xx
+ xofhvqGtWMQlYnyLv52fQ44Z7IZukrCmvV+XnuhSFXYR5ZqetSui6jbzfSo4U7jNlTF/
+ VEfEDdj11PZxemnT9Wc9IwzyWqBgXsxx2oNmIgCF4nQaG75GkdLI38sAEHVGxROio3V9
+ 1jOZmAq4D69Qydk9g/DZ+k64Sk2xsTEuLVxqnql0SznGXrdguqhd+nuLRBAhwjO4Gnnb
+ NnMS1tGqlCVXEDzxt95U836VgW+WIhSOkJq20h2Fp90L4wp9mTaZhMkkJ6eCapvtzjM/
+ V+Fw==
+X-Gm-Message-State: AOJu0YzqhJmPrJnp7Mo2qvyef1Uj9RZW8QNT6WqCj6uo+EmXWReFyAjo
+ 97irDisaRE/A3G7ENqTv3qRCy8cXZaN2m9cwDdJz6Sa1eOQHbd019g/q/vgM+5r/Ak7r3S0tf06
+ 7MaNdaSOso4y7WI2/SQqIahxjKAaqCFO5f/zWdY2vEurCHWLpmuEjgIZX2PO1YJFUEQU7NmUwqC
+ tgfvd6HYbameHmPY5BgD85nbMlVfWm3XTDLj2k13a/
+X-Gm-Gg: ASbGncv5oN+U/zJOadXrSzOu2PTK7YGa3QajXNWiSOTIgln7tdoDYTGOhTR6ZMqade1
+ FWdsbDHSPd9aNVxwwOxZ028ZpesXSnRBXJaObZT3kLjMQkrcVoeppwH3Ft+88biuKU7ZDt7UiQO
+ wju1Dsk+OGHFM0yc4CN/MRJkTX4luzEypJ41tI5C0MCnAkeOzeDxFYZ7RIOwKHYDnespHPiTIsh
+ R3QMTBcqpHp++UpslWLDvwe0SgHr3PxWmohozGeuUqiVXtq8o20aT5JNi1RCajfOmh5PrQ2P/GF
+ uUqkcGFzdys2WNTD13OVRwydJ183MLAjBeOsQbLwRzNO4yiBE221uS5HomQ7SQhiIPulAQp5LaP
+ e/lxt4xGdFd5VPZWMxGGsF0sL8FrzZhyl9RGiA9nU4K8=
+X-Received: by 2002:a5d:5d05:0:b0:3ce:f0a5:d594 with SMTP id
+ ffacd0b85a97d-3e641e3cba1mr6718259f8f.13.1757328683087; 
+ Mon, 08 Sep 2025 03:51:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFl4LGqNIWRvWJ5HHY/7bF1bcHn1LJIPfXb28/11U3xHuUCFuBKM6JD75yuRhKza2KTHiMqCA==
+X-Received: by 2002:a5d:5d05:0:b0:3ce:f0a5:d594 with SMTP id
+ ffacd0b85a97d-3e641e3cba1mr6718223f8f.13.1757328682577; 
+ Mon, 08 Sep 2025 03:51:22 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45dda4f2a0dsm133048215e9.2.2025.09.08.03.51.21
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Sep 2025 03:51:22 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 32/33] rust: meson: remove unnecessary complication in device
+ crates
+Date: Mon,  8 Sep 2025 12:50:04 +0200
+Message-ID: <20250908105005.2119297-33-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
+References: <20250908105005.2119297-1-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,17 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It is not necessary anymore to explicitly list procedural macro crates
+when doing the final link using rustc.
 
-> On 3 Sep 2025, at 12.06, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> Since hvf_inject_interrupts() calls hv_vcpu_set_pending_interrupt(),
-> which must run on a vCPU, it also must. Mention it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> target/arm/hvf/hvf.c | 1 +
-> 1 file changed, 1 insertion(+)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/meson.build | 3 ---
+ rust/hw/timer/hpet/meson.build | 3 ---
+ 2 files changed, 6 deletions(-)
 
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>=
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index 628a5238702..ffdc8af53f1 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -44,8 +44,5 @@ _libpl011_rs = static_library(
+ 
+ rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
+   link_whole: [_libpl011_rs],
+-  # Putting proc macro crates in `dependencies` is necessary for Meson to find
+-  # them when compiling the root per-target static rust lib.
+-  dependencies: [bilge_impl_rs, qemu_macros],
+   variables: {'crate': 'pl011'},
+ )])
+diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
+index b6bb9477f0c..bb64b96672e 100644
+--- a/rust/hw/timer/hpet/meson.build
++++ b/rust/hw/timer/hpet/meson.build
+@@ -16,8 +16,5 @@ _libhpet_rs = static_library(
+ 
+ rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
+   link_whole: [_libhpet_rs],
+-  # Putting proc macro crates in `dependencies` is necessary for Meson to find
+-  # them when compiling the root per-target static rust lib.
+-  dependencies: [qemu_macros],
+   variables: {'crate': 'hpet'},
+ )])
+-- 
+2.51.0
+
 
