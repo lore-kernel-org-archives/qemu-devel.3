@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCF4CAC588
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBFC5CAC588
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcfA-0000n2-MP; Mon, 08 Sep 2025 10:16:08 -0400
+	id 1uvcfd-0001Vy-9n; Mon, 08 Sep 2025 10:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcet-0000YF-Ua
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcfE-0000yT-OJ
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:16:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcen-00005g-Lb
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcf4-00007f-Vg
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:16:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757340941;
+ s=mimecast20190719; t=1757340957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ewvUTHg4npejcx2GKhTHbwQ3z+wOBpIN5iKEqdMOebo=;
- b=hXxwhE179iOL+ZuuIMlPUox0K3FbKYeLnefVCX527tLpMymJ6NOfUAfhLpBFcDBcuigCm6
- BqitSuyBXgrINMnTPZKItszMTyEnO4aQXoAEPgc6TyXHGxe4j0r4cNWEbDXCBVvtovwxDC
- pXTKk3kEh71h1iVLKQ5klY+EWBmPYPk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bl/TGPN9jya/voFmtsMmphkE0T1J4qhzJFKr5wOjRYs=;
+ b=HqKCJDxomoFlLxUMu2ORenM4AK69FuqKGKrkiaKOEykfuxFr856J7uy+/0VoXUKMSUEU+a
+ Ejrxqq9sW+9m+tevgTIsP1nhxoukR5k4ErT1wM5pNEWXuwUW4UYdhgKLNl6OKPtmOvDwJ0
+ hksftDSjrkTyAcPWXqyae2adP+LhDYo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-c0HAUtTuMH-OP1KWBU749Q-1; Mon, 08 Sep 2025 10:15:39 -0400
-X-MC-Unique: c0HAUtTuMH-OP1KWBU749Q-1
-X-Mimecast-MFC-AGG-ID: c0HAUtTuMH-OP1KWBU749Q_1757340938
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45dd66e1971so29663305e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:15:39 -0700 (PDT)
+ us-mta-464-1Uqo7oejN06AvFAVpmMLHQ-1; Mon, 08 Sep 2025 10:15:56 -0400
+X-MC-Unique: 1Uqo7oejN06AvFAVpmMLHQ-1
+X-Mimecast-MFC-AGG-ID: 1Uqo7oejN06AvFAVpmMLHQ_1757340955
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3df19a545c2so3428582f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:15:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757340938; x=1757945738;
+ d=1e100.net; s=20230601; t=1757340955; x=1757945755;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ewvUTHg4npejcx2GKhTHbwQ3z+wOBpIN5iKEqdMOebo=;
- b=j6UK94JSDaDaLzsjphx0Xsj4pQQMNGR5B5jyBieTgf0vsxAtyQhAV5iqE2c1mQvsYi
- iEjW0uH7fvSUgtKG6df+azLQGSk/3oeYTvGaYizljPrqkbbLH6fUmyQLcm8vDHLJT8Lg
- UqU891bq3poNSkz14znwUe/WBpqETWrE7DpnQhg2dwtNRBFgojlktUgK6YkdUDNtRQJj
- 0dggyHowdqA9M/aOheDH+bZLfOBx3xbRFCNDUfIMHXWvh4w1NfPbzE3L7AfirDoPLzFm
- ZCcH3WSKYiYcIjhw+iOcSndRMHXseRgzZKm3MjxXudImPrDjT0kEZM0nBs7/B7rnryB8
- 5SmA==
-X-Gm-Message-State: AOJu0Yz/lb0wMuzSeejgtLaS9btxkzBsTi9X0xflCAZY+pwSg4ilZhe5
- 40Et8tRDPOQEE2avz39nKiDl4YGuKx8Gof9OzrL+5KmsPkjSHoTExLVpXrhO3YeeGmsUQwFD97o
- Krvogd5kXeVGTJjXE9RaQK253hxQVwFmZXBowwWgqciWald8UNLpV9+n2/9rbKRZNXxp8ZsVXzh
- zYv2zRqT9GDx//h5fV0DENlWWQEVgwBrNp/A==
-X-Gm-Gg: ASbGnct2Z899/v1GPvvK6r53xx2JvLspKSXLCFOW3J++bwed3avr0QuET4svIWX05EM
- D2HJRnHw82kJ1KvWrOur3RxYzKJ/UgwafwgC5RywZHS+NcfcGqFcCk0JKIsjPlUIre+OgAbn+rt
- +JKERyGxCBeV1mIt2cFOkNAKCLMTWht5lWDrehgkYkzFl0QhxJZxVvKdk+/hFVbr74NFIzkbKJU
- 33Znjvg6XXZBJvZRfiiN+qjZup1VpuAO8K4MBX+NuELisOEs5lq+1v4fZUveDdjXJ7XHd42ONfY
- fPOUAUYAJa4oDxV1QmhFOtntsJYzLA+MCJ3ohcHSrMTLcAq54jRslIh2StOrNie90oD9TqOMba7
- 0xSw=
-X-Received: by 2002:a05:6000:1acd:b0:3e4:f194:288f with SMTP id
- ffacd0b85a97d-3e643e09089mr6249390f8f.62.1757340937683; 
- Mon, 08 Sep 2025 07:15:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/dVVz82JJ34EiHf5l8BX/a3WKjr6nCwAoT/HSu4+rwFfxL5xm93r7kKePCImLgS9zA7xUsg==
-X-Received: by 2002:a05:6000:1acd:b0:3e4:f194:288f with SMTP id
- ffacd0b85a97d-3e643e09089mr6249355f8f.62.1757340937193; 
- Mon, 08 Sep 2025 07:15:37 -0700 (PDT)
+ bh=Bl/TGPN9jya/voFmtsMmphkE0T1J4qhzJFKr5wOjRYs=;
+ b=nC7h4duW+++BHOV8LrqOTXQTRCfVTm25z9O2tYWMA9pZxNVuFiufIUlkDR+OgNXuF+
+ s8B0UtEAjWxxB0ZKx/6UdvR2RDgWK2KKPMojDX3AJmjo1M4i639FVuFz4POVGkxeLykz
+ 5gysapsePujtPTehQQf41zDRA6OpS+yPEwxPNf8FKsWUWDDCxqKLYr+NVoenVpaVlTQ/
+ OZgBELf+lKqrbL6FgBHDDB7aavax9kcrUD8V838bkJZwFyXxd2CFJjmKIlt+4IUslRps
+ +v0IzZGFa/g4H2JuRgbv2+W0HNaNKvQPkaUuXvvnCwHGQVBAluER81CDr61zu9IQDaSK
+ qu1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtQVYk3HSZhQOMJF3W8OkxI0Yup2KHQ5xXgxXte8yNgsG0dkwyAwK/4xmTIFkBkzrV/6JMteiQebOn@nongnu.org
+X-Gm-Message-State: AOJu0YxHRw0GqbxfQvbR1NLh2pQ2bF/yNspHQBGqcBCGcDF6s977YfYs
+ A9n9fUVu2TRtM1N0dia37598VsjUETHFP8AgMVPd2PwxwUChUu3B/FXCVlETstSM+RJJ+3GgyyD
+ n7YJ64ofgQarUnSqPXhhSkFEYnLK+nH32em1UZnBnzWq9Y8T1mUjLSDEA
+X-Gm-Gg: ASbGnctmmsj6X8qk34QUCKeHFP/qY5ZOewsNzN0qS+SSVclRfCd+qjRDMNEkwZ1noZd
+ 3X3FdL7+aLvichWD+DNePgA9CFHM8DYsivQzpXqaTg9+3CfQLaLLL7fjNqo+eu9EZ7kE86r63sH
+ xpbdh9++1WABPWJPu6ZBTEWES9XvhO+F5at9lDyUC8OMQQmRR8RXlssIrdb2xlp1ITpdKv0yWEq
+ V+jOoe9j6LLEF1+UIkWzWP4NghVyhQd/Xrdt0bGWsYk8owoR/TqgLVtimlgudtkjw7j5MrExtpK
+ L9txO+EOwV1KNxxaDXjeBPwKDDpQhfHRbj0CEzWIMMxRKaurnOboTeCvlxcZrY6nHzbapSKUlFC
+ wtUs=
+X-Received: by 2002:a05:6000:1aca:b0:3e1:2d70:6785 with SMTP id
+ ffacd0b85a97d-3e643ff7737mr6623010f8f.31.1757340954969; 
+ Mon, 08 Sep 2025 07:15:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEj4+gemzrpxu/u7CimqxIo9xf9O+2UaJ04GAMa8Ot1sJl62HGGcyC57oEb4hnFqpemi5NNQQ==
+X-Received: by 2002:a05:6000:1aca:b0:3e1:2d70:6785 with SMTP id
+ ffacd0b85a97d-3e643ff7737mr6622981f8f.31.1757340954536; 
+ Mon, 08 Sep 2025 07:15:54 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e74f848b10sm428857f8f.34.2025.09.08.07.15.35
+ ffacd0b85a97d-3e705508e22sm9032900f8f.49.2025.09.08.07.15.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 07:15:35 -0700 (PDT)
-Message-ID: <2990436e-e623-4daa-bcb1-6c6e03954ee1@redhat.com>
-Date: Mon, 8 Sep 2025 16:15:34 +0200
+ Mon, 08 Sep 2025 07:15:53 -0700 (PDT)
+Message-ID: <60bb61bc-13bd-461b-a368-aa6753c15edf@redhat.com>
+Date: Mon, 8 Sep 2025 16:15:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: Report an error when the 'dma_max_mappings' limit
- is reached
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <20250814153419.1643897-1-clg@redhat.com>
+Subject: Re: [PATCH] hw/vfio-user: add x-pci-class-code
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20250827190810.1645340-1-john.levon@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,19 +127,20 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250814153419.1643897-1-clg@redhat.com>
+In-Reply-To: <20250827190810.1645340-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,31 +156,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/25 17:34, Cédric Le Goater wrote:
-> The VFIO IOMMU Type1 kernel driver enforces a default IOMMU mapping
-> limit of 65535, which is configurable via the 'dma_max_mappings'
-> module parameter. When this limit is reached, QEMU issues a warning
-> and fails the mapping operation, but allows the VM to continue
-> running, potentially causing issues later. This scenario occurs with
-> SEV-SNP guests, which must update all IOMMU mappings during
-> initialization.
+On 8/27/25 21:08, John Levon wrote:
+> This new option was not added to vfio_user_pci_dev_properties, which
+> caused an incorrect class code for vfio-user devices.
 > 
-> To address this, update vfio_ram_discard_register_listener() to accept
-> an 'Error **' parameter and propagate the error to the caller. This
-> change will halt the VM immediately, at init time, with the same error
-> message.
-> 
-> Additionally, the same behavior will be enforced at runtime. While
-> this might be considered too brutal, the rarity of this case and the
-> planned removal of the dma_max_mappings module parameter make it a
-> reasonable approach.
-> 
-> Cc: Alex Williamson <alex.williamson@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Fixes: a59d06305fff ("vfio/pci: Introduce x-pci-class-code option")
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio/listener.c | 13 +++++++++----
->   1 file changed, 9 insertions(+), 4 deletions(-)
+>   hw/vfio-user/pci.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
+> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+> index be71c77729..dfaa89498d 100644
+> --- a/hw/vfio-user/pci.c
+> +++ b/hw/vfio-user/pci.c
+> @@ -406,6 +406,8 @@ static const Property vfio_user_pci_dev_properties[] = {
+>                          sub_vendor_id, PCI_ANY_ID),
+>       DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
+>                          sub_device_id, PCI_ANY_ID),
+> +    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
+> +                       class_code, PCI_ANY_ID),
+>       DEFINE_PROP_BOOL("x-send-queued", VFIOUserPCIDevice, send_queued, false),
+>       DEFINE_PROP_UINT32("x-msg-timeout", VFIOUserPCIDevice, wait_time, 5000),
+>       DEFINE_PROP_BOOL("x-no-posted-writes", VFIOUserPCIDevice, no_post, false),
+
+
 Applied to vfio-next.
 
 Thanks,
