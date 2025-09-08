@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B114CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1BDCAC586
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcdE-00087t-KK; Mon, 08 Sep 2025 10:14:09 -0400
+	id 1uvcdu-0008JE-5p; Mon, 08 Sep 2025 10:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcdD-00087P-4B
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:14:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcdq-0008Hv-Tn
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:14:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcd5-00086b-Mu
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:14:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcdi-0008Bo-Pe
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:14:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757340832;
+ s=mimecast20190719; t=1757340872;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1ipi3gqH3FrS5B47dsJQUcFLWbjqsvEmPXRy21X5yD4=;
- b=DN8sB8Zov3e4yWuEpfTlMsai5jDsCzyAQlUvPKDelHpL3+VLdUFAz+bxLuXywGk/tDjrcB
- y+03MnLAqZ/jtHgsK+U6g5OQvWpKJiAXlYTF5/YI4/QYBR81w2sNIzIQ52SywnydUXIgoZ
- RVIkSNysGvROS/GAG4nL492egBrhDD8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P746Pq4DmH41UsZx5jfPuND4CSRD4mDFfTKISjddDyE=;
+ b=SuM2b/J3B5Q27C3bbsI+PcB3EzovjS5gbmLuka4lB1aJv2c+euzUziDqvHuL505FRsAvVX
+ +NU8TGqWQsSER+Y2KzV7NfYQCMnNN6CoTWVq/6pUGuEUnmzWCiujNd2QBAzzCwiXKPiUp3
+ odX+decGJrSuJC5v8GfxIQA/3CemEAQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-HGGdSqwPP5e1YzRQlsum5A-1; Mon, 08 Sep 2025 10:13:50 -0400
-X-MC-Unique: HGGdSqwPP5e1YzRQlsum5A-1
-X-Mimecast-MFC-AGG-ID: HGGdSqwPP5e1YzRQlsum5A_1757340830
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b920a0c89so17911185e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:13:50 -0700 (PDT)
+ us-mta-20-vmdDeExGMHqFD5rIQFRHSQ-1; Mon, 08 Sep 2025 10:14:30 -0400
+X-MC-Unique: vmdDeExGMHqFD5rIQFRHSQ-1
+X-Mimecast-MFC-AGG-ID: vmdDeExGMHqFD5rIQFRHSQ_1757340870
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3e38ae5394aso2608000f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:14:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757340829; x=1757945629;
+ d=1e100.net; s=20230601; t=1757340869; x=1757945669;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1ipi3gqH3FrS5B47dsJQUcFLWbjqsvEmPXRy21X5yD4=;
- b=Oei7Zj4HA5hqJcDNALp70wr6s8dlEg0kO38WIuWQ6aIoG+RBnju3KnGh9gPgwFwDnC
- Grkmv1PTOfoSVeywE7TCEv4J5I+h6+22Po+GQ0QlqiObj5FTa0kMiEf8S6XA6dM9Suz0
- bUP2RYS74STpaQZIJmV5+laHSN5Fbj1mKcuaNkqCec+btvv/A5CHoM18gsbhGvDYYAr6
- NTveON5IyAadF8iPlKlN1fm3xpw1hSwnHXmAJ++4qq4jwPpxGtzOiaa2knm/e7flqqf5
- Q7rsws0srCSdDEduF6S7LlI8qzSrNiGcl/dAFSRyU4z1lFjHnXpKpr9VHWf5mZ+8/hMe
- Dy1w==
-X-Gm-Message-State: AOJu0YxdlyVmfmih/GNPARYiBqCg244CeI5KyDHmLH9wPnMTPNtiFTgl
- Jwd6kRDyS5rC+rMfzl4uIK2oAwhAvrrNMIn/qSvr7LtLwJpL5XIzFUpYnc2yqAJK5wZeqm88uj4
- 2Y/4kjBYnmDBdmvD9HW61KkItcZ+hLpC9wr5F6ZrvfI2ZM+XclXkJRYfI
-X-Gm-Gg: ASbGncuFeoXUH2P8zwJKPXa6e5+1qs3i4NNC17lLdLA2QGVDjEqQ+4gqlAeSE8YhRYK
- DmbyP4X0UzAh3QiYEVrmZWORAjdQXEMNJVNsZtonjoZlVVlJX3WgxsnSHoWFmjr/ruN/esFs5/a
- j0ji+7Q+rB3Snf3U3cIySHrvTSZkMaQ8KE9lgT4pCQiZQqetCbusgmDqzhyekkTaCMEUgW0hGvS
- CdcPc411dooJ2tsBG5Al/QljdqLRWyPGsUX/BbrpWKubYqmj3nwvYz9Ayn6cw03mwV+ZfFkhlaB
- XcbWYaSWnlGV82Go9SJN735+Y2pAEOPDHDQ1Hg1qXkzPjxOyPZHnWiuvDR4xaDvdCAyuxN010r6
- sa4k=
-X-Received: by 2002:a05:600c:c177:b0:45d:98be:ee91 with SMTP id
- 5b1f17b1804b1-45dddeb8f1emr63091685e9.9.1757340829654; 
- Mon, 08 Sep 2025 07:13:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFr/VwW6S1LhS38kGX3wtjg2zlQOc9j/KOV3eonzuqm3W3ukXsLI7k3EWPyLCvpaZ5+P+ZNqw==
-X-Received: by 2002:a05:600c:c177:b0:45d:98be:ee91 with SMTP id
- 5b1f17b1804b1-45dddeb8f1emr63091345e9.9.1757340829218; 
- Mon, 08 Sep 2025 07:13:49 -0700 (PDT)
+ bh=P746Pq4DmH41UsZx5jfPuND4CSRD4mDFfTKISjddDyE=;
+ b=LB9Kwv0WXTM7JVGr5GmrOO4J5EeLvoYRx1p8eoeQzkhHBMhfN7m+y2LlP3JgaZQHUN
+ blLIRHtmFsrDxyxSsyY+DeLTQZKyklWPBbvTHujHgJu2k2gkdYQIiVotf/uMxhsV2Gbd
+ 5+rO2zxwZQ3u2hosCa11HKRnMHu1WZLFTNKwUgwL5VcF+A1IrCc5DQNj4GPRA60NMG44
+ awtf0DPQh8IkkHpHQShy1lz8qcrJwTVP/zNoOlhF7pzMTAXe9rWG3GZLy3sXIqnJH4/8
+ y10NR7tDvecUam1t6/f5wF1UaniFcEd9gJQ2Bbmhik+InQJSJO9o5iMka2B38n9n/bxj
+ DVgg==
+X-Gm-Message-State: AOJu0YwHxa5UQO3CwimvAOFwvLx9jy6yRmYaeD9hOJl6Tur+tI1aMY13
+ zQ6v6W3/662t3OkoQtn3B/RAdoGPiOI0CuiESY9CAks8Lo+UF7xwSjapWE/Qox5gwwbOM5BGKK3
+ gQaDghd6f3Aabv3lrFEUX4OlLbLkqxIm4SJz1Jub05XjgUgQR44Vj/94pi6Zy3JbsX61cdiSs8p
+ ldVWuGOKNBHMxqDu2PlFroLq+8M2BUhV3GmA==
+X-Gm-Gg: ASbGnct2XUZtmc9OAU9I/Z7Nc8XYh+heTe/I1MJqzqC4MorLcf+Oj46+GaCW4tArB+m
+ Bkz7QavMJiUW9Qneu0+R7N859K7F61XS3hmKprGOk3k5xr53Qx0ZfbnfY4x35a6J2B9T0nzeDKp
+ ZUSFH9aisDXPJynfBsXyWXKfpdCfOgGhIoXhXHc6ts70AESgp2t/hEIxCVHEoNBh+lRsOxr11N7
+ JnxveP+5Ct5rR3L4LvuPlTgrPzlRq/isqtMhiyDxk0bDjs5aKwN9IMHi+VvMYwNedAvYjol7U8J
+ 0qft+ID7fYGwCyeBzUvSn43P/pa4dYnVTfGOVCgXlnauNI5959+sXVve5Lb7B1KdKs2526ZKEu5
+ 4jsI=
+X-Received: by 2002:a05:6000:26c3:b0:3e5:4da4:d894 with SMTP id
+ ffacd0b85a97d-3e64392d297mr6334087f8f.31.1757340869396; 
+ Mon, 08 Sep 2025 07:14:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4MY2F1vbKFxMpqai7LSgeJ+GP5U+//q7JKcQALmNPPW6erm07vAreTEHKXgpfBaiOMr39Zg==
+X-Received: by 2002:a05:6000:26c3:b0:3e5:4da4:d894 with SMTP id
+ ffacd0b85a97d-3e64392d297mr6334045f8f.31.1757340868949; 
+ Mon, 08 Sep 2025 07:14:28 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e8ab14esm483012085e9.21.2025.09.08.07.13.46
+ ffacd0b85a97d-3cf276d5816sm41479122f8f.25.2025.09.08.07.14.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 07:13:48 -0700 (PDT)
-Message-ID: <4b1eec13-082d-4a4d-8e45-551f1c87bcc4@redhat.com>
-Date: Mon, 8 Sep 2025 16:13:45 +0200
+ Mon, 08 Sep 2025 07:14:28 -0700 (PDT)
+Message-ID: <e864f98e-2331-4b82-8921-323c2dd7e526@redhat.com>
+Date: Mon, 8 Sep 2025 16:14:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/igd: Enable quirks when IGD is not the primary
- display
-To: Tomita Moeko <tomitamoeko@gmail.com>,
+Subject: Re: [PATCH v2 0/8] vfio: Remove 'vfio-platform'
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250813160510.23553-1-tomitamoeko@gmail.com>
+References: <20250901064631.530723-1-clg@redhat.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -127,9 +128,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250813160510.23553-1-tomitamoeko@gmail.com>
+In-Reply-To: <20250901064631.530723-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -155,21 +156,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/25 18:05, Tomita Moeko wrote:
-> Since linux 6.15, commit 41112160ca87 ("vfio/pci: match IGD devices in
-> display controller class"), IGD related regions are also exposed when
-> IGD is not primary display (device class is Display controller).
+On 9/1/25 08:46, Cédric Le Goater wrote:
+> Hello,
 > 
-> Allow IGD quirks to be enabled in this configuration so that guests can
-> have display output on IGD when it is not the primary display.
+> The VFIO_PLATFORM device type has been deprecated in the QEMU 10.0
+> timeframe. QEMU 10.2 is the time for removal.
 > 
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> The last patch moves vfio-region.h under hw/vfio since it no longer
+> needs to be a public VFIO interface.
+> 
+> Thanks,
+> 
+> C.
+> 
+> Changes in v2:
+> 
+>   - Fixed 'system/system.h' include for the arm virt machine and a
+>     couple more models
+> 
+> Cédric Le Goater (8):
+>    hw/arm/virt: Include 'system/system.h'
+>    hw/isa/superio: Include 'system/system.h'
+>    hw/mips/loongson3_virt: Include 'system/system.h'
+>    hw/mips/malta: Include 'system/system.h'
+>    vfio: Remove 'vfio-amd-xgbe' device
+>    vfio: Remove 'vfio-calxeda-xgmac' device
+>    vfio: Remove 'vfio-platform'
+>    vfio: Move vfio-region.h under hw/vfio/
+> 
+>   docs/about/deprecated.rst             |  25 -
+>   docs/about/removed-features.rst       |  25 +
+>   docs/devel/kconfig.rst                |   2 -
+>   {include/hw => hw}/vfio/vfio-region.h |   0
+>   include/hw/vfio/vfio-amd-xgbe.h       |  46 --
+>   include/hw/vfio/vfio-calxeda-xgmac.h  |  43 --
+>   include/hw/vfio/vfio-device.h         |   2 +-
+>   include/hw/vfio/vfio-platform.h       |  78 ---
+>   hw/arm/virt.c                         |   6 +-
+>   hw/core/sysbus-fdt.c                  | 383 --------------
+>   hw/isa/isa-superio.c                  |   1 +
+>   hw/mips/loongson3_virt.c              |   1 +
+>   hw/mips/malta.c                       |   1 +
+>   hw/vfio/amd-xgbe.c                    |  61 ---
+>   hw/vfio/calxeda-xgmac.c               |  61 ---
+>   hw/vfio/platform.c                    | 716 --------------------------
+>   hw/arm/Kconfig                        |   3 -
+>   hw/vfio/Kconfig                       |  16 -
+>   hw/vfio/meson.build                   |   3 -
+>   hw/vfio/trace-events                  |  11 -
+>   20 files changed, 30 insertions(+), 1454 deletions(-)
+>   rename {include/hw => hw}/vfio/vfio-region.h (100%)
+>   delete mode 100644 include/hw/vfio/vfio-amd-xgbe.h
+>   delete mode 100644 include/hw/vfio/vfio-calxeda-xgmac.h
+>   delete mode 100644 include/hw/vfio/vfio-platform.h
+>   delete mode 100644 hw/vfio/amd-xgbe.c
+>   delete mode 100644 hw/vfio/calxeda-xgmac.c
+>   delete mode 100644 hw/vfio/platform.c
+> 
 
 
-Applied to vfio-next.
+Applied 5-8 to vfio-next.
 
 Thanks,
 
 C.
+
+
 
 
