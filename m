@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6206CA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E78CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvf3X-0001HR-Pb; Mon, 08 Sep 2025 12:49:27 -0400
+	id 1uvf4X-0002mn-Ji; Mon, 08 Sep 2025 12:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvf3V-0001Gy-EI
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:49:25 -0400
+ id 1uvf4R-0002ZF-SH
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:50:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvf3R-0000r2-UN
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:49:25 -0400
+ id 1uvf4J-0001BU-DM
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:50:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350158;
+ s=mimecast20190719; t=1757350211;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=11AdguSATMcsseCEp9KXfxjhq/FQAbnMTZ4i4OMyRm8=;
- b=PLMtMlNJCPP97g2ny1w7Bgo6pO9zpikgVM+zwOsizA+KFztYCVP5eyZZ+4wpvxX3OjgKfZ
- g4a8wgTEZoJtAtsyLNAOBb74irxfVk9nEDBm01NtuiBEnB5VfkUXZS68/m2Ui/I+LpiJAg
- O8hBZixCP4R73ZRTSrzAv53tB7FfcsU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=5rh5fHfwO5asFin0dwWrFjZ61l+paqghd1bpf+BKkSA=;
+ b=XEDTPkJ7ascqMhHlc8ACmX9HDW235OBv+jbyKMqMTG4rLByqAOzuL5KvJAVKvwhRdr7/Us
+ 3VJmIVNdjfmDIB3nu6SyeX1T0h3VhD+pwNR1Vo1xqzs4sklsW2Yelr4uK7ishIGW9SY2Nf
+ cfDaj/BmP2xM1WCpko5i45FgFMAQDrc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575--DV_8ueJPEmIGKewnFF2pA-1; Mon,
- 08 Sep 2025 12:49:17 -0400
-X-MC-Unique: -DV_8ueJPEmIGKewnFF2pA-1
-X-Mimecast-MFC-AGG-ID: -DV_8ueJPEmIGKewnFF2pA_1757350156
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-xv5lSacZO-SSszYaEtKIcw-1; Mon,
+ 08 Sep 2025 12:50:08 -0400
+X-MC-Unique: xv5lSacZO-SSszYaEtKIcw-1
+X-Mimecast-MFC-AGG-ID: xv5lSacZO-SSszYaEtKIcw_1757350207
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C1081800359; Mon,  8 Sep 2025 16:49:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D49A19560B5; Mon,  8 Sep 2025 16:50:07 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.93])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C5F6619540ED; Mon,  8 Sep 2025 16:49:12 +0000 (UTC)
-Date: Mon, 8 Sep 2025 17:49:09 +0100
+ id 8E1C819540EE; Mon,  8 Sep 2025 16:50:04 +0000 (UTC)
+Date: Mon, 8 Sep 2025 17:50:01 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Cleber Rosa <crosa@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Adam Dorsey <adam.dorsey@twosixtech.com>,
- Adam Dorsey <adam@dorseys.email>
-Subject: Re: [PATCH v2 07/18] python: backport 'feat: allow setting read
- buffer limit'
-Message-ID: <aL8JBfKwfZnyJh07@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v2 08/18] python: backport 'make require() preserve
+ async-ness'
+Message-ID: <aL8JOTBAuLNfq-OQ@redhat.com>
 References: <20250903051125.3020805-1-jsnow@redhat.com>
- <20250903051125.3020805-8-jsnow@redhat.com>
+ <20250903051125.3020805-9-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903051125.3020805-8-jsnow@redhat.com>
+In-Reply-To: <20250903051125.3020805-9-jsnow@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -93,26 +92,49 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 01:11:13AM -0400, John Snow wrote:
-> From: Adam Dorsey <adam.dorsey@twosixtech.com>
+On Wed, Sep 03, 2025 at 01:11:14AM -0400, John Snow wrote:
+> This is not strictly needed functionality-wise, but doing this allows
+> sphinx to see which decorated methods are async. Without this, sphinx
+> misses the "async" classifier on generated docs, which ... for an async
+> library, isn't great.
 > 
-> Expose the limit parameter of the underlying StreamReader and StreamWriter
-> instances.
+> It does make an already gnarly function even gnarlier, though.
 > 
-> This is helpful for the use case of transferring files in and out of a VM
-> via the QEMU guest agent's guest-file-open, guest-file-read, guest-file-write,
-> and guest-file-close methods, as it allows pushing the buffer size up to the
-> guest agent's limit of 48MB per transfer.
+> So, what's going on here?
 > 
-> Signed-off-by: Adam Dorsey <adam@dorseys.email>
-> cherry picked from commit 9ba6a698344eb3b570fa4864e906c54042824cd6
-> cherry picked from commit e4d0d3f835d82283ee0e48438d1b154e18303491
-> [Squashed in linter fixups. --js]
+> A synchronous function (like require() before this patch) can return a
+> coroutine that can be awaited on, for example:
+> 
+>   def some_func():
+>       return asyncio.task(asyncio.sleep(5))
+> 
+>   async def some_async_func():
+>       await some_func()
+> 
+> However, this function is not considered to be an "async" function in
+> the eyes of the abstract syntax tree. Specifically,
+> some_func.__code__.co_flags will not be set with CO_COROUTINE.
+> 
+> The interpreter uses this flag to know if it's legal to use "await" from
+> within the body of the function. Since this function is just wrapping
+> another function, it doesn't matter much for the decorator, but sphinx
+> uses the stdlib inspect.iscoroutinefunction() to determine when to add
+> the "async" prefix in generated output. This function uses the presence
+> of CO_COROUTINE.
+> 
+> So, in order to preserve the "async" flag for docs, the require()
+> decorator needs to differentiate based on whether it is decorating a
+> sync or async function and use a different wrapping mechanism
+> accordingly.
+> 
+> Phew.
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> cherry picked from commit 40aa9699d619849f528032aa456dd061a4afa957
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  python/qemu/qmp/protocol.py   | 25 ++++++++++++++++---------
->  python/qemu/qmp/qmp_client.py | 18 ++++++++++++++----
->  2 files changed, 30 insertions(+), 13 deletions(-)
+>  python/qemu/qmp/protocol.py | 53 ++++++++++++++++++++++---------------
+>  1 file changed, 32 insertions(+), 21 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
