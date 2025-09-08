@@ -4,82 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CD2CAC586
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E25BCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvbpc-0007FC-Md; Mon, 08 Sep 2025 09:22:52 -0400
+	id 1uvc7D-0000Tz-Jp; Mon, 08 Sep 2025 09:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1uvbpZ-0007B4-2b
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:22:49 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1uvc76-0000RT-VP; Mon, 08 Sep 2025 09:40:57 -0400
+Received: from mail-bn8nam11on2060e.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::60e]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1uvbpK-0001Fv-2m
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:22:45 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20250908132220epoutp017e7a9aa2c520b00ac1fa268f206c9308~jUV1UBJfs1222112221epoutp01k
- for <qemu-devel@nongnu.org>; Mon,  8 Sep 2025 13:22:20 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20250908132220epoutp017e7a9aa2c520b00ac1fa268f206c9308~jUV1UBJfs1222112221epoutp01k
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1757337740;
- bh=knrzU4zTXN/S8XJVF6YHpcWSR50Tq3TSEQe5tajVzvg=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=vg63lgP9m5WtBYvjTpQZjdoWot1Rud8rC1IufjiJ6KqqdCULvHXaSjoOGvQ0ZOK2m
- qkXEm7XpzID+l/mQ4eqx49neXjGqduTPqfPJWv+89rMJwJTRtrpnTIjnLRqNDL1vWl
- AEYdN0pfz9spkqG+LZq1t7t6u5QfG1aOqZnzp4HU=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
- epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
- 20250908132220epcas5p1ffbdbb4c9ef7992a034859d65dc0e254~jUV03-xw00535705357epcas5p1I;
- Mon,  8 Sep 2025 13:22:20 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.95]) by
- epsnrtp03.localdomain (Postfix) with ESMTP id 4cL70W3RM7z3hhT8; Mon,  8 Sep
- 2025 13:22:19 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
- 20250908132218epcas5p3d3ed20009f5c6b0dd6d09a3797ad734f~jUVzfyrT90755907559epcas5p3v;
- Mon,  8 Sep 2025 13:22:18 +0000 (GMT)
-Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
- epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250908132217epsmtip138506816a6dccb23b458d72e1d5a945d~jUVxyjzD82205422054epsmtip1D;
- Mon,  8 Sep 2025 13:22:16 +0000 (GMT)
-Date: Mon, 8 Sep 2025 18:52:11 +0530
-From: Arpit Kumar <arpit1.kumar@samsung.com>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
- dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
- a.manzanares@samsung.com, alok.rathore@samsung.com, cpgs@samsung.com
-Subject: Re: [PATCH v3 0/2] FM-API Physical Switch Command Set Support
-Message-ID: <20250908132211.tusasxcwx45d474x@test-PowerEdge-R740xd>
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1uvc6v-0003dZ-KC; Mon, 08 Sep 2025 09:40:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=b/N+Bzeh2Z4tgmdBWe8YW4K9A4NS4hEGR1VdOhkc3pSF6LCLJAzECltYy2dugUSNJCth3Jefr4ZGZkv/XX7k33T73wOyLq0SMDnPCr8P2ji7DotjHfSpsera4RkA4PbAV4sqLBOJtZuKRt4nlHDWU0x1mVKrygJQutiHAkq0Bi9axf1Gh1MMqntynNEvTlYA2CcWdmAeNKo2FsbEjHwMOrsxBy15VP0dKSp+280SQ+x9gfE3YJ6lNng6jOwWH8upelGBXILRfAx//yl8GVNEKGNyBOpkDpxcuHzljGwwICfId59XvFtIgtVnYStRRg+789V8LbwzmDvMknQgkhXsDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yq8/dyx1iuQF2EdrQJGWLixG10qmHlPnDhMS5RcFu60=;
+ b=GixnFC6BQKn/0cPyXkk/E7+ziMPdjmZ3bUNTfbs7wczVejIlq/LmnbPvFBoGCJDfKRJkMFoqJb54yUiSM5rgJEUoVU7BefnwlXLDAcClLrQ38n4umefUMaKYv6Yo2P/S6oy588/H2LZiPmKHxMkmR7Xs2J59H+5OJpWKZ8huslver05bEHCCvBzTzdLc2HgIi/TBMMjTt2J8wu0uiKRjB3CzMB2bnTqTXr8MY45enIj0DmCFo4f4XX+bag/L1VnSXjQwV0fsFMCfPacD1LiQMIKxObIkRnoow8t8DZeFkqr17Jg1bGeSXOm9q//OSQxsU+dK+6SN+ptclJnssptKbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yq8/dyx1iuQF2EdrQJGWLixG10qmHlPnDhMS5RcFu60=;
+ b=QtYhYr+frALCuOhmupJx/qztMJdZkNqopq27oVGZtCjE26IeFfWZEiYb4ZzjAQY4j8ESJEjhrgzs/ejR4N4bd6GVe9oNWf8dXM9qRQEmFioilb6kv/las2blT8T24SgCeMO5HkoLQs6kFcT4Y0MBtHOYKZjTnlx3cHwKyObZ7g9KTQnohS6AVpDZXnhcHBltu80HX8xbRkngFHu0UTlEBr56hPntVogZ8kJkjR2AvBq6sP8adId72lIHNLqe+eiCXTFj0MTi/GGsbPTTnlZWoTEWAPmqG2kwpC6p2YmMk40+H5GsZSpLdCXvx5NqJE8aGbF1s9Nw2F58vEQm7rohjA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
+ by MW6PR12MB9000.namprd12.prod.outlook.com (2603:10b6:303:24b::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Mon, 8 Sep
+ 2025 13:40:33 +0000
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9094.017; Mon, 8 Sep 2025
+ 13:40:32 +0000
+Date: Mon, 8 Sep 2025 10:40:30 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "linuxarm@huawei.com" <linuxarm@huawei.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "shameerkolothum@gmail.com" <shameerkolothum@gmail.com>
+Subject: Re: [RFC PATCH v3 07/15] hw/arm/smmuv3: Implement get_viommu_cap()
+ callback
+Message-ID: <20250908134030.GG616306@nvidia.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-8-shameerali.kolothum.thodi@huawei.com>
+ <b13d3596-1498-462d-ab2c-1a626f050dbe@redhat.com>
+ <CH3PR12MB75482B0418C01770FAEFF56CAB0CA@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CH3PR12MB75482B0418C01770FAEFF56CAB0CA@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-ClientProxiedBy: BL0PR02CA0002.namprd02.prod.outlook.com
+ (2603:10b6:207:3c::15) To PH7PR12MB5757.namprd12.prod.outlook.com
+ (2603:10b6:510:1d0::13)
 MIME-Version: 1.0
-In-Reply-To: <20250905171252.00004c72@huawei.com>
-X-CMS-MailID: 20250908132218epcas5p3d3ed20009f5c6b0dd6d09a3797ad734f
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----6Bw0j5KOoRaxZeQKOp2dAcC2OKT3No9WZFWhMG37wfGsvvbi=_f7f1f_"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250904131926epcas5p2a363cf0604a4801038d32e7da5397da1
-References: <CGME20250904131926epcas5p2a363cf0604a4801038d32e7da5397da1@epcas5p2.samsung.com>
- <20250904131904.725758-1-arpit1.kumar@samsung.com>
- <20250905171252.00004c72@huawei.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|MW6PR12MB9000:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86e0b499-1477-4500-6bc3-08ddeedd47f7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?CFMk3MxhKBWSggoz+qt0KX4CvKWXHt5lythQDz6lx6YvvbCwYV9m5pzg1wDZ?=
+ =?us-ascii?Q?03jtp+rpzpxHdV9u9nfpmWm4XEGHtC9FpeuFwUbIKDuN/6570MepLOWaKkRx?=
+ =?us-ascii?Q?rCaS/jyNUXEjeZo7944tJOCuJZz6x3EdpOewFmrNB9KN3x4loGIK+DAQhayX?=
+ =?us-ascii?Q?8QFwQ3ld1sXT2FyZds03BtzZinWhaiqYWLfnu7QJmL1hZzJDqeGJLkfOuB7I?=
+ =?us-ascii?Q?SpglhjauQEzo8hf+qtoinw4mXOWdXjhpiLqEV75DwodCrpEWd99weHaBTZP+?=
+ =?us-ascii?Q?lnoMe1rjeFOjRNKRYBbL6C1t/KVzFGe2JLlJDQzL+aS0u7HU3vxHxiaspGzK?=
+ =?us-ascii?Q?NU+iG/j+azVLlW01Pwn7uiCdyKPc0OMSwZG/znLBbw2FG8udPBiTxTp3K7wp?=
+ =?us-ascii?Q?10pfUaNKtiBHFP9xwczLcjU5XtCle0LfREMqKhZzzPpfB+8fQNuzU02ER3pB?=
+ =?us-ascii?Q?sPCv4DUEZM8romMmPajySGPUDiV5TYgrD3K6+DH0GFOanwbOr3EyU0SObTQ5?=
+ =?us-ascii?Q?RKgH6Lf5IIItK9uFnjtgj971kbnU/j9oInCUthDFt+HbOEwbUFUp1pPvTlZ3?=
+ =?us-ascii?Q?0PtstTRiM9EAe7Bo1qXjRf/ByqcOjBovFqEAHv3c9ophhUrIw/qO1Awc8hiO?=
+ =?us-ascii?Q?mVfAjhSkJ1Dhmh+45opaDKXfQ+8S7HDe90MfH88XbX6P5MJV4Hb9jvizGW7s?=
+ =?us-ascii?Q?uwFpnz+QhQQ+ahhZSrL+ve0UQZANSlY41kfdbdzUkPuiqGuRjdNOT+ZgulS3?=
+ =?us-ascii?Q?gxH4Z3v5DuNY8bIGyTL8nfGEzPl7rmeAa/03tv0r7vES0ciUv/pGKUhUGf+e?=
+ =?us-ascii?Q?yZbZPfZ4d6vnqW4xZgqw9W+vXb6WQ8O0lgau+yRusawf1MP5olQG5y2nEk22?=
+ =?us-ascii?Q?q+UY2VZDffHT0ct2dEM+S5B7wiUNor+cKgZx0wwriQo9qZYkCuoob45NtYJY?=
+ =?us-ascii?Q?olZLbNmMbpdbBzFVDxUpMTZAEU2PyoSy0d498JeOVuhmubgPW6hF7E/2QCIf?=
+ =?us-ascii?Q?CpT6k/z+a0kaYG/+7BeXwYFb9XPE5r7/Qt2jnUOWhDTYbHLuir5LPl8fAQIR?=
+ =?us-ascii?Q?nM0XMTI7t8i0Msg0us3CRPnzGCqWF9kt1bMF1cM6g5bpvaLAmviP3adJ8bGx?=
+ =?us-ascii?Q?IsgMKsROL4wUjCcjo2PU0lISKHZQyhcGYKDPhg78WcLUaZyHKflsLfZ6vKZj?=
+ =?us-ascii?Q?oqS1XkIABJeM8RGlKuPFCv3Cwko7xvy2leH4ecYSVz1uPMmNrKfbuxhq33Iv?=
+ =?us-ascii?Q?ilbGcsdflG4KCOP2VtBZNp5UAWH+TvO1EnkhbTUmlhoGJysgxcyGoGbqeNVi?=
+ =?us-ascii?Q?09X11xE6ZWD8yY16dsu0tYOqXQM+mMTxtt45Ju0+1/MwHPB8TpSVlIthdXub?=
+ =?us-ascii?Q?+CRBmsDtzy/fQF1f0Db8YUBnlWxUVHy8WiPvXSQMbZaVlRjyfcaMhCalj0xU?=
+ =?us-ascii?Q?NnCMFe1/71A=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR12MB5757.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZsOjKpIJnCY/qL/jOTPRCWq4OJ+YP011oh+poMEOYm7FntSiUaK0PX/MUX/f?=
+ =?us-ascii?Q?Pkmi2YNssFulJE1HRIFItdPgLo6QjFEiMu1phntQGo6KvLeSnDR/qNS3j06a?=
+ =?us-ascii?Q?FLv19nDwTbfmO135e4GwHw6QKXC2K1y0L7/PaXvVk68IRr8ugNBALt2T33nk?=
+ =?us-ascii?Q?CP5QcA6jSbuqCVJn6SDINBgPPfLlAYEkDWXMN6id72BiR6jtwIGckaug9187?=
+ =?us-ascii?Q?p8QZ3VpjK3MfpHZ/dMUp9Qx9EMS1FmdouzqWnVTScoZ/mgAVYMo020WfDSyd?=
+ =?us-ascii?Q?j2Xje2DYr9ZCQqx7ZXEKoFjKZ9/S0QPuHGA7b/J10mbjGYtWhF2uyKhiMo62?=
+ =?us-ascii?Q?scnApDAT8kIu1zC+aw3PHogzqHPfE476EHPysoiGownOf/0AQrd9VpFHhp1h?=
+ =?us-ascii?Q?yB/AZFIqq4EJ3XYdRQgbfXqCrcB775urPjepJBYCSD+tbvJ1zxIrJ59eKfPP?=
+ =?us-ascii?Q?KexhSYLa1UunEjpKzkSZh+nsCPYDq9lf7kp1g7BsUSO6KWYwTuS3ZoXMwQ1I?=
+ =?us-ascii?Q?cw4Ob82nxSno1RPOdLZLqtnNVz/5+6JgSbutvRgjdKkvO549OQTRWoLaSo/V?=
+ =?us-ascii?Q?sf3Pae7jb4Q4tf+RkrIq4Ah2xybcQGb7BDSFONK60n3WIsmfSdVZMJp25gWa?=
+ =?us-ascii?Q?gSuE4Ild02TTjRBJhXiQdvYazEKmzRIUk2LzF/qnHCoyNw8t6Is0J2UVZKzk?=
+ =?us-ascii?Q?bvOb4ozvqX2v9w4cKczVpjE47zDv+PDuhOnldMKp0sEnqxzNYfRmc0dYwn6W?=
+ =?us-ascii?Q?VBbpCnd+woVcW/nCPgutDCOtpucmf4wT9k22o2PD+nuZHClRNDm06mYMLF8O?=
+ =?us-ascii?Q?OJy8nU97VCGPg7+817Jn3txI3454yqbdD7S5kfmr3Hwm5iPhSLi/NXNWML7a?=
+ =?us-ascii?Q?qFeg/EJCeTbY90kh0CLHaPwYnnOlrmN0Y13KPlP5YjuDbRn0OvGfC/1+pEcC?=
+ =?us-ascii?Q?gbQV4ufEtTJmhb44eyorXRqyKOh8CHdRrm/uJqhwYDPGz29lwQQPKoRzuRD4?=
+ =?us-ascii?Q?gA7l8bZC1PCOVUJaQRHLV5Ab7poiYV2TAy20/fKIhCgq8fOPekCsmjuW1jn+?=
+ =?us-ascii?Q?/It47jWw4rI2UJToGUlw7aD5t2Z5CZfpMdybisV1MAbb2pcYQD4dvbChpbAA?=
+ =?us-ascii?Q?doMK53kJ8+54/VgNXMir/t272zqAHo72/nO3ZeFlokPbaFO/AM6/a3vmN42n?=
+ =?us-ascii?Q?r3ck4+hhhAxoDJ5K+7D9qHuaOZ/9pZx/OekLkzdjtVlJq/zPxyMgUsoOHBd3?=
+ =?us-ascii?Q?AKIlXmFfwS9iAfV0uyViwKbnhDhaCXhtaZqApoLOaaJ/KHyTF+L15ytr9D8x?=
+ =?us-ascii?Q?oF1ZQVRlf6rNh2oSdxcX2DwE7SMGdqb6J8KGJqfggA96d/DeP3Vd0FTGJXp4?=
+ =?us-ascii?Q?JrMY6SGqhRUvsxGcFYgsGXOKWh4ATS0DtHiWwfT7YU/+f/O8d9VJ8NSwBlNK?=
+ =?us-ascii?Q?nDymj3LkemoLXIEKnav0oL1Sb8+jWtzegXGu7tc6DvD+Xl+yJfKxiqp6rope?=
+ =?us-ascii?Q?9CIEYszA7sy1S/p606ga4m5JnB51CgdMiHk/VSLAnGYDSk2pJCn+y0ja3AUL?=
+ =?us-ascii?Q?Efl401lBgNbx6+PfAQk=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86e0b499-1477-4500-6bc3-08ddeedd47f7
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2025 13:40:32.0625 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /Oipa6dCdlzAgAiA9S6RrL3czeOAKhq6FSQmUaBWE28cc6C0769I5UuUz3VjKhzZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB9000
+Received-SPF: permerror client-ip=2a01:111:f403:2414::60e;
+ envelope-from=jgg@nvidia.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,118 +176,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------6Bw0j5KOoRaxZeQKOp2dAcC2OKT3No9WZFWhMG37wfGsvvbi=_f7f1f_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
+On Mon, Sep 08, 2025 at 08:22:59AM +0000, Shameer Kolothum wrote:
+> > nit: strictly speaking couldn't we have a stage2 being used at guest
+> > level implemented by a stage1 at physical level?
+> > but it is totally fair to restrict the support.
+> 
+> Yeah it is possible I guess. But then we have to use the S2TTB to configure
+> Host SMMUv3 S1 instead of S1ContextPtr which is used now. 
 
-On 05/09/25 05:12PM, Jonathan Cameron wrote:
->On Thu,  4 Sep 2025 18:49:02 +0530
->Arpit Kumar <arpit1.kumar@samsung.com> wrote:
->
->> This patch series refactor existing support for Identify Switch Device
->> and Get Physical Port State by utilizing physical ports (USP & DSP)
->> information stored during enumeration.
->>
->> Additionally, it introduces new support for Physical Port Control
->> of FM-API based physical switch command set as per CXL spec r3.2
->> Table 8-230:Physical Switch. It primarily constitutes two logic:
->> -Assert-Deassert PERST: Assert PERST involves physical port to be in
->>  hold reset phase for minimum 100ms. No other physical port control
->>  request are entertained until Deassert PERST command for the given
->>  port is issued.
->> -Reset PPB: cold reset of physical port (completing enter->hold->exit phases).
->>
->> Tested using libcxl-mi interface[1]:
->> All active ports and all opcodes per active port is tested. Also, tested
->> against possible edge cases manually since the interface currently dosen't
->> support run time input.
->>
->> Example topology (1 USP + 3 DSP's->switch with 2 CXLType3 devices connected
->> to 2 DSP's):
->> FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
->>     -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
->>     -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
->>     -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
->>     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
->>     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
->>     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
->>     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
->>     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
->>     -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
->>     -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
->>     -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
->>     -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
->>     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
->>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
->>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
->>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
->>     -device virtio-rng-pci,bus=swport1"
->>
->> Multiple Qemu Topologies tested:
->> -without any devices connected to downstream ports.
->> -with virtio-rng-pci devices connected to downstream ports.
->> -with CXLType3 devices connected to downstream ports.
->> -with different unique values of ports (both upstream and downstream).
->>
->> Changes from v2->v3:
->> -cxl_set_port_type(): optimized storing of strucutre members.
->> -namespace defines instead of enum.
->> -Calculating size for active_port_bitmask than hardcoding to 0x20.
->> -Defined struct phy_port directly inside struct CXLUpstreamPort as pports.
->> -Renamed struct pperst to struct CXLPhyPortPerst.
->> -Optimized perst member initializations for ports inside
->>  cxl_initialize_usp_mctpcci() using active_port_bitmask.
->>
->> [1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
->>
->> The patches are generated against the Johnathan's tree
->> https://gitlab.com/jic23/qemu.git and branch cxl-2025-07-03.
->>
->> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
->
->Hi Arpit,
->
->I'll have a go (probably next week) at rebasing this rather earlier in my tree as I'd
->like to get this upstream without it having a dependency on the MCTP support.
->
->That means bring it up with the switch-cci / pcie mailbox CCI and squashing
->the MCTP bit into the patch that brings that support up later in my tree.
->
->I do plan to fix up the remaining 'feature' gap on the FMAPI/MCTP/USB
->emulation which is that it's ignoring the MTU to the host and so not
->breaking messages up as it should.  Linux doesn't care but maybe some other
->OS will. Not entirely sure when I'll get to that though and I'd like to
->move your work forward before that.
->
->Jonathan
->
->
-Hi Jonathan,
-Thanks for the review comments!
+S1 and S2 have different PTE formats, you cannot take a guest S2 table
+with S2 PTEs and have the hypervisor program it to a S1.
 
-As per my understanding from CXL spec r3.2 Table 8-215: Physical Port Control
-request is allowed only for switch FM interface and is prohibited for
-switch-cci/pcie mailbox CCI. However, if possible, should I be using
-cxl_initialize_mailbox_swcci() to initialize my perst members?
+The guest must see a SMMU with no S2 support in the IDRs.
 
-Thanks,
-Arpit.
->>
->> Arpit Kumar (2):
->>   hw/cxl: Refactored Identify Switch Device & Get Physical Port State
->>   hw/cxl: Add Physical Port Control (Opcode 5102h)
->>
->>  hw/cxl/cxl-mailbox-utils.c                | 368 +++++++++++++++-------
->>  include/hw/cxl/cxl_device.h               |  76 +++++
->>  include/hw/cxl/cxl_mailbox.h              |   1 +
->>  include/hw/pci-bridge/cxl_upstream_port.h |   9 +
->>  4 files changed, 347 insertions(+), 107 deletions(-)
->>
->
-
-------6Bw0j5KOoRaxZeQKOp2dAcC2OKT3No9WZFWhMG37wfGsvvbi=_f7f1f_
-Content-Type: text/plain; charset="utf-8"
-
-
-------6Bw0j5KOoRaxZeQKOp2dAcC2OKT3No9WZFWhMG37wfGsvvbi=_f7f1f_--
+Jason
 
