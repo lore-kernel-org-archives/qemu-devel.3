@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1779CAC586
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C391CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvZTL-0006rD-5i; Mon, 08 Sep 2025 06:51:43 -0400
+	id 1uvZTF-0006pD-1F; Mon, 08 Sep 2025 06:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZTK-0006r1-Dz
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uvZT8-0006mf-9z
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZT0-0006BB-W5
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:41 -0400
+ id 1uvZSu-000696-PW
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757328678;
+ s=mimecast20190719; t=1757328669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Njn9f+4/d6+wX8a3Px44GlfzCy4ABVK82N1+yXjOi5Y=;
- b=d77jm9jCeyggFmiOjgshym1snMK7acuAcaIoblseN/QaKDz5u781sG6cxxTWZre5w4ix7R
- ib31KxtPhYIM2F74UXufGWl60wtwTgOkfi+XNKyDE4kp0up9Ayh9R+ZgghHuSNYtYB9Lky
- ty1rcXMlZQecQlqSpxMBzuJPa6kePH0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GLjXlV6tskZf67489NweOESfqI9ttMPzYvJpnf+9hQI=;
+ b=N/O25o8nu3e5WziWub6hWHIXZmEwwu1YBBj47TFr1yDvFO7jSLyAFqnwlfH4UDNNQ7g1bf
+ LdUUcoPur/4fIBXm0+4RqQBS7ffZY3wAJuLGCtQsxsVDwiGlhjdGqH9zHZ+aIA/ZbYKS3c
+ 4LAlCvqu89D2kLP7Nr9QXPtxmg6QN/Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-3tq707zHNrexMKucJtGGoA-1; Mon, 08 Sep 2025 06:51:16 -0400
-X-MC-Unique: 3tq707zHNrexMKucJtGGoA-1
-X-Mimecast-MFC-AGG-ID: 3tq707zHNrexMKucJtGGoA_1757328676
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45cb604427fso21859505e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:51:16 -0700 (PDT)
+ us-mta-442-9FMuQBxTNfuwvuW0WEKkWA-1; Mon, 08 Sep 2025 06:50:57 -0400
+X-MC-Unique: 9FMuQBxTNfuwvuW0WEKkWA-1
+X-Mimecast-MFC-AGG-ID: 9FMuQBxTNfuwvuW0WEKkWA_1757328647
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45dde353979so10019075e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:50:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757328675; x=1757933475;
+ d=1e100.net; s=20230601; t=1757328643; x=1757933443;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Njn9f+4/d6+wX8a3Px44GlfzCy4ABVK82N1+yXjOi5Y=;
- b=IlrGw9dESUzuRIuCasqM9eFpOsLwAUfL5lL1dOK0FxfbMil8MuJi/mumFdFhRwUyJ+
- 0MQEos5Hp05irQmkDG09OKgi7P02+CU5S0lkSYU4+CKoEPPu4LeLcNVSNeW6UDb2qEJu
- xjYKMrv59pfmWB4R9Lc7Nlg5l8MIpeu2amTW2uFdD2+KFGmrH83bz4MUckIIEJVusFun
- sE+gp2VX3Q315gOny5KPmKy6wmELJYjwpz0/0wuS0kfl2yUKiyY4O7WrOfCiZtfjXnk1
- KinFrB71IaSgziX6E31a2C0ENItqr/UIXdlJjUNaPbeSLL6Blgjrap9Ire4AFVWUl8kr
- fStw==
-X-Gm-Message-State: AOJu0Yxi7G4/1Z/fiv97d3Tv/26zjB4VdGTcJC40G2AVeTMZaUOg2vAN
- YcfqohClO8yf/mjSVNjrjKiRaqJKdBWWbzg4TzWqrFWADIILiWPmeY0nsn/U08u6QQ57V9luUco
- t2GWsTXEH8VXiUjRwfnQ0KHWsGHLJ8zU3zuS/WyPySH8AI/CDnhBRAoVbau/ZTwwZIgMALg/JZs
- jrHp20cjUcWGHq/1jmOe8CEeWni95HVmPARH4txP9c
-X-Gm-Gg: ASbGnctg55KCGWU/T9cbRFFgzBPEUuzxQY+4jxETyVhxybkqg2y/+nBmzLNjQYvRtB3
- EtSt3NP3r4G/AgDdULFl8Kz2On9mis7LtWY/PS/lplKxNUQCsLHYQIehjCQ22+zrD1cFcD2JVfM
- 9vmYaV8eGDsbAL9qkjwjlxvVMen3AMhSzmng+jZJH7CXtV+/j5BF/sCSzySbrrki/qxlj8Makl1
- sdm56lP7tiXl63xr/bnBORIyBDpqsm+7qFGB332O5CtORhIF4ktdsdnqtLTOiZn4jGjfJ28YHsF
- w/PLgue03B7hLOoDlRyX8c7IFx8mhV9lyvBR/9LfNC6sS8bwSxs3pYGCXNou420xq7Eh2V7Eloh
- HK+/LMKHK+XwnUaVBvKIVozITJWm/vcH/bNLMO1BsxTw=
-X-Received: by 2002:a05:600c:3b1a:b0:456:19eb:2e09 with SMTP id
- 5b1f17b1804b1-45ddde86710mr76904915e9.8.1757328674642; 
- Mon, 08 Sep 2025 03:51:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnxtWcPDfZl9u9gjv6Uk0+feNCWuLC1vl1dCAtyRc7Zdaj+IOCmvIuwG/XHM17tG6WxwZIww==
-X-Received: by 2002:a05:600c:3b1a:b0:456:19eb:2e09 with SMTP id
- 5b1f17b1804b1-45ddde86710mr76904435e9.8.1757328673978; 
- Mon, 08 Sep 2025 03:51:13 -0700 (PDT)
+ bh=GLjXlV6tskZf67489NweOESfqI9ttMPzYvJpnf+9hQI=;
+ b=FFdJCaK0z7liYTF/gpCHxWcPztHGW+spa3Zgtnc7c2IV4XdpOqgu0/iKJmewsqBOVb
+ pKPPEPABoGZ/YK8PhbrxOuJVAtzh2rVOMUy2ltOodsFp2xmfn32seUGt8wUpHScQE6D/
+ lwXGbSzX5JJ29EcCrNQOrOcsUJ3CI9g1RhPA6R70Wss03a2SdXBsk6l07AVQHDj3L0+L
+ ugrgBpcO1TC/KNP2zLobiaYqOnFrP9JiClfuzYejV5Kb2zOGRgUItdjTsF9KP9h+heDP
+ z/rMgOUrfybjVtQn8vzzZhDJbhUbb9ptUJcW67exdLwwpoL22TAss+yet+5nsmRXwg+3
+ IO1g==
+X-Gm-Message-State: AOJu0YwcZGK9IQ+jRuSXm0tID9jQkVvsyPtKmMhmulauQmiWf9c6uaBt
+ QY09mhy2NysOupmq/KF9O+Z4qYsISnxJeTQhNJzV1S9zeoxTe2qbL2agyBwcsvjWOLA+JOksGbL
+ oWLFfhAYc0NK3SCjbizfAZUglPNiEcVUHDNfXPhBr+nhxP0n2JjRAZ7/6bKX0ZohU8TNAtwlNlf
+ qMvVVLytkdqtROsxp+LnvGue7WbgFZ2T/BekIrxpK9
+X-Gm-Gg: ASbGncup0Ih1/XrWqinOFHXt69Hl7U35phUwOXo+fR2aUxw04bFH2DgjqhXEgob/9L6
+ ibBVqicbWzSan6N6D++Vo+6Q5RjZW0789WUHUpdzFuhkxw7rYoIEE2K5Jw5bkuf8M3rzssjr6i3
+ SCMQ63AfjmSTq59Z+r0cspaitZUhpXpMRHV+YyAkJepoBGjjZGua0OZcD4ytkwNCSAoFpBaeovs
+ prrh7zoh7NPZyVfZMoY8xwCx6Z2y2EctuxBr6/EF59jK1MA2xe8GBpr9cye60nNpDKqvnS7CqxT
+ OIPwjJZ4pzmFPRIAq8x8b9eIC1N5V3DmuQrxFjiq7eY0tipmECJVs6jn/Fo98G54y3VUBFKIYP9
+ Crflqd/ZEF5zIc+IHkKsDsyxZM/zGeb5tUob/k62H1Bs=
+X-Received: by 2002:a05:600c:c4ab:b0:45d:d505:a1c3 with SMTP id
+ 5b1f17b1804b1-45dddef8c61mr55627155e9.37.1757328643403; 
+ Mon, 08 Sep 2025 03:50:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHtC0EbIvVN2Uo8L6f4KVM08w8s72nTGU/pUN86AbAuUxX4Q5/9/c2WUGqQGe/6t4Ac8h0nA==
+X-Received: by 2002:a05:600c:c4ab:b0:45d:d505:a1c3 with SMTP id
+ 5b1f17b1804b1-45dddef8c61mr55626855e9.37.1757328642826; 
+ Mon, 08 Sep 2025 03:50:42 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45dcfc481b5sm88958915e9.0.2025.09.08.03.51.12
+ ffacd0b85a97d-3cf34493b8csm40295573f8f.59.2025.09.08.03.50.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 03:51:12 -0700 (PDT)
+ Mon, 08 Sep 2025 03:50:41 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 28/33] rust: repurpose qemu_api -> tests
-Date: Mon,  8 Sep 2025 12:50:00 +0200
-Message-ID: <20250908105005.2119297-29-pbonzini@redhat.com>
+Subject: [PATCH 15/33] rust: move Cell vmstate impl
+Date: Mon,  8 Sep 2025 12:49:47 +0200
+Message-ID: <20250908105005.2119297-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,454 +112,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The crate purpose is only to provide integration tests at this point,
-that can't easily be moved to a specific crate.
-
-It's also often a good practice to have a single integration test crate
-(see for ex https://github.com/rust-lang/cargo/issues/4867)
-
-Drop README.md, use docs/devel/rust.rst instead.
+This will allow to split vmstate to a standalone crate next.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250827104147.717203-20-marcandre.lureau@redhat.com
+Link: https://lore.kernel.org/r/20250827104147.717203-10-marcandre.lureau@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- rust/qemu-api/wrapper.h                       | 53 -------------
- rust/Cargo.lock                               | 30 ++++----
- rust/Cargo.toml                               |  2 +-
- rust/meson.build                              |  4 +-
- rust/qemu-api/.gitignore                      |  2 -
- rust/qemu-api/README.md                       | 19 -----
- rust/qemu-api/build.rs                        |  1 -
- rust/qemu-api/meson.build                     | 75 -------------------
- rust/qemu-api/src/bindings.rs                 | 33 --------
- rust/qemu-api/src/lib.rs                      | 18 -----
- rust/qemu-api/src/prelude.rs                  |  5 --
- rust/{qemu-api => tests}/Cargo.toml           |  7 +-
- rust/tests/meson.build                        | 14 ++++
- .../tests/vmstate_tests.rs                    |  0
- 15 files changed, 35 insertions(+), 230 deletions(-)
- delete mode 100644 rust/qemu-api/wrapper.h
- delete mode 100644 rust/qemu-api/.gitignore
- delete mode 100644 rust/qemu-api/README.md
- delete mode 120000 rust/qemu-api/build.rs
- delete mode 100644 rust/qemu-api/meson.build
- delete mode 100644 rust/qemu-api/src/bindings.rs
- delete mode 100644 rust/qemu-api/src/lib.rs
- delete mode 100644 rust/qemu-api/src/prelude.rs
- rename rust/{qemu-api => tests}/Cargo.toml (78%)
- create mode 100644 rust/tests/meson.build
- rename rust/{qemu-api => tests}/tests/vmstate_tests.rs (100%)
+ rust/qemu-api/src/cell.rs    |  6 +++++-
+ rust/qemu-api/src/vmstate.rs | 14 +++++++-------
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 92cf6929bd8..de4f858df68 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3518,11 +3518,11 @@ F: rust/chardev/
- F: rust/common/
- F: rust/hw/core/
- F: rust/migration/
--F: rust/qemu-api
- F: rust/qemu-macros/
- F: rust/qom/
- F: rust/rustfmt.toml
- F: rust/system/
-+F: rust/tests/
- F: rust/util/
- F: scripts/get-wraps-from-cargo-registry.py
+diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
+index 148a13e3f56..9943d7286b6 100644
+--- a/rust/qemu-api/src/cell.rs
++++ b/rust/qemu-api/src/cell.rs
+@@ -221,7 +221,7 @@
+     ptr::NonNull,
+ };
  
-diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
-deleted file mode 100644
-index 7c9c20b14fe..00000000000
---- a/rust/qemu-api/wrapper.h
-+++ /dev/null
-@@ -1,53 +0,0 @@
--/*
-- * QEMU System Emulator
-- *
-- * Copyright (c) 2024 Linaro Ltd.
-- *
-- * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--
--/*
-- * This header file is meant to be used as input to the `bindgen` application
-- * in order to generate C FFI compatible Rust bindings.
-- */
--
--#ifndef __CLANG_STDATOMIC_H
--#define __CLANG_STDATOMIC_H
--/*
-- * Fix potential missing stdatomic.h error in case bindgen does not insert the
-- * correct libclang header paths on its own. We do not use stdatomic.h symbols
-- * in QEMU code, so it's fine to declare dummy types instead.
-- */
--typedef enum memory_order {
--  memory_order_relaxed,
--  memory_order_consume,
--  memory_order_acquire,
--  memory_order_release,
--  memory_order_acq_rel,
--  memory_order_seq_cst,
--} memory_order;
--#endif /* __CLANG_STDATOMIC_H */
--
--#include "qemu/osdep.h"
--#include "qemu-io.h"
--#include "exec/memattrs.h"
--#include "hw/char/pl011.h"
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 2018d13fbf5..ac79c6a34a9 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -187,21 +187,6 @@ dependencies = [
-  "unicode-ident",
- ]
+-use crate::bindings;
++use crate::{bindings, impl_vmstate_transparent};
  
--[[package]]
--name = "qemu_api"
--version = "0.1.0"
--dependencies = [
-- "bql",
-- "chardev",
-- "common",
-- "hwcore",
-- "migration",
-- "qemu_macros",
-- "qom",
-- "system",
-- "util",
--]
--
- [[package]]
- name = "qemu_macros"
- version = "0.1.0"
-@@ -252,6 +237,21 @@ dependencies = [
-  "util",
- ]
+ /// An internal function that is used by doctests.
+ pub fn bql_start_test() {
+@@ -456,6 +456,8 @@ pub fn take(&self) -> T {
+     }
+ }
  
-+[[package]]
-+name = "tests"
-+version = "0.1.0"
-+dependencies = [
-+ "bql",
-+ "chardev",
-+ "common",
-+ "hwcore",
-+ "migration",
-+ "qemu_macros",
-+ "qom",
-+ "system",
-+ "util",
-+]
++impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
 +
- [[package]]
- name = "unicode-ident"
- version = "1.0.12"
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index b2a5c230fa2..d8183c614d4 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -6,13 +6,13 @@ members = [
-     "common",
-     "migration",
-     "qemu-macros",
--    "qemu-api",
-     "qom",
-     "system",
-     "hw/core",
-     "hw/char/pl011",
-     "hw/timer/hpet",
-     "util",
-+    "tests",
- ]
+ /// A mutable memory location with dynamically checked borrow rules,
+ /// protected by the Big QEMU Lock.
+ ///
+@@ -764,6 +766,8 @@ fn from(t: T) -> BqlRefCell<T> {
+     }
+ }
  
- [workspace.package]
-diff --git a/rust/meson.build b/rust/meson.build
-index 9f6a0b161d2..bd9b9cb83ea 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -18,8 +18,6 @@ quote_rs_native = dependency('quote-1-rs', native: true)
- syn_rs_native = dependency('syn-2-rs', native: true)
- proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
++impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
++
+ struct BorrowRef<'b> {
+     borrow: &'b Cell<BorrowFlag>,
+ }
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 4e1086779ac..ce42b031bc1 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -124,7 +124,8 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
+ /// * scalar types (integer and `bool`)
+ /// * the C struct `QEMUTimer`
+ /// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
+-///   [`BqlCell`], [`BqlRefCell`]
++///   [`BqlCell`](crate::cell::BqlCell),
++///   [`BqlRefCell`](crate::cell::BqlRefCell)),
+ /// * a raw pointer to any of the above
+ /// * a `NonNull` pointer, a `Box` or an [`Owned`](crate::qom::Owned) for any of
+ ///   the above
+@@ -254,14 +255,15 @@ unsafe impl $crate::vmstate::VMState for $tuple {
  
--qemuutil_rs = qemuutil.partial_dependency(link_args: true, links: true)
--
- genrs = []
+ // Transparent wrappers: just use the internal type
  
- subdir('common')
-@@ -32,7 +30,7 @@ subdir('qom')
- subdir('system')
- subdir('chardev')
- subdir('hw/core')
--subdir('qemu-api')
-+subdir('tests')
++#[macro_export]
+ macro_rules! impl_vmstate_transparent {
+     ($type:ty where $base:tt: VMState $($where:tt)*) => {
+-        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+-            const BASE: VMStateField = VMStateField {
++        unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmstate::VMState $($where)* {
++            const BASE: $crate::vmstate::VMStateField = $crate::vmstate::VMStateField {
+                 size: mem::size_of::<$type>(),
+-                ..<$base as VMState>::BASE
++                ..<$base as $crate::vmstate::VMState>::BASE
+             };
+-            const VARRAY_FLAG: VMStateFlags = <$base as VMState>::VARRAY_FLAG;
++            const VARRAY_FLAG: $crate::bindings::VMStateFlags = <$base as $crate::vmstate::VMState>::VARRAY_FLAG;
+         }
+     };
+ }
+@@ -269,8 +271,6 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+ impl_vmstate_transparent!(std::cell::Cell<T> where T: VMState);
+ impl_vmstate_transparent!(std::cell::UnsafeCell<T> where T: VMState);
+ impl_vmstate_transparent!(std::pin::Pin<T> where T: VMState);
+-impl_vmstate_transparent!(crate::cell::BqlCell<T> where T: VMState);
+-impl_vmstate_transparent!(crate::cell::BqlRefCell<T> where T: VMState);
+ impl_vmstate_transparent!(crate::cell::Opaque<T> where T: VMState);
  
- subdir('hw')
- 
-diff --git a/rust/qemu-api/.gitignore b/rust/qemu-api/.gitignore
-deleted file mode 100644
-index df6c2163e03..00000000000
---- a/rust/qemu-api/.gitignore
-+++ /dev/null
-@@ -1,2 +0,0 @@
--# Ignore generated bindings file overrides.
--/src/bindings.inc.rs
-diff --git a/rust/qemu-api/README.md b/rust/qemu-api/README.md
-deleted file mode 100644
-index ed1b7ab263d..00000000000
---- a/rust/qemu-api/README.md
-+++ /dev/null
-@@ -1,19 +0,0 @@
--# QEMU bindings and API wrappers
--
--This library exports helper Rust types, Rust macros and C FFI bindings for internal QEMU APIs.
--
--The C bindings can be generated with `bindgen`, using this build target:
--
--```console
--$ make bindings.inc.rs
--```
--
--## Generate Rust documentation
--
--Common Cargo tasks can be performed from the QEMU build directory
--
--```console
--$ make clippy
--$ make rustfmt
--$ make rustdoc
--```
-diff --git a/rust/qemu-api/build.rs b/rust/qemu-api/build.rs
-deleted file mode 120000
-index 71a3167885c..00000000000
---- a/rust/qemu-api/build.rs
-+++ /dev/null
-@@ -1 +0,0 @@
--../util/build.rs
-\ No newline at end of file
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-deleted file mode 100644
-index fe81f16d990..00000000000
---- a/rust/qemu-api/meson.build
-+++ /dev/null
-@@ -1,75 +0,0 @@
--_qemu_api_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h, '--features', files('Cargo.toml'),
--  capture: true, check: true).stdout().strip().splitlines()
--
--c_enums = [
--  'MemoryDeviceInfoKind',
--]
--_qemu_api_bindgen_args = []
--foreach enum : c_enums
--  _qemu_api_bindgen_args += ['--rustified-enum', enum]
--endforeach
--
--blocked_type = [
--  'Chardev',
--  'Error',
--  'MemTxAttrs',
--  'MemoryRegion',
--  'ObjectClass',
--  'VMStateDescription',
--  'device_endian',
--]
--foreach type: blocked_type
--  _qemu_api_bindgen_args += ['--blocklist-type', type]
--endforeach
--
--# TODO: Remove this comment when the clang/libclang mismatch issue is solved.
--#
--# Rust bindings generation with `bindgen` might fail in some cases where the
--# detected `libclang` does not match the expected `clang` version/target. In
--# this case you must pass the path to `clang` and `libclang` to your build
--# command invocation using the environment variables CLANG_PATH and
--# LIBCLANG_PATH
--_qemu_api_bindings_inc_rs = rust.bindgen(
--  input: 'wrapper.h',
--  dependencies: common_ss.all_dependencies(),
--  output: 'bindings.inc.rs',
--  include_directories: bindings_incdir,
--  bindgen_version: ['>=0.60.0'],
--  args: bindgen_args_common + _qemu_api_bindgen_args,
--  )
--
--_qemu_api_rs = static_library(
--  'qemu_api',
--  structured_sources(
--    [
--      'src/lib.rs',
--      'src/bindings.rs',
--      'src/prelude.rs',
--    ],
--    {'.' : _qemu_api_bindings_inc_rs},
--  ),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: _qemu_api_cfg,
--  dependencies: [anyhow_rs, bql_rs, chardev_rs, common_rs, foreign_rs, hwcore_rs, libc_rs, migration_rs, qemu_macros,
--                 qom_rs, system_rs, util_rs, hwcore],
--)
--
--qemu_api_rs = declare_dependency(link_with: [_qemu_api_rs],
--  dependencies: [qemu_macros, qom, hwcore, chardev, migration])
--
--test('rust-qemu-api-integration',
--    executable(
--        'rust-qemu-api-integration',
--        files('tests/vmstate_tests.rs'),
--        override_options: ['rust_std=2021', 'build.rust_std=2021'],
--        rust_args: ['--test'],
--        install: false,
--        dependencies: [bql_rs, common_rs, util_rs, migration_rs, qom_rs, qemu_api_rs]),
--    args: [
--        '--test', '--test-threads', '1',
--        '--format', 'pretty',
--    ],
--    protocol: 'rust',
--    suite: ['unit', 'rust'])
-diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
-deleted file mode 100644
-index 9c863e9b5b4..00000000000
---- a/rust/qemu-api/src/bindings.rs
-+++ /dev/null
-@@ -1,33 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--#![allow(
--    dead_code,
--    improper_ctypes_definitions,
--    improper_ctypes,
--    non_camel_case_types,
--    non_snake_case,
--    non_upper_case_globals,
--    unnecessary_transmutes,
--    unsafe_op_in_unsafe_fn,
--    clippy::pedantic,
--    clippy::restriction,
--    clippy::style,
--    clippy::missing_const_for_fn,
--    clippy::ptr_offset_with_cast,
--    clippy::useless_transmute,
--    clippy::missing_safety_doc,
--    clippy::too_many_arguments
--)]
--
--//! `bindgen`-generated declarations.
--
--use chardev::bindings::Chardev;
--use migration::bindings::VMStateDescription;
--use qom::bindings::ObjectClass;
--use system::bindings::{device_endian, MemTxAttrs, MemoryRegion};
--use util::bindings::Error;
--
--#[cfg(MESON)]
--include!("bindings.inc.rs");
--
--#[cfg(not(MESON))]
--include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-deleted file mode 100644
-index 21b886035f3..00000000000
---- a/rust/qemu-api/src/lib.rs
-+++ /dev/null
-@@ -1,18 +0,0 @@
--// Copyright 2024, Linaro Limited
--// Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--#![cfg_attr(not(MESON), doc = include_str!("../README.md"))]
--#![deny(clippy::missing_const_for_fn)]
--
--#[rustfmt::skip]
--pub mod bindings;
--
--// preserve one-item-per-"use" syntax, it is clearer
--// for prelude-like modules
--#[rustfmt::skip]
--pub mod prelude;
--
--// Allow proc-macros to refer to `::qemu_api` inside the `qemu_api` crate (this
--// crate).
--extern crate self as qemu_api;
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-deleted file mode 100644
-index 8db56f9f817..00000000000
---- a/rust/qemu-api/src/prelude.rs
-+++ /dev/null
-@@ -1,5 +0,0 @@
--// Copyright 2024 Red Hat, Inc.
--// Author(s): Paolo Bonzini <pbonzini@redhat.com>
--// SPDX-License-Identifier: GPL-2.0-or-later
--
--//! Commonly used traits and types for QEMU.
-diff --git a/rust/qemu-api/Cargo.toml b/rust/tests/Cargo.toml
-similarity index 78%
-rename from rust/qemu-api/Cargo.toml
-rename to rust/tests/Cargo.toml
-index 9abb88aa1f8..8d106d896d7 100644
---- a/rust/qemu-api/Cargo.toml
-+++ b/rust/tests/Cargo.toml
-@@ -1,12 +1,11 @@
- [package]
--name = "qemu_api"
-+name = "tests"
- version = "0.1.0"
--authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
--description = "Rust bindings for QEMU"
--readme = "README.md"
-+description = "Rust integration tests for QEMU"
- resolver = "2"
- publish = false
- 
-+authors.workspace = true
- edition.workspace = true
- homepage.workspace = true
- license.workspace = true
-diff --git a/rust/tests/meson.build b/rust/tests/meson.build
-new file mode 100644
-index 00000000000..00688c66fb1
---- /dev/null
-+++ b/rust/tests/meson.build
-@@ -0,0 +1,14 @@
-+test('rust-integration',
-+    executable(
-+        'rust-integration',
-+        files('tests/vmstate_tests.rs'),
-+        override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+        rust_args: ['--test'],
-+        install: false,
-+        dependencies: [bql_rs, common_rs, util_rs, migration_rs, qom_rs]),
-+    args: [
-+        '--test', '--test-threads', '1',
-+        '--format', 'pretty',
-+    ],
-+    protocol: 'rust',
-+    suite: ['unit', 'rust'])
-diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-similarity index 100%
-rename from rust/qemu-api/tests/vmstate_tests.rs
-rename to rust/tests/tests/vmstate_tests.rs
+ #[macro_export]
 -- 
 2.51.0
 
