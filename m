@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C78FCAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A5CCA1013
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvYvs-00079l-Nq; Mon, 08 Sep 2025 06:17:08 -0400
+	id 1uvYwA-0007P6-Qt; Mon, 08 Sep 2025 06:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvYvq-00077b-OY
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:17:06 -0400
-Received: from p-east1-cluster3-host10-snip4-10.eps.apple.com ([57.103.91.231]
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvYw1-0007FE-1K
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:17:17 -0400
+Received: from p-east1-cluster7-host8-snip4-10.eps.apple.com ([57.103.88.83]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvYva-0001SI-F6
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:17:06 -0400
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uvYvv-0001Uj-J8
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:17:16 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPS id
- 31A941800169; Mon,  8 Sep 2025 10:16:37 +0000 (UTC)
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-1 (Postfix) with ESMTPS id
+ 3EC9018020C4; Mon,  8 Sep 2025 10:17:04 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=gj9ml0/2lblHAxAhDYnyGNFn4jVdTh3IeNEmfEK8+k0=;
+ bh=CbWo/lKy2ZE+lS5eXQPdvDbVqc1KV/Sm1xufJOU6lS4=;
  h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=GB7M/E/DP8/SdOCoNGe0GXixz1rcaaw4l9ttOZ92i3BJTW7mspuAxCR0D0SsxAi2gfmB2DltBF8apK3XxLTSyD2yf3jZ4BFrOj3IZUuHBMqqLSvpKjySQdu3P76O2lyDZAqUGALnBfrxA+Y0R+3TKJGifRMlENxw5wrLW5lYUJlg2DenY5EOVR6f+9acoFPFo+snB8g/1UuQI1pweV93nuEfewPVVoehyHRt9ezM+YWlRP8Aqau8dvftQ2Z22MpJsnJGu2v+3nrOlAd+Vs2j56AHgTYUIj5b1wDDnyIr+dEqXwD+F/5wbO8qHzMHPLddBXlgXgb8zz7kpCfYq/UbUA==
+ b=Q3NiX7AAFs2wzlL1BceJESJhv/fhqY+ogsk1dErJ9Bzyb2MEUIkmDscwCt32l+2+I1YbEnYEG/ZY+YxwwkwVFf10tWHjQGV1T1NTB08Qglyl/rp4U3QHdu659xWgKhGZZWTouIqK/Eg3FDk0Hflgs11udu30FR9EkuvLbFi3tBFKVs7obMI6QMkiMKYG9NatLwVAT7VkRP24u6gn1WG4RrF2RLiT8V2swdA1Q9P6XuXVYFcJ9YvYO5wWNEw6QPdaQWO0Bs7kSSQLWsnxZneqPEP7PoXyGrvWhqqQtbbzVUtlPZyfO80ZJoSVIsawYWGshAZjRBoZJzKAicdjUG+Apg==
 mail-alias-created-date: 1632407063367
 Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
  [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPSA id
- 1A0B91801CA4; Mon,  8 Sep 2025 10:16:34 +0000 (UTC)
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-1 (Postfix) with ESMTPSA id
+ 47DAC18020D8; Mon,  8 Sep 2025 10:17:02 +0000 (UTC)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH 09/24] target/arm/hvf: Mention hvf_sync_vtimer() must run
- on vCPU thread
+Subject: Re: [PATCH 04/24] accel/hvf: Rename hvf_vcpu_exec() ->
+ hvf_arch_vcpu_exec()
 From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250903100702.16726-10-philmd@linaro.org>
-Date: Mon, 8 Sep 2025 12:16:33 +0200
+In-Reply-To: <20250903100702.16726-5-philmd@linaro.org>
+Date: Mon, 8 Sep 2025 12:17:00 +0200
 Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -47,37 +47,36 @@ Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
  Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
  Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <86BC1B89-31B0-43B7-ADBB-947A0DEEDFDD@ynddal.dk>
+Message-Id: <F1C5A4F0-F0D6-4E6B-A9EE-5498346C9F2E@ynddal.dk>
 References: <20250903100702.16726-1-philmd@linaro.org>
- <20250903100702.16726-10-philmd@linaro.org>
+ <20250903100702.16726-5-philmd@linaro.org>
 To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: P8HZrt2TBpitYq8EDfJIN2i987X5gRq7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDEwNCBTYWx0ZWRfXzQ84NUvAnCeu
- /mCyPdKuuM2PPX4qTS6UygQ0Kp1CiffIli5Jewnuj7NRN0pJjT5ufkDsggRbOpBY1024f9A39r3
- XxtLalZoXG/nmU3Ruz4mnyzGyh9QACCefllOH38tRSZf24epaxtfgIiv7/el8OrINzK5Hy3JNNp
- Juk5+M8Rmu2wNHxA8TdsGTEe6plNYx7mfHAxEqnP5sZWHuR1SHYvRKG8jrdpvblKdpCcjnL/oSw
- MIppBfCVzYPOrCuuL4A0GSsS1UvSEyMRhviYY/+GWi3mNpJSXXgcWntxLuXcqjL18uG33KOGE=
-X-Proofpoint-ORIG-GUID: P8HZrt2TBpitYq8EDfJIN2i987X5gRq7
+X-Proofpoint-GUID: VSgn3KsNan0Ov-amgzmOUHBOjQW2kJXj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDEwNCBTYWx0ZWRfX73Ep1YKXclic
+ yP+xu7bChOGan4XH2EA3rZ+7AKv2JwLvG52BmP0jjQY7Djs2/9HrdPD0IJ+sjuoiYClUfmXmaMl
+ 9wrznJwV/FaYQUFZ6SSlexxxs+q7DGaA0X8OPGZ/N6Gg4QjgI3dPvwHUAwD666aiI9yh9/fPQA9
+ V4g8nTi3Ti1OYRLKrwzb6+ZfqqOd+YLjsEIwGqrKsDddYITYYcr8WvPCVdgfg8lRtk78C5WkHf5
+ Qqyhq0SzUDn5g4B06H+JpijXmlPbHStRk7QRHeetVZ9ixdr/uY563RY1l6J1UMJjnRqiJMjG8=
+X-Proofpoint-ORIG-GUID: VSgn3KsNan0Ov-amgzmOUHBOjQW2kJXj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-08_03,2025-09-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxscore=0 spamscore=0 mlxlogscore=955 phishscore=0
- malwarescore=0
- adultscore=0 bulkscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 mlxlogscore=949 malwarescore=0
+ adultscore=0 clxscore=1030 mlxscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.22.0-2506270000 definitions=main-2509080104
-X-JNJ: AAAAAAABNqm1MHQKcjvdkNdVHH3MhcJVL+94dtfZZ3MZnQ+ws3LTMPyAKyIld2zFSHz68Neq/tFfNkTBO1hejLXILAPXw1cMgJDgvsi7DHKuksu3B7QUr3Sg0ozcBvJprcyRLCKKRM3Xhn6/Ux5c7ao5FxUrEdaF4goGNx0kf8YvXCHSKNpLrI9ys2y6tB9I8yxi7Cne9hgbmZc1xhjcCpefFgD8nhjZtQyQpbE5pILi9Jws+Cq7JviNWvHeEWVKJGsPhS2kyRNx/0Sb3CEKekm7CSxp1OSJHKd+L9H0sERGYZBlD61B39o3JRwPfjJO6pjn2yfSMsVuma6B3TxhPs6fx2kVatySwzXmadYVR4Cne00Fjhaqb5lp+d82io9LVNbjXjT8on8oRTmwOzrQoiXE8Hj7FbDUC4oO0LsxiqphQ/141rrgpYD4/tCaHWq7WmkZdSLQnguodV3q7Sx+Xe0RSOsgkq+iQz8CsE8EauWtnD/hok7IGlQH+33Wu9eOXD1Y5QVlmDqxf32gR1R0b8U7W9unQhZV5w/KAecHNYP8rCv5PiShwOIcdowm8sDXi6kfpvdl239RF9uwvwafrw0NLuMSs+wmWs/FQDGGy5KSwmCAoQBlrht+6NpN2OpReohnyBj2jIWFRVJDQzcFf/AB4HvmomR+F7m7ynKxfTxNcVaRUUrwvsWDyiDUrbHB1IlWij2+o1E8migjjHcMROZ5afluwy8Qxzn2fSLN
-Received-SPF: pass client-ip=57.103.91.231; envelope-from=mads@ynddal.dk;
+X-JNJ: AAAAAAABIvMHl0Wh6DLxuiLJ1GJv9gHk25gl9h3Cz6pgP1HMv2Ia+3nSu+9z/LpU7UZK9GgBVl1ltgZZ/UkqLD7UVPIIWoQXSlqfoikaJDlyfc0PEjY0szaJxok9yRHBHRGSLTwJFHCqeTrXUf9R7UmE29FpbMEOsNYOer/5LTjTBIbiwoMtRF0N63ybSQ97vtIF+4SeFaYLmTeocc8B8N4K3x/mZ2xnRYoCocBdfoATlxoRDGuVqkxUxnkSLH4k6OUCJ3V3Eziv3ZFsMt4ii1+k+7654N8THCJiz8Eq6vGiByUaspVJRSUVMJSZ6D7fczCBUpjt7xai8m8Vfb73nYgpALGWEf6iCYsdzYErwfpEt/ZmbdcI2Ac0+4gySso75u7MSPk5oCIkGb8KrwsbV1CgolX44+bsL+UvskBCaf0pVMHRrDueU7D4eN6IFPNbaPOeWpwMe2tt2wHiFIBwTw96c7lrr7LQMtDs+96MlVgIkJSP02boMplN77BhIoBdSf6GEXcMxfMgyclrgptr/IKHudRtSN6JmK8qg79+ydbIIECR17qgwj3H/NIhC8cgetzmRfevQPtlM+yrHmnzpVTGRb8bXnuNWkN9ugPUU3seftAe03GBMvtGKWxwE5da9tVMaJAxZPVpls8DtrYh6kHscuDHfioemitcwfFtV36GYFkcPtE0pLaUjJ2tk7Zzd8dXUW2IU9XBGH6dk/Mw463gvDyz25lG
+Received-SPF: pass client-ip=57.103.88.83; envelope-from=mads@ynddal.dk;
  helo=outbound.ci.icloud.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,13 +96,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > On 3 Sep 2025, at 12.06, Philippe Mathieu-Daud=C3=A9 =
 <philmd@linaro.org> wrote:
 >=20
-> Since hvf_sync_vtimer() calls hv_vcpu_get_sys_reg(),
-> which must run on a vCPU, it also must. Mention it.
+> hvf_vcpu_exec() is implemented per target, rename it as
+> hvf_arch_vcpu_exec(), following the per target pattern.
+>=20
+> Since it calls hv_vcpu_run(), mention it must be called
+> on the vCPU.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
-> target/arm/hvf/hvf.c | 1 +
-> 1 file changed, 1 insertion(+)
+> include/system/hvf_int.h  | 4 +++-
+> accel/hvf/hvf-accel-ops.c | 2 +-
+> target/arm/hvf/hvf.c      | 2 +-
+> target/i386/hvf/hvf.c     | 2 +-
+> 4 files changed, 6 insertions(+), 4 deletions(-)
 
 Reviewed-by: Mads Ynddal <mads@ynddal.dk>=
 
