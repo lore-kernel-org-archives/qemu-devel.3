@@ -4,77 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C32DCAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F5ECA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvfBV-000495-Eh; Mon, 08 Sep 2025 12:57:41 -0400
+	id 1uvf9P-0007wI-4x; Mon, 08 Sep 2025 12:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvfBR-0003pr-SN
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:57:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9L-0007q3-LE
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvfBE-00023s-I5
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:57:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf99-0001sF-Ud
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350634;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1757350513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vmdJw7DJzbHKceWnT8jSOgeEr8734kgoB2kUWuUz0EE=;
- b=bJnjlJQ0Kj/nHYeoAdfC/3+6Ew08O5AaCm+uqaObtRX1ECk8wX55LjD/GWLde3s47j43j6
- NbtztNCAhe7sJtqnjbaw6h9adXu41Qik+7ys5PNeCyGDQK5Y+uPgA0HWCO5gkHi+tBywrQ
- Vb/BBwMvGAajgk01YdctJyTNPLzSoCg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FlZzZrjzCpbN3RMK+uCMvYdvJ6K/gsub/1q6bJe+ud4=;
+ b=OzX0Jn5POqvAdux8qkgqBeGCloYl6T9RiZcGnbXyyBb3xp+2B18EnDrv4dlyb5vVFZA+o7
+ 99uyoAbo/sN51ZNUrGMpDHNYHP8UQLPu9Wqk5S4YHEYKlAQY6Nf2r4khgf3CsH01JFZ/b0
+ PRSFabRjFZAslziCEvkE/WMbt4YldY8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-FnXb58IbPRSrqB0dbfLoMQ-1; Mon,
- 08 Sep 2025 12:57:11 -0400
-X-MC-Unique: FnXb58IbPRSrqB0dbfLoMQ-1
-X-Mimecast-MFC-AGG-ID: FnXb58IbPRSrqB0dbfLoMQ_1757350630
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-440-2-MimYYCNbW44J2e4LtXEg-1; Mon,
+ 08 Sep 2025 12:55:10 -0400
+X-MC-Unique: 2-MimYYCNbW44J2e4LtXEg-1
+X-Mimecast-MFC-AGG-ID: 2-MimYYCNbW44J2e4LtXEg_1757350510
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58B92195609F; Mon,  8 Sep 2025 16:57:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.93])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37F3A1800452; Mon,  8 Sep 2025 16:57:07 +0000 (UTC)
-Date: Mon, 8 Sep 2025 17:57:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, "Denis V . Lunev" <den@virtuozzo.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH 1/1] dump: enhance win_dump_available to report properly
-Message-ID: <aL8K4I91w4dRZrCC@redhat.com>
-References: <20250831161022.452426-1-nikolai.barybin@virtuozzo.com>
- <20250831161022.452426-2-nikolai.barybin@virtuozzo.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF6C5180057E; Mon,  8 Sep 2025 16:55:09 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.50])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7342B3000198; Mon,  8 Sep 2025 16:55:07 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 27/31] vfio/cpr.c: use QOM casts where appropriate
+Date: Mon,  8 Sep 2025 18:53:50 +0200
+Message-ID: <20250908165354.1731444-28-clg@redhat.com>
+In-Reply-To: <20250908165354.1731444-1-clg@redhat.com>
+References: <20250908165354.1731444-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250831161022.452426-2-nikolai.barybin@virtuozzo.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,78 +82,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 31, 2025 at 07:10:22PM +0300, Nikolai Barybin wrote:
-> QMP query-dump-guest-memory-capability reports win dump as available for
-> any x86 VM, which is false.
-> 
-> This patch implements proper query of vmcoreinfo and calculation of
-> guest note size. Based on that we can surely report whether win dump
-> available or not.
-> 
-> To perform this I suggest to split dump_init() into dump_preinit() and
-> dump_init_complete() to avoid exausting copypaste in
-> win_dump_available().
-> 
-> Also dump_state_prepare() and dump_cleanup() were modified to avoid
-> unsafe close on fd == 0. Thus, it is initialized to -1.
-> 
-> For further reference one may review this libvirt discussion:
-> https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB/#HJ3JRLWLGN3IKIC22OQ3PMZ4J3EFG5XB
-> [PATCH 0/4] Allow xml-configured coredump format on VM crash
-> 
-> Signed-off-by: Nikolai Barybin <nikolai.barybin@virtuozzo.com>
-> ---
->  dump/dump.c     | 138 ++++++++++++++++++++++++++++--------------------
->  dump/win_dump.c |  23 ++++++--
->  dump/win_dump.h |   2 +-
->  3 files changed, 101 insertions(+), 62 deletions(-)
-> 
-> diff --git a/dump/dump.c b/dump/dump.c
-> index 15bbcc0c61..ce8b43f819 100644
-> --- a/dump/dump.c
-> +++ b/dump/dump.c
-> @@ -103,7 +103,10 @@ static int dump_cleanup(DumpState *s)
->  
->      guest_phys_blocks_free(&s->guest_phys_blocks);
->      memory_mapping_list_free(&s->list);
-> -    close(s->fd);
-> +    if (s->fd != -1) {
-> +        close(s->fd);
-> +    }
-> +    s->fd = -1;
->      g_free(s->guest_note);
->      g_clear_pointer(&s->string_table_buf, g_array_unref);
->      s->guest_note = NULL;
-> @@ -1708,8 +1711,8 @@ static DumpState dump_state_global = { .status = DUMP_STATUS_NONE };
->  
->  static void dump_state_prepare(DumpState *s)
->  {
-> -    /* zero the struct, setting status to active */
-> -    *s = (DumpState) { .status = DUMP_STATUS_ACTIVE };
-> +    /* zero the struct, setting status to active and fd to -1 */
-> +    *s = (DumpState) { .fd = -1, .status = DUMP_STATUS_ACTIVE };
->  }
->
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
+Use QOM casts to convert between VFIOPCIDevice and PCIDevice instead of
+accessing pdev directly.
 
-Can you do this as a separate patch, as this is a pre-existing bug that
-ought to be cherry-picked to be fixed in stable too.
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
+Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-19-mark.caveayland@nutanix.com
+[ clg: Updated vfio_cpr_set_msi_virq() ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/cpr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-If this is split, then you can add
-
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-to both patches.
-
-With regards,
-Daniel
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index a831243e0207112a9357d7d718bd915a26411e06..f911988adddfdc1c8e8f87d66d1647c81f633570 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -56,7 +56,7 @@ static void vfio_cpr_claim_vectors(VFIOPCIDevice *vdev, int nr_vectors,
+ {
+     int i, fd;
+     bool pending = false;
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+ 
+     vdev->nr_vectors = nr_vectors;
+     vdev->msi_vectors = g_new0(VFIOMSIVector, nr_vectors);
+@@ -99,7 +99,7 @@ static void vfio_cpr_claim_vectors(VFIOPCIDevice *vdev, int nr_vectors,
+ static int vfio_cpr_pci_pre_load(void *opaque)
+ {
+     VFIOPCIDevice *vdev = opaque;
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+     int size = MIN(pci_config_size(pdev), vdev->config_size);
+     int i;
+ 
+@@ -113,7 +113,7 @@ static int vfio_cpr_pci_pre_load(void *opaque)
+ static int vfio_cpr_pci_post_load(void *opaque, int version_id)
+ {
+     VFIOPCIDevice *vdev = opaque;
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+     int nr_vectors;
+ 
+     vfio_sub_page_bar_update_mappings(vdev);
+@@ -214,7 +214,7 @@ static int set_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
+ static int vfio_cpr_set_msi_virq(VFIOPCIDevice *vdev, Error **errp, bool enable)
+ {
+     const char *op = (enable ? "enable" : "disable");
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+     int i, nr_vectors, ret = 0;
+ 
+     if (msix_enabled(pdev)) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.51.0
 
 
