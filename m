@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57761CA1013
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06518CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvZSJ-00061r-Kf; Mon, 08 Sep 2025 06:50:40 -0400
+	id 1uvZSW-00066K-EO; Mon, 08 Sep 2025 06:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZSC-00060O-LQ
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:33 -0400
+ id 1uvZSQ-00064F-Lq
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZS2-0005x4-MI
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:31 -0400
+ id 1uvZS8-0005yf-VZ
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757328611;
+ s=mimecast20190719; t=1757328620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MVpnMdG2AHYpvMFodnCVPf0A2jarENFLPLqWFsrrhQw=;
- b=Z7zixlUocXvTpqPJZDeXZsQUZgSvmdhCi9dLkiVIWMjb00Y/oOZWH9GoxIPVyCoAnsyh1S
- je1T9zthvYER45Omv0v+2VrXSP8CdiXJqnu345B5F5h6Xlf+RQPpR3vzWBB8gznmnFMjnv
- 5EJYV2+i6p6uGvvas72nuLUIb2o3CrA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SZbJleeyulOpA5LrkMwUKjkXRJN+Q3YBVWNLlLwx58A=;
+ b=DqctccKuyI0eQo7xAcgMGovJGM5Khxg87aiYPpFPiOrXGsY7u2oClg4cNx3z6D1iB7CzSJ
+ ybtdwPxWcoRxzLSvNShzTSt4mYjZxr8JGojmQqhYm39Ho8T3PQBG/13RFT81VQDIsOEATn
+ 70fkNWtnF5C96+rrsJDbgvPSXSTlKks=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-369-R9WaXgtSP_Wr_1VTO_3eIw-1; Mon, 08 Sep 2025 06:50:10 -0400
-X-MC-Unique: R9WaXgtSP_Wr_1VTO_3eIw-1
-X-Mimecast-MFC-AGG-ID: R9WaXgtSP_Wr_1VTO_3eIw_1757328609
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45dd5c1b67dso20704765e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:50:10 -0700 (PDT)
+ us-mta-683-OpDBZtkyM0yI-8aL_8bTgA-1; Mon, 08 Sep 2025 06:50:19 -0400
+X-MC-Unique: OpDBZtkyM0yI-8aL_8bTgA-1
+X-Mimecast-MFC-AGG-ID: OpDBZtkyM0yI-8aL_8bTgA_1757328618
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45dcf5f1239so16370715e9.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:50:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757328608; x=1757933408;
+ d=1e100.net; s=20230601; t=1757328618; x=1757933418;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MVpnMdG2AHYpvMFodnCVPf0A2jarENFLPLqWFsrrhQw=;
- b=G1GbNuYysipI++DWGJ2UudUo+aK1pgo5yDDsYOZXnPOIUFZLPWiT2EElHqNgqxLJiA
- VOjzjM3xRxI68SdPEIbdarOGTtOnj4vcsCDyBTgSZay5ctcfX2nJugFAaY1+xv5TpiLd
- NBwAx6VGPbRvCv7+xGIlgiQHIq7RpRGdXvwLNlfjDbY7m+IHOS4iN+CXb6R4Dw/bGUpu
- /F8pdVDEbT0lbY4pRleq3Qd5UN/AaEfIJmgzKGbHidY3Rvn4NWiyivx7Mr+kd3s4OWo9
- TGTmCaRjuVu9SATgx7ULFPSKeRf+6oyECuYspGG8W+oWzR/Q7ZJ3Jkeaa3SpgIZiQEzq
- 5UTw==
-X-Gm-Message-State: AOJu0YykdxP22khuZHZuvc1knIGN5k/6eY7tjtQzveaMYVGTDPv37qxN
- IMSmPCD+8EYv0jq9yms0c4XYH66BY7g7qWA1waOmmZl0nyeY+U9UrnuPQiLaVPnTv1lJs975h6P
- TNMMPSiLmLiha/W4XsZMITQu0aLD9HvTRSd27M3wfgpf4J+AFRYiGQGomcD/Vak1ozI/EuFlvEu
- WgVcNA2oIwyAiVl7WTfK3yaysGE5pOARFShFnbdrKw
-X-Gm-Gg: ASbGncsFK7oosdI5dCygxKdgyKPUFRbWW6pNmSML0Ao/z0yc8Tp2RSNNyVS3WmeqPPR
- 3tUU2rm8ap5uUlp+/LAQYvhRR63xaG+g5Cxlm4/qaQc6Lj04gzYmTcHu0DS56aIVNmSwHCsPwUO
- Lh+98Wm2ySGm74+ZwhkBshLFMHXR+Z0ppeqNfO5V96vpDf6qozXYX9NoDY1PusX0SwEz4PKf6h8
- ONZzziXvdjezHDpPa0laZLI/60ZyjRYz8UWpV97N/iO0qvhTGYJhZUMc7ywnEo6mb+ofSn5Tkzp
- oIPFGPwQYffKP2wVdv7G62Qcoq2U+jQ70YakC5bY1Xqi5RUAEe0KA9VnplOIth9bM8UfDZhmWrb
- OCMc9FD7m+RQN+vMonGvKM6mBy/pyJsWfd7L4b9gKmL8=
-X-Received: by 2002:a05:600c:5304:b0:45d:e110:e690 with SMTP id
- 5b1f17b1804b1-45de110e75dmr48761245e9.14.1757328608474; 
- Mon, 08 Sep 2025 03:50:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgQ0qn4t18SGH709o1Hi2rlbWvtC1u06LbW1J/km0098TNSUANF5g2CVBKZZGCLYf3fYsUFA==
-X-Received: by 2002:a05:600c:5304:b0:45d:e110:e690 with SMTP id
- 5b1f17b1804b1-45de110e75dmr48761035e9.14.1757328607969; 
- Mon, 08 Sep 2025 03:50:07 -0700 (PDT)
+ bh=SZbJleeyulOpA5LrkMwUKjkXRJN+Q3YBVWNLlLwx58A=;
+ b=bpCNjV82tdJiuPt70AAfJgjQu2hzNpPBzh8o0vfAIm8Kp32BKD/AptZ+3FYhgKNsTb
+ KuljL4ezyArgL/Rn1HNDJ492x7ezXYH+JuV7w/Bggf7+PKPwbOsUPN026XSeJ8ipVNWh
+ H0lqJUULRPgr1HiPAfp9O2Kh/53x2vJNWlaapBQKaVyRWPpZvFiQ7iVWA5upwGKa8LOB
+ g3lnDIoaoCs3KcifkfgSGrO6/mPdMnUYZGeOSqCWQyIw1byjT6Cgk0uzS2Bmsa9NqXAl
+ WL0jqFLe4i0U8HoQs5bbA/WzS2y0s8BMGmxnoek9FFiPEyseKwVErftC2fBSghsofx9M
+ naEQ==
+X-Gm-Message-State: AOJu0Yxsqch1Bv5BYaINCvR3Er8EcvMsmI4KqJJjDHvxV1FisdCfgwWx
+ EjEXNLJUIo02dBpyBR2ngvDAfY1a5bv1xgYuKYk/k+ZWqHrK/BEHTzwenYeDbyz0aXXru8//SfN
+ Rh//SpXjbVBGvMqy1htuSYIDX8gVeRm89KM+KDxYC1DHQTgl4Ru0KHhEGikBy1A+Khe3WzpH/Pn
+ ZZo4avP4Sd7yxcpUoRqGG344/CSURDGX2nIS9uOaVu
+X-Gm-Gg: ASbGnctsxIKJp27Zh1YquTzX1aE78nXk2WKmyb8mpb323Mml5/4K5ehciSVdR3Tn73S
+ JzaTComewkFg5HpXZ9nytgHUlYIKfmtVJzq/gdUNb3U2Fv3U9Pvx4EK07wiaBptFQ3SVdkb4NOJ
+ tLjY23VohvNEFJOGpPBDetHwC3CRc2ISSTRUh6xDbbmNLeE16zF07o9QnxeyVrFJemsOnKQ/HYG
+ g6fr35cF60zLRZb3Nt0E5AJZRZf/J+7UDg0QxXy9oWvuEHwggnRXzGHY+c3D3rNW/FQgNPGC3sJ
+ bUZ4jgI6p2mhoYMcnfbltXSCFTfCyGgIS4Z03e1BAArP2pXwZnhyQxAEwa0gWlfbMSc+N0u5Dj9
+ LSgf17UiRs9z4nayIa15mzU16JvBs4Ey1mrrgOxHhknM=
+X-Received: by 2002:a05:600c:6298:b0:459:d451:3364 with SMTP id
+ 5b1f17b1804b1-45dddecdaa7mr67425405e9.24.1757328617624; 
+ Mon, 08 Sep 2025 03:50:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHl9yOQe29Rdv8jl1S4Rx2noZPEQ8W5VP9dYHUPVe58UCa0wwkMkRy9/DdwEX/Ed+0PE3wCg==
+X-Received: by 2002:a05:600c:6298:b0:459:d451:3364 with SMTP id
+ 5b1f17b1804b1-45dddecdaa7mr67425025e9.24.1757328617036; 
+ Mon, 08 Sep 2025 03:50:17 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45de16b8b58sm83470415e9.4.2025.09.08.03.50.07
+ 5b1f17b1804b1-45c447244c4sm240568135e9.6.2025.09.08.03.50.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 03:50:07 -0700 (PDT)
+ Mon, 08 Sep 2025 03:50:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 01/33] ci: temporarily remove rust from Debian and Ubuntu
-Date: Mon,  8 Sep 2025 12:49:33 +0200
-Message-ID: <20250908105005.2119297-2-pbonzini@redhat.com>
+Subject: [PATCH 04/33] rust: add missing const markers for MSRV==1.83.0
+Date: Mon,  8 Sep 2025 12:49:36 +0200
+Message-ID: <20250908105005.2119297-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
@@ -109,36 +109,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Rust 1.83 allows more functions to be marked const.
+Fix clippy with bumped minimum supported Rust version.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/bits/src/lib.rs            | 6 +++---
+ rust/qemu-api/src/assertions.rs | 4 ++--
+ rust/qemu-api/src/cell.rs       | 6 ++----
+ rust/qemu-api/src/qom.rs        | 6 +++---
+ rust/qemu-api/src/timer.rs      | 2 +-
+ rust/qemu-api/src/uninit.rs     | 6 +++---
+ 6 files changed, 14 insertions(+), 16 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index d888a600637..47dbba9d0db 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -39,9 +39,9 @@ build-system-ubuntu:
-     job: amd64-ubuntu2204-container
-   variables:
-     IMAGE: ubuntu2204
--    CONFIGURE_ARGS: --enable-docs --enable-rust
-+    CONFIGURE_ARGS: --enable-docs
-     TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
--    MAKE_CHECK_ARGS: check-build check-doc
-+    MAKE_CHECK_ARGS: check-build
+diff --git a/rust/bits/src/lib.rs b/rust/bits/src/lib.rs
+index d485d6bd110..e9d15ad0cb5 100644
+--- a/rust/bits/src/lib.rs
++++ b/rust/bits/src/lib.rs
+@@ -165,19 +165,19 @@ pub const fn into_bits(self) -> $type {
  
- check-system-ubuntu:
-   extends: .native_test_job_template
-@@ -69,7 +69,7 @@ build-system-debian:
-     job: amd64-debian-container
-   variables:
-     IMAGE: debian
--    CONFIGURE_ARGS: --with-coroutine=sigaltstack --enable-rust
-+    CONFIGURE_ARGS: --with-coroutine=sigaltstack
-     TARGETS: arm-softmmu i386-softmmu riscv64-softmmu sh4eb-softmmu
-       sparc-softmmu xtensa-softmmu
-     MAKE_CHECK_ARGS: check-build
+             #[allow(dead_code)]
+             #[inline(always)]
+-            pub fn set(&mut self, rhs: Self) {
++            pub const fn set(&mut self, rhs: Self) {
+                 self.0 |= rhs.0;
+             }
+ 
+             #[allow(dead_code)]
+             #[inline(always)]
+-            pub fn clear(&mut self, rhs: Self) {
++            pub const fn clear(&mut self, rhs: Self) {
+                 self.0 &= !rhs.0;
+             }
+ 
+             #[allow(dead_code)]
+             #[inline(always)]
+-            pub fn toggle(&mut self, rhs: Self) {
++            pub const fn toggle(&mut self, rhs: Self) {
+                 self.0 ^= rhs.0;
+             }
+ 
+diff --git a/rust/qemu-api/src/assertions.rs b/rust/qemu-api/src/assertions.rs
+index a2d38c877df..e74fa3ef826 100644
+--- a/rust/qemu-api/src/assertions.rs
++++ b/rust/qemu-api/src/assertions.rs
+@@ -81,8 +81,8 @@ macro_rules! assert_field_type {
+     (@internal $param_name:ident, $ti:ty, $t:ty, $($field:tt)*) => {
+         const _: () = {
+             #[allow(unused)]
+-            fn assert_field_type($param_name: &$t) {
+-                fn types_must_be_equal<T, U>(_: &T)
++            const fn assert_field_type($param_name: &$t) {
++                const fn types_must_be_equal<T, U>(_: &T)
+                 where
+                     T: $crate::assertions::EqType<Itself = U>,
+                 {
+diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
+index 27063b049d5..148a13e3f56 100644
+--- a/rust/qemu-api/src/cell.rs
++++ b/rust/qemu-api/src/cell.rs
+@@ -980,8 +980,7 @@ pub unsafe fn from_raw<'a>(ptr: *mut T) -> &'a Self {
+     /// but the functions containing the dereference are usually safe.  The
+     /// value returned from `uninit()` must be initialized and pinned before
+     /// calling them.
+-    #[allow(clippy::missing_const_for_fn)]
+-    pub unsafe fn uninit() -> Self {
++    pub const unsafe fn uninit() -> Self {
+         Self {
+             value: UnsafeCell::new(MaybeUninit::uninit()),
+             _pin: PhantomPinned,
+@@ -997,8 +996,7 @@ pub unsafe fn uninit() -> Self {
+     /// but the functions containing the dereference are usually safe.  The
+     /// value returned from `uninit()` must be pinned (and possibly initialized)
+     /// before calling them.
+-    #[allow(clippy::missing_const_for_fn)]
+-    pub unsafe fn zeroed() -> Self {
++    pub const unsafe fn zeroed() -> Self {
+         Self {
+             value: UnsafeCell::new(MaybeUninit::zeroed()),
+             _pin: PhantomPinned,
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index e20ee014cb1..014ffb1fd88 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -307,7 +307,7 @@ impl<T: ObjectType> ParentInit<'_, T> {
+     /// Fields beyond `Object` could be uninitialized and it's your
+     /// responsibility to avoid that they're used when the pointer is
+     /// dereferenced, either directly or through a cast.
+-    pub fn as_object_mut_ptr(&self) -> *mut bindings::Object {
++    pub const fn as_object_mut_ptr(&self) -> *mut bindings::Object {
+         self.as_object_ptr().cast_mut()
+     }
+ 
+@@ -318,7 +318,7 @@ pub fn as_object_mut_ptr(&self) -> *mut bindings::Object {
+     /// Fields beyond `Object` could be uninitialized and it's your
+     /// responsibility to avoid that they're used when the pointer is
+     /// dereferenced, either directly or through a cast.
+-    pub fn as_object_ptr(&self) -> *const bindings::Object {
++    pub const fn as_object_ptr(&self) -> *const bindings::Object {
+         self.0.as_ptr().cast()
+     }
+ }
+@@ -336,7 +336,7 @@ impl<'a, T: ObjectImpl> ParentInit<'a, T> {
+     /// However, while the fields of the resulting reference are initialized,
+     /// calls might use uninitialized fields of the subclass.  It is your
+     /// responsibility to avoid this.
+-    pub unsafe fn upcast<U: ObjectType>(&self) -> &'a U
++    pub const unsafe fn upcast<U: ObjectType>(&self) -> &'a U
+     where
+         T::ParentType: IsA<U>,
+     {
+diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
+index 0a2d111d490..0daec62f926 100644
+--- a/rust/qemu-api/src/timer.rs
++++ b/rust/qemu-api/src/timer.rs
+@@ -39,7 +39,7 @@ impl Timer {
+     ///
+     /// The timer must be initialized before it is armed with
+     /// [`modify`](Self::modify).
+-    pub unsafe fn new() -> Self {
++    pub const unsafe fn new() -> Self {
+         // SAFETY: requirements relayed to callers of Timer::new
+         Self(unsafe { Opaque::zeroed() })
+     }
+diff --git a/rust/qemu-api/src/uninit.rs b/rust/qemu-api/src/uninit.rs
+index 04123b4ae99..b0a829729dd 100644
+--- a/rust/qemu-api/src/uninit.rs
++++ b/rust/qemu-api/src/uninit.rs
+@@ -12,7 +12,7 @@ pub struct MaybeUninitField<'a, T, U> {
+ 
+ impl<'a, T, U> MaybeUninitField<'a, T, U> {
+     #[doc(hidden)]
+-    pub fn new(parent: &'a mut MaybeUninit<T>, child: *mut U) -> Self {
++    pub const fn new(parent: &'a mut MaybeUninit<T>, child: *mut U) -> Self {
+         MaybeUninitField { parent, child }
+     }
+ 
+@@ -21,7 +21,7 @@ pub fn new(parent: &'a mut MaybeUninit<T>, child: *mut U) -> Self {
+     /// Because the `MaybeUninitField` remembers the containing object,
+     /// it is possible to use it in foreign APIs that initialize the
+     /// child.
+-    pub fn parent(f: &Self) -> *const T {
++    pub const fn parent(f: &Self) -> *const T {
+         f.parent.as_ptr()
+     }
+ 
+@@ -30,7 +30,7 @@ pub fn parent(f: &Self) -> *const T {
+     /// Because the `MaybeUninitField` remembers the containing object,
+     /// it is possible to use it in foreign APIs that initialize the
+     /// child.
+-    pub fn parent_mut(f: &mut Self) -> *mut T {
++    pub const fn parent_mut(f: &mut Self) -> *mut T {
+         f.parent.as_mut_ptr()
+     }
+ }
 -- 
 2.51.0
 
