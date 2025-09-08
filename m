@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B73CAC586
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCF4CAC588
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:16:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvceZ-0000LB-D6; Mon, 08 Sep 2025 10:15:31 -0400
+	id 1uvcfA-0000n2-MP; Mon, 08 Sep 2025 10:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvceV-0000IQ-H9
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcet-0000YF-Ua
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvceP-0008U1-3W
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcen-00005g-Lb
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:15:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757340913;
+ s=mimecast20190719; t=1757340941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UqobEociHISGXHoPFrTuEaGE4lGnImZfZNTTfRNmsl8=;
- b=MAbztudCY0UYGLMNQMIgct26oBB0ftP/JSQs0NvBa06Pya1K0OFWBYt4nDrR99vsLp3Qqy
- tswvgThvDgbIKjrxlLVCBEYcKSqfpl5X89AKEVmfXMRjnoX/PwGPqxTG52FJytezoSROY1
- 4YMrLMCaH78sdY+EkSES/jE6tLCLS64=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ewvUTHg4npejcx2GKhTHbwQ3z+wOBpIN5iKEqdMOebo=;
+ b=hXxwhE179iOL+ZuuIMlPUox0K3FbKYeLnefVCX527tLpMymJ6NOfUAfhLpBFcDBcuigCm6
+ BqitSuyBXgrINMnTPZKItszMTyEnO4aQXoAEPgc6TyXHGxe4j0r4cNWEbDXCBVvtovwxDC
+ pXTKk3kEh71h1iVLKQ5klY+EWBmPYPk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-393-s7bSrb9ONE-zhCW1bthSEQ-1; Mon, 08 Sep 2025 10:15:12 -0400
-X-MC-Unique: s7bSrb9ONE-zhCW1bthSEQ-1
-X-Mimecast-MFC-AGG-ID: s7bSrb9ONE-zhCW1bthSEQ_1757340910
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de5fdda1aso4788605e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:15:11 -0700 (PDT)
+ us-mta-613-c0HAUtTuMH-OP1KWBU749Q-1; Mon, 08 Sep 2025 10:15:39 -0400
+X-MC-Unique: c0HAUtTuMH-OP1KWBU749Q-1
+X-Mimecast-MFC-AGG-ID: c0HAUtTuMH-OP1KWBU749Q_1757340938
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45dd66e1971so29663305e9.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:15:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757340910; x=1757945710;
+ d=1e100.net; s=20230601; t=1757340938; x=1757945738;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UqobEociHISGXHoPFrTuEaGE4lGnImZfZNTTfRNmsl8=;
- b=YurksH0TFaXkk+opoRPOJmp3KHYkaetNxxhEzcRqb8KsgdkTdRpvhU7Oz35JOdt0ni
- xISZMyqV+EbB447Mw3UMbSU28bg33P8tf7vr16ppMrCZekYpNF6wjsc35lYy8gOjh1wx
- x9oSRvrBvu8je0v6/jTdcdjk+ZciFbr191tOSRv9+oOmKFxvDGLkz0cyB1Ishgjm/cBG
- Lo9piEJ1ceYNczwC7HEQPWHT/yCBjfCfp6CnEQudejB7P0pK2DQRGTima2AIvrN9ZLky
- 3JcTDT9wiS55ag8uHFi4hvyAjRx+4GAeRtmbHEbRQYLfRVh2DnsPOHMok5bkmH2iSXOa
- yLDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxmQEyprPVHd4Es/nNWuiWtuhUDqLCUfYVWl2FxmdV+mEc2D5hKTHg1ifmhgrjAf2ZRyMl7x+6E7BS@nongnu.org
-X-Gm-Message-State: AOJu0Yx6YaFc9RQF52VOHrZA7CH5Ph4A/7NdfopYhn6A7yw4S5N2rir3
- zDgUQKdaAclBqSJUCfkkcolal1tW+6kPiLRFtINzlF6irRJ46KXnXGhRuP0lVsCizy+mSnJIoaO
- L0x70aVB7/xFg4fFrimG+V0jxzUeyLt8mVl56qh/v9quK2fLluLKmNd5c
-X-Gm-Gg: ASbGncuEAIL7joVvv7Ngd6X2ACan7fAxC2hvtQqZCljuzg6KiHlcLk29sVilUHNy2uW
- bHzO3Bi0HwU1h43d6PlMHrXYKrF5UO7RZg4Ec3dCz7JSKmjIY53rIAsmPfZ9vwGaheiE8NswMlf
- U+br+9H5DWB6APpCha7nYpTtMsJx5/1aMWtPGfi3ikjTzLs59Klrr9gO4VyRjow8j4aXu13ZfVL
- 1BOVETPfiynPHcXtaia++5/3GEMeDw9IQ3u5KQMaKOH2/QHf+Ipps8rxAU1GnFTxCvk627Z9giZ
- okBEJa8Y4tSCocufiywZO6GZJNlyWiYo8QpfUdDEA/9f7rFMsW/h1U+BsWx44X0aXvu8uw+7ePf
- laCU=
-X-Received: by 2002:a05:600c:5247:b0:45d:cf5f:cff8 with SMTP id
- 5b1f17b1804b1-45de2028e47mr58266665e9.11.1757340910156; 
- Mon, 08 Sep 2025 07:15:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1ly88li0Mob/lKd02q/CS+HQZU8OunN/3HxCbN+Vijw/PzkuiH2lHj9iw8D8EUCf7xBagwQ==
-X-Received: by 2002:a05:600c:5247:b0:45d:cf5f:cff8 with SMTP id
- 5b1f17b1804b1-45de2028e47mr58266315e9.11.1757340909702; 
- Mon, 08 Sep 2025 07:15:09 -0700 (PDT)
+ bh=ewvUTHg4npejcx2GKhTHbwQ3z+wOBpIN5iKEqdMOebo=;
+ b=j6UK94JSDaDaLzsjphx0Xsj4pQQMNGR5B5jyBieTgf0vsxAtyQhAV5iqE2c1mQvsYi
+ iEjW0uH7fvSUgtKG6df+azLQGSk/3oeYTvGaYizljPrqkbbLH6fUmyQLcm8vDHLJT8Lg
+ UqU891bq3poNSkz14znwUe/WBpqETWrE7DpnQhg2dwtNRBFgojlktUgK6YkdUDNtRQJj
+ 0dggyHowdqA9M/aOheDH+bZLfOBx3xbRFCNDUfIMHXWvh4w1NfPbzE3L7AfirDoPLzFm
+ ZCcH3WSKYiYcIjhw+iOcSndRMHXseRgzZKm3MjxXudImPrDjT0kEZM0nBs7/B7rnryB8
+ 5SmA==
+X-Gm-Message-State: AOJu0Yz/lb0wMuzSeejgtLaS9btxkzBsTi9X0xflCAZY+pwSg4ilZhe5
+ 40Et8tRDPOQEE2avz39nKiDl4YGuKx8Gof9OzrL+5KmsPkjSHoTExLVpXrhO3YeeGmsUQwFD97o
+ Krvogd5kXeVGTJjXE9RaQK253hxQVwFmZXBowwWgqciWald8UNLpV9+n2/9rbKRZNXxp8ZsVXzh
+ zYv2zRqT9GDx//h5fV0DENlWWQEVgwBrNp/A==
+X-Gm-Gg: ASbGnct2Z899/v1GPvvK6r53xx2JvLspKSXLCFOW3J++bwed3avr0QuET4svIWX05EM
+ D2HJRnHw82kJ1KvWrOur3RxYzKJ/UgwafwgC5RywZHS+NcfcGqFcCk0JKIsjPlUIre+OgAbn+rt
+ +JKERyGxCBeV1mIt2cFOkNAKCLMTWht5lWDrehgkYkzFl0QhxJZxVvKdk+/hFVbr74NFIzkbKJU
+ 33Znjvg6XXZBJvZRfiiN+qjZup1VpuAO8K4MBX+NuELisOEs5lq+1v4fZUveDdjXJ7XHd42ONfY
+ fPOUAUYAJa4oDxV1QmhFOtntsJYzLA+MCJ3ohcHSrMTLcAq54jRslIh2StOrNie90oD9TqOMba7
+ 0xSw=
+X-Received: by 2002:a05:6000:1acd:b0:3e4:f194:288f with SMTP id
+ ffacd0b85a97d-3e643e09089mr6249390f8f.62.1757340937683; 
+ Mon, 08 Sep 2025 07:15:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/dVVz82JJ34EiHf5l8BX/a3WKjr6nCwAoT/HSu4+rwFfxL5xm93r7kKePCImLgS9zA7xUsg==
+X-Received: by 2002:a05:6000:1acd:b0:3e4:f194:288f with SMTP id
+ ffacd0b85a97d-3e643e09089mr6249355f8f.62.1757340937193; 
+ Mon, 08 Sep 2025 07:15:37 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3df4fd372ccsm19922666f8f.32.2025.09.08.07.15.08
+ ffacd0b85a97d-3e74f848b10sm428857f8f.34.2025.09.08.07.15.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 07:15:09 -0700 (PDT)
-Message-ID: <0c15d5bc-7888-429d-84d5-b6d76ae8b1c3@redhat.com>
-Date: Mon, 8 Sep 2025 16:15:08 +0200
+ Mon, 08 Sep 2025 07:15:35 -0700 (PDT)
+Message-ID: <2990436e-e623-4daa-bcb1-6c6e03954ee1@redhat.com>
+Date: Mon, 8 Sep 2025 16:15:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/container: set error on cpr failure
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <1755094667-281419-1-git-send-email-steven.sistare@oracle.com>
+Subject: Re: [PATCH] vfio: Report an error when the 'dma_max_mappings' limit
+ is reached
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250814153419.1643897-1-clg@redhat.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -128,7 +127,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1755094667-281419-1-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <20250814153419.1643897-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -136,8 +135,8 @@ Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -156,33 +155,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/25 16:17, Steve Sistare wrote:
-> Set an error message if vfio_cpr_ram_discard_register_listener fails so
-> the fail label gets a valid error object.
+On 8/14/25 17:34, Cédric Le Goater wrote:
+> The VFIO IOMMU Type1 kernel driver enforces a default IOMMU mapping
+> limit of 65535, which is configurable via the 'dma_max_mappings'
+> module parameter. When this limit is reached, QEMU issues a warning
+> and fails the mapping operation, but allows the VM to continue
+> running, potentially causing issues later. This scenario occurs with
+> SEV-SNP guests, which must update all IOMMU mappings during
+> initialization.
 > 
-> Reported-by: Cédric Le Goater <clg@redhat.com>
-> Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> To address this, update vfio_ram_discard_register_listener() to accept
+> an 'Error **' parameter and propagate the error to the caller. This
+> change will halt the VM immediately, at init time, with the same error
+> message.
+> 
+> Additionally, the same behavior will be enforced at runtime. While
+> this might be considered too brutal, the rarity of this case and the
+> planned removal of the dma_max_mappings module parameter make it a
+> reasonable approach.
+> 
+> Cc: Alex Williamson <alex.williamson@redhat.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   hw/vfio/listener.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   hw/vfio/listener.c | 13 +++++++++----
+>   1 file changed, 9 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index f498e23..5ebafaa 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -574,6 +574,9 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
->               vfio_ram_discard_register_listener(bcontainer, section);
->           } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
->                                                              section)) {
-> +            error_setg(&err,
-> +                       "vfio_cpr_ram_discard_register_listener for %s failed",
-> +                       memory_region_name(section->mr));
->               goto fail;
->           }
->           return;
-
-
 Applied to vfio-next.
 
 Thanks,
