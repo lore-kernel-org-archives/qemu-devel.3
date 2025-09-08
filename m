@@ -4,143 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C73A2CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 09:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE41CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 09:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvY4U-0007Gf-SA; Mon, 08 Sep 2025 05:21:58 -0400
+	id 1uvYb8-0003ON-5G; Mon, 08 Sep 2025 05:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvY4T-0007Dh-99
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:21:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvYb4-0003Nv-Us
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:55:38 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvY4K-0002nq-6q
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:21:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757323302;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QltnutdHvCokmOcNASWNTMGcEaGltqtGCKSMHli3Lsc=;
- b=W29qwh+2s5zfAtJfJFEPRQArCST329hksRUfr/GyCiBXJIcvN+mcMpmNK1s4vokUp3xPI8
- 5a9BmMJNaFwdLIZLw22+st8BQQrjVsCTBwZ/JNIlBnZSRTJhumkXxa4MKW3yJDN/EmLqpt
- upmYLFkl+qvwfMPyLfKsUUYdnX2Vc3Y=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-l8hjK_lsPpKWDTFfVtjwuA-1; Mon, 08 Sep 2025 05:21:41 -0400
-X-MC-Unique: l8hjK_lsPpKWDTFfVtjwuA-1
-X-Mimecast-MFC-AGG-ID: l8hjK_lsPpKWDTFfVtjwuA_1757323300
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3e2055ce8b7so1491642f8f.0
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 02:21:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757323300; x=1757928100;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QltnutdHvCokmOcNASWNTMGcEaGltqtGCKSMHli3Lsc=;
- b=d/494IAiDKpqtpKDdppjzhy/j3FoprlG5Yjo8Xbt9iL3jKdMacVJC3GBlPNoWD8ZMR
- 8tFZU/1kSPdT53oFmxY+LBiLAbzGIAAzT847/BzF0wxc9e5gGBXfOIHW3Cx+kugg1cV4
- ayKEOP0BJdM/vRdIl5FPWbbqC0aUKzTffPK0C2x78trlJCw/BUfc25zCjMaLtYUGcCif
- 35KINzlHle65633fJk5fHFnJB/b4sBLVVgGQC6iQhiJIKrjtuzsAlb/ZHsV9WU6PVCUs
- 5sTNNGIy5raNyK50J4zgagvWwNpAUze+Np7GEFa4RXlRcUSeWAWlIM9vsEzukI+CECHo
- Ghvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhsH7I6YH47LbAPImlV/OohdfCCIMsPNosvshYkE8IdjVeiyJPjPx/iFZ8X5GlVHH8seze5focxQaR@nongnu.org
-X-Gm-Message-State: AOJu0Yyt+Vp/6oJtyf+i1GIiAGgoxyRCvqK+KzjhUSABUuLVFU0XrcI2
- 5VOrxe16EPa3GbCU543MLUizfnLWAOnO73W+KVKVHmWhLP/wJou08yEeAUACGzQ9jw7gHl5iJu6
- 1N+5HoiCLpNPpi2Qzbm84gDFT6kja0nYB2EyLTPFKA9mIRJewiEZM3v/Y
-X-Gm-Gg: ASbGncvVCgRzhH6uG+qcXrUgli5+7Q5Q9GaactuegD58Sb2gj9jE2bOV6nRCnSvKRdo
- VjgtNk9Legs54wnTs7Da+WTagaSsWpwCp+A0cBGRm9mgq/HqmQ83S+aNWPxAIFUMnn0F/4XJR6J
- xUe2HYgxVrjI3ZNTKBN6317z/Ha85Iye7760vIJk6mGe4yXkOaRrCCR0fvGzZbWlAlH9uyZguyT
- JDQbVTHZp9q659Q3xLO8VEfK+JFEmV4coInNfr4kLIRvReKAW9lNNLSA0ZEeEz9REaZKNfeUt3s
- 5U74BgAekAhcVlPlm/MQ/+sgDzmIA3ODcXoR5/jm5qOECASfiooI3W7fQsB3lxJCkQLUcQblEIa
- p4Nw5/Q==
-X-Received: by 2002:a05:6000:2a82:b0:3e7:490c:1b0 with SMTP id
- ffacd0b85a97d-3e7490c03aemr1307837f8f.12.1757323299874; 
- Mon, 08 Sep 2025 02:21:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6vAOeQ7O01kaQvht5K6XC3+j+cvADtUsEEeUs1ThJ7otRQkkcXx/nOYqPF+dvlAVOucVVhw==
-X-Received: by 2002:a05:6000:2a82:b0:3e7:490c:1b0 with SMTP id
- ffacd0b85a97d-3e7490c03aemr1307812f8f.12.1757323299371; 
- Mon, 08 Sep 2025 02:21:39 -0700 (PDT)
-Received: from [192.168.0.5] (ltea-047-064-114-112.pools.arcor-ip.net.
- [47.64.114.112]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e329475a13sm12854079f8f.14.2025.09.08.02.21.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 02:21:38 -0700 (PDT)
-Message-ID: <b29080f8-c79f-44e5-840e-e1e49b0007ea@redhat.com>
-Date: Mon, 8 Sep 2025 11:21:37 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvYau-00077s-MO
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:55:38 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8D651C00C8;
+ Mon, 08 Sep 2025 12:55:07 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
+ [2a02:6bf:8080:b8f::1:11])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 5thEix4Go4Y0-4eK5HI14; Mon, 08 Sep 2025 12:55:06 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757325306;
+ bh=GlI1rQxDFixsxffaHNvUpWRG5rySpkqwfe0w/ZCXJ9g=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=tMc7g32PcW2+zn+q+nGN5MwKxXUYzDIOlOW5zHPgr+Ql39pXII8+BR1DHW8vkUL1h
+ kzHQGl88F38dvStBpMY0G1Emh4JjmQsh2XrEdLtm+3c0xEi1zQnOw/3LOdZc6ugu2B
+ t4NzWp7tOcSnuKJK7flr/XinYsGQdlpbgsHtCYPg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e93c1318-7530-4d02-95e1-bf60a6142e75@yandex-team.ru>
+Date: Mon, 8 Sep 2025 12:55:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] tests/functional: Support tests that require a
- runner
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, berrange@redhat.com
-Cc: qemu-arm@nongnu.org, 1844144@gmail.com
-References: <20250904154640.52687-1-gustavo.romero@linaro.org>
- <20250904154640.52687-5-gustavo.romero@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC V2 0/8] Live update: tap and vhost
+To: Peter Xu <peterx@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>,
+ "Chaney, Ben" <bchaney@akamai.com>, Jason Wang <jasowang@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hamza Khan <hamza.khan@nutanix.com>, qemu-devel@nongnu.org
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+ <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
+ <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
+ <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
+ <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
+ <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
+ <c8b799f7-c549-4534-a156-99df204e62ec@yandex-team.ru>
+ <aLsM-_Bfj2bYtwSX@x1.local>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250904154640.52687-5-gustavo.romero@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aLsM-_Bfj2bYtwSX@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,197 +87,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/09/2025 17.46, Gustavo Romero wrote:
-> Add support for running tests that require a specific runner.
+On 05.09.25 19:16, Peter Xu wrote:
+> On Tue, Sep 02, 2025 at 08:09:44PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 02.09.25 18:33, Steven Sistare wrote:
+>>> On 9/1/2025 7:44 AM, Vladimir Sementsov-Ogievskiy wrote:
+>>>> On 29.08.25 22:37, Steven Sistare wrote:
+>>>>> On 8/28/2025 11:48 AM, Steven Sistare wrote:
+>>>>>> On 8/23/2025 5:53 PM, Vladimir Sementsov-Ogievskiy wrote:
+>>>>>>> On 17.07.25 21:39, Steve Sistare wrote:
+>>>>>>>> Tap and vhost devices can be preserved during cpr-transfer using
+>>>>>>>> traditional live migration methods, wherein the management layer
+>>>>>>>> creates new interfaces for the target and fiddles with 'ip link'
+>>>>>>>> to deactivate the old interface and activate the new.
+>>>>>>>>
+>>>>>>>> However, CPR can simply send the file descriptors to new QEMU,
+>>>>>>>> with no special management actions required.  The user enables
+>>>>>>>> this behavior by specifing '-netdev tap,cpr=on'.  The default
+>>>>>>>> is cpr=off.
+>>>>>>>
+>>>>>>> Hi Steve!
+>>>>>>>
+>>>>>>> First, me trying to test the series:
+>>>>>>
+>>>>>> Thank-you Vladimir for all the work you are doing in this area.  I have
+>>>>>> reproduced the "virtio_net_set_queue_pairs: Assertion `!r' failed." bug.
+>>>>>> Let me dig into that before I study the larger questions you pose
+>>>>>> about preserving tap/vhost-user-blk in local migration versus cpr.
+>>>>>
+>>>>> I have reproduced your journey!  I fixed the assertion, the vnet_hdr, and
+>>>>> the blocking fd problems which you allude to.  The attached patch fixes
+>>>>> them, and will be squashed into the series.
+>>>>>
+>>>>> Ben, you also reported the !r assertion failure, so this fix should help
+>>>>> you also.
+>>>>>
+>>>>>>> SOURCE:
+>>>>>>>
+>>>>>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :0 -nodefaults -vga std -qmp stdio -msg timestamp -S -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on
+>>>>>>>
+>>>>>>> {"execute": "qmp_capabilities"}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "cont"}
+>>>>>>> {"timestamp": {"seconds": 1755977653, "microseconds": 248749}, "event": "RESUME"}
+>>>>>>> {"return": {}}
+>>>>>>> {"timestamp": {"seconds": 1755977657, "microseconds": 366274}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "vnet.1", "path": "/machine/peripheral/vnet.1/virtio-backend"}}
+>>>>>>> {"execute": "migrate-set-parameters", "arguments": {"mode": "cpr-transfer"}}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "migrate", "arguments": {"channels": [{"channel-type": "main", "addr": {"path": "/tmp/migr.sock", "transport": "socket", "type": "unix"}}, {"channel-type": "cpr", "addr": {"path": "/tmp/cpr.sock", "transport": "socket", "type": "unix"}}]}}
+>>>>>>> {"timestamp": {"seconds": 1755977767, "microseconds": 835571}, "event": "STOP"}
+>>>>>>> {"return": {}}
+>>>>>>>
+>>>>>>> TARGET:
+>>>>>>>
+>>>>>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :1 -nodefaults -vga std -qmp stdio -S -object memory-backend-file,id=ram0,size=4G,mem-p
+>>>>>>> ath=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on -incoming defer -incoming '{"channel-type": "cpr","addr": { "transport": "socket","type": "unix", "path": "/tmp/cpr.sock"}}'
+>>>>>>>
+>>>>>>> <need to wait until "migrate" on source>
+>>>>>>>
+>>>>>>> {"execute": "qmp_capabilities"}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
+>>>>>>> {"return": {}}
+>>>>>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
+>>>>>>> could not disable queue
+>>>>>>> qemu-system-x86_64: ../hw/net/virtio-net.c:771: virtio_net_set_queue_pairs: Assertion `!r' failed.
+>>>>>>> fish: Job 1, 'sudo build/qemu-system-x86_64 -…' terminated by signal SIGABRT (Abort)
+>>>>>>>
+>>>>>>> So, it crashes on device_add..
+>>>>>>>
+>>>>>>> Second, I've come a long way, backporting you TAP v1 series together with needed parts of CPR and migration channels to QEMU 7.2, fixing different issues (like, avoid reinitialization of vnet_hdr length on target, avoid simultaneous use of tap on source an target, avoid making the fd blocking again on target), and it finally started to work.
+>>>>>>>
+>>>>>>> But next, I went to support similar migration for vhost-user-blk, and that was a lot more complex. No reason to pass an fd in preliminary stage, when source is running (like in CPR), because:
+>>>>>>>
+>>>>>>> 1. we just can't use the fd on target at all, until we stop use it on source, otherwise we just break vhost-user-blk protocol on the wire (unlike TAP, where some ioctls called on target doesn't break source)
+>>>>>>> 2. we have to pass enough additional variables, which are simpler to pass through normal migration channel (how to pass anything except fds through cpr channel?)
+>>>>>
+>>>>> You can pass extra state through the cpr channel.  See for example vmstate_cpr_vfio_device,
+>>>>> and how vmstate_cpr_vfio_devices is defined as a sub-section of vmstate_cpr_state.
+>>>>
+>>>> O, I missed this.
+>>>>
+>>>> Hmm. Still, finally CPR becomes just an additional stage of migration, which is done prior device initialization on target..
+>>>>
+>>>> Didn't you think of integrating it to the common scheme: so that devices may have .vmsd_cpr in addition to .vmsd? This way we don't need a global CPR state, and CPR stage of migration will work the same way as normal migration?
+>>>
+>>> I proposed a single migration stream containing pre-create state that was read early,
+>>> but that was rejected as too complex.
+>>>
+>>> I also proposed refactoring initialization so the monitor and migration streams
+>>> could be opened earlier, but again rejected as too complex and/or not consistent with
+>>> a long term vision for reworking initialization.
+>>>
+>>>> Still2, if we pass some state in CPR it should be a kind of constant. We need a guarantee that it will not change between migration start and source stop.
+>>>>
+>>>>>
+>>>>>>> So, I decided to go another way, and just migrate everything backend-related including fds through main migration channel. Of course, this requires deep reworking of device initialization in case of incoming migration (but for vhost-user-blk we need it anyway). The feature is in my series "[PATCH 00/33] vhost-user-blk: live-backend local migration" (you are in CC).
+>>>>>
+>>>>> You did a lot of work in those series!
+>>>>> I suspect much less rework of initialization is required if you pass variables in cpr state.
+>>>>
+>>>> Not sure. I had to rework initialization anyway, as initialization damaged the connection. And this lead me to idea "if rework anyway, why not to go with one migration channel".
+>>>>
+>>>>>
+>>>>>>> The success with vhost-user-blk (of-course) make me rethink TAP migration too: try to avoid using additional cpr channel and unusual waiting for QMP interface on target. And, I've just sent an RFC: "[RFC 0/7] virtio-net: live-TAP local migration"
+>>>>>
+>>>>> Is there a use case for this outside of CPR?
+>>>>
+>>>> It just works without CPR.. Will CPR bring more benefit if I enable it in the setup with my local-tap + local-vhost-user-blk capabilities ( + ignore-shared of-course)?
+>>>>
+>>>>
+>>>>> CPR is intended to be the "local migration" solution that does it all :)
+>>>>> But if you do proceed with your local migration tap solution, I would want
+>>>>> to see that CPR could also use your code paths.
+>>>>>
+>>>> CPR can transparently use my code: you may enable both CPR and
+>>>> local-tap capability and it should work. Some devices will migrate
+>>>> their fds through CPR, TAP fds amd state will migrate through main
+>>>> migration channel.
+>>>
+>>> OK, I believe that.
+>>>
+>>> I also care about cpr-exec mode.  We use it internally, and I am trying to push
+>>> it upstream:
+>>>     https://lore.kernel.org/qemu-devel/1755191843-283480-8-git-send-email-steven.sistare@oracle.com/
+>>> I believe it would work with your code.  Migrated fd's in both the cpr channel and
+>>> the main migration channel would be handled differently as shown in vmstate-types.c
+>>> get_fd() and put_fd().  The fd is kept open across execv(), and vmstate represents
+>>> the fd by its value (eg a small integer), rather than as an object in the unix channel.
+>>
+>> I'm close to publish new version, which will include
+>>
+>>>
+>>>> Making both channels to be unix-sockets should not be a considerable overhead I think.
+>>>>
+>>>> Why I like my solution more:
+>>>>
+>>>> - no additional channel
+>>>> - no additional logic in management software (to handle target start with no QMP access until "migrate" command on source)
+>>>> - less code to backport (that's personal, of course not an argument for final upstream solution)
+>>>>
+>>>> It seems that CPR is simpler to support as we don't need to do deep rework of initialization code.. But in reality, there is a lot of work anyway: TAP, vhost-user-blk cases proves this. You series about vfio are also huge.
+>>>
+>>> TAP is the only case where we can compare both approaches, and the numbers tell
+>>> the story:
+>>>
+>>>     TAP initialization refactoring: 277 insertions(+), 308 deletions(-)
+>>
+>> Actually, I've done a lot more refactoring than required for TAP local migration, trying to make the whole initialization more clear and consistent. And it's a good base for any modification of TAP device I think.
+>>
+>>>     live-TAP local migration:       681 insertions(+), 72 deletions(-)
+>>
+>> But 369 is last patch which is not for commit, and 65 a first patch with tracepoints (look at it tap_dump_packet() - thanks to AI, really helps to debug network problems, when you see packet dumps in QEMU log)
+>> So, more honest estimate is ~250, which is in good accordance with Live update tap.
+>>
+>>>                           total:    958 insertions(+), 380 deletions(-)
+>>>
+>>>     Live update tap and vhost:      223 insertions(+), 55 deletions(-)
+>>>
+>>> For any given system, if the maintainers accept the larger amount of change,
+>>> then local migration is cool (and CPR made it possible by adding fd support
+>>> to vmstate+QEMUFile)
+>>
+>> Yes, native support for fds in migration API opens the doors:)
+>>
+>>> .  But the amount of change is a harder sell.
+>>
+>> Yes, that's right. But live-TAP isn't really big. Unlike live-vhost-user-blk unfortunately.
+>>
+>>>> What is the benefit of CPR against simple (unix-socket) migration?
+>>
+>>> CPR supports vfio, iommufd, and pinned memory.  Memory backend objects are
+>>> created early, before the main migration stream is read, and squashing
+>>> CPR into migration for those cases would require a major change in how
+>>> qemu creates objects during live migration.
+>>
+>> Yes, understand: less things to change in initialization code = we can cover more things..
+>>
+>> For my downstream I need TAP, vhost-user-blk and vfio. So vfio would be the most interesting challenge, if I try to make a kind of live-vfio local migration.
+>>
+>> - it already supported by CPR, so it would be really hard to cell 1-2 thousands of additional code lines) But I'll see, may be it will not be so much.
+>> - we already have support in downstream, which we've never tried to send. It based on getting fds from source and passing them to target by management software.. But of course one day we should sync with upstream.
 > 
-> The test is specified via a tuple (name, runner, protocol), where name
-> is the test name as found in the tests/functional directory without the
-> 'test_' prefix and the .py extension, runner is an array containing the
-> runner and any arguments required by the runner, and protocol is
-> the test protocol used by Meson to determine whether the test passed or
-> failed.
-> 
-> The test tuples are added to arrays that follow the current naming
-> logic but with the suffix '_with_runner' appended to their names. In
-> Meson it's not easy to select an element in an array at runtime based on
-> its type, so it's simpler to have a new array for these new test types
-> than use the current ones from the tests that don't require a runner,
-> and so avoid mixing strings and tuples in the same array.
-> 
-> Currently there is only one runner, the GDB runner, but more runners can
-> be defined and associated to a test via the tuple.
-> 
-> The GDB runner is only defined if GDB is detected. The probe is done
-> in 'configure' and the full path is passed to meson.build via the -Dgdb=
-> option.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   configure                     |  2 ++
->   meson.build                   |  4 +++
->   meson_options.txt             |  2 ++
->   scripts/meson-buildoptions.sh |  2 ++
->   tests/functional/meson.build  | 65 +++++++++++++++++++++++++++++++++++
->   5 files changed, 75 insertions(+)
-> 
-> diff --git a/configure b/configure
-> index 274a778764..8e2e2cd562 100755
-> --- a/configure
-> +++ b/configure
-> @@ -1978,6 +1978,8 @@ if test "$skip_meson" = no; then
->     test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
->     test "$plugins" = yes && meson_option_add "-Dplugins=true"
->     test "$tcg" != enabled && meson_option_add "-Dtcg=$tcg"
-> +  test -n "$gdb_bin" && meson_option_add "-Dgdb=$gdb_bin"
-> +
->     run_meson() {
->       NINJA=$ninja $meson setup "$@" "$PWD" "$source_path"
->     }
-> diff --git a/meson.build b/meson.build
-> index 0d42de61ae..7e0afe8288 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -75,6 +75,10 @@ have_user = have_linux_user or have_bsd_user
->   
->   sh = find_program('sh')
->   python = import('python').find_installation()
-> +# Meson python.get_path() on 'purelib' or 'platlib' doesn't properly return the
-> +# site-packages dir in pyvenv, so it is built manually.
-> +python_ver = python.language_version()
-> +python_site_packages = meson.build_root() / 'pyvenv/lib/python' + python_ver / 'site-packages'
->   
->   cc = meson.get_compiler('c')
->   all_languages = ['c']
-> diff --git a/meson_options.txt b/meson_options.txt
-> index fff1521e58..5bb41bcbc4 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -36,6 +36,8 @@ option('trace_file', type: 'string', value: 'trace',
->   option('coroutine_backend', type: 'combo',
->          choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
->          value: 'auto', description: 'coroutine backend to use')
-> +option('gdb', type: 'string', value: '',
-> +       description: 'Path to GDB')
->   
->   # Everything else can be set via --enable/--disable-* option
->   # on the configure script command line.  After adding an option
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index 0ebe6bc52a..f4bd21220e 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -58,6 +58,7 @@ meson_options_help() {
->     printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
->     printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
->     printf "%s\n" '                           firmware]'
-> +  printf "%s\n" '  --gdb=VALUE              Path to GDB'
->     printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
->     printf "%s\n" '  --includedir=VALUE       Header file directory [include]'
->     printf "%s\n" '  --interp-prefix=VALUE    where to find shared libraries etc., use %M for'
-> @@ -323,6 +324,7 @@ _meson_option_parse() {
->       --disable-fuzzing) printf "%s" -Dfuzzing=false ;;
->       --enable-gcrypt) printf "%s" -Dgcrypt=enabled ;;
->       --disable-gcrypt) printf "%s" -Dgcrypt=disabled ;;
-> +    --gdb=*) quote_sh "-Dgdb=$2" ;;
->       --enable-gettext) printf "%s" -Dgettext=enabled ;;
->       --disable-gettext) printf "%s" -Dgettext=disabled ;;
->       --enable-gio) printf "%s" -Dgio=enabled ;;
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 2a0c5aa141..febd31a263 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -9,6 +9,25 @@ if get_option('tcg_interpreter')
->     subdir_done()
->   endif
->   
-> +# Define the GDB runner if GDB is available.
-> +gdb = get_option('gdb')
-> +if gdb != ''
-> +    gdb_runner_script =  meson.project_source_root() + '/tests/guest-debug/run-test.py'
-> +    gdb_runner = [gdb_runner_script, '--quiet', '--gdb', gdb, '--test']
-> +
-> +    message('GDB runner defined based on GDB found at: ', gdb)
-> +
-> +    # A test with a runner is a tuple (name, runner, protocol).
-> +    # The tests must be elements of an array named like:
-> +    #
-> +    # test_<arch>_<mode=[system|linuxuser|bsduser]>_<speed=[quick|thorough]>_with_runner = [
-> +    #      ['test0', gdb_runner, 'exitcode'],
-> +    #      ...
-> +    # ]
-> +else
-> +    message('GDB not found, skipping functional tests that rely on it.')
-> +endif
-> +
->   subdir('aarch64')
->   subdir('alpha')
->   subdir('arm')
-> @@ -61,9 +80,11 @@ foreach speed : ['quick', 'thorough']
->         suites = ['func-quick', 'func-' + target_base]
->         target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_quick', []) \
->                        + get_variable('tests_generic_' + sysmode)
-> +      target_tests_r = get_variable('tests_' + target_base + '_' + sysmode + '_quick_with_runner', [])
->       else
->         suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
->         target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
-> +      target_tests_r = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed + '_with_runner', [])
->       endif
->   
->       test_deps = [roms, keymap_targets]
-> @@ -121,6 +142,50 @@ foreach speed : ['quick', 'thorough']
->              priority: time_out,
->              suite: suites)
->       endforeach
-> +
-> +    # Prepare tests that require a specific runner.
-> +    foreach test : target_tests_r
-> +      testname = '@0@-@1@'.format(target_base, test[0])
-> +      testfile = target_base / 'test_' + test[0] + '.py'
-> +      testpath = meson.current_source_dir() / testfile
-> +      teststamp = testname + '.tstamp'
-> +      testrunner  = test[1]
-> +      testproto = test[2]
-> +
-> +      # python_site_packages, i.e., site packages from Python in pyvenv, is
-> +      # added to PYTHONPATH because some runners can run a program that has its
-> +      # own Python hooks that, by its turn, will search for modules based on
-> +      # PYTHONPATH independently of the Python used by the runner, like, for
-> +      # example, GDB using libpython.
-> +      test_r_precache_env = test_precache_env
-> +      test_r_precache_env.append('PYTHONPATH', python_site_packages)
-> +      # For similar reasons, PYTHONPATH must also include the path to the test
-> +      # scripts, otherwise unittest's introspection will failed.
-> +      test_r_precache_env.append('PYTHONPATH', meson.current_source_dir() / target_base)
-> +
-> +      precache = custom_target('func-precache-' + testname,
-> +                               output: teststamp,
-> +                               command: [testrunner, testpath],
-> +                               depend_files: files(testpath),
-> +                               build_by_default: false,
-> +                               env: test_r_precache_env)
-> +      precache_all += precache
-> +
-> +      # See comments above about PYTHONPATH in test_r_precache_env.
-> +      test_r_env = test_env
-> +      test_r_env.append('PYTHONPATH', python_site_packages)
-> +      test_r_env.append('PYTHONPATH', meson.current_source_dir() / target_base)
-> +
-> +      test('func-' + testname,
-> +           python,
-> +           depends: [test_deps, test_emulator, emulator_modules, plugin_modules],
-> +           env: test_r_env,
-> +           args: [testrunner, testpath],
-> +           protocol: testproto,
-> +           timeout: time_out,
-> +           priority: time_out,
-> +           suite: suites)
-> +    endforeach
->     endforeach
->   endforeach
+> Sorry to jump in as late.  Just want to say that using LOCs to compare
+> solutions is not fair above, IMHO: we could have hacks that is a single
+> liner, but maintaining those can be nightmare.
 
-It's a little bit unfortunate that we get quite a bit of almost duplicated 
-code in meson.build this way, but I currently also lack an idea of doing it 
-in a better way... So from my side:
+Of-course )
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+> 
+> PS: totally not saying that CPR is hackish! :-)
+> 
+> I didn't read any new code at all, I apologize if I would say stupid
+> things, but.. if we have cleaner way to do all of these, and if that can
+> happen in one channel that sounds ideal.
 
+I believe that's possible. At least it works for vhost-user-blk and TAP.
+Still such approach may require more work to refactor initialization code.
+
+> 
+> IIUC then we can save the is_cpr_incoming() checks all over the places -
+> frankly, that's part of pure hack.  It's extremely hard to maintain
+> longterm, IMO.
+
+Unfortunately, my solution comes with similar checks here and there (for enabled capabilites, etc.).
+
+That's because we have to distinguish usual initialization/starting of device vs
+incoming migration, when we should postpone some part of initialization code up to
+post-load of migration.
+
+> 
+> I wished devices could opt-in to provide its own model so that it is
+> prepared to boot the QEMU without FDs being there and pause itself at that
+> stage if a load would happen. 
+
+So, you suggest to postpone the initialization up to "start" even for "normal start"
+of QEMU, to avoid these endless "if (we are in our special local-incoming/CPR mode)".
+
+Actually, that's how normal migratable devices live: we don't have "if (incoming)" for
+every step of initialization/start currently.
+
+I'll see, could I apply the concept to TAP local migration series.
+
+> If all such is possible for all device
+> emulations that we would care, it'll be perfect, IMHO.  More LOCs would
+> deserve such refactoring (and if there're even more benefits besides
+> migration, which I don't know about device code but I feel so).
+> 
+> So I wished more of Vladimir's work land, if my understanding is correct,
+> and if that can competely replace the early channel some day (when every
+> device FDs will be able to be migrated via main channel - is it possible)?
+> 
+
+Thanks!
+
+-- 
+Best regards,
+Vladimir
 
