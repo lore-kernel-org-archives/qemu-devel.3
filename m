@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD43ECAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 15:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1400CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 15:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvduq-0007pD-1A; Mon, 08 Sep 2025 11:36:24 -0400
+	id 1uve0s-0001a8-LA; Mon, 08 Sep 2025 11:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uvduk-0007eR-Vh
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:36:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve0r-0001Zn-BS
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:42:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uvduh-0005HY-OM
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:36:18 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uve0m-0006HH-JV
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 11:42:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757345760;
+ s=mimecast20190719; t=1757346147;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/2z4WZjc2Qw7Pdj0ZxOVrwEMVV/HOnLvbPYbjiPri8k=;
- b=f2Rbm6ebnMbdB5D8cJHgmLbDltyenXVTDqo1FN6Ieum1Ymcdd+Pi5fSia8cItZKJE7w7j+
- sb78uzpVDDRNCDxaqFmIqEeMV7Nwl9OzNQT13DvCqLJ9y4CnZz8M45h60AwYl6w8JFXkjZ
- 6b5EVL6+C/aiDfXoZJBU/xtSwu4GBUA=
+ bh=if19pmcHZ2lgYCxalY3B8NtguCsBYfluVuEXviZT2WA=;
+ b=dAPA470Re0cLLsOwb4I7wgKgLTpGP9Q97q87B8oCDPftSzPaYzyFV0vt6OgTEvS7B88gmV
+ cRbzI5r2vJkIUxBuC9Cwu3UFkzxyeSIPyxp13yuIk5g24u1TFnUNpHFRE2q9MN/Xjry1uW
+ jhWmU5YhFbJBhaq14yZ+R+CQvDr6e10=
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-eTZYaSIENnOmSTh70G13Ng-1; Mon, 08 Sep 2025 11:35:59 -0400
-X-MC-Unique: eTZYaSIENnOmSTh70G13Ng-1
-X-Mimecast-MFC-AGG-ID: eTZYaSIENnOmSTh70G13Ng_1757345758
+ us-mta-73-6u6OqP2BMQulxwSAlWL2Pw-1; Mon, 08 Sep 2025 11:42:26 -0400
+X-MC-Unique: 6u6OqP2BMQulxwSAlWL2Pw-1
+X-Mimecast-MFC-AGG-ID: 6u6OqP2BMQulxwSAlWL2Pw_1757346146
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-816a52d9a6bso169760585a.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 08:35:59 -0700 (PDT)
+ af79cd13be357-806f812a0aaso1172795885a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 08:42:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757345758; x=1757950558;
+ d=1e100.net; s=20230601; t=1757346146; x=1757950946;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/2z4WZjc2Qw7Pdj0ZxOVrwEMVV/HOnLvbPYbjiPri8k=;
- b=h1TbCq0sEtG3kinnovQumpnb4N9xU5vcOu5SKBQGP6/lgiTbI9ADMWqgdbqqz1t2DL
- 86MP2tOIs3HSWR6kqVlTzzhs8pWSjCfOekNH2xyxM/TFjshxICFY7qG6ml2CfSMLscZj
- i6LwDYnFZ99o7jqoE/T/4DcTi/JLtfUmk9TScqvsAgnEfV2ZEs9sbvIAa1s4OpTg7XZf
- OgBZUZZVw7XwBObPRP0/OMnmZZh3uNrT/jpNJ6edHJ70tqC3cFp2mOGwjqc0AYsc9VyX
- ByMZ5KYq2/ZeyG+i4JQfp7/3YjAi0jIxwXrO9NjknLYWPzTK/mT2NU2T/jRNibbUQZEv
- uWHA==
+ bh=if19pmcHZ2lgYCxalY3B8NtguCsBYfluVuEXviZT2WA=;
+ b=Ohi2zTt2EQcQz3/+Bq4YB7oLHpTo0VZ7C4Td6/rGi9+92+zEpHxu3BjdQoP2N9ZCYy
+ 7Ac41bgMgo2Wddb2N9pRRMVzc3Zc9rELmNU65ROG8KnqrJGe58jwJW20YfE6H5SMkONm
+ aGyf3eiUIrOa7MqE9DDAg1n62IBM6O5WdJijF6TTYQ7k/SHBB7XCJereaXjzWVqLRS3r
+ MznOIe4K9TxMXJU+OTBcLav1yIV0R5Jn/2l3pp+iJy6HH5dlaPCwfc+bMXX2/noS1g/B
+ 2mMlDUeCBW7PeCT6ZgbEcYREM091H6enKs9mDaNQVJm9qS3LFGJZXcpcfuxV1bLBMLYA
+ c4Jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFtI36fF+eREQpqv0fIu/dY8phR7+wSuq1QrNUeDF8y8PKxYdQtf889tnh3w7ym37gOWWeZhJyCVaI@nongnu.org
-X-Gm-Message-State: AOJu0YwpVsYhFKpYBiLbIF4eYkUGy+8Dl4BxkL791INDFgYUGDuKJwAZ
- L4TiVkMb78mTxpgECjgGJE2KD4rO1T+Sc5aJp69uDiWJjO33H3CdZRocruOzKAXJzDvsImJmFxL
- 5S5vcopjGkIaq4eufJ9qUqbvKcdZPi9RWJj7DosVAWutjQlNbKRot2Tyu
-X-Gm-Gg: ASbGncuR6PwVtiGuT/2tesPIVZTxNQdZEQvz7fdGC3XFlWCIpNcdW+7EDgL/EapV2Zj
- oVIpN9eaO8BLb4lE/Js/ALqwetwY117Puc03zNnq/UmQ/oQFdWXORcnjntZr1N72aXSEeWK8bOe
- GQQqrKhLAwmTI6xtukyQZYr2OoT/h+sZsOQ92FOdlFv0grNaGr6eQgH0sB5m0Mu8UzomdgADon2
- pbulY1fRUtT1fEH0KbrKVlbQy+/kLr56Ni4G6dYJ3EARmkEm/JRpMNfTdeUx25K/sqWTtCiCFPK
- DoOtUBKfGPfJIOmqDqh+z6u5EaqagIVq
-X-Received: by 2002:a05:620a:4609:b0:816:638f:4ab0 with SMTP id
- af79cd13be357-816638f4eebmr484521585a.27.1757345758214; 
- Mon, 08 Sep 2025 08:35:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFeac9ERaUm6vN81GgYU2HhrgjfSVe6+tpZBCcuERZexbNLnH/CSDwkQHP6uHmLtUAv7q5Pfg==
-X-Received: by 2002:a05:620a:4609:b0:816:638f:4ab0 with SMTP id
- af79cd13be357-816638f4eebmr484516185a.27.1757345757560; 
- Mon, 08 Sep 2025 08:35:57 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b48f62aa29sm105884081cf.11.2025.09.08.08.35.56
+ AJvYcCUjPmCMZ62QNeARN0JFWlbUMp4aTEDBGROsssC8wvEhE5Wo9QLwcK8dslMQJh9vSbMtQJJbr88wUGF6@nongnu.org
+X-Gm-Message-State: AOJu0Yz7VOi5Ag7GSWFdeXU40Z2ewxWvlGyWWNNJgDA+CK5+3YhuRf41
+ vAMc2pXUzOov7qqbfWxjnv5sAa+HyvkARrjh3MRz/51eILDbTdo5Y59Anzz+1M7ofxb/vNNeKEC
+ EKJc0uMm2CprnpITx3Kv8bLjgVdADpjpav3F13BXGXsWLZZAXFWoDsD2x
+X-Gm-Gg: ASbGnctbh43WGy1Frm9SbgTUvLYnEmPZIOUCGorzfWncCD4vlq0glBfr/bGsWbSGuEI
+ RJaB/QWuKA4d8lAdz5jHahRRZ5M+RHFDZEt1MuBkKEbO/wKYUhceXbGxUFbb/wvVuH5B4eb9VUu
+ N5lDatHLa9jG4j4BZXn8ScuY07UDWnJUrNwbdT5/iFrbYlZxpKPBfdJrXzh0LSzHqkCcwB26PI9
+ 4zjrfM3BkRkQIpMjg17tv8YhvUuD6rmltkc7+sUhnCQp6ldk7Xz7arve6V60SRwNbiqgpgczbg2
+ gyp4DEzEMcEm0lmYsf/a+CRilc8Q2kdfPPT8pyewopFsKAWwVDPgiCm1+ZS754SyQ/bM5xKa9Om
+ fDpQX8d0De/JllGte7FQBdg==
+X-Received: by 2002:a05:620a:25c9:b0:816:b56d:2103 with SMTP id
+ af79cd13be357-816b56d2a38mr474421985a.53.1757346145478; 
+ Mon, 08 Sep 2025 08:42:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwfzvHcSNZBXqHnsRvIckAtGYWnfmjTeuHo+YSv9WpDMFQuyptW0betzYcQM8XeZuU0acNZA==
+X-Received: by 2002:a05:620a:25c9:b0:816:b56d:2103 with SMTP id
+ af79cd13be357-816b56d2a38mr474416785a.53.1757346144806; 
+ Mon, 08 Sep 2025 08:42:24 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-816be049587sm353587285a.70.2025.09.08.08.42.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 08:35:56 -0700 (PDT)
-Date: Mon, 8 Sep 2025 11:35:45 -0400
+ Mon, 08 Sep 2025 08:42:24 -0700 (PDT)
+Date: Mon, 8 Sep 2025 11:42:23 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
  steven.sistare@oracle.com, yc-core@yandex-team.ru, mst@redhat.com,
  farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
-Subject: Re: [PATCH v3 4/9] qapi: add interface for local TAP migration
-Message-ID: <aL730XiXhM1Vj4Zg@x1.local>
+Subject: Re: [PATCH v3 5/9] net/tap: implement interfaces for local migration
+Message-ID: <aL75XyzSI6lEOKF3@x1.local>
 References: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
- <20250905135039.2202924-5-vsementsov@yandex-team.ru>
+ <20250905135039.2202924-6-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250905135039.2202924-5-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250905135039.2202924-6-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,38 +112,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 05, 2025 at 04:50:34PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 2387c21e9c..992a5b1e2b 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -517,6 +517,12 @@
->  #     each RAM page.  Requires a migration URI that supports seeking,
->  #     such as a file.  (since 9.0)
->  #
-> +# @local-tap: Migrate TAPs locally, keeping backend alive. Open file
-> +#     descriptors and TAP-related state are migrated. Only may be
-> +#     used when migration channel is unix socket. For target device
-> +#     also @local-incoming option must be specified (since 10.2)
-> +#     (since 10.2)
+On Fri, Sep 05, 2025 at 04:50:35PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> +static const VMStateDescription vmstate_tap = {
+> +    .name = "virtio-net-device",
+> +    .post_load = tap_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_FD(fd, TAPState),
+> +        VMSTATE_BOOL(using_vnet_hdr, TAPState),
+> +        VMSTATE_BOOL(has_ufo, TAPState),
+> +        VMSTATE_BOOL(has_uso, TAPState),
+> +        VMSTATE_BOOL(enabled, TAPState),
+> +        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +int tap_save(NetClientState *nc, QEMUFile *f)
+> +{
+> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> +
+> +    return vmstate_save_state(f, &vmstate_tap, s, 0);
+> +}
+> +
+> +int tap_load(NetClientState *nc, QEMUFile *f)
+> +{
+> +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> +
+> +    return vmstate_load_state(f, &vmstate_tap, s, 0);
+> +}
 
-IMHO we should move this into a per-device property, at least we need one
-there to still control the device behavior; we had a similar discussion
-recently on iterable virtio-net.
+Instead of hard-coding vmstate_save_state() / vmstate_load_state(), could
+we make tap's VMSD to be a subsection of virtio-net's?
 
-But maybe this one is slightly special?  Maybe the tap device needs to at
-least know whether in this specific migration, if we want to pass over FD
-or not (e.g. local upgrade, or remote _real_ migration)?
+Multifd already doesn't support qemufile, but only iochannels (which is the
+internal impl of qemufiles).  We might at some point start to concurrently
+load devices with multifd, then anything with qemufile will be a no-go and
+need to be serialized as legacy code in the main channel, or rewritten.
 
-If that's the case, we may consider providing a generic migration
-capability, like cap-fd-passing.  Nowadays since Fabiano's moving migration
-capabilities all over to migration parameters, this one can start with a
-parameter instead of a capability.  The problem with migration capability
-is (at least) that it can't by default ON on any machine types.. meanwhile
-it simply looks like identital to parameters except it's always bool.
-
-The high level rational is that we should never add a per-device cap flag
-into migration framework.
+IMHO it'll be great if we can avoid adding new codes operating on
+qemufiles, and also avoid adding any new custom VMSD fields' put()/get() if
+ever possible.
 
 Thanks,
 
