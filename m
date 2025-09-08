@@ -4,110 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1BBCA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 20:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49AA3CA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 20:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvi3j-0001sz-KC; Mon, 08 Sep 2025 16:01:51 -0400
+	id 1uvi4J-0001zh-MI; Mon, 08 Sep 2025 16:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uvi3h-0001s8-Gh; Mon, 08 Sep 2025 16:01:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uvi3s-0001vR-SQ
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 16:02:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uvi3d-0006x5-W7; Mon, 08 Sep 2025 16:01:49 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588ISPuG004056;
- Mon, 8 Sep 2025 20:01:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tmyZneTUF01bRMoiz
- CXwTR1Q6ib4smTEY2hiDRpjS3Y=; b=DpPyGP6kWLkZkSUCvnV1zl14z4VxZBl8X
- F8DReoiff+WQC3xdxm4IDgZJ5b4qUdNyyplHl+TZt+T1iPWO6HYF5oAcABhlP6xb
- a+nKEUvPpAlA99OsIFykJBC5fZSnrSxVz52Q89JZzhWoZxM8y+jnJV3MOxVo40dU
- SJRgsRmQQZp/9DTVxVJoP21/y4+UHrJ19WlU6n6Wc1Je4E43WJp/ce8EcN2+3Oe6
- dUJ52hc4NJWWVFoYY+D9p0iJsKH44Hmulh4KSqviNLU+YrbK5RDh8K7s1pXZ+KO1
- wprfH+sZEtSnZ5CXyUA2TUk78cOvQPTKpXiw/uGLGWQKMQR/S7saA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cff3q18-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Sep 2025 20:01:41 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 588K1flC004735;
- Mon, 8 Sep 2025 20:01:41 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cff3q12-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Sep 2025 20:01:40 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 588GfmHi007965;
- Mon, 8 Sep 2025 20:01:39 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49109pfqub-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Sep 2025 20:01:39 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 588K1cYZ16122512
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 8 Sep 2025 20:01:38 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 30CCD58058;
- Mon,  8 Sep 2025 20:01:38 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62BED5805C;
- Mon,  8 Sep 2025 20:01:37 +0000 (GMT)
-Received: from mglenn-KVM.. (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  8 Sep 2025 20:01:37 +0000 (GMT)
-From: Glenn Miles <milesg@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
- npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
- rathc@linux.ibm.com, richard.henderson@linaro.org
-Subject: [PATCH v3 7/9] hw/ppc: Support for an IBM PPE42 CPU decrementer
-Date: Mon,  8 Sep 2025 15:00:17 -0500
-Message-ID: <20250908200028.115789-8-milesg@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250908200028.115789-1-milesg@linux.ibm.com>
-References: <20250908200028.115789-1-milesg@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uvi3j-0006yR-R0
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 16:02:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757361707;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fz3xqU01kvmtYaiEpHfL3RwYEdsOgk1MOizgfVDpVa8=;
+ b=Q3pvs1hZ1ZqPJPl9deW9cjwomxE4dmoNYF3/R3IoudqFseT98I56+Z49w0302W3tqGHCJk
+ oM2mFPAP+UkfPuTUoFiRkS6/3YVWGY2NRjA6j0e4Hp6lYsutAbMg/orkD10DF1QT+iv69E
+ a8nzrrZLoUYd7xt5CWLi+EKhQ9fVOpU=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-267-zggTfgU0OQygAAq_IJdQEg-1; Mon, 08 Sep 2025 16:01:45 -0400
+X-MC-Unique: zggTfgU0OQygAAq_IJdQEg-1
+X-Mimecast-MFC-AGG-ID: zggTfgU0OQygAAq_IJdQEg_1757361705
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b5f31ef7dfso84994941cf.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 13:01:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757361705; x=1757966505;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fz3xqU01kvmtYaiEpHfL3RwYEdsOgk1MOizgfVDpVa8=;
+ b=vEo9g9T/oFwEvZpA4m4ucwfI03ggADvtWSlUCeBRivL6TN8K0w/MhUqteO2/LTYrd7
+ KDntEvG/q+4qmBDR2+FvGaWsJvKzJ//sBdbgsXiC8Rrh0jAjmyBwCBsGcuTeinoJfBvN
+ S4mQUXqRzLmVsPljCD9E/REVkVkFh7H2mydM41KkPFLUiPUyAWV+U+LCjhxQOEzq2SHm
+ UPWqGyYGGfzm6mzi8bfXAZOi39vXJczZJ9RoWm9aX2BsHTq7FAbC8CKDbTy2XCBfk/1e
+ 9s8TUkYCSdjtWvs6o8n1iuLnTLT4A8phNqj87EzfUf4SJv2xet+iSj8tqgYemtYZhJQI
+ sfJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCmJ7miDtp4fxspOcNVz9vIOqXhOpcg4kcFSpBUtlZU56hp9VAlQutw89PaHScRz8FeFj/m3KMfTjA@nongnu.org
+X-Gm-Message-State: AOJu0Ywf/hdjAa26ZhjbDX8rp8HlU7Ru+AkMiRLQzjbAfIwJf1R0yzUt
+ 2zFPjtFgkOsGQZ/0Fa0gaup1tY/M0r/WS5XVqq9nQ/rdIXPavMrDrIRzgICC0BSxBkf3gRUjLop
+ 8r0t3U3N4tslTECPnMR4CP0sxHiB+4z52zbJF1Bml5jxmYYZgdjlb1q+w
+X-Gm-Gg: ASbGncvB9/WkNYC76nVkhcdlJiQ8hRFUwAVQxbCtlAbcAEU399US2M9T97kyKQtWOtj
+ wK1hwLVsvQteRZ8YwOkUmWmdpQ9x5ab16HKUXClJ9rq8ecUeEvtdWt02O3DYTJdXSZ+Bj3mEuao
+ mon82EBPCTv8oVhY8ONwzNW0x8wx+SyWOMcGUkgwEwMf5B5c42wEyZsfHoYwyGWgv6a1LQTsrkc
+ GUefrItMmmqClY3w3vuTRDLT0V9HBMubIAz5LCJNanLba4sRf4ivGY5YeGGI6wFvzHZg5xJNRJz
+ I2UE7wHZ/OcRrjCPHChTZmU3xAd/EbzjZwORB3/wNv0KxZgSR/gjoRuxt97junjleqXCkAay8dX
+ 8/Kc/qtRJcwyQcNLPiMV+fg==
+X-Received: by 2002:a05:6214:f22:b0:713:2552:7be0 with SMTP id
+ 6a1803df08f44-73a1fbaafbdmr81157126d6.9.1757361704745; 
+ Mon, 08 Sep 2025 13:01:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFw9vFHtnQVRe3RGczH5Fayq+gehj2nItK+tXmm/phKzWiE+RVgNbEp+P3Z1k21oYOHyVxb7Q==
+X-Received: by 2002:a05:6214:f22:b0:713:2552:7be0 with SMTP id
+ 6a1803df08f44-73a1fbaafbdmr81156606d6.9.1757361704161; 
+ Mon, 08 Sep 2025 13:01:44 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-72160017b64sm125391066d6.55.2025.09.08.13.01.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Sep 2025 13:01:43 -0700 (PDT)
+Date: Mon, 8 Sep 2025 16:01:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org, leiyang@redhat.com,
+ steven.sistare@oracle.com, yc-core@yandex-team.ru, mst@redhat.com,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
+Subject: Re: [PATCH v3 5/9] net/tap: implement interfaces for local migration
+Message-ID: <aL82Jqzt5iJNNjnZ@x1.local>
+References: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
+ <20250905135039.2202924-6-vsementsov@yandex-team.ru>
+ <aL75XyzSI6lEOKF3@x1.local>
+ <0bdf838f-8fa8-488a-b2b8-fd6d385d05ff@yandex-team.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zBPogh2rYBJMOfIcLfi71-TmqE8ELoTj
-X-Proofpoint-GUID: mA_GSaG2lUIsKPjga7YSBmU0ZUL9tonx
-X-Authority-Analysis: v=2.4 cv=EYDIQOmC c=1 sm=1 tr=0 ts=68bf3625 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=FSmKNcNrx3yT2pM3_rYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyMCBTYWx0ZWRfX/1Bnp1piotLG
- ILvqbl3Z4XirnOhFr/7dIoWHZ7Nw1i/9bU1zWu2TE2Dgr53sFp3k4PninPPJaGMzyR/ZCql10cW
- K2tZObIb2AIwqpQIIBbUJGH33hyjv7k7DcFuwT8OUt0iUvm0VVvXAFvKqNkWnC16pOB2W8YrEvc
- wEy/25v3kXFijFX1RmwcQSQE+HL6k4jg9xQNr59x3f9APkqtCmFbEAKFRMoYSb+mMyHvPtb2Wcf
- rhilfFG67O2nucgQgd+FJEXpd7bMD55+A+/j7b8a4eAk86J7xAajQAtw7rPb7jhxO17k3bWZQp6
- yKfHQhE84bJ97kmNZCX1DwMiSaCN6maiMOGJtRVKDvAIah9301Q3qBwRpqp8ZbSJmQoe7vclSQw
- MbKk0u7l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_06,2025-09-08_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060020
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0bdf838f-8fa8-488a-b2b8-fd6d385d05ff@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,63 +114,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IBM PPE42 processors support a 32-bit decrementer
-that can raise an external interrupt when DEC[0]
-transitions from a 0 to a 1 (a non-negative value to a
-negative value).  It also continues decrementing
-even after this condition is met.
+On Mon, Sep 08, 2025 at 07:48:09PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 08.09.25 18:42, Peter Xu wrote:
+> > On Fri, Sep 05, 2025 at 04:50:35PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > +static const VMStateDescription vmstate_tap = {
+> > > +    .name = "virtio-net-device",
+> > > +    .post_load = tap_post_load,
+> > > +    .fields = (const VMStateField[]) {
+> > > +        VMSTATE_FD(fd, TAPState),
+> > > +        VMSTATE_BOOL(using_vnet_hdr, TAPState),
+> > > +        VMSTATE_BOOL(has_ufo, TAPState),
+> > > +        VMSTATE_BOOL(has_uso, TAPState),
+> > > +        VMSTATE_BOOL(enabled, TAPState),
+> > > +        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
+> > > +        VMSTATE_END_OF_LIST()
+> > > +    }
+> > > +};
+> > > +
+> > > +int tap_save(NetClientState *nc, QEMUFile *f)
+> > > +{
+> > > +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> > > +
+> > > +    return vmstate_save_state(f, &vmstate_tap, s, 0);
+> > > +}
+> > > +
+> > > +int tap_load(NetClientState *nc, QEMUFile *f)
+> > > +{
+> > > +    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+> > > +
+> > > +    return vmstate_load_state(f, &vmstate_tap, s, 0);
+> > > +}
+> > 
+> > Instead of hard-coding vmstate_save_state() / vmstate_load_state(), could
+> > we make tap's VMSD to be a subsection of virtio-net's?
+> > 
+> > Multifd already doesn't support qemufile, but only iochannels (which is the
+> > internal impl of qemufiles).  We might at some point start to concurrently
+> > load devices with multifd, then anything with qemufile will be a no-go and
+> > need to be serialized as legacy code in the main channel, or rewritten.
+> > 
+> > IMHO it'll be great if we can avoid adding new codes operating on
+> > qemufiles, and also avoid adding any new custom VMSD fields' put()/get() if
+> > ever possible.
+> > 
+> 
+> Subsections are loaded after fields.
+> 
+> And virtio-net already has fields
+> 
+>         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+>                          vmstate_virtio_net_has_vnet),
+> 
+> and
+> 
+>         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+>                          vmstate_virtio_net_has_ufo),
 
-The BookE timer is slightly different in that it
-raises an interrupt when the DEC value reaches 0
-and stops decrementing at that point.
+Side note: I'm actually a bit confused on why it needs to use
+VMSTATE_WITH_TMP(), or say, the get()/put() directly.
 
-Support a PPE42 version of the BookE timer by
-adding a new PPC_TIMER_PPE flag that has the timer
-code look for the transition from a non-negative value
-to a negative value and allows the value to
-continue decrementing.
+Taking example of vmstate_virtio_net_has_ufo, afaiu, the only point here is
+that virtio_net_ufo_post_load() would check peer UFO support.  I wonder if
+that should work too to check that in virtio_net_post_load_device(), and
+fail there if anything is wrong..  then would has_ufo be able to be
+migrated as a VMSTATE_U8 field?
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
----
+> 
+> Which do check on virtio-net level some parameters, which should come from local migration of TAP.
+> 
+> That's why I made TAP a field, and put it before these two ones. This way these two checks works.
+> 
+> 
+> Still, from your comment I understand that hard-coding save/load is worse problem. So I can just
+> skip checking in vmstate_virtio_net_has_vnet / vmstate_virtio_net_has_ufo with enabled "local-tap"
+> (or "fd-passing") capability (or better migration parameter). This way TAP may be a subsection.
 
-Changes from v2:
-  - Split out PPE42 decrementer support from v2 patch 3
+That'll be nice, thanks.  Or would a VMSTATE_STRUCT() for TAP to work (so
+that it can also be put before the two _TMPs, but avoid raw get()/put())?
 
- hw/ppc/ppc_booke.c   | 7 ++++++-
- include/hw/ppc/ppc.h | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
-index 3872ae2822..13403a56b1 100644
---- a/hw/ppc/ppc_booke.c
-+++ b/hw/ppc/ppc_booke.c
-@@ -352,7 +352,12 @@ void ppc_booke_timers_init(PowerPCCPU *cpu, uint32_t freq, uint32_t flags)
-     booke_timer = g_new0(booke_timer_t, 1);
- 
-     cpu->env.tb_env = tb_env;
--    tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
-+    if (flags & PPC_TIMER_PPE) {
-+        /* PPE's use a modified version of the booke behavior */
-+        tb_env->flags = flags | PPC_DECR_UNDERFLOW_TRIGGERED;
-+    } else {
-+        tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
-+    }
- 
-     tb_env->tb_freq    = freq;
-     tb_env->decr_freq  = freq;
-diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
-index 8a14d623f8..cb51d704c6 100644
---- a/include/hw/ppc/ppc.h
-+++ b/include/hw/ppc/ppc.h
-@@ -52,6 +52,7 @@ struct ppc_tb_t {
- #define PPC_DECR_UNDERFLOW_LEVEL     (1 << 4) /* Decr interrupt active when
-                                                * the most significant bit is 1.
-                                                */
-+#define PPC_TIMER_PPE                (1 << 5) /* Enable PPE support */
- 
- uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset);
- void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq);
 -- 
-2.43.0
+Peter Xu
 
 
