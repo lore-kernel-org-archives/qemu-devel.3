@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E0BCA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA49CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvf8u-00074e-Gr; Mon, 08 Sep 2025 12:55:01 -0400
+	id 1uvfGY-0003gn-B5; Mon, 08 Sep 2025 13:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf8b-0006fe-JK
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:54:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvfGM-0003P9-5P
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:02:46 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf8T-0001ax-OT
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:54:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350469;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xZbfSTP/JfACJayh18nuWhbeIHHE2nsgBhjOK4FY6p8=;
- b=US3Kh+SDzR40BAQ6WgR5acmmYkcEXxOeNoHmMz4bLfaFvXbFF+Qxqdbgm8RxbFzlisAJe8
- erRkQDMR0BIOf06YOJ27l/DuOMI0skGe9uX10dhC1VRbWpSjZNoFQXmV8uURHTnOaY54ER
- 1sHKBnfgSgrQhwd11K1eJjxWa0vlhqU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-l2WNfykDOmidbRKWdO0cTw-1; Mon,
- 08 Sep 2025 12:54:28 -0400
-X-MC-Unique: l2WNfykDOmidbRKWdO0cTw-1
-X-Mimecast-MFC-AGG-ID: l2WNfykDOmidbRKWdO0cTw_1757350467
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A9CF819560A1; Mon,  8 Sep 2025 16:54:27 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.50])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1267A30001B5; Mon,  8 Sep 2025 16:54:25 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/31] vfio: Introduce helper vfio_pci_from_vfio_device()
-Date: Mon,  8 Sep 2025 18:53:33 +0200
-Message-ID: <20250908165354.1731444-11-clg@redhat.com>
-In-Reply-To: <20250908165354.1731444-1-clg@redhat.com>
-References: <20250908165354.1731444-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvfG6-0002oO-TQ
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:02:41 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id BEE0680669;
+ Mon, 08 Sep 2025 20:02:18 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id H2pXUv5Gj8c0-QAnHMeyp; Mon, 08 Sep 2025 20:02:18 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757350938;
+ bh=aI/kg7eSoNLSXXPZvvTWIJNrmhOBJwcopGdloNsO7eA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=usyb9pa9Vvooe9DPFFNzMv6yvdtcCl5O3vwypx0HITOKHLusrteHrkFtuKZuw2/WR
+ 32vIbznlGcPggGC9HxJA03j5WGp/LE6qE451/aboDsncm4yennHzZd0KpeI7Ff4y3+
+ CufNRHg3e7iuNTfAdBpf3Ro2ZUNLL48Yorqq6Uuo=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <8de7ad48-e9f5-4783-9bcc-1cd4218289ad@yandex-team.ru>
+Date: Mon, 8 Sep 2025 20:02:17 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,142 +77,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On 14.08.25 20:17, Steve Sistare wrote:
+> This patch series adds the live migration cpr-exec mode.
+> 
+> The new user-visible interfaces are:
+>    * cpr-exec (MigMode migration parameter)
+>    * cpr-exec-command (migration parameter)
+> 
+> cpr-exec mode is similar in most respects to cpr-transfer mode, with the
+> primary difference being that old QEMU directly exec's new QEMU.  The user
+> specifies the command to exec new QEMU in the migration parameter
+> cpr-exec-command.
+> 
+> Why?
+> 
+> In a containerized QEMU environment, cpr-exec reuses an existing QEMU
+> container and its assigned resources.  By contrast, cpr-transfer mode
+> requires a new container to be created on the same host as the target of
+> the CPR operation.  Resources must be reserved for the new container, while
+> the old container still reserves resources until the operation completes.
+> Avoiding over commitment requires extra work in the management layer.
+> This is one reason why a cloud provider may prefer cpr-exec.  A second reason
+> is that the container may include agents with their own connections to the
+> outside world, and such connections remain intact if the container is reused.
+> 
 
-Introduce helper vfio_pci_from_vfio_device() to transform from VFIODevice
-to VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
+My two cents:
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250822064101.123526-5-zhenzhong.duan@intel.com
-[ clg: Added documentation ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/pci.h       | 12 ++++++++++++
- hw/vfio/container.c |  4 ++--
- hw/vfio/device.c    |  2 +-
- hw/vfio/iommufd.c   |  4 ++--
- hw/vfio/listener.c  |  4 ++--
- hw/vfio/pci.c       |  9 +++++++++
- 6 files changed, 28 insertions(+), 7 deletions(-)
+We considered a possibility to switch to cpr-exec, and even more,
+we thought about some kind of loading new version of QEMU binary to running
+QEMU process (like library) and switching to it. But finally decided to
+keep our current approach (starting new QEMU in a separate process) and
+use CPR transfer (and finally come to my current in-list proposals of
+just migrating all fds in main migration channel).
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 923cf9c2f79d078546239bf67195d6ba8157265a..96144b6fdeb94dccf6c0beecf039a12b9845c59b 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -226,6 +226,18 @@ void vfio_pci_write_config(PCIDevice *pdev,
- uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
- void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
- 
-+/**
-+ * vfio_pci_from_vfio_device: Transform from VFIODevice to
-+ * VFIOPCIDevice
-+ *
-+ * This function checks if the given @vbasedev is a VFIO PCI device.
-+ * If it is, it returns the containing VFIOPCIDevice.
-+ *
-+ * @vbasedev: The VFIODevice to transform
-+ *
-+ * Return: The VFIOPCIDevice on success, NULL on failure.
-+ */
-+VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev);
- void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev);
- bool vfio_opt_rom_in_denylist(VFIOPCIDevice *vdev);
- bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp);
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3e13feaa74c30e8d7f5a0978e15824cecbf6d674..134ddccc52449cd7d4ac90d17075e9fca5439674 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1087,7 +1087,7 @@ static int vfio_legacy_pci_hot_reset(VFIODevice *vbasedev, bool single)
-         /* Prep dependent devices for reset and clear our marker. */
-         QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
-             if (!vbasedev_iter->dev->realized ||
--                vbasedev_iter->type != VFIO_DEVICE_TYPE_PCI) {
-+                !vfio_pci_from_vfio_device(vbasedev_iter)) {
-                 continue;
-             }
-             tmp = container_of(vbasedev_iter, VFIOPCIDevice, vbasedev);
-@@ -1172,7 +1172,7 @@ out:
- 
-         QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
-             if (!vbasedev_iter->dev->realized ||
--                vbasedev_iter->type != VFIO_DEVICE_TYPE_PCI) {
-+                !vfio_pci_from_vfio_device(vbasedev_iter)) {
-                 continue;
-             }
-             tmp = container_of(vbasedev_iter, VFIOPCIDevice, vbasedev);
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 52a1996dc4e122499a978cc8a5ce7e01620a9639..08f12ac31f44fdebc9fc1f23f716c52f391ed53e 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -129,7 +129,7 @@ static inline const char *action_to_str(int action)
- 
- static const char *index_to_str(VFIODevice *vbasedev, int index)
- {
--    if (vbasedev->type != VFIO_DEVICE_TYPE_PCI) {
-+    if (!vfio_pci_from_vfio_device(vbasedev)) {
-         return NULL;
-     }
- 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 48c590b6a9467c8139131bef8b92864893a8f2e6..8c27222f754a22f47fda6b6a1a86005341ec0d7f 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -737,8 +737,8 @@ iommufd_cdev_dep_get_realized_vpdev(struct vfio_pci_dependent_device *dep_dev,
-     }
- 
-     vbasedev_tmp = iommufd_cdev_pci_find_by_devid(dep_dev->devid);
--    if (!vbasedev_tmp || !vbasedev_tmp->dev->realized ||
--        vbasedev_tmp->type != VFIO_DEVICE_TYPE_PCI) {
-+    if (!vfio_pci_from_vfio_device(vbasedev_tmp) ||
-+        !vbasedev_tmp->dev->realized) {
-         return NULL;
-     }
- 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index c244be5e218ae60e2b9c8a29d2d4b9dad86fc77a..e0938331659833bdca98e700ac42651a90fb1571 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -453,7 +453,7 @@ static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
-      * MMIO region mapping failures are not fatal but in this case PCI
-      * peer-to-peer transactions are broken.
-      */
--    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
-+    if (vfio_pci_from_vfio_device(vbasedev)) {
-         error_append_hint(errp, "%s: PCI peer-to-peer transactions "
-                           "on BARs are not supported.\n", vbasedev->name);
-     }
-@@ -759,7 +759,7 @@ static bool vfio_section_is_vfio_pci(MemoryRegionSection *section,
-     owner = memory_region_owner(section->mr);
- 
-     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
--        if (vbasedev->type != VFIO_DEVICE_TYPE_PCI) {
-+        if (!vfio_pci_from_vfio_device(vbasedev)) {
-             continue;
-         }
-         pcidev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 07257d0fa049b09fc296ac2279a6fafbdf93d277..3fe5b03eb1160bb66fc4ae3942d14a2d71b4431a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2833,6 +2833,15 @@ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
-     return ret;
- }
- 
-+/* Transform from VFIODevice to VFIOPCIDevice. Return NULL if fails. */
-+VFIOPCIDevice *vfio_pci_from_vfio_device(VFIODevice *vbasedev)
-+{
-+    if (vbasedev && vbasedev->type == VFIO_DEVICE_TYPE_PCI) {
-+        return container_of(vbasedev, VFIOPCIDevice, vbasedev);
-+    }
-+    return NULL;
-+}
-+
- void vfio_sub_page_bar_update_mappings(VFIOPCIDevice *vdev)
- {
-     PCIDevice *pdev = &vdev->pdev;
+First, we don't run QEMU in docker, so probably we don't encounter some
+problems around it. The real problem for us is migration downtime for
+switching network and disk.
+
+Still, why we don't want cpr-exec? Two reasons:
+
+1. It seems, that current approach is more safe against different errors during
+migration: we have more chances just to say "cont" on source process, if something
+goes wrong.
+
+2. It seems, that with second process we do have more possibilities to minimize
+downtime, as we can do some initializations in a new QEMU process _before_ migration
+(when second process starts, the first is still running).
+
+I also thought about, could we do a kind of "exec", but still be able to avoid [2]?
+This leads to an idea of loading new qemu binary to the running process (like library),
+and .. start executing it in parallel with the old one? But that looks like trying
+to reinvent processes again, which is obviously bad idea.
+
+
 -- 
-2.51.0
-
+Best regards,
+Vladimir
 
