@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B99CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C96CA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvefo-0005Wz-QZ; Mon, 08 Sep 2025 12:24:57 -0400
+	id 1uveha-0007JO-Hk; Mon, 08 Sep 2025 12:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvefk-0005UL-Li
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:24:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uvegz-00060F-7l
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:26:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvefd-0004NF-18
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:24:51 -0400
+ id 1uvega-0004ku-R8
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:25:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757348680;
+ s=mimecast20190719; t=1757348737;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LdNq/lpDEvUYUkg4xizb0rp+xbTZipteca4Lui9tToE=;
- b=izz+0ZOZq7JoRVYU1mHhnvnWb+Saqgyd9W4YU+plDMdTbzJ4FJuippcFW4fEqxB46nUL6N
- dHgs/I5BEF8cegwTMYLClFTAyzO6aM5nwwv6MbQ8+uq8eczZSFRbhBPadimsw1ooxPvwOC
- YaBT1l7KO7acuK1ypR8i5j0znGGh2Kw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xpABsv6ALlkGgIBZ0+c5+30yfimFiIzf0N8AFctG26E=;
+ b=A1PzWbv+tfCp3vgZfabw01kQZ39G1FX/vVOz6SBZeuP5cBM7NPtAcm+hbhA7BB7ZKsBPEE
+ OOLgGzgdWhk2BXhvYV+kWZYa04MJC4dLTC7JtTTdXLBVo3NVkNj/OcFNF8F397enlQdV/c
+ LSEuKzzA4whbBcLbPDHSwjS8iuOi7eM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-JoFXZmFJNIKvEMzWBTNeWA-1; Mon,
- 08 Sep 2025 12:24:37 -0400
-X-MC-Unique: JoFXZmFJNIKvEMzWBTNeWA-1
-X-Mimecast-MFC-AGG-ID: JoFXZmFJNIKvEMzWBTNeWA_1757348675
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-8qh0T6GRNru4vaJPXpG2AQ-1; Mon,
+ 08 Sep 2025 12:25:33 -0400
+X-MC-Unique: 8qh0T6GRNru4vaJPXpG2AQ-1
+X-Mimecast-MFC-AGG-ID: 8qh0T6GRNru4vaJPXpG2AQ_1757348732
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5042519560B5; Mon,  8 Sep 2025 16:24:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85E9819560A7; Mon,  8 Sep 2025 16:25:32 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.93])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB0411800447; Mon,  8 Sep 2025 16:24:31 +0000 (UTC)
-Date: Mon, 8 Sep 2025 17:24:26 +0100
+ id 5A70D1800451; Mon,  8 Sep 2025 16:25:30 +0000 (UTC)
+Date: Mon, 8 Sep 2025 17:25:27 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Cleber Rosa <crosa@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Jag Raman <jag.raman@oracle.com>
-Subject: Re: [PATCH v2 03/18] python: backport 'kick event queue on legacy
- event_pull()'
-Message-ID: <aL8DOg7B7vbf0S_U@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v2 04/18] python: backport 'protocol: adjust logging name
+ when changing client name'
+Message-ID: <aL8Dd7irEBBYyXHG@redhat.com>
 References: <20250903051125.3020805-1-jsnow@redhat.com>
- <20250903051125.3020805-4-jsnow@redhat.com>
+ <20250903051125.3020805-5-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903051125.3020805-4-jsnow@redhat.com>
+In-Reply-To: <20250903051125.3020805-5-jsnow@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,17 +92,15 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 01:11:09AM -0400, John Snow wrote:
-> This corrects an oversight in qmp-shell operation where new events will
-> not accumulate in the event queue when pressing "enter" with an empty
-> command buffer, so no new events show up.
+On Wed, Sep 03, 2025 at 01:11:10AM -0400, John Snow wrote:
+> The client name is mutable, so the logging name should also change to
+> reflect it when it changes.
 > 
-> Reported-by: Jag Raman <jag.raman@oracle.com>
 > Signed-off-by: John Snow <jsnow@redhat.com>
-> cherry picked from commit 0443582d16cf9efd52b2c41a7b5be7af42c856cd
+> cherry picked from commit e10b73c633ce138ba30bc8beccd2ab31989eaf3d
 > ---
->  python/qemu/qmp/legacy.py | 3 +++
->  1 file changed, 3 insertions(+)
+>  python/qemu/qmp/protocol.py | 24 ++++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
