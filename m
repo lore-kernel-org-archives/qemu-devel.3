@@ -4,156 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8860CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 19:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36789CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 19:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvhaQ-00059V-J6; Mon, 08 Sep 2025 15:31:38 -0400
+	id 1uvhoj-0002jT-9o; Mon, 08 Sep 2025 15:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uvha4-0004k3-UO; Mon, 08 Sep 2025 15:31:14 -0400
-Received: from mail-dm6nam12on20604.outbound.protection.outlook.com
- ([2a01:111:f403:2417::604]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
+ id 1uvhoe-0002hz-E8; Mon, 08 Sep 2025 15:46:18 -0400
+Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uvhZn-0005C5-Pt; Mon, 08 Sep 2025 15:31:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UqCOiLe1tlnQKPx9W9XaGKuqS5mYRbkQ+MV9KqARaF5KKjBVfN4kJvg+NNylXOY8t6uOIq1Vqe8oHn/o6AHK36EfyqMFXUIWOyIvd+3hOAYuZhVHXq0XQdDjMYsLfg3XDxydVYmSC+q8ltAxO82UScmkU+wE6ELRFEniWrYxiqrMBa5PBk/tjbtbKVqisQCk5IfB/qkSI1g6o4LKPLTOeNGNi+rHT0j1nXWiRBFTuKcN4ofd4D9Jt9Rx5FVX8VBWHFukFcSiCskZdrjPsNO8AiJ0x6NHwDksauMdQxuNZa8RKVWsqa0XN1qapaLQ8fPKcdFZlMHh/XU118OtkqKbEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9uca8U065mr6ZPcovwvg2eYSqlRz7JEyUvxbHbpf7VI=;
- b=F55ij+8KIX8ezb5nciaO2QRNf3DoW98xNFyAAFp/WeUkpymxF4afRVdGxYgt5a82Lfy8HpJRx3Sbu5jCfXj5WGvcFOu5amqiVwlP/+YytJRPOGME1WBRfnmguWdiPOZgUEUDUYxW+W53DtcMEs9DSAFJXB3tuXGNyvpO24ExgrCYg8wuPY6M0QFvaOTzjOjaQ0IkQsjft76H72rDBirwQtITsWiyTGoYzbsEufpsL7eK9um1inxU3SVjI1eq5UUWer6mWafQUhk/WYh9Pg7fwpsadG9D2Mvd7hIGvv+0S8OxCb3E2vjkSuNaX7SLamed9cJJ3SMM5kYl1yC8d/q+ZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9uca8U065mr6ZPcovwvg2eYSqlRz7JEyUvxbHbpf7VI=;
- b=kNPOt6W9pbuxio1mvIHEJRQGq7wqqIYC6/zANnYreQcl5gZeD0e8u3+9K9mk8/WN6debG1SV9+ZeJxT1RUWb+8eP2uh1R7TIA5Vb5C7br6cXL3F0JZYe8jX3ZAiq1ZqCFoeYgKvOsB1XxJeI23vh0Ubzm6OsPyfMTmof8h3+5gwcSJs1fZCGTqGXew2vRSaHLCOJy1iJ39RcbvriJu4K8uYBXDc53te7UY22Ck/HI6vMaWgQDUhyjGhH1roZv1s12AfgTHZxurpPqOVBeKx80LvqmYRQjUfBclSUMUfl6S65FrsFi66mEWXI4SdiG7AcvNsvgQaNpDO6Rm30WO2Kow==
-Received: from BL1PR13CA0421.namprd13.prod.outlook.com (2603:10b6:208:2c3::6)
- by MN2PR12MB4455.namprd12.prod.outlook.com (2603:10b6:208:265::23)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Mon, 8 Sep
- 2025 19:30:41 +0000
-Received: from BL6PEPF00020E65.namprd04.prod.outlook.com
- (2603:10b6:208:2c3:cafe::36) by BL1PR13CA0421.outlook.office365.com
- (2603:10b6:208:2c3::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.13 via Frontend Transport; Mon,
- 8 Sep 2025 19:30:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL6PEPF00020E65.mail.protection.outlook.com (10.167.249.26) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9115.13 via Frontend Transport; Mon, 8 Sep 2025 19:30:41 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 8 Sep
- 2025 12:30:09 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 8 Sep
- 2025 12:30:04 -0700
-Received: from nvidia.com (10.127.8.12) by mail.nvidia.com (10.129.68.8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 8 Sep 2025 12:30:01 -0700
-Date: Mon, 8 Sep 2025 12:29:58 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "linuxarm@huawei.com" <linuxarm@huawei.com>,
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com"
- <jiangkunkun@huawei.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, "shameerkolothum@gmail.com"
- <shameerkolothum@gmail.com>
-Subject: Re: [RFC PATCH v3 12/15] hw/arm/smmuv3-accel: Introduce helpers to
- batch and issue cache invalidations
-Message-ID: <aL8uth59ShMJyaDH@nvidia.com>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-13-shameerali.kolothum.thodi@huawei.com>
- <c2935990-ac0b-4272-b3aa-92a555d88e99@redhat.com>
- <CH3PR12MB75486D76AC47F611FC646510AB0CA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
+ id 1uvhoY-0000cc-Se; Mon, 08 Sep 2025 15:46:16 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.stl.internal (Postfix) with ESMTP id 42CD71D00015;
+ Mon,  8 Sep 2025 15:46:01 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 15:46:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bsbernd.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1757360761;
+ x=1757447161; bh=0j1MWwjUwfEbY+Ae+ca0MtYA+y6bx30gH2vZ5Vtlg9M=; b=
+ F3YqIXzHxPv42ybvV1Lza/IEfk7LYBwz+ZJYcTTp6XMAXXK+V1u8fBbAmS2FMJT/
+ W0BD8ou1QnUqANSqkYy6vfKGb/DC+TLgYvPm++bPMcyENY/s7rIJ/IXlRsA/G4gH
+ YYbUxW6mWsb+TWNxYPhtJRwKyqURzHX//JQxuk4/VUm7po0aVbfMgIiLyIh7zG4z
+ ZkSlIopnlI4sOiyrzbwLFfU2c434jTplCxqwp1ni0w2ZcZ/D6RJjU22HPo7Xq6ek
+ LTFi4GP4fC5GMT8Ff/H+5+hSH9SdHTWI5RO8P9hpgMPZY0tpBqkFEuZC5o2dBRz+
+ 0M2HYcSO3IqwFJm42Uu/cA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757360761; x=
+ 1757447161; bh=0j1MWwjUwfEbY+Ae+ca0MtYA+y6bx30gH2vZ5Vtlg9M=; b=c
+ NI/Suoge6qLXuJ/avVoxWqFRbDfSzQ7knhfV3NfKQz36RnOsn60QIYzWRgl5NLo1
+ 0nUZEuSKWIuXq/5NnHarj76Sp6u9M2yTFBk3uJhVx+c2L5OBtEyphoY/JUCILLRX
+ AeUO7xjnsoGD8QY/9gyuyT2ofm1w1G7WGlLwF2ECNnl+NTHhleNGP86jycf4IeJg
+ lEt14AKoe5AuzjYarWferAUbDOJSqzDzGKsxoLT0ROs3ufeAP0OBjLSSqc5nUHXm
+ j9ERoZzATycqzB9JU6R+u8eIicX8kL1jBcLy8vlIVtUFcTeWLXYF5SKo2ngxCL+x
+ 2oqTDR+OaUFfw0Zcb4tOg==
+X-ME-Sender: <xms:eDK_aBl8HwD8v0rwqdJAI426TltyS5lo_UVLOe34phKqvaDeURv4bQ>
+ <xme:eDK_aEeozN-ckauokSL3dSPELbBlbmziNOqoVl2SBndmQH0iAXOHhh6LpDmODcX6e
+ wSIssakj0rJo-0t>
+X-ME-Received: <xmr:eDK_aFRrMGvftz72w3mQdX8IFuoZczRotaahLy56f5uETrKKbpndWh2U7dm9NqBbVErr0z__goIs7tIkIjyInLJZsPTTSQvx1m7cKzZ7vPkLTATPxDJa>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeegudcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepuegvrhhnugcu
+ ufgthhhusggvrhhtuceosggvrhhnugessghssggvrhhnugdrtghomheqnecuggftrfgrth
+ htvghrnheptdeuvdeuudeltddukefhueeludduieejvdevveevteduvdefuedvkeffjeel
+ ueeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+ dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghrnhgusegsshgsvghrnhgurdgtohhm
+ pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehhih
+ gsrhhirghnshhonhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtvghfrghnhhgr
+ sehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnh
+ hurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdp
+ rhgtphhtthhopegrrhhmsghruhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmh
+ esvghuphhhohhnrdhnvghtpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtgho
+ mhdprhgtphhtthhopehkfiholhhfsehrvgguhhgrthdrtghomh
+X-ME-Proxy: <xmx:eDK_aLvoB4G64XfNQ1_NFYgjXfPiYU49IZ9ASPLi3EYaPi3-_g2szg>
+ <xmx:eDK_aGc3wzbChTH8NQ1o90TnhmlNnLeKDRw22saguNbETuGv7T4Uuw>
+ <xmx:eDK_aFavF0Lx0VgIqRoLqd4t4wnqKzK604thgLy6uPd36cYHAJRg4A>
+ <xmx:eDK_aIbpnIO13UIZTXxP5Bbr8sxd2Vz3z9W4kUUnsXXqeqeeB4psYQ>
+ <xmx:eTK_aPsp748E6Ti9UWXqjF50A8K9C-KjFj3BM_5fsoTpvKoWvxBYwwaX>
+Feedback-ID: i5c2e48a5:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Sep 2025 15:45:59 -0400 (EDT)
+Message-ID: <f6ca7bc4-604c-43c8-ab81-7ef14762d8a1@bsbernd.com>
+Date: Mon, 8 Sep 2025 21:45:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB75486D76AC47F611FC646510AB0CA@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00020E65:EE_|MN2PR12MB4455:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0cc5ad21-b70f-4d08-aef6-08ddef0e329c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|82310400026|376014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?VpFKYkW1MNXR1t45uFRe5sLuIW7wL1KT5oAfPqDodlUnqbiTSLByJTBWPwS8?=
- =?us-ascii?Q?sVP4W2/SpkMAJvHh6wjNzckanlK9oI9JC/0r43V1PAEhupRkpFp37uPu2VGt?=
- =?us-ascii?Q?P9fIuLQ/lvkAPPGy/1ihGpheVMm1ffiVP5ECNxcxKwNXD/RhqJ16kPmnJ59i?=
- =?us-ascii?Q?s/mulSxrQ4fIBTPTRPaJ6g7WqS5gSymyGogYidZx793/IVC/Fb5ymeykDHXQ?=
- =?us-ascii?Q?nZoKUqZkLrnaGOK39DHbRM0gHVhyqLduC22vWfVSRmX6TQS5rIdBGAAlAml1?=
- =?us-ascii?Q?pC9odw32RYVy3USyzFk4Qah3krBOyLSi8oHNNm/gTJdWYYKPKYNAm8hkb4qp?=
- =?us-ascii?Q?QzYsRVSUJavhhis5xmoQKHLNLb8wOy3EkIfwmmjEZUR+t4GbW9UBTMF7mcuV?=
- =?us-ascii?Q?2OToqsL9QGjMDyiy80TeswbO9B3QmZxz8rPNbMGotev0x72L9FGrQRIw+CJt?=
- =?us-ascii?Q?17tFyhSyo69KLQ1xHYKc1TPzxHUR4eEd3uGUcOXcPkklx2d/6KHFgt/ddntJ?=
- =?us-ascii?Q?+tZvuOVmMDS82NLL/dazzdPU3cfn3ilgGrGgB6j74e5tz8uaL9hi4QSV880r?=
- =?us-ascii?Q?qgjGdAmwcg2/m36NReUOf1k1aBVPNHOaAHk9yHX8lQ93K+jDzHKHcOl5ec8o?=
- =?us-ascii?Q?96IV5RJcrhk1tj+2AH90N3wNKwj2xqQbjqZy5M9X/fqc9/CW/Fj6VHQPGyMQ?=
- =?us-ascii?Q?1OxOMerR6TBObkOkDOzoC8J+SXKXxJ2ZwUXHtBu22hyFjwGX4993lEV4Yao8?=
- =?us-ascii?Q?Sxb2pTOO3CYTciWGNhmTpqIvHcPZcAeUMnPOZlTVLYQ7qDnDnFna+NMUyhRj?=
- =?us-ascii?Q?9ztPxhKpPo575AnsCiw6BLor8q40O8mHYRHZOk4VXtYX57NdeA633Xm127dL?=
- =?us-ascii?Q?tOorcfVS9k42ImO/XVMS4GHDQ76CXvT6FS6DdUFnhNow3GSkH/qo3fQyR0nu?=
- =?us-ascii?Q?c5upfyYTnC08AoYCAloRyjdMGFh2jSTeNpbMbe/GiQDcTPRLOCaqLmPnf7S8?=
- =?us-ascii?Q?fRFQzGdKBVtHCTOlLxGbY1cjPLFZIlssRPTijKpPl5F/T+1HyiojkyMYjWAP?=
- =?us-ascii?Q?Ada5RhNFTiN9Gf8lSGXPM5oH4jl3+orkceDyTzsowlok/ysZnplTvqCrcfSN?=
- =?us-ascii?Q?XDXa+Ysy58UF6tFo8vHd9H3bTeDkfYB2rdeloCyvHM6NFrUo56dRIxlHLC7+?=
- =?us-ascii?Q?gSvHmpTAHitVdzQWU24WI4p93Zvb667QlF4HQz2SMV3goJePw/HoNbKqDljG?=
- =?us-ascii?Q?uQgdvxUnW0cWvnusOcVHl7CxkfVkTHiy9SCMmhc9ShCIqip3HCJcP8MIhkh0?=
- =?us-ascii?Q?sa3ALKdJX7TsqzLKRWftSQ1lsNCArrhRP/5a1AEw2fJ1giND8g5ekiLifsc9?=
- =?us-ascii?Q?5lc2JeNIMgw6YdGBcC8QbmBidGrFTgFIQeTZVL+XbjmvU7uaz4Yh3+7xUFUG?=
- =?us-ascii?Q?GH4fYVYOnsyLBCZsV0Jz5XjQ5JOeDOvMdoJji3taaEy3jNn/KF+ohGFty6M8?=
- =?us-ascii?Q?6ir2GQZrhMcKQ25P/TeOu9YP/Nt3p78IQHcC?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(82310400026)(376014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2025 19:30:41.2182 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0cc5ad21-b70f-4d08-aef6-08ddef0e329c
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E65.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4455
-Received-SPF: permerror client-ip=2a01:111:f403:2417::604;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] export/fuse: process FUSE-over-io_uring requests
+To: Brian Song <hibriansong@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-3-hibriansong@gmail.com>
+ <20250903115108.GD106431@fedora>
+ <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
+From: Bernd Schubert <bernd@bsbernd.com>
+Content-Language: en-US, de-DE, fr
+In-Reply-To: <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.12.124.146; envelope-from=bernd@bsbernd.com;
+ helo=fout-b3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,26 +116,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 08, 2025 at 02:59:55AM -0700, Shameer Kolothum wrote:
-> > -----Original Message-----
-> > From: Eric Auger <eric.auger@redhat.com>
-> > > +/*
-> > > + * SMMUCommandBatch - batch of invalidation commands for accel
-> > smmuv3
-> > > + * @cmds: Pointer to list of commands
-> > > + * @cons: Pointer to list of CONS corresponding to the commands
-> > It is not totally clear to me how the list of "CONS" indexes is used. Is
-> > it meant to store errors, how do you update cons index in case it starts
-> > failing, ...
-> 
-> This is how I understand it,
-> 
-> The cons here is to store SMMUv3 queue cons corresponding to the cmd. And
-> in case batched invalidation fails(iommufd_backend_invalidate_cache()), it will
-> update the batch->ncmds with the index of the last failed command. The cons
-> value at that index is then used to update the SMMUv3 cons index.
 
-Yes. It is used to update the CONS index to the vSMMU CMDQ.
 
-Nicolin
+On 9/8/25 21:09, Brian Song wrote:
+> 
+> 
+> On 9/3/25 7:51 AM, Stefan Hajnoczi wrote:
+>> On Fri, Aug 29, 2025 at 10:50:23PM -0400, Brian Song wrote:
+>>> https://docs.kernel.org/filesystems/fuse-io-uring.html
+>>>
+>>> As described in the kernel documentation, after FUSE-over-io_uring
+>>> initialization and handshake, FUSE interacts with the kernel using
+>>> SQE/CQE to send requests and receive responses. This corresponds to
+>>> the "Sending requests with CQEs" section in the docs.
+>>>
+>>> This patch implements three key parts: registering the CQE handler
+>>> (fuse_uring_cqe_handler), processing FUSE requests (fuse_uring_co_
+>>> process_request), and sending response results (fuse_uring_send_
+>>> response). It also merges the traditional /dev/fuse request handling
+>>> with the FUSE-over-io_uring handling functions.
+>>>
+>>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>>> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+>>> Signed-off-by: Brian Song <hibriansong@gmail.com>
+>>> ---
+>>>   block/export/fuse.c | 457 ++++++++++++++++++++++++++++++--------------
+>>>   1 file changed, 309 insertions(+), 148 deletions(-)
+>>>
+>>> diff --git a/block/export/fuse.c b/block/export/fuse.c
+>>> index 19bf9e5f74..07f74fc8ec 100644
+>>> --- a/block/export/fuse.c
+>>> +++ b/block/export/fuse.c
+>>> @@ -310,6 +310,47 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+>>>   };
+>>>   
+>>>   #ifdef CONFIG_LINUX_IO_URING
+>>> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent);
+>>> +
+>>> +static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaque)
+>>
+>> This function appears to handle exactly one cqe. A singular function
+>> name would be clearer than a plural: co_fuse_uring_queue_handle_cqe().
+>>
+>>> +{
+>>> +    FuseRingEnt *ent = opaque;
+>>> +    FuseExport *exp = ent->rq->q->exp;
+>>> +
+>>> +    /* Going to process requests */
+>>> +    fuse_inc_in_flight(exp);
+>>
+>> What is the rationale for taking a reference here? Normally something
+>> already holds a reference (e.g. the request itself) and it will be
+>> dropped somewhere inside a function we're about to call, but we still
+>> need to access exp afterwards, so we temporarily take a reference.
+>> Please document the specifics in a comment.
+>>
+>> I think blk_exp_ref()/blk_exp_unref() are appropriate instead of
+>> fuse_inc_in_flight()/fuse_dec_in_flight() since we only need to hold
+>> onto the export and don't care about drain behavior.
+>>
+> 
+> Stefan:
+> 
+> When handling FUSE requests, we don’t want the FuseExport to be 
+> accidentally deleted. Therefore, we use fuse_inc_in_flight in the CQE 
+> handler to increment the in_flight counter, and when a request is 
+> completed, we call fuse_dec_in_flight to decrement it. Once the last 
+> request has been processed, fuse_dec_in_flight brings the in_flight 
+> counter down to 0, indicating that the export can safely be deleted. The 
+> usage of in_flight follows the same logic as in traditional FUSE request 
+> handling.
+> 
+> Since submitted SQEs for FUSE cannot be canceled, once we register or 
+> commit them we must wait for the kernel to return a CQE. Otherwise, the 
+> kernel may deliver a CQE and invoke its handler after the export has 
+> already been deleted. For this reason, we directly call blk_exp_ref and 
+> blk_exp_unref when submitting an SQE and when receiving its CQE, to 
+> explicitly control the export reference and prevent accidental deletion.
+> 
+> The doc/comment for co_fuse_uring_queue_handle_cqe:
+> 
+> Protect FuseExport from premature deletion while handling FUSE requests. 
+> CQE handlers inc/dec the in_flight counter; when it reaches 0, the 
+> export can be freed. This follows the same logic as traditional FUSE.
+> 
+> Since FUSE SQEs cannot be canceled, a CQE may arrive after commit even 
+> if the export is deleted. To prevent this, we ref/unref the export 
+> explicitly at SQE submission and CQE completion.
+> 
+>>> +
+>>> +    /* A ring entry returned */
+>>> +    fuse_uring_co_process_request(ent);
+>>> +
+>>> +    /* Finished processing requests */
+>>> +    fuse_dec_in_flight(exp);
+>>> +}
+>>> +
+>>> +static void fuse_uring_cqe_handler(CqeHandler *cqe_handler)
+>>> +{
+>>> +    FuseRingEnt *ent = container_of(cqe_handler, FuseRingEnt, fuse_cqe_handler);
+>>> +    Coroutine *co;
+>>> +    FuseExport *exp = ent->rq->q->exp;
+>>> +
+>>> +    if (unlikely(exp->halted)) {
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    int err = cqe_handler->cqe.res;
+>>> +
+>>> +    if (err != 0) {
+>>> +        /* -ENOTCONN is ok on umount  */
+>>> +        if (err != -EINTR && err != -EAGAIN &&
+>>> +            err != -ENOTCONN) {
+>>> +            fuse_export_halt(exp);
+>>> +        }
+>>
+>> How are EINTR and EAGAIN handled if they are silently ignored? When did
+>> you encounter these error codes?
+> 
+> Bernd:
+> 
+> I have the same question about this. As for how the kernel returns 
+> errors, I haven’t studied each case yet. In libfuse it’s implemented the 
+> same way, could you briefly explain why we choose to ignore these two 
+> errors, and under what circumstances we might encounter them?
+
+
+I think I remember why I had added these. Initially the ring threads
+didn't inherit the signal handlers libfuse worker threads have. I had
+fixed that later and these error conditions are a left over.
+In libfuse idea is that the main thread gets all signals and then sets
+se->exited - worker thread, include ring threads are not supposed to get
+or handle signals at all, but have to monitor se->exited.
+
+Good catch Stefan, I think I can remove these conditions in libfuse.
+
+
+Thanks,
+Bernd
+
 
