@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27F6CAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 14:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FEDCAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 14:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvzFr-0004yt-Dn; Tue, 09 Sep 2025 10:23:31 -0400
+	id 1uvzH7-0006DB-9Q; Tue, 09 Sep 2025 10:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvzFn-0004yD-MJ
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:23:27 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvzFe-0001Ah-If
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:23:27 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso37283335e9.2
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 07:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757427784; x=1758032584; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rTbTNGBs12hKrgX33g5TtcG2VI2h8zjQ7uuRv7/1cXo=;
- b=Bbu+YhdDpTwqcle5xfinyOWgs+MQWQCYSe7bSncHA05WcWLR82PuaMH3kriid2F+Ie
- S/Z+FhCXKQa1pRVYd5reumYpnKoYw8FsFbK9PU+5qTHMWAyBmQ3+N5IJ4VeeYq93RD7L
- FYuCHERQDT6Qs2QW677Z6nLAGyxqtdOHhr22W7M1mXB+cS4cVfcjP7UPCupmTGD7TRbM
- E00KtNaofrJ1halHFXbZYeWGhBp/qA4u+YAJ/qBqB4ODj1+2iAWRj/zB3z43ANZ/EQif
- Ywl74YYF7ikHZWQ7kLUOMNoMkcHWXwp9a2fQyFrMZgbWvKLepm/GQOQ97vxNYUJivoXJ
- iPVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757427784; x=1758032584;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rTbTNGBs12hKrgX33g5TtcG2VI2h8zjQ7uuRv7/1cXo=;
- b=prTh9dYrYPIk+7K7oyaj6HZtPSMhoBCcr3KmD8qdANoV8MtcVN0H2TaZiOrloRx7wY
- BME+y4iL++IvItgpnh/fYG/Czx3BPgSNd9bo5+3PHpDl/pKHmrtLg5dRwY7KsNlU2Kwo
- ZWjKgBZ3EqtbyGBWK4mjvMOR8xIFIzTldPe2PE1yTg1voCp3bT36MQfk51NKr6vgjaP5
- VYlEoXXFkOXXOkWKGak8G2ZsXE1YGBO3FN5ztm92RThrtF/VGv4VVVyKFwtz/BGfJ22j
- W51MSiwlYwiE75IsIHvM1ZmYbAlZ+JTR5cNEVgxHzHjIfQNhxICijsdGCCfaTdYneWRc
- x6Nw==
-X-Gm-Message-State: AOJu0Yx7XZ5Ht92EZlgNZqqHwA5/p78xgbSCAzDajcFSHo41U2DwiyZu
- E31XJ5IbyL8mxXnmF0bV0QjvM61DtH5+6QW+Tq1vyjb4HpcqAknw/9CHFJse7E/yH1g=
-X-Gm-Gg: ASbGncsDRLxDc0HQy19rAvX+MpYurPasZ8uFCTuV8unHTEtT+AbwzrwwwpL6oIOxRWl
- ygHCXOgCbLI0iVlxKWIHFHVAACiutb8xtGEMcDWh/6fZPcqLYuMmbpFAYveg2L04OCr1hzaWWoF
- 3NuJJEydJRexJWx2s5M2IfFGzNt15dgHf53RVaP/T0Yu1JZijXLKAKaG6Qb0AMkeB1m94wIg7gG
- bgomvyUUJFf6HwoZbx38svKb1806+thF88yg2ZgK5Rj1Flil6HzGi2RYSPJF0T50FMR6iaO1oHi
- UekzL/s+mNOb2v68eerF7unNJhDax/TfhkzGMNZN6DfgxEprB4VBOcOwAJNtCrTLkFcSQlyAYC4
- 20RnWIQ64I0CsFdpK6ITNiic=
-X-Google-Smtp-Source: AGHT+IFEYhqB6jqtrSuvNWEvDRv8kHfitb3oIudVuSwmEKimQuVtjWbocg2zCuCY1qCw8ZW3DQOWOw==
-X-Received: by 2002:a05:600c:1c97:b0:45d:e54b:fa0c with SMTP id
- 5b1f17b1804b1-45de54bfc44mr97019545e9.17.1757427783743; 
- Tue, 09 Sep 2025 07:23:03 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45de24ab648sm125066855e9.5.2025.09.09.07.23.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Sep 2025 07:23:03 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F24735F7CC;
- Tue, 09 Sep 2025 15:23:01 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org,  Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Jan =?utf-8?Q?L=C3=BCbbe?= <jlu@pengutronix.de>
-Subject: Re: [PATCH v3 6/6] docs: Add eMMC device model description
-In-Reply-To: <2a8d6226903d8dcf9615b5ac5a40522b6bf2f7c3.1757422256.git.jan.kiszka@siemens.com>
- (Jan Kiszka's message of "Tue, 9 Sep 2025 14:50:56 +0200")
-References: <cover.1757422256.git.jan.kiszka@siemens.com>
- <2a8d6226903d8dcf9615b5ac5a40522b6bf2f7c3.1757422256.git.jan.kiszka@siemens.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 09 Sep 2025 15:23:01 +0100
-Message-ID: <878qin7liy.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uvzH5-0006Cu-1W
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:24:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uvzH2-0001ST-BJ
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:24:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757427877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2zV4qrnHnmm9tRZunQhsh8AyQqMkyCryXkmqhKALE0I=;
+ b=g2gLvX6HK+FbT0g2QOwA9VaiiORyuIn5hppwlJaErueU5u2FxJwKrlY68vJ7vP8eOoUdjS
+ X8TiEnXkMdmiregyAje1Cj/OhAXFoan+BykLHi1DgYmk6GtltruqaJlMRzvJx9fVQHRWNw
+ f+Z+dYhDML9Nw+liBhelgxN8z6bGLJs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-qwfVW8ygPciyvtO7yhxZ0A-1; Tue,
+ 09 Sep 2025 10:24:33 -0400
+X-MC-Unique: qwfVW8ygPciyvtO7yhxZ0A-1
+X-Mimecast-MFC-AGG-ID: qwfVW8ygPciyvtO7yhxZ0A_1757427872
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28C0B193E894; Tue,  9 Sep 2025 14:24:32 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.59])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 325361800576; Tue,  9 Sep 2025 14:24:29 +0000 (UTC)
+Date: Mon, 8 Sep 2025 14:24:53 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] bql: Fix bql_locked status with condvar APIs
+Message-ID: <20250908182453.GD167158@fedora>
+References: <20250904223158.1276992-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="fcKCU61QGnf0kVjB"
+Content-Disposition: inline
+In-Reply-To: <20250904223158.1276992-1-peterx@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +89,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jan Kiszka <jan.kiszka@siemens.com> writes:
 
-> From: Jan Kiszka <jan.kiszka@siemens.com>
->
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+--fcKCU61QGnf0kVjB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-With typo fix:
+On Thu, Sep 04, 2025 at 06:31:58PM -0400, Peter Xu wrote:
+> QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
+> whether the current thread is holding the BQL lock.
+>=20
+> It's a pretty handy variable.  Function-wise, QEMU have codes trying to
+> conditionally take bql, relying on the var reflecting the locking status
+> (e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look =
+at
+> the variable (in reality, co_tls_bql_locked), to see which thread is
+> currently holding the bql.
+>=20
+> When using that as a debugging facility, sometimes we can observe multiple
+> threads holding bql at the same time. It's because QEMU's condvar APIs
+> bypassed the bql_*() API, hence they do not update bql_locked even if they
+> have released the mutex while waiting.
+>=20
+> It can cause confusion if one does "thread apply all p co_tls_bql_locked"
+> and see multiple threads reporting true.
+>=20
+> Fix this by moving the bql status updates into the mutex debug hooks.  Now
+> the variable should always reflect the reality.
+>=20
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+> rfc->v1
+> - Fix comment [Stefan]
+> ---
+>  include/qemu/main-loop.h  | 18 ++++++++++++++++++
+>  util/qemu-thread-common.h |  7 +++++++
+>  stubs/iothread-lock.c     |  9 +++++++++
+>  system/cpus.c             | 14 ++++++++++++--
+>  4 files changed, 46 insertions(+), 2 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+--fcKCU61QGnf0kVjB
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmi/H3UACgkQnKSrs4Gr
+c8i9cQf8DeOB8KrzlyGYUJw9TcqMxNXfqQtb3bES4f46T/zXsx5iMUj2g3c08AQt
+1J7Zh5elymdlP5L9l33QtVAos8EfDGmHIRIm4lq0fuaCKWBt0zLJ88uOgDUIRm3k
+9pOO5/18rkcJ+nAh4Vq9czMj9FqlA4eQ8s3UpzyJRIQ3bjJezOq0a5rUSGuyrclH
+xid782z1Gr1WoHsVob6Ym0nx2EhOmNRgSQIHoOyyaYgMMh0QVx89LR6Z9uvtXBCs
+GGAHdt/j+jpwkwloRpqu0VWfPHGVLS5pJ4exLSs7s+XI7DNdOYn+XJZT0j+BIvb4
+JQSG59UFLozPTFZYy48zMK7KpMbdiQ==
+=27Y+
+-----END PGP SIGNATURE-----
+
+--fcKCU61QGnf0kVjB--
+
 
