@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C35FCAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E347FCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcFi-0005T8-52; Mon, 08 Sep 2025 09:49:56 -0400
+	id 1uvcNY-0003us-0z; Mon, 08 Sep 2025 09:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uvcFR-0005PQ-0q
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:49:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvcNS-0003sS-St
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uvcFH-0004UG-Ic
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:49:31 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvcNI-0005ci-G5
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757339360;
+ s=mimecast20190719; t=1757339856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/3/zW8Ud3uhUe0GfbVwpW+pPcJ3c9uSODL+ufaS8gek=;
- b=eohzEbEgFHL/xgfyrXCx4Lj0TdnWUlOXd1OVro6uEQ9Ntp+UcstYQLsrwb07ZaVSqqZ+hb
- 9NaBwO/ECnTHYmRLsz8u33tdiG3R1BHHDiI59GK4bPjZEBP3z6+uLlj35h+CuK3zZKsn16
- lNAnyYPWm5pQJRt3IlYIWPHIHg+qAkU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ohCqBimbAIW10ypvu1EyGl3mXc9pNVzAsMpKZdpJYK0=;
+ b=cetsoH2xUT1zcv940C5HQyjVaixgNEPwmggvTaSlnrcfb00D4VYxyINRcICT1tbime/qiX
+ PWrNjOY+2tZRJVfbGKQ8S5h/HZ+yShRwtQ+EO+ZbhN4zN7T0DBtnknhUeUEkwj9v177ci/
+ EGCTtGu8H+si/obYw46mSXvn73zgVwk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-ZbMlqo81Ng2_fGh1IQboXw-1; Mon,
- 08 Sep 2025 09:49:16 -0400
-X-MC-Unique: ZbMlqo81Ng2_fGh1IQboXw-1
-X-Mimecast-MFC-AGG-ID: ZbMlqo81Ng2_fGh1IQboXw_1757339355
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-qzLhuxf1OPatOHfehE_AuQ-1; Mon,
+ 08 Sep 2025 09:57:35 -0400
+X-MC-Unique: qzLhuxf1OPatOHfehE_AuQ-1
+X-Mimecast-MFC-AGG-ID: qzLhuxf1OPatOHfehE_AuQ_1757339854
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9051F19560B0; Mon,  8 Sep 2025 13:49:15 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.148])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C394030001B5; Mon,  8 Sep 2025 13:49:14 +0000 (UTC)
-Date: Mon, 8 Sep 2025 09:49:13 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH] tracetool-test: allow to run in parallel
-Message-ID: <20250908134913.GC167158@fedora>
-References: <20250908114652.1880366-1-marcandre.lureau@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C31419560B7; Mon,  8 Sep 2025 13:57:34 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.93])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2D42218003FC; Mon,  8 Sep 2025 13:57:31 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH 4/4] tests/functional: purge scratch dir on test startup
+Date: Mon,  8 Sep 2025 14:57:22 +0100
+Message-ID: <20250908135722.3375580-5-berrange@redhat.com>
+In-Reply-To: <20250908135722.3375580-1-berrange@redhat.com>
+References: <20250908135722.3375580-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rnBNyzY6NYnwPA4U"
-Content-Disposition: inline
-In-Reply-To: <20250908114652.1880366-1-marcandre.lureau@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,44 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The test suite purges the scratch dir in the tearDown method, but
+if python crashes (or is non-gracefully killed) this won't get run.
+Also the user can set QEMU_TEST_KEEP_SCRATCH to disable cleanup.
 
---rnBNyzY6NYnwPA4U
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Purging the scratch dir on startup ensures that tests always run
+from a clean state.
 
-On Mon, Sep 08, 2025 at 03:46:51PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
->=20
-> Create a temporary build subdirectory, to avoid conflicting with other
-> running tests. This fixes "meson test" with tracetool-test which is
-> parallel default.
->=20
-> Signed-off-by: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  tests/tracetool/tracetool-test.py | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/functional/qemu_test/testcase.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Thanks, applied to my tracing tree:
-https://gitlab.com/stefanha/qemu/commits/tracing
-
-Stefan
-
---rnBNyzY6NYnwPA4U
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmi+3tkACgkQnKSrs4Gr
-c8j5wAf/bLX7TLs8iWEjWJeG51L89CdQjHlK4DlTTiiM9H4CWIZrtxjnJhb36tKj
-o+hm2NHR7yxvnxLBhXRy9xdWGmvW4jE+W4L0yyiF9aksQF4JOmhy/RzxE2oQ6aUM
-ACzqWwn5QzCFq7BCyizNR94hFWRuQCZcC4S+/T0GUiwlBOWBUkOiCWo7Ie3py4hA
-pFeJyKLz9iTVrhS2absjaZ74yplQISf3B32um9mafuCH4U4t5Jbb1JE2RB6f5e3Q
-Kt2PcrPknDc+cJ2Zf7jsHhTntgsVvLRJ+oi8RTDywnX11TJBU2MRuXmq924FNV2Z
-lkpwKKRL06R0+PSlx5fVvHZXPXIPhw==
-=CMP0
------END PGP SIGNATURE-----
-
---rnBNyzY6NYnwPA4U--
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index faa0a4f0db..2c0abde395 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -205,6 +205,10 @@ def setUp(self):
+         self.outputdir = self.build_file('tests', 'functional',
+                                          self.arch, self.id())
+         self.workdir = os.path.join(self.outputdir, 'scratch')
++        if os.path.exists(self.workdir):
++            # Purge as safety net in case of unclean termination of
++            # previous test, or use of QEMU_TEST_KEEP_SCRATCH
++            shutil.rmtree(self.workdir)
+         os.makedirs(self.workdir, exist_ok=True)
+ 
+         self.log_filename = self.log_file('base.log')
+-- 
+2.50.1
 
 
