@@ -4,94 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42120CA101F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 02:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD7ECA1013
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 06:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvRz3-0004p0-07; Sun, 07 Sep 2025 22:51:58 -0400
+	id 1uvVOL-0004L8-B9; Mon, 08 Sep 2025 02:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uvRyx-0004o2-EF
- for qemu-devel@nongnu.org; Sun, 07 Sep 2025 22:51:51 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1uvRyi-0003jq-EK
- for qemu-devel@nongnu.org; Sun, 07 Sep 2025 22:51:50 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-77281ea2dc7so3061765b3a.2
- for <qemu-devel@nongnu.org>; Sun, 07 Sep 2025 19:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1757299890; x=1757904690; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nqAwKmltmiI7r/nUnFfBQ+cYPc/avcq0j+oCHbJPWtQ=;
- b=MTB8+hcp7+PplU+cX52DVxh1/e6TMTtKs41nu/jZto9v0vdpEhPLx1M5Cv6vUpoSCv
- My7BUJUKore1wfIBbZqDsCLpOEmrY38aXNyAkOuKhVMbLqFtj822MESWY7g3v+9zy1C9
- LOPnJroAo/s83cUIT7tMrF6APMVGQVihMn0S/u0m/7fpw3QonIQsEr8PG6o4GNKOL2SG
- zf9pkYSD8ymO572zAd/iH/uYXF5rULsg82u9CGeDxc8MxUU0mY5qvmP4SBwIBx1GcjcT
- MaPuLef9J328IB3u2COOYrCgZQ/BQ0LcnWWTkrWUeaUTwrUK6k09pxN4zYJFyYQr/1wZ
- a1Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757299890; x=1757904690;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nqAwKmltmiI7r/nUnFfBQ+cYPc/avcq0j+oCHbJPWtQ=;
- b=aQ2XkqynTW4x2gDQQTI/7K8yapGJM6PMiEqz6mIJdXaDoSSthDmO4d3YMzTwM3I5NK
- 6HUR+08WAMTkFdVEPyeseCkCEOuPM1C4bobGZ1AsfwSYgicMR5rpV2Ip22EMcgerUGDT
- wDx6HG0Y22ewIkvk2rG6UfT4JUAaue3jAQIpwNuaI1CRh+SxbIq11tdB11wygHvIeiCN
- kA39JdlvjpzHj6+rIcV+XJTFKIZ47XVTdGejr6eWZkL3n4p94SU36vfgzUX0FULqKKVu
- F57Kci3cV4ZM7mn7/pCfF/4Dipdwhz0md3qftR73VC3xqueQH2qRJMrgodh4j8eVgMaJ
- 1jpw==
-X-Gm-Message-State: AOJu0YxLiin2/DwxAvfvMOtXSe1B8QdcTW33ChvNvTNVytZMZZ4+2P1n
- XyifKi5U2bycly5eAkhPdn2jZwb6IUhV4kUVvXv843WJEPjx9U//BAY4CH3fmsg3a5TOHuqTdOv
- o4Cjq2Ag+qAo6B9bGnisObFCMAAcNNRvs/7wN3OfPBjoRi+ULVcMFH6pm7eKooXzi23MVDlhZfF
- wJYZyiC37OVzuxFzLubzVTNdwbTN5G9tiVIpYNKk6HFQ==
-X-Gm-Gg: ASbGncu/3xjUdnqHcqLghsdOQ0qT07J2r3+sYwy+Yg7zEo3V+RE/OFdM5SbmS5do6iE
- 4zWISrISfIigsNEnl+9aI5IHeD+bwIBzoq8+4A8ABUEEFrWWcYr55vcEg/3XfKanfMoc5Mu6Kgs
- QGS5bi5OB0ERgihh86WRVxeYtfb/PIt8riwJv1jnn2xHRi0CR8nAZNVEo/bim3QJ6uvB3twnpP6
- M5gIyKr8a2Mb8pN9xmBoU7Bh6wysLhO6ihmnXWB4629rKFZZym73bByrKlGKQJ2zKyhhQLl5OG+
- DRmEeFd/gbknp+XfUKUl9O9/BeSwSMz1SvFhv79alXPLBDkSAxf9HPiAl0V/4Q3VsZ3K8VrpH76
- UeRq1FE8A6EHrmwAUkQXCTfIiiDcm4rZ9mxfh+Ia9mRDQYEdSLiNydp7CzSwgoOH+4XM=
-X-Google-Smtp-Source: AGHT+IEC6NKjraz1tesWXvI0LleraqbCKTYjkprfbRnLaKTwUF6V3GDKh09ClOqIx5SmXpxmuLDSPg==
-X-Received: by 2002:a05:6a00:23d4:b0:76b:d75c:8a76 with SMTP id
- d2e1a72fcca58-7742dc9f446mr8484594b3a.1.1757299889828; 
- Sun, 07 Sep 2025 19:51:29 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-772306a1870sm26823834b3a.75.2025.09.07.19.51.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Sep 2025 19:51:29 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, richard.henderson@linaro.org,
- Max Chou <max.chou@sifive.com>
-Subject: [RFC PATCH v4 2/3] target/riscv: rvv: Add Zvqdotq support
-Date: Mon,  8 Sep 2025 10:51:16 +0800
-Message-ID: <20250908025117.1728895-3-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250908025117.1728895-1-max.chou@sifive.com>
-References: <20250908025117.1728895-1-max.chou@sifive.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uvVOD-0004Gm-73
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 02:30:09 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uvVNU-0006Ng-Nm
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 02:30:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1757312965; x=1788848965;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=Mi798TroauoN/cGBrml3/96m33aab277fcqjVspqTT8=;
+ b=fN80/nk3E7Uo+yaZG0jgsbzWOiUCdv2dbLn5YnyqcUzbbAtEap1TpIzr
+ GFhsshgishZn4mjoMIH0sfvI+ycoDl+jS8gWAU09G1H8s370eeSezzovY
+ bKdbEGPR2nuaRwle7u7tFKVM6IAhYGKkiQm2ECXN1FhGI5UOHabu05q9o
+ FNSGX8IJ81pz4/ypshKJ6ouE1Vbj+JavIYT4QzK+4T3smT+l4nV40EUX/
+ 3fo+mmoc68UH+mInZcnw31/le+FZkV3RBcvNI1sIZGIo5u0VqAiCUD240
+ zc2XizWbsvLDZSSKOJjvBvq9whTvF2mBIqkp2oFU1MXXoIxS4WCON3oel w==;
+X-CSE-ConnectionGUID: f/JVzCnSRN6XhFC8YMNg8g==
+X-CSE-MsgGUID: hkVDNf+vSN2WBxtRK+9bNg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11546"; a="59420158"
+X-IronPort-AV: E=Sophos;i="6.18,247,1751266800"; d="scan'208";a="59420158"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Sep 2025 23:18:53 -0700
+X-CSE-ConnectionGUID: nwdMRvHEQa2NlZLK5MJyXg==
+X-CSE-MsgGUID: gk9QLeYATKSf9hwn7lEVng==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,247,1751266800"; d="scan'208";a="203492334"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Sep 2025 23:18:52 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Sun, 7 Sep 2025 23:18:52 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Sun, 7 Sep 2025 23:18:52 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (40.107.220.51)
+ by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Sun, 7 Sep 2025 23:18:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DNBwuzQkJ0GMHlk4CTq3eOuRGiNrQjZkmTrc8sVFrWDPuFvHTapy5p7cxvt3WKP5lZGqEsh50kPu2ktifWEu+5OuH2T+SperkwDoWt5zVOT1Xk71SD3O20dkS/u7a2iJjnWYMWC6WOk/ypG7gRs9Kf0fqGVRmvAAA7iffDXWJweQADkaI5dBMYSRuLTaarR5DwD2D0ufBxxmUZM9ii+Mucm8mLZLKr60L9H5/+kTKjMBYi9BvIpJ3y2avf0hfc6m0/lVfvWbQ8uofpxh6QYfw/GFVWmdfDJRkwmL0Ud9+zcXOL9rB/HbMA+slktXi9uXC1fn0jvkSI2cmo3FsXIG6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yPRLJj8T2oRnWGj7+y6L8qB2gGkGF1oqVTF1j226m1Q=;
+ b=v/flCdYVPpBPXTW3YNIwpmnab+Hscud5b/eEdJOez29YxF83NCP+hmf0m0Kcoo5+/oBXK9tJx2Nlv11bBGvYFz1B4YVfrhGe6iqjBG2As5JGiLw24qUO0YJYuaiH6KAuxa8qwRAP0aVJLJIrnWaNTT3J3lPlegR+3YscZ/fGd4FBJi4AYAMurnJqZSyIRRqJtJDQht9LuoptZR5oHmQR3hjkroUdEDxPN2h7QM/JxkvRXKarWmBnU2R+yTE99j4O2Mc8fmec1+WjGsP8Q0hROgIJYGjCXsPZaQAtrt72D0w6NGjXxIjW9brq4z2nQiKRlwlANJY/A6Ro3YChNLGpMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DM4PR11MB6041.namprd11.prod.outlook.com (2603:10b6:8:60::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Mon, 8 Sep
+ 2025 06:18:46 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9073.026; Mon, 8 Sep 2025
+ 06:18:46 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: David Hildenbrand <david@redhat.com>, Steven Sistare
+ <steven.sistare@oracle.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>
+Subject: RE: [PATCH] vfio/container: Remap only populated parts in a section
+Thread-Topic: [PATCH] vfio/container: Remap only populated parts in a section
+Thread-Index: AQHcDMr9Ap6MRYQc10GVaAw/xMLNqbR4FPYAgAWb3iCAAkuLAIAEca3QgAAU3ICABHDecA==
+Date: Mon, 8 Sep 2025 06:18:46 +0000
+Message-ID: <IA3PR11MB9136917E48A13AE53AD1FF07920CA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250814032414.301387-1-zhenzhong.duan@intel.com>
+ <0286f864-9aaa-4a49-8975-cb1af3bb1270@oracle.com>
+ <IA3PR11MB91363501F1A6ED40098AF8249207A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <0026017b-770e-467b-ab7d-98cac1c70463@oracle.com>
+ <IA3PR11MB913635617BAC00289BC3DB1B9203A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <ac4a5808-e90e-434b-8cd5-4c25fc543501@redhat.com>
+In-Reply-To: <ac4a5808-e90e-434b-8cd5-4c25fc543501@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DM4PR11MB6041:EE_
+x-ms-office365-filtering-correlation-id: ea0cf2f6-08b1-4342-b7e8-08ddee9f9152
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?ZuEXcKuNkllrOZ+WQQXmtBlf4TzitDQNR0s0uiRYB3dSC6IIZ/EOHYK6H2N0?=
+ =?us-ascii?Q?Ng8Ad6cES1tFXCpTZmNaxuoFhhg2lmcmPmIRHg+Yr6mObYP7JwImNLPdTMbc?=
+ =?us-ascii?Q?rvknF13n/UkTZPUENtYExS44c/7UgVs/DE6Bz3v6l0MjEuw5zvUFhXahSCmB?=
+ =?us-ascii?Q?i7L2KPpPQNRe87wUueiStWdSoTynVl7BS4AkSmy417Jk6z66lf5POa+kSrPI?=
+ =?us-ascii?Q?GVWB8GNlqZr0qEdZHvEzR60ZhvQhmPMo54zvD5Z5hhIUnEw8KXAsMiwN1mWN?=
+ =?us-ascii?Q?kI+2gZnDL8oLEAin85FYlzBX+JQy6v7gDLjr7NB52HR60/tViKxdO2C8RSmW?=
+ =?us-ascii?Q?h4aeQmhvb6WtYkvoSvHVAsBLMVPmXFv+d1PDzUnF8nFRm03I1PMRil95kpYQ?=
+ =?us-ascii?Q?aVODSB5xeEsU/O6ZnLrwJiTeI4PsbFHr+3hctd4rGBZ55FsMkn1SWtqC6N0w?=
+ =?us-ascii?Q?YVtphuEWGaZm4NU/P6LeqZwMVbJahmiTrsLUdrHnlcdeonQVU/F13NdEY5dK?=
+ =?us-ascii?Q?p3RlpgRxj+/kDHtcQaIFeUCIO3EIl7bBbd1IMlkLgOoBNm28Aue9UP7+Xjpe?=
+ =?us-ascii?Q?fNOJ1v+jAAuEx/C/0j+Pd0QIE3+F7U4y3TZwque8C+sb8tO3M//wDPUc3xJf?=
+ =?us-ascii?Q?C/Zo7ZExNoJwvFYV0Lp10Fs9ymB0hI7qfGXjPtREZsNaH1GdZI4aohqBZ80X?=
+ =?us-ascii?Q?8Qa6RWlRFVi9zQ4nzsiM4OhxzqaTR2uNPkXmOi/YGHKb9WCYnVPDKFYbwYxQ?=
+ =?us-ascii?Q?ZYFM4Uy6lkrfEOUK+ANVSCtvSIeo9ZSbSaGrmndqQoPzwFxJjILGJsBLoL8+?=
+ =?us-ascii?Q?QU0J06aJjdTuQdilXmCyu+kNxFf4eV5WxYeFsxmXOtJf/HZyTlsOAYORJgNZ?=
+ =?us-ascii?Q?dM549qlpaX4CD58e5T2gB3tx/KU105KvmZ4ls7Xzo1OCsHRmMTWFaE9puH8Z?=
+ =?us-ascii?Q?JvHu1tOgkYQ3Z/bsXLawPOJNjyqepwIYAKtKd37fwBjscLv9UwlkfL2uXzGT?=
+ =?us-ascii?Q?afU+Jn+4T300psEozkr2gAQYezaRctbzgtbz8QOj0Rolw3etxKJjZKiN6iiU?=
+ =?us-ascii?Q?HvGyJiR60dmDO4tH+i9s5Pk8u+aafs7vJznaFTc58d6hpi+qu0Pq69HaVoPn?=
+ =?us-ascii?Q?emoamyozMNNDThujq3mFaLgzSzvIglUwVXWZ2MwygW7G4+BT4YztH7DyYSgc?=
+ =?us-ascii?Q?T8rHCSwI3cyXZEaTvaSSNzKjAIyBRW4HtSx7KdxkjgNJYOpH4Hw8eBsnbyxS?=
+ =?us-ascii?Q?GB8zenPmBdQNaiG3VCV7I8Kigsu0n4VgxONCQVkRDrcqXPMU3PyhqF58Zh2d?=
+ =?us-ascii?Q?ud5ljC5Iw3QtKXwpORa4nM0c3kGcNA0jmofWkJ7NSLom2KQl9sEV05tsXm4l?=
+ =?us-ascii?Q?u2/SneuGPg/nfFR4LIlJTxkSFBZvvNSjIyxuUz5mokZMnGgyWq5U8stp7a37?=
+ =?us-ascii?Q?sfR3gP19q5o8fpGsXl08UFJVVgT5xrOZkKaVVxIkEP69BtaJVA7TKQ=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Ib2zXj1514MTLEEQaM1qe8kUl0JzKTPInp6M0EJRXpvRFky06UVv6PHfuf5L?=
+ =?us-ascii?Q?WA7PCwnZUBoUJVzQ/h64e709UHzjODiU50pHaZjt8dmcPZ3T8SJ702OR+Ash?=
+ =?us-ascii?Q?4qpkJCriMHyFdVXqOh7adweXCKvVN9uhs6Ec2TKfVPQgjN03+B/kns1Exd+8?=
+ =?us-ascii?Q?GJnaz1qHwag9lAtkU1xPRKe1vzhb6JRFFuZwDqheV1UpCYoDYXF5+cY9IFra?=
+ =?us-ascii?Q?Kg3AF9zQrcRAAlfqDsOWTOC8NqjU/V9mkV9lZm7Jdbym/lqcQ/nNxuWnQ8vA?=
+ =?us-ascii?Q?Ee10aZe8yJKh1i/f8S3o27XV5PyKeShBL6x0Lf6EM1r/I9SHqC21kgIfKufu?=
+ =?us-ascii?Q?F+1DeA2dZd4QeZlW9AO5PReotZRSx4aO0Y+eamM41vQsF502KJ/pGqT+CKwO?=
+ =?us-ascii?Q?8AaJ57xVeHfNaAHttWRGHmI9usZL1Ww5V/5R1p6TlzDkfiWKEKzzgf6WEZgg?=
+ =?us-ascii?Q?/BL7DCS6XEKN7rTtdSoaQ3EMN/gtdZyCiVyFRyV6/5afDFYgAdF5MAUGKbUV?=
+ =?us-ascii?Q?6vGgtIZiEEwUCjk3s6pBhuUjacPPcsDE4Rxof21qL8v/zjmLaB0Nq0LlhUle?=
+ =?us-ascii?Q?+/S541D3l+74w/9qMWmqF1XFQN6asHW46tpd4ckcWmdz1Y6kGuLryNTkQd1N?=
+ =?us-ascii?Q?s9YUPHUzO9MisbtF1WK3czpFZzeoTRAA45p2+sf5SEPZ8pEvM3PB1ZjIEfma?=
+ =?us-ascii?Q?t9hpel+6IINd1i3ctWEr4b3lvdxqQdKC062eTbDe7EtVn9NXpXAJvxkV4JZw?=
+ =?us-ascii?Q?xRSUxozji9j4Rzhs8UHcCD+SJ7G+SCEQFFVamW2hzUMq5L+zqqAFzquNQSfQ?=
+ =?us-ascii?Q?RRdTD2UtXA777lEOu0f0p6f1sv+Xn7LSTeFmnijM3uIqy56tzL+pf2/FyEHo?=
+ =?us-ascii?Q?GTKtBEPf/5Yksu6EVgEXCtu/DSYSP+j3SA1LsRgtCIQm34W7xXQbhEreya7E?=
+ =?us-ascii?Q?+nbblLWqYafTT6DQAn0PvgQ39p3Noh7hBZ23w6CFXRz5FVoeyA308E1kqhOG?=
+ =?us-ascii?Q?ig28qrTcTUeaXyE4U636IEWy3SKq6imA2THk0D0QiNWY1cnKO994cyauY7Xf?=
+ =?us-ascii?Q?IPp8x3KM5W1WXpPLPV6lwplM2krUWpG41EE39yLKmp4bd0h7eEVh91dikJjT?=
+ =?us-ascii?Q?7gyn5hV9q1UyF7BsDT/wjgj6JFi8ZFl65RADtj0mwJW2tSdT3/ZSWuHqydRI?=
+ =?us-ascii?Q?qEYvJIkSxQqglVMFSOWa3GfHB8arvX5hHwQN7qQZuGaV5agJApwnW4mv76IW?=
+ =?us-ascii?Q?/WYZGGQlM1s6zL+heQOUQWkeUvZVVeWqqFqxmPqlLbi2/UKmlabZkTZReG0H?=
+ =?us-ascii?Q?SDac3jWg26Vrrrnex6H/3g3OHtfODCD9B/wY6KIP15Plu3szS6DC4yLi2kLg?=
+ =?us-ascii?Q?4c1Rs3x7vagbHTRc7J2tj2/9PWjhoPp/r6q+k+u7WKiONKRzbdP2YBlLYB7k?=
+ =?us-ascii?Q?uJXPR1+tGA+dwgXLZ3NyZSIG8FMDEkrZQW9T1bOGCbS9YoPc0xADIb4UM+nE?=
+ =?us-ascii?Q?Q34qj+AuWX2HjAX9JQox2DAnTHVluN222MgI1sFiewRcXrSd0BOt6vCePq27?=
+ =?us-ascii?Q?06y3BX2F6yd7k2r5BI4XgY0vCcD4Q8dBoUGz8/6l?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ea0cf2f6-08b1-4342-b7e8-08ddee9f9152
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2025 06:18:46.1427 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: T8Q2mJYn7OgdbxmE2nRL7nmBgT2U0nXzeCLcQQ9HVN16biT80k8CzvCc1FPMEJbv2RLJHk0fQ8WYQaxTpXlZlzP4dV+WVMTKMda0YFVfedA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6041
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,210 +200,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support instructions for vector dot-product extension (Zvqdotq)
-- vqdot.[vv,vx]
-- vqdotu.[vv,vx]
-- vqdotsu.[vv,vx]
-- vqdotus.vx
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/riscv/helper.h                         | 10 +++
- target/riscv/insn32.decode                    |  9 +++
- target/riscv/insn_trans/trans_rvzvqdotq.c.inc | 61 +++++++++++++++++++
- target/riscv/translate.c                      |  1 +
- target/riscv/vector_helper.c                  | 57 +++++++++++++++++
- 5 files changed, 138 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_rvzvqdotq.c.inc
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index f712b1c368..80274f1dad 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1284,3 +1284,13 @@ DEF_HELPER_4(vgmul_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
- DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
-+
-+/* Vector dot-product functions */
-+DEF_HELPER_6(vqdot_vv, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vqdotu_vv, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_6(vqdotsu_vv, void, ptr, ptr, ptr, ptr, env, i32)
-+
-+DEF_HELPER_6(vqdot_vx, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vqdotu_vx, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vqdotsu_vx, void, ptr, ptr, tl, ptr, env, i32)
-+DEF_HELPER_6(vqdotus_vx, void, ptr, ptr, tl, ptr, env, i32)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cd23b1f3a9..50a6156667 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1066,3 +1066,12 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
- amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
- amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-+
-+# *** Zvqdotq Vector Dot-Product Extension ***
-+vqdot_vv    101100 . ..... ..... 010 ..... 1010111 @r_vm
-+vqdot_vx    101100 . ..... ..... 110 ..... 1010111 @r_vm
-+vqdotu_vv   101000 . ..... ..... 010 ..... 1010111 @r_vm
-+vqdotu_vx   101000 . ..... ..... 110 ..... 1010111 @r_vm
-+vqdotsu_vv  101010 . ..... ..... 010 ..... 1010111 @r_vm
-+vqdotsu_vx  101010 . ..... ..... 110 ..... 1010111 @r_vm
-+vqdotus_vx  101110 . ..... ..... 110 ..... 1010111 @r_vm
-diff --git a/target/riscv/insn_trans/trans_rvzvqdotq.c.inc b/target/riscv/insn_trans/trans_rvzvqdotq.c.inc
-new file mode 100644
-index 0000000000..80134874e9
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzvqdotq.c.inc
-@@ -0,0 +1,61 @@
-+/*
-+ * RISC-V translation routines for the Zvqdotq vector dot-product extension
-+ *
-+ * Copyright (C) 2025 SiFive, Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+static bool vext_zvqdotq_base_check(DisasContext *s)
-+{
-+    return s->cfg_ptr->ext_zvqdotq && s->sew == MO_32;
-+}
-+
-+static bool vext_vqdotq_opivv_check(DisasContext *s, arg_rmrr *a)
-+{
-+    return vext_zvqdotq_base_check(s) && opivv_check(s, a);
-+}
-+
-+#define GEN_VQDOTQ_OPIVV_TRANS(NAME, CHECK)              \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
-+{                                                        \
-+    if (CHECK(s, a)) {                                   \
-+        return opivv_trans(a->rd, a->rs1, a->rs2, a->vm, \
-+                           gen_helper_##NAME, s);        \
-+    }                                                    \
-+    return false;                                        \
-+}
-+
-+GEN_VQDOTQ_OPIVV_TRANS(vqdot_vv, vext_vqdotq_opivv_check)
-+GEN_VQDOTQ_OPIVV_TRANS(vqdotu_vv, vext_vqdotq_opivv_check)
-+GEN_VQDOTQ_OPIVV_TRANS(vqdotsu_vv, vext_vqdotq_opivv_check)
-+
-+static bool vext_vqdotq_opivx_check(DisasContext *s, arg_rmrr *a)
-+{
-+    return vext_zvqdotq_base_check(s) && opivx_check(s, a);
-+}
-+
-+#define GEN_VQDOTQ_OPIVX_TRANS(NAME, CHECK)              \
-+static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
-+{                                                        \
-+    if (CHECK(s, a)) {                                   \
-+        return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, \
-+                           gen_helper_##NAME, s);        \
-+    }                                                    \
-+    return false;                                        \
-+}
-+
-+GEN_VQDOTQ_OPIVX_TRANS(vqdot_vx, vext_vqdotq_opivx_check)
-+GEN_VQDOTQ_OPIVX_TRANS(vqdotu_vx, vext_vqdotq_opivx_check)
-+GEN_VQDOTQ_OPIVX_TRANS(vqdotsu_vx, vext_vqdotq_opivx_check)
-+GEN_VQDOTQ_OPIVX_TRANS(vqdotus_vx, vext_vqdotq_opivx_check)
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 9ddef2d6e2..6f43ed1ffd 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1190,6 +1190,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvzfh.c.inc"
- #include "insn_trans/trans_rvk.c.inc"
- #include "insn_trans/trans_rvvk.c.inc"
-+#include "insn_trans/trans_rvzvqdotq.c.inc"
- #include "insn_trans/trans_privileged.c.inc"
- #include "insn_trans/trans_svinval.c.inc"
- #include "insn_trans/trans_rvbf16.c.inc"
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 7c67d67a13..9d32fe0acc 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -921,6 +921,10 @@ GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb, ste_b_host)
- #define WOP_SSU_B int16_t, int8_t, uint8_t, int16_t, uint16_t
- #define WOP_SSU_H int32_t, int16_t, uint16_t, int32_t, uint32_t
- #define WOP_SSU_W int64_t, int32_t, uint32_t, int64_t, uint64_t
-+#define QOP_SSS_B int32_t, int8_t, int8_t, int32_t, int32_t
-+#define QOP_SUS_B int32_t, uint8_t, int8_t, uint32_t, int32_t
-+#define QOP_SSU_B int32_t, int8_t, uint8_t, int32_t, uint32_t
-+#define QOP_UUU_B uint32_t, uint8_t, uint8_t, uint32_t, uint32_t
- #define NOP_SSS_B int8_t, int8_t, int16_t, int8_t, int16_t
- #define NOP_SSS_H int16_t, int16_t, int32_t, int16_t, int32_t
- #define NOP_SSS_W int32_t, int32_t, int64_t, int32_t, int64_t
-@@ -5473,3 +5477,56 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
- GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
- GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
- GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
-+
-+
-+/* Vector dot-product instructions. */
-+
-+#define OPMVV_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
-+static void do_##NAME(void *vd, void *vs1, void *vs2, int i)            \
-+{                                                                       \
-+    int idx;                                                            \
-+    TX1 *r1_buf = (TX1 *)vs1 + HD(i);                                   \
-+    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
-+    TD acc = ((TD *)vd)[HD(i)];                                         \
-+                                                                        \
-+    for (idx = 0; idx < 4; ++idx) {                                     \
-+        T1 r1 = ((T1 *)r1_buf)[HS1(idx)];                               \
-+        T2 r2 = ((T2 *)r2_buf)[HS2(idx)];                               \
-+        acc += (TD)r1 * (TD)r2;                                         \
-+    }                                                                   \
-+    ((TD *)vd)[HD(i)] = acc;                                            \
-+}
-+
-+RVVCALL(OPMVV_VQDOTQ, vqdot_vv, QOP_SSS_B, H4, H1, H1)
-+RVVCALL(OPMVV_VQDOTQ, vqdotu_vv, QOP_UUU_B, H4, H1, H1)
-+RVVCALL(OPMVV_VQDOTQ, vqdotsu_vv, QOP_SUS_B, H4, H1, H1)
-+
-+GEN_VEXT_VV(vqdot_vv, 4)
-+GEN_VEXT_VV(vqdotu_vv, 4)
-+GEN_VEXT_VV(vqdotsu_vv, 4)
-+
-+#define OPMVX_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
-+static void do_##NAME(void *vd, target_long s1, void *vs2, int i)       \
-+{                                                                       \
-+    int idx;                                                            \
-+    TX1 *r1_buf = (TX1 *)&s1;                                           \
-+    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
-+    TD acc = ((TD *)vd)[HD(i)];                                         \
-+                                                                        \
-+    for (idx = 0; idx < 4; ++idx) {                                     \
-+        T1 r1 = ((T1 *)r1_buf)[HS1(idx)];                               \
-+        T2 r2 = ((T2 *)r2_buf)[HS2(idx)];                               \
-+        acc += (TD)r1 * (TD)r2;                                         \
-+    }                                                                   \
-+    ((TD *)vd)[HD(i)] = acc;                                            \
-+}
-+
-+RVVCALL(OPMVX_VQDOTQ, vqdot_vx, QOP_SSS_B, H4, H1, H1)
-+RVVCALL(OPMVX_VQDOTQ, vqdotu_vx, QOP_UUU_B, H4, H1, H1)
-+RVVCALL(OPMVX_VQDOTQ, vqdotsu_vx, QOP_SUS_B, H4, H1, H1)
-+RVVCALL(OPMVX_VQDOTQ, vqdotus_vx, QOP_SSU_B, H4, H1, H1)
-+
-+GEN_VEXT_VX(vqdot_vx, 4)
-+GEN_VEXT_VX(vqdotu_vx, 4)
-+GEN_VEXT_VX(vqdotsu_vx, 4)
-+GEN_VEXT_VX(vqdotus_vx, 4)
--- 
-2.39.3
+>-----Original Message-----
+>From: David Hildenbrand <david@redhat.com>
+>Subject: Re: [PATCH] vfio/container: Remap only populated parts in a secti=
+on
+>
+>On 05.09.25 11:04, Duan, Zhenzhong wrote:
+>> + David Hildenbrand
+>>
+>>> -----Original Message-----
+>>> From: Steven Sistare <steven.sistare@oracle.com>
+>>> Subject: Re: [PATCH] vfio/container: Remap only populated parts in a
+>section
+>>>
+>>> On 8/31/2025 10:13 PM, Duan, Zhenzhong wrote:
+>>>>> -----Original Message-----
+>>>>> From: Steven Sistare <steven.sistare@oracle.com>
+>>>>> Subject: Re: [PATCH] vfio/container: Remap only populated parts in a
+>>> section
+>>>>>
+>>>>> On 8/13/2025 11:24 PM, Zhenzhong Duan wrote:
+>>>>>> If there are multiple containers and unmap-all fails for some contai=
+ner,
+>>> we
+>>>>>> need to remap vaddr for the other containers for which unmap-all
+>>>>> succeeded.
+>>>>>> When ram discard is enabled, we should only remap populated parts in
+>a
+>>>>>> section instead of the whole section.
+>>>>>>
+>>>>>> Export vfio_ram_discard_notify_populate() and use it to do populatio=
+n.
+>>>>>>
+>>>>>> Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr
+>>>>> failure")
+>>>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>>>>> ---
+>>>>>> btw: I didn't find easy to test this corner case, only code inspecti=
+ng
+>>>>>
+>>>>> Thanks Zhenzhong, this looks correct.
+>>>>>
+>>>>> However, I never liked patch
+>>>>>     eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr
+>>> failure")
+>>>>>
+>>>>> I think it adds too much complexity for a rare case.  In fact, if we
+>>>>> examine all the possible error return codes, I believe they all would
+>>>>> be caused by other qemu application bugs, or kernel bugs:
+>>>>>
+>>>>> vfio_dma_do_unmap()
+>>>>>     returns -EBUSY if an mdev exists.  qemu blocks live update
+>blocker
+>>>>>       when mdev is present.  If this occurs, the blocker has a bug.
+>>>>>     returns -EINVAL if the vaddr was already invalidated.  qemu
+>already
+>>>>>       invalidated it, or never remapped the vaddr after a previous li=
+ve
+>>>>>       update.  Both are qemu bugs.
+>>>>>
+>>>>> iopt_unmap_all
+>>>>>     iopt_unmap_iova_range
+>>>>>       -EBUSY - qemu is concurrently performing other dma map or
+>unmap
+>>>>>                operations.  a bug.
+>>>>>
+>>>>>       -EDEADLOCK - Something is not responding to unmap requests.
+>>>>>
+>>>>> Therefore, I think we should just revert eba1f657cbb1, and assert tha=
+t
+>>>>> the qemu vfio_dma_unmap_vaddr_all() call succeeds.
+>>>>>
+>>>>> Thoughts?
+>>>>
+>>>> I agree it's a rare case and your suggestion will make code simple, bu=
+t I
+>feel
+>>> it's aggressive to kill QEMU instance if live update fails, try to rest=
+ore and
+>>> keep current instance running is important in cloud env and looks more
+>>> moderate.
+>>>
+>>> OK.
+>>>
+>>> Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
+>>>
+>>> (but you should also seek an RB from someone who is more familiar with
+>ram
+>>> discard and
+>>> its callbacks).
+>>
+>> Hi David, look forward to your comments, suggestions. Thanks
+>
+>Hi!
+>
+>I mean, the
+>
+>	return vrdl->listener.notify_populate(&vrdl->listener, section) =3D=3D 0;
+>
+>is completely wrong.
+>
+>ram_discard_manager_replay_populated() should be the right thing to do.
+>
+>Was this patch tested somehow (e.g., with virtio-mem), so we're sure it's
+>now behaving as expected?
+
+Thanks David for quick reply.
+
+To be honest, I didn't find an easy way to test this error path without hac=
+king qemu,
+e.g., faking an unmap_all failure on one container but succeed on others. I=
+'ll try it
+with virtio-mem and get back.
+
+>
+>
+>I would add an empty line in vfio_cpr_rdm_remap().
+
+Will do.
+
+BRs,
+Zhenzhong
+
+>
+>
+>Apart from that, LGTM
+>
+>Reviewed-by: David Hildenbrand <david@redhat.com>
+>
+>--
+>Cheers
+>
+>David / dhildenb
 
 
