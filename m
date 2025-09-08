@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC041CAC585
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFEACA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvf9W-0008F3-W8; Mon, 08 Sep 2025 12:55:39 -0400
+	id 1uvf9H-0007hl-Bq; Mon, 08 Sep 2025 12:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9U-00088K-8Q
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9F-0007at-1H
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9N-0001uB-4n
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf94-0001fI-SK
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350524;
+ s=mimecast20190719; t=1757350501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VzDQeLZJ1xnmfmw5TdfMdMrhfUNwDAO/ZuNdnSYO7uQ=;
- b=b8TTBMqnLG3eVSW4w1sqxkq/wrrtUtpBjWLL91PPlNJ8iOFOz+BRGQ5eODlocell+T2OJc
- B4Tg3R1hv0fFcJMn0UXOza9/Wc4i0ZHtnXyPShjwKgcIjOLpp75lN9eldXXEiXbCIU+URN
- gcr+uHANZUPJla+4b6aIFZ77JHR4Zfs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HTf9EWa3cQi5k7E0A65swuWdTLKr3lHlsuS/MO2SbXI=;
+ b=bognFE0rrIINW43b7oLxi9+XTUkwOek3POgw2MQNMH2eX3qJAoTJAmZEU/zowrVS+XB0lw
+ siTA/rxJG1tGN2oRORHYxiUZTA9DD7tiDzr5p5eXZ0HReG2wtyxkMzYOJzvki97+qEnW77
+ WEVloJH1JsYrb+Q4XaVfQ4rkDufiowg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-oR2Vfg0COL-5-jAmJ4K48Q-1; Mon,
- 08 Sep 2025 12:55:21 -0400
-X-MC-Unique: oR2Vfg0COL-5-jAmJ4K48Q-1
-X-Mimecast-MFC-AGG-ID: oR2Vfg0COL-5-jAmJ4K48Q_1757350520
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-_xufGYiYNQ-mtm6-t9ld0Q-1; Mon,
+ 08 Sep 2025 12:54:59 -0400
+X-MC-Unique: _xufGYiYNQ-mtm6-t9ld0Q-1
+X-Mimecast-MFC-AGG-ID: _xufGYiYNQ-mtm6-t9ld0Q_1757350497
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 810DC1800291; Mon,  8 Sep 2025 16:55:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99CAD18002E9; Mon,  8 Sep 2025 16:54:57 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.50])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 612EA30001A4; Mon,  8 Sep 2025 16:55:18 +0000 (UTC)
+ id BA80D30001A4; Mon,  8 Sep 2025 16:54:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 31/31] vfio/pci.h: rename VFIOPCIDevice pdev field to parent_obj
-Date: Mon,  8 Sep 2025 18:53:54 +0200
-Message-ID: <20250908165354.1731444-32-clg@redhat.com>
+ John Levon <john.levon@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 22/31] vfio-user/pci.c: use QOM casts where appropriate
+Date: Mon,  8 Sep 2025 18:53:45 +0200
+Message-ID: <20250908165354.1731444-23-clg@redhat.com>
 In-Reply-To: <20250908165354.1731444-1-clg@redhat.com>
 References: <20250908165354.1731444-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,64 +87,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Now that nothing accesses the pdev field directly, rename pdev to
-parent_obj as per our current coding guidelines.
+Use QOM casts to convert between VFIOUserPCIDevice and VFIOPCIDevice instead
+of accessing device directly.
 
 Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-23-mark.caveayland@nutanix.com
+Reviewed-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-13-mark.caveayland@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.h | 2 +-
- hw/vfio/cpr.c | 4 ++--
- hw/vfio/pci.c | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ hw/vfio-user/pci.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 2db76b6f4fb58679d65b651f0507c474e5c05857..e0aef82a8931c78a5504411a912acddda1fd6549 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -123,7 +123,7 @@ typedef struct VFIOMSIXInfo {
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 29cb592e9cf4d9a5923366dba2ece8d3266fe515..7b6a6514f6c22c64ea52d4e8e99b263ed44de522 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -214,8 +214,9 @@ static void vfio_user_compute_needs_reset(VFIODevice *vbasedev)
  
- struct VFIOPCIDevice {
--    PCIDevice pdev;
-+    PCIDevice parent_obj;
+ static Object *vfio_user_pci_get_object(VFIODevice *vbasedev)
+ {
+-    VFIOUserPCIDevice *vdev = container_of(vbasedev, VFIOUserPCIDevice,
+-                                           device.vbasedev);
++    VFIOUserPCIDevice *vdev = VFIO_USER_PCI(container_of(vbasedev,
++                                                         VFIOPCIDevice,
++                                                         vbasedev));
  
-     VFIODevice vbasedev;
-     VFIOINTx intx;
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index f911988adddfdc1c8e8f87d66d1647c81f633570..2c71fc1e8ef7b0765d015b0f423cb6a30f273f0f 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -173,8 +173,8 @@ const VMStateDescription vfio_cpr_pci_vmstate = {
-     .post_load = vfio_cpr_pci_post_load,
-     .needed = cpr_incoming_needed,
-     .fields = (VMStateField[]) {
--        VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
--        VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, pci_msix_present),
-+        VMSTATE_PCI_DEVICE(parent_obj, VFIOPCIDevice),
-+        VMSTATE_MSIX_TEST(parent_obj, VFIOPCIDevice, pci_msix_present),
-         VMSTATE_VFIO_INTX(intx, VFIOPCIDevice),
-         VMSTATE_END_OF_LIST()
+     return OBJECT(vdev);
+ }
+@@ -420,7 +421,7 @@ static void vfio_user_pci_set_socket(Object *obj, Visitor *v, const char *name,
+     VFIOUserPCIDevice *udev = VFIO_USER_PCI(obj);
+     bool success;
+ 
+-    if (udev->device.vbasedev.proxy) {
++    if (VFIO_PCI_BASE(udev)->vbasedev.proxy) {
+         error_setg(errp, "Proxy is connected");
+         return;
      }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 052591d2c970a1668db390f31ea06cd90e6a420f..d14e96b2f82d78746d361fc86ccbf14f6275a8de 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2811,8 +2811,8 @@ static const VMStateDescription vmstate_vfio_pci_config = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
--        VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
--        VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, vfio_msix_present),
-+        VMSTATE_PCI_DEVICE(parent_obj, VFIOPCIDevice),
-+        VMSTATE_MSIX_TEST(parent_obj, VFIOPCIDevice, vfio_msix_present),
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
 -- 
 2.51.0
 
