@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B66CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD83DCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:02:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvf9T-00083w-H5; Mon, 08 Sep 2025 12:55:36 -0400
+	id 1uvf9N-0007v3-Ku; Mon, 08 Sep 2025 12:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9Q-00080U-E9
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9L-0007pQ-6J
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9M-0001uJ-NB
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9G-0001tN-Jy
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350523;
+ s=mimecast20190719; t=1757350518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Tk/z8tBX1EhZyT86hd2bvnQ/UP6G4WHHkayDdzWaLoE=;
- b=ES+Pul0BVoyz3X0LP8JXU01PIB+84cBDxvhBsG7ba5BDDbwpB9qJtkoSKzf39A1AmsMC0W
- MO4nUWIEjB7jEB21R759WZWk9wIZFH27VTXQ+jdHcIiIHtL0J8wLU3xCA7lpZIqD1sJ/wg
- 3CTtgqvuMa1UD1dteG4yjoIs1ZQcoJ0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ypOxM9dc7y4eaNDSraygXyRP+ty+I+WP3T62HkaR0aM=;
+ b=dHdgycEzug2BdmKxEOBR5OFShfEK+gnfS/9miCz/nETyq95Y9bnNcKwrJlNu+u012GF1at
+ U99V6XTHkaus6lSDQRe3HIHHMcFM+1R5TA2nDBPgXHCWYIkwAHFKoU+U+FXovkb+3XhYQ1
+ fJTlWdEwhEoxLdYXpReTs745sJzc2wA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-utz4Pf6QP4mCzYWIQeyO9A-1; Mon,
- 08 Sep 2025 12:55:18 -0400
-X-MC-Unique: utz4Pf6QP4mCzYWIQeyO9A-1
-X-Mimecast-MFC-AGG-ID: utz4Pf6QP4mCzYWIQeyO9A_1757350518
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-MVOrqmCmPfig852YIDyiqA-1; Mon,
+ 08 Sep 2025 12:55:16 -0400
+X-MC-Unique: MVOrqmCmPfig852YIDyiqA-1
+X-Mimecast-MFC-AGG-ID: MVOrqmCmPfig852YIDyiqA_1757350515
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D90F118002CE; Mon,  8 Sep 2025 16:55:17 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D144180057A; Mon,  8 Sep 2025 16:55:15 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.50])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8780300018D; Mon,  8 Sep 2025 16:55:15 +0000 (UTC)
+ id 5D915300018D; Mon,  8 Sep 2025 16:55:13 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
+ John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 30/31] s390x/s390-pci-vfio.c: use QOM casts where appropriate
-Date: Mon,  8 Sep 2025 18:53:53 +0200
-Message-ID: <20250908165354.1731444-31-clg@redhat.com>
+Subject: [PULL 29/31] vfio-user/pci.c: use QOM casts where appropriate
+Date: Mon,  8 Sep 2025 18:53:52 +0200
+Message-ID: <20250908165354.1731444-30-clg@redhat.com>
 In-Reply-To: <20250908165354.1731444-1-clg@redhat.com>
 References: <20250908165354.1731444-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,84 +87,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Use QOM casts to cast to VFIOPCIDevice instead of using container_of().
+Use QOM casts to convert between VFIOPCIDevice and PCIDevice instead of
+accessing pdev directly.
 
 Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-22-mark.caveayland@nutanix.com
+Reviewed-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-21-mark.caveayland@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/s390x/s390-pci-vfio.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ hw/vfio-user/pci.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index aaf91319b4e3cfacf3ca3a91e71d9d6d2fbda13f..938a5511713dade46740dca79a8c4c738799a1ce 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -62,7 +62,7 @@ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index c3947a8f2ec9c0309b4484b95a4bd5439fa1d17f..e2c309784fec5feca635eb0f314f02eabb2dbf1f 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -65,7 +65,7 @@ static void vfio_user_msix_setup(VFIOPCIDevice *vdev)
+     vdev->msix->pba_region = pba_reg;
+ 
+     vfio_reg = vdev->bars[vdev->msix->pba_bar].mr;
+-    msix_reg = &vdev->pdev.msix_pba_mmio;
++    msix_reg = &PCI_DEVICE(vdev)->msix_pba_mmio;
+     memory_region_init_io(pba_reg, OBJECT(vdev), &vfio_user_pba_ops, vdev,
+                           "VFIO MSIX PBA", int128_get64(msix_reg->size));
+     memory_region_add_subregion_overlap(vfio_reg, vdev->msix->pba_offset,
+@@ -86,7 +86,7 @@ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
+ 
+ static void vfio_user_dma_read(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
  {
-     S390PCIDMACount *cnt;
-     uint32_t avail;
--    VFIOPCIDevice *vpdev = container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpdev = VFIO_PCI_BASE(pbdev->pdev);
-     int id;
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+     VFIOUserProxy *proxy = vdev->vbasedev.proxy;
+     VFIOUserDMARW *res;
+     MemTxResult r;
+@@ -134,7 +134,7 @@ static void vfio_user_dma_read(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
  
-     assert(vpdev);
-@@ -108,7 +108,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+ static void vfio_user_dma_write(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
  {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_base *cap;
--    VFIOPCIDevice *vpci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-     uint64_t vfio_size;
+-    PCIDevice *pdev = &vdev->pdev;
++    PCIDevice *pdev = PCI_DEVICE(vdev);
+     VFIOUserProxy *proxy = vdev->vbasedev.proxy;
+     MemTxResult r;
  
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_BASE);
-@@ -162,7 +162,7 @@ static bool get_host_fh(S390PCIBusDevice *pbdev, struct vfio_device_info *info,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_base *cap;
--    VFIOPCIDevice *vpci = container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_BASE);
- 
-@@ -185,7 +185,7 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
-     struct vfio_device_info_cap_zpci_group *cap;
-     S390pciState *s = s390_get_phb();
-     ClpRspQueryPciGrp *resgrp;
--    VFIOPCIDevice *vpci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
-     uint8_t start_gid = pbdev->zpci_fn.pfgid;
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_GROUP);
-@@ -264,7 +264,7 @@ static void s390_pci_read_util(S390PCIBusDevice *pbdev,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_util *cap;
--    VFIOPCIDevice *vpci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_UTIL);
- 
-@@ -291,7 +291,7 @@ static void s390_pci_read_pfip(S390PCIBusDevice *pbdev,
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_device_info_cap_zpci_pfip *cap;
--    VFIOPCIDevice *vpci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vpci = VFIO_PCI_BASE(pbdev->pdev);
- 
-     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_PFIP);
- 
-@@ -314,7 +314,7 @@ static void s390_pci_read_pfip(S390PCIBusDevice *pbdev,
- 
- static struct vfio_device_info *get_device_info(S390PCIBusDevice *pbdev)
- {
--    VFIOPCIDevice *vfio_pci = container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-+    VFIOPCIDevice *vfio_pci = VFIO_PCI_BASE(pbdev->pdev);
- 
-     return vfio_get_device_info(vfio_pci->vbasedev.fd);
- }
 -- 
 2.51.0
 
