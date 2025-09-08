@@ -4,76 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A270BCA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CF6CA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvd5M-00079L-1V; Mon, 08 Sep 2025 10:43:12 -0400
+	id 1uvd8p-0001LA-Cg; Mon, 08 Sep 2025 10:46:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvd5H-00078i-SF
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:43:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uvd8E-0000ds-92
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:46:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvd51-00043G-U2
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:43:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uvd81-0004OZ-94
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:46:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757342566;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=azTKdModMr7sW1ZecTCOmAgxA8yqAQu7rqBbvjtaGds=;
- b=ZxtYNxlPJh1t7vEVWrdAUIF1XMtSXGVVC14t7kKSuqxHxTmIheQpDy+7dkiXJY8k79lLOy
- npD7ANXYyVdalzv6qcpJWR8PXG6kmUdP3Q9uwu2UCV8GB+jMWTgyi9ctIigXfihROHfcwF
- pfLs7koJl4qGEFTIXnmdWNGw+M6TmAs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-u1gdpSjyMqmF6JNI3S99TA-1; Mon,
- 08 Sep 2025 10:42:43 -0400
-X-MC-Unique: u1gdpSjyMqmF6JNI3S99TA-1
-X-Mimecast-MFC-AGG-ID: u1gdpSjyMqmF6JNI3S99TA_1757342562
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69C2519560B8; Mon,  8 Sep 2025 14:42:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.93])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1ACB1800452; Mon,  8 Sep 2025 14:42:38 +0000 (UTC)
-Date: Mon, 8 Sep 2025 15:42:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v4 3/3] tests/functional: add a vfio-user smoke test
-Message-ID: <aL7rW6Tq9d-z8sGL@redhat.com>
-References: <20250903201931.168317-1-john.levon@nutanix.com>
- <20250903201931.168317-4-john.levon@nutanix.com>
+ s=mimecast20190719; t=1757342749;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=430zy+NmoraJe6H6S/wzGVhUyCf6a1S+6O2Yb0w2HfY=;
+ b=T6gNTDMnFx8kxXf9AvEL/0fospGd/hEk73zudkTWmTwQaEUpANj9p5OvPWgAUcje7Q3mp6
+ rhtwpJCHrk9Z/oWMsUbIZvxijF6AYJYmn6uxEVADZBN5snxha+dJ4OupZ5L/4RzpmtVNYP
+ ZS1KYFpVqkFz782HVrxY8zqcCgGBHLo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-299-Ds_ChAU6PyuVrobfR_W6zw-1; Mon, 08 Sep 2025 10:45:46 -0400
+X-MC-Unique: Ds_ChAU6PyuVrobfR_W6zw-1
+X-Mimecast-MFC-AGG-ID: Ds_ChAU6PyuVrobfR_W6zw_1757342745
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b467f5173so31438165e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:45:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757342745; x=1757947545;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=430zy+NmoraJe6H6S/wzGVhUyCf6a1S+6O2Yb0w2HfY=;
+ b=fQfP8ZSZBWngwbroMoK5lEKRvghtDB8fkRqzQeUeVIvlkPvDWzIpsvNBoqvb13NtZ9
+ 4RPhxmtVUYUpg9QBFsBeQ+so/op/BQvZBZk6nkI1ofbn0ML3cMLuKkpdUQYBpXwDdX0u
+ eglbqrJeGr5Ex0c/WLW++3vp3rQTAlU0iQvaPtj4P0ZEsS+V2xmuRiGMUfCCZ//MSPj2
+ dv2KlCw9du2SAWiX6xwxdQyndNs7O4+AIJZOEOLEOTcDz/zR2N5tC7XVKKtikei3r/36
+ /GceGFPK9PXHVmX3ZIuHRN/b8qQ1ih+SNsYCm2K3MZYn42xP/44Ir9E+6NYajCEKP8BP
+ Txmw==
+X-Gm-Message-State: AOJu0YyEijF0xXVE5lxttd9c6ZKkkVoowJ7ItlsLod/nBPd6+19hXcmh
+ HHtrtogF8dz8UmRkzl3mz0Laa6QlQOT/Ut4SldMek85mjBxar/IyuMnyTlVuIXgEse5FwuZIx03
+ QLN3N11Y/1NydyCJ2YUWdfAnikHER2A0Ndm49Kyz8j+od0lHAa80kAn/W
+X-Gm-Gg: ASbGnctfUomvMPXUUHzdmCgT7DAzZPpd89jJibJcXABJrDopBgMSSPoROTgaixhoQnH
+ ZFAGSuFfJN2j8rG7K1ureDRP8MOSLm8DXT4Yg0EgzOC/wfwLgyG2T4IQvrmb7ooYTeCstvExiU5
+ SelEx35Zea0PqiXZ4x8GGYb5SXuR+s0RksyooNxhN7RKhbjjKKYRSENuryasMCjFeR51KiX/0qd
+ WVvzs1YPmnJkgH1hk2SJ3KQq+xOL3qi5M0wKGJQOXHXJI2ccqtQ5UX5QjMiWhVC84LbGinyZ2a1
+ 2+wzPZDnPLITHiVkFHgI57BvGLvA3VI6
+X-Received: by 2002:a05:600c:5248:b0:45b:6b57:5308 with SMTP id
+ 5b1f17b1804b1-45de078401dmr69109785e9.7.1757342745292; 
+ Mon, 08 Sep 2025 07:45:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnDeQpB8Qcm1WhQeZWrgb4Db5QcsuNLbfehqzrlIyGP8NxFYWRiMrcQBNcIh+qTnr7Lnhjww==
+X-Received: by 2002:a05:600c:5248:b0:45b:6b57:5308 with SMTP id
+ 5b1f17b1804b1-45de078401dmr69109375e9.7.1757342744795; 
+ Mon, 08 Sep 2025 07:45:44 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1536:c800:2952:74e:d261:8021])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e543e9f444sm10130705f8f.60.2025.09.08.07.45.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Sep 2025 07:45:44 -0700 (PDT)
+Date: Mon, 8 Sep 2025 10:45:40 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
+ qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
+Subject: Re: [RFC PATCH] docs/system/security: Restrict "virtualization use
+ case" to specific machines
+Message-ID: <20250908104125-mutt-send-email-mst@kernel.org>
+References: <20250908125058.220973-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250903201931.168317-4-john.levon@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20250908125058.220973-1-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,220 +113,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 10:19:31PM +0200, John Levon wrote:
-> From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+On Mon, Sep 08, 2025 at 01:50:57PM +0100, Peter Maydell wrote:
+> Currently our security policy defines a "virtualization use case"
+> where we consider bugs to be security issues, and a
+> "non-virtualization use case" where we do not make any security
+> guarantees and don't consider bugs to be security issues.
 > 
-> Add a basic test of the vfio-user PCI client implementation.
+> The rationale for this split is that much code in QEMU is older and
+> was not written with malicious guests in mind, and we don't have the
+> resources to audit, fix and defend it.  So instead we inform users
+> about what the can in practice rely on as a security barrier, and
+> what they can't.
 > 
-> Co-authored-by: John Levon <john.levon@nutanix.com>
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> We don't currently restrict the "virtualization use case" to any
+> particular set of machine types.  This means that we have effectively
+> barred ourselves from adding KVM support to any machine type that we
+> don't want to put into the "bugs are security issues" category, even
+> if it would be useful for users to be able to get better performance
+> with a trusted guest by enabling KVM. This seems an unnecessary
+> restriction, and in practice the set of machine types it makes
+> sense to use for untrusted-guest virtualization is quite small.
+> 
+> Specifically, we would like to be able to enable the use of
+> KVM with the imx8 development board machine types, but we don't
+> want to commit ourselves to having to support those SoC models
+> and device models as part of QEMU's security boundary:
+> https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gmail.com/
+> 
+> This patch updates the security policy to explicitly list the
+> machine types we consider to be useful for the "virtualization
+> use case".
+
+This use-case sounds reasonable to me. I also imagine that
+some machines can get fixed down the road perhaps to
+the point where they enter the "virtualization use case".
+
+However, since we are
+getting this elaborate, would my old idea of a runtime flag
+make sense now?
+
+To recap, the idea was to add a "-virt" flag that will
+block any machines, devices and so on not considered
+part of the "virtualization use case".
+
+We could also create a mechanism for downstreams to
+tweak this as they see fit.
+
+
+
+
+> This is an RFC partly to see if we have consensus that this change
+> makes sense, and partly because I was only able to identify the
+> machine types we want to cover for some of our target architectures.
+> If maintainers for the other architectures could clarify which
+> machine types work with KVM that would be helpful.
+> 
+> Notes on the listed machine types:
+> 
+> architectures I'm pretty sure about:
+> 
+> aarch64:
+>  -- virt is definitely the only supported one
+> s390x:
+>  -- s390-ccw-virtio is the only machine type for this architecture
+> loongarch64:
+>  -- virt is the only machine type for this architecture
+> 
+> architectures where I've made a guess:
+> 
+> i386, x86_64:
+>  -- I have assumed that all machine types except the "experimental"
+>     x-remote are supported
+> 
+> architectures I don't know:
+> 
+> mips, mips64
+> riscv32, riscv64
+> ppc, ppc64
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  MAINTAINERS                                   |   1 +
->  tests/functional/x86_64/meson.build           |   1 +
->  .../x86_64/test_vfio_user_client.py           | 207 ++++++++++++++++++
->  3 files changed, 209 insertions(+)
->  create mode 100755 tests/functional/x86_64/test_vfio_user_client.py
+>  docs/system/security.rst | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 1ae28e8804..9987ac8a4d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4305,6 +4305,7 @@ F: docs/system/devices/vfio-user.rst
->  F: hw/vfio-user/*
->  F: include/hw/vfio-user/*
->  F: subprojects/libvfio-user
-> +F: tests/functional/x86_64/test_vfio_user_client.py
+> diff --git a/docs/system/security.rst b/docs/system/security.rst
+> index f2092c8768b..395c2d7fb88 100644
+> --- a/docs/system/security.rst
+> +++ b/docs/system/security.rst
+> @@ -35,6 +35,34 @@ malicious:
+>  Bugs affecting these entities are evaluated on whether they can cause damage in
+>  real-world use cases and treated as security bugs if this is the case.
 >  
->  EBPF:
->  M: Jason Wang <jasowang@redhat.com>
-> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-> index d0b4667bb8..eed1936976 100644
-> --- a/tests/functional/x86_64/meson.build
-> +++ b/tests/functional/x86_64/meson.build
-> @@ -31,6 +31,7 @@ tests_x86_64_system_thorough = [
->    'replay',
->    'reverse_debug',
->    'tuxrun',
-> +  'vfio_user_client',
->    'virtio_balloon',
->    'virtio_gpu',
->  ]
-> diff --git a/tests/functional/x86_64/test_vfio_user_client.py b/tests/functional/x86_64/test_vfio_user_client.py
-> new file mode 100755
-> index 0000000000..a9cb2f4621
-> --- /dev/null
-> +++ b/tests/functional/x86_64/test_vfio_user_client.py
-> @@ -0,0 +1,207 @@
-
-
-> +    def prepare_images(self):
-> +        """Set up the images for the VMs."""
-> +        self.kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_ROOTFS.fetch()
+> +To be covered by this security support policy you must:
 > +
-> +        self.server_rootfs_path = self.scratch_file('server.ext2')
-> +        shutil.copy(rootfs_path, self.server_rootfs_path)
-> +        os.chmod(self.server_rootfs_path, 0o600)
-> +        self.client_rootfs_path = self.scratch_file('client.ext2')
-> +        shutil.copy(rootfs_path, self.client_rootfs_path)
-> +        os.chmod(self.client_rootfs_path, 0o600)
-
-So copying the read-only asset to a writable file in the scratchdir....
-
+> +- use a virtualization accelerator like KVM or HVF
+> +- use one of the machine types listed below
 > +
-> +    def configure_server_vm_args(self, server_vm, sock_path):
-> +        """
-> +        Configuration for the server VM. Set up virtio-serial device backed by
-> +        the given socket path.
-> +        """
-> +        server_vm.add_args('-kernel', self.kernel_path)
-> +        server_vm.add_args('-append', 'console=ttyS0 root=/dev/sda')
-> +        server_vm.add_args('-drive',
-> +            f"file={self.server_rootfs_path},if=ide,format=raw,id=drv0")
-> +        server_vm.add_args('-snapshot')
-
-..but here you're using -snapshot, so surely the copying of the asset
-into the scratch dir is not required ?
-
-> +        server_vm.add_args('-chardev',
-> +            f"socket,id=sock0,path={sock_path},telnet=off,server=on,wait=off")
-> +        server_vm.add_args('-device', 'virtio-serial')
-> +        server_vm.add_args('-device',
-> +            'virtserialport,chardev=sock0,name=org.fedoraproject.port.0')
+> +It may be possible to use other machine types with a virtualization
+> +accelerator to provide improved performance with a trusted guest
+> +workload, but any machine type not listed here should not be
+> +considered to be providing guest isolation or security guarantees,
+> +and falls under the "non-virtualization use case".
 > +
-> +    def configure_client_vm_args(self, client_vm, sock_path):
-> +        """
-> +        Configuration for the client VM. Point the vfio-user-pci device to the
-> +        socket path configured above.
-> +        """
+> +Supported machine types for the virtualization use case, by target architecture:
 > +
-> +        client_vm.add_args('-kernel', self.kernel_path)
-> +        client_vm.add_args('-append', 'console=ttyS0 root=/dev/sda')
-> +        client_vm.add_args('-drive',
-> +            f'file={self.client_rootfs_path},if=ide,format=raw,id=drv0')
-
-...but  no using of -snapshot here, so copying the asset would be
-required?
-
-Can we just use -snapshot in both cases & avoid the copying ?
-
-> +        client_vm.add_args('-device',
-> +            '{"driver":"vfio-user-pci",' +
-> +            '"socket":{"path": "%s", "type": "unix"}}' % sock_path)
+> +aarch64
+> +  ``virt``
+> +i386, x86_64
+> +  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``, ``isapc``
+> +s390x
+> +  ``s390-ccw-virtio``
+> +loongarch64:
+> +  ``virt``
+> +ppc, ppc64:
+> +  TODO
+> +mips, mips64:
+> +  TODO
+> +riscv32, riscv64:
+> +  TODO
 > +
-
-> +    def setup_vfio_user_pci_server(self, server_vm):
-> +        """
-> +        Start the libvfio-user server within the server VM, and arrange
-> +        for data to shuttle between its socket and the virtio serial port.
-> +        """
-> +        wait_for_console_pattern(self, 'login:', None, server_vm)
-> +        exec_command_and_wait_for_pattern(self, 'root', '#', None, server_vm)
-> +
-> +        exec_command_and_wait_for_pattern(self,
-> +            'gpio-pci-idio-16 -v /tmp/vfio-user.sock >/var/tmp/gpio.out 2>&1 &',
-> +            '#', None, server_vm)
-> +        # wait for libvfio-user to initialize properly
-> +        exec_command_and_wait_for_pattern(self, 'sleep 5', '#', None, server_vm)
-> +        exec_command_and_wait_for_pattern(self,
-> +            'socat UNIX-CONNECT:/tmp/vfio-user.sock /dev/vport0p1,ignoreeof ' +
-> +            ' &', '#', None, server_vm)
-
-Hardcoded socket paths in /tmp ...
-
-> +
-> +    def test_vfio_user_pci(self):
-> +        self.prepare_images()
-> +        self.set_machine('pc')
-> +        self.require_device('virtio-serial')
-> +        self.require_device('vfio-user-pci')
-> +
-> +        sock_dir = self.socket_dir()
-> +        socket_path = sock_dir.name + '/vfio-user.sock'
-> +        socket_path = '/tmp/vfio-user.sock'
-
-This isn't honouring the temporary dir for the socket files.
-This temp dir needs to be passed into setup_vfio_user_pci_server
-
-> +
-> +        server_vm = self.get_vm(name='server')
-> +        server_vm.set_console()
-> +        self.configure_server_vm_args(server_vm, socket_path)
-> +
-> +        server_vm.launch()
-> +
-> +        self.log.debug('starting libvfio-user server')
-> +
-> +        self.setup_vfio_user_pci_server(server_vm)
-> +
-> +        client_vm = self.get_vm(name="client")
-> +        client_vm.set_console()
-> +        self.configure_client_vm_args(client_vm, socket_path)
-> +
-> +        try:
-> +            client_vm.launch()
-> +        except:
-> +            self.log.error('client VM failed to start, dumping server logs')
-> +            exec_command_and_wait_for_pattern(self, 'cat /var/tmp/gpio.out',
-> +                '#', None, server_vm)
-> +            raise
-> +
-> +        self.log.debug('waiting for client VM boot')
-> +
-> +        wait_for_console_pattern(self, 'login:', None, client_vm)
-> +        exec_command_and_wait_for_pattern(self, 'root', '#', None, client_vm)
-> +
-> +        #
-> +        # Here, we'd like to actually interact with the gpio device a little
-> +        # more as described at:
-> +        #
-> +        # https://github.com/nutanix/libvfio-user/blob/master/docs/qemu.md
-> +        #
-> +        # Unfortunately, the buildroot Linux kernel has some undiagnosed issue
-> +        # so we don't get /sys/class/gpio. Nonetheless just the basic
-> +        # initialization and setup is enough for basic testing of vfio-user.
-> +        #
-> +
-> +        self.log.debug('collecting libvfio-user server output')
-> +
-> +        out = exec_command_and_wait_for_pattern(self,
-> +            'cat /var/tmp/gpio.out',
-> +            'gpio: region2: wrote 0 to (0x1:1)',
-> +            None, server_vm)
-> +
-> +        pattern = re.compile(r'^gpio:')
-
-Use of 're' is overkill here...
-
-> +
-> +        gpio_server_out = [s for s in out.decode().splitlines()
-> +                                   if pattern.search(s)]
-
-......  as this can just use s.startswith("gpio:")
-
-> +
-> +        for line in EXPECTED_SERVER_LINES:
-> +            if line not in gpio_server_out:
-> +                self.log.error(f'Missing server debug line: {line}')
-> +                self.fail(False)
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
+>  Non-virtualization Use Case
+>  '''''''''''''''''''''''''''
+>  
 > -- 
 > 2.43.0
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
