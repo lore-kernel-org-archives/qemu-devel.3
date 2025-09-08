@@ -4,103 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36789CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 19:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DA5CA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 20:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvhoj-0002jT-9o; Mon, 08 Sep 2025 15:46:21 -0400
+	id 1uvi3K-0001kw-Va; Mon, 08 Sep 2025 16:01:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
- id 1uvhoe-0002hz-E8; Mon, 08 Sep 2025 15:46:18 -0400
-Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uvi3H-0001jq-M5; Mon, 08 Sep 2025 16:01:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
- id 1uvhoY-0000cc-Se; Mon, 08 Sep 2025 15:46:16 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfout.stl.internal (Postfix) with ESMTP id 42CD71D00015;
- Mon,  8 Sep 2025 15:46:01 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Mon, 08 Sep 2025 15:46:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bsbernd.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1757360761;
- x=1757447161; bh=0j1MWwjUwfEbY+Ae+ca0MtYA+y6bx30gH2vZ5Vtlg9M=; b=
- F3YqIXzHxPv42ybvV1Lza/IEfk7LYBwz+ZJYcTTp6XMAXXK+V1u8fBbAmS2FMJT/
- W0BD8ou1QnUqANSqkYy6vfKGb/DC+TLgYvPm++bPMcyENY/s7rIJ/IXlRsA/G4gH
- YYbUxW6mWsb+TWNxYPhtJRwKyqURzHX//JQxuk4/VUm7po0aVbfMgIiLyIh7zG4z
- ZkSlIopnlI4sOiyrzbwLFfU2c434jTplCxqwp1ni0w2ZcZ/D6RJjU22HPo7Xq6ek
- LTFi4GP4fC5GMT8Ff/H+5+hSH9SdHTWI5RO8P9hpgMPZY0tpBqkFEuZC5o2dBRz+
- 0M2HYcSO3IqwFJm42Uu/cA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1757360761; x=
- 1757447161; bh=0j1MWwjUwfEbY+Ae+ca0MtYA+y6bx30gH2vZ5Vtlg9M=; b=c
- NI/Suoge6qLXuJ/avVoxWqFRbDfSzQ7knhfV3NfKQz36RnOsn60QIYzWRgl5NLo1
- 0nUZEuSKWIuXq/5NnHarj76Sp6u9M2yTFBk3uJhVx+c2L5OBtEyphoY/JUCILLRX
- AeUO7xjnsoGD8QY/9gyuyT2ofm1w1G7WGlLwF2ECNnl+NTHhleNGP86jycf4IeJg
- lEt14AKoe5AuzjYarWferAUbDOJSqzDzGKsxoLT0ROs3ufeAP0OBjLSSqc5nUHXm
- j9ERoZzATycqzB9JU6R+u8eIicX8kL1jBcLy8vlIVtUFcTeWLXYF5SKo2ngxCL+x
- 2oqTDR+OaUFfw0Zcb4tOg==
-X-ME-Sender: <xms:eDK_aBl8HwD8v0rwqdJAI426TltyS5lo_UVLOe34phKqvaDeURv4bQ>
- <xme:eDK_aEeozN-ckauokSL3dSPELbBlbmziNOqoVl2SBndmQH0iAXOHhh6LpDmODcX6e
- wSIssakj0rJo-0t>
-X-ME-Received: <xmr:eDK_aFRrMGvftz72w3mQdX8IFuoZczRotaahLy56f5uETrKKbpndWh2U7dm9NqBbVErr0z__goIs7tIkIjyInLJZsPTTSQvx1m7cKzZ7vPkLTATPxDJa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddukeegudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
- hrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeenucfhrhhomhepuegvrhhnugcu
- ufgthhhusggvrhhtuceosggvrhhnugessghssggvrhhnugdrtghomheqnecuggftrfgrth
- htvghrnheptdeuvdeuudeltddukefhueeludduieejvdevveevteduvdefuedvkeffjeel
- ueeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghrnhgusegsshgsvghrnhgurdgtohhm
- pdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehhih
- gsrhhirghnshhonhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtvghfrghnhhgr
- sehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnh
- hurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdp
- rhgtphhtthhopegrrhhmsghruhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmh
- esvghuphhhohhnrdhnvghtpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtgho
- mhdprhgtphhtthhopehkfiholhhfsehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:eDK_aLvoB4G64XfNQ1_NFYgjXfPiYU49IZ9ASPLi3EYaPi3-_g2szg>
- <xmx:eDK_aGc3wzbChTH8NQ1o90TnhmlNnLeKDRw22saguNbETuGv7T4Uuw>
- <xmx:eDK_aFavF0Lx0VgIqRoLqd4t4wnqKzK604thgLy6uPd36cYHAJRg4A>
- <xmx:eDK_aIbpnIO13UIZTXxP5Bbr8sxd2Vz3z9W4kUUnsXXqeqeeB4psYQ>
- <xmx:eTK_aPsp748E6Ti9UWXqjF50A8K9C-KjFj3BM_5fsoTpvKoWvxBYwwaX>
-Feedback-ID: i5c2e48a5:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Sep 2025 15:45:59 -0400 (EDT)
-Message-ID: <f6ca7bc4-604c-43c8-ab81-7ef14762d8a1@bsbernd.com>
-Date: Mon, 8 Sep 2025 21:45:58 +0200
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uvi3D-0006og-HU; Mon, 08 Sep 2025 16:01:23 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588I8You016992;
+ Mon, 8 Sep 2025 20:01:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=9eN1uAUhaI8f0Ht+HEdZOXleMnqXRj83pDKfxVzyd
+ T0=; b=n7MHN9wUWu+d6d9n07BRos2jufEnYLUHNzASWMAWUON+aCmLK5oGwzW1q
+ Klld4QAvw0WdlKJXJDUwzfFx7+4ucMtDf2G/mmQLI1QCsnlR5hXSAjs+qQZzN38z
+ YEItUxCs4qvlUf5csf15qP+nqCiqZu+14v5WGSFSJ+P2z1c5JmxVUXVeg2cbB+mA
+ 96Sit+9jM32lL5GH9SknP7Eb88tItD8nt9OJIc6xXsUDLH+U4nc3TnfRYF/0fq5X
+ WXGhdX5GF+ttlyWWrWXZTSOWFv3Axa54Xsd7vv3r7Vsbe9sJQUfUhbJgUZDJ7bTv
+ 2vF3q0LbX7zoeUQiaiHAjFbmrrkpQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cff3pww-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Sep 2025 20:01:12 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 588K0uhh003119;
+ Mon, 8 Sep 2025 20:01:11 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cff3pwu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Sep 2025 20:01:11 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 588G4htA020458;
+ Mon, 8 Sep 2025 20:01:10 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 490yp0quum-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Sep 2025 20:01:10 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 588K19n423921334
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 8 Sep 2025 20:01:09 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED2CB58059;
+ Mon,  8 Sep 2025 20:01:08 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A01958058;
+ Mon,  8 Sep 2025 20:01:08 +0000 (GMT)
+Received: from mglenn-KVM.. (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  8 Sep 2025 20:01:08 +0000 (GMT)
+From: Glenn Miles <milesg@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
+ npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
+ rathc@linux.ibm.com, richard.henderson@linaro.org
+Subject: [PATCH v3 0/9] Add IBM PPE42 CPU support
+Date: Mon,  8 Sep 2025 15:00:10 -0500
+Message-ID: <20250908200028.115789-1-milesg@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] export/fuse: process FUSE-over-io_uring requests
-To: Brian Song <hibriansong@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
-References: <20250830025025.3610-1-hibriansong@gmail.com>
- <20250830025025.3610-3-hibriansong@gmail.com>
- <20250903115108.GD106431@fedora>
- <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
-From: Bernd Schubert <bernd@bsbernd.com>
-Content-Language: en-US, de-DE, fr
-In-Reply-To: <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.146; envelope-from=bernd@bsbernd.com;
- helo=fout-b3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: n6igRwhXQspQH9IdJfA-9gq2BcqlX7-4
+X-Proofpoint-GUID: LPpUS5Zkqf4GLdLzLXW42M2_vYy_blQ0
+X-Authority-Analysis: v=2.4 cv=EYDIQOmC c=1 sm=1 tr=0 ts=68bf3608 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=yJojWOMRYYMA:10 a=jRLB2SoPAAAA:8 a=NEAV23lmAAAA:8 a=jdePcm41jcmF87SOckgA:9
+ a=yloqiLrygL2q3s9aD-8D:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyMCBTYWx0ZWRfXwIseKYyog3qM
+ K/N8XChaEDipMP5cvOqG+RsRfYRbQ4WCNfRnOLxP0V8zauDGLUyTbQOpmrppaWUl+Mph3JNct6m
+ PHjsc/dR3DrP1GoWsfoE3KHuCNUC+3dWPULTWN+HIwpAd/yEQUZ8xcvxAi14NLNJyu5rlq0wVfS
+ JAFr3660RUtaLunZgKF/Vpu7TvCwf8tYEHXSCmhZVtzrMCcV54slhyD/0gT7DjGI9v0jxhBjlNs
+ VGmuDMDX0JU3Z0Qpnej3hri9AqqLV5d740AkFE+qtGzIGAdSHfXO0/U7hF0SQHP/DstxrNstlCP
+ PF0srsQBBPvlXzOamP4+YeGDV2VMc5spSGnKt+JAaDKwhVCam+LmurWHiVX2u3vV+CYbIuojk91
+ KKrqy7f/
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_06,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060020
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,143 +122,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+v3:
+  - Split v2 patch 1 into smaller patches 1 through 5 (Cedric)
+  - Moved special PPE42 decrementer support into distinct patch (Cedric)
+  - Introduced a specific MachineState for the ppe42 Machine (Cedric)
+  - Use qdev_realize to create the machine (Cedric)
+  - Use valid_cpu_types to determine validity of CPU (Cedric)
+  - Changed machine ram limit from 2GB to 512KB (Cedric)
+  - Utilize the TRANS macro to reduce TCG code (Chinmay)
 
+This patchset adds support for the IBM PPE42 processor,
+including a simple machine providing a platform for
+testing the PPE42 instructions.
 
-On 9/8/25 21:09, Brian Song wrote:
-> 
-> 
-> On 9/3/25 7:51 AM, Stefan Hajnoczi wrote:
->> On Fri, Aug 29, 2025 at 10:50:23PM -0400, Brian Song wrote:
->>> https://docs.kernel.org/filesystems/fuse-io-uring.html
->>>
->>> As described in the kernel documentation, after FUSE-over-io_uring
->>> initialization and handshake, FUSE interacts with the kernel using
->>> SQE/CQE to send requests and receive responses. This corresponds to
->>> the "Sending requests with CQEs" section in the docs.
->>>
->>> This patch implements three key parts: registering the CQE handler
->>> (fuse_uring_cqe_handler), processing FUSE requests (fuse_uring_co_
->>> process_request), and sending response results (fuse_uring_send_
->>> response). It also merges the traditional /dev/fuse request handling
->>> with the FUSE-over-io_uring handling functions.
->>>
->>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
->>> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
->>> Signed-off-by: Brian Song <hibriansong@gmail.com>
->>> ---
->>>   block/export/fuse.c | 457 ++++++++++++++++++++++++++++++--------------
->>>   1 file changed, 309 insertions(+), 148 deletions(-)
->>>
->>> diff --git a/block/export/fuse.c b/block/export/fuse.c
->>> index 19bf9e5f74..07f74fc8ec 100644
->>> --- a/block/export/fuse.c
->>> +++ b/block/export/fuse.c
->>> @@ -310,6 +310,47 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
->>>   };
->>>   
->>>   #ifdef CONFIG_LINUX_IO_URING
->>> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent);
->>> +
->>> +static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaque)
->>
->> This function appears to handle exactly one cqe. A singular function
->> name would be clearer than a plural: co_fuse_uring_queue_handle_cqe().
->>
->>> +{
->>> +    FuseRingEnt *ent = opaque;
->>> +    FuseExport *exp = ent->rq->q->exp;
->>> +
->>> +    /* Going to process requests */
->>> +    fuse_inc_in_flight(exp);
->>
->> What is the rationale for taking a reference here? Normally something
->> already holds a reference (e.g. the request itself) and it will be
->> dropped somewhere inside a function we're about to call, but we still
->> need to access exp afterwards, so we temporarily take a reference.
->> Please document the specifics in a comment.
->>
->> I think blk_exp_ref()/blk_exp_unref() are appropriate instead of
->> fuse_inc_in_flight()/fuse_dec_in_flight() since we only need to hold
->> onto the export and don't care about drain behavior.
->>
-> 
-> Stefan:
-> 
-> When handling FUSE requests, we don’t want the FuseExport to be 
-> accidentally deleted. Therefore, we use fuse_inc_in_flight in the CQE 
-> handler to increment the in_flight counter, and when a request is 
-> completed, we call fuse_dec_in_flight to decrement it. Once the last 
-> request has been processed, fuse_dec_in_flight brings the in_flight 
-> counter down to 0, indicating that the export can safely be deleted. The 
-> usage of in_flight follows the same logic as in traditional FUSE request 
-> handling.
-> 
-> Since submitted SQEs for FUSE cannot be canceled, once we register or 
-> commit them we must wait for the kernel to return a CQE. Otherwise, the 
-> kernel may deliver a CQE and invoke its handler after the export has 
-> already been deleted. For this reason, we directly call blk_exp_ref and 
-> blk_exp_unref when submitting an SQE and when receiving its CQE, to 
-> explicitly control the export reference and prevent accidental deletion.
-> 
-> The doc/comment for co_fuse_uring_queue_handle_cqe:
-> 
-> Protect FuseExport from premature deletion while handling FUSE requests. 
-> CQE handlers inc/dec the in_flight counter; when it reaches 0, the 
-> export can be freed. This follows the same logic as traditional FUSE.
-> 
-> Since FUSE SQEs cannot be canceled, a CQE may arrive after commit even 
-> if the export is deleted. To prevent this, we ref/unref the export 
-> explicitly at SQE submission and CQE completion.
-> 
->>> +
->>> +    /* A ring entry returned */
->>> +    fuse_uring_co_process_request(ent);
->>> +
->>> +    /* Finished processing requests */
->>> +    fuse_dec_in_flight(exp);
->>> +}
->>> +
->>> +static void fuse_uring_cqe_handler(CqeHandler *cqe_handler)
->>> +{
->>> +    FuseRingEnt *ent = container_of(cqe_handler, FuseRingEnt, fuse_cqe_handler);
->>> +    Coroutine *co;
->>> +    FuseExport *exp = ent->rq->q->exp;
->>> +
->>> +    if (unlikely(exp->halted)) {
->>> +        return;
->>> +    }
->>> +
->>> +    int err = cqe_handler->cqe.res;
->>> +
->>> +    if (err != 0) {
->>> +        /* -ENOTCONN is ok on umount  */
->>> +        if (err != -EINTR && err != -EAGAIN &&
->>> +            err != -ENOTCONN) {
->>> +            fuse_export_halt(exp);
->>> +        }
->>
->> How are EINTR and EAGAIN handled if they are silently ignored? When did
->> you encounter these error codes?
-> 
-> Bernd:
-> 
-> I have the same question about this. As for how the kernel returns 
-> errors, I haven’t studied each case yet. In libfuse it’s implemented the 
-> same way, could you briefly explain why we choose to ignore these two 
-> errors, and under what circumstances we might encounter them?
+The PPE42 processor is used as an embedded processor in
+the IBM Power9, Power10 and Power12 processors for various
+tasks.  It is basically a stripped down version of the
+IBM PowerPC 405 processor, with some added instructions
+for handling 64-bit loads and stores and some 64-bit
+logical operations.
+    
+For more information on the PPE 42 processor please visit:
+    
+https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
 
+A functional test is included.  This test downloads a
+prebuilt test image from:
 
-I think I remember why I had added these. Initially the ring threads
-didn't inherit the signal handlers libfuse worker threads have. I had
-fixed that later and these error conditions are a left over.
-In libfuse idea is that the main thread gets all signals and then sets
-se->exited - worker thread, include ring threads are not supposed to get
-or handle signals at all, but have to monitor se->exited.
+https://github.com/milesg-github/ppe42-tests
 
-Good catch Stefan, I think I can remove these conditions in libfuse.
+Building the image rquires a forked version of an old
+version of GCC, which can be found here:
 
+https://github.com/open-power/ppe42-gcc
 
 Thanks,
-Bernd
+
+Glenn
+
+
+Glenn Miles (9):
+  target/ppc: IBM PPE42 general regs and flags
+  target/ppc: Add IBM PPE42 family of processors
+  target/ppc: IBM PPE42 exception flags and regs
+  target/ppc: Add IBM PPE42 exception model
+  target/ppc: Support for IBM PPE42 MMU
+  target/ppc: Add IBM PPE42 special instructions
+  hw/ppc: Support for an IBM PPE42 CPU decrementer
+  hw/ppc: Add a test machine for the IBM PPE42 CPU
+  tests/functional: Add test for IBM PPE42 instructions
+
+ MAINTAINERS                         |   7 +
+ hw/ppc/Kconfig                      |   9 +
+ hw/ppc/meson.build                  |   2 +
+ hw/ppc/ppc_booke.c                  |   7 +-
+ hw/ppc/ppe42_machine.c              | 102 +++++
+ include/hw/ppc/ppc.h                |   1 +
+ target/ppc/cpu-models.c             |   7 +
+ target/ppc/cpu-models.h             |   4 +
+ target/ppc/cpu.h                    |  76 +++-
+ target/ppc/cpu_init.c               | 241 ++++++++--
+ target/ppc/excp_helper.c            | 163 +++++++
+ target/ppc/helper_regs.c            |  45 +-
+ target/ppc/insn32.decode            |  66 ++-
+ target/ppc/tcg-excp_helper.c        |  12 +
+ target/ppc/translate.c              |  35 +-
+ target/ppc/translate/ppe-impl.c.inc | 663 ++++++++++++++++++++++++++++
+ tests/functional/meson.build        |   1 +
+ tests/functional/test_ppc_ppe42.py  |  79 ++++
+ 18 files changed, 1453 insertions(+), 67 deletions(-)
+ create mode 100644 hw/ppc/ppe42_machine.c
+ create mode 100644 target/ppc/translate/ppe-impl.c.inc
+ create mode 100644 tests/functional/test_ppc_ppe42.py
+
+-- 
+2.43.0
 
 
