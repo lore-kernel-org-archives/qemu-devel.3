@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C88FCAC582
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA8FCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 17:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvfVu-0006KK-AI; Mon, 08 Sep 2025 13:18:50 -0400
+	id 1uvfrH-0006f8-2j; Mon, 08 Sep 2025 13:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1uvfVK-0006CP-1v
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:18:18 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1uvfV8-0005YE-CY
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:18:07 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-55f6b77c91fso12118e87.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 10:17:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1757351870; x=1757956670; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7q0yPHx8a6HFJU4nt+BsB9LXwZLZMRDFnEKXGOuW82Y=;
- b=O9lTT+28vsjhfPYON8k/NLMbVANnGGwXWGWZmcb7eD8/fvTOzpDPt7JMuYcvXXCJNV
- g+i9E2N3eb1zZUYimKhKHPJyDG2G9Jg9//bvhlbmG96uKdjU46QDgpr6rWyQCy7sLL15
- PRHUVZ9hIkFhKMo1XGCPpf6arutAtbsY5o4sCjkbAdVCTQkyws5vGmpuimP5N+t3kG4w
- eUjYwrcKC7l0Clw/5hNE31PA6etIwKFuOCADryuLBJpXmOemI1OxYj7GJzPCjUwXYQvT
- 6C1UYaOOkIX4403abzGqltPcmaLy9L5Peund8P+hCo/PaCOA1xLOa/z+WkYq2aXtqxR2
- jBmA==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uvfqz-0006ca-Oj
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:40:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uvfqo-0000mO-R9
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 13:40:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757353213;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rOS6ywG29J6dgRWaRK7FXo8q4BFXpPL8Q04JQDooHiA=;
+ b=UizJqQs3yZoHvIX/Y7Vte24daNgXmJoSjdJ5roz2700KgmpjEX8MYGD7ao6eVuP/yBjHni
+ K/aYvE9e000QigzNOnM/eem1F8B2YcCprKdRefXG+RSoJYzzvMwnaHB6q0AWkCZW4OZ7s3
+ qLrdExIMUmQLY4lRo3eHTQILbEp6yDA=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-9dqZ0WqyM0CsmT46pYuAoQ-1; Mon, 08 Sep 2025 13:40:11 -0400
+X-MC-Unique: 9dqZ0WqyM0CsmT46pYuAoQ-1
+X-Mimecast-MFC-AGG-ID: 9dqZ0WqyM0CsmT46pYuAoQ_1757353211
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-32bdfd536aeso2634485a91.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 10:40:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757351870; x=1757956670;
+ d=1e100.net; s=20230601; t=1757353210; x=1757958010;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7q0yPHx8a6HFJU4nt+BsB9LXwZLZMRDFnEKXGOuW82Y=;
- b=tSLC3XKmLIxo8ffDLeJKmYvvE0TsmQIGnhfgCYlqMf1e8Adn1ZtNFmcgotej3a6X90
- gDnFc2/094QUiu2M9xcLph4vRRZTpGhxxz24Pmb+dAQXjajvAbhgCnTFdA/Lb7ejv3WZ
- K5hwqjvNalanSYJ2qE8kefnJ6s44HzhC1zjGTBKHxWq5hFix99HfgDKjiNAxCWL0Z+mR
- LF1tULaPOotLk/3FVUjTjX619ojHUeoGLlOS5J3hJBQOgzJX49cqrVZjoai+O68PNhOm
- /UaWn/LVNWLv3ub745w3Oo5TCvWgl5BxHFdsZCRw1BHhREPiDI4AXKDm8V/1GGexECda
- 0cnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2guwm0V38JHxZcQ/0eaRX14RESnab0+E2P8xv8qAEIkbE+yVDcYVdm78eBmt5wzI6xaUdJ0y5BPHR@nongnu.org
-X-Gm-Message-State: AOJu0YxkE+H8Hwyj0RWkXJatGS45z7BzrnZo/n9ZwcSJ17/Bsntkq4/e
- 5MqyYf/FI4A7TwBgYHT5h1OH7yG2caSMChfT6r7R47X2L77vuoJbfclA3mhjtrv8XWvJgwrCuSn
- IrYxTI+vKKKch5vbAI54PLNNZOpLXNi2PUhEESGdg
-X-Gm-Gg: ASbGncsjEG9IZ614wRAFetmeBR901GpF5VhuRv+Azj8DLQJu3fc2LY2/zMK58cbj7Ui
- pA0zaHl82lQb+QWFpZKyHT/+bcyO9nvPxbcXgUn+OWb8WkWalEblSuEDkoxqiIzM5JykzDRetSa
- eHJY2T3zf/EYVkUguUl2s9cv23oGCk4m5qafHhVNgaCtQLIs7ZO0zT4VoyYaLHvCjz1+GShLNah
- CpCns5pRf6GXLEJz4/UzXZEWrAk/4d8eSn4irRmPQRw7RNPuPAq+6g=
-X-Google-Smtp-Source: AGHT+IGa1707ngqK8lE0HOddagXrOexADGlagDzoDWyTnxeGOw0lkb3mCFN2ZjuyNJCstqJQCUJGuAxr1yU6bK6KH+M=
-X-Received: by 2002:a05:6512:2394:b0:542:6b39:1d57 with SMTP id
- 2adb3069b0e04-56271a9f22emr393921e87.3.1757351869665; Mon, 08 Sep 2025
- 10:17:49 -0700 (PDT)
+ bh=rOS6ywG29J6dgRWaRK7FXo8q4BFXpPL8Q04JQDooHiA=;
+ b=TWHhhSoYLXh7F7VkHP6ZR3MOKO85dG+BhT5vAcBlQwm0f6OJpnMz8MfTavRcLIYzzN
+ hKE2t08ze00XiZtIKvovKnNjvMvzzaEV7Y4MVmy9Yxt0PCN9Z0XuORsXTyI20nMyqBHs
+ czAakLoNyxjWHcNukBzrc2f82pZVztdBnUcyCdGT7VeKFFtLtvOrGDt4dBcv0+LaGqB4
+ xrTRXqhUhBN/3RRNP3Q9VNxXX5FkGKAOOw5IYmrei4n8ujOm/5mkDNhwGkWC/uitrr0p
+ MpjRpwdwEQAORQR2zXQocwGOpn24jJwTYdEOtMYVooymX8LnE61MwT+oi3CtLPc2EEmC
+ I18Q==
+X-Gm-Message-State: AOJu0YxockqZzzHLkpe4qdJlJZ+5yFR0qkHG2RzX7XZ7/6xo9YnON0sz
+ 69y9MPAAPtBKPDTCiYaY398TrANWLv3cmYQXf3NZPnVczGgOQE6fhffCH7FVL9f8innvrWk3gmN
+ 1PAXTFv3b9+2XNQIsaWTtMZhHWosMurjBQfd4+i0ESG1WGU3PcA0QQ7uL1mTPZxa3tVbaYzRvfG
+ dgEJgEwPWoJeulMmnxSE/4jKRbuX5zfDs=
+X-Gm-Gg: ASbGncvvCylmo8jfLDygH1nUc138VPDh7GPbtE2e2raAk0ONUZm2N9E/Gs0iKou2yAS
+ gudiynVb2ddUpeMAS/nyefvY2k0oMWhtE3wbTmaoTyP6eix+MBJIUrrGcGc68GYKvDapxWwpoND
+ UHPz6NmAaJx/cviFZtRXPAmCqB51zDMnWtwwrTzujiK9+4QTeGhG+r
+X-Received: by 2002:a17:90b:3d8f:b0:314:2cd2:595d with SMTP id
+ 98e67ed59e1d1-32d4504c45fmr10669057a91.8.1757353210537; 
+ Mon, 08 Sep 2025 10:40:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7HKwGcu7wCYuFWaxtB5Gqqi236DWbwnqFvqkyvJeyGcyuiiUR/P5rdLUmK4YPD9yZwF2qzHS3EAMROX1g38A=
+X-Received: by 2002:a17:90b:3d8f:b0:314:2cd2:595d with SMTP id
+ 98e67ed59e1d1-32d4504c45fmr10669029a91.8.1757353209915; Mon, 08 Sep 2025
+ 10:40:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250828184939.3140841-1-bhillier@google.com>
- <484d2580-77fc-4fdf-8f02-ef25df08bb7c@linaro.org>
-In-Reply-To: <484d2580-77fc-4fdf-8f02-ef25df08bb7c@linaro.org>
-From: Titus Rwantare <titusr@google.com>
-Date: Mon, 8 Sep 2025 10:17:12 -0700
-X-Gm-Features: Ac12FXw3NIYUuW1rXVqO3k36XnEvFYykUNHccJNNZR9NAmx-0sn8CfeyoGXC6XI
-Message-ID: <CAMvPwGpjs1HkOCJU3AEyFj+sGepU8q7xynJKT6FryDe5-DnpsA@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/sensor: add stub for ADM1266 blackbox
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Ben Hillier <bhillier@google.com>, wuhaotsh@google.com, kfting@nuvoton.com,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20250903051125.3020805-1-jsnow@redhat.com>
+ <20250903051125.3020805-7-jsnow@redhat.com>
+ <aL8IsV55wwhSxSeu@redhat.com>
+In-Reply-To: <aL8IsV55wwhSxSeu@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 8 Sep 2025 13:39:58 -0400
+X-Gm-Features: Ac12FXz6iHgQfQjFpaR4vP-sSiNkQmd4xbObWgRPEdKLgcZnzZB3sl8w6OV_slc
+Message-ID: <CAFn=p-aTVUng3s7zU1Kpy4-jCsrXkKAbVPKw-ZACKmvL1Sy0eA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/18] python: backport 'qmp-shell: add common_parser()'
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Cleber Rosa <crosa@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=titusr@google.com; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,110 +104,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Aug 2025 at 09:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Mon, Sep 8, 2025 at 12:47=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> Hi Titus,
+> On Wed, Sep 03, 2025 at 01:11:12AM -0400, John Snow wrote:
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > cherry picked from commit 20a88c2471f37d10520b2409046d59e1d0f1e905
+> > Signed-off-by: John Snow <jsnow@redhat.com>
 >
-> On 28/8/25 20:49, Ben Hillier wrote:
-> > From: Titus Rwantare <titusr@google.com>
-> >
-> > This patch fixes a bug that causes a kernel panic when calling ADM1266_=
-BLACKBOX_INFORMATION.
->
-> But you also implement BLACKBOX_CONFIG / READ_BLACKBOX...
->
-> > Log Message:
-> >
-> > adm1266 5-0042: Could not read blackbox!
-> > Kernel panic - not syncing: stack-protector: Kernel stack is corrupted =
-in: adm1266_nvmem_read+0x168/0x170
-> >
-> > Signed-off-by: Titus Rwantare <titusr@google.com>
-> > ---
-> >   hw/sensor/adm1266.c | 15 +++++++++++++++
-> >   1 file changed, 15 insertions(+)
-> >
-> > diff --git a/hw/sensor/adm1266.c b/hw/sensor/adm1266.c
-> > index 9017ce6116..cd11526c2b 100644
-> > --- a/hw/sensor/adm1266.c
-> > +++ b/hw/sensor/adm1266.c
-> > @@ -75,6 +75,7 @@ typedef struct ADM1266State {
-> >   static const uint8_t adm1266_ic_device_id[] =3D {0x03, 0x41, 0x12, 0x=
-66};
-> >   static const uint8_t adm1266_ic_device_rev[] =3D {0x08, 0x01, 0x08, 0=
-x07, 0x0,
-> >                                                   0x0, 0x07, 0x41, 0x30=
-};
-> > +static const uint8_t adm1266_blackbox_info[] =3D {0x04, 0x00, 0x00, 0x=
-00, 0x00};
->    {
->      0x04,       /* length */
->      0x00, 0x00, /* latest ID */
->      0x00,       /* latest record logic index */
->      0x00        /* latest record count */
->    };
->
-> >
-> >   static void adm1266_exit_reset(Object *obj, ResetType type)
-> >   {
-> > @@ -125,6 +126,17 @@ static uint8_t adm1266_read_byte(PMBusDevice *pmde=
-v)
-> >           pmbus_send(pmdev, adm1266_ic_device_rev, sizeof(adm1266_ic_de=
-vice_rev));
-> >           break;
-> >
-> > +    case ADM1266_BLACKBOX_CONFIG:
-> > +        return 0;
->
-> I'd was expecting pmbus_send(pmdev, "\0\0", 2) for CYCLIC_RECORD_DISABLED=
-.
->
-> > +
-> > +    case ADM1266_READ_BLACKBOX:
->
-> Here I'm confused, as len+data is 65bytes. Is the guest
-> reading a stream of 0xff?
->
-> > +        return 0;
-> > +
-> > +    case ADM1266_BLACKBOX_INFORMATION:
-> > +        pmbus_send(pmdev, adm1266_blackbox_info,
-> > +                   sizeof(adm1266_blackbox_info));
-> > +        break;
->
-> OK.
->
-> >       default:
-> >           qemu_log_mask(LOG_UNIMP,
-> >                         "%s: reading from unimplemented register: 0x%02=
-x\n",
-> > @@ -154,6 +166,9 @@ static int adm1266_write_data(PMBusDevice *pmdev, c=
-onst uint8_t *buf,
-> >           pmbus_receive_block(pmdev, (uint8_t *)s->mfr_rev, sizeof(s->m=
-fr_rev));
-> >           break;
-> >
-> > +    case ADM1266_BLACKBOX_CONFIG:
-> Do we want to check, if lduw_p(buf) !=3D 0 -> log(UNIMP)?
->
-> > +    case ADM1266_READ_BLACKBOX:
->
-> Do we want to check, if (buf[0] !=3D 1) -> log(GUEST_ERROR),
-> and log(UNIMP) regardless?
->
-> > +    case ADM1266_BLACKBOX_INFORMATION:
->
->             log(GUEST_ERROR);
->
-> >       case ADM1266_SET_RTC:   /* do nothing */
-> >           break;
-> >
-> Regards,
->
-> Phil.
+> Duplicate s-o-b
 
-Thanks for the feedback, I wound up implementing more of the blackbox
-and implementing a test for it.
--Titus
+One is from the original commit, the other is from the backport.
+Wasn't sure if that was truly needed, but figured it wouldn't hurt
+anything.
+
+>
+> > ---
+> >  python/qemu/qmp/qmp_shell.py | 35 ++++++++++++++++-------------------
+> >  1 file changed, 16 insertions(+), 19 deletions(-)
+>
+> Wierdly the diffstat when I looked qmp_shell.py is very different
+> from what your patch here shows, but the end result appears the
+> same. Perhaps one of us has different settings for $HOME/.gitconfig
+> that affects diff display
+
+Possible. I didn't exactly take care to preserve the commits
+themselves exactly as they were ...
+
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> >
+> > diff --git a/python/qemu/qmp/qmp_shell.py b/python/qemu/qmp/qmp_shell.p=
+y
+> > index 98e684e9e8a..02028e94b5a 100644
+> > --- a/python/qemu/qmp/qmp_shell.py
+> > +++ b/python/qemu/qmp/qmp_shell.py
+> > @@ -514,21 +514,27 @@ def die(msg: str) -> NoReturn:
+> >      sys.exit(1)
+> >
+> >
+> > +def common_parser() -> argparse.ArgumentParser:
+> > +    """Build common parsing options used by qmp-shell and qmp-shell-wr=
+ap."""
+> > +    parser =3D argparse.ArgumentParser()
+> > +    parser.add_argument('-H', '--hmp', action=3D'store_true',
+> > +                        help=3D'Use HMP interface')
+> > +    parser.add_argument('-v', '--verbose', action=3D'store_true',
+> > +                        help=3D'Verbose (echo commands sent and receiv=
+ed)')
+> > +    parser.add_argument('-p', '--pretty', action=3D'store_true',
+> > +                        help=3D'Pretty-print JSON')
+> > +    parser.add_argument('-l', '--logfile',
+> > +                        help=3D'Save log of all QMP messages to PATH')
+> > +    return parser
+> > +
+> > +
+> >  def main() -> None:
+> >      """
+> >      qmp-shell entry point: parse command line arguments and start the =
+REPL.
+> >      """
+> > -    parser =3D argparse.ArgumentParser()
+> > -    parser.add_argument('-H', '--hmp', action=3D'store_true',
+> > -                        help=3D'Use HMP interface')
+> > +    parser =3D common_parser()
+> >      parser.add_argument('-N', '--skip-negotiation', action=3D'store_tr=
+ue',
+> >                          help=3D'Skip negotiate (for qemu-ga)')
+> > -    parser.add_argument('-v', '--verbose', action=3D'store_true',
+> > -                        help=3D'Verbose (echo commands sent and receiv=
+ed)')
+> > -    parser.add_argument('-p', '--pretty', action=3D'store_true',
+> > -                        help=3D'Pretty-print JSON')
+> > -    parser.add_argument('-l', '--logfile',
+> > -                        help=3D'Save log of all QMP messages to PATH')
+> >
+> >      default_server =3D os.environ.get('QMP_SOCKET')
+> >      parser.add_argument('qmp_server', action=3D'store',
+> > @@ -564,16 +570,7 @@ def main_wrap() -> None:
+> >      qmp-shell-wrap entry point: parse command line arguments and
+> >      start the REPL.
+> >      """
+> > -    parser =3D argparse.ArgumentParser()
+> > -    parser.add_argument('-H', '--hmp', action=3D'store_true',
+> > -                        help=3D'Use HMP interface')
+> > -    parser.add_argument('-v', '--verbose', action=3D'store_true',
+> > -                        help=3D'Verbose (echo commands sent and receiv=
+ed)')
+> > -    parser.add_argument('-p', '--pretty', action=3D'store_true',
+> > -                        help=3D'Pretty-print JSON')
+> > -    parser.add_argument('-l', '--logfile',
+> > -                        help=3D'Save log of all QMP messages to PATH')
+> > -
+> > +    parser =3D common_parser()
+> >      parser.add_argument('command', nargs=3Dargparse.REMAINDER,
+> >                          help=3D'QEMU command line to invoke')
+> >
+> > --
+> > 2.50.1
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+
 
