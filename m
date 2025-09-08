@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AC2CA1016
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208E0CAC585
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 18:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvgc6-00082p-Qo; Mon, 08 Sep 2025 14:29:14 -0400
+	id 1uvgc9-00083V-Sy; Mon, 08 Sep 2025 14:29:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1uvgbw-0007zo-HP
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 14:29:10 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1uvgbs-0007zP-OM
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 14:29:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1uvgbg-0001As-3C
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 14:29:02 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588H8QQX012487
- for <qemu-devel@nongnu.org>; Mon, 8 Sep 2025 18:28:39 GMT
+ id 1uvgbe-0001Am-8v
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 14:28:56 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588HFG26002914
+ for <qemu-devel@nongnu.org>; Mon, 8 Sep 2025 18:28:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=hYcRMIyLWQv
- lXfcTsmqq0jOfVzmmK99eaBq5EKBXMsg=; b=hijIuGx9tP+JirEsEZ7WOiRQ8k4
- yh8xAfcfybS1rWwoxak4aGE9qCfcCYVR9z8yfdfuc/6Pj1dFE1L2IzBMOeS+sN6r
- RAweA8k7NvwYISgyg3G5w3E4F0TZWzTXT2uhkDr1GbJU7fOfytZ0gud+Pn+Ay9OL
- iIc5wygJgx+0CfXEorp+oAfKJ+hpio4NRf2HlYnR8S7+7t5VA3P8AyPK6u2ZsV9D
- yafqE7Z+iaZDHRfuzKzWWMRsEj6VO9DDxP3JrFLmNEODgr3iNprQKctFRWpNSinC
- 7zYELPVqYTGavo2OxfS+ktjSPvZQhSR9VaVOqIO+qRm0y/rzfYsJi4U502A==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490by8wpph-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=3EI9SOU6kdd6tgzMd/gX2Y
+ zpwNShR+7fPBOkmdAZVfw=; b=Pdj5IbHNLhX9MpvJ/EWnucvI/gz3sSnjIyujHY
+ p2P8NM/JDMQ4yzV1nxpzzHu8lNlBCLkBTmBUs/zMGxn1iD+pesGkelDvBuiEEmSV
+ ZZs29as9n2PZj/NOVHyOslKabcQxRHFHRoJqU/jS70ZL5m00TPtCrRfKg10G4YDJ
+ wvde43c8G1Zm9bUg1Hn0Af3DOcwkZrrzdXaJwDpgcrTK6TV+kgc2BXfhwGBfIgpl
+ 7nNWCTAIXSC76rLgD0juNgay9nUKUjQ3ER0IRLKKt40LuXUXTQ6ieXCJAK1KmgY7
+ R1wDuJm2Q626ta3LOZH+G0Hy669+wvthNYTaVcuEI05hKUiA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e4kwfv5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 18:28:39 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-b47630f9aa7so3786815a12.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 11:28:38 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 18:28:37 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-774209f46dcso2978286b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 11:28:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757356118; x=1757960918;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hYcRMIyLWQvlXfcTsmqq0jOfVzmmK99eaBq5EKBXMsg=;
- b=w4rhOicOZ+gEwpLBoTnKO4ZBNQQMcNCvz2pOot7zDtd5wEqyG9Jpk6IynX8DFuxZfC
- JzERXkOle6My0xvgN0d5NVEaWBimbO4JaBI0kqrbc8JnSBomKQLH4dRblOxL32kmOCjR
- GqIaPngIZG+OVZ9k5mOnV3ZQg3fSJhZxmtCk0NoZhUpslFuTDaOMe8OtzMM7T0J0GveZ
- YLL/gqR0tEH2f1W9UYvGUYTRdAyWfV+QMweNbOQ9lBhMP1odHWTsAcoDCrmHjIB1aOVJ
- jT7ZTpbHnhJ2T7f6DOxqtfupva29s6a1TdrY1BT/QkBNLW/N/noXV0vshymDJDn4SgGs
- T74g==
-X-Gm-Message-State: AOJu0Yx11+MloZnKgt65F2QPefLx9/6p8PGYPlSJFwZxYAOv8m/ZZWtQ
- 5oBVSGtg0QExqKd+Uon+t+LBiyY5wKZ2AZUvMCiTOItn5x3DQO2j2yXiP5thK451+Yp9Se9wXh3
- WTcnl2ri2l6IG088hSbRnmCV2TKc7xTvAmYymqKjcI0I2ktdCud3eIqxYioankOIWH+PF
-X-Gm-Gg: ASbGncvQdoUQHDVs10a/cjwttrpNUcxWCB+3oZbfyt3znPL81ZlULC0vTaXuqIoj1ju
- 3qgUi0AStfbO3wi+DGpEZiEyv8QEOMeJ0d/HiZe/TT+xlsn0LQhMPD1wnJbH9sA6DPvn5zc5Gbp
- AmOOoe9B0nLmjXP/4PP176HagKPmAxwZEUcJ/kdmHlC7HRIbcV3YK/X2uAyRz3wFPyqpLnwlquG
- ZTV00wjaqIj7f+Kclh5zmHjxcQW59+AJpgCcke8bHB8kEc/TWvZrnE6uQMF3RcTapkLdFtB69XW
- I3qaZrcm0R1eYjdCPPPf2JWcGWIYAqcIy6zJsIaf23XJNwSXx5zC7z6BdTPIBQQjZlsjcKaWUsB
- BxoDvhGRsDJKFDtU=
-X-Received: by 2002:a17:90b:48cc:b0:32b:d79e:58ac with SMTP id
- 98e67ed59e1d1-32d43f70faemr11329227a91.31.1757356117389; 
- Mon, 08 Sep 2025 11:28:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0tXNFx/lYlzA94gjiwydyD5BAk071KUchH4SJmXhdh+jUXu3XSmD3OX4wbFdpN4TydNnuZQ==
-X-Received: by 2002:a17:90b:48cc:b0:32b:d79e:58ac with SMTP id
- 98e67ed59e1d1-32d43f70faemr11329197a91.31.1757356116862; 
+ d=1e100.net; s=20230601; t=1757356116; x=1757960916;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3EI9SOU6kdd6tgzMd/gX2YzpwNShR+7fPBOkmdAZVfw=;
+ b=qk8DkcSb8N3cSfk4uB62i/sl+x0PUMmzHQz4MA7jNB4Z9vWBI3RqUrcNuW9g14SSlN
+ FWM5/FYBtt7g+G/hJQiTiIWnsW6X6GvmJalMFcbYVsXe3ELTUXRfGmhuWj5cKALqHcvN
+ XNvrSSstYg58flGHUdDpp5FS5YeehgLTz1MzhYzpR7Qc5HbPTXleXVfRupk4NXeXV22p
+ 8p3PqeaCi6G8GGlhmoVZRMAeBfabaBk/Q7ejM/iv8OECbIP+zB3R+nJU2UE05TmmuGd9
+ DcY6WpufBF5v8JUt1/LIF904424be46YEmFX+S5yIMG7e2fZGIOW5WWifFp6aSaiXuVE
+ ZMew==
+X-Gm-Message-State: AOJu0YyipA0B3YIOnaFBIzlJMQ9vzfkL+gv8V+HdyIWJYF7rNC63A5pY
+ 3qcP1LhuCeUnGyUf+BU39HDLModAGmlqtGrLme3VchYgE57Y3aj9/cP6quFi0R2JHPM0zu+PhO0
+ qywUJEEyhEWfiEQFAulDzSCuRk8TbIpkeEMcKAcDKVNGfhxDx1FtkkzE0e79/vnlWUnkJ
+X-Gm-Gg: ASbGncv2BQdeefy8cM/dd4J8qpxk9gxYieX0VlO9JjQ76BA3BWk/YQoiEggtTr3XnjQ
+ VHW0zSbh9xpKdglKCDbQHrSWtQoqUAhoC9HiCiA6PTtWzfiXQ8hHTFbMh6mUqNwwWnXgrb7YuTm
+ tF5KDzrgaLYda7gEx/FQY9+SMcII+LRnViMPJ8gcbap/Fy6+I4KjohOz7Nhbd5COqBIElMUfTys
+ 41e+w3CvNwwRkXPwpO4yo+aawrJEc9oDZc2PqyYIM+Z3hnIcle530jeWR+LosV4SmsvEOi/mtEK
+ l/0WwtxFZHYxv54vSZ35tgqkdFh9Jv0DS+dVSbH/y1Km6+BUOU0IOKFRRDVTZ8M3EttFmhPpYM0
+ xlHjM9Th1PJq+ux8=
+X-Received: by 2002:a05:6a21:6d8a:b0:250:f80d:b34b with SMTP id
+ adf61e73a8af0-25335a8eee5mr13716403637.0.1757356116322; 
  Mon, 08 Sep 2025 11:28:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfO6hEYX1Ke3SCk0TYEZjbxRKZ5qDRbfqV5CHIQoiQ0X8RDepVKeuD8ZWA14cVeWjbq1MxKQ==
+X-Received: by 2002:a05:6a21:6d8a:b0:250:f80d:b34b with SMTP id
+ adf61e73a8af0-25335a8eee5mr13716362637.0.1757356115863; 
+ Mon, 08 Sep 2025 11:28:35 -0700 (PDT)
 Received: from admin15.qualcomm.com (i-global254.qualcomm.com.
  [199.106.103.254]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4f9c35f391sm15480164a12.25.2025.09.08.11.28.36
+ 41be03b00d2f7-b4f9c35f391sm15480164a12.25.2025.09.08.11.28.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 11:28:36 -0700 (PDT)
+ Mon, 08 Sep 2025 11:28:35 -0700 (PDT)
 From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -81,47 +81,44 @@ Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Subject: [PATCH v7 1/3] target/arm: Increase MAX_PACKET_LENGTH for SME ZA
- remote gdb debugging
-Date: Mon,  8 Sep 2025 18:28:32 +0000
-Message-Id: <20250908182834.2476277-2-vacha.bhavsar@oss.qualcomm.com>
+Subject: [PATCH v7 0/3] target/arm: Added support for SME register exposure to
+ GDB
+Date: Mon,  8 Sep 2025 18:28:31 +0000
+Message-Id: <20250908182834.2476277-1-vacha.bhavsar@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250908182834.2476277-1-vacha.bhavsar@oss.qualcomm.com>
-References: <20250908182834.2476277-1-vacha.bhavsar@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Yv8PR5YX c=1 sm=1 tr=0 ts=68bf2057 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=yJojWOMRYYMA:10 a=CCpqsmhAAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=XJBTR8SIO4LSYOdVysIA:9 a=_Vgx9l1VpLgwpw_dHYaR:22 a=ul9cdbp4aOFLsgKbc677:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: WEoxvGcAU1vsK2wa-JBGA6BRe6-ODnM6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxOCBTYWx0ZWRfXwR1GDdeo8l7+
- aOcHfFYgkbBfasc7w3uRjyF+/re6xkHNYEQ0UW3MlYiSVEtELd0zptg+1eh3AAIz9AyFW+FDzhT
- sNvKBJfNaURdh81yj9dNX2OrhSlHI3yCLYSOqFuBncaiB/mJUelvY///5x3himkS+yH/oAXbqBt
- Q2mn1OVT1cYmBFVVF9lmT0xLGqR2qNhtF/cA6ypfKwcb9Gum2qLJ4A8x9mHbbuAb7QtKrbvDjcu
- P9Jcio7EOrqno0u3nK+BI15rpFL18btNf14nqJBiA5o6hcQcMQA5h4oLVcgHDg/ZX6AKXU4xbxc
- bz69zo1pK90Cz9CKw6ua5P5hiHNQBWvk34iHsdo+N04qMqt00crjA7irtGtIcFvWIW+WdRzLRjX
- VPCNNNsR
-X-Proofpoint-ORIG-GUID: WEoxvGcAU1vsK2wa-JBGA6BRe6-ODnM6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOCBTYWx0ZWRfXz3N4vj9hMif2
+ c7TO/KzKDLC+4hEo6fuoW7kiTzqdcl9RzCZS71baNJqfF9JjbQITKJ8fbDxujJ8rI4H1kT4YTRb
+ et/G0K6PbPdub9D6gbmvDJLpcwCgZd0HMmeCyMwv3cf19VepG8D5pVrlF8pDYXjkKUfp/vPm6xs
+ H2i/SgcMf0YPDSLIvASs3/zFWqfHGD2Tg4oBV5Q9nweGOBEY086u3TZ2XUPmERDNpj5vsI6iWA2
+ QGZs1FHH5QqOshowtIXVO5/2fmKLpLfx5unOJYodwDbaMDvzOE273VF14BE5V687GLiI7mX43Lq
+ dOvfFyzywlP/PL6+iHfJpHsX+z+91dxxZqklmwDFgAecbVmeJgvWscP7bPsTnidSrv9KvI4qSPf
+ 8tTVEAXD
+X-Authority-Analysis: v=2.4 cv=J66q7BnS c=1 sm=1 tr=0 ts=68bf2055 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=Q-dapHUw0VXFM7UNezAA:9
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: J6WUydiXtFiafZIS4z5bUrM3Bkv8ByOQ
+X-Proofpoint-ORIG-GUID: J6WUydiXtFiafZIS4z5bUrM3Bkv8ByOQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-08_06,2025-09-08_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060018
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060038
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,56 +134,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch increases the value of the MAX_PACKET_LEGNTH to
-131104 from 4096 to allow the GDBState.line_buf to be large enough
-to accommodate the full contents of the SME ZA storage when the
-vector length is maximal. This is in preparation for a related
-patch that allows SME register visibility through remote GDB
-debugging.
+The QEMU GDB stub does not expose the ZA storage SME register to GDB via
+the remote serial protocol, which can be a useful functionality to debug SME
+code. To provide this functionality in Aarch64 target, this patch registers the
+SME register set with the GDB stub. To do so, this patch implements the
+aarch64_gdb_get_sme_reg() and aarch64_gdb_set_sme_reg() functions to
+specify how to get and set the SME registers, and the
+arm_gen_dynamic_smereg_feature() function to generate the target
+description in XML format to indicate the target architecture supports SME.
+Finally, this patch includes a dyn_smereg_feature structure to hold this
+GDB XML description of the SME registers for each CPU.
 
-Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
-Changes since v4:
-- the value for MAX_PACKET_LENGTH is changed from 131100 to
-131104 to align with a similar update made to gdbserver
----
- gdbstub/internals.h | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+Additionally, this patch series increases the value of MAX_PACKET_LENGTH
+to allow for remote GDB debugging of the ZA register when the vector
+length is maximal.
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index bf5a5c6302..87f64b6318 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -11,7 +11,27 @@
- 
- #include "exec/cpu-common.h"
- 
--#define MAX_PACKET_LENGTH 4096
-+/*
-+* Most "large" transfers (e.g. memory reads, feature XML
-+* transfer) have mechanisms in the gdb protocol for splitting
-+* them. However, register values in particular cannot currently
-+* be split. This packet size must therefore be at least big enough
-+* for the worst-case register size. Currently that is Arm SME
-+* ZA storage with a 256x256 byte value. We also must account
-+* for the conversion from raw data to hex in gdb_memtohex(),
-+* which writes 2 * size bytes, and for other protocol overhead
-+* including command, register number and checksum which add
-+* another 4 bytes of overhead. However, to be consistent with
-+* the changes made in gdbserver to address this same requirement,
-+* we add a total of 32 bytes to account for protocol overhead
-+* (unclear why specifically 32 bytes), bringing the value of 
-+* MAX_PACKET_LENGTH to 2 * 256 * 256 + 32 = 131104.
-+*
-+* The commit making this change for gdbserver can be found here:
-+* https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=
-+* b816042e88583f280ad186ff124ab84d31fb592b
-+*/
-+#define MAX_PACKET_LENGTH 131104
- 
- /*
-  * Shared structures and definitions
+We have chosen to drop the patch related to changing GDBState's line_buf
+to a dynamically re-sizeable GString for the time being.
+
+This patch also includes a test case for testing SME register exposure
+to GDB, based off of the existing SVE test case for the gdbstub.
+
+Vacha Bhavsar (3):
+  target/arm: Increase MAX_PACKET_LENGTH for SME ZA remote gdb debugging
+  target/arm: Added support for SME register exposure to GDB
+  target/arm: Added test case for SME register exposure to GDB
+
 -- 
 2.34.1
 
