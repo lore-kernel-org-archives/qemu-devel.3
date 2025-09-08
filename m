@@ -4,138 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB19CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D4CFCA1016
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcjA-0004oY-3B; Mon, 08 Sep 2025 10:20:16 -0400
+	id 1uvctX-000280-27; Mon, 08 Sep 2025 10:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcit-0004eR-RN
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:20:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvctS-00026l-E1
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:30:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvcif-0000kB-Jv
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:19:57 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvctC-0002Wv-Hc
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:30:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757341181;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=35e6rq1inm1qiEi1Ze0OmsUix0PFI3G3ih64wZTDO5U=;
- b=iOQHU/7uceJVWeMtqQEhoUmrNE9i6M19F/m6xBu7iSLjh1seTrdU3m/Td1bA7aItrXAnMH
- T5gE8HzJnZ4yR2BU5lTFQxbOxUSUaRYnZ06mSZUg6vGOpuLCpEkUQggZrKMZF5m8a52vzK
- 9BhuUODUZ89QGiCZRzwiH8yx7Fx3oH4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-jnIaQ-KGPCWvbMg2hbT3yQ-1; Mon, 08 Sep 2025 10:19:38 -0400
-X-MC-Unique: jnIaQ-KGPCWvbMg2hbT3yQ-1
-X-Mimecast-MFC-AGG-ID: jnIaQ-KGPCWvbMg2hbT3yQ_1757341174
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3db89e4f443so2744375f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:19:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757341174; x=1757945974;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=35e6rq1inm1qiEi1Ze0OmsUix0PFI3G3ih64wZTDO5U=;
- b=AYuFIdOAyN0QXXMRtZ6+JgJ4+/qli5ASebVdGuISC8JTKsfkY7c05dlZcverzndhwj
- qXJQWqdaMp3v6xfLdl5+njMXKrBrJ4ZQ0yaY/MPT3QNOM5/iHRqoyq5lMP2iWM4sHZVE
- 7zbbzWO1Ag2AjMf2dituK+kESQdqssb2FjWESTTs2U+W9/hhLJokt84Z162wsakRXmm5
- 6tJ5P/unREhwbt8Rq1+g05CTErC3l7MACltxvdKD1VfVHB0Z0/fqRl+wIxJ/LFHADI1V
- x0Xo3EtAz2LcDwWztnhKh9yCmlafM9xCugp+J9oSGIeizInm5hAnJLiyMV/gyOlhVx6r
- G+Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0rpai0LFm68XMiwZIbCI1a1vxOmY1/nc03UhUYXVDlcVqntpa8RyYT7MFUnAo5b7UZT25GR0s1+pZ@nongnu.org
-X-Gm-Message-State: AOJu0Yw/7TRvM/m8OY0viRhgeLBd71lW9olidD3GPO7pSnoD1NQmoZtc
- JN6Fbt5HW3UkyMzFIvAA8FrxxeMGeAIqTf1FpEojY5OtpAhKZTKwtoKvcIqY0F9dZAbpC05XkSh
- kNIgSwFMIwFoJf8s7QIHk2Z7aibztbToah/S94X3UBTiNo86stifqGZSy
-X-Gm-Gg: ASbGncvJ7+mjbTrESFnMx27GsoHXb07Tx6pEuDiz3Yy+9LVOAaRWrH5cBSYQ4Jfv/Li
- wY9rOFRsUCmEbXIecTHSlWv9P/X7AyG9eqZRDjMq+vv7ui89EDpwjhBoo+f2qhyr1CFakraPU8h
- ZsKO3h14lwFiVP4ZiSu9FQt5uVEAMjchsXu1E2spdO4EayBFGMA1dUEbhTs07WR45phlIgEh4Vg
- 9INlinikbqx8I0kC6rqKJldnC/RC2deuVUDfK4VPvdh0U+32cOlGG1sBMaTD88nFwXMy5pu2t1I
- /xD9PBAuXFywqz7hY1/Vhx8x+mLPW0x3dLgR2zT7XeAQ5266rlv9BzRUTclD5158iFaLirz/zJW
- 0xUU=
-X-Received: by 2002:a05:6000:40d9:b0:3e0:e23f:c6d9 with SMTP id
- ffacd0b85a97d-3e6429cc8f4mr5792626f8f.17.1757341174188; 
- Mon, 08 Sep 2025 07:19:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXUXkPxHHaot7OBwvHNhyyHVPcwXhsotoEWGpWNMwi7On0MBpGSqWdWI7GUQgVE0UbZxkBuQ==
-X-Received: by 2002:a05:6000:40d9:b0:3e0:e23f:c6d9 with SMTP id
- ffacd0b85a97d-3e6429cc8f4mr5792581f8f.17.1757341173647; 
- Mon, 08 Sep 2025 07:19:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d0f85c287fsm39828374f8f.52.2025.09.08.07.19.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 07:19:30 -0700 (PDT)
-Message-ID: <999058e5-747f-487f-abc6-4ab29cfbb9f7@redhat.com>
-Date: Mon, 8 Sep 2025 16:19:21 +0200
+ s=mimecast20190719; t=1757341827;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=llpvceQl/WeQu9WHN+bpq9FjG/NNmjKhW6KVEYxrIsI=;
+ b=Eo0Jh14FcF+JCFsRyi+rkGpSuLdGhr9NQ8Z6CkTLtVuA8F6UDr8iWAbNGNP6d20ccjZK2S
+ KdoeoRXT4BIA61v0KJsck93Bp2Hm+YiCBmQpwt59XCaj3tQzTsQScmvyCk/2rbmkBPc+Ag
+ L/o/iwlNOhSuolWszim04UKERZr8Fdk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-5qhixWmwO2KPrn9sthQZwQ-1; Mon,
+ 08 Sep 2025 10:30:26 -0400
+X-MC-Unique: 5qhixWmwO2KPrn9sthQZwQ-1
+X-Mimecast-MFC-AGG-ID: 5qhixWmwO2KPrn9sthQZwQ_1757341825
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57CBD1800366
+ for <qemu-devel@nongnu.org>; Mon,  8 Sep 2025 14:30:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.93])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4DF01800446; Mon,  8 Sep 2025 14:30:22 +0000 (UTC)
+Date: Mon, 8 Sep 2025 15:30:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Subject: Re: [PULL 24/28] hpet: switch to fine-grained device locking
+Message-ID: <aL7oe3sis3bKJhLW@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ <20250829125935.1526984-25-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] vfio: improve use of QOM and coding guidelines
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
- danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com, john.levon@nutanix.com, thanos.makatos@nutanix.com,
- alex.williamson@redhat.com, steven.sistare@oracle.com,
- tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715093110.107317-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250829125935.1526984-25-pbonzini@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -144,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,88 +84,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/25 11:25, Mark Cave-Ayland wrote:
-> This series attempts to improve use of QOM within the vfio subsystem which
-> appears to have been added at a later date. It's mostly mechanical changes
-> that do the following:
+Hi,
+
+This patches causes a regression making QEMU  abort in the KVM Xen
+functional test.
+
+To reproduce please run 'make check-functional-x86_64', or more
+specifically run this single test:
+
+ QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64 PYTHONPATH=./python:./tests/functional ./tests/functional/x86_64/test_kvm_xen.py
+
+though I recommend you first add this series:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01540.html
+
+as that fixes an infinite loop in the functional test console
+code on QEMU abnormal premature exit.
+
+In the test logs we see the following on the serial console:
+
+  2025-09-08 15:26:32,286: Cannot get hvm parameter CONSOLE_EVTCHN (18): -22!
+
+and then the following on stder:
+
+  qemu-system-x86_64: ../hw/i386/kvm/xen_evtchn.c:1619: xen_evtchn_set_gsi: Assertion `bql_locked()' failed.
+
+The QEMU command line was:
+
+  2025-09-08 15:26:32,097 - DEBUG: VM launch command: './build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -chardev socket,id=console,fd=10 -serial chardev:console -accel kvm,xen-version=0x4000a,kernel-irqchip=split -smp 2 -kernel /var/home/berrange/.cache/qemu/download/ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a -append "printk.time=0 root=/dev/xvda console=ttyS0 quiet xen_emul_unplug=ide-disks" -drive file=/var/home/berrange/.cache/qemu/download/b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b,if=none,snapshot=on,format=raw,id=drv0 -device xen-disk,drive=drv0,vdev=xvda -device virtio-net-pci,netdev=unet -netdev user,id=unet,hostfwd=:127.0.0.1:0-:22'
+
+On Fri, Aug 29, 2025 at 02:59:31PM +0200, Paolo Bonzini wrote:
+> From: Igor Mammedov <imammedo@redhat.com>
 > 
->    1) Format the QOM structs per our coding guidelines
+> as a step towards lock-less HPET counter read,
+> use per device locking instead of BQL.
 > 
->    2) Ensure the parent object is called parent_obj
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Link: https://lore.kernel.org/r/20250814160600.2327672-4-imammedo@redhat.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  hw/timer/hpet.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
->    3) Use QOM casts to access the parent object, instead of accessing
->       the parent struct member directly
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index cb48cc151f1..ab5aa59ae4e 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -38,6 +38,7 @@
+>  #include "hw/timer/i8254.h"
+>  #include "system/address-spaces.h"
+>  #include "qom/object.h"
+> +#include "qemu/lockable.h"
+>  #include "trace.h"
+>  
+>  struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
+> @@ -69,6 +70,7 @@ struct HPETState {
+>      SysBusDevice parent_obj;
+>      /*< public >*/
+>  
+> +    QemuMutex lock;
+>      MemoryRegion iomem;
+>      uint64_t hpet_offset;
+>      bool hpet_offset_saved;
+> @@ -428,6 +430,7 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+>      trace_hpet_ram_read(addr);
+>      addr &= ~4;
+>  
+> +    QEMU_LOCK_GUARD(&s->lock);
+>      /*address range of all global regs*/
+>      if (addr <= 0xff) {
+>          switch (addr) {
+> @@ -482,6 +485,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+>      int len = MIN(size * 8, 64 - shift);
+>      uint64_t old_val, new_val, cleared;
+>  
+> +    QEMU_LOCK_GUARD(&s->lock);
+>      trace_hpet_ram_write(addr, value);
+>      addr &= ~4;
+>  
+> @@ -679,8 +683,10 @@ static void hpet_init(Object *obj)
+>      SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+>      HPETState *s = HPET(obj);
+>  
+> +    qemu_mutex_init(&s->lock);
+>      /* HPET Area */
+>      memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
+> +    memory_region_enable_lockless_io(&s->iomem);
+>      sysbus_init_mmio(sbd, &s->iomem);
+>  }
+>  
+> -- 
+> 2.51.0
 > 
-> The benefits of this are that the QOM casts included type checking to help
-> ensure the right object is being passed into the cast, and it also becomes
-> much easier to infer the class hierarchy from reading the code.
-> 
-> Having produced this series, it feels to me that the readability could be
-> further improved by renaming the structs as follows:
-> 
->     VFIOContainer     -> VFIOLegacyContainer
->     VFIOContainerBase -> VFIOContainer
-> 
-> However I have left this for now given how close that we are to freeze.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> 
-> 
-> Mark Cave-Ayland (22):
->    vfio/vfio-container-base.h: update VFIOContainerBase declaration
->    vfio/vfio-container.h: update VFIOContainer declaration
->    hw/vfio/cpr-legacy.c: use QOM casts where appropriate
->    hw/vfio/container.c: use QOM casts where appropriate
->    ppc/spapr_pci_vfio.c: use QOM casts where appropriate
->    vfio/spapr.c: use QOM casts where appropriate
->    vfio/vfio-container.h: rename VFIOContainer bcontainer field to
->      parent_obj
->    vfio-user/container.h: update VFIOUserContainer declaration
->    vfio/container.c: use QOM casts where appropriate
->    vfio-user/container.h: rename VFIOUserContainer bcontainer field to
->      parent_obj
->    vfio-user/pci.c: update VFIOUserPCIDevice declaration
->    vfio-user/pci.c: use QOM casts where appropriate
->    vfio-user/pci.c: rename VFIOUserPCIDevice device field to parent_obj
->    vfio/pci.h: update VFIOPCIDevice declaration
->    vfio/pci.h: use QOM casts where appropriate
->    vfio/pci.c: use QOM casts where appropriate
->    vfio/pci-quirks.c: use QOM casts where appropriate
->    vfio/cpr.c: use QOM casts where appropriate
->    vfio/igd.c: use QOM casts where appropriate
->    vfio-user/pci.c: use QOM casts where appropriate
->    s390x/s390-pci-vfio.c: use QOM casts where appropriate
->    vfio/pci.h: rename VFIOPCIDevice pdev field to parent_obj
-> 
->   hw/ppc/spapr_pci_vfio.c               |   2 +-
->   hw/s390x/s390-pci-vfio.c              |  14 +-
->   hw/vfio-user/container.c              |  26 ++--
->   hw/vfio-user/container.h              |   7 +-
->   hw/vfio-user/pci.c                    |  16 +-
->   hw/vfio/container.c                   |  31 ++--
->   hw/vfio/cpr-legacy.c                  |  14 +-
->   hw/vfio/cpr.c                         |  10 +-
->   hw/vfio/igd.c                         |  38 ++---
->   hw/vfio/pci-quirks.c                  |  48 +++---
->   hw/vfio/pci.c                         | 206 +++++++++++++++-----------
->   hw/vfio/pci.h                         |   5 +-
->   hw/vfio/spapr.c                       |  16 +-
->   include/hw/vfio/vfio-container-base.h |  13 +-
->   include/hw/vfio/vfio-container.h      |   7 +-
->   15 files changed, 249 insertions(+), 204 deletions(-)
 > 
 
-I did some tests with an IGB device and didn't see any performance
-regression.
-
-Applied to vfio-next.
-
-Thanks,
-
-C.
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
