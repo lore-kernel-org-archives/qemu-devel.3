@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6A9CAC586
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 12:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B608CAC586
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvbLa-0002L6-Bq; Mon, 08 Sep 2025 08:51:53 -0400
+	id 1uvbXP-00013f-9v; Mon, 08 Sep 2025 09:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvbLB-0002Gp-5G
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 08:51:28 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvbKw-0005R0-4V
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 08:51:22 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45cb5492350so27969895e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 05:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757335861; x=1757940661; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nxPytzeq6dPngJT4hbcEIQRox1Pjr2WlO0kU+VWzsNQ=;
- b=KI6+11hpGUo708lRewtQ8Pte1mbp7EhsEmrCYSkgbXNhHnpTdMg7iR8BLlS5K14mql
- EzMOetdj2IiwMvgiOgbIWAu4j9+hmtwLrQ/TYH9emtjQWqAOJJ7+R1kg1CDlOPYONjK+
- h3aHJ5FUjLoNLIqzJTLZRLJ52fEaAI3X4V0NS9vd75YjEyhmWK+MpS0BbDOHpw3+PEO2
- wpkDrKDsAJEEO0I6ckmHM3AUwwXWJF3rAgNoHImpro8jv1OrmRN/jDdOXq7Fa00vxvu8
- kuaf2PYdKovR4SG+HZPE3Vz1QkjRR00WLalrpNUOqnkNFK3vBg0SLPb7UPDZboILxNK1
- 6VPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757335861; x=1757940661;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nxPytzeq6dPngJT4hbcEIQRox1Pjr2WlO0kU+VWzsNQ=;
- b=GC1A9KmsFLemD5mNfuJtsybwRyrh8rZBp50x9asEZcRoyl67WJoCvaO06ok99Bv2Rc
- aLrb/GhTU7+6YYwaZYPlfJNIXmeB/pHT67TeGo9mQgxwaB+81H4iDaComfQlfJGgamiN
- 6JjkN9szhKJW2QnADkbgkb65EXFQjAuC/eiI0D024it4L55dJ8hJxuv0hVstOLxZ/YCM
- ntOU3j92VFixxO/xmKwsFeDqPbLRBuRuUR2AYmXIUFn/rZPO9+bO0wif3ucecl6YQRlV
- OUS6yZtxdskeDMPkDqYQIhlPqJufVors3sfkt+oWizvAAgU1/6YIl3huzAbQrAFzkLOp
- tFWQ==
-X-Gm-Message-State: AOJu0YzD6efx5ZbjrnLhIiYCEfYWguB/+TQdR8nC3F6QV1gIq+KhQNjj
- GrC9B3kFegP7CrffHt89IXtNesgve3xgfxI8Nmt0TmDFwxvz5OXS9kPntDzTzI1k0uOeCSRY4m9
- jZwds
-X-Gm-Gg: ASbGncs1R0ujrCSD3/TQ1sCGj/zTZtrMHmKijBsaSIIVIEquAmj3W9hzNQKFBUp/AXA
- fgwSI3iDraILrIxMyM8C7TBJQEyPF4lgV5GXqszj9Gm7NAu1EBRzmNGCpg/G5WlfDtRfkULTN7N
- qot+o3lJIyqWA5D+OLeUUGRoGq4QVQOygHTKbojOYVYyLW8PQ/q9lpvmbjMdJ7whnDyB4pz36W8
- IRDuIBmidj6j0p0DoscTsFTt6AVfZ0Zx1rWeNnu3UQCf1v28ZfAVUpNO2aaJPArt7xV4GTXgo6l
- U0vIZpiolTDqFuH8qps3a4Hr4WuM6c2/AD81yRw5OUsv9q4NXfc6z9jFb841hokey4/GknxZPye
- 2u2i63MmyxtFCPvFg8mUCERDjwLi9
-X-Google-Smtp-Source: AGHT+IGsDim/DMSViM56KXy45ZJJdjM1w8uuhVmP2tGMEZ4H5/V+mkgrys6of98GIjOlt/H+9UXilA==
-X-Received: by 2002:a05:600c:1993:b0:45d:db2a:ce30 with SMTP id
- 5b1f17b1804b1-45ddde0d828mr63620025e9.0.1757335860663; 
- Mon, 08 Sep 2025 05:51:00 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45deab47e5dsm15240425e9.2.2025.09.08.05.50.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 05:50:59 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>
-Subject: [RFC PATCH] docs/system/security: Restrict "virtualization use case"
- to specific machines
-Date: Mon,  8 Sep 2025 13:50:57 +0100
-Message-ID: <20250908125058.220973-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uvbXF-00012p-S8
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:03:53 -0400
+Received: from mailout3.samsung.com ([203.254.224.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uvbX0-0007J5-Gi
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:03:53 -0400
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250908130317epoutp03ce24b2965283162db0477bae650f2651~jUFMulkCI1094810948epoutp03X
+ for <qemu-devel@nongnu.org>; Mon,  8 Sep 2025 13:03:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250908130317epoutp03ce24b2965283162db0477bae650f2651~jUFMulkCI1094810948epoutp03X
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1757336597;
+ bh=LN4sH3UwtU8HIQkrEetlva5pwUT35yq63hIpFGzCTV0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=D90R3n1CBgsk4Uvv13gBkZdI3W8MGUujqT+wVd7a8/1OE8a2p82cg7S1Tafs0E7uj
+ lighSfX0gtPk7dMnGAdx57SvqPCBZtB2Q7n6auIk2cJhjkPcjDfdiXQbuc8l3t4OE0
+ v1XVqoNkv3lMHP5aYwZDxG35pDTqmxpov04g5apU=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250908130316epcas5p25fd6caaa932fdd13a4133e376d1bc338~jUFLhYoNP1212412124epcas5p2E;
+ Mon,  8 Sep 2025 13:03:16 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.91]) by
+ epsnrtp02.localdomain (Postfix) with ESMTP id 4cL6ZW3l7lz2SSKY; Mon,  8 Sep
+ 2025 13:03:15 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+ 20250908130314epcas5p35e0086154cafff6515126e01f7981d3b~jUFJ61k3a2761427614epcas5p3A;
+ Mon,  8 Sep 2025 13:03:14 +0000 (GMT)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250908130313epsmtip1d1c2bbfc880dc95c15605b896d1d6252~jUFIfPFrE1029310293epsmtip13;
+ Mon,  8 Sep 2025 13:03:13 +0000 (GMT)
+Date: Mon, 8 Sep 2025 18:33:03 +0530
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: ALOK TIWARI <alok.a.tiwari@oracle.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ dave@stgolabs.net, Jonathan.Cameron@huawei.com, vishak.g@samsung.com,
+ krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com,
+ cpgs@samsung.com
+Subject: Re: [PATCH v3 2/2] hw/cxl: Add Physical Port Control (Opcode 5102h)
+Message-ID: <20250908130303.hxqdq5yldwpguojo@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+In-Reply-To: <2d731c30-bf0c-49c6-b519-4b558d794b08@oracle.com>
+X-CMS-MailID: 20250908130314epcas5p35e0086154cafff6515126e01f7981d3b
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----AO5Z5CA5q82FpJQJAbIGDvoW6m12ppu.cCYhbwpEEtg295OJ=_f81a4_"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250904131944epcas5p351c0e073a975b1347c4a61aa0dd511f3
+References: <20250904131904.725758-1-arpit1.kumar@samsung.com>
+ <CGME20250904131944epcas5p351c0e073a975b1347c4a61aa0dd511f3@epcas5p3.samsung.com>
+ <20250904131904.725758-3-arpit1.kumar@samsung.com>
+ <2d731c30-bf0c-49c6-b519-4b558d794b08@oracle.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,110 +97,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently our security policy defines a "virtualization use case"
-where we consider bugs to be security issues, and a
-"non-virtualization use case" where we do not make any security
-guarantees and don't consider bugs to be security issues.
+------AO5Z5CA5q82FpJQJAbIGDvoW6m12ppu.cCYhbwpEEtg295OJ=_f81a4_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-The rationale for this split is that much code in QEMU is older and
-was not written with malicious guests in mind, and we don't have the
-resources to audit, fix and defend it.  So instead we inform users
-about what the can in practice rely on as a security barrier, and
-what they can't.
+On 05/09/25 02:18PM, ALOK TIWARI wrote:
+>
+>>@@ -4791,6 +4907,28 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+>>      cxl_copy_cci_commands(cci, cxl_cmd_set_usp_mctp);
+>>      cci->d = d;
+>>      cci->intf = intf;
+>>+    CXLUpstreamPort *pp;
+>>+    int pn = 0;
+>>      cxl_init_cci(cci, payload_max);
+>>      cxl_set_phy_port_info(cci);
+>>+    /* physical port control */
+>>+    pp = CXL_USP(cci->d);
+>>+    for (int byte_index = 0; byte_index < (CXL_MAX_PHY_PORTS / BITS_PER_BYTE);
+>>+         byte_index++) {
+>>+        unsigned char byte = pp->pports.active_port_bitmask[byte_index];
+>>+
+>>+        for (int bit_index = 0; bit_index < 8; bit_index++, pn++) {
+>>+            if (((byte) & (1 << bit_index)) != 0) {
+>>+                qemu_mutex_init(&pp->pports.perst[pn].lock);
+>>+                pp->pports.perst[pn].issued_assert_perst = false;
+>>+                /*
+>>+                 * Assert PERST involves physical port to be in
+>>+                 * hold reset phase for minimum 100ms. No other
+>>+                 * physcial port control requests are entertained
+>
+>typo physcial -> physical
+>
+Thanks for pointing out!
+>>+                 * until Deassert PERST command.
+>>+                 */
+>>+                pp->pports.perst[pn].asrt_time = ASSERT_WAIT_TIME_MS;
+>>+            }
+>>+        }
+>>+    }
+>>  }
+>>diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>>index 9fc720ec10..033d9bf11a 100644
+>>--- a/include/hw/cxl/cxl_device.h
+>>+++ b/include/hw/cxl/cxl_device.h
+>>@@ -130,6 +130,7 @@
+>>                    (1 << 16))
+>>  #define CXL_MAX_PHY_PORTS 256
+>>+#define ASSERT_WAIT_TIME_MS 100 /* Assert - Deassert PERST */
+>>  /* physical port control info - CXL r3.2 table 7-19 */
+>>  #define CXL_PORT_CONFIG_STATE_DISABLED           0x0
+>>@@ -196,6 +197,14 @@ typedef struct CXLPhyPortInfo {
+>>      uint8_t supported_ld_count;
+>>  } QEMU_PACKED CXLPhyPortInfo;
+>>+/* Assert - Deassert PERST */
+>>+typedef struct CXLPhyPortPerst {
+>>+    bool issued_assert_perst;
+>>+    QemuMutex lock; /* protecting assert-deassert reset request */
+>>+    uint64_t asrt_time;
+>>+    QemuThread asrt_thread; /* thread for 100ms delay */
+>>+} CXLPhyPortPerst;
+>>+
+>>  /* CXL r3.1 Table 8-34: Command Return Codes */
+>>  typedef enum {
+>>      CXL_MBOX_SUCCESS = 0x0,
+>>diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+>>index 5c918c53a9..5c31023590 100644
+>>--- a/include/hw/cxl/cxl_mailbox.h
+>>+++ b/include/hw/cxl/cxl_mailbox.h
+>>@@ -88,6 +88,7 @@ enum {
+>>      PHYSICAL_SWITCH = 0x51,
+>>          #define IDENTIFY_SWITCH_DEVICE      0x0
+>>          #define GET_PHYSICAL_PORT_STATE     0x1
+>>+        #define PHYSICAL_PORT_CONTROL       0X2
+>
+>use 0X2 -> 0x2
+>
+Thanks for pointing out the typo's, will update the same in v4.
+>>      TUNNEL = 0x53,
+>>          #define MANAGEMENT_COMMAND     0x0
+>>      MHD = 0x55,
+>>diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
+>>index 3b7e72bfe0..4b9da87d77 100644
+>>--- a/include/hw/pci-bridge/cxl_upstream_port.h
+>>+++ b/include/hw/pci-bridge/cxl_upstream_port.h
+>>@@ -30,6 +30,7 @@ typedef struct CXLUpstreamPort {
+>>          uint8_t num_ports;
+>>          uint8_t active_port_bitmask[CXL_MAX_PHY_PORTS / BITS_PER_BYTE];
+>>          CXLPhyPortInfo pport_info[CXL_MAX_PHY_PORTS];
+>>+        CXLPhyPortPerst perst[CXL_MAX_PHY_PORTS];
+>>      } pports;
+>>  } CXLUpstreamPort;
+>>-- 2.34.1
+>>
+>
+>Thanks,
+>Alok
+>
 
-We don't currently restrict the "virtualization use case" to any
-particular set of machine types.  This means that we have effectively
-barred ourselves from adding KVM support to any machine type that we
-don't want to put into the "bugs are security issues" category, even
-if it would be useful for users to be able to get better performance
-with a trusted guest by enabling KVM. This seems an unnecessary
-restriction, and in practice the set of machine types it makes
-sense to use for untrusted-guest virtualization is quite small.
+------AO5Z5CA5q82FpJQJAbIGDvoW6m12ppu.cCYhbwpEEtg295OJ=_f81a4_
+Content-Type: text/plain; charset="utf-8"
 
-Specifically, we would like to be able to enable the use of
-KVM with the imx8 development board machine types, but we don't
-want to commit ourselves to having to support those SoC models
-and device models as part of QEMU's security boundary:
-https://lore.kernel.org/qemu-devel/20250629204851.1778-3-shentey@gmail.com/
 
-This patch updates the security policy to explicitly list the
-machine types we consider to be useful for the "virtualization
-use case".
-
-This is an RFC partly to see if we have consensus that this change
-makes sense, and partly because I was only able to identify the
-machine types we want to cover for some of our target architectures.
-If maintainers for the other architectures could clarify which
-machine types work with KVM that would be helpful.
-
-Notes on the listed machine types:
-
-architectures I'm pretty sure about:
-
-aarch64:
- -- virt is definitely the only supported one
-s390x:
- -- s390-ccw-virtio is the only machine type for this architecture
-loongarch64:
- -- virt is the only machine type for this architecture
-
-architectures where I've made a guess:
-
-i386, x86_64:
- -- I have assumed that all machine types except the "experimental"
-    x-remote are supported
-
-architectures I don't know:
-
-mips, mips64
-riscv32, riscv64
-ppc, ppc64
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/security.rst | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/docs/system/security.rst b/docs/system/security.rst
-index f2092c8768b..395c2d7fb88 100644
---- a/docs/system/security.rst
-+++ b/docs/system/security.rst
-@@ -35,6 +35,34 @@ malicious:
- Bugs affecting these entities are evaluated on whether they can cause damage in
- real-world use cases and treated as security bugs if this is the case.
- 
-+To be covered by this security support policy you must:
-+
-+- use a virtualization accelerator like KVM or HVF
-+- use one of the machine types listed below
-+
-+It may be possible to use other machine types with a virtualization
-+accelerator to provide improved performance with a trusted guest
-+workload, but any machine type not listed here should not be
-+considered to be providing guest isolation or security guarantees,
-+and falls under the "non-virtualization use case".
-+
-+Supported machine types for the virtualization use case, by target architecture:
-+
-+aarch64
-+  ``virt``
-+i386, x86_64
-+  ``microvm``, ``xenfv``, ``xenpv``, ``xenpvh``, ``pc``, ``q35``, ``isapc``
-+s390x
-+  ``s390-ccw-virtio``
-+loongarch64:
-+  ``virt``
-+ppc, ppc64:
-+  TODO
-+mips, mips64:
-+  TODO
-+riscv32, riscv64:
-+  TODO
-+
- Non-virtualization Use Case
- '''''''''''''''''''''''''''
- 
--- 
-2.43.0
-
+------AO5Z5CA5q82FpJQJAbIGDvoW6m12ppu.cCYhbwpEEtg295OJ=_f81a4_--
 
