@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E347FCAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601FECAC586
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 13:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcNY-0003us-0z; Mon, 08 Sep 2025 09:57:56 -0400
+	id 1uvcNY-0003vQ-1c; Mon, 08 Sep 2025 09:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvcNS-0003sS-St
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uvcNV-0003tw-FN
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvcNI-0005ci-G5
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:50 -0400
+ id 1uvcNM-0005cS-BZ
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 09:57:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757339856;
+ s=mimecast20190719; t=1757339852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohCqBimbAIW10ypvu1EyGl3mXc9pNVzAsMpKZdpJYK0=;
- b=cetsoH2xUT1zcv940C5HQyjVaixgNEPwmggvTaSlnrcfb00D4VYxyINRcICT1tbime/qiX
- PWrNjOY+2tZRJVfbGKQ8S5h/HZ+yShRwtQ+EO+ZbhN4zN7T0DBtnknhUeUEkwj9v177ci/
- EGCTtGu8H+si/obYw46mSXvn73zgVwk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KYR8qniNbAIhKaaxm22geyDivz6LBRyhYUYXniKr9r4=;
+ b=XKHXf0ANUbGrCxDqrrPNEdPACQ/g+geEojwyr76zdT71qbO91bcvhb0J/ATh5GVjlg6igA
+ jz6m2Mi0GMRVAqyLpvlUCJC6D0tqYNBZ50d6Iya9TLSz+NpnUdCOYg0SMyUHBzSjWcMTOC
+ Q4Jwgqg/Kj5xwYFc/bfhXDzHHqOf6bc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-qzLhuxf1OPatOHfehE_AuQ-1; Mon,
- 08 Sep 2025 09:57:35 -0400
-X-MC-Unique: qzLhuxf1OPatOHfehE_AuQ-1
-X-Mimecast-MFC-AGG-ID: qzLhuxf1OPatOHfehE_AuQ_1757339854
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-EmIJ1ubWOUW2qetZiby80g-1; Mon,
+ 08 Sep 2025 09:57:28 -0400
+X-MC-Unique: EmIJ1ubWOUW2qetZiby80g-1
+X-Mimecast-MFC-AGG-ID: EmIJ1ubWOUW2qetZiby80g_1757339847
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C31419560B7; Mon,  8 Sep 2025 13:57:34 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 926B519560AB; Mon,  8 Sep 2025 13:57:27 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.93])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2D42218003FC; Mon,  8 Sep 2025 13:57:31 +0000 (UTC)
+ id 0B3B6180044F; Mon,  8 Sep 2025 13:57:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 4/4] tests/functional: purge scratch dir on test startup
-Date: Mon,  8 Sep 2025 14:57:22 +0100
-Message-ID: <20250908135722.3375580-5-berrange@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/4] tests/functional: fix infinite loop on console EOF
+Date: Mon,  8 Sep 2025 14:57:19 +0100
+Message-ID: <20250908135722.3375580-2-berrange@redhat.com>
 In-Reply-To: <20250908135722.3375580-1-berrange@redhat.com>
 References: <20250908135722.3375580-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,34 +86,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test suite purges the scratch dir in the tearDown method, but
-if python crashes (or is non-gracefully killed) this won't get run.
-Also the user can set QEMU_TEST_KEEP_SCRATCH to disable cleanup.
+The 'recv' method will return an empty byte array, not None, when
+the socket has EOF.
 
-Purging the scratch dir on startup ensures that tests always run
-from a clean state.
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/functional/qemu_test/cmd.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index faa0a4f0db..2c0abde395 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -205,6 +205,10 @@ def setUp(self):
-         self.outputdir = self.build_file('tests', 'functional',
-                                          self.arch, self.id())
-         self.workdir = os.path.join(self.outputdir, 'scratch')
-+        if os.path.exists(self.workdir):
-+            # Purge as safety net in case of unclean termination of
-+            # previous test, or use of QEMU_TEST_KEEP_SCRATCH
-+            shutil.rmtree(self.workdir)
-         os.makedirs(self.workdir, exist_ok=True)
- 
-         self.log_filename = self.log_file('base.log')
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index dc5f422b77..2fb731ca24 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -51,7 +51,7 @@ def _console_read_line_until_match(test, vm, success, failure):
+     done = False
+     while True:
+         c = vm.console_socket.recv(1)
+-        if c is None:
++        if not c:
+             done = True
+             test.fail(
+                 f"EOF in console, expected '{success}'")
 -- 
 2.50.1
 
