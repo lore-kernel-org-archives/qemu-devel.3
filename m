@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 758D4CAC581
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F47ACA1013
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 09:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvXni-0005eZ-BL; Mon, 08 Sep 2025 05:04:40 -0400
+	id 1uvXmh-0005JI-Np; Mon, 08 Sep 2025 05:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXnQ-0005Yn-34
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:04:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXmc-0005Hy-5X
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:03:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXnF-0008KD-3V
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:04:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXmJ-0007zM-Mg
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:03:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757322236;
+ s=mimecast20190719; t=1757322133;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AhvUXvW8svR3x22M8R7FvV+xnXAef22ZxCBj7DbJ58U=;
- b=LfBQFc1Kw8z0GtjOkk/clLws4XRRowQplVOEFw2yDRxp579KVUV/f1CLd905y14daoZwRX
- ZgmBCfisI/R7uaEiSpOaXVAOn3Hzv+JNIDYDa0i3kzueSFV0rqqXG/iiNATpw3dZFepn8F
- vlKlgu0rHyh7k/wlKLTaTjM3yczjuE0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dY1FYqqBalZXG3Fq248Po3+1V3giPHlXujXYqhviE1w=;
+ b=C/2eSR29sz4frnORx9mOKZfvCDhgRrIz8YVVxJk1mAKHKXSbQbljDb7aeJXhZ1TqEk3kRD
+ uO6OC0G/qfXe/uiEatSLaT6IHJWalM+pcoTLhRI36dJ0Ayl7T/DzLUgGTrNzCcoNKX+VJz
+ sNo9Zhj7mXQf5FBv+UvcmQe1MOkghdE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-FDzXRvsGPu2eiRxjMSi7eA-1; Mon, 08 Sep 2025 05:03:55 -0400
-X-MC-Unique: FDzXRvsGPu2eiRxjMSi7eA-1
-X-Mimecast-MFC-AGG-ID: FDzXRvsGPu2eiRxjMSi7eA_1757322234
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45dd56f0000so24426315e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 02:03:55 -0700 (PDT)
+ us-mta-553-pQ7yjhP3Pv2rJCy_fmWJ3A-1; Mon, 08 Sep 2025 05:02:10 -0400
+X-MC-Unique: pQ7yjhP3Pv2rJCy_fmWJ3A-1
+X-Mimecast-MFC-AGG-ID: pQ7yjhP3Pv2rJCy_fmWJ3A_1757322129
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a15f10f31so28876955e9.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 02:02:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757322234; x=1757927034;
+ d=1e100.net; s=20230601; t=1757322129; x=1757926929;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=AhvUXvW8svR3x22M8R7FvV+xnXAef22ZxCBj7DbJ58U=;
- b=RLXKgouhTKHW6tRBTaQK80s7aPUVsjKvwIHqgSmeOHFzX7SFaaiTrHEsCh1bD5qeWR
- mqYG3XwwdCKFKsQdJmuW4uK2GWRgzPUGenVPF55tB+cUFcNptrVt7mwTEHd/LWh9JLBI
- WyHo2E9/3q6WH4eXG9+va4GggKNi7o0h8SSZDB623pgKCLQ8svIn1nCDqyh1KzyIJBlw
- 2SJL+AYtHdGAuFXd4BjK3wF7/9nx/8XnLjmLG3ReBX25udpFz83swU4poMurzyOAioFJ
- Th0iv+40q/KvxdyNrkmJHnKmq316LTUSqV2giBesZv4iTAsm3Ie1KAMSMGmRfiyINddP
- ermQ==
+ bh=dY1FYqqBalZXG3Fq248Po3+1V3giPHlXujXYqhviE1w=;
+ b=lRFzR97+y1vBwXosL1yW5gKhAIHdo6+xS7yIkKjTDlvqdD9EAJs56co64s7HcwVLKa
+ xKBJ4No0iRO6zzry9RW3AUwn8eG5kWRh8Pg3UNoK6KYoTpvBBK7/bkqE2b+Jz0RK7iUX
+ i+yBT3O/OiCn9ZPAdZScUVTYDBD8sS+D3qVPlTbNOOgyHHILY7eZgQrcgQU+TkUNne+1
+ 0XAkZ5jCjkuN+p9Mz9aOW79DM8uXaybhOn6xxkK6HjLTff/8OBvWjVv1Bj/krTpxazIS
+ k84Ao2yjgmqMq4dmojzFadgACP/oJGrlH6CIobspgdCIrKYe5bRI0gVHQtNXTeF3GrnE
+ Zw4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUMr3iscAS32viGlacFyISaIqYEkkbKRlrWonOGX6nVkLgBYSNejc1GMMkLvNbe4VdgQiI8+UIface@nongnu.org
-X-Gm-Message-State: AOJu0YzrEcqTC0HZOW8ScZJACjPYf8XfObtz761DEa6BR8y9L5erDiNU
- b3MsVbU1xhZaJAX3or6mXZmpvLW2PKTJwfF4YPo0YkWJnYh6uKKCrbZPoa3sXpUYChu+Pb+yTKo
- zl9ZJJ3EQ2XuSa65q0CjyxTY9MJ+ajYW4CAIqXiCbfiiSKcCDkvJX2QLl
-X-Gm-Gg: ASbGncstOzzUFYhz7xmlvbK6oXapV2H872lwZEw3B/K7bYTWButruxzmfpvtytGuAWQ
- DmYL+CUyormeU3lr/FH2GOVgxrDlzxL9g0al7pKD9o447rIe2ZOQMvBiOQrpIh8JTHxuQ+zmRWK
- bZxaljXlzxSZVzvatDfMSNrrgv7NaSakzVomKRX+W1tu2gHNorFWp8aol3Y+p0kVFIZ+t3amOA/
- Hjdd8d50cGE5HXWm0BaOrTGVvyWcD7Zlswwg6b/oS8Q9IJS0TRmU81iPENwTn+1DMNl9fZA3QD/
- WAh/3+gSOLi1ZeRVirqjEdKNdtyaKJOWl4PxOFgrqNzp0FLWX/K4BiQa4cKQ2d/SuNAb6zYgG5k
- eaCA1Vg==
-X-Received: by 2002:a05:600c:4f50:b0:45b:8600:2be1 with SMTP id
- 5b1f17b1804b1-45dddeb70f7mr58828135e9.7.1757322234437; 
- Mon, 08 Sep 2025 02:03:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHScWsXGW6SsjWOSVxfdlSBYBFLI7Tc2z/zrw0Q8n8twpPbFA6jNIjUTp1cIOk07kohoWZqsQ==
-X-Received: by 2002:a05:600c:4f50:b0:45b:8600:2be1 with SMTP id
- 5b1f17b1804b1-45dddeb70f7mr58827765e9.7.1757322234049; 
- Mon, 08 Sep 2025 02:03:54 -0700 (PDT)
+ AJvYcCWbgNJcx1oFHcZ5SZtE473Rfp8PubmLo3g73frVE0a1rQKyZg0P/4L87Lm/fbslT/sW7LKV1J9oKfVX@nongnu.org
+X-Gm-Message-State: AOJu0YxU5HEUNmx030Uhv4WFzijQqllLUQ1xKbe5ixs+OKyeUMISeQ1b
+ yfWX2tjEsnj2slbDOM4lJi801ro7mTKjBo/KYfiVMZ7ZC7rsPXmhqlMnw2umJ0hfCYOIEbdBGOP
+ Y9NXb2vk7uCFoE1pRJ68zy7XcbR/FIlm7ndA9VksYXsnmbm5gLY/bIxFS
+X-Gm-Gg: ASbGncv+8OWA7+6hr83zfp2nR/r2GygZI4y5aRMJ4zYa+gkNgcU8jNAqUs84CXHEJfo
+ 88G1WMVrmtYZIf5ryB2n917ohqdmmQdDZTRuHOG+PxD3nUkmCrXTLbP+qUgOueCQ+qNZLJZ+zQX
+ O3+5F3Td2mTa1SW1ktO5lTJJOSnxV+hQLXHB8qLSKVVCBkYIiiRYM5aXVrwVbIQjKfAhHstjj+A
+ 359u6MEgen3tQ3ICc567BoEji2SE1IpZpzFVA13HkXTGlLz61gw4B9HpMnbJT72EmVvDBEYOgmm
+ HiYb+U+vrlebNnsdMlAsEGT50iA2hgoVZnrGyfN1QBw0t9s2mMaJGbkeERDIBjJyT3UH+bErE5K
+ m0ulDDQ==
+X-Received: by 2002:a05:600c:8b5c:b0:45b:9b9f:88cb with SMTP id
+ 5b1f17b1804b1-45dd5b78584mr95536825e9.16.1757322128897; 
+ Mon, 08 Sep 2025 02:02:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3WVA3UnL4Yw3tRBj87z15x/SiJnqbyZSgM3VHmzs8+n80yu0wSPHpZMVpAISBgRP66O1H1g==
+X-Received: by 2002:a05:600c:8b5c:b0:45b:9b9f:88cb with SMTP id
+ 5b1f17b1804b1-45dd5b78584mr95536525e9.16.1757322128483; 
+ Mon, 08 Sep 2025 02:02:08 -0700 (PDT)
 Received: from [192.168.0.5] (ltea-047-064-114-112.pools.arcor-ip.net.
  [47.64.114.112]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45dd3aadbcesm161002545e9.17.2025.09.08.02.03.52
+ ffacd0b85a97d-3e2f6af9791sm12881241f8f.26.2025.09.08.02.02.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 02:03:53 -0700 (PDT)
-Message-ID: <15775d9f-3644-4b26-ba9b-483b3dfd4922@redhat.com>
-Date: Mon, 8 Sep 2025 11:03:52 +0200
+ Mon, 08 Sep 2025 02:02:07 -0700 (PDT)
+Message-ID: <b71c590e-ad55-498b-ab48-fee144e9d419@redhat.com>
+Date: Mon, 8 Sep 2025 11:02:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] tests/guest-debug: Format comments
+Subject: Re: [PATCH v2 1/5] tests/guest-debug: Make QEMU optional in
+ run-test.py
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  alex.bennee@linaro.org, berrange@redhat.com
 Cc: qemu-arm@nongnu.org, 1844144@gmail.com
 References: <20250904154640.52687-1-gustavo.romero@linaro.org>
- <20250904154640.52687-3-gustavo.romero@linaro.org>
+ <20250904154640.52687-2-gustavo.romero@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,9 +128,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250904154640.52687-3-gustavo.romero@linaro.org>
+In-Reply-To: <20250904154640.52687-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -156,15 +157,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2025 17.46, Gustavo Romero wrote:
-> Capitalize and add periods to comments.
+> This commit makes QEMU optional in run-test.py, allowing it to be used
+> as a GDB runner, i.e., to call GDB and pass a test script to it without
+> launching QEMU. In this configuration, it is the test script’s duty to
+> configure and run the VMs that GDB connects to.
+> 
+> sys.argv passed via -ex now includes the full path to the test script in
+> addition to the script’s arguments, which allows unittest introspection
+> to work properly in case it is used in the test script.
+> 
+> The --binary option continues to be required when --qemu is passed.
 > 
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->   tests/guest-debug/run-test.py | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
-
-Looks like it's currently a mix in the script, so it might be a good idea 
-indeed to standardize on one format here.
+>   tests/guest-debug/run-test.py | 60 +++++++++++++++++++----------------
+>   1 file changed, 33 insertions(+), 27 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
