@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46AE7CAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB9FCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvZTT-0006xh-Ae; Mon, 08 Sep 2025 06:51:51 -0400
+	id 1uvZSe-0006Ag-64; Mon, 08 Sep 2025 06:51:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZTR-0006vs-Qy
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uvZSY-00067O-7s
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZT9-0006CB-Tv
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:48 -0400
+ id 1uvZSI-000604-I3
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:50:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757328683;
+ s=mimecast20190719; t=1757328628;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J4aRL69bOB4c5VuxsEr4jSWWGbiTbMyhnBVfKJtmfVc=;
- b=haMCBRGjAT6nUT02Q65KT7z/5p8XD46yvOBadjVE0oITmhI5ZkAiBQgYaNNzWcXGNzy9B6
- LEJEE3KGTIbDxMQrZaDyeTBXT6STUtPJbwrULDFASQOnRdy3kqs0lE7uOGLb24QLdc1+a1
- oTWexRCYIkJSxAnw/IqdoXG0iV1BUOI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kdCkDQsW/IWpZoK1t5qLNlMlJI3HAL7+sHDe6qRvLs4=;
+ b=CMJGlnIb1wQ4ItTM82RZK1KeaPFbSuYxm2XUJPQuFb4N/TjVBHzGqWnuQA2Al1bJiUZwuG
+ Rzg5+TW7bD1NM7/Zobxn5LDhvb+CeB6mDYiDdWjaCm5stY43F69nGyS/z6G6AxX2ZzWkio
+ KIDWL1KpmmpX4vVnW09b+AKRhFZJzf4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-EA00SePpNXuO9d-GNxRD3A-1; Mon, 08 Sep 2025 06:51:21 -0400
-X-MC-Unique: EA00SePpNXuO9d-GNxRD3A-1
-X-Mimecast-MFC-AGG-ID: EA00SePpNXuO9d-GNxRD3A_1757328680
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45dda7c0e5eso24085165e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:51:21 -0700 (PDT)
+ us-mta-226-SsESdCYpN5C3BgfiisHEhw-1; Mon, 08 Sep 2025 06:50:27 -0400
+X-MC-Unique: SsESdCYpN5C3BgfiisHEhw-1
+X-Mimecast-MFC-AGG-ID: SsESdCYpN5C3BgfiisHEhw_1757328626
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3df9f185c7cso3176955f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:50:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757328679; x=1757933479;
+ d=1e100.net; s=20230601; t=1757328625; x=1757933425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J4aRL69bOB4c5VuxsEr4jSWWGbiTbMyhnBVfKJtmfVc=;
- b=AeNEPlDenBCzSBSqMm1y4llejx/x8EUTYHvJkPYz+fGSPolizzeRt1f04F+eCA0pkC
- ayjDoaqY8VPvfiU5HHwM2/2nT4IEgi6JcUD2XFwNEzN3dZeviiqLDCQucVetvhdaqQTi
- OhpxI44khe5FzqXgRECoLJPsbBfqaDxhuIPn6TBKa3cGla1LgijENdbj5Xk+dr+RE1dY
- h4u6rJgHsUKXaWijd9SRp3wGj+WGAZhl73DxjrgQhbNqao4Nrmjl+Urk0K71w4/JJbv9
- RHUMBSr3sKqpyDkS8Cjk8quk590KU203j7HrqUgyZ63jTTUAUwHG0Q7dDo6DoLqIHcSr
- y89A==
-X-Gm-Message-State: AOJu0Yw9b0kKjGS0ELI/XFpxqzfEaTO8xhyY+tPHWfP5CGxFYxKFebx4
- EXjl8rxV1SmPCOyVNt4T/dwi2A6tiDXTg2+V2yLgKnvmPWBFQc+pEEtrz4fpxCFFpvQYuWa89Sf
- VzKKypPVrBkI21koYSjY/TdWweER9P6ltEjqnVBCvw2QSM+TRzHgKcSD6/X0VmRN6bKsWHEe35U
- Ftsrh7vA9EQQeXwZil/FBIPy31jPMDGR4ANa32yqfr
-X-Gm-Gg: ASbGncvZZ/whK/YQsGTF/aN/RsyKO7EhPv+TBHpcJy/bqqohkr4zRrm79QaPuHwzrDt
- uGOFMjT1XoTk1SncHbE9UVfxj4kj9gedKwBCQ8I1htxnEXQxf3al2vV+8Ev+XSgj0qkrj77HWDz
- 4JcAGTuSWwCcbAQdA9pG4UU+JvRZdHTxt+s7SRnekYV113hSmIItUclty9RJGtyrgIfcLQJoVSk
- Jyzuo6wzoE75vGAQirdziQwwdY5JTP+WAk26vy+TjtRCJhE6F+m86flttfTEDT5EjvFoDLbHWw9
- suiQpJ8TZaJXbt2oDSkJuh6vPgC5P6LXNw02dBEFZhbcjpZvxq0Z4IM2n6pyoU3SGT0THd4MCJG
- OOebHoz9z590E9+W1W7iBJlo/uqZPF+m37gNsQr303CU=
-X-Received: by 2002:a05:600c:3b8b:b0:458:a7b5:9f6c with SMTP id
- 5b1f17b1804b1-45dddec2e09mr66143205e9.11.1757328679328; 
- Mon, 08 Sep 2025 03:51:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbjAXHaL9wQ3Fnvau8TaQ7s94qDpnQkzMhP4ZDHXmX3tQ3sh+ApMGX7IyQKmNReW8h0zKNHg==
-X-Received: by 2002:a05:600c:3b8b:b0:458:a7b5:9f6c with SMTP id
- 5b1f17b1804b1-45dddec2e09mr66142935e9.11.1757328678765; 
- Mon, 08 Sep 2025 03:51:18 -0700 (PDT)
+ bh=kdCkDQsW/IWpZoK1t5qLNlMlJI3HAL7+sHDe6qRvLs4=;
+ b=YyBtnkborEr2slwmQ0o3ILs1LO/fjeRzrbigR0jEQ7vuncqDoby30WLCv6MzyCnzpK
+ NJ7OxFLWr1izlAYrdki3jxvd+DcrWzIlkmgD/oax3aXF90rvMUGr0Q2XkIyU+znbvDfw
+ 7Xlr8/HvGy5HPMtHaInK/FhRFvX4BskVwYh5/NOy8E8SkJReVnL/to74q0LOWPBuwWFF
+ MfuBIQdQ9pKpxJWPFqKNzBNMkXp4F35a9m1xtFRkdsJq3nMbUHo3UHBf2NonqZwDJvjF
+ +jeXgUsbHKPICwctb/1O3tf6YgGuLrhkzJaoNMyiLpJirWK+o0mm2LA3smHYBEbs99hA
+ R18Q==
+X-Gm-Message-State: AOJu0Yz6tAIdoAGQ2U2P7vHJ9XPy4Riq6hp1pRi27wf+bT6/HzEEYKqe
+ XzcfUbA8/IsITAjeMpiapLknPeP+fumkzzcqahU1ee6QG+G8ZxzWFlFqTi9R5mYENtSGenjTRnJ
+ CHVUJHjBRTUOR/6ue8EjG/c6rU7wUootmWsmPH+n9cThMSatRs/5MKoO/UEOn5fERj/lDC+eSb/
+ 89IE2sukyiAr13DPk661s213iHdnn0kBpJJoSZEi83
+X-Gm-Gg: ASbGncu2K4Pvvw963ge3smXPmiXEpOaeGbdyZ1dHVyU6xBZwnmvBjTkc9Jq7+guGt3y
+ tX7KP7B0+0xknzPaN0duhhk5YNlZLxynsD2xMBcvfZH5uk7XLhoCjUQ1szIFpLvTkvhoBBUK5qC
+ jr6/3TRlbmf34VCDLQVNc6V1+DP5gzMlZOGrBKqtutk1o/UvN895goDwSST8A62cLhrIBwnLM8T
+ Z684wXLkj3FGDAUVKSYpX+SQKPITtu/PpzMJf3Qw6YtnMnHd2B9bDFkQVL/jO2XgLBsHsGR+kaZ
+ 0kQQ05IOEpqvDShitBjKv8fogVk/rvyP4654qkVMdSfrNyKp6xDkTcgvC0VB7N/BIPazSR2hCV2
+ BRSa5e3adTp+7cIlLEGwPQd+xEaEaaRnHshmekaOzGD0=
+X-Received: by 2002:a05:6000:438a:b0:3e3:61ba:696f with SMTP id
+ ffacd0b85a97d-3e63736d06dmr4972029f8f.2.1757328624875; 
+ Mon, 08 Sep 2025 03:50:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFG8BjbVMKvfumK3Tkb+RJiqqn8co+hIzyMd7EuVbcvlu0hOWng1zc3He58WQ+fsp3l2bH7uA==
+X-Received: by 2002:a05:6000:438a:b0:3e3:61ba:696f with SMTP id
+ ffacd0b85a97d-3e63736d06dmr4971981f8f.2.1757328623913; 
+ Mon, 08 Sep 2025 03:50:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45ddf1765e8sm93806955e9.22.2025.09.08.03.51.15
+ 5b1f17b1804b1-45de15de2b7sm79491605e9.14.2025.09.08.03.50.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 03:51:15 -0700 (PDT)
+ Mon, 08 Sep 2025 03:50:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 30/33] rust: re-export qemu macros from common/qom/hwcore
-Date: Mon,  8 Sep 2025 12:50:02 +0200
-Message-ID: <20250908105005.2119297-31-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 07/33] rust: vmstate: convert to use builder pattern
+Date: Mon,  8 Sep 2025 12:49:39 +0200
+Message-ID: <20250908105005.2119297-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,607 +109,1103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-This is just a bit nicer.
+Similar to MemoryRegionOps, the builder pattern has two advantages:
+1) it makes it possible to build a VMStateDescription that knows which
+types it will be invoked on; 2) it provides a way to wrap the callbacks
+and let devices avoid "unsafe".
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250827104147.717203-22-marcandre.lureau@redhat.com
+Unfortunately, building a static VMStateDescription requires the
+builder methods to be "const", and because the VMStateFields are
+*also* static, this requires const_refs_static.  So this requires
+Rust 1.83.0.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst                 | 2 +-
- rust/Cargo.lock                     | 8 +-------
- rust/chardev/Cargo.toml             | 1 -
- rust/chardev/meson.build            | 2 +-
- rust/chardev/src/chardev.rs         | 2 +-
- rust/common/Cargo.toml              | 1 +
- rust/common/meson.build             | 2 +-
- rust/common/src/lib.rs              | 2 ++
- rust/common/src/opaque.rs           | 4 +---
- rust/hw/char/pl011/Cargo.toml       | 1 -
- rust/hw/char/pl011/meson.build      | 1 -
- rust/hw/char/pl011/src/device.rs    | 4 ++--
- rust/hw/char/pl011/src/registers.rs | 2 +-
- rust/hw/core/Cargo.toml             | 2 +-
- rust/hw/core/meson.build            | 2 +-
- rust/hw/core/src/irq.rs             | 2 +-
- rust/hw/core/src/lib.rs             | 1 +
- rust/hw/core/src/qdev.rs            | 4 ++--
- rust/hw/core/src/sysbus.rs          | 2 +-
- rust/hw/core/tests/tests.rs         | 4 ++--
- rust/hw/timer/hpet/Cargo.toml       | 1 -
- rust/hw/timer/hpet/meson.build      | 1 -
- rust/hw/timer/hpet/src/device.rs    | 6 +++---
- rust/meson.build                    | 3 ++-
- rust/migration/Cargo.toml           | 1 -
- rust/qom/src/lib.rs                 | 2 ++
- rust/qom/src/qom.rs                 | 4 ++--
- rust/system/Cargo.toml              | 1 -
- rust/system/meson.build             | 2 +-
- rust/system/src/memory.rs           | 2 +-
- rust/tests/Cargo.toml               | 1 -
- rust/util/Cargo.toml                | 1 -
- rust/util/meson.build               | 2 +-
- rust/util/src/timer.rs              | 4 ++--
- 34 files changed, 35 insertions(+), 45 deletions(-)
+ docs/devel/rust.rst                  |   2 +-
+ rust/hw/char/pl011/src/device.rs     | 131 +++++++--------
+ rust/hw/timer/hpet/src/device.rs     | 162 ++++++++----------
+ rust/qemu-api/src/errno.rs           |  11 +-
+ rust/qemu-api/src/qdev.rs            |   6 +-
+ rust/qemu-api/src/vmstate.rs         | 242 ++++++++++++++++++++++++++-
+ rust/qemu-api/tests/tests.rs         |  16 +-
+ rust/qemu-api/tests/vmstate_tests.rs | 124 +++++++-------
+ 8 files changed, 450 insertions(+), 244 deletions(-)
 
 diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 20d15347def..29eb48af35b 100644
+index 98e3a33a3ce..aca29e55c05 100644
 --- a/docs/devel/rust.rst
 +++ b/docs/devel/rust.rst
-@@ -278,7 +278,7 @@ a raw pointer, for use in calls to C functions.  It can be used for
- example as follows::
+@@ -162,7 +162,7 @@ module           status
+ ``qom``          stable
+ ``sysbus``       stable
+ ``timer``        stable
+-``vmstate``      proof of concept
++``vmstate``      stable
+ ``zeroable``     stable
+ ================ ======================
  
-     #[repr(transparent)]
--    #[derive(Debug, qemu_api_macros::Wrapper)]
-+    #[derive(Debug, common::Wrapper)]
-     pub struct Object(Opaque<bindings::Object>);
- 
- where the special ``derive`` macro provides useful methods such as
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index ac79c6a34a9..eea928621a7 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -58,7 +58,6 @@ dependencies = [
-  "bql",
-  "common",
-  "migration",
-- "qemu_macros",
-  "qom",
-  "util",
- ]
-@@ -68,6 +67,7 @@ name = "common"
- version = "0.1.0"
- dependencies = [
-  "libc",
-+ "qemu_macros",
- ]
- 
- [[package]]
-@@ -93,7 +93,6 @@ dependencies = [
-  "common",
-  "hwcore",
-  "migration",
-- "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -133,7 +132,6 @@ name = "migration"
- version = "0.1.0"
- dependencies = [
-  "common",
-- "qemu_macros",
-  "util",
- ]
- 
-@@ -149,7 +147,6 @@ dependencies = [
-  "common",
-  "hwcore",
-  "migration",
-- "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -232,7 +229,6 @@ name = "system"
- version = "0.1.0"
- dependencies = [
-  "common",
-- "qemu_macros",
-  "qom",
-  "util",
- ]
-@@ -246,7 +242,6 @@ dependencies = [
-  "common",
-  "hwcore",
-  "migration",
-- "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -266,7 +261,6 @@ dependencies = [
-  "common",
-  "foreign",
-  "libc",
-- "qemu_macros",
- ]
- 
- [[package]]
-diff --git a/rust/chardev/Cargo.toml b/rust/chardev/Cargo.toml
-index c1391773078..3e77972546e 100644
---- a/rust/chardev/Cargo.toml
-+++ b/rust/chardev/Cargo.toml
-@@ -18,7 +18,6 @@ bql = { path = "../bql" }
- migration = { path = "../migration" }
- qom = { path = "../qom" }
- util = { path = "../util" }
--qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
-index a2fa3268d21..370895c111f 100644
---- a/rust/chardev/meson.build
-+++ b/rust/chardev/meson.build
-@@ -38,4 +38,4 @@ _chardev_rs = static_library(
-   dependencies: [common_rs, qemu_macros],
- )
- 
--chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [qemu_macros, chardev, qemuutil])
-+chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev, qemuutil])
-diff --git a/rust/chardev/src/chardev.rs b/rust/chardev/src/chardev.rs
-index cb6f99398eb..2014479674f 100644
---- a/rust/chardev/src/chardev.rs
-+++ b/rust/chardev/src/chardev.rs
-@@ -26,7 +26,7 @@
- 
- /// A safe wrapper around [`bindings::Chardev`].
- #[repr(transparent)]
--#[derive(qemu_macros::Wrapper)]
-+#[derive(common::Wrapper)]
- pub struct Chardev(Opaque<bindings::Chardev>);
- 
- pub type ChardevClass = bindings::ChardevClass;
-diff --git a/rust/common/Cargo.toml b/rust/common/Cargo.toml
-index 5e106427e80..0e1b4fc5050 100644
---- a/rust/common/Cargo.toml
-+++ b/rust/common/Cargo.toml
-@@ -14,6 +14,7 @@ rust-version.workspace = true
- 
- [dependencies]
- libc.workspace = true
-+qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/common/meson.build b/rust/common/meson.build
-index 230a967760d..b805e0faf57 100644
---- a/rust/common/meson.build
-+++ b/rust/common/meson.build
-@@ -19,7 +19,7 @@ _common_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _common_cfg,
--  dependencies: [libc_rs],
-+  dependencies: [libc_rs, qemu_macros],
- )
- 
- common_rs = declare_dependency(link_with: [_common_rs])
-diff --git a/rust/common/src/lib.rs b/rust/common/src/lib.rs
-index 25216503aab..8311bf945da 100644
---- a/rust/common/src/lib.rs
-+++ b/rust/common/src/lib.rs
-@@ -1,5 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
-+pub use qemu_macros::{TryInto, Wrapper};
-+
- pub mod assertions;
- 
- pub mod bitops;
-diff --git a/rust/common/src/opaque.rs b/rust/common/src/opaque.rs
-index 3b3263acaa3..c941fb45462 100644
---- a/rust/common/src/opaque.rs
-+++ b/rust/common/src/opaque.rs
-@@ -192,7 +192,7 @@ pub unsafe fn new() -> Self {
- 
- /// Annotates [`Self`] as a transparent wrapper for another type.
- ///
--/// Usually defined via the [`qemu_macros::Wrapper`] derive macro.
-+/// Usually defined via the [`crate::Wrapper`] derive macro.
- ///
- /// # Examples
- ///
-@@ -227,8 +227,6 @@ pub unsafe fn new() -> Self {
- /// ```
- ///
- /// They are not defined here to allow them to be `const`.
--///
--/// [`qemu_macros::Wrapper`]: ../../qemu_macros/derive.Wrapper.html
- pub unsafe trait Wrapper {
-     type Wrapped;
- }
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index 285d25c2178..b2418abc4bf 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -24,7 +24,6 @@ qom = { path = "../../../qom" }
- chardev = { path = "../../../chardev" }
- system = { path = "../../../system" }
- hwcore = { path = "../../../hw/core" }
--qemu_macros = { path = "../../../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index a14993f6921..628a5238702 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -35,7 +35,6 @@ _libpl011_rs = static_library(
-     util_rs,
-     migration_rs,
-     bql_rs,
--    qemu_macros,
-     qom_rs,
-     chardev_rs,
-     system_rs,
 diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 85626a969d4..1b4587d5f60 100644
+index 37944635202..21611d9c099 100644
 --- a/rust/hw/char/pl011/src/device.rs
 +++ b/rust/hw/char/pl011/src/device.rs
-@@ -97,7 +97,7 @@ pub struct PL011Registers {
- }
- 
- #[repr(C)]
--#[derive(qemu_macros::Object, qemu_macros::Device)]
-+#[derive(qom::Object, hwcore::Device)]
- /// PL011 Device Model in QEMU
- pub struct PL011State {
-     pub parent_obj: ParentField<SysBusDevice>,
-@@ -683,7 +683,7 @@ pub fn post_load(&self, _version_id: u8) -> Result<(), migration::InvalidError>
- }
- 
- #[repr(C)]
--#[derive(qemu_macros::Object, qemu_macros::Device)]
-+#[derive(qom::Object, hwcore::Device)]
- /// PL011 Luminary device model.
- pub struct PL011Luminary {
-     parent_obj: ParentField<PL011State>,
-diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
-index a1c41347ed5..0c3a4d7d214 100644
---- a/rust/hw/char/pl011/src/registers.rs
-+++ b/rust/hw/char/pl011/src/registers.rs
-@@ -16,7 +16,7 @@
- #[doc(alias = "offset")]
- #[allow(non_camel_case_types)]
- #[repr(u64)]
--#[derive(Debug, Eq, PartialEq, qemu_macros::TryInto)]
-+#[derive(Debug, Eq, PartialEq, common::TryInto)]
- pub enum RegisterOffset {
-     /// Data Register
-     ///
-diff --git a/rust/hw/core/Cargo.toml b/rust/hw/core/Cargo.toml
-index 0eb9ffee263..9a9aa517082 100644
---- a/rust/hw/core/Cargo.toml
-+++ b/rust/hw/core/Cargo.toml
-@@ -13,6 +13,7 @@ repository.workspace = true
- rust-version.workspace = true
- 
- [dependencies]
-+qemu_macros = { path = "../../qemu-macros" }
- common = { path = "../../common" }
- bql = { path = "../../bql" }
- qom = { path = "../../qom" }
-@@ -20,7 +21,6 @@ chardev = { path = "../../chardev" }
- migration = { path = "../../migration" }
- system = { path = "../../system" }
- util = { path = "../../util" }
--qemu_macros = { path = "../../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index 67eacf854fe..81d8c77f9ad 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -71,7 +71,7 @@ test('rust-hwcore-rs-integration',
-         override_options: ['rust_std=2021', 'build.rust_std=2021'],
-         rust_args: ['--test'],
-         install: false,
--        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, qemu_macros, util_rs]),
-+        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_rs]),
-     args: [
-         '--test', '--test-threads', '1',
-         '--format', 'pretty',
-diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
-index d8d964cad27..e0d7784d97b 100644
---- a/rust/hw/core/src/irq.rs
-+++ b/rust/hw/core/src/irq.rs
-@@ -18,7 +18,7 @@
- 
- /// An opaque wrapper around [`bindings::IRQState`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct IRQState(Opaque<bindings::IRQState>);
- 
- /// Interrupt sources are used by devices to pass changes to a value (typically
-diff --git a/rust/hw/core/src/lib.rs b/rust/hw/core/src/lib.rs
-index c5588d9bc27..b40801eb843 100644
---- a/rust/hw/core/src/lib.rs
-+++ b/rust/hw/core/src/lib.rs
-@@ -1,5 +1,6 @@
+@@ -3,9 +3,8 @@
  // SPDX-License-Identifier: GPL-2.0-or-later
  
-+pub use qemu_macros::Device;
- pub use qom;
+ use std::{
+-    ffi::{c_int, c_void, CStr},
+-    mem::size_of,
+-    ptr::NonNull,
++    ffi::CStr,
++    mem::size_of
+ };
  
- pub mod bindings;
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index c9faf44a71d..71b9ef141c3 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -23,7 +23,7 @@
+ use qemu_api::{
+@@ -21,9 +20,8 @@
+     static_assert,
+     sysbus::{SysBusDevice, SysBusDeviceImpl},
+     uninit_field_mut,
+-    vmstate::VMStateDescription,
++    vmstate::{self, VMStateDescription, VMStateDescriptionBuilder},
+     vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_unused,
+-    zeroable::Zeroable,
+ };
  
- /// A safe wrapper around [`bindings::Clock`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct Clock(Opaque<bindings::Clock>);
- 
- unsafe impl Send for Clock {}
-@@ -31,7 +31,7 @@ unsafe impl Sync for Clock {}
- 
- /// A safe wrapper around [`bindings::DeviceState`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct DeviceState(Opaque<bindings::DeviceState>);
- 
- unsafe impl Send for DeviceState {}
-diff --git a/rust/hw/core/src/sysbus.rs b/rust/hw/core/src/sysbus.rs
-index 92c7449b802..282315fce99 100644
---- a/rust/hw/core/src/sysbus.rs
-+++ b/rust/hw/core/src/sysbus.rs
-@@ -19,7 +19,7 @@
- 
- /// A safe wrapper around [`bindings::SysBusDevice`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct SysBusDevice(Opaque<bindings::SysBusDevice>);
- 
- unsafe impl Send for SysBusDevice {}
-diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
-index 2f08b8f3bfe..247d812866d 100644
---- a/rust/hw/core/tests/tests.rs
-+++ b/rust/hw/core/tests/tests.rs
-@@ -17,7 +17,7 @@
-     .build();
- 
- #[repr(C)]
--#[derive(qemu_macros::Object, qemu_macros::Device)]
-+#[derive(qom::Object, hwcore::Device)]
- pub struct DummyState {
-     parent: ParentField<DeviceState>,
-     #[property(rename = "migrate-clk", default = true)]
-@@ -54,7 +54,7 @@ impl DeviceImpl for DummyState {
+ use crate::registers::{self, Interrupt, RegisterOffset};
+@@ -177,8 +175,8 @@ impl ObjectImpl for PL011State {
  }
  
- #[repr(C)]
--#[derive(qemu_macros::Object, qemu_macros::Device)]
-+#[derive(qom::Object, hwcore::Device)]
- pub struct DummyChildState {
-     parent: ParentField<DummyState>,
+ impl DeviceImpl for PL011State {
+-    fn vmsd() -> Option<&'static VMStateDescription> {
+-        Some(&VMSTATE_PL011)
++    fn vmsd() -> Option<VMStateDescription<Self>> {
++        Some(VMSTATE_PL011)
+     }
+     const REALIZE: Option<fn(&Self) -> qemu_api::Result<()>> = Some(Self::realize);
  }
-diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
-index 08bf97af553..f781b28d8b3 100644
---- a/rust/hw/timer/hpet/Cargo.toml
-+++ b/rust/hw/timer/hpet/Cargo.toml
-@@ -17,7 +17,6 @@ migration = { path = "../../../migration" }
- bql = { path = "../../../bql" }
- qom = { path = "../../../qom" }
- system = { path = "../../../system" }
--qemu_macros = { path = "../../../qemu-macros" }
- hwcore = { path = "../../../hw/core" }
+@@ -467,10 +465,10 @@ pub fn fifo_rx_put(&mut self, value: registers::Data) -> bool {
+         false
+     }
  
- [lints]
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index 8ab26630d95..b6bb9477f0c 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -8,7 +8,6 @@ _libhpet_rs = static_library(
-     util_rs,
-     migration_rs,
-     bql_rs,
--    qemu_macros,
-     qom_rs,
-     system_rs,
-     hwcore_rs,
+-    pub fn post_load(&mut self) -> Result<(), ()> {
++    pub fn post_load(&mut self) -> Result<(), vmstate::InvalidError> {
+         /* Sanity-check input state */
+         if self.read_pos >= self.read_fifo.len() || self.read_count > self.read_fifo.len() {
+-            return Err(());
++            return Err(vmstate::InvalidError);
+         }
+ 
+         if !self.fifo_enabled() && self.read_count > 0 && self.read_pos > 0 {
+@@ -529,6 +527,10 @@ const fn clock_update(&self, _event: ClockEvent) {
+         /* pl011_trace_baudrate_change(s); */
+     }
+ 
++    pub fn clock_needed(&self) -> bool {
++        self.migrate_clock
++    }
++
+     fn post_init(&self) {
+         self.init_mmio(&self.iomem);
+         for irq in self.interrupts.iter() {
+@@ -645,7 +647,7 @@ fn update(&self) {
+         }
+     }
+ 
+-    pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
++    pub fn post_load(&self, _version_id: u8) -> Result<(), vmstate::InvalidError> {
+         self.regs.borrow_mut().post_load()
+     }
+ }
+@@ -715,68 +717,53 @@ impl DeviceImpl for PL011Luminary {}
+ impl ResettablePhasesImpl for PL011Luminary {}
+ impl SysBusDeviceImpl for PL011Luminary {}
+ 
+-extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
+-    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    unsafe { state.as_ref().migrate_clock }
+-}
+-
+ /// Migration subsection for [`PL011State`] clock.
+-static VMSTATE_PL011_CLOCK: VMStateDescription = VMStateDescription {
+-    name: c"pl011/clock".as_ptr(),
+-    version_id: 1,
+-    minimum_version_id: 1,
+-    needed: Some(pl011_clock_needed),
+-    fields: vmstate_fields! {
+-        vmstate_clock!(PL011State, clock),
+-    },
+-    ..Zeroable::ZERO
+-};
++static VMSTATE_PL011_CLOCK: VMStateDescription<PL011State> =
++    VMStateDescriptionBuilder::<PL011State>::new()
++        .name(c"pl011/clock")
++        .version_id(1)
++        .minimum_version_id(1)
++        .needed(&PL011State::clock_needed)
++        .fields(vmstate_fields! {
++             vmstate_clock!(PL011State, clock),
++        })
++        .build();
+ 
+-extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+-    let state = NonNull::new(opaque).unwrap().cast::<PL011State>();
+-    let result = unsafe { state.as_ref().post_load(version_id as u32) };
+-    if result.is_err() {
+-        -1
+-    } else {
+-        0
+-    }
+-}
++static VMSTATE_PL011_REGS: VMStateDescription<PL011Registers> =
++    VMStateDescriptionBuilder::<PL011Registers>::new()
++        .name(c"pl011/regs")
++        .version_id(2)
++        .minimum_version_id(2)
++        .fields(vmstate_fields! {
++            vmstate_of!(PL011Registers, flags),
++            vmstate_of!(PL011Registers, line_control),
++            vmstate_of!(PL011Registers, receive_status_error_clear),
++            vmstate_of!(PL011Registers, control),
++            vmstate_of!(PL011Registers, dmacr),
++            vmstate_of!(PL011Registers, int_enabled),
++            vmstate_of!(PL011Registers, int_level),
++            vmstate_of!(PL011Registers, read_fifo),
++            vmstate_of!(PL011Registers, ilpr),
++            vmstate_of!(PL011Registers, ibrd),
++            vmstate_of!(PL011Registers, fbrd),
++            vmstate_of!(PL011Registers, ifl),
++            vmstate_of!(PL011Registers, read_pos),
++            vmstate_of!(PL011Registers, read_count),
++            vmstate_of!(PL011Registers, read_trigger),
++        })
++        .build();
+ 
+-static VMSTATE_PL011_REGS: VMStateDescription = VMStateDescription {
+-    name: c"pl011/regs".as_ptr(),
+-    version_id: 2,
+-    minimum_version_id: 2,
+-    fields: vmstate_fields! {
+-        vmstate_of!(PL011Registers, flags),
+-        vmstate_of!(PL011Registers, line_control),
+-        vmstate_of!(PL011Registers, receive_status_error_clear),
+-        vmstate_of!(PL011Registers, control),
+-        vmstate_of!(PL011Registers, dmacr),
+-        vmstate_of!(PL011Registers, int_enabled),
+-        vmstate_of!(PL011Registers, int_level),
+-        vmstate_of!(PL011Registers, read_fifo),
+-        vmstate_of!(PL011Registers, ilpr),
+-        vmstate_of!(PL011Registers, ibrd),
+-        vmstate_of!(PL011Registers, fbrd),
+-        vmstate_of!(PL011Registers, ifl),
+-        vmstate_of!(PL011Registers, read_pos),
+-        vmstate_of!(PL011Registers, read_count),
+-        vmstate_of!(PL011Registers, read_trigger),
+-    },
+-    ..Zeroable::ZERO
+-};
+-
+-pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
+-    name: c"pl011".as_ptr(),
+-    version_id: 2,
+-    minimum_version_id: 2,
+-    post_load: Some(pl011_post_load),
+-    fields: vmstate_fields! {
+-        vmstate_unused!(core::mem::size_of::<u32>()),
+-        vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
+-    },
+-    subsections: vmstate_subsections! {
+-        VMSTATE_PL011_CLOCK
+-    },
+-    ..Zeroable::ZERO
+-};
++pub const VMSTATE_PL011: VMStateDescription<PL011State> =
++    VMStateDescriptionBuilder::<PL011State>::new()
++        .name(c"pl011")
++        .version_id(2)
++        .minimum_version_id(2)
++        .post_load(&PL011State::post_load)
++        .fields(vmstate_fields! {
++            vmstate_unused!(core::mem::size_of::<u32>()),
++            vmstate_struct!(PL011State, regs, &VMSTATE_PL011_REGS, BqlRefCell<PL011Registers>),
++        })
++        .subsections(vmstate_subsections! {
++             VMSTATE_PL011_CLOCK
++        })
++        .build();
 diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 07e0f639fc4..3cfbe9c32bb 100644
+index 01d5a0dd70c..955cf869ff6 100644
 --- a/rust/hw/timer/hpet/src/device.rs
 +++ b/rust/hw/timer/hpet/src/device.rs
-@@ -97,7 +97,7 @@
- /// Timer N Interrupt Routing Capability (bits 32:63)
- const HPET_TN_CFG_INT_ROUTE_CAP_SHIFT: usize = 32;
- 
--#[derive(qemu_macros::TryInto)]
-+#[derive(common::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
- /// Timer registers, masked by 0x18
-@@ -110,7 +110,7 @@ enum TimerRegister {
-     ROUTE = 16,
- }
- 
--#[derive(qemu_macros::TryInto)]
-+#[derive(common::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
- /// Global registers
-@@ -520,7 +520,7 @@ fn write(&mut self, reg: TimerRegister, value: u64, shift: u32, len: u32) {
- 
- /// HPET Event Timer Block Abstraction
- #[repr(C)]
--#[derive(qemu_macros::Object)]
-+#[derive(qom::Object)]
- pub struct HPETState {
-     parent_obj: ParentField<SysBusDevice>,
-     iomem: MemoryRegion,
-diff --git a/rust/meson.build b/rust/meson.build
-index bd9b9cb83ea..c7bd6aba45f 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -20,8 +20,9 @@ proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
- 
- genrs = []
- 
--subdir('common')
- subdir('qemu-macros')
-+
-+subdir('common')
- subdir('bits')
- subdir('util')
- subdir('migration')
-diff --git a/rust/migration/Cargo.toml b/rust/migration/Cargo.toml
-index 66af81e0a35..708bfaaa682 100644
---- a/rust/migration/Cargo.toml
-+++ b/rust/migration/Cargo.toml
-@@ -15,7 +15,6 @@ rust-version.workspace = true
- [dependencies]
- common = { path = "../common" }
- util = { path = "../util" }
--qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/qom/src/lib.rs b/rust/qom/src/lib.rs
-index 204c6fea2ff..24c44fc2afb 100644
---- a/rust/qom/src/lib.rs
-+++ b/rust/qom/src/lib.rs
-@@ -1,5 +1,7 @@
+@@ -3,7 +3,7 @@
  // SPDX-License-Identifier: GPL-2.0-or-later
  
-+pub use qemu_macros::Object;
+ use std::{
+-    ffi::{c_int, c_void, CStr},
++    ffi::CStr,
+     mem::MaybeUninit,
+     pin::Pin,
+     ptr::{addr_of_mut, null_mut, NonNull},
+@@ -27,9 +27,8 @@
+     sysbus::{SysBusDevice, SysBusDeviceImpl},
+     timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
+     uninit_field_mut,
+-    vmstate::VMStateDescription,
++    vmstate::{self, VMStateDescription, VMStateDescriptionBuilder},
+     vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_validate,
+-    zeroable::Zeroable,
+ };
+ 
+ use crate::fw_cfg::HPETFwConfig;
+@@ -213,6 +212,10 @@ pub struct HPETTimer {
+     last: u64,
+ }
+ 
++// SAFETY: Sync is not automatically derived due to the `state` field,
++// which is always dereferenced to a shared reference.
++unsafe impl Sync for HPETTimer {}
 +
- pub mod bindings;
+ impl HPETTimer {
+     fn new(index: u8, state: *const HPETState) -> HPETTimer {
+         HPETTimer {
+@@ -841,7 +844,7 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
+         }
+     }
  
- // preserve one-item-per-"use" syntax, it is clearer
-diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
-index 2cd1d850112..5808051cd77 100644
---- a/rust/qom/src/qom.rs
-+++ b/rust/qom/src/qom.rs
-@@ -112,7 +112,7 @@
+-    fn pre_save(&self) -> i32 {
++    fn pre_save(&self) -> Result<(), vmstate::Infallible> {
+         if self.is_hpet_enabled() {
+             self.counter.set(self.get_ticks());
+         }
+@@ -852,10 +855,10 @@ fn pre_save(&self) -> i32 {
+          * that was configured.
+          */
+         self.num_timers_save.set(self.num_timers as u8);
+-        0
++        Ok(())
+     }
  
- /// A safe wrapper around [`bindings::Object`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct Object(Opaque<bindings::Object>);
+-    fn post_load(&self, _version_id: u8) -> i32 {
++    fn post_load(&self, _version_id: u8) -> Result<(), vmstate::Infallible> {
+         for timer in self.timers.iter().take(self.num_timers) {
+             let mut t = timer.borrow_mut();
  
- unsafe impl Send for Object {}
-@@ -173,7 +173,7 @@ fn as_ref(&self) -> &$parent {
- ///
- /// ```ignore
- /// #[repr(C)]
--/// #[derive(qemu_macros::Object)]
-+/// #[derive(qom::Object)]
- /// pub struct MyDevice {
- ///     parent: ParentField<DeviceState>,
- ///     ...
-diff --git a/rust/system/Cargo.toml b/rust/system/Cargo.toml
-index d8338c8348d..7fd369b9e32 100644
---- a/rust/system/Cargo.toml
-+++ b/rust/system/Cargo.toml
-@@ -16,7 +16,6 @@ rust-version.workspace = true
- common = { path = "../common" }
- qom = { path = "../qom" }
- util = { path = "../util" }
--qemu_macros = { path = "../qemu-macros" }
+@@ -869,7 +872,7 @@ fn post_load(&self, _version_id: u8) -> i32 {
+                 .set(ticks_to_ns(self.counter.get()) - CLOCK_VIRTUAL.get_ns());
+         }
  
- [lints]
- workspace = true
-diff --git a/rust/system/meson.build b/rust/system/meson.build
-index 9f88166f3d3..3ec140de018 100644
---- a/rust/system/meson.build
-+++ b/rust/system/meson.build
-@@ -39,4 +39,4 @@ _system_rs = static_library(
- )
+-        0
++        Ok(())
+     }
  
- system_rs = declare_dependency(link_with: [_system_rs],
--  dependencies: [qemu_macros, hwcore])
-+  dependencies: [hwcore])
-diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
-index 7312f809f51..02aa3af7b13 100644
---- a/rust/system/src/memory.rs
-+++ b/rust/system/src/memory.rs
-@@ -129,7 +129,7 @@ fn default() -> Self {
+     fn is_rtc_irq_level_needed(&self) -> bool {
+@@ -939,97 +942,66 @@ impl ObjectImpl for HPETState {
+     ),
+ }
  
- /// A safe wrapper around [`bindings::MemoryRegion`].
- #[repr(transparent)]
--#[derive(qemu_macros::Wrapper)]
-+#[derive(common::Wrapper)]
- pub struct MemoryRegion(Opaque<bindings::MemoryRegion>);
+-unsafe extern "C" fn hpet_rtc_irq_level_needed(opaque: *mut c_void) -> bool {
+-    // SAFETY:
+-    // the pointer is convertible to a reference
+-    let state: &HPETState = unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_ref() };
+-    state.is_rtc_irq_level_needed()
+-}
++static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription<HPETState> =
++    VMStateDescriptionBuilder::<HPETState>::new()
++        .name(c"hpet/rtc_irq_level")
++        .version_id(1)
++        .minimum_version_id(1)
++        .needed(&HPETState::is_rtc_irq_level_needed)
++        .fields(vmstate_fields! {
++            vmstate_of!(HPETState, rtc_irq_level),
++        })
++        .build();
  
- unsafe impl Send for MemoryRegion {}
-diff --git a/rust/tests/Cargo.toml b/rust/tests/Cargo.toml
-index 8d106d896d7..d47dc3314d8 100644
---- a/rust/tests/Cargo.toml
-+++ b/rust/tests/Cargo.toml
-@@ -19,7 +19,6 @@ hwcore = { path = "../hw/core" }
- migration = { path = "../migration" }
- util = { path = "../util" }
- bql = { path = "../bql" }
--qemu_macros = { path = "../qemu-macros" }
- qom = { path = "../qom" }
- system = { path = "../system" }
+-unsafe extern "C" fn hpet_offset_needed(opaque: *mut c_void) -> bool {
+-    // SAFETY:
+-    // the pointer is convertible to a reference
+-    let state: &HPETState = unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_ref() };
+-    state.is_offset_needed()
+-}
++static VMSTATE_HPET_OFFSET: VMStateDescription<HPETState> =
++    VMStateDescriptionBuilder::<HPETState>::new()
++        .name(c"hpet/offset")
++        .version_id(1)
++        .minimum_version_id(1)
++        .needed(&HPETState::is_offset_needed)
++        .fields(vmstate_fields! {
++            vmstate_of!(HPETState, hpet_offset),
++        })
++        .build();
  
-diff --git a/rust/util/Cargo.toml b/rust/util/Cargo.toml
-index 18e6619ca06..1f6767ed9d1 100644
---- a/rust/util/Cargo.toml
-+++ b/rust/util/Cargo.toml
-@@ -17,7 +17,6 @@ anyhow = { workspace = true }
- foreign = { workspace = true }
- libc = { workspace = true }
- common = { path = "../common" }
--qemu_macros = { path = "../qemu-macros" }
+-unsafe extern "C" fn hpet_pre_save(opaque: *mut c_void) -> c_int {
+-    // SAFETY:
+-    // the pointer is convertible to a reference
+-    let state: &mut HPETState =
+-        unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_mut() };
+-    state.pre_save() as c_int
+-}
+-
+-unsafe extern "C" fn hpet_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+-    // SAFETY:
+-    // the pointer is convertible to a reference
+-    let state: &mut HPETState =
+-        unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_mut() };
+-    let version: u8 = version_id.try_into().unwrap();
+-    state.post_load(version) as c_int
+-}
+-
+-static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription = VMStateDescription {
+-    name: c"hpet/rtc_irq_level".as_ptr(),
+-    version_id: 1,
+-    minimum_version_id: 1,
+-    needed: Some(hpet_rtc_irq_level_needed),
+-    fields: vmstate_fields! {
+-        vmstate_of!(HPETState, rtc_irq_level),
+-    },
+-    ..Zeroable::ZERO
+-};
+-
+-static VMSTATE_HPET_OFFSET: VMStateDescription = VMStateDescription {
+-    name: c"hpet/offset".as_ptr(),
+-    version_id: 1,
+-    minimum_version_id: 1,
+-    needed: Some(hpet_offset_needed),
+-    fields: vmstate_fields! {
+-        vmstate_of!(HPETState, hpet_offset),
+-    },
+-    ..Zeroable::ZERO
+-};
+-
+-static VMSTATE_HPET_TIMER: VMStateDescription = VMStateDescription {
+-    name: c"hpet_timer".as_ptr(),
+-    version_id: 1,
+-    minimum_version_id: 1,
+-    fields: vmstate_fields! {
+-        vmstate_of!(HPETTimer, index),
+-        vmstate_of!(HPETTimer, config),
+-        vmstate_of!(HPETTimer, cmp),
+-        vmstate_of!(HPETTimer, fsb),
+-        vmstate_of!(HPETTimer, period),
+-        vmstate_of!(HPETTimer, wrap_flag),
+-        vmstate_of!(HPETTimer, qemu_timer),
+-    },
+-    ..Zeroable::ZERO
+-};
++static VMSTATE_HPET_TIMER: VMStateDescription<HPETTimer> =
++    VMStateDescriptionBuilder::<HPETTimer>::new()
++        .name(c"hpet_timer")
++        .version_id(1)
++        .minimum_version_id(1)
++        .fields(vmstate_fields! {
++            vmstate_of!(HPETTimer, index),
++            vmstate_of!(HPETTimer, config),
++            vmstate_of!(HPETTimer, cmp),
++            vmstate_of!(HPETTimer, fsb),
++            vmstate_of!(HPETTimer, period),
++            vmstate_of!(HPETTimer, wrap_flag),
++            vmstate_of!(HPETTimer, qemu_timer),
++        })
++        .build();
  
- [lints]
- workspace = true
-diff --git a/rust/util/meson.build b/rust/util/meson.build
-index 197872c9b23..87a893673d2 100644
---- a/rust/util/meson.build
-+++ b/rust/util/meson.build
-@@ -39,7 +39,7 @@ _util_rs = static_library(
-   ),
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
--  dependencies: [anyhow_rs, libc_rs, foreign_rs, common_rs, qemu_macros, qom, qemuutil],
-+  dependencies: [anyhow_rs, libc_rs, foreign_rs, common_rs, qom, qemuutil],
- )
+ const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
  
- util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
-diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-index 622b6ee3097..c6b3e4088ec 100644
---- a/rust/util/src/timer.rs
-+++ b/rust/util/src/timer.rs
-@@ -15,14 +15,14 @@
+-static VMSTATE_HPET: VMStateDescription = VMStateDescription {
+-    name: c"hpet".as_ptr(),
+-    version_id: 2,
+-    minimum_version_id: 2,
+-    pre_save: Some(hpet_pre_save),
+-    post_load: Some(hpet_post_load),
+-    fields: vmstate_fields! {
+-        vmstate_of!(HPETState, config),
+-        vmstate_of!(HPETState, int_status),
+-        vmstate_of!(HPETState, counter),
+-        vmstate_of!(HPETState, num_timers_save),
+-        vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+-        vmstate_struct!(HPETState, timers[0 .. num_timers_save], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
+-    },
+-    subsections: vmstate_subsections! {
+-        VMSTATE_HPET_RTC_IRQ_LEVEL,
+-        VMSTATE_HPET_OFFSET,
+-    },
+-    ..Zeroable::ZERO
+-};
++const VMSTATE_HPET: VMStateDescription<HPETState> =
++    VMStateDescriptionBuilder::<HPETState>::new()
++        .name(c"hpet")
++        .version_id(2)
++        .minimum_version_id(2)
++        .pre_save(&HPETState::pre_save)
++        .post_load(&HPETState::post_load)
++        .fields(vmstate_fields! {
++            vmstate_of!(HPETState, config),
++            vmstate_of!(HPETState, int_status),
++            vmstate_of!(HPETState, counter),
++            vmstate_of!(HPETState, num_timers_save),
++            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
++            vmstate_struct!(HPETState, timers[0 .. num_timers_save], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
++        })
++        .subsections(vmstate_subsections!(
++            VMSTATE_HPET_RTC_IRQ_LEVEL,
++            VMSTATE_HPET_OFFSET,
++        ))
++        .build();
  
- /// A safe wrapper around [`bindings::QEMUTimer`].
- #[repr(transparent)]
--#[derive(Debug, qemu_macros::Wrapper)]
-+#[derive(Debug, common::Wrapper)]
- pub struct Timer(Opaque<bindings::QEMUTimer>);
+ // SAFETY: HPET_PROPERTIES is a valid Property array constructed with the
+ // qemu_api::declare_properties macro.
+@@ -1040,8 +1012,8 @@ fn properties() -> &'static [Property] {
+ }
  
- unsafe impl Send for Timer {}
- unsafe impl Sync for Timer {}
+ impl DeviceImpl for HPETState {
+-    fn vmsd() -> Option<&'static VMStateDescription> {
+-        Some(&VMSTATE_HPET)
++    fn vmsd() -> Option<VMStateDescription<Self>> {
++        Some(VMSTATE_HPET)
+     }
  
- #[repr(transparent)]
--#[derive(qemu_macros::Wrapper)]
-+#[derive(common::Wrapper)]
- pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
+     const REALIZE: Option<fn(&Self) -> qemu_api::Result<()>> = Some(Self::realize);
+diff --git a/rust/qemu-api/src/errno.rs b/rust/qemu-api/src/errno.rs
+index 18d101448b9..507850fe33c 100644
+--- a/rust/qemu-api/src/errno.rs
++++ b/rust/qemu-api/src/errno.rs
+@@ -7,7 +7,10 @@
+ //! convention.  This module provides functions to portably convert an integer
+ //! into an [`io::Result`] and back.
  
- unsafe impl Send for TimerListGroup {}
+-use std::{convert::TryFrom, io, io::ErrorKind};
++use std::{
++    convert::{self, TryFrom},
++    io::{self, ErrorKind},
++};
+ 
+ /// An `errno` value that can be converted into an [`io::Error`]
+ pub struct Errno(pub u16);
+@@ -99,6 +102,12 @@ fn from(value: io::Error) -> Errno {
+     }
+ }
+ 
++impl From<convert::Infallible> for Errno {
++    fn from(_value: convert::Infallible) -> Errno {
++        panic!("unreachable")
++    }
++}
++
+ /// Internal traits; used to enable [`into_io_result`] and [`into_neg_errno`]
+ /// for the "right" set of types.
+ mod traits {
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 6a58a00e3fc..4dda8c81131 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -173,7 +173,7 @@ pub trait DeviceImpl:
+     /// A `VMStateDescription` providing the migration format for the device
+     /// Not a `const` because referencing statics in constants is unstable
+     /// until Rust 1.83.0.
+-    fn vmsd() -> Option<&'static VMStateDescription> {
++    fn vmsd() -> Option<VMStateDescription<Self>> {
+         None
+     }
+ }
+@@ -225,7 +225,9 @@ pub fn class_init<T: DeviceImpl>(&mut self) {
+             self.realize = Some(rust_realize_fn::<T>);
+         }
+         if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
+-            self.vmsd = vmsd;
++            // Give a 'static lifetime to the return value of vmsd().
++            // Temporary until vmsd() can be changed into a const.
++            self.vmsd = Box::leak(Box::new(vmsd.get()));
+         }
+         let prop = <T as DevicePropertiesImpl>::properties();
+         if !prop.is_empty() {
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 8515e382135..f5f1ea5590f 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -24,12 +24,24 @@
+ //!   `include/migration/vmstate.h`. These are not type-safe and only provide
+ //!   functionality that is missing from `vmstate_of!`.
+ 
+-use core::{marker::PhantomData, mem, ptr::NonNull};
+-use std::ffi::{c_int, c_void};
++pub use std::convert::Infallible;
++use std::{
++    error::Error,
++    ffi::{c_int, c_void, CStr},
++    fmt, io,
++    marker::PhantomData,
++    mem,
++    ptr::NonNull,
++};
+ 
+-pub use crate::bindings::{VMStateDescription, VMStateField};
++pub use crate::bindings::{MigrationPriority, VMStateField};
+ use crate::{
+-    bindings::VMStateFlags, callbacks::FnCall, prelude::*, qom::Owned, zeroable::Zeroable,
++    bindings::{self, VMStateFlags},
++    callbacks::FnCall,
++    errno::{into_neg_errno, Errno},
++    prelude::*,
++    qom::Owned,
++    zeroable::Zeroable,
+ };
+ 
+ /// This macro is used to call a function with a generic argument bound
+@@ -440,7 +452,7 @@ pub extern "C" fn rust_vms_test_field_exists<T, F: for<'a> FnCall<(&'a T, u8), b
+     opaque: *mut c_void,
+     version_id: c_int,
+ ) -> bool {
+-    // SAFETY: the opaque was passed as a reference to `T`.
++    // SAFETY: assumes vmstate_struct! is used correctly
+     let owner: &T = unsafe { &*(opaque.cast::<T>()) };
+     let version: u8 = version_id.try_into().unwrap();
+     F::call((owner, version))
+@@ -490,7 +502,7 @@ macro_rules! vmstate_struct {
+             },
+             size: ::core::mem::size_of::<$type>(),
+             flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
+-            vmsd: $vmsd,
++            vmsd: $vmsd.as_ref(),
+             $(field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),)?
+             ..$crate::zeroable::Zeroable::ZERO
+          } $(.with_varray_flag_unchecked(
+@@ -594,11 +606,225 @@ macro_rules! vmstate_subsections {
+     ($($subsection:expr),*$(,)*) => {{
+         static _SUBSECTIONS: $crate::vmstate::VMStateSubsectionsWrapper = $crate::vmstate::VMStateSubsectionsWrapper(&[
+             $({
+-                static _SUBSECTION: $crate::bindings::VMStateDescription = $subsection;
++                static _SUBSECTION: $crate::bindings::VMStateDescription = $subsection.get();
+                 ::core::ptr::addr_of!(_SUBSECTION)
+             }),*,
+             ::core::ptr::null()
+         ]);
+-        _SUBSECTIONS.0.as_ptr()
++        &_SUBSECTIONS
+     }}
+ }
++
++pub struct VMStateDescription<T>(bindings::VMStateDescription, PhantomData<fn(&T)>);
++
++// SAFETY: When a *const T is passed to the callbacks, the call itself
++// is done in a thread-safe manner.  The invocation is okay as long as
++// T itself is `Sync`.
++unsafe impl<T: Sync> Sync for VMStateDescription<T> {}
++
++#[derive(Clone)]
++pub struct VMStateDescriptionBuilder<T>(bindings::VMStateDescription, PhantomData<fn(&T)>);
++
++#[derive(Debug)]
++pub struct InvalidError;
++
++impl Error for InvalidError {}
++
++impl std::fmt::Display for InvalidError {
++    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
++        write!(f, "invalid migration data")
++    }
++}
++
++impl From<InvalidError> for Errno {
++    fn from(_value: InvalidError) -> Errno {
++        io::ErrorKind::InvalidInput.into()
++    }
++}
++
++unsafe extern "C" fn vmstate_no_version_cb<
++    T,
++    F: for<'a> FnCall<(&'a T,), Result<(), impl Into<Errno>>>,
++>(
++    opaque: *mut c_void,
++) -> c_int {
++    // SAFETY: assumes vmstate_struct! is used correctly
++    let result = F::call((unsafe { &*(opaque.cast::<T>()) },));
++    into_neg_errno(result)
++}
++
++unsafe extern "C" fn vmstate_post_load_cb<
++    T,
++    F: for<'a> FnCall<(&'a T, u8), Result<(), impl Into<Errno>>>,
++>(
++    opaque: *mut c_void,
++    version_id: c_int,
++) -> c_int {
++    // SAFETY: assumes vmstate_struct! is used correctly
++    let owner: &T = unsafe { &*(opaque.cast::<T>()) };
++    let version: u8 = version_id.try_into().unwrap();
++    let result = F::call((owner, version));
++    into_neg_errno(result)
++}
++
++unsafe extern "C" fn vmstate_needed_cb<T, F: for<'a> FnCall<(&'a T,), bool>>(
++    opaque: *mut c_void,
++) -> bool {
++    // SAFETY: assumes vmstate_struct! is used correctly
++    F::call((unsafe { &*(opaque.cast::<T>()) },))
++}
++
++unsafe extern "C" fn vmstate_dev_unplug_pending_cb<T, F: for<'a> FnCall<(&'a T,), bool>>(
++    opaque: *mut c_void,
++) -> bool {
++    // SAFETY: assumes vmstate_struct! is used correctly
++    F::call((unsafe { &*(opaque.cast::<T>()) },))
++}
++
++impl<T> VMStateDescriptionBuilder<T> {
++    #[must_use]
++    pub const fn name(mut self, name_str: &CStr) -> Self {
++        self.0.name = ::std::ffi::CStr::as_ptr(name_str);
++        self
++    }
++
++    #[must_use]
++    pub const fn unmigratable(mut self) -> Self {
++        self.0.unmigratable = true;
++        self
++    }
++
++    #[must_use]
++    pub const fn early_setup(mut self) -> Self {
++        self.0.early_setup = true;
++        self
++    }
++
++    #[must_use]
++    pub const fn version_id(mut self, version: u8) -> Self {
++        self.0.version_id = version as c_int;
++        self
++    }
++
++    #[must_use]
++    pub const fn minimum_version_id(mut self, min_version: u8) -> Self {
++        self.0.minimum_version_id = min_version as c_int;
++        self
++    }
++
++    #[must_use]
++    pub const fn priority(mut self, priority: MigrationPriority) -> Self {
++        self.0.priority = priority;
++        self
++    }
++
++    #[must_use]
++    pub const fn pre_load<F: for<'a> FnCall<(&'a T,), Result<(), impl Into<Errno>>>>(
++        mut self,
++        _f: &F,
++    ) -> Self {
++        self.0.pre_load = if F::IS_SOME {
++            Some(vmstate_no_version_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn post_load<F: for<'a> FnCall<(&'a T, u8), Result<(), impl Into<Errno>>>>(
++        mut self,
++        _f: &F,
++    ) -> Self {
++        self.0.post_load = if F::IS_SOME {
++            Some(vmstate_post_load_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn pre_save<F: for<'a> FnCall<(&'a T,), Result<(), impl Into<Errno>>>>(
++        mut self,
++        _f: &F,
++    ) -> Self {
++        self.0.pre_save = if F::IS_SOME {
++            Some(vmstate_no_version_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn post_save<F: for<'a> FnCall<(&'a T,), Result<(), impl Into<Errno>>>>(
++        mut self,
++        _f: &F,
++    ) -> Self {
++        self.0.post_save = if F::IS_SOME {
++            Some(vmstate_no_version_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn needed<F: for<'a> FnCall<(&'a T,), bool>>(mut self, _f: &F) -> Self {
++        self.0.needed = if F::IS_SOME {
++            Some(vmstate_needed_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn unplug_pending<F: for<'a> FnCall<(&'a T,), bool>>(mut self, _f: &F) -> Self {
++        self.0.dev_unplug_pending = if F::IS_SOME {
++            Some(vmstate_dev_unplug_pending_cb::<T, F>)
++        } else {
++            None
++        };
++        self
++    }
++
++    #[must_use]
++    pub const fn fields(mut self, fields: *const VMStateField) -> Self {
++        self.0.fields = fields;
++        self
++    }
++
++    #[must_use]
++    pub const fn subsections(mut self, subs: &'static VMStateSubsectionsWrapper) -> Self {
++        self.0.subsections = subs.0.as_ptr();
++        self
++    }
++
++    #[must_use]
++    pub const fn build(self) -> VMStateDescription<T> {
++        VMStateDescription::<T>(self.0, PhantomData)
++    }
++
++    #[must_use]
++    pub const fn new() -> Self {
++        Self(bindings::VMStateDescription::ZERO, PhantomData)
++    }
++}
++
++impl<T> Default for VMStateDescriptionBuilder<T> {
++    fn default() -> Self {
++        Self::new()
++    }
++}
++
++impl<T> VMStateDescription<T> {
++    pub const fn get(&self) -> bindings::VMStateDescription {
++        self.0
++    }
++
++    pub const fn as_ref(&self) -> &bindings::VMStateDescription {
++        &self.0
++    }
++}
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index aff3eecd654..4d4e4653f38 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -11,18 +11,16 @@
+     qdev::{DeviceImpl, DeviceState, ResettablePhasesImpl},
+     qom::{ObjectImpl, ParentField},
+     sysbus::SysBusDevice,
+-    vmstate::VMStateDescription,
+-    zeroable::Zeroable,
++    vmstate::{VMStateDescription, VMStateDescriptionBuilder},
+ };
+ 
+ mod vmstate_tests;
+ 
+ // Test that macros can compile.
+-pub static VMSTATE: VMStateDescription = VMStateDescription {
+-    name: c"name".as_ptr(),
+-    unmigratable: true,
+-    ..Zeroable::ZERO
+-};
++pub const VMSTATE: VMStateDescription<DummyState> = VMStateDescriptionBuilder::<DummyState>::new()
++    .name(c"name")
++    .unmigratable()
++    .build();
+ 
+ #[repr(C)]
+ #[derive(qemu_api_macros::Object, qemu_api_macros::Device)]
+@@ -58,8 +56,8 @@ impl ObjectImpl for DummyState {
+ impl ResettablePhasesImpl for DummyState {}
+ 
+ impl DeviceImpl for DummyState {
+-    fn vmsd() -> Option<&'static VMStateDescription> {
+-        Some(&VMSTATE)
++    fn vmsd() -> Option<VMStateDescription<Self>> {
++        Some(VMSTATE)
+     }
+ }
+ 
+diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
+index bded836eb60..8ffc2779d46 100644
+--- a/rust/qemu-api/tests/vmstate_tests.rs
++++ b/rust/qemu-api/tests/vmstate_tests.rs
+@@ -16,9 +16,8 @@
+     },
+     cell::{BqlCell, Opaque},
+     impl_vmstate_forward,
+-    vmstate::{VMStateDescription, VMStateField},
++    vmstate::{VMStateDescription, VMStateDescriptionBuilder, VMStateField},
+     vmstate_fields, vmstate_of, vmstate_struct, vmstate_unused, vmstate_validate,
+-    zeroable::Zeroable,
+ };
+ 
+ const FOO_ARRAY_MAX: usize = 3;
+@@ -41,22 +40,22 @@ struct FooA {
+     elem: i8,
+ }
+ 
+-static VMSTATE_FOOA: VMStateDescription = VMStateDescription {
+-    name: c"foo_a".as_ptr(),
+-    version_id: 1,
+-    minimum_version_id: 1,
+-    fields: vmstate_fields! {
++static VMSTATE_FOOA: VMStateDescription<FooA> = VMStateDescriptionBuilder::<FooA>::new()
++    .name(c"foo_a")
++    .version_id(1)
++    .minimum_version_id(1)
++    .fields(vmstate_fields! {
+         vmstate_of!(FooA, elem),
+         vmstate_unused!(size_of::<i64>()),
+         vmstate_of!(FooA, arr[0 .. num]).with_version_id(0),
+         vmstate_of!(FooA, arr_mul[0 .. num_mul * 16]),
+-    },
+-    ..Zeroable::ZERO
+-};
++    })
++    .build();
+ 
+ #[test]
+ fn test_vmstate_uint16() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOA.fields, 5) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOA.as_ref().fields, 5) };
+ 
+     // 1st VMStateField ("elem") in VMSTATE_FOOA (corresponding to VMSTATE_UINT16)
+     assert_eq!(
+@@ -76,7 +75,8 @@ fn test_vmstate_uint16() {
+ 
+ #[test]
+ fn test_vmstate_unused() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOA.fields, 5) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOA.as_ref().fields, 5) };
+ 
+     // 2nd VMStateField ("unused") in VMSTATE_FOOA (corresponding to VMSTATE_UNUSED)
+     assert_eq!(
+@@ -96,7 +96,8 @@ fn test_vmstate_unused() {
+ 
+ #[test]
+ fn test_vmstate_varray_uint16_unsafe() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOA.fields, 5) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOA.as_ref().fields, 5) };
+ 
+     // 3rd VMStateField ("arr") in VMSTATE_FOOA (corresponding to
+     // VMSTATE_VARRAY_UINT16_UNSAFE)
+@@ -117,7 +118,8 @@ fn test_vmstate_varray_uint16_unsafe() {
+ 
+ #[test]
+ fn test_vmstate_varray_multiply() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOA.fields, 5) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOA.as_ref().fields, 5) };
+ 
+     // 4th VMStateField ("arr_mul") in VMSTATE_FOOA (corresponding to
+     // VMSTATE_VARRAY_MULTIPLY)
+@@ -171,24 +173,25 @@ fn validate_foob(_state: &FooB, _version_id: u8) -> bool {
+     true
+ }
+ 
+-static VMSTATE_FOOB: VMStateDescription = VMStateDescription {
+-    name: c"foo_b".as_ptr(),
+-    version_id: 2,
+-    minimum_version_id: 1,
+-    fields: vmstate_fields! {
+-        vmstate_of!(FooB, val).with_version_id(2),
+-        vmstate_of!(FooB, wrap),
+-        vmstate_struct!(FooB, arr_a[0 .. num_a], &VMSTATE_FOOA, FooA).with_version_id(1),
+-        vmstate_struct!(FooB, arr_a_mul[0 .. num_a_mul * 32], &VMSTATE_FOOA, FooA).with_version_id(2),
+-        vmstate_of!(FooB, arr_i64),
+-        vmstate_struct!(FooB, arr_a_wrap[0 .. num_a_wrap], &VMSTATE_FOOA, FooA, validate_foob),
+-    },
+-    ..Zeroable::ZERO
+-};
++static VMSTATE_FOOB: VMStateDescription<FooB> =
++    VMStateDescriptionBuilder::<FooB>::new()
++        .name(c"foo_b")
++        .version_id(2)
++        .minimum_version_id(1)
++        .fields(vmstate_fields! {
++            vmstate_of!(FooB, val).with_version_id(2),
++            vmstate_of!(FooB, wrap),
++            vmstate_struct!(FooB, arr_a[0 .. num_a], &VMSTATE_FOOA, FooA).with_version_id(1),
++            vmstate_struct!(FooB, arr_a_mul[0 .. num_a_mul * 32], &VMSTATE_FOOA, FooA).with_version_id(2),
++            vmstate_of!(FooB, arr_i64),
++            vmstate_struct!(FooB, arr_a_wrap[0 .. num_a_wrap], &VMSTATE_FOOA, FooA, validate_foob),
++        })
++        .build();
+ 
+ #[test]
+ fn test_vmstate_bool_v() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+ 
+     // 1st VMStateField ("val") in VMSTATE_FOOB (corresponding to VMSTATE_BOOL_V)
+     assert_eq!(
+@@ -208,7 +211,8 @@ fn test_vmstate_bool_v() {
+ 
+ #[test]
+ fn test_vmstate_uint64() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+ 
+     // 2nd VMStateField ("wrap") in VMSTATE_FOOB (corresponding to VMSTATE_U64)
+     assert_eq!(
+@@ -228,7 +232,8 @@ fn test_vmstate_uint64() {
+ 
+ #[test]
+ fn test_vmstate_struct_varray_uint8() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+ 
+     // 3rd VMStateField ("arr_a") in VMSTATE_FOOB (corresponding to
+     // VMSTATE_STRUCT_VARRAY_UINT8)
+@@ -246,13 +251,14 @@ fn test_vmstate_struct_varray_uint8() {
+         foo_fields[2].flags.0,
+         VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_VARRAY_UINT8.0
+     );
+-    assert_eq!(foo_fields[2].vmsd, &VMSTATE_FOOA);
++    assert_eq!(foo_fields[2].vmsd, VMSTATE_FOOA.as_ref());
+     assert!(foo_fields[2].field_exists.is_none());
+ }
+ 
+ #[test]
+ fn test_vmstate_struct_varray_uint32_multiply() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+ 
+     // 4th VMStateField ("arr_a_mul") in VMSTATE_FOOB (corresponding to
+     // (no C version) MULTIPLY variant of VMSTATE_STRUCT_VARRAY_UINT32)
+@@ -272,13 +278,14 @@ fn test_vmstate_struct_varray_uint32_multiply() {
+             | VMStateFlags::VMS_VARRAY_UINT32.0
+             | VMStateFlags::VMS_MULTIPLY_ELEMENTS.0
+     );
+-    assert_eq!(foo_fields[3].vmsd, &VMSTATE_FOOA);
++    assert_eq!(foo_fields[3].vmsd, VMSTATE_FOOA.as_ref());
+     assert!(foo_fields[3].field_exists.is_none());
+ }
+ 
+ #[test]
+ fn test_vmstate_macro_array() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+ 
+     // 5th VMStateField ("arr_i64") in VMSTATE_FOOB (corresponding to
+     // VMSTATE_ARRAY)
+@@ -299,7 +306,8 @@ fn test_vmstate_macro_array() {
+ 
+ #[test]
+ fn test_vmstate_struct_varray_uint8_wrapper() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOB.fields, 7) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOB.as_ref().fields, 7) };
+     let mut foo_b: FooB = Default::default();
+     let foo_b_p = std::ptr::addr_of_mut!(foo_b).cast::<c_void>();
+ 
+@@ -335,26 +343,28 @@ struct FooC {
+     arr_ptr_wrap: FooCWrapper,
+ }
+ 
+-static VMSTATE_FOOC: VMStateDescription = VMStateDescription {
+-    name: c"foo_c".as_ptr(),
+-    version_id: 3,
+-    minimum_version_id: 1,
+-    fields: vmstate_fields! {
++unsafe impl Sync for FooC {}
++
++static VMSTATE_FOOC: VMStateDescription<FooC> = VMStateDescriptionBuilder::<FooC>::new()
++    .name(c"foo_c")
++    .version_id(3)
++    .minimum_version_id(1)
++    .fields(vmstate_fields! {
+         vmstate_of!(FooC, ptr).with_version_id(2),
+         // FIXME: Currently vmstate_struct doesn't support the pointer to structure.
+         // VMSTATE_STRUCT_POINTER: vmstate_struct!(FooC, ptr_a, VMSTATE_FOOA, NonNull<FooA>)
+         vmstate_unused!(size_of::<NonNull<FooA>>()),
+         vmstate_of!(FooC, arr_ptr),
+         vmstate_of!(FooC, arr_ptr_wrap),
+-    },
+-    ..Zeroable::ZERO
+-};
++    })
++    .build();
+ 
+ const PTR_SIZE: usize = size_of::<*mut ()>();
+ 
+ #[test]
+ fn test_vmstate_pointer() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOC.fields, 6) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOC.as_ref().fields, 6) };
+ 
+     // 1st VMStateField ("ptr") in VMSTATE_FOOC (corresponding to VMSTATE_POINTER)
+     assert_eq!(
+@@ -377,7 +387,8 @@ fn test_vmstate_pointer() {
+ 
+ #[test]
+ fn test_vmstate_macro_array_of_pointer() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOC.fields, 6) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOC.as_ref().fields, 6) };
+ 
+     // 3rd VMStateField ("arr_ptr") in VMSTATE_FOOC (corresponding to
+     // VMSTATE_ARRAY_OF_POINTER)
+@@ -401,7 +412,8 @@ fn test_vmstate_macro_array_of_pointer() {
+ 
+ #[test]
+ fn test_vmstate_macro_array_of_pointer_wrapped() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOC.fields, 6) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOC.as_ref().fields, 6) };
+ 
+     // 4th VMStateField ("arr_ptr_wrap") in VMSTATE_FOOC (corresponding to
+     // VMSTATE_ARRAY_OF_POINTER)
+@@ -450,21 +462,21 @@ fn validate_food_2(_state: &FooD, _version_id: u8) -> bool {
+     true
+ }
+ 
+-static VMSTATE_FOOD: VMStateDescription = VMStateDescription {
+-    name: c"foo_d".as_ptr(),
+-    version_id: 3,
+-    minimum_version_id: 1,
+-    fields: vmstate_fields! {
++static VMSTATE_FOOD: VMStateDescription<FooD> = VMStateDescriptionBuilder::<FooD>::new()
++    .name(c"foo_d")
++    .version_id(3)
++    .minimum_version_id(1)
++    .fields(vmstate_fields! {
+         vmstate_validate!(FooD, c"foo_d_0", FooD::validate_food_0),
+         vmstate_validate!(FooD, c"foo_d_1", FooD::validate_food_1),
+         vmstate_validate!(FooD, c"foo_d_2", validate_food_2),
+-    },
+-    ..Zeroable::ZERO
+-};
++    })
++    .build();
+ 
+ #[test]
+ fn test_vmstate_validate() {
+-    let foo_fields: &[VMStateField] = unsafe { slice::from_raw_parts(VMSTATE_FOOD.fields, 4) };
++    let foo_fields: &[VMStateField] =
++        unsafe { slice::from_raw_parts(VMSTATE_FOOD.as_ref().fields, 4) };
+     let mut foo_d = FooD;
+     let foo_d_p = std::ptr::addr_of_mut!(foo_d).cast::<c_void>();
+ 
 -- 
 2.51.0
 
