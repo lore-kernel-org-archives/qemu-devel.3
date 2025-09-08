@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60445CAC588
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF0F0CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvZTJ-0006qk-6x; Mon, 08 Sep 2025 06:51:42 -0400
+	id 1uvZTE-0006oz-8a; Mon, 08 Sep 2025 06:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZTG-0006pk-5J
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:38 -0400
+ id 1uvZTC-0006oS-6W
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvZSx-00069b-FI
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:37 -0400
+ id 1uvZSz-0006AO-KM
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:51:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757328672;
+ s=mimecast20190719; t=1757328675;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5yHt1Cnp6xdqYeA2MrGvgIihPETwX6YFNW7mP7Vuv5A=;
- b=OOXjznqJa7Cuyqrn+1e/JT7ITjFcoiBdKu6+bFuPowGQPamRycJ6Ceiesd+BNA/X7bXms3
- pJ6ZcBmo0Nu3txsby+q4YKsyWL47Ph5KQ/Kh6d4IoFoV6rgFH5zg2JzMGD9Rm0C7lgKRVt
- H4K5sPBxy4PtRd4UOdzmSG5+7dyPLuY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H/p3v3P5s7AXsTxilh2f7khnyWMVi+65OYGkXuoYuaw=;
+ b=a3fTuDA9S0TJkvzzU9Hq2cj6ycEXvcOcY/QCufqQGugVYECEjbrsbekoTgjdnRxnnK+KHm
+ aTXwMhLxpTSjinbVkhrAnY3InlDJP/IMtsgFXFVGhANdpN53fi8fqzLvpp0RLdsAjW99CT
+ kgVfo015Sasi4QrNTNFxIrX5Q90YCyg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-Q1Sff3tQPlKALWeaeb24ug-1; Mon, 08 Sep 2025 06:51:11 -0400
-X-MC-Unique: Q1Sff3tQPlKALWeaeb24ug-1
-X-Mimecast-MFC-AGG-ID: Q1Sff3tQPlKALWeaeb24ug_1757328670
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3df3e935ec8so2017767f8f.0
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:51:11 -0700 (PDT)
+ us-mta-246-RFx5N_k5NPOa6aFCf4IVAQ-1; Mon, 08 Sep 2025 06:51:14 -0400
+X-MC-Unique: RFx5N_k5NPOa6aFCf4IVAQ-1
+X-Mimecast-MFC-AGG-ID: RFx5N_k5NPOa6aFCf4IVAQ_1757328673
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3db89e4f443so2614061f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:51:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757328669; x=1757933469;
+ d=1e100.net; s=20230601; t=1757328672; x=1757933472;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5yHt1Cnp6xdqYeA2MrGvgIihPETwX6YFNW7mP7Vuv5A=;
- b=hS0u9RI4QcSvE8Mfbp01KIxe4e+Ly98puGCjJwXaqEETkOepWrLP/0Ao73v/odce7q
- Ge/rydwFBQDIwnKv+1LWv1N1G9KFfm5ndK+M1TvWifNZXg7Ux2F9OYwzrTxzkkFmGfRe
- 2GIc8dJ4GXnV1vqIECVrOPHJl5msMXSp1jwh9KJvZoOFFZNAB96kAkxVSdTeHUwFy4fi
- xHYl6AuF6I3Zmf01soUKvwAV9ZlFZHc7vJmgpc1tbZr78x1lmHrZDRcAd931WSvygG9m
- A3zeVCOeU+8UYUhWFC1ySfbJoJpU3Jsf0bABo4+ifj3zHHXKYAZwduasiuvHFemMLb5E
- ieZA==
-X-Gm-Message-State: AOJu0YzCqptJjFBQEcV+CQDvdi0Km6EGjsjtjUE5nkePGD778SG0VFez
- KDgZ/s7WgxVHAL3+x6/3yxuOVIvwgBYPecLRx6LhGYSjzGLmIJ7AmSXKh/hWceUYpSgYyAoHvw6
- ypp9Qn/MX+e4bAobcEQtMXP92GeHvML46ofnNhNLnknDZUGzSJSdyHj3aylp3m18RZw5s98UxQH
- w749SyVIU3YKv/dpIcUNmZ7TeWAlVzg3erDJTq6tmT
-X-Gm-Gg: ASbGncuGuSz+U9di6jKsVwTqmi0DI3dC+uWHeaqGR3BjsESsr31gvSDZ2LMHZy1yKXc
- FtCTjXZab0n7gMn8KsiVF/eaRMcndaS0bE5UdnTS3OtWiIlu7Y//tfZL5yW4MhPVCSd5fhsku+7
- rzRU2+JKN56aE6Eo9+lM/4tZgdLPuM6+y89TKCwxLG7tJGKEezUP1/eG41++P/5MJ5oQ2MNB6xR
- 8IsPOsWYBlAEbfX7OLeio2Ys1YeWWoY+4DUfUs9k5vyTXJnbFM6+XlAH5eOVDtxlKS+R97a7o1i
- OHdDrkeFec3Rixd/rbf8p6gAYWeEc796pPEPF4gdbMd6N65QSUuhrOAf6klLOFLTyTfYT6P0lAz
- JPaM+Xo8FYESlKkuNOgNXwSX03TkC1s52FWeCNetgYWc=
-X-Received: by 2002:a05:6000:2209:b0:3e5:31d3:e330 with SMTP id
- ffacd0b85a97d-3e641a62252mr6405793f8f.25.1757328669287; 
- Mon, 08 Sep 2025 03:51:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8quSI9tT2jAQfhJSz16uEwObN/vtcxAqg1zia9QFxF4iD6uB84FlS5nSyxran1AAerVCulg==
-X-Received: by 2002:a05:6000:2209:b0:3e5:31d3:e330 with SMTP id
- ffacd0b85a97d-3e641a62252mr6405764f8f.25.1757328668751; 
- Mon, 08 Sep 2025 03:51:08 -0700 (PDT)
+ bh=H/p3v3P5s7AXsTxilh2f7khnyWMVi+65OYGkXuoYuaw=;
+ b=uhKVlkPw1OcDNF1EirIz+b3s9L6IV7JdNorF/qvmZqwBuSP77nutMzc89HKU4nYonj
+ iL2i9QJC5mPw85ejcIlpwgNWv8EW+9A7R3paswUtcyIY/KgkQO557dbY4LOu1s6yaJxR
+ avLiBgs2S/+3RiC26bJ6zKZnDBd8aFEb+EgkRkoSoX7nA8gYV/fq4PG//D871vBXqFun
+ wj1rXm5uDRhUyK4nB+lPHTVxw3KWiCt39c2rfU7biv/7sr2nEC2fV+JYYoR4BEi1d6G6
+ vYb2n5m68Y7kcqUD4eG/2qkNgWv/lp710OiEoLqwCkXyBPf5aGJJpKxz5X/XxNuET+Qt
+ /T6Q==
+X-Gm-Message-State: AOJu0YzMBx7gZnEgiVjrh96M6bA5rb+X9LZcfoqJUInjRslnI8sjXW8K
+ 8HZm+wqO/Y2nMljRKYjSZZryzoWfQJfhlxv79MlxX43kLwVoYusQC9FN9y7XGWLeXCUQoTjOI23
+ KFo4dKvboswsYJai81oBx/YQP8o2Fpm/aHEwdossz8X02xuGiZMHYpmCG5cwiJmM7oz38DuTA8d
+ VNFaGsIMr6W151tVZFPspTLjQC8B4NNR7dQGdoH92H
+X-Gm-Gg: ASbGnctpw8sUYIhe9IVivRxos/TY20Is/bazfelxJkGD80yudwsqIqgLgQPQhG2egx4
+ WgpgvUsiK2vbHuZVzP0QJhb5vttpuFqMb8uKKp3Mcxph+ojvbkGvx2jJ+mPgjqF+kcneoNoM0iy
+ W9/NKxFnCGA9MVpJEvnJl6UrzlzNoBRElUxWPqy9q/RNgWhXJICPQ2Xc+vaF9jLpG85t0ybJnjx
+ 7JFJZpcbnYAe8JEhOX6S8jjDDZ3bzyR4Qdt3fnGgGYEtXsZeixkeIfuf1oQEEwhJxnIJcx9yxlW
+ xJ6/49mty6HJx6GEa3OwuuRlyJlI9Y9oUjY233pggoeGeue2sG8hPvU/Hg4V0ZYp00AVj7QMM6Z
+ ZaJupnGqdWMwMFoHAAwz+SgnrUbq8YvU0w2shg/xahok=
+X-Received: by 2002:a05:6000:647:b0:3e7:1f63:6e7d with SMTP id
+ ffacd0b85a97d-3e71f6373admr5759890f8f.45.1757328672098; 
+ Mon, 08 Sep 2025 03:51:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMvr6+l1YWoAQpyLVhwwCyhy1Bsb5kMXhK959ccg7F6GA8/GrQOHuolLnTMejBXEy4byG5EA==
+X-Received: by 2002:a05:6000:647:b0:3e7:1f63:6e7d with SMTP id
+ ffacd0b85a97d-3e71f6373admr5759863f8f.45.1757328671585; 
+ Mon, 08 Sep 2025 03:51:11 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45dd3aadbcesm164897645e9.17.2025.09.08.03.51.07
+ ffacd0b85a97d-3e740369f1esm7353183f8f.11.2025.09.08.03.51.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 03:51:08 -0700 (PDT)
+ Mon, 08 Sep 2025 03:51:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 26/33] rust/hpet: drop now unneeded qemu_api dep
-Date: Mon,  8 Sep 2025 12:49:58 +0200
-Message-ID: <20250908105005.2119297-27-pbonzini@redhat.com>
+Subject: [PATCH 27/33] rust/pl011: drop dependency on qemu_api
+Date: Mon,  8 Sep 2025 12:49:59 +0200
+Message-ID: <20250908105005.2119297-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
@@ -94,7 +94,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,19 +113,84 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250827104147.717203-18-marcandre.lureau@redhat.com
+Link: https://lore.kernel.org/r/20250827104147.717203-19-marcandre.lureau@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/Cargo.lock                | 1 -
- rust/hw/timer/hpet/Cargo.toml  | 1 -
- rust/hw/timer/hpet/meson.build | 1 -
- 3 files changed, 3 deletions(-)
+ rust/hw/char/pl011/wrapper.h       | 51 ++++++++++++++++++++++++++++++
+ rust/Cargo.lock                    |  1 -
+ rust/hw/char/pl011/Cargo.toml      |  1 -
+ rust/hw/char/pl011/build.rs        |  1 +
+ rust/hw/char/pl011/meson.build     | 27 ++++++++++++++--
+ rust/hw/char/pl011/src/bindings.rs | 27 ++++++++++++++++
+ rust/hw/char/pl011/src/device.rs   |  2 +-
+ rust/hw/char/pl011/src/lib.rs      |  1 +
+ 8 files changed, 106 insertions(+), 5 deletions(-)
+ create mode 100644 rust/hw/char/pl011/wrapper.h
+ create mode 120000 rust/hw/char/pl011/build.rs
+ create mode 100644 rust/hw/char/pl011/src/bindings.rs
 
+diff --git a/rust/hw/char/pl011/wrapper.h b/rust/hw/char/pl011/wrapper.h
+new file mode 100644
+index 00000000000..87a5a589c8e
+--- /dev/null
++++ b/rust/hw/char/pl011/wrapper.h
+@@ -0,0 +1,51 @@
++/*
++ * QEMU System Emulator
++ *
++ * Copyright (c) 2024 Linaro Ltd.
++ *
++ * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++
++/*
++ * This header file is meant to be used as input to the `bindgen` application
++ * in order to generate C FFI compatible Rust bindings.
++ */
++
++#ifndef __CLANG_STDATOMIC_H
++#define __CLANG_STDATOMIC_H
++/*
++ * Fix potential missing stdatomic.h error in case bindgen does not insert the
++ * correct libclang header paths on its own. We do not use stdatomic.h symbols
++ * in QEMU code, so it's fine to declare dummy types instead.
++ */
++typedef enum memory_order {
++  memory_order_relaxed,
++  memory_order_consume,
++  memory_order_acquire,
++  memory_order_release,
++  memory_order_acq_rel,
++  memory_order_seq_cst,
++} memory_order;
++#endif /* __CLANG_STDATOMIC_H */
++
++#include "qemu/osdep.h"
++#include "hw/char/pl011.h"
 diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 021ce6dd48c..c407029afed 100644
+index c407029afed..2018d13fbf5 100644
 --- a/rust/Cargo.lock
 +++ b/rust/Cargo.lock
-@@ -93,7 +93,6 @@ dependencies = [
+@@ -149,7 +149,6 @@ dependencies = [
   "common",
   "hwcore",
   "migration",
@@ -133,30 +198,128 @@ index 021ce6dd48c..c407029afed 100644
   "qemu_macros",
   "qom",
   "system",
-diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
-index 68e8187bb82..08bf97af553 100644
---- a/rust/hw/timer/hpet/Cargo.toml
-+++ b/rust/hw/timer/hpet/Cargo.toml
-@@ -17,7 +17,6 @@ migration = { path = "../../../migration" }
- bql = { path = "../../../bql" }
- qom = { path = "../../../qom" }
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+index 9e451fc0aa8..285d25c2178 100644
+--- a/rust/hw/char/pl011/Cargo.toml
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -24,7 +24,6 @@ qom = { path = "../../../qom" }
+ chardev = { path = "../../../chardev" }
  system = { path = "../../../system" }
+ hwcore = { path = "../../../hw/core" }
 -qemu_api = { path = "../../../qemu-api" }
  qemu_macros = { path = "../../../qemu-macros" }
- hwcore = { path = "../../../hw/core" }
  
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index 3b94d5ec0a7..8ab26630d95 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -5,7 +5,6 @@ _libhpet_rs = static_library(
+ [lints]
+diff --git a/rust/hw/char/pl011/build.rs b/rust/hw/char/pl011/build.rs
+new file mode 120000
+index 00000000000..5f5060db356
+--- /dev/null
++++ b/rust/hw/char/pl011/build.rs
+@@ -0,0 +1 @@
++../../../util/build.rs
+\ No newline at end of file
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index bad6a839c39..a14993f6921 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -1,6 +1,30 @@
++# TODO: Remove this comment when the clang/libclang mismatch issue is solved.
++#
++# Rust bindings generation with `bindgen` might fail in some cases where the
++# detected `libclang` does not match the expected `clang` version/target. In
++# this case you must pass the path to `clang` and `libclang` to your build
++# command invocation using the environment variables CLANG_PATH and
++# LIBCLANG_PATH
++_libpl011_bindings_inc_rs = rust.bindgen(
++  input: 'wrapper.h',
++  dependencies: common_ss.all_dependencies(),
++  output: 'bindings.inc.rs',
++  include_directories: bindings_incdir,
++  bindgen_version: ['>=0.60.0'],
++  args: bindgen_args_common,
++)
++
+ _libpl011_rs = static_library(
+   'pl011',
+-  files('src/lib.rs'),
++  structured_sources(
++    [
++      'src/lib.rs',
++      'src/bindings.rs',
++      'src/device.rs',
++      'src/registers.rs',
++    ],
++    {'.' : _libpl011_bindings_inc_rs},
++  ),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
    rust_abi: 'rust',
    dependencies: [
+@@ -8,7 +32,6 @@ _libpl011_rs = static_library(
+     bilge_impl_rs,
+     bits_rs,
      common_rs,
 -    qemu_api_rs,
      util_rs,
      migration_rs,
      bql_rs,
+diff --git a/rust/hw/char/pl011/src/bindings.rs b/rust/hw/char/pl011/src/bindings.rs
+new file mode 100644
+index 00000000000..bd5ea840cb2
+--- /dev/null
++++ b/rust/hw/char/pl011/src/bindings.rs
+@@ -0,0 +1,27 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++#![allow(
++    dead_code,
++    improper_ctypes_definitions,
++    improper_ctypes,
++    non_camel_case_types,
++    non_snake_case,
++    non_upper_case_globals,
++    unnecessary_transmutes,
++    unsafe_op_in_unsafe_fn,
++    clippy::pedantic,
++    clippy::restriction,
++    clippy::style,
++    clippy::missing_const_for_fn,
++    clippy::ptr_offset_with_cast,
++    clippy::useless_transmute,
++    clippy::missing_safety_doc,
++    clippy::too_many_arguments
++)]
++
++//! `bindgen`-generated declarations.
++
++#[cfg(MESON)]
++include!("bindings.inc.rs");
++
++#[cfg(not(MESON))]
++include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 3010b6d9839..85626a969d4 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -130,7 +130,7 @@ pub struct PL011State {
+ // structs, so the size of the Rust version must not be any larger
+ // than the size of the C one. If this assert triggers you need to
+ // expand the padding_for_rust[] array in the C PL011State struct.
+-static_assert!(size_of::<PL011State>() <= size_of::<qemu_api::bindings::PL011State>());
++static_assert!(size_of::<PL011State>() <= size_of::<crate::bindings::PL011State>());
+ 
+ qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
+ 
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index 2b70d2ff560..0c19b708c0a 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -12,6 +12,7 @@
+ //! See [`PL011State`](crate::device::PL011State) for the device model type and
+ //! the [`registers`] module for register types.
+ 
++mod bindings;
+ mod device;
+ mod registers;
+ 
 -- 
 2.51.0
 
