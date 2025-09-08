@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F47ACA1013
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 09:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3700DCA1013
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 09:14:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvXmh-0005JI-Np; Mon, 08 Sep 2025 05:04:07 -0400
+	id 1uvXvs-0001ug-4W; Mon, 08 Sep 2025 05:13:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXmc-0005Hy-5X
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:03:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXvn-0001tX-2Q
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:12:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXmJ-0007zM-Mg
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:03:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvXvg-0001PS-Gc
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 05:12:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757322133;
+ s=mimecast20190719; t=1757322765;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dY1FYqqBalZXG3Fq248Po3+1V3giPHlXujXYqhviE1w=;
- b=C/2eSR29sz4frnORx9mOKZfvCDhgRrIz8YVVxJk1mAKHKXSbQbljDb7aeJXhZ1TqEk3kRD
- uO6OC0G/qfXe/uiEatSLaT6IHJWalM+pcoTLhRI36dJ0Ayl7T/DzLUgGTrNzCcoNKX+VJz
- sNo9Zhj7mXQf5FBv+UvcmQe1MOkghdE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H5DedatCWHavDvoZrpKK8PehOpLyFx44MUtfOsHcLfU=;
+ b=aQqfTxp0sPQ0yIdXYajSWse59fA1l6H6Xg7nvTSd9BlVhFblu1Hn5CK3GpUnj6CS/gMxZo
+ g6QU6lIaMUXrZ64MKFyB8GFczc9yIcX57EOjaokFPaIfult6Fn84N8R8Pw6NoYS6U482NG
+ Gpce6Fl32kZDyk3FfPoah20tivuYXt0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-pQ7yjhP3Pv2rJCy_fmWJ3A-1; Mon, 08 Sep 2025 05:02:10 -0400
-X-MC-Unique: pQ7yjhP3Pv2rJCy_fmWJ3A-1
-X-Mimecast-MFC-AGG-ID: pQ7yjhP3Pv2rJCy_fmWJ3A_1757322129
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45a15f10f31so28876955e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 02:02:09 -0700 (PDT)
+ us-mta-125-x9qPGwd2O0SYdGv7XU2j1g-1; Mon, 08 Sep 2025 05:12:43 -0400
+X-MC-Unique: x9qPGwd2O0SYdGv7XU2j1g-1
+X-Mimecast-MFC-AGG-ID: x9qPGwd2O0SYdGv7XU2j1g_1757322762
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b920e0c25so32049925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 02:12:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757322129; x=1757926929;
+ d=1e100.net; s=20230601; t=1757322762; x=1757927562;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dY1FYqqBalZXG3Fq248Po3+1V3giPHlXujXYqhviE1w=;
- b=lRFzR97+y1vBwXosL1yW5gKhAIHdo6+xS7yIkKjTDlvqdD9EAJs56co64s7HcwVLKa
- xKBJ4No0iRO6zzry9RW3AUwn8eG5kWRh8Pg3UNoK6KYoTpvBBK7/bkqE2b+Jz0RK7iUX
- i+yBT3O/OiCn9ZPAdZScUVTYDBD8sS+D3qVPlTbNOOgyHHILY7eZgQrcgQU+TkUNne+1
- 0XAkZ5jCjkuN+p9Mz9aOW79DM8uXaybhOn6xxkK6HjLTff/8OBvWjVv1Bj/krTpxazIS
- k84Ao2yjgmqMq4dmojzFadgACP/oJGrlH6CIobspgdCIrKYe5bRI0gVHQtNXTeF3GrnE
- Zw4Q==
+ bh=H5DedatCWHavDvoZrpKK8PehOpLyFx44MUtfOsHcLfU=;
+ b=w44PEacL9LHi5DL/nlwuEwml5Quu8iVWf1Ztn5vch5xhEFeHRP95sQ++qK0Jw4vESF
+ x4kai9gOGuHqoo1G2XwKwNqLtcrt1z8Y/untK9DP/wtAECa9iywP58P2MbWCzs0JUMSY
+ pHSzxplO65HNOlXdsKCf8KWOwdl8YhBfsR79i7hs8NJcvWZD5ol6do/qxUmYA9UdADD1
+ a6n6Y27glUOVJSXpSRFD6i7j289qnx5vyymCgpmhN1wrx+1yvEDlUZvJifx2b8K5u1SH
+ bcSfbXqaFLPGMTT3H6SYs+k+fPnyXhFnP2VYuYcl2nQFkndv/aoVdpwo9qW/X/mPwyKH
+ Btzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbgNJcx1oFHcZ5SZtE473Rfp8PubmLo3g73frVE0a1rQKyZg0P/4L87Lm/fbslT/sW7LKV1J9oKfVX@nongnu.org
-X-Gm-Message-State: AOJu0YxU5HEUNmx030Uhv4WFzijQqllLUQ1xKbe5ixs+OKyeUMISeQ1b
- yfWX2tjEsnj2slbDOM4lJi801ro7mTKjBo/KYfiVMZ7ZC7rsPXmhqlMnw2umJ0hfCYOIEbdBGOP
- Y9NXb2vk7uCFoE1pRJ68zy7XcbR/FIlm7ndA9VksYXsnmbm5gLY/bIxFS
-X-Gm-Gg: ASbGncv+8OWA7+6hr83zfp2nR/r2GygZI4y5aRMJ4zYa+gkNgcU8jNAqUs84CXHEJfo
- 88G1WMVrmtYZIf5ryB2n917ohqdmmQdDZTRuHOG+PxD3nUkmCrXTLbP+qUgOueCQ+qNZLJZ+zQX
- O3+5F3Td2mTa1SW1ktO5lTJJOSnxV+hQLXHB8qLSKVVCBkYIiiRYM5aXVrwVbIQjKfAhHstjj+A
- 359u6MEgen3tQ3ICc567BoEji2SE1IpZpzFVA13HkXTGlLz61gw4B9HpMnbJT72EmVvDBEYOgmm
- HiYb+U+vrlebNnsdMlAsEGT50iA2hgoVZnrGyfN1QBw0t9s2mMaJGbkeERDIBjJyT3UH+bErE5K
- m0ulDDQ==
-X-Received: by 2002:a05:600c:8b5c:b0:45b:9b9f:88cb with SMTP id
- 5b1f17b1804b1-45dd5b78584mr95536825e9.16.1757322128897; 
- Mon, 08 Sep 2025 02:02:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3WVA3UnL4Yw3tRBj87z15x/SiJnqbyZSgM3VHmzs8+n80yu0wSPHpZMVpAISBgRP66O1H1g==
-X-Received: by 2002:a05:600c:8b5c:b0:45b:9b9f:88cb with SMTP id
- 5b1f17b1804b1-45dd5b78584mr95536525e9.16.1757322128483; 
- Mon, 08 Sep 2025 02:02:08 -0700 (PDT)
+ AJvYcCVUk3BOWAgZxcTcJhU2jUtGquXU5oWns2e5B26ema8IoiZhOfIA+CxAshSEofpahCEQFAoYYHXUpzn/@nongnu.org
+X-Gm-Message-State: AOJu0Yw6rz9AHLHmoCMYxTFOaLlUibCyHVIkgYxNPMcM9HQLi2V1a275
+ sZCZjq3vJJDtcFQxpAnyQKsGo8NGa/RF6rnwHRpSuCIHxdJvmweS4rdNTeL2k519mMzvrckCWq2
+ Rul7uzVsPOQmjZiQs2Z6dn43p9tUINREJY2+23FTVpznACIVbHlkCneEK
+X-Gm-Gg: ASbGncukZEE6T0O64ikGhrHyBCVCvG/UMgqjn1etbsSMSLvNZ1pkVOnAhwg9ZZXLL3J
+ jUylT8duBlSQ7cI2mBGcQI3BiuombIugOvKf+o2YB05OdB6bKEvDh3pUQIn3Ugb1yTN1f3Yy6qs
+ AkZAYvp/lUmJ4SXoDO7MJgInyhHhg5t930GoNZ2FIWwXUZ4rXoCQjswcPxwV3XOVDDEHLQn1gCp
+ YE61siy+yztPiFLAcGiZTof2SU55hcF3DpJ/OLYu449iTaXZ+huTUJ+NsaUcbXzbAg5XOVJgdxr
+ HO9sbHQ9nOWMbB1hSwRWrwpvvDvaBlKG2oOl02leRnqAytV8KCUD9qMIF0qVORBaAMVD3jq5MpZ
+ FJ5G0mw==
+X-Received: by 2002:a05:600c:1912:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-45de2cf9a5cmr39526165e9.1.1757322762444; 
+ Mon, 08 Sep 2025 02:12:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnisDzvToDGNWlrdFaGcylw8y03P/b0yNQySgMB6iaWqScPPEk/XLZ4CAP7VY+3cwWUrPhOQ==
+X-Received: by 2002:a05:600c:1912:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-45de2cf9a5cmr39525825e9.1.1757322761975; 
+ Mon, 08 Sep 2025 02:12:41 -0700 (PDT)
 Received: from [192.168.0.5] (ltea-047-064-114-112.pools.arcor-ip.net.
  [47.64.114.112]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e2f6af9791sm12881241f8f.26.2025.09.08.02.02.07
+ 5b1f17b1804b1-45dd2304e16sm179056905e9.7.2025.09.08.02.12.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Sep 2025 02:02:07 -0700 (PDT)
-Message-ID: <b71c590e-ad55-498b-ab48-fee144e9d419@redhat.com>
-Date: Mon, 8 Sep 2025 11:02:06 +0200
+ Mon, 08 Sep 2025 02:12:41 -0700 (PDT)
+Message-ID: <e43d5fa3-6687-4837-b99c-5d95f0e563f1@redhat.com>
+Date: Mon, 8 Sep 2025 11:12:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] tests/guest-debug: Make QEMU optional in
- run-test.py
+Subject: Re: [PATCH v2 3/5] tests/guest-debug: Add quiet option to run-tests.py
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  alex.bennee@linaro.org, berrange@redhat.com
 Cc: qemu-arm@nongnu.org, 1844144@gmail.com
 References: <20250904154640.52687-1-gustavo.romero@linaro.org>
- <20250904154640.52687-2-gustavo.romero@linaro.org>
+ <20250904154640.52687-4-gustavo.romero@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,9 +127,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250904154640.52687-2-gustavo.romero@linaro.org>
+In-Reply-To: <20250904154640.52687-4-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -157,22 +156,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 04/09/2025 17.46, Gustavo Romero wrote:
-> This commit makes QEMU optional in run-test.py, allowing it to be used
-> as a GDB runner, i.e., to call GDB and pass a test script to it without
-> launching QEMU. In this configuration, it is the test script’s duty to
-> configure and run the VMs that GDB connects to.
-> 
-> sys.argv passed via -ex now includes the full path to the test script in
-> addition to the script’s arguments, which allows unittest introspection
-> to work properly in case it is used in the test script.
-> 
-> The --binary option continues to be required when --qemu is passed.
+> Add a --quiet option to run-tests.py so it can run without printing any
+> messages to the stdout.
 > 
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->   tests/guest-debug/run-test.py | 60 +++++++++++++++++++----------------
->   1 file changed, 33 insertions(+), 27 deletions(-)
+>   tests/guest-debug/run-test.py | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+> index e051e8947c..cf8b37b8b8 100755
+> --- a/tests/guest-debug/run-test.py
+> +++ b/tests/guest-debug/run-test.py
+> @@ -39,15 +39,17 @@ def get_args():
+>       parser.add_argument("--stderr", help="A file to redirect stderr to")
+>       parser.add_argument("--no-suspend", action="store_true",
+>                           help="Ask the binary to not wait for GDB connection")
+> +    parser.add_argument("--quiet", action="store_true", default=False,
+> +                        help="Don't print any messages to stdout")
+>   
+>       return parser.parse_args()
+>   
+>   
+> -def log(output, msg):
+> +def log(output, msg, quiet):
+>       if output:
+>           output.write(msg + "\n")
+>           output.flush()
+> -    else:
+> +    elif not quiet:
+>           print(msg)
+>   
+>   
+> @@ -91,7 +93,7 @@ def log(output, msg):
+>               cmd = f'{args.qemu} {args.qargs} -g {socket_name}{suspend}' \
+>                   f' {args.binary}'
+>   
+> -        log(output, "QEMU CMD: %s" % (cmd))
+> +        log(output, "QEMU CMD: %s" % (cmd), args.quiet)
+>           inferior = subprocess.Popen(shlex.split(cmd))
+>   
+>       # Now launch gdb with our test and collect the result.
+> @@ -117,7 +119,7 @@ def log(output, msg):
+>   
+>   
+>       sleep(1)
+> -    log(output, "GDB CMD: %s" % (gdb_cmd))
+> +    log(output, "GDB CMD: %s" % (gdb_cmd), args.quiet)
+>   
+>       gdb_env = dict(os.environ)
+>       gdb_pythonpath = gdb_env.get("PYTHONPATH", "").split(os.pathsep)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I can see two more calls to log() in that script, don't you need to change 
+these spots, too:
+
+$ grep log tests/guest-debug/run-test.py
+def log(output, msg):
+     log(output, "QEMU CMD: %s" % (cmd))
+     log(output, "GDB CMD: %s" % (gdb_cmd))
+         log(output, "GDB crashed? (%d, %d) SKIPPING" % (result, result - 128))
+         log(output, "GDB never connected? Killed guest")
+
+?
+
+Maybe you could declare the new parameter with quiet=False by default, so 
+that you don't have to worry?
+
+  Thomas
 
 
