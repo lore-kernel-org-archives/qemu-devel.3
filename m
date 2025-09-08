@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3683DCAC581
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7620CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 10:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvYsT-0001tZ-Qq; Mon, 08 Sep 2025 06:13:37 -0400
+	id 1uvYst-00028q-II; Mon, 08 Sep 2025 06:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvYsN-0001pX-2m
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:13:31 -0400
+ id 1uvYsV-0001uA-T7
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:13:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uvYsC-0000xB-NT
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:13:29 -0400
+ id 1uvYsK-0000yi-Mr
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 06:13:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757326394;
+ s=mimecast20190719; t=1757326399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NNOluOBJNIDynOX/SeCHp/9Wa5GX8lq9yKO/uaKZQRg=;
- b=UhgZg9XB2q018+kkAjIiyIvwxQWAySvxNthXp/sSFgE4T+aO1YT0mGJQz4tihqCxckmxI0
- d6K/jTqAHjyVhTVElf8UDKUY81K4hq1RaFv7B2/GLbEn6O8MxD4DzgLGbEGYZBeDzsPUM1
- cLSajXrdGoC55J2e+m7fGfGSbWdO1P8=
+ bh=7joNFhlKCq/65i2RHs9pqNw9LGInItxc9SYTL3XBLRM=;
+ b=ZlyhELw+54BWda4fTs2NcQD5nkcknU5vggajS/IeH8NxNZUgnJTc3PJ/Fi0jF14DCLhSL7
+ s1PXAwym7TDSilD1HFe5dl+Lsc3mfeZRW8re3mBU4iEYCfkOF58Nx+kpKIH2DfneZ2lrIi
+ zJtvwu9/lITKpfgOZViBNcbS3qECQiE=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-vCGzS2HuOlixOJ-UQV3QXw-1; Mon, 08 Sep 2025 06:13:13 -0400
-X-MC-Unique: vCGzS2HuOlixOJ-UQV3QXw-1
-X-Mimecast-MFC-AGG-ID: vCGzS2HuOlixOJ-UQV3QXw_1757326392
+ us-mta-22-igiFS-i9MhmzylMlGJqG3A-1; Mon, 08 Sep 2025 06:13:18 -0400
+X-MC-Unique: igiFS-i9MhmzylMlGJqG3A-1
+X-Mimecast-MFC-AGG-ID: igiFS-i9MhmzylMlGJqG3A_1757326397
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3e68a54dac2so384457f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:13:13 -0700 (PDT)
+ ffacd0b85a97d-3dbf3054ac4so2451761f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 03:13:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757326391; x=1757931191;
+ d=1e100.net; s=20230601; t=1757326396; x=1757931196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NNOluOBJNIDynOX/SeCHp/9Wa5GX8lq9yKO/uaKZQRg=;
- b=SU1iWqiByYdSSWhekbikKNBcmHAxluFp7oUvUBMvO5ZqVjjakkPVcsNIbfg3a+U844
- yzVty8AfzjLud7F/CPiEAlBNObnTF9MAPxbq+i09upOzzaQYRJN2m9sw+dIrXz+CO2J6
- 66tQVhZQAz7PZqo8OESN2r21PplBA6z9v0QGsM8CZTOqrbR7VBpbonHAp47Sorrk+m2X
- gFqyEbXnA5R4E2eXh7aJ3G6UAc+tyi/4OKvZvrR5Vgli/z6rN7//1NfjddJJIlRVmwSj
- gfhMTBjGXaCfA0anaSOtyKsFxRWlmI8kkBWfkLQ5nzOu7uT4hMz6nm4Xp4hVZaj+jfxe
- I3sg==
-X-Gm-Message-State: AOJu0YzP8mtUBuTUPhdWyHTKF6BMnat4S+vLgDxV6SuYinXNMfCqRnha
- wA9LEVy/f93BFcjhsrrufMJC7uFQ9xali+239wuuZqb+j/x9tdfxtw1ZwRv7GiJ2da6L7iLKwGe
- v9k7nwWMInzV7QqVv+6A8zaMJ6FgmEQPDeDq5xvvNgb/upx1eJ6ZPwtuOfaKf6UM2xtJHhc9QuX
- MMjcT/WOoX28oG2Y+ZZMd7q1S6ssWbX7jU9RiasIDU
-X-Gm-Gg: ASbGncvY/CgO8V0tuoosOtf1Vue0S4D8s4YRQvYlYn2KGWWg0IJGQry7R5KZYyiS8vn
- 6iOcdER7Q2V2q7u5M8z/K31dj+TGyydyk3G1X5HjuQEWTrnzeFM65n3f22dRQBqEkjXdthyAF6Z
- /Hg5qZ4A3DRg5lOdC+pI4KJv0xKLFLaQXMdhYoS78f/sc7NIaGezvnXFdVe/JR+TxQPVTaT58Di
- 7WqkUrckfXMBk1+6YVrTPREq1Xax+dsTTOxa449gZRFsyZ3nL1Hv6NlOKdM2H74x9W3WkI28Ub1
- t1D6fsE0ng7rKbkXTvZPc3aXnrVyMZCG1HGJ8hv9Zy07PxDE9kdIhCbiulF13oIiOj8X+U54ob7
- KhceRFhxwtaUaS7RStb2xA2UmOjakcDnOA8MCxSU9kOI=
-X-Received: by 2002:a05:6000:1a87:b0:3e2:e851:7f93 with SMTP id
- ffacd0b85a97d-3e300ae3446mr10075262f8f.7.1757326390674; 
- Mon, 08 Sep 2025 03:13:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2pJGIYWJwE6StkLzHGPEjPIaEYufrfU5jk2BSgO6+GpS2gJl2d1sVD2m5rotGThxWdauADg==
-X-Received: by 2002:a05:6000:1a87:b0:3e2:e851:7f93 with SMTP id
- ffacd0b85a97d-3e300ae3446mr10075220f8f.7.1757326390104; 
- Mon, 08 Sep 2025 03:13:10 -0700 (PDT)
+ bh=7joNFhlKCq/65i2RHs9pqNw9LGInItxc9SYTL3XBLRM=;
+ b=rw9BDUdJ318CUl2GufsNQHuXM/X2YvfKXMBKiWYZ9j+uYboTpdNGm7tWpvzum0v0Yc
+ iDhyxUql8SLGR/YfIMJKGHNMVXXPF/sdLVfJfO+P5CZCI0mTIhbMQu48h3L9uYFI9q1B
+ +My4GlwMtf2LZC0R9PNOeyH8FRXa+XWUX3UYBhtwGAlcg02hSe+EfWxVgoEOC7kQ70fM
+ bd2SbQBYFXWMM4NdenmltgJqHcI/5QjFLGVtctGGye7KBe9upowbHcMMciUBDiqeFVgW
+ kyXY4il/LsgaUR/QOJEPQVNsMn1uAxV3YOm8x1PDrGxdToGsBjm2mDKXbFubydPIMvbZ
+ 2U3g==
+X-Gm-Message-State: AOJu0YyDSmwCFWoh00h/meH5lkWFeEjFs25RwrlfHsKZa7NuWhw57Vot
+ ULNxtMrBU4VOXM1nhVeskWXCrvdNccslml7YMfjbHNi6SmgNHa82MOw8nRhOMUi6KK2w4t1o9/n
+ blgke+37pOT4/mB7TzEy5p4e6kkkQvmRbx3XDqBZ57ujO46tnQCjcj7qweCPYyrCLaOSpbDpTw1
+ rEz67GnsvLimyeonPKCLz/3v2AO5V2ji4C+YQjVmtR
+X-Gm-Gg: ASbGncuiT6HA9fKKoSiYXXV6CpCZc/7wvnRsT6JfeZ1s8dILPNZXT/8R1hn9dya9r2/
+ UIMA2cxIYgSLfcRK/f8qqEiYv2xSZWzb9prk64RgXIlVmuMHmT+XxaryPr5jP5iHBjXheHddNbj
+ DPP8hESeVS5nAYpgmnvyxRCFLWdHoRp5wDtnIP2FG2rWYpsGNOe+TaatkQLi9TfFbukALR14L7T
+ nOvufe0oRaLRZlX0c7Q9NCPX4R5DeBxpae7KPyLdbau2rn/PPNVBviJpTdz79Eh9Wy1LelLA+Sv
+ jvgCDVHi8UWfi3zOHEYWm+sYzqi727OtX7HL2UT3MSGzP3rFfr7MUBzNsZ+OuV958rQTcx/TxlJ
+ 8wmKlj8ZTJK3j9STEe9N5SYP+eAFp9Dnd2WCXAaPo7ZY=
+X-Received: by 2002:a5d:584a:0:b0:3e0:152a:87b8 with SMTP id
+ ffacd0b85a97d-3e636d8fe92mr4845535f8f.8.1757326396447; 
+ Mon, 08 Sep 2025 03:13:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6wpkvhjlwFo5OKt5dWh6HWDtHXYSRjcuxnI1ZhwafTs5xV2Yy7275cyqfro4trZUvCxEPAA==
+X-Received: by 2002:a5d:584a:0:b0:3e0:152a:87b8 with SMTP id
+ ffacd0b85a97d-3e636d8fe92mr4845511f8f.8.1757326395999; 
+ Mon, 08 Sep 2025 03:13:15 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf34493b8csm40181801f8f.59.2025.09.08.03.13.08
+ 5b1f17b1804b1-45dcfc481b5sm88404475e9.0.2025.09.08.03.13.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 03:13:08 -0700 (PDT)
+ Mon, 08 Sep 2025 03:13:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 11/19] accel/tcg: create a thread-kick function for TCG
-Date: Mon,  8 Sep 2025 12:12:33 +0200
-Message-ID: <20250908101241.2110068-12-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PATCH 13/19] cpus: remove TCG-ism from cpu_exit()
+Date: Mon,  8 Sep 2025 12:12:35 +0200
+Message-ID: <20250908101241.2110068-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250908101241.2110068-1-pbonzini@redhat.com>
 References: <20250908101241.2110068-1-pbonzini@redhat.com>
@@ -94,7 +94,7 @@ X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,191 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Round-robin TCG is calling into cpu_exit() directly.  In preparation
-for making cpu_exit() usable from all accelerators, define a generic
-thread-kick function for TCG which is used directly in the multi-threaded
-case, and through CPU_FOREACH in the round-robin case.
+Now that TCG has its own kick function, make cpu_exit() do the right kick
+for all accelerators.
 
-Use it also for user-mode emulation, and take the occasion to move
-the implementation to accel/tcg/user-exec.c.
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/tcg-icount.rst       | 2 +-
- accel/tcg/tcg-accel-ops-mttcg.h | 3 ---
- accel/tcg/tcg-accel-ops.h       | 1 +
- accel/tcg/cpu-exec.c            | 6 ++++++
- accel/tcg/tcg-accel-ops-mttcg.c | 5 -----
- accel/tcg/tcg-accel-ops-rr.c    | 2 +-
- accel/tcg/tcg-accel-ops.c       | 2 +-
- accel/tcg/user-exec.c           | 6 ++++++
- bsd-user/main.c                 | 5 -----
- linux-user/main.c               | 5 -----
- 10 files changed, 16 insertions(+), 21 deletions(-)
+ hw/core/cpu-common.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/docs/devel/tcg-icount.rst b/docs/devel/tcg-icount.rst
-index 7df883446a7..a1dcd79e0fd 100644
---- a/docs/devel/tcg-icount.rst
-+++ b/docs/devel/tcg-icount.rst
-@@ -37,7 +37,7 @@ translator starts by allocating a budget of instructions to be
- executed. The budget of instructions is limited by how long it will be
- until the next timer will expire. We store this budget as part of a
- vCPU icount_decr field which shared with the machinery for handling
--cpu_exit(). The whole field is checked at the start of every
-+qemu_cpu_kick(). The whole field is checked at the start of every
- translated block and will cause a return to the outer loop to deal
- with whatever caused the exit.
- 
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.h b/accel/tcg/tcg-accel-ops-mttcg.h
-index 8ffa7a9a9fe..5c145cc8595 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.h
-+++ b/accel/tcg/tcg-accel-ops-mttcg.h
-@@ -10,9 +10,6 @@
- #ifndef TCG_ACCEL_OPS_MTTCG_H
- #define TCG_ACCEL_OPS_MTTCG_H
- 
--/* kick MTTCG vCPU thread */
--void mttcg_kick_vcpu_thread(CPUState *cpu);
--
- /* start an mttcg vCPU thread */
- void mttcg_start_vcpu_thread(CPUState *cpu);
- 
-diff --git a/accel/tcg/tcg-accel-ops.h b/accel/tcg/tcg-accel-ops.h
-index 6feeb3f3e9b..aecce605d7b 100644
---- a/accel/tcg/tcg-accel-ops.h
-+++ b/accel/tcg/tcg-accel-ops.h
-@@ -18,5 +18,6 @@ void tcg_cpu_destroy(CPUState *cpu);
- int tcg_cpu_exec(CPUState *cpu);
- void tcg_handle_interrupt(CPUState *cpu, int mask);
- void tcg_cpu_init_cflags(CPUState *cpu, bool parallel);
-+void tcg_kick_vcpu_thread(CPUState *cpu);
- 
- #endif /* TCG_ACCEL_OPS_H */
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index f838535d111..9241bcadb5f 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -40,6 +40,7 @@
- #include "exec/replay-core.h"
- #include "system/tcg.h"
- #include "exec/helper-proto-common.h"
-+#include "tcg-accel-ops.h"
- #include "tb-jmp-cache.h"
- #include "tb-hash.h"
- #include "tb-context.h"
-@@ -748,6 +749,11 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-     return false;
- }
- 
-+void tcg_kick_vcpu_thread(CPUState *cpu)
-+{
-+    cpu_exit(cpu);
-+}
-+
- static inline bool icount_exit_request(CPUState *cpu)
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 42463e6258d..41a339903ca 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -76,9 +76,7 @@ void cpu_exit(CPUState *cpu)
  {
-     if (!icount_enabled()) {
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index b12b7a36b5d..1148ebcaae5 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -123,11 +123,6 @@ static void *mttcg_cpu_thread_fn(void *arg)
-     return NULL;
+     /* Ensure cpu_exec will see the reason why the exit request was set.  */
+     qatomic_store_release(&cpu->exit_request, true);
+-    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+-    smp_wmb();
+-    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
++    qemu_cpu_kick(cpu);
  }
  
--void mttcg_kick_vcpu_thread(CPUState *cpu)
--{
--    cpu_exit(cpu);
--}
--
- void mttcg_start_vcpu_thread(CPUState *cpu)
- {
-     char thread_name[VCPU_THREAD_NAME_SIZE];
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index d13e0d8b44d..a1d75fd3419 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -43,7 +43,7 @@ void rr_kick_vcpu_thread(CPUState *unused)
-     CPUState *cpu;
- 
-     CPU_FOREACH(cpu) {
--        cpu_exit(cpu);
-+        tcg_kick_vcpu_thread(cpu);
-     };
- }
- 
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 9c37266c1e0..1f662a9c745 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -206,7 +206,7 @@ static void tcg_accel_ops_init(AccelClass *ac)
- 
-     if (qemu_tcg_mttcg_enabled()) {
-         ops->create_vcpu_thread = mttcg_start_vcpu_thread;
--        ops->kick_vcpu_thread = mttcg_kick_vcpu_thread;
-+        ops->kick_vcpu_thread = tcg_kick_vcpu_thread;
-         ops->handle_interrupt = tcg_handle_interrupt;
-     } else {
-         ops->create_vcpu_thread = rr_start_vcpu_thread;
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 66c25fba7dd..3c072fd868f 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -38,6 +38,7 @@
- #include "qemu/int128.h"
- #include "trace.h"
- #include "tcg/tcg-ldst.h"
-+#include "tcg-accel-ops.h"
- #include "backend-ldst.h"
- #include "internal-common.h"
- #include "tb-internal.h"
-@@ -46,6 +47,11 @@ __thread uintptr_t helper_retaddr;
- 
- //#define DEBUG_SIGNAL
- 
-+void qemu_cpu_kick(CPUState *cpu)
-+{
-+    tcg_kick_vcpu_thread(cpu);
-+}
-+
- /*
-  * Adjust the pc to pass to cpu_restore_state; return the memop type.
-  */
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 9ba69642f50..73aae8c3274 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -214,11 +214,6 @@ bool qemu_cpu_is_self(CPUState *cpu)
-     return thread_cpu == cpu;
- }
- 
--void qemu_cpu_kick(CPUState *cpu)
--{
--    cpu_exit(cpu);
--}
--
- /* Assumes contents are already zeroed.  */
- static void init_task_state(TaskState *ts)
- {
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 7b0ccb6fd60..4ddfc9a619c 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -189,11 +189,6 @@ bool qemu_cpu_is_self(CPUState *cpu)
-     return thread_cpu == cpu;
- }
- 
--void qemu_cpu_kick(CPUState *cpu)
--{
--    cpu_exit(cpu);
--}
--
- void task_settid(TaskState *ts)
- {
-     if (ts->ts_tid == 0) {
+ static int cpu_common_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
 -- 
 2.51.0
 
