@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A171ECA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08EBFCAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcvi-0003KW-HD; Mon, 08 Sep 2025 10:33:14 -0400
+	id 1uvcwh-0003Y8-Dt; Mon, 08 Sep 2025 10:34:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvcvg-0003Iz-Hj
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:33:12 -0400
+ id 1uvcwa-0003XQ-Td
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:34:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uvcvX-0002lp-Bv
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:33:12 -0400
+ id 1uvcwV-0002r1-Aq
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:34:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757341974;
+ s=mimecast20190719; t=1757342039;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jwXDcj/9N00BTg8ADke1Efg70RTEM8jwfb+37qHcWvk=;
- b=gTa1fw0LhF9st89LJpe1D67bhOx8bl+mZY093rs5wjP+wcG5TzfDj5KDG/Qdk9Kl4mtHoR
- UvtoxOo9w9368R4E7mZvXQylwYp4zsI+2J6lC6FYkT+QkY0SUTa13PWBvJWuEhbhqL/vW5
- TCPKcVEUC7dyS7ClCudg6U3CPZgz6uM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lYtniil9Xh8DZ1Hcem61GuUFyXYuqteO+HoYq1xlLM4=;
+ b=dySae58ErgjbgmGxs67VQqkhaMXVJ0R+Tu0BUI2b8sDr0XbAJy6VxQpeus6XIHJ0mcc+F4
+ WoDEj8slRHI6DhyN0l91GhH4QPpuklIUgImtMpk0u4dr71UpWfeE8Pw92IRnNFIl7tWqKc
+ E/smnESLrzSoO8YjptPfVL732ruvdtE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-l475BRaRMIqcuFo4AE0xCA-1; Mon,
- 08 Sep 2025 10:32:53 -0400
-X-MC-Unique: l475BRaRMIqcuFo4AE0xCA-1
-X-Mimecast-MFC-AGG-ID: l475BRaRMIqcuFo4AE0xCA_1757341972
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-DE4VpH67NQOJ_yz9WyeSIw-1; Mon,
+ 08 Sep 2025 10:33:56 -0400
+X-MC-Unique: DE4VpH67NQOJ_yz9WyeSIw-1
+X-Mimecast-MFC-AGG-ID: DE4VpH67NQOJ_yz9WyeSIw_1757342035
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 638ED180057A; Mon,  8 Sep 2025 14:32:52 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2DDB19560B1; Mon,  8 Sep 2025 14:33:54 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.93])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6411919540EE; Mon,  8 Sep 2025 14:32:49 +0000 (UTC)
-Date: Mon, 8 Sep 2025 15:32:45 +0100
+ id EE21E1955F24; Mon,  8 Sep 2025 14:33:51 +0000 (UTC)
+Date: Mon, 8 Sep 2025 15:33:48 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Levon <john.levon@nutanix.com>
 Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
@@ -56,15 +56,15 @@ Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 1/3] tests/functional: return output from cmd.py helpers
-Message-ID: <aL7pDZfCeGv3mFO1@redhat.com>
+Subject: Re: [PATCH v4 2/3] tests/functional: add vm param to cmd.py helpers
+Message-ID: <aL7pTJ1pm3n5Z39z@redhat.com>
 References: <20250903201931.168317-1-john.levon@nutanix.com>
- <20250903201931.168317-2-john.levon@nutanix.com>
+ <20250903201931.168317-3-john.levon@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903201931.168317-2-john.levon@nutanix.com>
+In-Reply-To: <20250903201931.168317-3-john.levon@nutanix.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -76,7 +76,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,14 +93,15 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 03, 2025 at 10:19:29PM +0200, John Levon wrote:
-> Tests might want to look at the whole output from a command execution,
-> as well as just logging it. Add support for this.
+On Wed, Sep 03, 2025 at 10:19:30PM +0200, John Levon wrote:
+> Extend the "vm" parameter of wait_for_console_pattern() to all the other
+> utility functions; this allows them to be used on a VM other than
+> test.vm.
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->  tests/functional/qemu_test/cmd.py | 53 +++++++++++++++++++++++++------
->  1 file changed, 44 insertions(+), 9 deletions(-)
+>  tests/functional/qemu_test/cmd.py | 18 ++++++++++++------
+>  1 file changed, 12 insertions(+), 6 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
