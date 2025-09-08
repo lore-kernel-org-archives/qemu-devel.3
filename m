@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB314CAC582
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 21:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC0DCAC582
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 21:20:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvjHg-0000b2-JI; Mon, 08 Sep 2025 17:20:20 -0400
+	id 1uvjHw-00016i-U2; Mon, 08 Sep 2025 17:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvjHd-0000aW-BP
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 17:20:17 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uvjHu-0000tx-Ke
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 17:20:34 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvjHb-0004DF-5K
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 17:20:16 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45ded619608so1181515e9.3
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 14:20:14 -0700 (PDT)
+ id 1uvjHo-0004ER-RE
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 17:20:34 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45decc9e83eso2600805e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 14:20:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757366412; x=1757971212; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757366427; x=1757971227; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gdLHNzmH7mA9ve8T/CvWPlFDAqdOAh6fhGY3xIHxsfI=;
- b=Mobc+UmtB96FYP7xRK/TXzw3ea1fElQLG5FwdWPKJ5nlYd/0KGGUzHp8a+52uWP0JZ
- QZfUJ8oANbClzU8NCEvy0GSbOD+N+nM4Jv72mVdBSaPc+j/OtjldTnptICuDI8INTtLI
- f6jnUJmfoo5rEJ6topHoaDp8uoJtWWijPlnkprersNSnwcWXjChUNd6L494ckWJeKkbd
- U6q/aS4Apx/IkzJFa0ZTzRJHVyEZ+qe87Af9WmBQpiwAh3tCw8vDefwk9l6ly8U3TeVf
- RD6hBP102u+6F0SggC5Q3pAzi0ywHjWkkNAm+EOftOgvvmxRxjg4MiGBDrV0QntV0hNi
- b1jw==
+ bh=AtFbu9uGNYR3g94cfZWQ73yJZ/4jh2oSFZ8Q3Zfvu4k=;
+ b=eBL2Ky1GiTh07sBTy43t50G8aqOBdBqdI4J/5dbM4bXzcOZrRrF4fkg5aOOR3uZIp1
+ CuqSQWWu2YmyI3mUUflF6YAl5ylyYZ0/zyWHLub3+lM/+HoP9AoKjBxYS7uVMXnjPB40
+ ZyLitC9neL2LeUfZ9+fZr86wWsaQ/QWPbY+/+2ncn4GxCsdeGQBrT8NsZ2wk8xphZKGc
+ l1thg/ehNZJBybkkfA1Jaws08ZdiKFWMUqWIbCPI0SJQiiJluyudke4QsMFI7sXRfVe4
+ BaPh8xJNqAp56rtPmNKeODnd1XMSXPypCKZLcia6nD4RtbzyBGz9zxk2zzAQDlVPRls/
+ s36Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757366412; x=1757971212;
+ d=1e100.net; s=20230601; t=1757366427; x=1757971227;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gdLHNzmH7mA9ve8T/CvWPlFDAqdOAh6fhGY3xIHxsfI=;
- b=DJf/pXzDpHonLkMv8pRBdzgfj7iSQXfwgJYFBB341AVqRhocS2DJaJozDTNX9Gvzk9
- k1ZwU0idqRuWlHY8UgDkCiTYQOpDgI81HryQVOuVQ92J+1r3wwBEcaMzKkXB2hYjrDgk
- Udw6FnPgQfXn66w8X8bYaFyG2NTtutF8c+0uPlrNYzpwHsz+hsUAnApiHO1pjy8Z5r2B
- c3tO52qTx1KnR1ZKrdYCtJOrkX5LeyDrmQBkQYK2iygtRQTTwExS3y3jhfz4U2cy7i/X
- m5qfBxV9n+iqohi5aFuDTdQPK6zFdygICmZwIZ0jFkG3PtX+M1XfP3Pt6q4wKfBAeV4O
- jszQ==
-X-Gm-Message-State: AOJu0Yyn8PHiHm3F/SdokqiNVBXSdtiCGAeE6vb3Evsz6hE8FxFHB/N2
- O0v9iQXv7vEx/SFpZlIuf/NxTs85tK3dh78JAbI2r01pTJxLQOjtlp2iqtCikbQAA6Y=
-X-Gm-Gg: ASbGncvSRZTHx97ZLrzhtk4GzWTMXK9/jCiuik5JmsPayABIArJgCakfumhCPWwOoEZ
- zE+Jbr/lqhfyLZIVrWyt7OFhrGY/Pd1LnYQ2bxYqi0jtHPnNtfpkdhhg20/BDJ3kdETmy1fW7WG
- kJnP/6GI6T0zMDeije+R1Ojr+DLPdeKwTltPHeUOgB5D4tqZWhPGG8QqWFFvkXTiJxWaFyqoN/Q
- VCKQxhHyoDKOOP91srEW0lsrxlvz5LHZkYuTNIM8IAz7IaCJOFKYaTINJTYNlqDowrZkDHi7qvS
- 7Now8vq2xpP/0lkLp3Q06JBNL492m4e+o6YzYuck4zgjpyLLUeo3RFzag3X5fL/Y4QFuJT0QCfe
- Jv9eq9XvoYt2FGQkfVPmdkak=
-X-Google-Smtp-Source: AGHT+IEz0zj29CU7CCCm+TvlNwgBHmyP/pKmSSNlehHLrhRfTCQk0u2YEIOnfT7u0YVDIPUIlkFp3Q==
-X-Received: by 2002:a05:600c:1c9a:b0:45c:b5f7:c6e1 with SMTP id
- 5b1f17b1804b1-45de746216amr36797735e9.0.1757366412521; 
- Mon, 08 Sep 2025 14:20:12 -0700 (PDT)
+ bh=AtFbu9uGNYR3g94cfZWQ73yJZ/4jh2oSFZ8Q3Zfvu4k=;
+ b=fJanoK4AqMutL0/+HAl6VTO2KufkCLZ0kThB43kcB1N/VYe+yG/p0xtfWVuJTgKEkm
+ IqMF0ipihDvzuTDaIKDdHZ9Lx8CnNYD6joEZeFdFzS8lZYaluTFUM6mThzlXB2Jhpjt2
+ KmuqN5PZJMZ2+WXEHIMkjWbpSoGVwjQ3Br2Bs4QvlwC4FQcqCfdVMFrOD+Il3jIl8hTi
+ sgviEH0VCpTCyI95xRM6hHyWxlYPNL8AncaT3KtRt0RQ1mfFyW7pSS1fsTLVG9S5hDlq
+ oFYDmwGJU8bjlJrR76aJfhIjxwunNdFLAzo6WwUr6v2pGSSvRv6sVleveVJbiVANH+ff
+ mHQw==
+X-Gm-Message-State: AOJu0YxW98IBOhSmZ4M5GebR3sCilqerSSs0i6gwBPDeO3niUStpFg/l
+ jpvmYa5M0P7+uJoTjwHyFKrISMq84aVRqm9FQzIFZjRmKTcRB5HeirsNGg9GRn4jKZM=
+X-Gm-Gg: ASbGncvwLRPaXiNn2rNnay4eqXlqXSq8Yd8oU2X2jN1lXmGQ6NjJdMg8I4m5nJwdCA3
+ DB8tuRoclPF7EBEmlVERrvP0fxcSkPXdRbW1++dIneBveqRhY/SqLXMrWNa3oUQiBeDTqdqFFdF
+ f1JMi/GYWjUzIY0gQ2BSK/Nleqlqaa4+wNv1G2FdYYWBVvpFxXwcHuGigCHwp4qKM64l4bWB5d6
+ diachRChZszYsW42Ntphah+GTyraS58hCwnMlRY8a1/WEjo1Uo7RqU3iCwW1WAGMgAKClwg5g7/
+ M0pmreLQuHiGeyYLuNncuh2OA8ERiP812HbeEhlX3O7UkJTOEe59s/0feFQ41G0JgLU9BfpuO9X
+ 14bTVChSP2+7jp6lIXmrlLmU=
+X-Google-Smtp-Source: AGHT+IGXDFFWjQAi7MOVjhZpElHu/EzNehjcfiFsMHH0HVUuHahwnqaUyMSufa2vS0eWrGQo+8Uq7g==
+X-Received: by 2002:a05:600c:4514:b0:45d:d9d1:80a3 with SMTP id
+ 5b1f17b1804b1-45dddeed052mr79188705e9.37.1757366426658; 
+ Mon, 08 Sep 2025 14:20:26 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45ddfe0b654sm110637405e9.3.2025.09.08.14.20.11
+ 5b1f17b1804b1-45dd4affb6bsm176143445e9.1.2025.09.08.14.20.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 14:20:11 -0700 (PDT)
+ Mon, 08 Sep 2025 14:20:25 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 233735F7C1;
- Mon, 08 Sep 2025 22:20:11 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 236EF5F7C1;
+ Mon, 08 Sep 2025 22:20:25 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Philippe
  =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yonggang Luo
  <luoyonggang@gmail.com>
-Subject: Re: [PATCH 1/4] gitlab: replace avocado results files with meson
- results files
-In-Reply-To: <20250908190901.3571859-2-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 8 Sep 2025 20:08:58 +0100")
+Subject: Re: [PATCH 2/4] gitlab: always include entire of meson-logs directory
+In-Reply-To: <20250908190901.3571859-3-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 8 Sep 2025 20:08:59 +0100")
 References: <20250908190901.3571859-1-berrange@redhat.com>
- <20250908190901.3571859-2-berrange@redhat.com>
+ <20250908190901.3571859-3-berrange@redhat.com>
 User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 08 Sep 2025 22:20:11 +0100
-Message-ID: <87cy808wvo.fsf@draig.linaro.org>
+Date: Mon, 08 Sep 2025 22:20:25 +0100
+Message-ID: <877by88wva.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,9 +108,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> The 'results.xml' file and 'test-results' directory were both outputs
-> of the avovcado test runner. Since we're now using meson with the new
-> functional test framework, we must reference meson results files as the
+> There are files besides testlog.txt that may be useful as published
 > CI artifacts.
 >
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
