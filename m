@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769FCCAC586
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CF0CAC581
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 14:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvcjb-00055n-VF; Mon, 08 Sep 2025 10:20:44 -0400
+	id 1uvcik-0004c8-29; Mon, 08 Sep 2025 10:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvcjZ-00054o-Ua
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:20:42 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1uvcii-0004bb-2V
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:19:48 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uvcjQ-00011D-Au
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:20:39 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso28751345e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:20:27 -0700 (PDT)
+ id 1uvciV-0000hO-He
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 10:19:46 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3d44d734cabso3075706f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 07:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757341223; x=1757946023; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fBQpfK5Ppgu2j7IEVQsruWGnmykbI+PC/kC5pUhut9o=;
- b=Ana+5pFNMPVl3a8Qd+Pz0e2IpklWPnJyuvmVEiWssX+Cjv115IYZgmRb06brTiIRQo
- 8a1boDnXhp2W6dXcuyByz7uHzAzfMoJ6X9l0/8+fHSPS8BCo5H39kCYADPCkTfgXnhof
- Xd4CabteDc4wblAbOWdeMPXC4HUULPc7iht/U7U7ML2hoGWF+TY8lZsUyJ2QBDOOhgmS
- cO13eGcbMQCcVGyswP+yGrAo4P4Vp0LcRZItHniqInlrlQKYKsLikPTUXtQMM743d+oE
- slaepxAkq/GghT/CyfDzGIF/kB/NUWxqZkFMcciuIxZiQczQGqJghGHekJHX4l+z0I2S
- 0Tlw==
+ d=linaro.org; s=google; t=1757341162; x=1757945962; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3ccrvKvMZOn56WMXboWclj1pPmiF/EWBGokbC7E5yq4=;
+ b=k0z98hiR2kdGuvq201Pr+QYEUdOEiALlvSJzd/JxuO3Yw3pnl2Vzx/xF+59V0jZNfr
+ NhPvJmXC4y04MtALUZyumDyf10jtQaerEfZlKNXnb/RklZYvy61xRhDyHG/60KiWP2JI
+ hSP/hJ3raurZ2IeFGD7IUYeJ4D0zn+Xw2cbCSxhG2fysb6Xwmqa9cTt0E0KxHTV/AUf/
+ RzGk0CYEB/FuD5uCxTemh2ZheBHoJqNG46PVrdGlFmwYjiBgCrk6DGyFwG5tAuxd0l4L
+ TiU1YfKLD+oa7unwes7dyeWj4Yr8ID1iAI1gCxq7RV7AKNHaLOM9x+u0KWLgNpVtWb6L
+ IEhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757341223; x=1757946023;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fBQpfK5Ppgu2j7IEVQsruWGnmykbI+PC/kC5pUhut9o=;
- b=B+IOZ0AOs5AUMWMFoFeTBw+eL73le+3IFfGjsVVgY1R73qR2+kCLiiSZ79h8aoNRLK
- 56P7D3VB1dNIlwq1D4qPZNRr7OtmcxPewK6VibeONbkrls55BbYp23d3jsTglFgu1H+T
- QHHZ3wgxZfs4ozFrWPsSJORfd2rcJuWMa75lzWxhWqH0XaqNsEO+Pcl8ekXdmYyojDHw
- Y5AxwX2887h5AQmkDVSSiDqnjoWk0yqUQG2R3UvzAgjndOAzhyDD2GFAcadsYYN13zjR
- 3+cXPSWj59o9nxqaSu2e+xR6X7jBmtNeeyVRl5+Opt6WzkEGQ7d/E4FFeFM8KKG6B3Na
- NaIQ==
-X-Gm-Message-State: AOJu0YzbPnj8q1ZskI85I8BoGezseDc/VaENmDn5iuxhASZ704QBhVCz
- kRprLjzGoaO2lT+P/xs7/+2jgRsUga2sJA/KZklmZTbYbNQnJXi3k4s3oLGhL9OPubc=
-X-Gm-Gg: ASbGncvKQ7nKDVjGoLCD5u8IHUt2SqjpuAzhzvrcsgH/w673A1A20739q98lFS8g54/
- 92QRYOcFBZfdStl+e+QVQa8lbBghakPKW03WlHVMaMeg63Ug/uSHdf32S3/W27Ck2GLP53L2OHr
- f5Tb7oUb7ObPeKfG0JKGNKKpRXk5gJpxDcgkZaLp6TG4hv/0G+ONLql3dfvvS6N1y46YM44k2WX
- z7Yifd7QxX+D69B6xM2OGtfsM8v7PoPXywJtvR6FEJqaB5m0dFHvLOr7gqzVsiU6/lnhfuYrhRM
- jaeSy1TgVICMlX4RFOrjkm9NIgAIV5OZp/r69+FYLOSusVzMXRGw6pd1QPS+ZEfYKmJdS2LK1dx
- wH7aFVylH4Ot6FuUG6BX0/jU=
-X-Google-Smtp-Source: AGHT+IHXR+przUAV1rfcg5Ues+qwWIfSpt1lTSVOnVXJFOJDo2N3K0i2M5MR/K0tbhxKT+jI0qFlGQ==
-X-Received: by 2002:a05:600c:1c15:b0:45b:9c93:d22b with SMTP id
- 5b1f17b1804b1-45ddde864b4mr61120565e9.2.1757341223493; 
- Mon, 08 Sep 2025 07:20:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757341162; x=1757945962;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3ccrvKvMZOn56WMXboWclj1pPmiF/EWBGokbC7E5yq4=;
+ b=X/gnATEnxJlOA++7+AZyUYErLwpiftVrh8IWnE95OmT8kMd9+tYPtrmfLOQHJf/gtH
+ XkfJFUxg+OBuNxlWZkdhaI4J513jK1zGmQ7wxaIXeSSqGU5GFXJtvphtP3s5PIYfWLxo
+ qu0uo/6Lc8YclfNlM/41EqE6QLOWdwRtd0gnzy3VCRE5hFec/KoUsvUAx4p+swZquaTb
+ ud3FUNVUIOjv49KF6LrNJBqhJHGgPnrkcJBp3/HVXb3TZGgCNMQQFYFX35S1jJrVcJyX
+ GJuBfjUxLxfCHvbIbd+nQqT4vmq8XkT+CN+mwYYQ/w08Pfqd6puq+MgR5exsxwaQozBW
+ GwFA==
+X-Gm-Message-State: AOJu0YwwfJwA+eST2wTCuHjhadgEhy4HOMBhG7xI+iGkgmVYEWW2TLZb
+ 2MRydCp2aRTHu8EO4S7W0TJjQDSjaj/BpeJC4jFpO4ghF9vIWPWb1+TVZEf2DBiNTGU=
+X-Gm-Gg: ASbGncv0Pi8OVrczsm8Cz2zflu+BmAjss2Q+BhZodi786hUev3yyuNwia4qYA4+gocN
+ ouuPLdUPmiPWEBl5Cz24FLeMtgOkpT11o2Z9jVsZTdve5Ut3BjJfL/IMXI1X7kjD4oGhHUifARd
+ vykZ2u8+ca9v7/3Tu0ToUonFNcoQGBmMEx4CInxx2xu6UyTic8LZwpSI1u1Y0HJuXuwMfJOfrAJ
+ ijHPGQknzP8rpSyEGgBZQe4JNpGkPD2I68mSQB2WZRNvo70WJQZRiqMRAsI5N/a9Qx/yPLzeReb
+ 7Bg/25OM7pERIsooODApkifgqBbxECbVlcRghlf8Cr9wLnqpDPOVKOvXNspavPiq6AV1d4GsUaY
+ D3VrEjSNdj1gDbZ4PCcHho5cOH+n27gEsGg==
+X-Google-Smtp-Source: AGHT+IH6g5oQwdDnWSsgmvgyaAsU+JXeE5M6uI/sI/HRfhJHce7kkDx8WnOHvVuUQGdv+g/gPZxQcw==
+X-Received: by 2002:a05:6000:178e:b0:3dc:33aa:a2b8 with SMTP id
+ ffacd0b85a97d-3e642da2f85mr6601374f8f.19.1757341162197; 
+ Mon, 08 Sep 2025 07:19:22 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45de16b8b58sm92719155e9.4.2025.09.08.07.20.22
+ ffacd0b85a97d-3e74b2e0511sm2879346f8f.62.2025.09.08.07.19.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 07:20:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0853B5F7FA;
- Mon, 08 Sep 2025 15:20:22 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH 4/4] tests/functional: purge scratch dir on test startup
-In-Reply-To: <20250908135722.3375580-5-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 8 Sep 2025 14:57:22 +0100")
-References: <20250908135722.3375580-1-berrange@redhat.com>
- <20250908135722.3375580-5-berrange@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 08 Sep 2025 15:20:22 +0100
-Message-ID: <87wm69do0p.fsf@draig.linaro.org>
+ Mon, 08 Sep 2025 07:19:21 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 505B05F7FA;
+ Mon, 08 Sep 2025 15:19:20 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] .gitmodules: move u-boot mirrors to qemu-project-mirrors
+Date: Mon,  8 Sep 2025 15:19:11 +0100
+Message-ID: <20250908141911.2546063-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,21 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+To continue our GitLab Open Source Program license we need to pass an
+automated license check for all repos under qemu-project. While U-Boot
+is clearly GPLv2 rather than fight with the automated validation
+script just move the mirror across to a separate project.
 
-> The test suite purges the scratch dir in the tearDown method, but
-> if python crashes (or is non-gracefully killed) this won't get run.
-> Also the user can set QEMU_TEST_KEEP_SCRATCH to disable cleanup.
->
-> Purging the scratch dir on startup ensures that tests always run
-> from a clean state.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Cc: qemu-stable@nongnu.org
+---
+ .gitmodules | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/.gitmodules b/.gitmodules
+index 73cae4cd4da..e27dfe8c2c1 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -15,7 +15,7 @@
+ 	url = https://gitlab.com/qemu-project/qemu-palcode.git
+ [submodule "roms/u-boot"]
+ 	path = roms/u-boot
+-	url = https://gitlab.com/qemu-project/u-boot.git
++	url = https://gitlab.com/qemu-project-mirrors/u-boot.git
+ [submodule "roms/skiboot"]
+ 	path = roms/skiboot
+ 	url = https://gitlab.com/qemu-project/skiboot.git
+@@ -27,7 +27,7 @@
+ 	url = https://gitlab.com/qemu-project/seabios-hppa.git
+ [submodule "roms/u-boot-sam460ex"]
+ 	path = roms/u-boot-sam460ex
+-	url = https://gitlab.com/qemu-project/u-boot-sam460ex.git
++	url = https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
+ [submodule "roms/edk2"]
+ 	path = roms/edk2
+ 	url = https://gitlab.com/qemu-project/edk2.git
+-- 
+2.47.3
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
