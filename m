@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A0ECA1016
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75190CAC586
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Sep 2025 16:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvf8d-0006f2-60; Mon, 08 Sep 2025 12:54:45 -0400
+	id 1uvf9D-0007WR-AQ; Mon, 08 Sep 2025 12:55:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf8V-0006cO-Pe
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:54:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf9A-0007QD-Mi
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf8K-0001Zz-Kh
- for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:54:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uvf93-0001qa-Q5
+ for qemu-devel@nongnu.org; Mon, 08 Sep 2025 12:55:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757350459;
+ s=mimecast20190719; t=1757350506;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XbBIB7xE8mZvpKPZLSICCkcz8xJxKQZE6ianLFZkd7A=;
- b=bgAXrAkAJd6UGs4EIQBQUDJvcqY50tSKEaPjPAcql6ZCrvJIK54hs0Y4fLBQCl4/zGPnEr
- iUq9jQmQApMnyFK0Xb235RjfbKBVAjb5iCNKaFm+9npJnEXDmFJRDHnSDQpSwI+U/wvd0g
- j5LWef6z2gFQgjD6yLgn57e8xLu9YYA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gPEUCaZYygqJQz764hQRVW735UON+2BLl3xNtcGzDWM=;
+ b=DYBBmGVWvUZ4VrZFeMFr/QcsJlfwJLpsuuzwLHCxoX5a2jWZyyBoC5Xk3bQXU1M3c+uRwh
+ ZEydAqrvZ5rP1c3LzOOHDG4VZoJiXGSX7pd7FD2lgXovEQDui5TsxbOvk8XOGApTGfMEkG
+ uOUVrEcAz+zttXzNPU5jRme9kMp1i3Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-y-4QiaThOg-TcvGgAnPq8g-1; Mon,
- 08 Sep 2025 12:54:17 -0400
-X-MC-Unique: y-4QiaThOg-TcvGgAnPq8g-1
-X-Mimecast-MFC-AGG-ID: y-4QiaThOg-TcvGgAnPq8g_1757350456
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-k0Cu7P1WOnKhQ_EM-2lf-A-1; Mon,
+ 08 Sep 2025 12:55:03 -0400
+X-MC-Unique: k0Cu7P1WOnKhQ_EM-2lf-A-1
+X-Mimecast-MFC-AGG-ID: k0Cu7P1WOnKhQ_EM-2lf-A_1757350502
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B846180063D
- for <qemu-devel@nongnu.org>; Mon,  8 Sep 2025 16:54:13 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B22871800452; Mon,  8 Sep 2025 16:55:02 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.50])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A46513002D2D; Mon,  8 Sep 2025 16:54:09 +0000 (UTC)
+ id C89B6300018D; Mon,  8 Sep 2025 16:55:00 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 04/31] vfio: Remove 'vfio-calxeda-xgmac' device
-Date: Mon,  8 Sep 2025 18:53:27 +0200
-Message-ID: <20250908165354.1731444-5-clg@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 24/31] vfio/pci.h: update VFIOPCIDevice declaration
+Date: Mon,  8 Sep 2025 18:53:47 +0200
+Message-ID: <20250908165354.1731444-25-clg@redhat.com>
 In-Reply-To: <20250908165354.1731444-1-clg@redhat.com>
 References: <20250908165354.1731444-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,345 +85,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VFIO_XGMAC device type has been deprecated in the QEMU 10.0
-timeframe. Remove it.
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250901064631.530723-7-clg@redhat.com
+Update the VFIOPCIDevice declaration so that it is closer to our coding
+guidelines: add a blank line after the parent object.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20250715093110.107317-15-mark.caveayland@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/about/deprecated.rst            |  7 ---
- docs/about/removed-features.rst      |  7 +++
- docs/devel/kconfig.rst               |  1 -
- include/hw/vfio/vfio-calxeda-xgmac.h | 43 ------------------
- hw/arm/virt.c                        |  3 +-
- hw/core/sysbus-fdt.c                 | 67 ----------------------------
- hw/vfio/calxeda-xgmac.c              | 61 -------------------------
- hw/arm/Kconfig                       |  1 -
- hw/vfio/Kconfig                      |  5 ---
- hw/vfio/meson.build                  |  1 -
- 10 files changed, 8 insertions(+), 188 deletions(-)
- delete mode 100644 include/hw/vfio/vfio-calxeda-xgmac.h
- delete mode 100644 hw/vfio/calxeda-xgmac.c
+ hw/vfio/pci.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index eb424f96d26be2c7226f9feefddd91da31984709..d0fa8e5536b583f1ec32a8aad4ec2649d1ee8097 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -491,13 +491,6 @@ which is not enough for all types of use cases, use ``reconnect-ms`` instead.
- VFIO device options
- '''''''''''''''''''
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 96144b6fdeb94dccf6c0beecf039a12b9845c59b..2db76b6f4fb58679d65b651f0507c474e5c05857 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -124,6 +124,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
  
--``-device vfio-calxeda-xgmac`` (since 10.0)
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
--10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
--string) to a guest. Calxeda HW has been ewasted now and there is no point
--keeping that device.
--
- ``-device vfio-platform`` (since 10.0)
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- The vfio-platform device allows to assign a host platform device
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index eb0e5128ba1489a81dc9a45e9b20594513d98347..db3f22941c25e19ea9ce8fbba584819fc961c7e2 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1283,6 +1283,13 @@ device driver such as RBD.
- VFIO devices
- ------------
- 
-+``-device vfio-calxeda-xgmac`` (since 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''
-+The vfio-calxeda-xgmac device allows to assign a host Calxeda Highbank
-+10Gb XGMAC Ethernet controller device ("calxeda,hb-xgmac" compatibility
-+string) to a guest. Calxeda HW has been ewasted now and there is no point
-+keeping that device.
+ struct VFIOPCIDevice {
+     PCIDevice pdev;
 +
- ``-device vfio-amd-xgbe`` (since 10.2)
- ''''''''''''''''''''''''''''''''''''''
- The vfio-amd-xgbe device allows to assign a host AMD 10GbE controller
-diff --git a/docs/devel/kconfig.rst b/docs/devel/kconfig.rst
-index 9fdf5015298ea2d19b97857c212ab38dca9ab85f..1d4a114a022af99a5a652da08034f2c1f3617bb0 100644
---- a/docs/devel/kconfig.rst
-+++ b/docs/devel/kconfig.rst
-@@ -59,7 +59,6 @@ stanza like the following::
-       config ARM_VIRT
-          bool
-          imply PCI_DEVICES
--         imply VFIO_XGMAC
-          select A15MPCORE
-          select ACPI
-          select ARM_SMMUV3
-diff --git a/include/hw/vfio/vfio-calxeda-xgmac.h b/include/hw/vfio/vfio-calxeda-xgmac.h
-deleted file mode 100644
-index 8482f151dd5ab8ca5f7e8f4300e67314604a68e3..0000000000000000000000000000000000000000
---- a/include/hw/vfio/vfio-calxeda-xgmac.h
-+++ /dev/null
-@@ -1,43 +0,0 @@
--/*
-- * VFIO calxeda xgmac device
-- *
-- * Copyright Linaro Limited, 2014
-- *
-- * Authors:
-- *  Eric Auger <eric.auger@linaro.org>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2.  See
-- * the COPYING file in the top-level directory.
-- *
-- */
--
--#ifndef HW_VFIO_VFIO_CALXEDA_XGMAC_H
--#define HW_VFIO_VFIO_CALXEDA_XGMAC_H
--
--#include "hw/vfio/vfio-platform.h"
--#include "qom/object.h"
--
--#define TYPE_VFIO_CALXEDA_XGMAC "vfio-calxeda-xgmac"
--
--/**
-- * This device exposes:
-- * - a single MMIO region corresponding to its register space
-- * - 3 IRQS (main and 2 power related IRQs)
-- */
--struct VFIOCalxedaXgmacDevice {
--    VFIOPlatformDevice vdev;
--};
--typedef struct VFIOCalxedaXgmacDevice VFIOCalxedaXgmacDevice;
--
--struct VFIOCalxedaXgmacDeviceClass {
--    /*< private >*/
--    VFIOPlatformDeviceClass parent_class;
--    /*< public >*/
--    DeviceRealize parent_realize;
--};
--typedef struct VFIOCalxedaXgmacDeviceClass VFIOCalxedaXgmacDeviceClass;
--
--DECLARE_OBJ_CHECKERS(VFIOCalxedaXgmacDevice, VFIOCalxedaXgmacDeviceClass,
--                     VFIO_CALXEDA_XGMAC_DEVICE, TYPE_VFIO_CALXEDA_XGMAC)
--
--#endif
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 75fb157f6cc676127781adfb206613528f975cc6..6a887228bbb8b65cf8e38f14d839fe1e80b8abce 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -38,7 +38,7 @@
- #include "hw/arm/primecell.h"
- #include "hw/arm/virt.h"
- #include "hw/block/flash.h"
--#include "hw/vfio/vfio-calxeda-xgmac.h"
-+#include "hw/vfio/vfio-platform.h"
- #include "hw/display/ramfb.h"
- #include "net/net.h"
- #include "system/device_tree.h"
-@@ -3217,7 +3217,6 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-      * configuration of the particular instance.
-      */
-     mc->max_cpus = 512;
--    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_CALXEDA_XGMAC);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
-diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-index d3649d5367e7294cd7a269a7b08e56d8cbd5021a..07117363a6f27ec9128d8732a87eaed3f054ef55 100644
---- a/hw/core/sysbus-fdt.c
-+++ b/hw/core/sysbus-fdt.c
-@@ -32,9 +32,6 @@
- #include "system/device_tree.h"
- #include "system/tpm.h"
- #include "hw/platform-bus.h"
--#include "hw/vfio/vfio-platform.h"
--#include "hw/vfio/vfio-calxeda-xgmac.h"
--#include "hw/vfio/vfio-region.h"
- #include "hw/display/ramfb.h"
- #include "hw/uefi/var-service-api.h"
- #include "hw/arm/fdt.h"
-@@ -65,67 +62,6 @@ typedef struct HostProperty {
-     bool optional;
- } HostProperty;
- 
--#ifdef CONFIG_LINUX
--
--/* Device Specific Code */
--
--/**
-- * add_calxeda_midway_xgmac_fdt_node
-- *
-- * Generates a simple node with following properties:
-- * compatible string, regs, interrupts, dma-coherent
-- */
--static int add_calxeda_midway_xgmac_fdt_node(SysBusDevice *sbdev, void *opaque)
--{
--    PlatformBusFDTData *data = opaque;
--    PlatformBusDevice *pbus = data->pbus;
--    void *fdt = data->fdt;
--    const char *parent_node = data->pbus_node_name;
--    int compat_str_len, i;
--    char *nodename;
--    uint32_t *irq_attr, *reg_attr;
--    uint64_t mmio_base, irq_number;
--    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(sbdev);
--    VFIODevice *vbasedev = &vdev->vbasedev;
--
--    mmio_base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
--    nodename = g_strdup_printf("%s/%s@%" PRIx64, parent_node,
--                               vbasedev->name, mmio_base);
--    qemu_fdt_add_subnode(fdt, nodename);
--
--    compat_str_len = strlen(vdev->compat) + 1;
--    qemu_fdt_setprop(fdt, nodename, "compatible",
--                          vdev->compat, compat_str_len);
--
--    qemu_fdt_setprop(fdt, nodename, "dma-coherent", "", 0);
--
--    reg_attr = g_new(uint32_t, vbasedev->num_regions * 2);
--    for (i = 0; i < vbasedev->num_regions; i++) {
--        mmio_base = platform_bus_get_mmio_addr(pbus, sbdev, i);
--        reg_attr[2 * i] = cpu_to_be32(mmio_base);
--        reg_attr[2 * i + 1] = cpu_to_be32(
--                                memory_region_size(vdev->regions[i]->mem));
--    }
--    qemu_fdt_setprop(fdt, nodename, "reg", reg_attr,
--                     vbasedev->num_regions * 2 * sizeof(uint32_t));
--
--    irq_attr = g_new(uint32_t, vbasedev->num_irqs * 3);
--    for (i = 0; i < vbasedev->num_irqs; i++) {
--        irq_number = platform_bus_get_irqn(pbus, sbdev , i)
--                         + data->irq_start;
--        irq_attr[3 * i] = cpu_to_be32(GIC_FDT_IRQ_TYPE_SPI);
--        irq_attr[3 * i + 1] = cpu_to_be32(irq_number);
--        irq_attr[3 * i + 2] = cpu_to_be32(GIC_FDT_IRQ_FLAGS_LEVEL_HI);
--    }
--    qemu_fdt_setprop(fdt, nodename, "interrupts",
--                     irq_attr, vbasedev->num_irqs * 3 * sizeof(uint32_t));
--    g_free(irq_attr);
--    g_free(reg_attr);
--    g_free(nodename);
--    return 0;
--}
--#endif /* CONFIG_LINUX */
--
- #ifdef CONFIG_TPM
- /*
-  * add_tpm_tis_fdt_node: Create a DT node for TPM TIS
-@@ -196,9 +132,6 @@ static bool type_match(SysBusDevice *sbdev, const BindingEntry *entry)
- 
- /* list of supported dynamic sysbus bindings */
- static const BindingEntry bindings[] = {
--#ifdef CONFIG_LINUX
--    TYPE_BINDING(TYPE_VFIO_CALXEDA_XGMAC, add_calxeda_midway_xgmac_fdt_node),
--#endif
- #ifdef CONFIG_TPM
-     TYPE_BINDING(TYPE_TPM_TIS_SYSBUS, add_tpm_tis_fdt_node),
- #endif
-diff --git a/hw/vfio/calxeda-xgmac.c b/hw/vfio/calxeda-xgmac.c
-deleted file mode 100644
-index 03f2ff57630b557dfbd5bde03544f5b6395c29c4..0000000000000000000000000000000000000000
---- a/hw/vfio/calxeda-xgmac.c
-+++ /dev/null
-@@ -1,61 +0,0 @@
--/*
-- * calxeda xgmac VFIO device
-- *
-- * Copyright Linaro Limited, 2014
-- *
-- * Authors:
-- *  Eric Auger <eric.auger@linaro.org>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2.  See
-- * the COPYING file in the top-level directory.
-- *
-- */
--
--#include "qemu/osdep.h"
--#include "hw/vfio/vfio-calxeda-xgmac.h"
--#include "migration/vmstate.h"
--#include "qemu/module.h"
--#include "qemu/error-report.h"
--
--static void calxeda_xgmac_realize(DeviceState *dev, Error **errp)
--{
--    VFIOPlatformDevice *vdev = VFIO_PLATFORM_DEVICE(dev);
--    VFIOCalxedaXgmacDeviceClass *k = VFIO_CALXEDA_XGMAC_DEVICE_GET_CLASS(dev);
--
--    warn_report("-device vfio-calxeda-xgmac is deprecated");
--    vdev->compat = g_strdup("calxeda,hb-xgmac");
--    vdev->num_compat = 1;
--
--    k->parent_realize(dev, errp);
--}
--
--static const VMStateDescription vfio_platform_calxeda_xgmac_vmstate = {
--    .name = "vfio-calxeda-xgmac",
--    .unmigratable = 1,
--};
--
--static void vfio_calxeda_xgmac_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    VFIOCalxedaXgmacDeviceClass *vcxc =
--        VFIO_CALXEDA_XGMAC_DEVICE_CLASS(klass);
--    device_class_set_parent_realize(dc, calxeda_xgmac_realize,
--                                    &vcxc->parent_realize);
--    dc->desc = "VFIO Calxeda XGMAC";
--    dc->vmsd = &vfio_platform_calxeda_xgmac_vmstate;
--}
--
--static const TypeInfo vfio_calxeda_xgmac_dev_info = {
--    .name = TYPE_VFIO_CALXEDA_XGMAC,
--    .parent = TYPE_VFIO_PLATFORM,
--    .instance_size = sizeof(VFIOCalxedaXgmacDevice),
--    .class_init = vfio_calxeda_xgmac_class_init,
--    .class_size = sizeof(VFIOCalxedaXgmacDeviceClass),
--};
--
--static void register_calxeda_xgmac_dev_type(void)
--{
--    type_register_static(&vfio_calxeda_xgmac_dev_info);
--}
--
--type_init(register_calxeda_xgmac_dev_type)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 64b2ec87b59b12601e28023cd8a5ae925f101a77..3fca48349ade97002597c866fa6457a784c3219d 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -6,7 +6,6 @@ config ARM_VIRT
-     imply PCI_DEVICES
-     imply TEST_DEVICES
-     imply VFIO_PLATFORM
--    imply VFIO_XGMAC
-     imply TPM_TIS_SYSBUS
-     imply TPM_TIS_I2C
-     imply NVDIMM
-diff --git a/hw/vfio/Kconfig b/hw/vfio/Kconfig
-index bc984f198639627043a88ecab95da4e927355e5a..9a1dbe29267ea61709c3e28e4f8c25be01c3aa33 100644
---- a/hw/vfio/Kconfig
-+++ b/hw/vfio/Kconfig
-@@ -23,11 +23,6 @@ config VFIO_PLATFORM
-     select VFIO
-     depends on LINUX && PLATFORM_BUS
- 
--config VFIO_XGMAC
--    bool
--    default y
--    depends on VFIO_PLATFORM
--
- config VFIO_AP
-     bool
-     default y
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 0edcaf5155c8853d165d03e4a3ae514f77ca5e8c..06473a078990eab9ec5ce76a6d9897326280dc03 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -19,7 +19,6 @@ vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
- 
- specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
- 
--system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
- system_ss.add(when: 'CONFIG_VFIO', if_true: files(
-   'cpr.c',
-   'cpr-legacy.c',
+     VFIODevice vbasedev;
+     VFIOINTx intx;
+     unsigned int config_size;
 -- 
 2.51.0
 
