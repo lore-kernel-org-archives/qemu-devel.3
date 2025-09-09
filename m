@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10F0CA0FED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB36CAC583
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 20:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw4vw-0004BX-Kx; Tue, 09 Sep 2025 16:27:21 -0400
+	id 1uw4v7-0003yg-7U; Tue, 09 Sep 2025 16:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uw4vs-0004Ar-37; Tue, 09 Sep 2025 16:27:16 -0400
+ id 1uw4v5-0003yE-1P; Tue, 09 Sep 2025 16:26:27 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uw4vi-0005vD-0h; Tue, 09 Sep 2025 16:27:15 -0400
+ id 1uw4uy-0005q5-6w; Tue, 09 Sep 2025 16:26:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=C0+arY6wVemkF+4wm84AQ19tIPnxonXXPR3Tx4kUBio=; b=JGSuONK4A2aKO9/rH30Q7giKLY
- LO/bB9D6SLC5kakLiFgKB9rv3m2Ww8+ixs1yPGTXWszjIwW3ONNXLDwUs9mihg8Jv3piqDPWHSVjg
- ZaSg5t1MnR3LQc3fBTB4H2Scb489OlsmXmM/CCv20ER7ptc132Yl9BXV+5VIC821488gQ6JGXFz9g
- JdIyWNz47ES8u9YcYTt2gq8Yd7pDx5cf8y54RN90NeH/AYO9oJkKZUCT4bolyWyEeUzYg5DICtDZE
- EsOXjoGLjGrMGGV2w9KKigk+bt2sP4o8rspFV0XPKfcvU3t9XFR5GLYw8HV678pBZUwhkAhcNQp/E
- 3CQfwXsIKTgesFxBohrHjSnwWjTXjFenvtBbURBGSn0yH5ciVMJ3BdXToyooD8nfREJij9F2n3K9j
- zhZhSMnDiNF8fN+KNHr2XHq0raKOybBiE9FCY149XhNrcBNIJToDMocuPsn0zTCnScCIkEuJnMzjB
- hukIkBDMCdBJ5FX/RCOe6zoFdLogIrKI3ioy4AKz4vMblVpXUcfya2Wb1LmV1j8N2thrpjpyu5daY
- Z3H7n8S5RTkY7EBtqIt0knrdJh1yg8j0ZC1zF5SOZfsfCzj3wnzLnutpogM2SOp3VU+G0r9mjh9HN
- 6VbL5ucBAQbsaFllclgIseNqlNu0nyIwSOiJ3O49g=;
+ bh=JEAG+OmM6GJpGtCDE6lB1fkLPgRglJtBLSpo0LyQPwQ=; b=M84xBR2VL4NaI5wOTPZLDCW2zM
+ 9qhZu5ayRRmO4cwfKco9gzJAn2zTMCxBKuNtm12/SFU+IhFL1MWWQNco9sfPcYAeHqirycGMRRbWC
+ SW99rcDkQENKzyjwJRcFui/UFe4WTyDCUk6+kznUUvUbxMOxRDemf9Ty1+zI6/asmdJZcerG0SoM4
+ dYVvJIIFR7+AVBY520B2i18bTa5LDrid0DyoQz7iGOD1CQvAH38ppSXUsJCm8jiDO7JK9d9SBv+mD
+ a2lN+Q/Taljcw7BuwIyxmSa3PIH4/ceXiNHmiQhOmuiEPfqctPAbswwTT6NXIY+6gRRUbaUR3wkvO
+ GeGPuLy3wQGfcUk8VfioTqP85zPbGssp10K6f+N8FEp6yI9MTTS/3L6tB5S4GEuDHtz7gPcmwhprS
+ Ti5eZXj8NnTCi8feR8BmX//LqTi90v9cgB/hz67lnCo96mJiSMWRcSTo2ZHulhZdP4z7EsLbDPGaa
+ RrkKpQ55NF35Fpw5ZzzHE7Cbkootb+3O9s1NxhxHNPLLkRBY7zGNda15/GudvEVYzqI7pv+V0ZGeC
+ oHuF0I/Ge9BHOAmTlu2uNQ5iDYgyaz4JfB223hWojTt6UBoIo5nHfa+7R7fz/95SBR5PrbO5QOZNi
+ MDlz5YLfcEzE13lilrKE6s8rv+vTO9GSiOwDzoqZ4=;
 Received: from [2a02:8012:2f01::15d6]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uw4tU-0003lS-Ac; Tue, 09 Sep 2025 21:24:51 +0100
-Message-ID: <041b6cb6-efc8-415d-b8d1-a8706ac49202@ilande.co.uk>
-Date: Tue, 9 Sep 2025 21:26:43 +0100
+ id 1uw4sa-0003kR-Aq; Tue, 09 Sep 2025 21:23:56 +0100
+Message-ID: <953790e1-76a1-44c4-9e90-d3ecd49e2a16@ilande.co.uk>
+Date: Tue, 9 Sep 2025 21:25:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
@@ -72,7 +72,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <20250906-use-v1-8-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -99,12 +99,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250906-use-v1-8-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01::15d6
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 09/22] sun4u: Fix AddressSpace exposure timing
+Subject: Re: [PATCH 08/22] sun4m: Fix AddressSpace exposure timing
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -113,8 +113,8 @@ X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,8 +132,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06/09/2025 03:11, Akihiko Odaki wrote:
 
-> sun4u-iommu is not hotpluggable but its instance can still be created
-> and destroyed when processing the device-list-properties QMP command.
+> sun4m-iommu is not hotpluggable but its instance can still be created
+> and finalized when processing the device-list-properties QMP command.
 > Exposing such a temporary instance to AddressSpace should be
 > avoided because it leaks the instance.
 > 
@@ -142,40 +142,43 @@ On 06/09/2025 03:11, Akihiko Odaki wrote:
 > 
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   hw/sparc64/sun4u_iommu.c | 9 ++++++++-
+>   hw/sparc/sun4m_iommu.c | 9 ++++++++-
 >   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
-> index 14645f475a09ed3a6bef77f8d8b4b6b4b36ae40a..b6568551935610116d33481ae8d9fc08f02ecf7b 100644
-> --- a/hw/sparc64/sun4u_iommu.c
-> +++ b/hw/sparc64/sun4u_iommu.c
-> @@ -298,18 +298,25 @@ static void iommu_init(Object *obj)
+> diff --git a/hw/sparc/sun4m_iommu.c b/hw/sparc/sun4m_iommu.c
+> index a7ff36ee78c1d6295efea6499dffc2a481022167..0997f29ccb97d3dec4e3d34db49f2e51b6807a1a 100644
+> --- a/hw/sparc/sun4m_iommu.c
+> +++ b/hw/sparc/sun4m_iommu.c
+> @@ -359,7 +359,6 @@ static void iommu_init(Object *obj)
 >       memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
->                                TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
->                                "iommu-sun4u", UINT64_MAX);
+>                                TYPE_SUN4M_IOMMU_MEMORY_REGION, OBJECT(dev),
+>                                "iommu-sun4m", UINT64_MAX);
 > -    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
 >   
->       memory_region_init_io(&s->iomem, obj, &iommu_mem_ops, s, "iommu",
->                             IOMMU_NREGS * sizeof(uint64_t));
->       sysbus_init_mmio(sbd, &s->iomem);
+>       sysbus_init_irq(dev, &s->irq);
+>   
+> @@ -368,6 +367,13 @@ static void iommu_init(Object *obj)
+>       sysbus_init_mmio(dev, &s->iomem);
 >   }
 >   
 > +static void iommu_realize(DeviceState *dev, Error **errp)
 > +{
-> +    IOMMUState *s = SUN4U_IOMMU(dev);
+> +    IOMMUState *s = SUN4M_IOMMU(dev);
 > +
 > +    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
 > +}
 > +
->   static void iommu_class_init(ObjectClass *klass, const void *data)
->   {
+>   static const Property iommu_properties[] = {
+>       DEFINE_PROP_UINT32("version", IOMMUState, version, 0),
+>   };
+> @@ -377,6 +383,7 @@ static void iommu_class_init(ObjectClass *klass, const void *data)
 >       DeviceClass *dc = DEVICE_CLASS(klass);
 >   
 >       device_class_set_legacy_reset(dc, iommu_reset);
 > +    dc->realize = iommu_realize;
+>       dc->vmsd = &vmstate_iommu;
+>       device_class_set_props(dc, iommu_properties);
 >   }
->   
->   static const TypeInfo iommu_info = {
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
