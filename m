@@ -4,88 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E45FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 15:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F4BCAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 15:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw0DI-0007xd-Jp; Tue, 09 Sep 2025 11:24:56 -0400
+	id 1uw0F7-0000h9-MX; Tue, 09 Sep 2025 11:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw0DC-0007uh-RZ
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:24:52 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uw0Ev-0000fA-D2
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:26:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw0D1-0003oN-1f
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:24:49 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uw0Eq-00047C-Ql
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:26:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757431471;
+ s=mimecast20190719; t=1757431589;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3tziygtfCsUaA6kOHzi4sfHG7kmuI1h8v60LVGQfPoI=;
- b=XmlG7aJur2yx5DzXB2v9/0NJ/IqotgIX0KFotMphGYWAIPsVsZLEaMHwP95yNhJT2fPkJ4
- SMZM0tQHNXyh+y9bKhGMTQQP3CQEkqcPthKH8K5PT/VkbuQ4SuOnXy7B9NthTWtCt/ijVe
- rRIbk0WRhACtNYJ77kvWY09ov4eVHEU=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-ow3edu_rMSyaAfbP4IMNEQ-1; Tue, 09 Sep 2025 11:24:27 -0400
-X-MC-Unique: ow3edu_rMSyaAfbP4IMNEQ-1
-X-Mimecast-MFC-AGG-ID: ow3edu_rMSyaAfbP4IMNEQ_1757431467
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4b49715fdfbso227713171cf.2
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 08:24:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757431467; x=1758036267;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3tziygtfCsUaA6kOHzi4sfHG7kmuI1h8v60LVGQfPoI=;
- b=Sa+NJMZf787Ooii3ZLviS5M/cY9IZB2mJgeF7ywTnlbCMjHy5ZmZC5nVSp//rl6N3j
- ufj5w5iYp/z12VhllU7VcczZJ10YhpU9TeNfDwDemGU1tVwC/j94pRRVj9p1ZGwqmScH
- G4SAV+qe+vdCIX0QLarrQJLl5iwHFhsKllGUIjM6oHBtbSuBDmGqejyXdt3yMa1ssAkN
- F0Jvjh+pV9PqD8BNIpamob5VA+aWN1ipLS6Lp781I/+y2ywqRTVYcRxhAnS6VOK175w6
- xwLO5T8CBrwgRXi3jK7MXen14OWPj+pmQQ3vxnsuP2EQpeM/yYDUlE4N1Wkbk97xr85g
- nKbw==
-X-Gm-Message-State: AOJu0YwpJq1gm2yjnqRDk+jgDZ0Wnd42AEA0pPu0g8pa+3dRJHnjYA0r
- ISXAmsWlBbU+4cSSYLFi88SM5KAmA232Pb2OeJ7DOR62dxx8or7kHc1mm8dUijpSAiJsHEmXkII
- 24YBmdl9Yk9ZufYSDFU03WZ5qI8rupk/2dJyZ/qQCzzyO0tWnzZwzZX+Y
-X-Gm-Gg: ASbGncv+6XwBaTeubv3MF/XxbBKSTd72jRoezezsBa/ktcm6DVbymq+Cx1H/rKx41br
- SUTiarTHUSsVKpdL4xaX2uXThE9t1pmU+9ezV+HugAQ/kQqaF4/RfW47RdU1jpyBE/9f9uNCrQ7
- 524jH5Cie+NhZ4AHQCAJM2uDmbNM2pQy6D8N6OnEVHrPPjeIXZhY5FmRbkfn45xVms4PxNIdhwG
- ztTPf5Is905+18JgswPCcxqeZ1nWO98RmHmDr2UldeHyaKutCqlitXEZsXHqbQJ9HMTk1a58OKR
- uEMhM0a74cxzNB0tCx7yjQdipMhqV3kz
-X-Received: by 2002:a05:622a:1449:b0:4b5:eb27:c241 with SMTP id
- d75a77b69052e-4b5f836b286mr120175751cf.3.1757431466655; 
- Tue, 09 Sep 2025 08:24:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPT4Aj/fpFkmhbVmFYVehgzRCic8ihfv0+xI68GoCJwfcvvpxH5V55yT5OYnLPsTpNoVNsIw==
-X-Received: by 2002:a05:622a:1449:b0:4b5:eb27:c241 with SMTP id
- d75a77b69052e-4b5f836b286mr120174991cf.3.1757431465449; 
- Tue, 09 Sep 2025 08:24:25 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-81b5ee68b49sm131884085a.53.2025.09.09.08.24.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Sep 2025 08:24:24 -0700 (PDT)
-Date: Tue, 9 Sep 2025 11:24:12 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
-Message-ID: <aMBGnHXieiXpBCqF@x1.local>
-References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
- <aLsUQWjW8gyZjySs@x1.local>
- <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
+ bh=cmbOJUV8XT5+HBw7vOgxEIAr4kdFuA/8o4ZBcBUiT8Y=;
+ b=LadEQ/p9N9hlpaabO7mgAI17AXcG7hQiUqVV0BPychLI5QV8oUwe+zUeyEZHOOGFDT/p26
+ rZdFmVp7L/jNbasXpOGo1PRGdDkEs6cIrREpj7ba73uYvY4/yfCwgi85FKkfSmhHCaVnLO
+ I0yE1CIZEJpPCTtfJASnu49HCVirPdY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-L8dPjtfxP7uF94aboyFTBg-1; Tue,
+ 09 Sep 2025 11:26:25 -0400
+X-MC-Unique: L8dPjtfxP7uF94aboyFTBg-1
+X-Mimecast-MFC-AGG-ID: L8dPjtfxP7uF94aboyFTBg_1757431584
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BCDF18002C2; Tue,  9 Sep 2025 15:26:24 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.59])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82292300018D; Tue,  9 Sep 2025 15:26:23 +0000 (UTC)
+Date: Tue, 9 Sep 2025 11:26:21 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: Bernd Schubert <bernd@bsbernd.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, armbru@redhat.com, fam@euphon.net,
+ hreitz@redhat.com, kwolf@redhat.com
+Subject: Re: [PATCH 2/4] export/fuse: process FUSE-over-io_uring requests
+Message-ID: <20250909152621.GD218449@fedora>
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-3-hibriansong@gmail.com>
+ <20250903115108.GD106431@fedora>
+ <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="gtUz9tpMqT/67K7E"
 Content-Disposition: inline
-In-Reply-To: <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,173 +89,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 09, 2025 at 10:36:16AM -0400, Steven Sistare wrote:
-> On 9/5/2025 12:48 PM, Peter Xu wrote:
-> > Add Vladimir and Dan.
-> > 
-> > On Thu, Aug 14, 2025 at 10:17:14AM -0700, Steve Sistare wrote:
-> > > This patch series adds the live migration cpr-exec mode.
-> > > 
-> > > The new user-visible interfaces are:
-> > >    * cpr-exec (MigMode migration parameter)
-> > >    * cpr-exec-command (migration parameter)
-> > > 
-> > > cpr-exec mode is similar in most respects to cpr-transfer mode, with the
-> > > primary difference being that old QEMU directly exec's new QEMU.  The user
-> > > specifies the command to exec new QEMU in the migration parameter
-> > > cpr-exec-command.
-> > > 
-> > > Why?
-> > > 
-> > > In a containerized QEMU environment, cpr-exec reuses an existing QEMU
-> > > container and its assigned resources.  By contrast, cpr-transfer mode
-> > > requires a new container to be created on the same host as the target of
-> > > the CPR operation.  Resources must be reserved for the new container, while
-> > > the old container still reserves resources until the operation completes.
-> > > Avoiding over commitment requires extra work in the management layer.
-> > 
-> > Can we spell out what are these resources?
-> > 
-> > CPR definitely relies on completely shared memory.  That's already not a
-> > concern.
-> > 
-> > CPR resolves resources that are bound to devices like VFIO by passing over
-> > FDs, these are not over commited either.
-> > 
-> > Is it accounting QEMU/KVM process overhead?  That would really be trivial,
-> > IMHO, but maybe something else?
-> 
-> Accounting is one issue, and it is not trivial.  Another is arranging exclusive
-> use of a set of CPUs, the same set for the old and new container, concurrently.
-> Another is avoiding namespace conflicts, the kind that make localhost migration
-> difficult.
-> 
-> > > This is one reason why a cloud provider may prefer cpr-exec.  A second reason
-> > > is that the container may include agents with their own connections to the
-> > > outside world, and such connections remain intact if the container is reused.
-> > 
-> > We discussed about this one.  Personally I still cannot understand why this
-> > is a concern if the agents can be trivially started as a new instance.  But
-> > I admit I may not know the whole picture.  To me, the above point is more
-> > persuasive, but I'll need to understand which part that is over-commited
-> > that can be a problem.
-> 
-> Agents can be restarted, but that would sever the connection to the outside
-> world.  With cpr-transfer or any local migration, you would need agents
-> outside of old and new containers that persist.
-> 
-> With cpr-exec, connections can be preserved without requiring the end user
-> to reconnect, and can be done trivially, by preserving chardevs.  With that
-> support in qemu, the management layer does nothing extra to preserve them.
-> chardev support is not part of this series but is part of my vision,
-> and makes exec mode even more compelling.
-> 
-> Management layers have a lot of code and complexity to manage live migration,
-> resources, and connections.  It requires modification to support cpr-transfer.
-> All that can be bypassed with exec mode.  Less complexity, less maintainance,
-> and  fewer points of failure.  I know this because I implemented exec mode in
-> OCI at Oracle, and we use it in production.
 
-I wonders how this part works in Vladimir's use case.
+--gtUz9tpMqT/67K7E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > After all, cloud hosts should preserve some extra memory anyway to make
-> > sure dynamic resources allocations all the time (e.g., when live migration
-> > starts, KVM pgtables can drastically increase if huge pages are enabled,
-> > for PAGE_SIZE trackings), I assumed the over-commit portion should be less
-> > that those.. and when it's also temporary (src QEMU will release all
-> > resources after live upgrade) then it looks manageable. >>
-> > > How?
-> > > 
-> > > cpr-exec preserves descriptors across exec by clearing the CLOEXEC flag,
-> > > and by sending the unique name and value of each descriptor to new QEMU
-> > > via CPR state.
-> > > 
-> > > CPR state cannot be sent over the normal migration channel, because devices
-> > > and backends are created prior to reading the channel, so this mode sends
-> > > CPR state over a second migration channel that is not visible to the user.
-> > > New QEMU reads the second channel prior to creating devices or backends.
-> > > 
-> > > The exec itself is trivial.  After writing to the migration channels, the
-> > > migration code calls a new main-loop hook to perform the exec.
-> > > 
-> > > Example:
-> > > 
-> > > In this example, we simply restart the same version of QEMU, but in
-> > > a real scenario one would use a new QEMU binary path in cpr-exec-command.
-> > > 
-> > >    # qemu-kvm -monitor stdio
-> > >    -object memory-backend-memfd,id=ram0,size=1G
-> > >    -machine memory-backend=ram0 -machine aux-ram-share=on ...
-> > > 
-> > >    QEMU 10.1.50 monitor - type 'help' for more information
-> > >    (qemu) info status
-> > >    VM status: running
-> > >    (qemu) migrate_set_parameter mode cpr-exec
-> > >    (qemu) migrate_set_parameter cpr-exec-command qemu-kvm ... -incoming file:vm.state
-> > >    (qemu) migrate -d file:vm.state
-> > >    (qemu) QEMU 10.1.50 monitor - type 'help' for more information
-> > >    (qemu) info status
-> > >    VM status: running
-> > > 
-> > > Steve Sistare (9):
-> > >    migration: multi-mode notifier
-> > >    migration: add cpr_walk_fd
-> > >    oslib: qemu_clear_cloexec
-> > >    vl: helper to request exec
-> > >    migration: cpr-exec-command parameter
-> > >    migration: cpr-exec save and load
-> > >    migration: cpr-exec mode
-> > >    migration: cpr-exec docs
-> > >    vfio: cpr-exec mode
-> > 
-> > The other thing is, as Vladimir is working on (looks like) a cleaner way of
-> > passing FDs fully relying on unix sockets, I want to understand better on
-> > the relationships of his work and the exec model.
-> 
-> His work is based on my work -- the ability to embed a file descriptor in a
-> migration stream with a VMSTATE_FD declaration -- so it is compatible.
-> 
-> The cpr-exec series preserves VMSTATE_FD across exec by remembering the fd
-> integer and embedding that in the data stream.  See the changes in vmstate-types.c
-> in [PATCH V3 7/9] migration: cpr-exec mode.
-> 
-> Thus cpr-exec will still preserve tap devices via Vladimir's code.
-> > I still personally think we should always stick with unix sockets, but I'm
-> > open to be convinced on above limitations.  If exec is better than
-> > cpr-transfer in any way, the hope is more people can and should adopt it.
-> 
-> Various people and companies have expressed interest in CPR and want to explore
-> cpr-exec.  Vladimir was one, he chose transfer instead, and that is fine, but
-> give people the option.  And Oracle continues to use cpr-exec mode.
+On Mon, Sep 08, 2025 at 03:09:57PM -0400, Brian Song wrote:
+>=20
+>=20
+> On 9/3/25 7:51 AM, Stefan Hajnoczi wrote:
+> > On Fri, Aug 29, 2025 at 10:50:23PM -0400, Brian Song wrote:
+> > > https://docs.kernel.org/filesystems/fuse-io-uring.html
+> > >=20
+> > > As described in the kernel documentation, after FUSE-over-io_uring
+> > > initialization and handshake, FUSE interacts with the kernel using
+> > > SQE/CQE to send requests and receive responses. This corresponds to
+> > > the "Sending requests with CQEs" section in the docs.
+> > >=20
+> > > This patch implements three key parts: registering the CQE handler
+> > > (fuse_uring_cqe_handler), processing FUSE requests (fuse_uring_co_
+> > > process_request), and sending response results (fuse_uring_send_
+> > > response). It also merges the traditional /dev/fuse request handling
+> > > with the FUSE-over-io_uring handling functions.
+> > >=20
+> > > Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> > > Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > Signed-off-by: Brian Song <hibriansong@gmail.com>
+> > > ---
+> > >   block/export/fuse.c | 457 ++++++++++++++++++++++++++++++-----------=
+---
+> > >   1 file changed, 309 insertions(+), 148 deletions(-)
+> > >=20
+> > > diff --git a/block/export/fuse.c b/block/export/fuse.c
+> > > index 19bf9e5f74..07f74fc8ec 100644
+> > > --- a/block/export/fuse.c
+> > > +++ b/block/export/fuse.c
+> > > @@ -310,6 +310,47 @@ static const BlockDevOps fuse_export_blk_dev_ops=
+ =3D {
+> > >   };
+> > >   #ifdef CONFIG_LINUX_IO_URING
+> > > +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *=
+ent);
+> > > +
+> > > +static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaqu=
+e)
+> >=20
+> > This function appears to handle exactly one cqe. A singular function
+> > name would be clearer than a plural: co_fuse_uring_queue_handle_cqe().
+> >=20
+> > > +{
+> > > +    FuseRingEnt *ent =3D opaque;
+> > > +    FuseExport *exp =3D ent->rq->q->exp;
+> > > +
+> > > +    /* Going to process requests */
+> > > +    fuse_inc_in_flight(exp);
+> >=20
+> > What is the rationale for taking a reference here? Normally something
+> > already holds a reference (e.g. the request itself) and it will be
+> > dropped somewhere inside a function we're about to call, but we still
+> > need to access exp afterwards, so we temporarily take a reference.
+> > Please document the specifics in a comment.
+> >=20
+> > I think blk_exp_ref()/blk_exp_unref() are appropriate instead of
+> > fuse_inc_in_flight()/fuse_dec_in_flight() since we only need to hold
+> > onto the export and don't care about drain behavior.
+> >=20
+>=20
+> Stefan:
+>=20
+> When handling FUSE requests, we don=E2=80=99t want the FuseExport to be a=
+ccidentally
+> deleted. Therefore, we use fuse_inc_in_flight in the CQE handler to
+> increment the in_flight counter, and when a request is completed, we call
+> fuse_dec_in_flight to decrement it. Once the last request has been
+> processed, fuse_dec_in_flight brings the in_flight counter down to 0,
+> indicating that the export can safely be deleted. The usage of in_flight
+> follows the same logic as in traditional FUSE request handling.
+>=20
+> Since submitted SQEs for FUSE cannot be canceled, once we register or com=
+mit
+> them we must wait for the kernel to return a CQE. Otherwise, the kernel m=
+ay
+> deliver a CQE and invoke its handler after the export has already been
+> deleted. For this reason, we directly call blk_exp_ref and blk_exp_unref
+> when submitting an SQE and when receiving its CQE, to explicitly control =
+the
+> export reference and prevent accidental deletion.
+>=20
+> The doc/comment for co_fuse_uring_queue_handle_cqe:
+>=20
+> Protect FuseExport from premature deletion while handling FUSE requests. =
+CQE
+> handlers inc/dec the in_flight counter; when it reaches 0, the export can=
+ be
+> freed. This follows the same logic as traditional FUSE.
+>=20
+> Since FUSE SQEs cannot be canceled, a CQE may arrive after commit even if
+> the export is deleted. To prevent this, we ref/unref the export explicitly
+> at SQE submission and CQE completion.
 
-How does cpr-exec guarantees everything will go smoothly with no failure
-after the exec?  Essentially, this is Vladimir's question 1.  Feel free to
-answer there, because there's also question 2 (which we used to cover some
-but maybe not as much).
+I looked at your "final" branch on GitHub and the refcount changes there
+match what I was thinking of.
 
-The other thing I don't remember if we discussed, on how cpr-exec manages
-device hotplugs. Say, what happens if there are devices hot plugged (via
-QMP) then cpr-exec migration happens?
+In case it helps for writing comments, I'll try to describe my mental
+model of the refcounts:
 
-Does cpr-exec cmdline needs to convert all QMP hot-plugged devices into
-cmdlines and append them?  How to guarantee src/dst device topology match
-exactly the same with the new cmdline?
+- fuse_inc_in_flight()/fuse_dec_in_flight() must wrap the lifecycle of
+  FUSE requests that the server is processing. This ensures that the
+  block layer's drain operation waits for requests to complete and that
+  the export cannot be deleted while the requests are still in progress.
 
-> 
-> There is no downside to supporting cpr-exec mode.  It is astonishing how much
-> code is shared by the cpr-transfer and cpr-exec modes.  Most of the code in
-> this series is factored into specific cpr-exec files and functions, code that
-> will never run for any other reason.  There are very few conditionals in common
-> code that do something different for exec mode.
-> > We also have no answer yet on how cpr-exec can resolve container world with
-> > seccomp forbidding exec.  I guess that's a no-go.  It's definitely a
-> > downside instead.  Better mention that in the cover letter.
-> The key is limiting the contents of the container, so exec only has a limited
-> and known safe set of things to target.  I'll add that to the cover letter.
+- blk_exp_ref()/blk_exp_unref() prevents the export from being deleted
+  while something that still depends on it remains outstanding.
 
-Thanks.
+How this maps to FUSE-over-io_uring:
 
--- 
-Peter Xu
+- When an SQE is submitted blk_exp_ref() must be called. After the CQE
+  has been processed, blk_exp_unref() must be called. This way the
+  export cannot be deleted before all CQEs have been handled.
+
+- The coroutine that processes a FUSE request must call
+  fuse_inc_in_flight() before processing begins and fuse_dec_in_flight()
+  after processing ends.
+
+Thanks,
+Stefan
+
+--gtUz9tpMqT/67K7E
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjARx0ACgkQnKSrs4Gr
+c8hXIQf/XmHtcYtAqaQhZLk+YgrGJ7YBKpFhsw12Xesr8/s2HGd1nPdYOEhCfLsY
+drJQAql4Gv8KwgSa/Qa3uUqhR2aiXoAGFk9Q+4fJA2y5qTC26J4dNf/b3GaFR8mX
+QeNzGeQXheF0wSsxQJizxYlypsl+AV99tco7vckfWT5W2otNKW2K22HlxE5DwDhB
+3Agz56W9e7+e5zuRQmFPjxaArh/DcfNHPnhA3FCHCxQ12xsAYiUWFlYn13Nn9kLR
+3c11Ze/NkKLc8rvEU9ux1oI4FxpOnkw3rB5Can5pAmkdDiUJEUJgWFzJM9ANS0Sj
+O+zh1yeOMmz1f2BVVUWCfFewQT5q8g==
+=E+ZS
+-----END PGP SIGNATURE-----
+
+--gtUz9tpMqT/67K7E--
 
 
