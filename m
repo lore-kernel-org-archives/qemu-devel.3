@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD43CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1286BCAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvylz-0000qk-Fm; Tue, 09 Sep 2025 09:52:39 -0400
+	id 1uvymD-0000zW-8M; Tue, 09 Sep 2025 09:52:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyln-0000lc-2Q
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:52:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvym5-0000sX-UF
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:52:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyle-0005GI-MV
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:52:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvylv-0005Iv-Ul
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:52:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757425935;
+ s=mimecast20190719; t=1757425953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0+N7ksxc09Rn8zd06nd3lkW7JmF5X1Y/vjS+u+eTaMQ=;
- b=PwsbwWmEDoXKUJyHh7O97E7RYzstCPN1Fc6LiTKtNYD4sIA6gMAEw4fzpGcGU8yKmeFtKZ
- wkhXebsLuBVCd/D/hyQwahDrqLeyy+FixqNcH0R3JRkKClE/ZLWsEW+lTlcafFoVh4P8c1
- eWE0OusDZQ2h73ALqvOyBvSiZLSP5m4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=K8zAEwjum86ER5JQwBv8BwGQ1Mku6jJOxDC+Ilgkb/g=;
+ b=bHM6QfxsA0aPxwmDHERv2rDssVnUWTKkRiJQU2MqHWfLlc1j9s++xPPL6fq2rZlStWK1s5
+ AyLnqkQTHGQpLcCeAomu/KmqzSym/R9910CkKkrD9GmtmPWaukcEmEa6YqKZgHnqy7LocH
+ 0KYgE6gS6F2cVLl5RoBxEN0ByWCVHq0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-OGosCj7uOkWmhnV4M-V_Lg-1; Tue,
- 09 Sep 2025 09:52:13 -0400
-X-MC-Unique: OGosCj7uOkWmhnV4M-V_Lg-1
-X-Mimecast-MFC-AGG-ID: OGosCj7uOkWmhnV4M-V_Lg_1757425932
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-xNffJESFNFS9H4-gMcKfVQ-1; Tue,
+ 09 Sep 2025 09:52:30 -0400
+X-MC-Unique: xNffJESFNFS9H4-gMcKfVQ-1
+X-Mimecast-MFC-AGG-ID: xNffJESFNFS9H4-gMcKfVQ_1757425949
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0E2E19541BD; Tue,  9 Sep 2025 13:52:12 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 718801800451; Tue,  9 Sep 2025 13:52:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.46])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BED3C18003FC; Tue,  9 Sep 2025 13:52:09 +0000 (UTC)
+ id C1C191800447; Tue,  9 Sep 2025 13:52:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Kane-Chen-AS <kane_chen@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/23] tests/functional/arm: Update test ASPEED SDK v03.02 for
- AST1030
-Date: Tue,  9 Sep 2025 15:51:34 +0200
-Message-ID: <20250909135147.612345-11-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 17/23] gitlab: prevent duplicated meson log artifacts in test
+ jobs
+Date: Tue,  9 Sep 2025 15:51:41 +0200
+Message-ID: <20250909135147.612345-18-thuth@redhat.com>
 In-Reply-To: <20250909135147.612345-1-thuth@redhat.com>
 References: <20250909135147.612345-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,44 +85,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20250904100556.1729604-2-kane_chen@aspeedtech.com>
+The build jobs will populate build/meson-logs/ with various files
+that are added as artifacts.
+
+The test jobs preserve the state of the build jobs, so we must
+delete any pre-existing logs to prevent confusion from duplicate
+artifacts.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20250908190901.3571859-5-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/arm/test_aspeed_ast1030.py | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ .gitlab-ci.d/buildtest-template.yml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional/arm/test_aspeed_ast1030.py
-index 77037f01793..42126b514ff 100755
---- a/tests/functional/arm/test_aspeed_ast1030.py
-+++ b/tests/functional/arm/test_aspeed_ast1030.py
-@@ -12,17 +12,17 @@
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 308490a35ac..d866cb12bb1 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -83,6 +83,10 @@
  
- class AST1030Machine(LinuxKernelTest):
- 
--    ASSET_ZEPHYR_3_00 = Asset(
-+    ASSET_ZEPHYR_3_02 = Asset(
-         ('https://github.com/AspeedTech-BMC'
--         '/zephyr/releases/download/v00.03.00/ast1030-evb-demo.zip'),
--        '37fe3ecd4a1b9d620971a15b96492a81093435396eeac69b6f3e384262ff555f')
-+         '/zephyr/releases/download/v00.03.02/ast1030-evb-demo.zip'),
-+        '1ec83caab3ddd5d09481772801be7210e222cb015ce22ec6fffb8a76956dcd4f')
- 
--    def test_ast1030_zephyros_3_00(self):
-+    def test_ast1030_zephyros_3_02(self):
-         self.set_machine('ast1030-evb')
- 
--        kernel_name = "ast1030-evb-demo/zephyr.elf"
-+        kernel_name = "ast1030-evb-demo-3/zephyr.elf"
-         kernel_file = self.archive_extract(
--            self.ASSET_ZEPHYR_3_00, member=kernel_name)
-+            self.ASSET_ZEPHYR_3_02, member=kernel_name)
- 
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_file, '-nographic')
+ .native_test_job_template:
+   extends: .common_test_job_template
++  before_script:
++    # Prevent logs from the build job that run earlier
++    # from being duplicated in the test job artifacts
++    - rm -f build/meson-logs/*
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+     when: always
+@@ -111,6 +115,9 @@
+   before_script:
+     - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
+     - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
++    # Prevent logs from the build job that run earlier
++    # from being duplicated in the test job artifacts
++    - rm -f build/meson-logs/*
+   after_script:
+     - cd build
+     - du -chs ${CI_PROJECT_DIR}/*-cache
 -- 
 2.51.0
 
