@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE20BCAC587
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B717CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvutC-0004xX-6Y; Tue, 09 Sep 2025 05:43:50 -0400
+	id 1uvuxl-0006pC-Lk; Tue, 09 Sep 2025 05:48:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvutA-0004w8-Al
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:43:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuxk-0006od-DX
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:48:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvut7-00020J-D7
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:43:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuxg-0002c5-NA
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:48:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757411023;
+ s=mimecast20190719; t=1757411305;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3rw4kVrLeYn94mHUsuPuPs3SmlmV/ZreC7oeCYX6sxU=;
- b=elHE+lVzEWb3OCT1tl2v8UhpLqNb3hnBJ32r8X5VGhiXCgTHL3Cu3aC1tIcl6xEPz2qIIB
- MpNMaFpjItCaBtEsK+yajdDXDMs0i3VfH4HE2yu1UaqnHOxeLE2cPUYv0CWpIQ0eaZxNOu
- d0sXYboBlfY39C9ABIVQga5jb3H+MBI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4m3VrIT4UXudgFWquh/W82XRbXvppGT1+CdRs3MqVt4=;
+ b=SLIds2+UpOA8e+n9c2XFAq85YbpggROcrzoPuj92r2S06toptVTj3o43+dDP2O1+TkwEDN
+ 2Nzl7g5ri0jt8/8xvb4Hi5xfJdOycYjmdLveZCs4HhWzY2sPh+NDOGNwfVYflFsFwNc7MU
+ FOIhkpPB/f/7mlOp/vizzgqJ0bfQlMc=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-195-KQIOl9pLMTCtquVzG7jfmw-1; Tue, 09 Sep 2025 05:43:42 -0400
-X-MC-Unique: KQIOl9pLMTCtquVzG7jfmw-1
-X-Mimecast-MFC-AGG-ID: KQIOl9pLMTCtquVzG7jfmw_1757411021
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45cb604427fso28912595e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 02:43:41 -0700 (PDT)
+ us-mta-582-TmtUGcDdOQuvT2jVDuou_g-1; Tue, 09 Sep 2025 05:48:24 -0400
+X-MC-Unique: TmtUGcDdOQuvT2jVDuou_g-1
+X-Mimecast-MFC-AGG-ID: TmtUGcDdOQuvT2jVDuou_g_1757411303
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3e38ae5394aso3261972f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 02:48:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757411021; x=1758015821;
+ d=1e100.net; s=20230601; t=1757411303; x=1758016103;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3rw4kVrLeYn94mHUsuPuPs3SmlmV/ZreC7oeCYX6sxU=;
- b=j/rUq7PRIN5hVGPOAUAO6SEGreK9JDHEQ8Bjhw3y/i1rH6l+jf/TcNPCn0o42M0j5V
- p7HTfnSVYpjG5z1T2vLVt2Q/ZF2SHD174b795cwxWCO6KcO+n8Zu0kL/8dK9bKoa8QPs
- piBNcwAMxlklsLnSo4kf+B9QP3zNbhafxUpN17w2wmx5hnYyf3mtp/73APSx2ux7+eGU
- SzKjNpxZWUKBvrBNWP4llhGXuIB4UJuLUPJBBMKNgviTQUMTA3MNaCD4pE63TFxZx1p6
- 9jb4GQ37Wg8/LPRl7Cgrdv7m9T0D0GC6vmfxt4tQe6AUL3O7+cCT7ibfrYieqYvso5PP
- HXww==
+ bh=4m3VrIT4UXudgFWquh/W82XRbXvppGT1+CdRs3MqVt4=;
+ b=inRUkbWYFO8X8HXrBRHpzEcViSSJNtd70Jtx8Rbqfb3mMJTwA9bjVPypazttBsqELW
+ lL5QFG4zQb5eZ+l1ywG5E1eHgKpiExCNW/04yJbLEVP7YsR5TsT/D6XjlzAfuZm0uFLM
+ OnKauC3apzMYHSPMEWUP0u/xNcjtT1ODMuPnnwNN0UaScuwTmLGa4sF2o89EUmbsdQ4j
+ J3AGJtb2eTrmCkuTWHRqTGx9D+rl2fXrZ1T104IH7IjuC+3tk3pk3wvYoeNTAZrndWYM
+ HlmKfGi6BkdtIee/0Ef6yaetPwSz8cgO8OiKCkor0wDxCJkkiy3XI/ShgvJmubejZRTH
+ RRJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCViny6W8R5XKxxKarl922N1jFWC8Jp0O4LEvG/EnJp4E4Z809E7+J45WAuwruF2dzg2Ig6ioy2TFX+G@nongnu.org
-X-Gm-Message-State: AOJu0Yz6LNYaZiaWWX87TU1M2WOh/y+w8TfhRX+DVankoHCWz1sMXCj7
- H+Ml2whLlr+JFPC4bJBB3hgOjJzWTU7dEPnVgwFJ5nj9+thrZPtYQaK8dfaYORu31XUmxnSv8k2
- 4jYM0Mt7Pre9NaSr/JtaM4y4kk4d6F5J7Desk9tpborYR9KnTFFjvlhst
-X-Gm-Gg: ASbGnctzlB97FDloHkMnQOBhWsrn+LgYqsYs3GEvkgtx2+py54jT41ck2swzcC06IQ9
- QZ+QlAGS/xwZn5TgQ2o/YBYTqIKBazucpx1S1+LRkqkXfEUMVtcp/idfumYAANHwMYjutvxmehR
- /3Bg5Vp89aJ0pXUK96H9RsqsVpPx5vtreDsSq1F7+Kvoqb5ZoBINF/kCs5gbChj7uUEh1Kc4/4M
- OGS7gSEj1f9L3WoKM4e6hVp9LsXer7R+s0FeagpyRrt7WRp6hDbBZaOezpnTFXunFJaCrdDVxhS
- xWgAmx+WS/eDtoh1+7gcESk9doQqETgixV5gIoPTsap5UHLU4gjaXvII34OPudOPfKred8mBnAQ
- ZJCYUFg==
-X-Received: by 2002:a05:600c:c490:b0:45b:9a7b:66ba with SMTP id
- 5b1f17b1804b1-45ddde9260cmr82959815e9.14.1757411020903; 
- Tue, 09 Sep 2025 02:43:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHK9WeV+GrnMSFgHdhrCfllPXlqAcQsbHOPAj/tTfbt7wLLdd/b+9cEd8BhEnv6tqm9PfaQ8g==
-X-Received: by 2002:a05:600c:c490:b0:45b:9a7b:66ba with SMTP id
- 5b1f17b1804b1-45ddde9260cmr82959495e9.14.1757411020384; 
- Tue, 09 Sep 2025 02:43:40 -0700 (PDT)
+ AJvYcCX/62Zhh98TxxsG+u8Jylcqt7Fx9ZW5iRsg6b4BSaQXEO4hOaSMmic/WoaW/u3UxNuLQvPb/4cTuAbQ@nongnu.org
+X-Gm-Message-State: AOJu0YxsD0/NQ0Tt8MU+UYeuyL5p7/Hg/tjwjwas54InvyDEUezDZCOH
+ 4uRHy5VhUKrMFOLAdjSAahFFDkgQ3MRrwKlRPO2XabpeqOGjkEi6g12erYBJEh1WGWnpyvx72Hd
+ WSkgD75A+YrqVfNrzT6S6NNyhiIaIathPm1v+Mm0upAXNydFXZoNnhrJ5
+X-Gm-Gg: ASbGncvALSe7GvndKXAdLXhWsm6xHtgXE2MweVmQOGcrLTrLzUl7F20E4UKtQeQXnri
+ udk4VWwYReKh4hdnC67H+j72L/JnzTzzdV2v2wM7xLJ6hGnOZa29+GeJh05QmEDswyiWIaRk/6B
+ CUtyPUQM6V1mXvlDJy9o7s6bYfTlGJpaTtN4xUnapXc7mYcT1IxdeiCCqUUixynU5EMla+cVvUE
+ t7wh3YhLGDXiaPvhOJM4OcSFP7G58941HvpIBWHdWEozqDVxelONRhDWN/VvItoj2zyJYawCcMZ
+ vV1c2oLruWA6qGC2uljAFb/pgN0RQpKoIpFz8p1cxFabPp1BewznG6kqb3yAGdyKGf+Cvgw8nWD
+ uJI81XQ==
+X-Received: by 2002:a5d:5f82:0:b0:3e7:4244:bff5 with SMTP id
+ ffacd0b85a97d-3e74244c4fdmr6084246f8f.8.1757411302749; 
+ Tue, 09 Sep 2025 02:48:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn6hwD9odY5mnElUW67kAcoAKl3/ktt+HOwCsonoaLSVKf9xmO4jqzGNNcTP393dwCicL9lQ==
+X-Received: by 2002:a5d:5f82:0:b0:3e7:4244:bff5 with SMTP id
+ ffacd0b85a97d-3e74244c4fdmr6084217f8f.8.1757411302251; 
+ Tue, 09 Sep 2025 02:48:22 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
  [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e752238967sm1901386f8f.33.2025.09.09.02.43.38
+ ffacd0b85a97d-3e7522562d1sm1873563f8f.63.2025.09.09.02.48.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 02:43:39 -0700 (PDT)
-Message-ID: <46b4d131-c409-4ad2-ab99-4c36fa1c6e69@redhat.com>
-Date: Tue, 9 Sep 2025 11:43:37 +0200
+ Tue, 09 Sep 2025 02:48:21 -0700 (PDT)
+Message-ID: <a55814af-3792-43e2-8cc8-2b2688786183@redhat.com>
+Date: Tue, 9 Sep 2025 11:48:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/22] auxbus: Fix AddressSpace exposure timing
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 08/22] sun4m: Fix AddressSpace exposure timing
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
@@ -89,14 +90,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, John Levon <john.levon@nutanix.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -106,10 +103,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  <peter.maydell@linaro.org>, Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-6-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <20250906-use-v1-8-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -154,10 +150,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250906-use-v1-6-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250906-use-v1-8-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -166,7 +162,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -183,8 +179,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06/09/2025 04.11, Akihiko Odaki wrote:
-> aux-bus is not hotpluggable but its instance can still be created and
-> finalized when processing the device-list-properties QMP command.
+> sun4m-iommu is not hotpluggable but its instance can still be created
+> and finalized when processing the device-list-properties QMP command.
 > Exposing such a temporary instance to AddressSpace should be
 > avoided because it leaks the instance.
 > 
@@ -193,25 +189,42 @@ On 06/09/2025 04.11, Akihiko Odaki wrote:
 > 
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   hw/misc/auxbus.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/sparc/sun4m_iommu.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
-> index 877f34560626f0ef741f00bb6c7272135d264399..c47db4da985d8e81f9eb49542279499c931aac6c 100644
-> --- a/hw/misc/auxbus.c
-> +++ b/hw/misc/auxbus.c
-> @@ -74,12 +74,12 @@ AUXBus *aux_bus_init(DeviceState *parent, const char *name)
->       /* Memory related. */
->       bus->aux_io = g_malloc(sizeof(*bus->aux_io));
->       memory_region_init(bus->aux_io, OBJECT(bus), "aux-io", 1 * MiB);
-> -    address_space_init(&bus->aux_addr_space, bus->aux_io, "aux-io");
->       return bus;
+> diff --git a/hw/sparc/sun4m_iommu.c b/hw/sparc/sun4m_iommu.c
+> index a7ff36ee78c1d6295efea6499dffc2a481022167..0997f29ccb97d3dec4e3d34db49f2e51b6807a1a 100644
+> --- a/hw/sparc/sun4m_iommu.c
+> +++ b/hw/sparc/sun4m_iommu.c
+> @@ -359,7 +359,6 @@ static void iommu_init(Object *obj)
+>       memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+>                                TYPE_SUN4M_IOMMU_MEMORY_REGION, OBJECT(dev),
+>                                "iommu-sun4m", UINT64_MAX);
+> -    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+>   
+>       sysbus_init_irq(dev, &s->irq);
+>   
+> @@ -368,6 +367,13 @@ static void iommu_init(Object *obj)
+>       sysbus_init_mmio(dev, &s->iomem);
 >   }
 >   
->   void aux_bus_realize(AUXBus *bus)
->   {
-> +    address_space_init(&bus->aux_addr_space, bus->aux_io, "aux-io");
->       qdev_realize(DEVICE(bus->bridge), BUS(bus), &error_fatal);
+> +static void iommu_realize(DeviceState *dev, Error **errp)
+> +{
+> +    IOMMUState *s = SUN4M_IOMMU(dev);
+> +
+> +    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+> +}
+> +
+>   static const Property iommu_properties[] = {
+>       DEFINE_PROP_UINT32("version", IOMMUState, version, 0),
+>   };
+> @@ -377,6 +383,7 @@ static void iommu_class_init(ObjectClass *klass, const void *data)
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       device_class_set_legacy_reset(dc, iommu_reset);
+> +    dc->realize = iommu_realize;
+>       dc->vmsd = &vmstate_iommu;
+>       device_class_set_props(dc, iommu_properties);
 >   }
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
