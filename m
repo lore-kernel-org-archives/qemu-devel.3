@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 876F5CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 16:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C484CAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 16:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw1fZ-0006MZ-CI; Tue, 09 Sep 2025 12:58:14 -0400
+	id 1uw1fk-0006Qs-5w; Tue, 09 Sep 2025 12:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uw1fE-0006BR-OS
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:57:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uw1fO-0006GZ-FD
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:58:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uw1fB-0007Z5-Bt
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:57:51 -0400
+ id 1uw1fM-0007cU-Fh
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:58:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757437068;
+ s=mimecast20190719; t=1757437078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X90i3lDhO5GKZF8jGV61sydE0PCwbavuOqD3n20P+q4=;
- b=JMYK21DcDZA8hHEuqc4ikREoBkzfy6dxQ81NSvHbeDoqZeQEUUU8njlSKGgf7l2SGOH9m0
- mXJ1KrtoZJQ3mFBuaQkco0MiDrLTZ6cwFVkNjxM8j8O91m2izJBfPW3NQ/M2j9cDWHQcNv
- 0V8LngCL2IayxlIPaGjBw5IphbGQ4EI=
+ bh=cfr02aDddyM4f+cQuRHngl/25SfiMaK12tyjEfawCpc=;
+ b=KLbV+9vzelO/FwR3xDd07vOEo2kXJajmltWSidx5IXpvGpurNiB+ZF34+QkILn2SfZFKqU
+ pZNqfs4ux2daimUtkmKRrzwHtVjoOkvX0iRIWqBPNCwWbLUZ1ww9mML7YD59w22wdnI9K9
+ hexlSR9pn1CaybfKHOZ4SROdeJupmuk=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-yX39LkFbOUuflJe5qn9LqA-1; Tue,
- 09 Sep 2025 12:57:45 -0400
-X-MC-Unique: yX39LkFbOUuflJe5qn9LqA-1
-X-Mimecast-MFC-AGG-ID: yX39LkFbOUuflJe5qn9LqA_1757437065
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-zAWk9m70PVKjp_GYDXE6Fg-1; Tue,
+ 09 Sep 2025 12:57:57 -0400
+X-MC-Unique: zAWk9m70PVKjp_GYDXE6Fg-1
+X-Mimecast-MFC-AGG-ID: zAWk9m70PVKjp_GYDXE6Fg_1757437076
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2BBD1800577; Tue,  9 Sep 2025 16:57:44 +0000 (UTC)
+ id 46D341800562; Tue,  9 Sep 2025 16:57:56 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.45])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37E8D1800446; Tue,  9 Sep 2025 16:57:41 +0000 (UTC)
+ id D71B21800446; Tue,  9 Sep 2025 16:57:53 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -54,16 +54,16 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 05/15] system: report machine security status in help output
-Date: Tue,  9 Sep 2025 17:57:16 +0100
-Message-ID: <20250909165726.3814465-6-berrange@redhat.com>
+Subject: [PATCH 09/15] accel: mark 'kvm' as secure and 'tcg' as insecure
+Date: Tue,  9 Sep 2025 17:57:20 +0100
+Message-ID: <20250909165726.3814465-10-berrange@redhat.com>
 In-Reply-To: <20250909165726.3814465-1-berrange@redhat.com>
 References: <20250909165726.3814465-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,31 +88,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When '-machine help' is given, report the security status of each
-machine.
-
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- system/vl.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ accel/kvm/kvm-all.c | 1 +
+ accel/tcg/tcg-all.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/system/vl.c b/system/vl.c
-index 3b7057e6c6..0695af433f 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1578,9 +1578,11 @@ static void machine_help_func(const QDict *qdict)
-         if (mc->alias) {
-             printf("%-20s %s (alias of %s)\n", mc->alias, mc->desc, mc->name);
-         }
--        printf("%-20s %s%s%s\n", mc->name, mc->desc,
-+        printf("%-20s %s%s%s%s%s\n", mc->name, mc->desc,
-                mc->is_default ? " (default)" : "",
--               mc->deprecation_reason ? " (deprecated)" : "");
-+               mc->deprecation_reason ? " (deprecated)" : "",
-+               object_class_is_secure(OBJECT_CLASS(mc)) ? " (secure)" : "",
-+               object_class_is_insecure(OBJECT_CLASS(mc)) ? " (insecure)" : "");
-     }
- }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index f36dfe3349..53b89d0560 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -4068,6 +4068,7 @@ static const TypeInfo kvm_accel_type = {
+     .instance_init = kvm_accel_instance_init,
+     .class_init = kvm_accel_class_init,
+     .instance_size = sizeof(KVMState),
++    .secure = true,
+ };
+ 
+ static void kvm_type_init(void)
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index 5125e1a4e2..3904df4e78 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -275,6 +275,7 @@ static const TypeInfo tcg_accel_type = {
+     .instance_init = tcg_accel_instance_init,
+     .class_init = tcg_accel_class_init,
+     .instance_size = sizeof(TCGState),
++    .insecure = true,
+ };
+ module_obj(TYPE_TCG_ACCEL);
  
 -- 
 2.50.1
