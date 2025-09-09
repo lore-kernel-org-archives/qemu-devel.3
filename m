@@ -4,130 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E230CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CC8CAC587
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvuSh-0004U8-Ka; Tue, 09 Sep 2025 05:16:27 -0400
+	id 1uvuUB-0005lE-Hs; Tue, 09 Sep 2025 05:17:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuSY-0004Bc-FS
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:16:19 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvuUA-0005ki-36
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:17:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuSO-0007cY-SY
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:16:18 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvuU5-0007jG-3A
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:17:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757409359;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1757409469;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oq7O2UR41WoxqcZNMg4sL8x9ooK+Nc0FUAi/Qza0myk=;
- b=h7ClkaMUzXmhkFRD3dKMwMk3DuGOZKR4kb6+Y9dUFmtq5KiqhsdV/kcmKUg2bmhBSsBXju
- W55JzR4JM2mpmNFTSGvdYlMtmDwEOzjDdMZcT0wWffmaZCj9nkdNOReNwVqsqWAp2IUgqL
- y0Gzf5INvAxbFOr4Ww8+dtumuqk0t1M=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-6rqUgNAJOxKqlHNBFjbUdw-1; Tue, 09 Sep 2025 05:15:58 -0400
-X-MC-Unique: 6rqUgNAJOxKqlHNBFjbUdw-1
-X-Mimecast-MFC-AGG-ID: 6rqUgNAJOxKqlHNBFjbUdw_1757409357
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3df9f185b82so2312301f8f.1
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 02:15:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757409357; x=1758014157;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oq7O2UR41WoxqcZNMg4sL8x9ooK+Nc0FUAi/Qza0myk=;
- b=HlHO6k0EO5bnMgJZqfdC/be/gYcd/slgTrHmUUpbBE5gUtzJLNjL5OdeFE9QmP9X5l
- hVvxIpQSkel+6jWd8mDNF/wUw0wNBJmhMuH9wkceJV4kynGqJdc4l22OtKPd4EJIHZsb
- KNQpjjPPgxfV8kLq5UgLn4in/sZF7kVoL4+qJo+C3YuGRqrmB4O2r338/REG+CozpwuI
- kQPPrDGyTBfmFlyPHUPEY/JTzyWGulCnhYyQXq2xyUCii/Ealm9ZSaQn7rRSQ9f9iYUP
- PYOFJXOjHZSysbihkcSqm+zKlwAK4XgnGdWy48BAYdHXntosuBgwiLRObtFKh0nW9w3R
- sf4g==
-X-Gm-Message-State: AOJu0Yy7vCRScT3R38kmB/XDyFffdxwHMY/SzK63GyfDym66AEqykN5h
- aAPzKvB3rYuOBKoLqVZsHioA/wz8i/t+u7lk3xX1xetDnvVHG4SipT/wbDcshhRoXdwtLHD9PQF
- jfLXMAiSYRI+O54p6OPV7HqY5C3FfZrwQ2/tgP68vBTA/CBcnzZ8y6Z+D
-X-Gm-Gg: ASbGncsS1vsDd611QWHtQmI+UC543tP/LA7wQDgPMbCoSCUTJ/DrbsWGGaV4bwKA1rH
- /4T1gd8T5thSdCpwVnSP1BLmuJRm0nRlQQJqt4faBmNQrzyFDkpeEsbc2GSrwCHMus8SOmfng4o
- sOOIOsX/WKV1onztpqSH/dZHDrYA1m6ZRinh/iPuo39wic/maZNT98ziQSJozGqjCAChKVV3f0W
- dr+nCym6sJT4soxPY9hgOw3wTSybY+zpudS8K/T0AXT8U7ChuWkoVTmOonoa2KZuU3XDPIuculJ
- BH19qk2/oZ7ZGbzzqhXrBLkt8R/715VcN3UmWmXXbqL1jV+P8arAhQQgRiuOsE23PG8nOoNEgi0
- GM8uXaw==
-X-Received: by 2002:a05:6000:420f:b0:3d9:70cc:6dd2 with SMTP id
- ffacd0b85a97d-3e64317eee0mr4981253f8f.40.1757409357007; 
- Tue, 09 Sep 2025 02:15:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvc2UMy33dRbdcTZf+41WbvuOcqeMmA54spmzhbmFTJgGdrY6vUUWVe8V6Nc4CpxB+ETGwuw==
-X-Received: by 2002:a05:6000:420f:b0:3d9:70cc:6dd2 with SMTP id
- ffacd0b85a97d-3e64317eee0mr4981221f8f.40.1757409356625; 
- Tue, 09 Sep 2025 02:15:56 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
- [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e75223ea47sm1784679f8f.46.2025.09.09.02.15.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 02:15:56 -0700 (PDT)
-Message-ID: <e7dcf4c0-e3c5-4a0f-8d23-a7786dac21fd@redhat.com>
-Date: Tue, 9 Sep 2025 11:15:54 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=o1wV7s0PBuYHMU3+/24J90kIvp/DulBRrQ3LIZXLbDs=;
+ b=OrCnnLzys8xZYiua2lDt6GrFqo7IGYofbjYCHQbGdReZvtEvLEn65P9GF/EGbs4UZLI45n
+ nIpggy8dbGODEIm7c+ZRakn9t6HdWw+pT6rVEqyDek+waQT59zKfu9cg09qrHySJHAyoG2
+ cI3LPDCIRXAhOj1/3YgQopgKjeDK330=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-FeJNNKJmOJGMswmHGR-DEg-1; Tue,
+ 09 Sep 2025 05:17:46 -0400
+X-MC-Unique: FeJNNKJmOJGMswmHGR-DEg-1
+X-Mimecast-MFC-AGG-ID: FeJNNKJmOJGMswmHGR-DEg_1757409465
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 956721800447; Tue,  9 Sep 2025 09:17:45 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40F101956095; Tue,  9 Sep 2025 09:17:44 +0000 (UTC)
+Date: Tue, 9 Sep 2025 10:17:40 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Andrew Keesler <ankeesler@google.com>
+Cc: marcandre.lureau@gmail.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/1] Support per-head resolutions with virtio-gpu
+Message-ID: <aL_wtBlIdBv5v2Qy@redhat.com>
+References: <20250902141312.750525-1-ankeesler@google.com>
+ <20250902141312.750525-2-ankeesler@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/system/keys: fix incorrect reset scaling key binding
-To: Nir Lichtman <nir@lichtman.org>, peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250815090025.GA1464436@lichtman.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250815090025.GA1464436@lichtman.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250902141312.750525-2-ankeesler@google.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -136,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,36 +85,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/08/2025 11.00, Nir Lichtman wrote:
-> Fix incorrect key binding for resetting the graphical frontends scaling
+On Tue, Sep 02, 2025 at 02:13:12PM +0000, Andrew Keesler wrote:
+> In 454f4b0f, we started down the path of supporting separate
+> configurations per display head (e.g., you have 2 heads - one with
+> EDID name "AAA" and the other with EDID name "BBB").
 > 
-> Signed-off-by: Nir Lichtman <nir@lichtman.org>
+> In this change, we add resolution to this configuration surface (e.g.,
+> you have 2 heads - one with resolution 111x222 and the other with
+> resolution 333x444).
+> 
+>   -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+>   -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+>   -device '{"driver":"virtio-vga",
+>             "max_outputs":2,
+>             "id":"vga",
+>             "outputs":[
+>               {
+>                  "name":"AAA",
+>                  "xres":111,
+>                  "yres":222
+>               },
+>               {
+>                  "name":"BBB",
+>                  "xres":333,
+>                  "yres":444
+>               }
+>             ]}'
+> 
+> Here is the behavior matrix of the current resolution configuration
+> surface (xres/yres) with the new resolution configuration surface
+> (outputs[i].xres/yres).
+> 
+> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with default xres/yres
+> 
+> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with xres/yres
+> 
+> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+> 
+> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
 > ---
->   docs/system/keys.rst.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/docs/system/keys.rst.inc b/docs/system/keys.rst.inc
-> index c28ae1a..3b5307b 100644
-> --- a/docs/system/keys.rst.inc
-> +++ b/docs/system/keys.rst.inc
-> @@ -21,7 +21,7 @@ while ``-display sdl,grab-mod=rctrl`` changes it to the right :kbd:`Ctrl` key.
->     * - :kbd:`Ctrl+Alt+-`
->       - Shrink the screen
->   
-> -  * - :kbd:`Ctrl+Alt+u`
-> +  * - :kbd:`Ctrl+Alt+0`
->       - Restore the screen's un-scaled dimensions
+>  hw/display/virtio-gpu-base.c | 10 ++++++++++
+>  qapi/virtio.json             | 10 ++++++++--
+>  2 files changed, 18 insertions(+), 2 deletions(-)
 
-  Hi,
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-this unfortunately seems to depend on the graphical front-end: For "-display 
-gtk", it's ctrl-alt-0 indeed, but for "-display sdl", it's ctrl-alt-u instead.
 
-Should we unify them? If so, which is the better key combination?
-
-  Thomas
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
