@@ -4,80 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34001CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377B6CAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:34:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvyTx-000774-Ts; Tue, 09 Sep 2025 09:34:02 -0400
+	id 1uvyTi-0006db-2M; Tue, 09 Sep 2025 09:33:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvyTg-0006hr-HF
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:33:47 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvyTS-0001M4-UK
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:33:41 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b00a9989633so181680666b.0
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 06:33:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1uvyTG-0006Uo-Fl; Tue, 09 Sep 2025 09:33:20 -0400
+Received: from [115.124.30.118] (helo=out30-118.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1uvyT6-0001JJ-KQ; Tue, 09 Sep 2025 09:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757424805; x=1758029605; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=oNxgNFfPpcR6ViM0K2MyFyM0oaG+XsB0dyvKqxqZh2E=;
- b=sVKmcCwsJVN7XEckKg/76Ia2grQCy29Lvoj9nP0s/v1MfyKLYp2NffJlzE4di1E+/h
- xTnRYl2CpmB5ZsjU9oDOgVAMKDGUxHCIv9hbC9PIVlxaaVDDcg8nxuinMLdgCcf4dQ6j
- rKhgj7WrkO+3nHRLEA+v9BQxXUkO5NL5LIvYbWRI6grQr+UfcanxrsbzVbgAyQHdtyPF
- ZuFuSItbf9/LmwC8NbrHZ79CmIlTmZjfC57j7+gd006oW4GGJxE0KsshjIdNi8kGe7Fp
- VVXbinvFDor9ZHk+35KhsvjtFKPCdZNYLagtMs6meyV4IEWZJ6XMoRShDxRlzuWtgA0N
- KmgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757424805; x=1758029605;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oNxgNFfPpcR6ViM0K2MyFyM0oaG+XsB0dyvKqxqZh2E=;
- b=klicET5wnzTXcSSxOGthBNCi2Yy1CPONUkkGE66BVWffrMiunDnI5lnOeJQJylVFru
- Y69OqYVzrnudDpAFkp7B1c+Zc2mYauoDknnkt54QtGa4F84odm2TVtSCAgy9KLl6Fe4l
- BLU0U9qT3zCvWAqXF8ajSqxyizhcc6CqQMilY5Whf9xV2jSeTKTIBPJKI1kNB3YCZcZX
- E/gMTcrDVqovQOJZ51MF7vypS4SCxboqY2Pzwvxco81hBUg4sfb0CnHFrzsTAvulPmcV
- ++ghmSRhbArnz/2eMGfjfQGKxgcBArUot/Rbqoxy3gTOhszljK17aWsoxwY+gMVVH98I
- /igw==
-X-Gm-Message-State: AOJu0YzpLx6jjBb++lxjFtQe4p9da6LeFWdoznN0u4tOJ/vWOLSCrNPO
- /1jSoBDEFMq6GPw7tQDgnLBY6EsIZdGC2oYbi41htHSSjLHipJF3EPMTwiZinzYiJwg1LeQQdkA
- eUJx48oERUl7t6aAYCzV5uF3gPDnCygvHqShVsfuz59ca70CzLoOz
-X-Gm-Gg: ASbGnct94fKghzckGxxwAQ30q59yTMVSZ7HgNW8CoI3uYFSeL2ALv+NICH7CupaZmZ6
- c25tELVHmsPB/9WboQLq79BucFNNY0Cqrqsciqfsgny0V4koLpaVciBcQTRSqVLW7ICagkfyh7c
- 3ixEth9veBsZFz+zgzUdwtUPb4xnCe+YYpoxoOaIv/k7DuHNrl7Q+33KLemvKKieZeyiO9lVgOR
- v1ajbx98T+Sbh/gQ6U=
-X-Google-Smtp-Source: AGHT+IH6g5IVXqJdKHRIQR4oAVOvhbkY7P++yTDyvr21iNFPXfUawLRvkvVHQMlitfYLI+vekSZBLk4hcbdi945qlRY=
-X-Received: by 2002:a17:907:7289:b0:b04:776a:81cb with SMTP id
- a640c23a62f3a-b04931f3609mr1770874366b.19.1757424805213; Tue, 09 Sep 2025
- 06:33:25 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1757424781; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=EZZo9vvOzdXYVfJlzbw5Ldq0ISDkkHtD4yrp9+oIuvc=;
+ b=YFd4ng5q+UJ1qcDhh2FYsY77/tFcRMx0cjA0V/bwgrBDAGCLEs8xj524byZr1XkpLc3+jDkR61F3ZwFza5CrbOerGmtHeSF1Axv5qBuxcnDc5y2KmXKLLG/+72UmHwzPo5P7J2JJg77kB01bQp+lwN1irhH6zR1MO7AvaWIqIws=
+Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0Wne8VxD_1757424469 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 09 Sep 2025 21:27:50 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+Subject: [RFC PATCH 4/5] target/riscv: Implement SMMPT fence instructions
+Date: Tue,  9 Sep 2025 21:25:32 +0800
+Message-Id: <20250909132533.32205-5-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20250909132533.32205-1-zhiwei_liu@linux.alibaba.com>
+References: <20250909132533.32205-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
- <20250830054128.448363-56-richard.henderson@linaro.org>
-In-Reply-To: <20250830054128.448363-56-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Sep 2025 14:33:11 +0100
-X-Gm-Features: AS18NWDy9-Dc7VDmevQuLzCMNo56NMV3ii4rqeNVH6WE1-y8JDUP80OgEb2Zwzo
-Message-ID: <CAFEAcA_1QRqHm-CsNn1SsvxiHybRDRob3fvn8U38uZorYtf0Ag@mail.gmail.com>
-Subject: Re: [PATCH v4 55/84] target/arm: Emit HSTR trap exception out of line
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.118 (deferred)
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,52 +68,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 30 Aug 2025 at 18:18, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Use delay_exception_el to move the exception out of line.
-> Use TCG_COND_TSTNE instead of separate AND+NE.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate.c | 18 ++++--------------
->  1 file changed, 4 insertions(+), 14 deletions(-)
->
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index c4dd3a747c..f6fdfaa551 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -3033,21 +3033,11 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
->
->          if (maskbit != 4 && maskbit != 14) {
->              /* T4 and T14 are RES0 so never cause traps */
-> -            TCGv_i32 t;
-> -            DisasLabel over = gen_disas_label(s);
-> +            TCGLabel *fail = delay_exception_el(s, EXCP_UDEF, syndrome, 2);
-> +            TCGv_i32 t =
-> +                load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
->
-> -            t = load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
+This patch completes the SMMPT implementation by adding support for the
+new fence instructions: `mfence.spa` and `minval.spa`.
 
-I almost certainly originally wrote this line with the declaration
-of t and its initialization split to avoid this awkward linebreak
-that you get if you put them together...
+According to the specification, these instructions act as memory ordering
+fences for MPT updates. In QEMU's TCG model, this is conservatively
+implemented by flushing the entire TLB, which ensures that any subsequent
+memory accesses will re-evaluate permissions and see the effects of any prior
+MPT modifications.
 
-> -            tcg_gen_andi_i32(t, t, 1u << maskbit);
-> -            tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
-> -
-> -            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
-> -            /*
-> -             * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
-> -             * but since we're conditionally branching over it, we want
-> -             * to assume continue-to-next-instruction.
-> -             */
-> -            s->base.is_jmp = DISAS_NEXT;
-> -            set_disas_label(s, over);
-> +            tcg_gen_brcondi_i32(TCG_COND_TSTNE, t, 1u << maskbit, fail);
->          }
->      }
+The instructions are privileged and will cause an illegal instruction
+exception if executed outside of M-mode.
 
--- PMM
+Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+---
+ target/riscv/insn32.decode                    |  2 ++
+ .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
+ 2 files changed, 32 insertions(+)
+
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index cd23b1f3a9..cf58f1beee 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+ mret        0011000    00010 00000 000 00000 1110011
+ wfi         0001000    00101 00000 000 00000 1110011
+ sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
++mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
++minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
+ 
+ # *** NMI ***
+ mnret       0111000    00010 00000 000 00000 1110011
+diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+index 8a62b4cfcd..5ec6bf5991 100644
+--- a/target/riscv/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/insn_trans/trans_privileged.c.inc
+@@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+ #endif
+     return false;
+ }
++
++#define REQUIRE_SMSDID(ctx) do {          \
++    if (!ctx->cfg_ptr->ext_smsdid) {      \
++        return false;                     \
++    }                                     \
++} while (0)
++
++static bool do_mfence_spa(DisasContext *ctx)
++{
++#ifndef CONFIG_USER_ONLY
++    REQUIRE_SMSDID(ctx);
++    if (ctx->priv != PRV_M) {
++        return false;
++    }
++    decode_save_opc(ctx, 0);
++    gen_helper_tlb_flush_all(tcg_env);
++    return true;
++#endif
++    return false;
++}
++
++static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
++
++static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
++{
++    return do_mfence_spa(ctx);
++}
+-- 
+2.25.1
+
 
