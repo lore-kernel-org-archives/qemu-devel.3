@@ -4,110 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18FECAC582
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 00:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356E6CA1016
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 01:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvmd2-0001AM-Hd; Mon, 08 Sep 2025 20:54:38 -0400
+	id 1uvmt5-000520-4g; Mon, 08 Sep 2025 21:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uvmcr-00019B-Cp; Mon, 08 Sep 2025 20:54:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1uvmcm-00020K-8a; Mon, 08 Sep 2025 20:54:23 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588E3WkB032411;
- Tue, 9 Sep 2025 00:54:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/VLEnk
- rZHky7Nf6yU5bhEKi3o6Re6rgiRC4nFw2tacw=; b=i7Q6u2YfCltZdC12EHQgWA
- qCPwAjNvv9wK+rVh+KWjEQtfLK9YT0u/Lm4QmjWgjqQ2ppgiWeF4se7Iktc+/MFg
- /w1mu7tCaEfRhGlM0G+TJvnr0XXYNQjfXTAi3oWT0N2ZWB2zy9ULMqodpCs+hl9g
- 0iGFplF/7zkz1uD2ucaLggMfmmiv32tOKR3jQiPdlNr/L1F2eWAbKb2HcfmI2fFA
- 5jOgoz1Uyaiz2b77VjdUv+CXb5rn4rc7NTy2w4rs+xeriJ3K631yP78QgmpDQW5t
- GVrFqjKgIZyKs+JvnUkiBBU7Yd66RZtXv3T+S8FPIe338ylwbvQ61NkWC7azNxxA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490uke9x4y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Sep 2025 00:54:10 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5890WcDc020499;
- Tue, 9 Sep 2025 00:54:10 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 490yp0rs55-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Sep 2025 00:54:10 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5890s80W29098524
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Sep 2025 00:54:08 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7596158054;
- Tue,  9 Sep 2025 00:54:08 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C300E5805A;
- Tue,  9 Sep 2025 00:54:06 +0000 (GMT)
-Received: from [9.67.101.119] (unknown [9.67.101.119])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  9 Sep 2025 00:54:06 +0000 (GMT)
-Message-ID: <4ef5904d-0bdc-44c5-8411-80ff9a1ff961@linux.ibm.com>
-Date: Mon, 8 Sep 2025 20:54:05 -0400
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uvmsy-0004zp-UI; Mon, 08 Sep 2025 21:11:04 -0400
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uvmsr-0004FU-C3; Mon, 08 Sep 2025 21:11:04 -0400
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-70ddadde494so43729936d6.1; 
+ Mon, 08 Sep 2025 18:10:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1757380253; x=1757985053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5ktCClomFs2S9VrtLLUmDiBZKr6YRa5S9ldqkoFhO/E=;
+ b=BPdJabNTGEx4+g4gBPqKjnUDdVNGTqb54HAEHEhc39qtgqUfgk5KXeRrKxlMYu7sCC
+ nAd8XUgdrikidFk7JPGzb6wR9i6LUgcGG8U6r52jIDLxDWrSJC0AADNjmEDKAWXIuK+O
+ tgfMPaufJhDuBGncD8sktFsIs+YpwtU8TKQmPNbQJjl4WrivydZPdYoaJiW3iSbbfBXy
+ eOHAcD+vBxkIcaqMwh4X++LZE8L520pl4BfA0KMrBPzjGNwZQA9YJ8CxF30ekolwBlXY
+ sRIpYCulrQLQZcblc4UcmjMX740waxb+TaHDKR4clDJlswtKwPMGfni79hg5xWXWAjZd
+ a5GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757380253; x=1757985053;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5ktCClomFs2S9VrtLLUmDiBZKr6YRa5S9ldqkoFhO/E=;
+ b=v60e3xNr1LqOk8Rk+rjw09N6E3KTvFRNjkIlx7CK7Y5JLNtSgwliuGnwZt7OKdqDex
+ 6zT7IOTeX+fA5XKiHsBjrracEvQ+KIhlCiEsnkno3PBG/x09G3QnK9ZskibnhRO5X7gZ
+ CSxCqQUXfrpB5ToJIvvWnq5ks2/D/cqfLhF9Yvi0aNtDPwuhEZ7TksBYN3VbJRTABdpj
+ AR6uFJaiHxf+zBJ1DySU/uCBRAeZMpbqv/pIuXiDmKwzlFm0VCZxRkSIvhOzIRpnnHfG
+ 9KCexZnkQDZhc5/0OyO+s+xZUcKlHg0QodC/eC6N2npLS8xxXk8geqvPlqoOGsEuSDkJ
+ NwIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeCyc5dPVE+1PAgR1YshE9xxxBiIzzKjJXAkVvAXoxeJSf6HLEyZgh0+O9LreYR8UQcU/pu+T0hsjZ@nongnu.org
+X-Gm-Message-State: AOJu0Yz3rn6guv6FEqsbrB2FNVt7DQSpeSHNUgLpz97s6fmAsithed+X
+ Ks3C8tXBlYktxL8awzsEVkNVjLatSa2JddpQNFBEphp1I+DXccHaos2vq7VJeA==
+X-Gm-Gg: ASbGncuTojQiUjM7Fzhv0cEFj5Wwb0xvHLdkDA3+jkqX6cTFCkA/JMiPOm9sQtKhTLH
+ JmNIE8m7rm35cqOjk2qTaONX21ERW08HHj9j+cjDZnpSPDPBAUjE6swEGzDcNzA+xzOa/fAEIhi
+ BOcCZSoU07rxtA9DDS7pBfcn75R0Z1n8JJNqjKrksKIPQv9wfna/5MFozBtdMLgDFsDwm4jYmU+
+ iGPgKaOiAv4m6FI+3WeCQYGZqSqA4vR4RU92tUkp8kfJQA8oKccQcgfWzZbgHJJvOhTjir0Jf1V
+ l0c8kKLui7K1MwXs30bQc49aNReMv3SNnRzNfloqr8xIVqm+WW+M07yVZMq3zHmWNRYUHwqD40R
+ uzTIhSA9pFtCGhlTYxNyBJbKzDDg+SW6GVpXDTT6rH8BRM7NFZekE4bb7+0DJ3CVbXWsM6f8caF
+ f93zDnR3e9umo=
+X-Google-Smtp-Source: AGHT+IFt2xM6t8QPTTcQMQEXWhhvYqRYezERw/ncZpW4yzWlt6vdY8UUGptDV7ZzrHvW+S1B8Evj5w==
+X-Received: by 2002:a05:6214:2aac:b0:731:bb3:776b with SMTP id
+ 6a1803df08f44-739211adf55mr88832116d6.3.1757380252693; 
+ Mon, 08 Sep 2025 18:10:52 -0700 (PDT)
+Received: from [10.36.181.110]
+ (wn-campus-nat-129-97-124-110.dynamic.uwaterloo.ca. [129.97.124.110])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-728d6f8b338sm102818576d6.0.2025.09.08.18.10.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Sep 2025 18:10:52 -0700 (PDT)
+Message-ID: <9948bdce-a50f-4b08-80bc-1be21c62f3c0@gmail.com>
+Date: Mon, 8 Sep 2025 21:10:51 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Collin Walling <walling@linux.ibm.com>
-Subject: Re: [PATCH v5 04/29] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20250818214323.529501-1-zycai@linux.ibm.com>
- <20250818214323.529501-5-zycai@linux.ibm.com>
+Subject: Re: [PATCH 2/4] export/fuse: process FUSE-over-io_uring requests
+To: Bernd Schubert <bernd@bsbernd.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-3-hibriansong@gmail.com>
+ <20250903115108.GD106431@fedora>
+ <d5550d6c-d3cb-440a-b806-80dd11887dd8@gmail.com>
+ <f6ca7bc4-604c-43c8-ab81-7ef14762d8a1@bsbernd.com>
 Content-Language: en-US
-In-Reply-To: <20250818214323.529501-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDE5NSBTYWx0ZWRfXwHnJj2upHjxh
- 7JaPt0Ly8EuZTzSo4pGR4DKb+xEfZgk2bLPxhsHUIw3TTgcl8AqJbRgSlz7e1I+dSdQuHeL/IZr
- t1hVmXqKgdMsj/Z5nL2TbIGKk9DzdPTMwQlWF8DS+lCCa/YsEVLIeT9tyINmQRgb56PHGG+2KR4
- H1Os/aDA+Wu32jctubhS9e+P3r5LXH7ooYxoSXTVHId1Yz3j8Eoj1cbO1NEQyTF7IWzv2Wf1SpH
- 1Ysr27L40JBm6+EKPcQuoG5q6caFcHux9S42jm4T/R/0CsyMQC/GxlLRLNi2/9wQY4UGVwQk1ax
- SDCGJzs/rD3pNcnlIa+IKV4JKuuwcSfYG4kaGRahAZ0ByRKLhYwHzJ8MbZcauu/ioYRhvvifOLq
- TFpyHmN5
-X-Proofpoint-ORIG-GUID: aHy5nKwgchObBTV5LZlVykfj-BReGD-V
-X-Proofpoint-GUID: aHy5nKwgchObBTV5LZlVykfj-BReGD-V
-X-Authority-Analysis: v=2.4 cv=StCQ6OO0 c=1 sm=1 tr=0 ts=68bf7ab2 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=BAr_F5vUW8ASze9uAjEA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_06,2025-09-08_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060195
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Brian Song <hibriansong@gmail.com>
+In-Reply-To: <f6ca7bc4-604c-43c8-ab81-7ef14762d8a1@bsbernd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=hibriansong@gmail.com; helo=mail-qv1-xf2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,396 +108,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/25 17:42, Zhuoying Cai wrote:
-> Create a certificate store for boot certificates used for secure IPL.
+
+
+On 9/8/25 3:45 PM, Bernd Schubert wrote:
 > 
-> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
-> machine type option into the cert store.
 > 
-> Currently, only X.509 certificates in PEM format are supported, as the
-> QEMU command line accepts certificates in PEM format only.
+> On 9/8/25 21:09, Brian Song wrote:
+>>
+>>
+>> On 9/3/25 7:51 AM, Stefan Hajnoczi wrote:
+>>> On Fri, Aug 29, 2025 at 10:50:23PM -0400, Brian Song wrote:
+>>>> https://docs.kernel.org/filesystems/fuse-io-uring.html
+>>>>
+>>>> As described in the kernel documentation, after FUSE-over-io_uring
+>>>> initialization and handshake, FUSE interacts with the kernel using
+>>>> SQE/CQE to send requests and receive responses. This corresponds to
+>>>> the "Sending requests with CQEs" section in the docs.
+>>>>
+>>>> This patch implements three key parts: registering the CQE handler
+>>>> (fuse_uring_cqe_handler), processing FUSE requests (fuse_uring_co_
+>>>> process_request), and sending response results (fuse_uring_send_
+>>>> response). It also merges the traditional /dev/fuse request handling
+>>>> with the FUSE-over-io_uring handling functions.
+>>>>
+>>>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>>>> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+>>>> Signed-off-by: Brian Song <hibriansong@gmail.com>
+>>>> ---
+>>>>    block/export/fuse.c | 457 ++++++++++++++++++++++++++++++--------------
+>>>>    1 file changed, 309 insertions(+), 148 deletions(-)
+>>>>
+>>>> diff --git a/block/export/fuse.c b/block/export/fuse.c
+>>>> index 19bf9e5f74..07f74fc8ec 100644
+>>>> --- a/block/export/fuse.c
+>>>> +++ b/block/export/fuse.c
+>>>> @@ -310,6 +310,47 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+>>>>    };
+>>>>    
+>>>>    #ifdef CONFIG_LINUX_IO_URING
+>>>> +static void coroutine_fn fuse_uring_co_process_request(FuseRingEnt *ent);
+>>>> +
+>>>> +static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaque)
+>>>
+>>> This function appears to handle exactly one cqe. A singular function
+>>> name would be clearer than a plural: co_fuse_uring_queue_handle_cqe().
+>>>
+>>>> +{
+>>>> +    FuseRingEnt *ent = opaque;
+>>>> +    FuseExport *exp = ent->rq->q->exp;
+>>>> +
+>>>> +    /* Going to process requests */
+>>>> +    fuse_inc_in_flight(exp);
+>>>
+>>> What is the rationale for taking a reference here? Normally something
+>>> already holds a reference (e.g. the request itself) and it will be
+>>> dropped somewhere inside a function we're about to call, but we still
+>>> need to access exp afterwards, so we temporarily take a reference.
+>>> Please document the specifics in a comment.
+>>>
+>>> I think blk_exp_ref()/blk_exp_unref() are appropriate instead of
+>>> fuse_inc_in_flight()/fuse_dec_in_flight() since we only need to hold
+>>> onto the export and don't care about drain behavior.
+>>>
+>>
+>> Stefan:
+>>
+>> When handling FUSE requests, we don’t want the FuseExport to be
+>> accidentally deleted. Therefore, we use fuse_inc_in_flight in the CQE
+>> handler to increment the in_flight counter, and when a request is
+>> completed, we call fuse_dec_in_flight to decrement it. Once the last
+>> request has been processed, fuse_dec_in_flight brings the in_flight
+>> counter down to 0, indicating that the export can safely be deleted. The
+>> usage of in_flight follows the same logic as in traditional FUSE request
+>> handling.
+>>
+>> Since submitted SQEs for FUSE cannot be canceled, once we register or
+>> commit them we must wait for the kernel to return a CQE. Otherwise, the
+>> kernel may deliver a CQE and invoke its handler after the export has
+>> already been deleted. For this reason, we directly call blk_exp_ref and
+>> blk_exp_unref when submitting an SQE and when receiving its CQE, to
+>> explicitly control the export reference and prevent accidental deletion.
+>>
+>> The doc/comment for co_fuse_uring_queue_handle_cqe:
+>>
+>> Protect FuseExport from premature deletion while handling FUSE requests.
+>> CQE handlers inc/dec the in_flight counter; when it reaches 0, the
+>> export can be freed. This follows the same logic as traditional FUSE.
+>>
+>> Since FUSE SQEs cannot be canceled, a CQE may arrive after commit even
+>> if the export is deleted. To prevent this, we ref/unref the export
+>> explicitly at SQE submission and CQE completion.
+>>
+>>>> +
+>>>> +    /* A ring entry returned */
+>>>> +    fuse_uring_co_process_request(ent);
+>>>> +
+>>>> +    /* Finished processing requests */
+>>>> +    fuse_dec_in_flight(exp);
+>>>> +}
+>>>> +
+>>>> +static void fuse_uring_cqe_handler(CqeHandler *cqe_handler)
+>>>> +{
+>>>> +    FuseRingEnt *ent = container_of(cqe_handler, FuseRingEnt, fuse_cqe_handler);
+>>>> +    Coroutine *co;
+>>>> +    FuseExport *exp = ent->rq->q->exp;
+>>>> +
+>>>> +    if (unlikely(exp->halted)) {
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    int err = cqe_handler->cqe.res;
+>>>> +
+>>>> +    if (err != 0) {
+>>>> +        /* -ENOTCONN is ok on umount  */
+>>>> +        if (err != -EINTR && err != -EAGAIN &&
+>>>> +            err != -ENOTCONN) {
+>>>> +            fuse_export_halt(exp);
+>>>> +        }
+>>>
+>>> How are EINTR and EAGAIN handled if they are silently ignored? When did
+>>> you encounter these error codes?
+>>
+>> Bernd:
+>>
+>> I have the same question about this. As for how the kernel returns
+>> errors, I haven’t studied each case yet. In libfuse it’s implemented the
+>> same way, could you briefly explain why we choose to ignore these two
+>> errors, and under what circumstances we might encounter them?
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  hw/s390x/cert-store.c       | 201 ++++++++++++++++++++++++++++++++++++
->  hw/s390x/cert-store.h       |  38 +++++++
->  hw/s390x/ipl.c              |   9 ++
->  hw/s390x/ipl.h              |   3 +
->  hw/s390x/meson.build        |   1 +
->  include/hw/s390x/ipl/qipl.h |   2 +
->  6 files changed, 254 insertions(+)
->  create mode 100644 hw/s390x/cert-store.c
->  create mode 100644 hw/s390x/cert-store.h
 > 
-> diff --git a/hw/s390x/cert-store.c b/hw/s390x/cert-store.c
-> new file mode 100644
-> index 0000000000..81e748a912
-> --- /dev/null
-> +++ b/hw/s390x/cert-store.c
-> @@ -0,0 +1,201 @@
-> +/*
-> + * S390 certificate store implementation
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "cert-store.h"
-> +#include "qapi/error.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/option.h"
-> +#include "qemu/config-file.h"
-> +#include "hw/s390x/ebcdic.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
-> +#include "qemu/cutils.h"
-> +#include "crypto/x509-utils.h"
-> +#include "qapi/qapi-types-machine-s390x.h"
-> +
-> +static BootCertPathList *s390_get_boot_certs(void)
-> +{
-> +    return S390_CCW_MACHINE(qdev_get_machine())->boot_certs;
-> +}
-> +
-> +static size_t cert2buf(char *path, char **cert_buf)
-> +{
-> +    size_t size;
-> +
-> +    if (!g_file_get_contents(path, cert_buf, &size, NULL) || size == 0) {
-> +        return 0;
-> +    }
-> +
-> +    return size;
-> +}
+> I think I remember why I had added these. Initially the ring threads
+> didn't inherit the signal handlers libfuse worker threads have. I had
+> fixed that later and these error conditions are a left over.
+> In libfuse idea is that the main thread gets all signals and then sets
+> se->exited - worker thread, include ring threads are not supposed to get
+> or handle signals at all, but have to monitor se->exited.
+> 
+> Good catch Stefan, I think I can remove these conditions in libfuse.
+> 
+> 
+> Thanks,
+> Bernd
+> 
 
-Seems redundant to check if size == 0 here.  If g_file_get_contents
-succeeds and size is set to 0, there's no difference between returning 0
-or returning size.
+In libfuse:
 
-> +
-> +static S390IPLCertificate *init_cert_x509(size_t size, uint8_t *raw, Error **errp)
-> +{
-> +    S390IPLCertificate *q_cert = NULL;
+static int fuse_uring_queue_handle_cqes(struct fuse_ring_queue *queue)
+{
+	struct fuse_ring_pool *ring_pool = queue->ring_pool;
+	struct fuse_session *se = ring_pool->se;
+	size_t num_completed = 0;
+	struct io_uring_cqe *cqe;
+	unsigned int head;
+	int ret = 0;
 
-I think the term "q_cert" is from an older implementation when we called
-this a "QEMUCertStore".  Since we're doing this for s390 right now, I
-think it makes sense to just to call it "cert".
+	io_uring_for_each_cqe(&queue->ring, head, cqe) {
+		int err = 0;
 
-> +    g_autofree uint8_t *cert_der = NULL;
-> +    size_t der_len = size;
-> +    int rc;
-> +
-> +    rc = qcrypto_x509_convert_cert_der(raw, size, &cert_der, &der_len, errp);
-> +    if (rc != 0) {
-> +        return NULL;
-> +    }
-> +
-> +    q_cert = g_new0(S390IPLCertificate, 1);
-> +    q_cert->size = size;
-> +    q_cert->der_size = der_len;
-> +    q_cert->key_id_size = QCRYPTO_HASH_DIGEST_LEN_SHA256;
-> +    q_cert->hash_size = QCRYPTO_HASH_DIGEST_LEN_SHA256;
+		num_completed++;
 
-Setting the sizes here doesn't seem right:
-1. it's making an assumption about the cert's data, and
-2. these fields are never accessed in any subsequent patch
+		err = cqe->res;
+		if (err != 0) {
+			if (err > 0 && ((uintptr_t)io_uring_cqe_get_data(cqe) ==
+					(unsigned int)queue->eventfd)) {
+				/* teardown from eventfd */
+				return -ENOTCONN;
+			}
 
-Patch 9 will explicitly use this enum when retrieving the cert and
-fingerprint, but this data is neither checked nor extracted from the
-S390IPLCertificate var.
+			// XXX: Needs rate limited logs, otherwise log spam
+			//fuse_log(FUSE_LOG_ERR, "cqe res: %d\n", cqe->res);
 
-I think it makes sense to get rid of the above two lines and potentially
-the two S390IPLCertificate fields as well.
+			/* -ENOTCONN is ok on umount  */
+			if (err != -EINTR &&
+			    err != -EAGAIN && err != -ENOTCONN) {
+				se->error = cqe->res;
 
-> +    q_cert->raw = raw;
-> +
-> +    return q_cert;
-> +}
-> +
-> +static S390IPLCertificate *init_cert(char *path)
-> +{
-> +    char *buf;
-> +    size_t size;
-> +    char vc_name[VC_NAME_LEN_BYTES];
-> +    g_autofree gchar *filename = NULL;
-> +    S390IPLCertificate *qcert = NULL;
-> +    Error *local_err = NULL;
-> +
-> +    filename = g_path_get_basename(path);
-> +
-> +    size = cert2buf(path, &buf);
-> +    if (size == 0) {
-> +        error_report("Failed to load certificate: %s", path);
-> +        return NULL;
-> +    }
-> +
-> +    qcert = init_cert_x509(size, (uint8_t *)buf, &local_err);
-> +    if (qcert == NULL) {
-> +        error_reportf_err(local_err, "Failed to initialize certificate: %s:  ", path);
-> +        g_free(buf);
-> +        return NULL;
-> +    }
-> +
-> +    /*
-> +     * Left justified certificate name with padding on the right with blanks.
-> +     * Convert certificate name to EBCDIC.
-> +     */
-> +    strpadcpy(vc_name, VC_NAME_LEN_BYTES, filename, ' ');
-> +    ebcdic_put(qcert->vc_name, vc_name, VC_NAME_LEN_BYTES);
-> +
-> +    return qcert;
-> +}
-> +
-> +static void update_cert_store(S390IPLCertificateStore *cert_store,
-> +                              S390IPLCertificate *qcert)
-> +{
-> +    size_t data_buf_size;
-> +    size_t keyid_buf_size;
-> +    size_t hash_buf_size;
-> +    size_t cert_buf_size;
-> +
-> +    /* length field is word aligned for later DIAG use */
-> +    keyid_buf_size = ROUND_UP(qcert->key_id_size, 4);
-> +    hash_buf_size = ROUND_UP(qcert->hash_size, 4);
-> +    cert_buf_size = ROUND_UP(qcert->der_size, 4);
-> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-> +
-> +    if (cert_store->max_cert_size < data_buf_size) {
-> +        cert_store->max_cert_size = data_buf_size;
-> +    }
-> +
-> +    cert_store->certs[cert_store->count] = *qcert;
-> +    cert_store->total_bytes += data_buf_size;
-> +    cert_store->count++;
-> +}
-> +
-> +static GPtrArray *get_cert_paths(void)
-> +{
-> +    BootCertPathList *path_list = NULL;
-> +    BootCertPathList *list = NULL;
-> +    gchar *cert_path;
-> +    GDir *dir = NULL;
-> +    const gchar *filename;
-> +    g_autoptr(GError) err = NULL;
-> +    g_autoptr(GPtrArray) cert_path_builder = g_ptr_array_new_full(0, g_free);
-> +
-> +    path_list = s390_get_boot_certs();
-> +    if (path_list == NULL) {
-> +        return g_steal_pointer(&cert_path_builder);
-> +    }
-> +
-> +    for (list = path_list; list; list = list->next) {
-> +        cert_path = list->value->path;
-> +
-> +        if (g_strcmp0(cert_path, "") == 0) {
-> +            error_report("Empty path in certificate path list is not allowed");
-> +            exit(1);
-> +        }
-> +
-> +        struct stat st;
-> +        if (stat(cert_path, &st) != 0) {
-> +            error_report("Failed to stat path '%s': %s", cert_path, g_strerror(errno));
-> +            exit(1);
-> +        }
-> +
-> +        if (S_ISREG(st.st_mode)) {
-> +            if (g_str_has_suffix(cert_path, ".pem")) {
-> +                g_ptr_array_add(cert_path_builder, g_strdup(cert_path));
-> +            }
-> +        } else if (S_ISDIR(st.st_mode)) {
-> +            dir = g_dir_open(cert_path, 0, &err);
-> +            if (dir == NULL) {
-> +                error_report("Failed to open directory '%s': %s",
-> +                             cert_path, err->message);
-> +                exit(1);
-> +            }
-> +
-> +            while ((filename = g_dir_read_name(dir))) {
-> +                if (g_str_has_suffix(filename, ".pem")) {
-> +                    g_ptr_array_add(cert_path_builder,
-> +                                    g_build_filename(cert_path, filename, NULL));
-> +                }
-> +            }
-> +
-> +            g_dir_close(dir);
-> +        } else {
-> +            error_report("Path '%s' is neither a file nor a directory", cert_path);
-> +        }
-> +    }
-> +
-> +    qapi_free_BootCertPathList(path_list);
-> +    return g_steal_pointer(&cert_path_builder);
-> +}
-> +
-> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-> +{
-> +    GPtrArray *cert_path_builder;
-> +
-> +    cert_path_builder = get_cert_paths();
-> +    if (cert_path_builder->len == 0) {
-> +        g_ptr_array_free(cert_path_builder, TRUE);
-> +        return;
-> +    }
-> +
-> +    cert_store->max_cert_size = 0;
-> +    cert_store->total_bytes = 0;
-> +
-> +    for (int i = 0; i < cert_path_builder->len; i++) {
-> +        if (i > MAX_CERTIFICATES - 1) {
-> +            error_report("Maximum %d certificates are allowed", MAX_CERTIFICATES);
+				/* return first error */
+				if (ret == 0)
+					ret = err;
+			}
 
-nit: reword to "Cert store exceeds maximum of %d certificates"
+		} else {
+			fuse_uring_handle_cqe(queue, cqe);
+		}
+	}
 
-> +            exit(1);
-> +        }
-> +
-> +        S390IPLCertificate *qcert = init_cert((char *) cert_path_builder->pdata[i]);
-> +        if (qcert) {
-> +            update_cert_store(cert_store, qcert);
-> +        }
-> +    }
-> +
-> +    g_ptr_array_free(cert_path_builder, TRUE);
-> +}
-> diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
-> new file mode 100644
-> index 0000000000..f030c8846c
-> --- /dev/null
-> +++ b/hw/s390x/cert-store.h
-> @@ -0,0 +1,38 @@
-> +/*
-> + * S390 certificate store
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_S390_CERT_STORE_H
-> +#define HW_S390_CERT_STORE_H
-> +
-> +#include "hw/s390x/ipl/qipl.h"
-> +#include "crypto/x509-utils.h"
-> +
-> +#define VC_NAME_LEN_BYTES  64
-> +
-> +struct S390IPLCertificate {
-> +    uint8_t vc_name[VC_NAME_LEN_BYTES];
-> +    size_t  size;
-> +    size_t  der_size;
-> +    size_t  key_id_size;
-> +    size_t  hash_size;
+	if (num_completed)
+		io_uring_cq_advance(&queue->ring, num_completed);
 
-From above: I don't think these two fields are needed?
+	return ret == 0 ? 0 : num_completed;
+}
 
-> +    uint8_t *raw;
-> +};
-> +typedef struct S390IPLCertificate S390IPLCertificate;
-> +
-> +struct S390IPLCertificateStore {
-> +    uint16_t count;
-> +    size_t   max_cert_size;
-> +    size_t   total_bytes;
-> +    S390IPLCertificate certs[MAX_CERTIFICATES];
-> +} QEMU_PACKED;
-> +typedef struct S390IPLCertificateStore S390IPLCertificateStore;
-> +
-> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store);
-> +
-> +#endif
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 2f082396c7..186be923d7 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -35,6 +35,7 @@
->  #include "qemu/option.h"
->  #include "qemu/ctype.h"
->  #include "standard-headers/linux/virtio_ids.h"
-> +#include "cert-store.h"
->  
->  #define KERN_IMAGE_START                0x010000UL
->  #define LINUX_MAGIC_ADDR                0x010008UL
-> @@ -422,6 +423,13 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
->      }
->  }
->  
-> +S390IPLCertificateStore *s390_ipl_get_certificate_store(void)
-> +{
-> +    S390IPLState *ipl = get_ipl_device();
-> +
-> +    return &ipl->cert_store;
-> +}
-> +
->  static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->  {
->      CcwDevice *ccw_dev = NULL;
-> @@ -717,6 +725,7 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
->  
->      if (!ipl->kernel || ipl->iplb_valid) {
->          cpu->env.psw.addr = ipl->bios_start_addr;
-> +        s390_ipl_create_cert_store(&ipl->cert_store);
->          if (!ipl->iplb_valid) {
->              ipl->iplb_valid = s390_init_all_iplbs(ipl);
->          } else {
-> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-> index 8f83c7da29..bee72dfbb3 100644
-> --- a/hw/s390x/ipl.h
-> +++ b/hw/s390x/ipl.h
-> @@ -13,6 +13,7 @@
->  #ifndef HW_S390_IPL_H
->  #define HW_S390_IPL_H
->  
-> +#include "cert-store.h"
->  #include "cpu.h"
->  #include "exec/target_page.h"
->  #include "system/address-spaces.h"
-> @@ -35,6 +36,7 @@ int s390_ipl_pv_unpack(struct S390PVResponse *pv_resp);
->  void s390_ipl_prepare_cpu(S390CPU *cpu);
->  IplParameterBlock *s390_ipl_get_iplb(void);
->  IplParameterBlock *s390_ipl_get_iplb_pv(void);
-> +S390IPLCertificateStore *s390_ipl_get_certificate_store(void);
->  
->  enum s390_reset {
->      /* default is a reset not triggered by a CPU e.g. issued by QMP */
-> @@ -64,6 +66,7 @@ struct S390IPLState {
->      IplParameterBlock iplb;
->      IplParameterBlock iplb_pv;
->      QemuIplParameters qipl;
-> +    S390IPLCertificateStore cert_store;
->      uint64_t start_addr;
->      uint64_t compat_start_addr;
->      uint64_t bios_start_addr;
-> diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-> index 8866012ddc..80d3d4a74d 100644
-> --- a/hw/s390x/meson.build
-> +++ b/hw/s390x/meson.build
-> @@ -17,6 +17,7 @@ s390x_ss.add(files(
->    'sclpcpu.c',
->    'sclpquiesce.c',
->    'tod.c',
-> +  'cert-store.c',
->  ))
->  s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
->    'tod-kvm.c',
-> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-> index 6824391111..e505f44020 100644
-> --- a/include/hw/s390x/ipl/qipl.h
-> +++ b/include/hw/s390x/ipl/qipl.h
-> @@ -20,6 +20,8 @@
->  #define LOADPARM_LEN    8
->  #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
->  
-> +#define MAX_CERTIFICATES  64
-> +
->  /*
->   * The QEMU IPL Parameters will be stored at absolute address
->   * 204 (0xcc) which means it is 32-bit word aligned but not
-
-
--- 
-Regards,
-  Collin
+If err > 0 && ((uintptr_t)io_uring_cqe_get_data(cqe) == (unsigned 
+int)queue->eventfd), it will return the negative value -ENOTCONN so that 
+the caller sets se->exited = 1. Then, under what circumstances is err > 
+0? When is err < 0? The current code also doesn't seem to handle the 
+case where err is negative?
 
