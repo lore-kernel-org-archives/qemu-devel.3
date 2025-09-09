@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4E3CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FCBCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvuAi-000345-Us; Tue, 09 Sep 2025 04:57:53 -0400
+	id 1uvuBu-0003ce-E1; Tue, 09 Sep 2025 04:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uvuAf-00032q-7L; Tue, 09 Sep 2025 04:57:49 -0400
+ id 1uvuBn-0003Xm-6w; Tue, 09 Sep 2025 04:58:59 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uvuAY-00056u-VJ; Tue, 09 Sep 2025 04:57:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cLd1V3ywwz6M55k;
- Tue,  9 Sep 2025 16:54:54 +0800 (CST)
+ id 1uvuBg-0005AY-8y; Tue, 09 Sep 2025 04:58:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cLd136sjpz6DJdn;
+ Tue,  9 Sep 2025 16:54:31 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 363701402F6;
- Tue,  9 Sep 2025 16:57:31 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id B280E140278;
+ Tue,  9 Sep 2025 16:58:38 +0800 (CST)
 Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 9 Sep
- 2025 10:57:30 +0200
-Date: Tue, 9 Sep 2025 09:57:29 +0100
+ 2025 10:58:37 +0200
+Date: Tue, 9 Sep 2025 09:58:36 +0100
 To: Wilfred Mallawa <wilfred.opensource@gmail.com>
 CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
  <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
@@ -38,11 +38,11 @@ CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
  <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
  Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
  <qemu-block@nongnu.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: Re: [PATCH v5 3/5] hw/nvme: add NVMe Admin Security SPDM support
-Message-ID: <20250909095729.000076ba@huawei.com>
-In-Reply-To: <20250909043259.93140-5-wilfred.opensource@gmail.com>
+Subject: Re: [PATCH v5 4/5] spdm: define SPDM transport enum types
+Message-ID: <20250909095836.00002d75@huawei.com>
+In-Reply-To: <20250909043259.93140-6-wilfred.opensource@gmail.com>
 References: <20250909043259.93140-2-wilfred.opensource@gmail.com>
- <20250909043259.93140-5-wilfred.opensource@gmail.com>
+ <20250909043259.93140-6-wilfred.opensource@gmail.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -78,18 +78,17 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  9 Sep 2025 14:32:58 +1000
+On Tue,  9 Sep 2025 14:32:59 +1000
 Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
 
 > From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > 
-> Adds the NVMe Admin Security Send/Receive command support with support
-> for DMTFs SPDM. The transport binding for SPDM is defined in the
-> DMTF DSP0286.
+> SPDM maybe used over different transports. This patch specifies the
+> trasnport types as an enum with a qdev property definition such that
+> a user input transport type (string) can be mapped directly into the
+> respective SPDM transportenum for internal use.
 > 
 > Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Not read the spec for this either so this is just for the code in the patch.
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
