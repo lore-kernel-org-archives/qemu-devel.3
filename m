@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24244CAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 12:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E62CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 12:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvxiv-0001vf-Vm; Tue, 09 Sep 2025 08:45:26 -0400
+	id 1uvxnb-0003ha-Of; Tue, 09 Sep 2025 08:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uvxit-0001vD-MC
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 08:45:23 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1uvxnZ-0003gQ-Fp
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 08:50:13 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uvxil-0001M2-P0
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 08:45:23 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-24cd340377dso34766385ad.1
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 05:45:13 -0700 (PDT)
+ id 1uvxnR-0001sc-4F
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 08:50:13 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-772679eb358so5131440b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 05:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1757421911; x=1758026711; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1757422203; x=1758027003; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=K2SAzTTWEn0NzP+tNQNUpX1Y95kG27tn9rny0UcROJ4=;
- b=J0Heb+HrrOxuDqIhM0zB5zAzqnQCKwIwf1z1klHQ5PRBfjowvQAtXuX/btbQSsLx2x
- tzRmRK2FaiZHbPoYmH6rxOokXfTawDydgloVrnllAuDTtcPxYwWN7HnaBRVcsyJueBeg
- msAmjtndMM8w26htbvopQG9wdMKcyHmbO8T20BxGQZ+dnO5pXrm2r5rA9FCjA0lALERl
- i3IhUaKF3zsIzJtK7pqgp+Cl9TgFvwjBluth4lJRE8bgqFgKYt/lg6/AYkHtP7+t/nKg
- S+V0chdhXvYI/GYtlZt5rDjrY7NQRpERZ/wSVue67AlDCwvwuVeqluCla6U4ersbgwrZ
- XDBQ==
+ bh=OFNQnj20+wpNALlD5yMKFYv4r48yrtyPIAE1azLaaG0=;
+ b=SdpXuuZL2BRfAJcZ4OhKezwSqYIO6YFRaQt4iyhiOrsvP9ivLzQjjxTGHqMUsd3iiX
+ 1wVkxFD9H+JMrPwKFMyxdaJ2tsqLwzg6045GPnwn8T+cYSLODcBtaYJpECF2pcgon9Ms
+ qar7TFnrZJ5Yv+cqP50uTQe7y/Pjei7LyvuzgwK3NubrJVLeZWwBarVVqj+XJd0P/8Dl
+ 1gpRSxWqNcHZooiDmNaHlkarfMxtgQXtvZmD1l4UbIO3tqOjNpFIswlBGhmhDd4nKCUN
+ OtiCnwrVf+TAC9ODu8hBpCLy3TKW1IBQEIQP1g9sGZjWlr+1MGB1CldmU7DyYeCZCIXw
+ iX5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757421911; x=1758026711;
+ d=1e100.net; s=20230601; t=1757422203; x=1758027003;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K2SAzTTWEn0NzP+tNQNUpX1Y95kG27tn9rny0UcROJ4=;
- b=vvYtWNlTUMnLw9njU/caYjaXJu3vGbdpGf4rUHdpB4cEb4yaTI4Li36laKOroYS5jz
- t25gWa7+GPX6lK1bLp2BulDZs4EMxdpahWwAt512SX8/AEsLo6Z7Mhtoo2Au+VaBjVeL
- upd5n45/LzPLeT6I/igOsEwEbQNoa96rlLiQ1l1vblOIX5UOl6s5j+h8vPBWxvQxBdTh
- IlN9ux6IjFfGEPN4z4CaX9epjVNToiUDHSwL3DeySaX0nd2b9QezBV37ZoNHNBQwEsZN
- NrsewYByX4BqiJM/njGuPs+CEQtI31FVh4C68lznQwjCYgixnBcuhfUmaT0/Us2GXjHd
- /3fA==
+ bh=OFNQnj20+wpNALlD5yMKFYv4r48yrtyPIAE1azLaaG0=;
+ b=MSmd7PF0Qk7ScXnvpPlvrXlkerIUPv7CuaXDn++w1JRqI46E+lxOZdo0F2yGpP2LDP
+ N1FFfPI/AkPzITg8YvxyqHjf+wjE1yIsd8gixTWHsEX8glIHoN9S27GSVRV0lTShIm36
+ QD5VNC65qRRvXhng+mpy/qXOWsnFXXdIHySnGTVZvgXM3jadTIitwn74xRaeQPCw8Qe8
+ kKEi/lENJav6YiLnW21HG4Jc4ltb13I7Fe24e7PVAnknoqRy2noP7wpdgLL1Az/7o6s7
+ NQ0B+03sK3k/uP1t01TOUFbyhaHns6lvHSSWc4lPUmlnhcYLCsE5gkSfUSwJlp02E17J
+ rSiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJ0sJa8kWqw9hMhTKwnoV9wxnUXZyZbLATqrghX/DPJi9SrOeNHMA5D3Omjp4YZ8f56YG65kMMCaLE@nongnu.org
-X-Gm-Message-State: AOJu0YwobtrsvJ7bj+hiUTo+JfL01zT+mu7AURHb0MKN3NZsw6BQv71V
- mPocLflKGpWsEA4e17CBBvu19bnfC0nhMM9kC1jCDavegKtJEMnqNVs+UyUHFNLhkmE=
-X-Gm-Gg: ASbGncsU+QzT2PJT1G3fQewpP6StF3WuljqVC1joSHcTRuLFhZt0S3Aklik25p5nyeH
- pU8FW6I1XGnqtcnZew++a72Mtno+43AQ56yY5FQJcxeJBwuJAMbN4fTdfW+nDs6U4D0QQlYUQQv
- sm1yX3qJ8hmM2L+aJA/+NNDOHA3A5jg0Aq4wQMkwgr31brQRnBxrYp2eYHX7jal03NdlXNsdz2D
- 50tMSgZuspv8lt4jYF8pazyvVqs6Nd0j/jhg/+gxrISAUqZEWPlXj+b6eXgSVH+JQca3XWuCkIC
- KVim1XMx/Bk3oyfjPDwL8X1q9PcI6GI8tcm8TyLJeIcNNnh6SboAMtkcDKxrb7GWHaAC+VRnYRh
- BhyREL3U0Jymt6sVbK0GiUIzjVfI6xUqr3KjsebRuRuLksD4=
-X-Google-Smtp-Source: AGHT+IH9ZZZtJphhszcCMvJo1n/OFeU9b/+QXhJF0p3WgljJ9nL2jlniuADQ5HQOY+cCpFHryqJttQ==
-X-Received: by 2002:a17:902:d510:b0:24e:9e47:2327 with SMTP id
- d9443c01a7336-25170f37b63mr163658605ad.30.1757421911141; 
- Tue, 09 Sep 2025 05:45:11 -0700 (PDT)
+ AJvYcCWOEA1GkiQR7fJyUhtAiQ9vBJaJKWA5ZbgjV9tNS3OxemgdC7qd5kFWprXoMkPF4T8SsLAGTOGUdNY4@nongnu.org
+X-Gm-Message-State: AOJu0YxF7oIKdIb6FOvsrNp2f1jNnSsDD77FHxuN1gPfrNptt1LQ7SMm
+ oiR0vAxrcLafCsIV6GIjDdF0zAfCN19gWi3djJ/0FqocN6lVQGORwqhvUgXqmmqOsJY=
+X-Gm-Gg: ASbGnct3v7gylr0m8t0AsLTbyYK4nO1xR13+45RZbdbPM66FHb9ovG/11OQax0YOg9Y
+ YwloaPsRdjnk1Kg9i4g2pFTT+FbMzzya5PbFQoiPgSaGR+r/dS+i5PtMb/F1fsv3GLJBuQUiVvo
+ VPo2UDgogH7yb60O2kZmIL42+v6MLth/G3hQl07rRwvGSEQDEVc/Bpl6nW+G3WYopIc1ZB1IXzs
+ scsEit378lt5o3f5yr7/OrhSsFuKypjedimOHk3GRT4BlPB9O3Mbo0iMuxEJPXg+xVAseW8ruYk
+ 37p1rJoVyvYq4qyX+5ArzZyVf9fK0NrR/Wg3s814gnZ/l6OppJ+nlouptbXVxShUJaEqazMZHf+
+ WjMJi+RTTa18qSP/Wlb9oay8VB3lrvv9KBih8
+X-Google-Smtp-Source: AGHT+IGwMnFabx7T17zBRXJFGklCdVGllSDeHG10V0WM+TWVwyHfM8Ru+QnEVSupwmxD9SPd1V9BOA==
+X-Received: by 2002:a17:902:eccf:b0:24e:47ea:9519 with SMTP id
+ d9443c01a7336-251718ddac9mr157675505ad.47.1757422202420; 
+ Tue, 09 Sep 2025 05:50:02 -0700 (PDT)
 Received: from [192.168.68.110] ([187.10.187.251])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-252184a16c2sm87663885ad.38.2025.09.09.05.45.08
+ d9443c01a7336-24c7ecd9cafsm181645015ad.83.2025.09.09.05.49.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 05:45:10 -0700 (PDT)
-Message-ID: <aa5ea2e9-8d01-4d45-99fc-efa5e6061c8b@ventanamicro.com>
-Date: Tue, 9 Sep 2025 09:45:07 -0300
+ Tue, 09 Sep 2025 05:50:01 -0700 (PDT)
+Message-ID: <5db78a12-2c66-4620-9a25-ea7ede0c3c2e@ventanamicro.com>
+Date: Tue, 9 Sep 2025 09:49:57 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hw/intc: Save timers array in RISC-V mtimer VMState
+Subject: Re: [PATCH 3/3] target/riscv: Save stimer and vstimer in CPU vmstate
 To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
@@ -78,21 +78,21 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  qemu-riscv@nongnu.org, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com>
- <20250909-timers-v1-2-7ee18a9d8f4b@linux.alibaba.com>
+ <20250909-timers-v1-3-7ee18a9d8f4b@linux.alibaba.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20250909-timers-v1-2-7ee18a9d8f4b@linux.alibaba.com>
+In-Reply-To: <20250909-timers-v1-3-7ee18a9d8f4b@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,100 +111,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/9/25 6:46 AM, TANG Tiancheng wrote:
-> The current 'timecmp' field in vmstate_riscv_mtimer is insufficient to keep
-> timers functional after migration.
+> vmstate_riscv_cpu was missing env.stimer and env.vstimer.
+> Without migrating these QEMUTimer fields, active S/VS-mode
+> timer events are lost after snapshot or migration.
 > 
-> If an mtimer's entry in 'mtimer->timers' is active at the time the snapshot
-> is taken, it means riscv_aclint_mtimer_write_timecmp() has written to
-> 'mtimecmp' and scheduled a timer into QEMU's main loop 'timer_list'.
-> 
-> During snapshot save, these active timers must also be migrated; otherwise,
-> after snapshot load there is no mechanism to restore 'mtimer->timers' back
-> into the 'timer_list', and any pending timer events would be lost.
-> 
-> QEMU's migration framework commonly uses VMSTATE_TIMER_xxx macros to save
-> and restore 'QEMUTimer' variables. However, 'timers' is a pointer array
-> with variable length, and vmstate.h did not previously provide a helper
-> macro for such type.
-> 
-> This commit adds a new macro, 'VMSTATE_TIMER_PTR_VARRAY', to handle saving
-> and restoring a variable-length array of 'QEMUTimer *'. We then use this
-> macro to migrate the 'mtimer->timers' array, ensuring that timer events
-> remain scheduled correctly after snapshot load.
+> Add VMSTATE_TIMER_PTR() entries to save and restore them.
 > 
 > Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 > Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 > ---
 
-LGTM but I wonder if changing one of the VMSTATE_TIMER_xxxx macros to accept
-variable length arrays is better than creating a new macro that only RISC-V
-cares about. Creating a new macro surely is easier and less messier than
-changing all existing callers though ...
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-I'll let the migration folks weight in. Thanks,
-
-Daniel
-
-
-
->   hw/intc/riscv_aclint.c      |  6 ++++--
->   include/migration/vmstate.h | 14 ++++++++++++++
->   2 files changed, 18 insertions(+), 2 deletions(-)
+>   target/riscv/machine.c | 25 +++++++++++++++++++++++++
+>   1 file changed, 25 insertions(+)
 > 
-> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-> index 318a9c8248432a8cd4c3f3fa990739917ecf7ca1..9f4c36e965e2aa379d75c0a9f656177f0dd82a45 100644
-> --- a/hw/intc/riscv_aclint.c
-> +++ b/hw/intc/riscv_aclint.c
-> @@ -323,13 +323,15 @@ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
->   
->   static const VMStateDescription vmstate_riscv_mtimer = {
->       .name = "riscv_mtimer",
-> -    .version_id = 2,
-> -    .minimum_version_id = 2,
-> +    .version_id = 3,
-> +    .minimum_version_id = 3,
->       .fields = (const VMStateField[]) {
->               VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
->               VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
->                                     num_harts, 0,
->                                     vmstate_info_uint64, uint64_t),
-> +            VMSTATE_TIMER_PTR_VARRAY(timers, RISCVAclintMTimerState,
-> +                                     num_harts),
->               VMSTATE_END_OF_LIST()
->           }
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 1600ec44f0b755fdd49fc0df47c2288c9940afe0..51e0567ed30cbab5e791ea904165bc1854709192 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -400,6 +400,30 @@ static const VMStateDescription vmstate_ssp = {
+>       }
 >   };
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 1ff7bd9ac425ba67cd5ca7ad97bcf570f9e19abe..255e403e5a103188712425d95a719d181e1a7202 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -522,6 +522,16 @@ extern const VMStateInfo vmstate_info_qlist;
->       .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
->   }
 >   
-> +#define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-> +    .name       = (stringify(_field)),                                    \
-> +    .version_id = (_version),                                             \
-> +    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
-> +    .info       = &(_info),                                               \
-> +    .size       = sizeof(_type),                                          \
-> +    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-> +    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
+> +static bool sstc_timer_needed(void *opaque)
+> +{
+> +    RISCVCPU *cpu = opaque;
+> +    CPURISCVState *env = &cpu->env;
+> +
+> +    if (!cpu->cfg.ext_sstc) {
+> +        return false;
+> +    }
+> +
+> +    return env->stimer != NULL || env->vstimer != NULL;
 > +}
 > +
->   #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
->       .name       = (stringify(_field)),                                     \
->       .version_id = (_version),                                              \
-> @@ -1035,6 +1045,10 @@ extern const VMStateInfo vmstate_info_qlist;
->   #define VMSTATE_TIMER_PTR_ARRAY(_f, _s, _n)                              \
->       VMSTATE_ARRAY_OF_POINTER(_f, _s, _n, 0, vmstate_info_timer, QEMUTimer *)
->   
-> +#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
-> +VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
-> +                                                        QEMUTimer *)
+> +static const VMStateDescription vmstate_sstc = {
+> +    .name = "cpu/timer",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .needed = sstc_timer_needed,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_TIMER_PTR(env.stimer, RISCVCPU),
+> +        VMSTATE_TIMER_PTR(env.vstimer, RISCVCPU),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
 > +
->   #define VMSTATE_TIMER_TEST(_f, _s, _test)                             \
->       VMSTATE_SINGLE_TEST(_f, _s, _test, 0, vmstate_info_timer, QEMUTimer)
->   
+>   const VMStateDescription vmstate_riscv_cpu = {
+>       .name = "cpu",
+>       .version_id = 10,
+> @@ -476,6 +500,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+>           &vmstate_elp,
+>           &vmstate_ssp,
+>           &vmstate_ctr,
+> +        &vmstate_sstc,
+>           NULL
+>       }
+>   };
 > 
 
 
