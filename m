@@ -4,93 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD3ACAC58C
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B37CAC589
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvt5v-0007Sd-1s; Tue, 09 Sep 2025 03:48:51 -0400
+	id 1uvt6Q-0007aG-Kq; Tue, 09 Sep 2025 03:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uvt5o-0007SB-7V
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 03:48:44 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uvt5k-0004fq-E1
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 03:48:42 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-628f29d68ecso3422994a12.3
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 00:48:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757404116; x=1758008916; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/kniX1Um2GQmVikiPu9kyIxLBJJm+Pz4wwjXXfTyiOM=;
- b=AyGwnwejmTr74pb/4ymwMvUOQNtIpmF/V4+AlpWTgPVvqPGow2VdwtC62gE2viY/9f
- y6MsXDjlXpV2iVfx/vAndfb4/rGYSE9Pt4xsdY/N5lkPnWvZJNvP6uYsQVqCvhj7EeG4
- VgLyVW1Afj2a1kS3J4AtyhlfBDHO3yHnsYLqsCMmn1sl3dEhc5R023ehgXzGulLRugNd
- gK1H0wo9PkG6u+xJJEV3TrLZ79LLrC5OutqYk3VUhnWuxKyn4viVQ57ivehTaZbKk0l1
- CX6/USKGD5d0IpLu2HdAj75uxw6dI31jS2DDdKkcOGRGkzQuD7QfeGaa0a7jg3bCY0mT
- 1FyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757404116; x=1758008916;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/kniX1Um2GQmVikiPu9kyIxLBJJm+Pz4wwjXXfTyiOM=;
- b=kNhGDaTP+ejshmXT5qvGGD+WCUZiizEDv7RjSNLOKmGsYp0GcUp1ifo/axuL3YEx6b
- 1zpGjBugZbQSWVT4ypU/dfhx1bIusg0Cj+B2bU3ZQPVHhnsKc+EZAyXNlwgb25slWZgv
- M+qgmUypLCBrQSjjz8sOIKiFwvwg4z7krLZVtcFq0mxkeMRgOQIV6lRh+AjEzeP9sMEE
- Cs3W+uUcs3iwJWw0zPTa7z5ZES2dzH2PG5ulkNpRJC2DLbrgjWnCeJ6Si+6VycS5mo2P
- XiPoKcXkUGdOSUMprJtT4TFlylEv2D1z2rOT+bD+Wi5nkAXLy7r0w5V0SSKk7CmhUCNj
- 4jLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJD6g6/R+Vmv4d7UxV6Bt9ffwTgfHj6+69Zd1Tn4japJLAAb/soNMefP95ITn4YPzQfm0Mno6ui2It@nongnu.org
-X-Gm-Message-State: AOJu0Yw83AaNiyLqYzcFgpHIQXUoANiQZZDivhUFN24qdB9COBGmCrV8
- W+erPeQdON6F63bvFuU2Fnu+z5ci8Er9Tj8c5ApLFa6/kMIgE0HzQWCCtqt6TzsPfYs=
-X-Gm-Gg: ASbGncs4YCj+mJVGS4MVIRovIfOjlGkkI3qsZwvBqx1BC9/Ld8PEREwBjvVjsOwpAJp
- wOMKgGAY2e6Ao5rGAhqkEGp+YsbtPhKydQWIhGqZ4m2L1D1QUtiorYgopVZ+0DX2+obMgy41hHk
- G9JKAIehrzHVV/lzNgv3CAlsLQKLPUBnb23w0nr9UBrTLHubA/Yccgg1YILLoE8ovlO+nO7MRLD
- HRO1UgHg47Of2Xdw7kjkj/9CAj/7K9i0l6BCl7R5BYGi4vICvVIz8NxVbAYJ7FbDwxmOZopCEk8
- 0ZxvlzGoZOdepykZxPraG65+/HYcuOiKD6/6X1PoXzVRSgJhU5ZIaLCpkQzwO0vZw8YIYx8f94y
- ar196TnGtBNaZG21x0pOr63oN1tx2dXzr6FQbWiU2ngg3ijHqQLoFOtqx8b6kCe8RK2NA51GE+f
- zJFNWxRXdC228gOv+E
-X-Google-Smtp-Source: AGHT+IGHL1LTzNA6IgpsD7t/GtpoGyraS0yBEfQjp5qCpLXbnchJM6pt7Pefy1FQUO2GarPS6SL/Ig==
-X-Received: by 2002:a05:6402:5110:b0:627:5841:7ae1 with SMTP id
- 4fb4d7f45d1cf-62758417d89mr7563196a12.21.1757404115773; 
- Tue, 09 Sep 2025 00:48:35 -0700 (PDT)
-Received: from ?IPV6:2a01:6f02:331:6601:e160:1208:59c9:40f2?
- ([2a01:6f02:331:6601:e160:1208:59c9:40f2])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-62c018f65afsm747790a12.41.2025.09.09.00.48.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 00:48:35 -0700 (PDT)
-Message-ID: <4957da97-4d2e-41db-9bb1-9197a577369d@linaro.org>
-Date: Tue, 9 Sep 2025 07:48:32 +0000
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvt6I-0007WN-NS; Tue, 09 Sep 2025 03:49:15 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvt6F-0004iI-08; Tue, 09 Sep 2025 03:49:14 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 360E680453;
+ Tue, 09 Sep 2025 10:49:02 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 0nDVIb6GwuQ0-NDtQv1Bk; Tue, 09 Sep 2025 10:49:01 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757404141;
+ bh=07aKuwVXoDyI279zLk5825bYoQxa7gxLvN4f5LK59FI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=tTM00iZRIQiRcICqsLcfB90ej4bHrKuDTAIPfdoE+F5ukYJG2LrsjYSQIbEKQsmsB
+ X02S3G2H+8lRbtDtvQf3D5eA/umUHPF8uaeYSozt0wnzSg/QlfW96YpVurn5YEStrC
+ TYPOGvMQ9BYXXxWtJqmAUlnmVT9oUoDxieekPeWs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <55b44b25-5b6f-44e8-a549-23b54eb28ec8@yandex-team.ru>
+Date: Tue, 9 Sep 2025 10:49:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Failure of func-x86_64-memlock
-To: Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-References: <7ceb8d59-be3f-4dad-9e2b-9db62fbf92cb@linaro.org>
- <666dce10-2359-4211-b761-daf9a828523e@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 02/10] char-socket: rework tcp_chr_recv()
+To: Peter Xu <peterx@redhat.com>
+Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
+ <20250903094411.1029449-3-vsementsov@yandex-team.ru>
+ <aL9QT9T2QTCA_tks@x1.local>
 Content-Language: en-US
-In-Reply-To: <666dce10-2359-4211-b761-daf9a828523e@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aL9QT9T2QTCA_tks@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,73 +77,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/8/25 10:12, Thomas Huth wrote:
-> On 05/09/2025 12.26, Richard Henderson wrote:
->> Hi guys,
+On 09.09.25 00:53, Peter Xu wrote:
+> On Wed, Sep 03, 2025 at 12:44:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> First, qio_channel_readv_full() already guarantees BLOCKING and
+>> CLOEXEC states for incoming descriptors, no reason call extra
+>> ioctls.
 >>
->> This test has been failing on my laptop for a few weeks.
->> Any idea why?
+>> Second, current implementation calls _set_block() and _set_cloexec()
+>> again on old descriptors on failure path - we fix this too.
+>>
+>> Finally, handling errors exactly after qio_channel_readv_full() call
+>> looks more readable.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   chardev/char-socket.c | 37 +++++++++++++------------------------
+>>   1 file changed, 13 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+>> index 1e8313915b..5b9b19ba8b 100644
+>> --- a/chardev/char-socket.c
+>> +++ b/chardev/char-socket.c
+>> @@ -293,6 +293,18 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
+>>                                        0, &err);
+>>       }
+>>   
+>> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+>> +        errno = EAGAIN;
+>> +        return -1;
+>> +    } else if (ret == -1) {
+>> +        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
+>> +        error_free(err);
+>> +        errno = EIO;
+>> +        return -1;
+>> +    }
+>> +
+>> +    assert(ret >= 0);
+>> +
+>>       if (msgfds_num) {
+>>           /* close and clean read_msgfds */
+>>           for (i = 0; i < s->read_msgfds_num; i++) {
+>> @@ -307,30 +319,7 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
+>>           s->read_msgfds_num = msgfds_num;
+>>       }
+>>   
+>> -    for (i = 0; i < s->read_msgfds_num; i++) {
+>> -        int fd = s->read_msgfds[i];
+>> -        if (fd < 0) {
+>> -            continue;
+>> -        }
+>> -
+>> -        /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+>> -        qemu_socket_set_block(fd);
+>> -
+>> -#ifndef MSG_CMSG_CLOEXEC
+>> -        qemu_set_cloexec(fd);
+>> -#endif
+>> -    }
+>> -
+>> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+>> -        errno = EAGAIN;
+>> -        ret = -1;
+>> -    } else if (ret == -1) {
+>> -        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
+>> -        error_free(err);
+>> -        errno = EIO;
+>> -    } else if (ret == 0) {
+>> -        trace_chr_socket_recv_eof(chr, chr->label);
+>> -    }
+>> +    trace_chr_socket_recv_eof(chr, chr->label);
 > 
-> FWIW, the test still works for me (after enabling it with "ulimit -l 2097152").
+> This tracepoint may still need to be put into a ret==0 check.
 > 
->> There's nothing logged in tests/functional/x86_64/test_memlock*/*,
->> which itself seems like a bug.
+> Looks reasonable other than that..
 > 
-> Is there maybe any hint in meson-logs/testlog-thorough.txt instead?
 
-Ah, yes, there it is:
+Oh, right. Will fix.
 
-TAP version 13
-not ok 1 test_memlock.MemlockTest.test_memlock_off
-ok 2 test_memlock.MemlockTest.test_memlock_on
-ok 3 test_memlock.MemlockTest.test_memlock_onfault
-1..3
------------------------------------ stderr -----------------------------------
-/home/rth/qemu/src/python/qemu/qmp/legacy.py:89: DeprecationWarning: There is no current 
-event loop
-   self._aloop = asyncio.get_event_loop()
-Traceback (most recent call last):
-   File "/home/rth/qemu/src/tests/functional/x86_64/test_memlock.py", line 40, in 
-test_memlock_off
-     self.assertTrue(status['VmLck'] == 0)
-AssertionError: False is not true
+>>   
+>>       return ret;
+>>   }
+>> -- 
+>> 2.48.1
+>>
+> 
 
 
-So it seems there's some non-zero amount of memory locked in the process, likely nothing 
-to do with what we're trying to test, but we're asserting anyway.
-
-Digging into /proc/pic/smaps, I have:
-
-79d7d3547000-79d7d354b000 rw-p 00000000 00:00 0
-Size:                 16 kB
-KernelPageSize:        4 kB
-MMUPageSize:           4 kB
-Rss:                  16 kB
-Pss:                  16 kB
-Pss_Dirty:            16 kB
-Shared_Clean:          0 kB
-Shared_Dirty:          0 kB
-Private_Clean:         0 kB
-Private_Dirty:        16 kB
-Referenced:           16 kB
-Anonymous:            16 kB
-KSM:                   0 kB
-LazyFree:              0 kB
-AnonHugePages:         0 kB
-ShmemPmdMapped:        0 kB
-FilePmdMapped:         0 kB
-Shared_Hugetlb:        0 kB
-Private_Hugetlb:       0 kB
-Swap:                  0 kB
-SwapPss:               0 kB
-Locked:               16 kB
-THPeligible:           0
-ProtectionKey:         0
-VmFlags: rd wr mr mw me lo ac sd
-
-It's not labeled in /proc/pid/maps, so without more work I don't know where it comes from, 
-but *something* in my system libraries has asked for 4 pages of locked memory.
-
-
-r~
+-- 
+Best regards,
+Vladimir
 
