@@ -4,94 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D409CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 04:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F03EFCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 04:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvq3p-0006JR-2Q; Tue, 09 Sep 2025 00:34:29 -0400
+	id 1uvq79-0001vF-1A; Tue, 09 Sep 2025 00:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1uvq3n-0006IY-Fx; Tue, 09 Sep 2025 00:34:27 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1uvq3k-0003GI-Io; Tue, 09 Sep 2025 00:34:27 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b4c72885c8bso4232149a12.0; 
- Mon, 08 Sep 2025 21:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757392460; x=1757997260; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WzDwa5raG8Sm10+4ENnYqbcNfW3OS0HNvh0la9YBPno=;
- b=M8ciZTl3UwF9C8XaGsDXQZfiRCVBv3rcCJ3OfluOwe9/ZWkwWBovTJNpCe9xh1QLX1
- tM/VNZaBv337W5Pjo7gj0rAP3QC0BhWOA7952g3Hvmqc4TRcHk9Ijrz/Rieb7CMZFgpN
- zBtXs3qZIMZ+EqNk4JitM1RSezGOWGSWL2mNfWwozrRq70RcOrkt3qs+UbAe5xTa2n/X
- hMc695CqHxjXp+uRdOpLB39JIWCIeriJXb7wYLogK6zgNFKcUacRqyC1yIG3UW+F2Bj9
- g5hLVTrhmVFiDt2OxpydkQU2p/iG8pCDBwAZIj4X3ihwKBD7hztPCl9ZPSjZ6asGDb4k
- D/VA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvq6y-0001uD-QC
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 00:37:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvq6q-0003kh-Ab
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 00:37:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757392651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=y1UepVGKBC0Mt3t6QP9hkL8HneT4LmLtsNTPLYx74Z8=;
+ b=BgMWwveXrGFLuNSFadIMz3wo1htYT5oII6RwzCoPzlA+PlF3p2fMae+rUlvRtCwE/QSmfj
+ PbNR1xCIwieXYLavwN/ETVx1/ggZqXE/2hoZHRYOuIIx9L1Mab/YrKukJA99aYscxd8nlS
+ ICTweYdp6rhDWAlU6xPZkI1twwE3z/Y=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-435-AanRXMkCN_a80l50hi434g-1; Tue, 09 Sep 2025 00:37:29 -0400
+X-MC-Unique: AanRXMkCN_a80l50hi434g-1
+X-Mimecast-MFC-AGG-ID: AanRXMkCN_a80l50hi434g_1757392649
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45ceeae0513so28725955e9.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 21:37:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757392460; x=1757997260;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WzDwa5raG8Sm10+4ENnYqbcNfW3OS0HNvh0la9YBPno=;
- b=Z2Dd1ad2YiOetNryKAGhWx86tl8BGEKXwFYIk5b5Y2IB8YDnhDE9470gryNSL126ln
- puheklu3NBI3q5Elb6qGxymvOR2uEs94IQpc49Jb6CUiPGNzTx8f0Rt98U9MTNdTADjZ
- 3JkesvN1VbBe0AtCujJwOLrBq8NxuSnWz7vcqFiDN/IUzlBQjgCMc89/lDogWTYlB3RI
- 97EP7v8D4bVky4KsjejM/Pb2o9nR6eadKvrfWvVR6u7ICNVM7wbA2ivYJ8kfXAStVGqf
- xh2NQ+TSYWt25LGiXgWFFkJ4leaf30pbGyvzjuemWfkSqgToz0ZvhAT/mYHw7U/siXnk
- JIEg==
+ d=1e100.net; s=20230601; t=1757392648; x=1757997448;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y1UepVGKBC0Mt3t6QP9hkL8HneT4LmLtsNTPLYx74Z8=;
+ b=pr0at54uTzrpNAQkgoU22Wvr92H9n1vrooDM+wqUV8T8+JYV1MKDb6bvW592OxnXnA
+ YVOCbaKnVL5poTk1kFmrzK7eRgoHypuJmUXYwyuoecLU/hHhBgrY4eo6aW//Jd8FX1U9
+ O0hyX72fYyvg6UsDsKOyy9+rfRirlpbFgaHZl5Ri2iEScnjT+bKZdLu11H1aBBT0UkrY
+ ARrQ46F+Trxwq3z7QocGmTyMhfyWWIk5OkVXWZDzswmlMh6fZY8IvN6Vd+ozMQtD1v5n
+ dbY1RAsXdM3nWuBTduVs4tpIADPRldCczJjzZjOu8oIgeqZIZIMyWJcFWlQuJffJDiQY
+ /I5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDdNesXtTIzWincctT44cqmD441c017M7c2FmDCC7vpVzu9c98PEB7/7e12lu2iL4CS+POEWsDqFvd@nongnu.org
-X-Gm-Message-State: AOJu0YwL6INpoDpvgnlCPKBRZrbW6/0wak6Eff2sZRxGqaDAZY88NVv4
- J4UUy5RV5W6KzdhyUsx09W6kjNXvOLiuCS0CqzXElZGeThJ6zQi5Y/PW
-X-Gm-Gg: ASbGncssHyIbJPwv6DM6Yp8xklZveBgUhx39mr8ohs98lylbUyGIPer80tyuYSbnMpS
- jNQXVvW7is/LnHqo2eiMXvQ61rJf8JevzEfNJNAIRBnQn6tm7JJevAlJIWJZixK7mK5BfcPHN0F
- xNlOTbzTDX85yBEZMqXwBVL1WCklA4gDg4YYhpNr9fK9dJhEPTVjMeNJz9ud4pMP7NnJdfrnxhi
- FOy/ycx3aXBRkFAdZkWBcTVlxqsbIbzKMKJMxWFquVXAulg0jfB0hCqv3xbLXQSYrx3mYVg9f8X
- bOiwu4w1sBJyNPK7j9gJaDyLw/7B4jno2wmNL0x1kwJm4ky3AjpUM1jm/43AQFf91cclUw/mD0h
- HcwkMSm5ne5PuD7NKvR1lhwxlNr+dgNxszsdreQ==
-X-Google-Smtp-Source: AGHT+IHFSBwyK2utun2TNC4gGtAzdCXBgUG0lg2FqmBo8o2awc7edJTWsyKuaOKzLXOGjvs6Jgvwog==
-X-Received: by 2002:a17:903:46cb:b0:24d:f9f:de8f with SMTP id
- d9443c01a7336-2516fbdcc8amr155936605ad.17.1757392460026; 
- Mon, 08 Sep 2025 21:34:20 -0700 (PDT)
-Received: from fedora ([159.196.5.243]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-774661247cdsm606534b3a.33.2025.09.08.21.34.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Sep 2025 21:34:19 -0700 (PDT)
-From: Wilfred Mallawa <wilfred.opensource@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [PATCH v5 4/5] spdm: define SPDM transport enum types
-Date: Tue,  9 Sep 2025 14:32:59 +1000
-Message-ID: <20250909043259.93140-6-wilfred.opensource@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250909043259.93140-2-wilfred.opensource@gmail.com>
-References: <20250909043259.93140-2-wilfred.opensource@gmail.com>
+ AJvYcCW+y862UhL1vf/48Ibexi+OzSfzhQq1phAFwMZU5a2nBFOyWs98Yq1tsfKO+hMvAykNZXgOMqC8A955@nongnu.org
+X-Gm-Message-State: AOJu0Yzg/6jlKqAM8sFr4qALDpr6oVjUt1Af8IzPSket8sBGTjChKsTw
+ 7JxR/eFMQ3TIMHR04B5F7qqgetWO9Fg1WGMlBLenJbDzvrCulbXmI4YTFbUKnWm/zAkKsA2g+wk
+ c/kOUbtvbQGMJe0UTEAg5PexnoH05KpIjr4DOA+ml0xpZO1lCoJbuz3e4
+X-Gm-Gg: ASbGncuHw4YRMGowLuwIeUPK0AJshaWgLH/y0Z/m4/Pode3LWkI9kcv98tHl8zQwZRH
+ tGVcO+KCGEit35hJNb913u7fZVPIQ2t1ikwPBZ0yFiAVJHExFBNHx13OwHlRxaf6BE8x5VyT5E8
+ ZuhOiLHJKpe+k7s3JHLNB5+2qsYCdYGghldyjdl3y0DY0iXBiJl2aLXiG4/K6MvyOAEaaoMbt7y
+ bvA2WfUVtC5Zl/XZyMUCd6T2n4UhluMCicp/O7SDTcF8Lod/gCZPUmYu/1Y5Pt2pCjUEg9NRa0X
+ u2H35DAiha4dMVcCaHBeCofFd1JCDoONjirY6bCWOI2aXHD5X2dRf765R5UTqTD2QdEQ14wRPmn
+ 3hdL2Qg==
+X-Received: by 2002:a05:600c:1390:b0:45d:da7c:b36 with SMTP id
+ 5b1f17b1804b1-45ddded7614mr86069375e9.19.1757392648614; 
+ Mon, 08 Sep 2025 21:37:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1K4moPCmFgeJ4Ls0IXCLQv3wHP25afL++HeeAMykeV0YKlkZO4dKWA1Sa8ESQurpkGiXjgA==
+X-Received: by 2002:a05:600c:1390:b0:45d:da7c:b36 with SMTP id
+ 5b1f17b1804b1-45ddded7614mr86069195e9.19.1757392648172; 
+ Mon, 08 Sep 2025 21:37:28 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
+ [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45df16a749fsm1822095e9.19.2025.09.08.21.37.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Sep 2025 21:37:27 -0700 (PDT)
+Message-ID: <56baeaa6-b274-457c-931d-4ae76535f6dd@redhat.com>
+Date: Tue, 9 Sep 2025 06:37:26 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] scripts/ci: add gitlab-failure-analysis script
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: berrange@redhat.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250908211859.2678847-1-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250908211859.2678847-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=wilfred.opensource@gmail.com; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,89 +155,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+On 08/09/2025 23.18, Alex Bennée wrote:
+> This is a script designed to collect data from multiple pipelines and
+> analyse the failure modes they have.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   scripts/ci/gitlab-failure-analysis | 65 ++++++++++++++++++++++++++++++
+>   1 file changed, 65 insertions(+)
+>   create mode 100755 scripts/ci/gitlab-failure-analysis
 
-SPDM maybe used over different transports. This patch specifies the
-trasnport types as an enum with a qdev property definition such that
-a user input transport type (string) can be mapped directly into the
-respective SPDM transportenum for internal use.
+You already get a nice overview by visiting a page like 
+https://gitlab.com/qemu-project/qemu/-/pipelines/2019002986 ... what's the 
+advantage of this script?
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
----
- backends/spdm-socket.c       | 23 +++++++++++++++++++++++
- include/system/spdm-socket.h | 19 +++++++++++++++----
- 2 files changed, 38 insertions(+), 4 deletions(-)
-
-diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
-index 845ea87b72..2321ab72d5 100644
---- a/backends/spdm-socket.c
-+++ b/backends/spdm-socket.c
-@@ -13,6 +13,9 @@
- #include "qemu/osdep.h"
- #include "system/spdm-socket.h"
- #include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/core/qdev-prop-internal.h"
- 
- static bool read_bytes(const int socket, uint8_t *buffer,
-                        size_t number_of_bytes)
-@@ -247,3 +250,23 @@ void spdm_socket_close(const int socket, uint32_t transport_type)
-     send_platform_data(socket, transport_type,
-                        SPDM_SOCKET_COMMAND_SHUTDOWN, NULL, 0);
- }
-+
-+const QEnumLookup SpdmTransport_lookup = {
-+    .array = (const char *const[]) {
-+        [SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC] = "unspecified",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_MCTP] = "mctp",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE] = "doe",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_SCSI] = "scsi",
-+        [SPDM_SOCKET_TRANSPORT_TYPE_NVME] = "nvme",
-+    },
-+    .size = SPDM_SOCKET_TRANSPORT_TYPE_MAX
-+};
-+
-+const PropertyInfo qdev_prop_spdm_trans = {
-+    .type = "SpdmTransportType",
-+    .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
-+    .enum_table = &SpdmTransport_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 3d27cc366f..6edbf5185b 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -110,11 +110,22 @@ typedef struct {
- #define SPDM_SOCKET_COMMAND_UNKOWN                0xFFFF
- #define SPDM_SOCKET_COMMAND_TEST                  0xDEAD
- 
--#define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
--#define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
--#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
--
- #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
- #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
- 
-+typedef enum SpdmTransportType {
-+    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
-+    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
-+    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
-+    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
-+    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+    SPDM_SOCKET_TRANSPORT_TYPE_MAX
-+} SpdmTransportType;
-+
-+extern const PropertyInfo qdev_prop_spdm_trans;
-+
-+#define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
-+    DEFINE_PROP_UNSIGNED(_name, _state, _field, _default, \
-+                         qdev_prop_spdm_trans, SpdmTransportType)
-+
- #endif
--- 
-2.51.0
+  Thomas
 
 
