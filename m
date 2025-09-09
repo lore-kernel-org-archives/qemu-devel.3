@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B100CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41734CAC587
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 10:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvv4H-0001MO-Ej; Tue, 09 Sep 2025 05:55:17 -0400
+	id 1uvvOO-00070Y-PV; Tue, 09 Sep 2025 06:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvv4F-0001LH-73
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:55:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvOM-00070D-Kl
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:16:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvv48-0003WN-84
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:55:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvOJ-0005uN-MS
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:16:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757411704;
+ s=mimecast20190719; t=1757412953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Jv7flKaqlnEdqU9afBVzH0AqaM3/3IZ9tTY5wl18z1g=;
- b=CGFm2yppbYYqFx0dWALT/eyIYeVj8gd66dgM7zRrIlTUjfw+utlRMzXW3HKaMgPhIZk9sp
- KMUMRtDdnhJnzJKJ0U8Aqia3yZxFu69zrhp6l8UFVi3OUWX3JUnfOFQMe78MdJlxFtN4Tv
- VK0+Dnpxf0e4kRdnACpiWFkpOXE3tZQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/xXfsM94UT8GZicLtz8PwKaM1ae+r2WqMy1mR9vysUI=;
+ b=Oyur4OdTnaZb4ozga2b/qvFRnvWdUpU6zmbWkBCbKIhJvQr24XPUsnDkWeOf7NuHkQhqsj
+ CnzWVWIFyqhjbHnuYHvzt5hvTgJJOJyYjMr38OfgQtiUnw3gqxlfoypy7FWtQP+OewVOWr
+ rVwxIRi8x9/YtKYhdhQyRx1DtnpyfjY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-1X0hAnGzNH2e_MUSOd8qFQ-1; Tue, 09 Sep 2025 05:55:02 -0400
-X-MC-Unique: 1X0hAnGzNH2e_MUSOd8qFQ-1
-X-Mimecast-MFC-AGG-ID: 1X0hAnGzNH2e_MUSOd8qFQ_1757411702
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3db4cfcc23eso2785796f8f.3
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 02:55:02 -0700 (PDT)
+ us-mta-57-C6B_Qd7POvO7JgT--Z-6XQ-1; Tue, 09 Sep 2025 06:15:51 -0400
+X-MC-Unique: C6B_Qd7POvO7JgT--Z-6XQ-1
+X-Mimecast-MFC-AGG-ID: C6B_Qd7POvO7JgT--Z-6XQ_1757412950
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b990eb77cso38538855e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 03:15:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757411701; x=1758016501;
+ d=1e100.net; s=20230601; t=1757412950; x=1758017750;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Jv7flKaqlnEdqU9afBVzH0AqaM3/3IZ9tTY5wl18z1g=;
- b=wy+0IF7F46HLDXMaw9J+hE6W9d4U3OildzLmBL5S5pliz9KXMyJ9cTmvrhlvwFLe4Z
- ZXj1qlED/KQXbpPl9uqAmd2AvD0QUaWKqFP0AI6aw924YzJ6R15OjhFkYoIjgCtoV7n1
- 1VZZXsyuAEpm24EuqoOF+Xqtk2lGr91eC5l1+2i0cxwokeVgVpHXBvPuGjG+MTwFlS3+
- VWPfEVW2DFHQOvzjtr/bpInPxBtxuagxjSmY7rDe986K8zQ7BdDQvsyJY9C+yt1dhZvz
- CJqTguwn5HfDMI3uWqWtS7X3aNWUzXTNhaLtJ9PKifLRCJhho425LQSZM2fi0h6ave7R
- qQfw==
+ bh=/xXfsM94UT8GZicLtz8PwKaM1ae+r2WqMy1mR9vysUI=;
+ b=H4axEQzv7tK0FSwDlJ+0DvZaQZCZgy8Y7qVkyyEGWpm+bEeIiK0esKHYOLTqq5n2QL
+ 6Iq9fxHA6/D1hpHA4BKMCRU205KQ+A7D+9svRybHxlE+JE2+BnGcRi8nCip1xE2N+znd
+ yZj2QSRfMBVoZrnZb1PpOWXAUvjYd5qDYAGRIou7kq+F+zhix8mN11XiPZxgtt7R7tPj
+ LkOcAfR2AJvLeQP69uQjrm9QYDqI7PqxHF0w7mCFgVDWJE2BJOVJJwdUB/Em1FvocCVs
+ kEmSrG4f1lJT4IlyOqAW2p2zkPKwqO3MPboV26B2zIw2TQwNV7yGrXiOvDsCZBSnQalk
+ FxYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9gWCIn+B2Dp+l21bfM2uUuAxsXKhvOsoKpoyvKfN+j1PS93KOczG1AmmxvhiJsOyF/i+lwOqLgFN4@nongnu.org
-X-Gm-Message-State: AOJu0YytyaVqtr1D+pkzbel3mlDcFPANHvzK8eV9ULfngBS+Ajq0GBW7
- 6WC+FpirI2lgBvNsiAgXl4QyWYr6V4L84vLC5bDqzpcVIrJvjduOIs3GVLl6TGNCgD7Hy0jzSOf
- dspQcgPmO5k1dcFP25u8/dh9C8FEQe+I/i29hev4edsSJhQM3beTOiapq
-X-Gm-Gg: ASbGncup9k4C5jw6tI3YwKftRe32Byz0DdreCuSmSgwDaWDEuEge20HxNt2sYz/WMGz
- 51fFOgI6qKqpMaTwRBr4eujbGqyl4uRnR0wbSCTXck2ZJkpXj7iXRWNxeXxVYko28aguCeiS54L
- k9quhk9TGUE5AjwDMSI2mdBpfmFLq39nWAAFKw6/NrZUmfPD1BuPl7shBC2nTEFKXwM9q32DGJ6
- dVRFG+Ekq6jaqV8+UzbfpY0QssEq2DZwP4shhS2gqTMeNi7JDyWaVUmqvg2zx2SBQUkeCU1Q7sO
- C5fWa3W6K9cobUKLsJ5K/+3t2uakuObRjeTR+MnxLylFOmfyu+IxOxOjc2MlI5UyP3Rq+QC2+UL
- 4drjxaA==
-X-Received: by 2002:a05:6000:2906:b0:3dc:45be:4a7f with SMTP id
- ffacd0b85a97d-3e643b18ccfmr6343478f8f.57.1757411701489; 
- Tue, 09 Sep 2025 02:55:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETg0aD2iaDgPlhgaG5tx9z8ghavChH1wX3fZh8n4RiW6uzRLu4LrPMF2Vf2bgebUpr2H1pUw==
-X-Received: by 2002:a05:6000:2906:b0:3dc:45be:4a7f with SMTP id
- ffacd0b85a97d-3e643b18ccfmr6343447f8f.57.1757411700974; 
- Tue, 09 Sep 2025 02:55:00 -0700 (PDT)
+ AJvYcCWCOfUL/qKFT+1APpPnyY2V2WFtHnQ0QGT+oz01Xnqu5/E+Ddpapx9oVN91bRzLog1bqB5wgLrvzBl2@nongnu.org
+X-Gm-Message-State: AOJu0YyhX6h5C0rdtWpsWfc7dzymIuOUuqHK72fJ6e5pgbsXJxVWyL7b
+ /loxzn9dKRQbmUEKmxPABCr+y0hmbDoEwhPOT6OALO9Tvpo76uobR5RtpAkx67zCwID0tVYUuEM
+ E7/XmMZ7EhSBh28aC/DXVBtyEA7vA8cSxUDC5m60JEQQyyZxSq/SLQZJR
+X-Gm-Gg: ASbGncs/JmfZfHupZoleRE55zwRlQZt8xaJsFy3+FMBUted2nJiBPR4OKN7/uU6/ir0
+ L/Rv9lGN7UoOCEh8xA0vaVz3IIZefy2EoF3YPQ06QLrCx1DPkJlIoOhy/dzbce9mYluCtATkz14
+ 2+bG+eX4QTldpuMLelVSTMm2mHhzEF+e4JObFhFni/d6H+oJDMtb/ZPkqk6HdgLPmWGNMWmjeQw
+ PSRASc8CwD7DyM+CC7rYNcfN1KnjYWe6R7q0vQqG8gd96aTWH/XClu/9EMlx8rT/yfIj0z+7DbV
+ HXWbBjkNxzBSFvmjtj9K2oNJyLLp3srl2Fh7GvCStlvaLItsWzl+oa1YoxV4SjCuTWJpBR4+juX
+ xsh4diA==
+X-Received: by 2002:a05:600c:310a:b0:45d:d202:77f0 with SMTP id
+ 5b1f17b1804b1-45deb706181mr42332415e9.5.1757412950389; 
+ Tue, 09 Sep 2025 03:15:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFB32CSByc2ViXyyawfIri2I7/QnpS0TbweeOoDsdV5VcO2Mboy/WA/o3VPuecA3qFgt/h8A==
+X-Received: by 2002:a05:600c:310a:b0:45d:d202:77f0 with SMTP id
+ 5b1f17b1804b1-45deb706181mr42332155e9.5.1757412949936; 
+ Tue, 09 Sep 2025 03:15:49 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
  [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7521bf7ebsm2060219f8f.3.2025.09.09.02.54.59
+ 5b1f17b1804b1-45b7e8ab14esm522159575e9.21.2025.09.09.03.15.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 02:55:00 -0700 (PDT)
-Message-ID: <6a1d0bc9-4444-4287-9459-a4e5eece1644@redhat.com>
-Date: Tue, 9 Sep 2025 11:54:58 +0200
+ Tue, 09 Sep 2025 03:15:49 -0700 (PDT)
+Message-ID: <1e744fe7-6ef1-4917-8074-b01f12618ede@redhat.com>
+Date: Tue, 9 Sep 2025 12:15:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/22] sun4u: Fix AddressSpace exposure timing
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
- <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
-References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH 1/4] tests/functional: fix infinite loop on console EOF
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250908135722.3375580-1-berrange@redhat.com>
+ <20250908135722.3375580-2-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -150,9 +127,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250908135722.3375580-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -178,51 +155,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/09/2025 04.11, Akihiko Odaki wrote:
-> sun4u-iommu is not hotpluggable but its instance can still be created
-> and destroyed when processing the device-list-properties QMP command.
-> Exposing such a temporary instance to AddressSpace should be
-> avoided because it leaks the instance.
+On 08/09/2025 15.57, Daniel P. Berrangé wrote:
+> The 'recv' method will return an empty byte array, not None, when
+> the socket has EOF.
 > 
-> Expose instances to the AddressSpace at their realization time so that
-> it won't happen for the temporary instances.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/sparc64/sun4u_iommu.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
+>   tests/functional/qemu_test/cmd.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
-> index 14645f475a09ed3a6bef77f8d8b4b6b4b36ae40a..b6568551935610116d33481ae8d9fc08f02ecf7b 100644
-> --- a/hw/sparc64/sun4u_iommu.c
-> +++ b/hw/sparc64/sun4u_iommu.c
-> @@ -298,18 +298,25 @@ static void iommu_init(Object *obj)
->       memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
->                                TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
->                                "iommu-sun4u", UINT64_MAX);
-> -    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
->   
->       memory_region_init_io(&s->iomem, obj, &iommu_mem_ops, s, "iommu",
->                             IOMMU_NREGS * sizeof(uint64_t));
->       sysbus_init_mmio(sbd, &s->iomem);
->   }
->   
-> +static void iommu_realize(DeviceState *dev, Error **errp)
-> +{
-> +    IOMMUState *s = SUN4U_IOMMU(dev);
-> +
-> +    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
-> +}
-> +
->   static void iommu_class_init(ObjectClass *klass, const void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
->       device_class_set_legacy_reset(dc, iommu_reset);
-> +    dc->realize = iommu_realize;
->   }
->   
->   static const TypeInfo iommu_info = {
+> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+> index dc5f422b77..2fb731ca24 100644
+> --- a/tests/functional/qemu_test/cmd.py
+> +++ b/tests/functional/qemu_test/cmd.py
+> @@ -51,7 +51,7 @@ def _console_read_line_until_match(test, vm, success, failure):
+>       done = False
+>       while True:
+>           c = vm.console_socket.recv(1)
+> -        if c is None:
+> +        if not c:
+>               done = True
+>               test.fail(
+>                   f"EOF in console, expected '{success}'")
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
