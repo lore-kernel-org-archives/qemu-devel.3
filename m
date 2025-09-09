@@ -4,70 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDE4CAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 15:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70CDACAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 15:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvzrN-0006Ef-NB; Tue, 09 Sep 2025 11:02:18 -0400
+	id 1uvzss-0006mL-Dr; Tue, 09 Sep 2025 11:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uvzrF-0006Cb-Ce
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:02:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uvzse-0006kX-Qc
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:03:37 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1uvzr9-00016O-Sl
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:02:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757430118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=2S910rc+A98q8IsZKat+n6zMcbjMHkRV5qo+ZthnVyQ=;
- b=NAYrdhlTay15L7ConaRyVX7UYweDMnl1WEKSGEJPa+WJYuUK7MgdG5lPg/HSOOVYVMHgp/
- kec+1h9JZg61sbHi3pPV/xRvWQ2naSs+mQwPv+rls4q+v9VZNBF/A8BWW/clgcQ+YBsOPX
- AwieNmCIIgB5QowdLX+K3IZT71XP+mA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-6ygpPTrkNyuLylWskfvH5w-1; Tue,
- 09 Sep 2025 11:01:57 -0400
-X-MC-Unique: 6ygpPTrkNyuLylWskfvH5w-1
-X-Mimecast-MFC-AGG-ID: 6ygpPTrkNyuLylWskfvH5w_1757430116
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39E2C19560A1; Tue,  9 Sep 2025 15:01:56 +0000 (UTC)
-Received: from fedora (unknown [10.43.3.85])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 733741800446; Tue,  9 Sep 2025 15:01:54 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] migration: Apply migration specific keep-alive defaults to
- inet socket
-Date: Tue,  9 Sep 2025 17:01:24 +0200
-Message-ID: <20250909150127.1494626-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uvzsX-0001Ak-Mq
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 11:03:36 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cLn9D4gbxz67GCQ;
+ Tue,  9 Sep 2025 23:02:08 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 863531401DC;
+ Tue,  9 Sep 2025 23:03:18 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 9 Sep
+ 2025 17:03:17 +0200
+Date: Tue, 9 Sep 2025 16:03:16 +0100
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v3 0/2] FM-API Physical Switch Command Set Support
+Message-ID: <20250909160316.00000190@huawei.com>
+In-Reply-To: <20250908132211.tusasxcwx45d474x@test-PowerEdge-R740xd>
+References: <CGME20250904131926epcas5p2a363cf0604a4801038d32e7da5397da1@epcas5p2.samsung.com>
+ <20250904131904.725758-1-arpit1.kumar@samsung.com>
+ <20250905171252.00004c72@huawei.com>
+ <20250908132211.tusasxcwx45d474x@test-PowerEdge-R740xd>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,122 +73,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+On Mon, 8 Sep 2025 18:52:11 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 
-Usual system defaults for TCP keep-alive options are too long for
-migration workload. On Linux, a TCP connection waits idle for 2 hours
-before it starts checking if the connection is not broken.
+> On 05/09/25 05:12PM, Jonathan Cameron wrote:
+> >On Thu,  4 Sep 2025 18:49:02 +0530
+> >Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+> >  
+> >> This patch series refactor existing support for Identify Switch Device
+> >> and Get Physical Port State by utilizing physical ports (USP & DSP)
+> >> information stored during enumeration.
+> >>
+> >> Additionally, it introduces new support for Physical Port Control
+> >> of FM-API based physical switch command set as per CXL spec r3.2
+> >> Table 8-230:Physical Switch. It primarily constitutes two logic:
+> >> -Assert-Deassert PERST: Assert PERST involves physical port to be in
+> >>  hold reset phase for minimum 100ms. No other physical port control
+> >>  request are entertained until Deassert PERST command for the given
+> >>  port is issued.
+> >> -Reset PPB: cold reset of physical port (completing enter->hold->exit phases).
+> >>
+> >> Tested using libcxl-mi interface[1]:
+> >> All active ports and all opcodes per active port is tested. Also, tested
+> >> against possible edge cases manually since the interface currently dosen't
+> >> support run time input.
+> >>
+> >> Example topology (1 USP + 3 DSP's->switch with 2 CXLType3 devices connected
+> >> to 2 DSP's):
+> >> FM="-object memory-backend-file,id=cxl-mem1,mem-path=$TMP_DIR/t3_cxl1.raw,size=256M \
+> >>     -object memory-backend-file,id=cxl-lsa1,mem-path=$TMP_DIR/t3_lsa1.raw,size=1M \
+> >>     -object memory-backend-file,id=cxl-mem2,mem-path=$TMP_DIR/t3_cxl2.raw,size=512M \
+> >>     -object memory-backend-file,id=cxl-lsa2,mem-path=$TMP_DIR/t3_lsa2.raw,size=512M \
+> >>     -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
+> >>     -device cxl-rp,port=0,bus=cxl.1,id=cxl_rp_port0,chassis=0,slot=2 \
+> >>     -device cxl-upstream,port=2,sn=1234,bus=cxl_rp_port0,id=us0,addr=0.0,multifunction=on, \
+> >>     -device cxl-switch-mailbox-cci,bus=cxl_rp_port0,addr=0.1,target=us0 \
+> >>     -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+> >>     -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+> >>     -device cxl-downstream,port=3,bus=us0,id=swport2,chassis=0,slot=6 \
+> >>     -device cxl-type3,bus=swport0,memdev=cxl-mem1,id=cxl-pmem1,lsa=cxl-lsa1,sn=3 \
+> >>     -device cxl-type3,bus=swport2,memdev=cxl-mem2,id=cxl-pmem2,lsa=cxl-lsa2,sn=4 \
+> >>     -machine cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=1k \
+> >>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=4,target=us0 \
+> >>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=5,target=cxl-pmem1 \
+> >>     -device i2c_mctp_cxl,bus=aspeed.i2c.bus.0,address=6,target=cxl-pmem2 \
+> >>     -device virtio-rng-pci,bus=swport1"
+> >>
+> >> Multiple Qemu Topologies tested:
+> >> -without any devices connected to downstream ports.
+> >> -with virtio-rng-pci devices connected to downstream ports.
+> >> -with CXLType3 devices connected to downstream ports.
+> >> -with different unique values of ports (both upstream and downstream).
+> >>
+> >> Changes from v2->v3:
+> >> -cxl_set_port_type(): optimized storing of strucutre members.
+> >> -namespace defines instead of enum.
+> >> -Calculating size for active_port_bitmask than hardcoding to 0x20.
+> >> -Defined struct phy_port directly inside struct CXLUpstreamPort as pports.
+> >> -Renamed struct pperst to struct CXLPhyPortPerst.
+> >> -Optimized perst member initializations for ports inside
+> >>  cxl_initialize_usp_mctpcci() using active_port_bitmask.
+> >>
+> >> [1] https://github.com/computexpresslink/libcxlmi/commit/35fe68bd9a31469f832a87694d7b18d2d50be5b8
+> >>
+> >> The patches are generated against the Johnathan's tree
+> >> https://gitlab.com/jic23/qemu.git and branch cxl-2025-07-03.
+> >>
+> >> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>  
+> >
+> >Hi Arpit,
+> >
+> >I'll have a go (probably next week) at rebasing this rather earlier in my tree as I'd
+> >like to get this upstream without it having a dependency on the MCTP support.
+> >
+> >That means bring it up with the switch-cci / pcie mailbox CCI and squashing
+> >the MCTP bit into the patch that brings that support up later in my tree.
+> >
+> >I do plan to fix up the remaining 'feature' gap on the FMAPI/MCTP/USB
+> >emulation which is that it's ignoring the MTU to the host and so not
+> >breaking messages up as it should.  Linux doesn't care but maybe some other
+> >OS will. Not entirely sure when I'll get to that though and I'd like to
+> >move your work forward before that.
+> >
+> >Jonathan
+> >
+> >  
+> Hi Jonathan,
+> Thanks for the review comments!
+> 
+> As per my understanding from CXL spec r3.2 Table 8-215: Physical Port Control
+I guess table 8-230?  
+> request is allowed only for switch FM interface and is prohibited for
+> switch-cci/pcie mailbox CCI. However, if possible, should I be using
+> cxl_initialize_mailbox_swcci() to initialize my perst members?
 
-Now when InetSocketAddress supports keep-alive options [1], this patch
-applies migration specific defaults if they are not supplied by the user
-or the management software. With these defaults, a migration TCP stream
-waits idle for 1 minute and then sends 5 TCP keep-alive packets in 30
-second interval before considering the connection as broken.
+I always find that table really hard to understand. I'm not sure
+what intent is wrt to "host mailbox" in that table.   I can't immediately think
+why the FM API CCI  (thing that was switch cci in earlier specs) wouldn't support
+this particular command.  You are supposed to be able to control anything via
+that which is controllable for MCTP. Only exceptions should be the few
+things to do with the MCTP interface itself.
 
-System defaults can be still used by explicitly setting these parameters
-to 0.
+Just to add to the confusion, the entry for Get Physical Port State in the
+host mailbox column is "MSW = mandatory on MCTP-based CCIs for all switches that support
+the FM API MCTP message type" which is odd given that mailbox isn't mctp based.
 
-[1]: 1bd4237cb1 "util/qemu-sockets: Introduce inet socket options
-     controlling TCP keep-alive"
-
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- migration/migration.c | 39 +++++++++++++++++++++++++++++++++++++++
- qapi/migration.json   |  6 ++++++
- 2 files changed, 45 insertions(+)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 10c216d25d..a1f1223946 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -74,6 +74,11 @@
+Gut feeling is that it can be implemented on the 'switch CCI'.  I'd like to do
+that for now just because the MCTP stuff is going to take longer to upstream
+and I'd rather your series was not queued up behind it.
  
- #define INMIGRATE_DEFAULT_EXIT_ON_ERROR true
- 
-+#define INET_SOCKET_DEFAULT_KEEP_ALIVE true
-+#define INET_SOCKET_DEFAULT_KEEP_ALIVE_COUNT 5
-+#define INET_SOCKET_DEFAULT_KEEP_ALIVE_IDLE 60
-+#define INET_SOCKET_DEFAULT_KEEP_ALIVE_INTERVAL 30
-+
- static NotifierWithReturnList migration_state_notifiers[] = {
-     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
-     NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
-@@ -718,6 +723,36 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-     return true;
- }
- 
-+static void migration_address_apply_defaults(MigrationAddress *addr)
-+{
-+    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-+        addr->u.socket.type == SOCKET_ADDRESS_TYPE_INET) {
-+        InetSocketAddress *inet = &addr->u.socket.u.inet;
-+        if (!inet->has_keep_alive) {
-+            inet->has_keep_alive = true;
-+            inet->keep_alive = INET_SOCKET_DEFAULT_KEEP_ALIVE;
-+        }
-+#ifdef HAVE_TCP_KEEPCNT
-+        if (!inet->has_keep_alive_count) {
-+            inet->has_keep_alive_count = true;
-+            inet->keep_alive_count = INET_SOCKET_DEFAULT_KEEP_ALIVE_COUNT;
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        if (!inet->has_keep_alive_idle) {
-+            inet->has_keep_alive_idle = true;
-+            inet->keep_alive_idle = INET_SOCKET_DEFAULT_KEEP_ALIVE_IDLE;
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        if (!inet->has_keep_alive_interval) {
-+            inet->has_keep_alive_interval = true;
-+            inet->keep_alive_interval = INET_SOCKET_DEFAULT_KEEP_ALIVE_INTERVAL;
-+        }
-+#endif
-+    }
-+}
-+
- static bool
- migration_incoming_state_setup(MigrationIncomingState *mis, Error **errp)
- {
-@@ -775,6 +810,8 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-         addr = channel->addr;
-     }
- 
-+    migration_address_apply_defaults(addr);
-+
-     /* transport mechanism not suitable for migration? */
-     if (!migration_transport_compatible(addr, errp)) {
-         return;
-@@ -2232,6 +2269,8 @@ void qmp_migrate(const char *uri, bool has_channels,
-         addr = channel->addr;
-     }
- 
-+    migration_address_apply_defaults(addr);
-+
-     /* transport mechanism not suitable for migration? */
-     if (!migration_transport_compatible(addr, errp)) {
-         return;
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 2387c21e9c..68d4acb5db 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1639,6 +1639,12 @@
- #
- # Migration endpoint configuration.
- #
-+# If transport is socket of type inet, it has the following defaults:
-+# keep-alive: true, keep-alive-count: 5, keep-alive-idle: 60 seconds,
-+# keep-alive-interval: 30 seconds.  System defaults can be used by
-+# explicitly setting these parameters to 0.  See `InetSocketAddress` for
-+# more details.
-+#
- # @transport: The migration stream transport mechanism
- #
- # Since: 8.2
--- 
-2.51.0
+Jonathan
+
+
+> 
+> Thanks,
+> Arpit.
+> >>
+> >> Arpit Kumar (2):
+> >>   hw/cxl: Refactored Identify Switch Device & Get Physical Port State
+> >>   hw/cxl: Add Physical Port Control (Opcode 5102h)
+> >>
+> >>  hw/cxl/cxl-mailbox-utils.c                | 368 +++++++++++++++-------
+> >>  include/hw/cxl/cxl_device.h               |  76 +++++
+> >>  include/hw/cxl/cxl_mailbox.h              |   1 +
+> >>  include/hw/pci-bridge/cxl_upstream_port.h |   9 +
+> >>  4 files changed, 347 insertions(+), 107 deletions(-)
+> >>  
+> >  
+> 
 
 
