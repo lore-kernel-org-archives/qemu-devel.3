@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE28CAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 20:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74280CAC582
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 21:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw5Ou-00050H-NB; Tue, 09 Sep 2025 16:57:17 -0400
+	id 1uw5XK-0007Ww-E1; Tue, 09 Sep 2025 17:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uw5Oq-0004zL-SY
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:13 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uw5Oj-0001s6-9b
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:12 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-32da35469f7so1243652a91.1
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 13:57:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
+ id 1uw5XC-0007W3-M2; Tue, 09 Sep 2025 17:05:50 -0400
+Received: from mail.raptorengineering.com ([23.155.224.40]
+ helo=raptorengineering.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
+ id 1uw5X7-0003UK-57; Tue, 09 Sep 2025 17:05:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by mail.rptsys.com (Postfix) with ESMTP id 1FC2F828820F;
+ Tue,  9 Sep 2025 16:05:31 -0500 (CDT)
+Received: from mail.rptsys.com ([127.0.0.1])
+ by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
+ with ESMTP id C53sclFQTJ_4; Tue,  9 Sep 2025 16:05:28 -0500 (CDT)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.rptsys.com (Postfix) with ESMTP id E52518288261;
+ Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com E52518288261
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1757451420; x=1758056220;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ee3LM2mTuY71FsskUj8THQjhM2jFxw20MT+w+Yf2s8I=;
- b=ToIbaLXAxE9I/bVNIp6jnwzspyMGibxDMWb2iNjNN1ELhurnVHl3Wn3V/hSSFlWK9b
- owHkx9llaFKsG26ZJ/uKJbCVB8vSdimk7b7LPWxkHOcCvxtVkGh9QOwuVtmbr1b5gEhI
- rW/zDNzA52Qvni+GIRDZVAyKcLMPeVstl36XOkg7A03PwMG7F+KA5tZeh6/X8zNg4rJ5
- Ni3h/5bt61PBAw31mAN+AzJHu0BRXWOOtHSVmlgRAUU/MsH3ls/DyZxdxiWjexA0N5AG
- oPS1j9PPabRDI+332C8mii1Qa1+4LzdWZFsn3vxA9/UjzuD7sy3PwADF+GRXf9oM3j6W
- L5wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757451420; x=1758056220;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ee3LM2mTuY71FsskUj8THQjhM2jFxw20MT+w+Yf2s8I=;
- b=DC+mco/u7oc3hvRShpmRB0qgJiokPGdRVm1W/5kqYj2wQKkRBdF8IkYG+tC+44WtQW
- 5P+iHToBmf0v52Zu90bHtZj1AFLZRjlU4eFAajy+cwncLaf7ZpdmVw7n3ESrhVlxdlT5
- dLSTT48EEYAUoeaW4dloI0WYQBx/JEjscyBJS5AM322mNXTsbXNSIYmR54XCXkcdTDnu
- SJSeZi9VAHkvGfVNYL8/vsduOjbPK+ZxQsWPklSOGP2BJKK1pYd/5tCXG7CYMxrcj0Fh
- lOoJeiaiPCI2XfI69m2ye3+bWW0qpZmgz/2Ph7ikCe+YV9pQqYW/a+CZNxvofZgijriH
- DI5A==
-X-Gm-Message-State: AOJu0Yx2bHcEWKfksq2T67vFbwjmia+4UybO8fHhQIvq4JLLr9IR7sqv
- ktnKNnIqpQuLSWQvjjxYOwMNuS3nT7F6NEU+54auXVgBhF+V9Q2IdoGSlq3GoS/MCYowZb7Lcca
- 17+swA0SaONXBlRcpILmOmo0+bYfw+1iL29K3hpLlYw==
-X-Gm-Gg: ASbGncvi2TRFqe1PMLASe/85iaPceOINlg7UhDaslB5+2Rr5SD0dhKtJHH2zzTt+nNV
- lKgQAZ9fDxt/6bY3caHpJ6QpFKwekd1j45VQBIUBSCFKK10lQJYDjBzxestVNKzSk29zqqnxvNQ
- 5s61VLMqJCPJW2IgLJlISWTTdDCvs8EpFYE+jxjoAj3YTHGigMyUPJL3XzpJokAPLCfpwa/y+5d
- 9GDgX9AwpOhKCE4uA2X+bfULksQoLAAx0+9H3A=
-X-Google-Smtp-Source: AGHT+IHi6OhA+k1XaVwnkeZGrL2Pp23vSnEPR2+OOmSdhNZ/nbCOZDP9ByD7bEuH1GPXn5nvXOh5KXk7nKDVmGK6arQ=
-X-Received: by 2002:a17:90b:56cb:b0:32b:6223:25a with SMTP id
- 98e67ed59e1d1-32d43fbb270mr14813074a91.28.1757451419660; Tue, 09 Sep 2025
- 13:56:59 -0700 (PDT)
+ d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
+ t=1757451927; bh=pcb2EotGYn9Yw6u0qBIDErjWZ9LHsFuT0G031z+FEoU=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=uoY0e9xsovbN7xUukC/Moj7Gl5ulDC+pC0/lHyj4Hn4xvXtKqHANZfzO/TTIOyERN
+ hz+2Q6kRmAKQMX5ecu4b604an7A+6pVTt0EHeJGqJNyyzzvRwLoUszuJWaOhZiBgvu
+ P9B07tNoavXhB16uC1K10mk0BBw/wHxLj/U+3jOo=
+X-Virus-Scanned: amavisd-new at rptsys.com
+Received: from mail.rptsys.com ([127.0.0.1])
+ by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id 28JjgZCZjtrQ; Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
+Received: from vali.starlink.edu (localhost [127.0.0.1])
+ by mail.rptsys.com (Postfix) with ESMTP id AE94C828820F;
+ Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
+Date: Tue, 9 Sep 2025 16:05:25 -0500 (CDT)
+From: Timothy Pearson <tpearson@raptorengineering.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Alexey Kardashevskiy <aik@ozlabs.ru>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ "list@suse.de" <qemu-ppc@nongnu.org>, qemu-devel <qemu-devel@nongnu.org>, 
+ Frederic Barrat <fbarrat@linux.ibm.com>, npiggin <npiggin@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>
+Message-ID: <1601363295.1707586.1757451924995.JavaMail.zimbra@raptorengineeringinc.com>
+In-Reply-To: <2125253552.30561871.1713198808922.JavaMail.zimbra@raptorengineeringinc.com>
+References: <1891893257.448156.1647023745384.JavaMail.zimbra@raptorengineeringinc.com>
+ <6f0a92ca-9f53-b8b8-e85d-43f4da36200d@kaod.org>
+ <edfa8ca4-8e8a-335a-2e7e-c69661ec73da@ozlabs.ru>
+ <560c8c1a-a87e-71f9-cfea-0a034933070b@ozlabs.ru>
+ <e25296b3-b1ec-a90a-ee72-ed15fe5130f6@kaod.org>
+ <5308af13-a943-efeb-d819-e39cfc2f2907@ozlabs.ru>
+ <3e188eb4-40dd-952c-9764-4cc8cb255f01@kaod.org>
+ <2125253552.30561871.1713198808922.JavaMail.zimbra@raptorengineeringinc.com>
+Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy load
 MIME-Version: 1.0
-References: <cover.1757422256.git.jan.kiszka@siemens.com>
- <8fa0fa4158dc2e62edb59d5af8fa54a41e50e306.1757422256.git.jan.kiszka@siemens.com>
-In-Reply-To: <8fa0fa4158dc2e62edb59d5af8fa54a41e50e306.1757422256.git.jan.kiszka@siemens.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 9 Sep 2025 14:56:47 -0600
-X-Gm-Features: Ac12FXwJ6PyAFbsOiqtdw1W4f7IWx880C2ILEWXOiIKNCIgPjo5i3L6HLhEpv1k
-Message-ID: <CANCZdfqBMsq-GW6VnaS5WfJTwoP1DVbZcr8E++2NPmHa-_4jgQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-To: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, 
- Alexander Bulekov <alxndr@bu.edu>
-Content-Type: multipart/alternative; boundary="0000000000009442bc063e648b5f"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC139 (Linux)/8.5.0_GA_3042)
+Thread-Topic: XIVE VFIO kernel resample failure in INTx mode under heavy load
+Thread-Index: deIr1MHtwC5ZXfgisgYC7lwKFkKupHii3cau
+Received-SPF: pass client-ip=23.155.224.40;
+ envelope-from=tpearson@raptorengineering.com; helo=raptorengineering.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,301 +92,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009442bc063e648b5f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Sep 9, 2025 at 6:51=E2=80=AFAM Jan Kiszka <jan.kiszka@siemens.com> =
-wrote:
-
-> From: Jan Kiszka <jan.kiszka@siemens.com>
->
-> Alignment rules apply the the individual partitions (user, boot, later
-> on also RPMB) and depend both on the size of the image and the type of
-> the device. Up to and including 2GB, the power-of-2 rule applies to the
-> user data area. For larger images, multiples of 512 sectors must be used
-> for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
-> and also detect if the image is too small to even hold the boot
-> partitions.
->
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> ---
-> CC: Warner Losh <imp@bsdimp.com>
-> CC: C=C3=A9dric Le Goater <clg@kaod.org>
-> CC: Joel Stanley <joel@jms.id.au>
-> CC: Alistair Francis <alistair@alistair23.me>
-> CC: Alexander Bulekov <alxndr@bu.edu>
-> ---
->  hw/sd/sd.c | 61 +++++++++++++++++++++++++++++++++++++-----------------
->
-
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 
 
+----- Original Message -----
+> From: "Timothy Pearson" <tpearson@raptorengineering.com>
+> To: "C=C3=A9dric Le Goater" <clg@kaod.org>
+> Cc: "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Alex Williamson" <alex.willi=
+amson@redhat.com>, "Timothy Pearson"
+> <tpearson@raptorengineering.com>, "list@suse.de" <qemu-ppc@nongnu.org>, "=
+qemu-devel" <qemu-devel@nongnu.org>, "Frederic
+> Barrat" <fbarrat@linux.ibm.com>, "npiggin" <npiggin@gmail.com>, "David Gi=
+bson" <david@gibson.dropbear.id.au>
+> Sent: Monday, April 15, 2024 11:33:28 AM
+> Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy l=
+oad
 
->  1 file changed, 42 insertions(+), 19 deletions(-)
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index d7a496d77c..b42cd01d1f 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2759,6 +2759,28 @@ static void sd_instance_finalize(Object *obj)
->      timer_free(sd->ocr_power_timer);
->  }
->
-> +static void sd_blk_size_error(SDState *sd, int64_t blk_size,
-> +                              int64_t blk_size_aligned, const char *rule=
-,
-> +                              Error **errp)
-> +{
-> +    const char *dev_type =3D sd_is_emmc(sd) ? "eMMC" : "SD card";
-> +    char *blk_size_str;
-> +
-> +    blk_size_str =3D size_to_str(blk_size);
-> +    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
-> +    g_free(blk_size_str);
-> +
-> +    blk_size_str =3D size_to_str(blk_size_aligned);
-> +    error_append_hint(errp,
-> +                      "%s size has to be %s, e.g. %s.\n"
-> +                      "You can resize disk images with"
-> +                      " 'qemu-img resize <imagefile> <new-size>'\n"
-> +                      "(note that this will lose data if you make the"
-> +                      " image smaller than it currently is).\n",
-> +                      dev_type, rule, blk_size_str);
-> +    g_free(blk_size_str);
-> +}
-> +
->  static void sd_realize(DeviceState *dev, Error **errp)
->  {
->      SDState *sd =3D SDMMC_COMMON(dev);
-> @@ -2781,25 +2803,26 @@ static void sd_realize(DeviceState *dev, Error
-> **errp)
->              return;
->          }
->
-> -        blk_size =3D blk_getlength(sd->blk);
-> -        if (blk_size > 0 && !is_power_of_2(blk_size)) {
-> -            int64_t blk_size_aligned =3D pow2ceil(blk_size);
-> -            char *blk_size_str;
-> -
-> -            blk_size_str =3D size_to_str(blk_size);
-> -            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
-> -            g_free(blk_size_str);
-> -
-> -            blk_size_str =3D size_to_str(blk_size_aligned);
-> -            error_append_hint(errp,
-> -                              "SD card size has to be a power of 2, e.g.
-> %s.\n"
-> -                              "You can resize disk images with"
-> -                              " 'qemu-img resize <imagefile>
-> <new-size>'\n"
-> -                              "(note that this will lose data if you mak=
-e
-> the"
-> -                              " image smaller than it currently is).\n",
-> -                              blk_size_str);
-> -            g_free(blk_size_str);
-> -
-> +        blk_size =3D blk_getlength(sd->blk) - sd->boot_part_size * 2;
-> +        if (blk_size > SDSC_MAX_CAPACITY) {
-> +            if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) !=3D 0=
-) {
-> +                int64_t blk_size_aligned =3D
-> +                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
-> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
-> +                                  "multiples of 512", errp);
-> +                return;
-> +            } else if (!sd_is_emmc(sd) && blk_size % (512 * KiB)) {
-> +                int64_t blk_size_aligned =3D ((blk_size >> 19) + 1) << 1=
-9;
-> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
-> +                                  "multiples of 512K", errp);
-> +                return;
-> +            }
-> +        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
-> +            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power
-> of 2",
-> +                              errp);
-> +            return;
-> +        } else if (blk_size < 0) {
-> +            error_setg(errp, "eMMC image smaller than boot partitions");
->              return;
->          }
->
-> --
-> 2.51.0
->
->
+> ----- Original Message -----
+>> From: "C=C3=A9dric Le Goater" <clg@kaod.org>
+>> To: "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Alex Williamson"
+>> <alex.williamson@redhat.com>, "Timothy Pearson"
+>> <tpearson@raptorengineering.com>
+>> Cc: "list@suse.de:PowerPC" <qemu-ppc@nongnu.org>, "qemu-devel"
+>> <qemu-devel@nongnu.org>, "Frederic Barrat"
+>> <fbarrat@linux.ibm.com>, "npiggin" <npiggin@gmail.com>, "David Gibson"
+>> <david@gibson.dropbear.id.au>
+>> Sent: Thursday, April 21, 2022 1:35:50 AM
+>> Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy =
+load
+>=20
+>> On 4/21/22 05:07, Alexey Kardashevskiy wrote:
+>>>=20
+>>>=20
+>>> On 14/04/2022 22:41, C=C3=A9dric Le Goater wrote:
+>>>>
+>>>>>> After re-reading what I just wrote, I am leaning towards disabling u=
+se of
+>>>>>> KVM_CAP_IRQFD_RESAMPLE as it seems last worked on POWER8 and never s=
+ince :)
+>>>>>>
+>>>>>> Did I miss something in the picture (hey Cedric)?
+>>>>>
+>>>>> How about disabling it like this?
+>>>>>
+>>>>> =3D=3D=3D=3D=3D
+>>>>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+>>>>> index 5bfd4aa9e5aa..c999f7b1ab1b 100644
+>>>>> --- a/hw/ppc/spapr_pci.c
+>>>>> +++ b/hw/ppc/spapr_pci.c
+>>>>> @@ -732,7 +732,7 @@ static PCIINTxRoute spapr_route_intx_pin_to_irq(v=
+oid
+>>>>> *opaque, int pin)
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SpaprPhbState *sphb =3D SPAPR_PCI_HOST=
+_BRIDGE(opaque);
+>>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 PCIINTxRoute route;
+>>>>>
+>>>>> -=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_ENABLED;
+>>>>> +=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_DISABLED;
+>>>>>
+>>>>> =3D=3D=3D=3D=3D
+>>>>
+>>>> I like it.
+>>>=20
+>>>=20
+>>> The only thing is that this resampling works on POWER8/XICS and
+>>> removing it there is not great. So far sPAPR PHB was unaware of
+>>> underlying interrupt controller, or was not it?
+>>=20
+>> It is. The dynamic change of the underlying irqchip in QEMU and
+>> in KVM required that for CAS. Of course, plenty is done in the
+>> back of the devices when this happens, see spapr_irq.
+>>=20
+>> There are some quirks related to LPM with VIO devices in Linux.
+>> This is the only case I know about.
+>>=20
+>> Thanks,
+>>=20
+>> C.
+>=20
+> Unfortunately this remains quite broken, and after a kernel upgrade (incl=
+uding
+> the purported fix [1]) and a qemu upgrade we have now completely lost the
+> ability to get the card working in the guest with *any* combination of
+> parameters.
+>=20
+> In guest XIVE mode with irqchip on it passes through a handful of interru=
+pts,
+> then dies.  In guest XICS mode we're dropping the majority of the interru=
+pts.
+> This is all on POWER9.
 
---0000000000009442bc063e648b5f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To close the loop on this, it looks like the issue was a corner case in a s=
+eries of bridged legacy PCI 2.2 devices, and that the remaining issues were=
+ the result of a specific interaction between the INTx hardware and INTx gu=
+est mode devices. [1]  PCI 2.3+ and PCIe devices use a different interrupt =
+signalling mechanism (INTx with DisINTx+, or MSI), and would not be affecte=
+d.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 9, =
-2025 at 6:51=E2=80=AFAM Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemens=
-.com">jan.kiszka@siemens.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">From: Jan Kiszka &lt;<a href=3D"mailto:jan.kisz=
-ka@siemens.com" target=3D"_blank">jan.kiszka@siemens.com</a>&gt;<br>
-<br>
-Alignment rules apply the the individual partitions (user, boot, later<br>
-on also RPMB) and depend both on the size of the image and the type of<br>
-the device. Up to and including 2GB, the power-of-2 rule applies to the<br>
-user data area. For larger images, multiples of 512 sectors must be used<br=
->
-for eMMC and multiples of 512K for SD-cards. Fix the check accordingly<br>
-and also detect if the image is too small to even hold the boot<br>
-partitions.<br>
-<br>
-Signed-off-by: Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemens.com" tar=
-get=3D"_blank">jan.kiszka@siemens.com</a>&gt;<br>
----<br>
-CC: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp=
-@bsdimp.com</a>&gt;<br>
-CC: C=C3=A9dric Le Goater &lt;<a href=3D"mailto:clg@kaod.org" target=3D"_bl=
-ank">clg@kaod.org</a>&gt;<br>
-CC: Joel Stanley &lt;<a href=3D"mailto:joel@jms.id.au" target=3D"_blank">jo=
-el@jms.id.au</a>&gt;<br>
-CC: Alistair Francis &lt;<a href=3D"mailto:alistair@alistair23.me" target=
-=3D"_blank">alistair@alistair23.me</a>&gt;<br>
-CC: Alexander Bulekov &lt;<a href=3D"mailto:alxndr@bu.edu" target=3D"_blank=
-">alxndr@bu.edu</a>&gt;<br>
----<br>
-=C2=A0hw/sd/sd.c | 61 +++++++++++++++++++++++++++++++++++++----------------=
--<br></blockquote><div><br></div><div>Reviewed-by: Warner Losh &lt;<a href=
-=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div><br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A01 file changed, 42 insertions(+), 19 deletions(-)<br>
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c<br>
-index d7a496d77c..b42cd01d1f 100644<br>
---- a/hw/sd/sd.c<br>
-+++ b/hw/sd/sd.c<br>
-@@ -2759,6 +2759,28 @@ static void sd_instance_finalize(Object *obj)<br>
-=C2=A0 =C2=A0 =C2=A0timer_free(sd-&gt;ocr_power_timer);<br>
-=C2=A0}<br>
-<br>
-+static void sd_blk_size_error(SDState *sd, int64_t blk_size,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_aligned, const char *rule,=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 const char *dev_type =3D sd_is_emmc(sd) ? &quot;eMMC&quot; :=
- &quot;SD card&quot;;<br>
-+=C2=A0 =C2=A0 char *blk_size_str;<br>
-+<br>
-+=C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk_size);<br>
-+=C2=A0 =C2=A0 error_setg(errp, &quot;Invalid %s size: %s&quot;, dev_type, =
-blk_size_str);<br>
-+=C2=A0 =C2=A0 g_free(blk_size_str);<br>
-+<br>
-+=C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk_size_aligned);<br>
-+=C2=A0 =C2=A0 error_append_hint(errp,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;%s size has to be %s, e.g. %s.\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;You can resize disk images with&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot; &#39;qemu-img resize &lt;imagefile&gt; &lt;new-size&gt;&#39;\n&q=
-uot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;(note that this will lose data if you make the&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot; image smaller than it currently is).\n&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 dev_type, rule, blk_size_str);<br>
-+=C2=A0 =C2=A0 g_free(blk_size_str);<br>
-+}<br>
-+<br>
-=C2=A0static void sd_realize(DeviceState *dev, Error **errp)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0SDState *sd =3D SDMMC_COMMON(dev);<br>
-@@ -2781,25 +2803,26 @@ static void sd_realize(DeviceState *dev, Error **er=
-rp)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size =3D blk_getlength(sd-&gt;blk);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (blk_size &gt; 0 &amp;&amp; !is_power_of_2(=
-blk_size)) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_aligned =3D pow=
-2ceil(blk_size);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char *blk_size_str;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk=
-_size);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Invalid S=
-D card size: %s&quot;, blk_size_str);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(blk_size_str);<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk=
-_size_aligned);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_append_hint(errp,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SD card size has to be a power of 2, =
-e.g. %s.\n&quot;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;You can resize disk images with&quot;=
-<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; &#39;qemu-img resize &lt;imagefile&g=
-t; &lt;new-size&gt;&#39;\n&quot;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;(note that this will lose data if you=
- make the&quot;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; image smaller than it currently is).=
-\n&quot;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(blk_size_str);<br>
--<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size =3D blk_getlength(sd-&gt;blk) - sd-&g=
-t;boot_part_size * 2;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (blk_size &gt; SDSC_MAX_CAPACITY) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sd_is_emmc(sd) &amp;&amp; bl=
-k_size % (1 &lt;&lt; HWBLOCK_SHIFT) !=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_a=
-ligned =3D<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((bl=
-k_size &gt;&gt; HWBLOCK_SHIFT) + 1) &lt;&lt; HWBLOCK_SHIFT;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(=
-sd, blk_size, blk_size_aligned,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;multiples of 512&quot;,=
- errp);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!sd_is_emmc(sd) &amp;=
-&amp; blk_size % (512 * KiB)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_a=
-ligned =3D ((blk_size &gt;&gt; 19) + 1) &lt;&lt; 19;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(=
-sd, blk_size, blk_size_aligned,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;multiples of 512K&quot;=
-, errp);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (blk_size &gt; 0 &amp;&amp; !is_powe=
-r_of_2(blk_size)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(sd, blk_size, =
-pow2ceil(blk_size), &quot;a power of 2&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errp);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (blk_size &lt; 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;eMMC imag=
-e smaller than boot partitions&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.51.0<br>
-<br>
-</blockquote></div></div>
+With the linked patch, XIVE on XIVE works fairly well, even with the legacy=
+ PCI 2.2 devices.
 
---0000000000009442bc063e648b5f--
+The one remaining issue is that we tend to generate a lot of spurious IRQs =
+due to all of the INTx handshaking between the host and guest XIVEs; if the=
+ H_INT_ESB hypercall is issued by the guest before the VFIO interrupt is ac=
+knowledged by QEMU (i.e. while the emulated INTx line is still asserted and=
+, thus, the host INTx line is still masked), we get an extra unwanted INTx =
+IRQ generated in the guest.  This is mostly harmless aside from causing the=
+ spurious interrupt counters to increase, but as it is apparently caused by=
+ a race condition between guest IRQ completion and host QEMU VFIO acknowled=
+ge it doesn't look particularly simple to fix.
+
+[1] https://lore.kernel.org/linuxppc-dev/663798478.1707537.1757450926706.Ja=
+vaMail.zimbra@raptorengineeringinc.com/T/#u
 
