@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B37CAC589
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4167BCAC589
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvt6Q-0007aG-Kq; Tue, 09 Sep 2025 03:49:22 -0400
+	id 1uvt8Q-0001D8-99; Tue, 09 Sep 2025 03:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvt6I-0007WN-NS; Tue, 09 Sep 2025 03:49:15 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1uvt8M-0001Bj-Ei; Tue, 09 Sep 2025 03:51:22 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvt6F-0004iI-08; Tue, 09 Sep 2025 03:49:14 -0400
+ id 1uvt8A-000594-Dl; Tue, 09 Sep 2025 03:51:21 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 360E680453;
- Tue, 09 Sep 2025 10:49:02 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 6D96A8066F;
+ Tue, 09 Sep 2025 10:51:05 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 0nDVIb6GwuQ0-NDtQv1Bk; Tue, 09 Sep 2025 10:49:01 +0300
+ ESMTPSA id 4pDiKb6GuGk0-HMv6wFof; Tue, 09 Sep 2025 10:51:04 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757404141;
- bh=07aKuwVXoDyI279zLk5825bYoQxa7gxLvN4f5LK59FI=;
+ s=default; t=1757404264;
+ bh=WDkgfhXw6p8dBd6w9PYgemsE5KhRjM8le73mcVMol6c=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=tTM00iZRIQiRcICqsLcfB90ej4bHrKuDTAIPfdoE+F5ukYJG2LrsjYSQIbEKQsmsB
- X02S3G2H+8lRbtDtvQf3D5eA/umUHPF8uaeYSozt0wnzSg/QlfW96YpVurn5YEStrC
- TYPOGvMQ9BYXXxWtJqmAUlnmVT9oUoDxieekPeWs=
+ b=SX9xBQ2/J5TTbCoMxEuk7XTSSeRlM0uGliLxv8klvOuJFvniYHXx6xlGR1VqR4CLu
+ rDz2t4spODnOIH6Z1iQakpj3SKAtLtIG/nW/ZG4nqhWi34KBcVn3hlzdSSVutOGoXd
+ 96utFcTkP9nPPnqH/7lWj5junGJ4/8KFmc+jwfH8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <55b44b25-5b6f-44e8-a549-23b54eb28ec8@yandex-team.ru>
-Date: Tue, 9 Sep 2025 10:49:00 +0300
+Message-ID: <b4d801db-7999-4298-a82a-9a14afe0d4f8@yandex-team.ru>
+Date: Tue, 9 Sep 2025 10:51:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] char-socket: rework tcp_chr_recv()
+Subject: Re: [PATCH 03/10] util: add qemu_set_blocking() function
 To: Peter Xu <peterx@redhat.com>
 Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
 References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-3-vsementsov@yandex-team.ru>
- <aL9QT9T2QTCA_tks@x1.local>
+ <20250903094411.1029449-4-vsementsov@yandex-team.ru>
+ <aL9SZr8uU4lp0o41@x1.local>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aL9QT9T2QTCA_tks@x1.local>
+In-Reply-To: <aL9SZr8uU4lp0o41@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,86 +76,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.09.25 00:53, Peter Xu wrote:
-> On Wed, Sep 03, 2025 at 12:44:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> First, qio_channel_readv_full() already guarantees BLOCKING and
->> CLOEXEC states for incoming descriptors, no reason call extra
->> ioctls.
+On 09.09.25 01:02, Peter Xu wrote:
+> On Wed, Sep 03, 2025 at 12:44:03PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> In generic code we have qio_channel_set_blocking(), which takes
+>> bool parameter, and qemu_file_set_blocking(), which as well takes
+>> bool parameter.
 >>
->> Second, current implementation calls _set_block() and _set_cloexec()
->> again on old descriptors on failure path - we fix this too.
+>> At lower fd-layer we have a mess of functions:
 >>
->> Finally, handling errors exactly after qio_channel_readv_full() call
->> looks more readable.
+>> - enough direct calls to g_unix_set_fd_nonblocking()
+>> and several wrappers without bool parameter:
+>>
+>> - qemu_scoket_set_nonblock(), which asserts success for posix (still,
+>>    in most cases we can handle the error in better way) and ignores
+>>    error for win32 realization
+>>
+>> - qemu_socket_try_set_nonblock(), the best one
+>>
+>> - qemu_socket_set_block(), which simply ignores an error, the worst
+>>    case
+>>
+>> And all three lack errp argument, so we have to handle it after the
+>> call.
+>>
+>> So let's introduce a new socket-layer wrapper, and use it consistently
+>> in following commits.
 >>
 >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >> ---
->>   chardev/char-socket.c | 37 +++++++++++++------------------------
->>   1 file changed, 13 insertions(+), 24 deletions(-)
+>>   include/qemu/osdep.h |  1 +
+>>   util/oslib-posix.c   | 12 ++++++++++++
+>>   util/oslib-win32.c   | 18 ++++++++++++++++++
+>>   3 files changed, 31 insertions(+)
 >>
->> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
->> index 1e8313915b..5b9b19ba8b 100644
->> --- a/chardev/char-socket.c
->> +++ b/chardev/char-socket.c
->> @@ -293,6 +293,18 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
->>                                        0, &err);
->>       }
+>> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+>> index be3460b32f..1b38cb7e45 100644
+>> --- a/include/qemu/osdep.h
+>> +++ b/include/qemu/osdep.h
+>> @@ -687,6 +687,7 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
+>>       G_GNUC_WARN_UNUSED_RESULT;
 >>   
->> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> +        errno = EAGAIN;
->> +        return -1;
->> +    } else if (ret == -1) {
->> +        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
->> +        error_free(err);
->> +        errno = EIO;
->> +        return -1;
+>>   void qemu_set_cloexec(int fd);
+>> +bool qemu_set_blocking(int fd, bool block, Error **errp);
+>>   
+>>   /* Return a dynamically allocated directory path that is appropriate for storing
+>>    * local state.
+>> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+>> index 4ff577e5de..e473938195 100644
+>> --- a/util/oslib-posix.c
+>> +++ b/util/oslib-posix.c
+>> @@ -250,6 +250,18 @@ void qemu_anon_ram_free(void *ptr, size_t size)
+>>   #endif
+>>   }
+>>   
+>> +bool qemu_set_blocking(int fd, bool block, Error **errp)
+>> +{
+>> +    if (!g_unix_set_fd_nonblocking(fd, !block, NULL)) {
+> 
+> If we want to do the best, we could also pass in GError** here, and convert
+> GError(.message) to errp?
+
+Hmm, agree, will try.
+
+Interesting, why we just don't sit on GError..
+
+> 
+>> +        error_setg_errno(errp, errno,
+>> +                         "Can't set file descriptor %d %s", fd,
+>> +                         block ? "blocking" : "non-blocking");
+>> +        return false;
 >> +    }
 >> +
->> +    assert(ret >= 0);
+>> +    return true;
+>> +}
 >> +
->>       if (msgfds_num) {
->>           /* close and clean read_msgfds */
->>           for (i = 0; i < s->read_msgfds_num; i++) {
->> @@ -307,30 +319,7 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
->>           s->read_msgfds_num = msgfds_num;
+>>   void qemu_socket_set_block(int fd)
+>>   {
+>>       g_unix_set_fd_nonblocking(fd, false, NULL);
+>> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+>> index b7351634ec..03044f5b59 100644
+>> --- a/util/oslib-win32.c
+>> +++ b/util/oslib-win32.c
+>> @@ -177,6 +177,24 @@ static int socket_error(void)
 >>       }
->>   
->> -    for (i = 0; i < s->read_msgfds_num; i++) {
->> -        int fd = s->read_msgfds[i];
->> -        if (fd < 0) {
->> -            continue;
->> -        }
->> -
->> -        /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
->> -        qemu_socket_set_block(fd);
->> -
->> -#ifndef MSG_CMSG_CLOEXEC
->> -        qemu_set_cloexec(fd);
->> -#endif
->> -    }
->> -
->> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> -        errno = EAGAIN;
->> -        ret = -1;
->> -    } else if (ret == -1) {
->> -        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
->> -        error_free(err);
->> -        errno = EIO;
->> -    } else if (ret == 0) {
->> -        trace_chr_socket_recv_eof(chr, chr->label);
->> -    }
->> +    trace_chr_socket_recv_eof(chr, chr->label);
-> 
-> This tracepoint may still need to be put into a ret==0 check.
-> 
-> Looks reasonable other than that..
-> 
-
-Oh, right. Will fix.
-
->>   
->>       return ret;
 >>   }
+>>   
+>> +bool qemu_set_blocking(int fd, bool block, Error **errp)
+>> +{
+>> +    unsigned long opt = block ? 0 : 1;
+>> +
+>> +    if (block) {
+>> +        qemu_socket_unselect(fd, NULL);
+>> +    }
+>> +
+>> +    if (ioctlsocket(fd, FIONBIO, &opt) != NO_ERROR) {
+>> +        error_setg_errno(errp, socket_error(),
+>> +                         "Can't set file descriptor %d %s", fd,
+>> +                         block ? "blocking" : "non-blocking");
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   void qemu_socket_set_block(int fd)
+>>   {
+>>       unsigned long opt = 0;
 >> -- 
 >> 2.48.1
 >>
