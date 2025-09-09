@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CC9CAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5254CAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 14:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvys0-0004AF-Mc; Tue, 09 Sep 2025 09:58:52 -0400
+	id 1uvyxG-0006xJ-FE; Tue, 09 Sep 2025 10:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyry-00047v-0V
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:58:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyxC-0006wV-JV
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:04:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyrn-0005pZ-8r
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:58:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvyx6-0006TN-QC
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 10:04:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757426316;
+ s=mimecast20190719; t=1757426643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=z6EGipz7vidKh7WGpdfosCzRAyYOSWnjgsAPpXUl1Zw=;
- b=CMuhl7hrFw239iRJMOhuJS586vkD27ht2gQtd2YpbscYcHZMd+7m58ZZ2tiNBQ8Z+aDjzY
- 1Y5zGJB9V60r92qAv8LvS8EKFwlp0i+J/TEwZuHSuZUj1Tl//npxMru7ZdKkg+kTEsHmhr
- pIH5D/4jEmbFrXesbhxqlv6eNQUtDro=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R9ngnzdsjun91a4UfHkP4l3LzYvtabB+kxVXDrYmjTM=;
+ b=Cg6GUBI91qTE0fFD/NmQUdQsVNszsX01FBz/CY2URaD8YiUKeC6+ZXnsUiBK4/m3/2LGyL
+ hEX+65ek8YUIxH08TyLQQlHLxLPr5CgsoDvvR2KXbNZPRO+s9jyTnyG62BUX4yQNCMm/c5
+ S9dPc+zDX981bJ+yYRyLwnmN5iH6bT8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-nvms_T2wNC6IkGzjdmKgrA-1; Tue, 09 Sep 2025 09:58:34 -0400
-X-MC-Unique: nvms_T2wNC6IkGzjdmKgrA-1
-X-Mimecast-MFC-AGG-ID: nvms_T2wNC6IkGzjdmKgrA_1757426313
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3e067ef24aaso2925825f8f.3
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 06:58:34 -0700 (PDT)
+ us-mta-444-bAvZ7eyHPROWI8cUrxLbtA-1; Tue, 09 Sep 2025 10:04:01 -0400
+X-MC-Unique: bAvZ7eyHPROWI8cUrxLbtA-1
+X-Mimecast-MFC-AGG-ID: bAvZ7eyHPROWI8cUrxLbtA_1757426640
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3e753e78902so322249f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 07:04:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757426313; x=1758031113;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z6EGipz7vidKh7WGpdfosCzRAyYOSWnjgsAPpXUl1Zw=;
- b=NoaEKwTesfSONqyWGN2GjNtGS58RN6v8kgSTSlP+vD7/eeYxi1NBQ4N1bsfzYmAF2n
- VmVpkVPW9Cxb38zCXZrj+NCPAwPejIHPpH3Q7EhSKqggmqb8+TsCw001yZy/dcgjOHVT
- eZ+D7wCQ/gL1fohPARx6FT9y4RCe7QzgxvLmwsuSfKfAn1i35VUruHv2dASfXHWAkjJB
- +Ufy/Uev9GfNKk57EwJs6FyOGWe5GQffHV8Md+gH2d0ldViA7H/hhcKHj2PZIsGqI6nT
- pesvRrgwhY1iOf6FWsepWNHlOaJvQkczc8a4xdWf7zyo+wvDqB8Vu277v2wwFocxlrP6
- Ucbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLIeDbeeXw00GcueiSWTFhn793Ghah1WpLUxPLKWqCiBVoqiwuPOzyWcK0Vja9idyet8MJMOoYmqKY@nongnu.org
-X-Gm-Message-State: AOJu0Yx9T2eKNwAZgnju6HlEWsOWhnzViS6uSeM3/CxaxT0QWiYTg61e
- 3Ur2oxNe3hLSOMsRv+q9+X80gQdZJ4qC8DA47tuNiwoE5ywZW/kImwz8T+Bwk7WMw+PexUEXsFb
- 2QaTOm/KXjPdd3BnwKGhO6xRInIZx6aNCwyBsfTZjT/6gel3PJqoRxogP
-X-Gm-Gg: ASbGncuZe/V5rqUQ+xCSv79MxOuYSzNvwkg7O1nobcW/5CM7Z0gNe3eAjpovu/+mSBp
- wFMjeRZZKhM8iWZdlFT/fbf6ShtzrZjXCwmwz6xYHAx8pvHDYxAbrG/07WW6vFod2T0lKq8WOGX
- vYQNWLe7q/jWgPlu3zD26cjKU1jvGLTHJn/kXNHJgrUFw33TNUWddD3CNfBwzNvE37VfkMQ1b1U
- S17fXhHMG1gVDUKpQEmXYv3g8MJk/sdYxulOz+HyZyyHnx71TsshdcKBn80+F1SC+PfNPHD9Hx5
- /GhLkuJHRenK03J+0SDN7DEhY/pECglcbMHk2+t9prRhiZ2C3n911yKlFHhiO/uAiLAh3d80WvF
- /n42xlg==
-X-Received: by 2002:a05:6000:4211:b0:3ce:f0a5:d597 with SMTP id
- ffacd0b85a97d-3e64c1c34aamr9915655f8f.47.1757426313253; 
- Tue, 09 Sep 2025 06:58:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEx4IlzxsitH9UHIUtpCCO1ep2Fiav12MvBArvi9Yp8UpQH/9Rm+5IhGGLogGrrqgRUzC7ASw==
-X-Received: by 2002:a05:6000:4211:b0:3ce:f0a5:d597 with SMTP id
- ffacd0b85a97d-3e64c1c34aamr9915629f8f.47.1757426312846; 
- Tue, 09 Sep 2025 06:58:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757426640; x=1758031440;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R9ngnzdsjun91a4UfHkP4l3LzYvtabB+kxVXDrYmjTM=;
+ b=ke7l58Jv0ikCFr93rsCtos8q5QuHkrER5xBYMMNNuP57I7uL2Wlw2ptSPzBxsKQcdH
+ LDgoZKiCiVk79CeiQ9QdgouYbYi9E/1TAbGsjD/oVxsL5c5pFRCzv6GbSJY5sCZb53so
+ VRD67HxIsDdXWVbaK04X60lZzaKmqgK5AWl9UBcFAd3+RmYoovjjpAxDUIySXTJzOzj7
+ V/D5PMxkF0bgvQNUaA9QmcP6HiWdZ0i1ywdbHW8Qdq8weD/3IAifcVcVt5JgbItK1FMS
+ eCOTLkxE3KffHAbGJ2g8wHK7YEykUp4W8jEBM+ArjfZRXrexk2kFGS6z9+2+IxfNd8dQ
+ JJ2Q==
+X-Gm-Message-State: AOJu0Yz02tAexoUu/LTMIdnostZEhyGEyCqfSXAaPwAyeEW1j270Ez41
+ ga2k9UqpcamrB6pphpOEP5M6+yozF4Vt/36GLkAETECIgqjf0bibvYGVdwwq+A4cSx+b0SAFAop
+ 6L56jfnpDZ1MdUM8Gj2AJLXvRQUSPmSJ7Tviml0QKGuPGd/4wbRuRhotV
+X-Gm-Gg: ASbGnctxdeaO/8xGCOtfNcUqAv1fan8cDM7xA66VfKt0VUB78D3kCvUVWgaIB+XM0UR
+ 6rW4OwdifzZ/Y+XOzUqoQWX6b7r+4gZCwNhEjwUMOgbfm2y5wEi2RR6uVkDvPgXZM1cUWhEISor
+ NAETv0Ld5PsHikY+5q0v77DuQ/gQOlFloJrXyLDjbAWI7dbHNe3s9r3NXd1POjTuEY72OfK1vs3
+ MfmBpUEhF1Jjxg/6CsLD4qPdsw6pr5U0bonKic+DTuqk9geA7vOm8hhLN0q3a2ypl+mZCgZTu7q
+ KCspu9gAgG0pbCv7MTh8nzbPuH1x+M/77ZcYqHBPqbXiO+F1xIRhQZaexqO7HjVGF4MFchOTrWW
+ qnQPj9w==
+X-Received: by 2002:a05:6000:22c3:b0:3de:78c8:11fc with SMTP id
+ ffacd0b85a97d-3e6497c0668mr10308352f8f.63.1757426639617; 
+ Tue, 09 Sep 2025 07:03:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0valpWlqaryySuF6aVEZlmHGbbGXHNvaXyVAEqLQD43zFQwW6vAeQ0TTuIyxZ7sR37rdy7g==
+X-Received: by 2002:a05:6000:22c3:b0:3de:78c8:11fc with SMTP id
+ ffacd0b85a97d-3e6497c0668mr10308316f8f.63.1757426639112; 
+ Tue, 09 Sep 2025 07:03:59 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
  [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e75223ea04sm2714645f8f.45.2025.09.09.06.58.31
+ ffacd0b85a97d-3e752238851sm2717310f8f.29.2025.09.09.07.03.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 06:58:32 -0700 (PDT)
-Message-ID: <183727ca-2e8a-47d5-b3a8-094afce03268@redhat.com>
-Date: Tue, 9 Sep 2025 15:58:31 +0200
+ Tue, 09 Sep 2025 07:03:58 -0700 (PDT)
+Message-ID: <91a01e52-4ede-4317-b7ef-fc555d3e6825@redhat.com>
+Date: Tue, 9 Sep 2025 16:03:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] vfio-user client functional test
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20250903201931.168317-1-john.levon@nutanix.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 7/9] tests/functional:
+ exec_command_and_wait_for_pattern: add vm arg
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com
+Cc: qemu-devel@nongnu.org, leiyang@redhat.com, steven.sistare@oracle.com,
+ yc-core@yandex-team.ru, peterx@redhat.com, mst@redhat.com, farosas@suse.de,
+ eblake@redhat.com, armbru@redhat.com, philmd@linaro.org, berrange@redhat.com
+References: <20250905135039.2202924-1-vsementsov@yandex-team.ru>
+ <20250905135039.2202924-8-vsementsov@yandex-team.ru>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -131,9 +128,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250903201931.168317-1-john.levon@nutanix.com>
+In-Reply-To: <20250905135039.2202924-8-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -141,9 +138,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,29 +156,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/09/2025 22.19, John Levon wrote:
-> Add a basic functional test for the vfio-user client, along with a couple of
-> test framework extensions to support it.
+On 05/09/2025 15.50, Vladimir Sementsov-Ogievskiy wrote:
+> Allow to specify non default vm for the command.
 > 
-> v4: generalize the test so it's less sensitive to build/environment
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/functional/qemu_test/cmd.py | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> John Levon (2):
->    tests/functional: return output from cmd.py helpers
->    tests/functional: add vm param to cmd.py helpers
-> 
-> Mark Cave-Ayland (1):
->    tests/functional: add a vfio-user smoke test
+> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+> index dc5f422b77..28b36a3a54 100644
+> --- a/tests/functional/qemu_test/cmd.py
+> +++ b/tests/functional/qemu_test/cmd.py
+> @@ -172,7 +172,8 @@ def exec_command(test, command):
+>       _console_interaction(test, None, None, command + '\r')
+>   
+>   def exec_command_and_wait_for_pattern(test, command,
+> -                                      success_message, failure_message=None):
+> +                                      success_message, failure_message=None,
+> +                                      vm=None):
+>       """
+>       Send a command to a console (appending CRLF characters), then wait
+>       for success_message to appear on the console, while logging the.
+> @@ -184,9 +185,11 @@ def exec_command_and_wait_for_pattern(test, command,
+>       :param command: the command to send
+>       :param success_message: if this message appears, test succeeds
+>       :param failure_message: if this message appears, test fails
+> +    :param vm: the VM to use (defaults to test.vm if None)
+>       """
+>       assert success_message
+> -    _console_interaction(test, success_message, failure_message, command + '\r')
+> +    _console_interaction(test, success_message, failure_message, command + '\r',
+> +                         vm=vm)
 
   Hi,
 
-FYI, I've added the first two patches to my current pull request from today 
-(since there's another series on the list that needs similar changes to 
-cmd.py, so we can hopefully get the conflict sorted that way).
+FYI, there was another patch on the list that does something very similar, 
+and I picked it for my pull request today (since it fixed some more spots):
 
-For the third patch, I assume this will go via the vfio-user tree once 
-you've addressed Daniels review comments - if not, let me know, then I can 
-pick it up the next time.
+  https://lore.kernel.org/qemu-devel/20250909135147.612345-20-thuth@redhat.com/
 
-  Thomas
+... so once that got merged, you can likely drop this patch from your series.
+
+  Regards,
+   Thomas
 
 
