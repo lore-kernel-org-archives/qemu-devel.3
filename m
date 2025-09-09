@@ -4,71 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66879CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 19:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10F0CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 20:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw4K9-0004Ef-T2; Tue, 09 Sep 2025 15:48:17 -0400
+	id 1uw4vw-0004BX-Kx; Tue, 09 Sep 2025 16:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uw4K7-0004E5-C9
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 15:48:15 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uw4K0-0008Le-UE
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 15:48:14 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id D064E60CB2
- for <qemu-devel@nongnu.org>; Tue,  9 Sep 2025 21:48:02 +0200 (CEST)
-Received: (qmail 23363 invoked by uid 990); 9 Sep 2025 19:48:02 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Tue, 09 Sep 2025 21:48:02 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uw4vs-0004Ar-37; Tue, 09 Sep 2025 16:27:16 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uw4vi-0005vD-0h; Tue, 09 Sep 2025 16:27:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=C0+arY6wVemkF+4wm84AQ19tIPnxonXXPR3Tx4kUBio=; b=JGSuONK4A2aKO9/rH30Q7giKLY
+ LO/bB9D6SLC5kakLiFgKB9rv3m2Ww8+ixs1yPGTXWszjIwW3ONNXLDwUs9mihg8Jv3piqDPWHSVjg
+ ZaSg5t1MnR3LQc3fBTB4H2Scb489OlsmXmM/CCv20ER7ptc132Yl9BXV+5VIC821488gQ6JGXFz9g
+ JdIyWNz47ES8u9YcYTt2gq8Yd7pDx5cf8y54RN90NeH/AYO9oJkKZUCT4bolyWyEeUzYg5DICtDZE
+ EsOXjoGLjGrMGGV2w9KKigk+bt2sP4o8rspFV0XPKfcvU3t9XFR5GLYw8HV678pBZUwhkAhcNQp/E
+ 3CQfwXsIKTgesFxBohrHjSnwWjTXjFenvtBbURBGSn0yH5ciVMJ3BdXToyooD8nfREJij9F2n3K9j
+ zhZhSMnDiNF8fN+KNHr2XHq0raKOybBiE9FCY149XhNrcBNIJToDMocuPsn0zTCnScCIkEuJnMzjB
+ hukIkBDMCdBJ5FX/RCOe6zoFdLogIrKI3ioy4AKz4vMblVpXUcfya2Wb1LmV1j8N2thrpjpyu5daY
+ Z3H7n8S5RTkY7EBtqIt0knrdJh1yg8j0ZC1zF5SOZfsfCzj3wnzLnutpogM2SOp3VU+G0r9mjh9HN
+ 6VbL5ucBAQbsaFllclgIseNqlNu0nyIwSOiJ3O49g=;
+Received: from [2a02:8012:2f01::15d6]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uw4tU-0003lS-Ac; Tue, 09 Sep 2025 21:24:51 +0100
+Message-ID: <041b6cb6-efc8-415d-b8d1-a8706ac49202@ilande.co.uk>
+Date: Tue, 9 Sep 2025 21:26:43 +0100
 MIME-Version: 1.0
-Date: Tue, 09 Sep 2025 19:48:02 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <a2eaee5105fb4b3302e2f65bb8bbea987a85454e@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v6 00/25] tcg-plugins: add hooks for discontinuities
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, "=?utf-8?B?QWxleCBCZW5uw6ll?="
- <alex.bennee@linaro.org>
-In-Reply-To: <819c9f3b-13f4-2ef2-e651-5cfec52f2e12@eik.bme.hu>
-References: <cover.1757018626.git.neither@nut.email>
- <a1c2d356-e664-2632-002f-d0b9bea06e1e@eik.bme.hu>
- <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
- <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
- <3c8d0c3733edc984937ac33a417488f92dccb148@nut.email>
- <819c9f3b-13f4-2ef2-e651-5cfec52f2e12@eik.bme.hu>
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.157009) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.257009
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=l8G0S4Dwsx9+t/5gwBOqRP+ct6TC1WJia2pS7jziG6s=;
- b=kgQBivIG0zPn3uL24caud7iA22ghmAbJGepDPs/Dm2O4y+61Gy7yjJf0aXstuMF59izcbD/Riv
- Z2QpxEki5+mUSyNrsLD9wsF3lnthonwH6sECoIg3PIMBzL8Csek9nGI8TI4/iQomJYOKVjL1WfmT
- s48aKF3UHn5ytBxtlxDsGySVgAIEv4CuQpvMk/yXyU8k5uy5/kgQ5J/jDkyoKTvQNJi2zrtn2XaF
- EpfYBpwF51dvn6Y3RMuXKK+bY07A+W665jqUtBvhWtGs9Qq4Q95Ys+1veCS3J+nDo1TzHUZNIcWq
- CsxwapeDHT9jJOuMIMW+IldyVgE601BcxiBopkeIe0x7GQEAWsyKDAwSti7lD07SLmmw2IHxmWba
- MRaKcJ+nNoyhycakPQSc2TgCNrHt+PN/nS69G1nyBYFzQlJYdKnbIWJ/i+wZy15fR2xP7k6wPJxP
- yAa0+pAw+iZbKwkRInCvBZIjbtR7SJRGQwL4OdQvOMHOXrbDUV8/YpyOppQLzvWAC20hipLulwbi
- vwfZef0B+RE1xvnG4QwuGOjSUXnJJsOl2DJojT0UVZUiYDgDCLSH+BiovPhk9VL/aitda9pwdXYU
- K3uQeCm8yqU2ppRJotWpExpi+FKZfYaA8W8klFRS19/AcvpFRS1Q43IKeVbdkecoJOKjknaMMWPH
- 8=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
+User-Agent: Mozilla Thunderbird
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20250906-use-v1-9-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01::15d6
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 09/22] sun4u: Fix AddressSpace exposure timing
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,66 +130,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-September 7, 2025 at 10:21 PM, "BALATON Zoltan" wrote:
-> I have uploaded some PPC binaries for the STREAM benchmark that I teste=
-d with before here:
-> http://zero.eik.bme.hu/~balaton/qemu/stream-test.zip
-> which may excercise this if run on sam460ex or ppce500 machines but I d=
-on't have a scripted test case for that. There is some docs on how to run=
- Linux on these machines here:
-> https://www.qemu.org/docs/master/system/target-ppc.html
+On 06/09/2025 03:11, Akihiko Odaki wrote:
 
-After spending too much time looking for usable root-images (and then
-giving up and just stuffing the executables in an ext2), I got to run
-these beanchmarks on Linux 4.4.5 configured for the Sam460ex from [1].
+> sun4u-iommu is not hotpluggable but its instance can still be created
+> and destroyed when processing the device-list-properties QMP command.
+> Exposing such a temporary instance to AddressSpace should be
+> avoided because it leaks the instance.
+> 
+> Expose instances to the AddressSpace at their realization time so that
+> it won't happen for the temporary instances.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>   hw/sparc64/sun4u_iommu.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
+> index 14645f475a09ed3a6bef77f8d8b4b6b4b36ae40a..b6568551935610116d33481ae8d9fc08f02ecf7b 100644
+> --- a/hw/sparc64/sun4u_iommu.c
+> +++ b/hw/sparc64/sun4u_iommu.c
+> @@ -298,18 +298,25 @@ static void iommu_init(Object *obj)
+>       memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+>                                TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
+>                                "iommu-sun4u", UINT64_MAX);
+> -    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+>   
+>       memory_region_init_io(&s->iomem, obj, &iommu_mem_ops, s, "iommu",
+>                             IOMMU_NREGS * sizeof(uint64_t));
+>       sysbus_init_mmio(sbd, &s->iomem);
+>   }
+>   
+> +static void iommu_realize(DeviceState *dev, Error **errp)
+> +{
+> +    IOMMUState *s = SUN4U_IOMMU(dev);
+> +
+> +    address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+> +}
+> +
+>   static void iommu_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+>       device_class_set_legacy_reset(dc, iommu_reset);
+> +    dc->realize = iommu_realize;
+>   }
+>   
+>   static const TypeInfo iommu_info = {
 
-I ran streamPPCpowerpcO3 on qemu with these patches:
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
--------------------------------------------------------------
-Function    Best Rate MB/s  Avg time     Min time     Max time
-Copy:            2867.6     0.056828     0.055795     0.061792
-Scale:           1057.5     0.153282     0.151305     0.158115
-Add:             1308.8     0.187095     0.183380     0.193672
-Triad:           1111.6     0.220863     0.215902     0.230440
--------------------------------------------------------------
 
-After doing a clean build, with the fans still audible:
+ATB,
 
--------------------------------------------------------------
-Function    Best Rate MB/s  Avg time     Min time     Max time
-Copy:            2932.9     0.055131     0.054554     0.055667
-Scale:           1067.9     0.151520     0.149832     0.155000
-Add:             1324.9     0.184807     0.181150     0.191386
-Triad:           1122.0     0.220080     0.213896     0.229302
--------------------------------------------------------------
+Mark.
 
-On qemu (6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8) without these
-patches, but plugins enabled:
-
--------------------------------------------------------------
-Function    Best Rate MB/s  Avg time     Min time     Max time
-Copy:            2972.1     0.054407     0.053834     0.054675
-Scale:           1068.6     0.151503     0.149726     0.154594
-Add:             1327.6     0.185160     0.180784     0.193181
-Triad:           1127.2     0.219249     0.212915     0.229230
--------------------------------------------------------------
-
-And on qemu (6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8) without these
-patches, with plugins disabled:
-
--------------------------------------------------------------
-Function    Best Rate MB/s  Avg time     Min time     Max time
-Copy:            2983.4     0.055141     0.053630     0.060013
-Scale:           1058.3     0.152353     0.151186     0.155072
-Add:             1323.9     0.184707     0.181279     0.188868
-Triad:           1128.2     0.218674     0.212734     0.230314
--------------------------------------------------------------
-
-I fail to see any significant indication that these patches, or
-plugins in general, would result in a degredation of performance.
-
-Regards,
-Julian
-
-[1]: http://www.supertuxkart-amiga.de/amiga/sam.html#downloads
 
