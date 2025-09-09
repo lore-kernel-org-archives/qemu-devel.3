@@ -4,120 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1287ECAC583
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 16:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7B2CAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 16:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw0wT-0007km-58; Tue, 09 Sep 2025 12:11:37 -0400
+	id 1uw1Gv-0007Ih-7R; Tue, 09 Sep 2025 12:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1uw0wO-0007kK-FX
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:11:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw1Gs-0007Hz-OH
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:32:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1uw0wG-0001n0-J3
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:11:31 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5899LQ0f009065
- for <qemu-devel@nongnu.org>; Tue, 9 Sep 2025 16:11:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=1S+8/GmANSsit+oC8iJ8NZuI
- Ic/8K6Qrgest0rjjDOY=; b=Mhb1oDNpV4uATpDgJupqcF8lTBA0mBWnQQ3vbJi0
- B9kL7lYWjS8DCOGwVA2w+v4M5xn4faoMigsOSyu79Lli3kL8IlBNU0m1slbDeHyu
- 7XONJ/COJgnMQNFEecS6chwe3ijcBv5dUQbU1oZwBOz2aanRmBBlVEJje8pi70Xi
- FHRfRM4Mork7AMpzEOZYk3485zlDnEvT21RMm1yxNHcAp2hF4hRt+CxVYG7ZD++3
- CG6yXChXXyYbHRD2VCYhfOyieAReRZUkzhc0zv/kUj3WS4WooLa5FVAXUtprO0wN
- bEWHIsL7sh5b4PyWeQIUDTeMN4IwUgZ6FwmZ8Vy6ptKyhw==
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491qhdwn4a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 16:11:20 +0000 (GMT)
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e9d67ca7a23so6854316276.0
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 09:11:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw1Gk-0004J1-MH
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 12:32:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757435549;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=A/rS49g7/DUOwKVgpfoCrHTaeaH64NL9mhQzTr6LNGM=;
+ b=FS529h4S/uko2Rnvk21R9AXdxkCa+v5Umo3HBdPxJmZadl1qcFwgSCtTOF4VOCFAOuc7Xp
+ 4a+AGbgkpUURkHVQo634aUehchj+4n3wqHFwU2KbxPHBrr9csFEdQ5c8XZGUpblfiFibH8
+ Yeg9FQEQm/gkDbrQAcwPECX+O9DuoPw=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-mmnwLU6ZPIyZFe1gW2nu4A-1; Tue, 09 Sep 2025 12:32:28 -0400
+X-MC-Unique: mmnwLU6ZPIyZFe1gW2nu4A-1
+X-Mimecast-MFC-AGG-ID: mmnwLU6ZPIyZFe1gW2nu4A_1757435547
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7ffb4a65951so2285755685a.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 09:32:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757434280; x=1758039080;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1S+8/GmANSsit+oC8iJ8NZuIIc/8K6Qrgest0rjjDOY=;
- b=pPu8+eOSBt08t6JJ2Xqcz5oMjHQ06r54j0LQuLWeYCx+4+1B3HkbeszXIf+3XucJVN
- NKnwhA5IpktEBkMIXgvF0OUcQ6WepAAh8YQqaLlRUws24Sl+Alli4SjCLrDNQpO34t8I
- mNpt0KsNNYetWZI9H8+rMBKKKr43GpSn95PJ8oRlsmtj92v7MXR94RIS3MfJYv/eGCjL
- I+U+Vn266juJZg527q/Mg8xwvTiE9ktJqIidN/CZ6WiRjzdadWmVNt72IpbpE4u1Wx5W
- R4kPmCzxAPHJ/B+OY+EbsqjCjFlI9F0NHblhiX0TSObrViT8NWRoO/2gsxjsonHCpvNa
- YwTw==
-X-Gm-Message-State: AOJu0YwjegW83dgTsW+g5AUWt2QG/N5S3vC5nqiiFGYo3RiGMh0EtHSJ
- ITLO4S/xNOXaEyxLi5tu21j4iRqyuzdK+wzpY+fadZZgGdzxEFlOHpAMSEDLxWH+qcAwWIr2aey
- WOt35gmwwUpZ9nCQisA56M1BSCgAutB68+sskzCsICJnhoB0OOSp/bLPsb7E6yHyFz3jtmPHdGO
- KGu27l99vuOx2nykOV1QgD/azWV85OZudU
-X-Gm-Gg: ASbGncuAix8mR5Ova/F2lLQaM0FKB1dHOHQJhyLXmE+mpb02Ro82Bt9bu5I2p67w3da
- sqnI59qEJ3fUi8DkKOrS6sTFGqZiYWYyozhig6YUkmcWq6CXHMt/icKbLH+Vk0kK0YSjwO8cgVM
- YsroNKFXNB+fBnOWhKZWoF8Ms=
-X-Received: by 2002:a25:9387:0:b0:e93:2d7c:96f2 with SMTP id
- 3f1490d57ef6-e9f677a21ffmr8755306276.24.1757434278885; 
- Tue, 09 Sep 2025 09:11:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGwyzQ2OT7+CTlPjbvl6aLpQ/YirsPcNJxZFKkmdwdcdeReC5LZyblnetF+TIJfQdRM+45S7Y6gWKz9AroUnk=
-X-Received: by 2002:a25:9387:0:b0:e93:2d7c:96f2 with SMTP id
- 3f1490d57ef6-e9f677a21ffmr8755266276.24.1757434278384; Tue, 09 Sep 2025
- 09:11:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757435547; x=1758040347;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A/rS49g7/DUOwKVgpfoCrHTaeaH64NL9mhQzTr6LNGM=;
+ b=krhyXx8ilTgVJu2RIbm4s2WPD2w2xMBGQMc1bpizrhHaxk3Ns6cEMJZFHQlhIRotRl
+ Pjc+erwzEf/lETEkJBegCGxriAKrxZ3/HKPx/YXe166jBt+cVTdel7EMzYE9fMPPR868
+ 6V0G2qIfEibdSh7fH3/aH36j4MB1qEQrIfuQS+2LoRARyxSPmM7fK/6ziCQhWObYH7YJ
+ t0YlLawYzZh+PWiYJenHpgXMNuOJqsH4c/debW18UNAMhHXdbpwKkopGq8cdnobmYTcR
+ HovW5ck1Lmxo8bPeyboPzePJ0B+0okGIvRw1ifRo+mDS9ozSjNEG6JbcUQE1KP8KbwjE
+ JbVw==
+X-Gm-Message-State: AOJu0YxPDUt4pqKzu6MFWcQ8OLJsmJADAzygouzQC184SeoULs64gMYv
+ q9fULcmYypLKuZ8X1oni/7DO9sO+sJsiaE4sQ43gvtDMUWEGpZPWUVkPoy/8Kx1ZAQz9rGIyupu
+ aEIV3cvMV7Wjp/4pyF+MqbxNvDYS+RgaMqtF+watxQHKBOzjc8sEeV0Jw
+X-Gm-Gg: ASbGncuGO4Hf80ho9XNSbTbaW724FOZYrS37gA6g+bFa+BF0JvdSoXKDEWvUwkvL5wW
+ G8aw4RmCVkfyx6k6xqCLtXxt5ZxkTqOA50vTk78/slESM6SDalLnSrkDlX66Vgieju5YnZ8xigQ
+ ouoZsLrA8P8OpuROCwxTR5445JQP4QFn8Yf3CtfDO5BbKkSQhjWgAYuQpvD0F9nQKyOolYtP+3C
+ 1Y/LxKa0vJGIaDwFVrRioytmrPd1Bf+3hjqoJrHoLwIQE8EHN4z9JA2Z3qw0DLjfoIbz8HG7YCa
+ d6h1g9nZIBfjhcdTer7uTmzGC9zY39w/
+X-Received: by 2002:a05:620a:1a99:b0:7e8:4400:d082 with SMTP id
+ af79cd13be357-813bf8b5129mr1097899085a.36.1757435546793; 
+ Tue, 09 Sep 2025 09:32:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYNGEfINgg/TBBtDaAqqoDuo4xghfWy76CqQGAlUOKkE5i4C3y/vGocBraWqLq4UbRmcK/RQ==
+X-Received: by 2002:a05:620a:1a99:b0:7e8:4400:d082 with SMTP id
+ af79cd13be357-813bf8b5129mr1097891485a.36.1757435545857; 
+ Tue, 09 Sep 2025 09:32:25 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b61bbf161dsm11364521cf.44.2025.09.09.09.32.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Sep 2025 09:32:25 -0700 (PDT)
+Date: Tue, 9 Sep 2025 12:32:12 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH V3 7/9] migration: cpr-exec mode
+Message-ID: <aMBWjBGPnmz3rtwh@x1.local>
+References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
+ <1755191843-283480-8-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-References: <20250826184504.510279-1-vacha.bhavsar@oss.qualcomm.com>
- <20250826184504.510279-4-vacha.bhavsar@oss.qualcomm.com>
- <CAFEAcA9_wXKT6zfpCSty2bRjVpCSyzLcdfWuJofJEZcZuqRgYQ@mail.gmail.com>
- <CAEWVDmttumhB+kx7RExyTV1vUoUCY=ED_qbj=7tbBx0hDPeqUg@mail.gmail.com>
- <CAFEAcA8Qnv+_=-MeNuHuZm3DuAK7A-DqYo0GsArQCk62GF0jEQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8Qnv+_=-MeNuHuZm3DuAK7A-DqYo0GsArQCk62GF0jEQ@mail.gmail.com>
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Date: Tue, 9 Sep 2025 12:11:07 -0400
-X-Gm-Features: AS18NWAmeO83ueie5vbU9TYvI5nU4SulUn86kX9q93t0NTqgyKCioEk6WfARH6g
-Message-ID: <CAEWVDmvwMUxYeU_130uThFUWByWt_6F=C+rpmaFyNFFM8Gc0_Q@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] target/arm: Added test case for SME register
- exposure to GDB
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e12baf063e608d2a"
-X-Proofpoint-GUID: irt7sAzedhkA5Yupc8I5es_gor48PKZc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDAzNCBTYWx0ZWRfX8o/EQJNW3U0n
- M3hbmQsJQlv1ZT6+EBZb4stVW/08GI74SKhzNuSC3+1cmZZmiq+lRa4nhc6HrMskLm+LAPa7cE7
- 9rew6LIPdF22KpGgUpnAoU0qPDLYEITHDxTBYcVGhJysyFb/XxoCblBq3xanm2JMOHpPM2Tbz1r
- aNBHp4TB31F+jVQ+oAAoMFMksxypte1fewRRuOxa1Cc8e/CmSjy/H5iqXvzp6mYWDSLFx3Zk7EF
- 6Vq8BgSqnuw3KtpENgp5+F7EldDQ2i9JpI8oXbeoZHvWteRyb1Q8Gy84cRTiCxMnWg8cmb+zv03
- O/eFBUiEzhlRY00khUJYBcFQa6vzazC4Z/8pYnPUO+8bJyGNJNGB4SPrJ5QQnwo95n87bRvPGuK
- 7CdchPdG
-X-Authority-Analysis: v=2.4 cv=YOCfyQGx c=1 sm=1 tr=0 ts=68c051a8 cx=c_pps
- a=OxDXTYJfYfhXdKRNwaci0A==:117 a=yJojWOMRYYMA:10 a=CCpqsmhAAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=dw954JRmwQRGsdTYt74A:9 a=QEXdDO2ut3YA:10
- a=xsCOeRy3ZukA:10 a=Y4SkpI06CHAA:10 a=1BFMoyKHhG91QSF6OGcA:9
- a=57FbZqFqGi0K-PKL:21 a=lqcHg5cX4UMA:10 a=cxVRdw0VslE0MYWkNwNp:22
- a=ul9cdbp4aOFLsgKbc677:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: irt7sAzedhkA5Yupc8I5es_gor48PKZc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-09_02,2025-09-08_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080034
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1755191843-283480-8-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,109 +107,431 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e12baf063e608d2a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Aug 14, 2025 at 10:17:21AM -0700, Steve Sistare wrote:
+> Add the cpr-exec migration mode.  Usage:
+>   qemu-system-$arch -machine aux-ram-share=on ...
+>   migrate_set_parameter mode cpr-exec
+>   migrate_set_parameter cpr-exec-command \
+>     <arg1> <arg2> ... -incoming <uri-1> \
+>   migrate -d <uri-1>
+> 
+> The migrate command stops the VM, saves state to uri-1,
+> directly exec's a new version of QEMU on the same host,
+> replacing the original process while retaining its PID, and
+> loads state from uri-1.  Guest RAM is preserved in place,
+> albeit with new virtual addresses.
+> 
+> The new QEMU process is started by exec'ing the command
+> specified by the @cpr-exec-command parameter.  The first word of
+> the command is the binary, and the remaining words are its
+> arguments.  The command may be a direct invocation of new QEMU,
+> or may be a non-QEMU command that exec's the new QEMU binary.
+> 
+> This mode creates a second migration channel that is not visible
+> to the user.  At the start of migration, old QEMU saves CPR state
+> to the second channel, and at the end of migration, it tells the
+> main loop to call cpr_exec.  New QEMU loads CPR state early, before
+> objects are created.
+> 
+> Because old QEMU terminates when new QEMU starts, one cannot
+> stream data between the two, so uri-1 must be a type,
+> such as a file, that accepts all data before old QEMU exits.
+> Otherwise, old QEMU may quietly block writing to the channel.
+> 
+> Memory-backend objects must have the share=on attribute, but
+> memory-backend-epc is not supported.  The VM must be started with
+> the '-machine aux-ram-share=on' option, which allows anonymous
+> memory to be transferred in place to the new process.  The memfds
+> are kept open across exec by clearing the close-on-exec flag, their
+> values are saved in CPR state, and they are mmap'd in new QEMU.
 
-Hi,
+Some generic questions around exec..
 
-Got it! I have sent over an updated version that avoids the
-int cast and associated checks for an appropriate gdb version.
+How do we know we can already safely kill all threads?
 
-Thanks,
-Vacha
+IIUC vcpu threads must be all stopped.  I wonder if we want to assert that
+in the exec helper below.
 
-On Tue, Sep 9, 2025 at 4:55=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
-org>
-wrote:
+What about rest threads?  RCU threads should be for freeing resources,
+looks ok if to be ignored.  But others?
 
-> On Mon, 8 Sept 2025 at 19:32, Vacha Bhavsar
-> <vacha.bhavsar@oss.qualcomm.com> wrote:
->
-> > >So the only difference between these two branches is that we are
-> > >checking "int(v) =3D=3D MAGIC" rather than "v =3D=3D MAGIC" ?
-> >
-> >
-> >
-> > >Is this a "one GDB only works one way, and the other GDB only
-> > >works the other way" case? Or is there a real interesting thing
-> > >we'd like to test involving the cast ?
->
-> > Yes, the only difference between the two branches is the presence
-> > of the int cast. This seems to be an issue limited to specific versions
-> >
-> > of gdb. This has been discussed with the gdb team
-> > (https://sourceware.org/pipermail/gdb/2025-August/051868.html,
-> > https://sourceware.org/pipermail/gdb/2025-August/051878.html) and
-> > a bug has been filed. With additional tests I have found that the
-> > int cast causes no issues with the testcase when running gdb16.1
-> > or newer. Other than this issue there is no intention on our end
-> > of testing anything interesting regarding casting as the int cast
-> > was included to stay aligned with the existing SVE test.
->
-> So if we can test QEMU's gdbstub functionality by writing
-> the test in a way that avoids the int cast and which doesn't
-> lose coverage, we should just do that. That would mean
-> we don't need to have checks for whether the gdb can do
-> the cast and multiple paths through the test code.
->
-> -- PMM
->
+Or would process states still matter in some cases? e.g. when QEMU is
+talking to another vhost-user, or vfio-user, or virtio-fs, or ... whatever
+other process, then suddenly the other process doesn't recognize this QEMU
+anymore?
 
---000000000000e12baf063e608d2a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+What about file locks or similiar shared locks that can be running in an
+iothread?  Is it possible that old QEMU took some shared locks, suddenly
+qemu exec(), then the lock is never released?
 
-<div dir=3D"ltr">Hi,<div><br></div><div>Got it! I have sent over an updated=
- version that avoids the</div><div>int cast and associated checks for an ap=
-propriate gdb version.</div><div><br></div><div>Thanks,</div><div>Vacha</di=
-v></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"lt=
-r" class=3D"gmail_attr">On Tue, Sep 9, 2025 at 4:55=E2=80=AFAM Peter Maydel=
-l &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">O=
-n Mon, 8 Sept 2025 at 19:32, Vacha Bhavsar<br>
-&lt;<a href=3D"mailto:vacha.bhavsar@oss.qualcomm.com" target=3D"_blank">vac=
-ha.bhavsar@oss.qualcomm.com</a>&gt; wrote:<br>
-<br>
-&gt; &gt;So the only difference between these two branches is that we are<b=
-r>
-&gt; &gt;checking &quot;int(v) =3D=3D MAGIC&quot; rather than &quot;v =3D=
-=3D MAGIC&quot; ?<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; &gt;Is this a &quot;one GDB only works one way, and the other GDB only=
-<br>
-&gt; &gt;works the other way&quot; case? Or is there a real interesting thi=
-ng<br>
-&gt; &gt;we&#39;d like to test involving the cast ?<br>
-<br>
-&gt; Yes, the only difference between the two branches is the presence<br>
-&gt; of the int cast. This seems to be an issue limited to specific version=
-s<br>
-&gt;<br>
-&gt; of gdb. This has been discussed with the gdb team<br>
-&gt; (<a href=3D"https://sourceware.org/pipermail/gdb/2025-August/051868.ht=
-ml" rel=3D"noreferrer" target=3D"_blank">https://sourceware.org/pipermail/g=
-db/2025-August/051868.html</a>,<br>
-&gt; <a href=3D"https://sourceware.org/pipermail/gdb/2025-August/051878.htm=
-l" rel=3D"noreferrer" target=3D"_blank">https://sourceware.org/pipermail/gd=
-b/2025-August/051878.html</a>) and<br>
-&gt; a bug has been filed. With additional tests I have found that the<br>
-&gt; int cast causes no issues with the testcase when running gdb16.1<br>
-&gt; or newer. Other than this issue there is no intention on our end<br>
-&gt; of testing anything interesting regarding casting as the int cast<br>
-&gt; was included to stay aligned with the existing SVE test.<br>
-<br>
-So if we can test QEMU&#39;s gdbstub functionality by writing<br>
-the test in a way that avoids the int cast and which doesn&#39;t<br>
-lose coverage, we should just do that. That would mean<br>
-we don&#39;t need to have checks for whether the gdb can do<br>
-the cast and multiple paths through the test code.<br>
-<br>
--- PMM<br>
-</blockquote></div>
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  qapi/migration.json       | 25 +++++++++++++++-
+>  include/migration/cpr.h   |  1 +
+>  migration/cpr-exec.c      | 74 +++++++++++++++++++++++++++++++++++++++++++++++
+>  migration/cpr.c           | 26 ++++++++++++++++-
+>  migration/migration.c     | 10 ++++++-
+>  migration/ram.c           |  1 +
+>  migration/vmstate-types.c |  8 +++++
+>  migration/trace-events    |  1 +
+>  8 files changed, 143 insertions(+), 3 deletions(-)
+> 
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index ea410fd..cbc90e8 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -694,9 +694,32 @@
+>  #     until you issue the `migrate-incoming` command.
+>  #
+>  #     (since 10.0)
+> +#
+> +# @cpr-exec: The migrate command stops the VM, saves state to the
+> +#     migration channel, directly exec's a new version of QEMU on the
+> +#     same host, replacing the original process while retaining its
+> +#     PID, and loads state from the channel.  Guest RAM is preserved
+> +#     in place.  Devices and their pinned pages are also preserved for
+> +#     VFIO and IOMMUFD.
+> +#
+> +#     Old QEMU starts new QEMU by exec'ing the command specified by
+> +#     the @cpr-exec-command parameter.  The command may be a direct
+> +#     invocation of new QEMU, or may be a non-QEMU command that exec's
+> +#     the new QEMU binary.
+> +#
+> +#     Because old QEMU terminates when new QEMU starts, one cannot
+> +#     stream data between the two, so the channel must be a type,
+> +#     such as a file, that accepts all data before old QEMU exits.
+> +#     Otherwise, old QEMU may quietly block writing to the channel.
 
---000000000000e12baf063e608d2a--
+The CPR channel (in case of exec mode) is persisted via env var.  Why not
+do that too for the main migration stream?
+
+Does it has something to do with the size of the binary chunk to store all
+device states (and some private mem)?  Or other concerns?
+
+It just feels like it would look cleaner for cpr-exec to not need -incoming
+XXX at all, e.g. if the series already used envvar anyway, we can use that
+too so new QEMU would know it's cpr-exec incoming migration, without
+-incoming parameter at all.
+
+> +#
+> +#     Memory-backend objects must have the share=on attribute, but
+> +#     memory-backend-epc is not supported.  The VM must be started
+> +#     with the '-machine aux-ram-share=on' option.
+> +#
+> +#     (since 10.2)
+>  ##
+>  { 'enum': 'MigMode',
+> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
+>  
+>  ##
+>  # @ZeroPageDetection:
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index aaeec02..e99e48e 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -54,6 +54,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index, bool cpr,
+>  QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+>  QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+>  
+> +void cpr_exec_init(void);
+>  QEMUFile *cpr_exec_output(Error **errp);
+>  QEMUFile *cpr_exec_input(Error **errp);
+>  void cpr_exec_persist_state(QEMUFile *f);
+> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+> index 2c32e9c..7d0429f 100644
+> --- a/migration/cpr-exec.c
+> +++ b/migration/cpr-exec.c
+> @@ -6,15 +6,20 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qemu/cutils.h"
+> +#include "qemu/error-report.h"
+>  #include "qemu/memfd.h"
+>  #include "qapi/error.h"
+>  #include "io/channel-file.h"
+>  #include "io/channel-socket.h"
+> +#include "block/block-global-state.h"
+> +#include "qemu/main-loop.h"
+>  #include "migration/cpr.h"
+>  #include "migration/qemu-file.h"
+> +#include "migration/migration.h"
+>  #include "migration/misc.h"
+>  #include "migration/vmstate.h"
+>  #include "system/runstate.h"
+> +#include "trace.h"
+>  
+>  #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
+>  
+> @@ -92,3 +97,72 @@ QEMUFile *cpr_exec_input(Error **errp)
+>      lseek(mfd, 0, SEEK_SET);
+>      return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
+>  }
+> +
+> +static bool preserve_fd(int fd)
+> +{
+> +    qemu_clear_cloexec(fd);
+> +    return true;
+> +}
+> +
+> +static bool unpreserve_fd(int fd)
+> +{
+> +    qemu_set_cloexec(fd);
+> +    return true;
+> +}
+> +
+> +static void cpr_exec(char **argv)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +    Error *err = NULL;
+> +
+> +    /*
+> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
+> +     * earlier because they should not persist across miscellaneous fork and
+> +     * exec calls that are performed during normal operation.
+> +     */
+> +    cpr_walk_fd(preserve_fd);
+> +
+> +    trace_cpr_exec();
+> +    execvp(argv[0], argv);
+> +
+> +    cpr_walk_fd(unpreserve_fd);
+> +
+> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
+> +    error_report_err(error_copy(err));
+
+Feel free to ignore my question in the other patch, so we dump some errors
+here.. which makes sense.
+
+> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+
+This is indeed FAILED migration, however it seems to imply it can catch
+whatever possible failures that incoming could have.  Strictly speaking
+this is not migration failure, but exec failure..  Maybe we need a comment
+above this one explaining that we won't be able to capture any migration
+issues, it's too late after exec() succeeded, so there's higher risk of
+crashing the VM.
+
+Luckily we still are on the same host, so things like mismatched kernel
+versions at least won't crash this migration.. aka not as easy to fail a
+migration as cross- hosts indeed. But still, I'd say I agree with Vladimir
+that this is a major flaw of the design if so.
+
+> +    migrate_set_error(s, err);
+> +
+> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+> +
+> +    err = NULL;
+> +    if (!migration_block_activate(&err)) {
+> +        /* error was already reported */
+> +        return;
+> +    }
+> +
+> +    if (runstate_is_live(s->vm_old_state)) {
+> +        vm_start();
+> +    }
+> +}
+> +
+> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+> +                             Error **errp)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +
+> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
+> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
+> +        qemu_system_exec_request(cpr_exec, s->parameters.cpr_exec_command);
+> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+> +        cpr_exec_unpersist_state();
+> +    }
+> +    return 0;
+> +}
+> +
+> +void cpr_exec_init(void)
+> +{
+> +    static NotifierWithReturn exec_notifier;
+> +
+> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
+> +                                MIG_MODE_CPR_EXEC);
+
+Why using a notifier?  IMHO exec() is something important enough to not be
+hiding in a notifier..  and CPR is already a major part of migration in the
+framework, IMHO it'll be cleaner to invoke any CPR request in the migration
+subsystem.  AFAIU notifiers are normally only for outside migration/ purposes.
+
+> +}
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 021bd6a..2078d05 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -198,6 +198,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>      if (mode == MIG_MODE_CPR_TRANSFER) {
+>          g_assert(channel);
+>          f = cpr_transfer_output(channel, errp);
+> +    } else if (mode == MIG_MODE_CPR_EXEC) {
+> +        f = cpr_exec_output(errp);
+>      } else {
+>          return 0;
+>      }
+> @@ -215,6 +217,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>          return ret;
+>      }
+>  
+> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+> +        cpr_exec_persist_state(f);
+> +    }
+> +
+>      /*
+>       * Close the socket only partially so we can later detect when the other
+>       * end closes by getting a HUP event.
+> @@ -226,6 +232,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>      return 0;
+>  }
+>  
+> +static bool unpreserve_fd(int fd)
+> +{
+> +    qemu_set_cloexec(fd);
+> +    return true;
+> +}
+> +
+>  int cpr_state_load(MigrationChannel *channel, Error **errp)
+>  {
+>      int ret;
+> @@ -237,6 +249,12 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>          mode = MIG_MODE_CPR_TRANSFER;
+>          cpr_set_incoming_mode(mode);
+>          f = cpr_transfer_input(channel, errp);
+> +    } else if (cpr_exec_has_state()) {
+> +        mode = MIG_MODE_CPR_EXEC;
+> +        f = cpr_exec_input(errp);
+> +        if (channel) {
+> +            warn_report("ignoring cpr channel for migration mode cpr-exec");
+
+This looks like dead code?  channel can't be set when reaching here, AFAIU..
+
+> +        }
+>      } else {
+>          return 0;
+>      }
+> @@ -245,6 +263,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>      }
+>  
+>      trace_cpr_state_load(MigMode_str(mode));
+> +    cpr_set_incoming_mode(mode);
+>  
+>      v = qemu_get_be32(f);
+>      if (v != QEMU_CPR_FILE_MAGIC) {
+> @@ -266,6 +285,11 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>          return ret;
+>      }
+>  
+> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+> +        /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
+> +        cpr_walk_fd(unpreserve_fd);
+> +    }
+> +
+>      /*
+>       * Let the caller decide when to close the socket (and generate a HUP event
+>       * for the sending side).
+> @@ -286,7 +310,7 @@ void cpr_state_close(void)
+>  bool cpr_incoming_needed(void *opaque)
+>  {
+>      MigMode mode = migrate_mode();
+> -    return mode == MIG_MODE_CPR_TRANSFER;
+> +    return mode == MIG_MODE_CPR_TRANSFER || mode == MIG_MODE_CPR_EXEC;
+>  }
+>  
+>  /*
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 271c521..d604284 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -333,6 +333,7 @@ void migration_object_init(void)
+>  
+>      ram_mig_init();
+>      dirty_bitmap_mig_init();
+> +    cpr_exec_init();
+>  
+>      /* Initialize cpu throttle timers */
+>      cpu_throttle_init();
+> @@ -1797,7 +1798,8 @@ bool migrate_mode_is_cpr(MigrationState *s)
+>  {
+>      MigMode mode = s->parameters.mode;
+>      return mode == MIG_MODE_CPR_REBOOT ||
+> -           mode == MIG_MODE_CPR_TRANSFER;
+> +           mode == MIG_MODE_CPR_TRANSFER ||
+> +           mode == MIG_MODE_CPR_EXEC;
+>  }
+>  
+>  int migrate_init(MigrationState *s, Error **errp)
+> @@ -2146,6 +2148,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>          return false;
+>      }
+>  
+> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
+> +        !s->parameters.has_cpr_exec_command) {
+> +        error_setg(errp, "cpr-exec mode requires setting cpr-exec-command");
+> +        return false;
+> +    }
+> +
+>      if (migration_is_blocked(errp)) {
+>          return false;
+>      }
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 7208bc1..6730a41 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -228,6 +228,7 @@ bool migrate_ram_is_ignored(RAMBlock *block)
+>      MigMode mode = migrate_mode();
+>      return !qemu_ram_is_migratable(block) ||
+>             mode == MIG_MODE_CPR_TRANSFER ||
+> +           mode == MIG_MODE_CPR_EXEC ||
+>             (migrate_ignore_shared() && qemu_ram_is_shared(block)
+>                                      && qemu_ram_is_named_file(block));
+>  }
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index 741a588..1aa0573 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -321,6 +321,10 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
+>                    const VMStateField *field)
+>  {
+>      int32_t *v = pv;
+> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+> +        qemu_get_sbe32s(f, v);
+> +        return 0;
+> +    }
+>      *v = qemu_file_get_fd(f);
+>      return 0;
+>  }
+> @@ -329,6 +333,10 @@ static int put_fd(QEMUFile *f, void *pv, size_t size,
+>                    const VMStateField *field, JSONWriter *vmdesc)
+>  {
+>      int32_t *v = pv;
+> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+> +        qemu_put_sbe32s(f, v);
+> +        return 0;
+> +    }
+>      return qemu_file_put_fd(f, *v);
+>  }
+>  
+> diff --git a/migration/trace-events b/migration/trace-events
+> index 706db97..e8edd1f 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -354,6 +354,7 @@ cpr_state_save(const char *mode) "%s mode"
+>  cpr_state_load(const char *mode) "%s mode"
+>  cpr_transfer_input(const char *path) "%s"
+>  cpr_transfer_output(const char *path) "%s"
+> +cpr_exec(void) ""
+>  
+>  # block-dirty-bitmap.c
+>  send_bitmap_header_enter(void) ""
+> -- 
+> 1.8.3.1
+> 
+
+-- 
+Peter Xu
+
 
