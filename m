@@ -4,64 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D075CAC589
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1538ECAC58C
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvu0Q-0006Hm-3z; Tue, 09 Sep 2025 04:47:14 -0400
+	id 1uvu0M-0006GV-6L; Tue, 09 Sep 2025 04:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvu05-0006B5-3P; Tue, 09 Sep 2025 04:46:54 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvu00-0003pW-9J; Tue, 09 Sep 2025 04:46:52 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B28EDC0196;
- Tue, 09 Sep 2025 11:46:37 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id akEOIQ2GwiE0-AAHOqtcd; Tue, 09 Sep 2025 11:46:37 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757407597;
- bh=HttkUanbHmZ0Tg0v81CB/VB6m/qrIwO3DSpg6QiQp+0=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=xgyPF57YR4FSmxB+ss0siMICFL405z2+E8FfanxYx8uZk0EMDGSeR7r8mLKQlFHnf
- DtO3PuScEPFQQveYXR+uWMgwHCzARnAvmzZXzd4hXC6Lqx71aOFP3HuZtH7fLpKADa
- kRvJBZU9TeZEx6wgrCVcKiSaCyz78tU/KxEgiGfM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3ffa98e4-38f2-484a-a7b6-d59fbb418c44@yandex-team.ru>
-Date: Tue, 9 Sep 2025 11:46:36 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uvu00-0006AJ-D9
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 04:46:50 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uvtzq-0003p1-HU
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 04:46:47 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b046f6fb230so125904666b.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 01:46:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757407596; x=1758012396; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lrBTwxbWfehJGHfoZQVy21HNvFSiwSEPRKO+L7NgJQE=;
+ b=hdw4tKXdANHcmTRXqciz5WikX38+GgODpuPMWmicipE+gKCMjOkibHHQphsBHopcml
+ UWgiNRMz7kqHki3k34sTtO7GaiXMCzG22sRZ15137pwxaJ2ewhCITLxLQfzRIZJ9bPRR
+ 3fgcXC86EB3bLl0L3YI605qH4PPMUw6IWZJCe4DpmtQFQ+BRhDvIYADq1+NZR5JwE7O3
+ qh4rHe4FtqDzwkVIqmTf/k+YeyJ9DzPDCjBUjsW9ZyhDNGEUfhMvACjborpZYZrVS4cs
+ XcdVDCjugKTARWMLHw3XFTzD74dbDNplgzPBn07fOgPjGlryQDUo65YpHOa6BvzIfy1z
+ S49w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757407596; x=1758012396;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lrBTwxbWfehJGHfoZQVy21HNvFSiwSEPRKO+L7NgJQE=;
+ b=k1B4qcs9zylg37WCgouCaL3yFFUA+wzniui3GbSLI5VS4ZZJN6FHgv7yGlOpMUrqP6
+ 72mg2soA6Je6uDACYCGtMyTtLkJDTInLbtFJcah5fgVB3M2a+qZQbmgvmOGoDxnG92wd
+ v+ij/cc760igEcSe+4MmWmHBGthTx0ztysLZwgLVfbhShdL9zCcAkqYhoTrD0uUoD1Qz
+ 55nU9ISpDem7LVaCTBmCWVKlhmi3IJG7/MDvND7YjFvaKFPRCTleABxmjg3G1ld1ako5
+ TvQtKl5YRMOkOIRu5Z8i5ZBl+S+rio9iVxvmva88qK6A++xlaevfgcqhUwSEL/9KfOv4
+ nGHA==
+X-Gm-Message-State: AOJu0YwulcBoVQE4u/lP1qEUqJnyqUKEfWA4EzTsme7acmp7poCc07kE
+ 1wENPlZIBocBLapDMQ9hWe4VTtBpaMg1NAhXXfjotyYSngN+acJ/v2jGHiuu4+D/0Ro=
+X-Gm-Gg: ASbGnctXkQ4xDDXMv30GAu0LwG6gv8CKzrYScZZTeg0XFT8N3RjZENwBLWRE8Y2if+7
+ WPQuOFt4S5FcIZZtbldYskz9edZIlH/7ZRhrIG/rBBOX1uWJnd8DX/xUQJrfTg61ByKrl1Luv/3
+ 3g0B+9BmHrBh3ObpStRdPoz7y53siBbsclbkygJ1/Gf+jtzuPU061BfKchr5IBF59jenQDBgn/q
+ fRwsyWuJ64WyXgW+L1J83JKfM4/iF9um5xlKUtGxmJ7Tm7T0kmf8Nw5l5WUvr3sm2Za2fbEpR5F
+ OuF4r3RN/zc+NdqfIGiqxgye8iv1AncvwCEWsyauHGErxQFdTgZAFvyMSsTZgpaJ9MKQ64VJOIP
+ snjy6GVMx5snJqHJwUMrvvTw=
+X-Google-Smtp-Source: AGHT+IG8O5LisGCJqQjooVRofew8AfKxxZPJlo3uv9NlOBugr5CIhWl+BuaL1Hk09d9Rqrh2cT3JHQ==
+X-Received: by 2002:a17:907:940c:b0:afe:8bd8:e2c3 with SMTP id
+ a640c23a62f3a-b04b1a804d1mr1248822966b.0.1757407595767; 
+ Tue, 09 Sep 2025 01:46:35 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aff138a8d76sm2477468766b.104.2025.09.09.01.46.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Sep 2025 01:46:35 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3BF8F5F829;
+ Tue, 09 Sep 2025 09:46:34 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yonggang Luo
+ <luoyonggang@gmail.com>
+Subject: Re: [PATCH 4/4] gitlab: prevent duplicated meson log artifacts in
+ test jobs
+In-Reply-To: <aL_QzBYYd4HB0T3Q@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 9 Sep 2025 08:04:30 +0100")
+References: <20250908190901.3571859-1-berrange@redhat.com>
+ <20250908190901.3571859-5-berrange@redhat.com>
+ <87v7ls7i8t.fsf@draig.linaro.org> <aL_QzBYYd4HB0T3Q@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 09 Sep 2025 09:46:34 +0100
+Message-ID: <87jz286mj9.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] char-socket: rework tcp_chr_recv()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-3-vsementsov@yandex-team.ru>
- <aL_njFMhsCazHxUf@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aL_njFMhsCazHxUf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,101 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.09.25 11:38, Daniel P. Berrangé wrote:
-> On Wed, Sep 03, 2025 at 12:44:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> First, qio_channel_readv_full() already guarantees BLOCKING and
->> CLOEXEC states for incoming descriptors, no reason call extra
->> ioctls.
->>
->> Second, current implementation calls _set_block() and _set_cloexec()
->> again on old descriptors on failure path - we fix this too.
->>
->> Finally, handling errors exactly after qio_channel_readv_full() call
->> looks more readable.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   chardev/char-socket.c | 37 +++++++++++++------------------------
->>   1 file changed, 13 insertions(+), 24 deletions(-)
->>
->> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
->> index 1e8313915b..5b9b19ba8b 100644
->> --- a/chardev/char-socket.c
->> +++ b/chardev/char-socket.c
->> @@ -293,6 +293,18 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
->>                                        0, &err);
->>       }
->>   
->> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> +        errno = EAGAIN;
->> +        return -1;
->> +    } else if (ret == -1) {
->> +        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
->> +        error_free(err);
->> +        errno = EIO;
->> +        return -1;
->> +    }
->> +
->> +    assert(ret >= 0);
-> 
-> Moving this logic to here means that in the blocking I/O, and/or error
-> paths, we are not clearing out the previously read s->read_msgfds_num
-> These should be considered obsolete at the point we start a new read
-> call, regardless of its success, hence why we had the code ordered in
-> this way.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Oops, thanks! That's not obvious, I'll add a comment.
+> On Mon, Sep 08, 2025 at 10:21:38PM +0100, Alex Benn=C3=A9e wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > The build jobs will populate build/meson-logs/ with various files
+>> > that are added as artifacts.
+>> >
+>> > The test jobs preserve the state of the build jobs, so we must
+>> > delete any pre-existing logs to prevent confusion from duplicate
+>> > artifacts.
+>>=20
+>> Will this cause us to rebuild needlessly?
+>
+> These files aren't involved in any rebuild / stale checks &
+> the test pipeline I ran show no difference in what was done.
 
-> 
-> 
->> +
->>       if (msgfds_num) {
->>           /* close and clean read_msgfds */
->>           for (i = 0; i < s->read_msgfds_num; i++) {
->> @@ -307,30 +319,7 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
->>           s->read_msgfds_num = msgfds_num;
->>       }
->>   
->> -    for (i = 0; i < s->read_msgfds_num; i++) {
->> -        int fd = s->read_msgfds[i];
->> -        if (fd < 0) {
->> -            continue;
->> -        }
->> -
->> -        /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
->> -        qemu_socket_set_block(fd);
->> -
->> -#ifndef MSG_CMSG_CLOEXEC
->> -        qemu_set_cloexec(fd);
->> -#endif
->> -    }
-> 
-> This for(){} removal is fnie.
-> 
->> -
->> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> -        errno = EAGAIN;
->> -        ret = -1;
->> -    } else if (ret == -1) {
->> -        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
->> -        error_free(err);
->> -        errno = EIO;
->> -    } else if (ret == 0) {
->> -        trace_chr_socket_recv_eof(chr, chr->label);
->> -    }
->> +    trace_chr_socket_recv_eof(chr, chr->label);
->>   
->>       return ret;
->>   }
->> -- 
->> 2.48.1
->>
-> 
-> With regards,
-> Daniel
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-
--- 
-Best regards,
-Vladimir
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
