@@ -4,144 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0012ACAC587
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6623DCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 09:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvuVi-0006Nb-Fi; Tue, 09 Sep 2025 05:19:34 -0400
+	id 1uvuW6-0006RF-TV; Tue, 09 Sep 2025 05:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuVe-0006N2-M2
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:19:30 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvuW4-0006Qf-S7
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:19:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvuVc-0007oC-DR
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:19:30 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uvuVr-0007pn-3g
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 05:19:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757409564;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6e51UfDr+YC9BDm+tXUwtIngjqJUr+hk5YarBZY3QoQ=;
- b=dWv72+TegV84QV22N3517dOVurR4Qsh5v99Y4ZtmgBT+mRSi534p+lWIAaLm4ZSr8TEtBr
- r8HjGOs23cHHXRjp1ERzJIJ6b8RdDpk3tFg+YTQLdxwwtD1IP4rBIm7CbDUfB5rYIgd6Ni
- 1oOgBtQd39cYTulZiGZTKPoEzIsReZQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-cgiW0z2_Nyq7tdP6ySxJWg-1; Tue, 09 Sep 2025 05:19:23 -0400
-X-MC-Unique: cgiW0z2_Nyq7tdP6ySxJWg-1
-X-Mimecast-MFC-AGG-ID: cgiW0z2_Nyq7tdP6ySxJWg_1757409562
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45de18e7eccso15748015e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 02:19:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757409562; x=1758014362;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6e51UfDr+YC9BDm+tXUwtIngjqJUr+hk5YarBZY3QoQ=;
- b=cabLFJsy02xdIwiF1qDWtIutoLe+uemIcnlZvdpw+8nuc0y6VsUDgyJKkIPq3DiaR+
- mjAFUKT79p9iiB+fETDFB/dpPGHJiVzDayznzbfQzE7rJLvpCoTYlDsNFqy3WzNOG/uY
- fI+cX5oaR9+jeaWJDrBh40FVsh5F/VN8v03ZP+OvpZAD0AlD/ssHF/480ifiIt4Vma3f
- ABz6lPxxcRF99cSu7prLCOYDuF99P5byrms7wKz8XCSXcgzTCFPsJIPHYGedXR/Cqi1o
- 3Q54d7i5FDRPGxcstw/UvA4v2Wrrx3mETq6rBaWDyNoKhePpLjDtWQp5/EFpiETV9c/F
- hRXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKEyAr/dMcrMwPOh0cIUclLT/BLqPYby+4JoHZUWd6oYeVGT1laiFH9UEXRK+3yVbIIe80ee0JJKWL@nongnu.org
-X-Gm-Message-State: AOJu0YwQu7uwcDMJDZWNjTy6nBBHzt5y/y8/zIKQmjn50v49x6bszYSd
- JJuPHK+Ryd5yAjs5GGXvX6IRJs8Qni9m2eC5dgtzUQqkuOqp7oZhkzM7EjJW2DHcZPHUlGpG/86
- ey3Qce+r1YuSQznOVkWpwqCECkwYdZxgVhsM71MfkwYRZgOkcXwTgfCTv
-X-Gm-Gg: ASbGncuZxfAD+27rec1N6NzGhYZuvpaNvWPt+4j+nwiT0OJq62ORzmUrP+RSCVd1gf5
- OxwlarZ9G++ek+QGyvBQO+P81IvJouQoqzKug8a7JVnEwnmlNxw60yYexEFTJymtttUwOM57ASe
- Ya0P0Zkqrwort8ZtgksSGIig1Vq/rpdhp4E5n1y006O33j/9a0ktc6SgQVgDBQFsc/K9xS51OIo
- SQHweBG66iwbp65RdBR2aeoxFwoDpPd/44aKFVLd8wZj4r/c0XZeNAOfrAIlvEh/r5cGOLVHLKm
- hinsls7IlDxr83+g4mUdW/rPz69uhnjBLek/TldpTAd8Q+Ujyvt6DwpWNdqjhQt88kJXTYq9GMA
- lV0ebew==
-X-Received: by 2002:a05:600c:548a:b0:45d:db33:fa0a with SMTP id
- 5b1f17b1804b1-45dddee3772mr96514995e9.33.1757409561774; 
- Tue, 09 Sep 2025 02:19:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBR9vAp8SgOQOaw1IV8f/xgeKzhJv86ZaiyvOOhB0e4kav5ZP86zpSAVuoj+PvafLAfCFboA==
-X-Received: by 2002:a05:600c:548a:b0:45d:db33:fa0a with SMTP id
- 5b1f17b1804b1-45dddee3772mr96514755e9.33.1757409561353; 
- Tue, 09 Sep 2025 02:19:21 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
- [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45cb61377a7sm275841295e9.13.2025.09.09.02.19.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 02:19:20 -0700 (PDT)
-Message-ID: <fd7b3742-c445-4b26-9f3f-e277f4131545@redhat.com>
-Date: Tue, 9 Sep 2025 11:19:13 +0200
+ s=mimecast20190719; t=1757409581;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=tQxGEDyiD5csPqCyhu4BPxW1dvm7kWBwjyOqicrXsLM=;
+ b=AqeCf2qX2WKDV2z8O7zR3DcwzURqnECEcPohkMk++yGbYU4Cca3qIdA66VNpIY/kGwwPWC
+ sT8hS7n7suYFjGCIat9sVNCkrzhn81c66NgmcNtorLEPMOCp6DGZGd8amah94nTc2Fgx4P
+ kVoW5eUjgw2I1koQ31PpFncLMNQ/T9Q=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-VWmMsmA9NTil-UT1Orup3A-1; Tue,
+ 09 Sep 2025 05:19:37 -0400
+X-MC-Unique: VWmMsmA9NTil-UT1Orup3A-1
+X-Mimecast-MFC-AGG-ID: VWmMsmA9NTil-UT1Orup3A_1757409576
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C9E31955F2A; Tue,  9 Sep 2025 09:19:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E65C1800446; Tue,  9 Sep 2025 09:19:35 +0000 (UTC)
+Date: Tue, 9 Sep 2025 10:19:32 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Andrew Keesler <ankeesler@google.com>
+Cc: marcandre.lureau@gmail.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/1] Support per-head resolutions with virtio-gpu
+Message-ID: <aL_xJCxOMQdIkH9S@redhat.com>
+References: <20250902141312.750525-1-ankeesler@google.com>
+ <20250902141312.750525-2-ankeesler@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Failure of func-x86_64-memlock
-To: Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-References: <7ceb8d59-be3f-4dad-9e2b-9db62fbf92cb@linaro.org>
- <666dce10-2359-4211-b761-daf9a828523e@redhat.com>
- <4957da97-4d2e-41db-9bb1-9197a577369d@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <4957da97-4d2e-41db-9bb1-9197a577369d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250902141312.750525-2-ankeesler@google.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,83 +82,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/09/2025 09.48, Richard Henderson wrote:
-> On 9/8/25 10:12, Thomas Huth wrote:
->> On 05/09/2025 12.26, Richard Henderson wrote:
->>> Hi guys,
->>>
->>> This test has been failing on my laptop for a few weeks.
->>> Any idea why?
->>
->> FWIW, the test still works for me (after enabling it with "ulimit -l 
->> 2097152").
->>
->>> There's nothing logged in tests/functional/x86_64/test_memlock*/*,
->>> which itself seems like a bug.
->>
->> Is there maybe any hint in meson-logs/testlog-thorough.txt instead?
+On Tue, Sep 02, 2025 at 02:13:12PM +0000, Andrew Keesler wrote:
+> In 454f4b0f, we started down the path of supporting separate
+> configurations per display head (e.g., you have 2 heads - one with
+> EDID name "AAA" and the other with EDID name "BBB").
 > 
-> Ah, yes, there it is:
+> In this change, we add resolution to this configuration surface (e.g.,
+> you have 2 heads - one with resolution 111x222 and the other with
+> resolution 333x444).
 > 
-> TAP version 13
-> not ok 1 test_memlock.MemlockTest.test_memlock_off
-> ok 2 test_memlock.MemlockTest.test_memlock_on
-> ok 3 test_memlock.MemlockTest.test_memlock_onfault
-> 1..3
-> ----------------------------------- stderr -----------------------------------
-> /home/rth/qemu/src/python/qemu/qmp/legacy.py:89: DeprecationWarning: There 
-> is no current event loop
->    self._aloop = asyncio.get_event_loop()
-> Traceback (most recent call last):
->    File "/home/rth/qemu/src/tests/functional/x86_64/test_memlock.py", line 
-> 40, in test_memlock_off
->      self.assertTrue(status['VmLck'] == 0)
-> AssertionError: False is not true
+>   -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+>   -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+>   -device '{"driver":"virtio-vga",
+>             "max_outputs":2,
+>             "id":"vga",
+>             "outputs":[
+>               {
+>                  "name":"AAA",
+>                  "xres":111,
+>                  "yres":222
+>               },
+>               {
+>                  "name":"BBB",
+>                  "xres":333,
+>                  "yres":444
+>               }
+>             ]}'
 > 
+> Here is the behavior matrix of the current resolution configuration
+> surface (xres/yres) with the new resolution configuration surface
+> (outputs[i].xres/yres).
 > 
-> So it seems there's some non-zero amount of memory locked in the process, 
-> likely nothing to do with what we're trying to test, but we're asserting 
-> anyway.
+> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with default xres/yres
 > 
-> Digging into /proc/pic/smaps, I have:
+> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: current behavior - outputs[0] enabled with xres/yres
 > 
-> 79d7d3547000-79d7d354b000 rw-p 00000000 00:00 0
-> Size:                 16 kB
-> KernelPageSize:        4 kB
-> MMUPageSize:           4 kB
-> Rss:                  16 kB
-> Pss:                  16 kB
-> Pss_Dirty:            16 kB
-> Shared_Clean:          0 kB
-> Shared_Dirty:          0 kB
-> Private_Clean:         0 kB
-> Private_Dirty:        16 kB
-> Referenced:           16 kB
-> Anonymous:            16 kB
-> KSM:                   0 kB
-> LazyFree:              0 kB
-> AnonHugePages:         0 kB
-> ShmemPmdMapped:        0 kB
-> FilePmdMapped:         0 kB
-> Shared_Hugetlb:        0 kB
-> Private_Hugetlb:       0 kB
-> Swap:                  0 kB
-> SwapPss:               0 kB
-> Locked:               16 kB
-> THPeligible:           0
-> ProtectionKey:         0
-> VmFlags: rd wr mr mw me lo ac sd
+> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
 > 
-> It's not labeled in /proc/pid/maps, so without more work I don't know where 
-> it comes from, but *something* in my system libraries has asked for 4 pages 
-> of locked memory.
+> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
+> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
 
-Ok, then the easiest fix is likely to allow some few locked pages in that 
-assert statement? Care to send a patch?
+This commit lacks the Signed-off-by line to assert compliance
+with the DCO. Assuming  you agree, can you just reply to this
+mail with your S-o-b and then I'll queue this.
 
-  Thomas
+> ---
+>  hw/display/virtio-gpu-base.c | 10 ++++++++++
+>  qapi/virtio.json             | 10 ++++++++--
+>  2 files changed, 18 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+> index 7269477a1c..6adb5312a4 100644
+> --- a/hw/display/virtio-gpu-base.c
+> +++ b/hw/display/virtio-gpu-base.c
+> @@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+>      g->req_state[0].width = g->conf.xres;
+>      g->req_state[0].height = g->conf.yres;
+>  
+> +    for (output_idx = 0, node = g->conf.outputs;
+> +         node && output_idx < g->conf.max_outputs;
+> +         output_idx++, node = node->next) {
+> +        if (node->value->has_xres && node->value->has_yres) {
+> +            g->enabled_output_bitmask |= (1 << output_idx);
+> +            g->req_state[output_idx].width = node->value->xres;
+> +            g->req_state[output_idx].height = node->value->yres;
+> +        }
+> +    }
+> +
+>      g->hw_ops = &virtio_gpu_ops;
+>      for (i = 0; i < g->conf.max_outputs; i++) {
+>          g->scanout[i].con =
+> diff --git a/qapi/virtio.json b/qapi/virtio.json
+> index 9d652fe4a8..9469c63e81 100644
+> --- a/qapi/virtio.json
+> +++ b/qapi/virtio.json
+> @@ -966,15 +966,21 @@
+>  ##
+>  # @VirtIOGPUOutput:
+>  #
+> -# Describes configuration of a VirtIO GPU output.
+> +# Describes configuration of a VirtIO GPU output. If both xres and
+> +# yres are set, they take precedence over root virtio-gpu
+> +# resolution configuration and enable the corresponding output.
+>  #
+>  # @name: the name of the output
+>  #
+> +# @xres: horizontal resolution of the output in pixels (since 10.2)
+> +#
+> +# @yres: vertical resolution of the output in pixels (since 10.2)
+> +#
+>  # Since: 10.1
+>  ##
+>  
+>  { 'struct': 'VirtIOGPUOutput',
+> -  'data': { 'name': 'str' } }
+> +  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
+>  
+>  ##
+>  # @DummyVirtioForceArrays:
+> -- 
+> 2.51.0.338.gd7d06c2dae-goog
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
