@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8A4CAC587
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7469FCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvsYY-0004bH-7O; Tue, 09 Sep 2025 03:14:22 -0400
+	id 1uvsYg-0004dQ-DK; Tue, 09 Sep 2025 03:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZSe1=3U=kaod.org=clg@ozlabs.org>)
- id 1uvsYW-0004ax-3D; Tue, 09 Sep 2025 03:14:20 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1uvsYe-0004cf-9m; Tue, 09 Sep 2025 03:14:28 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=ZSe1=3U=kaod.org=clg@ozlabs.org>)
- id 1uvsYJ-0000V2-Dl; Tue, 09 Sep 2025 03:14:19 -0400
+ id 1uvsYR-0000WM-1T; Tue, 09 Sep 2025 03:14:26 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cLZmz2Qhcz4w9g;
- Tue,  9 Sep 2025 17:13:55 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cLZnF0kdRz4w9k;
+ Tue,  9 Sep 2025 17:14:09 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cLZmx01mgz4w8w;
- Tue,  9 Sep 2025 17:13:52 +1000 (AEST)
-Message-ID: <cddd599f-5928-4592-9c14-442cdbbf8d2d@kaod.org>
-Date: Tue, 9 Sep 2025 09:13:49 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cLZnB6r1Wz4w8w;
+ Tue,  9 Sep 2025 17:14:06 +1000 (AEST)
+Message-ID: <abdb5b47-a450-4fc3-b5cd-b170ebb8271a@kaod.org>
+Date: Tue, 9 Sep 2025 09:14:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hw/gpio: Add property for ASPEED GPIO in 32 bits basis
+Subject: Re: [PATCH 2/5] tests/qtest: Add qtest for for ASPEED GPIO gpio-set
+ property
 To: Coco Li <lixiaoyan@google.com>, peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Felix Wu <flwu@google.com>,
  'Andrew Jeffery' <andrew@codeconstruct.com.au>
 References: <20250903213809.3779860-1-lixiaoyan@google.com>
- <20250903213809.3779860-2-lixiaoyan@google.com>
+ <20250903213809.3779860-3-lixiaoyan@google.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -81,17 +82,18 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250903213809.3779860-2-lixiaoyan@google.com>
+In-Reply-To: <20250903213809.3779860-3-lixiaoyan@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=ZSe1=3U=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,89 +114,180 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 9/3/25 23:38, Coco Li wrote:
 > From: Felix Wu <flwu@google.com>
 > 
-> Added 32 bits property for ASPEED GPIO. Previously it can only be access in bitwise manner.
-> 
-> This change gives ASPEED similar behavior as Nuvoton.
+>   - Added qtests to test gpio-set property for ASPEED.
+>   - Added function to get uint in qdict.
 > 
 > Signed-off-by: Felix Wu <flwu@google.com>
 > ---
->   hw/gpio/aspeed_gpio.c | 57 +++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 57 insertions(+)
+>   include/qobject/qdict.h        |   1 +
+>   qobject/qdict.c                |  13 ++++
+>   tests/qtest/aspeed_gpio-test.c | 105 ++++++++++++++++++++++++++++++---
+>   3 files changed, 110 insertions(+), 9 deletions(-)
 > 
-> diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-> index 609a556908..2d78bf9515 100644
-> --- a/hw/gpio/aspeed_gpio.c
-> +++ b/hw/gpio/aspeed_gpio.c
-> @@ -1308,6 +1308,57 @@ static void aspeed_gpio_2700_write(void *opaque, hwaddr offset,
+> diff --git a/include/qobject/qdict.h b/include/qobject/qdict.h
+> index 903e6e5462..861996f08d 100644
+> --- a/include/qobject/qdict.h
+> +++ b/include/qobject/qdict.h
+> @@ -57,6 +57,7 @@ void qdict_put_str(QDict *qdict, const char *key, const char *value);
+>   
+>   double qdict_get_double(const QDict *qdict, const char *key);
+>   int64_t qdict_get_int(const QDict *qdict, const char *key);
+> +uint64_t qdict_get_uint(const QDict *qdict, const char *key);
+>   bool qdict_get_bool(const QDict *qdict, const char *key);
+>   QList *qdict_get_qlist(const QDict *qdict, const char *key);
+>   QDict *qdict_get_qdict(const QDict *qdict, const char *key);
+> diff --git a/qobject/qdict.c b/qobject/qdict.c
+> index a90ac9ae2f..0dafe6d421 100644
+> --- a/qobject/qdict.c
+> +++ b/qobject/qdict.c
+> @@ -209,6 +209,19 @@ int64_t qdict_get_int(const QDict *qdict, const char *key)
+>       return qnum_get_int(qobject_to(QNum, qdict_get(qdict, key)));
 >   }
 >   
->   /* Setup functions */
-> +static void aspeed_gpio_set_set(Object *obj, Visitor *v,
-> +                                        const char *name, void *opaque,
-> +                                        Error **errp)
+> +/**
+> + * qdict_get_uint(): Get an unsigned integer mapped by 'key'
+> + *
+> + * This function assumes that 'key' exists and it stores a
+> + * QNum representable as uint.
+> + *
+> + * Return unsigned integer mapped by 'key'.
+> + */
+> +uint64_t qdict_get_uint(const QDict *qdict, const char *key)
 > +{
-> +    uint32_t set_val = 0;
-> +    AspeedGPIOState *s = ASPEED_GPIO(obj);
-> +    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-> +    int set_idx = 0;
-> +
-> +    if (!visit_type_uint32(v, name, &set_val, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (sscanf(name, "gpio-set[%d]", &set_idx) != 1) {
-> +        error_setg(errp, "%s: error reading %s", __func__, name);
-> +        return;
-> +    }
-> +
-> +    if (set_idx >= agc->nr_gpio_sets || set_idx < 0) {
-> +        error_setg(errp, "%s: invalid set_idx %s", __func__, name);
-> +        return;
-> +    }
-> +
-> +    aspeed_gpio_update(s, &s->sets[set_idx], set_val,
-> +                       ~s->sets[set_idx].direction);
+> +    return qnum_get_uint(qobject_to(QNum, qdict_get(qdict, key)));
 > +}
 > +
-> +static void aspeed_gpio_get_set(Object *obj, Visitor *v,
-> +                                        const char *name, void *opaque,
-> +                                        Error **errp)
+>   /**
+>    * qdict_get_bool(): Get a bool mapped by 'key'
+>    *
+> diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
+> index 12675d4cbb..c2f9ca2298 100644
+> --- a/tests/qtest/aspeed_gpio-test.c
+> +++ b/tests/qtest/aspeed_gpio-test.c
+> @@ -27,28 +27,115 @@
+>   #include "qemu/timer.h"
+>   #include "qobject/qdict.h"
+>   #include "libqtest-single.h"
+> +#include "qemu/typedefs.h"
+>   
+>   #define AST2600_GPIO_BASE 0x1E780000
+>   
+>   #define GPIO_ABCD_DATA_VALUE 0x000
+>   #define GPIO_ABCD_DIRECTION  0x004
+>   
+> +static uint32_t qtest_qom_get_uint32(QTestState *s, const char *path,
+> +                                     const char *property)
 > +{
-> +    uint32_t set_val = 0;
-> +    AspeedGPIOState *s = ASPEED_GPIO(obj);
-> +    AspeedGPIOClass *agc = ASPEED_GPIO_GET_CLASS(s);
-> +    int set_idx = 0;
+> +    QDict *r;
 > +
-> +    if (sscanf(name, "gpio-set[%d]", &set_idx) != 1) {
-> +        error_setg(errp, "%s: error reading %s", __func__, name);
-> +        return;
-> +    }
+> +    uint32_t res;
+> +    r = qtest_qmp(s, "{ 'execute': 'qom-get', 'arguments': "
+> +                     "{ 'path': %s, 'property': %s } }", path, property);
+> +    res = qdict_get_uint(r, "return");
+> +    qobject_unref(r);
 > +
-> +    if (set_idx >= agc->nr_gpio_sets || set_idx < 0) {
-> +        error_setg(errp, "%s: invalid set_idx %s", __func__, name);
-> +        return;
-> +    }
-> +
-> +    set_val = s->sets[set_idx].data_value;
-> +    visit_type_uint32(v, name, &set_val, errp);
+> +    return res;
 > +}
 > +
-> +/****************** Setup functions ******************/
->   static const GPIOSetProperties ast2400_set_props[ASPEED_GPIO_MAX_NR_SETS] = {
->       [0] = {0xffffffff,  0xffffffff,  {"A", "B", "C", "D"} },
->       [1] = {0xffffffff,  0xffffffff,  {"E", "F", "G", "H"} },
-> @@ -1435,6 +1486,12 @@ static void aspeed_gpio_init(Object *obj)
->               g_free(name);
->           }
->       }
+> +static void qtest_qom_set_uint32(QTestState *s, const char *path,
+> +                                 const char *property, uint32_t value)
+> +{
+> +    QDict *r;
 > +
-> +    for (int i = 0; i < agc->nr_gpio_sets; i++) {
-> +        char *name = g_strdup_printf("gpio-set[%d]", i);
-> +        object_property_add(obj, name, "uint32", aspeed_gpio_get_set,
-> +        aspeed_gpio_set_set, NULL, NULL);
+> +    r = qtest_qmp(s, "{ 'execute': 'qom-set', 'arguments': "
+> +                     "{ 'path': %s, 'property': %s, 'value': %" PRIu32 " } }",
+> +                     path, property, value);
+> +    qobject_unref(r);
+> +}
+> +
+> +static const char *resp_get_error(QDict *r, const char* error_key)
+> +{
+> +    QDict *qdict;
+> +
+> +    g_assert(r);
+> +
+> +    qdict = qdict_get_qdict(r, "error");
+> +    if (qdict) {
+> +        return qdict_get_str(qdict, error_key);
 > +    }
+> +
+> +    return NULL;
+> +}
+> +
+> +static bool qtest_qom_check_error(QTestState *s, const char *path,
+> +                                  const char *property, const char *error_msg,
+> +                                  const char *error_msg_key)
+> +{
+> +    QDict *r;
+> +    bool b;
+> +
+> +    r = qtest_qmp(s, "{ 'execute': 'qom-get', 'arguments': "
+> +                     "{ 'path': %s, 'property': %s } }", path, property);
+> +    b = g_str_equal(resp_get_error(r, error_msg_key), error_msg);
+> +    qobject_unref(r);
+> +
+> +    return b;
+> +}
+> +
+>   static void test_set_colocated_pins(const void *data)
+>   {
+>       QTestState *s = (QTestState *)data;
+> -
+> +    const char path[] = "/machine/soc/gpio";
+>       /*
+>        * gpioV4-7 occupy bits within a single 32-bit value, so we want to make
+>        * sure that modifying one doesn't affect the other.
+>        */
+> -    qtest_qom_set_bool(s, "/machine/soc/gpio", "gpioV4", true);
+> -    qtest_qom_set_bool(s, "/machine/soc/gpio", "gpioV5", false);
+> -    qtest_qom_set_bool(s, "/machine/soc/gpio", "gpioV6", true);
+> -    qtest_qom_set_bool(s, "/machine/soc/gpio", "gpioV7", false);
+> -    g_assert(qtest_qom_get_bool(s, "/machine/soc/gpio", "gpioV4"));
+> -    g_assert(!qtest_qom_get_bool(s, "/machine/soc/gpio", "gpioV5"));
+> -    g_assert(qtest_qom_get_bool(s, "/machine/soc/gpio", "gpioV6"));
+> -    g_assert(!qtest_qom_get_bool(s, "/machine/soc/gpio", "gpioV7"));
+> +    qtest_qom_set_bool(s, path, "gpioV4", true);
+> +    qtest_qom_set_bool(s, path, "gpioV5", false);
+> +    qtest_qom_set_bool(s, path, "gpioV6", true);
+> +    qtest_qom_set_bool(s, path, "gpioV7", false);
+> +    g_assert(qtest_qom_get_bool(s, path, "gpioV4"));
+> +    g_assert(!qtest_qom_get_bool(s, path, "gpioV5"));
+> +    g_assert(qtest_qom_get_bool(s, path, "gpioV6"));
+> +    g_assert(!qtest_qom_get_bool(s, path, "gpioV7"));
+> +
+> +    /*
+> +     * Testing the gpio-set[%d] properties, using individual gpio boolean
+> +     * properties to do cross check.
+> +     * We use gpioR4-7 for test, Setting them to be 0b1010.
+> +     */
+> +    qtest_qom_set_uint32(s, path, "gpio-set[4]", 0x0);
+> +    g_assert(qtest_qom_get_uint32(s, path, "gpio-set[4]") == 0x0);
+> +    qtest_qom_set_uint32(s, path, "gpio-set[4]", 0xa000);
+> +    g_assert(qtest_qom_get_uint32(s, path, "gpio-set[4]") == 0xa000);
+> +
+> +    g_assert(!qtest_qom_get_bool(s, path, "gpioR4"));
+> +    g_assert(qtest_qom_get_bool(s, path, "gpioR5"));
+> +    g_assert(!qtest_qom_get_bool(s, path, "gpioR6"));
+> +    g_assert(qtest_qom_get_bool(s, path, "gpioR7"));
+> +
+> +    /*
+> +     * Testing the invalid indexing, the response info should contain following
+> +     * info:
+> +     * {key: "class", value: "GenericError"}
+> +     *
+> +     * For pins, it should follow "gpio%2[A-Z]%1d" or "gpio%3[18A-E]%1d" format.
+> +     */
+> +    const char error_msg[] = "GenericError";
+> +    const char error_msg_key[] = "class";
+> +
+> +    g_assert(qtest_qom_check_error(s, path, "gpioR+1", error_msg,
+> +                                   error_msg_key));
+> +    g_assert(qtest_qom_check_error(s, path, "gpio-set[99]", error_msg,
+> +                                   error_msg_key));
+> +    g_assert(qtest_qom_check_error(s, path, "gpio-set[-3]", error_msg,
+> +                                   error_msg_key));
 >   }
 >   
->   static const VMStateDescription vmstate_gpio_regs = {
+>   static void test_set_input_pins(const void *data)
 
 
