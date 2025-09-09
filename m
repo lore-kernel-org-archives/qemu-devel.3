@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A5FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 10:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDAF3CAC583
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 10:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvvQ0-0007w1-Vt; Tue, 09 Sep 2025 06:17:45 -0400
+	id 1uvvjG-0004jg-I1; Tue, 09 Sep 2025 06:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvPt-0007oj-Ch
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:17:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvjE-0004jQ-79
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:37:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvPq-0005wp-D8
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:17:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvjA-0000X2-UD
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:37:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757413051;
+ s=mimecast20190719; t=1757414247;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8WmOzYXodsSBYYeCMbLmze/pZqfbcZKz+Ub5/20ryAo=;
- b=CRaDSploqNHMnZBVJT36Co+drWg4hMXSVTHXrcH3ZeP5l3NVw91BJtehVsSILcXaHIthNE
- TJY6iRzILTNNPPlfDMcRK5yrtaHQ1trARwXyJmzakFzuI0F5pBdOHfV1f5nihasZLnUbCV
- f4DkILuVWfVMR+muU8XuaEKZy2RJkxI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8tMonEwMMztYrVlk6yr7bssrKM4mcBJMyJMorHpkNjs=;
+ b=XOtIutE3PfvJus0YTdJxRrxdJb8/DYx53kPReomvaF+hq+cD4/Z/ksa0/y+qkGBHYnZHDs
+ 6G9qCmVGOUJw288hqx+TQ+u6vvPheeWV7asxOd2VLQK7Kc6cBF3dMbHgbPfLkZ0nBqGmlS
+ touVBoEJLrlYQnkuUFvin8/qgMm0+1w=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-zwXMCpnzOGmCoOMslvR0Jg-1; Tue, 09 Sep 2025 06:17:30 -0400
-X-MC-Unique: zwXMCpnzOGmCoOMslvR0Jg-1
-X-Mimecast-MFC-AGG-ID: zwXMCpnzOGmCoOMslvR0Jg_1757413049
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3dc3f943e6eso3422062f8f.2
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 03:17:29 -0700 (PDT)
+ us-mta-176-xA-IfwxzOI6dNqwgm6xDSQ-1; Tue, 09 Sep 2025 06:37:26 -0400
+X-MC-Unique: xA-IfwxzOI6dNqwgm6xDSQ-1
+X-Mimecast-MFC-AGG-ID: xA-IfwxzOI6dNqwgm6xDSQ_1757414245
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b96c2f4ccso32365965e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 03:37:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757413049; x=1758017849;
+ d=1e100.net; s=20230601; t=1757414245; x=1758019045;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8WmOzYXodsSBYYeCMbLmze/pZqfbcZKz+Ub5/20ryAo=;
- b=n4/dvkUjc1gYihbUVOv7XI59LfqPFnS72R8csh+O4HrA42wGOpJUxyTunqqJn53GpJ
- v6EOu6zwZBygFxrjGeOhJe+8qNsX46/LFiKnC0qxl0gST+IXrDlc5sMnSItvCxsLGMfS
- Xet9+zErvMJqLE2KxSnPCSFvjvts+ceDUi5+shIPg5LVzrl5wklP5qY35pPveoPHjtHr
- Fsnt8lU+ABJBTe2kceq0D+PRlr1On8RI1EMD3E+SbsR8xYighh2BlIZ9lG6axuhETEp3
- mIID0PJ3LNuTHW3K5wXZEAzLSgVth6knpQvrNuD+HbD9RNLvk44Fx2a1+zbByo3OrCRN
- G88A==
+ bh=8tMonEwMMztYrVlk6yr7bssrKM4mcBJMyJMorHpkNjs=;
+ b=Ti+OPd56ZxJ8+pKVYSP1Fbgy1TxcQ1spXkiqkXvC7tcSNZ98I98VVqBlMpG6UhE9+Y
+ yHSKYcNsFQEUs0m9THkn5/0BjK0oXuhQvbT/4cYYUo/B2N4LOiY2Iu69tTBBPj5HBoZd
+ SZ4LOxVL64g/KN84m6n8n/PINFcj2xUVz23IOwL9onwinVYHz6htORRUeLnAB6IfrvcJ
+ jx8zSWN3VvEMaqe4wEp6vF274jzqFKO17R5z4jwVAPphAPV8f+9UPyqHtOgQFC2fJqv/
+ xcipiKrlGeE2+Aom7AMpLyllkYQz6QIF0p/wp+UAB7vjpjRlwzsaoTNCOBS0AjWKHbnh
+ +b/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQ+vPp2eqlOaJVxPvVrMNYlrReZn8Vfb3PFGvGfDuFRdK7OT7K7FW8tijYtMeYm3gCLxeAOsFyl3+G@nongnu.org
-X-Gm-Message-State: AOJu0Yxnbz3KD5lSXkbAdKIjsuJp3jE/1wQToxY6h+lx+BcFMzkvh7/W
- kY9WIlBzV2oNPf1VrQ+DOcyfVTo+hAjmYpjTZZT9W2FwUbO9FcurlHYn8O9K2DBhoa+VE9Eiww1
- vgaF+pkXna0QQnCjbAgsVn13mk017GP9/FT+5p8nrqFyl3l2dUkrEUTK6
-X-Gm-Gg: ASbGncvEtekAAm/umLFmTTpge00F0fOC7J6JbL/jKvuLeHT+jRhT5oOFxa3Im22S7ap
- GqRUMRosKuEGlqLOq55dZrz8TMDpw2stExJ9Tv12ulIgXBYt1xelIx9z1kfg82vwEs/xWxoPvyC
- pezCpEdUWXh3WYZc+XYNbHavFJU3VFZukZznuam3Ys4+Sxoqq5a5GOvB59YCZ7FxT6nYgJsCqCN
- pHqDhxyWNL8sc71UsVAQNSUYYxbmQaAA5TAci136wE9BxJhDAWPQGt9xQ91EbWAF57zYi2l+MAq
- WsxISYZgfbqnkSxjNl7f2IjL5MaKc90RgNZw6f4ODR3WCOg8kclW6mjKlS+8ZVOpQov4a6GBmao
- NEAB3Ww==
-X-Received: by 2002:a5d:5d02:0:b0:3db:c7aa:2c4a with SMTP id
- ffacd0b85a97d-3e643740fb6mr9710507f8f.42.1757413048739; 
- Tue, 09 Sep 2025 03:17:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrM6sUSGR2v3DK5CM1rkOjrWdk/UA57/lA/js0MBdgmlf56Z94hx4qmYM4oIsir8SZH3ffNw==
-X-Received: by 2002:a5d:5d02:0:b0:3db:c7aa:2c4a with SMTP id
- ffacd0b85a97d-3e643740fb6mr9710482f8f.42.1757413048327; 
- Tue, 09 Sep 2025 03:17:28 -0700 (PDT)
+ AJvYcCU83BkpHtbSfIPcja8z6xIJ3jYXcTNyhyldP1ijJGj5ErgwO/bbEQf4kD7kAaXKHA6JuPtiI/SeJW3h@nongnu.org
+X-Gm-Message-State: AOJu0Ywicb5YE9I38j4B45Fe5j4K140o4ksL6z8M950RRSF6Mp58Fwt9
+ s9OkzcYUH9++vVPPMr2ubS+JEY/TNjWE1V/j2Xn3EGDqHcU6g2MzuutD5YgYy0vU0KzRitVF/xN
+ 4i1yp5RC76EyN33XFzSfmBRoh0iGzjyKV12pUDX80Rfk3t9dRQtd2nQbh
+X-Gm-Gg: ASbGnctp8F38yjYA+UUuvpLVcN9pZjT6LHfvc6YZJ0VlCpB0lSk0B0SJ1i+rl6vfUc5
+ r9biJxoq82yv7VezUYmYCWQSu0fCyLZsgjBfIENRZpGsLRzWn9Q85YTz6WMYkV3lSEQgsA2iH3x
+ nn0EV0G195gCYK2QuaYNrkRYduoFpbBHkfJt6tib+X65OsYgG1BSvjCQdEOXcTGgtyjvOsVjJdw
+ xMjKbxj2DSxwHPU4GT3d80D3SH0oYNoFNVs2Ev5CbPT+ooWkI2E/ZZdtbAwcozhoTSyIZCi+EmQ
+ zfLviyvt0Cxuoje5C2cnvtK5/PSybcsS8PjSUWogBxdzql0hSiYqObpI6yTUBkl3J5egBKKP+FM
+ PPdo3XQ==
+X-Received: by 2002:a5d:5f48:0:b0:3de:78c8:1223 with SMTP id
+ ffacd0b85a97d-3e6440ef6cemr9297371f8f.31.1757414245074; 
+ Tue, 09 Sep 2025 03:37:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH5+3/qfuph8oCcvoMRXFKN2G9jJeTgIB5VjROYmvjn+vdWpHmpLm4QXq0cpdI6ghDvBCgJMA==
+X-Received: by 2002:a5d:5f48:0:b0:3de:78c8:1223 with SMTP id
+ ffacd0b85a97d-3e6440ef6cemr9297351f8f.31.1757414244628; 
+ Tue, 09 Sep 2025 03:37:24 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
  [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7521bf85esm2092568f8f.1.2025.09.09.03.17.27
+ ffacd0b85a97d-3e75223ea3csm2105260f8f.49.2025.09.09.03.37.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 03:17:27 -0700 (PDT)
-Message-ID: <919abc1b-8132-42c6-a3df-9f8c09ce3a0e@redhat.com>
-Date: Tue, 9 Sep 2025 12:17:27 +0200
+ Tue, 09 Sep 2025 03:37:24 -0700 (PDT)
+Message-ID: <147a8aaf-5895-435d-8394-ef6a5e03b638@redhat.com>
+Date: Tue, 9 Sep 2025 12:37:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] tests/functional: avoid tearDown failure when QEMU
- dies
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250908135722.3375580-1-berrange@redhat.com>
- <20250908135722.3375580-4-berrange@redhat.com>
+Subject: Re: [PATCH] tests/functional: add --debug CLI arg
+To: John Snow <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+ <87ms93xl69.fsf@draig.linaro.org>
+ <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
+ <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
+ <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,10 +134,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250908135722.3375580-4-berrange@redhat.com>
+In-Reply-To: <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,45 +162,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/09/2025 15.57, Daniel P. Berrangé wrote:
-> In a QEMU process under test dies unexpectedly, the 'shutdown'
-> method may well raise an exeception. This causes the tearDown
-> method to fail, which means any later cleanup code fails to
-> get run. Most notably the log handlers don't get removed so
-> the base.log file from an earlier test will get polluted with
-> messages from any subsequent tests. The tearDown failure also
-> results in pages of exceptions printed on the console, which
-> obscures the real failure message / trace printed by the test.
+On 07/08/2025 23.46, John Snow wrote:
+> On Thu, Jul 24, 2025 at 3:47 PM Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> On 21/07/2025 22.38, John Snow wrote:
+>>> On Thu, Jul 17, 2025 at 4:44 AM Alex Bennée <alex.bennee@linaro.org> wrote:
+>> ...
+>>>> Am I holding it wrong?
+>>>>
+>>>>     ➜  ./pyvenv/bin/python ../../tests/functional/test_aarch64_virt.py --help
+>>>>     Traceback (most recent call last):
+>>>>       File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/test_aarch64_virt.py", line 16, in <module>
+>>>>         from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
+>>>>       File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init__.py", line 14, in <module>
+>>>>         from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
+>>>>       File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcase.py", line 26, in <module>
+>>>>         from qemu.machine import QEMUMachine
+>>>>     ModuleNotFoundError: No module named 'qemu'
+>>>>
+>>>> I thought the point of the venv is we had all the modules we need
+>>>> automatically available to the PYTHONPATH?
+>>>
+>>> As Thomas points out, "qemu" is special since it's already in the
+>>> tree. There has been some dragging-of-feet by yours-truly because
+>>> installing the "qemu" module by default when running configure
+>>> introduces a considerable startup lag time, and the module is not
+>>> actually needed for the simple configuration and building of QEMU -
+>>> only testing.
+>>>
+>>> It's something I want to fix, but must admit to being a bit stumped as
+>>> to how I will bridge that gap long term. Currently, all of the modules
+>>> we need are in the tree with no dependencies, so it can be fixed with
+>>> a simple PYTHONPATH hack. However, if I actually remove the QMP
+>>> library from the tree like I have wanted to, then we need pip to do a
+>>> real install and process dependencies, and this creates some
+>>> complications and extra startup lag.
+>>
+>> Wouldn't it be possible to add the module as a wheel in python/wheels/ ?
+>> That's maybe the easiest solution, isn't it?
 > 
-> Ignore any shutdown failures in the tearDown method, since any
-> test which cares about clean shutdown should have already
-> cleaned up any running VMs. The tearDown method is just there
-> as a safety net to cleanup resources. The base.log file will
-> still containing log messages from the failed 'vm.shutdown'
-> call too.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/testcase.py | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 82a7724404..faa0a4f0db 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -404,7 +404,10 @@ def set_vm_arg(self, arg, value):
->   
->       def tearDown(self):
->           for vm in self._vms.values():
-> -            vm.shutdown()
-> +            try:
-> +                vm.shutdown()
-> +            except Exception as ex:
-> +                self.log.error("Failed to teardown VM: %s" % ex)
->           logging.getLogger('console').removeHandler(self._console_log_fh)
->           self._console_log_fh.close()
->           super().tearDown()
+> The qemu.qmp wheel, yes, because it's purepython. The part I am
+> worried about is that by removing qemu.qmp from the tree, you cannot
+> just use the PYTHONPATH hack anymore to use the remaining in-tree
+> goodies, namely the machine module used extensively throughout
+> testing, because they will now rely on an external dependency.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Would it maybe be possible to add the machine part to the qemu.qmp module, 
+too? (Gerd also ask me at KVM forum about this, so there is certainly 
+interest for extending the qemu.qmp module with the machine part)
+
+> I'm sure it's solvable, I just tried once a while back and hit a wall,
+> got distracted, and haven't revisited it yet... Maybe a good
+> rubber-ducking session would help.
+
+For the (removed) avocado tests, they had a dependency on the "check-venv" 
+target in QEMU, so its python dependencies were only added when you ran 
+"make check-avocado". We could maybe do the same for "check-functional", too?
+
+  Thomas
 
 
