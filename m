@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0EECAC589
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D075CAC589
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 08:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvtyz-0005Uz-N6; Tue, 09 Sep 2025 04:45:45 -0400
+	id 1uvu0Q-0006Hm-3z; Tue, 09 Sep 2025 04:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uvtyw-0005U2-4q; Tue, 09 Sep 2025 04:45:42 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvu05-0006B5-3P; Tue, 09 Sep 2025 04:46:54 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uvtyr-0003fb-Vg; Tue, 09 Sep 2025 04:45:41 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cLclH5nnDz6M56j;
- Tue,  9 Sep 2025 16:42:35 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 65862140279;
- Tue,  9 Sep 2025 16:45:12 +0800 (CST)
-Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 9 Sep
- 2025 10:45:11 +0200
-Date: Tue, 9 Sep 2025 09:45:10 +0100
-To: Wilfred Mallawa <wilfred.opensource@gmail.com>
-CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
- <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
- <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
- <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
- <qemu-block@nongnu.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: Re: [PATCH v5 1/5] spdm-socket: add seperate send/recv functions
-Message-ID: <20250909094510.00005892@huawei.com>
-In-Reply-To: <20250909043259.93140-3-wilfred.opensource@gmail.com>
-References: <20250909043259.93140-2-wilfred.opensource@gmail.com>
- <20250909043259.93140-3-wilfred.opensource@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uvu00-0003pW-9J; Tue, 09 Sep 2025 04:46:52 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B28EDC0196;
+ Tue, 09 Sep 2025 11:46:37 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id akEOIQ2GwiE0-AAHOqtcd; Tue, 09 Sep 2025 11:46:37 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757407597;
+ bh=HttkUanbHmZ0Tg0v81CB/VB6m/qrIwO3DSpg6QiQp+0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=xgyPF57YR4FSmxB+ss0siMICFL405z2+E8FfanxYx8uZk0EMDGSeR7r8mLKQlFHnf
+ DtO3PuScEPFQQveYXR+uWMgwHCzARnAvmzZXzd4hXC6Lqx71aOFP3HuZtH7fLpKADa
+ kRvJBZU9TeZEx6wgrCVcKiSaCyz78tU/KxEgiGfM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3ffa98e4-38f2-484a-a7b6-d59fbb418c44@yandex-team.ru>
+Date: Tue, 9 Sep 2025 11:46:36 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] char-socket: rework tcp_chr_recv()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
+ <20250903094411.1029449-3-vsementsov@yandex-team.ru>
+ <aL_njFMhsCazHxUf@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aL_njFMhsCazHxUf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,53 +74,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  9 Sep 2025 14:32:56 +1000
-Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
-
-> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+On 09.09.25 11:38, Daniel P. Berrangé wrote:
+> On Wed, Sep 03, 2025 at 12:44:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> First, qio_channel_readv_full() already guarantees BLOCKING and
+>> CLOEXEC states for incoming descriptors, no reason call extra
+>> ioctls.
+>>
+>> Second, current implementation calls _set_block() and _set_cloexec()
+>> again on old descriptors on failure path - we fix this too.
+>>
+>> Finally, handling errors exactly after qio_channel_readv_full() call
+>> looks more readable.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   chardev/char-socket.c | 37 +++++++++++++------------------------
+>>   1 file changed, 13 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+>> index 1e8313915b..5b9b19ba8b 100644
+>> --- a/chardev/char-socket.c
+>> +++ b/chardev/char-socket.c
+>> @@ -293,6 +293,18 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
+>>                                        0, &err);
+>>       }
+>>   
+>> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+>> +        errno = EAGAIN;
+>> +        return -1;
+>> +    } else if (ret == -1) {
+>> +        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
+>> +        error_free(err);
+>> +        errno = EIO;
+>> +        return -1;
+>> +    }
+>> +
+>> +    assert(ret >= 0);
 > 
-> This is to support uni-directional transports such as SPDM over Storage.
-> As specified by the DMTF DSP0286.
+> Moving this logic to here means that in the blocking I/O, and/or error
+> paths, we are not clearing out the previously read s->read_msgfds_num
+> These should be considered obsolete at the point we start a new read
+> call, regardless of its success, hence why we had the code ordered in
+> this way.
+
+Oops, thanks! That's not obvious, I'll add a comment.
+
 > 
-> Also update spdm_socket_rsp() to use the new send()/receive() functions. For
-> the case of spdm_socket_receive(), this allows us to do error checking
-> in one place with the addition of spdm_socket_command_valid().
 > 
-> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+>> +
+>>       if (msgfds_num) {
+>>           /* close and clean read_msgfds */
+>>           for (i = 0; i < s->read_msgfds_num; i++) {
+>> @@ -307,30 +319,7 @@ static ssize_t tcp_chr_recv(Chardev *chr, char *buf, size_t len)
+>>           s->read_msgfds_num = msgfds_num;
+>>       }
+>>   
+>> -    for (i = 0; i < s->read_msgfds_num; i++) {
+>> -        int fd = s->read_msgfds[i];
+>> -        if (fd < 0) {
+>> -            continue;
+>> -        }
+>> -
+>> -        /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+>> -        qemu_socket_set_block(fd);
+>> -
+>> -#ifndef MSG_CMSG_CLOEXEC
+>> -        qemu_set_cloexec(fd);
+>> -#endif
+>> -    }
+> 
+> This for(){} removal is fnie.
+> 
+>> -
+>> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+>> -        errno = EAGAIN;
+>> -        ret = -1;
+>> -    } else if (ret == -1) {
+>> -        trace_chr_socket_recv_err(chr, chr->label, error_get_pretty(err));
+>> -        error_free(err);
+>> -        errno = EIO;
+>> -    } else if (ret == 0) {
+>> -        trace_chr_socket_recv_eof(chr, chr->label);
+>> -    }
+>> +    trace_chr_socket_recv_eof(chr, chr->label);
+>>   
+>>       return ret;
+>>   }
+>> -- 
+>> 2.48.1
+>>
+> 
+> With regards,
+> Daniel
 
-One trivial comment below. Either way
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-
-> +uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-> +                         void *req, uint32_t req_len,
-> +                         void *rsp, uint32_t rsp_len)
-> +{
-> +    bool result;
-> +
-> +    result = spdm_socket_send(socket, SPDM_SOCKET_COMMAND_NORMAL,
-> +                              transport_type, req, req_len);
->      if (!result) {
->          return 0;
->      }
->  
-> -    assert(command != 0);
-> -
-> +    rsp_len = spdm_socket_receive(socket, transport_type, rsp, rsp_len);
->      return rsp_len;
-
-   return spdm_socket_receive(socket, transport_type, rsp, rsp_len);
-
-Both shorter and avoids rsp_len changing meaning (slightly).
-
->  }
->  
-
-
+-- 
+Best regards,
+Vladimir
 
