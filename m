@@ -4,81 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C50CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BC3CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvyIk-0002FZ-BU; Tue, 09 Sep 2025 09:22:26 -0400
+	id 1uvyOn-000478-BM; Tue, 09 Sep 2025 09:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvyIi-0002Ey-8O
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:22:24 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uvyIb-0006hs-Ks
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:22:23 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-620724883e6so9415246a12.2
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 06:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757424132; x=1758028932; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4TYaLpbJWh8rhq9OPhSimGa7FvXK7jqaJQsRgzRiYZU=;
- b=y/WOmvnM0ubMYCmLm6F/WIyxHDYZXekR/GVBUIbC0tiZIcQtzLCFZy6EV1EIvVJjzW
- ExfBzemrWq0/N98MxL2XCexOCT6eKJAbVdORmkhhE+ndyOiGMa7wcohi50vrh0WmEdnz
- CxSmG1BzwZe8P70GGth9tK84igwOzZwhwZHyxaLHzSbHwdy5800Fzn/9jEsyOP6ojdu9
- lmK8zicI4CPj8vHC3OtzEjxSEBgEQBp3mklJFhek6IwD643M9VWCPt/kAIh2N2Bjh3UT
- d7CRYaoWpGIamuO00H3+qrVYOluq2iGWAS8qNs7tjQ2hM+vOQ5IM80GrOBU1PqPVX8Rh
- ElRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757424132; x=1758028932;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4TYaLpbJWh8rhq9OPhSimGa7FvXK7jqaJQsRgzRiYZU=;
- b=UoBADVvBzdjvuqc5BL8lxa/zMUcMZaIKvjQxVX8f84N6JZV3JlR+2iuyV80s3iw0hZ
- yibGJM0nV1vkzXLpZQVarqSLxIRyb7XzBdmSdFp39VSIO8Rx6acs8eqAxSinXrQXTvRz
- vJDkBaSJ3W8uO6LwCuEytX+Yb4e5C5zEfUt6LmmbTtvSm2lCchV2/EoZYMfMc5hZTp29
- xuWGVgbKSoa2+MhvwoV+3sRCAR0GSyKomuQmqtEKSayikaDVirE2F95akPBCYAyxSufR
- W3RS0OBX6SYGy4+flaeMMlaOr/2cI+vAd1onj8G1mU65DNtYrzAwy/lDj/d3MZAXa7t4
- ezxA==
-X-Gm-Message-State: AOJu0YxY3NafKahRDFZCI9IvIrjLxE1MlArY4OCdM+zTdROoYwGsdVxW
- zWgq1EsDfxn5ZWMJ/0wr/i/oDIGotHWj4wkLt61nv9coQ/KIJ0qyKM2porvasYgHMrQPbysjK09
- vRDxX+EjDJvZ4gI/EY3p0no9EU/PeD9j+4fv4JN1glw==
-X-Gm-Gg: ASbGncuEJ0vywG3mgPBLAG6EfkaxfSZOj8lRfxRIGUngvem/8Lru+av9i+SWYWxjL1O
- iRhtLepeX2lIEGVPehOCE7il7qR+46Rub5ulaD75s65+Nb2JEqgjCUiQOBVTRLITgE1X83WR4yj
- cTFgiSSjXDIDeGHXSC5czXaEeDunxMVfCiI0G8y9uP308qbj1YOT2tua3DQjS5N/pOp8X8Ldj+d
- HMFDeZd
-X-Google-Smtp-Source: AGHT+IHk6xFRFA5GEOfQEfBPpUSoyyYfEnkrnzZlQXQMFL9MTsUnreLnBbuktp33tbQFqZjgyCgmd49DqWBHaCuxbhs=
-X-Received: by 2002:a05:6402:4557:b0:61d:3dad:228d with SMTP id
- 4fb4d7f45d1cf-6237c235cd0mr9892184a12.13.1757424131614; Tue, 09 Sep 2025
- 06:22:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
- <20250830054128.448363-54-richard.henderson@linaro.org>
-In-Reply-To: <20250830054128.448363-54-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Sep 2025 14:21:58 +0100
-X-Gm-Features: AS18NWDoZ9Fv7-Ue2UU1ea_fC1MPRE_92x3kfdm6hZAv478OloazzvhbYYyfP1s
-Message-ID: <CAFEAcA9QKunkHRKSHMmqdrT-_amq4JpeOnjUakjjxrQP5edtEQ@mail.gmail.com>
-Subject: Re: [PATCH v4 53/84] target/arm: Split {arm,core}_user_mem_index
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1uvyOl-00046o-FD
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:28:39 -0400
+Received: from metis.whiteo.stw.pengutronix.de ([2a0a:edc0:2:b01:1d::104])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jlu@pengutronix.de>)
+ id 1uvyOi-0008Ss-If
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 09:28:39 -0400
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+ by metis.whiteo.stw.pengutronix.de with esmtps
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <jlu@pengutronix.de>)
+ id 1uvyOa-0006o8-3n; Tue, 09 Sep 2025 15:28:28 +0200
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77])
+ by drehscheibe.grey.stw.pengutronix.de with esmtps (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1uvyOZ-000Qdj-1U;
+ Tue, 09 Sep 2025 15:28:27 +0200
+Received: from localhost ([127.0.0.1] helo=[IPv6:::1])
+ by ptz.office.stw.pengutronix.de with esmtp (Exim 4.96)
+ (envelope-from <jlu@pengutronix.de>) id 1uvyOZ-00FmkC-0w;
+ Tue, 09 Sep 2025 15:28:27 +0200
+Message-ID: <4d7760a559948fe8b16517fd4a17abde0606bae5.camel@pengutronix.de>
+Subject: Re: [PATCH v3 6/6] docs: Add eMMC device model description
+From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Bin Meng
+ <bmeng.cn@gmail.com>, qemu-block@nongnu.org, Ilias Apalodimas
+ <ilias.apalodimas@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>
+Date: Tue, 09 Sep 2025 15:28:26 +0200
+In-Reply-To: <2a8d6226903d8dcf9615b5ac5a40522b6bf2f7c3.1757422256.git.jan.kiszka@siemens.com>
+References: <cover.1757422256.git.jan.kiszka@siemens.com>
+ <2a8d6226903d8dcf9615b5ac5a40522b6bf2f7c3.1757422256.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: jlu@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de);
+ SAEximRunCond expanded to false
+X-PTX-Original-Recipient: qemu-devel@nongnu.org
+Received-SPF: pass client-ip=2a0a:edc0:2:b01:1d::104;
+ envelope-from=jlu@pengutronix.de; helo=metis.whiteo.stw.pengutronix.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,42 +77,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 30 Aug 2025 at 17:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Separate current to unpriv and arm to core mmu conversions
-> into two separate functions.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 2025-09-09 at 14:50 +0200, Jan Kiszka wrote:
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+>=20
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 > ---
->  target/arm/tcg/translate-a64.c | 24 +++++++++++++++---------
->  1 file changed, 15 insertions(+), 9 deletions(-)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 8c73f54e9a..ca1633540f 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -93,7 +93,7 @@ void a64_translate_init(void)
->  }
->
->  /*
-> - * Return the core mmu_idx to use for A64 load/store insns which
-> + * Return the full arm mmu_idx to use for A64 load/store insns which
->   * have a "unprivileged load/store" variant. Those insns access
->   * EL0 if executed from an EL which has control over EL0 (usually
->   * EL1) but behave like normal loads and stores if executed from
-> @@ -103,7 +103,7 @@ void a64_translate_init(void)
->   *           normal encoding (in which case we will return the same
->   *           thing as get_mem_index().
->   */
-> -static int get_a64_user_mem_index(DisasContext *s, bool unpriv)
-> +static ARMMMUIdx arm_user_mem_index(DisasContext *s, bool unpriv)
+>  docs/system/device-emulation.rst |  1 +
+>  docs/system/devices/emmc.rst     | 52 ++++++++++++++++++++++++++++++++
+>  2 files changed, 53 insertions(+)
+>  create mode 100644 docs/system/devices/emmc.rst
+>=20
+> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulat=
+ion.rst
+> index 911381643f..36429b1d17 100644
+> --- a/docs/system/device-emulation.rst
+> +++ b/docs/system/device-emulation.rst
+> @@ -101,3 +101,4 @@ Emulated Devices
+>     devices/canokey.rst
+>     devices/usb-u2f.rst
+>     devices/igb.rst
+> +   devices/emmc.rst
+> diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
+> new file mode 100644
+> index 0000000000..3bd70c0e94
+> --- /dev/null
+> +++ b/docs/system/devices/emmc.rst
+> @@ -0,0 +1,52 @@
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +eMMC Emulation
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +Besides SD card emulation, QEMU also offers an eMMC model as found on ma=
+ny
+> +embedded boards. An eMMC, just like an SD card, is connected to the mach=
+ine
+> +via an SDHCI controller.
+> +
+> +Create eMMC Images
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay prot=
+ected
+> +Memory Block (RPMB), and the user data area. QEMU expects backing images=
+ for
+> +the eMMC to contain those partitions concatenated in exactly that order.
+> +However, the boot partitions as well as the RPMB might be absent if thei=
+r sizes
+> +are configured to zero.
+> +
+> +The eMMC specification defines alignment constraints for the partitions.=
+ The
+> +two boot partitions must be of the same size. Furthermore, boot and RPMB
+> +partitions must be multiples of 128 KB with a maximum of 32640 KB for ea=
+ch
+> +boot partition and 16384K for the RPMB partition.
+> +
+> +The alignment constrain of the user data area depends on its size. Up to=
+ 2
+> +GByte, the size must be a power of 2. From 2 GByte onward, the size has =
+to be
+> +multiples of 512 byte.
+> +
+> +QEMU is enforcing those alignment rules before instantiating the device.
+> +Therefore, the provided image has to strictly follow them as well. The h=
+elper
+> +script `scripts/mkemmc.sh` can be used to create compliant images, with =
+or
+> +without pre-filled partitions. E.g., to create an eMMC image from a firm=
+ware
+> +image and an OS image with an empty 2 MByte RPMB, use the following comm=
+and:
+> +
+> +.. code-block:: console
+> +
+> +    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
+> +
+> +This will take care of rounding up the partition sizes to the next valid=
+ value
+> +and will leave the RPMB and the second boot partition empty (zeroed).
+> +
+> +Adding eMMC Devices
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +An eMMC is either automatically created by a machine model (e.g. Aspeed =
+boards)
+> +or can be user-created when using a PCI-attached SDHCI controller. To
+> +instantiate the eMMC image form the example above while assuming that th=
+e
 
-This function is named get_a64_user_mem_index() to indicate
-that it's the A64 logic, compared to get_a32_user_mem_index()
-in translate.c for the A32 logic. It seems a shame to lose
-the parallelism in the naming.
+s/form/from/
 
--- PMM
+> +firmware needs a boot partitions of 1 MB, use the following options:
+> +
+> +.. code-block:: console
+> +
+> +    -drive file=3Demmc.img,if=3Dnone,format=3Draw,id=3Demmc-img
+> +    -device sdhci-pci
+> +    -device emmc,drive=3Demmc-img,boot-partition-size=3D1048576 rpmb-par=
+tition-size=3D2097152
+
+Missing ',' before rpmb-partition-size?
+
+Thanks,
+Jan
+--=20
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
 
