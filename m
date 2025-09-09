@@ -4,147 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDBFCA0FED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE28CAC583
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 20:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw5Oi-0004wW-KJ; Tue, 09 Sep 2025 16:57:04 -0400
+	id 1uw5Ou-00050H-NB; Tue, 09 Sep 2025 16:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uw5Of-0004vc-Ck
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uw5OZ-0001qg-G0
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757451403;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=d+9alRluVSppxGrcPFsqGD2ORqu4IPOenfkl6vfKMqs=;
- b=Uo5uFJn6s8/n77fQkwI0eQheHZ58TFrPDosAdgjbxozJRD8C24gukFIRx1Z1A0MLhH86Tv
- hhLFJyXg8hoE+w1zxybvp4uHyVijsBodofEOYCAEABA3CMhnEm0ZZk9Kn6pBqFT7NWxZLj
- /pv3AvwBxipS69CQzepjVkbxyCamOig=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-rKfl_z_1PdK_BaaFDV_S9A-1; Tue, 09 Sep 2025 16:56:42 -0400
-X-MC-Unique: rKfl_z_1PdK_BaaFDV_S9A-1
-X-Mimecast-MFC-AGG-ID: rKfl_z_1PdK_BaaFDV_S9A_1757451401
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3e1e7752208so2937159f8f.3
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 13:56:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uw5Oq-0004zL-SY
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:13 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1uw5Oj-0001s6-9b
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 16:57:12 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-32da35469f7so1243652a91.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 13:57:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1757451420; x=1758056220;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ee3LM2mTuY71FsskUj8THQjhM2jFxw20MT+w+Yf2s8I=;
+ b=ToIbaLXAxE9I/bVNIp6jnwzspyMGibxDMWb2iNjNN1ELhurnVHl3Wn3V/hSSFlWK9b
+ owHkx9llaFKsG26ZJ/uKJbCVB8vSdimk7b7LPWxkHOcCvxtVkGh9QOwuVtmbr1b5gEhI
+ rW/zDNzA52Qvni+GIRDZVAyKcLMPeVstl36XOkg7A03PwMG7F+KA5tZeh6/X8zNg4rJ5
+ Ni3h/5bt61PBAw31mAN+AzJHu0BRXWOOtHSVmlgRAUU/MsH3ls/DyZxdxiWjexA0N5AG
+ oPS1j9PPabRDI+332C8mii1Qa1+4LzdWZFsn3vxA9/UjzuD7sy3PwADF+GRXf9oM3j6W
+ L5wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757451401; x=1758056201;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1757451420; x=1758056220;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=d+9alRluVSppxGrcPFsqGD2ORqu4IPOenfkl6vfKMqs=;
- b=myoS1qt6j/VBB1e4aLnGJE58e3opHerqsjDjGlpHdXcgLc2ntYmVqGPPPjZpaXvduP
- Gh+TXTAoYTtgLaWQMXapQvp4eyv3ShQDSbmv+DvgffY76qhFFVtY9U7iKJ/kZSoDFVOE
- G2VSQAZg0DnCw170UihHrjukF87IsA448vCuE5XFBsO6OxhC5YgC/Q5Q/18r+pL3NSzv
- tLzhRyi085T5A5QN4sVeIWGPfwaAS6JJNJwMwIloIS82gGlt8rELirYIzZbyPOiQLzJA
- FNGTHU7Qfmr+6SPYxasKd894T8U4R6xeXnoWFO7DITnCf1A0C7Xc2htUTUA8uOgCrByD
- +P/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWv9UBkCl0VrzltPy0cLfEu3yKEBiks1+dbZGmudll15Ypfe0zwJIwC4bTNT5ZG1j189QL+p7ZOt3GJ@nongnu.org
-X-Gm-Message-State: AOJu0YwjQVMS8qz9t+N/5SoNRbormcCtqeMW1PfGfbENV9EALAHbXaCn
- 7z3APvKe4iIMS8JzVJNkaSsFQnB7sxgoAv5o+jwe0VkDk2eSz0GSQM57JQj2bvPicnkGFn2Yk6l
- SMbt9XEybTS85QAcnDVpsGwiXRzuESDpiTkxrabN8T5jyuRNI+g5X+vkM
-X-Gm-Gg: ASbGncsZIy8tFMcamd6lWFwuxYiKSrzlLISy3ulYzQDdy7n14sAUFrlZ6UdLJIqnqPX
- hdBbb922IKA/bdKoqFD/rs1/OC9dRUmD+BVwzsSyZxNS+VBQAQYDUvvVLAEqch4Xiatm5Cn7R0k
- UP+iLwNDP6Wqaz9PWWYKnZ9WepcQ0/WEZDOZcQS+tN91HLuZsVio8X++5egm9w7SKIoG2ASBjVs
- i+r8Y0GKxYHO/gonkDV/TPfPNeHVaHJPHwm5kdJKxNJY44VSECcYhBmM/qOTqksMS1J9EitdDyq
- e0Wxd28SOyyoXMtg/52hqWW594yjhtf1iO5pB/Xb5mC1YORQqtf4KZ15J2GGW7yBwWpgPMOjjCx
- XRW4=
-X-Received: by 2002:a05:6000:1786:b0:3cd:5815:68d4 with SMTP id
- ffacd0b85a97d-3e64c789447mr8935702f8f.57.1757451400996; 
- Tue, 09 Sep 2025 13:56:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJmSCmf4HVA/Tg8Th/M2yhqBSOc7EoVCF9Kx0SJ4l+U4l78xaxV7d9rZwHh7WbTqCX6UPCzA==
-X-Received: by 2002:a05:6000:1786:b0:3cd:5815:68d4 with SMTP id
- ffacd0b85a97d-3e64c789447mr8935689f8f.57.1757451400630; 
- Tue, 09 Sep 2025 13:56:40 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7522562d1sm3842356f8f.63.2025.09.09.13.56.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 13:56:40 -0700 (PDT)
-Message-ID: <01ec0eb8-62ae-495f-abe6-cb64f493a2df@redhat.com>
-Date: Tue, 9 Sep 2025 22:56:39 +0200
+ bh=ee3LM2mTuY71FsskUj8THQjhM2jFxw20MT+w+Yf2s8I=;
+ b=DC+mco/u7oc3hvRShpmRB0qgJiokPGdRVm1W/5kqYj2wQKkRBdF8IkYG+tC+44WtQW
+ 5P+iHToBmf0v52Zu90bHtZj1AFLZRjlU4eFAajy+cwncLaf7ZpdmVw7n3ESrhVlxdlT5
+ dLSTT48EEYAUoeaW4dloI0WYQBx/JEjscyBJS5AM322mNXTsbXNSIYmR54XCXkcdTDnu
+ SJSeZi9VAHkvGfVNYL8/vsduOjbPK+ZxQsWPklSOGP2BJKK1pYd/5tCXG7CYMxrcj0Fh
+ lOoJeiaiPCI2XfI69m2ye3+bWW0qpZmgz/2Ph7ikCe+YV9pQqYW/a+CZNxvofZgijriH
+ DI5A==
+X-Gm-Message-State: AOJu0Yx2bHcEWKfksq2T67vFbwjmia+4UybO8fHhQIvq4JLLr9IR7sqv
+ ktnKNnIqpQuLSWQvjjxYOwMNuS3nT7F6NEU+54auXVgBhF+V9Q2IdoGSlq3GoS/MCYowZb7Lcca
+ 17+swA0SaONXBlRcpILmOmo0+bYfw+1iL29K3hpLlYw==
+X-Gm-Gg: ASbGncvi2TRFqe1PMLASe/85iaPceOINlg7UhDaslB5+2Rr5SD0dhKtJHH2zzTt+nNV
+ lKgQAZ9fDxt/6bY3caHpJ6QpFKwekd1j45VQBIUBSCFKK10lQJYDjBzxestVNKzSk29zqqnxvNQ
+ 5s61VLMqJCPJW2IgLJlISWTTdDCvs8EpFYE+jxjoAj3YTHGigMyUPJL3XzpJokAPLCfpwa/y+5d
+ 9GDgX9AwpOhKCE4uA2X+bfULksQoLAAx0+9H3A=
+X-Google-Smtp-Source: AGHT+IHi6OhA+k1XaVwnkeZGrL2Pp23vSnEPR2+OOmSdhNZ/nbCOZDP9ByD7bEuH1GPXn5nvXOh5KXk7nKDVmGK6arQ=
+X-Received: by 2002:a17:90b:56cb:b0:32b:6223:25a with SMTP id
+ 98e67ed59e1d1-32d43fbb270mr14813074a91.28.1757451419660; Tue, 09 Sep 2025
+ 13:56:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] vfio/pci: Add an architecture specific error
- handler
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, thuth@redhat.com, alex.williamson@redhat.com
-References: <20250825212434.2255-1-alifm@linux.ibm.com>
- <20250825212434.2255-3-alifm@linux.ibm.com>
- <0699f897-3aeb-4104-919b-c96cdab4d4e7@redhat.com>
- <17b1213d-d076-4e0f-b43e-657abc002e9c@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <17b1213d-d076-4e0f-b43e-657abc002e9c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1757422256.git.jan.kiszka@siemens.com>
+ <8fa0fa4158dc2e62edb59d5af8fa54a41e50e306.1757422256.git.jan.kiszka@siemens.com>
+In-Reply-To: <8fa0fa4158dc2e62edb59d5af8fa54a41e50e306.1757422256.git.jan.kiszka@siemens.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 9 Sep 2025 14:56:47 -0600
+X-Gm-Features: Ac12FXwJ6PyAFbsOiqtdw1W4f7IWx880C2ILEWXOiIKNCIgPjo5i3L6HLhEpv1k
+Message-ID: <CANCZdfqBMsq-GW6VnaS5WfJTwoP1DVbZcr8E++2NPmHa-_4jgQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] hw/sd/sdcard: Fix size check for backing block
+ image
+To: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, 
+ Alexander Bulekov <alxndr@bu.edu>
+Content-Type: multipart/alternative; boundary="0000000000009442bc063e648b5f"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,56 +100,301 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 18:49, Farhan Ali wrote:
-> 
-> On 9/1/2025 4:28 AM, Cédric Le Goater wrote:
->> On 8/25/25 23:24, Farhan Ali wrote:
->>> Provide a architecture specific error handling callback, that can be used
->>> by platforms to handle PCI errors for passthrough devices.
->>>
->>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->>> ---
->>>   hw/vfio/pci.c | 5 +++++
->>>   hw/vfio/pci.h | 1 +
->>>   2 files changed, 6 insertions(+)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index 07257d0fa0..3c71d19306 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -3026,6 +3026,11 @@ static void vfio_err_notifier_handler(void *opaque)
->>>           return;
->>>       }
->>>   +    if (vdev->arch_err_handler) {
->>> +        vdev->arch_err_handler(vdev);
->>
->>
->> I am not sure that the "architecture specific error handling"
->> will be implemented this way but we need to check for potential
->> errors.
-> 
-> Thanks for reviewing, do you have any suggestions on how to implement the architecture/device specific error handling?
+--0000000000009442bc063e648b5f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The nature of VFIOPCIDevice is special, it's both a PCIDevice and
-a VFIODevice and it's difficult to use QOM to customize some of
-its behavior with device class handlers. I don't see a better
-way for now.
+On Tue, Sep 9, 2025 at 6:51=E2=80=AFAM Jan Kiszka <jan.kiszka@siemens.com> =
+wrote:
 
-I would drop the 'arch_' prefix from the name.
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+>
+> Alignment rules apply the the individual partitions (user, boot, later
+> on also RPMB) and depend both on the size of the image and the type of
+> the device. Up to and including 2GB, the power-of-2 rule applies to the
+> user data area. For larger images, multiples of 512 sectors must be used
+> for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
+> and also detect if the image is too small to even hold the boot
+> partitions.
+>
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> ---
+> CC: Warner Losh <imp@bsdimp.com>
+> CC: C=C3=A9dric Le Goater <clg@kaod.org>
+> CC: Joel Stanley <joel@jms.id.au>
+> CC: Alistair Francis <alistair@alistair23.me>
+> CC: Alexander Bulekov <alxndr@bu.edu>
+> ---
+>  hw/sd/sd.c | 61 +++++++++++++++++++++++++++++++++++++-----------------
+>
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 
 
->> So, please make the handler return a bool and add an extra
->> 'Error **' parameter.
->>
->>
-> Sure, I can change that. Are you suggesting the change to bool return for the handler to report any failures in the handler (through errp)?
 
-yes. The error reported before the vm_stop() in vfio_err_notifier_handler()
-should be updated too.
+>  1 file changed, 42 insertions(+), 19 deletions(-)
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index d7a496d77c..b42cd01d1f 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2759,6 +2759,28 @@ static void sd_instance_finalize(Object *obj)
+>      timer_free(sd->ocr_power_timer);
+>  }
+>
+> +static void sd_blk_size_error(SDState *sd, int64_t blk_size,
+> +                              int64_t blk_size_aligned, const char *rule=
+,
+> +                              Error **errp)
+> +{
+> +    const char *dev_type =3D sd_is_emmc(sd) ? "eMMC" : "SD card";
+> +    char *blk_size_str;
+> +
+> +    blk_size_str =3D size_to_str(blk_size);
+> +    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
+> +    g_free(blk_size_str);
+> +
+> +    blk_size_str =3D size_to_str(blk_size_aligned);
+> +    error_append_hint(errp,
+> +                      "%s size has to be %s, e.g. %s.\n"
+> +                      "You can resize disk images with"
+> +                      " 'qemu-img resize <imagefile> <new-size>'\n"
+> +                      "(note that this will lose data if you make the"
+> +                      " image smaller than it currently is).\n",
+> +                      dev_type, rule, blk_size_str);
+> +    g_free(blk_size_str);
+> +}
+> +
+>  static void sd_realize(DeviceState *dev, Error **errp)
+>  {
+>      SDState *sd =3D SDMMC_COMMON(dev);
+> @@ -2781,25 +2803,26 @@ static void sd_realize(DeviceState *dev, Error
+> **errp)
+>              return;
+>          }
+>
+> -        blk_size =3D blk_getlength(sd->blk);
+> -        if (blk_size > 0 && !is_power_of_2(blk_size)) {
+> -            int64_t blk_size_aligned =3D pow2ceil(blk_size);
+> -            char *blk_size_str;
+> -
+> -            blk_size_str =3D size_to_str(blk_size);
+> -            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
+> -            g_free(blk_size_str);
+> -
+> -            blk_size_str =3D size_to_str(blk_size_aligned);
+> -            error_append_hint(errp,
+> -                              "SD card size has to be a power of 2, e.g.
+> %s.\n"
+> -                              "You can resize disk images with"
+> -                              " 'qemu-img resize <imagefile>
+> <new-size>'\n"
+> -                              "(note that this will lose data if you mak=
+e
+> the"
+> -                              " image smaller than it currently is).\n",
+> -                              blk_size_str);
+> -            g_free(blk_size_str);
+> -
+> +        blk_size =3D blk_getlength(sd->blk) - sd->boot_part_size * 2;
+> +        if (blk_size > SDSC_MAX_CAPACITY) {
+> +            if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) !=3D 0=
+) {
+> +                int64_t blk_size_aligned =3D
+> +                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
+> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+> +                                  "multiples of 512", errp);
+> +                return;
+> +            } else if (!sd_is_emmc(sd) && blk_size % (512 * KiB)) {
+> +                int64_t blk_size_aligned =3D ((blk_size >> 19) + 1) << 1=
+9;
+> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
+> +                                  "multiples of 512K", errp);
+> +                return;
+> +            }
+> +        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
+> +            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a power
+> of 2",
+> +                              errp);
+> +            return;
+> +        } else if (blk_size < 0) {
+> +            error_setg(errp, "eMMC image smaller than boot partitions");
+>              return;
+>          }
+>
+> --
+> 2.51.0
+>
+>
 
-Thanks,
+--0000000000009442bc063e648b5f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-C.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 9, =
+2025 at 6:51=E2=80=AFAM Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemens=
+.com">jan.kiszka@siemens.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">From: Jan Kiszka &lt;<a href=3D"mailto:jan.kisz=
+ka@siemens.com" target=3D"_blank">jan.kiszka@siemens.com</a>&gt;<br>
+<br>
+Alignment rules apply the the individual partitions (user, boot, later<br>
+on also RPMB) and depend both on the size of the image and the type of<br>
+the device. Up to and including 2GB, the power-of-2 rule applies to the<br>
+user data area. For larger images, multiples of 512 sectors must be used<br=
+>
+for eMMC and multiples of 512K for SD-cards. Fix the check accordingly<br>
+and also detect if the image is too small to even hold the boot<br>
+partitions.<br>
+<br>
+Signed-off-by: Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemens.com" tar=
+get=3D"_blank">jan.kiszka@siemens.com</a>&gt;<br>
+---<br>
+CC: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp=
+@bsdimp.com</a>&gt;<br>
+CC: C=C3=A9dric Le Goater &lt;<a href=3D"mailto:clg@kaod.org" target=3D"_bl=
+ank">clg@kaod.org</a>&gt;<br>
+CC: Joel Stanley &lt;<a href=3D"mailto:joel@jms.id.au" target=3D"_blank">jo=
+el@jms.id.au</a>&gt;<br>
+CC: Alistair Francis &lt;<a href=3D"mailto:alistair@alistair23.me" target=
+=3D"_blank">alistair@alistair23.me</a>&gt;<br>
+CC: Alexander Bulekov &lt;<a href=3D"mailto:alxndr@bu.edu" target=3D"_blank=
+">alxndr@bu.edu</a>&gt;<br>
+---<br>
+=C2=A0hw/sd/sd.c | 61 +++++++++++++++++++++++++++++++++++++----------------=
+-<br></blockquote><div><br></div><div>Reviewed-by: Warner Losh &lt;<a href=
+=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div><br></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A01 file changed, 42 insertions(+), 19 deletions(-)<br>
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c<br>
+index d7a496d77c..b42cd01d1f 100644<br>
+--- a/hw/sd/sd.c<br>
++++ b/hw/sd/sd.c<br>
+@@ -2759,6 +2759,28 @@ static void sd_instance_finalize(Object *obj)<br>
+=C2=A0 =C2=A0 =C2=A0timer_free(sd-&gt;ocr_power_timer);<br>
+=C2=A0}<br>
+<br>
++static void sd_blk_size_error(SDState *sd, int64_t blk_size,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_aligned, const char *rule,=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 const char *dev_type =3D sd_is_emmc(sd) ? &quot;eMMC&quot; :=
+ &quot;SD card&quot;;<br>
++=C2=A0 =C2=A0 char *blk_size_str;<br>
++<br>
++=C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk_size);<br>
++=C2=A0 =C2=A0 error_setg(errp, &quot;Invalid %s size: %s&quot;, dev_type, =
+blk_size_str);<br>
++=C2=A0 =C2=A0 g_free(blk_size_str);<br>
++<br>
++=C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk_size_aligned);<br>
++=C2=A0 =C2=A0 error_append_hint(errp,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;%s size has to be %s, e.g. %s.\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;You can resize disk images with&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot; &#39;qemu-img resize &lt;imagefile&gt; &lt;new-size&gt;&#39;\n&q=
+uot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;(note that this will lose data if you make the&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot; image smaller than it currently is).\n&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 dev_type, rule, blk_size_str);<br>
++=C2=A0 =C2=A0 g_free(blk_size_str);<br>
++}<br>
++<br>
+=C2=A0static void sd_realize(DeviceState *dev, Error **errp)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0SDState *sd =3D SDMMC_COMMON(dev);<br>
+@@ -2781,25 +2803,26 @@ static void sd_realize(DeviceState *dev, Error **er=
+rp)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size =3D blk_getlength(sd-&gt;blk);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (blk_size &gt; 0 &amp;&amp; !is_power_of_2(=
+blk_size)) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_aligned =3D pow=
+2ceil(blk_size);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char *blk_size_str;<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk=
+_size);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Invalid S=
+D card size: %s&quot;, blk_size_str);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(blk_size_str);<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str =3D size_to_str(blk=
+_size_aligned);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_append_hint(errp,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SD card size has to be a power of 2, =
+e.g. %s.\n&quot;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;You can resize disk images with&quot;=
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; &#39;qemu-img resize &lt;imagefile&g=
+t; &lt;new-size&gt;&#39;\n&quot;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;(note that this will lose data if you=
+ make the&quot;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot; image smaller than it currently is).=
+\n&quot;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size_str);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(blk_size_str);<br>
+-<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 blk_size =3D blk_getlength(sd-&gt;blk) - sd-&g=
+t;boot_part_size * 2;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (blk_size &gt; SDSC_MAX_CAPACITY) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sd_is_emmc(sd) &amp;&amp; bl=
+k_size % (1 &lt;&lt; HWBLOCK_SHIFT) !=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_a=
+ligned =3D<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ((bl=
+k_size &gt;&gt; HWBLOCK_SHIFT) + 1) &lt;&lt; HWBLOCK_SHIFT;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(=
+sd, blk_size, blk_size_aligned,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;multiples of 512&quot;,=
+ errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!sd_is_emmc(sd) &amp;=
+&amp; blk_size % (512 * KiB)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int64_t blk_size_a=
+ligned =3D ((blk_size &gt;&gt; 19) + 1) &lt;&lt; 19;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(=
+sd, blk_size, blk_size_aligned,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;multiples of 512K&quot;=
+, errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (blk_size &gt; 0 &amp;&amp; !is_powe=
+r_of_2(blk_size)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sd_blk_size_error(sd, blk_size, =
+pow2ceil(blk_size), &quot;a power of 2&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (blk_size &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;eMMC imag=
+e smaller than boot partitions&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-- <br>
+2.51.0<br>
+<br>
+</blockquote></div></div>
 
-
+--0000000000009442bc063e648b5f--
 
