@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755B9CAC587
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 10:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A5FCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 10:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvvOs-0007Qy-HO; Tue, 09 Sep 2025 06:16:34 -0400
+	id 1uvvQ0-0007w1-Vt; Tue, 09 Sep 2025 06:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvOp-0007QL-Tm
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:16:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvPt-0007oj-Ch
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:17:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvOm-0005vL-2J
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:16:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uvvPq-0005wp-D8
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 06:17:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757412985;
+ s=mimecast20190719; t=1757413051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2pg0PBVbwHlHd4A386E8sE9ZX+RW3W2BGzZ2LeOjgsk=;
- b=E6kDzSdSyRfkFn930C/iiLBLVeMc2zN4XOkbHQnVHYgKz97S+0Z19v+8yqR0N95MkYTt3I
- rIDja++ldjV37WQdp357TuN/dXsguc2/C2tkvBAyQJQPNZa/h4aWvn+zW/bhqyHwmAhsIU
- sq0jB0gSH3QBZIGSyrjQwuZok4DPJ/Q=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8WmOzYXodsSBYYeCMbLmze/pZqfbcZKz+Ub5/20ryAo=;
+ b=CRaDSploqNHMnZBVJT36Co+drWg4hMXSVTHXrcH3ZeP5l3NVw91BJtehVsSILcXaHIthNE
+ TJY6iRzILTNNPPlfDMcRK5yrtaHQ1trARwXyJmzakFzuI0F5pBdOHfV1f5nihasZLnUbCV
+ f4DkILuVWfVMR+muU8XuaEKZy2RJkxI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-kBG94bPyMBy_nKM2tAV_sg-1; Tue, 09 Sep 2025 06:16:23 -0400
-X-MC-Unique: kBG94bPyMBy_nKM2tAV_sg-1
-X-Mimecast-MFC-AGG-ID: kBG94bPyMBy_nKM2tAV_sg_1757412983
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de27bf706so11408175e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 03:16:23 -0700 (PDT)
+ us-mta-673-zwXMCpnzOGmCoOMslvR0Jg-1; Tue, 09 Sep 2025 06:17:30 -0400
+X-MC-Unique: zwXMCpnzOGmCoOMslvR0Jg-1
+X-Mimecast-MFC-AGG-ID: zwXMCpnzOGmCoOMslvR0Jg_1757413049
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3dc3f943e6eso3422062f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 03:17:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757412982; x=1758017782;
+ d=1e100.net; s=20230601; t=1757413049; x=1758017849;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2pg0PBVbwHlHd4A386E8sE9ZX+RW3W2BGzZ2LeOjgsk=;
- b=olEezNMBlHgoxYvRFonxmA0tYjY/AkEAjDmQCkvkjXmbjrzDEy76WgtaCr7MvzqSoR
- Fsfnuv+yRudp/tsV89bWeBrUaAtZ7n8r6JvdlrHI6l5voEl05+x/LRhzJB1IhJdyYl3s
- roiU9+F8Qggi1+YibMwdXtaqVm9NgtSOur94Ih88EdyrluL9QzEeBpHxz7IfBJNWA9Sl
- tohFCh+310MbcK3Ns8qtsnLFO8fWcGrc0iGOVmRE7/itA7jAKFUwE9PYH189MJaswg4g
- I2dUOcQaDgTBTu3ZBTGV9s6Whqg18XcH4tS/MhMz6l42X0Ymt9ZozdHc9b1PuUDHLpR0
- fz0A==
+ bh=8WmOzYXodsSBYYeCMbLmze/pZqfbcZKz+Ub5/20ryAo=;
+ b=n4/dvkUjc1gYihbUVOv7XI59LfqPFnS72R8csh+O4HrA42wGOpJUxyTunqqJn53GpJ
+ v6EOu6zwZBygFxrjGeOhJe+8qNsX46/LFiKnC0qxl0gST+IXrDlc5sMnSItvCxsLGMfS
+ Xet9+zErvMJqLE2KxSnPCSFvjvts+ceDUi5+shIPg5LVzrl5wklP5qY35pPveoPHjtHr
+ Fsnt8lU+ABJBTe2kceq0D+PRlr1On8RI1EMD3E+SbsR8xYighh2BlIZ9lG6axuhETEp3
+ mIID0PJ3LNuTHW3K5wXZEAzLSgVth6knpQvrNuD+HbD9RNLvk44Fx2a1+zbByo3OrCRN
+ G88A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbbocO7qHXt7CoVv+c6XX5/2fWmocCPSTJP8hDW05tKSuMhR+4v3z/kJlw+8uRjgnc4Lqp/gNwBmQG@nongnu.org
-X-Gm-Message-State: AOJu0YyAjSC6n5NgQdqm65ua+lzlx8ArzxBZX+LkRtc7G17G0PGrH3YU
- 3uYBi7j3QGqu3RYU+cHK3+kzF8jJhySb5vtD+qNgsVa0AaaRqD19ERhe/Xug8wpC71q7TWjaZPZ
- 4xWN/CYDOXZJ+Yntmv5LcRlL/t3OmG0pT/iPL4QL8t3/2kmDRnIKSTUAZ
-X-Gm-Gg: ASbGncupoWp9zRuaWGQ1eLyXgFRJSN+ZpLvHp9kfNKdj+0odfPZauLWwLfyplaDjqBz
- JPEQDSQFIe39Il/NzNho850xSX04Dz5G+v1Zt8xfo7A+9X/gnHzkMpFPyFEzXdToLL0g63L9p6z
- g5wxlfaN8beOBPvRMIYbXLio+0UeLE+z6U1V/WZbjkOIuN7gDuQajJyprMGY6/wlyP0BZB2ahY9
- NSg6m04UJZEktLNxYfmJP60L1FZ2bWbaTwuSPgGg9FWRGTWrvhFomuKI/bRAuDcHF7X0IF0YtLQ
- wp7Dmw1gl6o5FB0JlUPFsGi8BGTR6uGbQoa3jFDi1zydIqsjq5ojxHGrg1xXhu4kBEYiuc+enzK
- 1RKBn1Q==
-X-Received: by 2002:a05:600c:1993:b0:45b:7bba:c7a6 with SMTP id
- 5b1f17b1804b1-45dddef9cc0mr94145385e9.32.1757412982557; 
- Tue, 09 Sep 2025 03:16:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaVq9ez9FqjBFUiCmyQkfF/k6KYBRv/0jAqvyM8qJB4BJVuBXLhThmdYzEdUWk1brA5arAQg==
-X-Received: by 2002:a05:600c:1993:b0:45b:7bba:c7a6 with SMTP id
- 5b1f17b1804b1-45dddef9cc0mr94145145e9.32.1757412982121; 
- Tue, 09 Sep 2025 03:16:22 -0700 (PDT)
+ AJvYcCUQ+vPp2eqlOaJVxPvVrMNYlrReZn8Vfb3PFGvGfDuFRdK7OT7K7FW8tijYtMeYm3gCLxeAOsFyl3+G@nongnu.org
+X-Gm-Message-State: AOJu0Yxnbz3KD5lSXkbAdKIjsuJp3jE/1wQToxY6h+lx+BcFMzkvh7/W
+ kY9WIlBzV2oNPf1VrQ+DOcyfVTo+hAjmYpjTZZT9W2FwUbO9FcurlHYn8O9K2DBhoa+VE9Eiww1
+ vgaF+pkXna0QQnCjbAgsVn13mk017GP9/FT+5p8nrqFyl3l2dUkrEUTK6
+X-Gm-Gg: ASbGncvEtekAAm/umLFmTTpge00F0fOC7J6JbL/jKvuLeHT+jRhT5oOFxa3Im22S7ap
+ GqRUMRosKuEGlqLOq55dZrz8TMDpw2stExJ9Tv12ulIgXBYt1xelIx9z1kfg82vwEs/xWxoPvyC
+ pezCpEdUWXh3WYZc+XYNbHavFJU3VFZukZznuam3Ys4+Sxoqq5a5GOvB59YCZ7FxT6nYgJsCqCN
+ pHqDhxyWNL8sc71UsVAQNSUYYxbmQaAA5TAci136wE9BxJhDAWPQGt9xQ91EbWAF57zYi2l+MAq
+ WsxISYZgfbqnkSxjNl7f2IjL5MaKc90RgNZw6f4ODR3WCOg8kclW6mjKlS+8ZVOpQov4a6GBmao
+ NEAB3Ww==
+X-Received: by 2002:a5d:5d02:0:b0:3db:c7aa:2c4a with SMTP id
+ ffacd0b85a97d-3e643740fb6mr9710507f8f.42.1757413048739; 
+ Tue, 09 Sep 2025 03:17:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrM6sUSGR2v3DK5CM1rkOjrWdk/UA57/lA/js0MBdgmlf56Z94hx4qmYM4oIsir8SZH3ffNw==
+X-Received: by 2002:a5d:5d02:0:b0:3db:c7aa:2c4a with SMTP id
+ ffacd0b85a97d-3e643740fb6mr9710482f8f.42.1757413048327; 
+ Tue, 09 Sep 2025 03:17:28 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
  [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e8ab14esm522202475e9.21.2025.09.09.03.16.21
+ ffacd0b85a97d-3e7521bf85esm2092568f8f.1.2025.09.09.03.17.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Sep 2025 03:16:21 -0700 (PDT)
-Message-ID: <95eb8569-2390-4106-8ca0-dca8ab0a557c@redhat.com>
-Date: Tue, 9 Sep 2025 12:16:20 +0200
+ Tue, 09 Sep 2025 03:17:27 -0700 (PDT)
+Message-ID: <919abc1b-8132-42c6-a3df-9f8c09ce3a0e@redhat.com>
+Date: Tue, 9 Sep 2025 12:17:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] tests/functional: avoid duplicate messages on failures
+Subject: Re: [PATCH 3/4] tests/functional: avoid tearDown failure when QEMU
+ dies
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250908135722.3375580-1-berrange@redhat.com>
- <20250908135722.3375580-3-berrange@redhat.com>
+ <20250908135722.3375580-4-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250908135722.3375580-3-berrange@redhat.com>
+In-Reply-To: <20250908135722.3375580-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,39 +157,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/09/2025 15.57, Daniel P. Berrangé wrote:
-> In some scenarios the same tests is mentioned in both the
-> 'res.results.errors' and 'res.results.failures' array returned
-> by unittest.main(). This was seen when the 'tearDown' method
-> raised an exception.
+> In a QEMU process under test dies unexpectedly, the 'shutdown'
+> method may well raise an exeception. This causes the tearDown
+> method to fail, which means any later cleanup code fails to
+> get run. Most notably the log handlers don't get removed so
+> the base.log file from an earlier test will get polluted with
+> messages from any subsequent tests. The tearDown failure also
+> results in pages of exceptions printed on the console, which
+> obscures the real failure message / trace printed by the test.
 > 
-> In such a case, we printed out the same information about where
-> to find a log file twice for each test. Track which tests we
-> have already reported on, to avoid the duplication.
+> Ignore any shutdown failures in the tearDown method, since any
+> test which cares about clean shutdown should have already
+> cleaned up any running VMs. The tearDown method is just there
+> as a safety net to cleanup resources. The base.log file will
+> still containing log messages from the failed 'vm.shutdown'
+> call too.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/testcase.py | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>   tests/functional/qemu_test/testcase.py | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index fbeb171058..82a7724404 100644
+> index 82a7724404..faa0a4f0db 100644
 > --- a/tests/functional/qemu_test/testcase.py
 > +++ b/tests/functional/qemu_test/testcase.py
-> @@ -251,13 +251,14 @@ def main():
->                                      test_output_log = pycotap.LogMode.LogToError)
->           res = unittest.main(module = None, testRunner = tr, exit = False,
->                               argv=[sys.argv[0], path] + sys.argv[1:])
-> +        failed = {}
->           for (test, message) in res.result.errors + res.result.failures:
-> -
-> -            if hasattr(test, "log_filename"):
-> +            if hasattr(test, "log_filename") and not test.id() in failed:
->                   print('More information on ' + test.id() + ' could be found here:'
->                         '\n %s' % test.log_filename, file=sys.stderr)
->                   if hasattr(test, 'console_log_name'):
->                       print(' %s' % test.console_log_name, file=sys.stderr)
-> +                failed[test.id()] = True
->           sys.exit(not res.result.wasSuccessful())
+> @@ -404,7 +404,10 @@ def set_vm_arg(self, arg, value):
+>   
+>       def tearDown(self):
+>           for vm in self._vms.values():
+> -            vm.shutdown()
+> +            try:
+> +                vm.shutdown()
+> +            except Exception as ex:
+> +                self.log.error("Failed to teardown VM: %s" % ex)
+>           logging.getLogger('console').removeHandler(self._console_log_fh)
+>           self._console_log_fh.close()
+>           super().tearDown()
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
