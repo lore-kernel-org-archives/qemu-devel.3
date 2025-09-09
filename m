@@ -4,87 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B22ACA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B7BCA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 13:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvxw5-0006BG-Si; Tue, 09 Sep 2025 08:59:01 -0400
+	id 1uvxwA-0006KK-Py; Tue, 09 Sep 2025 08:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lifei.shirley@bytedance.com>)
- id 1uvrvX-0003ne-KN
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 02:34:03 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lifei.shirley@bytedance.com>)
- id 1uvrvQ-0004uR-PT
- for qemu-devel@nongnu.org; Tue, 09 Sep 2025 02:34:03 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-77460a64848so653340b3a.1
- for <qemu-devel@nongnu.org>; Mon, 08 Sep 2025 23:33:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1uvv1f-00009X-Oj; Tue, 09 Sep 2025 05:52:35 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1uvv1W-00033s-8L; Tue, 09 Sep 2025 05:52:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1757399622; x=1758004422; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KlYPumXZ2GNPPhioX83eHuWYdzwsk2NeU2T6+Hb+h+o=;
- b=hN+5z20g8QInG14gp2lJ5e+f6QUebCgNUyw65Ydse9snreS2NPC89JJfaoMrPtciqA
- Ciz7TaJ2ALdMMM2XNW6G0BPRJuXA9twJPaHA8beBL9uU2fYtbaZhnYU5BpeyTorbPCkd
- bX5uzWj0QGvPkxCg1cZA9OIwY5E9F+dpiQDGFq/wv3t1fd1j6vXee46WtG0Gp4Bq586K
- 9zPBr3NzjlGAUgPR/BWK/3wubvIaMM863IDtD5SIQEAPFupK7rR7kM5EjdjYhfw6WOGX
- /LvofTHWddlRkRcMyxIZCfb9/xZqp/E/kZnEtVHgC5vxd0DpQF1oh18G2qaMZlyGySKk
- rBFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757399622; x=1758004422;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KlYPumXZ2GNPPhioX83eHuWYdzwsk2NeU2T6+Hb+h+o=;
- b=D7ZoqjXjJoQRjgYpEgt3YFJmYkeLW1TZuXS41/JINLzXPVnmANdXP0MV9kOsgY8R8W
- mCwZxNxuMOhd02+WA67RiLLq9meG0VT0kBiYyCN8oTKI4XNuT3X6DSlseRYioNHxqQFO
- NjlsIyk/nBDB9f1IHV6voh1MMYzr/f9ArVL5ha/Eht622P1PTjHsaAeUMajLXfZvmSAp
- m4EI9FUZ1J5AhbUl5wgVjjsseri6wvSEZ6bzAhfEpEQtdHm3/cYTpWauV53yCMTpcSHS
- xDZXxdYFSpjXhvyuKVDU5oKrH2ZyMZZf04Xt300egukUH2d3oQL39T3wlIxgkiERLzzB
- 0Ezg==
-X-Gm-Message-State: AOJu0YzqbLrHV+JTyTxIsffgD72aWRstibQpYBVhF/kr8k14mRkBNIIV
- YZHgHAP9x7w6jbRwxILRU2djbTC3gSoPYN6zBduKYyxbAiI7tn7yJTkhVbAr2olrV9Q=
-X-Gm-Gg: ASbGncugzJ3/29o/Gls5l1leC0VIViLokAt2N/DQKOHu3K/JvXqqzzlwcXsWr8vzoiK
- 7v/CoKDMCWefUEJ5Lj8jVzHMA9rrZaLhfXVkXdGG9kNZMoyVF/uTTj2EedYJ/zTvQrbcYlyIvbZ
- 4ZSSpA+AZqvNxDmXntT8YowYoLAuVNlvUyJGkCxOl7pBqVziWzqYc9tA/wmHJrG29B2/w+83zv4
- Ha8LUvWrvJ7iPylbS6g3WwrtRO52wi8Y6NNrZqsrjbwk7fwoNTxzBI5RNYgVGzfQcfyiBU1g/jZ
- 8CXZWM0iW+c8giZ7aCDbFs78uGH178aAfMi0+UlGDamFpS4sJi2OsPpGx5dBjuBoL0YykaOW3++
- xZHKhAkKoEBbGs+nV6Jyc0zzJitIe4km7QT03UqR8h2ZPR6Ngcqm77mRX4BjXvg==
-X-Google-Smtp-Source: AGHT+IG5VjYQNMdw/MpShOmZhgIpumMJ2z8imKGQ/mFwUjSsWb6PA2uPoGsX+egsKKVRJhRC4n1lfQ==
-X-Received: by 2002:a05:6a20:9392:b0:24e:2cee:9592 with SMTP id
- adf61e73a8af0-2534547a6c6mr15549901637.46.1757399621653; 
- Mon, 08 Sep 2025 23:33:41 -0700 (PDT)
-Received: from localhost.localdomain ([61.213.176.12])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b5235c0c3e2sm4213501a12.20.2025.09.08.23.33.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Sep 2025 23:33:41 -0700 (PDT)
-From: Fei Li <lifei.shirley@bytedance.com>
-To: pbonzini@redhat.com, mtosatti@redhat.com, seanjc@google.com,
- kvm@vger.kernel.org
-Cc: qemu-devel@nongnu.org,
-	Fei Li <lifei.shirley@bytedance.com>
-Subject: [PATCH] KVM: x86: Restrict writeback of SMI VCPU state
-Date: Tue,  9 Sep 2025 14:33:27 +0800
-Message-Id: <20250909063327.14263-1-lifei.shirley@bytedance.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
+ d=linux.alibaba.com; s=default;
+ t=1757411533; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=gdxCOjTq347NYfqTOrM1YGY3YxJeDGJ5zmIf4NPc2rs=;
+ b=bUve2suO6Cy8qnaVC+NpZ4FLIuI9+Nr70tWRLdfTIrrJM7z6muXA9q0ZQPt9LRxqS8O+IwLIzFw4JqHoaw5yTYGfHjc3se6zMGpFoDVYDTp4w5e4bGofxt3f1U7KzrnRTEo0iEvL1Fbz9mICNJw/hkKqq6bU4LOSPda7wpH6/hs=
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0WndQHtm_1757411217 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 09 Sep 2025 17:46:57 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Tue, 09 Sep 2025 17:46:45 +0800
+Subject: [PATCH 2/3] hw/intc: Save timers array in RISC-V mtimer VMState
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=lifei.shirley@bytedance.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250909-timers-v1-2-7ee18a9d8f4b@linux.alibaba.com>
+References: <20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com>
+In-Reply-To: <20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757411216; l=4232;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=stR2NZygkLJHgnxSDo9w+i+TRSVf5TH1xDTP10RPuHA=;
+ b=JFc73tNYBTpBjyajsP0cWALr7sOF8RviNQUao6vIXxzbwdAFnggzniHePgPI6jxapLa2pxNqu
+ 8yp48RCuERNDN4igWjPF5amTq0vSnVdSFPDXj/edLIIEkzAgCgEgnqT
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 09 Sep 2025 08:58:42 -0400
+X-Mailman-Approved-At: Tue, 09 Sep 2025 08:58:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,96 +79,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recently, we meet a SMI race bug triggered by one monitor tool in our
-production environment. This monitor executes 'info registers -a' hmp
-at a fixed frequency, even during VM startup process, which makes
-some AP stay in KVM_MP_STATE_UNINITIALIZED forever, thus VM hangs.
+The current 'timecmp' field in vmstate_riscv_mtimer is insufficient to keep
+timers functional after migration.
 
-The complete calling processes for the SMI race are as follows:
+If an mtimer's entry in 'mtimer->timers' is active at the time the snapshot
+is taken, it means riscv_aclint_mtimer_write_timecmp() has written to
+'mtimecmp' and scheduled a timer into QEMU's main loop 'timer_list'.
 
-//thread1                      //thread2               //thread3
-`info registers -a` hmp [1]    AP(vcpu1) thread [2]    BSP(vcpu0) send INIT/SIPI [3]
+During snapshot save, these active timers must also be migrated; otherwise,
+after snapshot load there is no mechanism to restore 'mtimer->timers' back
+into the 'timer_list', and any pending timer events would be lost.
 
-                               [2]
-                               KVM: KVM_RUN and then
-                                    schedule() in kvm_vcpu_block() loop
+QEMU's migration framework commonly uses VMSTATE_TIMER_xxx macros to save
+and restore 'QEMUTimer' variables. However, 'timers' is a pointer array
+with variable length, and vmstate.h did not previously provide a helper
+macro for such type.
 
-[1]
-for each cpu: cpu_synchronize_state
-if !qemu_thread_is_self()
-1. insert to cpu->work_list, and handle asynchronously
-2. then kick the AP(vcpu1) by sending SIG_IPI/SIGUSR1 signal
+This commit adds a new macro, 'VMSTATE_TIMER_PTR_VARRAY', to handle saving
+and restoring a variable-length array of 'QEMUTimer *'. We then use this
+macro to migrate the 'mtimer->timers' array, ensuring that timer events
+remain scheduled correctly after snapshot load.
 
-                               [2]
-                               KVM: checks signal_pending, breaks loop and returns -EINTR
-                               Qemu: break kvm_cpu_exec loop, run
-                                     1. qemu_wait_io_event()
-                                     => process_queued_cpu_work => cpu->work_list.func()
-                                        e.i. do_kvm_cpu_synchronize_state() callback
-                                        => kvm_arch_get_registers
-                                           => kvm_get_mp_state /* KVM: get_mpstate also calls
-                                              kvm_apic_accept_events() to handle INIT and SIPI */
-                                     => cpu->vcpu_dirty = true;
-                                     // end of qemu_wait_io_event
-
-                                                       [3]
-                                                       SeaBIOS: BSP enters non-root mode and runs reset_vector() in SeaBIOS.
-                                                                send INIT and then SIPI by writing APIC_ICR during smp_scan
-                                                       KVM: BSP(vcpu0) exits, then => handle_apic_write
-                                                            => kvm_lapic_reg_write => kvm_apic_send_ipi to all APs
-                                                            => for each AP: __apic_accept_irq, e.g. for AP(vcpu1)
-                                                            ==> case APIC_DM_INIT: apic->pending_events = (1UL << KVM_APIC_INIT)
-                                                                (not kick the AP yet)
-                                                            ==> case APIC_DM_STARTUP: set_bit(KVM_APIC_SIPI, &apic->pending_events)
-                                                                (not kick the AP yet)
-
-                               [2]
-                               Qemu continue:
-                                    2. kvm_cpu_exec()
-                                    => if (cpu->vcpu_dirty):
-                                       => kvm_arch_put_registers
-                                          => kvm_put_vcpu_events
-                               KVM: kvm_vcpu_ioctl_x86_set_vcpu_events
-                                    => clear_bit(KVM_APIC_INIT, &vcpu->arch.apic->pending_events);
-                                       e.i. pending_events changes from 11b to 10b
-                                      // end of kvm_vcpu_ioctl_x86_set_vcpu_events
-                               Qemu: => after put_registers, cpu->vcpu_dirty = false;
-                                     => kvm_vcpu_ioctl(cpu, KVM_RUN, 0)
-                               KVM: KVM_RUN
-                                    => schedule() in kvm_vcpu_block() until Qemu's next SIG_IPI/SIGUSR1 signal
-                                    /* But AP(vcpu1)'s mp_state will never change from KVM_MP_STATE_UNINITIALIZED
-                                      to KVM_MP_STATE_INIT_RECEIVED, even then to KVM_MP_STATE_RUNNABLE without
-                                      handling INIT inside kvm_apic_accept_events(), considering BSP will never
-                                      send INIT/SIPI again during smp_scan. Then AP(vcpu1) will never enter
-                                      non-root mode */
-
-                                                       [3]
-                                                       SeaBIOS: waits CountCPUs == expected_cpus_count and loops forever
-                                                                e.i. the AP(vcpu1) stays: EIP=0000fff0 && CS =f000 ffff0000
-                                                                and BSP(vcpu0) appears 100% utilized as it is in a while loop.
-
-To fix this, avoid clobbering SMI when not putting "reset" state, just
-like NMI abd SIPI does.
-
-Signed-off-by: Fei Li <lifei.shirley@bytedance.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/i386/kvm/kvm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/riscv_aclint.c      |  6 ++++--
+ include/migration/vmstate.h | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 369626f8c8..598661799a 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5056,7 +5056,7 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 318a9c8248432a8cd4c3f3fa990739917ecf7ca1..9f4c36e965e2aa379d75c0a9f656177f0dd82a45 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -323,13 +323,15 @@ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
  
-     events.sipi_vector = env->sipi_vector;
+ static const VMStateDescription vmstate_riscv_mtimer = {
+     .name = "riscv_mtimer",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .fields = (const VMStateField[]) {
+             VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
+             VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
+                                   num_harts, 0,
+                                   vmstate_info_uint64, uint64_t),
++            VMSTATE_TIMER_PTR_VARRAY(timers, RISCVAclintMTimerState,
++                                     num_harts),
+             VMSTATE_END_OF_LIST()
+         }
+ };
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 1ff7bd9ac425ba67cd5ca7ad97bcf570f9e19abe..255e403e5a103188712425d95a719d181e1a7202 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -522,6 +522,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
+ }
  
--    if (has_msr_smbase) {
-+    if (has_msr_smbase && level >= KVM_PUT_RESET_STATE) {
-         events.flags |= KVM_VCPUEVENT_VALID_SMM;
-         events.smi.smm = !!(env->hflags & HF_SMM_MASK);
-         events.smi.smm_inside_nmi = !!(env->hflags2 & HF2_SMM_INSIDE_NMI_MASK);
++#define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
++    .name       = (stringify(_field)),                                    \
++    .version_id = (_version),                                             \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
++    .info       = &(_info),                                               \
++    .size       = sizeof(_type),                                          \
++    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
++    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
++}
++
+ #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
+     .name       = (stringify(_field)),                                     \
+     .version_id = (_version),                                              \
+@@ -1035,6 +1045,10 @@ extern const VMStateInfo vmstate_info_qlist;
+ #define VMSTATE_TIMER_PTR_ARRAY(_f, _s, _n)                              \
+     VMSTATE_ARRAY_OF_POINTER(_f, _s, _n, 0, vmstate_info_timer, QEMUTimer *)
+ 
++#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
++VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
++                                                        QEMUTimer *)
++
+ #define VMSTATE_TIMER_TEST(_f, _s, _test)                             \
+     VMSTATE_SINGLE_TEST(_f, _s, _test, 0, vmstate_info_timer, QEMUTimer)
+ 
+
 -- 
-2.39.2 (Apple Git-143)
+2.43.0
 
 
