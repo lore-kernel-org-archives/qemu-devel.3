@@ -4,63 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4167BCAC589
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C895CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 07:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uvt8Q-0001D8-99; Tue, 09 Sep 2025 03:51:26 -0400
+	id 1uvtFA-0003Tr-5J; Tue, 09 Sep 2025 03:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvt8M-0001Bj-Ei; Tue, 09 Sep 2025 03:51:22 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uvt8A-000594-Dl; Tue, 09 Sep 2025 03:51:21 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 6D96A8066F;
- Tue, 09 Sep 2025 10:51:05 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b64::1:1] (unknown [2a02:6bf:8080:b64::1:1])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4pDiKb6GuGk0-HMv6wFof; Tue, 09 Sep 2025 10:51:04 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757404264;
- bh=WDkgfhXw6p8dBd6w9PYgemsE5KhRjM8le73mcVMol6c=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=SX9xBQ2/J5TTbCoMxEuk7XTSSeRlM0uGliLxv8klvOuJFvniYHXx6xlGR1VqR4CLu
- rDz2t4spODnOIH6Z1iQakpj3SKAtLtIG/nW/ZG4nqhWi34KBcVn3hlzdSSVutOGoXd
- 96utFcTkP9nPPnqH/7lWj5junGJ4/8KFmc+jwfH8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <b4d801db-7999-4298-a82a-9a14afe0d4f8@yandex-team.ru>
-Date: Tue, 9 Sep 2025 10:51:04 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uvtF4-0003Nw-Tr
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 03:58:20 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uvtEx-00060K-Gb
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 03:58:18 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b047f28a83dso881138666b.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 00:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757404685; x=1758009485; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FaRLH3DhroeR+6Lh/DNs+YiJ7TJJDCt7NZn4YtxdyGU=;
+ b=GSsB7M6l3xxEsKmI3j+W8PHmHUlCzG70C2No5/FY+hO9l3/pd8TlkCRBUeXqJXhNaV
+ qLUw5bPCRzVjz3PIPEjZTfbGL33U1T7kRlPku/4AgJEdF4NQJBZNwzOb6NbjozvpVltG
+ i3AyBni4KiVPrfjgl/kFjF/8hSJE4Pr0YRfLgUymxOdP6YTI/1UhjXOJqO0sbsoTJMwR
+ NYtBkj+1grrBQWfPXxk96JnAAhVOpxz8+wBbFx91RSTR2C+FmnpepD18+h2TbUUifk09
+ gKq20FcoAn3Zj4FFp18SwySqYsnjQazOYFtqmqNKyVcTVTYzoQ1ItFDOd1pqbszCpifF
+ jfnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757404685; x=1758009485;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FaRLH3DhroeR+6Lh/DNs+YiJ7TJJDCt7NZn4YtxdyGU=;
+ b=mU/GWPKkRbggh4JMYltbz9I/+JWYuHL/rF8H4Q/L3WvSP/4QyJPiAsEymfz4wed1tI
+ Ur3SfuSysM5QRjaa6OsNHsDgcR6N9Up7Wynab2ykDSmNC97KY6zibTnLM5t7jiG5xe26
+ Y7IRlMBfLZk3UVFjhHVdIEcNQgFTxDT2XEHKTWFtURTrCmbpfaf3xk/HWuBxXRgqY/vH
+ gEWM0TQEe1Z9iGTSx0FTkux9BV9pqidRTk1+fLnBgES0/MM3raAKkkancOiLW87F0iu9
+ g7kDEkoXbXMOCbQwDPWqcLiafB+J5NEmNlyHFM3lgTWFpwyVvR25xn3xirEd2fbfxVJv
+ 0ecw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmbMa86FN0JjjLBLbQZ7HoFgtSwfaSmB0fQ0Rln9fqYBHxvkGO1bhCMcBMn0a/ugpfwjMBrHvWNqee@nongnu.org
+X-Gm-Message-State: AOJu0YyB9qpj1ItIVKoinIEsmWuFsd5dYNS3TzlaHR/w52oK0BdDPhH3
+ E5nbLOl+68qoQV2DIQssUqJJYR6J0ZBFL8BHWT5Kv+NeAAi8oAw66p+yPLNLraaMmqE=
+X-Gm-Gg: ASbGncsdLTqIpC2an/u0PT61WuqK79/gWHX3EyEXQzuBA04iJWuKuwMs2PCdWF+Qu6B
+ TaeSEqcPqsoDa0FoFeKOulMABhwzJmv6VpeQPgW6ZyNQ00pPI14kfEYPenRsIcBfI9fJTuVK6n6
+ V4zNJ+rwqS8f3tR5OFaOLXfY5zU8VvCinDDx9Hw5IAHSiHG87huMJ8inG18tsilrpD03rd7o1U1
+ ivMOdbLPkDj6NjjxfKTU904dGWAkD86rOHpnidGUjzfextJeDpVYpkjXajYfNYcVOQq3f6VZgE4
+ 66oDK+SIy7Z61S0rPsi9amSOGzxb0Xop6WsqNjOLp/0Ara12XLOTuTKUYVj3az+mot0wWttMdBP
+ RY7LCPFwtYZlZy5RPiD+ADjKX+2q/z1ai2bidabJtCtWrThsWTzzLeOBDvoJ4foYW0hoPY0i4Nj
+ R2FklltAyK4PJaVEwG
+X-Google-Smtp-Source: AGHT+IF7G0N5gJj5fC0AIA/Tvuc5KilLiInWEnuYxaF8MttGGavrpBT1iYUNJu0/l8JrSKxVkiJe8g==
+X-Received: by 2002:a17:907:d8f:b0:b04:5a74:b674 with SMTP id
+ a640c23a62f3a-b04b1719e89mr1035598166b.58.1757404684714; 
+ Tue, 09 Sep 2025 00:58:04 -0700 (PDT)
+Received: from ?IPV6:2a01:6f02:331:6601:e160:1208:59c9:40f2?
+ ([2a01:6f02:331:6601:e160:1208:59c9:40f2])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aff03e9ba10sm2585362866b.52.2025.09.09.00.58.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Sep 2025 00:58:04 -0700 (PDT)
+Message-ID: <14dfdfc5-c56b-4f1a-b83b-836fe43ec15b@linaro.org>
+Date: Tue, 9 Sep 2025 07:58:01 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] util: add qemu_set_blocking() function
-To: Peter Xu <peterx@redhat.com>
-Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-4-vsementsov@yandex-team.ru>
- <aL9SZr8uU4lp0o41@x1.local>
+Subject: Re: [PATCH v4 04/36] linux-user: Remove qemu_host_page_size from
+ create_elf_tables
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20240215062018.795056-1-richard.henderson@linaro.org>
+ <20240215062018.795056-5-richard.henderson@linaro.org>
+ <56a7b332-e848-4e58-ac06-9da6b56ffa5d@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aL9SZr8uU4lp0o41@x1.local>
+In-Reply-To: <56a7b332-e848-4e58-ac06-9da6b56ffa5d@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,119 +109,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.09.25 01:02, Peter Xu wrote:
-> On Wed, Sep 03, 2025 at 12:44:03PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> In generic code we have qio_channel_set_blocking(), which takes
->> bool parameter, and qemu_file_set_blocking(), which as well takes
->> bool parameter.
+On 9/9/25 07:36, Michael Tokarev wrote:
+> On 15.02.2024 09:19, Richard Henderson wrote:
+>> AT_PAGESZ is supposed to advertise the guest page size.
+>> The random adjustment made here using qemu_host_page_size
+>> does not match anything else within linux-user.
 >>
->> At lower fd-layer we have a mess of functions:
->>
->> - enough direct calls to g_unix_set_fd_nonblocking()
->> and several wrappers without bool parameter:
->>
->> - qemu_scoket_set_nonblock(), which asserts success for posix (still,
->>    in most cases we can handle the error in better way) and ignores
->>    error for win32 realization
->>
->> - qemu_socket_try_set_nonblock(), the best one
->>
->> - qemu_socket_set_block(), which simply ignores an error, the worst
->>    case
->>
->> And all three lack errp argument, so we have to handle it after the
->> call.
->>
->> So let's introduce a new socket-layer wrapper, and use it consistently
->> in following commits.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   include/qemu/osdep.h |  1 +
->>   util/oslib-posix.c   | 12 ++++++++++++
->>   util/oslib-win32.c   | 18 ++++++++++++++++++
->>   3 files changed, 31 insertions(+)
->>
->> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
->> index be3460b32f..1b38cb7e45 100644
->> --- a/include/qemu/osdep.h
->> +++ b/include/qemu/osdep.h
->> @@ -687,6 +687,7 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
->>       G_GNUC_WARN_UNUSED_RESULT;
->>   
->>   void qemu_set_cloexec(int fd);
->> +bool qemu_set_blocking(int fd, bool block, Error **errp);
->>   
->>   /* Return a dynamically allocated directory path that is appropriate for storing
->>    * local state.
->> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
->> index 4ff577e5de..e473938195 100644
->> --- a/util/oslib-posix.c
->> +++ b/util/oslib-posix.c
->> @@ -250,6 +250,18 @@ void qemu_anon_ram_free(void *ptr, size_t size)
->>   #endif
->>   }
->>   
->> +bool qemu_set_blocking(int fd, bool block, Error **errp)
->> +{
->> +    if (!g_unix_set_fd_nonblocking(fd, !block, NULL)) {
+>> The idea here is good, but should be done more systemically
+>> via adjustment to TARGET_PAGE_SIZE.
 > 
-> If we want to do the best, we could also pass in GError** here, and convert
-> GError(.message) to errp?
-
-Hmm, agree, will try.
-
-Interesting, why we just don't sit on GError..
-
+> Hi!
 > 
->> +        error_setg_errno(errp, errno,
->> +                         "Can't set file descriptor %d %s", fd,
->> +                         block ? "blocking" : "non-blocking");
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>   void qemu_socket_set_block(int fd)
->>   {
->>       g_unix_set_fd_nonblocking(fd, false, NULL);
->> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
->> index b7351634ec..03044f5b59 100644
->> --- a/util/oslib-win32.c
->> +++ b/util/oslib-win32.c
->> @@ -177,6 +177,24 @@ static int socket_error(void)
->>       }
->>   }
->>   
->> +bool qemu_set_blocking(int fd, bool block, Error **errp)
->> +{
->> +    unsigned long opt = block ? 0 : 1;
->> +
->> +    if (block) {
->> +        qemu_socket_unselect(fd, NULL);
->> +    }
->> +
->> +    if (ioctlsocket(fd, FIONBIO, &opt) != NO_ERROR) {
->> +        error_setg_errno(errp, socket_error(),
->> +                         "Can't set file descriptor %d %s", fd,
->> +                         block ? "blocking" : "non-blocking");
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>   void qemu_socket_set_block(int fd)
->>   {
->>       unsigned long opt = 0;
->> -- 
->> 2.48.1
->>
+> This change broke execution of armhf binaries on 16k-pagesized
+> aarch64 host.  See https://bugs.debian.org/1114725 for a few more
+> details and the reproducer.
 > 
+>  From the commit message this seems to be intentional to remove
+> such support.  But is it really intentional that it doesn't work
+> anymore?  Should the mentioned adjustments to TARGET_PAGE_SIZE
+> compensate for this change?
+
+We have only trivial support for host page size != guest page size.
+Any time it does work is purely by accident.
+
+Older systems like arm32 and i386 are more likely to fail than others, due to program layout.
+
+The only reliable solution is to use softmmu with linux-user in these cases, so that host 
+and guest page size, memory layout, etc are properly disconnected.  This is a significant 
+amount of work which no one has volunteered to do.
 
 
--- 
-Best regards,
-Vladimir
+r~
 
