@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74280CAC582
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 21:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26345CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Sep 2025 21:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uw5XK-0007Ww-E1; Tue, 09 Sep 2025 17:05:59 -0400
+	id 1uw5Xn-0007zW-If; Tue, 09 Sep 2025 17:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
- id 1uw5XC-0007W3-M2; Tue, 09 Sep 2025 17:05:50 -0400
-Received: from mail.raptorengineering.com ([23.155.224.40]
- helo=raptorengineering.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw5Xj-0007yj-TV
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 17:06:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tpearson@raptorengineering.com>)
- id 1uw5X7-0003UK-57; Tue, 09 Sep 2025 17:05:50 -0400
-Received: from localhost (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id 1FC2F828820F;
- Tue,  9 Sep 2025 16:05:31 -0500 (CDT)
-Received: from mail.rptsys.com ([127.0.0.1])
- by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
- with ESMTP id C53sclFQTJ_4; Tue,  9 Sep 2025 16:05:28 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id E52518288261;
- Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com E52518288261
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
- t=1757451927; bh=pcb2EotGYn9Yw6u0qBIDErjWZ9LHsFuT0G031z+FEoU=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=uoY0e9xsovbN7xUukC/Moj7Gl5ulDC+pC0/lHyj4Hn4xvXtKqHANZfzO/TTIOyERN
- hz+2Q6kRmAKQMX5ecu4b604an7A+6pVTt0EHeJGqJNyyzzvRwLoUszuJWaOhZiBgvu
- P9B07tNoavXhB16uC1K10mk0BBw/wHxLj/U+3jOo=
-X-Virus-Scanned: amavisd-new at rptsys.com
-Received: from mail.rptsys.com ([127.0.0.1])
- by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id 28JjgZCZjtrQ; Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
-Received: from vali.starlink.edu (localhost [127.0.0.1])
- by mail.rptsys.com (Postfix) with ESMTP id AE94C828820F;
- Tue,  9 Sep 2025 16:05:27 -0500 (CDT)
-Date: Tue, 9 Sep 2025 16:05:25 -0500 (CDT)
-From: Timothy Pearson <tpearson@raptorengineering.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Alexey Kardashevskiy <aik@ozlabs.ru>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- "list@suse.de" <qemu-ppc@nongnu.org>, qemu-devel <qemu-devel@nongnu.org>, 
- Frederic Barrat <fbarrat@linux.ibm.com>, npiggin <npiggin@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>
-Message-ID: <1601363295.1707586.1757451924995.JavaMail.zimbra@raptorengineeringinc.com>
-In-Reply-To: <2125253552.30561871.1713198808922.JavaMail.zimbra@raptorengineeringinc.com>
-References: <1891893257.448156.1647023745384.JavaMail.zimbra@raptorengineeringinc.com>
- <6f0a92ca-9f53-b8b8-e85d-43f4da36200d@kaod.org>
- <edfa8ca4-8e8a-335a-2e7e-c69661ec73da@ozlabs.ru>
- <560c8c1a-a87e-71f9-cfea-0a034933070b@ozlabs.ru>
- <e25296b3-b1ec-a90a-ee72-ed15fe5130f6@kaod.org>
- <5308af13-a943-efeb-d819-e39cfc2f2907@ozlabs.ru>
- <3e188eb4-40dd-952c-9764-4cc8cb255f01@kaod.org>
- <2125253552.30561871.1713198808922.JavaMail.zimbra@raptorengineeringinc.com>
-Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy load
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uw5Xa-0003Yo-Tr
+ for qemu-devel@nongnu.org; Tue, 09 Sep 2025 17:06:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757451971;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zLAsRt7MAJI4R3q9CPFwrxvphZIfvctuMvdK4/DmUus=;
+ b=SdnC+zMyo7tBPbOmQibXllyVMmtI6uJ/14XM5l5HwnHcgZ3OoONWv7pcdtflqf6mXpG2ZL
+ prs+v27kQ3XmXQ17NnSQpvrZTMttH6bj/xpJ5Yklz4NBuXJ2fqFMHA/lAQqNRYcaUWWdnb
+ nsEoMrE+Y7uvWqPe42irjgCzh8ZDZ+g=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-424-t_wd7vb_Nx2hWWpMa18WbQ-1; Tue, 09 Sep 2025 17:06:10 -0400
+X-MC-Unique: t_wd7vb_Nx2hWWpMa18WbQ-1
+X-Mimecast-MFC-AGG-ID: t_wd7vb_Nx2hWWpMa18WbQ_1757451969
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-70fa9206690so523246d6.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Sep 2025 14:06:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757451969; x=1758056769;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zLAsRt7MAJI4R3q9CPFwrxvphZIfvctuMvdK4/DmUus=;
+ b=jOKLgvoAIZfCzfN8iFt17/rn3oDty7qx5VpKP9Xft+WGLl/ibryAe1feLjO1Uu2D0I
+ /TdLVZ/RhqO0mD/YVmFwDhWNlcQzCzTzWdN54Ls2iK2VpLXWD/KieeRazQZkxHLSsF3K
+ JGAIMx7EoPm8V+cWCGzPwNyFVibE0hQF8foWQ+LHXsBM3y7uLpbOk1WajtX0CG68Wq6N
+ 9XpGYvJ5pTq8uyWuw2gA4pLnlL3fyLp02kY9rVmUgswDfVJR75KfOaceL7CiUhrQBL/b
+ YbQLGi4foIMsQLJeCwMbTRoiA/nQdwBoSb21tr6nQYsPxpeUcaX8WaccBN+0MrRTNVU5
+ pVCw==
+X-Gm-Message-State: AOJu0YypQQ5H/OHRpycptF0aBvyMztH1qIQ3n5tB+rLe6TuXFPIvZU1E
+ zSYrsOVt6zH6sDmdAsWG9tABRYNJPkwLQHcpH6oddW5QN0/GWuUagwLnkiX4LX0dMXcl9oyupdY
+ JHJR0Q6N4qNcgfpz64c7SzmTI4AplosmKXNBqNyfUqvOsnSWdHIjSbmHPUo6iMeOL
+X-Gm-Gg: ASbGncsnHVLMF9ld1zLDJo3SXQAkW9KWT/H843FN2xUR9L3vJu2iayu6FE6ILa04fAc
+ qBvX/TMFgChFRWnQrvGP2Arv2dKbTfcPTz7LxnsNqZB5hApWqzQ8+1o5N72kebl4Oar0a7czKKt
+ pjKLjEnlGwPfQ/WkUZssxrZSdC2iqr+kFeD8BYyjiphqUQ86L0qpqqN07dM0+ymSELrJ1Ifl93W
+ brCxrG0FHY23xkraWMUqzfWcS2tDJSANHx6Q+j4Laju7wO29VwBRRqyDGRJUSnJf6dQmtRbNS8Z
+ ipwSq5oJrasmpO8HoH6D7YB4NzE0avictbImPBX3WMJ3yuvxOEFpPk+XALXuLhK3COlO6QRPuov
+ bqWy2d2mLi1VMLVBXSXXdkQ==
+X-Received: by 2002:a05:6214:ca8:b0:720:e4bd:d3f3 with SMTP id
+ 6a1803df08f44-73a3dbf507dmr117749596d6.26.1757451969296; 
+ Tue, 09 Sep 2025 14:06:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERfR9tFVblOu0HZ1fY0jFxvFFSpTK3VBW4LMG63lUuJhe/Yy3p0wibnm+Rbn0SZbLZ0hYI/A==
+X-Received: by 2002:a05:6214:ca8:b0:720:e4bd:d3f3 with SMTP id
+ 6a1803df08f44-73a3dbf507dmr117749266d6.26.1757451968881; 
+ Tue, 09 Sep 2025 14:06:08 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-720b683283csm148770556d6.68.2025.09.09.14.06.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Sep 2025 14:06:08 -0700 (PDT)
+Date: Tue, 9 Sep 2025 17:06:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org
+Subject: Re: [PATCH 05/11] accel/tcg: Move post-load tb_flush to
+ vm_change_state hook
+Message-ID: <aMCWvYbDZrOowIs5@x1.local>
+References: <20250906051820.160432-1-richard.henderson@linaro.org>
+ <20250906051820.160432-6-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC139 (Linux)/8.5.0_GA_3042)
-Thread-Topic: XIVE VFIO kernel resample failure in INTx mode under heavy load
-Thread-Index: deIr1MHtwC5ZXfgisgYC7lwKFkKupHii3cau
-Received-SPF: pass client-ip=23.155.224.40;
- envelope-from=tpearson@raptorengineering.com; helo=raptorengineering.com
+Content-Disposition: inline
+In-Reply-To: <20250906051820.160432-6-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,115 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, Sep 06, 2025 at 07:18:14AM +0200, Richard Henderson wrote:
+> We need not call tb_flush once per cpu, only once per vmload.
+> Move the call from cpu_common_post_load to a tcg-specific
+> vm_change_state_handler.
 
+The change looks correct.  Though the commit message here implies a
+conversion from per-cpu flush to per-system flush, which IMHO is only part
+of the change.
 
------ Original Message -----
-> From: "Timothy Pearson" <tpearson@raptorengineering.com>
-> To: "C=C3=A9dric Le Goater" <clg@kaod.org>
-> Cc: "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Alex Williamson" <alex.willi=
-amson@redhat.com>, "Timothy Pearson"
-> <tpearson@raptorengineering.com>, "list@suse.de" <qemu-ppc@nongnu.org>, "=
-qemu-devel" <qemu-devel@nongnu.org>, "Frederic
-> Barrat" <fbarrat@linux.ibm.com>, "npiggin" <npiggin@gmail.com>, "David Gi=
-bson" <david@gibson.dropbear.id.au>
-> Sent: Monday, April 15, 2024 11:33:28 AM
-> Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy l=
-oad
+IIUC, the change is better than that, because previously when the flush is
+in post_load(), it means the per-cpu flush will also happen in a live
+migration, but here AFAIU the flush is only needed through a HMP
+loadvm-styled migration, where there must be some stale data in the first
+place. In case of live migrations there isn't any prior data to flush,
+iiuc.
 
-> ----- Original Message -----
->> From: "C=C3=A9dric Le Goater" <clg@kaod.org>
->> To: "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Alex Williamson"
->> <alex.williamson@redhat.com>, "Timothy Pearson"
->> <tpearson@raptorengineering.com>
->> Cc: "list@suse.de:PowerPC" <qemu-ppc@nongnu.org>, "qemu-devel"
->> <qemu-devel@nongnu.org>, "Frederic Barrat"
->> <fbarrat@linux.ibm.com>, "npiggin" <npiggin@gmail.com>, "David Gibson"
->> <david@gibson.dropbear.id.au>
->> Sent: Thursday, April 21, 2022 1:35:50 AM
->> Subject: Re: XIVE VFIO kernel resample failure in INTx mode under heavy =
-load
->=20
->> On 4/21/22 05:07, Alexey Kardashevskiy wrote:
->>>=20
->>>=20
->>> On 14/04/2022 22:41, C=C3=A9dric Le Goater wrote:
->>>>
->>>>>> After re-reading what I just wrote, I am leaning towards disabling u=
-se of
->>>>>> KVM_CAP_IRQFD_RESAMPLE as it seems last worked on POWER8 and never s=
-ince :)
->>>>>>
->>>>>> Did I miss something in the picture (hey Cedric)?
->>>>>
->>>>> How about disabling it like this?
->>>>>
->>>>> =3D=3D=3D=3D=3D
->>>>> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
->>>>> index 5bfd4aa9e5aa..c999f7b1ab1b 100644
->>>>> --- a/hw/ppc/spapr_pci.c
->>>>> +++ b/hw/ppc/spapr_pci.c
->>>>> @@ -732,7 +732,7 @@ static PCIINTxRoute spapr_route_intx_pin_to_irq(v=
-oid
->>>>> *opaque, int pin)
->>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SpaprPhbState *sphb =3D SPAPR_PCI_HOST=
-_BRIDGE(opaque);
->>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 PCIINTxRoute route;
->>>>>
->>>>> -=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_ENABLED;
->>>>> +=C2=A0=C2=A0=C2=A0 route.mode =3D PCI_INTX_DISABLED;
->>>>>
->>>>> =3D=3D=3D=3D=3D
->>>>
->>>> I like it.
->>>=20
->>>=20
->>> The only thing is that this resampling works on POWER8/XICS and
->>> removing it there is not great. So far sPAPR PHB was unaware of
->>> underlying interrupt controller, or was not it?
->>=20
->> It is. The dynamic change of the underlying irqchip in QEMU and
->> in KVM required that for CAS. Of course, plenty is done in the
->> back of the devices when this happens, see spapr_irq.
->>=20
->> There are some quirks related to LPM with VIO devices in Linux.
->> This is the only case I know about.
->>=20
->> Thanks,
->>=20
->> C.
->=20
-> Unfortunately this remains quite broken, and after a kernel upgrade (incl=
-uding
-> the purported fix [1]) and a qemu upgrade we have now completely lost the
-> ability to get the card working in the guest with *any* combination of
-> parameters.
->=20
-> In guest XIVE mode with irqchip on it passes through a handful of interru=
-pts,
-> then dies.  In guest XICS mode we're dropping the majority of the interru=
-pts.
-> This is all on POWER9.
+Maybe it would be nice to mention the other side of the changes in the
+commit message too?  No strong feelings, though.
 
-To close the loop on this, it looks like the issue was a corner case in a s=
-eries of bridged legacy PCI 2.2 devices, and that the remaining issues were=
- the result of a specific interaction between the INTx hardware and INTx gu=
-est mode devices. [1]  PCI 2.3+ and PCIe devices use a different interrupt =
-signalling mechanism (INTx with DisINTx+, or MSI), and would not be affecte=
-d.
+Thanks,
 
-With the linked patch, XIVE on XIVE works fairly well, even with the legacy=
- PCI 2.2 devices.
+-- 
+Peter Xu
 
-The one remaining issue is that we tend to generate a lot of spurious IRQs =
-due to all of the INTx handshaking between the host and guest XIVEs; if the=
- H_INT_ESB hypercall is issued by the guest before the VFIO interrupt is ac=
-knowledged by QEMU (i.e. while the emulated INTx line is still asserted and=
-, thus, the host INTx line is still masked), we get an extra unwanted INTx =
-IRQ generated in the guest.  This is mostly harmless aside from causing the=
- spurious interrupt counters to increase, but as it is apparently caused by=
- a race condition between guest IRQ completion and host QEMU VFIO acknowled=
-ge it doesn't look particularly simple to fix.
-
-[1] https://lore.kernel.org/linuxppc-dev/663798478.1707537.1757450926706.Ja=
-vaMail.zimbra@raptorengineeringinc.com/T/#u
 
