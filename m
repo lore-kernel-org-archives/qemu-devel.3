@@ -4,74 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6284BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4EADCA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwPD4-0001Xh-73; Wed, 10 Sep 2025 14:06:23 -0400
+	id 1uwPDc-00043Y-VN; Wed, 10 Sep 2025 14:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPCE-00005h-5s
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uwPDX-0003gi-69
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:06:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPC7-0004yB-GW
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:28 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uwPDQ-000538-RB
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:06:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757527521;
+ s=mimecast20190719; t=1757527601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vxWJYGru1Gg7qht2WyJDwScYuEQEAZ6WAAEk9BmPzFc=;
- b=UrJseWhkip8BuzIBIeCAN3sdbL18WRCvxDApq2z2lSRUSf7Z5ulFIrdpxksz8CFJ2FsZkV
- mIeWh6HzdvehUwIdMTnPf6wISn/42Hgge+8friZ/pLXj7TLpWAlZoWVT0VmefCnl/pWrHS
- WxL8r/7La9/bIottWrElvnIFYYAdHYE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Uq/ffucX0LrsPavRUjZZ8ksU3DGad+yaH3VgAUHZsZo=;
+ b=fSKjbcwwn41cSTCRnBzJ6qlXFtFq9LHLG6tl653IFKzKSvTfkwN7rW1O8khDcFDLUh53Zq
+ wGevrc95sB+hTNFwX10D1g0A9CwgAhLvxBUvFj6PYOM7jqGN4CrDjg/qq2BcWJgGW/tIRd
+ vZ5fCTzhylr+H2NRzoUVUzEW2ytMFfo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-363-TSPtSEpcPiekgaXFfx2LQQ-1; Wed,
- 10 Sep 2025 14:05:16 -0400
-X-MC-Unique: TSPtSEpcPiekgaXFfx2LQQ-1
-X-Mimecast-MFC-AGG-ID: TSPtSEpcPiekgaXFfx2LQQ_1757527515
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-xmhrZunnO8WCF9k4-hZkpQ-1; Wed,
+ 10 Sep 2025 14:06:40 -0400
+X-MC-Unique: xmhrZunnO8WCF9k4-hZkpQ-1
+X-Mimecast-MFC-AGG-ID: xmhrZunnO8WCF9k4-hZkpQ_1757527599
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F89C19560B7; Wed, 10 Sep 2025 18:05:15 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A43A91800452; Wed, 10 Sep 2025 18:05:11 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 850DC195608D; Wed, 10 Sep 2025 18:06:39 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.66])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AA66319560AB; Wed, 10 Sep 2025 18:06:38 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 17/20] util: add support for formatting a workload name in
- messages
-Date: Wed, 10 Sep 2025 19:03:54 +0100
-Message-ID: <20250910180357.320297-18-berrange@redhat.com>
-In-Reply-To: <20250910180357.320297-1-berrange@redhat.com>
-References: <20250910180357.320297-1-berrange@redhat.com>
+Cc: Aarushi Mehta <mehta.aaru20@gmail.com>, Fam Zheng <fam@euphon.net>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, hibriansong@gmail.com, Stefan Weil <sw@weilnetz.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 01/12] aio-posix: fix race between io_uring CQE and
+ AioHandler deletion
+Date: Wed, 10 Sep 2025 13:56:52 -0400
+Message-ID: <20250910175703.374499-2-stefanha@redhat.com>
+In-Reply-To: <20250910175703.374499-1-stefanha@redhat.com>
+References: <20250910175703.374499-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,7 +73,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,168 +89,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error_report function can include the guest name in any
-messages it prints. The qemu_log function has no equivalent
-behaviour.
+When an AioHandler is enqueued on ctx->submit_list for removal, the
+fill_sq_ring() function will submit an io_uring POLL_REMOVE operation to
+cancel the in-flight POLL_ADD operation.
 
-This introduces support for a "workload name" in the new
-messages API, which in the case of system emulators will
-be the guest name. The possibility of defining a workload
-name for other binaries is left as an exercise for the
-future.
+There is a race when another thread enqueues an AioHandler for deletion
+on ctx->submit_list when the POLL_ADD CQE has already appeared. In that
+case POLL_REMOVE is unnecessary. The code already handled this, but
+forgot that the AioHandler itself is still on ctx->submit_list when the
+POLL_ADD CQE is being processed. It's unsafe to delete the AioHandler at
+that point in time (use-after-free).
 
-This change has no impact on the output of the error_report
-function, but will change the qemu_log function. This can
-be easily seen with the 'log' trace backend, and how it is
-now more closely matching error_report output.
+Solve this problem by keeping the AioHandler alive but setting a flag so
+that it will be deleted by fill_sq_ring() when it runs.
 
-Before:
-
-  # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
-  qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
-  qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
-  blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
-
-After:
-
-  # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
-  blah qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
-  blah qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
-  blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- include/qemu/error-report.h |  3 ---
- include/qemu/message.h      | 10 ++++++++++
- system/vl.c                 |  6 ++++--
- util/error-report.c         |  7 -------
- util/message.c              | 12 +++++++++++-
- 5 files changed, 25 insertions(+), 13 deletions(-)
+ util/fdmon-io_uring.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
-diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
-index c8000778ec..ffc305f828 100644
---- a/include/qemu/error-report.h
-+++ b/include/qemu/error-report.h
-@@ -70,7 +70,4 @@ void error_init(const char *argv0);
-                               fmt, ##__VA_ARGS__);      \
-     })
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index b0d68bdc44..ad89160f31 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -52,9 +52,10 @@ enum {
+     FDMON_IO_URING_ENTRIES  = 128, /* sq/cq ring size */
  
--extern bool error_with_guestname;
--extern const char *error_guest_name;
--
- #endif
-diff --git a/include/qemu/message.h b/include/qemu/message.h
-index 0a06421f77..cfc3c92648 100644
---- a/include/qemu/message.h
-+++ b/include/qemu/message.h
-@@ -5,6 +5,7 @@
- 
- enum QMessageFormatFlags {
-     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
-+    QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
+     /* AioHandler::flags */
+-    FDMON_IO_URING_PENDING  = (1 << 0),
+-    FDMON_IO_URING_ADD      = (1 << 1),
+-    FDMON_IO_URING_REMOVE   = (1 << 2),
++    FDMON_IO_URING_PENDING            = (1 << 0),
++    FDMON_IO_URING_ADD                = (1 << 1),
++    FDMON_IO_URING_REMOVE             = (1 << 2),
++    FDMON_IO_URING_DELETE_AIO_HANDLER = (1 << 3),
  };
  
- /**
-@@ -16,6 +17,15 @@ enum QMessageFormatFlags {
-  */
- void qmessage_set_format(int flags);
- 
-+/**
-+ * qmessage_set_workload_name:
-+ * @name: the name of the workload
-+ *
-+ * Set the workload name, which for a system emulator
-+ * will be the guest VM name.
-+ */
-+void qmessage_set_workload_name(const char *name);
+ static inline int poll_events_from_pfd(int pfd_events)
+@@ -218,6 +219,16 @@ static void fill_sq_ring(AioContext *ctx)
+         if (flags & FDMON_IO_URING_REMOVE) {
+             add_poll_remove_sqe(ctx, node);
+         }
++        if (flags & FDMON_IO_URING_DELETE_AIO_HANDLER) {
++            /*
++             * process_cqe() sets this flag after ADD and REMOVE have been
++             * cleared. They cannot be set again, so they must be clear.
++             */
++            assert(!(flags & FDMON_IO_URING_ADD));
++            assert(!(flags & FDMON_IO_URING_REMOVE));
 +
- /**
-  * qmessage_context_print:
-  * @fp: file to emit the prefix on
-diff --git a/system/vl.c b/system/vl.c
-index 696dd92669..fee6fdf7b1 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -818,7 +818,9 @@ static void configure_msg(QemuOpts *opts)
-     if (qemu_opt_get_bool(opts, "timestamp", false)) {
-         flags |= QMESSAGE_FORMAT_TIMESTAMP;
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
      }
--    error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
-+    if (qemu_opt_get_bool(opts, "guest-name", false)) {
-+        flags |= QMESSAGE_FORMAT_WORKLOAD_NAME;
-+    }
-     qmessage_set_format(flags);
  }
  
-@@ -3520,7 +3522,7 @@ void qemu_init(int argc, char **argv)
-                     exit(1);
-                 }
-                 /* Capture guest name if -msg guest-name is used later */
--                error_guest_name = qemu_opt_get(opts, "guest");
-+                qmessage_set_workload_name(qemu_opt_get(opts, "guest"));
-                 break;
-             case QEMU_OPTION_prom_env:
-                 if (nb_prom_envs >= MAX_PROM_ENVS) {
-diff --git a/util/error-report.c b/util/error-report.c
-index 719f059494..c40cdf3bb3 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -25,8 +25,6 @@ typedef enum {
-     REPORT_TYPE_INFO,
- } report_type;
- 
--bool error_with_guestname;
--const char *error_guest_name;
- 
- typedef void (*error_print_func)(void *opaque, const char *fmt, ...);
- typedef void (*error_print_vfunc)(void *opaque, const char *fmt, va_list ap);
-@@ -218,11 +216,6 @@ static void vreport(report_type type, const char *fmt, va_list ap)
-         qmessage_context_print(stderr);
+@@ -241,7 +252,12 @@ static bool process_cqe(AioContext *ctx,
+      */
+     flags = qatomic_fetch_and(&node->flags, ~FDMON_IO_URING_REMOVE);
+     if (flags & FDMON_IO_URING_REMOVE) {
+-        QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        if (flags & FDMON_IO_URING_PENDING) {
++            /* Still on ctx->submit_list, defer deletion until fill_sq_ring() */
++            qatomic_or(&node->flags, FDMON_IO_URING_DELETE_AIO_HANDLER);
++        } else {
++            QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++        }
+         return false;
      }
  
--    /* Only prepend guest name if -msg guest-name and -name guest=... are set */
--    if (error_with_guestname && error_guest_name && !cur) {
--        print_func(print_opaque, "%s ", error_guest_name);
--    }
--
-     print_loc(!!cur, print_func, print_opaque);
+@@ -347,10 +363,13 @@ void fdmon_io_uring_destroy(AioContext *ctx)
+             unsigned flags = qatomic_fetch_and(&node->flags,
+                     ~(FDMON_IO_URING_PENDING |
+                       FDMON_IO_URING_ADD |
+-                      FDMON_IO_URING_REMOVE));
++                      FDMON_IO_URING_REMOVE |
++                      FDMON_IO_URING_DELETE_AIO_HANDLER));
  
-     switch (type) {
-diff --git a/util/message.c b/util/message.c
-index ef70e08c5f..a91c008e08 100644
---- a/util/message.c
-+++ b/util/message.c
-@@ -6,18 +6,28 @@
- #include "monitor/monitor.h"
+-            if (flags & FDMON_IO_URING_REMOVE) {
+-                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers, node, node_deleted);
++            if ((flags & FDMON_IO_URING_REMOVE) ||
++                (flags & FDMON_IO_URING_DELETE_AIO_HANDLER)) {
++                QLIST_INSERT_HEAD_RCU(&ctx->deleted_aio_handlers,
++                                      node, node_deleted);
+             }
  
- static int message_format;
-+static char *message_workloadname;
- 
- void qmessage_set_format(int flags)
- {
-     message_format = flags;
- }
- 
--void qmessage_context_print(FILE *fp)
-+void qmessage_set_workload_name(const char *name)
- {
-+    message_workloadname = g_strdup(name);
-+}
- 
-+void qmessage_context_print(FILE *fp)
-+{
-     if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
-         g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-         g_autofree char *timestr = g_date_time_format_iso8601(dt);
-         fprintf(fp, "%s ", timestr);
-     }
-+
-+    if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
-+        message_workloadname) {
-+        fprintf(fp, "%s ", message_workloadname);
-+    }
- }
+             QSLIST_REMOVE_HEAD_RCU(&ctx->submit_list, node_submitted);
 -- 
-2.50.1
+2.51.0
 
 
