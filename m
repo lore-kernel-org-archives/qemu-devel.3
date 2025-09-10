@@ -4,63 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 713FBCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091FDCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwHFO-0003rW-FB; Wed, 10 Sep 2025 05:36:14 -0400
+	id 1uwHFH-0003m3-Lw; Wed, 10 Sep 2025 05:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1uwHFL-0003oB-8R; Wed, 10 Sep 2025 05:36:11 -0400
-Received: from [218.76.62.146] (helo=ultrarisc.com)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uwHEr-0003eh-SB
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <xb@ultrarisc.com>)
- id 1uwHFB-0007hu-Jl; Wed, 10 Sep 2025 05:36:09 -0400
-Received: from ur-dp1000.. (unknown [192.168.100.1])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAfwDnYNCsRsFo_7ssAA--.43755S2; 
- Wed, 10 Sep 2025 17:36:50 +0800 (CST)
-From: Xie Bo <xb@ultrarisc.com>
-To: qemu-devel@nongnu.org
-Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- anup@brainfault.org, alistair.francis@wdc.com, rkrcmar@ventanamicro.com,
- palmer@dabbelt.com, xiamy@ultrarisc.com, Xie Bo <xb@ultrarisc.com>
-Subject: =?UTF-8?q?=5BPATCH=20v6=20for=20v10=2E0=2E0=200/2=5D=20target/riscv=EF=BC=9AFix=20riscv64=20kvm=20migration?=
-Date: Wed, 10 Sep 2025 17:35:26 +0800
-Message-ID: <20250910093529.614305-1-xb@ultrarisc.com>
-X-Mailer: git-send-email 2.43.0
+ (envelope-from <gaosong@loongson.cn>) id 1uwHEe-0007eA-O4
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:37 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxmdFaRsFob8EIAA--.18879S3;
+ Wed, 10 Sep 2025 17:35:22 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJAxE+RWRsFoj8+LAA--.52579S5;
+ Wed, 10 Sep 2025 17:35:21 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH v7 03/11] hw/loongarch: add misc register supoort avecintc
+Date: Wed, 10 Sep 2025 17:11:42 +0800
+Message-Id: <20250910091150.2424979-4-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250910091150.2424979-1-gaosong@loongson.cn>
+References: <20250910091150.2424979-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDnYNCsRsFo_7ssAA--.43755S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
- VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUOs7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E
- 6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28Cjx
- kF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8I
- cVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aV
- CY1x0267AKxVW8JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE
- 5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeV
- CFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1l
- FIxGxcIEc7CjxVA2Y2ka0xkIwI1lc2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxAqzxv262
- kKe7AKxVWUAVWUtwCF54CYxVCY1x0262kKe7AKxVW8ZVWrXwCFx2IqxVCFs4IE7xkEbVWU
- JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUkrcfUUUUU=
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAAB2i-hXAAJwAish
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
-Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
- helo=ultrarisc.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+X-CM-TRANSID: qMiowJAxE+RWRsFoj8+LAA--.52579S5
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,25 +66,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series(v6) replaces the earlier series patch"[PATCH v5 for v10.0.0 0/2]
-target/riscv: Fix riscv64 kvm migration".
+Add feature register and misc register for avecintc feature checking and
+setting
 
-Changes since v5:
-- Fix commit message style
-- Randomly select boot CPU instead of hardcoding cpu_index=0
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/loongarch/virt.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Xie Bo (2):
-  Set KVM initial privilege mode and mp_state
-  Fix VM resume after QEMU+KVM migration
-
- target/riscv/cpu.c           | 17 +++++++++-
- target/riscv/cpu.h           |  2 ++
- target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
- target/riscv/kvm/kvm_riscv.h |  3 +-
- target/riscv/machine.c       |  5 +--
- 5 files changed, 70 insertions(+), 17 deletions(-)
-
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 37c38ae63f..0883f3a272 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -561,6 +561,10 @@ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+             return MEMTX_OK;
+         }
+ 
++        if (virt_has_avecintc(lvms) && val & BIT(IOCSRM_AVEC_EN)) {
++            lvms->misc_status |= BIT(IOCSRM_AVEC_EN);
++        }
++
+         features = address_space_ldl(&lvms->as_iocsr,
+                                      EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
+                                      attrs, NULL);
+@@ -596,6 +600,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         break;
+     case FEATURE_REG:
+         ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
++        if (virt_has_avecintc(lvms)) {
++            ret |= BIT(IOCSRF_AVEC);
++        }
+         if (kvm_enabled()) {
+             ret |= BIT(IOCSRF_VM);
+         }
+@@ -625,6 +632,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
+             ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
+         }
++        if (virt_has_avecintc(lvms) &&
++            (lvms->misc_status & BIT(IOCSRM_AVEC_EN))) {
++            ret |= BIT_ULL(IOCSRM_AVEC_EN);
++        }
+         break;
+     default:
+         g_assert_not_reached();
 -- 
-2.43.0
+2.41.0
 
 
