@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA54DCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB098CAC58D
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwPBI-0007vW-Ec; Wed, 10 Sep 2025 14:04:32 -0400
+	id 1uwPCv-00016I-K9; Wed, 10 Sep 2025 14:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPBH-0007v6-Io
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:04:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uwPCL-0000IJ-Jl
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPBF-0004hb-TB
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:04:31 -0400
+ id 1uwPCJ-0004zl-Mb
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757527469;
+ s=mimecast20190719; t=1757527534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8U4JGpe8oY8jn8vL5TXbHGmcWR602uNhf/50IZVuU5g=;
- b=CW85m0q/YYdVTc0MbpZCvhjXYlTXq2EX6qc2JWx7cisO41x0SQHv5evHXjOeUYVouVs9ru
- MNWVnNNtzXZORO/Nk+shDT4sq7uTX5G2DlaqAk4VF+X8fzw/F2X8dKNH+ed+6eRE9FWyfK
- eQhucVukiwbjjs2hYDYqSfbGtXYcYIA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=fy2hCOizZ1P8nfNJTFHtbE21ChLZDVppYA1lOHsHttE=;
+ b=P5W8rwQefhgPPR2/P0cwo6DzFPhlZAMr/8eqwKhx+eflACixeeaWl7o6bge8fo/+xkroyV
+ TpVyLkHNM4qcgZqAagjB0/oglDYc3fAyH9/klpBxwPKAuZn0rM9KJq3hlYysjnxEOYMMvt
+ 16taxX6kzSWiyuIw+euwivK91QoOApo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-pMmHt2xrNfCqzWzFaLYr2Q-1; Wed,
- 10 Sep 2025 14:04:25 -0400
-X-MC-Unique: pMmHt2xrNfCqzWzFaLYr2Q-1
-X-Mimecast-MFC-AGG-ID: pMmHt2xrNfCqzWzFaLYr2Q_1757527464
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-FAqXAgcIPQuQIoHXLYQfgw-1; Wed,
+ 10 Sep 2025 14:05:30 -0400
+X-MC-Unique: FAqXAgcIPQuQIoHXLYQfgw-1
+X-Mimecast-MFC-AGG-ID: FAqXAgcIPQuQIoHXLYQfgw_1757527528
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78B84195608B; Wed, 10 Sep 2025 18:04:24 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF7861800291; Wed, 10 Sep 2025 18:05:28 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.57])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D78981800447; Wed, 10 Sep 2025 18:04:20 +0000 (UTC)
+ id 102491800446; Wed, 10 Sep 2025 18:05:23 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -61,16 +61,17 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 05/20] audio: make jackaudio use qemu_thread_set_name
-Date: Wed, 10 Sep 2025 19:03:42 +0100
-Message-ID: <20250910180357.320297-6-berrange@redhat.com>
+Subject: [PATCH v3 20/20] util: add brackets around guest name in message
+ context
+Date: Wed, 10 Sep 2025 19:03:57 +0100
+Message-ID: <20250910180357.320297-21-berrange@redhat.com>
 In-Reply-To: <20250910180357.320297-1-berrange@redhat.com>
 References: <20250910180357.320297-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,73 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This has greater portability than directly call pthread_setname_np,
-which is only 1 out of 3 possible functions for pthreads that can
-set the name.
+The message context can optionally include the guest name if the
+argument '-msg guest-name=on' is given. The formatting, however,
+does not look good if the guest name contains whitespace. Change
+the output to include square brackets to demarcate the name.
 
-The new API requires a trampoline function, since it can only set
-the name of the current thread.
+Before:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
+  fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55657e94e690 dir=fish
+  fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_get_path TLS creds path creds=0x55657e94e690 filename=ca-cert.pem path=<none>
+  fish food qemu-system-x86_64(1146846:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+After:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
+  [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5604ada2c950 dir=fish
+  [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_get_path TLS creds path creds=0x5604ada2c950 filename=ca-cert.pem path=<none>
+  [fish food] qemu-system-x86_64(1144713:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- audio/jackaudio.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ util/message.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index 974a3caad3..69dce3f302 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -629,18 +629,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
-     ji->c.enabled = enable;
- }
+diff --git a/util/message.c b/util/message.c
+index 814ca0316e..7d94b9d970 100644
+--- a/util/message.c
++++ b/util/message.c
+@@ -28,7 +28,7 @@ void qmessage_context_print(FILE *fp)
  
--#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-+#if !defined(WIN32)
-+struct QJackThreadData {
-+    void *(*function)(void *);
-+    void *arg;
-+};
-+
-+static void *qjack_thread_trampoline(void *targ)
-+{
-+    struct QJackThreadData *data = targ;
-+    void *(*function)(void *) = data->function;
-+    void *arg = data->arg;
-+
-+    g_free(data);
-+    qemu_thread_set_name("jack-client");
-+
-+    return function(arg);
-+}
-+
- static int qjack_thread_creator(jack_native_thread_t *thread,
-     const pthread_attr_t *attr, void *(*function)(void *), void *arg)
- {
--    int ret = pthread_create(thread, attr, function, arg);
-+    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
-+    data->function = function;
-+    data->arg = arg;
-+    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
-     if (ret != 0) {
-+        g_free(data);
-         return ret;
+     if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
+         message_workloadname) {
+-        fprintf(fp, "%s ", message_workloadname);
++        fprintf(fp, "[%s] ", message_workloadname);
      }
  
--    /* set the name of the thread */
--    pthread_setname_np(*thread, "jack-client");
--
-     return ret;
- }
- #endif
-@@ -696,7 +714,7 @@ static void register_audio_jack(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
-     audio_driver_register(&jack_driver);
--#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-+#if !defined(WIN32)
-     jack_set_thread_creator(qjack_thread_creator);
- #endif
-     jack_set_error_function(qjack_error);
+     if (message_format & QMESSAGE_FORMAT_PROGRAM_NAME) {
 -- 
 2.50.1
 
