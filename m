@@ -4,67 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE44BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6123ACA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwHFR-0003t9-4e; Wed, 10 Sep 2025 05:36:17 -0400
+	id 1uwHG0-0004dW-Sy; Wed, 10 Sep 2025 05:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1uwHFM-0003pj-1v; Wed, 10 Sep 2025 05:36:12 -0400
-Received: from [218.76.62.146] (helo=ultrarisc.com)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uwHFz-0004cE-KQ
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:36:51 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <xb@ultrarisc.com>)
- id 1uwHFC-0007iI-Jv; Wed, 10 Sep 2025 05:36:11 -0400
-Received: from ur-dp1000.. (unknown [192.168.100.1])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAfwDnYNCsRsFo_7ssAA--.43755S3; 
- Wed, 10 Sep 2025 17:36:53 +0800 (CST)
-From: Xie Bo <xb@ultrarisc.com>
-To: qemu-devel@nongnu.org
-Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- anup@brainfault.org, alistair.francis@wdc.com, rkrcmar@ventanamicro.com,
- palmer@dabbelt.com, xiamy@ultrarisc.com, Xie Bo <xb@ultrarisc.com>
-Subject: [PATCH v6 1/2] Set KVM initial privilege mode and mp_state
-Date: Wed, 10 Sep 2025 17:35:27 +0800
-Message-ID: <20250910093529.614305-2-xb@ultrarisc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250910093529.614305-1-xb@ultrarisc.com>
-References: <20250910093529.614305-1-xb@ultrarisc.com>
+ (envelope-from <gaosong@loongson.cn>) id 1uwHFq-0007mC-Bm
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:36:51 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Bx379eRsFoisEIAA--.17341S3;
+ Wed, 10 Sep 2025 17:35:26 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJAxE+RWRsFoj8+LAA--.52579S13;
+ Wed, 10 Sep 2025 17:35:25 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH v7 11/11] hw/loongarch: Implement AVEC plug/unplug interfaces
+Date: Wed, 10 Sep 2025 17:11:50 +0800
+Message-Id: <20250910091150.2424979-12-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250910091150.2424979-1-gaosong@loongson.cn>
+References: <20250910091150.2424979-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDnYNCsRsFo_7ssAA--.43755S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxAF4UJr15AFy3ZF45AFy7ZFb_yoW5Jw4xpF
- 4kCw4akrZ5Xa97Jw4fJrykWr18uw4kGr4UCw4xArWxAFs8ArWYgF4ktryUCFyDWFW5AryI
- 9as8Ar1rAa1UZ3JanT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUlY14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
- x26xkF7I0E14v26r1I6r4UM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
- Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
- ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2kK
- e7AKxVWUAVWUtwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I
- 80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCj
- c4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YV
- CY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCY02Avz4vE-syl42xK82IYc2Ij
- 64vIr41l4c8EcI0En4kS14v26r126r1DMxAqzxv26xkF7I0En4kS14v26r4a6rW5MxC20s
- 026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
- JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
- v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xva
- j40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
- W8JrUvcSsGvfC2KfnxnUUI43ZEXa7sR_zuWtUUUUU==
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQABB2jA1vAAIQAAso
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
-Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
- helo=ultrarisc.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+X-CM-TRANSID: qMiowJAxE+RWRsFoj8+LAA--.52579S13
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,85 +66,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For KVM mode, the privilege mode should not include M-mode, and the 
-initial value should be set to S-mode. Additionally, a following patch 
-adds the implementation of putting the vCPU privilege mode to KVM. 
-When the vCPU runs for the first time, QEMU will first put the privilege 
-state to KVM. If the initial value is set to M-mode, KVM will encounter
-an error.
+when cpu added, connect avec irq to cpu INT_AVEC irq pin.
 
-In addition, this patch introduces the 'mp_state' field to RISC-V 
-vCPUs, following the convention used by KVM on x86. The 'mp_state' 
-reflects the multiprocessor state of a vCPU, and is used to control 
-whether the vCPU is runnable by KVM. Randomly select one CPU as the 
-boot CPU.
-
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/riscv/cpu.c | 17 ++++++++++++++++-
- target/riscv/cpu.h |  2 ++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ hw/intc/loongarch_avec.c | 71 ++++++++++++++++++++++++++++++++++++++++
+ hw/loongarch/virt.c      | 11 +++++++
+ 2 files changed, 82 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 09ded6829a..57b8c421bd 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -38,6 +38,7 @@
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
- #include "tcg/tcg.h"
-+#include "hw/boards.h"
+diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+index 1bf0dcda24..9faf28a90c 100644
+--- a/hw/intc/loongarch_avec.c
++++ b/hw/intc/loongarch_avec.c
+@@ -114,14 +114,81 @@ static void loongarch_avec_init(Object *obj)
+     return;
+ }
  
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-@@ -1031,18 +1032,32 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- #ifndef CONFIG_USER_ONLY
-     uint8_t iprio;
-     int i, irq, rdzero;
-+    static int boot_cpu_index = -1;
- #endif
-     CPUState *cs = CPU(obj);
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(obj);
-     CPURISCVState *env = &cpu->env;
-+    MachineState *ms = MACHINE(qdev_get_machine());
++static AVECCore *loongarch_avec_get_cpu(LoongArchAVECState *s,
++                                        DeviceState *dev)
++{
++    CPUClass *k = CPU_GET_CLASS(dev);
++    uint64_t arch_id = k->get_arch_id(CPU(dev));
++    int i;
++
++    for (i = 0; i < s->num_cpu; i++) {
++        if (s->cpu[i].arch_id == arch_id) {
++            return &s->cpu[i];
++        }
++    }
++
++    return NULL;
++}
++
++static void loongarch_avec_cpu_plug(HotplugHandler *hotplug_dev,
++                                   DeviceState *dev, Error **errp)
++{
++    LoongArchAVECState *s = LOONGARCH_AVEC(hotplug_dev);
++    Object *obj = OBJECT(dev);
++    AVECCore *core;
++    int index;
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch AVEC: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++    core = loongarch_avec_get_cpu(s, dev);
++    if (!core) {
++        return;
++    }
++
++    core->cpu = CPU(dev);
++    index = core - s->cpu;
++
++    /* connect avec msg irq to cpu irq */
++    qdev_connect_gpio_out(DEVICE(s), index, qdev_get_gpio_in(dev, INT_AVEC));
++    return;
++}
++
++static void loongarch_avec_cpu_unplug(HotplugHandler *hotplug_dev,
++                                     DeviceState *dev, Error **errp)
++{
++    LoongArchAVECState *s = LOONGARCH_AVEC(hotplug_dev);
++    Object *obj = OBJECT(dev);
++    AVECCore *core;
++
++    if (!object_dynamic_cast(obj, TYPE_LOONGARCH_CPU)) {
++        warn_report("LoongArch AVEC: Invalid %s device type",
++                                       object_get_typename(obj));
++        return;
++    }
++
++    core = loongarch_avec_get_cpu(s, dev);
++
++    if (!core) {
++        return;
++    }
++
++    core->cpu = NULL;
++}
++
+ static void loongarch_avec_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+     LoongArchAVECClass *lac = LOONGARCH_AVEC_CLASS(klass);
  
-     if (mcc->parent_phases.hold) {
-         mcc->parent_phases.hold(obj, type);
+     dc->unrealize = loongarch_avec_unrealize;
+     device_class_set_parent_realize(dc, loongarch_avec_realize,
+                                     &lac->parent_realize);
++    hc->plug = loongarch_avec_cpu_plug;
++    hc->unplug = loongarch_avec_cpu_unplug;
+ }
+ 
+ static const TypeInfo loongarch_avec_info = {
+@@ -130,6 +197,10 @@ static const TypeInfo loongarch_avec_info = {
+     .instance_size = sizeof(LoongArchAVECState),
+     .instance_init = loongarch_avec_init,
+     .class_init    = loongarch_avec_class_init,
++    .interfaces    = (const InterfaceInfo[]) {
++        { TYPE_HOTPLUG_HANDLER },
++        { }
++    },
+ };
+ 
+ static void loongarch_avec_register_types(void)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index c8fb31c485..a7043f13dd 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -378,6 +378,10 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+                              &error_abort);
+         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), DEVICE(cs),
+                              &error_abort);
++        if (lvms->avec) {
++            hotplug_handler_plug(HOTPLUG_HANDLER(lvms->avec), DEVICE(cs),
++                                 &error_abort);
++        }
      }
- #ifndef CONFIG_USER_ONLY
-     env->misa_mxl = mcc->misa_mxl_max;
--    env->priv = PRV_M;
-+    if (kvm_enabled()) {
-+        env->priv = PRV_S;
-+    } else {
-+        env->priv = PRV_M;
-+    }
-+    if (boot_cpu_index < 0) {
-+        boot_cpu_index = g_random_int() % ms->smp.cpus;
-+    }
-+    if (cs->cpu_index == boot_cpu_index) {
-+        env->mp_state = KVM_MP_STATE_RUNNABLE;
-+    } else {
-+        env->mp_state = KVM_MP_STATE_STOPPED;
-+    }
-     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
-     if (env->misa_mxl > MXL_RV32) {
-         /*
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 51e49e03de..4b1c5bf0e4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -256,6 +256,8 @@ struct CPUArchState {
- #endif
+ }
  
-     target_ulong priv;
-+    /* Current multiprocessor state of this vCPU. */
-+    uint32_t mp_state;
-     /* CSRs for execution environment configuration */
-     uint64_t menvcfg;
-     target_ulong senvcfg;
+@@ -1086,6 +1090,9 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+     /* Notify ipi and extioi irqchip to remove interrupt routing to CPU */
+     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev, &error_abort);
+     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
++    if (lvms->avec) {
++        hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->avec), dev, &error_abort);
++    }
+ 
+     /* Notify acpi ged CPU removed */
+     hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &error_abort);
+@@ -1109,6 +1116,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &error_abort);
+     }
+ 
++    if (lvms->avec) {
++        hotplug_handler_plug(HOTPLUG_HANDLER(lvms->avec), dev, &error_abort);
++    }
++
+     if (lvms->acpi_ged) {
+         hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev,
+                              &error_abort);
 -- 
-2.43.0
+2.41.0
 
 
