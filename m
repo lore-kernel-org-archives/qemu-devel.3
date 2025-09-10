@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A546CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 11:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25675CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 12:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwJTp-0005zc-J3; Wed, 10 Sep 2025 07:59:20 -0400
+	id 1uwJTt-00061B-C1; Wed, 10 Sep 2025 07:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hector.cao@canonical.com>)
- id 1uwJTZ-0005s1-0K
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:59:02 -0400
+ id 1uwJTW-0005rh-5T
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:59:00 -0400
 Received: from smtp-relay-canonical-0.canonical.com ([185.125.188.120])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hector.cao@canonical.com>)
- id 1uwJTJ-0001wi-8p
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:58:59 -0400
+ id 1uwJT4-0001wd-0m
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:58:55 -0400
 Received: from localhost.localdomain (unknown [10.101.192.134])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id A168540D36
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:58:25 +0000 (UTC)
+ by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 8FB323F4BC
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1757505507;
- bh=fUzSuTBMtGi3wZGGhv3ZitxmAY7aNwFeIHVAOlgI/PI=;
+ s=20210705; t=1757505504;
+ bh=zUWhMoQjR8jSieQ2e6nnxVq9Tr74de30lwSWicVIlCI=;
  h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
  MIME-Version;
- b=fPAfs4+0XYKWgHXzLnZR5rDpLsZgG0J2JOws2SPb8rpLX2WDcNTUcBcZSgRACXJQe
- LeLMemPQ+mjr69qJyRMipCiSDMiao1F1WpEVasS7fiFCdIZqDynxzBy0vTUalJSUbY
- ksKPig+UulCoYBmvDBggpeRQHxjyCdvx3wLHmet9yFVkh980dYcG46Uw2201VSf1E1
- cLDNha8p9J/H//lKxxkc5pWY21X4DMWeSXwO6WjcheWfz6sUS4LETm4rqeJTCUCNm/
- aYCzKAsU16JAkc8U2AyttY49kYOQM9Dubu1F/51poK3gFx1+jfT66YE7im+6YMxb1y
- G63ISeGefA4Fw==
+ b=gAXpNLkzVZKeXlzxOTBtihlpJCRZ+OEQ+aGAEMnYwbEANKObLGJe+x7WpK5IETd1g
+ os7JRxYqUsSEyxLwJlFVXhJ+VgN5vs3hU9CKPyV3gph07miV1CN38ercL/pj5iLpBT
+ bVLcF/KsmKvOVd47Qk7C3SW24QjhNQv8xgIGrz7TkuDdjfIdT7iVTCJ021Odx5YMih
+ b9L7ztzPK1SYGuWQ0M4df1Ny4QgnTV9S3sGdhkFg4JiIFLMR3s8r1Kqo35vccFTV+Z
+ 5XK6thtHViupulTWOt7KmS6H+oLvve/h+gOKckw/4hMY/5Vdw6kqpUQ8n2S9wab33Z
+ i1EURSd48AnHg==
 From: Hector Cao <hector.cao@canonical.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] target/i386: add compatibility property for
- arch_capabilities
-Date: Wed, 10 Sep 2025 13:57:32 +0200
-Message-ID: <20250910115733.21149-2-hector.cao@canonical.com>
+Subject: [RFC PATCH 0/2] Fix cross migration issue with missing features: pdcm,
+ arch-capabilities
+Date: Wed, 10 Sep 2025 13:57:31 +0200
+Message-ID: <20250910115733.21149-1-hector.cao@canonical.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250910115733.21149-1-hector.cao@canonical.com>
+In-Reply-To: <CABjvBV7wgfSv-OjGf_L2t9ranXfzTQTSBdRAFODpHH-nFcLFig@mail.gmail.com>
 References: <CABjvBV7wgfSv-OjGf_L2t9ranXfzTQTSBdRAFODpHH-nFcLFig@mail.gmail.com>
- <20250910115733.21149-1-hector.cao@canonical.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=185.125.188.120;
@@ -75,102 +74,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prior to v10.1, if requested by user, arch-capabilities is always on
-despite the fact that CPUID advertises it to be off/unvailable.
-this causes a migration issue for VMs that are run on a machine
-without arch-capabilities and expect this feature to be present
-on the destination host with QEMU 10.1.
+Hello,
 
-This commit add a compatibility property to restore the legacy
-behavior for all machines with version prior to 10.1
+Since it is a blocking issue for us, we went further and ended up with a solution along [1]
+that allows us to get out of this situation.
 
-Signed-off-by: Hector Cao <hector.cao@canonical.com>
----
- hw/core/machine.c     |  1 +
- migration/migration.h | 12 ++++++++++++
- migration/options.c   |  3 +++
+The idea is to add compatibility properties to restore legacy behaviors for machine types
+with older versions of QEMU (<10.1). 2 compatiblity properties have been added to address
+respectively the 2 missing features, each one is done in a separate patch.
+
+We know that 10.1 has been released and it's final, but working on a solution towards 11.0
+would allow everyone to settle on the fix and even consider backporting where not yet released
+like Ubuntu 25.10 for us.
+
+It is important to have upstream support going forward in this or any other way
+and therefore reach out with this RFC to ask you to think about it with us.
+
+[1] https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/migration/compatibility.rst
+
+Hector Cao (2):
+  target/i386: add compatibility property for arch_capabilities
+  target/i386: add compatibility property for pdcm feature
+
+ hw/core/machine.c     |  2 ++
+ migration/migration.h | 23 +++++++++++++++++++++++
+ migration/options.c   |  6 ++++++
+ target/i386/cpu.c     | 17 ++++++++++++++---
  target/i386/kvm/kvm.c |  5 ++++-
- 4 files changed, 20 insertions(+), 1 deletion(-)
+ 5 files changed, 49 insertions(+), 4 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 38c949c4f2..8ad5d79cb3 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -45,6 +45,7 @@ GlobalProperty hw_compat_10_0[] = {
-     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
-     { "ramfb", "use-legacy-x86-rom", "true"},
-     { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
-+    { "migration", "arch-cap-always-on", "true" },
- };
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
-diff --git a/migration/migration.h b/migration/migration.h
-index 01329bf824..5124ff3636 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -510,6 +510,18 @@ struct MigrationState {
-     bool rdma_migration;
- 
-     GSource *hup_source;
-+
-+    /*
-+     * This variable allows to keep the backward compatibility with QEMU (<10.1)
-+     * on the arch-capabilities detection.
-+     * With the commit d3a2413 (since 10.1), the arch-capabilities feature is gated
-+     * with the CPUID bit (CPUID_7_0_EDX_ARCH_CAPABILITIES) instead of being always
-+     * enabled when user requests for it. this new behavior breaks migration of VMs
-+     * created and run with older QEMU on machines without IA32_ARCH_CAPABILITIES MSR,
-+     * those VMs might have arch-capabilities enabled and break when migrating
-+     * to a host with QEMU 10.1 with error : missing feature arch-capabilities
-+     */
-+    bool arch_cap_always_on;
- };
- 
- void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
-diff --git a/migration/options.c b/migration/options.c
-index 4e923a2e07..3a80dba9c5 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -203,6 +203,9 @@ const Property migration_properties[] = {
-                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
-     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
-     DEFINE_PROP_MIG_CAP("mapped-ram", MIGRATION_CAPABILITY_MAPPED_RAM),
-+
-+    DEFINE_PROP_BOOL("arch-cap-always-on", MigrationState,
-+                     arch_cap_always_on, false),
- };
- const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
- 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 306430a052..e2ec4e6de5 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -42,6 +42,7 @@
- #include "xen-emu.h"
- #include "hyperv.h"
- #include "hyperv-proto.h"
-+#include "migration/migration.h"
- 
- #include "gdbstub/enums.h"
- #include "qemu/host-utils.h"
-@@ -438,6 +439,7 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-     uint32_t ret = 0;
-     uint32_t cpuid_1_edx, unused;
-     uint64_t bitmask;
-+    MigrationState *ms = migrate_get_current();
- 
-     cpuid = get_supported_cpuid(s);
- 
-@@ -508,7 +510,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-          * mcahines at all, do not show the fake ARCH_CAPABILITIES MSR that
-          * KVM sets up.
-          */
--        if (!has_msr_arch_capabs || !(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES)) {
-+        if (!has_msr_arch_capabs
-+            || (!(edx & CPUID_7_0_EDX_ARCH_CAPABILITIES) && (!ms->arch_cap_always_on))) {
-             ret &= ~CPUID_7_0_EDX_ARCH_CAPABILITIES;
-         }
-     } else if (function == 7 && index == 1 && reg == R_EAX) {
 -- 
 2.45.2
 
