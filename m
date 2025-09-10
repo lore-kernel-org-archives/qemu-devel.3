@@ -4,54 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D264CA101F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CDECA0FED
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwMtJ-0001Qo-IQ; Wed, 10 Sep 2025 11:37:49 -0400
+	id 1uwMtQ-0001UL-B8; Wed, 10 Sep 2025 11:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtH-0001Py-C8
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtN-0001T9-LI
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtF-0000qP-Kh
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtL-0000rC-Oo
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757518664;
+ s=mimecast20190719; t=1757518670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=4nfw8Dg+necFb49a8oUJ+CFJCd4KmdxQdsArjJs0b+Y=;
- b=AMPXRo6vNAhu1Ip46jaD3gU20Jo5ztSXU1pSIbGXJz/0nwX4Uhz0LX8OZUmE6VXqJzH6sy
- qvyOcW+g3TDqCwusrkxthelOdh/CkHlym7EfGmYYvb+uMaK4SARsC8XZsc/pvEvghhlxCN
- m15jVEmHPuo1yfllHVIeaZmOZ3ZJnkU=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=egz1P5ARJZip0BMZ/JsNUG371xq1bSh1M9dI58Ujl0Q=;
+ b=CF3Wn/GM4vWYDykjFujVXD/FagBAbG9EFcNOmaSKEGdwueqX+2n6+JF4cfS8vMzUn9A61k
+ 2iMs4kOJaBwx+CAJj7BemTuzrSNvEdFI3rPoFIRmKOS+6pbRqf/ubAln9d7tX2lABKfsRU
+ NerQRKEvYPcN9W0RZtINJn1cyY9yiO4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-GkuNJ0EpPsaSUk4caih0aQ-1; Wed,
- 10 Sep 2025 11:37:41 -0400
-X-MC-Unique: GkuNJ0EpPsaSUk4caih0aQ-1
-X-Mimecast-MFC-AGG-ID: GkuNJ0EpPsaSUk4caih0aQ_1757518660
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-5TKqdOwuPuieUFTp31RwXQ-1; Wed,
+ 10 Sep 2025 11:37:47 -0400
+X-MC-Unique: 5TKqdOwuPuieUFTp31RwXQ-1
+X-Mimecast-MFC-AGG-ID: 5TKqdOwuPuieUFTp31RwXQ_1757518666
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4CD418002C1; Wed, 10 Sep 2025 15:37:39 +0000 (UTC)
+ id 9ACA71800370; Wed, 10 Sep 2025 15:37:46 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.173])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 20E2119560AB; Wed, 10 Sep 2025 15:37:36 +0000 (UTC)
+ id 627CB19560AB; Wed, 10 Sep 2025 15:37:44 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-block@nongnu.org,
 	Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 0/3] tests/qemu-iotests: Improve test detection for meson
-Date: Wed, 10 Sep 2025 17:37:23 +0200
-Message-ID: <20250910153727.226217-1-thuth@redhat.com>
+Subject: [PATCH 1/3] tests/qemu-iotests/184: Fix skip message for qemu-img
+ without throttle
+Date: Wed, 10 Sep 2025 17:37:24 +0200
+Message-ID: <20250910153727.226217-2-thuth@redhat.com>
+In-Reply-To: <20250910153727.226217-1-thuth@redhat.com>
+References: <20250910153727.226217-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -80,23 +84,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running the test in thorough mode, we currently try to run a lot of
-tests that are only skipped, which is somewhat annoying. This series
-fixes the problems (see second patch), and add some more image formats
-in the third patch (which should be fine now that the list of tests that
-we try to execute is not that big anymore).
+From: Thomas Huth <thuth@redhat.com>
 
-Thomas Huth (3):
-  tests/qemu-iotests/184: Fix skip message for qemu-img without throttle
-  tests/qemu-iotests: Improve the dry run list to speed up thorough
-    testing
-  tests/qemu-iotest: Add more image formats to the thorough testing
+If qemu-img does not support throttling, test 184 currently skips
+with the message:
 
- tests/qemu-iotests/184         |  2 +-
- tests/qemu-iotests/check       | 35 +++++++++++++++++++++++++++++++---
- tests/qemu-iotests/meson.build |  3 +++
- 3 files changed, 36 insertions(+), 4 deletions(-)
+  not suitable for this image format: raw
 
+But that's wrong, it's not about the image format, it's about the
+throttling not being available in qemu-img. Thus fix this by using
+_notrun with a proper message instead.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/184 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qemu-iotests/184 b/tests/qemu-iotests/184
+index e4cbcd86345..f7fcedacfb5 100755
+--- a/tests/qemu-iotests/184
++++ b/tests/qemu-iotests/184
+@@ -50,7 +50,7 @@ run_qemu()
+ }
+ 
+ test_throttle=$($QEMU_IMG --help|grep throttle)
+-[ "$test_throttle" = "" ] && _supported_fmt throttle
++[ "$test_throttle" = "" ] && _notrun "qemu-img does not support throttle"
+ 
+ echo
+ echo "== checking interface =="
 -- 
 2.51.0
 
