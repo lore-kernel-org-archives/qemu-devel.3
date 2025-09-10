@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9942CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8421CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwNHD-0003VO-SS; Wed, 10 Sep 2025 12:02:31 -0400
+	id 1uwNHD-0003VK-Mo; Wed, 10 Sep 2025 12:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGr-0003AL-DG
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGr-0003AO-Nj
  for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGo-0004Vs-6B
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGp-0004Vc-2w
  for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757520125;
+ s=mimecast20190719; t=1757520123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pk2p/fZ62GE+HVK96dUx6wUZhpLCmZYAlpZ+g5YJz3U=;
- b=iXQ+jE+CAAaH8qRrVcZnGiyIFkTM+mQzPwXDT+cyw0QuiILrlqKfMo+tAg93hdEuqB6SSr
- l3Ej6nCw0+rJkS1Mam2Rc8xVx0bCJoLLO8S0INUiPWl9EHovwZl8wt0fSSkeCZW/f1f6hB
- DvuYA2PL5t2buLCkOZzwntcmf1NCoKo=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8p45ZSRefEV6HYOFhbXSS9og5rhg3/fjfKNb+/N5nuk=;
+ b=ddM4K+0e3x7quWbroo5TyWEBD/IpyL5cDSWCzMuwfGkb5AYper1N9pT7tRN8rgDgozbqEV
+ 03Ufwn7dEL44FGQp5XVLDizd8L4tHrPwqNzFkNCksdpoG1cJfpeG8nqmCVNsSeJ0BUYApR
+ OG/EBGdBw4DTQp0RezJPH6JpCjWSkX4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-qt1OKEMJOa6zm2FYoEVGSg-1; Wed, 10 Sep 2025 12:02:03 -0400
-X-MC-Unique: qt1OKEMJOa6zm2FYoEVGSg-1
-X-Mimecast-MFC-AGG-ID: qt1OKEMJOa6zm2FYoEVGSg_1757520122
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7ff94e5c251so225352385a.1
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:02:03 -0700 (PDT)
+ us-mta-2-1EeEGBzkPLqts47_5pHr8Q-1; Wed, 10 Sep 2025 12:02:01 -0400
+X-MC-Unique: 1EeEGBzkPLqts47_5pHr8Q-1
+X-Mimecast-MFC-AGG-ID: 1EeEGBzkPLqts47_5pHr8Q_1757520121
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7fff4abc97cso1772649985a.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:02:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757520122; x=1758124922;
+ d=1e100.net; s=20230601; t=1757520120; x=1758124920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pk2p/fZ62GE+HVK96dUx6wUZhpLCmZYAlpZ+g5YJz3U=;
- b=ZeCpm9JUnQrGxgSFNKg3UDTXor3EDbWKkcIXAXkNI/pRigHzCODuT2XFUf//vUecnk
- vlwqaVfVUQGrT8PBUP4HY+sGR8ZomhBIqF7zflcUT7y4xs7XG73hT9P5LhlQRnzxj6L2
- Rqsa5tmA7uUza8OIrB1hU3YZYTHUFTt/34zeNnF1cG46hZSWCXiUv+cRwnwxb7UyPLaV
- xPPei2uZL0K17uJcThdZsCJ2lSGRmqpwVjxUCN6RFIY6/iJtkqSYxwvj5h/URjpvv0KZ
- QsRYwvbhsx7UDdY6P1/mA9xV37oqmmuHVepov4Mg80M0NDRA0OyMnsbxHd5CMwBNOVdt
- HPug==
-X-Gm-Message-State: AOJu0Yy8k5z/SxgtUBUQKc1la0wPoHIGclesm47tsPbY7Xvx8OB1smCp
- bt2Tx8vIX7x3ndHmVNJpVPOZ+OBEtslQbh/o3evfhomla4xI/DMLMNh+aU4n/2uzGng9PwjxM8h
- LypwjUMHz2JqCYLUo7mSDrm+bo1Rp5pRMpCd/8+VVHPhjXVOoJmZ/pqUA7OVHoI6MT96uFiRTfp
- z+RZFkOs0GKzj1D00jYuOpKVtFN7HYFKFEXQ+P0w==
-X-Gm-Gg: ASbGncuZLgXNceO/i7IKFQXIQkI4iR6Rh5BdzBeNrD17z2udoeR/T8TOwtLLfgt9U8S
- Bckq4YYwLuGg5g1WkrTZS5GvIttIMpjwcG6e3wuWtREIkhRWgb99zjt6gqvGPo4rv8DPmazKRpc
- K2xhsFFbKB5VUtsPI4as76Rbq1hNxWhmx2IR4jgAaE8yt+iAJsZzv/OhtU4i8xxp6AxHK3jZzXn
- 0fVmjD82WLeJoN5EyfUGul/8KDhBYmEJQT0IQadIn1TNG1f5Fwx+MOehja0DgUlPi529qtacmKD
- odkebe6XzKokX6d5R30nhM/Oh7HDmA==
-X-Received: by 2002:a05:620a:414f:b0:7e8:8f35:1d2b with SMTP id
- af79cd13be357-81ff181374emr16849285a.2.1757520122065; 
- Wed, 10 Sep 2025 09:02:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQx2xOVSmqUjrjn0K0j5L7e36/Uc3be7+P8Puidgf2AUD9TXTqBozLNygj0SCKXPJhPx9Veg==
-X-Received: by 2002:a05:620a:414f:b0:7e8:8f35:1d2b with SMTP id
- af79cd13be357-81ff181374emr16832185a.2.1757520119930; 
- Wed, 10 Sep 2025 09:01:59 -0700 (PDT)
+ bh=8p45ZSRefEV6HYOFhbXSS9og5rhg3/fjfKNb+/N5nuk=;
+ b=uJ/Vu5MyEL+h8AcmV8duV/abWSEi1jFJ9ivAeEPtmwB7wgQkTL/MClgzMTnGYNgtPG
+ JYIDAg1DLY/ZosDF7sqZkZGu+BYQXwd2DW/Q9ytPpW3Pdbap64lbsVDR/bQysfqm53sM
+ laXUovdlzTkJrYPIVRTZCiLr9JpsMD8JTIRLc4mgh4nzbnPNUJWWQ74RBfFE2wKY/Hrz
+ ZWj5njNZqSLkaL368/dJt/mSefk+PQkILVQVDVyjQh6CLIfeYlilKPMo33rafUcpxd4U
+ 8RICv7Z4Gd2YfDhB/m2PNqbrw792IIrczHlXiTaxc/zOBrvHUxik0eugiYPgLZfFdsEt
+ HW3Q==
+X-Gm-Message-State: AOJu0YzR6zi94IDd8Ig+/FCY5MDz6EV7GCgcY3QdK9Al0epm4qiNgsQ4
+ gfBZEcdeS8lFyH9y4SivdskORA6KaPFH0cNDoSkzlCXbOnklr97NNr5Gg6/DYJhY+41ZJwMsFwl
+ bNtDJynq4FiSPy2mKKGdNI9u6S3ohditfCXoAqS4GebDwUExCBaRMeZE2OsUtV2Elp77R0v/14t
+ 5yIIY0mSwUAfJ0OVKgz1zmALCMVGGdWUgIe9KSjA==
+X-Gm-Gg: ASbGncv+umYukGBxLfx+LjSBM3dt6aHinKJIiCqyXyXej7zUfQ6XVfOM6kubSwqyB9f
+ PTUhMAej1vKcSDkieIQ53cIN5gStr8raYptM5q13qal22T40z1Dg0jsfn4t8+XSdGlcnI/5NGkJ
+ /JmTey0iQc55dJnhWqnbI5C5xU2kc1JOFExU1jq6OqVke/K9rRJi/UJd9LtcWo4LVq8HaPzY6ta
+ YJUjiraCnU9eMit21HSCgj4VHRpth8mmvOzBQkftAckRTR1lDvSEmQJ2P1fAzdbwGR5m4kxxCvK
+ 26kSZWfRwUyqeLqQDXvhA1JQmR/gpQ==
+X-Received: by 2002:a05:620a:319c:b0:81f:f2aa:70ee with SMTP id
+ af79cd13be357-81ff2ab173fmr16118385a.76.1757520120007; 
+ Wed, 10 Sep 2025 09:02:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAY6gOHFyMYhlvAF6R9jjrSu6CnVNrLrTw5GRFwXnhj/qWNhZGXiqGlfdaVoBvgTDD39rbgA==
+X-Received: by 2002:a05:620a:319c:b0:81f:f2aa:70ee with SMTP id
+ af79cd13be357-81ff2ab173fmr16108085a.76.1757520118869; 
+ Wed, 10 Sep 2025 09:01:58 -0700 (PDT)
 Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b61bbe0a85sm26655281cf.42.2025.09.10.09.01.59
+ d75a77b69052e-4b61bbe0a85sm26655281cf.42.2025.09.10.09.01.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 09:01:59 -0700 (PDT)
+ Wed, 10 Sep 2025 09:01:57 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 2/3] migration: Make migration_has_failed() work even for
- CANCELLING
-Date: Wed, 10 Sep 2025 12:01:43 -0400
-Message-ID: <20250910160144.1762894-3-peterx@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Xiaohui Li <xiaohli@redhat.com>
+Subject: [PATCH 1/3] migration/tls: Gracefully shutdown main and preempt
+ channels
+Date: Wed, 10 Sep 2025 12:01:42 -0400
+Message-ID: <20250910160144.1762894-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250910160144.1762894-1-peterx@redhat.com>
 References: <20250910160144.1762894-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,32 +108,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We set CANCELLED very late, it means migration_has_failed() may not work
-correctly if it's invoked before updating CANCELLING to CANCELLED.
+QEMU supported graceful shutdowns for multifd channels starting from commit
+48796f6b44 ("migration/multifd: Terminate the TLS connection").  Then error
+check was enabled for premature TLS terminations.
 
-Allow that state will make migration_has_failed() working as expected even
-if it's invoked slightly earlier.
+Now if we run the preempt TLS unit test, the test would pass, but there
+will be a warning reported:
 
-One current user is the multifd code for the TLS graceful termination,
-where it's before updating to CANCELLED.
+qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+ok 1 /x86_64/migration/postcopy/preempt/tls/psk
 
+To fix it, make the rest channels to be gracefully terminated too when it's
+a TLS channel.
+
+One note is that the qemufile helper needs to be in migration.c not
+qemu-file.c, because qemu-file.c will be linked in unit tests, which will
+not link channel.c unfortunately.
+
+Reported-by: Xiaohui Li <xiaohli@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ migration/channel.h   |  3 +++
+ migration/migration.h |  2 ++
+ migration/channel.c   | 13 +++++++++++++
+ migration/migration.c | 24 +++++++++++++++++++++++-
+ 4 files changed, 41 insertions(+), 1 deletion(-)
 
+diff --git a/migration/channel.h b/migration/channel.h
+index 5bdb8208a7..0b25dd7c5b 100644
+--- a/migration/channel.h
++++ b/migration/channel.h
+@@ -29,4 +29,7 @@ int migration_channel_read_peek(QIOChannel *ioc,
+                                 const char *buf,
+                                 const size_t buflen,
+                                 Error **errp);
++
++bool migration_channel_shutdown_gracefully(QIOChannel *c, Error **errp);
++
+ #endif
+diff --git a/migration/migration.h b/migration/migration.h
+index 01329bf824..b5763af057 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -594,4 +594,6 @@ void migration_bitmap_sync_precopy(bool last_stage);
+ void dirty_bitmap_mig_init(void);
+ bool should_send_vmdesc(void);
+ 
++bool qemu_file_shutdown_gracefully(QEMUFile *f, Error **errp);
++
+ #endif
+diff --git a/migration/channel.c b/migration/channel.c
+index a547b1fbfe..1ae839e5fe 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -145,3 +145,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+ 
+     return 0;
+ }
++
++/*
++ * This is only needed for a successful migration, no-op for non-TLS
++ * channels.  For unexpected interruptions, use qio_channel_shutdown().
++ */
++bool migration_channel_shutdown_gracefully(QIOChannel *c, Error **errp)
++{
++    if (object_dynamic_cast((Object *)c, TYPE_QIO_CHANNEL_TLS)) {
++        qio_channel_tls_bye(QIO_CHANNEL_TLS(c), errp);
++    }
++
++    return *errp == NULL;
++}
 diff --git a/migration/migration.c b/migration/migration.c
-index 7015c2b5e0..397917b1b3 100644
+index 10c216d25d..7015c2b5e0 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1723,7 +1723,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+@@ -113,6 +113,27 @@ static bool close_return_path_on_source(MigrationState *s);
+ static void migration_completion_end(MigrationState *s);
+ static void migrate_hup_delete(MigrationState *s);
  
- bool migration_has_failed(MigrationState *s)
++/*
++ * See migration_channel_shutdown_gracefully().  The "graceful" versions
++ * are only needed if migration succeeded.
++ */
++bool qemu_file_shutdown_gracefully(QEMUFile *f, Error **errp)
++{
++    int ret;
++
++    if (!migration_channel_shutdown_gracefully(qemu_file_get_ioc(f), errp)) {
++        return false;
++    }
++
++    ret = qemu_file_shutdown(f);
++    if (ret) {
++        error_setg_errno(errp, -ret, "qemu_file_shutdown() failed");
++        return false;
++    }
++
++    return true;
++}
++
+ static void migration_downtime_start(MigrationState *s)
  {
--    return (s->state == MIGRATION_STATUS_CANCELLED ||
-+    return (s->state == MIGRATION_STATUS_CANCELLING ||
-+            s->state == MIGRATION_STATUS_CANCELLED ||
-             s->state == MIGRATION_STATUS_FAILED);
+     trace_vmstate_downtime_checkpoint("src-downtime-start");
+@@ -2473,11 +2494,12 @@ static void migration_release_dst_files(MigrationState *ms)
+      */
+     if (ms->postcopy_qemufile_src) {
+         migration_ioc_unregister_yank_from_file(ms->postcopy_qemufile_src);
+-        qemu_file_shutdown(ms->postcopy_qemufile_src);
++        qemu_file_shutdown_gracefully(ms->postcopy_qemufile_src, &error_warn);
+         qemu_fclose(ms->postcopy_qemufile_src);
+         ms->postcopy_qemufile_src = NULL;
+     }
+ 
++    qemu_file_shutdown_gracefully(file, &error_warn);
+     qemu_fclose(file);
  }
  
 -- 
