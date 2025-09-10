@@ -4,75 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0A1CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 13:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25096CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 13:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwKiU-0007zv-B3; Wed, 10 Sep 2025 09:18:30 -0400
+	id 1uwKkA-0000w7-Rj; Wed, 10 Sep 2025 09:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uwKhd-0007fp-2t
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 09:17:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uwKk5-0000sW-Mi; Wed, 10 Sep 2025 09:20:09 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uwKhF-0004Bd-BY
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 09:17:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757510232;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UglAbwONwB6IaMBrRSRdtkOzZF3BATPK8mLVm4yy2lc=;
- b=hUgpwIey+xScXEVaOe6lu0TpHgZYaRK5ED9uFk0ZWzbyM4B1rfmv7nyMR9jAq7Ba5BH/ux
- ZxQGqT0B5CbGrLzKngGbg6r4brVLvmUyGfjICIfNVJ25YflRN46QnqHvULJ9nLoFk+Pvdg
- 1RaBXCxn3Dm1xCmmRKM3C1/dQAsguAI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-TOBDx7b5Pya97xejGCcGdg-1; Wed,
- 10 Sep 2025 09:17:07 -0400
-X-MC-Unique: TOBDx7b5Pya97xejGCcGdg-1
-X-Mimecast-MFC-AGG-ID: TOBDx7b5Pya97xejGCcGdg_1757510226
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1581019560AF; Wed, 10 Sep 2025 13:17:06 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.131])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3903E1800446; Wed, 10 Sep 2025 13:17:05 +0000 (UTC)
-Date: Wed, 10 Sep 2025 09:17:04 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Brian Song <hibriansong@gmail.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
-Subject: Re: [PATCH 3/4] export/fuse: Safe termination for FUSE-uring
-Message-ID: <20250910131704.GB246746@fedora>
-References: <20250830025025.3610-1-hibriansong@gmail.com>
- <20250830025025.3610-4-hibriansong@gmail.com>
- <20250909193358.GE218449@fedora>
- <128a530b-b375-4019-bfef-9482cc63af37@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uwKjy-0004sm-Q0; Wed, 10 Sep 2025 09:20:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 26DDD15242E;
+ Wed, 10 Sep 2025 16:19:50 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C126D27BBDD;
+ Wed, 10 Sep 2025 16:19:56 +0300 (MSK)
+Message-ID: <d5883d95-3475-4c72-b07f-10e685b0b4b8@tls.msk.ru>
+Date: Wed, 10 Sep 2025 16:19:56 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="m+8UwVox3h8R5ZXB"
-Content-Disposition: inline
-In-Reply-To: <128a530b-b375-4019-bfef-9482cc63af37@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tree-wide: replace tabs with sapce and align code This
+ patch updates by replacing the tabs with spaces and fixing alignment
+ issues
+ Signed-off-by: Harshini <harshinimageswari@gmail.com> Signed-off-by: Akshaya
+ S <akshayasankarr@gmail.com> Signed-off-by: Sri Vishnu
+ <108srivishnu1008@gmail.com>
+To: Harshini <harshinimageswari@gmail.com>, qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-arm@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <20250910104836.449429-1-harshinimageswari@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250910104836.449429-1-harshinimageswari@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,83 +116,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Please don't.  For the countless number of times.
+This changes authorship of code while actual code
+has not changed.
 
---m+8UwVox3h8R5ZXB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks,
 
-On Tue, Sep 09, 2025 at 04:51:32PM -0400, Brian Song wrote:
->=20
->=20
-> On 9/9/25 3:33 PM, Stefan Hajnoczi wrote:
-> > On Fri, Aug 29, 2025 at 10:50:24PM -0400, Brian Song wrote:
-> > > @@ -901,24 +941,15 @@ static void fuse_export_shutdown(BlockExport *b=
-lk_exp)
-> > >            */
-> > >           g_hash_table_remove(exports, exp->mountpoint);
-> > >       }
-> > > -}
-> > > -
-> > > -static void fuse_export_delete(BlockExport *blk_exp)
-> > > -{
-> > > -    FuseExport *exp =3D container_of(blk_exp, FuseExport, common);
-> > > -    for (int i =3D 0; i < exp->num_queues; i++) {
-> > > +    for (size_t i =3D 0; i < exp->num_queues; i++) {
-> > >           FuseQueue *q =3D &exp->queues[i];
-> > >           /* Queue 0's FD belongs to the FUSE session */
-> > >           if (i > 0 && q->fuse_fd >=3D 0) {
-> > >               close(q->fuse_fd);
-> >=20
-> > This changes the behavior of the non-io_uring code. Now all fuse fds and
-> > fuse_session are closed while requests are potentially still being
-> > processed.
-> >=20
-> > There is a race condition: if an IOThread is processing a request here
-> > then it may invoke a system call on q->fuse_fd just after it has been
-> > closed but not set to -1. If another thread has also opened a new file
-> > then the fd could be reused, resulting in an accidental write(2) to the
-> > new file. I'm not sure whether there is a way to trigger this in
-> > practice, but it looks like a problem waiting to happen.
-> >=20
-> > Simply setting q->fuse_fd to -1 here doesn't fix the race. It would be
-> > necessary to stop processing fuse_fd in the thread before closing it
-> > here or to schedule a BH in each thread so that fuse_fd can be closed
-> > in the thread that uses the fd.
->=20
-> I get what you mean. This newly introduced cleanup code was originally in
-> the deletion section, after the reconf counter decreased to 0, and it was
-> meant to cancel the pending SQEs. But now we've moved it to the shutdown
-> section, which may introduce a potential problem. How do you think we sho=
-uld
-> fix it? This is the last week of GSoC, I'm already busy on weekdays since
-> the new term has started.
-
-Hi Brian,
-Two issues:
-1. Change of behavior for non-io_uring code. It would be safer to keep
-   the old behavior for non-io_uring code.
-2. The race condition. Schedule a BH in each queue's IOThread and call
-   close(fuse_fd) from the BH function. That way there is no race
-   between threads.
-
-Stefan
-
---m+8UwVox3h8R5ZXB
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjBelAACgkQnKSrs4Gr
-c8jw/gf9E2w+dYtQojetomfgxPeQdo2PaEE/Df6oU31L3zoam/WDB817pYzRuFJn
-o5PT4mdlbG81MBNU7hvPCUqqdrrpIwiXhlAC/8Qlgp8WBQ62PxOHdyOrgLMbzSYs
-BhsW3sPHixrU+31khUD2pyCGYUIlDoM8vtAuSBJAyAyZQwB6TXascLEXVR14QEfH
-+kIASNcPGTJs3seZp8GXZmQ05UZx3nx1y6lYCoS6EYLOQVyOBA00I9VHNdB3NQz2
-0DqEGtCgXP/8+rkpY/qiPQgTp/dQnBtzi0tt8LbL+qnXzaNzGpj546zmbe5FP9TU
-wJss8O1a8HnU04TiRLiAKS09MUwHjQ==
-=SSUE
------END PGP SIGNATURE-----
-
---m+8UwVox3h8R5ZXB--
-
+/mjt
 
