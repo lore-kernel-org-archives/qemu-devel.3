@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04603CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A24CACA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwNIC-0004Tq-RB; Wed, 10 Sep 2025 12:03:33 -0400
+	id 1uwNNo-0008J9-3D; Wed, 10 Sep 2025 12:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwNHw-0004Ci-FY
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:03:27 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uwNNa-0008Ge-BZ
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:09:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwNHn-0004cf-A5
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:03:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757520187; x=1789056187;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=xZCKiCcGS7e7tKYJxzoHfuVR+9ToYP/8va8zczdPUR8=;
- b=DP01zkYSFsQmiLrVKxQqqIooCS4xzb3nB3F5qNUtTjVY+0xLyUDdiWvw
- 7X2DqK6lGuO2H7JTBKZj71BP1EkrDOxPAZzEQDURCNAN7W4etn1qfvZcK
- AuVomAefMInbvHtJwTsrVOcXhJUj0MMvMtwUC/MH2OH2fyUA1mDX5Cy65
- owUHkwlOwG/LJL87jqJ66YTAqscvI8mhFFE3HY3yfHqd8g4MdK9HrwXa2
- 0JEwOtW/lCiq9ObkgfEcyCYcoH2GAqna3/hbO/olQ6yXpaxliyU3Z454e
- uQfUHvmen39pnph7Nq3rK+2vIHk+gXoZQAEyj8rPjLNzN9CVjW8D+Keaj w==;
-X-CSE-ConnectionGUID: xMGNC35PRrSW2ru6PsTo6w==
-X-CSE-MsgGUID: RrSQONcYRqaOYCw1B6OMbQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63667272"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="63667272"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2025 09:03:02 -0700
-X-CSE-ConnectionGUID: QNELGcRySjWvsY0wQhFlog==
-X-CSE-MsgGUID: 8HOhq+iPREOTZCL2qi0O/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,254,1751266800"; d="scan'208";a="173880469"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 10 Sep 2025 09:03:01 -0700
-Date: Thu, 11 Sep 2025 00:24:52 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-rust@nondevel.org, qemu-devel <qemu-devel@nongnu.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: Rust high-level pre/post migration callbacks
-Message-ID: <aMGmVNdIAyrN/W4J@intel.com>
-References: <8076a298-1cd9-4c90-a64c-f65004753975@redhat.com>
- <aME0r+dDsdmGCbxA@intel.com>
- <CABgObfaBOJs73XMCUS1tPnoSYYYoKSWmjRmWnjUOb2kFL6XPJg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uwNNV-0005M3-Pn
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:09:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757520536;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZfEjeCYWrvNyNF/OH64pvA+w6HxCV9HCS/0vK2FiFU8=;
+ b=gYNb9DjrrN8lfB0BL8+GAJ+oPLc5ilT/Ec/TpKoetx/YcLOEcOQUrwhtDNleoOTfIZYXHI
+ DgAnpw0CTwM/CIpg2YpgGChdgGy6WnfOzTETt+iRv9C3jNHdsvKjo7hcbUc3gu26455K6e
+ +s7/ICFmPlPpL+mJP/ybPlF9Wn97tlM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-cO_ZubgQPVetUqcFt0sGVw-1; Wed,
+ 10 Sep 2025 12:08:53 -0400
+X-MC-Unique: cO_ZubgQPVetUqcFt0sGVw-1
+X-Mimecast-MFC-AGG-ID: cO_ZubgQPVetUqcFt0sGVw_1757520532
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCBC91935329; Wed, 10 Sep 2025 16:08:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.166])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE94318003FC; Wed, 10 Sep 2025 16:08:48 +0000 (UTC)
+Date: Wed, 10 Sep 2025 18:08:45 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, hreitz@redhat.com,
+ Maxim Levitsky <mlevitsk@redhat.com>, Hyman Huang <yong.huang@smartx.com>
+Subject: Re: Some iotests are failing with -luks
+Message-ID: <aMGijXg9XIpbbn-v@redhat.com>
+References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfaBOJs73XMCUS1tPnoSYYYoKSWmjRmWnjUOb2kFL6XPJg@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,107 +84,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 01:33:53PM +0200, Paolo Bonzini wrote:
-> Date: Wed, 10 Sep 2025 13:33:53 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: Rust high-level pre/post migration callbacks
+Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
 > 
-> On Wed, Sep 10, 2025 at 9:58 AM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > > If a pure snapshot is possible, implementing the new trait
-> > > is also simple:
-> > >
-> > > impl_vmstate_struct!(MyDeviceRegisters, ...);
-> > >
-> > > impl ToMigrationState for MyDeviceRegisters {
-> > >     type Migrated = Self;
-> > >     fn to_migration_state(&self) ->
-> >
-> > Just about the name:
-> >
-> > `to_migration_state` and `restore_migrated_state*` sound not a proper pair.
-> > What about `snapshoot_migration_state` and `restore_migration_state`?
+>  Hi,
 > 
-> to_migration_state is the one that creates a new migration state, but
-> perhaps it could be implemented in terms of
+> when running "./check -luks" in the qemu-iotests directory,
+> some tests are failing for me:
 > 
->     fn snapshot_migration_state(&self, target: &mut Self::Migrated) ->
->        Result<(), migration::InvalidError>;
-
-Thanks for this snapshot_migration_state() example. Then I think the
-original to_migration_state() is better (returning migration state in the
-`Result` looks better than passing `&mut` :). )
-
-> > > trait ToMigrationState {
-> > >     type Migrated: Default + VMState;
-> > >     fn to_migration_state(&self) ->
-> >
-> > I think maybe here it's also necessary to accept a `&mut self` since
-> > device would make some changes in pre_save.
-> >
-> > Then this trate can provide mutable methods and ToMigrationStateShare
-> > provides immuatable ones.
+> 295 296 inactive-node-nbd luks-detached-header
 > 
-> That should not be necessary with this approach,
+> Is that a known problem already?
 
-Indeed, I had misunderstood this point. Rethink the pre_save: Use HPET
-as the example - changing something within `pre_save` is what HPETState's
-`pre_save` does, and it's unrelated to the current Migratable<>'s
-`pre_save`.
+Not to me anyway.
 
-Here, Migratable<>'s `pre_save` is used to assist in retrieving the
-corresponding migration state.
-
-> since all changes can
-> be done in the newly-allocated migration state.
-
-EMM, I didn't your point here... could you please talk more about this
-point?
-
-> > > impl<T> ToMigrationState for Mutex<T: ToMigrationState> {
-> > >     type Migrated = T::Migrated;
-> > >     fn to_migration_state(&self) ->
-> > >         Result<Box<Self::Migrated>, migration::InvalidError> {
-> > >         self.lock().to_migration_state()
-> >
-> > I'm considerring maybe we could use get_mut() (and check bql by
-> > assert!(bql_locked())) instead of locking this Mutex.
-> >
-> > In this context, C side should hold the BQL lock so that this is
-> > already a stronger protection.
+> FWIW, 295 is failing with the following output:
 > 
-> For non-BQL-protected device I think you cannot know that another
-> thread isn't taking the lock. For BQL the assertion is only needed in
-> Migratable and BqlRefCell's implementation of ToMigrationStateShared.
-
-Yes, I see.
-
-> > This omits the restore_migrated_state_mut, I guess it should be
-> > filled with `unimplemented!()`.
+> 295   fail       [17:03:01] [17:03:17]   15.7s                failed, exit status 1
+> [...]
+> +EWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=6 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=10 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> +E
+> [...]
 > 
-> restore_migrated_state_mut() however *can* use get_mut().
-
-Yes!
-
-> > > unsafe impl VMState for Migratable<T: ToMigrationStateShared> {
-> > >     const BASE: bindings::VMStateField = {
-> > >         static VMSD: &$crate::bindings::VMStateDescription =
-> > >             VMStateDescriptionBuilder::<Self>::new()
-> > >                 .version_id(T::VMSD.version_id)
-> > >                 .minimum_version_id(T::VMSD.minimum_version_id)
-> > >                 .priority(T::VMSD.priority)
-> > >                 .pre_load(Self::pre_load)
-> > >                 .post_load(Self::post_load)
-> > >                 .pre_save(Self::pre_save)
-> > >                 .post_save(Self::post_save)
-> >
-> > Maybe performance is a thing, and it might be worth comparing the
-> > impact of these additional callbacks.
+> etc.
 > 
-> This is only done once per device so it should be okay.
+> 296 looks very similar (also a "qemu received signal 6" error),
+> but the others look like this:
 
-Okay, I agree.
+When it gets signal 6 (i.e. SIGABRT), that usually means that you should
+have a look at the coredump.
 
-Thanks,
-Zhao
+> inactive-node-nbd   fail       [17:13:56] [17:14:04]   7.5s                 failed, exit status 1
+> --- /home/thuth/devel/qemu/tests/qemu-iotests/tests/inactive-node-nbd.out
+> +++ /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-inactive-node-nbd/inactive-node-nbd.out.bad
+> @@ -1,239 +1,64 @@
+>  Preparing disk...
+>  Launching VM...
+> -{"execute": "nbd-server-start", "arguments": {"addr": {"data": {"path": "SOCK_DIR/PID-nbd.sock"}, "type": "unix"}}}
+> -{"return": {}}
+> +ERROR:qemu.qmp.qmp_client.qemu-223907:Failed to receive Greeting: EOFError
+> +ERROR:qemu.qmp.qmp_client.qemu-223907:Failed to establish session: EOFError
+> +Traceback (most recent call last):
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/protocol.py", line 425, in _session_guard
+> +    await coro
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/qmp_client.py", line 250, in _establish_session
+> +    self._greeting = await self._get_greeting()
+> +                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/qmp_client.py", line 270, in _get_greeting
+> +    msg = await self._recv()
+> +          ^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/protocol.py", line 1009, in _recv
+> +    message = await self._do_recv()
+> +              ^^^^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/qmp_client.py", line 402, in _do_recv
+> +    msg_bytes = await self._readline()
+> +                ^^^^^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/python/qemu/qmp/protocol.py", line 977, in _readline
+> +    raise EOFError
+> +EOFError
+
+Not sure what this is. It looks like the QEMU process failed to start,
+maybe it didn't like some command line option. I would expect an error
+message on stderr, but I'm not sure if qemu-iotests automatically
+displays that in such cases. I thought that yes, but maybe I'm confusing
+it with a different case.
+
+> luks-detached-header   fail       [17:15:26] [17:15:38]   12.2s                failed, exit status 1
+> --- /home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header.out
+> +++ /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/luks-detached-header.out.bad
+> @@ -1,5 +1,55 @@
+> -..
+> +EE
+> +======================================================================
+> +ERROR: test_detached_luks_header (__main__.TestDetachedLUKSHeader.test_detached_luks_header)
+> +----------------------------------------------------------------------
+> +Traceback (most recent call last):
+> +  File "/home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header", line 139, in setUp
+> +    res = qemu_img_create(
+> +          ^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 278, in qemu_img_create
+> +    return qemu_img('create', *args)
+> +           ^^^^^^^^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 261, in qemu_img
+> +    return qemu_tool(*full_args, check=check, combine_stdio=combine_stdio)
+> +           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 241, in qemu_tool
+> +    raise VerboseProcessError(
+> +qemu.utils.VerboseProcessError: Command '('/home/thuth/tmp/qemu-build/qemu-img', 'create', '-f', 'luks', '-o', 'iter-time=10', '-o', 'key-secret=sec0', '-o', 'detached-header=true', '--object', 'secret,id=sec0,data=foo', '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/detached_header.img2')' returned non-zero exit status 1.
+> +  ┏━ output ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+> +  ┃ Formatting '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/l
+> +  ┃ uks-file-luks-detached-header/detached_header.img2', fmt=luks
+> +  ┃ size=-1 key-secret=sec0 iter-time=10 detached-header=true
+> +  ┃ qemu-img: /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luk
+> +  ┃ s-file-luks-detached-header/detached_header.img2: Parameter
+> +  ┃ 'detached-header' is unexpected
+> +  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This one is surprising. I don't think anything relevant in the luks
+driver has changed since the test was introduced. At the same time, the
+code clearly has a problem when it tries to convert a QemuOpts
+containing a "detached-header" option into a QAPI object when the schema
+doesn't even have this option. Was this broken from the beginning? Would
+have been for a year and half.
+
+Kevin
 
 
