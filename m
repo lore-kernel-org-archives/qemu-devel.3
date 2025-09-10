@@ -4,91 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9018CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 08:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A37CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 08:45:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwGQh-00081k-5m; Wed, 10 Sep 2025 04:43:51 -0400
+	id 1uwGRK-00085c-94; Wed, 10 Sep 2025 04:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uwGQe-00081E-Ct
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:43:48 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uwGQX-0001GE-5S
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:43:47 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-628f29d68ecso6099103a12.3
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 01:43:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757493817; x=1758098617; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ww8TBYaHpdqpB4vVxgYrbfF4ro1OCvfUEnwzXDhof8U=;
- b=q9hghzrSaCd++NJj+jVcEBunQxZxQq6njxN0XjfaV4RYWJziWo0RRSc3u2E/KhUHPq
- Kn7PHzW7QMA7kgQEx1Duo/KiJAKag9vQp432bych/tXxD4AYB5I3vswawiTVrxgMXsg3
- qmgkspLS8sHW5J9APZD64p5OrRD9xqMZu2KXHQyn1kg59+00COm6TumdIDi9GhE7soQn
- XqTk/RjZHav11gZNDe5t+3o2wOikEICGYb+dYMndVl1gaml7G5P694w0HZZ85KQyUxC+
- kPXvB8PKMhQ8WvtLzgbWhDdm1K4CjZiAZemFZLdk8XCqs0C36imCTkQeOdMS9Gxp3ATx
- cxHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757493817; x=1758098617;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ww8TBYaHpdqpB4vVxgYrbfF4ro1OCvfUEnwzXDhof8U=;
- b=bpVn/xiFetqEdPGep8oTMu7m6RaFipwxNw9miWbc4LIbyT1d6KOkaxshdYapl57qxq
- iYR5MsqjZuR9HyW5H7YvOAOYir3fdJh2SD3Sic1CgSGoYmtI8vsBL8ORIlJYnOTEqMe3
- K4CzN6dFsVCfSRXVE6ddrQSJtFA08sVJKEqWCidFt+zow/nuOSi1m5CCKNH/ZkMXGWPw
- zAZ4Y8gPC9fKWG7ITizNx5DCIvVJKkWQ/9ZedB8aui0xjSnAvqCVxgB9mhsnlqcGsWrc
- hUrGRthcXgzJtD9fbV5zP+oeFHXBCnam3SyLgEDK5jKK8BSJlrvhVWWCT9y12in+RnOh
- Y62g==
-X-Gm-Message-State: AOJu0YyOLDSv1TnT6Yf/yPPbPANNCCTcHKW4Sso7XZ1gdRdSkRfiM9P9
- ZkF+X6Bkt6bEqFieWg04DK82EzarH4B5fAJslR4fORZgH71OMIbC32H8Gyf3F8qlIj09cEZyPTL
- 7tBLzU7U=
-X-Gm-Gg: ASbGncuVww1Bk+MkzCq/ibHVYSbyjDxO1H/V9hL/fNPAAQjMYGnoUeKQq/e81ri9R+W
- DHw57DchVsC13N1l04LomA92RKphtAx0qr2Ww8BLUsUqwJ8C9XoJpO6bP4JxysW/bh2nGlkZikG
- JKJP8EXSdY1oL5GVhW3469ui2MMeiBXJFxBueEk/MvT53OPwO2QV9sBEZez3Y/MoCQmS93G+MWI
- vfzamPCx3qSGUHKV/mdAfBZ0lMGaKmI7oWoAX51oUrrrQXsNGWyrvLj79k7MnwsN/SpoV9kGMWQ
- CaSLJakTqeL9egPYxykrUoDU7h60MvUB4vYAKkvOc3MC5mTAKWCH4NFKeX8cx750y6S5eN7ztCs
- Knb3541p4hYhPp2JtI+6wVaI=
-X-Google-Smtp-Source: AGHT+IHehCckBB5uO6SLHw4HTqXYGMmIzgkdVLZt2KQOsXJ5sk8154mic7VsPuog3MPge2FtGFg+9A==
-X-Received: by 2002:a05:6402:5110:b0:627:5841:7ae1 with SMTP id
- 4fb4d7f45d1cf-62758417d89mr11176701a12.21.1757493817463; 
- Wed, 10 Sep 2025 01:43:37 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-62c01bdb952sm2888798a12.52.2025.09.10.01.43.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 01:43:36 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 91A295F82D;
- Wed, 10 Sep 2025 09:43:35 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Arkadiusz Marud <a.marud@post.pl>
-Cc: qemu-devel@nongnu.org
-Subject: Re: Question: ThreadSanitizer support in QEMU user-mode
-In-Reply-To: <CB3C08B0-0B52-4C27-89CF-8621B2A9E0E3@post.pl> (Arkadiusz Marud's
- message of "Wed, 10 Sep 2025 08:45:04 +0200")
-References: <CB3C08B0-0B52-4C27-89CF-8621B2A9E0E3@post.pl>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Wed, 10 Sep 2025 09:43:35 +0100
-Message-ID: <87348u7l54.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1uwGRJ-00085S-8h
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:44:29 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1uwGR9-0001J1-Tf
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:44:28 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4C027C028F;
+ Wed, 10 Sep 2025 11:44:12 +0300 (MSK)
+Received: from d-tatianin-lin.yandex-team.ru (unknown
+ [2a02:6bf:8080:d5b::1:32])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 4iFKTo2GviE0-4dVAHQGp; Wed, 10 Sep 2025 11:44:11 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757493851;
+ bh=LoRgsLL/+pxzOHUvxrpiV4z9AGTT6xp9fb6X1hQvfdo=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=AO+rkhKTmDrIwTYLRGv7y4hrDagdj5Vnvzo6VDaEbMvseHeAzzqas8gHT1iv9lLKS
+ PzfV19WUovKQITgK7vMoKTWthwzCYHd6jic7ZeUCMxGuKGZDejkN/KAQl2MTTsfBBN
+ e/8ZGS+3RDPJn98tmI3EJphSaeOKUqoPdZ0dvVhA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	qemu-devel@nongnu.org
+Subject: [RFC PATCH] io/channel-socket: abort socket reads after a force
+ shutdown request
+Date: Wed, 10 Sep 2025 11:43:58 +0300
+Message-Id: <20250910084358.69212-1-d-tatianin@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,28 +74,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arkadiusz Marud <a.marud@post.pl> writes:
+When a user chooses to force shutdown QEMU by pressing ^C or sending a
+SIGINT otherwise, we want to shutdown as soon as possible, and entering
+a blocking read which happens in the main thread seems like the opposite
+of that.
 
-> Hi all,=20
->
-> I am experimenting with running a C++ project built with ThreadSanitizer =
-(TSAN) under QEMU.
-> The documentation describes TSAN usage in system-mode (qemu-system-x86_64=
-) with --enable-tsan,
-> but I couldn=E2=80=99t find any reference to support in user-mode (qemu-x=
-86_64).=20=20
->
-> Does QEMU user-mode support running TSAN-instrumented binaries, or is
-> TSAN available only in system-mode builds?
+This may seem like a rare case, but it is actually not when using
+vhost-user devices, which usually have the control plane working via
+UNIX sockets.
 
-I don't think the compiler cares and our TSAN helpers are mode agnostic.
-However there may be some fork/thread things that it can't track.
+The way the code is currently written, all vhost-user devices are
+serviced in the main thread and thus block each other, as well as other
+things that happen in the QEMU's main thread, including QMP, and even
+network devices that are not vhost-net.
 
->
-> Thanks in advance for clarification,=20=20
-> Arek
+In case the vhost-user backend servicing a device decides to hang for
+whatever reason, any control plane request in QEMU will also hang the
+main loop until the backend either dies or ends up replying.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Ideally the vhost-user handling code should be rewritten to work
+asynchronously, or to support io-threads or similar, but that seems like
+a giant undertaking and we would like to at least be able to make QEMU
+shutdown no matter if a vhost-user backend is currently able to service
+the control plane or not.
+
+Luckily for us, SIGINT or similar causes the kernel to cancel (almost)
+all blocking syscalls with EINTR, which we can utilize to check whether
+a shutdown was requested while we were blocked in the syscall, which is
+what this commit does. The check is performed even on the first attempt,
+not only retries after EINTR. This is intentional to avoid race
+conditions where QEMU may decide to perform a control plane request
+before the shutdown event is checked for thus forcing the user to send
+SIGINT at least 2 times.
+
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+---
+ io/channel-socket.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 3b7ca924ff..5be01029a5 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -26,10 +26,20 @@
+ #include "io/channel-watch.h"
+ #include "trace.h"
+ #include "qapi/clone-visitor.h"
++#include "sysemu/runstate.h"
+ #ifdef CONFIG_LINUX
+ #include <linux/errqueue.h>
+ #include <sys/socket.h>
+ 
++/*
++ * This function is not available when io links against qemu-img etc.,
++ * in this case just pretend it always returns false.
++ */
++__attribute__((weak)) bool qemu_force_shutdown_requested(void)
++{
++    return false;
++}
++
+ #if (defined(MSG_ZEROCOPY) && defined(SO_ZEROCOPY))
+ #define QEMU_MSG_ZEROCOPY
+ #endif
+@@ -541,6 +551,12 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+     }
+ 
+  retry:
++    if (qemu_force_shutdown_requested()) {
++        error_setg_errno(errp, ECANCELED,
++                        "Socket read aborted due to force shutdown");
++        return -1;
++    }
++
+     ret = recvmsg(sioc->fd, &msg, sflags);
+     if (ret < 0) {
+         if (errno == EAGAIN) {
+-- 
+2.34.1
+
 
