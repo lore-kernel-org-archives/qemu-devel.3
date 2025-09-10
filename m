@@ -4,64 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64859CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 10:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE33CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 11:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwIHw-0003ny-26; Wed, 10 Sep 2025 06:42:56 -0400
+	id 1uwIeD-0002Bt-Fz; Wed, 10 Sep 2025 07:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwIHs-0003nT-LP; Wed, 10 Sep 2025 06:42:53 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwIeA-0002BL-Hc
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:05:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwIHk-0007by-Pu; Wed, 10 Sep 2025 06:42:49 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 5937E808C8;
- Wed, 10 Sep 2025 13:42:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b48::1:39] (unknown
- [2a02:6bf:8080:b48::1:39])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id egH2DB6FleA0-bJhnKd3w; Wed, 10 Sep 2025 13:42:40 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757500960;
- bh=4++AjFLcJo5It728uKULo6xpk6lRXR5yQYcvbU0jfWs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dMs+fraDkDN6AT4HyG6u1HCqe7gXg4suos4Z85jqH0q4+KSxj8scE9ampz6pEMfMI
- dY4RRiIMiyP3DREuBGL/xB2RZeMY0rZ7dMC4HSCqRROOU9NFVoM/n+yQ3aZFvkIrrK
- p2nozJDjTJO1hpbppRt/rgneSBUAUn0eJu/unk7k=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c601a8ef-c721-4e93-845a-cdb885378f7f@yandex-team.ru>
-Date: Wed, 10 Sep 2025 13:42:40 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwIe5-0002WY-6A
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:05:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757502345;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oZgHwLREy18GzLUggA2Fp6ndCi9BTU/lo7hYAlHU1NM=;
+ b=h0cvLRrerRlPnN5BqZLOnIqcFDOU4842dM0A2ASKYnxiJFnTpW1TiohDefgAaAqlqHjmZA
+ E+GFqfIr2MsEhladDRX43ORNoyqXV767Psu38iaphl/6fw20OLzAYgKQnztdlhgR3/VP1G
+ GNNDWmaNmpnxe0QKexms54ds0uDTImI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-YafSvOIbPfupVBnmhD2lyw-1; Wed,
+ 10 Sep 2025 07:05:44 -0400
+X-MC-Unique: YafSvOIbPfupVBnmhD2lyw-1
+X-Mimecast-MFC-AGG-ID: YafSvOIbPfupVBnmhD2lyw_1757502343
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FCB519560BA
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:05:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AE6241800446
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:05:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2E89021E6A27; Wed, 10 Sep 2025 13:05:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Abuse of warnings for unhandled errors and programming errors
+In-Reply-To: <aKRuXq0_5ULf5yp-@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 19 Aug 2025 13:30:22 +0100")
+References: <87h5yijh3b.fsf@pond.sub.org> <aKRuXq0_5ULf5yp-@redhat.com>
+Date: Wed, 10 Sep 2025 13:05:40 +0200
+Message-ID: <87frcupny3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] oslib-posix: add qemu_fds_set_blocking() helper
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-9-vsementsov@yandex-team.ru>
- <aMFKUcHVxB9q3of6@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aMFKUcHVxB9q3of6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,131 +89,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.25 12:52, Daniel P. Berrangé wrote:
-> On Wed, Sep 03, 2025 at 12:44:08PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> And use it in io/channel-socket.c. This simplifies the following
->> commit, which will move this functionality from io/channel-socket.c
->> to the callers.
-> 
-> Looking at how many callers will still want the current
-> functionality, I'm inclined to add a flag for QIOChannel
-> 
->    QIO_CHANNEL_READ_FLAG_PRESERVE_BLOCKING
-> 
-> which migration can pass to qio_channel_readv_full and
-> thus avoid adding this method and duplicated calls to
-> it in (almost) every caller.
-> 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Yes, I thought about this too, when preparing the series.
+> On Fri, Aug 08, 2025 at 11:30:32AM +0200, Markus Armbruster wrote:
+>> In "[PATCH 00/12] Error reporting cleanup, a fix, and &error_warn
+>> removal", I challenged the use of warnings in a few places.  I think the
+>> topic deserves a wider audience than the one a rather pedestrian cleanup
+>> series draws.
+>>=20
+>>=20
+>> To make my case, I need to start with errors.  We distinguish between
+>> ordinary errors (for lack of a better word) and programming errors.
+>>=20
+>> Ordinary errors are things like nonsensical user requests, unavailable
+>> resources, and so forth.  A correct program is prepared for such
+>> failures, detects them, and reports them to the user.  The user can then
+>> fix their request, try again when resources are available, and so forth.
+>>=20
+>> Tools for reporting ordinary errors are error_report(),
+>> error_report_err(), &error_fatal, and friends.
+>
+> The thing about nonsense user rquests / unavailable resources , etc
+> is that almost none of them should imply exiting QEMU, except if they
+> occur in the context of system startup before the VM starts executing.
+> Once running we should do everything in our power to not let the users
+> workload die.
+>
+> From that POV, I tend to wish that error_fatal did not exist and that
+> we instead propagated all fatal errors up until reaching main(), so
+> we were not at risk of using error_fatal in runtime scenarios. We're
+> largely stuck with what we've got though, due to our need to retrofit
+> error reporting in to our existing codebase design.
 
-I'll make a patch, and make the fds-set-blocking refactoring series to be the separate one.
+Yes, &error_fatal is almost always wrong after the guest starts.
 
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   include/qemu/osdep.h |  7 +++++++
->>   io/channel-socket.c  | 24 +++++++++++++-----------
->>   util/oslib-posix.c   | 12 ++++++++++++
->>   3 files changed, 32 insertions(+), 11 deletions(-)
->>
->> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
->> index 1b38cb7e45..dde98d588c 100644
->> --- a/include/qemu/osdep.h
->> +++ b/include/qemu/osdep.h
->> @@ -689,6 +689,13 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
->>   void qemu_set_cloexec(int fd);
->>   bool qemu_set_blocking(int fd, bool block, Error **errp);
->>   
->> +/*
->> + * qemu_fds_set_blockinging:
->> + * Call qemu_socket_set_block() on several fds.
->> + * When @nfds = 0, does nothing, @fds is not touched.
->> + */
->> +bool qemu_fds_set_blockinging(int *fds, int nfds, bool block, Error **errp);
->> +
->>   /* Return a dynamically allocated directory path that is appropriate for storing
->>    * local state.
->>    *
->> diff --git a/io/channel-socket.c b/io/channel-socket.c
->> index 4f7e86f72f..96098b5bcc 100644
->> --- a/io/channel-socket.c
->> +++ b/io/channel-socket.c
->> @@ -472,8 +472,11 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
->>       *fds = NULL;
->>   
->>       for (cmsg = CMSG_FIRSTHDR(msg); cmsg; cmsg = CMSG_NXTHDR(msg, cmsg)) {
->> -        int fd_size, i;
->> +        int fd_size;
->>           int gotfds;
->> +#ifndef MSG_CMSG_CLOEXEC
->> +        int i;
->> +#endif
->>   
->>           if (cmsg->cmsg_len < CMSG_LEN(sizeof(int)) ||
->>               cmsg->cmsg_level != SOL_SOCKET ||
->> @@ -491,20 +494,19 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
->>           *fds = g_renew(int, *fds, *nfds + gotfds);
->>           memcpy(*fds + *nfds, CMSG_DATA(cmsg), fd_size);
->>   
->> +        /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
->> +        /* TODO: don't crash on error, just handle it! */
->> +        qemu_fds_set_blockinging(*fds + *nfds, gotfds, true, &error_abort);
->> +
->> +#ifndef MSG_CMSG_CLOEXEC
->>           for (i = 0; i < gotfds; i++) {
->>               int fd = (*fds)[*nfds + i];
->> -            if (fd < 0) {
->> -                continue;
->> +            if (fd >= 0) {
->> +                qemu_set_cloexec(fd);
->>               }
->> -
->> -            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
->> -            /* TODO: don't crash on error, just handle it! */
->> -            qemu_set_blocking(fd, true, &error_abort);
->> -
->> -#ifndef MSG_CMSG_CLOEXEC
->> -            qemu_set_cloexec(fd);
->> -#endif
->>           }
->> +#endif
->> +
->>           *nfds += gotfds;
->>       }
->>   }
->> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
->> index 8891d82db0..8589ff21ec 100644
->> --- a/util/oslib-posix.c
->> +++ b/util/oslib-posix.c
->> @@ -262,6 +262,18 @@ bool qemu_set_blocking(int fd, bool block, Error **errp)
->>       return true;
->>   }
->>   
->> +bool qemu_fds_set_blockinging(int *fds, int nfds, bool block, Error **errp)
->> +{
->> +    int i;
->> +    for (i = 0; i < nfds; i++) {
->> +        if (fds[i] >= 0 && !qemu_set_blocking(fds[i], block, errp)) {
->> +            return false;
->> +        }
->> +    }
->> +
->> +    return true;
->> +}
->> +
->>   int socket_set_fast_reuse(int fd)
->>   {
->>       int val = 1, ret;
->> -- 
->> 2.48.1
->>
-> 
-> With regards,
-> Daniel
+When it isn't wrong, it's quite convenient.
 
+> I do try to push back in review any time we introduce new code that
+> doesn't propagate errors as high up the stack as possible/practcal.
+>
+>> Programming errors are bugs.  A developer needs to fix the program.
+>> Unlike ordinary errors, programming errors are *unexpected*.
+>>=20
+>> Programming errors are commonly not recoverable.  The proper tool for
+>> unrecoverable ones is assertions.  &error_abort can be a convenient way
+>> to assert "this can't fail".
+>
+> We could have called it &error_assert but that's bike shed colouring :-)
 
--- 
-Best regards,
-Vladimir
+Yup :)
+
+>> On to warnings.
+>>=20
+>> When some failure doesn't prevent satisfying some request, an ordinary
+>> error can be misleading.  We make it a warning instead then.
+>>=20
+>> What if it's a programming error we recover from?
+>>=20
+>> Aside: trying to recover in a buggy program is risky, but that's not the
+>> debate I want to have here.
+>>=20
+>> How do we want such recoverable programming errors reported?
+>>=20
+>> Warning?  We seem to be abusing warnings this way, and I hate it.  What
+>> we have to report is a *bug*, and we should make that crystal clear.
+>> "warning: FunctionYouNeverHeardAbout() failed" does not.  It could be
+>> anything, and you likely need to look at the source to find out.
+>>=20
+>> Ordinary error reporting with "internal error: " prefix, so the user
+>> understands this is a bug, and all they can do about it is report it?
+>>=20
+>> Log the bug somehow?
+>>=20
+>> Thoughts?
+>
+> I don't see 'warnings' as something directly actionable for a user.
+> Rather they are messages that I would want to see included in a log
+> file that a user attaches to a bug report if they find some behavioural
+> problem. If the user understands the warning great, but that isn't a
+> requirement.
+>
+> IOW, while informative warnings is of course better than not, as long
+> as the warning message contains sufficient info for the maintainer to
+> understand what happened the minimum quality bar is satisfied IMHO.
+
+That's a low quality bar indeed.  Here's mine:
+
+1. A warning should make perfectly clear whether this is a bug that
+should be reported, or an issue with usage, resources, etc. that can be
+ignored, but may help understand future trouble, if any (typically an
+ordinary error that wasn't fully handled).  Our errors make bug
+vs. ordinary error clear.
+
+2. A warning of the former kind (bug) should provide information
+developers need to start debugging.  For errors, we give them a core
+dump, source file and line number.  For warnings, we currently give them
+grep and warm wishes.
+
+3. A warning of the latter kind (not a bug) should at least try to
+provide hints that help users diagnose and correct / work around what's
+wrong.  "warning: failed to WSAEventSelect()" doesn't.  "warning:
+trouble initializing slirp for user mode networking" might.
+
 
