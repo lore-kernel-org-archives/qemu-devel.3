@@ -4,70 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79D5CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E9DCA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 19:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwPw7-0008OD-GM; Wed, 10 Sep 2025 14:52:55 -0400
+	id 1uwQXO-0000oj-C4; Wed, 10 Sep 2025 15:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwPw4-0008N6-BX; Wed, 10 Sep 2025 14:52:52 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1uwQXL-0000oR-Lg
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 15:31:23 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwPw1-0006yI-4x; Wed, 10 Sep 2025 14:52:52 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B2925807DE;
- Wed, 10 Sep 2025 21:52:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b48::1:39] (unknown
- [2a02:6bf:8080:b48::1:39])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id eqPm040GiW20-wDcMApAK; Wed, 10 Sep 2025 21:52:41 +0300
+ id 1uwQXJ-0003q6-8I
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 15:31:23 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:999c:0:640:51a7:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 36A2F804CA;
+ Wed, 10 Sep 2025 22:31:16 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b48::1:39])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id EVQIl30GrmI0-lbSdqVZf; Wed, 10 Sep 2025 22:31:15 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757530361;
- bh=4DNXAcbJvD3oHDpYh2UxolhWLuXODSso3eywZ5V6l+8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=rOCS7IV+NmKxJIuebKusINffPmH7qmwXvZ9k0UeziQW+ibpK6xDXPEfwvUJ1hfPTH
- 7nfmsPFw7+oY3tUiCpjybpVHDRq1UyUGdF6ADx/SaTu+rpZHS2LyyjuSIYunB3wFDk
- lb/INxIDDmoEqGv2q/Be/d+y7zbMt1N48E7noaRU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ s=default; t=1757532675;
+ bh=6zk2HlwQVu6MiqppbHH1LwEAltQId5nu3DmhF1Zfbf4=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=VJEeJdxmorXMg6fq2DRqPC1CfND+3H5EEiK7FYB6l/GSjfK51RAIeKje8t5fPLux7
+ 3fablURFXGN2LOGQQakIxGd9/2Y6Cw3T4js8efVz9aCIKubniuFThUFQOIYsJWNYRA
+ rQ2dcfmvLu9SOPfTBfw5QWWXuyTggM2HohtKjrk4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <719b1b6e-524e-4993-9977-cbceaff2a776@yandex-team.ru>
-Date: Wed, 10 Sep 2025 21:52:40 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] util: drop qemu_socket_set_nonblock()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Kostiantyn Kostiuk
- <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Coiby Xu <Coiby.Xu@gmail.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-5-vsementsov@yandex-team.ru>
- <aMFIhJp-GfOhv3AV@redhat.com>
- <2bfafcf7-7051-4c14-a580-fb33895a0a1a@yandex-team.ru>
- <aMHAQkYQ1kK4_yD_@redhat.com>
-Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aMHAQkYQ1kK4_yD_@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: berrange@redhat.com
+Cc: peterx@redhat.com, farosas@suse.de, steven.sistare@oracle.com,
+ vsementsov@yandex-team.ru, qemu-devel@nongnu.org
+Subject: [PATCH v4 1/2] migration/qemu-file: don't make incoming fds blocking
+ again
+Date: Wed, 10 Sep 2025 22:31:11 +0300
+Message-ID: <20250910193112.1220763-2-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250910193112.1220763-1-vsementsov@yandex-team.ru>
+References: <20250910193112.1220763-1-vsementsov@yandex-team.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,49 +76,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.25 21:15, Daniel P. Berrangé wrote:
-> On Wed, Sep 10, 2025 at 08:55:57PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 10.09.25 12:44, Daniel P. Berrangé wrote:
->>>> @@ -36,7 +37,11 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
->>>>            g_warning("error converting fd to gsocket: %s", strerror(errno));
->>>>            goto out;
->>>>        }
->>>> -    qemu_socket_set_nonblock(client_fd);
->>>> +    if (!qemu_set_blocking(client_fd, false, &err)) {
->>>> +        g_warning("errer: %s", error_get_pretty(err));
->>> s/errer/error/
->>>
->>>
->>> This is a pre-existing problem, but none of this code should be using
->>> g_warning. g_printerr() should have been used for printing error
->>> messages. I'm not expecting you to fix that, just an observation.
->>
->>
->> Why not g_error()? I see some g_warnings in qga code a correct "warnings", not "errors".. And if we use sometimes g_warning, the g_error is more correct pair for it.
->>
->> Or we don't want any of g_error / g_warning in QEMU code?
-> 
-> g_error will call abort() after printing the message, which will
-> prevent graceful cleanup and result in a core file, so is not
-> very desirable to use.
+In migration we want to pass fd "as is", not changing its
+blocking status.
 
-Oh, right, I was stupid)
+The only current user of these fds is CPR state (through VMSTATE_FD),
+which of-course doesn't want to modify fds on target when source is
+still running and use these fds.
 
-> 
-> g_warning will also turn into g_error if G_DEBUG=fatal-warnings
-> is set.
-> 
-> We really just want a plain message printed on the console with
-> no side effects, and g_printerr gives us that.
-> 
-> 
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ include/io/channel.h  |  1 +
+ io/channel-socket.c   | 13 +++++++++----
+ migration/qemu-file.c |  3 ++-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-Still, it's strange for me, that we just not use error_reprot()/warn_report() everywhere.
-
-I see we have underlying error_vprintf() realization for code without monitor in stubs/error-printf.c..
-
-
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 234e5db70d..12266256a8 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -36,6 +36,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
+ 
+ #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
+ #define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
++#define QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING 0x4
+ 
+ typedef enum QIOChannelFeature QIOChannelFeature;
+ 
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 3b7ca924ff..21f8f2e0c5 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -464,7 +464,8 @@ static void qio_channel_socket_finalize(Object *obj)
+ 
+ #ifndef WIN32
+ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+-                                        int **fds, size_t *nfds)
++                                        int **fds, size_t *nfds,
++                                        bool preserve_blocking)
+ {
+     struct cmsghdr *cmsg;
+ 
+@@ -497,8 +498,10 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+                 continue;
+             }
+ 
+-            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+-            qemu_socket_set_block(fd);
++            if (!preserve_blocking) {
++                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
++                qemu_socket_set_block(fd);
++            }
+ 
+ #ifndef MSG_CMSG_CLOEXEC
+             qemu_set_cloexec(fd);
+@@ -556,7 +559,9 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+     }
+ 
+     if (fds && nfds) {
+-        qio_channel_socket_copy_fds(&msg, fds, nfds);
++        qio_channel_socket_copy_fds(
++            &msg, fds, nfds,
++            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
+     }
+ 
+     return ret;
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index b6ac190034..d5c6e7ec61 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -340,7 +340,8 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+ 
+     do {
+         struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
+-        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
++        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd,
++                                     QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING,
+                                      &local_error);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+             if (qemu_in_coroutine()) {
 -- 
-Best regards,
-Vladimir
+2.48.1
+
 
