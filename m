@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A37CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 08:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D27CCA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 08:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwGRK-00085c-94; Wed, 10 Sep 2025 04:44:30 -0400
+	id 1uwGX4-0001eo-UU; Wed, 10 Sep 2025 04:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1uwGRJ-00085S-8h
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:44:29 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1uwGX3-0001ea-OV
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:50:25 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1uwGR9-0001J1-Tf
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:44:28 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4C027C028F;
- Wed, 10 Sep 2025 11:44:12 +0300 (MSK)
+ id 1uwGWy-0002PB-MF
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 04:50:24 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5B33B807DF;
+ Wed, 10 Sep 2025 11:50:16 +0300 (MSK)
 Received: from d-tatianin-lin.yandex-team.ru (unknown
  [2a02:6bf:8080:d5b::1:32])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4iFKTo2GviE0-4dVAHQGp; Wed, 10 Sep 2025 11:44:11 +0300
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 8oFbEc6Gm0U0-jwN6V2ir; Wed, 10 Sep 2025 11:50:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757493851;
- bh=LoRgsLL/+pxzOHUvxrpiV4z9AGTT6xp9fb6X1hQvfdo=;
+ s=default; t=1757494216;
+ bh=QNPAI9/iKPu3p5pzEiqqurtjrk0S3jrcC5pY7aAVp4I=;
  h=Message-Id:Date:Cc:Subject:To:From;
- b=AO+rkhKTmDrIwTYLRGv7y4hrDagdj5Vnvzo6VDaEbMvseHeAzzqas8gHT1iv9lLKS
- PzfV19WUovKQITgK7vMoKTWthwzCYHd6jic7ZeUCMxGuKGZDejkN/KAQl2MTTsfBBN
- e/8ZGS+3RDPJn98tmI3EJphSaeOKUqoPdZ0dvVhA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ b=gcvriyb78EQK5lFtf639EnB9SLe2KTICBK32OISQOyEew6mS75TuCm31g1f+hPjUy
+ 7cKZvk77/v5dsAo7diZ6p1s86HSzRlq4K3zjAZpL5cCerGM7b37yftfoWjcoCQqpw5
+ yVCd0okARW6DxewGpSZ98K0GKgEIORvaS/IBbfv4=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 To: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
 	qemu-devel@nongnu.org
-Subject: [RFC PATCH] io/channel-socket: abort socket reads after a force
+Subject: [RFC PATCH v1] io/channel-socket: abort socket reads after a force
  shutdown request
-Date: Wed, 10 Sep 2025 11:43:58 +0300
-Message-Id: <20250910084358.69212-1-d-tatianin@yandex-team.ru>
+Date: Wed, 10 Sep 2025 11:50:06 +0300
+Message-Id: <20250910085006.69790-1-d-tatianin@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,18 +109,22 @@ SIGINT at least 2 times.
 
 Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 ---
+v0 -> v1:
+- Fix code alignment
+- Fix included header
+---
  io/channel-socket.c | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
 diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3b7ca924ff..5be01029a5 100644
+index 3b7ca924ff..74238b511a 100644
 --- a/io/channel-socket.c
 +++ b/io/channel-socket.c
 @@ -26,10 +26,20 @@
  #include "io/channel-watch.h"
  #include "trace.h"
  #include "qapi/clone-visitor.h"
-+#include "sysemu/runstate.h"
++#include "system/runstate.h"
  #ifdef CONFIG_LINUX
  #include <linux/errqueue.h>
  #include <sys/socket.h>
@@ -143,7 +147,7 @@ index 3b7ca924ff..5be01029a5 100644
   retry:
 +    if (qemu_force_shutdown_requested()) {
 +        error_setg_errno(errp, ECANCELED,
-+                        "Socket read aborted due to force shutdown");
++                         "Socket read aborted due to force shutdown");
 +        return -1;
 +    }
 +
