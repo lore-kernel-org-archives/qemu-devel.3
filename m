@@ -4,89 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E8FCA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 13:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9D9CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 14:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwLH7-0003ZY-OT; Wed, 10 Sep 2025 09:54:17 -0400
+	id 1uwLiG-0002If-2r; Wed, 10 Sep 2025 10:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uwLH6-0003Z3-16
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 09:54:16 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uwLGy-0002AS-EF
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 09:54:15 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45dde353b47so21311015e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 06:54:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757512442; x=1758117242; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HsKBSNXGouODjqFbzXtr6MHfNWWtyiLAciJxtw6gymY=;
- b=fpiPhp+6Jm+iHwm6fGfbhXsWvRo4Tzclq1xSolaV+54tvg8CnM5To1r9xpVbgIxhAz
- 5lERqDgkSgACR2wyDbKbd4rr9pCuUYDoUXeRGc1WacKUApjfrOBtZGRC9eb/v4Lc6uRL
- NVE7GzCm5TGc+NrRB0J52iDJLQHCMJl+cg8LMHIt3m5xtc8g/rQgkefQnDmMeNPM0ZAD
- UZmlOCmivQizZ5DCd7RXplxNIYViLkM8DJzAXDaQBImoXMybxiJxFzrjuPd2M04knGdY
- H/M/4Bb29p1mqa2LyT2hrQjGovh0biCffG0PjEmj5W4j3S/BcFPtcild9o/sMUHYfvJp
- R1Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757512442; x=1758117242;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HsKBSNXGouODjqFbzXtr6MHfNWWtyiLAciJxtw6gymY=;
- b=kZdtpO4YHBrvaSXxtgWtQvb8Aje1BRQSTy5NRVxY+GExGMYwdBLRzDPLfLaUk79DO/
- cHpvonZTa6FilbMQt6ymIhxQitsbhxIoYYW5P0xS+jYdFBRrqxKWJyJdZcPIfj1tA4bv
- bf4bSkdmHZFw6W+JZtT6XjmjuXk60Agh1H/IU3JiRqG753WWFlKIk2bAbx5Dl7PBMYRy
- xlWtE4awiZKdYjyYhB1SBLoS51iGDbnpyJcbwOeUrSvR2N2li3AWyszfY3Jm0El2DlyX
- 1Ya2npeXBvhtzw8WimAxaYbw+I8lHvk08OUYyrZnrKgLMv/9ZkuMVs4UNJFpq6hQiOgI
- 17jg==
-X-Gm-Message-State: AOJu0YxLpmHfnwF5L3I3LiPoxWaX94J8wDvgYse2ujdNgXKtLtuGj6Ac
- 2DiU90tE8wcQJwU75LQHTW/Q3aeq//UJY14G2DtEkqXqnBCdqZKH/cNaKyParIH/r94=
-X-Gm-Gg: ASbGncswflCFesSzaflDod+uPGYhxjALJUITaO5NMA5nbOSyImgyJAHoGnrabMFJMQX
- s7pyW5TrVrJHy0Ha+aXzGiPv6cL8ffhP16xR//kevQU9j1+S4fgjDnbzi4zqZTq9UOMZja/FRCC
- Jflo49yyGsfbteVrhAv2y6CrK/hO1R8fyNZ6GCZACQwSjXQMtUVkL4uBKBBTdi2KrKaTjolI+JN
- HGp3LP22YfUwcKt7r5jlWIBgWhzApLtje8E3AWrlAmH8MO5XVELKhEpjtrVJ5j3Mk+Stj7PNmyv
- 5L1jaACO/Uwg0jsJQ4UVZMbvgDgKrtYNj0zVt8ZppZcB09ksy7XkUCzy45YhwmMSTNxTFZFwTr/
- 4evhamSvndvoOY8tVZsMfqDkP3tg2v19xUw==
-X-Google-Smtp-Source: AGHT+IEGH96P4Jo76weYObUN0cLXLaUIHEuCi9HH3gAQYsRB990bgFzESxDtlIP8fIIxUU6vvNJjlA==
-X-Received: by 2002:a05:600c:3513:b0:45d:d88d:9ed9 with SMTP id
- 5b1f17b1804b1-45df8b8ca57mr21767625e9.34.1757512441719; 
- Wed, 10 Sep 2025 06:54:01 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7521bff6esm6816746f8f.13.2025.09.10.06.54.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 06:54:00 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1B68F5F82D;
- Wed, 10 Sep 2025 14:54:00 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2] scripts/ci: add gitlab-failure-analysis script
-Date: Wed, 10 Sep 2025 14:53:57 +0100
-Message-ID: <20250910135357.3042016-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uwLiC-0002Hn-Gi; Wed, 10 Sep 2025 10:22:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uwLi1-0006Ls-Mp; Wed, 10 Sep 2025 10:22:15 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58A9osS3029387;
+ Wed, 10 Sep 2025 14:21:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=rxq47v46PUJuMRMvu9OGbEk2cZgm8/3CX7wLCL97qLs=; b=bldcx4Aofm3k
+ 8ypsqQpwr0JntGMdnNCQRCWCZfm9yOZjNCz/wL5w0NlLmxacU4WTfmyszFWXyGAH
+ WzpInQABaO48bn9/2tM9kiqKd3fEOyJz6wqr4WQF99vk2aeaoPFEu2l2ahpwPB8w
+ jIpBmOnutBE6HqevPegoQjHYQviCnpYnVsh0ZZKfHqQzlxB4k9OnkqT7tZ5IsA8D
+ AJ2eopnjyc9W0k6CfTb3Rltbl/7dxRdgmiySI/cJAysafNF/luY+wfZRsS2NaGJ1
+ hXKCnJw4bC3arOqAn4AT3BUjqNhy8eKOyn51u3SiGIjMi8lcHZSE3nh8ZODALMAs
+ yXumk0tsSw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cffes8a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Sep 2025 14:21:56 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58AEItP6022775;
+ Wed, 10 Sep 2025 14:21:55 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490cffes87-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Sep 2025 14:21:55 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58AD5qHa020495;
+ Wed, 10 Sep 2025 14:21:54 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 490yp1119p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Sep 2025 14:21:54 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58AELq9c19727004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 10 Sep 2025 14:21:53 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ABE8458055;
+ Wed, 10 Sep 2025 14:21:52 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0803E58059;
+ Wed, 10 Sep 2025 14:21:52 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 10 Sep 2025 14:21:51 +0000 (GMT)
+Message-ID: <b18882d811ef82b9825d83d7de368e04a051ce99.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 8/9] hw/ppc: Add a test machine for the IBM PPE42 CPU
+From: Miles Glenn <milesg@linux.ibm.com>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ thuth@redhat.com, rathc@linux.ibm.com, richard.henderson@linaro.org
+Date: Wed, 10 Sep 2025 09:21:51 -0500
+In-Reply-To: <ce46413b-dab9-4ffc-9e6e-078c6b2ed6b9@redhat.com>
+References: <20250908200028.115789-1-milesg@linux.ibm.com>
+ <20250908200028.115789-9-milesg@linux.ibm.com>
+ <ce46413b-dab9-4ffc-9e6e-078c6b2ed6b9@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: SVRmV47O-NFl_NWZ1zyZWUoo9UC2UYfK
+X-Proofpoint-GUID: KT9Mxe_5Mp9BUUvWhO5b0hojunITAK_D
+X-Authority-Analysis: v=2.4 cv=EYDIQOmC c=1 sm=1 tr=0 ts=68c18984 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=up-X0YpDAAAA:8 a=20KFwNOVAAAA:8 a=14Q3UDedklbQJ-9NY7oA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=86FmjZgct7XXK6GGpxvI:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyMCBTYWx0ZWRfX4SssA8GF32Lf
+ IlJBEhQvkiiGh92q+m/n62jGNW5ZqVdKET8CreBQM1IbrQNF5wye6+sAE5ZQIYtTGASV8UZspug
+ OKWEUgeL4AfYXWJEXDDJlOIaskmfzUa27te3GNegpiJMYwFRBxcP8Jmp36pruvy0ClXwCKEGCBf
+ r1ICNFVjQzfBOVuD5s8/HaBLRyI1wsjvX+Fa3cPWqlamHymjQhxNiZ6b5Ey4N+RszPHlSY8ITtt
+ Kr+eK9lRVSM91PvELyqO/+sOmRGtzyXxURPJqBjbRPBuhJfeTqLkMVKugt8UQabRqb7LDWOm2PI
+ gb0EDrb/2t45EzcCS10Dg6+MEwPSseofzMGmITP3n6Nsq3zqwINQnIwZwU8emTECmVhtgA3BL2Y
+ y6mMEY5o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-10_02,2025-09-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060020
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,164 +126,218 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a script designed to collect data from multiple pipelines and
-analyse the failure modes they have. By default it will probe the last
-3 failed jobs on the staging branch. However this can all be
-controlled by the CLI:
+On Wed, 2025-09-10 at 09:10 +0200, Cédric Le Goater wrote:
+> On 9/8/25 22:00, Glenn Miles wrote:
+> > Adds a test machine for the IBM PPE42 processor, including a
+> > DEC, FIT, WDT and 512 KiB of ram.
+> > 
+> > The purpose of this machine is only to provide a generic platform
+> > for testing instructions of the recently  added PPE42 processor
+> > model which is used extensively in the IBM Power9, Power10 and
+> > future Power server processors.
+> > 
+> > Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> > ---
+> > 
+> > Changes from v2:
+> >    - Moved decrementer changes to distinct commit
+> >    - Introduced a specific MachineState for the ppe42 Machine
+> >    - Use qdev_realize to create the machine
+> >    - Use valid_cpu_types to determine validity of CPU
+> >    - Changed machine ram limit from 2GB to 512KB
+> > 
+> >   MAINTAINERS            |   6 +++
+> >   hw/ppc/Kconfig         |   9 ++++
+> >   hw/ppc/meson.build     |   2 +
+> >   hw/ppc/ppe42_machine.c | 102 +++++++++++++++++++++++++++++++++++++++++
+> >   4 files changed, 119 insertions(+)
+> >   create mode 100644 hw/ppc/ppe42_machine.c
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index a07086ed76..52fa303e0a 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1531,6 +1531,12 @@ F: include/hw/pci-host/grackle.h
+> >   F: pc-bios/qemu_vga.ndrv
+> >   F: tests/functional/test_ppc_mac.py
+> >   
+> > +PPE42
+> > +M: Glenn Miles <milesg@linux.ibm.com>
+> > +L: qemu-ppc@nongnu.org
+> > +S: Odd Fixes
+> > +F: hw/ppc/ppe42_machine.c
+> > +
+> >   PReP
+> >   M: Hervé Poussineau <hpoussin@reactos.org>
+> >   L: qemu-ppc@nongnu.org
+> > diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+> > index ced6bbc740..3fdea5919c 100644
+> > --- a/hw/ppc/Kconfig
+> > +++ b/hw/ppc/Kconfig
+> > @@ -44,6 +44,15 @@ config POWERNV
+> >       select SSI_M25P80
+> >       select PNV_SPI
+> >   
+> > +config PPC405
+> > +    bool
+> > +    default y
+> > +    depends on PPC
+> > +    select M48T59
+> > +    select PFLASH_CFI02
+> > +    select PPC4XX
+> > +    select SERIAL
+> 
+> Does the machine need all the above support ?
 
-  ./scripts/ci/gitlab-failure-analysis --count 2 --branch=testing/next --id 39915562 --status=
-  running pipeline 2028486060, total jobs 125, skipped 5, failed 0,  39742 tests, 0 failed tests
-  success pipeline 2015018135, total jobs 125, skipped 5, failed 0,  49219 tests, 0 failed tests
+No, it only needs PPC4XX.  I'll remove the others.
 
-You can also skip failing jobs and just dump the tests:
+> 
+> > +
+> >   config PPC440
+> >       bool
+> >       default y
+> > diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> > index 9893f8adeb..170b90ae7d 100644
+> > --- a/hw/ppc/meson.build
+> > +++ b/hw/ppc/meson.build
+> > @@ -57,6 +57,8 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+> >     'pnv_n1_chiplet.c',
+> >   ))
+> >   # PowerPC 4xx boards
+> > +ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
+> > +  'ppe42_machine.c'))
+> >   ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
+> >     'ppc440_bamboo.c',
+> >     'ppc440_uc.c'))
+> > diff --git a/hw/ppc/ppe42_machine.c b/hw/ppc/ppe42_machine.c
+> > new file mode 100644
+> > index 0000000000..2cfce2503f
+> > --- /dev/null
+> > +++ b/hw/ppc/ppe42_machine.c
+> > @@ -0,0 +1,102 @@
+> > +/*
+> > + * Test Machine for the IBM PPE42 processor
+> > + *
+> > + * Copyright (c) 2025, IBM Corporation.
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/units.h"
+> > +#include "qemu/error-report.h"
+> > +#include "system/address-spaces.h"
+> > +#include "hw/boards.h"
+> > +#include "hw/ppc/ppc.h"
+> > +#include "system/system.h"
+> > +#include "system/reset.h"
+> > +#include "system/kvm.h"
+> > +#include "qapi/error.h"
+> > +
+> > +#define TYPE_PPE42_MACHINE MACHINE_TYPE_NAME("ppe42_machine")
+> > +typedef MachineClass Ppe42MachineClass;
+> > +typedef struct Ppe42MachineState Ppe42MachineState;
+> > +DECLARE_OBJ_CHECKERS(Ppe42MachineState, Ppe42MachineClass,
+> > +                     PPE42_MACHINE, TYPE_PPE42_MACHINE)
+> > +
+> > +struct Ppe42MachineState {
+> > +    MachineState parent_obj;
+> > +
+> > +    PowerPCCPU cpu;
+> > +};
+> > +
+> > +static void main_cpu_reset(void *opaque)
+> > +{
+> > +    PowerPCCPU *cpu = opaque;
+> > +
+> > +    cpu_reset(CPU(cpu));
+> > +}
+> > +
+> > +static void ppe42_machine_init(MachineState *machine)
+> > +{
+> > +    Ppe42MachineState *pms = PPE42_MACHINE(machine);
+> > +    PowerPCCPU *cpu = &pms->cpu;
+> > +
+> > +    if (kvm_enabled()) {
+> > +        error_report("machine %s does not support the KVM accelerator",
+> > +                     MACHINE_GET_CLASS(machine)->name);
+> > +        exit(EXIT_FAILURE);
+> > +    }
+> > +
+> > +    /* init CPU */
+> > +    object_initialize_child(OBJECT(pms), "cpu", cpu, machine->cpu_type);
+> > +    if (!qdev_realize(DEVICE(cpu), NULL, &error_fatal)) {
+> > +        return;
+> > +    }
+> > +
+> > +    qemu_register_reset(main_cpu_reset, cpu);
+> > +
+> > +    /* This sets the decrementer timebase */
+> > +    ppc_booke_timers_init(cpu, 37500000, PPC_TIMER_PPE);
+> > +
+> > +    /* RAM */
+> > +    if (machine->ram_size > 512 * KiB) {
+> > +        error_report("RAM size more than 512 KiB is not supported");
+> > +        exit(1);
+> > +    }
+> 
+> In case of resend, the RAM size could be tested sooner (after kvm_enabled()).
+> 
 
-  ./scripts/ci/gitlab-failure-analysis --branch= --id 39915562 --status= --skip-jobs --pipeline 1946202491 1919542960
-  failed pipeline 1946202491, total jobs 127, skipped 5, failed 26,  38742 tests, 278 skipped tests, 2 failed tests
-    Failed test qemu.qemu:qtest+qtest-s390x / qtest-s390x/boot-serial-test, check-system-opensuse, 1 /s390x/boot-serial/s390-ccw-virtio - FATAL-ERROR: Failed to find expected string. Please check '/tmp/qtest-boot-serial-sW77EA3'
-    Failed test qemu.qemu:qtest+qtest-aarch64 / qtest-aarch64/arm-cpu-features, check-system-opensuse, 1 /aarch64/arm/query-cpu-model-expansion - ERROR:../tests/qtest/arm-cpu-features.c:459:test_query_cpu_model_expansion: assertion failed (_error == "The CPU type 'host' requires KVM"): ("The CPU type 'host' requires hardware accelerator" == "The CPU type 'host' requires KVM")
-  failed pipeline 1919542960, total jobs 127, skipped 5, failed 2,  48753 tests, 441 skipped tests, 1 failed tests
-    Failed test qemu.qemu:unit / test-aio, msys2-64bit, 12 /aio/timer/schedule - ERROR:../tests/unit/test-aio.c:413:test_timer_schedule: assertion failed: (aio_poll(ctx, true))
+Sure, I'll move it up.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> > +    memory_region_add_subregion(get_system_memory(), 0xfff80000, machine->ram);
+> > +}
+> > +
+> > +
+> > +static void ppe42_machine_class_init(ObjectClass *oc, const void *data)
+> > +{
+> > +    MachineClass *mc = MACHINE_CLASS(oc);
+> > +    static const char * const valid_cpu_types[] = {
+> > +        POWERPC_CPU_TYPE_NAME("PPE42"),
+> > +        POWERPC_CPU_TYPE_NAME("PPE42X"),
+> > +        POWERPC_CPU_TYPE_NAME("PPE42XM"),
+> > +        NULL,
+> > +    };
+> > +
+> > +    mc->desc = "PPE42 Test Machine";
+> > +    mc->init = ppe42_machine_init;
+> > +    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("PPE42XM");
+> > +    mc->valid_cpu_types = valid_cpu_types;
+> > +    mc->default_ram_id = "ram";
+> > +    mc->default_ram_size = 512 * KiB;
+> > +}
+> > +
+> > +static const TypeInfo ppe42_machine_info = {
+> > +        .name          = TYPE_PPE42_MACHINE,
+> > +        .parent        = TYPE_MACHINE,
+> > +        .instance_size = sizeof(Ppe42MachineState),
+> > +        .class_init    = ppe42_machine_class_init,
+> > +        .class_size    = sizeof(Ppe42MachineClass),
+> > +};
+> > +
+> > +static void ppe42_machine_register_types(void)
+> > +{
+> > +    type_register_static(&ppe42_machine_info);
+> > +}
+> > +
+> > +type_init(ppe42_machine_register_types);
+> > +
+> 
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> 
+> Thanks,
+> 
+> C.
+> 
 
----
-v2
-  - allow status selection, handle empty strings as None
-  - allow individual pipeline selection
-  - extract individual tests
-  - allow skipping of jobs
----
- scripts/ci/gitlab-failure-analysis | 117 +++++++++++++++++++++++++++++
- 1 file changed, 117 insertions(+)
- create mode 100755 scripts/ci/gitlab-failure-analysis
+Thank you for your help!
 
-diff --git a/scripts/ci/gitlab-failure-analysis b/scripts/ci/gitlab-failure-analysis
-new file mode 100755
-index 00000000000..906725be973
---- /dev/null
-+++ b/scripts/ci/gitlab-failure-analysis
-@@ -0,0 +1,117 @@
-+#!/usr/bin/env python3
-+#
-+# A script to analyse failures in the gitlab pipelines. It requires an
-+# API key from gitlab with the following permissions:
-+#  - api
-+#  - read_repository
-+#  - read_user
-+#
-+
-+import argparse
-+import gitlab
-+import os
-+
-+#
-+# Arguments
-+#
-+class NoneForEmptyStringAction(argparse.Action):
-+    def __call__(self, parser, namespace, value, option_string=None):
-+        if value == '':
-+            setattr(namespace, self.dest, None)
-+        else:
-+            setattr(namespace, self.dest, value)
-+
-+
-+parser = argparse.ArgumentParser(description="Analyse failed GitLab CI runs.")
-+
-+parser.add_argument("--gitlab",
-+                    default="https://gitlab.com",
-+                    help="GitLab instance URL (default: https://gitlab.com).")
-+parser.add_argument("--id", default=11167699,
-+                    type=int,
-+                    help="GitLab project id (default: 11167699 for qemu-project/qemu)")
-+parser.add_argument("--token",
-+                    default=os.getenv("GITLAB_TOKEN"),
-+                    help="Your personal access token with 'api' scope.")
-+parser.add_argument("--branch",
-+                    type=str,
-+                    default="staging",
-+                    action=NoneForEmptyStringAction,
-+                    help="The name of the branch (default: 'staging')")
-+parser.add_argument("--status",
-+                    type=str,
-+                    action=NoneForEmptyStringAction,
-+                    default="failed",
-+                    help="Filter by branch status (default: 'failed')")
-+parser.add_argument("--count", type=int,
-+                    default=3,
-+                    help="The number of failed runs to fetch.")
-+parser.add_argument("--skip-jobs",
-+                    default=False,
-+                    action='store_true',
-+                    help="Skip dumping the job info")
-+parser.add_argument("--pipeline", type=int,
-+                    nargs="+",
-+                    default=None,
-+                    help="Explicit pipeline ID(s) to fetch.")
-+
-+
-+if __name__ == "__main__":
-+    args = parser.parse_args()
-+
-+    gl = gitlab.Gitlab(url=args.gitlab, private_token=args.token)
-+    project = gl.projects.get(args.id)
-+
-+
-+    pipelines_to_process = []
-+
-+    # Use explicit pipeline IDs if provided, otherwise fetch a list
-+    if args.pipeline:
-+        args.count = len(args.pipeline)
-+        for p_id in args.pipeline:
-+            pipelines_to_process.append(project.pipelines.get(p_id))
-+    else:
-+        # Use an iterator to fetch the pipelines
-+        pipe_iter = project.pipelines.list(iterator=True,
-+                                           status=args.status,
-+                                           ref=args.branch)
-+        # Check each failed pipeline
-+        pipelines_to_process = [next(pipe_iter) for _ in range(args.count)]
-+
-+    # Check each pipeline
-+    for p in pipelines_to_process:
-+
-+        jobs = p.jobs.list(get_all=True)
-+        failed_jobs = [j for j in jobs if j.status == "failed"]
-+        skipped_jobs = [j for j in jobs if j.status == "skipped"]
-+        manual_jobs = [j for j in jobs if j.status == "manual"]
-+
-+        trs = p.test_report_summary.get()
-+        total = trs.total["count"]
-+        skipped = trs.total["skipped"]
-+        failed = trs.total["failed"]
-+
-+        print(f"{p.status} pipeline {p.id}, total jobs {len(jobs)}, "
-+              f"skipped {len(skipped_jobs)}, "
-+              f"failed {len(failed_jobs)}, ",
-+              f"{total} tests, "
-+              f"{skipped} skipped tests, "
-+              f"{failed} failed tests")
-+
-+        if not args.skip_jobs:
-+            for j in failed_jobs:
-+                print(f"  Failed job {j.id}, {j.name}, {j.web_url}")
-+
-+        # It seems we can only extract failing tests from the full
-+        # test report, maybe there is some way to filter it.
-+
-+        if failed > 0:
-+            ftr = p.test_report.get()
-+            failed_suites = [s for s in ftr.test_suites if
-+                             s["failed_count"] > 0]
-+            for fs in failed_suites:
-+                name = fs["name"]
-+                tests = fs["test_cases"]
-+                failed_tests = [t for t in tests if t["status"] == 'failed']
-+                for t in failed_tests:
-+                    print(f"  Failed test {t["classname"]}, {name}, {t["name"]}")
--- 
-2.47.3
+Glenn
+
 
 
