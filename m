@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B11CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9942CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwNHB-0003Oy-UZ; Wed, 10 Sep 2025 12:02:29 -0400
+	id 1uwNHD-0003VO-SS; Wed, 10 Sep 2025 12:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGq-00039w-3V
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGr-0003AL-DG
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGn-0004VY-W3
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNGo-0004Vs-6B
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:02:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757520122;
+ s=mimecast20190719; t=1757520125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=F33TBYki1BDgx+VyY0rl+C5E5kkXuHdxe6UHxgWX2Qo=;
- b=XEmH7DKCko5u/BHM7HPVIBXezKNdxKQoG+1tTNxk4WwUs5n6yElrkHhPNs7/H5DSYZt+ol
- OTZ3N4Xos8m9DsC0DEnnrt9bjQQeov0bJpEgcWrjxBjiVhxyt2bMfyTpLfPHD9VyqVCKrR
- o0leVYj/neBEI6FD8gjPeXPByfz8opU=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pk2p/fZ62GE+HVK96dUx6wUZhpLCmZYAlpZ+g5YJz3U=;
+ b=iXQ+jE+CAAaH8qRrVcZnGiyIFkTM+mQzPwXDT+cyw0QuiILrlqKfMo+tAg93hdEuqB6SSr
+ l3Ej6nCw0+rJkS1Mam2Rc8xVx0bCJoLLO8S0INUiPWl9EHovwZl8wt0fSSkeCZW/f1f6hB
+ DvuYA2PL5t2buLCkOZzwntcmf1NCoKo=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-5IXxPuCDN7W99NkfOU6fYQ-1; Wed, 10 Sep 2025 12:02:01 -0400
-X-MC-Unique: 5IXxPuCDN7W99NkfOU6fYQ-1
-X-Mimecast-MFC-AGG-ID: 5IXxPuCDN7W99NkfOU6fYQ_1757520120
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4b5f9673e56so133860451cf.3
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:02:01 -0700 (PDT)
+ us-mta-681-qt1OKEMJOa6zm2FYoEVGSg-1; Wed, 10 Sep 2025 12:02:03 -0400
+X-MC-Unique: qt1OKEMJOa6zm2FYoEVGSg-1
+X-Mimecast-MFC-AGG-ID: qt1OKEMJOa6zm2FYoEVGSg_1757520122
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7ff94e5c251so225352385a.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:02:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757520120; x=1758124920;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=F33TBYki1BDgx+VyY0rl+C5E5kkXuHdxe6UHxgWX2Qo=;
- b=G8Ygc5AdQu94CqAXxPgVlvHZNs0ntKBMqHSYYUO9b2obNbyWV+Grs6Wjhed40vKniE
- 08mfDFFGVlG9I6xFPtCGZYL9FBuMxqlbCEoJVRf/kpCeW/e3AxKo9DQceFBjHtcwPekK
- 4mfx2NoMoHJCirEng8byWNIUJNwsFtuaBZO/6+AP4QFsPRIiZBzFsSxfN5UejYa/bIV1
- sM+QyfngjGxhGf3sO8AHHV8ODbdZektoSvBPaMAEcbpHQzvtByDIpFSFxVYH/dPDufwA
- c5owb2iKNMzxxgs8+htKXHbFsYxCLMhrHAF0jUdnNIP0FV9GUuStyBZb5eQCwVP0pERg
- HrKA==
-X-Gm-Message-State: AOJu0YwYupkYqvV97fvAOVpraYp1senvAgNNYYjajzURUh0p1bn0jrgC
- ELXXrNTH2/Q/m9J/j8bicGizthw3THS5l+Pv/Gb8Rcdt7wFYUxNfPb5/q5GXBkXyX9jAcnTnVhN
- BcSYQSnqd3vVscDbydCn2WLCDyVGEYpVxazNjBRBq7KhOEzLbjG/4Um6g0uhnWLGVLu6hB/yrlz
- IF4vQqhs79BMi0dZZZVKx4FcEEcjrnm6DAo9CFCQ==
-X-Gm-Gg: ASbGnctrOJFD0chRDu4cu1OEHBglbjkR32sqd/3SKnKtB6Ovabe1xKJaLCW5fxmFFgx
- pBbknS4O8yMc9IC0Ic75T8gKYaQOew7r5P/A2V39HEIenWft4qAl8+ZZlUksPo0pLM04KhiWmsq
- aNvwBjzFcHWaTiZASQzn9LDQOQTevnKTI5VogiROIQ6CMaaM47sFI7skT2EfizFGs/c1hvGQIJ6
- 7iJjQ2+mKpdSYWmQBxTPW2aXcDBCV5sh05d2l4ugc+7hDwUSVb8+SUoZD/8ssTM/ejvjGJMPpWh
- Aa96h3KCChlQPSpe/ysi7/O+Byj9GQ==
-X-Received: by 2002:a05:622a:1788:b0:4b5:f514:7e17 with SMTP id
- d75a77b69052e-4b5f83a509cmr196120591cf.22.1757520118452; 
- Wed, 10 Sep 2025 09:01:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOKu0bMDourAMbQ+lj7s8GLZLzGItc3Tj5EgM3cK7m3JgbHNbJqBjyr1IuDcltTGpUoKAOmQ==
-X-Received: by 2002:a05:622a:1788:b0:4b5:f514:7e17 with SMTP id
- d75a77b69052e-4b5f83a509cmr196119271cf.22.1757520117312; 
- Wed, 10 Sep 2025 09:01:57 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757520122; x=1758124922;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pk2p/fZ62GE+HVK96dUx6wUZhpLCmZYAlpZ+g5YJz3U=;
+ b=ZeCpm9JUnQrGxgSFNKg3UDTXor3EDbWKkcIXAXkNI/pRigHzCODuT2XFUf//vUecnk
+ vlwqaVfVUQGrT8PBUP4HY+sGR8ZomhBIqF7zflcUT7y4xs7XG73hT9P5LhlQRnzxj6L2
+ Rqsa5tmA7uUza8OIrB1hU3YZYTHUFTt/34zeNnF1cG46hZSWCXiUv+cRwnwxb7UyPLaV
+ xPPei2uZL0K17uJcThdZsCJ2lSGRmqpwVjxUCN6RFIY6/iJtkqSYxwvj5h/URjpvv0KZ
+ QsRYwvbhsx7UDdY6P1/mA9xV37oqmmuHVepov4Mg80M0NDRA0OyMnsbxHd5CMwBNOVdt
+ HPug==
+X-Gm-Message-State: AOJu0Yy8k5z/SxgtUBUQKc1la0wPoHIGclesm47tsPbY7Xvx8OB1smCp
+ bt2Tx8vIX7x3ndHmVNJpVPOZ+OBEtslQbh/o3evfhomla4xI/DMLMNh+aU4n/2uzGng9PwjxM8h
+ LypwjUMHz2JqCYLUo7mSDrm+bo1Rp5pRMpCd/8+VVHPhjXVOoJmZ/pqUA7OVHoI6MT96uFiRTfp
+ z+RZFkOs0GKzj1D00jYuOpKVtFN7HYFKFEXQ+P0w==
+X-Gm-Gg: ASbGncuZLgXNceO/i7IKFQXIQkI4iR6Rh5BdzBeNrD17z2udoeR/T8TOwtLLfgt9U8S
+ Bckq4YYwLuGg5g1WkrTZS5GvIttIMpjwcG6e3wuWtREIkhRWgb99zjt6gqvGPo4rv8DPmazKRpc
+ K2xhsFFbKB5VUtsPI4as76Rbq1hNxWhmx2IR4jgAaE8yt+iAJsZzv/OhtU4i8xxp6AxHK3jZzXn
+ 0fVmjD82WLeJoN5EyfUGul/8KDhBYmEJQT0IQadIn1TNG1f5Fwx+MOehja0DgUlPi529qtacmKD
+ odkebe6XzKokX6d5R30nhM/Oh7HDmA==
+X-Received: by 2002:a05:620a:414f:b0:7e8:8f35:1d2b with SMTP id
+ af79cd13be357-81ff181374emr16849285a.2.1757520122065; 
+ Wed, 10 Sep 2025 09:02:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQx2xOVSmqUjrjn0K0j5L7e36/Uc3be7+P8Puidgf2AUD9TXTqBozLNygj0SCKXPJhPx9Veg==
+X-Received: by 2002:a05:620a:414f:b0:7e8:8f35:1d2b with SMTP id
+ af79cd13be357-81ff181374emr16832185a.2.1757520119930; 
+ Wed, 10 Sep 2025 09:01:59 -0700 (PDT)
 Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b61bbe0a85sm26655281cf.42.2025.09.10.09.01.55
+ d75a77b69052e-4b61bbe0a85sm26655281cf.42.2025.09.10.09.01.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 09:01:56 -0700 (PDT)
+ Wed, 10 Sep 2025 09:01:59 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 0/3] migration/tls: Graceful shutdowns for main and postcopy
- channels
-Date: Wed, 10 Sep 2025 12:01:41 -0400
-Message-ID: <20250910160144.1762894-1-peterx@redhat.com>
+Subject: [PATCH 2/3] migration: Make migration_has_failed() work even for
+ CANCELLING
+Date: Wed, 10 Sep 2025 12:01:43 -0400
+Message-ID: <20250910160144.1762894-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250910160144.1762894-1-peterx@redhat.com>
+References: <20250910160144.1762894-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -106,30 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano fixed graceful shutdowns for multifd channels previously:
+We set CANCELLED very late, it means migration_has_failed() may not work
+correctly if it's invoked before updating CANCELLING to CANCELLED.
 
-https://lore.kernel.org/qemu-devel/20250206175824.22664-1-farosas@suse.de/
+Allow that state will make migration_has_failed() working as expected even
+if it's invoked slightly earlier.
 
-However we likely forgot the rest channels.  Do it the same for the main
-and postcopy channels.  This fixes a warning message when running unit test
-/ARCH/migration/postcopy/preempt/tls/psk.
+One current user is the multifd code for the TLS graceful termination,
+where it's before updating to CANCELLED.
 
-Thanks,
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Peter Xu (3):
-  migration/tls: Gracefully shutdown main and preempt channels
-  migration: Make migration_has_failed() work even for CANCELLING
-  migration/multifd: Use the new graceful termination helper
-
- migration/channel.h   |  3 +++
- migration/migration.h |  2 ++
- migration/tls.h       |  1 -
- migration/channel.c   | 20 ++++++++++++++++++++
- migration/migration.c | 27 +++++++++++++++++++++++++--
- migration/multifd.c   | 40 +++++++---------------------------------
- migration/tls.c       |  5 -----
- 7 files changed, 57 insertions(+), 41 deletions(-)
-
+diff --git a/migration/migration.c b/migration/migration.c
+index 7015c2b5e0..397917b1b3 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1723,7 +1723,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+ 
+ bool migration_has_failed(MigrationState *s)
+ {
+-    return (s->state == MIGRATION_STATUS_CANCELLED ||
++    return (s->state == MIGRATION_STATUS_CANCELLING ||
++            s->state == MIGRATION_STATUS_CANCELLED ||
+             s->state == MIGRATION_STATUS_FAILED);
+ }
+ 
 -- 
 2.50.1
 
