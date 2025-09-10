@@ -4,91 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DF6CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 14:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE22CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwM10-0000SH-8f; Wed, 10 Sep 2025 10:41:42 -0400
+	id 1uwMNN-0005G3-9P; Wed, 10 Sep 2025 11:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1uwM0x-0000Rr-HN
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:41:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uwMNH-0005Fh-Cj
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:04:43 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
- id 1uwM0s-0000U0-G9
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:41:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757515286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W0NnmC6Lh5v4pZdMl8VvSdVEd96kDWwKqUqph1n3Tug=;
- b=dyvk1+ZOSASkqkLrVAq3MLzmzmG6AjhZZqpnILdqTt+sFmgfM/FEOFNPC4sSnVAOtTOvO3
- skebwTdeOJ3g6Xh94lfVqDZlkQC2gKS0oM+4fUzrerfaGN9tJfE3JgNlvRcoT6xmgdkAkx
- k57NgiWoEAFHY9PtuEmEok6Z4C+Ah84=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-FZqRuJw7MTypNjk7yYi41Q-1; Wed, 10 Sep 2025 10:40:13 -0400
-X-MC-Unique: FZqRuJw7MTypNjk7yYi41Q-1
-X-Mimecast-MFC-AGG-ID: FZqRuJw7MTypNjk7yYi41Q_1757515209
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8080713fa17so1449130385a.2
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 07:40:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757515209; x=1758120009;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W0NnmC6Lh5v4pZdMl8VvSdVEd96kDWwKqUqph1n3Tug=;
- b=f3kCSTF9J/nXMA7gIX39G9JGytda2ERvuZRh+/EEgMuqfy8DMwU0FogR+7UsvPZSs5
- O/vQO1FPzE8Rg1e4FDyaYhop9k3CETmAzjp5+WlFcYJ231s+rZXTIWFM1k+mOoDIkvlO
- OHzXrlx3g7DazEMtGdVUsgZzCmoBzGZ5MhfCOywWD7GXtlkN4ABvG5NacD6gTYvUqNeE
- YX8ymUsIehoeE+LjrceMtvAQUJ7Ll9qyE8p5qFr0ZDCknPTg6UgGouMdMPdjyiuljEbo
- ReYr8kAT3QPWkmuypScRj5ylOSIUfgo7GIsN8eeOEclw/YgU1FcK6Jbb9bL/lU5G1q6m
- RgeQ==
-X-Gm-Message-State: AOJu0Yw9Hg55FqAvlzIYg1BcnvB7I3epNVVTkHqpnoRegES19gzpbTg1
- sUzX7FZcEVyp/QHxteLasVNY4LJk6iS/iffnv2bSZBnT9/NEduX/3tjOCJqp3wT6PrN91hluRiv
- HkBcMHbi7QKSKiSsQ4/51wVEdn9+0pdjOk32Mtbl/K1hqEwsO0hPQ1p8SYMyVpEAukaF1jlEdGv
- YXNIoq137wLs07YjxgvBAYiUSYWOioUbM=
-X-Gm-Gg: ASbGncupYWp2ny4V4enl7GviZffyWayy77NmHu524WWjuby76JqQU93n6O36mJ143JS
- uuIYqvdwg0MeNA6AscekUfBMd0b4hBlYGkMMS/b6n0lYri4sXBSDYpiNPCAcuEj7QNLYDgJxmqL
- 1kwbMMMzk4G3cvgTXSo9s3z6iuyAkczmyrkbXI6h9V5AA8GYY0wXchK2Y=
-X-Received: by 2002:a05:620a:3909:b0:813:a1a8:d4e2 with SMTP id
- af79cd13be357-813c39a167dmr1415887985a.74.1757515209437; 
- Wed, 10 Sep 2025 07:40:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXj+tvPS+3GMXelwQXFDP4hfDNSDdnw//gi2UueBMfreWysEfrzXsTfGWmIyhT9S4jOuQPdTezHG9JviU+WYg=
-X-Received: by 2002:a05:620a:3909:b0:813:a1a8:d4e2 with SMTP id
- af79cd13be357-813c39a167dmr1415883985a.74.1757515208802; Wed, 10 Sep 2025
- 07:40:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uwMND-0003Qq-Nj
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:04:43 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 49DD756F31B;
+ Wed, 10 Sep 2025 17:04:35 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id U42ZVCVOR8MK; Wed, 10 Sep 2025 17:04:32 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E6B6956F2CA; Wed, 10 Sep 2025 17:04:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E49C556F2C1;
+ Wed, 10 Sep 2025 17:04:32 +0200 (CEST)
+Date: Wed, 10 Sep 2025 17:04:32 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
+cc: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 00/25] tcg-plugins: add hooks for discontinuities
+In-Reply-To: <87ldmm5x28.fsf@draig.linaro.org>
+Message-ID: <453e44ee-f32c-887c-b488-34b9e03b65e8@eik.bme.hu>
+References: <cover.1757018626.git.neither@nut.email>
+ <a1c2d356-e664-2632-002f-d0b9bea06e1e@eik.bme.hu>
+ <cf6e7db43e9e9e59b6c9edb1c172b01ae62fb23f@nut.email>
+ <df0a8c4b-ae9b-1582-1570-6cb588149a7a@eik.bme.hu>
+ <3c8d0c3733edc984937ac33a417488f92dccb148@nut.email>
+ <819c9f3b-13f4-2ef2-e651-5cfec52f2e12@eik.bme.hu>
+ <a2eaee5105fb4b3302e2f65bb8bbea987a85454e@nut.email>
+ <a18a99ca-8415-71bf-3022-c9a98e46c2b5@eik.bme.hu>
+ <71a535f9154ddc269c0a948053e39053550bd8c0@nut.email>
+ <87ldmm5x28.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250910121501.676219-1-abologna@redhat.com>
-In-Reply-To: <20250910121501.676219-1-abologna@redhat.com>
-From: Kashyap Chamarthy <kchamart@redhat.com>
-Date: Wed, 10 Sep 2025 16:39:50 +0200
-X-Gm-Features: Ac12FXxMcycCUaP5UKacl-2FJuV8UTGFs03EUzbojKwGUQ2zGjdMAAhAM02q4ag
-Message-ID: <CAJ=Wi4qhxwZH3d6gN4nJf0Ei3ECu9GFPZvhVjG_yu0zYkdnNww@mail.gmail.com>
-Subject: Re: [PATCH] docs/interop/firmware: Add riscv64 to FirmwareArchitecture
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1854827598-1757516672=:84971"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +75,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 2:15=E2=80=AFPM Andrea Bolognani <abologna@redhat.c=
-om> wrote:
->
-> Descriptors using this value have been shipped for years
-> by distros, so we just need to update the spec to match
-> reality.
->
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
-> ---
->  docs/interop/firmware.json | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-> index 6bbe2cce0a..ccbfaf828d 100644
-> --- a/docs/interop/firmware.json
-> +++ b/docs/interop/firmware.json
-> @@ -85,12 +85,14 @@
->  #
->  # @loongarch64: 64-bit LoongArch. (since: 7.1)
->  #
-> +# @riscv64: 64-bit RISC-V.
-> +#
->  # @x86_64: 64-bit x86.
->  #
->  # Since: 3.0
->  ##
->  { 'enum' : 'FirmwareArchitecture',
-> -  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
-> +  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64=
-' ] }
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks :-)
+--3866299591-1854827598-1757516672=:84971
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Reviewed-by: Kashyap Chamarthy <kchamart@redhat.com>
-
->  ##
->  # @FirmwareTarget:
-> --
-> 2.51.0
+On Wed, 10 Sep 2025, Alex Bennée wrote:
+> "Julian Ganz" <neither@nut.email> writes:
+>> September 10, 2025 at 12:06 PM, "BALATON Zoltan" wrote:
+>>> On Tue, 9 Sep 2025, Julian Ganz wrote:
+>>>> I ran streamPPCpowerpcO3 on qemu with these patches:
+>>>>
+>>>>  -------------------------------------------------------------
+>>>>  Function Best Rate MB/s Avg time Min time Max time
+>>>>  Copy: 2867.6 0.056828 0.055795 0.061792
+>>>>  Scale: 1057.5 0.153282 0.151305 0.158115
+>>>>  Add: 1308.8 0.187095 0.183380 0.193672
+>>>>  Triad: 1111.6 0.220863 0.215902 0.230440
+>>>>  -------------------------------------------------------------
+>>>>
+>>>>  After doing a clean build, with the fans still audible:
+>>>>
+>>>>  -------------------------------------------------------------
+>>>>  Function Best Rate MB/s Avg time Min time Max time
+>>>>  Copy: 2932.9 0.055131 0.054554 0.055667
+>>>>  Scale: 1067.9 0.151520 0.149832 0.155000
+>>>>  Add: 1324.9 0.184807 0.181150 0.191386
+>>>>  Triad: 1122.0 0.220080 0.213896 0.229302
+>>>>  -------------------------------------------------------------
+>>>>
+>>> What was different between the above two runs? I guess maybe one is with plugins disabled but it's not clear from the description.
+>>
+>> The difference is nothing but a a clean rebuild of qemu. As you see
+>> there are fluctuations already. Plugins are enabled for both cases.
+>>
+>>>> On qemu (6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8) without these
+>>>>  patches, but plugins enabled:
+>>>>
+>>>>  -------------------------------------------------------------
+>>>>  Function Best Rate MB/s Avg time Min time Max time
+>>>>  Copy: 2972.1 0.054407 0.053834 0.054675
+>>>>  Scale: 1068.6 0.151503 0.149726 0.154594
+>>>>  Add: 1327.6 0.185160 0.180784 0.193181
+>>>>  Triad: 1127.2 0.219249 0.212915 0.229230
+>>>>  -------------------------------------------------------------
+>>>>
+>>>>  And on qemu (6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8) without these
+>>>>  patches, with plugins disabled:
+>>>>
+>>>>  -------------------------------------------------------------
+>>>>  Function Best Rate MB/s Avg time Min time Max time
+>>>>  Copy: 2983.4 0.055141 0.053630 0.060013
+>>>>  Scale: 1058.3 0.152353 0.151186 0.155072
+>>>>  Add: 1323.9 0.184707 0.181279 0.188868
+>>>>  Triad: 1128.2 0.218674 0.212734 0.230314
+>>>>  -------------------------------------------------------------
+>>>>
+>>>>  I fail to see any significant indication that these patches, or
+>>>>  plugins in general, would result in a degredation of performance.
+>>>>
+>>> With worst case Copy test it seems to be about 3.5% (and about 1.7%
+>>> with plugins disabled?) and should be less than that normally so it
+>>> does not add much more overhead to plugins than there is already so
+>>> this should be acceptable. It may still be interesting to see if the
+>>> overhead with plugins disabled can be avoided with a similar way as
+>>> logging does it.
+>>
+>> The thing is: that's probably just usual fluctuations. As you have seen
+>> with the first two measurements the values fluctuate quite a bit between
+>> runs of the test on the very same qemu (assuming that a clean build did
+>> not incur any _other_ relevant change). For example, the best rate for
+>> scale shown with plugins enabled is one percent faster than with plugins
+>> disabled. Is this significant? Probably not. Or at least it doesn't make
+>> much sense.
 >
+> I wouldn't spend too much time chasing this down. As you say this
+> fluctuation is well within the noise range.
+>
+> I can recommend hyperfine as a runner:
+>
+>  https://github.com/sharkdp/hyperfine
+>
+> as it does some work on how many times you need to run a test before the
+> results are statistically relevant.
+>
+>> I may do some more tests this week, with runtimes longer than a few
+>> seconds if I can find the motivation to set up everything I'd need to
+>> compile your benchmark. In the mean-time, you are welcome to make your
+>> own measurements if you want to. The patches are also availible at [1]
+>> if you don't want to apply them to your local tree yourself.
+>
+> Balton,
+>
+> I don't think worries about performance impact are justified and Julian
+> has certainly done enough due diligence here. If you can come up with a
+> repeatable test that shows a measurable impact then please do so.
 
+I agree this testing is enough to ensure there is no big impact. I just 
+wanted to make sure there is some testing and not just adding stuff 
+without worrying about performance. I'd like to keep QEMU quick and only 
+add unavoidable overhead where possible but I don't demand to spend too 
+much time on that. If Julian got interested and does more testing that may 
+give some interesting results for possible optimisation but if no time for 
+that this was enough to measure the impact for this series.
+
+Regards,
+BALATON Zoltan
+
+>> Regards,
+>> Julian
+>>
+>> [1]: https://github.com/patchew-project/qemu/tree/patchew/cover.1757018626.git.neither@nut.email
+>
+>
+--3866299591-1854827598-1757516672=:84971--
 
