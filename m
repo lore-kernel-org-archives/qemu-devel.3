@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD8DCA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC328CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 09:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwHF6-0003gs-KH; Wed, 10 Sep 2025 05:35:59 -0400
+	id 1uwHFF-0003kg-8t; Wed, 10 Sep 2025 05:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uwHEm-0003de-Oh
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:37 -0400
+ id 1uwHEr-0003ei-RG
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:45 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uwHEd-0007eK-1i
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:32 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uwHEc-0007e4-Pa
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 05:35:40 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx2tFbRsFofsEIAA--.18939S3;
- Wed, 10 Sep 2025 17:35:23 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx6tFaRsFodMEIAA--.18812S3;
+ Wed, 10 Sep 2025 17:35:22 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxE+RWRsFoj8+LAA--.52579S10;
- Wed, 10 Sep 2025 17:35:23 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxE+RWRsFoj8+LAA--.52579S7;
+ Wed, 10 Sep 2025 17:35:22 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v7 08/11] hw/loongarch: Implement avec set irq
-Date: Wed, 10 Sep 2025 17:11:47 +0800
-Message-Id: <20250910091150.2424979-9-gaosong@loongson.cn>
+Subject: [PATCH v7 05/11] target/loongarch: add msg interrupt CSR registers
+Date: Wed, 10 Sep 2025 17:11:44 +0800
+Message-Id: <20250910091150.2424979-6-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250910091150.2424979-1-gaosong@loongson.cn>
 References: <20250910091150.2424979-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxE+RWRsFoj8+LAA--.52579S10
+X-CM-TRANSID: qMiowJAxE+RWRsFoj8+LAA--.52579S7
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,68 +66,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement avec set irq and update CSR_MSGIS.
+include CSR_MSGIS0-3, CSR_MSGIR and CSR_MSGIE.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_avec.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ target/loongarch/cpu-csr.h |  3 +++
+ target/loongarch/cpu.h     | 11 +++++++++++
+ target/loongarch/machine.c | 25 +++++++++++++++++++++++--
+ 3 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 1f9f376898..0c90579de2 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -16,6 +16,14 @@
- #include "migration/vmstate.h"
- #include "trace.h"
- #include "hw/qdev-properties.h"
-+#include "target/loongarch/cpu.h"
-+#include "qemu/error-report.h"
-+#include "system/hw_accel.h"
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index 0834e91f30..4792677086 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -186,6 +186,9 @@ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
+ 
+ #define LOONGARCH_CSR_CTAG           0x98 /* TagLo + TagHi */
+ 
++#define LOONGARCH_CSR_MSGIS(N)       (0xa0 + N)
++#define LOONGARCH_CSR_MSGIR               0xa4
 +
-+/* msg addr field */
-+FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-+FIELD(MSG_ADDR, CPU_NUM, 12, 8)
-+FIELD(MSG_ADDR, FIX, 28, 12)
+ /* Direct map windows CSRs*/
+ #define LOONGARCH_CSR_DMW(N)         (0x180 + N)
+ FIELD(CSR_DMW, PLV0, 0, 1)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 1e8a9dbef8..807a710810 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -233,6 +233,13 @@ FIELD(TLB_MISC, ASID, 1, 10)
+ FIELD(TLB_MISC, VPPN, 13, 35)
+ FIELD(TLB_MISC, PS, 48, 6)
  
- static uint64_t loongarch_avec_mem_read(void *opaque,
-                                         hwaddr addr, unsigned size)
-@@ -23,13 +31,33 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
-     return 0;
- }
++/*Msg interrupt registers */
++#define N_MSGIS                4
++FIELD(CSR_MSGIS, IS, 0, 63)
++FIELD(CSR_MSGIR, INTNUM, 0, 8)
++FIELD(CSR_MSGIR, ACTIVE, 31, 1)
++FIELD(CSR_MSGIE, PT, 0, 8)
++
+ #define LSX_LEN    (128)
+ #define LASX_LEN   (256)
  
-+static void do_set_vcpu_avec_irq(CPUState *cs, run_on_cpu_data data)
+@@ -350,6 +357,10 @@ typedef struct CPUArchState {
+     uint64_t CSR_DBG;
+     uint64_t CSR_DERA;
+     uint64_t CSR_DSAVE;
++    /* Msg interrupt registers */
++    uint64_t CSR_MSGIS[N_MSGIS];
++    uint64_t CSR_MSGIR;
++    uint64_t CSR_MSGIE;
+     struct {
+         uint64_t guest_addr;
+     } stealtime;
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 4e70f5c879..0cc787462c 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -45,6 +45,26 @@ static const VMStateDescription vmstate_fpu = {
+     },
+ };
+ 
++static bool avec_needed(void *opaque)
 +{
-+    int irq = data.host_int;
-+    CPULoongArchState *env;
++    LoongArchCPU *cpu = opaque;
 +
-+    env = &LOONGARCH_CPU(cs)->env;
-+    cpu_synchronize_state(cs);
-+    set_bit(irq, env->CSR_MSGIS);
++    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
 +}
 +
- static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
-                                      uint64_t val, unsigned size)
- {
--    return;
-+    int irq_num, cpu_num = 0;
-+    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
-+    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
-+    CPUState *cs;
++static const VMStateDescription vmstate_avec = {
++    .name = "cpu/msg",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = avec_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
++        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
++        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
++        VMSTATE_END_OF_LIST()
++    },
++};
 +
-+    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-+    cs = cpu_by_arch_id(cpu_num);
-+    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
-+
-+    async_run_on_cpu(cs, do_set_vcpu_avec_irq,
-+                         RUN_ON_CPU_HOST_INT(irq_num));
-+    qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
- }
- 
--
- static const MemoryRegionOps loongarch_avec_ops = {
-     .read = loongarch_avec_mem_read,
-     .write = loongarch_avec_mem_write,
+ static const VMStateDescription vmstate_lsxh_reg = {
+     .name = "lsxh_reg",
+     .version_id = 1,
+@@ -168,8 +188,8 @@ static const VMStateDescription vmstate_tlb = {
+ /* LoongArch CPU state */
+ const VMStateDescription vmstate_loongarch_cpu = {
+     .name = "cpu",
+-    .version_id = 3,
+-    .minimum_version_id = 3,
++    .version_id = 4,
++    .minimum_version_id = 4,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, LoongArchCPU, 32),
+         VMSTATE_UINTTL(env.pc, LoongArchCPU),
+@@ -245,6 +265,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         &vmstate_tlb,
+ #endif
+         &vmstate_lbt,
++        &vmstate_avec,
+         NULL
+     }
+ };
 -- 
 2.41.0
 
