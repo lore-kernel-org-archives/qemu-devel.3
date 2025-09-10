@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB680CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A3ECA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwMOV-0005cz-TQ; Wed, 10 Sep 2025 11:05:59 -0400
+	id 1uwMOO-0005Zo-Ng; Wed, 10 Sep 2025 11:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwMOM-0005Xb-WA; Wed, 10 Sep 2025 11:05:51 -0400
-Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
+ id 1uwMOL-0005Wl-QI; Wed, 10 Sep 2025 11:05:50 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwMOF-0003fC-9r; Wed, 10 Sep 2025 11:05:50 -0400
+ id 1uwMOF-0003fG-SP; Wed, 10 Sep 2025 11:05:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1757516723; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=CgPzvRW3PYzQdn11ycTE+/tC0brKHXf/hxY7dZiqdA0=;
- b=Tjw6Am5sewwLcWJEYipGmOi4/JmNy8v06HwgDCMUvSyWp2eHSPtni+uneZylLWB5AQQ/+s+UNTr8ZEdvvd27f0YGBvKkDr9tKqEtSXKDGKr94hlNm3o4iWTjMKWqEnEb/9HgCugPNsBnq37s334QeyDCp85MrL4cLNLvdqFk4aQ=
+ t=1757516724; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=1gqd1TzCEIyvFYfjyBctacJ1+0G9407EGdXdIQ5mOdw=;
+ b=mn8vwOGX7MGjS/e/rcvDjaRzyw3GZ95In0qElQq08tF5bsFy7CauO18rtnU/2xSe7ZM7gjdFFnjWJZHnQb6HxmZo7s5mxIkVWZkvE+HwoWY+7Y87SsdRymgjbeJ+EANHKX/au8JdwzI71TKW8UYwiiOMjATPYMVUOFcRilyJzt8=
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0WniJAyp_1757516721 cluster:ay36) by smtp.aliyun-inc.com;
+ fp:SMTPD_---0WniJAyz_1757516721 cluster:ay36) by smtp.aliyun-inc.com;
  Wed, 10 Sep 2025 23:05:21 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Wed, 10 Sep 2025 23:04:27 +0800
-Subject: [PATCH v2 3/4] hw/intc: Save timers array in RISC-V mtimer VMState
+Date: Wed, 10 Sep 2025 23:04:28 +0800
+Subject: [PATCH v2 4/4] target/riscv: Save stimer and vstimer in CPU
+ vmstate
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-timers-v2-3-31359f1f6ee8@linux.alibaba.com>
+Message-Id: <20250910-timers-v2-4-31359f1f6ee8@linux.alibaba.com>
 References: <20250910-timers-v2-0-31359f1f6ee8@linux.alibaba.com>
 In-Reply-To: <20250910-timers-v2-0-31359f1f6ee8@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -44,26 +45,25 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757516719; l=2900;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757516719; l=1731;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=YkJJfhz9vbR/O68Q0eP/tZoK/MlSnuQnZJEPg8ettsM=;
- b=kc9KThWIHBuncNXfMrv6t+T95XxKcXZ3hkDsMcpDRouD0/h9Z8xSPseofOBsLYmHJRdOzZ+5t
- cAN3xkQrhCrB/GJvrzCDFIDtZ6CmmzJhBke3TXtkDZtbclNBb4SMHl4
+ bh=db8HgAaEdZbHQou94hhdJN2K2puP3nx87MpC33YWDYQ=;
+ b=+1hGhz821Vyki9a4hYBmSESip1sNmiTuxeSAuzOgWAuEfSkhzdTSkfC6Qw90ZGS3ztyMb4gsI
+ fl/vn/FjHRSBtZyBSVO+tMdp8s4vAuBurrw4d2jeZMhKb7MSKbeNJJJ
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -86
-X-Spam_score: -8.7
-X-Spam_bar: --------
-X-Spam_report: (-8.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
- UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=no autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,69 +79,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current 'timecmp' field in vmstate_riscv_mtimer is insufficient to keep
-timers functional after migration.
+vmstate_riscv_cpu was missing env.stimer and env.vstimer.
+Without migrating these QEMUTimer fields, active S/VS-mode
+timer events are lost after snapshot or migration.
 
-If an mtimer's entry in 'mtimer->timers' is active at the time the snapshot
-is taken, it means riscv_aclint_mtimer_write_timecmp() has written to
-'mtimecmp' and scheduled a timer into QEMU's main loop 'timer_list'.
-
-During snapshot save, these active timers must also be migrated; otherwise,
-after snapshot load there is no mechanism to restore 'mtimer->timers' back
-into the 'timer_list', and any pending timer events would be lost.
-
-QEMU's migration framework commonly uses VMSTATE_TIMER_xxx macros to save
-and restore 'QEMUTimer' variables. However, 'timers' is a pointer array
-with variable length, and vmstate.h did not previously provide a helper
-macro for such type.
-
-This commit adds a new macro, 'VMSTATE_TIMER_PTR_VARRAY', to handle saving
-and restoring a variable-length array of 'QEMUTimer *'. We then use this
-macro to migrate the 'mtimer->timers' array, ensuring that timer events
-remain scheduled correctly after snapshot load.
+Add VMSTATE_TIMER_PTR() entries to save and restore them.
 
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- hw/intc/riscv_aclint.c         | 6 ++++--
- include/hw/intc/riscv_aclint.h | 4 ++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ target/riscv/machine.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index 318a9c8248432a8cd4c3f3fa990739917ecf7ca1..9f4c36e965e2aa379d75c0a9f656177f0dd82a45 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -323,13 +323,15 @@ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
- 
- static const VMStateDescription vmstate_riscv_mtimer = {
-     .name = "riscv_mtimer",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
-             VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
-                                   num_harts, 0,
-                                   vmstate_info_uint64, uint64_t),
-+            VMSTATE_TIMER_PTR_VARRAY(timers, RISCVAclintMTimerState,
-+                                     num_harts),
-             VMSTATE_END_OF_LIST()
-         }
- };
-diff --git a/include/hw/intc/riscv_aclint.h b/include/hw/intc/riscv_aclint.h
-index 693415eb6defe4454e5731a681e025f3bac3ad2e..4b7406eec005a06b7c040d8483a8790866a39297 100644
---- a/include/hw/intc/riscv_aclint.h
-+++ b/include/hw/intc/riscv_aclint.h
-@@ -80,4 +80,8 @@ enum {
-     RISCV_ACLINT_SWI_SIZE              = 0x4000
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 1600ec44f0b755fdd49fc0df47c2288c9940afe0..51e0567ed30cbab5e791ea904165bc1854709192 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -400,6 +400,30 @@ static const VMStateDescription vmstate_ssp = {
+     }
  };
  
-+#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
-+VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
-+                                                        QEMUTimer *)
++static bool sstc_timer_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++    CPURISCVState *env = &cpu->env;
 +
- #endif
++    if (!cpu->cfg.ext_sstc) {
++        return false;
++    }
++
++    return env->stimer != NULL || env->vstimer != NULL;
++}
++
++static const VMStateDescription vmstate_sstc = {
++    .name = "cpu/timer",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sstc_timer_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_TIMER_PTR(env.stimer, RISCVCPU),
++        VMSTATE_TIMER_PTR(env.vstimer, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 10,
+@@ -476,6 +500,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_elp,
+         &vmstate_ssp,
+         &vmstate_ctr,
++        &vmstate_sstc,
+         NULL
+     }
+ };
 
 -- 
 2.43.0
