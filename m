@@ -4,66 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41621CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F74CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwPEW-0005R8-RL; Wed, 10 Sep 2025 14:07:53 -0400
+	id 1uwPBW-0007zo-5M; Wed, 10 Sep 2025 14:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uwPDh-0004Un-DZ
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:07:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uwPBU-0007zT-Aw
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:04:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uwPDe-00055Y-LE
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:07:01 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uwPBS-0004j5-Jl
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:04:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757527616;
+ s=mimecast20190719; t=1757527480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8G9SH3P4RQbLnkpw+zUh6T+aeJe+fBgecMc4c5oGF3w=;
- b=HV2rZ/wrXK1mFUVHvHJe4BDXYGCAYX5NLg4FKyxkMayChxcyE87igOa3rleRQ03BH9l6M7
- xo2wKuwn+oiqVf+unkjqaVCzV+IcFurHUAXDGVKouuuo74nHra44of5SBfg6DFUA6pHI6I
- V0JiFR6861bxV+sJof4PmjfmEkgqMT0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TwEOa+l6LoighEebVVlGwnEROumGJcjNVxWy72+VXdU=;
+ b=OvSf3dzuI1+H2wqo3v89mtTUSZ+toVefQGiBbpsYNvOQdkXxFNO+HK7UWBe7z4a743MeLn
+ jlQschMT3i2hz7VaHkcNJ9wq6zBdpniZizDZnWZY45FQ/o9sxO6PknfgJx+8FOuBk+vLby
+ QkjgQdYr4L2HVnl7wki+dR9JNE7rCzQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-2cWktSxrO6OO4eEfmFKceA-1; Wed,
- 10 Sep 2025 14:06:53 -0400
-X-MC-Unique: 2cWktSxrO6OO4eEfmFKceA-1
-X-Mimecast-MFC-AGG-ID: 2cWktSxrO6OO4eEfmFKceA_1757527610
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-kE8yN8t7NvC7FIz4jr1cfQ-1; Wed,
+ 10 Sep 2025 14:04:39 -0400
+X-MC-Unique: kE8yN8t7NvC7FIz4jr1cfQ-1
+X-Mimecast-MFC-AGG-ID: kE8yN8t7NvC7FIz4jr1cfQ_1757527478
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C51E618002C6; Wed, 10 Sep 2025 18:06:50 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.66])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D5C21955F24; Wed, 10 Sep 2025 18:06:50 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 024F1180057C; Wed, 10 Sep 2025 18:04:38 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F39281800446; Wed, 10 Sep 2025 18:04:33 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Aarushi Mehta <mehta.aaru20@gmail.com>, Fam Zheng <fam@euphon.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, hibriansong@gmail.com, Stefan Weil <sw@weilnetz.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 07/12] aio: add errp argument to aio_context_setup()
-Date: Wed, 10 Sep 2025 13:56:58 -0400
-Message-ID: <20250910175703.374499-8-stefanha@redhat.com>
-In-Reply-To: <20250910175703.374499-1-stefanha@redhat.com>
-References: <20250910175703.374499-1-stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 08/20] log: avoid repeated prefix on incremental qemu_log
+ calls
+Date: Wed, 10 Sep 2025 19:03:45 +0100
+Message-ID: <20250910180357.320297-9-berrange@redhat.com>
+In-Reply-To: <20250910180357.320297-1-berrange@redhat.com>
+References: <20250910180357.320297-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,94 +96,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When aio_context_new() -> aio_context_setup() fails at startup it
-doesn't really matter whether errors are returned to the caller or the
-process terminates immediately.
+Some code makes multiple qemu_log calls to incrementally emit
+a single message. Currently timestamps get prepended to all
+qemu_log calls, even those continuing a previous incomplete
+message.
 
-However, it is not acceptable to terminate when hotplugging --object
-iothread at runtime. Refactor aio_context_setup() so that errors can be
-propagated. The next commit will set errp when fdmon_io_uring_setup()
-fails.
+This changes the qemu_log so it skips adding a new line prefix,
+if the previous qemu_log call did NOT end with a newline.
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/block/aio.h | 3 ++-
- util/aio-posix.c    | 2 +-
- util/aio-win32.c    | 2 +-
- util/async.c        | 7 ++++++-
- 4 files changed, 10 insertions(+), 4 deletions(-)
+ util/log.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 2760f308f5..d919d7c8f4 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -718,10 +718,11 @@ void qemu_set_current_aio_context(AioContext *ctx);
- /**
-  * aio_context_setup:
-  * @ctx: the aio context
-+ * @errp: error pointer
-  *
-  * Initialize the aio context.
-  */
--void aio_context_setup(AioContext *ctx);
-+void aio_context_setup(AioContext *ctx, Error **errp);
- 
- /**
-  * aio_context_destroy:
-diff --git a/util/aio-posix.c b/util/aio-posix.c
-index bebd9ce3a2..bbe470c145 100644
---- a/util/aio-posix.c
-+++ b/util/aio-posix.c
-@@ -718,7 +718,7 @@ bool aio_poll(AioContext *ctx, bool blocking)
-     return progress;
- }
- 
--void aio_context_setup(AioContext *ctx)
-+void aio_context_setup(AioContext *ctx, Error **errp)
- {
-     ctx->fdmon_ops = &fdmon_poll_ops;
-     ctx->epollfd = -1;
-diff --git a/util/aio-win32.c b/util/aio-win32.c
-index 34c4074133..4ba401ff92 100644
---- a/util/aio-win32.c
-+++ b/util/aio-win32.c
-@@ -419,7 +419,7 @@ bool aio_poll(AioContext *ctx, bool blocking)
-     return progress;
- }
- 
--void aio_context_setup(AioContext *ctx)
-+void aio_context_setup(AioContext *ctx, Error **errp)
- {
- }
- 
-diff --git a/util/async.c b/util/async.c
-index 34aaab4e9e..2bb7e1f3c1 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -577,6 +577,7 @@ static void co_schedule_bh_cb(void *opaque)
- 
- AioContext *aio_context_new(Error **errp)
- {
-+    ERRP_GUARD();
-     int ret;
-     AioContext *ctx;
- 
-@@ -590,7 +591,11 @@ AioContext *aio_context_new(Error **errp)
-         goto fail;
+diff --git a/util/log.c b/util/log.c
+index abdcb6b311..2642a55c59 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -143,6 +143,12 @@ void qemu_log_unlock(FILE *logfile)
      }
+ }
  
--    aio_context_setup(ctx);
-+    aio_context_setup(ctx, errp);
-+    if (*errp) {
-+        event_notifier_cleanup(&ctx->notifier);
-+        goto fail;
-+    }
- 
-     g_source_set_can_recurse(&ctx->source, true);
-     qemu_lockcnt_init(&ctx->list_lock);
++/*
++ * 'true' if the previous log message lacked a trailing '\n',
++ * and thus the subsequent call must skip any prefix
++ */
++static __thread bool incomplete;
++
+ void qemu_log(const char *fmt, ...)
+ {
+     FILE *f;
+@@ -154,7 +160,7 @@ void qemu_log(const char *fmt, ...)
+      * was emitted if we are delayed acquiring the
+      * mutex
+      */
+-    if (message_with_timestamp) {
++    if (message_with_timestamp && !incomplete) {
+         g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+         timestr = g_date_time_format_iso8601(dt);
+     }
+@@ -170,6 +176,7 @@ void qemu_log(const char *fmt, ...)
+         va_start(ap, fmt);
+         vfprintf(f, fmt, ap);
+         va_end(ap);
++        incomplete = fmt[strlen(fmt) - 1] != '\n';
+         qemu_log_unlock(f);
+     }
+ }
 -- 
-2.51.0
+2.50.1
 
 
