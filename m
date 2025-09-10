@@ -4,98 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525ACCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2881CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwNol-0007sD-5a; Wed, 10 Sep 2025 12:37:11 -0400
+	id 1uwNp4-0007v5-Gf; Wed, 10 Sep 2025 12:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNoh-0007qw-Dn
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:37:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwNoe-0000JJ-4s
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:37:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757522219;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8IgkosInxAwFZbtna1cBKct9yexaJaomTIjAvlJ5g8I=;
- b=beaIXl58YIYPpkpL19Y9CqkiwOo9xvhIXH9RANdU21crjsAD4nUCQl4e0MUXBu39kchSA4
- Rz2UtItn7zRQ2zHsgehMVjfSLaJrYWWhoZsOEs+7Yit++Yww7m62s8/asQk4BrweoJP9xE
- N9AKwKcd4DL8yLwyDbxa8vfiwfJIRwg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-s5FJfrfROtCZuRwCwpg6Gg-1; Wed, 10 Sep 2025 12:36:58 -0400
-X-MC-Unique: s5FJfrfROtCZuRwCwpg6Gg-1
-X-Mimecast-MFC-AGG-ID: s5FJfrfROtCZuRwCwpg6Gg_1757522217
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-7248ed9f932so87852946d6.3
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:36:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uwNp0-0007ui-Pv
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:37:27 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uwNoy-0000K7-2M
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:37:26 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-88432e6700dso51146939f.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:37:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1757522240; x=1758127040; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=77Sp7vE/cjj+LkmFLQCy5EPSzbhLfnme7P3vlpAn3y0=;
+ b=jxe7hBmuZAsLlCshqvHH9gXJovIUQK+cP4NkzAIb0Ytf8TQ+brX2RVeJ798KyLcOVW
+ Kqni55TpQ96HhHp3Dl5AHYdeg1lTT3I6VMriKTIJ1gy4b3gMqa+vIo72+0Tw+uGv3oFT
+ uGANQPhVol3WWe4Z9wfN8th4ttk062ZzfcnagY6LuBaLAwV6d5nfm82Yoz15/D4D+vfC
+ cDnKwMQwAC+N2meZHwmHG+ZAyXAq768060Oz5YFpsDJrlAggGMbabllrZNcpVcBVh026
+ JrrLm5IWBZ9e3iciWqmWbSkcmUf6yt6mcjQD+PqRRkSKAsGTBypI7cqMhW72hyimIV3K
+ sX4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757522217; x=1758127017;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8IgkosInxAwFZbtna1cBKct9yexaJaomTIjAvlJ5g8I=;
- b=BeN/Cpw9ZVUIWXyOPeko1cngxkQzuxWHXTDsWn4gIGfTSQQpgmApjldXiT4Wq56u7p
- ZA+V+pFJvyx0kvrX7RtHlHc+IANGWUd/scDwFsiteK1nvFq9PNAfORAWFI/vZ98sVV9n
- oCJjv1u48bqE0kXwKpt5rvhXy5mcD0qs7FlUTbgytJ16BwZg2qLc/hNSEm7RSjLDshAn
- NroMCTsKZ4c4T6LpmRMrj/aZ4S37emAMRs9F+Taipmr/TfgG1Xa19mgs3U9/k8lJ0upN
- O9zIMM8A7eS8wMHVPCt9BTdnDjhSsxXqi7cZaZRo7g2gkERAHe+wmuX3o/XfB1D8iUDQ
- AVRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVat9oNTQNj0yWnEB3TWIjaK24lnyVYPEapfhtw3cG2CRZMdFPO56U7z4Wu+qiFmAVsYIa7rw/SnPEe@nongnu.org
-X-Gm-Message-State: AOJu0YzGkavdOGzzFysAJOjh7qVGq8t71O/1NTRKShHMNPsykccpdj/Z
- UXRWxBmVHdQU8TugyG8MGrmW5fq5NQ81scDIF2fytztvRTIHCrh0BzzZSxl+UdDsi5NgvGuiz9M
- lXDjROtlhHClRfJtgHlv4D4qMZmu0P1iAjDS3lbeTIm6cNEjSK5SKLMcW
-X-Gm-Gg: ASbGncvXqSLPT5yvQPsazByCb3UiUkbf63s3d6eObPbH2w1xFptRlJz4bB2xZgFSD7Z
- GEZ8dkFYEw8FEZE/SPxDCYtSHkjBaS/mF0PZ1yIFygQxM8uEZkfRcFe/PsPe2HLl95xdvuHvQyR
- FhPbR1bws0i3wO7S0GrdLhlbScvvhlRXUHiM8/13ZF/J9KK1VxmoLvKluaQ3iJZnd/QFN4xXBqn
- TWybTgtokd2BabamCh7yhbcQf09rjxaPTriNKb5ymo1kYug/HtSj2YTK2fhXjB+Qe0xbaY6gUiS
- fV3NoPzaNoXYqN197gneIWumNFbanlKq
-X-Received: by 2002:a05:6214:501b:b0:746:9bad:5020 with SMTP id
- 6a1803df08f44-7469bad681bmr131948176d6.14.1757522217269; 
- Wed, 10 Sep 2025 09:36:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcz7yqAXMInlWWTheEIc6mETI7Y8IX9v+mF0R1rnGUn7XhZKjkDE9g7ZP1LSq2eoROmSD0aw==
-X-Received: by 2002:a05:6214:501b:b0:746:9bad:5020 with SMTP id
- 6a1803df08f44-7469bad681bmr131947556d6.14.1757522216666; 
- Wed, 10 Sep 2025 09:36:56 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-73fc2cdc577sm80793246d6.66.2025.09.10.09.36.55
+ d=1e100.net; s=20230601; t=1757522240; x=1758127040;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=77Sp7vE/cjj+LkmFLQCy5EPSzbhLfnme7P3vlpAn3y0=;
+ b=edIIrxwuZWPeta9MbvpkIgGUxJs/tVOCbE39gHXk6UeoZHvqeTuAA6hNaYAMW8tz8G
+ BgPNPcelYNIRcx4k2+1TncUlNm7YZMb2VvWhu92gH0D9fJBNvOdf75zNJr+mkY9PMuGT
+ EhGXC5tv0a8azplU0QruSST42cmivNk694m5jwMCOQxS29VZ2PHloFsRZenFGYpvNtH/
+ v/MOlHIUwk1aOEJ6Fy45dQ04StzbSnF8GHjYTyoXGM0eD5I9C9kIyRBZ/Rh1dLWOXsHU
+ PMxcS5FSQv27alq44efaa6veINI4GdD1W83bPjKYOyBdw8x40pGncwZDwNLvFO87+8EF
+ 5h7Q==
+X-Gm-Message-State: AOJu0Yw4eVRIpPHDdRa9t9Rexr8zT/jnBTR259PK3aze2vA3cfgbr/It
+ 2Lfgtfs/wXzIWPvddhzI5GS6D47DS8J3gpbmdG+bzPYqmbwcA5OV/E9U40DMKUeEaRs=
+X-Gm-Gg: ASbGnct3XYkp9t7sPfq57bc1iwMU51iR5LT7l5B6MxkWQgMqR0YXBdH0H+nBnsHeHs4
+ sMc/zxkwspQiyepSD9q7bCtKWLx6D8SPp1i6NcgyU+p9m20l0Uy3E7egjOzUhzowRuBtEJNKbTL
+ 3f2NCdwGIdkrGNOmfAbgKn0NTxsnoTeie5E95O2xBeQEebFBjCCxY0Ra4KV6vlHkdj54e1z0QiC
+ Rj5PZUs7jG4Uwp+WZR4r4DiKEuWKX8139sBFHuRu9Npkca0bBftXxWNKk05LjTZFTcjHq7DqwqM
+ A7Cj6s8xU3yK87nJxqq+CSZYSV4Ix0qP32VRtvnJdQZOvBxf0IviKR+fPng78E+u4DldLrJlx9Q
+ 8wwgDR54dElGDnRj+loppm9lP
+X-Google-Smtp-Source: AGHT+IEj51rHSaWEmWFKrq4fsZ9TFd6EsLaWMqTM/n5mbFm9ZUpUVtMN0kilDtFpe/LMcJPFArKfEw==
+X-Received: by 2002:a05:6602:2ccb:b0:887:5ebe:bb9c with SMTP id
+ ca18e2360f4ac-887776bb156mr2366486539f.14.1757522239709; 
+ Wed, 10 Sep 2025 09:37:19 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-88c35d4bbc5sm265997439f.27.2025.09.10.09.37.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 09:36:56 -0700 (PDT)
-Date: Wed, 10 Sep 2025 12:36:44 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Apply migration specific keep-alive defaults
- to inet socket
-Message-ID: <aMGpHBGth05JY2hl@x1.local>
-References: <20250909150127.1494626-1-jmarcin@redhat.com>
- <aMBDIwKDxTVrBJBQ@redhat.com> <aMCjGVUiM3MY-RM3@x1.local>
- <aMEkY3N9ITwH_Y8Z@redhat.com>
+ Wed, 10 Sep 2025 09:37:19 -0700 (PDT)
+Date: Wed, 10 Sep 2025 11:37:18 -0500
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Xie Bo <xb@ultrarisc.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ anup@brainfault.org, alistair.francis@wdc.com, rkrcmar@ventanamicro.com, 
+ palmer@dabbelt.com, xiamy@ultrarisc.com
+Subject: Re: [PATCH v6 1/2] Set KVM initial privilege mode and mp_state
+Message-ID: <20250910-70e85bb0410ddfa6fb425b0a@orel>
+References: <20250910093529.614305-1-xb@ultrarisc.com>
+ <20250910093529.614305-2-xb@ultrarisc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMEkY3N9ITwH_Y8Z@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250910093529.614305-2-xb@ultrarisc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=ajones@ventanamicro.com; helo=mail-io1-xd2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,88 +100,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 08:10:57AM +0100, Daniel P. Berrangé wrote:
-> On Tue, Sep 09, 2025 at 05:58:49PM -0400, Peter Xu wrote:
-> > On Tue, Sep 09, 2025 at 04:09:23PM +0100, Daniel P. Berrangé wrote:
-> > > On Tue, Sep 09, 2025 at 05:01:24PM +0200, Juraj Marcin wrote:
-> > > > From: Juraj Marcin <jmarcin@redhat.com>
-> > > > 
-> > > > Usual system defaults for TCP keep-alive options are too long for
-> > > > migration workload. On Linux, a TCP connection waits idle for 2 hours
-> > > > before it starts checking if the connection is not broken.
-> > > > 
-> > > > Now when InetSocketAddress supports keep-alive options [1], this patch
-> > > > applies migration specific defaults if they are not supplied by the user
-> > > > or the management software. With these defaults, a migration TCP stream
-> > > > waits idle for 1 minute and then sends 5 TCP keep-alive packets in 30
-> > > > second interval before considering the connection as broken.
-> > > > 
-> > > > System defaults can be still used by explicitly setting these parameters
-> > > > to 0.
-> > > 
-> > > IMHO this is not a good idea. This is a very short default, which
-> > > may be fine for the scenario where your network conn is permanently
-> > > dead, but it is going to cause undesirable failures when the network
-> > > conn is only temporarily dead.
-> > > 
-> > > Optimizing defaults for temporary outages is much more preferrable
-> > > as that maximises reliability of migration. In the case of permanent
-> > > outages, it is already possible to tear down the connection without
-> > > waiting for a keep-alive timeout, and liveliness checks can also be
-> > > perform by the mgmt app at a higher level too. The TCP keepalives
-> > > are just an eventual failsafe, and having those work on a long
-> > > timeframe is OK.
-> > 
-> > For precopy it looks fine indeed, because migrate_cancel should always work
-> > on src if src socket hanged, and even if dest QEMU socket hanged, it can
-> > simply be killed if src QEMU can be gracefully cancelled and rolled back to
-> > RUNNING, disregarding the socket status on dest QEMU.
-> > 
-> > For postcopy, we could still use migrate_pause to enforce src shutdown().
-> > Initially I thought we have no way of doing that for dest QEMU, but I just
-> > noticed two years ago I added that to dest QEMU for migrate_paused when
-> > working on commit f8c543e808f20b..  So looks like that part is covered too,
-> > so that if dest QEMU socket hanged we can also kick it out.
-> > 
-> > I'm not 100% sure though, on whether shutdown() would always be able to
-> > successfully kick out the hanged socket while the keepalive is ticking.  Is
-> > it guaranteed?
+On Wed, Sep 10, 2025 at 05:35:27PM +0800, Xie Bo wrote:
+> For KVM mode, the privilege mode should not include M-mode, and the 
+> initial value should be set to S-mode. Additionally, a following patch 
+> adds the implementation of putting the vCPU privilege mode to KVM. 
+> When the vCPU runs for the first time, QEMU will first put the privilege 
+> state to KVM. If the initial value is set to M-mode, KVM will encounter
+> an error.
 > 
-> I don't know about shutdown(), but close() certainly works. If shutdown()
-> is not sufficient, then IMHO the migration code would need the ability to
-> use close() to deal with this situation.
+> In addition, this patch introduces the 'mp_state' field to RISC-V 
+> vCPUs, following the convention used by KVM on x86. The 'mp_state' 
+> reflects the multiprocessor state of a vCPU, and is used to control 
+> whether the vCPU is runnable by KVM. Randomly select one CPU as the 
+> boot CPU.
 > 
+> Signed-off-by: Xie Bo <xb@ultrarisc.com>
+> ---
+>  target/riscv/cpu.c | 17 ++++++++++++++++-
+>  target/riscv/cpu.h |  2 ++
+>  2 files changed, 18 insertions(+), 1 deletion(-)
 > 
-> > I also am not sure if that happens, whether libvirt would automatically do
-> > that, or provide some way so the user can trigger that.  The goal IIUC here
-> > is we shouldn't put user into a situation where the migration hanged but
-> > without any way to either cancel or recover.  With the default values Juraj
-> > provided here, it makes sure the hang won't happen more than a few minutes,
-> > which sounds like a sane timeout value.
-> 
-> Sufficient migration QMP commands should exist to ensure migration can
-> always be cancelled. Short keepalive timeouts should not be considered
-> a solution to any gaps in that respect.
-> 
-> Also there is yank, but IMHO apps shouldn't have to rely on yank - I see
-> yank as a safety net for apps to workaround limitations in QEMU.
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 09ded6829a..57b8c421bd 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -38,6 +38,7 @@
+>  #include "kvm/kvm_riscv.h"
+>  #include "tcg/tcg-cpu.h"
+>  #include "tcg/tcg.h"
+> +#include "hw/boards.h"
+>  
+>  /* RISC-V CPU definitions */
+>  static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
+> @@ -1031,18 +1032,32 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>  #ifndef CONFIG_USER_ONLY
+>      uint8_t iprio;
+>      int i, irq, rdzero;
+> +    static int boot_cpu_index = -1;
+>  #endif
+>      CPUState *cs = CPU(obj);
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+>      RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(obj);
+>      CPURISCVState *env = &cpu->env;
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+>  
+>      if (mcc->parent_phases.hold) {
+>          mcc->parent_phases.hold(obj, type);
+>      }
+>  #ifndef CONFIG_USER_ONLY
+>      env->misa_mxl = mcc->misa_mxl_max;
+> -    env->priv = PRV_M;
+> +    if (kvm_enabled()) {
+> +        env->priv = PRV_S;
+> +    } else {
+> +        env->priv = PRV_M;
+> +    }
+> +    if (boot_cpu_index < 0) {
+> +        boot_cpu_index = g_random_int() % ms->smp.cpus;
 
-The QMP facility looks to be all present, which is migrate-cancel and
-migrate-pause mentioned above.
+I don't think we're obliged to use the same boot cpu on each reset
+after initially randomly selecting it. We can randomly select each
+time.
 
-For migrate_cancel (of precopy), is that Ctrl-C of "virsh migrate"?
-
-Does libvirt exposes migrate_pause via any virsh command?  IIUC that's the
-only official way of pausing a postcopy VM on either side.  I also agree we
-shouldn't make yank the official tool to use.
-
-OTOH, the default timeouts work without changing libvirt, making sure the
-customers will not be stuck in a likely-failing network for hours without
-providing a way to properly detach and recover when it's wanted.
+Also, we can use g_random_int_range() instead of the mod.
 
 Thanks,
+drew
 
--- 
-Peter Xu
-
+> +    }
+> +    if (cs->cpu_index == boot_cpu_index) {
+> +        env->mp_state = KVM_MP_STATE_RUNNABLE;
+> +    } else {
+> +        env->mp_state = KVM_MP_STATE_STOPPED;
+> +    }
+>      env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+>      if (env->misa_mxl > MXL_RV32) {
+>          /*
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 51e49e03de..4b1c5bf0e4 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -256,6 +256,8 @@ struct CPUArchState {
+>  #endif
+>  
+>      target_ulong priv;
+> +    /* Current multiprocessor state of this vCPU. */
+> +    uint32_t mp_state;
+>      /* CSRs for execution environment configuration */
+>      uint64_t menvcfg;
+>      target_ulong senvcfg;
+> -- 
+> 2.43.0
+> 
 
