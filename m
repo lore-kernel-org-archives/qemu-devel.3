@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387B4CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D264CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 15:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwMmw-00078W-DW; Wed, 10 Sep 2025 11:31:18 -0400
+	id 1uwMtJ-0001Qo-IQ; Wed, 10 Sep 2025 11:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwMmf-00072p-ID; Wed, 10 Sep 2025 11:31:01 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtH-0001Py-C8
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uwMmY-00085E-DD; Wed, 10 Sep 2025 11:30:57 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id EB1CC807F9;
- Wed, 10 Sep 2025 18:30:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b48::1:39] (unknown
- [2a02:6bf:8080:b48::1:39])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id fUMJ900Gl4Y0-3WOIwbor; Wed, 10 Sep 2025 18:30:41 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757518241;
- bh=FkByi02RbeEau5EJLJbcRoESOauSrZla3SH+LMFxpC0=;
- h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
- b=s68KC6/vxM0NCSM7r70YDaggb6iYqUU3fb5mdvKWWxcVoZWrb3h6mrUHBA6lqhXCg
- yeM5EkMBJbeAaMTRdK/gAVXDeDnRXtkqAiov/2NFoSszcKvMtao2JWwG3o51zN+t4G
- R8hg0Hyrs9cQd6AzxoR11UunMdBoMjutugaPcBkI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <f888c1f8-d727-47f9-8b26-ba91969d695b@yandex-team.ru>
-Date: Wed, 10 Sep 2025 18:30:41 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwMtF-0000qP-Kh
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 11:37:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757518664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4nfw8Dg+necFb49a8oUJ+CFJCd4KmdxQdsArjJs0b+Y=;
+ b=AMPXRo6vNAhu1Ip46jaD3gU20Jo5ztSXU1pSIbGXJz/0nwX4Uhz0LX8OZUmE6VXqJzH6sy
+ qvyOcW+g3TDqCwusrkxthelOdh/CkHlym7EfGmYYvb+uMaK4SARsC8XZsc/pvEvghhlxCN
+ m15jVEmHPuo1yfllHVIeaZmOZ3ZJnkU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-GkuNJ0EpPsaSUk4caih0aQ-1; Wed,
+ 10 Sep 2025 11:37:41 -0400
+X-MC-Unique: GkuNJ0EpPsaSUk4caih0aQ-1
+X-Mimecast-MFC-AGG-ID: GkuNJ0EpPsaSUk4caih0aQ_1757518660
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4CD418002C1; Wed, 10 Sep 2025 15:37:39 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.173])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 20E2119560AB; Wed, 10 Sep 2025 15:37:36 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-block@nongnu.org,
+	Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 0/3] tests/qemu-iotests: Improve test detection for meson
+Date: Wed, 10 Sep 2025 17:37:23 +0200
+Message-ID: <20250910153727.226217-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] util: drop qemu_socket_set_nonblock()
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Kostiantyn Kostiuk
- <kkostiuk@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Coiby Xu <Coiby.Xu@gmail.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-5-vsementsov@yandex-team.ru>
- <aMFIhJp-GfOhv3AV@redhat.com>
- <7d8153f0-28e4-422b-8210-28d1d7472528@yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <7d8153f0-28e4-422b-8210-28d1d7472528@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,81 +80,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.09.25 13:33, Vladimir Sementsov-Ogievskiy wrote:
-> On 10.09.25 12:44, Daniel P. Berrangé wrote:
->> On Wed, Sep 03, 2025 at 12:44:04PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>> Use common qemu_set_blocking() instead.
->>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>> ---
->>>   contrib/ivshmem-server/ivshmem-server.c |  5 ++++-
->>>   hw/hyperv/syndbg.c                      |  4 +++-
->>>   hw/virtio/vhost-user.c                  |  5 ++++-
->>>   include/qemu/sockets.h                  |  1 -
->>>   io/channel-socket.c                     |  7 +++----
->>>   net/dgram.c                             | 16 +++++++++++++---
->>>   net/l2tpv3.c                            |  5 +++--
->>>   net/socket.c                            | 20 ++++++++++++++++----
->>>   qga/channel-posix.c                     |  7 ++++++-
->>>   tests/unit/socket-helpers.c             |  5 ++++-
->>>   tests/unit/test-crypto-tlssession.c     |  8 ++++----
->>>   util/oslib-posix.c                      |  7 -------
->>>   util/oslib-win32.c                      |  5 -----
->>>   util/vhost-user-server.c                |  4 ++--
->>>   14 files changed, 62 insertions(+), 37 deletions(-)
->>>
->>
->>> diff --git a/qga/channel-posix.c b/qga/channel-posix.c
->>> index 465d688ecb..ddf8ebdc5e 100644
->>> --- a/qga/channel-posix.c
->>> +++ b/qga/channel-posix.c
->>> @@ -28,6 +28,7 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
->>>       GAChannel *c = data;
->>>       int ret, client_fd;
->>>       bool accepted = false;
->>> +    Error *err = NULL;
->>>       g_assert(channel != NULL);
->>> @@ -36,7 +37,11 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
->>>           g_warning("error converting fd to gsocket: %s", strerror(errno));
->>>           goto out;
->>>       }
->>> -    qemu_socket_set_nonblock(client_fd);
->>> +    if (!qemu_set_blocking(client_fd, false, &err)) {
->>> +        g_warning("errer: %s", error_get_pretty(err));
->>
->> s/errer/error/
->>
->>
->> This is a pre-existing problem, but none of this code should be using
->> g_warning. g_printerr() should have been used for printing error
->> messages. I'm not expecting you to fix that, just an observation.
-> 
-> Sure.
+When running the test in thorough mode, we currently try to run a lot of
+tests that are only skipped, which is somewhat annoying. This series
+fixes the problems (see second patch), and add some more image formats
+in the third patch (which should be fine now that the list of tests that
+we try to execute is not that big anymore).
 
-Ha, some how I've read "not expecting" with opposite meaning) So by "sure", I meant "will fix".
+Thomas Huth (3):
+  tests/qemu-iotests/184: Fix skip message for qemu-img without throttle
+  tests/qemu-iotests: Improve the dry run list to speed up thorough
+    testing
+  tests/qemu-iotest: Add more image formats to the thorough testing
 
-Still now looking at code and your comment more carefully, this means one more patch, as
-adding g_prinerr among two g_warnings is mess.
-
-One more patch won't hurt I think.
-
-> 
->>
->>> +        error_free(err);
->>> +        goto out;
->>> +    }
->>>       ret = ga_channel_client_add(c, client_fd);
->>>       if (ret) {
->>>           g_warning("error setting up connection");
->>
->>
->> With regards,
->> Daniel
-> 
-> 
-
+ tests/qemu-iotests/184         |  2 +-
+ tests/qemu-iotests/check       | 35 +++++++++++++++++++++++++++++++---
+ tests/qemu-iotests/meson.build |  3 +++
+ 3 files changed, 36 insertions(+), 4 deletions(-)
 
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
