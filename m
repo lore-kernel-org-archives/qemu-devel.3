@@ -4,76 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE33CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 11:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9176CA101F
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 11:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwIeD-0002Bt-Fz; Wed, 10 Sep 2025 07:05:57 -0400
+	id 1uwIjM-0004LH-FI; Wed, 10 Sep 2025 07:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwIeA-0002BL-Hc
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:05:54 -0400
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1uwIjI-00047y-Fb
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:11:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwIe5-0002WY-6A
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:05:51 -0400
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1uwIj8-0003Rw-3L
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 07:11:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757502345;
+ s=mimecast20190719; t=1757502658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oZgHwLREy18GzLUggA2Fp6ndCi9BTU/lo7hYAlHU1NM=;
- b=h0cvLRrerRlPnN5BqZLOnIqcFDOU4842dM0A2ASKYnxiJFnTpW1TiohDefgAaAqlqHjmZA
- E+GFqfIr2MsEhladDRX43ORNoyqXV767Psu38iaphl/6fw20OLzAYgKQnztdlhgR3/VP1G
- GNNDWmaNmpnxe0QKexms54ds0uDTImI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-YafSvOIbPfupVBnmhD2lyw-1; Wed,
- 10 Sep 2025 07:05:44 -0400
-X-MC-Unique: YafSvOIbPfupVBnmhD2lyw-1
-X-Mimecast-MFC-AGG-ID: YafSvOIbPfupVBnmhD2lyw_1757502343
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FCB519560BA
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:05:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE6241800446
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 11:05:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2E89021E6A27; Wed, 10 Sep 2025 13:05:40 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: Abuse of warnings for unhandled errors and programming errors
-In-Reply-To: <aKRuXq0_5ULf5yp-@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 19 Aug 2025 13:30:22 +0100")
-References: <87h5yijh3b.fsf@pond.sub.org> <aKRuXq0_5ULf5yp-@redhat.com>
-Date: Wed, 10 Sep 2025 13:05:40 +0200
-Message-ID: <87frcupny3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=M9OX8tlnWhy3Fku9KineBC3eI4tuEDAbURIQOkSwxcs=;
+ b=XPMkRBN2t7mmQs+4MU/4itvGQSkocL+Zo5kAB+KfkWIt++DHKKcUefsMSJeqQyzYtt+nxl
+ BheFPhGay/lTXtXjqlaq7pRmzpI/U/mhMuRjyxzLoSkoXEY3yQRqqQ2QAkC9enNvod5bZU
+ +Jl2NaCsQCDwaIigrm1n4awdc4ZeW/o=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-8plfxSHIPAaxkArk0e0Z4w-1; Wed, 10 Sep 2025 07:10:56 -0400
+X-MC-Unique: 8plfxSHIPAaxkArk0e0Z4w-1
+X-Mimecast-MFC-AGG-ID: 8plfxSHIPAaxkArk0e0Z4w_1757502656
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-32da5dbbe9fso1616688a91.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 04:10:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757502656; x=1758107456;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M9OX8tlnWhy3Fku9KineBC3eI4tuEDAbURIQOkSwxcs=;
+ b=XY1OWe2h1evGh7Y2pUpQV61UXRPrpsdonN3vZRN0AeNeRGS6T8VYRcwz3BQ+l1mwCp
+ kbCyGUS98ajkoYC8gVCf0RTTWycRL9mKlWD+c42FuDC5RTGg9IMjsgzm6NA8CYgzBXQU
+ BWYviLkAbOtqP+jtxvsgQIWwgD5jQFJDqgk6b39UbC5Q7xOwWjyyKpxjG2WxjYro+kgG
+ hL4fGPEXXWQ5Ug8MLARXLaol26OVHHJt2eHLrBiV1aaBnRJE3DwyCWanIwZ1v35ccWBi
+ 5p8/HNMwCw34F62D0K8YPwRR0nN+13Yd0PXXTo8LAwIOzTVzq9sCaU8ikPVbh7+v9d0q
+ rv1A==
+X-Gm-Message-State: AOJu0Yx0ZCuUdM187bYYhaNruO1kIK068qTk3Vji00uo/OAkH+Z5Huel
+ ElbP6TjZv00Uw39ODVJrKydrRUJG8RYSdRZ/FF/DU0x18OWroR8VhmzcuiXpy1crYBToi7jV3WM
+ zAS1lb+JjUwb3/HM+kJxyWsy1bSHum+hu9DIdNZN/CPdSdIzhfDGrHUwmbjqasWOIJRYacj9N1C
+ IiE+etTKP5D3/MfPiRNIOX40Tmjrg2KGg=
+X-Gm-Gg: ASbGnctJRTEzoe/lwMgqadUGvxfU5KnWPYsgyI7E+7XB7jGs9/Hssp30eIW0DghnnJL
+ xw+XvzjfjDFrGgFm9IhULLWgGM4uC6i2ahNozRcUTyonK8V2P83HJ7ljv1FOHV/QbJ0rvNn0x4n
+ 3Hv7P+ntlcJYDtzQoA
+X-Received: by 2002:a17:90b:1d4c:b0:32c:c40e:db12 with SMTP id
+ 98e67ed59e1d1-32d43f973e6mr22044622a91.17.1757502655732; 
+ Wed, 10 Sep 2025 04:10:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdIcbyOIXL3uILxA7l9z0Qz3J+Fk0QM2V/PNUfGhuouo2eMiF2a4/pQu5+2roxPhMHglzhsNYCRT3bQbBjWoM=
+X-Received: by 2002:a17:90b:1d4c:b0:32c:c40e:db12 with SMTP id
+ 98e67ed59e1d1-32d43f973e6mr22044589a91.17.1757502655327; Wed, 10 Sep 2025
+ 04:10:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250818100353.1560655-1-aesteve@redhat.com>
+ <20250818100353.1560655-7-aesteve@redhat.com>
+ <20250818231438.GA30271@fedora>
+ <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
+ <20250820203348.GA131468@fedora>
+ <CADSE00LVbpzB9Y1PHyb4HZHE+K1U3gNg4rGST=5FjdYEO0pWzQ@mail.gmail.com>
+In-Reply-To: <CADSE00LVbpzB9Y1PHyb4HZHE+K1U3gNg4rGST=5FjdYEO0pWzQ@mail.gmail.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Wed, 10 Sep 2025 13:10:43 +0200
+X-Gm-Features: AS18NWAvBqXeTjQ485fXuuTyDrvHGXk4uu-xvsI9Rs-qFr7CdAZZYWzd5EYVJ-E
+Message-ID: <CADSE00J6CjALwha9qW_Q3aHx5Rzoyba-TnDrT1SW845mWjz3-w@mail.gmail.com>
+Subject: Re: [PATCH v7 6/8] tests/qtest: Add GET_SHMEM validation test
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, david@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is, jasowang@redhat.com, 
+ Laurent Vivier <lvivier@redhat.com>, dbassey@redhat.com, 
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ stevensd@chromium.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, slp@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,106 +112,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Fri, Aug 08, 2025 at 11:30:32AM +0200, Markus Armbruster wrote:
->> In "[PATCH 00/12] Error reporting cleanup, a fix, and &error_warn
->> removal", I challenged the use of warnings in a few places.  I think the
->> topic deserves a wider audience than the one a rather pedestrian cleanup
->> series draws.
->>=20
->>=20
->> To make my case, I need to start with errors.  We distinguish between
->> ordinary errors (for lack of a better word) and programming errors.
->>=20
->> Ordinary errors are things like nonsensical user requests, unavailable
->> resources, and so forth.  A correct program is prepared for such
->> failures, detects them, and reports them to the user.  The user can then
->> fix their request, try again when resources are available, and so forth.
->>=20
->> Tools for reporting ordinary errors are error_report(),
->> error_report_err(), &error_fatal, and friends.
+On Thu, Aug 21, 2025 at 8:50=E2=80=AFAM Albert Esteve <aesteve@redhat.com> =
+wrote:
 >
-> The thing about nonsense user rquests / unavailable resources , etc
-> is that almost none of them should imply exiting QEMU, except if they
-> occur in the context of system startup before the VM starts executing.
-> Once running we should do everything in our power to not let the users
-> workload die.
+> On Wed, Aug 20, 2025 at 10:33=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
+.com> wrote:
+> >
+> > On Tue, Aug 19, 2025 at 02:16:47PM +0200, Albert Esteve wrote:
+> > > On Tue, Aug 19, 2025 at 12:42=E2=80=AFPM Stefan Hajnoczi <stefanha@re=
+dhat.com> wrote:
+> > > >
+> > > > On Mon, Aug 18, 2025 at 12:03:51PM +0200, Albert Esteve wrote:
+> > > > > Improve vhost-user-test to properly validate
+> > > > > VHOST_USER_GET_SHMEM_CONFIG message handling by
+> > > > > directly simulating the message exchange.
+> > > > >
+> > > > > The test manually triggers the
+> > > > > VHOST_USER_GET_SHMEM_CONFIG message by calling
+> > > > > chr_read() with a crafted VhostUserMsg, allowing direct
+> > > > > validation of the shmem configuration response handler.
+> > > >
+> > > > It looks like this test case invokes its own chr_read() function wi=
+thout
+> > > > going through QEMU, so I don't understand what this is testing?
+> > >
+> > > I spent some time trying to test it, but in the end I could not
+> > > instatiate vhost-user-device because it is non user_creatable. I did
+> > > not find any test for vhost-user-device anywhere else either. But I
+> > > had already added most of the infrastructure here so I fallback to
+> > > chr_read() communication to avoid having to delete everything. My
+> > > though was that once we have other devices that use shared memory,
+> > > they could tweak the test to instantiate the proper device and test
+> > > this and the map/unmap operations.
+> > >
+> > > Although after writing this, I think other devices will actually a
+> > > specific layout for their shared memory. So
+> > > VHOST_USER_GET_SHMEM_CONFIG is only ever going to be used by
+> > > vhost-user-device.
+> > >
+> > > In general, trying to test this patch series has been a headache othe=
+r
+> > > than trying with external device code I have. If you have an idea tha=
+t
+> > > I could try to test this, I can try. Otherwise, probably is best to
+> > > remove this commit from the series and wait for another vhost-user
+> > > device that uses map/unmap to land to be able to test it.
+> >
+> > Alex Bennee has renamed vhost-user-device to vhost-user-test-device and
+> > set user_creatable =3D true:
+> > https://lore.kernel.org/qemu-devel/20250820195632.1956795-1-alex.bennee=
+@linaro.org/T/#t
 >
-> From that POV, I tend to wish that error_fatal did not exist and that
-> we instead propagated all fatal errors up until reaching main(), so
-> we were not at risk of using error_fatal in runtime scenarios. We're
-> largely stuck with what we've got though, due to our need to retrofit
-> error reporting in to our existing codebase design.
-
-Yes, &error_fatal is almost always wrong after the guest starts.
-
-When it isn't wrong, it's quite convenient.
-
-> I do try to push back in review any time we introduce new code that
-> doesn't propagate errors as high up the stack as possible/practcal.
+> Oh, great! Thanks for letting me know.
 >
->> Programming errors are bugs.  A developer needs to fix the program.
->> Unlike ordinary errors, programming errors are *unexpected*.
->>=20
->> Programming errors are commonly not recoverable.  The proper tool for
->> unrecoverable ones is assertions.  &error_abort can be a convenient way
->> to assert "this can't fail".
+> That allows having a QTest with the vhost-user-test-device available
+> and run it in piplines if necessary, without manually
+> changing/recompiling. I'll try to add it to the test again in this
+> commit.
 >
-> We could have called it &error_assert but that's bike shed colouring :-)
+> Thank you, Stefan and Alyssa, for the hints.
 
-Yup :)
+Hi,
 
->> On to warnings.
->>=20
->> When some failure doesn't prevent satisfying some request, an ordinary
->> error can be misleading.  We make it a warning instead then.
->>=20
->> What if it's a programming error we recover from?
->>=20
->> Aside: trying to recover in a buggy program is risky, but that's not the
->> debate I want to have here.
->>=20
->> How do we want such recoverable programming errors reported?
->>=20
->> Warning?  We seem to be abusing warnings this way, and I hate it.  What
->> we have to report is a *bug*, and we should make that crystal clear.
->> "warning: FunctionYouNeverHeardAbout() failed" does not.  It could be
->> anything, and you likely need to look at the source to find out.
->>=20
->> Ordinary error reporting with "internal error: " prefix, so the user
->> understands this is a bug, and all they can do about it is report it?
->>=20
->> Log the bug somehow?
->>=20
->> Thoughts?
+I wanted to make a note before sending the next version. I have been
+trying to test it by forcing user_creatable to true locally while the
+other PATCH lands. But it will need more work, and I do not want to
+delay the new version much further. Thus, I will remove this commit
+from the next version and keep working locally.
+
 >
-> I don't see 'warnings' as something directly actionable for a user.
-> Rather they are messages that I would want to see included in a log
-> file that a user attaches to a bug report if they find some behavioural
-> problem. If the user understands the warning great, but that isn't a
-> requirement.
->
-> IOW, while informative warnings is of course better than not, as long
-> as the warning message contains sufficient info for the maintainer to
-> understand what happened the minimum quality bar is satisfied IMHO.
-
-That's a low quality bar indeed.  Here's mine:
-
-1. A warning should make perfectly clear whether this is a bug that
-should be reported, or an issue with usage, resources, etc. that can be
-ignored, but may help understand future trouble, if any (typically an
-ordinary error that wasn't fully handled).  Our errors make bug
-vs. ordinary error clear.
-
-2. A warning of the former kind (bug) should provide information
-developers need to start debugging.  For errors, we give them a core
-dump, source file and line number.  For warnings, we currently give them
-grep and warm wishes.
-
-3. A warning of the latter kind (not a bug) should at least try to
-provide hints that help users diagnose and correct / work around what's
-wrong.  "warning: failed to WSAEventSelect()" doesn't.  "warning:
-trouble initializing slirp for user mode networking" might.
+> >
+> > >
+> > >
+> > >
+> > > >
+> > > > >
+> > > > > Added TestServerShmem structure to track shmem
+> > > > > configuration state, including nregions_sent and
+> > > > > sizes_sent arrays for comprehensive validation.
+> > > > > The test verifies that the response contains the expected
+> > > > > number of shared memory regions and their corresponding
+> > > > > sizes.
+> > > > >
+> > > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > > > ---
+> > > > >  tests/qtest/vhost-user-test.c | 91 +++++++++++++++++++++++++++++=
+++++++
+> > > > >  1 file changed, 91 insertions(+)
+> > > > >
+> > > > > diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-us=
+er-test.c
+> > > > > index 75cb3e44b2..44a5e90b2e 100644
+> > > > > --- a/tests/qtest/vhost-user-test.c
+> > > > > +++ b/tests/qtest/vhost-user-test.c
+> > > > > @@ -88,6 +88,7 @@ typedef enum VhostUserRequest {
+> > > > >      VHOST_USER_SET_VRING_ENABLE =3D 18,
+> > > > >      VHOST_USER_GET_CONFIG =3D 24,
+> > > > >      VHOST_USER_SET_CONFIG =3D 25,
+> > > > > +    VHOST_USER_GET_SHMEM_CONFIG =3D 44,
+> > > > >      VHOST_USER_MAX
+> > > > >  } VhostUserRequest;
+> > > > >
+> > > > > @@ -109,6 +110,20 @@ typedef struct VhostUserLog {
+> > > > >      uint64_t mmap_offset;
+> > > > >  } VhostUserLog;
+> > > > >
+> > > > > +#define VIRTIO_MAX_SHMEM_REGIONS 256
+> > > > > +
+> > > > > +typedef struct VhostUserShMemConfig {
+> > > > > +    uint32_t nregions;
+> > > > > +    uint32_t padding;
+> > > > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> > > > > +} VhostUserShMemConfig;
+> > > > > +
+> > > > > +typedef struct TestServerShmem {
+> > > > > +    bool test_enabled;
+> > > > > +    uint32_t nregions_sent;
+> > > > > +    uint64_t sizes_sent[VIRTIO_MAX_SHMEM_REGIONS];
+> > > > > +} TestServerShmem;
+> > > > > +
+> > > > >  typedef struct VhostUserMsg {
+> > > > >      VhostUserRequest request;
+> > > > >
+> > > > > @@ -124,6 +139,7 @@ typedef struct VhostUserMsg {
+> > > > >          struct vhost_vring_addr addr;
+> > > > >          VhostUserMemory memory;
+> > > > >          VhostUserLog log;
+> > > > > +        VhostUserShMemConfig shmem;
+> > > > >      } payload;
+> > > > >  } QEMU_PACKED VhostUserMsg;
+> > > > >
+> > > > > @@ -170,6 +186,7 @@ typedef struct TestServer {
+> > > > >      bool test_fail;
+> > > > >      int test_flags;
+> > > > >      int queues;
+> > > > > +    TestServerShmem shmem;
+> > > > >      struct vhost_user_ops *vu_ops;
+> > > > >  } TestServer;
+> > > > >
+> > > > > @@ -513,6 +530,31 @@ static void chr_read(void *opaque, const uin=
+t8_t *buf, int size)
+> > > > >          qos_printf("set_vring(%d)=3D%s\n", msg.payload.state.ind=
+ex,
+> > > > >                     msg.payload.state.num ? "enabled" : "disabled=
+");
+> > > > >          break;
+> > > > > +
+> > > > > +    case VHOST_USER_GET_SHMEM_CONFIG:
+> > > > > +        if (!s->shmem.test_enabled) {
+> > > > > +            /* Reply with error if shmem feature not enabled */
+> > > > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > > > +            msg.size =3D sizeof(uint64_t);
+> > > > > +            msg.payload.u64 =3D -1; /* Error */
+> > > > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_U=
+SER_HDR_SIZE + msg.size);
+> > > > > +        } else {
+> > > > > +            /* Reply with test shmem configuration */
+> > > > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > > > +            msg.size =3D sizeof(VhostUserShMemConfig);
+> > > > > +            msg.payload.shmem.nregions =3D 2; /* Test with 2 reg=
+ions */
+> > > > > +            msg.payload.shmem.padding =3D 0;
+> > > > > +            msg.payload.shmem.memory_sizes[0] =3D 0x100000; /* 1=
+MB */
+> > > > > +            msg.payload.shmem.memory_sizes[1] =3D 0x200000; /* 2=
+MB */
+> > > > > +
+> > > > > +            /* Record what we're sending for test validation */
+> > > > > +            s->shmem.nregions_sent =3D msg.payload.shmem.nregion=
+s;
+> > > > > +            s->shmem.sizes_sent[0] =3D msg.payload.shmem.memory_=
+sizes[0];
+> > > > > +            s->shmem.sizes_sent[1] =3D msg.payload.shmem.memory_=
+sizes[1];
+> > > > > +
+> > > > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_U=
+SER_HDR_SIZE + msg.size);
+> > > > > +        }
+> > > > > +        break;
+> > > > >
+> > > > >      default:
+> > > > >          qos_printf("vhost-user: un-handled message: %d\n", msg.r=
+equest);
+> > > > > @@ -809,6 +851,22 @@ static void *vhost_user_test_setup_shm(GStri=
+ng *cmd_line, void *arg)
+> > > > >      return server;
+> > > > >  }
+> > > > >
+> > > > > +static void *vhost_user_test_setup_shmem_config(GString *cmd_lin=
+e, void *arg)
+> > > > > +{
+> > > > > +    TestServer *server =3D test_server_new("vhost-user-test", ar=
+g);
+> > > > > +    test_server_listen(server);
+> > > > > +
+> > > > > +    /* Enable shmem testing for this server */
+> > > > > +    server->shmem.test_enabled =3D true;
+> > > > > +
+> > > > > +    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
+> > > > > +    server->vu_ops->append_opts(server, cmd_line, "");
+> > > > > +
+> > > > > +    g_test_queue_destroy(vhost_user_test_cleanup, server);
+> > > > > +
+> > > > > +    return server;
+> > > > > +}
+> > > > > +
+> > > > >  static void test_read_guest_mem(void *obj, void *arg, QGuestAllo=
+cator *alloc)
+> > > > >  {
+> > > > >      TestServer *server =3D arg;
+> > > > > @@ -1089,6 +1147,33 @@ static struct vhost_user_ops g_vu_net_ops =
+=3D {
+> > > > >      .get_protocol_features =3D vu_net_get_protocol_features,
+> > > > >  };
+> > > > >
+> > > > > +/* Test function for VHOST_USER_GET_SHMEM_CONFIG message */
+> > > > > +static void test_shmem_config(void *obj, void *arg, QGuestAlloca=
+tor *alloc)
+> > > > > +{
+> > > > > +    TestServer *s =3D arg;
+> > > > > +
+> > > > > +    g_assert_true(s->shmem.test_enabled);
+> > > > > +
+> > > > > +    g_mutex_lock(&s->data_mutex);
+> > > > > +    s->shmem.nregions_sent =3D 0;
+> > > > > +    s->shmem.sizes_sent[0] =3D 0;
+> > > > > +    s->shmem.sizes_sent[1] =3D 0;
+> > > > > +    g_mutex_unlock(&s->data_mutex);
+> > > > > +
+> > > > > +    VhostUserMsg msg =3D {
+> > > > > +        .request =3D VHOST_USER_GET_SHMEM_CONFIG,
+> > > > > +        .flags =3D VHOST_USER_VERSION,
+> > > > > +        .size =3D 0,
+> > > > > +    };
+> > > > > +    chr_read(s, (uint8_t *) &msg, VHOST_USER_HDR_SIZE);
+> > > > > +
+> > > > > +    g_mutex_lock(&s->data_mutex);
+> > > > > +    g_assert_cmpint(s->shmem.nregions_sent, =3D=3D, 2);
+> > > > > +    g_assert_cmpint(s->shmem.sizes_sent[0], =3D=3D, 0x100000); /=
+* 1MB */
+> > > > > +    g_assert_cmpint(s->shmem.sizes_sent[1], =3D=3D, 0x200000); /=
+* 2MB */
+> > > > > +    g_mutex_unlock(&s->data_mutex);
+> > > > > +}
+> > > > > +
+> > > > >  static void register_vhost_user_test(void)
+> > > > >  {
+> > > > >      QOSGraphTestOptions opts =3D {
+> > > > > @@ -1136,6 +1221,12 @@ static void register_vhost_user_test(void)
+> > > > >      qos_add_test("vhost-user/multiqueue",
+> > > > >                   "virtio-net",
+> > > > >                   test_multiqueue, &opts);
+> > > > > +
+> > > > > +    opts.before =3D vhost_user_test_setup_shmem_config;
+> > > > > +    opts.edge.extra_device_opts =3D "";
+> > > > > +    qos_add_test("vhost-user/shmem-config",
+> > > > > +                 "virtio-net",
+> > > > > +                 test_shmem_config, &opts);
+> > > > >  }
+> > > > >  libqos_init(register_vhost_user_test);
+> > > > >
+> > > > > --
+> > > > > 2.49.0
+> > > > >
+> > >
 
 
