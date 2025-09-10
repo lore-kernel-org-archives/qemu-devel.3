@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEE5CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 14:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DF6CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 14:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwLsm-0005ZK-Dl; Wed, 10 Sep 2025 10:33:12 -0400
+	id 1uwM10-0000SH-8f; Wed, 10 Sep 2025 10:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwLsj-0005Yz-IR
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:33:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1uwM0x-0000Rr-HN
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:41:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwLse-0007g9-8i
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:33:09 -0400
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1uwM0s-0000U0-G9
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 10:41:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757514778;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1757515286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sT/XkJ/G6QSCrTfKW+oO0TJCKUsnxXWNojFNY/rs07U=;
- b=cpOn0ISb2jkFAgPMeHdQwLZ3UqfLk3MIimZZR1M4/s7bSgSqCONF1fpPxLt2KimjiHpXqy
- QtlndvlPyHQPRZoRNvgvGDKb4X7KcL8xPwvXUqsi5xWzl7S9MUnhNuZ4U1IG5XMDQMn8CZ
- XcLWTb/9o8Pzf7j/JnxAU9O3NtAZnz8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-dfDHSHcaMQqRgoD2FMLuSA-1; Wed,
- 10 Sep 2025 10:32:54 -0400
-X-MC-Unique: dfDHSHcaMQqRgoD2FMLuSA-1
-X-Mimecast-MFC-AGG-ID: dfDHSHcaMQqRgoD2FMLuSA_1757514773
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C8281800298; Wed, 10 Sep 2025 14:32:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5ED1A18003FC; Wed, 10 Sep 2025 14:32:50 +0000 (UTC)
-Date: Wed, 10 Sep 2025 15:32:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- steven.sistare@oracle.com
-Subject: Re: [PATCH v3] migration/qemu-file: don't make incoming fds blocking
- again
-Message-ID: <aMGMDorWhKZ2nqrJ@redhat.com>
-References: <20250910143156.1053779-1-vsementsov@yandex-team.ru>
+ bh=W0NnmC6Lh5v4pZdMl8VvSdVEd96kDWwKqUqph1n3Tug=;
+ b=dyvk1+ZOSASkqkLrVAq3MLzmzmG6AjhZZqpnILdqTt+sFmgfM/FEOFNPC4sSnVAOtTOvO3
+ skebwTdeOJ3g6Xh94lfVqDZlkQC2gKS0oM+4fUzrerfaGN9tJfE3JgNlvRcoT6xmgdkAkx
+ k57NgiWoEAFHY9PtuEmEok6Z4C+Ah84=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-449-FZqRuJw7MTypNjk7yYi41Q-1; Wed, 10 Sep 2025 10:40:13 -0400
+X-MC-Unique: FZqRuJw7MTypNjk7yYi41Q-1
+X-Mimecast-MFC-AGG-ID: FZqRuJw7MTypNjk7yYi41Q_1757515209
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8080713fa17so1449130385a.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 07:40:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757515209; x=1758120009;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=W0NnmC6Lh5v4pZdMl8VvSdVEd96kDWwKqUqph1n3Tug=;
+ b=f3kCSTF9J/nXMA7gIX39G9JGytda2ERvuZRh+/EEgMuqfy8DMwU0FogR+7UsvPZSs5
+ O/vQO1FPzE8Rg1e4FDyaYhop9k3CETmAzjp5+WlFcYJ231s+rZXTIWFM1k+mOoDIkvlO
+ OHzXrlx3g7DazEMtGdVUsgZzCmoBzGZ5MhfCOywWD7GXtlkN4ABvG5NacD6gTYvUqNeE
+ YX8ymUsIehoeE+LjrceMtvAQUJ7Ll9qyE8p5qFr0ZDCknPTg6UgGouMdMPdjyiuljEbo
+ ReYr8kAT3QPWkmuypScRj5ylOSIUfgo7GIsN8eeOEclw/YgU1FcK6Jbb9bL/lU5G1q6m
+ RgeQ==
+X-Gm-Message-State: AOJu0Yw9Hg55FqAvlzIYg1BcnvB7I3epNVVTkHqpnoRegES19gzpbTg1
+ sUzX7FZcEVyp/QHxteLasVNY4LJk6iS/iffnv2bSZBnT9/NEduX/3tjOCJqp3wT6PrN91hluRiv
+ HkBcMHbi7QKSKiSsQ4/51wVEdn9+0pdjOk32Mtbl/K1hqEwsO0hPQ1p8SYMyVpEAukaF1jlEdGv
+ YXNIoq137wLs07YjxgvBAYiUSYWOioUbM=
+X-Gm-Gg: ASbGncupYWp2ny4V4enl7GviZffyWayy77NmHu524WWjuby76JqQU93n6O36mJ143JS
+ uuIYqvdwg0MeNA6AscekUfBMd0b4hBlYGkMMS/b6n0lYri4sXBSDYpiNPCAcuEj7QNLYDgJxmqL
+ 1kwbMMMzk4G3cvgTXSo9s3z6iuyAkczmyrkbXI6h9V5AA8GYY0wXchK2Y=
+X-Received: by 2002:a05:620a:3909:b0:813:a1a8:d4e2 with SMTP id
+ af79cd13be357-813c39a167dmr1415887985a.74.1757515209437; 
+ Wed, 10 Sep 2025 07:40:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXj+tvPS+3GMXelwQXFDP4hfDNSDdnw//gi2UueBMfreWysEfrzXsTfGWmIyhT9S4jOuQPdTezHG9JviU+WYg=
+X-Received: by 2002:a05:620a:3909:b0:813:a1a8:d4e2 with SMTP id
+ af79cd13be357-813c39a167dmr1415883985a.74.1757515208802; Wed, 10 Sep 2025
+ 07:40:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250910143156.1053779-1-vsementsov@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20250910121501.676219-1-abologna@redhat.com>
+In-Reply-To: <20250910121501.676219-1-abologna@redhat.com>
+From: Kashyap Chamarthy <kchamart@redhat.com>
+Date: Wed, 10 Sep 2025 16:39:50 +0200
+X-Gm-Features: Ac12FXxMcycCUaP5UKacl-2FJuV8UTGFs03EUzbojKwGUQ2zGjdMAAhAM02q4ag
+Message-ID: <CAJ=Wi4qhxwZH3d6gN4nJf0Ei3ECu9GFPZvhVjG_yu0zYkdnNww@mail.gmail.com>
+Subject: Re: [PATCH] docs/interop/firmware: Add riscv64 to FirmwareArchitecture
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kchamart@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,29 +101,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 05:31:56PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> In migration we want to pass fd "as is", not changing its
-> blocking status.
-> 
-> The only current user of these fds is CPR state (through VMSTATE_FD),
-> which of-course doesn't want to modify fds on target when source is
-> still running and use these fds.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On Wed, Sep 10, 2025 at 2:15=E2=80=AFPM Andrea Bolognani <abologna@redhat.c=
+om> wrote:
+>
+> Descriptors using this value have been shipped for years
+> by distros, so we just need to update the spec to match
+> reality.
+>
+> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+> ---
+>  docs/interop/firmware.json | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index 6bbe2cce0a..ccbfaf828d 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -85,12 +85,14 @@
+>  #
+>  # @loongarch64: 64-bit LoongArch. (since: 7.1)
+>  #
+> +# @riscv64: 64-bit RISC-V.
+> +#
+>  # @x86_64: 64-bit x86.
+>  #
+>  # Since: 3.0
+>  ##
+>  { 'enum' : 'FirmwareArchitecture',
+> -  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
+> +  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64=
+' ] }
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Thanks :-)
 
+Reviewed-by: Kashyap Chamarthy <kchamart@redhat.com>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>  ##
+>  # @FirmwareTarget:
+> --
+> 2.51.0
+>
 
 
