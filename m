@@ -4,74 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0069DCA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B6ECAC58D
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 18:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwPCx-0001QP-S5; Wed, 10 Sep 2025 14:06:15 -0400
+	id 1uwPEp-0005pc-Sd; Wed, 10 Sep 2025 14:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPC4-0008PH-4G
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uwPDn-0004jW-2U
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:07:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwPC0-0004xK-28
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:05:19 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uwPDe-00055i-LP
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 14:07:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757527514;
+ s=mimecast20190719; t=1757527617;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2cUjnHXP+2yLDsC7cDBwPJsCA0A+uWS2z3y2xXWSqbk=;
- b=EhJtqS/m3ocETmyKIzpesUrJW7+qgbcZPpd2OZRXK9K/pCLL1fDQMu01kUCmUwyhRTQETX
- eDF4K6ohL+L614WIlBK5AZ9fCx2wHhI5eduH+x7is+6s2Q3JwZPOh8tx83rkE2VoanZ54r
- XJZsql8BBdvAAhJvtw7uCy5D5v4PBNE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=eol21QjpcqS+1NzmihTA3L9wQ1fcb13YdBbC/Hdfqwo=;
+ b=iXIUo4Djvuh3kE1naQEzxDnm60JWSLz466p1DZoas2VTF8gIUHOd9SLSBiRs6af3KKYLWs
+ SHGdErX8mUK7tXRhh+p+kqn1ZuOR24nd8abx/fZV0P5NHku980aB4kQEptWlDzQkCcWRnW
+ f7cdV43i8oyxChZNT6mQlaI2NsmVY10=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-lBaOwhgDMKeTJ-ICCBiqfg-1; Wed,
- 10 Sep 2025 14:05:12 -0400
-X-MC-Unique: lBaOwhgDMKeTJ-ICCBiqfg-1
-X-Mimecast-MFC-AGG-ID: lBaOwhgDMKeTJ-ICCBiqfg_1757527511
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-xOZMvGDaP8eXy7sKrBQqgw-1; Wed,
+ 10 Sep 2025 14:06:54 -0400
+X-MC-Unique: xOZMvGDaP8eXy7sKrBQqgw-1
+X-Mimecast-MFC-AGG-ID: xOZMvGDaP8eXy7sKrBQqgw_1757527613
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 284A2180029A; Wed, 10 Sep 2025 18:05:11 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 86A911800446; Wed, 10 Sep 2025 18:05:07 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D64B7195609F; Wed, 10 Sep 2025 18:06:52 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.66])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3499D3000198; Wed, 10 Sep 2025 18:06:52 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 16/20] util: convert error-report & log to message API for
- timestamp
-Date: Wed, 10 Sep 2025 19:03:53 +0100
-Message-ID: <20250910180357.320297-17-berrange@redhat.com>
-In-Reply-To: <20250910180357.320297-1-berrange@redhat.com>
-References: <20250910180357.320297-1-berrange@redhat.com>
+Cc: Aarushi Mehta <mehta.aaru20@gmail.com>, Fam Zheng <fam@euphon.net>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, eblake@redhat.com,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, hibriansong@gmail.com, Stefan Weil <sw@weilnetz.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 08/12] aio-posix: gracefully handle io_uring_queue_init()
+ failure
+Date: Wed, 10 Sep 2025 13:56:59 -0400
+Message-ID: <20250910175703.374499-9-stefanha@redhat.com>
+In-Reply-To: <20250910175703.374499-1-stefanha@redhat.com>
+References: <20250910175703.374499-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,7 +73,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,185 +90,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both the error-report and log APIs can optional emit a timestamp
-as a prefix on messages, with the '-msg timestamp=on' command
-line flag is set.
+io_uring may not be available at runtime due to system policies (e.g.
+the io_uring_disabled sysctl) or creation could fail due to file
+descriptor resource limits.
 
-Convert them to the new message API for formatting the context
-prefix, guaranteeing they will have matching behaviour going
-forward.
+Handle failure scenarios as follows:
 
-There is no change in output format for either logs or errors
-with this conversion.
+If another AioContext already has io_uring, then fail AioContext
+creation so that the aio_add_sqe() API is available uniformly from all
+QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+unavailable.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Notes:
+- Update the comment about selecting the fastest fdmon implementation.
+  At this point it's not about speed anymore, it's about aio_add_sqe()
+  API availability.
+- Uppercase the error message when converting from error_report() to
+  error_setg_errno() for consistency (but there are instances of
+  lowercase in the codebase).
+- It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
+
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- include/qemu/error-report.h    |  1 -
- system/vl.c                    |  7 ++++++-
- tests/unit/test-error-report.c |  3 ++-
- util/error-report.c            | 17 ++---------------
- util/log.c                     | 21 ++++-----------------
- 5 files changed, 14 insertions(+), 35 deletions(-)
+ util/aio-posix.h      | 12 ++----------
+ util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
+ util/fdmon-io_uring.c |  8 ++++----
+ 3 files changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
-index 3ae2357fda..c8000778ec 100644
---- a/include/qemu/error-report.h
-+++ b/include/qemu/error-report.h
-@@ -70,7 +70,6 @@ void error_init(const char *argv0);
-                               fmt, ##__VA_ARGS__);      \
-     })
+diff --git a/util/aio-posix.h b/util/aio-posix.h
+index f9994ed79e..6f9d97d866 100644
+--- a/util/aio-posix.h
++++ b/util/aio-posix.h
+@@ -18,6 +18,7 @@
+ #define AIO_POSIX_H
  
--extern bool message_with_timestamp;
- extern bool error_with_guestname;
- extern const char *error_guest_name;
+ #include "block/aio.h"
++#include "qapi/error.h"
  
-diff --git a/system/vl.c b/system/vl.c
-index a64fd90d4a..696dd92669 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -26,6 +26,7 @@
- #include "qemu/help-texts.h"
- #include "qemu/datadir.h"
- #include "qemu/units.h"
-+#include "qemu/message.h"
- #include "qemu/module.h"
- #include "qemu/target-info.h"
- #include "exec/cpu-common.h"
-@@ -813,8 +814,12 @@ static void realtime_init(void)
+ struct AioHandler {
+     GPollFD pfd;
+@@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *ctx)
+ #endif /* !CONFIG_EPOLL_CREATE1 */
  
- static void configure_msg(QemuOpts *opts)
- {
--    message_with_timestamp = qemu_opt_get_bool(opts, "timestamp", false);
-+    int flags = 0;
-+    if (qemu_opt_get_bool(opts, "timestamp", false)) {
-+        flags |= QMESSAGE_FORMAT_TIMESTAMP;
-+    }
-     error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
-+    qmessage_set_format(flags);
- }
- 
- 
-diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
-index 54319c86c9..78f8b57660 100644
---- a/tests/unit/test-error-report.c
-+++ b/tests/unit/test-error-report.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qemu/message.h"
- 
- static void
- test_error_report_simple(void)
-@@ -90,7 +91,7 @@ static void
- test_error_report_timestamp(void)
- {
-     if (g_test_subprocess()) {
--        message_with_timestamp = true;
-+        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
-         warn_report("warn");
-         error_report("err");
-         return;
-diff --git a/util/error-report.c b/util/error-report.c
-index 6c887047e3..719f059494 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -13,6 +13,7 @@
- #include "qemu/osdep.h"
- #include "monitor/monitor.h"
- #include "qemu/error-report.h"
-+#include "qemu/message.h"
- 
- /*
-  * @report_type is the type of message: error, warning or
-@@ -24,8 +25,6 @@ typedef enum {
-     REPORT_TYPE_INFO,
- } report_type;
- 
--/* Prepend timestamp to messages */
--bool message_with_timestamp;
- bool error_with_guestname;
- const char *error_guest_name;
- 
-@@ -185,13 +184,6 @@ static void print_loc(bool cur, error_print_func print_func, void *print_opaque)
-     }
- }
- 
--static char *
--real_time_iso8601(void)
+ #ifdef CONFIG_LINUX_IO_URING
+-bool fdmon_io_uring_setup(AioContext *ctx);
++void fdmon_io_uring_setup(AioContext *ctx, Error **errp);
+ void fdmon_io_uring_destroy(AioContext *ctx);
+-#else
+-static inline bool fdmon_io_uring_setup(AioContext *ctx)
 -{
--    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
--    return g_date_time_format_iso8601(dt);
+-    return false;
 -}
 -
- /*
-  * Print a message to current monitor if we have one, else to stderr.
-  * @report_type is the type of message: error, warning or informational.
-@@ -213,7 +205,6 @@ static void vreport(report_type type, const char *fmt, va_list ap)
-     error_print_func print_func;
-     error_print_vfunc print_vfunc;
-     void *print_opaque;
--    gchar *timestr;
+-static inline void fdmon_io_uring_destroy(AioContext *ctx)
+-{
+-}
+ #endif /* !CONFIG_LINUX_IO_URING */
  
-     if (cur) {
-         print_func = (error_print_func)monitor_printf;
-@@ -223,12 +214,8 @@ static void vreport(report_type type, const char *fmt, va_list ap)
-         print_func = (error_print_func)fprintf;
-         print_vfunc = (error_print_vfunc)vfprintf;
-         print_opaque = stderr;
--    }
+ #endif /* AIO_POSIX_H */
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index bbe470c145..800b4debbf 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "block/block.h"
+ #include "block/thread-pool.h"
++#include "qapi/error.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/lockcnt.h"
+ #include "qemu/rcu.h"
+@@ -724,17 +725,39 @@ void aio_context_setup(AioContext *ctx, Error **errp)
+     ctx->epollfd = -1;
+     ctx->epollfd_tag = NULL;
  
--    if (message_with_timestamp && !cur) {
--        timestr = real_time_iso8601();
--        print_func(print_opaque, "%s ", timestr);
--        g_free(timestr);
-+        qmessage_context_print(stderr);
+-    /* Use the fastest fd monitoring implementation if available */
+-    if (fdmon_io_uring_setup(ctx)) {
+-        return;
++#ifdef CONFIG_LINUX_IO_URING
++    {
++        static bool need_io_uring;
++        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
++
++        /* io_uring takes precedence because it provides aio_add_sqe() support */
++        fdmon_io_uring_setup(ctx, &local_err);
++        if (!local_err) {
++            /*
++             * If one AioContext gets io_uring, then all AioContexts need io_uring
++             * so that aio_add_sqe() support is available across all threads.
++             */
++            need_io_uring = true;
++            return;
++        }
++        if (need_io_uring) {
++            error_propagate(errp, local_err);
++            return;
++        }
++
++        /* Silently fall back on systems where io_uring is unavailable */
++        error_free(local_err);
+     }
++#endif /* CONFIG_LINUX_IO_URING */
+ 
+     fdmon_epoll_setup(ctx);
+ }
+ 
+ void aio_context_destroy(AioContext *ctx)
+ {
++#ifdef CONFIG_LINUX_IO_URING
+     fdmon_io_uring_destroy(ctx);
++#endif
+ 
+     qemu_lockcnt_lock(&ctx->list_lock);
+     fdmon_epoll_disable(ctx);
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index 4b6dc8903f..3181601767 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -45,6 +45,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include <poll.h>
++#include "qapi/error.h"
+ #include "qemu/rcu_queue.h"
+ #include "aio-posix.h"
+ 
+@@ -369,7 +370,7 @@ static const FDMonOps fdmon_io_uring_ops = {
+     .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+ };
+ 
+-bool fdmon_io_uring_setup(AioContext *ctx)
++void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+ {
+     int ret;
+ 
+@@ -377,15 +378,14 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+ 
+     ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+     if (ret != 0) {
+-        return false;
++        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
++        return;
      }
  
-     /* Only prepend guest name if -msg guest-name and -name guest=... are set */
-diff --git a/util/log.c b/util/log.c
-index 2642a55c59..baa33ad8f1 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -22,6 +22,7 @@
- #include "qemu/range.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qemu/message.h"
- #include "qemu/cutils.h"
- #include "trace/control.h"
- #include "qemu/thread.h"
-@@ -151,26 +152,12 @@ static __thread bool incomplete;
- 
- void qemu_log(const char *fmt, ...)
- {
--    FILE *f;
--    g_autofree const char *timestr = NULL;
+     QSLIST_INIT(&ctx->submit_list);
+     ctx->fdmon_ops = &fdmon_io_uring_ops;
+     ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
+             ctx->fdmon_io_uring.ring_fd, G_IO_IN);
 -
--    /*
--     * Prepare the timestamp *outside* the logging
--     * lock so it better reflects when the message
--     * was emitted if we are delayed acquiring the
--     * mutex
--     */
--    if (message_with_timestamp && !incomplete) {
--        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
--        timestr = g_date_time_format_iso8601(dt);
--    }
--
--    f = qemu_log_trylock();
-+    FILE *f = qemu_log_trylock();
-     if (f) {
-         va_list ap;
+-    return true;
+ }
  
--        if (timestr) {
--            fprintf(f, "%s ", timestr);
-+        if (!incomplete) {
-+            qmessage_context_print(f);
-         }
- 
-         va_start(ap, fmt);
+ void fdmon_io_uring_destroy(AioContext *ctx)
 -- 
-2.50.1
+2.51.0
 
 
