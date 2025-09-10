@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421C3CA101F
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 16:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E06DCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Sep 2025 17:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwO9M-00062j-BS; Wed, 10 Sep 2025 12:58:28 -0400
+	id 1uwODC-0008CS-33; Wed, 10 Sep 2025 13:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwO98-0005zL-Bd
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:58:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwODA-0008Bn-PQ
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 13:02:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwO92-0002zD-NC
- for qemu-devel@nongnu.org; Wed, 10 Sep 2025 12:58:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwOD6-0003jC-St
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 13:02:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757523486;
+ s=mimecast20190719; t=1757523737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iOhRCgAyRJXEMcLeQWG0deiOP5qmzjyOQ1uX4+YCtEo=;
- b=RZllqM3qWalZnUXMfrs/s725loF3zyh3quBLTv0fGIofzYgh6TlBMiH9RK0BrRyBZY6FpF
- CqEoZgg8DLIgweI2DVoWvXll8p/pxWEcTX0ekz52PJUH3ihTpSIGpOqcAGcKJeYL81FqMp
- Fy3iwSyrxyI43vNRQ1dQXr5FVuFLtVU=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Z5ReGiGY6uadiKJ+QzUjrPbDSpgbi9ZwcLfupHAT/So=;
+ b=XCmwMOidlDASkw9agBRM3x668DbWRcUgRGaQjJastWt3At11/CjIgGOLR5eZeBDOnk460k
+ js6Q2cAs24cpKldAO1ubBu+RFgjCSUsesxqUk6yKG8tEoloZbu5HK0vVkgbTons1PaFbx2
+ W3kHnbM7HtoGdD9IH2GFEL1naxxta/Q=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-0lcZUGkaOSyfm1NeV433RA-1; Wed, 10 Sep 2025 12:58:04 -0400
-X-MC-Unique: 0lcZUGkaOSyfm1NeV433RA-1
-X-Mimecast-MFC-AGG-ID: 0lcZUGkaOSyfm1NeV433RA_1757523484
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-7248ed9f932so88176376d6.3
- for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:58:04 -0700 (PDT)
+ us-mta-176-bO4A4E2hPLiu-aOrr2ULUQ-1; Wed, 10 Sep 2025 12:47:30 -0400
+X-MC-Unique: bO4A4E2hPLiu-aOrr2ULUQ-1
+X-Mimecast-MFC-AGG-ID: bO4A4E2hPLiu-aOrr2ULUQ_1757522850
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-721094e78e5so75671626d6.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Sep 2025 09:47:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757523484; x=1758128284;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iOhRCgAyRJXEMcLeQWG0deiOP5qmzjyOQ1uX4+YCtEo=;
- b=OjTpBbhyf1l2roJBpuZY8M0gXiEprjsQPXRaYiOcngtpdbH7gTGj1N6tZJSpqo7Bmv
- H64Aoybn50+UJStgm7BHHqOZ0t4470vRw/rawy+3U4uYxKfC1k3bjti0vofkpNG+kfOV
- PufPlvj59vVvMp65bfL86YDcUIokYpXhAprcUusCRt8NycoTQfRAML5+X1qr+v1xr0lh
- RhmdCJPCSTYZSRNEg75g7tHoU1kY11oMgGmi19dACjirTO+5kTYi9+twvpLan5Jhp93s
- 9/8ESzKRumqKV8o+eYZ/wEktcu5EOG0Vq4kBigRbxkbdhTZfIR72+0D0EQ9AMZZSHycb
- vVIg==
+ d=1e100.net; s=20230601; t=1757522850; x=1758127650;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z5ReGiGY6uadiKJ+QzUjrPbDSpgbi9ZwcLfupHAT/So=;
+ b=nJynXcfNrP8RNNFtxZE/Jhye19krzjIYD5bgOlA0XmwAvVLWagTkvLXJF5+qSMDpC8
+ kU1TYdKegBFcOMult7gRHg1Vl9wH5Q/mFUUsT+BhYNBruPU25gO6OARqOg6g2co3tzM5
+ 4+nrhbSmQcaHgcMU6d2JOyz96RPoogUZyueK+cYWsmUMUL++FL3pCjgbhKbLFOsqeD06
+ ueLqzS5ahHLP8tMdGTuHkJeUcyUyGSzWnaeDwhF1Am8mVscodI8XKoZ3kAEBZjHO5vlT
+ RDtGu4+UEjbyVSGehOwvrmndFj3THH3/jCvFJg5BdzGr2lu8w81gPxMWAZKBy3ihAeyx
+ 9I6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWmgsD1IZAeyHZQw8VNcPtQAaZffZT2BJ8gW4gSKZTkC24OKAG5CiuWCY4vzT7EpZ2yNR0huP7yjqs@nongnu.org
-X-Gm-Message-State: AOJu0YxI6pPBUULNqGFcfYzBDvLX/Jn3bn+aaBCVIZOwSDNSlRK2olVT
- xXyvje8DXYLQQEnJ/MLxAtJ7w1KveZBA2GGK84af6P4Pw+/HJJlEUN9YUevWc2qgnldT/mr7e8S
- zgJMDG5W80N+cNdgTgK9By4eOC8qdKZ9xQFfq2TmtTAVDaqx2d5ekPIW0bDf2K4r4
-X-Gm-Gg: ASbGncuhQYDNBpSE7bz9dmGYa9F6xIQjYmNK69Zr/BBeKPw+c485W7fTyFwYhxQTDV2
- S0c8LrWHwU417Q3bXYfzvptxYzBFrX9LevZDAWwgf2WtOqDxT+UTjnApcg7ZAa93s0STz9iegeL
- v9qBFlRKFSpnFWk0GKVvWILJvFSTvaQlkzNFfpD2EdG/woTDTAUPVnepc3IpOnZiGD6TsVsqNut
- G22Tz4/fTTZJrHyRTC47FRyj5TvpiSJ55jN0tk6j2vBbg/2nG33WEpa9SZk0t6KnZvTE/5H8VCD
- CqJAT646usY5WklUlj3U9tjv+HV/g1B62pYmJBcndkFViTpWoiRt89tisbxhs3tlIokqTvUSMe9
- pRaMDg1ZoVTsRuXqDEUS/xg==
-X-Received: by 2002:a05:6214:1c83:b0:70d:fd01:992d with SMTP id
- 6a1803df08f44-739256c25b4mr164636336d6.16.1757523483795; 
- Wed, 10 Sep 2025 09:58:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHK6HqpGtVbM0zvqVDvnmYUTTA2b55SBs61E2OBK/3jHfjpZ6CDt0Ulv7Kd799DGXWLuXEKqw==
-X-Received: by 2002:a05:6214:1c83:b0:70d:fd01:992d with SMTP id
- 6a1803df08f44-739256c25b4mr164635996d6.16.1757523483183; 
- Wed, 10 Sep 2025 09:58:03 -0700 (PDT)
+ AJvYcCUV9N4mK2ga0/IBkKb0U0gvb4e3YXXC4K202upKSVT+6DsDSG0V0Ea+YAraVFMppDIUqdAUUpMtK+uv@nongnu.org
+X-Gm-Message-State: AOJu0YxmAdD+yE4MLQY0Sx0fbJ8jI30M9sWeG97JPHQ78T+IT3WN2DOO
+ /S6OohvYirj8HijTWlT5+bufP4az1fSbNiYoOwj1Yt3N1sAPXwiu04cNiaqfW62ZHqJ4u2txLlz
+ F1FyCNm6GvuctCJd0bPsh0AzJ2Eq+bjPtDG18UgtUpvAVstzH3cP+JAxs
+X-Gm-Gg: ASbGncvzEirQMgtcJeGsmZQVQXlXWWCql8Ym420VDmWTdmGQo9zp1W1HO1T2pxCFiIt
+ QOLdvGOcoZvmHvsLhSYhkf2E6g/PtioKhPpluY6po8DfmDzfuovNVDOi0/Nh2aQQthAfbOehZ46
+ xQ8X+TA9vuYEABGJIGr2jFa+PnReVXFqkZiOrS7uo6OPwcRcIBt3xSVtWKKjgG89RKXDviHkHIy
+ P6aCAF8lgCH9rwHKhqWybUiv3OxC4m06hcs3xah6OUiBOFHNCRfwH4SoP7HNSVSsaBRpfZhmzFD
+ XyZC/W4jSbUCw2RVgL2ef+6GoW/T/7T4H1Ehzb6HwHrdV4DQE36YJqDOu/25uQSJvjy4o9LjWvn
+ 2VJiqejyUNw6/PdHYQULdPQ==
+X-Received: by 2002:a0c:f092:0:20b0:73b:d22e:14c5 with SMTP id
+ 6a1803df08f44-73bd22e1629mr142923676d6.3.1757522849734; 
+ Wed, 10 Sep 2025 09:47:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzREP4taqWZIQoMGNLRYw2eALmGxP7o151JaOGGRFZmkuAxbM33pCfbvI1NdbTRFQ4BetYtA==
+X-Received: by 2002:a0c:f092:0:20b0:73b:d22e:14c5 with SMTP id
+ 6a1803df08f44-73bd22e1629mr142923186d6.3.1757522849145; 
+ Wed, 10 Sep 2025 09:47:29 -0700 (PDT)
 Received: from x1.local
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7252d6ad05asm140097766d6.62.2025.09.10.09.58.01
+ 6a1803df08f44-72925b87571sm124927506d6.6.2025.09.10.09.47.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Sep 2025 09:58:02 -0700 (PDT)
-Date: Wed, 10 Sep 2025 12:58:00 -0400
+ Wed, 10 Sep 2025 09:47:28 -0700 (PDT)
+Date: Wed, 10 Sep 2025 12:47:26 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Steven Sistare <steven.sistare@oracle.com>,
- "Chaney, Ben" <bchaney@akamai.com>, Jason Wang <jasowang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hamza Khan <hamza.khan@nutanix.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC V2 0/8] Live update: tap and vhost
-Message-ID: <aMGuGDnjsfo8wBU-@x1.local>
-References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
- <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
- <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
- <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
- <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
- <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
- <c8b799f7-c549-4534-a156-99df204e62ec@yandex-team.ru>
- <aLsM-_Bfj2bYtwSX@x1.local>
- <e93c1318-7530-4d02-95e1-bf60a6142e75@yandex-team.ru>
- <b742f0e7-3ee6-4824-9713-b45ba390df1e@yandex-team.ru>
+Cc: berrange@redhat.com, qemu-devel@nongnu.org, farosas@suse.de,
+ steven.sistare@oracle.com
+Subject: Re: [PATCH v3] migration/qemu-file: don't make incoming fds blocking
+ again
+Message-ID: <aMGrnua2KHDerfMi@x1.local>
+References: <20250910143156.1053779-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b742f0e7-3ee6-4824-9713-b45ba390df1e@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250910143156.1053779-1-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,7 +96,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,130 +112,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 12:35:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > I wished devices could opt-in to provide its own model so that it is
-> > > prepared to boot the QEMU without FDs being there and pause itself at that
-> > > stage if a load would happen.
-> > 
-> > So, you suggest to postpone the initialization up to "start" even for "normal start"
-> > of QEMU, to avoid these endless "if (we are in our special local-incoming/CPR mode)".
-> > 
-> > Actually, that's how normal migratable devices live: we don't have "if (incoming)" for
-> > every step of initialization/start currently.
-> > 
-> > I'll see, could I apply the concept to TAP local migration series.
+On Wed, Sep 10, 2025 at 05:31:56PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> In migration we want to pass fd "as is", not changing its
+> blocking status.
 > 
+> The only current user of these fds is CPR state (through VMSTATE_FD),
+> which of-course doesn't want to modify fds on target when source is
+> still running and use these fds.
 > 
-> Hmm, not so simple.
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
 > 
-> OK, my current series behave like this:
+> v3: RESEND, add qemu-devel to CC, sorry for the noise
+> v2: rework, following Daniel's suggestion to use flag.
 > 
-> init:  if tap.local_incoming then do nothing else open(/dev/net/tun)
+>  include/io/channel.h  |  1 +
+>  io/channel-socket.c   | 12 ++++++++----
+>  io/channel.c          |  2 +-
+>  migration/qemu-file.c |  3 ++-
+>  4 files changed, 12 insertions(+), 6 deletions(-)
 > 
-> incoming migration: get fd, and continue initialization
-> 
-> 
-> Assume, we want to avoid extra "if"s, and just postpone the initialization to vm start point, like
-> 
-> init: do nothing. set fd=-1
-> 
-> incmoing migration: get fd (if cap-fd-passing enabled)
-> 
-> start: open(), if fd==-1, continue initialization
-> 
-> 
-> But that mean that we postpone possible errors up to start as well, when we cannot rollback the
-> migration..
+> diff --git a/include/io/channel.h b/include/io/channel.h
+> index 234e5db70d..5394f50768 100644
+> --- a/include/io/channel.h
+> +++ b/include/io/channel.h
+> @@ -36,6 +36,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
+>  
+>  #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
+>  #define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
+> +#define QIO_CHANNEL_READ_FLAG_PRESERVE_BLOCKING 0x4
 
-Yep, doesn't sound like a good idea.  We also don't want to slow down VM
-starts.
+Shouldn't the name reflect FD somehow?  Or it can imply preservation
+blocking for the channel itself.
 
-> 
-> 
-> Alternatively, we can postpone open() to post-load.. But what for normal start of vm?
-> 
-> init: if INMIGRATE then do nothing, else open()
-> 
-> incoming: get fd (if cap-fd-passing)
-> 
-> post-load: open(), if fd==-1, continue initialization
-> 
-> start: if fd is still -1, open(), continue initialization
-> 
-> that avoids extra tap.local_incoming option, but:
-> 
-> - seems even more complicated
-> - open() and some initialization is done in downtime, when we don't enable cap-fd-passing
-> 
-> 
-> So, now I think, that my current approach with additional "local-incoming" per-device option is better.
-> 
-> What do you think?
-> 
-> 
-> Probably I'm trying to optimize wrong "if". As "if local-incomging .." in generic layer is a lot
-> more expensive than checking the options in device code.
-> 
-> But the idea is generic: for non-fd migration, we do as much initialization at start as possible,
+  QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING 
+  QIO_CHANNEL_READ_FLAG_PRESERVE_FD_BLOCKING 
+  ...
 
-AFAIU, the non-fd migrations works simply because the portion that VMSD
-loads will always be over-writeable.  When it's not, a pre_load() or
-post_load() would make it work.
+>  
+>  typedef enum QIOChannelFeature QIOChannelFeature;
+>  
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 3b7ca924ff..2f6e2d84a3 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -464,7 +464,8 @@ static void qio_channel_socket_finalize(Object *obj)
+>  
+>  #ifndef WIN32
+>  static void qio_channel_socket_copy_fds(struct msghdr *msg,
+> -                                        int **fds, size_t *nfds)
+> +                                        int **fds, size_t *nfds,
+> +                                        bool preserve_blocking)
+>  {
+>      struct cmsghdr *cmsg;
+>  
+> @@ -497,8 +498,10 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>                  continue;
+>              }
+>  
+> -            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+> -            qemu_socket_set_block(fd);
+> +            if (!preserve_blocking) {
+> +                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+> +                qemu_socket_set_block(fd);
+> +            }
+>  
+>  #ifndef MSG_CMSG_CLOEXEC
+>              qemu_set_cloexec(fd);
+> @@ -556,7 +559,8 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+>      }
+>  
+>      if (fds && nfds) {
+> -        qio_channel_socket_copy_fds(&msg, fds, nfds);
+> +        qio_channel_socket_copy_fds(
+> +            &msg, fds, nfds, flags & QIO_CHANNEL_READ_FLAG_PRESERVE_BLOCKING);
+>      }
+>  
+>      return ret;
+> diff --git a/io/channel.c b/io/channel.c
+> index ebd9322765..50d5f7b10b 100644
+> --- a/io/channel.c
+> +++ b/io/channel.c
+> @@ -58,7 +58,7 @@ ssize_t qio_channel_readv_full(QIOChannel *ioc,
+>  {
+>      QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
+>  
+> -    if ((fds || nfds) &&
+> +    if ((fds || nfds || (flags & QIO_CHANNEL_READ_FLAG_PRESERVE_BLOCKING)) &&
 
-> to get early errors and to decrease further downtime. For fd migration, we postpone fd-initialization
-> up to post-load stage. So, we have "if"s in device code to handle it, and we have "if"s in generic
-> code to support device, which doesn't still have fully initialized backend (no fds during init).
+Not a huge deal, but.. IMHO we can simply ignore this flag when fds==NULL.
 
-What I meant is, IMHO we should try to not use things like
-cpr_is_incoming() too deep into the device stack, and we should use it as
-less frequent as possible.
+It can also make callers' lives slightly easier too by always passing in
+this flag when necessary, like in below.
 
-In many cases, IIUC it's because the current device emulation code is not
-yet separating the FD installation (and also whatever that can be relevant
-to the FD) from the realize() process.  Hence a quick way to make it work
-is to add cpr_is_incoming() or similar helpers either to skip some process,
-or do something different with an existing FD.
-
-If we can have device emulation be prepared with such, in an ideal world
-and just to show what I am thinking.. it could be:
-
-  - realize()
-    - realize_frontend()
-    - if migration is incoming, and backend should be postponed (for fd
-      loading, or maybe something else)?
-      - ... realize_backend() postponed until post_load()...
-    - else
-      - realize_backend()
-
-If all of the devices would support such split of realize() process
-v.s. FDs / backends, _maybe_ we can remove all cpr_is_incoming() but move
-it upper and upper until qdev code, like:
-
-device_set_realized():
-        if (migration_incoming_XXX() && dc->realize_prepare) {
-            /*
-             * This is only part of realize(), rest done in a separate VMSD
-             * post_load().
-             */
-            dc->realize_prepare(dev, &local_err);
-            if (local_err != NULL) {
-                goto fail;
-            }
-        } else if (dc->realize) {
-            dc->realize(dev, &local_err);
-            if (local_err != NULL) {
-                goto fail;
-            }
-        }
-
-In general, that "whether is incoming fd migration" concept will be passed
-down from higher the stack, rather than randomly checked very deep in
-stack.  That should IMHO make code more maintenable.
-
-But that's only my two cents.. so please take that with a grain of salt.  I
-don't really know device code well to say.
-
-Thanks,
+>          !qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS)) {
+>          error_setg_errno(errp, EINVAL,
+>                           "Channel does not support file descriptor passing");
+> diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> index b6ac190034..92c7b5678b 100644
+> --- a/migration/qemu-file.c
+> +++ b/migration/qemu-file.c
+> @@ -324,6 +324,7 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+>      size_t nfd = 0;
+>      int **pfds = f->can_pass_fd ? &fds : NULL;
+>      size_t *pnfd = f->can_pass_fd ? &nfd : NULL;
+> +    int flags = f->can_pass_fd ? QIO_CHANNEL_READ_FLAG_PRESERVE_BLOCKING : 0;
+>  
+>      assert(!qemu_file_is_writable(f));
+>  
+> @@ -340,7 +341,7 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
+>  
+>      do {
+>          struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
+> -        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
+> +        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, flags,
+>                                       &local_error);
+>          if (len == QIO_CHANNEL_ERR_BLOCK) {
+>              if (qemu_in_coroutine()) {
+> -- 
+> 2.48.1
+> 
 
 -- 
 Peter Xu
