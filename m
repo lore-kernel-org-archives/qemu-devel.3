@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7728CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 03:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C33CA1016
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 03:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwYIY-0007qg-UT; Wed, 10 Sep 2025 23:48:39 -0400
+	id 1uwYQN-0001Nc-TD; Wed, 10 Sep 2025 23:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uwYIQ-0007pm-Lr; Wed, 10 Sep 2025 23:48:30 -0400
+ id 1uwYQL-0001N1-JJ; Wed, 10 Sep 2025 23:56:41 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uwYIO-0008Mm-R3; Wed, 10 Sep 2025 23:48:30 -0400
+ id 1uwYQJ-0001Kk-MA; Wed, 10 Sep 2025 23:56:41 -0400
 Received: from [10.105.8.218] ([192.51.222.130]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58B3lOCt056090
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58B3tbpE058779
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 11 Sep 2025 12:47:24 +0900 (JST)
+ Thu, 11 Sep 2025 12:55:38 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=B5SaaKSLxy/q/pHcFofKq+wDYAl24gyO7ZseYqJGDBQ=; 
+DKIM-Signature: a=rsa-sha256; bh=vKzriTajaOwrhNhX6+bC4vwTxqTITUSOmywM3fktt5k=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1757562445; v=1;
- b=KFWsEPKxHcy7jfIHfyGkzKZvRhSdsLLg6tFJYIPNdnOMcmurmoqbeTrBnWyR8VcB
- wWt6juHxlxgeSsypP8oPHUpNICfpd8Sbts3ytXHWnn0MsnBcW5OwdusssGleJZ+g
- rWccWM1JT7RFfwLGsAA34mqjkk2v2mK5xV2p/PZ3WN3qVHV7ZFyFAaJBd9RsJp/t
- 15lx/nPMHr1PRq8OpFm0/Z+agOwccedChx0oZfeL7dg7S46kGRW1Akd5rYVBDjtm
- sNRkngQ5KwNSCQywPQmmiYVGAWn428HqsiD4H5lMm8j8dOsk1Gbsfs2tE8sjZiNk
- GHwLCbPmtu8B2QJiOm6gCw==
-Message-ID: <1a5b7471-1799-44bd-9c1c-c3c07e478bb8@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 11 Sep 2025 12:47:24 +0900
+ s=rs20250326; t=1757562938; v=1;
+ b=Kx1iAYmHYGSJgfdIPICYshjGzYxlVmB9JBcxT6qC+tYhjksMT4G74/0FQvk47Dxk
+ zRqjdfnW9LMf7sDIrwFwnJzjdmF9FYDq1zcPvZ/PKJYcfyHp2U3ZuIXR1gFwbosM
+ 7x334BvF2erL7WIKE6IghfGGfbJo3V5y9Go7MJ8Os2DpApvmjGbHVgVsFWlCH6ai
+ AcfbYXbKDewnNa+krg4cBlWW9pcwVX6xybAI7Bx5J6bXPmbR8Qe3JosH5+hTd7iq
+ Qp6YFhrQ1dRfbrmuQA+0Wsaclj0G1Ffqk3bs772+ksUNdWkuhjRcCn2hgN0S0omg
+ kv56MdnVK42XoWk5WEqp3Q==
+Message-ID: <4eb3769b-aa0f-49ff-8ff5-3370ea752ba1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 11 Sep 2025 12:55:37 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
+Subject: Re: [PATCH 10/22] qdev: Automatically delete memory subregions
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -71,11 +71,11 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <aMHidDl1tdx-2G4e@x1.local>
+ <20250906-use-v1-10-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <aMHpQbx1z_p6bC3E@x1.local>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aMHidDl1tdx-2G4e@x1.local>
+In-Reply-To: <aMHpQbx1z_p6bC3E@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -102,58 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/11 5:41, Peter Xu wrote:
-> On Sat, Sep 06, 2025 at 04:11:11AM +0200, Akihiko Odaki wrote:
->> Children are automatically unparented so manually unparenting is
->> unnecessary.
->>
->> Worse, automatic unparenting happens before the insntance_finalize()
->> callback of the parent gets called, so object_unparent() calls in
->> the callback will refer to objects that are already unparented, which
->> is semantically incorrect.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   hw/vfio/pci.c | 4 ----
->>   1 file changed, 4 deletions(-)
->>
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 07257d0fa049b09fc296ac2279a6fafbdf93d277..2e909c190f86a722e1022fa7c45a96d2dde8d58e 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
->>           vfio_region_finalize(&bar->region);
->>           if (bar->mr) {
->>               assert(bar->size);
->> -            object_unparent(OBJECT(bar->mr));
->>               g_free(bar->mr);
->>               bar->mr = NULL;
->>           }
->> @@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
->>   
->>       if (vdev->vga) {
->>           vfio_vga_quirk_finalize(vdev);
->> -        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
->> -            object_unparent(OBJECT(&vdev->vga->region[i].mem));
->> -        }
->>           g_free(vdev->vga);
->>       }
->>   }
+On 2025/09/11 6:10, Peter Xu wrote:
+> On Sat, Sep 06, 2025 at 04:11:19AM +0200, Akihiko Odaki wrote:
+>> A common pattern is that to delete memory subregions during realization
+>> error handling and unrealization. pci automatically automatically
+>> deletes the IO subregions, but the pattern is manually implemented
+>> in other places, which is tedious and error-prone.
 > 
-> So the 2nd object_unparent() here should be no-op, seeing empty list of
-> properties (but shouldn't causing anything severe), is that correct?
+> I don't think they're the same?  What is the ultimate goal of this change?
 
-No. The object is finalized with the first object_unparent() if there is 
-no referrer other than the parent. The second object_unparent() will 
-access the finalized, invalid object in that case.
+Covering all devices in the common code is less tedious and error-prone 
+because the same logic will not be duplicated by the subclasses.
 
 > 
-> I think it still makes some sense to theoretically allow object_unparent()
-> to happen, at least when it happens before owner's finalize().  IIUC that
-> was the intention of the doc, pairing the memory_region_init*() operation.
+> PCI core only detachs all the BARs from the address space registered from
+> pci_register_bar() explicitly.  It's not an object_dynamic_cast() detaching
+> every MR not matter what it is..
 
-Perhaps so, but this patch is only about the case where 
-object_unparent() is called in finalize().
+All devices share one semantics: they are exposed to the guest only when 
+they are realized. Therefore, every MRs should be detached after 
+unrealization, no matter what it is.
+
+> 
+> The other thing it does is detaching the DMA root memory region.
+> 
+> I'm not fluent with pci, but IMHO it's good to keep those explicit.
+
+Explicit detaching is "tedious and error-prone"; more concretely, there 
+are the following two error situations:
+1. Forget the detachment and cause a memory leak.
+2. Perform the detachment after finalization, which could have happened 
+with a manual detachment in "[PATCH 11/22] vfio-user: Do not delete the 
+subregion".
 
 Regards,
 Akihiko Odaki
