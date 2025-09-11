@@ -4,97 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B2CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 18:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FE3CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 19:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwm51-00028U-UF; Thu, 11 Sep 2025 14:31:36 -0400
+	id 1uwmaD-0000gn-QF; Thu, 11 Sep 2025 15:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwm4B-0001bh-2b
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:30:44 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwm48-0007Lm-EY
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:30:42 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-45decc9e83eso9822185e9.3
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 11:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757615435; x=1758220235; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xd6XaDYT0WdSg/M97tLW+2AqgiOlqQ1VEz6hpdxUHm8=;
- b=nFyUYRZLjGyQ8iQZftcLHBfE2DjhG4rVBqorWEfU2/NBfhdT2QmL4k2q5j/y4KrEcl
- gZV+drgJrLyXwro3gMNHvFNa0yPCtc6iPO2vfutuqN87xSyU6eucUh/FDEUj6aJjXG5r
- lp64+myPfOdaAV0lO+TA64OHVgrQjGq4z3PotQGIe2k8Tt88c2xovmfkE/XlHOHP5SXQ
- Rz+eM3gHesnl3Miggk5mXhe8JtUPIE60BAKcdyVX8DUnmUf24mVAT3IejGJ3IfoWND/V
- S4tTKKepUwIUn4jYJcSV4SNY75jz/BDlckfB7/2A7VeRx/7ZBJbnGx+56C47tpO9RTVo
- Ek9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757615435; x=1758220235;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xd6XaDYT0WdSg/M97tLW+2AqgiOlqQ1VEz6hpdxUHm8=;
- b=DMZdAc9A91iz7Mu+x1iffs0aTfvGniOxjoKANjz08X7tLp9pXDwdkodeE39UvvWizi
- LqSUARZ7fJmLDI+unKRwCPu2SpbA2Rou9eY2y4oXJU+Eu/H++eO11pXInVArgp9rw8fx
- WEwzNh0wYHfXDIOgaljtuJA58TvWiynVhvDaZ421868BO3Cei+Vhj7WmMZsN+NJ7hNeg
- T+dWLUkWwpHOsErut70YRBuZrTzGv/B/9LurwYE7aCMGhF95p/kAvk85F6m8Kelx/gVn
- BTY7eu9V6khvzsf1WlrUrfL92F3UCK/VurDi22nJcwfImBT2FPsKPR64Rr5qxfCkBKNP
- pEhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyjrzLt1WJOZfGuslF0ok42EbxI6mVW3mHbGRpFtDfI+I68IGXvqiJ54dWu8CMTrFZ6683WWeZMRUu@nongnu.org
-X-Gm-Message-State: AOJu0YyQBzHnhx6B8CJ4C0yBph3y1ibNa0MSYLESzVQqAzZ3SSdQkVsN
- rPiDXtW07omOhjsur3R57thGVvlIgI/f33deEFPN3Co/F/IMGih7EH2JZKt92nNsTes=
-X-Gm-Gg: ASbGncuiGqog1nHEStLQW8ksRGe7ohq7EIm4XasJ+y4KiI6U6hcuxVbOeFpzXv1DIWN
- zLRDEkdV9RdZcYxkLcP8u+4SRANL0FWv5idLy+lUpUvmF83tCah4b9dBCa4ymkGbUoadjqYxtjl
- gCjTENkxa/A154AcRVmqJFFLVB/hBFvVFShuDOvP3pC8PVvpWf7i1fRNkzPwaE5J1p+Cr+UHXib
- mgHkoSr3q/3rWZMQNdT0xwAc+FN2RoV7xUUlGqp8kmC36tUG36RF9ki2SiqvRQLRPgam9G/bmdY
- IOujwiYJ9UumqBMOpI9OCZFl1VlBiLR/W0pKRR1fa9W3EAlRXEi0baHAYcJBxh+JbWTuDP6N8Z/
- TlWb5ZGV1qiukZgxoccNxRhx0jKmCTLaJtuqrR166pV5GP/x7t73jmCg22BBlbXgRGl9t
-X-Google-Smtp-Source: AGHT+IHif9JZ193Qkx9GbmAVoffwrUcePmf96v6VHN97P45gZNPsNodLr12Rk4aVLhUO3IkHS7724Q==
-X-Received: by 2002:a05:6000:2dc7:b0:3cb:285f:8d9c with SMTP id
- ffacd0b85a97d-3e765a48a8dmr252232f8f.48.1757615435204; 
- Thu, 11 Sep 2025 11:30:35 -0700 (PDT)
-Received: from [172.16.30.12] (ipnet-92-225.static.simnet.is. [157.157.92.225])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760776badsm3472160f8f.5.2025.09.11.11.30.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 11:30:34 -0700 (PDT)
-Message-ID: <3791c8ff-fcf5-4312-b6dc-c7ff172f7f8d@linaro.org>
-Date: Thu, 11 Sep 2025 18:30:23 +0000
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uwmaC-0000gV-3S; Thu, 11 Sep 2025 15:03:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uwma9-00032E-M9; Thu, 11 Sep 2025 15:03:47 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58BBplhA028539;
+ Thu, 11 Sep 2025 19:03:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=am8pHU
+ kA2dNSFWw45qlOHaDoyBfLnn9kUcY749v6c1I=; b=KXGg/A9/IH2Zc3zR7zStOR
+ uy0R1b4RvslMG4YpqXrUPwqs6NnV4vbw7FLJ5eio9tBReNjKUXzrQE6xTo3gRMdo
+ lsqFc9nWq9AiwZaSN1702L4yGL9hMkZU+KaN2ULfsiNy0njy3yyWFeHzh0GW9Tjr
+ Q3Wt9K1vlyg6iaMJZQYdFja+4SC2cGus599jcQH7/ik+NtjN2l24znpZBiA0NtLL
+ dd/jz0hxEsxNDhvlcY6UhjMTTe67dQzZShXQ306+o4W2veULbPbKvs84808hbeQy
+ HsxZB38Y9LzIO7NKZNbdxIRTBiHtizf3G278V21hYPMMeMfurjNG1HrPcIZMLJ0Q
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490ukeubtu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 11 Sep 2025 19:03:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58BI5usA017219;
+ Thu, 11 Sep 2025 19:03:42 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4911gmq5hm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 11 Sep 2025 19:03:42 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58BJ3eCw31523470
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 11 Sep 2025 19:03:40 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 745BC5805A;
+ Thu, 11 Sep 2025 19:03:40 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F413258054;
+ Thu, 11 Sep 2025 19:03:38 +0000 (GMT)
+Received: from [9.61.156.147] (unknown [9.61.156.147])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 11 Sep 2025 19:03:38 +0000 (GMT)
+Message-ID: <ffb4d32b-d2bc-45f0-91ce-6472d64c02bb@linux.ibm.com>
+Date: Thu, 11 Sep 2025 15:03:37 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: The different ways QEMU logs stuff
-To: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Greg Kurz <groug@kaod.org>
-References: <87bjnhgpg8.fsf@pond.sub.org>
- <2ae622b3-4210-494e-95a3-cc20219779a7@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 01/29] Add boot-certs to s390-ccw-virtio machine type
+ option
+To: Markus Armbruster <armbru@redhat.com>
+Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ alifm@linux.ibm.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-2-zycai@linux.ibm.com> <87v7lpjvsw.fsf@pond.sub.org>
 Content-Language: en-US
-In-Reply-To: <2ae622b3-4210-494e-95a3-cc20219779a7@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <87v7lpjvsw.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDE5NSBTYWx0ZWRfX8L0OARgtIq0P
+ efRkprd8fX5u9P9DNBsaLayhO0O5+QlzaxS8ckVLGHR5YS2TqItBzGf5OZxlhSd6kWTPwjoyjE+
+ WSmyX7sn0ax20UCHXWzBDLuX+va5vtrVCRUABwJcPryLVF5aKCWW8+0QeDWkkX0KDihp0uMsdA6
+ Nf2kyHkMLA0X8KZYFmPflzRhAGGCEn+2QtItwIvsQ9xj7b43l9pEnKiAFS9McMJ6KGCqqcxezjA
+ leGk7yrJanflcZQhD587M/uNt4Xr+5MgRxIKZR+srswmAuhwCNtBsxiZ026W61AoPZYkCPwyjWJ
+ j5u/QiJNgOCVDW5l4dHEpb0JU1BJKIa7Nls8SObbkrJrkQ2NHa4lxm6+s0pR9qUG0q9WxkSVzEP
+ EaP7SYOO
+X-Proofpoint-ORIG-GUID: 01yiro66y8tJQnRWHsf29D9RrQS6le6G
+X-Proofpoint-GUID: 01yiro66y8tJQnRWHsf29D9RrQS6le6G
+X-Authority-Analysis: v=2.4 cv=StCQ6OO0 c=1 sm=1 tr=0 ts=68c31d0f cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=jKY45INLLk0cNB3xUyoA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-11_03,2025-09-11_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060195
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,18 +125,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/25 14:49, Paolo Bonzini wrote:
->>    -d tid further splits per thread.
->>
->>    Splitting per thread feels fairly redundant once the prefix includes
->>    the thread name.  Thread names is easier to make sense of than numeric
->>    thread IDs in the split filenames.
+Thanks for the feedback.
+
+On 9/11/25 3:24 AM, Markus Armbruster wrote:
+> Zhuoying Cai <zycai@linux.ibm.com> writes:
 > 
-> https://lore.kernel.org/all/20220417183019.755276-1-richard.henderson@linaro.org/ says 
-> "this can be extremely helpful in debugging user-only threads".
+>> Introduce a new `boot-certs` machine type option for the s390-ccw-virtio
+>> machine. This allows users to specify one or more certificate file paths
+>> or directories to be used during secure boot.
+>>
+>> Each entry is specified using the syntax:
+>> 	boot-certs.<index>.path=/path/to/cert.pem
+>>
+>> Multiple paths can be specify using array properties:
+>> 	boot-certs.0.path=/path/to/cert.pem,
+>> 	boot-certs.1.path=/path/to/cert-dir,
+>> 	boot-certs.2.path=/path/to/another-dir...
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  docs/system/s390x/secure-ipl.rst   | 20 ++++++++++++++++++++
+>>  hw/s390x/s390-virtio-ccw.c         | 30 ++++++++++++++++++++++++++++++
+>>  include/hw/s390x/s390-virtio-ccw.h |  2 ++
+>>  qapi/machine-s390x.json            | 24 ++++++++++++++++++++++++
+>>  qemu-options.hx                    |  6 +++++-
+>>  5 files changed, 81 insertions(+), 1 deletion(-)
+>>  create mode 100644 docs/system/s390x/secure-ipl.rst
+>>
+>> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+>> new file mode 100644
+>> index 0000000000..9b3fd25cc4
+>> --- /dev/null
+>> +++ b/docs/system/s390x/secure-ipl.rst
+>> @@ -0,0 +1,20 @@
+>> +.. SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +Secure IPL Command Line Options
+>> +===============================
+>> +
+>> +New parameters have been introduced to s390-ccw-virtio machine type option
+>> +to support secure IPL. These parameters allow users to provide certificates
+>> +and enable secure IPL directly via the command line.
+> 
+> All too soon these parameters will no longer be new.  Consider something
+> like "The s390-ccw-virtio machine type supports secure TPL.  To enable
+> it, you need to provide certificates."
+> 
+>> +
+>> +Providing Certificates
+>> +----------------------
+>> +
+>> +The certificate store can be populated by supplying a list of certificate file
+>> +paths or directories on the command-line:
+> 
+> File is clear enough (use the certificate found in the file).  What does
+> directory do?
+> 
 
-Compare strace -ff.
+A directory contains a list of certificate files, and allowing both
+files and directories could make the CLI more flexible.
+
+>> +
+>> +.. code-block:: shell
+>> +
+>> +    qemu-system-s390x -machine s390-ccw-virtio, \
+>> +                               boot-certs.0.path=/.../qemu/certs, \
+>> +                               boot-certs.1.path=/another/path/cert.pem ...
+>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>> index c294106a74..9ac425c695 100644
+>> --- a/hw/s390x/s390-virtio-ccw.c
+>> +++ b/hw/s390x/s390-virtio-ccw.c
+>> @@ -45,6 +45,7 @@
+>>  #include "target/s390x/kvm/pv.h"
+>>  #include "migration/blocker.h"
+>>  #include "qapi/visitor.h"
+>> +#include "qapi/qapi-visit-machine-s390x.h"
+>>  #include "hw/s390x/cpu-topology.h"
+>>  #include "kvm/kvm_s390x.h"
+>>  #include "hw/virtio/virtio-md-pci.h"
+>> @@ -798,6 +799,30 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+>>      g_free(val);
+>>  }
+>>  
+>> +static void machine_get_boot_certs(Object *obj, Visitor *v,
+>> +                                   const char *name, void *opaque,
+>> +                                   Error **errp)
+>> +{
+>> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>> +    BootCertPathList **certs = &ms->boot_certs;
+>> +
+>> +    visit_type_BootCertPathList(v, name, certs, errp);
+>> +}
+>> +
+>> +static void machine_set_boot_certs(Object *obj, Visitor *v, const char *name,
+>> +                                   void *opaque, Error **errp)
+>> +{
+>> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>> +    BootCertPathList *cert_list = NULL;
+>> +
+>> +    visit_type_BootCertPathList(v, name, &cert_list, errp);
+>> +    if (!cert_list) {
+>> +        return;
+>> +    }
+>> +
+>> +    ms->boot_certs = cert_list;
+>> +}
+>> +
+>>  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>>  {
+>>      MachineClass *mc = MACHINE_CLASS(oc);
+>> @@ -851,6 +876,11 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>>              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
+>>              " to upper case) to pass to machine loader, boot manager,"
+>>              " and guest kernel");
+>> +
+>> +    object_class_property_add(oc, "boot-certs", "BootCertPath",
+> 
+> Isn't this a BootCertPathList, not a BootCertPath?
+> 
+
+If I understand correctly, would BootCerts also be the correct option to
+use here?
+
+>> +                              machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
+>> +    object_class_property_set_description(oc, "boot-certs",
+>> +            "provide paths to a directory and/or a certificate file for secure boot");
+>>  }
+>>  
+>>  static inline void s390_machine_initfn(Object *obj)
+>> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+>> index 526078a4e2..b90949355c 100644
+>> --- a/include/hw/s390x/s390-virtio-ccw.h
+>> +++ b/include/hw/s390x/s390-virtio-ccw.h
+>> @@ -14,6 +14,7 @@
+>>  #include "hw/boards.h"
+>>  #include "qom/object.h"
+>>  #include "hw/s390x/sclp.h"
+>> +#include "qapi/qapi-types-machine-s390x.h"
+>>  
+>>  #define TYPE_S390_CCW_MACHINE               "s390-ccw-machine"
+>>  
+>> @@ -31,6 +32,7 @@ struct S390CcwMachineState {
+>>      uint8_t loadparm[8];
+>>      uint64_t memory_limit;
+>>      uint64_t max_pagesize;
+>> +    BootCertPathList *boot_certs;
+>>  
+>>      SCLPDevice *sclp;
+>>  };
+>> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+>> index 966dbd61d2..3e89ef8320 100644
+>> --- a/qapi/machine-s390x.json
+>> +++ b/qapi/machine-s390x.json
+>> @@ -119,3 +119,27 @@
+>>  { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+>>    'features': [ 'unstable' ]
+>>  }
+>> +
+>> +##
+>> +# @BootCertPath:
+>> +#
+>> +# Boot certificate path.
+>> +#
+>> +# @path: path of certificate(s)
+>> +#
+>> +# Since: 10.1
+>> +##
+> 
+> No mention of file vs. directory.
+> 
+> Why do you wrap the file name in a struct?  One possible reason is
+> providing for future extensions.  Can you think of any?
+> 
+> If you extend it, the name BootCertPath could become suboptimal.
+> BootCertificate?
+> 
+
+I wrapped the path in a struct to follow the array-style structure used
+by cxl-fmw and smp-cache options (as Daniel suggested).
+
+```
+  It would be something like this on the CLI:
 
 
-r~
+boot-certs.0.path=/path/to/dir,boot-certs.1.path=/to/other/dir,boot-certs.2.path=/some/...
+```
+
+This could potentially leave room for future extensions, such as
+including details about the certificate (e.g., issuer, hashing
+algorithm, etc).
+
+>> +{ 'struct': 'BootCertPath',
+>> +  'data': {'path': 'str'} }
+>> +
+>> +##
+>> +# @BootCerts:
+>> +#
+>> +# List of boot certificate paths.
+>> +#
+>> +# @boot-certs: List of BootCertPath
+> 
+> Anti-pattern: the description text restates the type.
+> 
+>> +#
+>> +# Since: 10.1
+>> +##
+>> +{ 'struct': 'BootCerts',
+>> +  'data': {'boot-certs': ['BootCertPath'] } }
+> 
+> Where is this type used?
+> 
+
+Please correct me if I'm wrong, but from what I've seen, it is not used
+directly in the implementation. It provides a list property for
+BootCertPath, which makes the BootCertPathList definition valid and able
+to accept multiple paths. If BootCerts is removed, then BootCertPathList
+becomes underfined and results in compilation errors.
+
+>> diff --git a/qemu-options.hx b/qemu-options.hx
+>> index ab23f14d21..ac497eb3a0 100644
+>> --- a/qemu-options.hx
+>> +++ b/qemu-options.hx
+>> @@ -44,7 +44,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>>  #endif
+>>      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+>>      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
+>> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
+>> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
+>> +    "                boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file provides paths to a directory and/or a certificate file\n",
+>>      QEMU_ARCH_ALL)
+>>  SRST
+>>  ``-machine [type=]name[,prop=value[,...]]``
+>> @@ -205,6 +206,9 @@ SRST
+>>          ::
+>>  
+>>              -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
+>> +
+>> +    ``boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file``
+>> +        Provide paths to a directory and/or a certificate file on the host [s390x only].
+>>  ERST
+>>  
+>>  DEF("M", HAS_ARG, QEMU_OPTION_M,
+> 
+
 
