@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE6FCAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BACCAC594
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwczx-00033O-6A; Thu, 11 Sep 2025 04:49:45 -0400
+	id 1uwd1G-0003bB-8S; Thu, 11 Sep 2025 04:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwczv-000334-JD
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:49:43 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1uwd1D-0003VO-FR
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:51:03 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwczo-0004Zz-MQ
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:49:43 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3dcce361897so333537f8f.3
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 01:49:34 -0700 (PDT)
+ id 1uwd16-0004vR-Ow
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:51:02 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45b9853e630so4253345e9.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 01:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757580572; x=1758185372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757580653; x=1758185453; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pFcqO3G4bt95C8X7bgNW11HxlHtsvOfsnIcISPdzHCM=;
- b=buqqRQTWBEOopUf7RHt3TcqwsyOqYo3phdY39qveQKT3W01Na3MpRIIfIwL1CxAsj9
- MdJpfMQTNBtB0MJPzR116RLm8Dvnm0TOfP5qxUu+xmWTFv1m660ZJvCBe6ABTgKAthMP
- t2KByNwJ5C3uDUrWtzaCRd7n8EX3Go93tGp+UtP7ok4xart+Wrplb2Koo2FwCGbpgqQT
- pxeUUM7yVwj3Ivl3+Ex6Xbb1jyylyLrlynQ27rE6h948ovsVL+DvIOkxwHK2zF6js+y+
- 56hSbdRs09JgSpcC2iWJLNDo1/zUudDjEJsM3qEB6BQgMnlJEPfLOFRxeU1NF0K4V5Y9
- mCqg==
+ bh=ujnceHljfEoi7XPNlz/AudQ/n03a6q6hILamwu8xWnU=;
+ b=x27V82bYf9wU7v5KoWIhd2aI7q5ecZ9NoWjjU5aaJjxrJBQMbDemEHckW9yHomfmjo
+ squW32FktHAUcC7GBZPaE4ADPBKyxy7Vuykr1RUMMWyicYOoLnH6OZgve3AllITOqAUW
+ 9hfp8+CxZRIlu+GWqEMLgZBmEtoEqHSF/LnhZUQIwUKr7fWUeEdp6Jqk1JbWmRvMKX6Z
+ todhktmBglEUW0a1qaBI/DItJEyd+kcssrlBm2jurGdEQct8TGI3aLKTQgZPa+0ncfsW
+ /yOYPBajMjbKDAhEGtHdszaOZBzE+PxhQK7WQUKWbRZq09UkwIZyP9YJzulBSSVJdi0A
+ XjWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757580572; x=1758185372;
+ d=1e100.net; s=20230601; t=1757580653; x=1758185453;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pFcqO3G4bt95C8X7bgNW11HxlHtsvOfsnIcISPdzHCM=;
- b=Kdpduh7bbLK5HKkO+HVQPNjJXdSC1bpz67aYsb9nDtSP7Ya2WlI6yPcNJe+4QkiIAy
- rYHMCyB2p/YQjJgQR0/YSR9l9ED2AeLWJfpd9PUcgcwB4qma8iJ4c6sRhYHoIvmtrqzT
- 7aJ5jXYvmiOp7sLC0Qzo8kmrMi0N3wIFpj5MgyfaMCCQanl9iFQw1i7ui/aADVWl1cZm
- RalN10zMZgpCUccM9MY7a9TOqBBRSkWn2hIgjufVmUWTJ9PYqwnKQvBPwZiG0SCayTkf
- 5xSW7lxy8cGcXh/lB0blZqKAB+3d4zzPFZzj3pt5O2jbL4yMCzraLkqFb4dNdyR2WYRQ
- d4HA==
+ bh=ujnceHljfEoi7XPNlz/AudQ/n03a6q6hILamwu8xWnU=;
+ b=prYOjpajm0KaIpMOV4ntfY0zy/8VgX5x1RGfMVpBPAmHIEJxqM6WsS1Y3PjGhIlMid
+ 1ovYxGfziU1uD7wtF2Ape7yJU/VjwMljqbHXlnXzcdkO16cNmaE4ocYxnM8kLxLu53mE
+ SGPz2vY8F1umDAaBkesaWXrEfgbLXgqNQ2Yi/bScMFZq9sjekdatf+DtHgszY926ZY67
+ Mz4r26zI+n1OHUKxK+TRG4YZxcF0YC4e5NbqT+lsz0xx5LwZaOiQdsAJmIXwGtUZBLEk
+ M+w1AqDbAgYkfPKq9z5es+W10KtsYBfP6/dvjfY4jZz/bWe3jF349ApInVN4wosPrEqd
+ GoFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTWqd4++dNw2DgVQ3Xo/YbAuBmzcirFVcoSZo8u9vpcGmxw8IOL3nRFxYBvdSQSqJzhA4x2kOC8wIP@nongnu.org
-X-Gm-Message-State: AOJu0YxR78QLzqXNFAIQRpN2BWqYD5W02SqycMZSkhAWOP+N3VFTix/9
- V1dTmkSqTdt9PVtxoehO5fu3MChPNhCob3asHDSdcor7Bq2q5djc4pSBJt7A7we3fMc=
-X-Gm-Gg: ASbGncuGrIEFQCC0RPrV+ebekEQTCyskhfGgUG903lvtWzE3kuLBHifLm7bwSB8xr60
- 9zufuaNhGpsdEWYicF36Oj93JyiPReWs9a0A3ZFaOao77AbZ0MrxmWnMl1Nfu6cPmf5RfxhoiwB
- BUd3qL51fpC6Wz5VUe6L3wAQFHdmPBwLek7LiFuWztIUTNhB4A709aFTp0kUt2lITq3fEGwt0Hv
- 1SB53uXZCdDYIZ7ZDDYIX6dT55P+3UuSIKMG2zwXaKqEPwhf+z8+ZHfhfjOddxVpGNQl6UbJV75
- 7JkWjwIhdXWdEKJ3G46qDehyYnK6w4u+pSa2Fhhi5Vo0UPo1xOoAgW9BdIaMv9KDnX2fGEsNZ9u
- 3wBOmrVlNA2b5VCSnjejjf/l2sK8R4LgilaJO
-X-Google-Smtp-Source: AGHT+IGs8m1Yfhi6QKC0fxefl6h9o7Z3NJwjJJ/prOivfk5bU+nIn96ZU7LLvUAHpnPsGJRM1HOVYw==
-X-Received: by 2002:a05:6000:2508:b0:3cd:e7de:c51e with SMTP id
- ffacd0b85a97d-3e64cd592f0mr14785092f8f.61.1757580572511; 
- Thu, 11 Sep 2025 01:49:32 -0700 (PDT)
+ AJvYcCUJxPaptQK6bKqu8Rp16y2bUewPtW+o0noaBpeLBgArfhHUb+a7mn+r7ID3Uimj9uQAyy+uAjIZJfSs@nongnu.org
+X-Gm-Message-State: AOJu0Yy2Vi2FcTtNNpDl6oCHJFYN3dYqp9RWQhA8OpZukqYT++SJztwu
+ bd7NDcMUT4lkEQaZzy78UkorPj0ToCevxFqPH0jUmWUzhhf6yz71z7Wuhq2MKwiofvI=
+X-Gm-Gg: ASbGncs4h9NQZsRFf2q+AeMQpS8gqYMtD6Wapw7fYjb0+ru5z0VwVaMfc3dV1HoRoU9
+ tavelVE5M8D/K/J+5tzX7PkugUCD0Hip4d4NmOmu4leu9yq7hLkt9H1hnk3TIZDW0cdHq9h0fw1
+ 44TLejt96QKDuKLifHOrk+UDFpmC1Yq7miyTwHJinC52blwSa5gnFmNqnrGY89srK1hVTKzE4Nz
+ bWAVNcCPU30CVNN4HXffrqUZT0c+5TgdR5UZbevpgAmPhYw4qDjhch2SML+FheaN39n5L8aeRz1
+ J3Z4ykSvfYGE1ZwlupS+/VwtNGS+lgmHF1l9GRVODtL1uq4Imwm6Y+DlbMIJh1zQeW95xajm/cS
+ xbox5QVZOJ8bZKKWDhAAxBK2eNZV5gqr4D3jCKLQQpNS5jLs=
+X-Google-Smtp-Source: AGHT+IFuWRG/PgvBzTKmhpw+b7xWr1es2/CM/oNvjWlkfR7qV81sBWV6vGoSfJAHTZ2+z2p1yTBeZQ==
+X-Received: by 2002:a05:600c:540c:b0:45b:5f99:191c with SMTP id
+ 5b1f17b1804b1-45dddff012cmr174122035e9.12.1757580653071; 
+ Thu, 11 Sep 2025 01:50:53 -0700 (PDT)
 Received: from [10.20.51.75] ([88.149.120.245])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607e40a5sm1560921f8f.60.2025.09.11.01.49.31
+ 5b1f17b1804b1-45e017c1455sm18101255e9.24.2025.09.11.01.50.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 01:49:32 -0700 (PDT)
-Message-ID: <a306a44e-60b8-400c-9633-4b53ed949eac@linaro.org>
-Date: Thu, 11 Sep 2025 08:49:28 +0000
+ Thu, 11 Sep 2025 01:50:52 -0700 (PDT)
+Message-ID: <b5681050-2e15-438d-88fa-cd9e612be2c8@linaro.org>
+Date: Thu, 11 Sep 2025 08:50:49 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/20] log: avoid repeated prefix on incremental
- qemu_log calls
+Subject: Re: [PATCH v3 10/20] monitor: remove redundant
+ error_[v]printf_unless_qmp
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -84,20 +84,21 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
 References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-9-berrange@redhat.com>
+ <20250910180357.320297-11-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250910180357.320297-9-berrange@redhat.com>
+In-Reply-To: <20250910180357.320297-11-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,56 +115,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/25 18:03, Daniel P. Berrangé wrote:
-> Some code makes multiple qemu_log calls to incrementally emit
-> a single message. Currently timestamps get prepended to all
-> qemu_log calls, even those continuing a previous incomplete
-> message.
+> These functions only had one caller which was easily converted to
+> the normal error_printf() function. Remove them as they don't add
+> sufficient value.
 > 
-> This changes the qemu_log so it skips adding a new line prefix,
-> if the previous qemu_log call did NOT end with a newline.
-> 
-> Reported-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   util/log.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
+>   include/monitor/monitor.h |  3 ---
+>   monitor/monitor.c         | 24 ------------------------
+>   stubs/error-printf.c      |  5 -----
+>   3 files changed, 32 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~>
-> diff --git a/util/log.c b/util/log.c
-> index abdcb6b311..2642a55c59 100644
-> --- a/util/log.c
-> +++ b/util/log.c
-> @@ -143,6 +143,12 @@ void qemu_log_unlock(FILE *logfile)
->       }
->   }
->   
-> +/*
-> + * 'true' if the previous log message lacked a trailing '\n',
-> + * and thus the subsequent call must skip any prefix
-> + */
-> +static __thread bool incomplete;
-> +
->   void qemu_log(const char *fmt, ...)
->   {
->       FILE *f;
-> @@ -154,7 +160,7 @@ void qemu_log(const char *fmt, ...)
->        * was emitted if we are delayed acquiring the
->        * mutex
->        */
-> -    if (message_with_timestamp) {
-> +    if (message_with_timestamp && !incomplete) {
->           g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
->           timestr = g_date_time_format_iso8601(dt);
->       }
-> @@ -170,6 +176,7 @@ void qemu_log(const char *fmt, ...)
->           va_start(ap, fmt);
->           vfprintf(f, fmt, ap);
->           va_end(ap);
-> +        incomplete = fmt[strlen(fmt) - 1] != '\n';
->           qemu_log_unlock(f);
->       }
->   }
+r~
 
 
