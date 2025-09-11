@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A350CA1016
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92147CA1016
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwe6U-0005wq-7V; Thu, 11 Sep 2025 06:00:34 -0400
+	id 1uwe7t-0007Hh-JZ; Thu, 11 Sep 2025 06:02:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwe6S-0005wK-Gw
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:00:32 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1uwe7r-0007H9-Sm
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:01:59 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwe6J-0006Ho-35
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:00:31 -0400
+ id 1uwe7p-0006UY-Ky
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:01:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757584823; x=1789120823;
+ t=1757584917; x=1789120917;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=n87dABdsD1J3a1Kkxf9PvaiG0GCOdgGYv1TAqaxiipc=;
- b=BqvaLj+6jWYfk7Rv90IRchpi8yBv1n5z1bQ3GyPbKEAF5C1J+QrynXmN
- lOZHzo68d4Oc1RSLXiVI3BrR3Unvqnm4a5l2zDlS4DgX4tofbeISyIvs7
- TNFW+Es7JedFGl6nIw8wDredtbell6bhH7FvmSuU8n8LdAGlKtmsxNLgE
- vXyahuPomz3VEcV7iuaMO0bugktgvEPjRCaizOBxAEP2WQ2u6jtT4EN72
- xJ4/FP27eDzWk+lLJVjQDmLtdcNi6etCbucC4xLA0ztBcQ14xwjYzBWHI
- c4ODCBolOpQYmRkTn16K6jU6R7X8U6Ybd7I/9adNkHQCNhSB7844c5P7N g==;
-X-CSE-ConnectionGUID: 2E+tDracSku8gLXWvIFgpw==
-X-CSE-MsgGUID: XFw//irZSmK6x4XgNmy0gg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="70166370"
-X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="70166370"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 03:00:08 -0700
-X-CSE-ConnectionGUID: PDzfPMbeToCs4auA6aL4fw==
-X-CSE-MsgGUID: knwlTEbaTl6x0Y5bdplUjg==
+ bh=NwVt3Hvjb0IhQ6E9x92cjR0FTVxvrHIBhXtAyzklHFE=;
+ b=hC6FwU3rOwyW9XGkmx5P72RHyX98yGlFgc8+OwJeJWh4CwJnYDV/4poh
+ +NSVr64Yak/AQrAQXyLeaSzFjvAF+SwEpgX7PgvG1N48lgrjFwQB2ryqm
+ nkbpvoIbnPHQ64Y5ccTZ37yHXS5Wi6dRXFUCr2Zz3NKldgvkmxasyWQK/
+ +daTyl45zE0rYzyk9LgymdrO003n/5b8YmP1pcNDu0Tt4C9sQrJG27rdG
+ ChCxzuYEJdFzqSQBlLV33BwGIOSa8cDtd0EB+uBgw6FVtGwL79oIZMrie
+ 1HUgUPg8LNQbucAL3tLZYAi7nFCyMVftWIPHKYM2Vhs3UQ8ZbYRb7hnEB w==;
+X-CSE-ConnectionGUID: 6GRTpSexS/2QcVmTCTboGQ==
+X-CSE-MsgGUID: N+Zb1G3eSeGXn4EPivJPNg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="59770309"
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="59770309"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 03:01:53 -0700
+X-CSE-ConnectionGUID: z6FCd+GkT3uRwKioCkE9+A==
+X-CSE-MsgGUID: wEJx4mF0TSW9jsaAK0Pfxw==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="204410591"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 11 Sep 2025 03:00:06 -0700
-Date: Thu, 11 Sep 2025 18:21:59 +0800
+ by orviesa002.jf.intel.com with ESMTP; 11 Sep 2025 03:01:52 -0700
+Date: Thu, 11 Sep 2025 18:23:45 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 11/33] rust: remove unused global qemu "allocator"
-Message-ID: <aMKixyg+pXqvuNz8@intel.com>
+Subject: Re: [PATCH 12/33] rust: add workspace authors
+Message-ID: <aMKjMY4HXBGLAAdQ@intel.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
- <20250908105005.2119297-12-pbonzini@redhat.com>
+ <20250908105005.2119297-13-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250908105005.2119297-12-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250908105005.2119297-13-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -84,28 +85,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 08, 2025 at 12:49:43PM +0200, Paolo Bonzini wrote:
-> Date: Mon,  8 Sep 2025 12:49:43 +0200
+On Mon, Sep 08, 2025 at 12:49:44PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  8 Sep 2025 12:49:44 +0200
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 11/33] rust: remove unused global qemu "allocator"
+> Subject: [PATCH 12/33] rust: add workspace authors
 > X-Mailer: git-send-email 2.51.0
 > 
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> The global allocator has always been disabled. There is no clear reason
-> Rust and C should use the same allocator. Allocations made from Rust
-> must be freed by Rust, and same for C, otherwise we head into troubles.
-> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/r/20250827104147.717203-3-marcandre.lureau@redhat.com
+> Link: https://lore.kernel.org/r/20250827104147.717203-4-marcandre.lureau@redhat.com
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  meson.build               |   4 --
->  rust/Cargo.toml           |   2 +-
->  rust/qemu-api/Cargo.toml  |   1 -
->  rust/qemu-api/meson.build |   1 -
->  rust/qemu-api/src/lib.rs  | 135 --------------------------------------
->  5 files changed, 1 insertion(+), 142 deletions(-)
+>  rust/Cargo.toml | 1 +
+>  1 file changed, 1 insertion(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
