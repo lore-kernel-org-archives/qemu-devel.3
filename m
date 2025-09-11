@@ -4,84 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB42CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 16:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02106CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 16:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwjlD-0001s4-NE; Thu, 11 Sep 2025 12:02:59 -0400
+	id 1uwjpD-00059J-Hg; Thu, 11 Sep 2025 12:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwjkr-0001a0-7R
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 12:02:41 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1uwjpC-00058S-9R
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 12:07:06 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwjkm-0005VK-RU
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 12:02:36 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-71d60501806so6466867b3.2
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 09:02:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1uwjpA-0006AM-7e
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 12:07:05 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-32de096c067so438609a91.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 09:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757606550; x=1758211350; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7dRGjVVwpjU1/n+vvstizJLUX8chlCa0TZSJ83N8d/Y=;
- b=bYqQx48aVb8wKkqnke1773eFpc/NVszQfKqkG/7I7AxSIqiq5qHAIcY/qV3QRRTkZ4
- yCiSUM+WQLFx7f1S5pUpRP9F5NP1PFhaePZXhjIp/+nGTuYvW+nJhzdPX8Tuci0JmCIK
- aggtsdw7yiPGfmxB/MmvmfBGcS4N8PJJDBap0sc+rj5afdn+EBYbC3H9hIqgEwPukdO9
- hcSGSR4cSggEpkaTjKW+biuks+10f1NbLSwI03yI2JrU8xqUVUZMYevila15I/gA2a0A
- W8+z+FCzxouJHnzmXblg5wQFRWUTKf+4f6iw1fGZXHvum4Vk/Z960x/3tMnjUrH1vVsL
- wqxA==
+ d=sifive.com; s=google; t=1757606822; x=1758211622; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UIhBt/gfm4MfQLRC2cneq/+C/BNaiAz/oeMtDs6zQnA=;
+ b=PUGPQszprDrH25oPwap2QYkjh1bOVQNsoFE8Fe8E1cdwoE2Rr+nFmKUGWaJsswcOgt
+ Gi8uxidtlOFICzjQitosHAYi5Fz02bobHMAfHvN20t6Rna+jrmvvQKYH1rERhE7Lx35H
+ LoQk7+MrJ4cZMi3Ch/3Ey1mHIYs+lL0NK0XczgGWJjaVPyGGeNjSaKjQpntwuKws8PRG
+ kkImkQ5K03agGrf/3mrFKLQfAe2jn1Ty+25Qnf747+WHGUVdjOsaCFpNBpWxZrwzlCHm
+ 7Hx6LQC88Bk2Wnk6XiZ6BWQmehn7tF1SZedgHLwfWCCIvYhg+5XmcybpAxYo3tAlgvvA
+ 0YNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757606550; x=1758211350;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7dRGjVVwpjU1/n+vvstizJLUX8chlCa0TZSJ83N8d/Y=;
- b=s9YFMZNPv9I63sIsBshue22m+DEzUcg9rWdYmvQ/ouNqjnR3Sf7wlnX2NDCyKtv5xM
- jsjH4nI00UiIH4Eq1HYNSAXQ/BbXFVQ0/TDUtO+i2f34Bkc2yvFRvS4xqSmhCTAOdwim
- VMme1LVr6mdQn9SnabNIGHteeSzrd+LHLRsxg9BSTx6qFv+LSQkJ7Ipr57vuTYRACYbh
- NXVExpZipcwaoWccBm9vNpBehp6USNTb+rwzORwKOzkrLRqxb59VkltgFrAVUBNKHmCz
- WZpo0l/AuT2cMnZX2guPiKienCcd7kxgez1LFXAXRO6Db2ZT4twH8S3nVEoecyma8Cmc
- QFPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEfY4xOvx+RObRpVxe6bRAVJcU9GLWEg4eYqsFzs7S0j4y2hjxXijftb8Z6LTCX8oyUJtiC4coVKN7@nongnu.org
-X-Gm-Message-State: AOJu0Yw8hD4SJ4k1t/TmgQp110DQhQ5u+OI5zQguj9kLq8t+Ia6RV2wm
- 06XuHiQvMI82jJay8dT6fvbBIyWYxcxuLBgibNUgMG1IRjV5uBJ6fiGyg9Bd07Is4E+L9x1Bh1V
- +e7tAMkY6am99mB+eoL9Q5Hpvugbp5clT+KHqD/MAsQ==
-X-Gm-Gg: ASbGnctA8jNAQVHbREKRgZ6C+mKrVzah9IlvXWeTVm/97glP1jpqmNeumXSbEO7Plrh
- 31dVajS7NhuNP3UlT+gQ7J76Hjxmq3hQqT2yJ2HKN89azfCO3pbdGnneiyctbcZkbde19ijimed
- o8uWyhCB8Y0mZjfJs1KNw07GtcKA9fR+S1xWZ1YKnpuN+MuXakrvAIfgD/evENNmmKcTaBBOWFh
- Leo6Ieo
-X-Google-Smtp-Source: AGHT+IEcRWg0Ibv9La+c1AHa5/EwzBNdLFmIeSpsqfPLBULrqQYCnbKIvwEz11pcW5Z0PxHmVsBAk1FKJbGhiL4pVXI=
-X-Received: by 2002:a05:690c:e1a:b0:721:1649:b070 with SMTP id
- 00721157ae682-727f5648a22mr172576627b3.44.1757606549654; Thu, 11 Sep 2025
- 09:02:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757606822; x=1758211622;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UIhBt/gfm4MfQLRC2cneq/+C/BNaiAz/oeMtDs6zQnA=;
+ b=KItkijA//kUJtliL5ExjAQatnLshEedAC0boZ3Ruie/oOUJhX3FbQAl+7Y0HQ2RjdL
+ BlJ3UD9DqarzgvS5fBD/hD+JdbijCwE08ABhrc2dfedkqSVD8Zo2hJmR9YeiOQV6vm6n
+ kW+s10PzbiOQnvjIe7DIkT/yJ6q6Vvy1YfPf9TMGw60x1rw1f2yNXni3E/YbtkSMnlyT
+ mtCSeS850pSLOZ1zmcy/uNjpQkBDIFYKKEs8Pk/McYZIa7IuVmrNJ0221DReZYuZ3gln
+ UiR0Y8httd5vkhv7LNH5KpuQkUTpD4lnFNRng9XPIj24ps880uZigM/F+hmUduhQxNlY
+ aCVA==
+X-Gm-Message-State: AOJu0YwjmpabUjlNT+zqrV1CW7I3kIgdCA6Agi2CB4ovI2oQkmC3KKG7
+ ZN8Y6IUGIgvLGdkPATB+4Eg4MwPq3k0GzkTfhwPVgBczMExLsL0fRXeTYPLn5TlXGP1JF29Pf2h
+ YUqFIjmaRhsdoTcE+Ias59NHYCG4tZrJ3h83OWSli2mKsNxbC0DmwVSUowYN5HrDldctL+xIIOU
+ Dx1AZe1NnTImwMZGi3wEQyQdbytzF7oCooeTbr+XVcoo/Kgg==
+X-Gm-Gg: ASbGnct6z00pXzWe8DXOoZambVng4pfgn+ZNgmAWsxDr9TSOyqOa+6Qmn1gzGY+n9R+
+ 4sDvFZFiyRJ5gOQrlSBXOQJV4NOvlaMY+UEI/PuvwJRxIe8AnuHyrsoXw/kBaDvspFnibGC6FNh
+ XyRejYxOWwhnsGyUcYLZlw/FwhxLPDcTWhWvDTMeNKgSuE1q4A/e0lph+ssT3TJ4Z3imzOaV7Yw
+ tdybQICBlDu3DuGiPirVWjrRFkiRqoe5sc3L9Mx2FS/6qgDtWLvspALc4pH4o/XJjmCMnD+kxk+
+ 0LJ6obnZnrtvd31U/Y70DvVlZiNN9ebKO0EXYkOUHj840w3Cx0E/Q8a1abmdOH3on3oQOKyiyCG
+ YiKuK1uzb9xJjEBTG3YLOAY6vO3h1PzYfc6QP6m6iZnRLHzQrByKJrJ9coEIh
+X-Google-Smtp-Source: AGHT+IGrXv1a1syGeNZS7H98f7pe9op4VyS741NsSQnqqfmADV4og4MPk4p+CszzYk5IxU49CG2HFg==
+X-Received: by 2002:a17:90b:4e8b:b0:32b:6ac0:863f with SMTP id
+ 98e67ed59e1d1-32d43f5a67bmr23253381a91.18.1757606822268; 
+ Thu, 11 Sep 2025 09:07:02 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-32dd9903a2asm2618765a91.24.2025.09.11.09.07.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Sep 2025 09:07:01 -0700 (PDT)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org (open list:SiFive Machines),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH 4/4] hw/char: sifive_uart: Add newline to error message
+Date: Fri, 12 Sep 2025 00:06:46 +0800
+Message-ID: <20250911160647.5710-5-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250911160647.5710-1-frank.chang@sifive.com>
+References: <20250911160647.5710-1-frank.chang@sifive.com>
 MIME-Version: 1.0
-References: <20250911144923.24259-1-sebott@redhat.com>
- <CAFEAcA8EDJT1+ayyWNsfdOvNoGzczzWV-JSyiP1c1jbxmcBshQ@mail.gmail.com>
- <8bca09f1-48fe-0868-f82f-cdb0362699e1@redhat.com>
-In-Reply-To: <8bca09f1-48fe-0868-f82f-cdb0362699e1@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Sep 2025 17:02:17 +0100
-X-Gm-Features: Ac12FXx96W2Z904Fh96vP6TMP44uauq6yyDdA3EE2iGnUzJEwgpWwDS7kISm_EE
-Message-ID: <CAFEAcA8hUiQkYsyLOHFQqexzY3u4ZZZBXvi+DuueExGdJi_HVQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] arm: add kvm-psci-version vcpu property
-To: Sebastian Ott <sebott@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=frank.chang@sifive.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Sept 2025 at 16:59, Sebastian Ott <sebott@redhat.com> wrote:
->
-> On Thu, 11 Sep 2025, Peter Maydell wrote:
-> > On Thu, 11 Sept 2025 at 15:49, Sebastian Ott <sebott@redhat.com> wrote:
-> >>
-> >> This series adds a vcpu knob to request a specific PSCI version
-> >> from KVM via the KVM_REG_ARM_PSCI_VERSION FW register.
-> >>
-> >> Note: in order to support PSCI v0.1 we need to drop vcpu
-> >> initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
-> >> Alternatively we could limit support to versions >=0.2 .
-> >>
-> >> Sebastian Ott (2):
-> >>   target/arm/kvm: add constants for new PSCI versions
-> >>   target/arm/kvm: add kvm-psci-version vcpu property
-> >
-> > Could we have some rationale, please? What's the use case
-> > where you might need to specify a particular PSCI version?
->
-> The use case is migrating between different host kernel versions.
-> Per default the kernel reports the latest PSCI version in the
-> KVM_REG_ARM_PSCI_VERSION register (for KVM_CAP_ARM_PSCI_0_2) -
-> when that differs between source and target a migration will fail.
->
-> This property allows to request a PSCI version that is supported by
-> both sides. Specifically I want to support migration between host
-> kernels with and without the following Linux commit:
->         8be82d536a9f KVM: arm64: Add support for PSCI v1.2 and v1.3
+From: Frank Chang <frank.chang@sifive.com>
 
-So if the destination kernel is post that commit and the
-source kernel pre-dates it, do we fail migration? Or is
-this only a migration failure when the destination doesn't
-support the PSCI version we defaulted to at the source end?
+Adds a missing newline character to the error message.
 
-thanks
--- PMM
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+---
+ hw/char/sifive_uart.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index baef0bd9c28..e7357d585a1 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -113,7 +113,7 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+ 
+     if (size > fifo8_num_free(&s->tx_fifo)) {
+         size = fifo8_num_free(&s->tx_fifo);
+-        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
++        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow.\n");
+     }
+ 
+     if (size > 0) {
+-- 
+2.49.0
+
 
