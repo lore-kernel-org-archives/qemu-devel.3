@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D86FCCA1016
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 07:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB74CAC587
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 07:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwbho-00017c-TX; Thu, 11 Sep 2025 03:26:56 -0400
+	id 1uwbhj-0000nn-3Y; Thu, 11 Sep 2025 03:26:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uwbhX-0000Cj-AF; Thu, 11 Sep 2025 03:26:43 -0400
+ id 1uwbgd-0007mk-5H; Thu, 11 Sep 2025 03:25:45 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uwbhD-00015t-6p; Thu, 11 Sep 2025 03:26:21 -0400
+ id 1uwbgY-0000j4-S0; Thu, 11 Sep 2025 03:25:40 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 11 Sep
- 2025 15:24:57 +0800
+ 2025 15:24:55 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 11 Sep 2025 15:24:57 +0800
+ Transport; Thu, 11 Sep 2025 15:24:55 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -35,10 +35,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v2 13/14] tests/functional/arm/test_aspeed_ast2600: add PCIe
- enumeration test
-Date: Thu, 11 Sep 2025 15:24:37 +0800
-Message-ID: <20250911072452.314553-14-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 07/14] hw/arm/aspeed: Wire up PCIe devices in SoC model
+Date: Thu, 11 Sep 2025 15:24:31 +0800
+Message-ID: <20250911072452.314553-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250911072452.314553-1-jamin_lin@aspeedtech.com>
 References: <20250911072452.314553-1-jamin_lin@aspeedtech.com>
@@ -70,47 +69,65 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the AST2600 functional tests with a PCIe enumeration check.
+Add PCIe controller and PHY instances to the Aspeed SoC state and device
+enum. This prepares the SoC model to host PCIe Root Complexes and their
+associated PHYs.
 
-This patch introduces a new helper "do_ast2600_pcie_test()" that runs
-"lspci" on the emulated system and verifies the presence of the expected
-PCIe devices:
-
-- 80:00.0 Host bridge: ASPEED Technology, Inc. Device 2600
-- 80:08.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
+Although the AST2600 supports only a single Root Complex, the AST2700
+provides three Root Complexes. For this reason, the model defines arrays
+of three PCIe config/PHY objects and enumerates three PCIe device IDs so
+that both SoCs can be represented consistently.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/arm/test_aspeed_ast2600.py | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/hw/arm/aspeed_soc.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
-index 129695ca4e..f97fbbaa11 100755
---- a/tests/functional/arm/test_aspeed_ast2600.py
-+++ b/tests/functional/arm/test_aspeed_ast2600.py
-@@ -101,6 +101,14 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
-         'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.07/ast2600-default-obmc.tar.gz',
-         'cb6c08595bcbba1672ce716b068ba4e48eda1ed9abe78a07b30392ba2278feba')
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 217ef0eafd..79fe353f83 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -37,6 +37,7 @@
+ #include "qom/object.h"
+ #include "hw/misc/aspeed_lpc.h"
+ #include "hw/misc/unimp.h"
++#include "hw/pci-host/aspeed_pcie.h"
+ #include "hw/misc/aspeed_peci.h"
+ #include "hw/fsi/aspeed_apb2opb.h"
+ #include "hw/char/serial-mm.h"
+@@ -49,6 +50,7 @@
+ #define ASPEED_MACS_NUM  4
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
++#define ASPEED_PCIE_NUM  3
  
-+    def do_ast2600_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 80:00.0',
-+            '80:00.0 Host bridge: ASPEED Technology, Inc. Device 2600')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 80:08.0',
-+            '80:08.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+
-     def test_arm_ast2600_evb_sdk(self):
-         self.set_machine('ast2600-evb')
- 
-@@ -136,5 +144,7 @@ def test_arm_ast2600_evb_sdk(self):
-         exec_command_and_wait_for_pattern(self,
-              '/sbin/hwclock -f /dev/rtc1', year)
- 
-+        self.do_ast2600_pcie_test()
-+
- if __name__ == '__main__':
-     AspeedTest.main()
+ struct AspeedSoCState {
+     DeviceState parent;
+@@ -87,6 +89,8 @@ struct AspeedSoCState {
+     AspeedSDHCIState sdhci;
+     AspeedSDHCIState emmc;
+     AspeedLPCState lpc;
++    AspeedPCIECfgState pcie[ASPEED_PCIE_NUM];
++    AspeedPCIEPhyState pcie_phy[ASPEED_PCIE_NUM];
+     AspeedPECIState peci;
+     SerialMM uart[ASPEED_UARTS_NUM];
+     Clock *sysclk;
+@@ -254,6 +258,15 @@ enum {
+     ASPEED_DEV_LPC,
+     ASPEED_DEV_IBT,
+     ASPEED_DEV_I2C,
++    ASPEED_DEV_PCIE0,
++    ASPEED_DEV_PCIE1,
++    ASPEED_DEV_PCIE2,
++    ASPEED_DEV_PCIE_PHY0,
++    ASPEED_DEV_PCIE_PHY1,
++    ASPEED_DEV_PCIE_PHY2,
++    ASPEED_DEV_PCIE_MMIO0,
++    ASPEED_DEV_PCIE_MMIO1,
++    ASPEED_DEV_PCIE_MMIO2,
+     ASPEED_DEV_PECI,
+     ASPEED_DEV_ETH1,
+     ASPEED_DEV_ETH2,
 -- 
 2.43.0
 
