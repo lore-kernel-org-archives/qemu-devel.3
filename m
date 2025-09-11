@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 553E3CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D66C4CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwh74-0001OU-1R; Thu, 11 Sep 2025 09:13:22 -0400
+	id 1uwh6D-0000up-Mb; Thu, 11 Sep 2025 09:12:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwh71-0001MM-4c
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:13:19 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1uwh6C-0000ts-2N
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:12:28 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwh6v-0007XF-Ry
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:13:18 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-61a8c134533so1344830a12.3
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 06:13:12 -0700 (PDT)
+ id 1uwh69-0007TB-Fa
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:12:27 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b0472bd218bso121015466b.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 06:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757596390; x=1758201190; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757596343; x=1758201143; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BLArwD4h0WuYLDjVYgR3IWlbms1EKzAZ7hWpKqNofrY=;
- b=na/pRSC1/AF71OiBZTny6YWoYoY6PIyUaOVZy17A3MoUtzrLC3+J0fXlS0oWiOIr0x
- yv20J8qk0md1eH7ve592gxQapK1MsKqta6FpU+9+HI0E8LTqGh91kJMMQnIGsREpv4hi
- A/5ovLjKZGNs1b+CMHDIXxFlUOqvkZX4xmNkphqrzs20dKRtER+KLWK+1sPLWjKrJdPS
- W2Sup9Z03dsKOwuQegS/FIGTngXS/n9RxLLB89fzL507n4qIbcS+vobCE/Rq2+Ml+vU0
- kv/hfds6ARfVgSh6oRpz8JUAwtIini1j+CKwHW8wZk5JjgrDEOC13Zd0gAkqeyWiSJqR
- 4LeQ==
+ bh=DX5FoeI10alkx6kuDGgMOBk6pebgfXpNtF5ePKM38Eg=;
+ b=d4aELZeqvzIFGRvnQbNprvgFg9Q6P+wnrUbRv8yBq/UXsDNcs0b5Xx9QcAgwNQY8c5
+ cq3jxZWSg9d/PmN1uEtvdrHRrA9ELFbwgoN434HsksvHbX4QZc66zeb1LdwxjD1cAeFS
+ XIOzkwHn+T6e6RBNvnTFQlxYkLPnQhmrezC+llYYLkk2qY6lGqtK4DExoLhKXblA2/rV
+ PG9KRRJWYvKPydrnyFtg0w6oVgBiAaC0VQQinxdX4e4m+xDR//xmgX2/n8IB5GpTxedS
+ /MaRUTCb9mqk0QGev8HntaMiih+GzuHoMS1eVstT8WAy1wYlXe8AbHgHM0hBRIcziFMj
+ Km7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757596390; x=1758201190;
+ d=1e100.net; s=20230601; t=1757596343; x=1758201143;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BLArwD4h0WuYLDjVYgR3IWlbms1EKzAZ7hWpKqNofrY=;
- b=cXheW36c1Ui/gI/7LNOYw6LtxWwNz/9LJNfjDMM+0wVIECzRzhMsb89bDqJ9GWzaF3
- vuEvjPfJGJRZQ06kkAG+Lh3DB5XQppH8FW6jzQZHwDJO6Qrx8f9Q6zAGeznt5GVTtkGD
- QdPh2vl/WZf//Ggh643aGdgA0WLbRsT4X/PJjZOr+JG79F6bcQgdhr1IrmjmmYUbEN6r
- cF0BF+1p/tvT9lWSPuIh+e3HwvaSDo15Bp2m5gUmnbg9/koOHCr241cn6kWeL6P6md9v
- cYl9bysKCaySXRfiLqr/QhTGCYo6IdbB2cmXaEFzZSupKyWKLkLvTEjPixjNxrF4pynr
- sMqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8yURngFI/hJZ7DEMJi6jfrhZ5U6uom3axofkW10MXJq5aL8jGk41MJxdCRtwRCDgG6SJfSy4pMfO1@nongnu.org
-X-Gm-Message-State: AOJu0YwQL6K6hRbcLHuz+7/v1u64dlanbEp7+AIGF0SHrwtLM4jW73o8
- XkQGsJ54+iEa53t40vUY+LShYyfTP/SFK1xEjhIEImh9UH27haQN9tm79KBimaVRt5jUpU6s0qO
- X4vRCDhBUCzMYiRfYPo4B5gMAPawOPknPb5ijfVWddQ==
-X-Gm-Gg: ASbGncvVGQFvBam9vr1pOB2GXd0vc0HEe01dLJLsZmqhXkL5DaZkl5Jzl+B0YC3Cwjt
- nXZSsGl0v66nw4MGYMEQ8aw9n/B7dhpGIGumSoDsU7kqc7pkXUft0aaQxtGdLISKSTbzW9i64VA
- 0DEcSasle5gn98i2H5rExpee7xPAk+a31g39BT3t4ZZtgjrKp9RnMLgkwjvuY2sSIfUBFbLpU9o
- 6JGgh+gqLO2+BOFMX0=
-X-Google-Smtp-Source: AGHT+IF1Do3jJJouUJIYYM5Oe7bMecITwlXX7e9Z49dzvjsXu2b7hjeaXyKSNiI25DkAz8KnlclYlmcM9ZOVih/biQ8=
-X-Received: by 2002:a05:6402:254d:b0:628:20b9:2621 with SMTP id
- 4fb4d7f45d1cf-62820b928bdmr14561690a12.2.1757596390349; Thu, 11 Sep 2025
- 06:13:10 -0700 (PDT)
+ bh=DX5FoeI10alkx6kuDGgMOBk6pebgfXpNtF5ePKM38Eg=;
+ b=TO5bRB4ENy1DPvHrC5I6qtuYyr7GmK1GvgSN5iTQFa7e6wquYxlgE71+mFvD4JlkxN
+ y1OnDeb2lJtJueKoOJ0N1zfSMA7ofKPRuMsveFnhi9Q5oB8KB1bQnlR4n82EyXKYFiHI
+ LLYD1yAs9DBMTr1vXVlf5QYsjJ+ha+rUpD2Y0iDEHlI2LHrEuy5/4TMXNjoLUb4vj8qw
+ EeHkszCyarkQeDEy1WbWV9QaVeFilFKN70Uzst650sbzLGxk8/iffvl2+thy+ILmkUs2
+ GL7zqQVuV1pdzboFnCkEG7zJZ1LYHxyiQzwFBnFwShQ+ReBatIf9mIidrE9xYZOQUlTK
+ MAUw==
+X-Gm-Message-State: AOJu0YximSilCZIyhQONEHQX/JZkqlcB26ufQ5Xv2bwqyyrZNKUUHmU8
+ H1kmp/PZqnyS79dEWkBW3fH2KExFAYYZa0zZJaIncLvTnCpXZNLXSCWvx4u2Pbey0SU7LInypc+
+ OiF2uz0LX1hHoT5WCYFm2gP3P6AMnRIjUoEEOvt7vAX1Vk2dpwWHh
+X-Gm-Gg: ASbGncsLGMpRaKq736WvPx1T31Be82Y7ynsLZx0wOQSo6bZUBylJPfPqfX3/yuEtSp3
+ 9ycgDKhsFSQu30k+UVlEESDcoFM7umYjrRm36ZFhA2OdoyX86kGbUOdqE4Z2EYOgY6qwc5HkpZr
+ Z4xmbcnxsMzJ/9YKBbcASIkTI7ho10WWwucCEVgAs5tSEBCjKVmt7ORRHg6CfdR9x/w6bJloApo
+ Wj0Jix6
+X-Google-Smtp-Source: AGHT+IFyb3eAv1xiX7ddu+JSsYGi3l72x/m85XtONIY8lhH6wejH96xoAc9Ts9DX2+cOk1RFOOav8VSZwjRIB1wE1F0=
+X-Received: by 2002:a17:907:9624:b0:af9:add3:6bbb with SMTP id
+ a640c23a62f3a-b04b1476d1cmr1795631666b.29.1757596342635; Thu, 11 Sep 2025
+ 06:12:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250909123747.567480-1-thuth@redhat.com>
-In-Reply-To: <20250909123747.567480-1-thuth@redhat.com>
+References: <20250909135147.612345-1-thuth@redhat.com>
+In-Reply-To: <20250909135147.612345-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Sep 2025 14:12:54 +0100
-X-Gm-Features: AS18NWDgOwpwP8VpUus8K1NUd1-geWRZuvI1MgI47EqU8IPPNQcD1WfFs7OPkfQ
-Message-ID: <CAFEAcA9h4HDAsSBUQq+3MCOcjyHJxjgyz6pz6GfzuboZ69=Rjw@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional/aarch64: Fix assets of test_hotplug_pci
+Date: Thu, 11 Sep 2025 14:12:10 +0100
+X-Gm-Features: AS18NWBmBpygdNTasc00AOwPfcJBIwKmhzNTpFL64oZ91grxEXP7tI5etS_AwJA
+Message-ID: <CAFEAcA_oF549W88Aorh32xy+nkmJsyVnJpUn4AA44VKcO83Nng@mail.gmail.com>
+Subject: Re: [PULL 00/23] Functional tests and misc patches
 To: Thomas Huth <thuth@redhat.com>
-Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,19 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Sept 2025 at 13:38, Thomas Huth <thuth@redhat.com> wrote:
+On Tue, 9 Sept 2025 at 14:54, Thomas Huth <thuth@redhat.com> wrote:
 >
-> From: Thomas Huth <thuth@redhat.com>
+>  Hi Richard!
 >
-> The old bookworm URLs don't work anymore, resulting in a 404 error
-> now. Let's update the test to Debian Trixie to get it going again.
+> The following changes since commit 6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8:
 >
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/functional/aarch64/test_hotplug_pci.py | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>   Merge tag 'pull-tcg-20250905' of https://gitlab.com/rth7680/qemu into staging (2025-09-05 09:51:27 +0200)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2025-09-09
+>
+> for you to fetch changes up to 2fc170bcdc4d2f05534c68572b4f72a7d18c2119:
+>
+>   tests/functional: purge scratch dir on test startup (2025-09-09 15:45:33 +0200)
+>
+> ----------------------------------------------------------------
+> * Silence warnings from the undefined-behaviour sanitizer
+> * Many small improvements to various functional tests
+> * Remove remainders from storing avocado artifacts in the Gitlab CI
+> * Keep more meson log files as artifacts in the Gitlab CI instead
+> * Re-enable -fzero-call-used-regs on OpenBSD
+>
 
-Applied to master to avoid the CI failures; thanks.
+
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.2
+for any user-visible changes.
 
 -- PMM
 
