@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1F1CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 21:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C07FCAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 21:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwomE-0002ii-AX; Thu, 11 Sep 2025 17:24:22 -0400
+	id 1uwomF-0002ij-2j; Thu, 11 Sep 2025 17:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwom7-0002h1-V2
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 17:24:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwom9-0002hz-N8
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 17:24:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwom5-0008QQ-Bk
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 17:24:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uwom7-0008Qe-P6
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 17:24:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757625852;
+ s=mimecast20190719; t=1757625853;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x+mQzcBNcIdFANreHLy90tT/Nh2HwBTHifc2In8UdMM=;
- b=hJWIHVh83qzNmA/AOUzGwMCy1cLfbZkXCokofQ9oTC8d/VEOVmnv0NWLsm4Fla3zVWcCoL
- qmBvxGc/Hf6dWeDU3jdqgT+fiQPQbmDswEF0fJQX/MvIKt+WKGZpWReeHVTmRL8L9WbgQc
- 4usfCMBOCvNuM1YeaI+veDf6GjyYJaQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sN2ewjYKseHzqoQc0ThzSP1uQrVGcryEZdT1qKjYcXk=;
+ b=HdxnTgh9VIaeIRfzdlX0lPPweQZGgfT/CzaVSU3p+/7URsufXatQ4cZsgEE40pMaWX3lwW
+ vnlxTLN9J8KY217C4OFsy5LBlgJgcKxxMp2qtJWiyXLjLYnv1HUscZemQEl5AXop2d2ZuL
+ Htiid+ayxLDpKNTF7iYC1ggiohQAufk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-EJ1Dh1aaMG2v9oRnWZ-DWw-1; Thu, 11 Sep 2025 17:24:11 -0400
-X-MC-Unique: EJ1Dh1aaMG2v9oRnWZ-DWw-1
-X-Mimecast-MFC-AGG-ID: EJ1Dh1aaMG2v9oRnWZ-DWw_1757625851
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e870623cdaso263676985a.2
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 14:24:11 -0700 (PDT)
+ us-mta-507-BuCLUof8PbGLrPL9OkXUAg-1; Thu, 11 Sep 2025 17:24:12 -0400
+X-MC-Unique: BuCLUof8PbGLrPL9OkXUAg-1
+X-Mimecast-MFC-AGG-ID: BuCLUof8PbGLrPL9OkXUAg_1757625852
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-812ae9acaecso286244285a.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 14:24:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757625850; x=1758230650;
+ d=1e100.net; s=20230601; t=1757625852; x=1758230652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x+mQzcBNcIdFANreHLy90tT/Nh2HwBTHifc2In8UdMM=;
- b=oK9XTWJywJ5QYbK8zrnDSDWkVTwyELddb4VC1M1GvpoNeSXklWH59V665WjzeF1CHQ
- WiMp9cYAHOTHZ+2egmtitUaJQrTspwS36YYp5IAZjsr6JPs9nmOsXbK7zACR5t6S1KXm
- QBe0ze4HiOReugGBb2T8OoMoLF6NpUeCiBMqzZJcs9LiLSMDvpgkweGIx/LefDAl4zhO
- 56h+vXzD0/e3xmjJTZn/st8faHorMYgjnx0FvTKanIzqVYJdg6exbTt88m9XmkwVJP4A
- ZqIYNWsmQsdmYewLPZPowPH8dizDWLTMYRTLJN/LTdHl4yRrxx9ZUVLLQsu6mu2SOGhY
- 6cWA==
-X-Gm-Message-State: AOJu0YyLpPAh2OQckcIZwIc1wMVv9dy00NJiEhnEekb/w/Q+axVVqwJq
- I35a72RJwaxvG4xAgmwbAtS34T0Q7E8eoqjEsSkBfApP8usPLw5kPTGrP4KIyONNxCNDYV2dQSQ
- MN3FlXq7DEmBpas5i59s2tDYvNnWK0NdP7XKwMTCyiD1fx7qDsx+pPjbF+0TIxR/pVoD8b+o3jP
- rtIyc93gGM2cOX3Dsvl+m5IC+jJ5+VGxWHFwXC9w==
-X-Gm-Gg: ASbGnctrDOZD5MUT4Pmt3Oam2bn8MAc+s1AxFlfbpRzvubSf+mwrUvLjKFih8xDAszo
- j2kxzgRuvCjKDZZtz4klW1rzc4Rk4AJvwIRtXBYl11gYtFPa8W+GKGVkeY8G9j4gw8yv5PbyYjB
- tNjuuYjIeeFiM9ePC1e/ToS5QvJnmZVwHmAwY6lcNcF9agW7xuV8NFoET20ltXoywtQ3hnDabsj
- UvZIY98/Fcf4O5H9bKIbTC4FreWZxcO8HhBQFjRJ5FzBwM2SISoITU5Q+0mNlRm6YY94BWKfA7Y
- 0jQlDPkNTyFFt50ytK6zru+XccJpCg==
-X-Received: by 2002:a05:620a:44c4:b0:810:69dc:6e with SMTP id
- af79cd13be357-824032b00b6mr109965285a.58.1757625850308; 
+ bh=sN2ewjYKseHzqoQc0ThzSP1uQrVGcryEZdT1qKjYcXk=;
+ b=XdjC08IpcFi7eF7HG9TLIySYH8FR+91IDCJ3+TGFAVPPMeVIx7Pq5cyB47/MdSMOg5
+ A6oQQlcYtOCBaBJoB7BvDSdb76Pt+CC6/N7v5IOv4SjrvD8Mf3PbzRv4cdzt0dxYr8eB
+ s1kUAwHMl98FlMcXjQzH2DToJFH8D5BWfS2F1UKzSQk2CKv8QqQrCDC3KiiE14Iw9Bj9
+ 41/NsS4wEKOSE6L29Mo9Mv1X6KnDaa5m45jPGd9BzhjKwhS45BniT4pWKSTnVV4hXd0g
+ GgnJ+4Yhspi3MhLuyVOS0t/CD+jco/cJxZHDN8ceoGK4irSOFnDPK7Bxc0xRXIuPntum
+ x6kw==
+X-Gm-Message-State: AOJu0YyJNx/ZFfZLk8/36JYbjIriZk5jiP2xaQQAIdoO/ZSGr4jjkpAs
+ Yu++QLr9WqfPS9jTq7pFKzfloOCdnl6GDj7NnN2u03Wr9VhWKEMdylejqNFxWjuYqUwe1oDt4jF
+ Pdl2fwuFl89jrdeOj7DXXK76NnsZKk9qU7rJoMPaVePcNBBauW7kJlZnn06Vu56O6xon4wVbmGc
+ j0C+FeW+1Ea9WxtVD/X+RD8f61x/mb2FhDF8kHuw==
+X-Gm-Gg: ASbGncuHv8Gms6H1csGDV3thqU+Lf+mOUSDQ+6AYtyhftuy1E1U+9NPCcVHVTYGaFxf
+ ovLwfM/91jJ7zpYCevT03RoI50EoOdIuJ8cEqGwQaB4OdphiAtWm1yIk1ELLf2XuNGigSVqpRHq
+ /dP89/ai5yo9XBykRkN5jeEMa+Iqq5GLsmO6gy5EA1DAHtKTR8w8nsGFzGVocq7fK4qL7ioUCKz
+ ViMKVPiXlKVudxY3gs1sA0LmZSQy9pfnF37F90s6TD7WdD6KkJltcsV6GXhPIdO0h3UY6EoKacg
+ 6K3OVFmY/g5dcZnMy1QZC1UZM7sXUw==
+X-Received: by 2002:a05:620a:280b:b0:81f:eb9f:a04c with SMTP id
+ af79cd13be357-8240253e58bmr116797385a.54.1757625851514; 
+ Thu, 11 Sep 2025 14:24:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVPd7JCuLDVwwMIoqATnOsV2K6NWcg5uP0bIcBZQGMOgv9WwJq+C+17710a0bbtog4WK98nQ==
+X-Received: by 2002:a05:620a:280b:b0:81f:eb9f:a04c with SMTP id
+ af79cd13be357-8240253e58bmr116794185a.54.1757625850993; 
  Thu, 11 Sep 2025 14:24:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGORlmUezVTkXzefb94IHJ4Mq5bzWIFkEbTyVVPBSxxOTmsLhImL3iiIduH/FYKY7v/VJ+w9Q==
-X-Received: by 2002:a05:620a:44c4:b0:810:69dc:6e with SMTP id
- af79cd13be357-824032b00b6mr109962385a.58.1757625849812; 
- Thu, 11 Sep 2025 14:24:09 -0700 (PDT)
 Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-820c9845c47sm166032285a.28.2025.09.11.14.24.08
+ af79cd13be357-820c9845c47sm166032285a.28.2025.09.11.14.24.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Sep 2025 14:24:09 -0700 (PDT)
+ Thu, 11 Sep 2025 14:24:10 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  peterx@redhat.com, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 2/3] io/tls: Make qio_channel_tls_bye() always synchronous
-Date: Thu, 11 Sep 2025 17:23:54 -0400
-Message-ID: <20250911212355.1943494-3-peterx@redhat.com>
+Subject: [PATCH v2 3/3] migration: Make migration_has_failed() work even for
+ CANCELLING
+Date: Thu, 11 Sep 2025 17:23:55 -0400
+Message-ID: <20250911212355.1943494-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250911212355.1943494-1-peterx@redhat.com>
 References: <20250911212355.1943494-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,184 +111,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 No issue I hit, the change is only from code observation when I am looking
 at a TLS premature termination issue.
 
-qio_channel_tls_bye() API needs to be synchronous.  When it's not, the
-previous impl will attach an asynchronous task retrying but only until when
-the channel gets the relevant GIO event. It may be problematic, because the
-caller of qio_channel_tls_bye() may have invoked channel close() before
-that, leading to premature termination of the TLS session.
+We set CANCELLED very late, it means migration_has_failed() may not work
+correctly if it's invoked before updating CANCELLING to CANCELLED.
 
-Remove the asynchronous handling, instead retry it immediately.  Currently,
-the only two possible cases that may lead to async task is either INTERRUPT
-or EAGAIN.  It should be suffice to spin retry as of now, until a solid
-proof showing that a more complicated retry logic is needed.
+Allow that state will make migration_has_failed() working as expected even
+if it's invoked slightly earlier.
 
-With that, we can remove the whole async model for the bye task.
-
-When at it, making the function return bool, which looks like a common
-pattern in QEMU when errp is used.
-
-Side note on the tracepoints: previously the tracepoint bye_complete()
-isn't used.  Start to use it in this patch.  bye_pending() and bye_cancel()
-can be dropped now.  Adding bye_retry() instead.
+One current user is the multifd code for the TLS graceful termination,
+where it's before updating to CANCELLED.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/io/channel-tls.h |  5 ++-
- io/channel-tls.c         | 86 +++++-----------------------------------
- io/trace-events          |  3 +-
- 3 files changed, 15 insertions(+), 79 deletions(-)
+ migration/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-index 7e9023570d..bcd14ffbd6 100644
---- a/include/io/channel-tls.h
-+++ b/include/io/channel-tls.h
-@@ -49,7 +49,6 @@ struct QIOChannelTLS {
-     QCryptoTLSSession *session;
-     QIOChannelShutdown shutdown;
-     guint hs_ioc_tag;
--    guint bye_ioc_tag;
- };
+diff --git a/migration/migration.c b/migration/migration.c
+index 10c216d25d..f6f6a6e202 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1702,7 +1702,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
  
- /**
-@@ -60,8 +59,10 @@ struct QIOChannelTLS {
-  * Perform the TLS session termination. This method will return
-  * immediately and the termination will continue in the background,
-  * provided the main loop is running.
-+ *
-+ * Returns: true on success, false on error (with errp set)
-  */
--void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
-+bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
- 
- /**
-  * qio_channel_tls_new_server:
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 5a2c8188ce..8510a187a8 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -253,84 +253,25 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
-     qio_channel_tls_handshake_task(ioc, task, context);
- }
- 
--static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
--                                       gpointer user_data);
--
--static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
--                                     GMainContext *context)
-+bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
+ bool migration_has_failed(MigrationState *s)
  {
--    GIOCondition condition;
--    QIOChannelTLSData *data;
-     int status;
--    Error *err = NULL;
- 
--    status = qcrypto_tls_session_bye(ioc->session, &err);
-+    trace_qio_channel_tls_bye_start(ioc);
-+retry:
-+    status = qcrypto_tls_session_bye(ioc->session, errp);
- 
-     if (status < 0) {
-         trace_qio_channel_tls_bye_fail(ioc);
--        qio_task_set_error(task, err);
--        qio_task_complete(task);
--        return;
--    }
--
--    if (status == QCRYPTO_TLS_BYE_COMPLETE) {
--        qio_task_complete(task);
--        return;
--    }
--
--    data = g_new0(typeof(*data), 1);
--    data->task = task;
--    data->context = context;
--
--    if (context) {
--        g_main_context_ref(context);
--    }
--
--    if (status == QCRYPTO_TLS_BYE_SENDING) {
--        condition = G_IO_OUT;
--    } else {
--        condition = G_IO_IN;
--    }
--
--    trace_qio_channel_tls_bye_pending(ioc, status);
--    ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
--                                                  qio_channel_tls_bye_io,
--                                                  data, NULL, context);
--}
--
--
--static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
--                                       gpointer user_data)
--{
--    QIOChannelTLSData *data = user_data;
--    QIOTask *task = data->task;
--    GMainContext *context = data->context;
--    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
--
--    tioc->bye_ioc_tag = 0;
--    g_free(data);
--    qio_channel_tls_bye_task(tioc, task, context);
--
--    if (context) {
--        g_main_context_unref(context);
-+        return false;
-+    } else if (status != QCRYPTO_TLS_BYE_COMPLETE) {
-+        /* BYE event must be synchronous, retry immediately */
-+        trace_qio_channel_tls_bye_retry(ioc, status);
-+        goto retry;
-     }
- 
--    return FALSE;
--}
--
--static void propagate_error(QIOTask *task, gpointer opaque)
--{
--    qio_task_propagate_error(task, opaque);
--}
--
--void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
--{
--    QIOTask *task;
--
--    task = qio_task_new(OBJECT(ioc), propagate_error, errp, NULL);
--
--    trace_qio_channel_tls_bye_start(ioc);
--    qio_channel_tls_bye_task(ioc, task, NULL);
-+    trace_qio_channel_tls_bye_complete(ioc);
-+    return true;
+-    return (s->state == MIGRATION_STATUS_CANCELLED ||
++    return (s->state == MIGRATION_STATUS_CANCELLING ||
++            s->state == MIGRATION_STATUS_CANCELLED ||
+             s->state == MIGRATION_STATUS_FAILED);
  }
- 
- static void qio_channel_tls_init(Object *obj G_GNUC_UNUSED)
-@@ -482,11 +423,6 @@ static int qio_channel_tls_close(QIOChannel *ioc,
-         g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
-     }
- 
--    if (tioc->bye_ioc_tag) {
--        trace_qio_channel_tls_bye_cancel(ioc);
--        g_clear_handle_id(&tioc->bye_ioc_tag, g_source_remove);
--    }
--
-     return qio_channel_close(tioc->master, errp);
- }
- 
-diff --git a/io/trace-events b/io/trace-events
-index dc3a63ba1f..67b3814192 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -45,10 +45,9 @@ qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
- qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
- qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
- qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
--qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
-+qio_channel_tls_bye_retry(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
- qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
- qio_channel_tls_bye_complete(void *ioc) "TLS termination complete ioc=%p"
--qio_channel_tls_bye_cancel(void *ioc) "TLS termination cancel ioc=%p"
- qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
- qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
  
 -- 
 2.50.1
