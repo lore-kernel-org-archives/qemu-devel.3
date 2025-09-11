@@ -4,66 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E9CDCAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 20:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51C3CAC587
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 20:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwntS-00054M-BK; Thu, 11 Sep 2025 16:27:46 -0400
+	id 1uwoFD-0001mR-OT; Thu, 11 Sep 2025 16:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1uwntP-00053d-6O; Thu, 11 Sep 2025 16:27:43 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1uwntM-0000TS-BG; Thu, 11 Sep 2025 16:27:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=Sif3muZR8+GGi2HhISFxgaNnVigEZam3ukk+56tOQH0=; b=AVLWgyiVS5KzZO+m
- Wfd7qIv79ehr9na8tObZoTmGY2ceUZIgjrKNBC6UzScv0BAPVVELL1eCr9b7CU0uKhiZpwqaNXnda
- DnQkjaytTj8QiHKQ5NJj2OEX65MPau90WAa/F8Aj4sSMnjGiSlTYi5vkEwETpdHwZjlReqQRmduEd
- yvgzd0451KTVKeGU7cV2hW4i8arbPkosjFBgzcM84dNDLI02HLx7ntdXFlb7YFczE0BLdox2pOJq9
- rAxV741J2TQ5i2dOctuR2myUmcnHm2KNl0++nlF187kmxBUdbwBfEkERo42CgLMYt1j2ful/iLf60
- wV/p4n6EjY6w43x4sw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uwntI-00AV17-0C;
- Thu, 11 Sep 2025 20:27:36 +0000
-Date: Thu, 11 Sep 2025 20:27:36 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v3 17/20] util: add support for formatting a workload
- name in messages
-Message-ID: <aMMwuEqguq62FZhU@gallifrey>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-18-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uwoFB-0001mE-NI
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 16:50:13 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uwoF9-00039d-Ub
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 16:50:13 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-61feb87fe26so1258062a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 13:50:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1757623810; x=1758228610; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ug82rWd3PrNdeT7rbYF0Tz12bbfVWttmU5VcZtkn9hA=;
+ b=Vh4vUwhTUmg9poy1LrRxTn6wkKnGVwThiOVIexmeFD+7DppqMDt10jKXNkHo/8f/x0
+ O6OUewYTEIi2pdQnu0awNXXZvX/baSpmuK8nH23Yy+OIBs3DTbaDn8C0RpAGpSZ0N4U2
+ ZMcd5G/8fLlDLX3NaPU9szclzCtrJEDbuutcFAuQC+sF9KQ1HSXsJKkM705YH2z+0Crn
+ Eu49OFrUaS4z3sqkSiFEWFsUiGByL+MZUCucZJw/5+K4U1s8T1tbzdqNcP62XPnD7mwA
+ M0e2W/w9PWB3Emc1AsIEB4B0M/7GdkFCQxktR49PKJr7XXydphTRE8O2oYzTF1Xe6FaB
+ 1ptw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757623810; x=1758228610;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ug82rWd3PrNdeT7rbYF0Tz12bbfVWttmU5VcZtkn9hA=;
+ b=kvmzLMPQ1GyL23HhpAfzBMpuCWq/I1cqj+sZAjQciGvf4HLAZtG2of/WZ7XnNg6SuW
+ NqaC/emAvoxh7S19vVthy+XdUSxmHKRB61DML+dAPJeX6uSTyLUc9LfnRqLYJzDwldvg
+ u/V+YMjoprehi4vr4kBRnkt2D2cO91fCFPrpMWsa2X6puvNMSrZ5wkHq3Ja5xx6tZikI
+ bQxk+s9gLM9hBtTgEt+gHr6btauyuLd6zDg2MLKyzZBiVloC0OO0vypDOB5mxnONFvDQ
+ CJaaogiKoV4wV3uVrVPaQLy6/XQiPzqYjZYWi8L5MToct4GLlcswpu5u4in4Ibq/lugK
+ d4Jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpDGtLqAKVD/hU5AEukNXnzNAnr+zzQzZx9NoLcVl2Vt/5+obT7/Sin2vg2gI3OVvYQ/iEpU7LFuoL@nongnu.org
+X-Gm-Message-State: AOJu0YwxPfqRkSAeIa/4+n+63bNb2x4n8VuhAk5vZ0BCZThmTcerIDSJ
+ qV38RbSFdMyYR+J5SmirL/HKqIBGjaEbxEEoiFDulMtUJ+la5sqYbM4j+ctX6BJvWZ9a0BDcaHo
+ PQeYDD34wKQmxw7MxpZ1Q6ruZGWkuWdI=
+X-Gm-Gg: ASbGnctEURq/lOVcJYXvqS98Yw+jiw7lBMtrUK2bBQA5/rpdV13Ni9mXTn8Y+g54psk
+ rEbkzVkmWt8RpZCDrtJHgWY5mXslxJva0IT8sLlsEIvjE4GXz0Ea9UBuMqstRHFsAuultEwoZKL
+ nlBPpqhSPR93zR2gXH5hXEkEdvALU+C/XCTOPbta8auauBukalowaeup0Xp4ZPGqwr4s8cD007y
+ zOf6qWRBmScVPyJ
+X-Google-Smtp-Source: AGHT+IEpEyTGQaTWXSmXmSXyZmIZC5I4hqTM+UvVwGJ02nUv3nm4a0pCqUNFmgC7sFAe2xNQTix/5iP7zO9oJ26seIs=
+X-Received: by 2002:a05:6402:34ce:b0:62d:e044:4a5a with SMTP id
+ 4fb4d7f45d1cf-62ed69e0208mr915154a12.0.1757623810066; Thu, 11 Sep 2025
+ 13:50:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250910180357.320297-18-berrange@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 20:25:58 up 137 days,  4:39,  1 user,  load average: 0.10, 0.03, 0.01
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+References: <20250908140653.170707-1-stefanha@redhat.com>
+ <CAFEAcA_jB-5wmRXUijcr_+hpto3huMZQnKzZA5rHFwS5ZWDSkw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_jB-5wmRXUijcr_+hpto3huMZQnKzZA5rHFwS5ZWDSkw@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 11 Sep 2025 16:49:57 -0400
+X-Gm-Features: AS18NWAU7iqWbLaFrMV2Z49T9J1NGby2SEun8LMlHVejOK4_NXboBiCy9K059gQ
+Message-ID: <CAJSP0QWumdKVQWknYQkXw_G18RJ93q_jrmPoUsDD-CN_B=PU-g@mail.gmail.com>
+Subject: Re: [PULL 0/8] Tracing patches
+To: "Daniel P. Berrange" <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
+ Michael Roth <michael.roth@amd.com>, Thomas Huth <thuth@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Richard Henderson <rth@twiddle.net>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,186 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Daniel P. Berrangé (berrange@redhat.com) wrote:
-> The error_report function can include the guest name in any
-> messages it prints. The qemu_log function has no equivalent
-> behaviour.
-> 
-> This introduces support for a "workload name" in the new
-> messages API, which in the case of system emulators will
-> be the guest name. The possibility of defining a workload
-> name for other binaries is left as an exercise for the
-> future.
-> 
-> This change has no impact on the output of the error_report
-> function, but will change the qemu_log function. This can
-> be easily seen with the 'log' trace backend, and how it is
-> now more closely matching error_report output.
-> 
-> Before:
-> 
->   # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
->   qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
->   qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
->   blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> After:
-> 
->   # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
->   blah qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
->   blah qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
->   blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On Thu, Sep 11, 2025 at 7:40=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 8 Sept 2025 at 15:10, Stefan Hajnoczi <stefanha@redhat.com> wrote=
+:
+> >
+> > The following changes since commit 6a9fa5ef3230a7d51e0d953a59ee9ef10af7=
+05b8:
+> >
+> >   Merge tag 'pull-tcg-20250905' of https://gitlab.com/rth7680/qemu into=
+ staging (2025-09-05 09:51:27 +0200)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+> >
+> > for you to fetch changes up to b91cbf4e691b397510584b04fd6197284f55b52c=
+:
+> >
+> >   tracetool-test: allow to run in parallel (2025-09-08 09:48:10 -0400)
+> >
+> > ----------------------------------------------------------------
+> > Pull request
+> >
+> > Daniel Berrang=C3=A9's tracetool test suite and Marc-Andr=C3=A9 Lureau'=
+s test suite fix.
+> >
+> > ----------------------------------------------------------------
+>
+> I ran this as a combined merge test with a couple of other
+> pullreqs, but I'm assuming this one is the cause of this
+> msys2-64bit job failure:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/11318561687
+>
+> # [WinError 2] The system cannot find the file specified:
+> 'C:/GitLab-Runner/builds/qemu-project/qemu/build/tests/tracetooldmg99xan/=
+dtrace.c'
+> not ok 1 - dtrace.c (set QEMU_TEST_REGENERATE=3D1 to recreate reference
+> output if tracetool generator was intentionally changed)
+> # [WinError 2] The system cannot find the file specified:
+> 'C:/GitLab-Runner/builds/qemu-project/qemu/build/tests/tracetooldmg99xan/=
+dtrace.h'
+>
+> and other similar errors.
 
-Are you going to want to escape that? I see later you're adding []'s around it,
-which makes it feel like you want to end up with it parsable, but if some nasty
-person does:
+Hi Daniel,
+Looks like Windows is not happy with the new tracetool test suite.
+Please take a look at
+https://gitlab.com/qemu-project/qemu/-/jobs/11318561687.
 
--name ']})🐧({['
+Stefan
 
-then things get confusing; I guess you're hoping that whoever calls qemu will
-be careful not to allow that.
-
-Dave
-
-> ---
->  include/qemu/error-report.h |  3 ---
->  include/qemu/message.h      | 10 ++++++++++
->  system/vl.c                 |  6 ++++--
->  util/error-report.c         |  7 -------
->  util/message.c              | 12 +++++++++++-
->  5 files changed, 25 insertions(+), 13 deletions(-)
-> 
-> diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
-> index c8000778ec..ffc305f828 100644
-> --- a/include/qemu/error-report.h
-> +++ b/include/qemu/error-report.h
-> @@ -70,7 +70,4 @@ void error_init(const char *argv0);
->                                fmt, ##__VA_ARGS__);      \
->      })
->  
-> -extern bool error_with_guestname;
-> -extern const char *error_guest_name;
-> -
->  #endif
-> diff --git a/include/qemu/message.h b/include/qemu/message.h
-> index 0a06421f77..cfc3c92648 100644
-> --- a/include/qemu/message.h
-> +++ b/include/qemu/message.h
-> @@ -5,6 +5,7 @@
->  
->  enum QMessageFormatFlags {
->      QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
-> +    QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
->  };
->  
->  /**
-> @@ -16,6 +17,15 @@ enum QMessageFormatFlags {
->   */
->  void qmessage_set_format(int flags);
->  
-> +/**
-> + * qmessage_set_workload_name:
-> + * @name: the name of the workload
-> + *
-> + * Set the workload name, which for a system emulator
-> + * will be the guest VM name.
-> + */
-> +void qmessage_set_workload_name(const char *name);
-> +
->  /**
->   * qmessage_context_print:
->   * @fp: file to emit the prefix on
-> diff --git a/system/vl.c b/system/vl.c
-> index 696dd92669..fee6fdf7b1 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -818,7 +818,9 @@ static void configure_msg(QemuOpts *opts)
->      if (qemu_opt_get_bool(opts, "timestamp", false)) {
->          flags |= QMESSAGE_FORMAT_TIMESTAMP;
->      }
-> -    error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
-> +    if (qemu_opt_get_bool(opts, "guest-name", false)) {
-> +        flags |= QMESSAGE_FORMAT_WORKLOAD_NAME;
-> +    }
->      qmessage_set_format(flags);
->  }
->  
-> @@ -3520,7 +3522,7 @@ void qemu_init(int argc, char **argv)
->                      exit(1);
->                  }
->                  /* Capture guest name if -msg guest-name is used later */
-> -                error_guest_name = qemu_opt_get(opts, "guest");
-> +                qmessage_set_workload_name(qemu_opt_get(opts, "guest"));
->                  break;
->              case QEMU_OPTION_prom_env:
->                  if (nb_prom_envs >= MAX_PROM_ENVS) {
-> diff --git a/util/error-report.c b/util/error-report.c
-> index 719f059494..c40cdf3bb3 100644
-> --- a/util/error-report.c
-> +++ b/util/error-report.c
-> @@ -25,8 +25,6 @@ typedef enum {
->      REPORT_TYPE_INFO,
->  } report_type;
->  
-> -bool error_with_guestname;
-> -const char *error_guest_name;
->  
->  typedef void (*error_print_func)(void *opaque, const char *fmt, ...);
->  typedef void (*error_print_vfunc)(void *opaque, const char *fmt, va_list ap);
-> @@ -218,11 +216,6 @@ static void vreport(report_type type, const char *fmt, va_list ap)
->          qmessage_context_print(stderr);
->      }
->  
-> -    /* Only prepend guest name if -msg guest-name and -name guest=... are set */
-> -    if (error_with_guestname && error_guest_name && !cur) {
-> -        print_func(print_opaque, "%s ", error_guest_name);
-> -    }
-> -
->      print_loc(!!cur, print_func, print_opaque);
->  
->      switch (type) {
-> diff --git a/util/message.c b/util/message.c
-> index ef70e08c5f..a91c008e08 100644
-> --- a/util/message.c
-> +++ b/util/message.c
-> @@ -6,18 +6,28 @@
->  #include "monitor/monitor.h"
->  
->  static int message_format;
-> +static char *message_workloadname;
->  
->  void qmessage_set_format(int flags)
->  {
->      message_format = flags;
->  }
->  
-> -void qmessage_context_print(FILE *fp)
-> +void qmessage_set_workload_name(const char *name)
->  {
-> +    message_workloadname = g_strdup(name);
-> +}
->  
-> +void qmessage_context_print(FILE *fp)
-> +{
->      if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
->          g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
->          g_autofree char *timestr = g_date_time_format_iso8601(dt);
->          fprintf(fp, "%s ", timestr);
->      }
-> +
-> +    if ((message_format & QMESSAGE_FORMAT_WORKLOAD_NAME) &&
-> +        message_workloadname) {
-> +        fprintf(fp, "%s ", message_workloadname);
-> +    }
->  }
-> -- 
-> 2.50.1
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+>
+> thanks
+> -- PMM
+>
 
