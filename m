@@ -4,66 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F49CA101F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 00:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DECCAC58F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 01:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwUrr-00024u-Oy; Wed, 10 Sep 2025 20:08:51 -0400
+	id 1uwVsl-0005RN-P7; Wed, 10 Sep 2025 21:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1uwUrq-00024f-9e; Wed, 10 Sep 2025 20:08:50 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1uwUro-0005JK-5s; Wed, 10 Sep 2025 20:08:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=+P+V4H2H+BNozEPtg6NgeX7u6wj6Do083o6eSL4fmQM=; b=CXzbiOohELM/iIPj
- 3xj05Y1SRC9zI5kXeD3ifnPggMoD6nTBXLIWmlcil1H5AHYZcmAT/hw12LXZzLCXcVhrLmAENva6D
- xYnal/3czmfCmgexZkGyEdVsHr5OZAaJ6O/6YcNjnlh5zkEqjrBNMT8GQUdPCSuqnJIyUAUvqPRD9
- ZoHp23Lkzd271SiZs+0AmXwVJqUz0dU+qqKDjqcEKME1bCpGTm3NoLXUfTGkEqzmmFTan8kZFEAZy
- QcgkB5uCyUbA1nAXp1IdqiqthU41nTRWpb+cbvJmDEqE/s4QY8uyAuUeTaY/pfmdMQmmEcROX9SNA
- SQNNEXUY6Aww3MYEnA==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uwUrl-00A3Lg-23;
- Thu, 11 Sep 2025 00:08:45 +0000
-Date: Thu, 11 Sep 2025 00:08:45 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v3 09/20] ui/vnc: remove use of error_printf_unless_qmp()
-Message-ID: <aMITDSYgYpyzWOqn@gallifrey>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-10-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uwVsi-0005R8-A7
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 21:13:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uwVsf-0004Ue-Jg
+ for qemu-devel@nongnu.org; Wed, 10 Sep 2025 21:13:48 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxudE+IsJoAwkJAA--.19604S3;
+ Thu, 11 Sep 2025 09:13:34 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxT+Y7IsJojQWNAA--.54110S3;
+ Thu, 11 Sep 2025 09:13:33 +0800 (CST)
+Subject: Re: [PATCH v7 10/11] target/loongarch:Implement csrrd CSR_MSGIR
+ register
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250910091150.2424979-1-gaosong@loongson.cn>
+ <20250910091150.2424979-11-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <e5a510a3-ff66-7ae6-7b6f-d0a207b8738e@loongson.cn>
+Date: Thu, 11 Sep 2025 09:11:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <20250910091150.2424979-11-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250910180357.320297-10-berrange@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 00:06:04 up 136 days,  8:19,  1 user,  load average: 0.00, 0.01, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJAxT+Y7IsJojQWNAA--.54110S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXFy8CF4kXryUAw4xAr45XFc_yoW5Zr1fpr
+ W7CFW3KF48J397A3WfXa43twn8Zr48Kw4xXa1xt34I9a13Jr93Wr40q3srKF4DJa45XFW0
+ v3ZYkr18JFW7X3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzZ2-UUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.551,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,62 +83,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Daniel P. Berrangé (berrange@redhat.com) wrote:
-> The error_printf_unless_qmp() will print to the monitor if the current
-> one is HMP, if it is QMP nothing will be printed, otherwise stderr
-> will be used.
+
+
+On 2025/9/10 ä¸‹åˆ5:11, Song Gao wrote:
+> implement the read-clear feature for CSR_MSGIR register.
 > 
-> This scenario is easily handled by checking !monitor_cur_is_qmp() and
-> then calling the error_printf() function.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->  ui/vnc.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
+>   target/loongarch/csr.c                        |  5 +++++
+>   target/loongarch/tcg/csr_helper.c             | 21 +++++++++++++++++++
+>   target/loongarch/tcg/helper.h                 |  1 +
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+>   4 files changed, 28 insertions(+)
 > 
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 68ca4a68e7..439d586358 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3530,8 +3530,10 @@ int vnc_display_password(const char *id, const char *password)
->          return -EINVAL;
->      }
->      if (vd->auth == VNC_AUTH_NONE) {
-> -        error_printf_unless_qmp("If you want use passwords please enable "
-> -                                "password auth using '-vnc ${dpy},password'.\n");
-> +        if (!monitor_cur_is_qmp()) {
-> +            error_printf("If you want use passwords please enable "
-> +                         "password auth using '-vnc ${dpy},password'.\n");
+> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+> index 7ea0a30450..f973780bba 100644
+> --- a/target/loongarch/csr.c
+> +++ b/target/loongarch/csr.c
+> @@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
+>       CSR_OFF(DBG),
+>       CSR_OFF(DERA),
+>       CSR_OFF(DSAVE),
+> +    CSR_OFF_ARRAY(MSGIS, 0),
+> +    CSR_OFF_ARRAY(MSGIS, 1),
+> +    CSR_OFF_ARRAY(MSGIS, 2),
+> +    CSR_OFF_ARRAY(MSGIS, 3),
+> +    CSR_OFF(MSGIR),
+>   };
+>   
+>   CSRInfo *get_csr(unsigned int csr_num)
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 0d99e2c92b..ae0046f42c 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -73,6 +73,27 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+>       return cpu_loongarch_get_constant_timer_ticks(cpu);
+>   }
+>   
+> +target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+> +{
+> +    int irq, new;
+> +
+> +    irq = find_first_bit(env->CSR_MSGIS, 256);
+> +    if (irq < 256) {
+> +        clear_bit(irq, env->CSR_MSGIS);
+> +        new = find_first_bit(env->CSR_MSGIS, 256);
+> +        if (new < 256) {
+> +            return irq;
 > +        }
-
-OK, but while you're here, could you add the missing 'to' please.
-
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-
->          return -EINVAL;
->      }
->  
-> @@ -3570,9 +3572,11 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
->          qapi_free_SocketAddress(addr);
->          return;
->      }
-> -    error_printf_unless_qmp("VNC server running on %s:%s\n",
-> -                            addr->u.inet.host,
-> -                            addr->u.inet.port);
-> +    if (!monitor_cur_is_qmp()) {
-> +        error_printf("VNC server running on %s:%s\n",
-> +                     addr->u.inet.host,
-> +                     addr->u.inet.port);
+> +
+> +        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+> +    } else {
+> +        /* bit 31 set 1 for no invalid irq */
+> +        irq = BIT(31);
 > +    }
->      qapi_free_SocketAddress(addr);
->  }
->  
-> -- 
-> 2.50.1
+> +
+> +    return irq;
+> +}
+> +
+>   target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+>   {
+>       int64_t old_v = env->CSR_ESTAT;
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index 1d5cb0198c..db57dbfc16 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+>   DEF_HELPER_1(csrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+> +DEF_HELPER_1(csrrd_msgir, i64, env)
+>   DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 34cfab8879..a407ab51b7 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
+>       SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+>       SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+>       SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
+> +    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+>   }
+>   #undef SET_CSR_FUNC
+>   
 > 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
 
