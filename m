@@ -4,64 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C491CA1016
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 12:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDDDCAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 12:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwfwL-0002OW-ST; Thu, 11 Sep 2025 07:58:14 -0400
+	id 1uwfxi-0003mP-Or; Thu, 11 Sep 2025 07:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uwfwG-0002Ng-7s
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:58:09 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1uwfxd-0003cu-At
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:59:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uwfwB-0006Om-Se
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:58:06 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 72D1344EE0;
- Thu, 11 Sep 2025 11:58:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8952CC4CEF1;
- Thu, 11 Sep 2025 11:58:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1757591881;
- bh=/D55pFyt3VJdmuGX0Hft3q3YJw6AKpeKJBy5hh1wrNE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=si55fs3taRGv6SAX3cphNIIaluOEZV9VQnKLgYUNGSmXMaNchVlUd+JsPJ2xwRiH8
- zwH6MXBgSOZRGaP4LPMkkQhyde1HwI8aHaKga9zE3IjfC5RZUkmv4onCzhiGPP02UX
- enhtrEf8Iaae5HK5+5vS+BnHyKz3Bx5Dx5X/jQUriX+6WYd4QVc35fi/N0evXgKXry
- GLmfdagiyDawSQmpxtB7XHDWFUfV/bJRlziv2YQ+BLgNQnfIfKsCLrwqqUhRe29yXw
- 4rVtjJdnrKQyz5EUu395/OcvyurmkfpmHGOA6mM/N96kLdsOSAqRXfi+UMLvMYmpL/
- XPfcoggS7JszA==
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1uwfxV-0006UA-Rl
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:59:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757591958;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3CJWvgw8jXTso7Qw4D/rZViKGHWxwqyUWpC+jQEMaoA=;
+ b=Nd8Xj3+3h5vE4f7KB1sKVilTxXww9o6atbdw9Op36ot/GTYn2v/ZJA7dBWQGUJKR6tIO+e
+ v7uk7ABVWfJsW0X43GXihNeBAj4msNonRbNX3gb4e7K2O8OrfHK+dHu2PvUEA3s8/s+efv
+ R3KiTe/o2v0QH6dlYh9HZq4YZZr6bWU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-vXZ0MX_fN1O5alAnTa3gRA-1; Thu,
+ 11 Sep 2025 07:59:16 -0400
+X-MC-Unique: vXZ0MX_fN1O5alAnTa3gRA-1
+X-Mimecast-MFC-AGG-ID: vXZ0MX_fN1O5alAnTa3gRA_1757591955
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB6EE195395B; Thu, 11 Sep 2025 11:59:14 +0000 (UTC)
+Received: from fedora (unknown [10.44.33.231])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9F6119560BB; Thu, 11 Sep 2025 11:59:08 +0000 (UTC)
+Date: Thu, 11 Sep 2025 13:59:04 +0200
+From: =?iso-8859-1?B?SuFu?= Tomko <jtomko@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Neeraj Upadhyay <neeraj.upadhyay@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: [RFC PATCH 1/7] target/i386: SEV: Consolidate SEV feature validation
- to common init path
-Date: Thu, 11 Sep 2025 17:24:20 +0530
-Message-ID: <bd64baf06e483cf8df0f7b0f98cf5ad3dd5bff80.1757589490.git.naveen@kernel.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1757589490.git.naveen@kernel.org>
-References: <cover.1757589490.git.naveen@kernel.org>
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 03/14] system: unconditionally enable thread naming
+Message-ID: <aMK5iGPz5rSV7WC8@fedora>
+References: <20250829180354.2922145-1-berrange@redhat.com>
+ <20250829180354.2922145-4-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="5c2FoizNjCBL97Wh"
+Content-Disposition: inline
+In-Reply-To: <20250829180354.2922145-4-berrange@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jtomko@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,97 +92,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, check_sev_features() is called in multiple places when
-processing IGVM files: both when processing the initial VMSA SEV
-features from IGVM, as well as when validating the full contents of the
-VMSA. Move this to a single point in sev_common_kvm_init() to simplify
-the flow, as well as to re-use this function when VMSA SEV features are
-being set without using IGVM files.
 
-Since check_sev_features() relies on SVM_SEV_FEAT_SNP_ACTIVE being set
-in VMSA SEV features depending on the guest type, set this flag by
-default when creating SEV-SNP guests. When using IGVM files, this field
-is anyway over-written so that validation in check_sev_features() is
-still relevant.
+--5c2FoizNjCBL97Wh
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Finally, add a check to ensure SEV features aren't also set through qemu
-cli if using IGVM files.
+On a Friday in 2025, Daniel P. Berrang=E9 wrote:
+>When thread naming was introduced years ago, it was disabled by
+>default and put behind a command line flag:
+>
+>  commit 8f480de0c91a18d550721f8d9af969ebfbda0793
+>  Author: Dr. David Alan Gilbert <dgilbert@redhat.com>
+>  Date:   Thu Jan 30 10:20:31 2014 +0000
+>
+>    Add 'debug-threads' suboption to --name
+>
+>This was done based on a concern that something might depend
+>on the historical thread naming. Thread names, however, were
+>never promised to be part of QEMU's public API. The defaults
+>will vary across platforms, so no assumptions should ever be
+>made about naming.
+>
+>An opt-in behaviour is also unfortunately incompatible with
+>RCU which creates its thread from an constructor function
+>which is run before command line args are parsed. Thus the
+>RCU thread lacks any name.
+>
+>libvirt has unconditionally enabled debug-threads=3Dyes on all
+>VMs it creates for 10 years. Interestingly this DID expose a
+>bug in libvirt, as it parsed /proc/$PID/stat and could not
+>cope with a space in the thread name. This was a latent
+>pre-existing bug in libvirt though, and not a part of QEMU's
+>API.
+>
+>Having thread names always available, will allow thread names
+>to be included in error reports and log messags QEMU prints
+>by default, which will improve ability to triage QEMU bugs.
+>
+>Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+>Signed-off-by: Daniel P. Berrang=E9 <berrange@redhat.com>
+>---
+> docs/about/deprecated.rst |  7 +++++++
+> include/qemu/thread.h     |  1 -
+> system/vl.c               | 11 ++++++-----
+> util/qemu-thread-posix.c  | 18 +-----------------
+> util/qemu-thread-win32.c  | 27 ++++++---------------------
+> 5 files changed, 20 insertions(+), 44 deletions(-)
+>
+>diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>index d50645a071..bd6f865558 100644
+>--- a/docs/about/deprecated.rst
+>+++ b/docs/about/deprecated.rst
+>@@ -81,6 +81,13 @@ kernel since 2001. None of the board types QEMU support=
+s need
+> ``param_struct`` support, so this option has been deprecated and will
+> be removed in a future QEMU version.
+>
+>+``debug-threads`` option for ``-name``
 
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
----
- target/i386/sev.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+(since 10.2)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 1057b8ab2c60..243e9493ba8d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -586,9 +586,6 @@ static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
-     vmsa_check.x87_fcw = 0;
-     vmsa_check.mxcsr = 0;
- 
--    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
--        return -1;
--    }
-     vmsa_check.sev_features = 0;
- 
-     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
-@@ -1892,20 +1889,29 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-          * as SEV_STATE_UNINIT.
-          */
-         if (x86machine->igvm) {
-+            if (sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE) {
-+                error_setg(errp, "%s: SEV features can't be specified when using IGVM files",
-+                           __func__);
-+                return -1;
-+            }
-             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-                     ->process(x86machine->igvm, machine->cgs, true, errp) ==
-                 -1) {
-                 return -1;
-             }
--            /*
--             * KVM maintains a bitmask of allowed sev_features. This does not
--             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
--             * itself. Therefore we need to clear this flag.
--             */
--            args.vmsa_features = sev_common->sev_features &
--                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
-         }
- 
-+        if (check_sev_features(sev_common, sev_common->sev_features, errp) < 0) {
-+            return -1;
-+        }
-+
-+        /*
-+         * KVM maintains a bitmask of allowed sev_features. This does not
-+         * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
-+         * itself. Therefore we need to clear this flag.
-+         */
-+        args.vmsa_features = sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE;
-+
-         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
-         break;
-     }
-@@ -2518,9 +2524,6 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-                            __func__);
-                 return -1;
-             }
--            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
--                return -1;
--            }
-             sev_common->sev_features = sa->sev_features;
-         }
-         return 0;
-@@ -3127,6 +3130,7 @@ sev_snp_guest_instance_init(Object *obj)
- 
-     /* default init/start/finish params for kvm */
-     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
-+    SEV_COMMON(sev_snp_guest)->sev_features |= SVM_SEV_FEAT_SNP_ACTIVE;
- }
- 
- /* guest info specific to sev-snp */
--- 
-2.50.1
+Jano
+
+>+''''''''''''''''''''''''''''''''''''''
+>+
+>+Thread ``debug-threads`` option for the ``-name`` argument is now
+>+ignored. Thread naming is unconditionally enabled for all platforms
+>+where it is supported.
+>+
+> User-mode emulator command line arguments
+> -----------------------------------------
+>
+
+--5c2FoizNjCBL97Wh
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQT+Rn5j0qdK2hQgnuAU0rOr/y4PvAUCaMK5hQAKCRAU0rOr/y4P
+vAjPAP9IH40tEQqmVUeI2r1NnNvrTtDh4Eu4OSX8KyP65orD8QEAmHSoa4Lh0taD
+A8tZgqoQiRG3R3QRIthMbL+rbafF8Q8=
+=xUIa
+-----END PGP SIGNATURE-----
+
+--5c2FoizNjCBL97Wh--
 
 
