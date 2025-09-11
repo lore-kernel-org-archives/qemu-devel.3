@@ -4,51 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3226FCAC587
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E42CAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwcf8-0004Wg-BH; Thu, 11 Sep 2025 04:28:15 -0400
+	id 1uwcnR-0007J9-OQ; Thu, 11 Sep 2025 04:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1uwcf4-0004W3-K7; Thu, 11 Sep 2025 04:28:10 -0400
+ id 1uwcnO-0007I6-IR; Thu, 11 Sep 2025 04:36:46 -0400
 Received: from [218.76.62.146] (helo=ultrarisc.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <xb@ultrarisc.com>)
- id 1uwcey-0002Iq-Ft; Thu, 11 Sep 2025 04:28:09 -0400
-Received: from xb$ultrarisc.com ( [192.168.100.1] ) by
- ajax-webmail-localhost.localdomain (Coremail) ; Thu, 11 Sep 2025 16:28:54
- +0800 (GMT+08:00)
-X-Originating-IP: [192.168.100.1]
-Date: Thu, 11 Sep 2025 16:28:54 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?6LCi5rOi?= <xb@ultrarisc.com>
-To: "Michael Tokarev" <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, ajones@ventanamicro.com, qemu-riscv@nongnu.org,
+ id 1uwcnH-0003IK-5G; Thu, 11 Sep 2025 04:36:45 -0400
+Received: from ur-dp1000.. (unknown [192.168.100.1])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAfwBn1M5IisJoPP4sAA--.40469S3; 
+ Thu, 11 Sep 2025 16:37:36 +0800 (CST)
+From: Xie Bo <xb@ultrarisc.com>
+To: qemu-devel@nongnu.org
+Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, mjt@tls.msk.ru,
  pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
- rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com
-Subject: =?UTF-8?Q?Re:_Re:_[PATCH_v6_for_v10.0.0_0/2]_t?=
- =?UTF-8?Q?arget/riscv=EF=BC=9AFix_riscv64_kvm_migration?=
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
- 20240625(a75f206e) Copyright (c) 2002-2025 www.mailtech.cn
- mispb-8cc425bc-7df6-4523-bb46-a48cc1a964e6-ultrarisc.com
-In-Reply-To: <9e0c71fe-55fb-4ca9-aac4-40d38a77e07a@tls.msk.ru>
-References: <20250910093529.614305-1-xb@ultrarisc.com>
- <9e0c71fe-55fb-4ca9-aac4-40d38a77e07a@tls.msk.ru>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: iOob5GZvb3Rlcl90eHQ9MTA0MDo4NDA=
-Content-Type: text/plain; charset=UTF-8
+ rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com,
+ Xie Bo <xb@ultrarisc.com>
+Subject: [PATCH v7 for v10.0.0 1/2] Set KVM initial privilege mode and mp_state
+Date: Thu, 11 Sep 2025 16:36:15 +0800
+Message-ID: <20250911083617.1173094-2-xb@ultrarisc.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250911083617.1173094-1-xb@ultrarisc.com>
+References: <20250911083617.1173094-1-xb@ultrarisc.com>
 MIME-Version: 1.0
-Message-ID: <49f382e6.10fb.19937e45190.Coremail.xb@ultrarisc.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AQAAfwBXxM5GiMJovvwsAA--.2097W
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQABB2jA1vAALAATs2
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwBn1M5IisJoPP4sAA--.40469S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxAF4UJr15AFy3ZF45Xw4rGrg_yoW5Xr1fpF
+ 4kCw4a9rWkZa97Jw4fJrWvgr1F9w4kKrWUC397ZrWxZFsxArWYgF4ktFyUCFyDWFW5AryS
+ 9a98Ar1rAa1UZaUanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUQS14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+ x26xkF7I0E14v26r4j6ryUM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
+ ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2kK
+ e7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I
+ 80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCj
+ c4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YV
+ CY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE-syl42xK82IYc2Ij
+ 64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x
+ 8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE
+ 2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42
+ xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF
+ 7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUUID7UUUUU
+X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQACB2jCKHAAJAAAsS
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
 Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
  helo=ultrarisc.com
@@ -74,44 +80,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWljaGFlbO+8jAoKWWVzLCB0aGUgcGF0Y2ggc2VyaWVzIGlzIGludGVuZGVkIHRvIGJlIGFw
-cGxpZWQgdG8gdGhlIG5leHQgZGV2ZWxvcG1lbnQgcmVsZWFzZSwgMTAuMi4gIApBZGRpdGlvbmFs
-bHksIHdlIHdhbnQgdG8gY2hlcnJ5LXBpY2sgaXQgdG8gdGhlIHN0YWJsZSAxMC4wLnggYW5kIDEw
-LjEueCBzZXJpZXMgYXMgd2VsbC4KCkJlc3QgcmVnYXJkcywKWGllIEJvCgoKPiAtLS0tLeWOn+Wn
-i+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiTWljaGFlbCBUb2thcmV2IiA8bWp0QHRscy5tc2su
-cnU+Cj4g5Y+R6YCB5pe26Ze0OjIwMjUtMDktMTAgMTc6NTM6MTQgKOaYn+acn+S4iSkKPiDmlLbk
-u7bkuro6ICJYaWUgQm8iIDx4YkB1bHRyYXJpc2MuY29tPiwgcWVtdS1kZXZlbEBub25nbnUub3Jn
-Cj4g5oqE6YCBOiBham9uZXNAdmVudGFuYW1pY3JvLmNvbSwgcWVtdS1yaXNjdkBub25nbnUub3Jn
-LCBwYm9uemluaUByZWRoYXQuY29tLCBhbnVwQGJyYWluZmF1bHQub3JnLCBhbGlzdGFpci5mcmFu
-Y2lzQHdkYy5jb20sIHJrcmNtYXJAdmVudGFuYW1pY3JvLmNvbSwgcGFsbWVyQGRhYmJlbHQuY29t
-LCB4aWFteUB1bHRyYXJpc2MuY29tCj4g5Li76aKYOiBSZTogW1BBVENIIHY2IGZvciB2MTAuMC4w
-IDAvMl0gdGFyZ2V0L3Jpc2N277yaRml4IHJpc2N2NjQga3ZtIG1pZ3JhdGlvbgo+IAo+IE9uIDEw
-LjA5LjIwMjUgMTI6MzUsIFhpZSBCbyB3cm90ZToKPiA+IFRoaXMgc2VyaWVzKHY2KSByZXBsYWNl
-cyB0aGUgZWFybGllciBzZXJpZXMgcGF0Y2giW1BBVENIIHY1IGZvciB2MTAuMC4wIDAvMl0KPiA+
-IHRhcmdldC9yaXNjdjogRml4IHJpc2N2NjQga3ZtIG1pZ3JhdGlvbiIuCj4gCj4gSGkhCj4gCj4g
-WW91J3JlIHRhcmdldHRpbmcgcWVtdSAxMC4wLCB3aGlsZSB3ZSBhbHJlYWR5IHJlbGVhc2VkIDEw
-LjEsCj4gYW5kIHRoZSBuZXh0IHJlbGVhc2UgaXMgMTAuMi4KPiAKPiBEb2VzIGl0IG1lYW4geW91
-ciBwYXRjaHNldCBzaG91bGQgYmUgYXBwbGllZCB0byAxMC4yLCBhbmQKPiBjaGVycnktcGlja2Vk
-IHRvIHN0YWJsZSAxMC4wLnggYW5kIDEwLjEueCBzZXJpZXM/Cj4gCj4gVGhhbmtzLAo+IAo+IC9t
-anQKDQoNCl9fX19fX19fX19fX19fX19fX19fX193d3cudWx0cmFyaXNjLmNvbQ0K6YeN6KaB5o+Q
-56S677ya5pys6YKu5Lu25YyF5ous6ZmE5Lu255qE5YaF5a655piv5Y+X5rOV5b6L5L+d5oqk55qE
-5L+d5a+G5L+h5oGv77yM5aaC5p6c5oKo5LiN5piv5oyH5a6a5pS25Lu25Lq677yM6K+356uL5Y2z
-5bCG5pys6YKu5Lu25Yig6Zmk77yM5rOV5b6L56aB5q2i5Lu75L2V6Z2e5rOV55qE5oqr6Zyy44CB
-5aSN5Yi244CB5Lyg5pKt5oiW5Lul5Lu75L2V5pa55byP5L2/55So5pys6YKu5Lu244CC5pys6YKu
-5Lu25Lit5YyF5ZCr55qE5oSP6KeB44CB5bu66K6u5piv5Z+65LqO5oiW5Y+X5Yiw5oiR5pa56KGo
-6L6+5ZKM5a6a5LmJ55qE5p2h5qy+5Y+K5p2h5Lu255qE6ZmQ5a6a77yM5aaC5peg5oiR5pa555qE
-5q2j5byP5Lmm6Z2i5r6E5riF5oiW5o6I5p2D77yM5LiN5Y+v6KKr5Y2V54us5L2c5Li65Lu75L2V
-5oOF5b2i5LiL55qE6K+B5o2u5oiW5L6d5o2u44CC5oSf6LCi5oKo55qE55CG6Kej5LiO6YWN5ZCI
-44CC54mI5p2D5omA5pyJ44CCSU1QT1JUQU5UIE5PVElDRTogVGhpcyBlbWFpbCwgaW5jbHVkaW5n
-IGl0cyBhdHRhY2htZW50IGlmIGFueSwgaXMgY29uZmlkZW50aWFsLiBJZiB5b3UgYXJlIG5vdCB0
-aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBwbGVhc2UgZGVsZXRlIGl0IGZyb20geW91ciBjb21wdXRl
-ciBpbW1lZGlhdGVseS4gQW55IGRpc2Nsb3N1cmUsIGNvcHlpbmcsIG9yIGRpc3RyaWJ1dGlvbiBv
-ZiB0aGlzIG1lc3NhZ2UsIG9yIHRha2luZyBvZiBhbnkgYWN0aW9uIGJhc2VkIG9uIGl0IGlzIHN0
-cmljdGx5IHByb2hpYml0ZWQuICBBbnkgb3BpbmlvbnMgYW5kIHN1Z2dlc3Rpb25zIGNvbnRhaW5l
-ZCBpbiB0aGlzIGVtYWlsIGFyZSBzdWJqZWN0IHRvIHRoZSB0ZXJtcyBhbmQgY29uZGl0aW9ucyBl
-eHByZXNzZWQgYW5kIGRlZmluZWQgYnkgdXMgYW5kIHNob3VsZCBub3QgYmUgcmVsaWVkIHVwb24g
-dW5jb25kaXRpb25hbGx5IHVuZGVyIGFueSBjaXJjdW1zdGFuY2VzIHVubGVzcyB0aGV5IGFyZSBj
-b25maXJtZWQgaW4gb2ZmaWNpYWwgd3JpdHRlbiBjbGFyaWZpY2F0aW9uIG9yIGF1dGhvcml6YXRp
-b24gZnJvbSB1cy4gIFRoYW5rIHlvdSBmb3IgeW91ciB1bmRlcnN0YW5kaW5nIGFuZCBjb29wZXJh
-dGlvbi5BbGwgcmlnaHRzIHJlc2VydmVkLg==
+For KVM mode, the privilege mode should not include M-mode, and the 
+initial value should be set to S-mode. Additionally, a following patch 
+adds the implementation of putting the vCPU privilege mode to KVM. 
+When the vCPU runs for the first time, QEMU will first put the privilege 
+state to KVM. If the initial value is set to M-mode, KVM will encounter 
+an error.
+
+In addition, this patch introduces the 'mp_state' field to RISC-V 
+vCPUs, following the convention used by KVM on x86. The 'mp_state' 
+reflects the multiprocessor state of a vCPU, and is used to control 
+whether the vCPU is runnable by KVM. Randomly select one CPU as the 
+boot CPU. Since each CPU executes the riscv_cpu_reset_hold() function 
+and CPU0 executes first, only CPU0 randomly selects the boot CPU.
+
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+---
+ target/riscv/cpu.c | 17 ++++++++++++++++-
+ target/riscv/cpu.h |  2 ++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 09ded6829a..f6c787ebdc 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -38,6 +38,7 @@
+ #include "kvm/kvm_riscv.h"
+ #include "tcg/tcg-cpu.h"
+ #include "tcg/tcg.h"
++#include "hw/boards.h"
+ 
+ /* RISC-V CPU definitions */
+ static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
+@@ -1031,18 +1032,32 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+ #ifndef CONFIG_USER_ONLY
+     uint8_t iprio;
+     int i, irq, rdzero;
++    static int boot_cpu_index;
+ #endif
+     CPUState *cs = CPU(obj);
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(obj);
+     CPURISCVState *env = &cpu->env;
++    MachineState *ms = MACHINE(qdev_get_machine());
+ 
+     if (mcc->parent_phases.hold) {
+         mcc->parent_phases.hold(obj, type);
+     }
+ #ifndef CONFIG_USER_ONLY
+     env->misa_mxl = mcc->misa_mxl_max;
+-    env->priv = PRV_M;
++    if (kvm_enabled()) {
++        env->priv = PRV_S;
++    } else {
++        env->priv = PRV_M;
++    }
++    if (cs->cpu_index == 0) {
++        boot_cpu_index = g_random_int_range(0, ms->smp.cpus);
++    }
++    if (cs->cpu_index == boot_cpu_index) {
++        env->mp_state = KVM_MP_STATE_RUNNABLE;
++    } else {
++        env->mp_state = KVM_MP_STATE_STOPPED;
++    }
+     env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+     if (env->misa_mxl > MXL_RV32) {
+         /*
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 51e49e03de..4b1c5bf0e4 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -256,6 +256,8 @@ struct CPUArchState {
+ #endif
+ 
+     target_ulong priv;
++    /* Current multiprocessor state of this vCPU. */
++    uint32_t mp_state;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+     target_ulong senvcfg;
+-- 
+2.43.0
+
 
