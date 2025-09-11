@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BECCAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 14:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBEBDCAC587
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 14:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwiNr-0005l1-Ap; Thu, 11 Sep 2025 10:34:48 -0400
+	id 1uwiZH-0000N0-G5; Thu, 11 Sep 2025 10:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uwiNm-0005jj-IP
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 10:34:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uwiNg-0002Ym-JX
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 10:34:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757601275;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PVjOpw6EoV5dG9BS6F1AQX+Z7wfboRWkzUGwOHIrDDY=;
- b=NNsXFGGhEkAT4WOScn1nPou+3KehGNcEkbZDyv0HxAtirH6dfXvolS2ggWxNU1uVyzsYVs
- QfQNDWSI5lQ/BVi2l2gL5iR99yfXl2iaXTgzuZhg0o5FeeXLADYULyX5MJUkNfxno7zJdX
- JxYf7B6HHVhSgzIuNmYlgzry1RPkPI4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-EFhPPiVWNKydRxiWh1zNyw-1; Thu,
- 11 Sep 2025 10:34:32 -0400
-X-MC-Unique: EFhPPiVWNKydRxiWh1zNyw-1
-X-Mimecast-MFC-AGG-ID: EFhPPiVWNKydRxiWh1zNyw_1757601271
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C24141800447; Thu, 11 Sep 2025 14:34:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.148])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1ABE519560B1; Thu, 11 Sep 2025 14:34:26 +0000 (UTC)
-Date: Thu, 11 Sep 2025 16:34:22 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Hanna Czenczek <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] tests/qemu-iotests: Mark the 'inactive-node-nbd' as
- unsupported with -luks
-Message-ID: <aMLd7iqM9SBrF33x@redhat.com>
-References: <20250911142922.222365-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uwiZ6-0000LQ-O4
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 10:46:26 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uwiZ5-0003xb-2u
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 10:46:24 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-72ce9790aceso5883897b3.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 07:46:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757601981; x=1758206781; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FcTsT/2FVI7V/KcYWRv9dX9PSVwqf/a/qxlTK88yXXY=;
+ b=ye5M4tvp6GUKOCbvLrO1mX+YRwqHOX0eKO1mMDF/SN4q8510LOy582hZ75qMe5rQfg
+ luh2sh+mok9j0Mpe+Y0q/+3/1/4iQRI8sQUSPwqYQ3WoWNJGbACHcA3+qarBdR7jOFqH
+ 2v86h+xyFFbEpfh3eXr6v94Pq2igupmeWDKx+jvoXHcdbEaU4Ccd41ACQSv2JN/DGJWy
+ IoFHhdbpR2QhJyicpLgg/c2sBDd5egK/WiqGzAbXIlRxITy9tzDZadRIQGD8+EsQhLtS
+ 1bMVkiEZ/btrrwWD9YIaPSqUTtC4mjaxWEEweGHs5cZsrw67RUdggBsCiWlIqTPv9i29
+ zzOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757601981; x=1758206781;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FcTsT/2FVI7V/KcYWRv9dX9PSVwqf/a/qxlTK88yXXY=;
+ b=QLXuPcmrAaRGn3OwqAHYHeTrJRyFw7DBWRZUW7Bf8gUvcfUQcsgvHZLEbNdJ8XQyOw
+ iUDr9fm6nFdPwxw//RC2gyTT//X6SS/lqO6pusMV7qWsJFAu4eqpzacWHJPJaPoaBtjZ
+ M/UlDlypHA3TAm4HaUX4BKJBcADjCH9JeHEOJXe1sJXa/ZqxWcTLEBslYVt5lW5UhJs6
+ 5v45okh+jNIy56/5cYcWIC9U9EqAHgFG7mhiDynef8I9BXO5Gy/lXkMnkURe1fMEF7CQ
+ XrfEtV+b1dqpOPZb7exdP3AhlMkMqOjnjHmV8KpObTlyT5xEvqTHNBNTtJB+0uVZtr3e
+ 8cBA==
+X-Gm-Message-State: AOJu0Yw8sXWajFWEsPgn2qRYCJEEWlavxMF08tmyKbIf7HJaoBK/5Y3x
+ hnI+LcqdorS5syiRKPHM/cVIbCKu/YxyTDS9GcC6pcHCQNjSgLI8eq4L44iY3M8BrV9YZ3LGO68
+ pACcNhlFrnUVDjk/q4BeB3QWyq9g0Jit9SVTKRzCGjQ==
+X-Gm-Gg: ASbGncsdkJXXe3xrAoguZZwtYZKSKtKserIxucFQBBmqZ2gGfyD8SnFSPQqqsBBQXMe
+ pdDZOSFIAj8opXKwxmRwQRwYY4XxkjWEVASbnuWbyNcaz6CCbZRG3xyTwPRlLZFGvBvHx2b9VSh
+ L7JNosHu0QJa8iji5rxOJb+uEEpgfU3s2fIdL+fA61iD94HWFxzAso1CKBWzy7msb2iRqHMxEez
+ Q+2BddayRYuhaTSTDMg5f7WjeRROA==
+X-Google-Smtp-Source: AGHT+IFyDu42MC95CranUfROhX4o6o38lUqWwTiV5HMA7Ensn9+sjwdyk24ICRGEN/HcoP4ptGH92y6EvT+TKTCCxg8=
+X-Received: by 2002:a05:690c:a010:b0:729:f78b:420c with SMTP id
+ 00721157ae682-729f78b9be5mr122562777b3.24.1757601981232; Thu, 11 Sep 2025
+ 07:46:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250911142922.222365-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250903100702.16726-1-philmd@linaro.org>
+ <20250903100702.16726-24-philmd@linaro.org>
+In-Reply-To: <20250903100702.16726-24-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 11 Sep 2025 15:46:09 +0100
+X-Gm-Features: Ac12FXwzErRf24MAYGbl-qZ8jiJRTUumVQFc9x037jHRbDc1gkrkzef5d4PTXms
+Message-ID: <CAFEAcA8Bf90DJ44gdDWaBzc+FdbSY1Nn7Z0VJeWVpt3HMG__8A@mail.gmail.com>
+Subject: Re: [PATCH 23/24] target/arm: Rename init_cpreg_list() ->
+ arm_init_cpreg_list()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, Mads Ynddal <mads@ynddal.dk>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 11.09.2025 um 16:29 hat Thomas Huth geschrieben:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> When running "./check -luks inactive-node-nbd", the test currently fails
-> because QEMU terminates immediately. The reason can be seen with the
-> "-p" parameter of the "check" script:
-> 
->  qemu-system-x86_64: -blockdev luks,file=disk-file,node-name=disk-fmt,active=off:
->   Parameter 'key-secret' is required for cipher
-> 
-> Quoting Kevin: "The test case just isn't made for luks. iotests.py has
-> special code for luks in VM.add_drive(), but not in VM.add_blockdev()."
-> 
-> Thus let's mark it as unsupported on luks to avoid the failure.
-> 
-> Suggested-by: Kevin Wolf <kwolf@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On Wed, 3 Sept 2025 at 11:10, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Prefix init_cpreg_list() with 'arm_'.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Thanks, applied to the block branch.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Kevin
-
+thanks
+-- PMM
 
