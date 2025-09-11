@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF345CA1016
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE11CAC58F
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 09:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwe2x-0001e4-Ot; Thu, 11 Sep 2025 05:56:55 -0400
+	id 1uwe2y-0001f9-3x; Thu, 11 Sep 2025 05:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwe2r-0001cf-L3; Thu, 11 Sep 2025 05:56:49 -0400
-Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
+ id 1uwe2r-0001cQ-Dk; Thu, 11 Sep 2025 05:56:49 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwe2l-0005P0-41; Thu, 11 Sep 2025 05:56:49 -0400
+ id 1uwe2h-0005P4-B2; Thu, 11 Sep 2025 05:56:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
  t=1757584579; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=v+vs4CjpsTjK/bQhd1tu9FkaHGP8LV/h4beB5NsLGsY=;
- b=uOgeGZtzDWc1+VkF1Y17lvydmQ5tchcLtOjN25Kb+nPJpWFY7JcKivjIM0WJU6UUFgJcoRCfDPFbyo8mmzoheBgKepNVQq0sCTaTcjtaw2JuYNJxazrW32ixCbhNAfne6m9v23cY65n9IXqQmFGOrGMDfGHV+V+l8J+WCYsz1Ls=
+ bh=1gqd1TzCEIyvFYfjyBctacJ1+0G9407EGdXdIQ5mOdw=;
+ b=GZEBXztvhdIwrDy+Q0iadCMAlFff6Ubh4Rq2mkiRDA+BbJRsRcyMO9F7HW4sOq0ulDTR5rHxR1+YyxmoLiZ7lwvZ+rRpmOy9rWZJHclutNGf+jQ0S0/OSEAj+nseLi3BzmudRM/EildDfenELDKTbTSubH14C2PN1tvDTR54ypI=
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0Wnlj.Ka_1757584578 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 11 Sep 2025 17:56:18 +0800
+ fp:SMTPD_---0Wnlj.L-_1757584579 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 11 Sep 2025 17:56:19 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 11 Sep 2025 17:56:14 +0800
-Subject: [PATCH v3 2/4] migration: Add support for a variable-length array
- of UINT32 pointers
+Date: Thu, 11 Sep 2025 17:56:16 +0800
+Subject: [PATCH v3 4/4] target/riscv: Save stimer and vstimer in CPU
+ vmstate
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250911-timers-v3-2-60508f640050@linux.alibaba.com>
+Message-Id: <20250911-timers-v3-4-60508f640050@linux.alibaba.com>
 References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
 In-Reply-To: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -45,17 +45,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757584576; l=1832;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757584576; l=1731;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=cayQUbiz/WECLi6cpVZlwvmhlxaq9Pjmx69PYLrf5gU=;
- b=GRQ0OjVb3FeXn2XgxLUf+jJ6HaL2ch4vCSW1NekWU3meTPsR2yHjqas2TTK1FD7niN2IrBa8/
- mWbAj8tCAVqBwjw0bRvYLgU4tkZFmv9tqqBTjwGwsaGOm8H74I5cQ5v
+ bh=db8HgAaEdZbHQou94hhdJN2K2puP3nx87MpC33YWDYQ=;
+ b=rnE8KAyA9YE2wPYoNdk7C1NlNMyzW4RDdk9kDIdRq/TxTEluv39LB2c1HOMy6tQ7vMY0CeSqN
+ TQ/C8V5tDlJDLs+DBwdycbMzEPyXfF8O/IVtfM6sEYXlUzRRrHnLhEw
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=lyndra@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -80,39 +79,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for defining a vmstate field which is a variable-length array
-of pointers, and use this to define a VMSTATE_TIMER_PTR_VARRAY() which allows
-a variable-length array of QEMUTimer* to be used by devices.
+vmstate_riscv_cpu was missing env.stimer and env.vstimer.
+Without migrating these QEMUTimer fields, active S/VS-mode
+timer events are lost after snapshot or migration.
 
-Message-id: 20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com
+Add VMSTATE_TIMER_PTR() entries to save and restore them.
+
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- include/migration/vmstate.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/riscv/machine.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 1ff7bd9ac425ba67cd5ca7ad97bcf570f9e19abe..1cfddf31b54090f0f63380794092858b4bed8bcf 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -522,6 +522,16 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
- }
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 1600ec44f0b755fdd49fc0df47c2288c9940afe0..51e0567ed30cbab5e791ea904165bc1854709192 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -400,6 +400,30 @@ static const VMStateDescription vmstate_ssp = {
+     }
+ };
  
-+#define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-+    .name       = (stringify(_field)),                                    \
-+    .version_id = (_version),                                             \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
-+    .info       = &(_info),                                               \
-+    .size       = sizeof(_type),                                          \
-+    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
++static bool sstc_timer_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++    CPURISCVState *env = &cpu->env;
++
++    if (!cpu->cfg.ext_sstc) {
++        return false;
++    }
++
++    return env->stimer != NULL || env->vstimer != NULL;
 +}
 +
- #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
-     .name       = (stringify(_field)),                                     \
-     .version_id = (_version),                                              \
++static const VMStateDescription vmstate_sstc = {
++    .name = "cpu/timer",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sstc_timer_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_TIMER_PTR(env.stimer, RISCVCPU),
++        VMSTATE_TIMER_PTR(env.vstimer, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 10,
+@@ -476,6 +500,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_elp,
+         &vmstate_ssp,
+         &vmstate_ctr,
++        &vmstate_sstc,
+         NULL
+     }
+ };
 
 -- 
 2.43.0
