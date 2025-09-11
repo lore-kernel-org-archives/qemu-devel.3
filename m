@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDA5CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 09:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF345CA1016
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 09:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwds7-0007Nd-R8; Thu, 11 Sep 2025 05:45:43 -0400
+	id 1uwe2x-0001e4-Ot; Thu, 11 Sep 2025 05:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwds4-0007Mv-8D
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 05:45:40 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1uwe2r-0001cf-L3; Thu, 11 Sep 2025 05:56:49 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwdrw-0003BY-Ar
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 05:45:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757583932; x=1789119932;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=M5NUiD5lZIGjNEagvFU9izwPjfG4M2CncUk1AjL7PKU=;
- b=Aks2OhpAbSUEIc2SAyoY+IX4sBDu0TCmmolsc0+K5H7xCPUYuC6oc5hj
- CYMwUp6nkapo0L9eR8WJJgOsuqBIbNYKBJGcrmal92Rjex5Z/DByIhLaR
- YHFtZvlveoRmrXmbmlKlHMyerYm1lXDz2p1p9BV2I6c+Ug59KjnqAOkvn
- epn74JUcRmH/LpU6k9mXFZ455FkB8p8W7wcUzfM1vSFEEHOiS9cwptTKe
- tkkowdsz2LGn8bB6438r7crh9WUx8yv6w8a8M7t8wJsgiM5R7mnz1wuEc
- WvjFBoMdcKjyqFfCzUpthqK7SONXSVBzETGlXfvwK8AtPZ19KW1BnhiB9 g==;
-X-CSE-ConnectionGUID: 1OC0rAvZRNixCZMU4qSZrQ==
-X-CSE-MsgGUID: HeA+vLY8Rx6kbR1ZvCPQrg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="60058319"
-X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="60058319"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 02:45:24 -0700
-X-CSE-ConnectionGUID: SsgBFixeTmiTiDyNOOm2Cw==
-X-CSE-MsgGUID: hpUwRtASSUmA/JqVoBLiZw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="204643372"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 11 Sep 2025 02:45:23 -0700
-Date: Thu, 11 Sep 2025 18:07:16 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 08/33] rust: vmstate: use const_refs_to_static
-Message-ID: <aMKfVKfdouRf/La3@intel.com>
-References: <20250908105005.2119297-1-pbonzini@redhat.com>
- <20250908105005.2119297-9-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1uwe2l-0005P0-41; Thu, 11 Sep 2025 05:56:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1757584579; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=v+vs4CjpsTjK/bQhd1tu9FkaHGP8LV/h4beB5NsLGsY=;
+ b=uOgeGZtzDWc1+VkF1Y17lvydmQ5tchcLtOjN25Kb+nPJpWFY7JcKivjIM0WJU6UUFgJcoRCfDPFbyo8mmzoheBgKepNVQq0sCTaTcjtaw2JuYNJxazrW32ixCbhNAfne6m9v23cY65n9IXqQmFGOrGMDfGHV+V+l8J+WCYsz1Ls=
+Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0Wnlj.Ka_1757584578 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 11 Sep 2025 17:56:18 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Thu, 11 Sep 2025 17:56:14 +0800
+Subject: [PATCH v3 2/4] migration: Add support for a variable-length array
+ of UINT32 pointers
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250908105005.2119297-9-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250911-timers-v3-2-60508f640050@linux.alibaba.com>
+References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
+In-Reply-To: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757584576; l=1832;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=cayQUbiz/WECLi6cpVZlwvmhlxaq9Pjmx69PYLrf5gU=;
+ b=GRQ0OjVb3FeXn2XgxLUf+jJ6HaL2ch4vCSW1NekWU3meTPsR2yHjqas2TTK1FD7niN2IrBa8/
+ mWbAj8tCAVqBwjw0bRvYLgU4tkZFmv9tqqBTjwGwsaGOm8H74I5cQ5v
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,32 +80,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 08, 2025 at 12:49:40PM +0200, Paolo Bonzini wrote:
-> Date: Mon,  8 Sep 2025 12:49:40 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 08/33] rust: vmstate: use const_refs_to_static
-> X-Mailer: git-send-email 2.51.0
-> 
-> The VMStateDescriptionBuilder already needs const_refs_static, so
-> use it to remove the need for vmstate_clock! and vmstate_struct!,
-> as well as to simplify the implementation for scalars.
-> 
-> If the consts in the VMState trait can reference to static
-> VMStateDescription, scalars do not need the info_enum_to_ref!
-> indirection and structs can implement the VMState trait themselves.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/devel/rust.rst                  |   5 -
->  rust/hw/char/pl011/src/device.rs     |  19 ++-
->  rust/hw/timer/hpet/src/device.rs     |   8 +-
->  rust/qemu-api/src/assertions.rs      |   4 -
->  rust/qemu-api/src/vmstate.rs         | 229 +++++++--------------------
->  rust/qemu-api/tests/vmstate_tests.rs |  65 +++++---
->  6 files changed, 113 insertions(+), 217 deletions(-)
+Add support for defining a vmstate field which is a variable-length array
+of pointers, and use this to define a VMSTATE_TIMER_PTR_VARRAY() which allows
+a variable-length array of QEMUTimer* to be used by devices.
 
-Good improvement!
+Message-id: 20250909-timers-v1-0-7ee18a9d8f4b@linux.alibaba.com
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+---
+ include/migration/vmstate.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 1ff7bd9ac425ba67cd5ca7ad97bcf570f9e19abe..1cfddf31b54090f0f63380794092858b4bed8bcf 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -522,6 +522,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
+ }
+ 
++#define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
++    .name       = (stringify(_field)),                                    \
++    .version_id = (_version),                                             \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
++    .info       = &(_info),                                               \
++    .size       = sizeof(_type),                                          \
++    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
++    .offset     = vmstate_offset_pointer(_state, _field, _type),          \
++}
++
+ #define VMSTATE_STRUCT_SUB_ARRAY(_field, _state, _start, _num, _version, _vmsd, _type) { \
+     .name       = (stringify(_field)),                                     \
+     .version_id = (_version),                                              \
+
+-- 
+2.43.0
 
 
