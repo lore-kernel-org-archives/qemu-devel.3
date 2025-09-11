@@ -4,65 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6033CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 12:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BF3CAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 12:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwfw7-0002Ju-Hp; Thu, 11 Sep 2025 07:57:59 -0400
+	id 1uwg8P-0002QL-6x; Thu, 11 Sep 2025 08:10:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uwfw1-0002Iy-OJ
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:57:55 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwg8M-0002PI-Gc
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 08:10:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uwfvn-0006J7-LG
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 07:57:52 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 7496041788;
- Thu, 11 Sep 2025 11:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F98C4CEF0;
- Thu, 11 Sep 2025 11:57:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1757591854;
- bh=2z1LZETut4QsqrD4hbQwCdQhV7qbnpi4feefGZI8cIc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PFkxMQ6zgcqS07/oUhpub27PmF1d+40G661vUe32HGLf3BVSOuboCHp2u6MEjva4s
- /F/1qwZLufM7BhIz/JYFF3NzBNGt7ALXGFVqMYOL9y6BqgPRfQ+nFnvgU+04RMxYmC
- OC18c/gxzjY11nfbT6k2AiqQYrd9WRkl4SdLbt7xcccs5CMYoGq7A/ZgCaAscJcKqy
- MinjQYkQfNJBAfOe0BjURvJtlF6qYmvNMJYH0bPjRaDSU/DF/R5EDnRJtyfAKAEQvI
- DLodAyr3j8XzR/mgp1NAIJm7poxn4fW9czLXGeeRcy8gZMfQym5RHah8+/KBgXIkoY
- Nm3AFTcrM3tQQ==
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Neeraj Upadhyay <neeraj.upadhyay@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: [RFC PATCH 2/7] target/i386: SEV: Validate that SEV-ES is enabled
- when VMSA features are used
-Date: Thu, 11 Sep 2025 17:24:21 +0530
-Message-ID: <75d491d24e39a6d95049868c56e4f2088ed48d6e.1757589490.git.naveen@kernel.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1757589490.git.naveen@kernel.org>
-References: <cover.1757589490.git.naveen@kernel.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwg8E-0008Gz-9v
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 08:10:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757592624;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2SdUvC2ubGxk30ZeDssCzCm4f5QjPRrWZPkHiwST+sU=;
+ b=BARm1L3KvKu686wt2wPrmGc0YP7u76SPukmDUDGLjlKJnV67sFHRFAjaYEUsPaCZGr3Ipd
+ emZM/fbM3M+9tc0TRzPpGaN/+acGHheQYf8lzQuyhdPRKHvkNFsj+D++7z6n76JKs0KfVK
+ 8PXfMqwFFzfdtKi9xyxGO9pRQuutP9o=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-vGcAXZUNOxqwNaRc-8a34Q-1; Thu,
+ 11 Sep 2025 08:10:20 -0400
+X-MC-Unique: vGcAXZUNOxqwNaRc-8a34Q-1
+X-Mimecast-MFC-AGG-ID: vGcAXZUNOxqwNaRc-8a34Q_1757592619
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B77411800562; Thu, 11 Sep 2025 12:10:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E3C2300021A; Thu, 11 Sep 2025 12:10:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7FEF821E6A27; Thu, 11 Sep 2025 14:10:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Greg Kurz
+ <groug@kaod.org>
+Subject: The different ways QEMU logs stuff
+Date: Thu, 11 Sep 2025 14:10:15 +0200
+Message-ID: <87bjnhgpg8.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,37 +88,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SEV features in the VMSA are only meaningful for SEV-ES and SEV-SNP
-guests, as they control aspects of the encrypted guest state that are
-not relevant for basic SEV guests.
+I fell into another rabbit hole: logging.  Here's my trip report.
 
-Add a check in check_sev_features() to ensure that SEV-ES or SEV-SNP is
-enabled when any SEV features are specified.
+We have:
 
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
----
- target/i386/sev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+* util/error-report.c
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 243e9493ba8d..fa23b5c38e9b 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -509,6 +509,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-             __func__);
-         return -1;
-     }
-+    if (sev_features && !sev_es_enabled()) {
-+        error_setg(errp,
-+                   "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
-+                   __func__);
-+        return -1;
-+    }
-     if (sev_features & ~sev_common->supported_sev_features) {
-         error_setg(errp,
-                    "%s: VMSA contains unsupported sev_features: %lX, "
--- 
-2.50.1
+  - To stderr (or current monitor, but that's not relevant here)
+
+  - Format:
+        [TIME ][GUEST-NAME ]PROGNAME:LOCATION: (|warning: |info: )MESSAGE
+    where the optional parts are controlled by -msg
+
+  - Maintained: see MAINTAINERS "Error reporting"
+
+* util/log.c
+
+  - Control:
+
+    =C2=B7 Some logging is always on
+
+    =C2=B7 Some logging is off by default, enabled per "log item" with -d
+
+    =C2=B7 Some can additionally be limited to address ranges with -dfilter
+
+  - To the file given by -D (default stderr), or with -d tid to files
+    with names derived from the pattern given by -D (%d is replaced by
+    the thread ID)
+
+  - Format:
+        [TIME ]MESSAGE
+    where the optional part is controlled by -msg timestamp (-msg
+    guest-name has no effect here)
+
+  - Not covered by MAINTAINERS
+
+* Tracing
+
+  - Control: off by default, enabled with -trace per trace point (and
+    also -d trace: --- I find that duplication bizarre)
+
+  - Run time control with HMP commands trace-event, trace-file, QMP
+    commands trace-event-get-state, trace-event-set-state
+
+  - To whatever backends are compiled in:
+
+    =C2=B7 "log" wraps around util/log.c's always-on logging
+
+    =C2=B7 "simple" logs to a binary file given by -trace file=3D
+
+    =C2=B7 "syslog" logs to POSIX syslog
+
+    =C2=B7 "ftrace", "dtrace", "ust" integrate with Linux ftrace, DTrace /
+      SystemTap, and LTTng userspace tracing, respectively
+
+  - Maintained: see MAINTAINERS "Traicing"
+
+* Unstructured ad hoc printing to stdout or stderr
+
+I think that's it.
+
+Observations:
+
+* Mixing logs with different formats in one destination makes them
+  needlessly hard to read and parse.
+
+  Daniel's "util: sync error_report & qemu_log output more closely"
+  series makes util/error-report.c and util/log.c use a common message
+  prefix
+
+      [TIME ][GUEST-NAME ]PROGNAME\(THREAD-NAME\):...
+
+  where the optional parts are controlled by -msg.  Continues prior work
+  in that direction: commit 012842c0755 (log: make '-msg timestamp=3Don'
+  apply to all qemu_log usage).
+
+* Spreading logs over multiple destinations can make the order hard to
+  determine.
+
+  -D splits util/log.c from util/error-report.c.
+
+  -d tid further splits per thread.
+
+  Splitting per thread feels fairly redundant once the prefix includes
+  the thread name.  Thread names is easier to make sense of than numeric
+  thread IDs in the split filenames.
+
+  To keep the complete log in one place, avoid -D, and enable trace
+  backend "log".
+
+* In my view, util/log.c consists of three layers.  Form bottom to top:
+
+  * Logging messages: qemu_log()
+
+  * Control of what to log ("log items"): qemu_log_mask()
+
+  * Address filtering: qemu_log_in_addr_range()
+
+  The bottom layer is also used by trace backend "log".
+
+* Tracing vs. "log items"
+
+  Tracing and "log items" both provide opt-in logging.
+
+  Why do we have two?  Feels like an accident to me.
+
+  When to use which?  I guess people pick whatever they're familiar
+  with.
+
+  Would we be better off with just one?  I wish...
+
+  Which one?  Clearly tracing, because tracing backends provide plenty
+  of useful functionality "log items" lack.
+
+  "Log items" support per-thread log files.  With tracing, you could
+  instead split by thread names once Daniel's series is in.
+
+  Address range filtering is only used with "log items".  It could just
+  as easily be used with tracing.
+
+Thoughts?
 
 
