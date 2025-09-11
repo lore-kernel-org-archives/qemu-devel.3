@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B9B3CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 18:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A432BCAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 18:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwlfV-0001XL-3W; Thu, 11 Sep 2025 14:05:13 -0400
+	id 1uwlge-0002Zw-C2; Thu, 11 Sep 2025 14:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwlfS-0001W3-19
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:05:10 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1uwlgT-0002DG-JO
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:06:17 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwlfQ-0004GX-53
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:05:09 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45cb6180b60so7458945e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 11:05:07 -0700 (PDT)
+ id 1uwlgP-0004Jf-Hx
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:06:13 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3b9edf4cf6cso885295f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 11:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757613906; x=1758218706; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757613968; x=1758218768; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CWXGcMgEpokLbE0wjnpjge6Ilh7Zjrmv+FxN0jp/DwM=;
- b=kNWqmarV+YCuTFNqpRmXlWupNFIBuSNSiuk39igbc60J0OnrSrXP+yN9sD1yjnpBBH
- FrP1jHj38q9oBEyg07WLWY8HWiw8a3JOVgHvWUvf5E7Ei9XWrBh3l3tTkr9sjaNjrlbg
- Om3I4ZK6PEIyOYQhJwnC35NVTQLco+cMKBB+LqZq9B757WWxDM7PWwd5YKpzUWu7igOx
- 60ilM2hWg4MWU312MYjMjfwNPMw4X72NgvcbK4Yie4XfxI0xT7xplpMtODZizkZ8LiFr
- aLmnUZoAWS4QrH4PmLTt8O4R1IMd3Ovlqce/4id/vkqDXWGo0A8E3JVwqpejhpXbft5A
- bJzg==
+ bh=wC/l/0eF1fF9Hbl+CcfWv/Ta3f7x17R91szPSVszkvs=;
+ b=vm3TJtVAYM5OlfBVH8d/A0QfsGnmXHN908K8c3ez/Tg5UpsxEq3tJVAQdOfQUXCkVf
+ cxhQyTkP972kTNUCM+i/tsUmVujHgHfq08t+LTxCjnz+YyC90HABkdlLyifR0rUtBMtN
+ K1vifaFJjfBP1775ka8qr7bNTtDYOlPbWGRjAJ063Mi1lSpDAonNtUoMYZQzxh2GFxu9
+ bt4ujMHNfe5iEy/c0EuuBboO0kx2E0OGPB7L8Ugi+9+OWOwllb707PC5EbF06jaeYH+f
+ sEBz7+w+rnTK5fqmggAKpX40k0aQVUXBQhSrIExENPYfRPbujT3B9QGjLdPtUpgfmYey
+ VAZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757613906; x=1758218706;
+ d=1e100.net; s=20230601; t=1757613968; x=1758218768;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CWXGcMgEpokLbE0wjnpjge6Ilh7Zjrmv+FxN0jp/DwM=;
- b=snTUfodBrzxCUpYBTJlCnkw5UTQU8RtV422kS+o/GsrAKj7lc9vsbIyC1Cb2ryPDxb
- eQtLWbWFpT3lcWdUi6FXx86mSfqdHoWTl3Tohqs3DinXs7tu6z30ok17y9ilwsqpBA8n
- b1/RhIx8ReAhisx+MTN/2+xX70ybKGrZ10AEqcmP7xeve/3iwCIWhkHJsROo9ZP/ZYUL
- bIKybnxe8BRPWVVtcD+hhChdcy+bwXyz140hMibwdHgTNaB0J+AmbrtIlo3QC+DA4G0U
- eg21e2VZVtomWZL01fb6Y8iPxS3l8nPrW5cN5R4WGvjG71QjtbEyH84E/s5v4YGdoan9
- vP8A==
+ bh=wC/l/0eF1fF9Hbl+CcfWv/Ta3f7x17R91szPSVszkvs=;
+ b=Dx4aSx4diG6DP7av73TYtVZCAgFzT4RqojhYmUKu1HTp3PfCPQvC5hFcpsE7J3QGVW
+ Wb146Cx3+AkQVdM2tpw4rzDLaEQXn4T2I/XrdSlaYxsLr8z7wZRVsiBVuEKfmGfgYywZ
+ Rz3uIqj5sKOhBjQ3ctW0AHU+S91KjUD9M0HJ20A+jUTGUNulHt0f4Atk9A9CudcEoFxM
+ GafqqUC9YiOLMdVuX6LElLzEqvbWu9/+fu55nyPaEPAhKvVMJWF+iBLlLPodnF1UlffC
+ zsOqQXOuY0o0BUa6jKjWHZ11qhGVUl8JG/jWQ84IV0r5T1Iwf3SNTLnAp5twG0FqWf/f
+ WCxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsKLaDDHYiUBg+d3LXDss8cBZMypwaUnOcT+sv5hkZ61HgTaYFm+YyBlF/VWUV8RXvNpCMsZX9PWTG@nongnu.org
-X-Gm-Message-State: AOJu0YznUY6J4WiTb7ipshJGskfdSAmOv5vb6vSwbHnYVpumEsLV9KGR
- 0smzh9rS8QXG1dB+XjjzmNC0meuPnjUB8z7NiZagGODbKloqDrBSV9uzn7UZzy1lEaE=
-X-Gm-Gg: ASbGncvOMQWizoSiOOInHKWDptYubl+qR8sazIpaxOYman0mIwOZ9D8IcabSkCXvizZ
- 9x6CG9LvOJWmlWC2YMbm0wEgZIE5fUkMyA63JJcXJrJB8AYsK46hfCXg+iIyRig4RXOTARhVm3T
- dc9uyhnpIUiMnTVqK1vYAuX4D5MFsfa3w8Vw/Yj+90spCLa7aO1TYbLlKTfkGT1BDAmYtHXAjA5
- yhjXJqQRuBdZlvt1Qtoxd5fzyFzr/gj4ELYE70hR+SbqGKk1n/hkDUkZOJmqjbiyY9R5kEMKZ5n
- ygIwmx/P58098ZA6ED6E3zlb/3BHHjSJrIjmlmr5foU4IVlo8leL5B6PxtZCo/tzFyon3EqS78B
- eV1Vx1NT3tHdRRGO3Nk66ainZH+hFG1JA38NNeTvDiWwXtHCBPrZpU7beyxXr368B+AGSBt5tBv
- KErRI=
-X-Google-Smtp-Source: AGHT+IF6J4ncdGnQSIcxNia+CWfm9sGNznJqKAI1f+x+b2W8P0Lz2chkQBDTUmJT8bpMsRZjmSXdHg==
-X-Received: by 2002:a05:600c:6c51:b0:45d:f7cb:8954 with SMTP id
- 5b1f17b1804b1-45f211d4eedmr2798105e9.9.1757613906331; 
- Thu, 11 Sep 2025 11:05:06 -0700 (PDT)
+ AJvYcCVT6JEGkuf8W2NUs0rXjeDEJGlTsRXDRp42NwENwgujKonK+vdX29x5Vy8XAWbquP1H0p0UejFRobQa@nongnu.org
+X-Gm-Message-State: AOJu0YwZRxL9E/rZCtvKyXAA6yLM10bWm3k/aW1xHxLNS0Dv0dbsPpIN
+ 8KH2ZWLWKjd6Wt6p/e6njopfSL+wGU/bPNWxYEQcErk9pb1enGUal2nS0gN0pUyA8YQ=
+X-Gm-Gg: ASbGnct5F7u/BgAZd56kz8NRvXIYhlXiFIU3OZnHRmPbseqJee/Sx0R8Aa4x8Dyy3o5
+ NQWujg4XfS8dU+sY5Ajp8P858xEzy8fmTfFT9uf0uinFE2tWL9G9yeOxrhVsYehj5Kbel+xcTdh
+ Ayyd/gCxaRhqGMSXPoUluy7qHy1nTtYEk0mswEN/QcebaIJz4W3AJuuujgdgBiMLCQzL/MMBoEm
+ Oaxlgh2OfB2QG5+P5YOyKaIZJpCFN25unbuZ+qCbDkAxV/+kWWmj3J9vmwWcvoSBpAygOBJlnDC
+ TB4KnJvGV5XaeUllPhLP69TpEGEYeKyBSweucUAiA6/xTBNweF/llYSydK2HsbeJvANUBim8+Bn
+ nfpeCd4xwfR7t/+qe+5bngrJyP3etkWM3EAc839qE1nvuq+D+JsinIB6hYiDZsz7XztQy
+X-Google-Smtp-Source: AGHT+IEx4LkhrBqTOvedC5OHALY5btWwtHJ3WfomECP/keBJR1aSQiYY/dwENXbTOTb13hlmGqEAmg==
+X-Received: by 2002:a05:6000:2212:b0:3e7:471c:b11a with SMTP id
+ ffacd0b85a97d-3e7659c44d9mr195091f8f.19.1757613967750; 
+ Thu, 11 Sep 2025 11:06:07 -0700 (PDT)
 Received: from [172.16.30.12] (ipnet-92-225.static.simnet.is. [157.157.92.225])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e0372bbd3sm31277875e9.10.2025.09.11.11.05.03
+ ffacd0b85a97d-3e7607cd9fasm3263803f8f.35.2025.09.11.11.06.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 11:05:05 -0700 (PDT)
-Message-ID: <b22eec99-48ae-4d77-9e63-3944247ae5d5@linaro.org>
-Date: Thu, 11 Sep 2025 18:05:01 +0000
+ Thu, 11 Sep 2025 11:06:07 -0700 (PDT)
+Message-ID: <bab17a17-37ce-4163-8065-a454d368aa21@linaro.org>
+Date: Thu, 11 Sep 2025 18:06:02 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/20] util: fix interleaving of error & trace output
+Subject: Re: [PATCH v3 17/20] util: add support for formatting a workload name
+ in messages
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -84,14 +84,14 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>
 References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-15-berrange@redhat.com>
+ <20250910180357.320297-18-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250910180357.320297-15-berrange@redhat.com>
+In-Reply-To: <20250910180357.320297-18-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,29 +115,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/10/25 18:03, Daniel P. Berrangé wrote:
-> +    } else {
-> +        print_func = (error_print_func)fprintf;
-> +        print_vfunc = (error_print_vfunc)vfprintf;
-> +        print_opaque = stderr;
-> +    }
-> +
-> +    if (message_with_timestamp && !cur) {
->           timestr = real_time_iso8601();
-> -        error_printf("%s ", timestr);
-> +        print_func(print_opaque, "%s ", timestr);
->           g_free(timestr);
->       }
->   
->       /* Only prepend guest name if -msg guest-name and -name guest=... are set */
-> -    if (error_with_guestname && error_guest_name && !monitor_cur_hmp()) {
-> -        error_printf("%s ", error_guest_name);
-> +    if (error_with_guestname && error_guest_name && !cur) {
-> +        print_func(print_opaque, "%s ", error_guest_name);
->       }
+> The error_report function can include the guest name in any
+> messages it prints. The qemu_log function has no equivalent
+> behaviour.
+> 
+> This introduces support for a "workload name" in the new
+> messages API, which in the case of system emulators will
+> be the guest name. The possibility of defining a workload
+> name for other binaries is left as an exercise for the
+> future.
+> 
+> This change has no impact on the output of the error_report
+> function, but will change the qemu_log function. This can
+> be easily seen with the 'log' trace backend, and how it is
+> now more closely matching error_report output.
+> 
+> Before:
+> 
+>    # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+>    qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
+>    qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
+>    blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+> 
+> After:
+> 
+>    # qemu-system-x86_64 -msg guest-name=on -name blah -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+>    blah qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55b3af3fd870 dir=fish
+>    blah qcrypto_tls_creds_get_path TLS creds path creds=0x55b3af3fd870 filename=ca-cert.pem path=<none>
+>    blah qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+> 
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
+> ---
+>   include/qemu/error-report.h |  3 ---
+>   include/qemu/message.h      | 10 ++++++++++
+>   system/vl.c                 |  6 ++++--
+>   util/error-report.c         |  7 -------
+>   util/message.c              | 12 +++++++++++-
+>   5 files changed, 25 insertions(+), 13 deletions(-)
 
-It's worth pushing these second and third if into the first else,
-so that !cur is already true.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
