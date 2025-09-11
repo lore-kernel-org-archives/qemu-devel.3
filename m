@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B923CCAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808EFCAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uweAk-0000Ni-E9; Thu, 11 Sep 2025 06:04:58 -0400
+	id 1uweFW-0003KH-PE; Thu, 11 Sep 2025 06:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uweAc-0000KH-6x
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uweFU-0003JW-EH
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:09:52 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uweAU-0006hX-Jr
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757585075;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=i1SExr+rbrirwYtNrkSq1LPHtg5L0cu87DIAcQMQnCM=;
- b=fBbCzERmKiHzJjIKiVK43Ufhs+ibitEmTRHVniLNwhq1hAlZQiuPobp/oMdT5Hfp07+s8W
- GzcgzLYTpoO4wx3+8J3I4CV/oHPdL985e/qiazl0EWJFG7uf5scfRpITC5FUxfagkmcMOA
- fGgCyeIuS/89qhFLNfp8E1BgG4C9lHE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-YJs1ZyI_MHatlTfToES4wQ-1; Thu,
- 11 Sep 2025 06:04:32 -0400
-X-MC-Unique: YJs1ZyI_MHatlTfToES4wQ-1
-X-Mimecast-MFC-AGG-ID: YJs1ZyI_MHatlTfToES4wQ_1757585071
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C1C31800366; Thu, 11 Sep 2025 10:04:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.148])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A9F531800451; Thu, 11 Sep 2025 10:04:28 +0000 (UTC)
-Date: Thu, 11 Sep 2025 12:04:24 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
- hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
- berrange@redhat.com, armbru@redhat.com
-Subject: Re: Some iotests are failing with -luks
-Message-ID: <aMKeqBDvzEM0682l@redhat.com>
-References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
- <aMGijXg9XIpbbn-v@redhat.com> <aMHFrDEW8cbnXajG@redhat.com>
- <CAK9dgmYY-193Nom=DteAp2mDCNCMdA-fUMi8PH5iAoVVZ59cKQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uweFS-0007Fu-Ei
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:09:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1757585390; x=1789121390;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=SAgni/KfSWPOF3qch/YVPVcy2Ajgyr/k32z5Co3/S24=;
+ b=PXnSBqFGE5tZIoWY4t9ioUlo1Web6Pwiv1DE3t6E+/ZlxiuJOlo6+vLu
+ KgxNozM941kz7AZ3LUeK1QydI36AIlJ2j8QHyt+Awdc/7xQonmlbYw6YZ
+ JUGn+HohA+QLBnQThXOqRr4Y13dor+c64kchZRVgDsQKIngNBgSg5iVK+
+ oR44l0Gy5qoOxsIYYOnGyD5leIhJE4gBpu03KHs8EpulVv4gV6zWpLPAt
+ 0ogHH4qiLxtb6OyIkV5k8dwy5SzRv6wJpWDQIBQduHh3MYjyeazkIXFZV
+ FcBWc1EMRtyuFYhiKay2sCa5+jxXvrM/IZW/fG9JNrXks0XiWYjEUln5k g==;
+X-CSE-ConnectionGUID: adqX19+dQtK5FtUmi3ZvuQ==
+X-CSE-MsgGUID: k0Ct/LYnQgW+bC60hUBnzg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="71336226"
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="71336226"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 03:09:48 -0700
+X-CSE-ConnectionGUID: kufx1bdhQMuc2q1fAx2WXg==
+X-CSE-MsgGUID: 6rnxFVmtReqbwNgknJkyeQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="173207566"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 11 Sep 2025 03:09:48 -0700
+Date: Thu, 11 Sep 2025 18:31:39 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 15/33] rust: move Cell vmstate impl
+Message-ID: <aMKlC9yG/JaNXUkt@intel.com>
+References: <20250908105005.2119297-1-pbonzini@redhat.com>
+ <20250908105005.2119297-16-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK9dgmYY-193Nom=DteAp2mDCNCMdA-fUMi8PH5iAoVVZ59cKQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250908105005.2119297-16-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,111 +85,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 11.09.2025 um 04:33 hat Yong Huang geschrieben:
-> On Thu, Sep 11, 2025 at 2:38 AM Kevin Wolf <kwolf@redhat.com> wrote:
+On Mon, Sep 08, 2025 at 12:49:47PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  8 Sep 2025 12:49:47 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 15/33] rust: move Cell vmstate impl
+> X-Mailer: git-send-email 2.51.0
 > 
-> > Am 10.09.2025 um 18:08 hat Kevin Wolf geschrieben:
-> > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
-> > > > luks-detached-header   fail       [17:15:26] [17:15:38]   12.2s
-> >         failed, exit status 1
-> > > > ---
-> > /home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header.out
-> > > > +++
-> > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/luks-detached-header.out.bad
-> > > > @@ -1,5 +1,55 @@
-> > > > -..
-> > > > +EE
-> > > > +======================================================================
-> > > > +ERROR: test_detached_luks_header
-> > (__main__.TestDetachedLUKSHeader.test_detached_luks_header)
-> > > > +----------------------------------------------------------------------
-> > > > +Traceback (most recent call last):
-> > > > +  File
-> > "/home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header",
-> > line 139, in setUp
-> > > > +    res = qemu_img_create(
-> > > > +          ^^^^^^^^^^^^^^^^
-> > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > 278, in qemu_img_create
-> > > > +    return qemu_img('create', *args)
-> > > > +           ^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > 261, in qemu_img
-> > > > +    return qemu_tool(*full_args, check=check,
-> > combine_stdio=combine_stdio)
-> > > > +
-> >  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > 241, in qemu_tool
-> > > > +    raise VerboseProcessError(
-> > > > +qemu.utils.VerboseProcessError: Command
-> > '('/home/thuth/tmp/qemu-build/qemu-img', 'create', '-f', 'luks', '-o',
-> > 'iter-time=10', '-o', 'key-secret=sec0', '-o', 'detached-header=true',
-> > '--object', 'secret,id=sec0,data=foo',
-> > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/detached_header.img2')'
-> > returned non-zero exit status 1.
-> > > > +  ┏━ output
-> > ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > > > +  ┃ Formatting
-> > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/l
-> > > > +  ┃ uks-file-luks-detached-header/detached_header.img2', fmt=luks
-> > > > +  ┃ size=-1 key-secret=sec0 iter-time=10 detached-header=true
-> > > > +  ┃ qemu-img:
-> > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luk
-> > > > +  ┃ s-file-luks-detached-header/detached_header.img2: Parameter
-> > > > +  ┃ 'detached-header' is unexpected
-> > > > +
-> > ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > >
-> > > This one is surprising. I don't think anything relevant in the luks
-> > > driver has changed since the test was introduced. At the same time, the
-> > > code clearly has a problem when it tries to convert a QemuOpts
-> > > containing a "detached-header" option into a QAPI object when the schema
-> > > doesn't even have this option. Was this broken from the beginning? Would
-> > > have been for a year and half.
-> >
-> > I bisected this one because I was curious how this could happen, and it
-> > was broken quite explicitly by commit e818c01a:
-> >
-> > commit e818c01ae6e7c54c7019baaf307be59d99ce80b9 (HEAD)
-> > Author: Daniel P. Berrangé <berrange@redhat.com>
-> > Date:   Mon Feb 19 15:12:59 2024 +0000
-> >
-> >     qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
-> >
-> >     The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
-> >     was left over from earlier patch iterations.
-> >
-> >     Acked-by: Markus Armbruster <armbru@redhat.com>
-> >     Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> >
-> > The test case demonstrates that it actually wasn't unused.
-> >
-> > If we don't want to reintroduce the field in QAPI, we need to explicitly
-> >
+> From: Marc-Andr� Lureau <marcandre.lureau@redhat.com>
 > 
-> Keeping the detached-header option is more convenient for users when
-> creating a detached-header image.
+> This will allow to split vmstate to a standalone crate next.
 > 
-> My inclination is to bring this optionback.  Any suggestions? cc @Daniel P.
-> Berrangé <berrange@redhat.com>
+> Signed-off-by: Marc-Andr� Lureau <marcandre.lureau@redhat.com>
+> Link: https://lore.kernel.org/r/20250827104147.717203-10-marcandre.lureau@redhat.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/cell.rs    |  6 +++++-
+>  rust/qemu-api/src/vmstate.rs | 14 +++++++-------
+>  2 files changed, 12 insertions(+), 8 deletions(-)
 
-Having it available for users in qemu-img is different from having it in
-QAPI. Arguably there is no use for it in QAPI, as long as you make sure
-that it's taken out of the QemuOpts before going to QAPI.
-
-Kevin
-
-> 
-> > delete it from the QemuOpts in block_crypto_co_create_opts_luks() before
-> > block_crypto_create_opts_init() creates a QCryptoBlockCreateOptions from
-> > the given options and fails now that this option doesn't exist any more.
-> >
-> > Kevin
-> >
-> >
-> 
-> -- 
-> Best regards
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
