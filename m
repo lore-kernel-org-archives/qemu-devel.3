@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D09CA1016
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092DCCA1016
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uweAI-0008LU-AF; Thu, 11 Sep 2025 06:04:31 -0400
+	id 1uweAc-0000KI-9B; Thu, 11 Sep 2025 06:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uweAG-0008LA-CB
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:28 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uweAD-0006gZ-Af
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:28 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-5fe42994547so188011d50.0
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 03:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757585061; x=1758189861; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=90Hq1/SkzrOr12kzW5mjFU3ZDT8bRGSr2u7/iNn9v10=;
- b=w7hf6IoFpDD3b7cmTx+Ev135GoftK5LkQ+5X9ZLlAd6nbeESBdBoTCOERV4rOPaxQa
- 8OBt+aX8eGCSXJr3n4ZZGk1j3semGgyY5tjM4uowe6nBq1WQMFBRoagZdMCgNQLGRE82
- 0IHfYpp2BRl6kRDFnnLIcSFSWnVw1IGMT+Lic073m0N9Q3BYMroAyZySI/te/zP/NdcF
- xdktbaaCKDlHKDQnwbBzkZE3iJaHNAm4D+iDut3R13//IdPajfXvUEX6WJm9pNjOpMGv
- MbiqtOMq/n4+F6JvKwyow4otDazLWy/HXsMHz2vsQZ8wKtw1z3CgyKMljuAsUTzoT43t
- Whyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757585061; x=1758189861;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=90Hq1/SkzrOr12kzW5mjFU3ZDT8bRGSr2u7/iNn9v10=;
- b=TfsimdWzZd5LMyWPWZqylTbF1v6LwSYvJI1U2gPptOWhd+0gV0dv91SbD4JyJSe0cY
- dinp6c5RN3X1gkMx8o9JlXyjVE3ZsEtR9LNXDEfjyJtVh66yoSuzk45TOQUFN0R36/rF
- dYsXw9o+bOb/Ob/qS+rHumTjyQF64bUyo9/xvoOt4W7aeCkdZyiwN2Ary1Ej4OArDmX9
- haanRdabs3De4Wva41QWDU1sNcj6otJm7R41TiKaEKlbY11pZH4oZ/HaUou9MRSSjkKc
- Wp3tJMb3uCgBukOLSaPiEN3zrSk8VbFU2HOfO1KBjsp0lJlZLI+IOxAOWWfWqkFKzALj
- 54Nw==
-X-Gm-Message-State: AOJu0YxxrAQ1LKD0FRLJcLJs98dgr5s1Oc+IM6UxYJRB8/CHGag9Q27o
- xXT5kvpAwEi+DtBdv29dQakBjGipEVCxknj+JAeyeuquLZDfgMfu/v4bfSdt3QoeAPpH7K+3jDG
- paVqBnB1u+dOXJhgqCtPNoM/Gb2GYzoLboxcWnkLv1/ayRvwo9z0b
-X-Gm-Gg: ASbGncvMiUJxGk0LZz51fcl9ZWaOIXAk6ZLUk5Q1avRj5DER1PgWxcUs3w/bCn5FITs
- DoLPSieMhN3kaDOnkDVizegGG4X0ZWAbUkrnfyoHy1YH1h1IzGXnbkQM7t7i9eZ0KPMS+GsdWHB
- utayv3yDEUIbViuBWZA6TcldfLccg7Y5xsslD0kg1DdTZ2cTMXPsnQrVNPCONrJs5InoofzJhsA
- Xe+yZiKFoYcBc+eMfE=
-X-Google-Smtp-Source: AGHT+IGmq8Aq6iskIyTm4ls7gp6FJRYP497Ovkq7K/pSzn28jbRoyuFnTkQRly5P69A8gkXQbrXSEp+Td84ektfxEFI=
-X-Received: by 2002:a53:d010:0:b0:5fc:f3a:58b3 with SMTP id
- 956f58d0204a3-6103602c465mr11449643d50.36.1757585061215; Thu, 11 Sep 2025
- 03:04:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250908105005.2119297-1-pbonzini@redhat.com>
-In-Reply-To: <20250908105005.2119297-1-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Sep 2025 11:04:09 +0100
-X-Gm-Features: Ac12FXx__Gdlp_HGN1M7neeZPDPF0L9fZenRW7Eb2HDsHU4uwET_BGeQYHmkAUI
-Message-ID: <CAFEAcA8WZ1Aa==LZv+roEHdaOzoMoX3aoeBbsM4gc3d_Yq=GTA@mail.gmail.com>
-Subject: Re: [PATCH 00/33] First Rust update for QEMU 10.2
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uweAZ-0000II-5F
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:47 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uweAW-0006ho-0u
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:04:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1757585084; x=1789121084;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=JusztU2JzdkE4ZZ/+r7ccO6JOMV2pGMPeZjCtfoPCU8=;
+ b=MhvPAyXgFy9KNQr/hLNcqwSjJA5UhxEtZjAiBeNtTpP9DNJbpWK6hRLj
+ UxYG4bk8/jQ37OFdIFjZ0YTwUAsFYJOXmMaQ3JReogE+uDPG2ZxEmCYzp
+ JamXqLkNz/uW0mfFVDhvc+A1k3U7L8jKadRtAfkXBOB1ZeUvdddhOIvOd
+ GAiZ7OHeGJNq16G+vs4zZDOmIZun0Dj9hsYqeX8z9LyN+NwxeLqISGP49
+ LFGzkXVr5+3GUgYjQoyvW1KuZUd7695rzkY5K24OzNAcVRqk+B/X1CEce
+ OH6D1kgkh2qQ/inm9nNPbMozj5BcZRsLZG4D2IfaSuiVOEPTntErX7uVz g==;
+X-CSE-ConnectionGUID: PcQooW/8Q66qrNvf5mHcdw==
+X-CSE-MsgGUID: R/LbFAQzQQyXwoQvg+ZSgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11549"; a="70601627"
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="70601627"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 03:04:39 -0700
+X-CSE-ConnectionGUID: ZiIazQeDTG+bDooADEIirg==
+X-CSE-MsgGUID: zesJFuHKQ8yhwL1oLZfdVQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,257,1751266800"; d="scan'208";a="173487981"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 11 Sep 2025 03:04:36 -0700
+Date: Thu, 11 Sep 2025 18:26:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 14/33] rust: move VMState handling to QOM module
+Message-ID: <aMKj1MEYbInV9Zdq@intel.com>
+References: <20250908105005.2119297-1-pbonzini@redhat.com>
+ <20250908105005.2119297-15-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250908105005.2119297-15-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,33 +85,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Sept 2025 at 11:53, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> This includes:
-> - bumping MSRV to 1.83.0 to support const_refs_to_static
-> - Zhao's safe, builder-based implementation of migration callbacks
-> - Manos's qdev properties macro.  While bit-based properties are
->   not yet supported, that's a small change overall.
-> - the Rust crate split from Marc-Andr=C3=A9
-> - adding proc macro aliases in individual crates, also from Marc-Andr=C3=
-=A9
->
-> I'm still not convinced about having "bql" depend on "migration",
-> but I am convinced by the crate split between "util" and "bql",
-> so we can move the implementation of VMState from "bql" to
-> "migration" later if needed.
->
-> For the purpose of getting this in as an easy-to-use base for future
-> development, I'm disabling CI from Debian and Ubuntu.  The plan is:
-> - that Debian will require trixie to enable Rust usage
-> - that Ubuntu will backport 1.83 to its 22.04 and 24.04 versions
->   (https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318)
-> - that Marc-Andr=C3=A9 or someone else will add Rust to other CI jobs
+On Mon, Sep 08, 2025 at 12:49:46PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  8 Sep 2025 12:49:46 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 14/33] rust: move VMState handling to QOM module
+> X-Mailer: git-send-email 2.51.0
+> 
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> This will allow to split vmstate to a standalone crate next.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Link: https://lore.kernel.org/r/20250827104147.717203-9-marcandre.lureau@redhat.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/qom.rs     |  3 +++
+>  rust/qemu-api/src/vmstate.rs | 11 +++++------
+>  2 files changed, 8 insertions(+), 6 deletions(-)
 
-How far into the future does moving to 1.83.0 push our
-"we can enable rust and make it mandatory" point? I was
-hoping we would be able to do that sometime soon but this
-sounds like we're going to be still a long way out from that :-(
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
--- PMM
 
