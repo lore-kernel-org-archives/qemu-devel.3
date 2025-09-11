@@ -4,82 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2505CAC587
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819AACAC587
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwgyK-0005x1-Mn; Thu, 11 Sep 2025 09:04:20 -0400
+	id 1uwh2b-0007UQ-J8; Thu, 11 Sep 2025 09:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwgyF-0005wi-59
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:04:16 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uwgyB-0006Z0-Ev
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:04:14 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-7227bc08c97so12127717b3.1
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 06:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757595847; x=1758200647; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8OYzAKS8UNIAfJWX6zf7rRXv1/Qvw89hpvx4JcJ/ayc=;
- b=nCtc4MFybK/M9fhhxbvrwV2myqcnZJnEmQrEjNdjZmP0KWXZ2NTJmRKUiiy5R7GC9s
- 7N9FsYEm2cC/Nqyz8eeFySSc3aimDzRkpgUrEALOjpPa5AkS65V3HJdS3DzPUccouygt
- WReH1S34LgNL43IfUr+e38Y07S2xhYlxYFLJenPRi9QhrO9tQyxn3P0m3hIZvyVs1yX2
- Tzvq3aCaPxVmbtPdf7Bt7M5d4Gsh+hdfGhOrAjRGXfTxHGDbGP7D9DiV4XYg3NPzBpeH
- Eh8ZYM1xPR8Yqd8pH6b62hts6lw1XtUXp6k/BTNnDkkfrkudSOm8ces4ogqtAAM+3OeD
- ALPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757595847; x=1758200647;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8OYzAKS8UNIAfJWX6zf7rRXv1/Qvw89hpvx4JcJ/ayc=;
- b=AUecwAWWGO+ZqeUm3iIVwDHdRgNpeaw+87xtqQ7/mZuCYsB8IKCEK2TXVy23PYJyb/
- nbbF3mHa9bnWhFc43OuSfzd1dac0TMWjgYWEeds2ZN2w8wa/iK3s9z+zzth7j8OmNUgr
- K/6R+ROxoUO6Ga8EGlTMq6CyPC+Xqhu0rvEiiQ9IshkHN/+bImMSq2YoZBYB6j6x+bOe
- 7F9VV1m5UslZrvKcJUADm5heZJicVluZvWqt0nxp2tkIatE2g+Sf1EYVxd8+6h7N6GjK
- YO4tKnRCXZg6OFL8uPIbpaFjloDu111J6oqr+R5ukUwqbF2CLHy/ZkqmPUehaSvk82kn
- FOtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpivLgJGZ5HtsCLIslABjtfF9/kZ5XiTg/Rx+/a/HtsRQ56Z8wvqkCQRmyMXMOVCGQFjB+hi8XI6ro@nongnu.org
-X-Gm-Message-State: AOJu0YzMnnO0n/8nWXZ6CuCNquKbC2XyfiGdVujzXsBU1oXF49rqhtWP
- 4+iZwR8Aya9rgk5QASEGnUluk/S8QE62bahzongoZTdss1dXRD83dkZ9dKaq13JD0c2G50tV6WV
- EgWrrg/1wjSIVcyGWpZyQ/BaQ/UbWtALh3w7J/DPiPg==
-X-Gm-Gg: ASbGncu3KncTCqhQuCtHCa+eKGDjP0791jgvxKV2YbwQiKLS1M0z9k9QbXyF/dODiRB
- fFBm9LVw0GP9uWF1QIfjJd4r/4A1YFi2ZpZLUVOOaX8dIq1U5MH9wrGlsFOMsnoLZaD1dAUczkG
- U7mvV5pl7uI7MsEJ6BDjVEiOgZwccqZdsLD4SDckbUQ8In7wE2Q1hjkg5xKgAgrcAfT+9ip7F/w
- DcIdvs4kUuIKwgy348=
-X-Google-Smtp-Source: AGHT+IHlEPB6zmIMmP3aLZ3Diba8MYG8cM6OaYkdLea0qKp57i+7hVl6exjEGnh34go9mWuCY95Ygl3WqGGD8Flvr9E=
-X-Received: by 2002:a05:690c:9686:b0:722:8d7f:da90 with SMTP id
- 00721157ae682-72eec5b879fmr31164347b3.19.1757595846553; Thu, 11 Sep 2025
- 06:04:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uwh2W-0007U0-TJ
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:08:41 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uwh2R-0006zl-PM
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:08:40 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxM9DFycJotz0JAA--.19955S3;
+ Thu, 11 Sep 2025 21:08:22 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBxTMHDycJophaOAA--.3764S3;
+ Thu, 11 Sep 2025 21:08:21 +0800 (CST)
+From: gaosong <gaosong@loongson.cn>
+Subject: Re: [PATCH v7 02/11] hw/loongarch: add virt feature avecintc and cpu
+ feature msgint support
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250910091150.2424979-1-gaosong@loongson.cn>
+ <20250910091150.2424979-3-gaosong@loongson.cn>
+ <604e9ede-e83c-f433-c96f-e1e341b39171@loongson.cn>
+Message-ID: <78e92f8c-c1d4-e4ca-0d27-7c5b524b3529@loongson.cn>
+Date: Thu, 11 Sep 2025 21:08:19 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250902092732.706338-1-cohuck@redhat.com>
-In-Reply-To: <20250902092732.706338-1-cohuck@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Sep 2025 14:03:55 +0100
-X-Gm-Features: Ac12FXxjijJmJZ9BTHLDHOHG6M5hF7RpUhc-iqCIkX73kLJo9067-4VjOxchMAs
-Message-ID: <CAFEAcA-_FgV69C6mKk5XiaQwj=LQD=C9ecjcm_gGuhEjYD3dyw@mail.gmail.com>
-Subject: Re: [PATCH v2] arm/kvm: report registers we failed to set
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Eric Auger <eric.auger@redhat.com>, Sebastian Ott <sebott@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <604e9ede-e83c-f433-c96f-e1e341b39171@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxTMHDycJophaOAA--.3764S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3ZFW8trWxJr48JryxWry5Jrc_yoW8JrW3Ao
+ WUKF1fJr15Jr4jkryDJw17Xry3Jr1UGrnrAryUCry3JF1xtr4UJ34UGryUt3y7tF1kGr1U
+ GryUGryjyFy7Ar1rl-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY77kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.551,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,156 +84,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Sept 2025 at 10:27, Cornelia Huck <cohuck@redhat.com> wrote:
+在 2025/9/11 上午9:32, Bibo Mao 写道:
 >
-> If we fail migration because of a mismatch of some registers between
-> source and destination, the error message is not very informative:
 >
-> qemu-system-aarch64: error while loading state for instance 0x0 ofdevice 'cpu'
-> qemu-system-aarch64: Failed to put registers after init: Invalid argument
+> On 2025/9/10 下午5:11, Song Gao wrote:
+>> Avecintc feature is added in LoongArchVirtMachinState, and it is used
+>> to check whether virt machine supports the advanced interrupt controller
+>> and by default set avecintc with ON_OFF_AUTO_ON.
+>> LoongArchVirtMachineState adds misc_feature and misc_status for misc
+>> features and status. and set the default avec feature bit.
+>> Msegint feature is added in LoongArchCPU, and it is used to check
+>> whether th cpu supports the Message-Interrupts and by default set
+>> mesgint with ON_OFF_AUTO_AUTO.
+>>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/loongarch/virt.c                   | 32 +++++++++++++++++++++++++++
+>>   include/hw/loongarch/virt.h           | 14 ++++++++++++
+>>   target/loongarch/cpu.c                | 29 ++++++++++++++++++++++++
+>>   target/loongarch/cpu.h                |  1 +
+>>   target/loongarch/loongarch-qmp-cmds.c |  2 +-
+>>   5 files changed, 77 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 31215b7785..37c38ae63f 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -48,6 +48,27 @@
+>>   #include "qemu/error-report.h"
+>>   #include "kvm/kvm_loongarch.h"
+>>   +static void virt_get_avecintc(Object *obj, Visitor *v, const char 
+>> *name,
+>> +                             void *opaque, Error **errp)
+>> +{
+>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+>> +    OnOffAuto avecintc = lvms->avecintc;
+>> +
+>> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
+>> +
+>> +}
+>> +static void virt_set_avecintc(Object *obj, Visitor *v, const char 
+>> *name,
+>> +                              void *opaque, Error **errp)
+>> +{
+>> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+>> +
+>> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
+>> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
+>> +        lvms->misc_feature &= ~BIT(IOCSRF_AVEC);
+>> +        lvms->misc_status &= ~BIT(IOCSRM_AVEC_EN);
+>> +    }
+>> +}
+>> +
+>>   static void virt_get_veiointc(Object *obj, Visitor *v, const char 
+>> *name,
+>>                                 void *opaque, Error **errp)
+>>   {
+>> @@ -692,6 +713,7 @@ static void virt_init(MachineState *machine)
+>>       hwaddr base, size, ram_size = machine->ram_size;
+>>       MachineClass *mc = MACHINE_GET_CLASS(machine);
+>>       Object *cpuobj;
+>> +    LoongArchCPU *cpu;
+>>         if (!cpu_model) {
+>>           cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+>> @@ -717,6 +739,10 @@ static void virt_init(MachineState *machine)
+>>           }
+>>           qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
+>>       }
+>> +    cpu = LOONGARCH_CPU(cpuobj);
+>> +    if (cpu->msgint != ON_OFF_AUTO_OFF) {
+> it works only if  lvms->avecintc == ON_OFF_AUTO_AUTO, there should be 
+> error report if lvms->avecintc == ON_OFF_AUTO_ON and cpu->msgint == 
+> ON_OFF_AUTO_OFF.
 >
-> At least try to give the user a hint which registers had a problem,
-> even if they cannot really do anything about it right now.
+emm,  I missing some check here.
+>> +        lvms->misc_feature = BIT(IOCSRF_AVEC);
+>> +    }
+>>       fw_cfg_add_memory(machine);
+>>         /* Node0 memory */
+>> @@ -847,6 +873,8 @@ static void virt_initfn(Object *obj)
+>>       if (tcg_enabled()) {
+>>           lvms->veiointc = ON_OFF_AUTO_OFF;
+>>       }
+>> +
+>> +    lvms->avecintc = ON_OFF_AUTO_ON;
+> why is it ON_OFF_AUTO_ON rather than ON_OFF_AUTO_AUTO?
 >
-> Sample output:
+should be ON_OFF_AUTO_AUTO here.
+>>       lvms->acpi = ON_OFF_AUTO_AUTO;
+>>       lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+>>       lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+>> @@ -1239,6 +1267,10 @@ static void virt_class_init(ObjectClass *oc, 
+>> const void *data)
+>>           NULL, NULL);
+>>       object_class_property_set_description(oc, "v-eiointc",
+>>                               "Enable Virt Extend I/O Interrupt 
+>> Controller.");
+>> +    object_class_property_add(oc, "avecintc", "OnOffAuto",
+>> +        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
+>> +    object_class_property_set_description(oc, "avecintc",
+>> +                            "Enable Advance Interrupt Controller.");
+> I do not object to adding feature in board side, however its name 
+> should come from manual. Its name is dmsi rather than avecintc, and 
+> this board feature depends on CPU feature msgint.
 >
-> Could not set register op0:3 op1:0 crn:0 crm:0 op2:0 to c00fac31 (is 413fd0c1)
+> With TCG mode, there are four conditions:
+>   msgint=ON   avecintc=ON                system works
+>   msgint=ON   avecintc=OFF               ??            like 3A6000
+>   msgint=OFF  avecintc=OFF               system works
+>   msgint=OFF  avecintc=ON               system fails
 >
-> We could be even more helpful once we support writable ID registers,
-> at which point the user might actually be able to configure something
-> that is migratable.
+With TCG mode, misgint=ON avecintc= OFF  system works.
+> With KVM mode, there are combined condition wit host added, especially 
+> when host mode is "msgint=ON avecintc=OFF"
+>              VM                       Host
+>    msgint=ON   avecintc=ON       msgint=ON   avecintc=OFF      ??
+>    msgint=ON   avecintc=OFF      msgint=ON   avecintc=OFF      ??
 >
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
-> Changes RFC->v2:
-> * cover different register types
-> * less macro magic
-> * less memory leaks
-> ---
->  target/arm/kvm.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 86 insertions(+)
+I am not sure this case, I think  the guest sytem should work but not 
+use avecintc.
+> Regards
+> Bibo Mao
 >
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 667234485547..0423d4df7c06 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -900,6 +900,58 @@ bool write_kvmstate_to_list(ARMCPU *cpu)
->      return ok;
->  }
+>> machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>>       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>>   #ifdef CONFIG_TPM
+>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>> index 7120b46714..68b8e92e99 100644
+>> --- a/include/hw/loongarch/virt.h
+>> +++ b/include/hw/loongarch/virt.h
+>> @@ -23,6 +23,7 @@
+>>   #define IOCSRF_DVFSV1           7
+>>   #define IOCSRF_GMOD             9
+>>   #define IOCSRF_VM               11
+>> +#define IOCSRF_AVEC             15
+>>     #define VERSION_REG             0x0
+>>   #define FEATURE_REG             0x8
+>> @@ -31,6 +32,7 @@
+>>   #define MISC_FUNC_REG           0x420
+>>   #define IOCSRM_EXTIOI_EN        48
+>>   #define IOCSRM_EXTIOI_INT_ENCODE 49
+>> +#define IOCSRM_AVEC_EN          51
+>>     #define LOONGARCH_MAX_CPUS      256
+>>   @@ -69,6 +71,7 @@ struct LoongArchVirtMachineState {
+>>       Notifier     powerdown_notifier;
+>>       OnOffAuto    acpi;
+>>       OnOffAuto    veiointc;
+>> +    OnOffAuto    avecintc;
+>>       char         *oem_id;
+>>       char         *oem_table_id;
+>>       DeviceState  *acpi_ged;
+>> @@ -84,6 +87,8 @@ struct LoongArchVirtMachineState {
+>>       DeviceState *extioi;
+>>       struct memmap_entry *memmap_table;
+>>       unsigned int memmap_entries;
+>> +    uint64_t misc_feature;
+>> +    uint64_t misc_status;
+>>   };
+>>     #define TYPE_LOONGARCH_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
+>> @@ -91,6 +96,15 @@ 
+>> OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, 
+>> LOONGARCH_VIRT_MACHINE)
+>>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+>>   +static inline bool virt_has_avecintc(LoongArchVirtMachineState *lvms)
+>> +{
+>> +    if (!(lvms->misc_feature & BIT(IOCSRF_AVEC))) {
+>> +        return false;
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   static inline bool 
+>> virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>>   {
+>>       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index 55ee317bf2..0258bea6df 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -495,6 +495,31 @@ static void loongarch_set_lasx(Object *obj, bool 
+>> value, Error **errp)
+>>       cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
+>>   }
+>>   +static bool loongarch_get_msgint(Object *obj, Error **errp)
+>> +{
+>> +    return LOONGARCH_CPU(obj)->msgint != ON_OFF_AUTO_OFF;
+>> +}
+>> +
+>> +static void loongarch_set_msgint(Object *obj, bool value, Error **errp)
+>> +{
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>> +    uint32_t val;
+>> +
+>> +    cpu->msgint = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>> +
+>> +    if (kvm_enabled()) {
+>> +        /* kvm feature detection in function kvm_arch_init_vcpu */
+>> +        return;
+>> +    }
+>> +
+>> +    val = cpu->env.cpucfg[1];
+>> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
+> Why it is special for ON_OFF_AUTO_ON? what about with ON_OFF_AUTO_OFF?
+> Can user disable this feature?
+For TCG ,  user can enable and disable this feature.
+For KVM.  enable this feature should depends with host msgint features.
+>> +        if (FIELD_EX32(val, CPUCFG1, MSG_INT) == 0) {
+> checking with FIELD_EX32(val, CPUCFG1, MSG_INT) == 0 seems unneeded ??
+this is for  cpu LA464 which has MSG_INT bit , but not set this bit on 
+cpu init,  we allow users enable msgint feature.
 >
-> +/* pretty-print a KVM register */
-> +#define CP_REG_ARM64_SYSREG_OP(_reg, _op)                       \
-> +    ((uint8_t)((_reg & CP_REG_ARM64_SYSREG_ ## _op ## _MASK) >> \
-> +               CP_REG_ARM64_SYSREG_ ## _op ## _SHIFT))
-> +
-> +static gchar *kvm_print_sve_register_name(uint64_t regidx)
-> +{
-> +    uint16_t sve_reg = regidx & 0x000000000000ffff;
-> +
-> +    if (regidx == KVM_REG_ARM64_SVE_VLS) {
-> +        return g_strdup_printf("SVE VLS");
-> +    }
-> +    /* zreg, preg, ffr */
-> +    switch (sve_reg & 0xfc00) {
-> +    case 0:
-> +        return g_strdup_printf("SVE zreg n:%d slice:%d",
-> +                               (sve_reg & 0x03e0) >> 5, sve_reg & 0x001f);
-> +    case 0x04:
-> +        return g_strdup_printf("SVE preg n:%d slice:%d",
-> +                               (sve_reg & 0x01e0) >> 5, sve_reg & 0x001f);
-> +    case 0x06:
-> +        return g_strdup_printf("SVE ffr slice:%d", sve_reg & 0x001f);
-> +    default:
-> +        return g_strdup_printf("SVE ???");
-> +    }
-> +}
-> +
-> +static gchar *kvm_print_register_name(uint64_t regidx)
-> +{
-> +        switch ((regidx & KVM_REG_ARM_COPROC_MASK)) {
-> +        case KVM_REG_ARM_CORE:
-> +            return g_strdup_printf("core reg %lx", regidx);
-> +        case KVM_REG_ARM_DEMUX:
-> +            return g_strdup_printf("demuxed reg %lx", regidx);
+>
+>> +            cpu->env.cpucfg[1]= FIELD_DP32(val, CPUCFG1, MSG_INT, 
+>> value);
+>> +        }
+>> +    }
+here should if cpu->msgint == ON_OFF_AUTO_OFF  disable msgint 
+feature.and set MSG_INT = 0.
 
-You can't print a uint64_t with %lx. I suppose this code is
-only going to get compiled on a 64-bit host but we might
-someday want to move it so we can pretty-print registers
-elsewhere (e.g. in cpu_post_load() where we fail for
-"incoming migration stream has sysreg X but we don't know it").
+Thanks.
+Song Gao.
+>> +}
+>> +
+>>   static void loongarch_cpu_post_init(Object *obj)
+>>   {
+>>       LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>> @@ -503,10 +528,14 @@ static void loongarch_cpu_post_init(Object *obj)
+>>       cpu->pmu = ON_OFF_AUTO_OFF;
+>>       cpu->lsx = ON_OFF_AUTO_AUTO;
+>>       cpu->lasx = ON_OFF_AUTO_AUTO;
+>> +    cpu->msgint = ON_OFF_AUTO_AUTO;
+>> +
+>>       object_property_add_bool(obj, "lsx", loongarch_get_lsx,
+>>                                loongarch_set_lsx);
+>>       object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+>>                                loongarch_set_lasx);
+>> +    object_property_add_bool(obj, "msgint", loongarch_get_msgint,
+>> +                             loongarch_set_msgint);
+>>       /* lbt is enabled only in kvm mode, not supported in tcg mode */
+>>       if (kvm_enabled()) {
+>>           kvm_loongarch_cpu_post_init(cpu);
+>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+>> index fd3d94b55a..1e8a9dbef8 100644
+>> --- a/target/loongarch/cpu.h
+>> +++ b/target/loongarch/cpu.h
+>> @@ -396,6 +396,7 @@ struct ArchCPU {
+>>       OnOffAuto pmu;
+>>       OnOffAuto lsx;
+>>       OnOffAuto lasx;
+>> +    OnOffAuto msgint;
+>>       OnOffAuto kvm_pv_ipi;
+>>       OnOffAuto kvm_steal_time;
+>>       int32_t socket_id;  /* socket-id of this CPU */
+>> diff --git a/target/loongarch/loongarch-qmp-cmds.c 
+>> b/target/loongarch/loongarch-qmp-cmds.c
+>> index 1d8cd32f5f..152cd4a551 100644
+>> --- a/target/loongarch/loongarch-qmp-cmds.c
+>> +++ b/target/loongarch/loongarch-qmp-cmds.c
+>> @@ -41,7 +41,7 @@ CpuDefinitionInfoList 
+>> *qmp_query_cpu_definitions(Error **errp)
+>>   }
+>>     static const char *cpu_model_advertised_features[] = {
+>> -    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time", NULL
+>> +    "lsx", "lasx", "lbt", "pmu", "msgint", "kvm-pv-ipi", 
+>> "kvm-steal-time", NULL
+>>   };
+>>     CpuModelExpansionInfo 
+>> *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>
 
-> +        case KVM_REG_ARM64_SYSREG:
-> +            return g_strdup_printf("op0:%d op1:%d crn:%d crm:%d op2:%d",
-> +                                   CP_REG_ARM64_SYSREG_OP(regidx, OP0),
-> +                                   CP_REG_ARM64_SYSREG_OP(regidx, OP1),
-> +                                   CP_REG_ARM64_SYSREG_OP(regidx, CRN),
-> +                                   CP_REG_ARM64_SYSREG_OP(regidx, CRM),
-> +                                   CP_REG_ARM64_SYSREG_OP(regidx, OP2));
-> +        case KVM_REG_ARM_FW:
-> +            return g_strdup_printf("fw reg %d", (int)(regidx & 0xffff));
-> +        case KVM_REG_ARM64_SVE:
-> +            return kvm_print_sve_register_name(regidx);
-> +        case KVM_REG_ARM_FW_FEAT_BMAP:
-> +            return g_strdup_printf("fw feat reg %d", (int)(regidx & 0xffff));
-> +        default:
-> +            return g_strdup_printf("%lx", regidx);
-> +        }
-> +}
-> +
->  bool write_list_to_kvmstate(ARMCPU *cpu, int level)
->  {
->      CPUState *cs = CPU(cpu);
-> @@ -927,11 +979,45 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
->              g_assert_not_reached();
->          }
->          if (ret) {
-> +            gchar *reg_str = kvm_print_register_name(regidx);
-> +
->              /* We might fail for "unknown register" and also for
->               * "you tried to set a register which is constant with
->               * a different value from what it actually contains".
->               */
->              ok = false;
-> +            switch (ret) {
-> +            case -ENOENT:
-> +                error_report("Could not set register %s: unknown to KVM",
-> +                             reg_str);
-> +                break;
-> +            case -EINVAL:
-> +                if ((regidx & KVM_REG_SIZE_MASK) == KVM_REG_SIZE_U32) {
-> +                    if (!kvm_get_one_reg(cs, regidx, &v32)) {
-> +                        error_report("Could not set register %s to %x (is %x)",
-> +                                     reg_str, (uint32_t)cpu->cpreg_values[i],
-> +                                     v32);
-> +                    } else {
-> +                        error_report("Could not set register %s to %x",
-> +                                     reg_str, (uint32_t)cpu->cpreg_values[i]);
-> +                    }
-> +                } else /* U64 */ {
-> +                    uint64_t v64;
-> +
-> +                    if (!kvm_get_one_reg(cs, regidx, &v64)) {
-> +                        error_report("Could not set register %s to %lx (is %lx)",
-> +                                     reg_str, cpu->cpreg_values[i], v64);
-> +                    } else {
-> +                        error_report("Could not set register %s to %lx",
-> +                                     reg_str, cpu->cpreg_values[i]);
-
-Similarly we should be using PRIx64 here.
-
-> +                    }
-> +                }
-> +                break;
-> +            default:
-> +                error_report("Could not set register %s: %s",
-> +                             reg_str, strerror(-ret));
-> +            }
-> +            g_free(reg_str);
->          }
->      }
->      return ok;
-
-thanks
--- PMM
 
