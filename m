@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6DCCAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662F1CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 13:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwhaa-0003b8-6F; Thu, 11 Sep 2025 09:43:52 -0400
+	id 1uwhl8-0008WB-NL; Thu, 11 Sep 2025 09:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uwhaW-0003Z5-RR
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:43:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uwhl6-0008VQ-49; Thu, 11 Sep 2025 09:54:44 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uwhaS-0003VU-Bm
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 09:43:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757598223;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=09+9glxCNez7qUz7UASruAF+e/F/Ri1H0Rleipm38aA=;
- b=fTgU4zPgp2/KP8sUNtuH2+4/TFlCKo2a8h1ar8pJX031rDlT7Yacq77YbhNmkWBYiu341b
- B23+IOLXBYLJm+lZYquFiW1S0wlROcrg5dC9jG88Zp5FQAa2ng9PMJijmmCS1OohfSEa7Z
- 3IsgWgizGY1f2W9urvUVw20nivC14NA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-PeP8B2FRPgiOmznj6r2tjw-1; Thu,
- 11 Sep 2025 09:43:41 -0400
-X-MC-Unique: PeP8B2FRPgiOmznj6r2tjw-1
-X-Mimecast-MFC-AGG-ID: PeP8B2FRPgiOmznj6r2tjw_1757598219
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B473C1953947; Thu, 11 Sep 2025 13:43:39 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.45.224.190])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2C24B1944CEB; Thu, 11 Sep 2025 13:43:35 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com, gshan@redhat.com
-Subject: [RFC 2/3] target/arm/kvm: Add new CPU property for KVM regs to enforce
-Date: Thu, 11 Sep 2025 15:40:28 +0200
-Message-ID: <20250911134324.3702720-3-eric.auger@redhat.com>
-In-Reply-To: <20250911134324.3702720-1-eric.auger@redhat.com>
-References: <20250911134324.3702720-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uwhl1-0004xy-FB; Thu, 11 Sep 2025 09:54:42 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A9C415299F;
+ Thu, 11 Sep 2025 16:54:14 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BFBEA27C673;
+ Thu, 11 Sep 2025 16:54:22 +0300 (MSK)
+Message-ID: <dbb88315-c078-47c1-b45d-7e1c7b0519d6@tls.msk.ru>
+Date: Thu, 11 Sep 2025 16:54:22 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/igd: Enable quirks when IGD is not the primary
+ display
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20250813160510.23553-1-tomitamoeko@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250813160510.23553-1-tomitamoeko@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,209 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer kernels sometimes revokes exposure of KVM regs to
-userspace. This can happen if some registers were unconditionnally
-exposed, by mistake, in previous versions and then conditionnally exposed.
+On 13.08.2025 19:05, Tomita Moeko wrote:
+> Since linux 6.15, commit 41112160ca87 ("vfio/pci: match IGD devices in
+> display controller class"), IGD related regions are also exposed when
+> IGD is not primary display (device class is Display controller).
+> 
+> Allow IGD quirks to be enabled in this configuration so that guests can
+> have display output on IGD when it is not the primary display.
 
-Recently this happened with 3 registers: TCR2_EL1, PIRE0_EL1,  PIR_EL1.
-The associated kernel commit were:
-0fcb4eea5345  KVM: arm64: Hide TCR2_EL1 from userspace when disabled for guests
-a68cddbe47ef  KVM: arm64: Hide S1PIE registers from userspace when disabled for guests
+This feels like qemu-stable material (10.0.x & 10.1.x), is it not?
 
-Those commits were actual fixes but the cons is that is breaks forward
-miration from old to new host kernels as the number of KVM regs exposed
-to userspace decreases and this leads to "failed to load cpu:cpreg_vmstate_array_len"
-when migrating the CPU state.
+Thanks,
 
-This patchs adds a new CPU property, under the form of an array of reg
-indices that teach (destination) QEMU that some registers must exist.
-If they don't (because KVM does not expose them anymore), qemu fakes them but
-does not care of their state.
+/mjt
 
-This is meant to be applied as a cmahine type compat like:
-static GlobalProperty arm_virt_kernel_compat_10_1[] = {
-    { TYPE_ARM_CPU, "kvm-enforced-regs",
-      /* TCR_EL1, PIRE0_EL1, PIR_EL1 */
-      "0x603000000013c103, 0x603000000013c512, 0x603000000013c513" },
-};
-
-In case we migrate from a source where the KVM regs are not exposed and
-where regs are faked to a destination where KVM expose them, this means that
-anyway FEAT_TCR2 and S1PIE are not supported by the guest so it should
-not matter that dumb values are written on dest.
-
-But obviously introducing fake registers is a last resort solution.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/cpu.h        | 11 +++++++
- target/arm/kvm.c        | 63 +++++++++++++++++++++++++++++++++++++++--
- target/arm/trace-events |  4 +++
- 3 files changed, 76 insertions(+), 2 deletions(-)
-
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 121b4372b2..ea9045e5ff 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1035,6 +1035,17 @@ struct ArchCPU {
-     uint64_t *kvm_hidden_regs;
-     uint32_t nr_kvm_hidden_regs;
- 
-+    /*
-+     * KVM registers whose presence must be enforced
-+     * Either they must be exposed to user space by KVM or
-+     * they must be faked for migration sake
-+     */
-+    uint64_t *kvm_enforced_regs;
-+    uint32_t nr_kvm_enforced_regs;
-+
-+    /* registers among those to be enforced that are faked */
-+    uint64_t *kvm_fake_regs;
-+
-     /* Uniprocessor system with MP extensions */
-     bool mp_is_up;
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 67675781f4..f8c36ffa2f 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -489,6 +489,11 @@ static const Property arm_cpu_kvm_compat_hidden_regs_property =
-     DEFINE_PROP_ARRAY("kvm-hidden-regs", ARMCPU,
-                       nr_kvm_hidden_regs, kvm_hidden_regs, qdev_prop_uint64, uint64_t);
- 
-+static const Property arm_cpu_kvm_compat_enforced_regs_property =
-+    DEFINE_PROP_ARRAY("kvm-enforced-regs", ARMCPU,
-+                      nr_kvm_enforced_regs, kvm_enforced_regs,
-+                      qdev_prop_uint64, uint64_t);
-+
- /* KVM VCPU properties should be prefixed with "kvm-". */
- void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
- {
-@@ -512,6 +517,7 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-                                     "Set off to disable KVM steal time.");
- 
-     qdev_property_add_static(DEVICE(obj), &arm_cpu_kvm_compat_hidden_regs_property);
-+    qdev_property_add_static(DEVICE(obj), &arm_cpu_kvm_compat_enforced_regs_property);
- }
- 
- bool kvm_arm_pmu_supported(void)
-@@ -772,6 +778,27 @@ static bool kvm_arm_reg_syncs_via_cpreg_list(uint64_t regidx)
-     }
- }
- 
-+/**
-+ * kvm_vcpu_compat_fake_reg:
-+ * @cpu: ARMCPU
-+ * @regidx: index of the register to check
-+ *
-+ * Depending on the CPU compat returns true if @regidx is a
-+ * fake register that does not need any sync, false otherwise
-+ */
-+static inline bool
-+kvm_vcpu_compat_fake_reg(ARMCPU *cpu, uint64_t regidx)
-+{
-+    for (int i = 0; i < cpu->nr_kvm_enforced_regs; i++) {
-+        if (cpu->kvm_fake_regs[i] &&
-+            cpu->kvm_enforced_regs[i] == regidx) {
-+            trace_kvm_vcpu_compat_fake_reg(regidx);
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
- /**
-  * kvm_vcpu_compat_hidden_reg:
-  * @cpu: ARMCPU
-@@ -806,7 +833,8 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
- {
-     struct kvm_reg_list rl;
-     struct kvm_reg_list *rlp;
--    int i, ret, arraylen;
-+    int i, ret, arraylen, rln;
-+    int nr_fake_regs = 0;
-     CPUState *cs = CPU(cpu);
- 
-     rl.n = 0;
-@@ -814,12 +842,34 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
-     if (ret != -E2BIG) {
-         return ret;
-     }
--    rlp = g_malloc(sizeof(struct kvm_reg_list) + rl.n * sizeof(uint64_t));
-+    rln = rl.n + cpu->nr_kvm_enforced_regs;
-+    rlp = g_malloc(sizeof(struct kvm_reg_list) + rln * sizeof(uint64_t));
-     rlp->n = rl.n;
-     ret = kvm_vcpu_ioctl(cs, KVM_GET_REG_LIST, rlp);
-     if (ret) {
-         goto out;
-     }
-+
-+    trace_kvm_arm_init_cpreg_list(rlp->n, cpu->nr_kvm_enforced_regs);
-+
-+    cpu->kvm_fake_regs = g_new0(uint64_t, cpu->nr_kvm_enforced_regs);
-+
-+    for (int j = 0; j < cpu->nr_kvm_enforced_regs; j++) {
-+        uint64_t v64;
-+        int res;
-+
-+        res = kvm_get_one_reg(cs, cpu->kvm_enforced_regs[j], &v64);
-+
-+        if (res != -ENOENT) {
-+            trace_kvm_arm_init_cpreg_exposed(cpu->kvm_enforced_regs[j], v64, res);
-+            continue;
-+        }
-+        rlp->reg[j + rl.n] = cpu->kvm_enforced_regs[j];
-+        cpu->kvm_fake_regs[j] = true;
-+        nr_fake_regs++;
-+    }
-+    rlp->n = rl.n + nr_fake_regs;
-+
-     /* Sort the list we get back from the kernel, since cpreg_tuples
-      * must be in strictly ascending order.
-      */
-@@ -912,6 +962,10 @@ bool write_kvmstate_to_list(ARMCPU *cpu)
-         uint32_t v32;
-         int ret;
- 
-+        if (kvm_vcpu_compat_fake_reg(cpu, regidx)) {
-+            continue;
-+        }
-+
-         switch (regidx & KVM_REG_SIZE_MASK) {
-         case KVM_REG_SIZE_U32:
-             ret = kvm_get_one_reg(cs, regidx, &v32);
-@@ -947,6 +1001,10 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
-             continue;
-         }
- 
-+        if (kvm_vcpu_compat_fake_reg(cpu, regidx)) {
-+            continue;
-+        }
-+
-         switch (regidx & KVM_REG_SIZE_MASK) {
-         case KVM_REG_SIZE_U32:
-             v32 = cpu->cpreg_values[i];
-@@ -1654,6 +1712,7 @@ static void kvm_arch_set_eager_split_size(Object *obj, Visitor *v,
-     s->kvm_eager_split_size = value;
- }
- 
-+
- void kvm_arch_accel_class_init(ObjectClass *oc)
- {
-     object_class_property_add(oc, "eager-split-size", "size",
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 1b4ab0c683..57d2b6afd4 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -15,3 +15,7 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
- kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
- kvm_arm_init_cpreg_list_arraylen(uint32_t arraylen) "arraylen=%d"
- kvm_vcpu_compat_hidden_reg(uint64_t regidx) "0x%"PRIx64" is hidden"
-+kvm_arm_init_cpreg_list(uint32_t kvm_regs, uint32_t fake_regs) "%d regs exposed by KVM, %d enforced regs"
-+kvm_vcpu_compat_fake_reg(uint64_t regidx) "0x%"PRIx64" is fake"
-+kvm_arm_init_cpreg_exposed(uint64_t regidx, uint64_t val, int ret) "enforced reg 0x%"PRIx64" is already exposed by KVM: value=0x%"PRIx64 " ret=%d: nothing to do"
-+
--- 
-2.49.0
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index ee0767b0b8..f116c40ccd 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -460,7 +460,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>       int gen;
+>   
+>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> -        !vfio_is_vga(vdev) || nr != 0) {
+> +        !vfio_is_base_display(vdev) || nr != 0) {
+>           return;
+>       }
+>   
+> @@ -518,7 +518,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>       Error *err = NULL;
+>   
+>       if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> -        !vfio_is_vga(vdev)) {
+> +        !vfio_is_base_display(vdev)) {
+>           return true;
+>       }
+>   
+> @@ -534,12 +534,13 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>       /*
+>        * For backward compatibility, enable legacy mode when
+>        * - Device geneation is 6 to 9 (including both)
+> -     * - IGD claims VGA cycles on host
+> +     * - IGD exposes itself as VGA controller and claims VGA cycles on host
+>        * - Machine type is i440fx (pc_piix)
+>        * - IGD device is at guest BDF 00:02.0
+>        * - Not manually disabled by x-igd-legacy-mode=off
+>        */
+>       if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
+> +        vfio_is_vga(vdev) &&
+>           (gen >= 6 && gen <= 9) &&
+>           !(gmch & IGD_GMCH_VGA_DISABLE) &&
+>           !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index 810a842f4a..923cf9c2f7 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -203,6 +203,11 @@ static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
+>       return (vdev->class_code >> 8) == PCI_CLASS_DISPLAY_VGA;
+>   }
+>   
+> +static inline bool vfio_is_base_display(VFIOPCIDevice *vdev)
+> +{
+> +    return (vdev->class_code >> 16) == PCI_BASE_CLASS_DISPLAY;
+> +}
+> +
+>   /* MSI/MSI-X/INTx */
+>   void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr);
+>   void vfio_pci_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
 
 
