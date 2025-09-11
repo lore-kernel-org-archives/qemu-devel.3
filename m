@@ -4,141 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97E0CA1016
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 07:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F100ECAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 07:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwbPv-0004Hn-49; Thu, 11 Sep 2025 03:08:27 -0400
+	id 1uwbg4-0007a2-Hv; Thu, 11 Sep 2025 03:25:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uwbPs-0004HP-MX; Thu, 11 Sep 2025 03:08:24 -0400
-Received: from mail-mw2nam04on20605.outbound.protection.outlook.com
- ([2a01:111:f403:240a::605]
- helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwbg1-0007ZW-2T
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 03:25:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uwbPq-0007Iy-47; Thu, 11 Sep 2025 03:08:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K0JD1pnH4osgeg8Cawcu2E+lDsraYCUxXMDVjoN6nQ5+zf7+00NUabD85+sX3TwKws3aQeuF1GBG0/xd+O9C83Zsk1Kmkqi+shpsbwD/1fqZk84DTaESdD38YcVpd1FQfQRLQXJNt2zBnwCzsO/b2i9YFgM+TY3rn++rv0YlqhgMBjxyeBYtS3cY17u6K1byxhOwhzcYlNGmORXr246p1ZInKFT6p5U/Q4BnkzNyeXbbqRCw5+RmXejdwwuAeWZjYfjSkFAwZ3RiRkCIANk5uBIVtfuvAXSdSXCvyM9yuYJkEgC75q3/yDdhwX8PGyjqDVk+5O4o8bci/bMtNNJBEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UpBc5GIHlCQw7Wty6YKEtgqQELk13edHSD/xLJyTuP8=;
- b=eLyRvPV8mUTLP5/rNnfQR/nWdTaUubvmXfkARwKCT91fUckRA0uyAKelbAtzy1TuxxKV3XwIM30U2jLK7XKIyo6Xn1uFgMvXVhNxk9++aLOdqCUCx0rZByJWBfWzjDorSc/lv8/jEMG/cmv2FNQO5+H6HCPzubGaR7OpHXll/Dr9cV7iur0cAqJJLJMhEilHp1mYeOo+/90piiXFkNRi+lkdSaOiyLYMSlcGqLlexRwm/pGUpFszYeOboMtCm+aWZAxfcRCaksS4OKlJQQQJLKBPw8N20ndj6c2OiaMD0wRlYYoNw/OkFZ0xUNc5G4gWrmL8rthfRtvpHHogllVhIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UpBc5GIHlCQw7Wty6YKEtgqQELk13edHSD/xLJyTuP8=;
- b=GBt4ovKtRRNoAgMAiY09wweX2D7AdkpVU2lKYRR7hdjtNswGj5ik6m2hf++PCBKkDdikzkuAz8o9GdwyY48BwxXq+2gaFbf/giOMXhw5pN6QALiS2nlnVnlVn/ytrUBfS96PuhKI0IBry87BnDDlBJqQIurRx2nyKTtsOEWQFB0=
-Received: from SJ0PR05CA0085.namprd05.prod.outlook.com (2603:10b6:a03:332::30)
- by IA0PR12MB8893.namprd12.prod.outlook.com (2603:10b6:208:484::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Thu, 11 Sep
- 2025 07:08:15 +0000
-Received: from CO1PEPF000044F2.namprd05.prod.outlook.com
- (2603:10b6:a03:332:cafe::c5) by SJ0PR05CA0085.outlook.office365.com
- (2603:10b6:a03:332::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.6 via Frontend Transport; Thu,
- 11 Sep 2025 07:08:14 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CO1PEPF000044F2.mail.protection.outlook.com (10.167.241.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9115.13 via Frontend Transport; Thu, 11 Sep 2025 07:08:14 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 11 Sep
- 2025 00:08:13 -0700
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 11 Sep
- 2025 00:08:13 -0700
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17 via Frontend
- Transport; Thu, 11 Sep 2025 00:08:11 -0700
-Date: Thu, 11 Sep 2025 09:08:10 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Francisco Iglesias
- <francisco.iglesias@amd.com>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alistair Francis
- <alistair@alistair23.me>, Frederic Konrad <frederic.konrad@amd.com>, "Sai
- Pavan Boddu" <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH v4 00/47] AMD Versal Gen 2 support
-Message-ID: <aMJ1WpiNOuLR62t9@XFR-LUMICHEL-L2.amd.com>
-References: <20250822151614.187856-1-luc.michel@amd.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uwbfy-0000j9-7O
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 03:25:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757575496;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8J+zzD/eoXLTYhc72NY6/0u6MuVdQE+lYNip60L/GZw=;
+ b=FAozC2l82R3F1JVgN4HhY+TSrps8DtAEDs9oKwPx/lMFnCF5fjhJgExdxfNhdM/G/Hv4jw
+ HF6CGwp5g27iPAA8eYnOC4c7PWQtR4Syd9YK1gA1fULDi1+ArUGCjdWTfhgUhW9jW8he+x
+ AxlGZXKgiPPoGMDjFQQptdo2IYpfCgo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-eptRu-sSPcGB3z0re-bB4g-1; Thu,
+ 11 Sep 2025 03:24:53 -0400
+X-MC-Unique: eptRu-sSPcGB3z0re-bB4g-1
+X-Mimecast-MFC-AGG-ID: eptRu-sSPcGB3z0re-bB4g_1757575492
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83A6E180057E; Thu, 11 Sep 2025 07:24:51 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADE6F1800452; Thu, 11 Sep 2025 07:24:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id F0E1A21E6A27; Thu, 11 Sep 2025 09:24:47 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: thuth@redhat.com,  berrange@redhat.com,  richard.henderson@linaro.org,
+ david@redhat.com,  jrossi@linux.ibm.com,  qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org,  walling@linux.ibm.com,  jjherne@linux.ibm.com,
+ pasic@linux.ibm.com,  borntraeger@linux.ibm.com,  farman@linux.ibm.com,
+ mjrosato@linux.ibm.com,  iii@linux.ibm.com,  eblake@redhat.com,
+ armbru@redhat.com,  alifm@linux.ibm.com
+Subject: Re: [PATCH v5 01/29] Add boot-certs to s390-ccw-virtio machine type
+ option
+In-Reply-To: <20250818214323.529501-2-zycai@linux.ibm.com> (Zhuoying Cai's
+ message of "Mon, 18 Aug 2025 17:42:54 -0400")
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-2-zycai@linux.ibm.com>
+Date: Thu, 11 Sep 2025 09:24:47 +0200
+Message-ID: <87v7lpjvsw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250822151614.187856-1-luc.michel@amd.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F2:EE_|IA0PR12MB8893:EE_
-X-MS-Office365-Filtering-Correlation-Id: 207c7940-a802-47a7-bd6c-08ddf101f9b9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|376014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?aTDIEvsfA/n3WuZyksNfT+VvAi3KcakqzaWoDJCV/wIYsEMx5t87XxDIReA8?=
- =?us-ascii?Q?cYSy89mt9hY4wBy91lRC5hC9BM5LS/kExCICpyKC4LHvK3V+ZK4uZNd9iQ5J?=
- =?us-ascii?Q?SjrmNvJm7RlZZylfMPmXVxoYYI9ohtjfhb3MpZB4hYEztQUnIsQnnYcSMbWc?=
- =?us-ascii?Q?GPvTuy/eFxQmtGeds7sp4epTnJoWUWqw3WDV4djL3ZOXtGcQ2aBsINeLpy4V?=
- =?us-ascii?Q?ycE1bGRnfmJ2O66+tmztjhQ3u/3CZO9ETWSsq01q5CEKULuE2DmgGk/UvA+L?=
- =?us-ascii?Q?8vjhnPhhvQUrNbJQBCHMW/uZ8SB/YLiKyeQZuaKWAZZQubfeT6KubHZWm18s?=
- =?us-ascii?Q?jr4D4s5nIVH++6JlFqv37YbO/ALyxK2mGzgpVYaQeoeahgF35hJdsLpSRpwU?=
- =?us-ascii?Q?hZ2+yEGvtq58E0+u7+Qe+1KY3W549FHhP8Qvg/8nBS5SR65gBX2l18tX8RZ0?=
- =?us-ascii?Q?q1TFJRxVawhEV2EKjCsWvr89iDS5m4Cx/RCKEjd58zQ/K8wzICAOvdjm3m5r?=
- =?us-ascii?Q?pX0vRCRfIoMr453U25IldX7ZiK3V3ncUxp4jQJoZ/8Eby9ieGlrFB4OMBiH7?=
- =?us-ascii?Q?03yveR1TGd4lsYtodYJh89It+PXVQluQmgLgaZwXLQuo6V0eBmZq1sxmwpUY?=
- =?us-ascii?Q?tefIU//7ycZ9UQRfUg1Qg11xCABePnZEJUKfxUR/zvq9kTHYsRK0HHdrw5wL?=
- =?us-ascii?Q?pjr1i8vZRLQYKWoWGS1GBLC03INqOJTlTgORzELsN9gGIKM4ej79FnoUjnTy?=
- =?us-ascii?Q?y44pwfz7P63pNHT49Itr0aDCXB9ZBJs+mnKUGfwbMbMq2QgRNcUY/hD9Wcil?=
- =?us-ascii?Q?uiffyDU3y3RYSN3+ntTI/VKyXUUJld5qXtYS+VNqrzLcJ0BAQGmvXJB2+7mY?=
- =?us-ascii?Q?pmsQguQqTLRBfnfIUOcEK8wpttbQfuOrzHlAh8u095qWFyHVwaQPLhV8YBVc?=
- =?us-ascii?Q?Cu/MGL5qzYcpyjOvT/LET6Co64H/NeQF2n8QzWidhrkWCN+sz7Lp756JJA0j?=
- =?us-ascii?Q?CDsg5pUypcVnu11Jh3f09GJgK1+msGiEVvy4fHNP97I79H9+VeCBu302n0Hb?=
- =?us-ascii?Q?Rof/DmrtEtY8HI7wZk1DWtVlw5fJB+wcfxrX73ZwwbVGNhWB6WfrtMZjAPIs?=
- =?us-ascii?Q?BT/+nx+DpbdUrvJd+Rn4lKElHpAhUD7j/s4gmppJu4wCYOFzVIcA+eTqNn7L?=
- =?us-ascii?Q?JmcsX7lopS4/fJXs22rJz5v7x8UbLHYn8lynqVla2K3QZAf9rktC8qj+d66X?=
- =?us-ascii?Q?hDwLV4ozhATyqegBaCRkAq7LzKVeHy8FaOADSKnEHoNT16vKIUwOgQH3CTge?=
- =?us-ascii?Q?4om04AnaS6VBbc+o6WhpABn9OCFNQz7wgd+QhW1XTFcJhn2zti4cHXpagsGW?=
- =?us-ascii?Q?jiK/qWnqYZE0GtmJ8a1rpVZaTP4Eyr/9D4kytCR4Dxa69jJhP3bYavhj+g7s?=
- =?us-ascii?Q?B+vtC/3LJH+QfXGWuyfRSpzr0kSHVNdzESQKBHZJJcHXzFt5fcCqYail6QQ1?=
- =?us-ascii?Q?1zmQfAa8WKkFTZpgEZSujlFfwBsVmlgDqDS2?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(376014)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2025 07:08:14.2100 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 207c7940-a802-47a7-bd6c-08ddf101f9b9
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F2.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8893
-Received-SPF: permerror client-ip=2a01:111:f403:240a::605;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,148 +91,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping. Only patches 23 and 39 need review.
+Zhuoying Cai <zycai@linux.ibm.com> writes:
 
-Thanks
+> Introduce a new `boot-certs` machine type option for the s390-ccw-virtio
+> machine. This allows users to specify one or more certificate file paths
+> or directories to be used during secure boot.
+>
+> Each entry is specified using the syntax:
+> 	boot-certs.<index>.path=/path/to/cert.pem
+>
+> Multiple paths can be specify using array properties:
+> 	boot-certs.0.path=/path/to/cert.pem,
+> 	boot-certs.1.path=/path/to/cert-dir,
+> 	boot-certs.2.path=/path/to/another-dir...
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>  docs/system/s390x/secure-ipl.rst   | 20 ++++++++++++++++++++
+>  hw/s390x/s390-virtio-ccw.c         | 30 ++++++++++++++++++++++++++++++
+>  include/hw/s390x/s390-virtio-ccw.h |  2 ++
+>  qapi/machine-s390x.json            | 24 ++++++++++++++++++++++++
+>  qemu-options.hx                    |  6 +++++-
+>  5 files changed, 81 insertions(+), 1 deletion(-)
+>  create mode 100644 docs/system/s390x/secure-ipl.rst
+>
+> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+> new file mode 100644
+> index 0000000000..9b3fd25cc4
+> --- /dev/null
+> +++ b/docs/system/s390x/secure-ipl.rst
+> @@ -0,0 +1,20 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +Secure IPL Command Line Options
+> +===============================
+> +
+> +New parameters have been introduced to s390-ccw-virtio machine type option
+> +to support secure IPL. These parameters allow users to provide certificates
+> +and enable secure IPL directly via the command line.
 
--- 
-Luc
+All too soon these parameters will no longer be new.  Consider something
+like "The s390-ccw-virtio machine type supports secure TPL.  To enable
+it, you need to provide certificates."
 
-On 17:15 Fri 22 Aug     , Luc Michel wrote:
-> v4:
->   - Fixed compilation issues and runtime crashes in 3 intermediate
->     patches. [Edgar]
->   - Introduced a small hack to keep the GEM FDT node order as it was
->     before. This is to avoid kernel iface name swapping (eth0 <-> eth1)
->     in Versal. [Edgar]
-> 
-> v3:
->   - Dropped qemu_get_cpu() usage in the machine code. Added an getter on
->     the SoC interface to retrieve the boot CPU instead. [Phil]
->   - Cleaned the mp_affinity logic. Drop the mask attribute and assume
->     it's always 0xff (the Affx fields in MPIDR are 8 bits long). Use the
->     ARM_AFFx_SHIFT constant instead of hardcoded values in .mp_affinity
->     description. [Phil]
->   - Avocado test renaming in patch 41 instead of 47. [Phil]
->   - Documentation tweak. [Phil]
-> 
-> v2:
->   - Addressed formatting/typo issues [Francisco]
->   - Patch 23: GICv3 first-cpu-idx: addressed the KVM case by bailing
->     out if not 0 at realize. I chose this path as I don't have a clear
->     view of what it means to implement that for KVM. It seems to make
->     sense anyway as this property is meant to be used for modeling of
->     non-SMP systems. [Peter]
->   - Patch 39: added a comment to clarify cortex-a78ae != cortex-a78 [Peter]
-> 
-> Hello,
-> 
-> This series brings support for the AMD Versal Gen 2 (versal2) SoC in
-> QEMU. This SoC is the next iteration of the existing Versal SoC.
-> 
-> It is organized as follows:
->   - The first and biggest part of the series performs refactoring of the
->     existing versal SoC implementation. This consists in:
->        - splitting existing device types into base/concrete classes,
->        - moving from an in-place to dynamic device creation approach in
->          the SoC code for flexibility,
->        - describing the SoC using a new structure called VersalMap,
->        - moving the DTB creation logic in the SoC code itself alongside
->          device creation.
->     Patches are split such that each device is individually converted to
->     use this new approach. Behaviour changes are minimal and are
->     emphasised in the commit messages. This gets the SoC code ready for
->     versal2 addition and leverage the fact that Versal family SoCs are
->     quite similar in term of architecture.
-> 
->   - versal2 SoC support is then added by adding the corresponding
->     VersalMap description. This allows to reuse the existing code
->     without duplication and almost no special case.
-> 
->   - The amd-versal2-virt machine is finally added, following the same
->     idea as amd-versal-virt. The documentation and tests are updated
->     accordingly.
-> 
-> Note that the xlnx-versal-virt machine is renamed amd-versal-virt to
-> follow current branding guidelines and stay coherent with the new
-> amd-versal2-virt machine. The xlnx-versal-virt name is kept as an alias
-> to amd-versal-virt for command line backward compatibility.
-> 
-> Thanks
-> 
-> Luc
-> 
-> Francisco Iglesias (1):
->   hw/intc/arm_gicv3: Introduce a 'first-cpu-index' property
-> 
-> Luc Michel (46):
->   hw/arm/xlnx-versal: split the xlnx-versal type
->   hw/arm/xlnx-versal: prepare for FDT creation
->   hw/arm/xlnx-versal: uart: refactor creation
->   hw/arm/xlnx-versal: canfd: refactor creation
->   hw/arm/xlnx-versal: sdhci: refactor creation
->   hw/arm/xlnx-versal: gem: refactor creation
->   hw/arm/xlnx-versal: adma: refactor creation
->   hw/arm/xlnx-versal: xram: refactor creation
->   hw/arm/xlnx-versal: usb: refactor creation
->   hw/arm/xlnx-versal: efuse: refactor creation
->   hw/arm/xlnx-versal: ospi: refactor creation
->   hw/arm/xlnx-versal: VersalMap: add support for OR'ed IRQs
->   hw/arm/xlnx-versal: PMC IOU SCLR: refactor creation
->   hw/arm/xlnx-versal: bbram: refactor creation
->   hw/arm/xlnx-versal: trng: refactor creation
->   hw/arm/xlnx-versal: rtc: refactor creation
->   hw/arm/xlnx-versal: cfu: refactor creation
->   hw/arm/xlnx-versal: crl: refactor creation
->   hw/arm/xlnx-versal-virt: virtio: refactor creation
->   hw/arm/xlnx-versal: refactor CPU cluster creation
->   hw/arm/xlnx-versal: add the mp_affinity property to the CPU mapping
->   hw/arm/xlnx-versal: instantiate the GIC ITS in the APU
->   hw/arm/xlnx-versal: add support for multiple GICs
->   hw/arm/xlnx-versal: add support for GICv2
->   hw/arm/xlnx-versal: rpu: refactor creation
->   hw/arm/xlnx-versal: ocm: refactor creation
->   hw/arm/xlnx-versal: ddr: refactor creation
->   hw/arm/xlnx-versal: add the versal_get_num_cpu accessor
->   hw/misc/xlnx-versal-crl: remove unnecessary include directives
->   hw/misc/xlnx-versal-crl: split into base/concrete classes
->   hw/misc/xlnx-versal-crl: refactor device reset logic
->   hw/arm/xlnx-versal: reconnect the CRL to the other devices
->   hw/arm/xlnx-versal: use hw/arm/bsa.h for timer IRQ indices
->   hw/arm/xlnx-versal: tidy up
->   hw/misc/xlnx-versal-crl: add the versal2 version
->   hw/arm/xlnx-versal: add a per_cluster_gic switch to
->     VersalCpuClusterMap
->   hw/arm/xlnx-versal: add the target field in IRQ descriptor
->   target/arm/tcg/cpu64: add the cortex-a78ae CPU
->   hw/arm/xlnx-versal: add versal2 SoC
->   hw/arm/xlnx-versal-virt: rename the machine to amd-versal-virt
->   hw/arm/xlnx-versal-virt: split into base/concrete classes
->   hw/arm/xlnx-versal-virt: tidy up
->   docs/system/arm/xlnx-versal-virt: update supported devices
->   docs/system/arm/xlnx-versal-virt: add a note about dumpdtb
->   hw/arm/xlnx-versal-virt: add the xlnx-versal2-virt machine
->   tests/functional/test_aarch64_xlnx_versal: test the versal2 machine
-> 
->  docs/system/arm/xlnx-versal-virt.rst         |   80 +-
->  include/hw/arm/xlnx-versal-version.h         |   16 +
->  include/hw/arm/xlnx-versal.h                 |  342 +--
->  include/hw/intc/arm_gicv3_common.h           |    1 +
->  include/hw/misc/xlnx-versal-crl.h            |  378 ++-
->  hw/arm/xlnx-versal-virt.c                    |  741 ++----
->  hw/arm/xlnx-versal.c                         | 2465 +++++++++++++-----
->  hw/intc/arm_gicv3_common.c                   |    3 +-
->  hw/intc/arm_gicv3_cpuif.c                    |    2 +-
->  hw/intc/arm_gicv3_kvm.c                      |    6 +
->  hw/misc/xlnx-versal-crl.c                    |  602 ++++-
->  target/arm/tcg/cpu64.c                       |   79 +
->  tests/functional/test_aarch64_xlnx_versal.py |   12 +-
->  13 files changed, 3067 insertions(+), 1660 deletions(-)
->  create mode 100644 include/hw/arm/xlnx-versal-version.h
-> 
-> -- 
-> 2.50.1
-> 
+> +
+> +Providing Certificates
+> +----------------------
+> +
+> +The certificate store can be populated by supplying a list of certificate file
+> +paths or directories on the command-line:
 
--- 
+File is clear enough (use the certificate found in the file).  What does
+directory do?
+
+> +
+> +.. code-block:: shell
+> +
+> +    qemu-system-s390x -machine s390-ccw-virtio, \
+> +                               boot-certs.0.path=/.../qemu/certs, \
+> +                               boot-certs.1.path=/another/path/cert.pem ...
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index c294106a74..9ac425c695 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -45,6 +45,7 @@
+>  #include "target/s390x/kvm/pv.h"
+>  #include "migration/blocker.h"
+>  #include "qapi/visitor.h"
+> +#include "qapi/qapi-visit-machine-s390x.h"
+>  #include "hw/s390x/cpu-topology.h"
+>  #include "kvm/kvm_s390x.h"
+>  #include "hw/virtio/virtio-md-pci.h"
+> @@ -798,6 +799,30 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+>      g_free(val);
+>  }
+>  
+> +static void machine_get_boot_certs(Object *obj, Visitor *v,
+> +                                   const char *name, void *opaque,
+> +                                   Error **errp)
+> +{
+> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+> +    BootCertPathList **certs = &ms->boot_certs;
+> +
+> +    visit_type_BootCertPathList(v, name, certs, errp);
+> +}
+> +
+> +static void machine_set_boot_certs(Object *obj, Visitor *v, const char *name,
+> +                                   void *opaque, Error **errp)
+> +{
+> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+> +    BootCertPathList *cert_list = NULL;
+> +
+> +    visit_type_BootCertPathList(v, name, &cert_list, errp);
+> +    if (!cert_list) {
+> +        return;
+> +    }
+> +
+> +    ms->boot_certs = cert_list;
+> +}
+> +
+>  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>  {
+>      MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -851,6 +876,11 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
+>              " to upper case) to pass to machine loader, boot manager,"
+>              " and guest kernel");
+> +
+> +    object_class_property_add(oc, "boot-certs", "BootCertPath",
+
+Isn't this a BootCertPathList, not a BootCertPath?
+
+> +                              machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
+> +    object_class_property_set_description(oc, "boot-certs",
+> +            "provide paths to a directory and/or a certificate file for secure boot");
+>  }
+>  
+>  static inline void s390_machine_initfn(Object *obj)
+> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+> index 526078a4e2..b90949355c 100644
+> --- a/include/hw/s390x/s390-virtio-ccw.h
+> +++ b/include/hw/s390x/s390-virtio-ccw.h
+> @@ -14,6 +14,7 @@
+>  #include "hw/boards.h"
+>  #include "qom/object.h"
+>  #include "hw/s390x/sclp.h"
+> +#include "qapi/qapi-types-machine-s390x.h"
+>  
+>  #define TYPE_S390_CCW_MACHINE               "s390-ccw-machine"
+>  
+> @@ -31,6 +32,7 @@ struct S390CcwMachineState {
+>      uint8_t loadparm[8];
+>      uint64_t memory_limit;
+>      uint64_t max_pagesize;
+> +    BootCertPathList *boot_certs;
+>  
+>      SCLPDevice *sclp;
+>  };
+> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+> index 966dbd61d2..3e89ef8320 100644
+> --- a/qapi/machine-s390x.json
+> +++ b/qapi/machine-s390x.json
+> @@ -119,3 +119,27 @@
+>  { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+>    'features': [ 'unstable' ]
+>  }
+> +
+> +##
+> +# @BootCertPath:
+> +#
+> +# Boot certificate path.
+> +#
+> +# @path: path of certificate(s)
+> +#
+> +# Since: 10.1
+> +##
+
+No mention of file vs. directory.
+
+Why do you wrap the file name in a struct?  One possible reason is
+providing for future extensions.  Can you think of any?
+
+If you extend it, the name BootCertPath could become suboptimal.
+BootCertificate?
+
+> +{ 'struct': 'BootCertPath',
+> +  'data': {'path': 'str'} }
+> +
+> +##
+> +# @BootCerts:
+> +#
+> +# List of boot certificate paths.
+> +#
+> +# @boot-certs: List of BootCertPath
+
+Anti-pattern: the description text restates the type.
+
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'struct': 'BootCerts',
+> +  'data': {'boot-certs': ['BootCertPath'] } }
+
+Where is this type used?
+
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index ab23f14d21..ac497eb3a0 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -44,7 +44,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>  #endif
+>      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+>      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
+> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
+> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
+> +    "                boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file provides paths to a directory and/or a certificate file\n",
+>      QEMU_ARCH_ALL)
+>  SRST
+>  ``-machine [type=]name[,prop=value[,...]]``
+> @@ -205,6 +206,9 @@ SRST
+>          ::
+>  
+>              -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
+> +
+> +    ``boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file``
+> +        Provide paths to a directory and/or a certificate file on the host [s390x only].
+>  ERST
+>  
+>  DEF("M", HAS_ARG, QEMU_OPTION_M,
+
 
