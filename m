@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE11CAC58F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 09:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA90CCAC594
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 09:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwe2y-0001f9-3x; Thu, 11 Sep 2025 05:56:56 -0400
+	id 1uwe34-0001jP-Tm; Thu, 11 Sep 2025 05:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwe2r-0001cQ-Dk; Thu, 11 Sep 2025 05:56:49 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ id 1uwe2u-0001dU-JY; Thu, 11 Sep 2025 05:56:52 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
- id 1uwe2h-0005P4-B2; Thu, 11 Sep 2025 05:56:46 -0400
+ id 1uwe2l-0005Ow-4b; Thu, 11 Sep 2025 05:56:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1757584579; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
- bh=1gqd1TzCEIyvFYfjyBctacJ1+0G9407EGdXdIQ5mOdw=;
- b=GZEBXztvhdIwrDy+Q0iadCMAlFff6Ubh4Rq2mkiRDA+BbJRsRcyMO9F7HW4sOq0ulDTR5rHxR1+YyxmoLiZ7lwvZ+rRpmOy9rWZJHclutNGf+jQ0S0/OSEAj+nseLi3BzmudRM/EildDfenELDKTbTSubH14C2PN1tvDTR54ypI=
+ t=1757584578; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=EfbDjTEkKmQSHkupOEfM7fT9Z4bCEggf+NrkPcGjW4U=;
+ b=iIq/kBG0msveohs/7q5yiGqm7sgANFwTsqPhC35993JdDhp8K6DeqWCu+YV602yDXlaXVXVGtD7wwLN3UAgVC8Dm0J4+bLRHoiQrfnVTUBX2HDw5PVMYnbGkN2/hI39x7owWM481SavDmb9QnTw8yxWhWI8hNG+7BC4dvd5Ubqw=
 Received: from ea134-sw06.eng.xrvm.cn(mailfrom:lyndra@linux.alibaba.com
- fp:SMTPD_---0Wnlj.L-_1757584579 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 11 Sep 2025 17:56:19 +0800
+ fp:SMTPD_---0Wnlj.KH_1757584577 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 11 Sep 2025 17:56:17 +0800
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
-Date: Thu, 11 Sep 2025 17:56:16 +0800
-Subject: [PATCH v3 4/4] target/riscv: Save stimer and vstimer in CPU
- vmstate
+Date: Thu, 11 Sep 2025 17:56:13 +0800
+Subject: [PATCH v3 1/4] hw/intc: Save time_delta in RISC-V mtimer VMState
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250911-timers-v3-4-60508f640050@linux.alibaba.com>
+Message-Id: <20250911-timers-v3-1-60508f640050@linux.alibaba.com>
 References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
 In-Reply-To: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
 To: qemu-devel@nongnu.org
@@ -45,16 +44,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
  TANG Tiancheng <lyndra@linux.alibaba.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757584576; l=1731;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757584576; l=2874;
  i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
- bh=db8HgAaEdZbHQou94hhdJN2K2puP3nx87MpC33YWDYQ=;
- b=rnE8KAyA9YE2wPYoNdk7C1NlNMyzW4RDdk9kDIdRq/TxTEluv39LB2c1HOMy6tQ7vMY0CeSqN
- TQ/C8V5tDlJDLs+DBwdycbMzEPyXfF8O/IVtfM6sEYXlUzRRrHnLhEw
+ bh=V0J1o0BTyrUgt1B4k2jqg8yY3dbSFHQu27VONEAoIxs=;
+ b=60JYPjSoSTm6LVe5EEvr5knCnNMthZtImWJCfNyf9Y4K9qGy9Qvu86yY+AoKxWK7zlF75G9VU
+ 5HDmybUoyBMDA0r9pqeOgFUjpZiLSzmJ+/rjOA5BrGZlR0ZieZLD58N
 X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
  pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -79,62 +79,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vmstate_riscv_cpu was missing env.stimer and env.vstimer.
-Without migrating these QEMUTimer fields, active S/VS-mode
-timer events are lost after snapshot or migration.
+In QEMU's RISC-V ACLINT timer model, 'mtime' is not stored directly as a
+state variable. It is computed on demand as:
 
-Add VMSTATE_TIMER_PTR() entries to save and restore them.
+    mtime = rtc_r + time_delta
+
+where:
+- 'rtc_r' is the current VM virtual time (in ticks) obtained via
+  cpu_riscv_read_rtc_raw() from QEMU_CLOCK_VIRTUAL.
+- 'time_delta' is an offset applied when the guest writes a new 'mtime'
+  value via riscv_aclint_mtimer_write():
+
+    time_delta = value - rtc_r
+
+Under this design, 'rtc_r' is assumed to be monotonically increasing
+during VM execution. Even if the guest writes an 'mtime' value smaller
+than the current one (making 'time_delta' negative in signed arithmetic,
+or underflow in unsigned arithmetic), the computed 'mtime' remains
+correct because 'rtc_r_new > rtc_r_old':
+
+    mtime_new = rtc_r_new + (value - rtc_r_old)
+
+However, this monotonicity assumption breaks on snapshot load.
+
+Before restoring a snapshot, QEMU resets the guest, which calls
+riscv_aclint_mtimer_reset_enter() to set 'mtime' to 0 and recompute
+'time_delta' as:
+
+    time_delta = 0 - rtc_r_reset
+
+Here, the time_delta differs from the value that was present when the
+snapshot was saved. As a result, subsequent reads produce a fixed offset
+from the true mtime.
+
+This can be observed with the 'date' command inside the guest: after loading
+a snapshot, the reported time appears "frozen" at the save point, and only
+resumes correctly after the guest has run long enough to compensate for the
+erroneous offset.
+
+The fix is to treat 'time_delta' as part of the device's migratable
+state and save/restore it via vmstate. This preserves the correct
+relation between 'rtc_r' and 'mtime' across snapshot save/load, ensuring
+'mtime' continues incrementing from the precise saved value after
+restore.
 
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- target/riscv/machine.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ hw/intc/riscv_aclint.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 1600ec44f0b755fdd49fc0df47c2288c9940afe0..51e0567ed30cbab5e791ea904165bc1854709192 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -400,6 +400,30 @@ static const VMStateDescription vmstate_ssp = {
-     }
- };
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 4623cfa029365c6cbdead4bd4a9f0d8b9e88b939..318a9c8248432a8cd4c3f3fa990739917ecf7ca1 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -323,9 +323,10 @@ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
  
-+static bool sstc_timer_needed(void *opaque)
-+{
-+    RISCVCPU *cpu = opaque;
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (!cpu->cfg.ext_sstc) {
-+        return false;
-+    }
-+
-+    return env->stimer != NULL || env->vstimer != NULL;
-+}
-+
-+static const VMStateDescription vmstate_sstc = {
-+    .name = "cpu/timer",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = sstc_timer_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_TIMER_PTR(env.stimer, RISCVCPU),
-+        VMSTATE_TIMER_PTR(env.vstimer, RISCVCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
-     .version_id = 10,
-@@ -476,6 +500,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_elp,
-         &vmstate_ssp,
-         &vmstate_ctr,
-+        &vmstate_sstc,
-         NULL
-     }
- };
+ static const VMStateDescription vmstate_riscv_mtimer = {
+     .name = "riscv_mtimer",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
++            VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
+             VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
+                                   num_harts, 0,
+                                   vmstate_info_uint64, uint64_t),
 
 -- 
 2.43.0
