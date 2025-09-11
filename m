@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE65CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F393CAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uweT2-0008Nf-Iy; Thu, 11 Sep 2025 06:23:52 -0400
+	id 1uwea3-00024h-3b; Thu, 11 Sep 2025 06:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uweT1-0008M3-AS
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:23:51 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uweSs-0000dM-Us
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:23:50 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-61cb4374d2fso808568a12.2
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 03:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757586219; x=1758191019; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wU8niMhFnqL1Dj0pnnvP/M2XkMpeaMP1pOvcmYGmUlE=;
- b=Py9RinS/KoGqNT0X+jLpfWLdFeh7aGF/RsGLR5W2944ZBeiSqrD1d6yFM6AdRyIDtb
- fxD9pYf1FPDckKtdUTD7B3t3/9UnscEGft20tOPzOAyPth1Neil4BkpyNyokaP9Bq8oQ
- 5IuxmmA15AAymAfiOyfrj+AZZYTFrI4cXN8SpfZtG3a8oKPPRi+DKiNH5/tvIAG69nQW
- n+ydJS+/DBeV4u9DU7AUwT6C2ii5IhOP2j6Jus7niLjHw4lWeVE7AZ/YMS5PmDTNzSvc
- kZ8P9xIcFQXWs7XwEapmESet6YJzUGtC3CRF7JHRympgAFqXIczLPTkhqkgfMGMtnaDn
- qXqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757586219; x=1758191019;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wU8niMhFnqL1Dj0pnnvP/M2XkMpeaMP1pOvcmYGmUlE=;
- b=cwPnzFxJGCi7AgINzY+z0Kdoj7Yxgy6iYuJEMsFZs/xq/APU0lYf0S3D7IX1Hpohvi
- 1JcNPqUxafE1QmB1BtE5ambk80Knseq3c82lAntWGgdKB8ct/bpUegM1O27oWxUAMh8A
- iTIY2JAAbU9VWPcUidtQRMHE2ylZM+sHiqBjqJaleKyRWi3oijRWLPehMhbBDCNrxkFP
- K9LJaAQ9oR8Yc547WhtC6HClY9uKD41Quw4Pj4PAWYQOOBccgR6lYd+KjF1+2mXwCZmG
- m0EcYv74IfbjOBs+G3hmBv8KQ8jRb7RhoAGPN8sYmLAW3DaOVpRCnIg7h4/EYkiuXJbF
- ijFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXS1DLX9+KLZwG/sFb+291yFNiSAJzAlX/JapNShDvHVzU6c6ionFzYxMIKARiCIxYqCBJ/HBOcRHVa@nongnu.org
-X-Gm-Message-State: AOJu0YzzuPSTWmh4QnqotmTqMeTQ3mXh82G5dOpUZyHgaB/ifD6cNfxp
- 6d4zGpYa4mMlPSmgSPzft+iV51OFnUSn6O1L/eEyxFP3NMLE0KE7/lg58LflyTAnIc8DgpljgML
- Q6742bge81hdlISHcBPLuaSwZi0F/pz4=
-X-Gm-Gg: ASbGnctV75Y7IIgBQHiZA8WRlvw3c/HqV9CaqW4+fgRBaCff0DCNT/XfO3oEKKY6doF
- /nEmqzurXBd25QAtsezxAiohWVBQkf0hUhPHjbRKV10MtQr3r3KWU6TgSWD7rJGE/W1UGi6QA68
- vZKsd/eK6V0iC6KQcOEZyu5xRD+jwG/aG1n0szu33UZT+75yyukiTO7VTNp4nAgiL14hw6g6PkM
- 3RQtvZxOYkVZMq5F6zrU/0OCHI=
-X-Google-Smtp-Source: AGHT+IF+LpYqk7Um175vmwip0UO+yAzy1t5JE8Eg8gJa/JuK34dP+8jIxL21fx56jnwyHpN3PecGZIhLYNJAdFtB0Pw=
-X-Received: by 2002:a05:6402:5508:b0:61d:cd5:8b72 with SMTP id
- 4fb4d7f45d1cf-623801e798cmr15379223a12.31.1757586219277; Thu, 11 Sep 2025
- 03:23:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uweZs-00023J-7O; Thu, 11 Sep 2025 06:30:59 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uweZn-0001uK-7Q; Thu, 11 Sep 2025 06:30:55 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3AA4F15287E;
+ Thu, 11 Sep 2025 13:30:37 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74BB227C2BA;
+ Thu, 11 Sep 2025 13:30:45 +0300 (MSK)
+Message-ID: <84a347ed-3ad1-45d0-af08-1bb187390c0c@tls.msk.ru>
+Date: Thu, 11 Sep 2025 13:30:45 +0300
 MIME-Version: 1.0
-References: <20250910210849.GA379545@fedora>
- <8623c898-a0e1-42d2-8afa-35b64e41cc50@linux.ibm.com>
-In-Reply-To: <8623c898-a0e1-42d2-8afa-35b64e41cc50@linux.ibm.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 11 Sep 2025 06:23:26 -0400
-X-Gm-Features: AS18NWD4U8dtshF5d0FQhsv64Q51ymKBXiPyTq_sKUFzNtSy33KJ5hCuTzR1P7o
-Message-ID: <CAJSP0QVfaFjtuDqSiEozOmPVUMYzXWaSO21qUp1pHAgo1-Uvqg@mail.gmail.com>
-Subject: Re: swtpm persistent state snapshots by copying .permall file
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- pkrempa@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/2] target/loongarch: Guard 64-bit-only insn translation
+ with TRANS64 macro
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, WANG Rui <wangrui@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>,
+ Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250828120218.1227427-1-gaosong@loongson.cn>
+ <20250828120218.1227427-2-gaosong@loongson.cn>
+ <fe6cc32a-1586-47bf-9ecc-ec8100372240@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <fe6cc32a-1586-47bf-9ecc-ec8100372240@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,54 +109,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 7:14=E2=80=AFPM Stefan Berger <stefanb@linux.ibm.co=
-m> wrote:
-> On 9/10/25 5:08 PM, Stefan Hajnoczi wrote:
-> > Hi Stefan,
-> > I am investigating QEMU devices with persistent state like swtpm for a
-> > specific snapshot use case. The VM is paused while disk images and othe=
-r
-> > persistent state files are snapshotted. This creates a crash-consistent
-> > snapshot similar to booting after power failure on a real machine. No
-> > RAM or volatile device state is collected.
-> >
-> > My concern is how to ensure the swtpm's persistent state is captured as
-> > consistently as possible, but I'm not very familiar with the code. I
-> > wanted to run the following by you:
-> >
-> > - Using --tpmstate dir=3D will write the persistent state to a new
-> >    temporary file and then atomically replace the old .permall file usi=
-ng
-> >    rename(2).
->
-> This is correct for the directory backend. We also have the file backend
-> where a single file is keeping all the different types of state.
->
-> >
-> > - If the VM is paused and a copy of the .permall file is taken, then
-> >    this copy is consistent. It may not reflect any in-progress changes
-> >    being written into a new temporary file, but that doesn't matter fro=
-m
->
-> Correct.
->
-> >    the snapshot point of view since the VM is paused and it hasn't seen
-> >    the completion of in-progress TPM operations.
->
-> >
-> > - The .volatilestate and .savestate files do not need to be captured in
-> >    the snapshot since the goal is just to achieve crash consistency.
->
-> Yes, I think so since the .volatilestate state would be written only in
-> case of VM suspend or migration and the .savestate only upon suspend-to-R=
-AM.
->
-> >
-> > Does this sound reasonable or have I missed something?
->
-> No, I think this sounds reasonable.
+On 11.09.2025 13:04, Michael Tokarev wrote:
+...
+> The same applies to the second patch in this series, btw, -- the second
+> patch also does not apply to 10.0.x directly because 10.0 lacks commit
+> ab9bbee3c7da3 "hw/intc/loongarch_pch: Modify name of some registers" --
+> the commit is just some code renames, it does not change actual code, so
+> it is a no-op, but it makes subsequent changes to not apply directly.
+> I think I'll pick ab9bbee3c7da3 and the next one, 4f0f2ab5640ef
+> "hw/intc/loongarch_pch: Modify register name PCH_PIC_xxx_OFFSET..",
+> to 10.0.x too.
 
-Thanks for confirming!
+And nope, the second patch ("loongarch_pch_pic: Fix ubsan warning and
+endianness issue") is a bit more involved in 10.0.x, since 10.0 also
+misses a6fdd0032ce5c7c "loongarch_pch: Use generic write callback for
+iomem8 region", which is one from larger refactoring series.  Sigh.
 
-Stefan
+loongarch is a fast-moving target still.. :)
+
+Thanks,
+
+/mjt
+
 
