@@ -4,77 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D34CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE6FCAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 08:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwcuC-0001f9-Bz; Thu, 11 Sep 2025 04:43:48 -0400
+	id 1uwczx-00033O-6A; Thu, 11 Sep 2025 04:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwcuA-0001ex-Kb
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:43:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uwcu6-0003zJ-3T
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:43:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757580215;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5TRBARsbQg+9UIzdzy1hX9p1CK2l4DX+tg0kT5cV0b0=;
- b=EiTgOyZJwFxfM0gK6ykUPloI/jUYWY5gVudjWMDwHAz2NsrqijxH1phz2n6p2J9Nskkvlr
- wPuVQN/Fj9p/k7LODy6+si7SMXRFJaltfKjgGfEaLThFiM73J9ZF88syzgfE8rfN9uI+e+
- wD+Wr7V6RMzDA380F4x1iTT4tFSwOIQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-mnwqoqLnPyKM3LlTTouzew-1; Thu,
- 11 Sep 2025 04:43:31 -0400
-X-MC-Unique: mnwqoqLnPyKM3LlTTouzew-1
-X-Mimecast-MFC-AGG-ID: mnwqoqLnPyKM3LlTTouzew_1757580210
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3ACD6180034A; Thu, 11 Sep 2025 08:43:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.148])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DF701800446; Thu, 11 Sep 2025 08:43:27 +0000 (UTC)
-Date: Thu, 11 Sep 2025 09:43:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
- hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>, armbru@redhat.com
-Subject: Re: Some iotests are failing with -luks
-Message-ID: <aMKLrFrtPYa3ZfqS@redhat.com>
-References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
- <aMGijXg9XIpbbn-v@redhat.com> <aMHFrDEW8cbnXajG@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uwczv-000334-JD
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:49:43 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uwczo-0004Zz-MQ
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 04:49:43 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3dcce361897so333537f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 01:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757580572; x=1758185372; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pFcqO3G4bt95C8X7bgNW11HxlHtsvOfsnIcISPdzHCM=;
+ b=buqqRQTWBEOopUf7RHt3TcqwsyOqYo3phdY39qveQKT3W01Na3MpRIIfIwL1CxAsj9
+ MdJpfMQTNBtB0MJPzR116RLm8Dvnm0TOfP5qxUu+xmWTFv1m660ZJvCBe6ABTgKAthMP
+ t2KByNwJ5C3uDUrWtzaCRd7n8EX3Go93tGp+UtP7ok4xart+Wrplb2Koo2FwCGbpgqQT
+ pxeUUM7yVwj3Ivl3+Ex6Xbb1jyylyLrlynQ27rE6h948ovsVL+DvIOkxwHK2zF6js+y+
+ 56hSbdRs09JgSpcC2iWJLNDo1/zUudDjEJsM3qEB6BQgMnlJEPfLOFRxeU1NF0K4V5Y9
+ mCqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757580572; x=1758185372;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pFcqO3G4bt95C8X7bgNW11HxlHtsvOfsnIcISPdzHCM=;
+ b=Kdpduh7bbLK5HKkO+HVQPNjJXdSC1bpz67aYsb9nDtSP7Ya2WlI6yPcNJe+4QkiIAy
+ rYHMCyB2p/YQjJgQR0/YSR9l9ED2AeLWJfpd9PUcgcwB4qma8iJ4c6sRhYHoIvmtrqzT
+ 7aJ5jXYvmiOp7sLC0Qzo8kmrMi0N3wIFpj5MgyfaMCCQanl9iFQw1i7ui/aADVWl1cZm
+ RalN10zMZgpCUccM9MY7a9TOqBBRSkWn2hIgjufVmUWTJ9PYqwnKQvBPwZiG0SCayTkf
+ 5xSW7lxy8cGcXh/lB0blZqKAB+3d4zzPFZzj3pt5O2jbL4yMCzraLkqFb4dNdyR2WYRQ
+ d4HA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTWqd4++dNw2DgVQ3Xo/YbAuBmzcirFVcoSZo8u9vpcGmxw8IOL3nRFxYBvdSQSqJzhA4x2kOC8wIP@nongnu.org
+X-Gm-Message-State: AOJu0YxR78QLzqXNFAIQRpN2BWqYD5W02SqycMZSkhAWOP+N3VFTix/9
+ V1dTmkSqTdt9PVtxoehO5fu3MChPNhCob3asHDSdcor7Bq2q5djc4pSBJt7A7we3fMc=
+X-Gm-Gg: ASbGncuGrIEFQCC0RPrV+ebekEQTCyskhfGgUG903lvtWzE3kuLBHifLm7bwSB8xr60
+ 9zufuaNhGpsdEWYicF36Oj93JyiPReWs9a0A3ZFaOao77AbZ0MrxmWnMl1Nfu6cPmf5RfxhoiwB
+ BUd3qL51fpC6Wz5VUe6L3wAQFHdmPBwLek7LiFuWztIUTNhB4A709aFTp0kUt2lITq3fEGwt0Hv
+ 1SB53uXZCdDYIZ7ZDDYIX6dT55P+3UuSIKMG2zwXaKqEPwhf+z8+ZHfhfjOddxVpGNQl6UbJV75
+ 7JkWjwIhdXWdEKJ3G46qDehyYnK6w4u+pSa2Fhhi5Vo0UPo1xOoAgW9BdIaMv9KDnX2fGEsNZ9u
+ 3wBOmrVlNA2b5VCSnjejjf/l2sK8R4LgilaJO
+X-Google-Smtp-Source: AGHT+IGs8m1Yfhi6QKC0fxefl6h9o7Z3NJwjJJ/prOivfk5bU+nIn96ZU7LLvUAHpnPsGJRM1HOVYw==
+X-Received: by 2002:a05:6000:2508:b0:3cd:e7de:c51e with SMTP id
+ ffacd0b85a97d-3e64cd592f0mr14785092f8f.61.1757580572511; 
+ Thu, 11 Sep 2025 01:49:32 -0700 (PDT)
+Received: from [10.20.51.75] ([88.149.120.245])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e7607e40a5sm1560921f8f.60.2025.09.11.01.49.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Sep 2025 01:49:32 -0700 (PDT)
+Message-ID: <a306a44e-60b8-400c-9633-4b53ed949eac@linaro.org>
+Date: Thu, 11 Sep 2025 08:49:28 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 08/20] log: avoid repeated prefix on incremental
+ qemu_log calls
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <20250910180357.320297-1-berrange@redhat.com>
+ <20250910180357.320297-9-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250910180357.320297-9-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMHFrDEW8cbnXajG@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,87 +110,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 08:38:36PM +0200, Kevin Wolf wrote:
-> Am 10.09.2025 um 18:08 hat Kevin Wolf geschrieben:
-> > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
-> > > luks-detached-header   fail       [17:15:26] [17:15:38]   12.2s                failed, exit status 1
-> > > --- /home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header.out
-> > > +++ /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/luks-detached-header.out.bad
-> > > @@ -1,5 +1,55 @@
-> > > -..
-> > > +EE
-> > > +======================================================================
-> > > +ERROR: test_detached_luks_header (__main__.TestDetachedLUKSHeader.test_detached_luks_header)
-> > > +----------------------------------------------------------------------
-> > > +Traceback (most recent call last):
-> > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header", line 139, in setUp
-> > > +    res = qemu_img_create(
-> > > +          ^^^^^^^^^^^^^^^^
-> > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 278, in qemu_img_create
-> > > +    return qemu_img('create', *args)
-> > > +           ^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 261, in qemu_img
-> > > +    return qemu_tool(*full_args, check=check, combine_stdio=combine_stdio)
-> > > +           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line 241, in qemu_tool
-> > > +    raise VerboseProcessError(
-> > > +qemu.utils.VerboseProcessError: Command '('/home/thuth/tmp/qemu-build/qemu-img', 'create', '-f', 'luks', '-o', 'iter-time=10', '-o', 'key-secret=sec0', '-o', 'detached-header=true', '--object', 'secret,id=sec0,data=foo', '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/detached_header.img2')' returned non-zero exit status 1.
-> > > +  ┏━ output ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > > +  ┃ Formatting '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/l
-> > > +  ┃ uks-file-luks-detached-header/detached_header.img2', fmt=luks
-> > > +  ┃ size=-1 key-secret=sec0 iter-time=10 detached-header=true
-> > > +  ┃ qemu-img: /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luk
-> > > +  ┃ s-file-luks-detached-header/detached_header.img2: Parameter
-> > > +  ┃ 'detached-header' is unexpected
-> > > +  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > 
-> > This one is surprising. I don't think anything relevant in the luks
-> > driver has changed since the test was introduced. At the same time, the
-> > code clearly has a problem when it tries to convert a QemuOpts
-> > containing a "detached-header" option into a QAPI object when the schema
-> > doesn't even have this option. Was this broken from the beginning? Would
-> > have been for a year and half.
+On 9/10/25 18:03, Daniel P. Berrangé wrote:
+> Some code makes multiple qemu_log calls to incrementally emit
+> a single message. Currently timestamps get prepended to all
+> qemu_log calls, even those continuing a previous incomplete
+> message.
 > 
-> I bisected this one because I was curious how this could happen, and it
-> was broken quite explicitly by commit e818c01a:
+> This changes the qemu_log so it skips adding a new line prefix,
+> if the previous qemu_log call did NOT end with a newline.
 > 
-> commit e818c01ae6e7c54c7019baaf307be59d99ce80b9 (HEAD)
-> Author: Daniel P. Berrangé <berrange@redhat.com>
-> Date:   Mon Feb 19 15:12:59 2024 +0000
-> 
->     qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
-> 
->     The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
->     was left over from earlier patch iterations.
-> 
->     Acked-by: Markus Armbruster <armbru@redhat.com>
->     Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> The test case demonstrates that it actually wasn't unused.
-> 
-> If we don't want to reintroduce the field in QAPI, we need to explicitly
-> delete it from the QemuOpts in block_crypto_co_create_opts_luks() before
-> block_crypto_create_opts_init() creates a QCryptoBlockCreateOptions from
-> the given options and fails now that this option doesn't exist any more.
+> Reported-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   util/log.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
-Sigh, that was rather a awful mistake.  I've been misled by fact that
-the code does not use the QAPI generated structs directly, but instead
-converts the QAPI struct back into a QemuOpts and then accesses the
-opts by name. So I saw no reference to 'detached_header' or
-'has_detached_header' struct fields, but failed to remember that the
-qemu_opt_get_bool relied on the QAPI field. We need to revert that
-commit.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+r~>
+> diff --git a/util/log.c b/util/log.c
+> index abdcb6b311..2642a55c59 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -143,6 +143,12 @@ void qemu_log_unlock(FILE *logfile)
+>       }
+>   }
+>   
+> +/*
+> + * 'true' if the previous log message lacked a trailing '\n',
+> + * and thus the subsequent call must skip any prefix
+> + */
+> +static __thread bool incomplete;
+> +
+>   void qemu_log(const char *fmt, ...)
+>   {
+>       FILE *f;
+> @@ -154,7 +160,7 @@ void qemu_log(const char *fmt, ...)
+>        * was emitted if we are delayed acquiring the
+>        * mutex
+>        */
+> -    if (message_with_timestamp) {
+> +    if (message_with_timestamp && !incomplete) {
+>           g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+>           timestr = g_date_time_format_iso8601(dt);
+>       }
+> @@ -170,6 +176,7 @@ void qemu_log(const char *fmt, ...)
+>           va_start(ap, fmt);
+>           vfprintf(f, fmt, ap);
+>           va_end(ap);
+> +        incomplete = fmt[strlen(fmt) - 1] != '\n';
+>           qemu_log_unlock(f);
+>       }
+>   }
 
 
