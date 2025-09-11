@@ -4,142 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18622CAC587
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 15:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7D8CAC587
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 15:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwj7W-00050m-Sy; Thu, 11 Sep 2025 11:21:58 -0400
+	id 1uwjD5-0006TH-4W; Thu, 11 Sep 2025 11:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uwj7U-00050U-UO
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 11:21:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwjD2-0006SM-Nb
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 11:27:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uwj7S-0000cy-TE
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 11:21:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uwjD0-0001Og-EM
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 11:27:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757604113;
+ s=mimecast20190719; t=1757604450;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HbnNvqoU+xrhKnuTknwwcJKWZSzJ/gF++tijL7ozYSo=;
- b=b/NDTTPwjEdvbu1oZOsMDy9PEg8AmSXBw7jHlWkhOtgHfNxHlZWATXt6eAB4IZpVim4lsH
- 5l2tJRLuU9OjehI3MZ5dJyznsvsih2TVLw2UceSOY9+PqFu88XVhVeulE7zgK38Oofuh81
- mo7ROmkZkMCJSXd0+mtwTW1lCxklszs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2QCAmnJLGBLN51jNUOoc+FaOgOXUPOO3XmKhNDK1ytY=;
+ b=P6Sm2DXHRkoZ6VjYjbpde7p0v3SL0ZWzuPed57X8+dUIJKeeTiBMKBTqluH7wDPjFYVJWY
+ sznr6XKCTkVMsPnfIN3pcPWtOJxhGnehuLS1/PlBcSW5qsOCKmkba8ESiIf5NhHYKhU+LF
+ VPlHk5geHmaII8X9mR49buMSXxVVR5Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-PvZQoB2UOF2LclYaCKRiHQ-1; Thu, 11 Sep 2025 11:21:51 -0400
-X-MC-Unique: PvZQoB2UOF2LclYaCKRiHQ-1
-X-Mimecast-MFC-AGG-ID: PvZQoB2UOF2LclYaCKRiHQ_1757604110
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3df9f185b82so321077f8f.1
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 08:21:51 -0700 (PDT)
+ us-mta-619-w_Bdxf00O3aeQ3V0F-fHpw-1; Thu, 11 Sep 2025 11:27:28 -0400
+X-MC-Unique: w_Bdxf00O3aeQ3V0F-fHpw-1
+X-Mimecast-MFC-AGG-ID: w_Bdxf00O3aeQ3V0F-fHpw_1757604447
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3e04ea95c6cso430728f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 08:27:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757604110; x=1758208910;
+ d=1e100.net; s=20230601; t=1757604447; x=1758209247;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HbnNvqoU+xrhKnuTknwwcJKWZSzJ/gF++tijL7ozYSo=;
- b=BW0Ng4T0KjMQFXdphsFHPelwEyzqBFIo0nQioAYIyywf1Nnxk4D5UmMkLF6hIeTDyT
- xqBL9TnLtYvvDQ9SWi2N8STUiZDFbZCg3rbJ0nPmqxgAf7D4rRgnSnd6ky4uw+Ul8MKI
- blZa/XoRiDPlZlE9oX5M52t1fAZEcqjcg9xjb0BRfTREWu2qBH77pS1c4lJgJwJJZEVM
- LGrNNg7+l9pBdGSZJqPIfwKxZOzYRkqCzcWKDSGmkjG+wLbIza3k5LHA4lIL+Ft8CUU7
- F1X/fryv/s0vL+Hf9YXcHbv+3ULLZRBM+ofYodjUAQUNjgqZ9Ea3R9z7w4F7qB9mkpPB
- j6Pg==
-X-Gm-Message-State: AOJu0YwLlzVwWoWDJUe+GkIV1Lr8h3dlNE+NtTyQKqOV5bSZKh3z8c5j
- nsZHI+S/FKQvSkGl/OnTzxD44mWMd10zdUVW9Me8Sfr1lI0t+dKj+SYdjoidD1fpttzRd6W8dCs
- QvxBws7DY+gn3vmto6Y3eBKbq1OiljNlRWFXwqaQbkYfPc0myfAUw0xYt
-X-Gm-Gg: ASbGncvNCvcWndkSFziSl/2ndqXI9C6Uk3VcUaKym/gFSrEa6W+DdrAIpcog2zEF1RK
- RxlhPKlcpTqBDl9xalkS/jAdWobukVivh63CbQ77FeJgH4Epcc47cV5AFa6qRbM/ZHrUf6ChsN4
- zjfjezhjkc/R6bE+4KMQrWqP7O7KBfubHJRehyvPWkrZTgJH0YmVMwa2su2kKMqdIKxdwicjP7i
- 4pkxRX1w3jybRSblkAmaHq2YAy+RBC/8h+StdskCLi1daWqHDyfDqNS79tL6xug1teODq8B6iYw
- sVXXVp43cvugJ9t2qmH7BUnwjbT6qMdLP6t13jMViccvr7NwxDEIrDUIqteasIxCJIDHsX7U+MU
- Y9HyVQbN8iYBr5MueaXcHDqGJoztFSWOXf1ccNey4jKI=
-X-Received: by 2002:adf:a448:0:b0:3e7:4701:d1ca with SMTP id
- ffacd0b85a97d-3e74701d6e2mr9328541f8f.17.1757604110149; 
- Thu, 11 Sep 2025 08:21:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHIuKs6ENDmz2JzfHw8kgUL7A8BrL2gkhJChCmmeakp6xd9MQt1SWlarEk+RWpnqThTFT3zzw==
-X-Received: by 2002:adf:a448:0:b0:3e7:4701:d1ca with SMTP id
- ffacd0b85a97d-3e74701d6e2mr9328503f8f.17.1757604109743; 
- Thu, 11 Sep 2025 08:21:49 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3e760790154sm2977363f8f.27.2025.09.11.08.21.47
+ bh=2QCAmnJLGBLN51jNUOoc+FaOgOXUPOO3XmKhNDK1ytY=;
+ b=I9OEnGpustQeYGn5AxPAxZREb2sdZGXAdhPHQUNK51sJQnnj2LCG+/H3K/T5e5L+8X
+ h87a2eFS6obajH44CtHmHHRdyXKDWE46os5YM/MkQYZ1Qc8S2RAdCTPP6qK88jeU/FCD
+ KHNr0CrRE14IZiedlC6Qk5i9mimXeqWvL3o9UaKgduNW1K8MfASdbJUwnnNm2rMEiB2A
+ ncPjBYFUGClM/NHcuH1E9bZg91pc6nVpgUNRdIH0/Zibk48Sx/7NepGawkXuB/OToatr
+ 5zpNJk9FpEHLmtEIB05oOHm05OKe9XCTKZKdbCx9qsMkO8UNuQYKOrvouSAgu9Ae4FOq
+ u2+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgZIEDDIxDtE1jb6pYsqtLIB1I3/G5FVdApsPE12bhZyoh+LGxGK2NJb86KHetfntFdwY2KwS/m9Eo@nongnu.org
+X-Gm-Message-State: AOJu0Yy0vrPyzc5eVh52uBTMF/BR7OtSLL3N+vT7ttfYILVd4L+V6Oi5
+ tZZfy0Pa/J9zshuley3tqxVZGDpz6uy3FT21cKYDFa7x9Ahv83Gk/6d9x2IX6ilfr9bMIqAKPa2
+ 0fJG92lPN9rVIgolQKkMEk7ZPoq7Ngr8VHse9SGEwJ468t67zzJxwCQqb
+X-Gm-Gg: ASbGncsdsm0YyzEVZWwk5QhEhiCvP7FTIrm4svRB57/ejVnEK+YCP94QZFGEGZhDATu
+ v902gO+4E2esucFEeek1BqQXFEZfUcAXsnN6NZB6/1j5jKDEeM5JM9Pwc6UvyWS+vl8rzL2+WdK
+ DxkN6Nkm0Wh8T4eBqLSbvmRajk1wXPY9VvaAOc78ZlT2y0mSqq7ybBBFes4exz1SfCxNp9ahGzp
+ HOij6png0nLU6fZGOgKmGbi3rEQ+x68dkwGN3UEo81UAOBGqq8YLkbaTVbCUmBwQfH5Yh2ol2gh
+ 1ikLo02I+9YWByKKeGUvSkGec3Q+6PQrqMay9mfLHPYVyza71tAsQb9Cv9jIljOUtXkO0ovQOsX
+ FHwK4NA==
+X-Received: by 2002:a05:6000:2c0b:b0:3e0:37f3:7778 with SMTP id
+ ffacd0b85a97d-3e64317d070mr18537833f8f.26.1757604447052; 
+ Thu, 11 Sep 2025 08:27:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/PncLgqQh9eRLISbvQTaQVREJoO4tI6qsOmiMxOyJvIC8zbAdkaJsYHBwcuc90MFBE0zxDw==
+X-Received: by 2002:a05:6000:2c0b:b0:3e0:37f3:7778 with SMTP id
+ ffacd0b85a97d-3e64317d070mr18537794f8f.26.1757604446366; 
+ Thu, 11 Sep 2025 08:27:26 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
+ [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e76078761asm2861028f8f.25.2025.09.11.08.27.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 08:21:49 -0700 (PDT)
-Message-ID: <17ac0ef9-1c10-4f84-be24-b0f25c7e78fb@redhat.com>
-Date: Thu, 11 Sep 2025 17:21:44 +0200
+ Thu, 11 Sep 2025 08:27:25 -0700 (PDT)
+Message-ID: <0d71919b-d5f9-47cd-9979-a692f3cf6a8d@redhat.com>
+Date: Thu, 11 Sep 2025 17:27:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/26] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster
- <armbru@redhat.com>, Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@microsoft.com>, Cornelia Huck
- <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250911025906-mutt-send-email-mst@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5] tests/functional: add a vfio-user smoke test
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+References: <20250911142228.1955529-1-john.levon@nutanix.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250911025906-mutt-send-email-mst@kernel.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250911142228.1955529-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -164,29 +158,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/25 08:59, Michael S. Tsirkin wrote:
-> On Thu, Aug 07, 2025 at 04:39:25PM +0200, Magnus Kulke wrote:
->> Hey all,
->>
->> This is the third revision of a patch set implementing an accelerator
->> for the MSHV kernel driver, exposing HyperV to Linux "Dom0" hosts in various
->> scenarios. Thank you for the feedback so far. Since the last revision we
->> incorporated feedback from the last review and identified further areas for
->> performance fixes, notably in the irqfd handling. I'm looking forward to your
->> comments.
->>
->> Best regards,
->>
->> magnus
-> 
-> 
-> So regarding merging plans. Did you guys get in touch
-> with Sunil? That's the easiest smoothest path, through
-> an existing maintainer.
+  Hi!
 
-There's hardly any code shared with WHPX; I am on vacation this week but 
-I'll do a final review and merge it soon.
+On 11/09/2025 16.22, John Levon wrote:
+> From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> 
+> Add a basic test of the vfio-user PCI client implementation.
+> 
+> Co-authored-by: John Levon <john.levon@nutanix.com>
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+...
+> diff --git a/tests/functional/x86_64/test_vfio_user_client.py b/tests/functional/x86_64/test_vfio_user_client.py
+> new file mode 100755
+> index 0000000000..1e4c5bc875
+> --- /dev/null
+> +++ b/tests/functional/x86_64/test_vfio_user_client.py
+> @@ -0,0 +1,197 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Copyright (c) 2025 Nutanix, Inc.
+> +#
+> +# Author:
+> +#  Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> +#  John Levon <john.levon@nutanix.com>
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +"""
+> +Check basic vfio-user-pci client functionality. The test starts two VMs:
+> +
+> +    - the server VM runs the libvfio-user "gpio" example server inside it,
+> +      piping vfio-user traffic between a local UNIX socket and a virtio-serial
+> +      port. On the host, the virtio-serial port is backed by a local socket.
+> +
+> +    - the client VM loads the gpio-pci-idio-16 kernel module, with the
+> +      vfio-user client connecting to the above local UNIX socket.
+> +
+> +This way, we don't depend on trying to run a vfio-user server on the host
+> +itself.
+> +
+> +Once both VMs are running, we run some basic configuration on the gpio device
+> +and verify that the server is logging the expected out. As this is consistent
+> +given the same VM images, we just do a simple direct comparison.
+> +"""
 
-Paolo
+I'm not a python expert, but I guess it would make sense to move that 
+description block next to the "class VfioUserClient(QemuSystemTest):" line 
+so that it's the description for the class? (that would fix the "Missing 
+class docstring" that you get when using "pylint" on your code)
+
+> +import difflib
+> +import logging
+> +import os
+> +import select
+> +import shutil
+> +import socket
+> +import subprocess
+> +import time
+
+pylint complains:
+
+tests/functional/x86_64/test_vfio_user_client.py:28:0: W0611: Unused import 
+difflib (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:29:0: W0611: Unused import 
+logging (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:30:0: W0611: Unused import 
+os (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:31:0: W0611: Unused import 
+select (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:32:0: W0611: Unused import 
+shutil (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:33:0: W0611: Unused import 
+socket (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:34:0: W0611: Unused import 
+subprocess (unused-import)
+tests/functional/x86_64/test_vfio_user_client.py:35:0: W0611: Unused import 
+time (unused-import)
+
+... so I think you can remove those.
+
+> +from qemu_test import Asset
+> +from qemu_test import QemuSystemTest
+> +from qemu_test import exec_command
+
+Same for "exec_command" ... you don't use it in your test here.
+
+> +from qemu_test import exec_command_and_wait_for_pattern
+> +from qemu_test import wait_for_console_pattern
+> +
+> +# Exact output can vary, so we just sample for some expected lines.
+> +EXPECTED_SERVER_LINES = [
+> +    "gpio: adding DMA region [0, 0xc0000) offset=0 flags=0x3",
+> +    "gpio: devinfo flags 0x3, num_regions 9, num_irqs 5",
+> +    "gpio: region_info[0] offset 0 flags 0 size 0 argsz 32",
+> +    "gpio: region_info[1] offset 0 flags 0 size 0 argsz 32",
+> +    "gpio: region_info[2] offset 0 flags 0x3 size 256 argsz 32",
+> +    "gpio: region_info[3] offset 0 flags 0 size 0 argsz 32",
+> +    "gpio: region_info[4] offset 0 flags 0 size 0 argsz 32",
+> +    "gpio: region_info[5] offset 0 flags 0 size 0 argsz 32",
+> +    "gpio: region_info[7] offset 0 flags 0x3 size 256 argsz 32",
+> +    "gpio: region7: read 256 bytes at 0",
+> +    "gpio: region7: read 0 from (0x30:4)",
+> +    "gpio: cleared EROM",
+> +    "gpio: I/O space enabled",
+> +    "gpio: memory space enabled",
+> +    "gpio: SERR# enabled",
+> +    "gpio: region7: wrote 0x103 to (0x4:2)",
+> +    "gpio: I/O space enabled",
+> +    "gpio: memory space enabled",
+> +]
+> +
+> +class VfioUserClient(QemuSystemTest):
+> +
+> +    ASSET_REPO = 'https://github.com/mcayland-ntx/libvfio-user-test'
+
+Not sure whether that indirection works with the asset pre-caching 
+mechanism? Daniel, could you comment on that?
+
+> +    ASSET_KERNEL = Asset(
+> +        f'{ASSET_REPO}/raw/refs/heads/main/images/bzImage',
+> +        '40292fa6ce95d516e26bccf5974e138d0db65a6de0bc540cabae060fe9dea605'
+> +    )
+> +
+> +    ASSET_ROOTFS = Asset(
+> +        f'{ASSET_REPO}/raw/refs/heads/main/images/rootfs.ext2',
+> +        'e1e3abae8aebb8e6e77f08b1c531caeacf46250c94c815655c6bbea59fc3d1c1'
+> +    )
+> +
+> +
+> +    def prepare_images(self):
+> +        """Download the images for the VMs."""
+> +        self.kernel_path = self.ASSET_KERNEL.fetch()
+> +        self.rootfs_path = self.ASSET_ROOTFS.fetch()
+> +
+> +    def configure_server_vm_args(self, server_vm, sock_path):
+> +        """
+> +        Configuration for the server VM. Set up virtio-serial device backed by
+> +        the given socket path.
+> +        """
+> +        server_vm.add_args('-kernel', self.kernel_path)
+> +        server_vm.add_args('-append', 'console=ttyS0 root=/dev/sda')
+> +        server_vm.add_args('-drive',
+> +            f"file={self.rootfs_path},if=ide,format=raw,id=drv0")
+> +        server_vm.add_args('-snapshot')
+> +        server_vm.add_args('-chardev',
+> +            f"socket,id=sock0,path={sock_path},telnet=off,server=on,wait=off")
+> +        server_vm.add_args('-device', 'virtio-serial')
+> +        server_vm.add_args('-device',
+> +            'virtserialport,chardev=sock0,name=org.fedoraproject.port.0')
+> +
+> +    def configure_client_vm_args(self, client_vm, sock_path):
+> +        """
+> +        Configuration for the client VM. Point the vfio-user-pci device to the
+> +        socket path configured above.
+> +        """
+> +
+> +        client_vm.add_args('-kernel', self.kernel_path)
+> +        client_vm.add_args('-append', 'console=ttyS0 root=/dev/sda')
+> +        client_vm.add_args('-drive',
+> +            f'file={self.rootfs_path},if=ide,format=raw,id=drv0')
+> +        client_vm.add_args('-snapshot')
+> +        client_vm.add_args('-device',
+> +            '{"driver":"vfio-user-pci",' +
+> +            '"socket":{"path": "%s", "type": "unix"}}' % sock_path)
+> +
+> +    def setup_vfio_user_pci_server(self, server_vm):
+> +        """
+> +        Start the libvfio-user server within the server VM, and arrange
+> +        for data to shuttle between its socket and the virtio serial port.
+> +        """
+> +        wait_for_console_pattern(self, 'login:', None, server_vm)
+> +        exec_command_and_wait_for_pattern(self, 'root', '#', None, server_vm)
+> +
+> +        exec_command_and_wait_for_pattern(self,
+> +            'gpio-pci-idio-16 -v /tmp/vfio-user.sock >/var/tmp/gpio.out 2>&1 &',
+> +            '#', None, server_vm)
+> +        # wait for libvfio-user to initialize properly
+> +        exec_command_and_wait_for_pattern(self, 'sleep 5', '#', None, server_vm)
+
+Could the sleep be avoided? ... it's still a race condition (even if it's 
+unlikely when you wait for 5 seconds), and always sleeping 5 seconds slows 
+down the test quite a bit ...
+
+Could you maybe poll something instead, e.g. output of "dmesg" or something 
+in the file system? (sorry, I don't have any clue about vfio-user, so I 
+don't know any better suggestions)
+
+> +        exec_command_and_wait_for_pattern(self,
+> +            'socat UNIX-CONNECT:/tmp/vfio-user.sock /dev/vport0p1,ignoreeof ' +
+> +            ' &', '#', None, server_vm)
+> +
+> +    def test_vfio_user_pci(self):
+> +        self.prepare_images()
+
+Please move the "prepare_images" after the set_machine() and 
+require_device() calls. Reason: set_machine() and require_device() could 
+skip the test if it's not available in the qemu binary, so in that case you 
+don't want to try to fetch the assets first.
+
+> +        self.set_machine('pc')
+> +        self.require_device('virtio-serial')
+> +        self.require_device('vfio-user-pci')
+> +
+> +        sock_dir = self.socket_dir()
+> +        socket_path = sock_dir.name + '/vfio-user.sock'
+
+Better use os.path.join() instead of hard-coding slashes.
+
+  Thanks,
+   Thomas
 
 
