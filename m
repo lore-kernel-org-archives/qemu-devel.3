@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF94CAC58E
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 18:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B2CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 18:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwlmY-0005gM-Dd; Thu, 11 Sep 2025 14:12:30 -0400
+	id 1uwm51-00028U-UF; Thu, 11 Sep 2025 14:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwlmK-0005b2-8S
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:12:25 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1uwm4B-0001bh-2b
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:30:44 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uwlmE-00055C-CF
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:12:12 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3d44d734cabso892282f8f.3
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 11:12:09 -0700 (PDT)
+ id 1uwm48-0007Lm-EY
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 14:30:42 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45decc9e83eso9822185e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 11:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757614329; x=1758219129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757615435; x=1758220235; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RHIrNID+tkvNaJJYQVHQcGccjCnjaJgpv9H/TBaqlns=;
- b=w7bqPKmRkZg0u5ITs080GEm0+WK1ATgC07LrNKZ+VpNUWlmDNzN9uHbyvDzp0Gs/V5
- FPpUvmL4tdW0esS46cdf9H0e0Yb9cXPtHvTztWscO5234Uy8/wGVDqMz0baAD4xZXOYW
- APTKLhvjSbw8Xvb3251tCMBh0io6imnZSDFOap1ST0h40JcXAXZe59+tCk4oY8mskXIJ
- if2E4oZ08eFblSTireO5pLP3j6RMTroCZSMswZ+ImaS7UgdJHSzvH8R82v6SDY2tJ0vn
- 6X2uO3XuBvJEGTafG89x0t6K5KciJb2BoP8ENPc1cTpThvBk8/iO1CuPYoeiu9KGjqjl
- pv3w==
+ bh=xd6XaDYT0WdSg/M97tLW+2AqgiOlqQ1VEz6hpdxUHm8=;
+ b=nFyUYRZLjGyQ8iQZftcLHBfE2DjhG4rVBqorWEfU2/NBfhdT2QmL4k2q5j/y4KrEcl
+ gZV+drgJrLyXwro3gMNHvFNa0yPCtc6iPO2vfutuqN87xSyU6eucUh/FDEUj6aJjXG5r
+ lp64+myPfOdaAV0lO+TA64OHVgrQjGq4z3PotQGIe2k8Tt88c2xovmfkE/XlHOHP5SXQ
+ Rz+eM3gHesnl3Miggk5mXhe8JtUPIE60BAKcdyVX8DUnmUf24mVAT3IejGJ3IfoWND/V
+ S4tTKKepUwIUn4jYJcSV4SNY75jz/BDlckfB7/2A7VeRx/7ZBJbnGx+56C47tpO9RTVo
+ Ek9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757614329; x=1758219129;
+ d=1e100.net; s=20230601; t=1757615435; x=1758220235;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RHIrNID+tkvNaJJYQVHQcGccjCnjaJgpv9H/TBaqlns=;
- b=bQ+nbZfpirie3hhEwGrdaPGgrq9vdMy+W0UWd/ePD7TG+SyxjZF/W/MgFh2707eysC
- hL67jt0Mnx8QCGqhmSIu5shmxb6F8slQDvuf0J/KLqmgMEHy1T6e6+CHgXxs0mXDiXOj
- 7e63XPh+uTL3KQF5L7T7b0TMNtv9Ub1lQRO6Rvf18Wm2CY2wVz6VbNd4dCuysVWtdTFi
- jfc/amjkGE2GqjOHu4KsL23yfeu0a92a/8A0c6mrS30F34e8dxeHB9HoB9iIPuPB3nCj
- vj/eS5YUThBRWMHYFUP94jpI7Y9/PyuMeJXXcVkdXm5JFpOeHHGRj6LLy14+GP673USc
- 9YAw==
+ bh=xd6XaDYT0WdSg/M97tLW+2AqgiOlqQ1VEz6hpdxUHm8=;
+ b=DMZdAc9A91iz7Mu+x1iffs0aTfvGniOxjoKANjz08X7tLp9pXDwdkodeE39UvvWizi
+ LqSUARZ7fJmLDI+unKRwCPu2SpbA2Rou9eY2y4oXJU+Eu/H++eO11pXInVArgp9rw8fx
+ WEwzNh0wYHfXDIOgaljtuJA58TvWiynVhvDaZ421868BO3Cei+Vhj7WmMZsN+NJ7hNeg
+ T+dWLUkWwpHOsErut70YRBuZrTzGv/B/9LurwYE7aCMGhF95p/kAvk85F6m8Kelx/gVn
+ BTY7eu9V6khvzsf1WlrUrfL92F3UCK/VurDi22nJcwfImBT2FPsKPR64Rr5qxfCkBKNP
+ pEhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+3Z8jGauMLxoOMCkqFYNVIn1M6XXGCUoTE3tSEHNsqpKbpWshALuUXmtxZpGXQUjparyJgI9N5t4p@nongnu.org
-X-Gm-Message-State: AOJu0YxJeTm7pyYS1I4S+wbRLE4iYurYiF7E0BjGMQMxsn9x1leT5olY
- xFXX/UhcRN+L2GLAlnXvtTXYIBsB8ANor0uo4GGJ4Aan6s3NFqpulQR4t/2Ms2yFmdw=
-X-Gm-Gg: ASbGncuwPXTGwfPy0ROjwUdyU1IeHg0/pzchFriEsoyG+6vzk6c+s4qk0yzyf+rnuw7
- iRN5HBav98gWGe2Qp+f9MRNuDE69clUPr5RmAHCHNGl3KRro3sQfRoSc/GjooJ2WKJOQBTCArho
- v/abMSFF2bcLWc0029U2jhqcdezjY+cdgFCMObkbWu/LMMjaZPALJxrLp+VVsih56oYG8FFGvUs
- 4erWKXodk6UWmtBdalO048+nTNhUv4HP20cUb87mR8hVw3jzZ4oTORsooSYPD8h0vufArKWA4Z2
- KbwVEQsGCHu2ji8pzveHHBiBnOWbVGo3fls/m3w8JbY8dFr/X8Vapb0piyHL6HimODjsFhLMMhb
- wGw31wU5UTNghjAiyTocXoKNvINkU9XD2/UBQbqjO6JdfTkjZSZelSPzVFABC/XZHJ5Gd
-X-Google-Smtp-Source: AGHT+IGkiwzdEXrfqTIg537MxIS44JmTjWuSINRver3HKTHggJUNep6vJDFCMfyAKzwnKjQ1J79nFQ==
-X-Received: by 2002:adf:8b5d:0:b0:3e7:5206:bdc4 with SMTP id
- ffacd0b85a97d-3e765780ae2mr197223f8f.4.1757614328676; 
- Thu, 11 Sep 2025 11:12:08 -0700 (PDT)
+ AJvYcCUyjrzLt1WJOZfGuslF0ok42EbxI6mVW3mHbGRpFtDfI+I68IGXvqiJ54dWu8CMTrFZ6683WWeZMRUu@nongnu.org
+X-Gm-Message-State: AOJu0YyQBzHnhx6B8CJ4C0yBph3y1ibNa0MSYLESzVQqAzZ3SSdQkVsN
+ rPiDXtW07omOhjsur3R57thGVvlIgI/f33deEFPN3Co/F/IMGih7EH2JZKt92nNsTes=
+X-Gm-Gg: ASbGncuiGqog1nHEStLQW8ksRGe7ohq7EIm4XasJ+y4KiI6U6hcuxVbOeFpzXv1DIWN
+ zLRDEkdV9RdZcYxkLcP8u+4SRANL0FWv5idLy+lUpUvmF83tCah4b9dBCa4ymkGbUoadjqYxtjl
+ gCjTENkxa/A154AcRVmqJFFLVB/hBFvVFShuDOvP3pC8PVvpWf7i1fRNkzPwaE5J1p+Cr+UHXib
+ mgHkoSr3q/3rWZMQNdT0xwAc+FN2RoV7xUUlGqp8kmC36tUG36RF9ki2SiqvRQLRPgam9G/bmdY
+ IOujwiYJ9UumqBMOpI9OCZFl1VlBiLR/W0pKRR1fa9W3EAlRXEi0baHAYcJBxh+JbWTuDP6N8Z/
+ TlWb5ZGV1qiukZgxoccNxRhx0jKmCTLaJtuqrR166pV5GP/x7t73jmCg22BBlbXgRGl9t
+X-Google-Smtp-Source: AGHT+IHif9JZ193Qkx9GbmAVoffwrUcePmf96v6VHN97P45gZNPsNodLr12Rk4aVLhUO3IkHS7724Q==
+X-Received: by 2002:a05:6000:2dc7:b0:3cb:285f:8d9c with SMTP id
+ ffacd0b85a97d-3e765a48a8dmr252232f8f.48.1757615435204; 
+ Thu, 11 Sep 2025 11:30:35 -0700 (PDT)
 Received: from [172.16.30.12] (ipnet-92-225.static.simnet.is. [157.157.92.225])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e015775f1sm35771235e9.8.2025.09.11.11.12.06
+ ffacd0b85a97d-3e760776badsm3472160f8f.5.2025.09.11.11.30.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 11:12:08 -0700 (PDT)
-Message-ID: <7708f678-4e8a-4ed1-a5b9-6b17797493aa@linaro.org>
-Date: Thu, 11 Sep 2025 18:12:02 +0000
+ Thu, 11 Sep 2025 11:30:34 -0700 (PDT)
+Message-ID: <3791c8ff-fcf5-4312-b6dc-c7ff172f7f8d@linaro.org>
+Date: Thu, 11 Sep 2025 18:30:23 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 20/20] util: add brackets around guest name in message
- context
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-21-berrange@redhat.com>
+Subject: Re: The different ways QEMU logs stuff
+To: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Greg Kurz <groug@kaod.org>
+References: <87bjnhgpg8.fsf@pond.sub.org>
+ <2ae622b3-4210-494e-95a3-cc20219779a7@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250910180357.320297-21-berrange@redhat.com>
+In-Reply-To: <2ae622b3-4210-494e-95a3-cc20219779a7@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,32 +110,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 18:03, Daniel P. Berrangé wrote:
-> The message context can optionally include the guest name if the
-> argument '-msg guest-name=on' is given. The formatting, however,
-> does not look good if the guest name contains whitespace. Change
-> the output to include square brackets to demarcate the name.
+On 9/11/25 14:49, Paolo Bonzini wrote:
+>>    -d tid further splits per thread.
+>>
+>>    Splitting per thread feels fairly redundant once the prefix includes
+>>    the thread name.  Thread names is easier to make sense of than numeric
+>>    thread IDs in the split filenames.
 > 
-> Before:
-> 
->    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
->    fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55657e94e690 dir=fish
->    fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_get_path TLS creds path creds=0x55657e94e690 filename=ca-cert.pem path=<none>
->    fish food qemu-system-x86_64(1146846:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> After:
-> 
->    # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
->    [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5604ada2c950 dir=fish
->    [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_get_path TLS creds path creds=0x5604ada2c950 filename=ca-cert.pem path=<none>
->    [fish food] qemu-system-x86_64(1144713:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
-> 
-> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
-> ---
->   util/message.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> https://lore.kernel.org/all/20220417183019.755276-1-richard.henderson@linaro.org/ says 
+> "this can be extremely helpful in debugging user-only threads".
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Compare strace -ff.
+
 
 r~
 
