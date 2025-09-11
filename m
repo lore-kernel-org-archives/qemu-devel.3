@@ -4,96 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F393CAC58D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5300CAC58D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 10:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwea3-00024h-3b; Thu, 11 Sep 2025 06:31:08 -0400
+	id 1uwei2-0004nC-Km; Thu, 11 Sep 2025 06:39:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uweZs-00023J-7O; Thu, 11 Sep 2025 06:30:59 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uwei0-0004mZ-05
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:39:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uweZn-0001uK-7Q; Thu, 11 Sep 2025 06:30:55 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AA4F15287E;
- Thu, 11 Sep 2025 13:30:37 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 74BB227C2BA;
- Thu, 11 Sep 2025 13:30:45 +0300 (MSK)
-Message-ID: <84a347ed-3ad1-45d0-af08-1bb187390c0c@tls.msk.ru>
-Date: Thu, 11 Sep 2025 13:30:45 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uwehr-0002gr-PU
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 06:39:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757587144;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CGsCdrfJ7Rm3QeHY7rN/TEiM82TbFL4gLglvuRgCTsE=;
+ b=Oau4SoJrBEISlkFI09rEVBkz8uXjMfXVQpIwen9ALPSNcbH4vPeJGPlvLGg7VSTBWkAp01
+ Nd6AeoKcvmdM0MpwPggg37njene94pUS8ghcK7sxNafFKvrGbG0J6hps4rW8vSWpUAi3uk
+ upbDmByI2MndE7Xptv/wk2ZuEN0Q8lA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-8EjUKPnrO9m9ruEHD1JDuQ-1; Thu,
+ 11 Sep 2025 06:39:03 -0400
+X-MC-Unique: 8EjUKPnrO9m9ruEHD1JDuQ-1
+X-Mimecast-MFC-AGG-ID: 8EjUKPnrO9m9ruEHD1JDuQ_1757587142
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C2C9195608E; Thu, 11 Sep 2025 10:39:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.148])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 602C3300021A; Thu, 11 Sep 2025 10:38:59 +0000 (UTC)
+Date: Thu, 11 Sep 2025 11:38:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Yong Huang <yong.huang@smartx.com>, Thomas Huth <thuth@redhat.com>,
+ QEMU Developers <qemu-devel@nongnu.org>, hreitz@redhat.com,
+ Maxim Levitsky <mlevitsk@redhat.com>, armbru@redhat.com
+Subject: Re: Some iotests are failing with -luks
+Message-ID: <aMKmvQ1IyBzK93lD@redhat.com>
+References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
+ <aMGijXg9XIpbbn-v@redhat.com> <aMHFrDEW8cbnXajG@redhat.com>
+ <CAK9dgmYY-193Nom=DteAp2mDCNCMdA-fUMi8PH5iAoVVZ59cKQ@mail.gmail.com>
+ <aMKeqBDvzEM0682l@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/2] target/loongarch: Guard 64-bit-only insn translation
- with TRANS64 macro
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, WANG Rui <wangrui@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>,
- Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250828120218.1227427-1-gaosong@loongson.cn>
- <20250828120218.1227427-2-gaosong@loongson.cn>
- <fe6cc32a-1586-47bf-9ecc-ec8100372240@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <fe6cc32a-1586-47bf-9ecc-ec8100372240@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aMKeqBDvzEM0682l@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +89,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.09.2025 13:04, Michael Tokarev wrote:
-...
-> The same applies to the second patch in this series, btw, -- the second
-> patch also does not apply to 10.0.x directly because 10.0 lacks commit
-> ab9bbee3c7da3 "hw/intc/loongarch_pch: Modify name of some registers" --
-> the commit is just some code renames, it does not change actual code, so
-> it is a no-op, but it makes subsequent changes to not apply directly.
-> I think I'll pick ab9bbee3c7da3 and the next one, 4f0f2ab5640ef
-> "hw/intc/loongarch_pch: Modify register name PCH_PIC_xxx_OFFSET..",
-> to 10.0.x too.
+On Thu, Sep 11, 2025 at 12:04:24PM +0200, Kevin Wolf wrote:
+> Am 11.09.2025 um 04:33 hat Yong Huang geschrieben:
+> > On Thu, Sep 11, 2025 at 2:38 AM Kevin Wolf <kwolf@redhat.com> wrote:
+> > 
+> > > Am 10.09.2025 um 18:08 hat Kevin Wolf geschrieben:
+> > > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
+> > > > > luks-detached-header   fail       [17:15:26] [17:15:38]   12.2s
+> > >         failed, exit status 1
+> > > > > ---
+> > > /home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header.out
+> > > > > +++
+> > > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/luks-detached-header.out.bad
+> > > > > @@ -1,5 +1,55 @@
+> > > > > -..
+> > > > > +EE
+> > > > > +======================================================================
+> > > > > +ERROR: test_detached_luks_header
+> > > (__main__.TestDetachedLUKSHeader.test_detached_luks_header)
+> > > > > +----------------------------------------------------------------------
+> > > > > +Traceback (most recent call last):
+> > > > > +  File
+> > > "/home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header",
+> > > line 139, in setUp
+> > > > > +    res = qemu_img_create(
+> > > > > +          ^^^^^^^^^^^^^^^^
+> > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
+> > > 278, in qemu_img_create
+> > > > > +    return qemu_img('create', *args)
+> > > > > +           ^^^^^^^^^^^^^^^^^^^^^^^^^
+> > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
+> > > 261, in qemu_img
+> > > > > +    return qemu_tool(*full_args, check=check,
+> > > combine_stdio=combine_stdio)
+> > > > > +
+> > >  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
+> > > 241, in qemu_tool
+> > > > > +    raise VerboseProcessError(
+> > > > > +qemu.utils.VerboseProcessError: Command
+> > > '('/home/thuth/tmp/qemu-build/qemu-img', 'create', '-f', 'luks', '-o',
+> > > 'iter-time=10', '-o', 'key-secret=sec0', '-o', 'detached-header=true',
+> > > '--object', 'secret,id=sec0,data=foo',
+> > > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/detached_header.img2')'
+> > > returned non-zero exit status 1.
+> > > > > +  ┏━ output
+> > > ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+> > > > > +  ┃ Formatting
+> > > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/l
+> > > > > +  ┃ uks-file-luks-detached-header/detached_header.img2', fmt=luks
+> > > > > +  ┃ size=-1 key-secret=sec0 iter-time=10 detached-header=true
+> > > > > +  ┃ qemu-img:
+> > > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luk
+> > > > > +  ┃ s-file-luks-detached-header/detached_header.img2: Parameter
+> > > > > +  ┃ 'detached-header' is unexpected
+> > > > > +
+> > > ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+> > > >
+> > > > This one is surprising. I don't think anything relevant in the luks
+> > > > driver has changed since the test was introduced. At the same time, the
+> > > > code clearly has a problem when it tries to convert a QemuOpts
+> > > > containing a "detached-header" option into a QAPI object when the schema
+> > > > doesn't even have this option. Was this broken from the beginning? Would
+> > > > have been for a year and half.
+> > >
+> > > I bisected this one because I was curious how this could happen, and it
+> > > was broken quite explicitly by commit e818c01a:
+> > >
+> > > commit e818c01ae6e7c54c7019baaf307be59d99ce80b9 (HEAD)
+> > > Author: Daniel P. Berrangé <berrange@redhat.com>
+> > > Date:   Mon Feb 19 15:12:59 2024 +0000
+> > >
+> > >     qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
+> > >
+> > >     The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
+> > >     was left over from earlier patch iterations.
+> > >
+> > >     Acked-by: Markus Armbruster <armbru@redhat.com>
+> > >     Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > >
+> > > The test case demonstrates that it actually wasn't unused.
+> > >
+> > > If we don't want to reintroduce the field in QAPI, we need to explicitly
+> > >
+> > 
+> > Keeping the detached-header option is more convenient for users when
+> > creating a detached-header image.
+> > 
+> > My inclination is to bring this optionback.  Any suggestions? cc @Daniel P.
+> > Berrangé <berrange@redhat.com>
+> 
+> Having it available for users in qemu-img is different from having it in
+> QAPI. Arguably there is no use for it in QAPI, as long as you make sure
+> that it's taken out of the QemuOpts before going to QAPI.
 
-And nope, the second patch ("loongarch_pch_pic: Fix ubsan warning and
-endianness issue") is a bit more involved in 10.0.x, since 10.0 also
-misses a6fdd0032ce5c7c "loongarch_pch: Use generic write callback for
-iomem8 region", which is one from larger refactoring series.  Sigh.
+Ah so what we actually need to fix is
 
-loongarch is a fast-moving target still.. :)
+diff --git a/block/crypto.c b/block/crypto.c
+index 4eed3ffa6a..8b60510c61 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -792,7 +792,7 @@ block_crypto_co_create_opts_luks(BlockDriver *drv, const char *filename,
+     char *buf = NULL;
+     int64_t size;
+     bool detached_hdr =
+-        qemu_opt_get_bool(opts, "detached-header", false);
++        qemu_opt_get_bool_del(opts, "detached-header", false);
+     unsigned int cflags = 0;
+     int ret;
+     Error *local_err = NULL;
 
-Thanks,
 
-/mjt
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
