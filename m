@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D583CAC587
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 23:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B05CAC58E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Sep 2025 23:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwr3b-0001vG-R5; Thu, 11 Sep 2025 19:50:27 -0400
+	id 1uwr4g-0002vf-2X; Thu, 11 Sep 2025 19:51:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uwr3a-0001uT-B6
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 19:50:26 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uwr4f-0002sk-47
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 19:51:33 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uwr3Y-0004rq-MQ
- for qemu-devel@nongnu.org; Thu, 11 Sep 2025 19:50:26 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-772488c78bcso1225117b3a.1
- for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 16:50:23 -0700 (PDT)
+ id 1uwr4S-0004vQ-NG
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 19:51:22 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-24cd340377dso9301215ad.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 16:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757634622; x=1758239422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757634679; x=1758239479; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JcQGAek4i81asZ4bL6G/L8o9wAK6+elN8NwZki5kqJY=;
- b=mFm5pJAhiS7QpVaIMlVae/bXtXuzb7lc8+y+gidoaFdSqMsAbp8Xf34QgBYcy17Jh5
- 8WPL/7rsiWq5ol+0N1xVIxay3bVSNiHfeUQykHt+wmgVn+hOogAeyFuEn8Q/UM4CWTyk
- ZVghceh5WrFQLeHsP6ZyCqsDzdPKv9Xu7ffWHmy3Ubs1lNfOhJ3g7MkHBQYY/uWekqO8
- W4kq9QnHP88QaE7g7RMajfbGot8cRU8Qw3qeEYHs3WXnBiJPHXYj2jdBYl+FGeVkAJAO
- FBLzFZ7W24vfyilsMeosFaZ/jxkM7ZYdEsanACXXH9oLqs5nFA6HRaRXGsGgP7APP39y
- RE2Q==
+ bh=jzt8fZAiJxy8CMggOsbgEYt3c/CWXdu6thBIfAsi0e4=;
+ b=h9Youz0wKxtFVRC1jFtUaZUbSaAnoEFOE4bbyfOtka/csm0tBhqi4T5vSsYVgbqpg6
+ jKtMIvMD87sANpTJoEHtYosoG22SuRZTsOFc7fyzA7SmzznUpoDINOAhPcgkTVAITBLd
+ 4sMqUYxJc/Koo5wgYXNWjzrH8AHMzdsWSZdgFWgWIi13x9+yfsv2lCLV4jLERajspMOs
+ JfIct1ljiBFqXtWG6ucotlahECzC+dmOVQnfDOOVF9Lgn25c2ekSwlw6SMwwE7Xf7LND
+ hytZxzi7wfeywOz2GdpkDjt1hAdr0t1p4iwy7lSJj93JSmVXQ37lo1p0oltvQ5kd9M7u
+ /yCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757634622; x=1758239422;
+ d=1e100.net; s=20230601; t=1757634679; x=1758239479;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JcQGAek4i81asZ4bL6G/L8o9wAK6+elN8NwZki5kqJY=;
- b=iqMk19jQjAFjBDxBigrieudeq/gOYmvqHPsWTtd6+HPbQ1S6PqoIbBePZBe5uz5Kcy
- 3PlamS5fQ7sRHWagwXVf47iqmwTbu3SWfu/r1PHxEp2zcgOiiVjn62OVy56vLANuX15n
- BCaw7MX508rMj1y4qRC3u5kxG+NiWFnMcEyNvji643/Bzd/7wt+qN08+eggFBRTwR6Ch
- Xg3/nUsM9NyxG+PuozBmRlC/VxuBD0KOqSxAQ295DXVsB9hYpfQb84thVH74odStfhAv
- eAnvN1ItXgRqXmpq7vuMdn3xjDYRe8QBb9l9qqx5P/7a6oZSlVkYEvZiLTptOc2zqAuW
- wOSg==
-X-Gm-Message-State: AOJu0YziClsntAFb41jsi6ljztYBpe4P1mFStnzl2rUBM/ZQBfmKM97w
- wu/o5VyVNigDVCP9ekl/0gYUxI1cmjDWv3TEBPA/hDl/30gdoSq+9cXneKT1ABJZw1A=
-X-Gm-Gg: ASbGncsCpqlQwofwFlVcDw71bAaZ0qCw4S17W9sNGnrSvzSSG3Cd99eCVEuzBprJSwc
- s1i68iHgUlvFXVkwdCs8nYaWgkQLf6/b4HSdeHS1S2YrgdWVvqOVmV/Ft6Blql09RoUbdJp1tyA
- pZUnjlsZJH8QOsgRoPeZumkDndqwhpup/AjNOf27RHYUiINsNjU1/FJsSfMQoproeeW+kZfBdJx
- ehODWyNSBXVQqc/zDuemYJdiC4vgETPfFOTecmGylUTawPFq+Sn+a1ylJU751ZR01cmHQsolHj1
- KbrI08m2IzGXnJLzg3evOX2tuzKxmWKwjWUWxR0/YqbMmiF1o0cBeygpHRgFES2c65ZqP8iKyDj
- Ewl0ARANxHcWNAZ+RJRl0ygZjbdToS0Vg4Q==
-X-Google-Smtp-Source: AGHT+IHrxqYkbC2JUsHaN0b2hx+2PL+gmS18n2lRi+YGUsqDJwJHLcuQUWzyv6XXk8XOeh41/tHXZg==
-X-Received: by 2002:a05:6a00:17a5:b0:770:48cf:83f5 with SMTP id
- d2e1a72fcca58-77612095a9cmr1249840b3a.14.1757634622222; 
- Thu, 11 Sep 2025 16:50:22 -0700 (PDT)
+ bh=jzt8fZAiJxy8CMggOsbgEYt3c/CWXdu6thBIfAsi0e4=;
+ b=oR7SK7P5o/2h3evChAp4A54n1DTOOLg7FPbXM9SOZgTEQHPAvwhI8Tae2RSNoavTYG
+ +y0udMF/CJa81hRLkjaOLfZlJ3xcJNEX9Qfj3H2hPAE7eLuUmmjXA+e6Q2fPchigGvn7
+ ffxKWc6VGmFQnjDkOjq+rH4JCCnAFa4YyuTqwvILNAHAfnG6aCku/jMY7jxkv1zm7rJk
+ HR61KFa4YGSrZHhk1Rum/7F6EV2z85S9YkAESeXaGzLQqKhGdrorVS9Uj/2s8snfYoM9
+ ZxuY60eOumgAPLn8GZ8PCZr5qc+hxww7rqUR6Xx/Q3qhocn6daNxizUZziHOy8MU2KWK
+ bPjQ==
+X-Gm-Message-State: AOJu0YyUvQrQ8yHhgUV8jV48ohhK76Y4lnerwoP99vs/fhgFMF53hVqX
+ wi8kI0m/OafCOJLsPxtJL11j6CZjapcnY96H4r5GhXHQ75ZDj3xaGVF6PiZSrdEc4RM=
+X-Gm-Gg: ASbGncuGCPvNmFBNzvzCCO1lxEU+x49QA9+NcNe0ny97QZ9XVSSopAhAynKwe073IOX
+ ebXAWtshnqT912DEKn6h8CGf03QoJFIb5g+VRq6R/JFsA3wcleizL4r35Auw3k3Cs0lZGPqLgpB
+ ahkOJTHrEiip3BD8mLFUOu8O13bsefBwB78syHZksgxOX4+b6+b9zIJOPdOsQtYYi/NvnTE+SkX
+ D31uZMfAWX8n2zNJrnsx8iTHvqGPqPl0f2RkYYsEOxORSBYsZAc2v+dVur3q0xav6wF+Nj2bNxk
+ Ponw4kBwtzXnenIz/I6/79zn0uHoVeZH1mugtidSQbKOjH1FbA5QSQn1Lh1GgSWXl1o0SYMqoKr
+ 2/A11Cl+3lNIQ3KmRGTEgmNaLY+bl6PP+Fw==
+X-Google-Smtp-Source: AGHT+IF0BtcBCb7ejbGUs9ksFkJdlfJEfbqYG7evbjKVPIYkpikmTxZ7Q5aL1+AFzMT4vzLDNG//Zw==
+X-Received: by 2002:a17:902:ef03:b0:24c:7b94:2f87 with SMTP id
+ d9443c01a7336-25d243ef68dmr12815175ad.14.1757634679068; 
+ Thu, 11 Sep 2025 16:51:19 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.55.55])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77607b347f8sm3287493b3a.82.2025.09.11.16.50.20
+ d9443c01a7336-25c3ae29aefsm29892675ad.118.2025.09.11.16.51.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Sep 2025 16:50:21 -0700 (PDT)
-Message-ID: <9aa2f190-0bd7-4c54-b2a2-cdd67ec7023c@linaro.org>
-Date: Thu, 11 Sep 2025 20:50:18 -0300
+ Thu, 11 Sep 2025 16:51:18 -0700 (PDT)
+Message-ID: <a6320118-84f0-4088-82de-7192be6093cd@linaro.org>
+Date: Thu, 11 Sep 2025 20:51:08 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] tests/functional: Adapt reverse_debugging to run
+Subject: Re: [PATCH v2 0/5] tests/functional: Adapt reverse_debugging to run
  w/o Avocado
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, thuth@redhat.com,
  qemu-arm@nongnu.org
 References: <20250904154640.52687-1-gustavo.romero@linaro.org>
- <20250904154640.52687-6-gustavo.romero@linaro.org>
- <aL6e8PyjsfK0Wx70@redhat.com>
+ <aL7CsSppNc-WZFY-@redhat.com>
 Content-Language: en-US
 From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <aL6e8PyjsfK0Wx70@redhat.com>
+In-Reply-To: <aL7CsSppNc-WZFY-@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,82 +104,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel!
+Hi Daniel,
 
-On 9/8/25 06:16, Daniel P. Berrangé wrote:
-> On Thu, Sep 04, 2025 at 03:46:40PM +0000, Gustavo Romero wrote:
->> This commit removes Avocado as a dependency for running the
->> reverse_debugging test.
+Thanks a lot for review and the suggestions.
+
+On 9/8/25 08:49, Daniel P. Berrangé wrote:
+> On Thu, Sep 04, 2025 at 03:46:35PM +0000, Gustavo Romero wrote:
+>> In this series, we leveraged the run-test.py script used in the
+>> check-tcg tests, making it a GDB runner capable of calling a test script
+>> without spawning any VMs. In this configuration, the test scripts can
+>> manage the VM and also import gdb, making the GDB Python API inside the
+>> functional test scripts.
 >>
->> The main benefit, beyond eliminating an extra dependency, is that there
->> is no longer any need to handle GDB packets manually. This removes the
->> need for ad-hoc functions dealing with endianness and arch-specific
->> register numbers, making the test easier to read. The timeout variable
->> is also removed, since Meson now manages timeouts automatically.
+>> A --quiet option has been added to run-test.py so it doesn't print the
+>> command line used to execute GDB to the stdout. This ensures that users
+>> don't get confused about how to re-run the tests. One can re-run the
+>> test simply by copying and pasting the command line shown by Meson when
+>> V=1 is passed:
 >>
->> The reverse_debugging test is now executed through a runner, because it
->> requires GDB in addition to QMP. The runner is responsible for invoking
->> GDB with the appropriate arguments and for passing the test script to
->> GDB.
+>> $ make -j check-functional V=1
 >>
->> Since the test now runs inside GDB, its output, particularly from
->> 'stepi' commands, which cannot be disabled, interleaves with the TAP
->> output from unittest. To avoid this conflict, the test no longer uses
->> Meson’s 'tap' protocol and instead relies on the simpler 'exitcode'
->> protocol.
->>
->> reverse_debugging is kept "skipped" for aarch64, ppc64, and x86_64, so
->> won't run unless QEMU_TEST_FLAKY_TESTS=1 is set in the test environment,
->> before running 'make check-functional' or 'meson test [...]'.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   tests/functional/aarch64/meson.build          |   7 +-
->>   .../functional/aarch64/test_reverse_debug.py  |  15 +-
->>   tests/functional/ppc64/meson.build            |   7 +-
->>   tests/functional/ppc64/test_reverse_debug.py  |  17 +-
->>   tests/functional/reverse_debugging.py         | 175 +++++++++---------
->>   tests/functional/x86_64/meson.build           |   7 +-
->>   tests/functional/x86_64/test_reverse_debug.py |  21 +--
->>   7 files changed, 131 insertions(+), 118 deletions(-)
->>
->> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
->> index 04846c6eb1..4f3168dd55 100644
->> --- a/tests/functional/aarch64/meson.build
->> +++ b/tests/functional/aarch64/meson.build
->> @@ -32,7 +32,6 @@ tests_aarch64_system_thorough = [
->>     'raspi3',
->>     'raspi4',
->>     'replay',
->> -  'reverse_debug',
->>     'rme_virt',
->>     'rme_sbsaref',
->>     'sbsaref',
->> @@ -46,3 +45,9 @@ tests_aarch64_system_thorough = [
->>     'xen',
->>     'xlnx_versal',
->>   ]
->> +
->> +if is_variable('gdb_runner')
->> +tests_aarch64_system_thorough_with_runner = [
->> +    ['reverse_debug', gdb_runner, 'exitcode'],
->> +]
->> +endif
+>> or, alternatively, once the test run completes, the exact command found
+>> in the 'command:' field of the build/meson-logs/testlog-thorough.txt
+>> file generated by Meson. Both methods provide the correct environment
+>> variables required to run the test, such as the proper $PYTHONPATH.
 > 
-> Why do you need to replace the of 'tap' with 'exitcode' for this script ?
+> While I like the conceptual idea of just sending human GDB commands,
+> instead of working with GDB protocol packets, I really dislike the
+> effect this has on the execution / startup of the functional tests
+> via use of the custom runner for a number of reasons
 > 
-> I don't like the idea that a subset of our functional tests are not using
-> the TAP protocol.
+>   * The command line for launching the test outside of meson is very
+>     complicated, so not memorable
 
-Unfortunately, the GDB Python API seems to be broken regarding being able
-to redirect GDB's output to a file (as it's possible to do via GDB's prompt)
-so we can't redirect the printed addresses that are printed after each "stepi"
-command in the test script. As a consequence Meson's TAP gets confused with
-it and fails the test. Since I could not find any directive in QEMU functional
-tests that forbid using the classic exitcode, I used it, at least while
-the GDB redirect is not fixed.
+Why very complicated? It calls a simple runner instead of calling the
+test script directly, but it doesn't change the way to re-run a single
+test. One just have to pass V=1 to see make's command line  and copy
+and paste the full command line to re-run the test. I mentioned
+inspecting 'testlog-thorough.txt' just for completeness.
 
-Why don't you like it?
+
+>   * It makes the meson.build rules much more complicated
+
+Do we want to never augment functional tests' meson.build? Nothing
+complicated is being added. Basically, just a new variable suffixed with
+'_with_runner' which holds a tuple (test, runner) that tell the test
+to be executed, following the same logic we already have for all the other
+variables that specify the tests per arch/mode/speed.
+
+Another option would be to select a runner based on a suffix in the test
+name, for instance, 'reverse_debug_with_runner.py'.
+
+
+>   * Running standalone there is no TAP output available making the
+>     test hard to debug on failure or timeout
+
+This is because of an unfortunate GDB Python API issue, please see my
+reply in your comment on patch 5/5. This can be solved but needs more
+investigation on GDB side.
+
+
+> I understand the need to spawn the test via gdb, in order to be able
+> to import the 'gdb' python module. Looking at what reverse_debugging.py
+> does, however, makes me question whether we actually need to directly
+> use the 'gdb' python module.
+> 
+> The only APIs we use are 'gdb.execute' and 'gdb.parse_and_eval'.
+> 
+> The latter is only used once as
+> 
+>    gdb.parse_and_eval("$pc")
+> 
+> and I believe that can be changed to
+> 
+>    gdb.execute("printf \"0x%x\", $pc", to_string=True)
+> 
+> IOW, all we need is 'gdb.execute("....", to_string=True)'
+
+Yes, I do want to directly use the 'gdb' python module directly in the
+tests. We shouldn't look at a solution only for reverse_debug.py but also
+think of any future tests that will require the GDB Python API, so I don't
+want to specialize here and reduce the API to a single method.
+
+
+> With a little extra helper proxy script, we can achieve this without
+> changing the way scripts are launched.
+> 
+> The script needs to listen on a UNIX socket path. When a client
+> connects, it should read lines of data from the client and pass
+> them to 'gdb.execute(..., to_string=True)' and whatever data
+> gdb returns should be written back to the client.
+> 
+> A very very crude example with no error handling would be:
+> 
+>    #!/usr/bin/python3
+> 
+>    import gdb
+>    import os
+>    import socket
+> 
+>    sock = os.environ.get("QEMU_PROXY", "/tmp/qemu.gdb.proxy")
+> 
+>    try:
+>      os.unlink(sock)
+>    except:
+>      pass
+> 
+>    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+>      s.bind(sock)
+>      s.listen()
+>      conn, addr = s.accept()
+>      fh = conn.makefile('rw')
+>      with conn:
+>          while True:
+>              line = fh.readline()
+>              if not line:
+>                  break
+>              data = gdb.execute(line, to_string=True)
+>              fh.write(data)
+>              fh.flush()
+> 
+> 
+> In the functional test suite, we should have a helper file
+> tests/functional/qemu_test/gdb.py that provides an API for
+> launching GDB to execute this proxy script, and an API to
+> execute commands by talking over this UNIX socket path.
+> 
+> With this, we will need no changes in the way we execute the
+> reverse debugging script from a test runner POV, thus avoiding
+> all the downsides of use of the run-test.py script. IOW, the
+> first 4 patches in this series go away completely. Instead we
+> need a patch to create the proxy script and a patch to create
+> the helper APIs in tests/functional/qemu_test/gdb.py, whereupon
+> the last patch can replace
+> 
+> try:
+>      import gdb
+> except ModuleNotFoundError:
+>      from sys import exit
+>      exit("This script must be launched via tests/guest-debug/run-test.py!")
+> 
+> with
+> 
+>    from qemu_test import gdb
+> 
+> and the earlier mentioned replacement of parse_and_eval()
+
+For the sake of not adding a few lines into meson.build, we are going
+to design a new ad-hoc API for the functional tests on top of the GDB
+Python API, which will communicate with the test script via a socket
+and will _still require a runner anyway_ (just now hidden under a
+module/API)? This is far more complicated than having a simple runner
+to call GDB and pass the test script.
+
+In fact, I think that if the test script had any clue in its name,
+like the "_with_runner" suffix I mentioned above, maybe Meson's could
+take care of calling GDB itself without calling any runner. Would that
+address your first comment in the bullets (and maybe the second one too,
+but not sure without trying it) and get this series accepted by you,
+since the third one, about the exitcode, is related to GDB's odd behavior?
 
 
 Cheers,
