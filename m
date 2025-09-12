@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 737BBCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 21:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B8FCAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 21:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxAyH-0008SN-0x; Fri, 12 Sep 2025 17:06:17 -0400
+	id 1uxB1U-0001CR-EJ; Fri, 12 Sep 2025 17:09:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
- id 1ux7oi-0003hX-FX
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 13:44:12 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lixiaoyan@google.com>)
- id 1ux7og-0008Dd-5s
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 13:44:12 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-621c6ae39b5so1352a12.0
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 10:44:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1757699046; x=1758303846; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TP6Xkd1ZYogxUzlDoK8soGJmRtUx1u6oSWZyFYXhlcQ=;
- b=X60efN8hPkSaTa7znNTdwG0wI/7G3l1NetjU/jN0+WemTTAjIXtMm9Y96XoeEz7C5a
- hgqbiFchO2b+7AAd+6lT6msbeVXOwWYQWk2hyZZay3pJuCA6bPG3izk/JnVmCc/FdIAd
- ajG97v26zi53tsdCmFXITGylBLn5oyzlzEJs+tGn37j7wE+CVElZ8otRoNx5cyuIax3C
- B/molGou0cpE+sZKoggAtcHBnjLg2WoueWu+PS3QETc4GSwjrGAehcfETRjmPJdNPS/Q
- dCDzkX6fDWJC6hRLUmzOxfZd6cDMV3H3klZNfSpFkmWt8sNRzFRRtmdFh0nYJ69NMgFW
- g78g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757699046; x=1758303846;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TP6Xkd1ZYogxUzlDoK8soGJmRtUx1u6oSWZyFYXhlcQ=;
- b=FGdkBB/MOiCDP46o9Gnjr0mwCcTxZapFXFcZr22yBcG5qb9EIp5cq+lryCC6qxz43F
- UtQf9pXre+w2tEuaBbZnbCCQ3seIKHCFep1Wu2keL4CB/C7V0RHpo02xBJpAYlI2ybJX
- PDAWJjBn4CG0m6wZgnCTYYqrUaQjhJ4tRi9ZTPwEA93bSeuG+uboEWJeDZ9WuoDNtlKx
- +meYaHw+vNKJHM29oUsAu7ls4Ll0R14zcA/BkrI3bb2cDYynHs4sc3BlSmoSIfA8Jqxo
- W3CAwLBxxqauWrDGg+nEJx0NN1voFOTT6JCB8qk6ybPPgaUbYhwXCOkojO8c0yFaSHSm
- X0Ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpAk451u2HTAwmEP0LjV+F0FM+B1xp1LQxqVdcRC3gA+ypYtGAVNm7KYnVZe1V5PsyTBP1drVdtX35@nongnu.org
-X-Gm-Message-State: AOJu0YxcqHh1sUB/j8TAHlVAjFM/4X9WoyXoYLzgJrD7ssT4R7l8Xx9z
- r6gJ8LafUXYb1UNhm3DVMbcT1IZ7ugDPDuQ2uY08BW/ykH1gBkWlBU+AKS8MJUfzIGRNAQHa+wx
- HKedJP24jiTpdQ/a4Suu3KU6ZLBRNGXjRlETcAD4x
-X-Gm-Gg: ASbGncuEM45IAG8rh271ZeJjk96M3yGwoSjbAsKBqcryv6jl/rDyJFqGi0fbJEb0myr
- J+1ivDHUp+A8zbAxQjlUeQUFJca8+Sx0huu+9+oi/3TJDR0k3eRsi3c6vpxgCdFL7sqPU9Uacr5
- NI+yZk1kcNtu10r01y/03AU8Wycy/5yZbbT7xTodeEHxO++5xowAdT8OchRqOXUBaIKsyOBuVGm
- KHVMbSYTokTUn/E7pHKeX3HLRP/4QN7+5bbY5m9gSE3S9T+SDDBhiNVHw==
-X-Google-Smtp-Source: AGHT+IHsyXrGrakgdtLZwlQLBD1M2C5+48aI/x71/auXiYYs4JyM7SJNNkpYMxuTaANPYDbDHEf4WxnzeL1iqtvrdaM=
-X-Received: by 2002:a05:6402:d4b:b0:62e:de92:704f with SMTP id
- 4fb4d7f45d1cf-62ede927182mr94943a12.1.1757699045538; Fri, 12 Sep 2025
- 10:44:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uxB1S-0001Bw-1Q
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:09:34 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uxB1P-0005f3-Vr
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:09:33 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4193A153239;
+ Sat, 13 Sep 2025 00:09:26 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6201E27EBA7;
+ Sat, 13 Sep 2025 00:09:28 +0300 (MSK)
+Message-ID: <ecfa6dad-aa24-46f5-8025-a42c7c31f623@tls.msk.ru>
+Date: Sat, 13 Sep 2025 00:09:28 +0300
 MIME-Version: 1.0
-References: <20250903213809.3779860-1-lixiaoyan@google.com>
- <20250903213809.3779860-2-lixiaoyan@google.com>
- <e0e733ff458cf253ddaf2b5570183b86c7c13102.camel@codeconstruct.com.au>
-In-Reply-To: <e0e733ff458cf253ddaf2b5570183b86c7c13102.camel@codeconstruct.com.au>
-From: Coco Li <lixiaoyan@google.com>
-Date: Fri, 12 Sep 2025 10:43:53 -0700
-X-Gm-Features: Ac12FXxnuV3NoMwYMKUqwyFl2bgbQRtXILEQhkalURrnZuqfJhl0_N2aCxRvN9c
-Message-ID: <CADjXwjjjSQGwOfquXmLfENRAAmHv5KXaGvjkiK7KFzGuehPsow@mail.gmail.com>
-Subject: Re: [PATCH 1/5] hw/gpio: Add property for ASPEED GPIO in 32 bits basis
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: peter.maydell@linaro.org, clg@kaod.org, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, Felix Wu <flwu@google.com>
-Content-Type: multipart/alternative; boundary="0000000000003bd89c063e9e33bc"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=lixiaoyan@google.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -165
-X-Spam_score: -16.6
-X-Spam_bar: ----------------
-X-Spam_report: (-16.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: seabios-hppa: is it acpi-aware?
+To: Helge Deller <deller@gmx.de>
+Cc: QEMU Development <qemu-devel@nongnu.org>
+References: <c6aa3d2a-dfc6-4303-9a47-e0e2c3ffb2a5@tls.msk.ru>
+ <9d4ae773-0414-4701-a59e-85873da26bf9@gmx.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <9d4ae773-0414-4701-a59e-85873da26bf9@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 12 Sep 2025 17:06:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,82 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003bd89c063e9e33bc
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 12.09.2025 23:49, Helge Deller wrote:
+> On 9/12/25 22:35, Michael Tokarev wrote:
+>> Does seabios-hppa needs ACPI?
+> 
+> No.
+> 
+>> When building, it embeds the acpi tables (src/fw/acpi-dsdt.hex etc).
+> 
+> That table can be dropped.
+> If you come up with a patch to build without, I'm happy to
+> apply it.
 
-Hello Andrew,
+It boils down to just this:
 
-I discussed with the original author of the patch and the Nuvoton
-functionality mentioned above has not been upstreamed since then,
-unfortunately.
-Aside from the comment above, we believe this patch series allows gpios to
-be accessed more dynamically/flexibly in complicated simulation, and also
-helps with accessing advanced gpio features, see the sgpio implementation
-later in this patch series.
+diff --git a/roms/seabios-hppa/Makefile.parisc 
+b/roms/seabios-hppa/Makefile.parisc
+index 751a3479ca..d64118aca0 100644
+--- a/roms/seabios-hppa/Makefile.parisc
++++ b/roms/seabios-hppa/Makefile.parisc
+@@ -44,5 +44,5 @@ SRC32FLAT=$(SRCBOTH) post.c e820map.c romfile.c 
+optionroms.c \
+      fw/coreboot.c fw/lzmadecode.c fw/multiboot.c fw/biostables.c \
+      fw/paravirt.c fw/shadow.c fw/pciinit.c fw/smm.c fw/xen.c \
+-    fw/acpi.c fw/mptable.c fw/pirtable.c fw/smbios.c fw/romfile_loader.c \
++    fw/mptable.c fw/pirtable.c fw/smbios.c fw/romfile_loader.c \
+      hw/virtio-ring.c hw/virtio-pci.c hw/virtio-blk.c hw/virtio-scsi.c \
+      hw/tpm_drivers.c hw/nvme.c \
+diff --git a/roms/seabios-hppa/src/fw/paravirt.c 
+b/roms/seabios-hppa/src/fw/paravirt.c
+index fba4e52db6..37ddac9c0d 100644
+--- a/roms/seabios-hppa/src/fw/paravirt.c
++++ b/roms/seabios-hppa/src/fw/paravirt.c
+@@ -252,5 +252,5 @@ qemu_platform_setup(void)
+      }
 
-Best,
-Coco
+-    acpi_setup();
++    //acpi_setup();
+  }
 
-On Tue, Sep 9, 2025 at 8:52=E2=80=AFPM Andrew Jeffery <andrew@codeconstruct=
-.com.au>
-wrote:
 
-> On Wed, 2025-09-03 at 21:38 +0000, Coco Li wrote:
-> > From: Felix Wu <flwu@google.com>
-> >
-> > Added 32 bits property for ASPEED GPIO. Previously it can only be acces=
-s
-> in bitwise manner.
-> >
-> > This change gives ASPEED similar behavior as Nuvoton.
->
-> Can you point me to the Nuvoton functionality? I had a quick look and
-> couldn't immediately see an equivalent implementation.
->
-> Regardless, I'd like to see more motivation in the commit message than
-> "make it behave like Nuvoton". Can you provide a concrete use-case as
-> an example?
->
-> Andrew
->
+but I'm not sure this is the right approach - since it modifies
+the original seabios source (in paravirt.c).
 
---0000000000003bd89c063e9e33bc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+BTW, upstream seabios stopped embedding acpi tables in recent
+version.
 
-<div dir=3D"ltr">Hello Andrew,<div><br></div><div>I discussed with the orig=
-inal author of the patch and the Nuvoton functionality mentioned above has =
-not been upstreamed since then, unfortunately.</div><div>Aside from the com=
-ment above, we believe this patch series allows gpios to be accessed more d=
-ynamically/flexibly in complicated simulation, and also helps with accessin=
-g advanced gpio features, see the sgpio implementation later in this patch =
-series.</div><div><br></div><div>Best,</div><div>Coco</div></div><br><div c=
-lass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 9, 2=
-025 at 8:52=E2=80=AFPM Andrew Jeffery &lt;<a href=3D"mailto:andrew@codecons=
-truct.com.au" target=3D"_blank">andrew@codeconstruct.com.au</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, 2025-09-=
-03 at 21:38 +0000, Coco Li wrote:<br>
-&gt; From: Felix Wu &lt;<a href=3D"mailto:flwu@google.com" target=3D"_blank=
-">flwu@google.com</a>&gt;<br>
-&gt; <br>
-&gt; Added 32 bits property for ASPEED GPIO. Previously it can only be acce=
-ss in bitwise manner.<br>
-&gt; <br>
-&gt; This change gives ASPEED similar behavior as Nuvoton.<br>
-<br>
-Can you point me to the Nuvoton functionality? I had a quick look and<br>
-couldn&#39;t immediately see an equivalent implementation.<br>
-<br>
-Regardless, I&#39;d like to see more motivation in the commit message than<=
-br>
-&quot;make it behave like Nuvoton&quot;. Can you provide a concrete use-cas=
-e as<br>
-an example?<br>
-<br>
-Andrew<br>
-</blockquote></div>
+Thanks,
 
---0000000000003bd89c063e9e33bc--
+/mjt
 
