@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA4ACAC587
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 02:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC3DCAC58E
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 02:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwtG2-00021h-Ma; Thu, 11 Sep 2025 22:11:27 -0400
+	id 1uwtGn-0002Cd-TQ; Thu, 11 Sep 2025 22:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uwtFv-00020q-7J; Thu, 11 Sep 2025 22:11:19 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uwtFr-0004xi-16; Thu, 11 Sep 2025 22:11:18 -0400
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58C29pIw079443
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 12 Sep 2025 11:09:51 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=OiEWy566g4njwzExPUXUWjjakl2LySIDrIBxFd9DPBo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1757642992; v=1;
- b=vpctMdJpef9Qn0NI5HhLlNNSqb0hhP6Uknft3SBWrWRAGCZORdGdGsjEDra3OMD1
- iqw+PpFYoUiEtPF+ceBirf+E/azkg/xi4Ae1dMl3PjpP4GEAtM3HamUTwijgGgV6
- RZQwbDluC2WFOawpKwhcDYEQWlALnUFDvodI6KQmjj9cjBjpi8RXJZYa6lU/zSL+
- 5gyICXhC+HpAzyAaS7C7QL0LspJRMExAdhjG7XU/FCtJp8+EcV0darVNGUgcOTSu
- Z3KqTfVQna7gqO7UrW0EgSwX7OYOW9edJgT79hn0bnUaRtZQCS3PD9xPFd+Gf3pW
- HZWgPDbmk4dYVaqBSHP1uw==
-Message-ID: <4d91c86f-4e3d-4850-8b8c-77ad3c9d5bce@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 12 Sep 2025 11:09:51 +0900
+ (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
+ id 1uwtGm-0002Bl-D1
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 22:12:12 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
+ id 1uwtGk-00054a-Gu
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 22:12:12 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-24cbd9d9f09so17866305ad.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 19:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1757643128; x=1758247928; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rYrb1daHYgOTFYRlcqopV4rGy5pFWnKtEiBmHFiZtkA=;
+ b=bbBGJg9nwpuiKH0R9bgCw8/WVrbmTVEz7tABXRNuJ3tviR8aGRQuiCHYsz0cWSEnWl
+ YpalHL8abf1vFSyyeDiypsQCEokmlNft2nav82Z8Ldr6L2EJxCdod9izCW993CAdzCyD
+ 2C6yklBmgKNSZV+Z0meWsxCJcf1Uad9i47qPDDCO7wwXcjFf+a+8A21/WOMMtdT1/AjM
+ nviX4PUACW/Mp4KDZB18H5ElBNlwsqX66Yg0iuYmqbmytEa+gUVY5XRCz+yR+wRExbYh
+ FvosWdkOoC75r86qmwD0tqvEndO5YyK3vuRCute6Howef1/L3ijEy6cLzC35pjAR526b
+ ZDLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757643128; x=1758247928;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rYrb1daHYgOTFYRlcqopV4rGy5pFWnKtEiBmHFiZtkA=;
+ b=kPmC2K/K/cMl6artt3ei++G5x3SF2r691PmUnGHfcdQHbeO+eiQjWbcwmvCbqn39EM
+ BOXtocSbpsQXUCe+iyMbACtxpOOSksJXnD/u5LAV1GAgrZbS2U8U+o8jT90udvF0f6Bo
+ Cl6m3mZDdQ4GhbtY0ZVOS+xRS2NqbpbC3UtpmIXEupmQF2umM1LgZInBjbLmsq2gZ2gu
+ rg1Gd8zdKeLXc239ELUbVJ0QHsJui55sQc9Tx/ER4lzMTnl8KBNXeAuJvMEBXRy56kUj
+ shBx4qqKSOooX+qJrvplXT/ecf7QM9pJ/wRcJ7FKr9+gG/SIPwPWd/X5rCjr2kQA8SBi
+ Q4HA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQX1lC16yHy0KUqXuWRJcXrPQoz8BTDsIz6M+3PolLeaL6CQqrq3G6LO3hd007zqLYpoQo8brcOq+K@nongnu.org
+X-Gm-Message-State: AOJu0YwtuYKmPXfFSMLLS7Re4zEtvOts3bvvGFFFd2IkITcCqV1EU3Yb
+ QYuNr80gInNnbnWV9MaKMiwX28JlDQEDBERJA/stz8V/Od6FcRoKZvrp
+X-Gm-Gg: ASbGncuk/RVCG+9d/D7dWmkeqtRddgwjme7qUbAskbZaNcF698ixBlmXnZkBFxOfpBS
+ yqNK27gCRJGvtoEVLxaZieYV2rV9Asz8q9KX8IS+0lFmwuCZXvpWv6bPUFwHZW4TFAleXVxiVTt
+ XYsF64Ge7kWrEur7ieiy5z+/kZ/k2WloYW6pqJBcTMVNxGtS+vXGpDeM59E2H0sCdW+eQfztRjz
+ 3cJTRDqQMiKPQnx6lMfLQsTgH7wZ48fli8dufgdjjJiv0iBKSHnsjk9A1YRnYhcs8Vq7ssmEAEX
+ FC7peaRqm12/oJncwSqCRBo8kDQabx1UNdJiECWgvbc1f5HnWsB3WcG9/ZYE+hNRwoo19p3Iosr
+ mKm/XHtTgNfvN6AhWvsh1Rw38mbUmlkzfhqchYZm/Hg==
+X-Google-Smtp-Source: AGHT+IH6qvVLAAi5cRMWov+mofoBo4m4hmV4iPUYy7I4xYzk7NygnT5IJ1DQdrddHCotqXlySHNzow==
+X-Received: by 2002:a17:903:38cd:b0:24e:49ea:1c6b with SMTP id
+ d9443c01a7336-25d27d207e1mr15146125ad.46.1757643128201; 
+ Thu, 11 Sep 2025 19:12:08 -0700 (PDT)
+Received: from fedora ([159.196.5.243]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-25c3ad3349fsm32853205ad.104.2025.09.11.19.12.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Sep 2025 19:12:07 -0700 (PDT)
+From: Wilfred Mallawa <wilfred.opensource@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [PATCH v7 0/5] NVMe: Add SPDM over the storage transport support
+Date: Fri, 12 Sep 2025 12:11:47 +1000
+Message-ID: <20250912021152.46556-1-wilfred.opensource@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
- <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <aMHidDl1tdx-2G4e@x1.local>
- <1a5b7471-1799-44bd-9c1c-c3c07e478bb8@rsg.ci.i.u-tokyo.ac.jp>
- <aMNBJF9E4BYrWEHO@x1.local>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aMNBJF9E4BYrWEHO@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=wilfred.opensource@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,99 +105,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/12 6:37, Peter Xu wrote:
-> On Thu, Sep 11, 2025 at 12:47:24PM +0900, Akihiko Odaki wrote:
->> On 2025/09/11 5:41, Peter Xu wrote:
->>> On Sat, Sep 06, 2025 at 04:11:11AM +0200, Akihiko Odaki wrote:
->>>> Children are automatically unparented so manually unparenting is
->>>> unnecessary.
->>>>
->>>> Worse, automatic unparenting happens before the insntance_finalize()
->>>> callback of the parent gets called, so object_unparent() calls in
->>>> the callback will refer to objects that are already unparented, which
->>>> is semantically incorrect.
->>>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>>    hw/vfio/pci.c | 4 ----
->>>>    1 file changed, 4 deletions(-)
->>>>
->>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>> index 07257d0fa049b09fc296ac2279a6fafbdf93d277..2e909c190f86a722e1022fa7c45a96d2dde8d58e 100644
->>>> --- a/hw/vfio/pci.c
->>>> +++ b/hw/vfio/pci.c
->>>> @@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
->>>>            vfio_region_finalize(&bar->region);
->>>>            if (bar->mr) {
->>>>                assert(bar->size);
->>>> -            object_unparent(OBJECT(bar->mr));
->>>>                g_free(bar->mr);
->>>>                bar->mr = NULL;
->>>>            }
->>>> @@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
->>>>        if (vdev->vga) {
->>>>            vfio_vga_quirk_finalize(vdev);
->>>> -        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
->>>> -            object_unparent(OBJECT(&vdev->vga->region[i].mem));
->>>> -        }
->>>>            g_free(vdev->vga);
->>>>        }
->>>>    }
->>>
->>> So the 2nd object_unparent() here should be no-op, seeing empty list of
->>> properties (but shouldn't causing anything severe), is that correct?
->>
->> No. The object is finalized with the first object_unparent() if there is no
->> referrer other than the parent. The second object_unparent() will access the
->> finalized, invalid object in that case.
-> 
-> Yes, it's logically wrong.  I was trying to understand the impact when it's
-> invoked.  In this specific case of above two changes, I believe both MR
-> structs are still available, so it does look fine, e.g. nothing would crash.
-> 
-> For example, I think it doesn't need to copy stable if there's no real
-> functional issue involved.
+From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 
-You are right. Cc: stable is unnecessary.
+This series extends the existing SPDM support in QEMU to support the DSP0286
+SPDM Storage Transport [1] for NVMe. SPDM Storage Transport uses the NVMe
+Admin Security Send/Receive commands, as such, support for these commands have
+also been added.
 
-> 
->>
->>>
->>> I think it still makes some sense to theoretically allow object_unparent()
->>> to happen, at least when it happens before owner's finalize().  IIUC that
->>> was the intention of the doc, pairing the memory_region_init*() operation.
->>
->> Perhaps so, but this patch is only about the case where object_unparent() is
->> called in finalize().
-> 
-> You ignored my other comment.  That (using object_new() on MRs) was what I
-> was thinking might be better than a split model you discussed here, so
-> that's also a comment for patch 1 of your series.
+With the addition of a new `spdm-trans` CLI argument for NVMe controllers,
+users can specify `spdm_trans=nvme` or `spdm_trans=doe`. This allows for the
+selection of the SPDM transport. The `doe` option is the current default,
+`nvme` would select SPDM Storage Transport for the controller, where SPDM
+communication happens over the NVMe Admin Security Send/Receive commands.
 
-I'm not sure what you mean by the "split model".
+Support for DSP0286 already exists in `libspdm` [2] and support for the QEMU
+SPDM server is being upstreamed for `spdm-utils` [3]. This series was tested by
+using `spdm-utils` as the qemu SPDM server with SPDM Storage Transport support
+built with `libspdm` v3.8.0, and `spdm-utils` also as the SPDM requester.
 
-This change removes object_unparent() in vfio_bars_finalize(). 
-object_new() will allow removing even g_free(), but we can do these 
-changes incrementally:
-1. remove object_unparent() in finalize(),
-    which fixes a semantic problem (this patch)
-2. allow object_new() for MRs and remove g_free() in finalize()
-    as a refactoring.
+Changes V1 -> V2:
+	- spdm_socket_rsp() now uses the new spdm_socket_send/receive()
+	 functions. spdm_socket_command_valid() is added to parse the
+	 command value incase some bytes were received (result = true) but
+	 with an invalid command.
 
-So I suggest focusing on object_unparent() in finalize() to keep this 
-patch and review concise.
+	- Added inline comments to describe fields of
+	 StorageSpdmTransportHeader. Checkpatch generates warnings, but lots of
+	 existing code does this. The QEMU_PACKED attribute now follows the
+	 StorageSpdmTransportHeader struct definition.
 
-> 
-> Btw, this patch also didn't change all occurances of such for VFIO?
-> E.g. there's at least vfio_vga_quirk_finalize().  I didn't check the rest.
-> 
+	- Use extract32() instead of manual shifting/masking in
+	 nvme_sec_prot_spdm_send/recv().
 
-Indeed. I only removed object_unparent() calls hw/vfio/pci.c because it 
-was mentioned in the documentation. I suspect you will find more cases 
-that subregions are used in instance_finalize() in general if you check 
-the code base; "[PATCH 11/22] vfio-user: Do not delete the subregion" 
-also removes memory_region_del_subregion() during finalization, for example.
+	- Use g_autofree for send/recv buffer allocation
+	 in nvme_sec_prot_spdm_send/recv().
+	
+	- Added explicit fallthrough comment for checking `secp` in
+	 nvme_security_receive()
+	
+	- Added enum support for SPDM transport type, such that a user defined
+	 transport type string, can be mapped to the respective enum for
+	 internal use.
 
-Regards,
-Akihiko Odaki
+Changes V2 -> V3:
+	- Fixed up the incorrect use of `NVME_NO_COMPLETE` to more appropriate
+	 NVMe error codes in Patch [3/5]. Note that DSP0286 does not define
+	 error codes for transport level failures.
+	
+	- Removed NULL check for g_malloc0(). Should abort instead.
+
+Changes V3 -> V4:
+    - Added integer overflow and MDTS checking for spdm_sends
+    - Use g_try_malloc0() over g_malloc0()
+    - Fixed up endian conversion for command status received from
+      the server.
+    - Added check to only accept SPDM send/receive if the socket
+      has been setup.
+    - Only show SPDM as a supported protocol if the socket
+      has been setup.
+      
+Changes V4 -> V5:
+    - Init spdm_socket fd to -1 for NVMe. Allow 0 to be a valid file descriptor
+      for the socket.
+    - Move transport definitions to the patches they are used in.
+    - Avoid splitting SPSP0/SPSP1. Use a uint16 instead.
+    - Fixup up incorrect (uint8_t *) casting in calls to
+      spdm_socket_receive/send().
+    - Default to SPDM over DoE if transport is not specified.
+    - Fixup alignment (style).
+
+Changes V5 -> V6:
+    - Minor comment style fixup for the description of StorageSpdmTransportHeader
+    - Change spdm_socket_rsp() to directly return spdm_socket_receive()
+
+Changes V6 -> V7:
+    - Added an assert() to check that only one spdm socket was setup in
+      nvme_exit().
+    - Merged spdm_socket_close() calls into an else if for DoE/NVMe.
+    
+Wilfred Mallawa (5):
+  spdm-socket: add seperate send/recv functions
+  spdm: add spdm storage transport virtual header
+  hw/nvme: add NVMe Admin Security SPDM support
+  spdm: define SPDM transport enum types
+  hw/nvme: connect SPDM over NVMe Security Send/Recv
+
+ backends/spdm-socket.c       |  79 +++++++++--
+ docs/specs/spdm.rst          |  10 +-
+ hw/nvme/ctrl.c               | 257 +++++++++++++++++++++++++++++++++--
+ hw/nvme/nvme.h               |   5 +
+ include/block/nvme.h         |  15 ++
+ include/hw/pci/pci_device.h  |   2 +
+ include/system/spdm-socket.h |  63 ++++++++-
+ 7 files changed, 402 insertions(+), 29 deletions(-)
+
+-- 
+2.51.0
+
 
