@@ -4,92 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B76CAC594
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE1ACAC58F
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3lf-0006Kw-KO; Fri, 12 Sep 2025 09:24:49 -0400
+	id 1ux3lf-0006Km-Jz; Fri, 12 Sep 2025 09:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
- id 1ux1kB-0003OJ-Pz
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 07:15:07 -0400
-Received: from mail-lf1-f54.google.com ([209.85.167.54])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
- id 1ux1k8-0004te-UT
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 07:15:07 -0400
-Received: by mail-lf1-f54.google.com with SMTP id
- 2adb3069b0e04-55f76454f69so1781358e87.0
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 04:15:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757675700; x=1758280500;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p6JP8Pum99r5CoRhJu1jMy4fZ/96rMAfaqPJqZ97O4Y=;
- b=X+0ag4SFFBRPLXel0YMC5nIoC3ZukaRhdgmBsyjkwP69HgKKNaG48POc9TFZMXPL0T
- PKaHla0scnGydsDl1HD00QmtdOIbQiyVbUxZ7ai2nCNBm/fkctxDbM3Q6qo+wpmiByUP
- QQxqEF2lKpmSwEfypPXRPCMxjA2vZno0lmojbaVxj2EQIipkHVpgXKdqjcA+v3sBUq5R
- KUMXVH8k+3b5bvUQZ6sTTBmpObkxlGUqUjf8h3KVWzaAUgSRgeNQA6RHEYTEYat1LFM8
- v4ZFjeDLFfH6FMPzPC6Klm5mVwPgrcZRwF8WTlIylWMLAkwmwiZuDArd5NChGiO8ZY7K
- qaBA==
-X-Gm-Message-State: AOJu0YzMYgA9S6jRsUm9RM0GoC5qTdXami1yDc/ZwzPDMIOAwjw6uOXi
- xykvLMlaPIn1Sd4qNcL49G8S9RgABrR+yOAzTJKqkhoeUra6860JF1JN
-X-Gm-Gg: ASbGncutebWROSflM5ykefIyTNhbYnmISErvuKpt7vtmPNnGMhinRRz25Fs2X9SboZa
- X/y9LXSH3Hv2In5bJoauX35Ncl1/aBWM1k/9rUvxa6g6XMStP402nwsI2mBaWBo2Zvrrl3z7PTp
- X25KGQc00s9IfnXRrD6VjFgggE86AnWQHr3c8BRSzSJygkMoxLa9XGtTZyKsHna+dqaYzIk9R9J
- AMwGH+uupeZ1Jta5DkwOVIQ5S/hl3JqgoSv1nQg7mtt8YU8GtbNIcRR7JcaOaOFgoXyEnAfTp6/
- wYj93QGV4Qm2u426CUtN4PvblVu1CKDlSeD75zKzQxCT8lyVHTnFBU6ZZuJq/vevvcDnx3MVjVI
- 7DTY5Dg0AbKZAtEyxalQ9OssL/bIyigS7xtatx9T+fjjLdpIMhV7LwNuu
-X-Google-Smtp-Source: AGHT+IGwv5iKCgHISaqD9l+6BfffDDPDnCqb70WaUKKci+yoS1ZmoJXytHs9mVhyfoREntyBr4qhug==
-X-Received: by 2002:a05:6512:350f:b0:569:28e5:d42 with SMTP id
- 2adb3069b0e04-5704f7a377amr673128e87.29.1757675699802; 
- Fri, 12 Sep 2025 04:14:59 -0700 (PDT)
-Received: from onyx.my.domain (91-159-30-98.elisa-laajakaista.fi.
- [91.159.30.98]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-56e5c3b6188sm1099903e87.3.2025.09.12.04.14.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 04:14:59 -0700 (PDT)
-From: =?utf-8?q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>
-Date: Fri, 12 Sep 2025 14:14:46 +0300
-Subject: [PATCH] hw/usb/host-libusb: keep autoscan enabled for bus+addr
- selector
+ (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
+ id 1uwx0m-0005kY-59
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:11:56 -0400
+Received: from mail-dm6nam10on20611.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::611]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
+ id 1uwx0j-0005ln-Py
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:11:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vxqXERKyynDbzA3L9Ne48RfqycvcSkx0A6YUznasuYG/o5MDkOgdHrZmrVyb+fTkvQ+xcWdrqoSUzt/XqQDdzQdy8Fu2RGZBzBOgR49KovK00jqI//2g5lr31hscGQEnxPtVcVKAQ5KOsy41NZE2ZzhAQ3Uv+A/HX6HnFlaALL06vH4nYnjborTlP9mUJ39zy5wS9b0Tuh/vL+KIs6Bm33P311NfNmW0T+JgWnRiqkLjg6rSu4Z3mMxEo0hlD1emeJBaHvrlO0fIyKkQNkkraKHZ4WJZa1wSzeJmiZyS+qz2KKDoK1bKGLJxQmNGT8G0xijEsc5dqKO0QHE+Zt7P/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WpyMhExORLjCmbrA9QoaWpCbIp8zyys/5Q8qeYSVDMA=;
+ b=yV1sb0bayRRq4SDlvzxawvTL4FMYHlrq+HJ4IhEZDuXAP8TGgvfryorENV5OmDHCmQbkg8j3sb+yxmgk2ljB+RAT4uL46LYKgVUCZilSEsjlCLsq9t/RoM6XDOJuG9lJ656GbxTNtNmIDIMChQqp4p6ZFscRR2trXAkgG7KMVK3N5NFtt8Tj6RJXu7/g9r995MqjABrKCJbZqre1ViTMQACA0C9mzygoRy8v8fE5m6/oYGk8Nonca5cnxT5wSNwZakdY8lpAC4xzcIgskbg9ygq6k0iiGJUalHebxr/EbSEedSd06esceMzr+h7/HSXw50sKEjLz6GXbWM3MoBe8Qw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WpyMhExORLjCmbrA9QoaWpCbIp8zyys/5Q8qeYSVDMA=;
+ b=m6AjzhqUnAHEUSWfgkt/PgtMrhobPG0WMZGbgWHfSg+70pFbnmjkXHilarQg+KTOtoUd8E1IBaubWO3Vj3D8VS8u8sURWALg4vX49bMUOZxgqnAUqqcpIMt7/xT3rTx2kon6qnv8v8vXdlFRVtLC5Kg8OQQf5czGl67tvF/EVgE=
+Received: from SA0PR11CA0194.namprd11.prod.outlook.com (2603:10b6:806:1bc::19)
+ by MN2PR12MB4302.namprd12.prod.outlook.com (2603:10b6:208:1de::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
+ 2025 06:11:48 +0000
+Received: from SA2PEPF00001505.namprd04.prod.outlook.com
+ (2603:10b6:806:1bc:cafe::25) by SA0PR11CA0194.outlook.office365.com
+ (2603:10b6:806:1bc::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.16 via Frontend Transport; Fri,
+ 12 Sep 2025 06:11:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SA2PEPF00001505.mail.protection.outlook.com (10.167.242.37) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9115.13 via Frontend Transport; Fri, 12 Sep 2025 06:11:47 +0000
+Received: from fedora.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 11 Sep
+ 2025 23:11:45 -0700
+From: Zhu Lingshan <lingshan.zhu@amd.com>
+To: <jasowang@redhat.com>, <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, Zhu Lingshan <lingshan.zhu@amd.com>
+Subject: [RFC 2/2] virtio: implement virtio control-plane suspend and resume
+ facility
+Date: Fri, 12 Sep 2025 14:11:25 +0800
+Message-ID: <20250912061125.262457-3-lingshan.zhu@amd.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250912061125.262457-1-lingshan.zhu@amd.com>
+References: <20250912061125.262457-1-lingshan.zhu@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
-X-B4-Tracking: v=1; b=H4sIAKUAxGgC/x3MQQqAIBBA0avErBPSCLKrRAsbp5yNhlMRSHdPW
- r7F/wWEMpPA1BTIdLNwihW6bQCDizsp9tVgOjN0Vht1yRqSnMqzYIqR8FTaGkLnxg17ghoemTZ
- +/um8vO8Hc0YyvmQAAAA=
-X-Change-ID: 20250912-usbhost-disconnect-192ecaa8fc3e
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2888; i=timo.teras@iki.fi;
- h=from:subject:message-id; bh=BH8Px5alyO25aMCdJuahlCBuvr93ZN2zDT2SO/HzhOg=;
- b=owEBbQGS/pANAwAKAUZwDoxij6HOAcsmYgBoxACyakadGuPeumKvPvxBWaR4yfgaXrRino5l5
- vMgTAFi3w6JATMEAAEKAB0WIQTRdEpSPGbUaXBswFVGcA6MYo+hzgUCaMQAsgAKCRBGcA6MYo+h
- zkTCB/sEfw3RScOvyLmvZ+EeobBfJM86VM6Xm6A6OffyGmITx2rRA0ZhLPYHcJVHnXNe7dJTXYj
- yfjnVljVIYCS2omp2u4+vy9PluKQr0ykg16LgpYMDNansuz9HoFUaa72R8Y2QyoP/XWypsQ5YxH
- UGug1Ql8NhvO5B+7pnxBJ3cJdK5daMR/U1bYMzmfCyffDElYLYEO93EFP51LdnpxNu7zEvLVCvk
- OHp1I49NkB7HV1pfReBAkXlRZebu/YVRzc1afcWkkc/44SyLDRpi4HIdmOZmAIQOLosbB3BUfYY
- ad7S84Br8DgAJHm57ygM5oXzMsugr2Yh3jIJ85NtdyU8d+OB
-X-Developer-Key: i=timo.teras@iki.fi; a=openpgp;
- fpr=D1744A523C66D469706CC05546700E8C628FA1CE
-Received-SPF: pass client-ip=209.85.167.54; envelope-from=timo.teras@gmail.com;
- helo=mail-lf1-f54.google.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_PSBL=2.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001505:EE_|MN2PR12MB4302:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1daa36b6-3a31-4fc0-c415-08ddf1c34132
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4LwHORRdIwrymi19Y84pOA/y2/j8mC4QnRkEAjql1dZ/SUlc3aDVCjQN1CSW?=
+ =?us-ascii?Q?HpfeZsSPSx6cy5iLJ0dLnGNkUtWUkYm41Iu/7zzwF0kgd/D3lLdKyA3knaIY?=
+ =?us-ascii?Q?eMzo835cEJ+sMJIbr8/EKBTlucQJYokJH4ajm91vkchlsUay8h5RPMN7BnO8?=
+ =?us-ascii?Q?ACTX8iFVWEcvq0FPzW4OngJPOokRiFx/zTx4xJT1ZcqB80aNqn8t81apwqDr?=
+ =?us-ascii?Q?1izs03Q1686GjPfMD9NAMb2UcKYTJbyf+JHKqFNaaS20TJeMhh3egs3zFpdq?=
+ =?us-ascii?Q?fNABa5ZXimGVJGMxKHym3FU2WdmryaVVBRQ6niy9HxXiOvS5nbIlkIN3BGLc?=
+ =?us-ascii?Q?qG6sT8VLh8i0xs/uY4XAjb1y0Zz13CM77HHtz1JHjWM0I7myzxi7fa4Sfpq4?=
+ =?us-ascii?Q?v8fjjrbFpM3w4HaaOMn3dMv4HhEu4z940HWSs3JbtZpTKrbSUaINY7D5nFa6?=
+ =?us-ascii?Q?47iWUCN4S9P0QBZjcELLZCt5cskHsbjrbXOx2UlwW2oOcDtyplhXR85nGSoR?=
+ =?us-ascii?Q?irv8MPp7DeUnRB1AHqrenpp44rw3TkM4fsOreY0Jc09uxW7EnqS2iT02fygz?=
+ =?us-ascii?Q?/7d2vxQLlT6Nf+a824BG4nePnvQ3lvRKpJkCqjmxIl2B3xDhsjXMX+LqlISm?=
+ =?us-ascii?Q?s0jWOmuwP9JDBn62Mj3Ga8cDCuD/3eMWrFPVR4n9Qmx609mbi02vWw1vlTGU?=
+ =?us-ascii?Q?WBKJMR5NK3pwRofaAUdLyfQn+dPp3o++Wifff91qTksZ+Q434QCLtVaGqtbZ?=
+ =?us-ascii?Q?2Zt8QhyAJ9j9asJyERXsE7jCXr9tgk5eMQzaJ9HSVg+ydIhhUh5Ib3SCQD9I?=
+ =?us-ascii?Q?JxG03Mb93SDXmIyi4NBbYirHmWmpwTSmvuQ4lf3dS+cdtwZlz9yPgZf8KRww?=
+ =?us-ascii?Q?vkjAES2ShM4r1o5bBdymYAid2FUzdki3lFTE325GDMzanKGErrAOJOV7m4It?=
+ =?us-ascii?Q?Zo/d/TT0BTOFcwmAITcf5hB4kDGE0f+2HLdVULsHAylZ+2HVBd6AmD5dF+3q?=
+ =?us-ascii?Q?AMuw9v+HOPSlFpRsqAA7GOm3x09PT3habGHP0pfTppsymK7x1itdIGPnSzD+?=
+ =?us-ascii?Q?F+jU5fe3dLj5d2OvXS/n1TaZunsAb1B663UU/iHJWCpijy2ucnZ7vVgaNKe0?=
+ =?us-ascii?Q?EvYTbySicTszaLMme6+9gi/D0riP1JtYR+TQU5/HCDOxZJsxVj0bUGy2O/I/?=
+ =?us-ascii?Q?fN9ihbxujQrv2rZ7yTCGBNkKhDh63HwX1fhGIWDrnAOo+c+pv2niwSVO8/fU?=
+ =?us-ascii?Q?yfZ1bhqJgEiWlAjQ+hamQqhDxtXOhLf5te2nyStuuejkk6K2j/zUKb9i9Yrg?=
+ =?us-ascii?Q?v8ciYAzAf/myyY7YYxXEmem3htRP98nCA+Yeocm2mXi4jtsAysEXbfrA1EN6?=
+ =?us-ascii?Q?JKSy9gzpq4zIdy0rleAvrAF0PAvhkVNvj7zypXud3ATY0vg03oyMVUJaybUL?=
+ =?us-ascii?Q?PmTpa8gaLiMY+wRPdo+5JG2pi5W+uGf0KZ9Bn1Jqn5KkOThKw7anePJeCOL8?=
+ =?us-ascii?Q?WY5lDzu/Hx60MHCmbQhFnIh9QHA8Ihp/Auji?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 06:11:47.0588 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1daa36b6-3a31-4fc0-c415-08ddf1c34132
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001505.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4302
+Received-SPF: permerror client-ip=2a01:111:f403:2413::611;
+ envelope-from=Lingshan.Zhu@amd.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 12 Sep 2025 09:24:39 -0400
+X-Mailman-Approved-At: Fri, 12 Sep 2025 09:24:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,83 +150,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is partial revert of commit e058fa2dd599.
+This commit implements suspend and resume facility
+of virtio control-plane according to the new spec changes,
+and a reference design on virtio-net.
 
-The portion to immediately validate the device is kept, but this
-adds and enables again the autoscan functionality. This is needed
-to detect and relay USB device disconnect event to the guest.
-
-Fixes: e058fa2dd599 ("usb-host: add special case for bus+addr")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3111
-Signed-off-by: Timo Teräs <timo.teras@iki.fi>
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
 ---
- hw/usb/host-libusb.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ hw/virtio/virtio-pci.c     |  5 +++++
+ hw/virtio/virtio.c         | 16 ++++++++++++++++
+ include/hw/virtio/virtio.h |  1 +
+ 3 files changed, 22 insertions(+)
 
-diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-index b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8feb5b788b46d3187028df58 100644
---- a/hw/usb/host-libusb.c
-+++ b/hw/usb/host-libusb.c
-@@ -90,7 +90,6 @@ struct USBHostDevice {
-     uint32_t                         iso_urb_frames;
-     uint32_t                         options;
-     uint32_t                         loglevel;
--    bool                             needs_autoscan;
-     bool                             allow_one_guest_reset;
-     bool                             allow_all_guest_resets;
-     bool                             suppress_remote_wake;
-@@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
- #if LIBUSB_API_VERSION >= 0x01000107 && !defined(CONFIG_WIN32)
-     if (s->hostdevice) {
-         int fd;
--        s->needs_autoscan = false;
-         fd = qemu_open(s->hostdevice, O_RDWR, errp);
-         if (fd < 0) {
-             return;
-@@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
-         !s->match.vendor_id &&
-         !s->match.product_id &&
-         !s->match.port) {
--        s->needs_autoscan = false;
-         ldev = usb_host_find_ref(s->match.bus_num,
-                                  s->match.addr);
-         if (!ldev) {
-@@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
-                        s->match.bus_num, s->match.addr);
-             return;
-         }
--    } else {
--        s->needs_autoscan = true;
--        QTAILQ_INSERT_TAIL(&hostdevs, s, next);
--        usb_host_auto_check(NULL);
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 767216d795..bc9189746f 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1580,6 +1580,11 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
+         return;
      }
  
-     s->exit.notify = usb_host_exit_notifier;
-     qemu_add_exit_notifier(&s->exit);
++    /* only allow writing device status while suspended */
++    if ((vdev->status & VIRTIO_CONFIG_S_SUSPEND) && (addr != VIRTIO_PCI_COMMON_STATUS)) {
++        return;
++    }
 +
-+    QTAILQ_INSERT_TAIL(&hostdevs, s, next);
-+    usb_host_auto_check(NULL);
+     switch (addr) {
+     case VIRTIO_PCI_COMMON_DFSELECT:
+         proxy->dfselect = val;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index e5abbc4601..9d632d72be 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2242,8 +2242,10 @@ int virtio_set_status(VirtIODevice *vdev, uint8_t val)
+ {
+     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+     trace_virtio_set_status(vdev, val);
++    uint8_t old_status;
+     int ret = 0;
+ 
++    old_status = vdev->status;
+     if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+         if (!(vdev->status & VIRTIO_CONFIG_S_FEATURES_OK) &&
+             val & VIRTIO_CONFIG_S_FEATURES_OK) {
+@@ -2276,6 +2278,15 @@ int virtio_set_status(VirtIODevice *vdev, uint8_t val)
+             vdev->status &= !VIRTIO_CONFIG_S_DRIVER_OK;
+     }
+ 
++    /* The device has been resumed */
++    if ((!(vdev->status & VIRTIO_CONFIG_S_SUSPEND)) &&
++        (old_status & VIRTIO_CONFIG_S_SUSPEND) &&
++        (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK) &&
++        (vdev->config_interrupt_pending)) {
++            virtio_notify_config(vdev);
++            vdev->config_interrupt_pending = false;
++    }
++
+     return ret;
  }
  
- static void usb_host_instance_init(Object *obj)
-@@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *udev)
-     USBHostDevice *s = USB_HOST_DEVICE(udev);
+@@ -2714,6 +2725,11 @@ void virtio_notify_config(VirtIODevice *vdev)
+     if (!(vdev->status & VIRTIO_CONFIG_S_DRIVER_OK))
+         return;
  
-     qemu_remove_exit_notifier(&s->exit);
--    if (s->needs_autoscan) {
--        QTAILQ_REMOVE(&hostdevs, s, next);
--    }
-+    QTAILQ_REMOVE(&hostdevs, s, next);
-     usb_host_close(s);
- }
++    if (vdev->status & VIRTIO_CONFIG_S_SUSPEND) {
++        vdev->config_interrupt_pending = true;
++        return;
++    }
++
+     virtio_set_isr(vdev, 0x3);
+     vdev->generation++;
+     virtio_notify_vector(vdev, vdev->config_vector);
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c594764f23..9d66076f75 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -167,6 +167,7 @@ struct VirtIODevice
+      */
+     EventNotifier config_notifier;
+     bool device_iotlb_enabled;
++    bool config_interrupt_pending;
+ };
  
-
----
-base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
-change-id: 20250912-usbhost-disconnect-192ecaa8fc3e
-
-Best regards,
+ struct VirtioDeviceClass {
 -- 
-Timo Teräs <timo.teras@iki.fi>
+2.51.0
 
 
