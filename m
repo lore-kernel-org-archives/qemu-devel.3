@@ -4,136 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB929CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B76CAC594
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3ln-0006Lr-Th; Fri, 12 Sep 2025 09:24:55 -0400
+	id 1ux3lf-0006Kw-KO; Fri, 12 Sep 2025 09:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
- id 1uwx5a-0007w7-Rf
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:17:01 -0400
-Received: from mail-bn7nam10on2070.outbound.protection.outlook.com
- ([40.107.92.70] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
- id 1uwx5Y-0006JM-Pz
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:16:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xsmVRFT7/++C897IHO438LBjkBHsLLVtWPW8nKkyrsGvEWwV95xkgoBdRdmnvFymKTEkl94IESk9jyek4savZaxxR8YyGn77b6Fj/11vcm1OS9Glb/wlO7b7kuiu3Wcl0TEu1v/XGK2/dazpFgCXSA03le2WVrcTL07+Or++KkVvrrqdIUPD0UbqEP7GSuIhVHSnSk3xhyKD+KfQv/u04de0mNbfWLvWZZXqJesTQ7MInoKt4pADyL54ZZJ7XitObbM5dGdcecHsEYwt0ncOcOEwbHl//WVJH2VulEM4ff6DM1sDMe/h45iWZCuFb9/8FlsOAGLk3hwSt8Y6w9mUGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l6auPqG5hPxwFsrp7yZSOW+0r/UOmX244ZQIdt7Kfp8=;
- b=ZYgQEhiXEeEN8HtDA6JptTahasXHZF3HMGZuQuS5gi9HCnhF1q0om3r8W62Yg8Bbm3/SDJiLnZ1D0dQQX4fviU2gAOCEkfZaz/OqyI4quD6k+FBe+E/4W+68qCI1ysuTlUmnY/a9ZqD/i58zl1C8uzevBlmH+3vVOsqOdr1lCFWOZ9szz2v+m90NEc4ssh3baXvvnk5Jy6AisoVvGOXZuMfUL3/TN/RWz+s3xrQRS2RuU3n1LlewuofpkE2BZTGYnM4DbObAOv6dSfcqXc5w0bbcZ0XzMVDYn7gxcLNf0OcC1v/FwuDQO8raa47Hq5z/PYW+YGCEi/sqigO7KT8WLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l6auPqG5hPxwFsrp7yZSOW+0r/UOmX244ZQIdt7Kfp8=;
- b=SdCkCtUeJYmmUNNnYQLN68w/rvRAr3oMsvY4xZpTFgNHg/UJYCtO0RtMC4b3ljDK21HQyzUKF53JLBX8j2J5ayZKZt/SOmfdr/VUi9IBhdcnDqX2oUA5jvdSZmE++nLugTJnbiAKeyqTOEahYF5BZVaUqgoWjnFpVm1PtXMh9rc=
-Received: from SA0PR11CA0007.namprd11.prod.outlook.com (2603:10b6:806:d3::12)
- by CH3PR12MB9122.namprd12.prod.outlook.com (2603:10b6:610:196::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
- 2025 06:11:44 +0000
-Received: from SA2PEPF00001507.namprd04.prod.outlook.com
- (2603:10b6:806:d3:cafe::48) by SA0PR11CA0007.outlook.office365.com
- (2603:10b6:806:d3::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.17 via Frontend Transport; Fri,
- 12 Sep 2025 06:11:43 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SA2PEPF00001507.mail.protection.outlook.com (10.167.242.39) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9115.13 via Frontend Transport; Fri, 12 Sep 2025 06:11:44 +0000
-Received: from fedora.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 11 Sep
- 2025 23:11:42 -0700
-From: Zhu Lingshan <lingshan.zhu@amd.com>
-To: <jasowang@redhat.com>, <mst@redhat.com>
-CC: <qemu-devel@nongnu.org>, Zhu Lingshan <lingshan.zhu@amd.com>
-Subject: [RFC 0/2] virtio: implement suspend and resume feature
-Date: Fri, 12 Sep 2025 14:11:23 +0800
-Message-ID: <20250912061125.262457-1-lingshan.zhu@amd.com>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
+ id 1ux1kB-0003OJ-Pz
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 07:15:07 -0400
+Received: from mail-lf1-f54.google.com ([209.85.167.54])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <timo.teras@gmail.com>)
+ id 1ux1k8-0004te-UT
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 07:15:07 -0400
+Received: by mail-lf1-f54.google.com with SMTP id
+ 2adb3069b0e04-55f76454f69so1781358e87.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 04:15:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757675700; x=1758280500;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p6JP8Pum99r5CoRhJu1jMy4fZ/96rMAfaqPJqZ97O4Y=;
+ b=X+0ag4SFFBRPLXel0YMC5nIoC3ZukaRhdgmBsyjkwP69HgKKNaG48POc9TFZMXPL0T
+ PKaHla0scnGydsDl1HD00QmtdOIbQiyVbUxZ7ai2nCNBm/fkctxDbM3Q6qo+wpmiByUP
+ QQxqEF2lKpmSwEfypPXRPCMxjA2vZno0lmojbaVxj2EQIipkHVpgXKdqjcA+v3sBUq5R
+ KUMXVH8k+3b5bvUQZ6sTTBmpObkxlGUqUjf8h3KVWzaAUgSRgeNQA6RHEYTEYat1LFM8
+ v4ZFjeDLFfH6FMPzPC6Klm5mVwPgrcZRwF8WTlIylWMLAkwmwiZuDArd5NChGiO8ZY7K
+ qaBA==
+X-Gm-Message-State: AOJu0YzMYgA9S6jRsUm9RM0GoC5qTdXami1yDc/ZwzPDMIOAwjw6uOXi
+ xykvLMlaPIn1Sd4qNcL49G8S9RgABrR+yOAzTJKqkhoeUra6860JF1JN
+X-Gm-Gg: ASbGncutebWROSflM5ykefIyTNhbYnmISErvuKpt7vtmPNnGMhinRRz25Fs2X9SboZa
+ X/y9LXSH3Hv2In5bJoauX35Ncl1/aBWM1k/9rUvxa6g6XMStP402nwsI2mBaWBo2Zvrrl3z7PTp
+ X25KGQc00s9IfnXRrD6VjFgggE86AnWQHr3c8BRSzSJygkMoxLa9XGtTZyKsHna+dqaYzIk9R9J
+ AMwGH+uupeZ1Jta5DkwOVIQ5S/hl3JqgoSv1nQg7mtt8YU8GtbNIcRR7JcaOaOFgoXyEnAfTp6/
+ wYj93QGV4Qm2u426CUtN4PvblVu1CKDlSeD75zKzQxCT8lyVHTnFBU6ZZuJq/vevvcDnx3MVjVI
+ 7DTY5Dg0AbKZAtEyxalQ9OssL/bIyigS7xtatx9T+fjjLdpIMhV7LwNuu
+X-Google-Smtp-Source: AGHT+IGwv5iKCgHISaqD9l+6BfffDDPDnCqb70WaUKKci+yoS1ZmoJXytHs9mVhyfoREntyBr4qhug==
+X-Received: by 2002:a05:6512:350f:b0:569:28e5:d42 with SMTP id
+ 2adb3069b0e04-5704f7a377amr673128e87.29.1757675699802; 
+ Fri, 12 Sep 2025 04:14:59 -0700 (PDT)
+Received: from onyx.my.domain (91-159-30-98.elisa-laajakaista.fi.
+ [91.159.30.98]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-56e5c3b6188sm1099903e87.3.2025.09.12.04.14.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Sep 2025 04:14:59 -0700 (PDT)
+From: =?utf-8?q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>
+Date: Fri, 12 Sep 2025 14:14:46 +0300
+Subject: [PATCH] hw/usb/host-libusb: keep autoscan enabled for bus+addr
+ selector
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00001507:EE_|CH3PR12MB9122:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a280d0b-f462-4b82-5d86-08ddf1c33f6d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|376014|82310400026|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?0/vqGjt/xDEEAMX8LydPE9RRlQ94rf5S0tpqfi6tE+xPWKlZR8T9SBPZWp5k?=
- =?us-ascii?Q?bZ+t56amCXXtiJ9f0q3H2q1OrcmYvd3emQlnwiXGKP6qcy9mnKxqU1yNVv78?=
- =?us-ascii?Q?NfAVy8oCwWV0e5dKxpGnORfRxofKMBjDrrunUqWOze2nRttVLMFe8rmRIgh6?=
- =?us-ascii?Q?aFXZghC3wK+KTVZrHCLVaBYT6411JC93RhsIcFM99s3qQhn0yYyzcwr+joCH?=
- =?us-ascii?Q?GPLDwop1hmCe1g3W6sSW53xCDip32/G6O8YCi7NYVTTHkbXyd8tobWpmwx2X?=
- =?us-ascii?Q?rF9riK1k1duziQkAlS63vSyxQbyEToydEqSR9DvZ/UncAyhIsvArJJ/q6OTg?=
- =?us-ascii?Q?6Ve8NnB+hut9FGX+dvdxrEMJk9fMy8/+ftwaNnhULQBdZd3y7MESprzN1BeJ?=
- =?us-ascii?Q?Yk0suzTYkLNQVNY9kK+tE8mMuyyg2PMZzDbEaqpjOFngQK2ZYzIzGC/86z+V?=
- =?us-ascii?Q?R2xa2gRMOTouIhzcb2lptAzWMWca9pNol35tQztxM0GpZ/5s+3zYs23wSbxt?=
- =?us-ascii?Q?y/zw5eha+5DFuOVRa2KIhBP+J/KWsdOOMPfye2Our15fdr9Xt5FH/Q+arF4T?=
- =?us-ascii?Q?zL+GMsGdehS6qdzXbO9RrgZM4425atJDFxe9DoB8cKTe4+SWgY44R6acOcWZ?=
- =?us-ascii?Q?tpXBsZK9zClb4O2LW+PsgBbxBlYB9eKIdPE7HknS6Jpz2JuHgC40cH8bDMJp?=
- =?us-ascii?Q?d3Oi8gVM29vCF08ASuA5sEzUbZcYVgvw0y8kBVlVXPfwBX5u1eGwz2zp3ZY6?=
- =?us-ascii?Q?kwQG5plgzHqfzkcycdLz8Anu4DhDJmiFrNXtiafAQRNkI3IG71jeJ/iE8DFL?=
- =?us-ascii?Q?Ddu1GPcxEKm4h7VQ18yV2DldwbJYdhvfqLzPlefCxuHcZ4/bCOSiYIgmtn5L?=
- =?us-ascii?Q?J0cX3U7bhnmGwc42yum2VqfMUlBsELhuSjk148xuBb2ysYxw7xaK4rl6qasl?=
- =?us-ascii?Q?QcEePIEgGTtJCtJ+kGiH2KuqLWeypqPR1R9sEWRCl0pjvNjZe/eQatBpuOFY?=
- =?us-ascii?Q?eIXPJmvXOr//BxuQEZB8+6cdzWlg9LcNfnHLVbkn3E40c9E3bmBD6TAGlgBc?=
- =?us-ascii?Q?Ani7XzaBC1SP3kdAWYuoxBtfAcUvzj6oH9VRkBTQ/Li/0qQMZdUSs5zsiuzZ?=
- =?us-ascii?Q?GRqj8REYJvgsvQh2AH9+DZIgNXuWRLB1Imf/sXU7Hf9v57NbnBRQUnserzoH?=
- =?us-ascii?Q?wEwxZ7hsdV5N0gV/ylkTzygSx1gVfJ9g1Zk90nxdg9o+XHCdGj9X0JaAGyUr?=
- =?us-ascii?Q?XANhB4VbrIyiEPWOsO6WFrzccXrldx1XJcsr9E2aLcMcYJHiGZjU+KJDpBLq?=
- =?us-ascii?Q?tW0E9Li3Dyvn66VBXiVp2KiaTZ2gosqiMWJQezLwDmuu16frW3MZVH3Xi4Kd?=
- =?us-ascii?Q?9n+s1qvI1Qm6aJL9MJLnaOUfxSIgNDDXlwc7GwE/gQhaE1ortvUiFwRRjmfy?=
- =?us-ascii?Q?TqB52jyij8a8kCoQVsqdsezuqZu5VgClVS7WW2h7V25Q6PtUE3GGXyWq1Nwy?=
- =?us-ascii?Q?A+eAfyomUrVCM0M=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026)(13003099007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 06:11:44.0915 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a280d0b-f462-4b82-5d86-08ddf1c33f6d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001507.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9122
-Received-SPF: permerror client-ip=40.107.92.70;
- envelope-from=Lingshan.Zhu@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Message-Id: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
+X-B4-Tracking: v=1; b=H4sIAKUAxGgC/x3MQQqAIBBA0avErBPSCLKrRAsbp5yNhlMRSHdPW
+ r7F/wWEMpPA1BTIdLNwihW6bQCDizsp9tVgOjN0Vht1yRqSnMqzYIqR8FTaGkLnxg17ghoemTZ
+ +/um8vO8Hc0YyvmQAAAA=
+X-Change-ID: 20250912-usbhost-disconnect-192ecaa8fc3e
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2888; i=timo.teras@iki.fi;
+ h=from:subject:message-id; bh=BH8Px5alyO25aMCdJuahlCBuvr93ZN2zDT2SO/HzhOg=;
+ b=owEBbQGS/pANAwAKAUZwDoxij6HOAcsmYgBoxACyakadGuPeumKvPvxBWaR4yfgaXrRino5l5
+ vMgTAFi3w6JATMEAAEKAB0WIQTRdEpSPGbUaXBswFVGcA6MYo+hzgUCaMQAsgAKCRBGcA6MYo+h
+ zkTCB/sEfw3RScOvyLmvZ+EeobBfJM86VM6Xm6A6OffyGmITx2rRA0ZhLPYHcJVHnXNe7dJTXYj
+ yfjnVljVIYCS2omp2u4+vy9PluKQr0ykg16LgpYMDNansuz9HoFUaa72R8Y2QyoP/XWypsQ5YxH
+ UGug1Ql8NhvO5B+7pnxBJ3cJdK5daMR/U1bYMzmfCyffDElYLYEO93EFP51LdnpxNu7zEvLVCvk
+ OHp1I49NkB7HV1pfReBAkXlRZebu/YVRzc1afcWkkc/44SyLDRpi4HIdmOZmAIQOLosbB3BUfYY
+ ad7S84Br8DgAJHm57ygM5oXzMsugr2Yh3jIJ85NtdyU8d+OB
+X-Developer-Key: i=timo.teras@iki.fi; a=openpgp;
+ fpr=D1744A523C66D469706CC05546700E8C628FA1CE
+Received-SPF: pass client-ip=209.85.167.54; envelope-from=timo.teras@gmail.com;
+ helo=mail-lf1-f54.google.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_PSBL=2.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 12 Sep 2025 09:24:40 -0400
+X-Mailman-Approved-At: Fri, 12 Sep 2025 09:24:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,31 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the spec changes[1,2], this RFC series implements
-suspend and resume facility for virtio, and a reference design
-on virtio-net.
+This is partial revert of commit e058fa2dd599.
 
-This suspend and resume feature will be supported on more
-device types after the basic facilities settling down.
+The portion to immediately validate the device is kept, but this
+adds and enables again the autoscan functionality. This is needed
+to detect and relay USB device disconnect event to the guest.
 
-Plese help review, Thanks!!!
+Fixes: e058fa2dd599 ("usb-host: add special case for bus+addr")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3111
+Signed-off-by: Timo Teräs <timo.teras@iki.fi>
+---
+ hw/usb/host-libusb.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8feb5b788b46d3187028df58 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -90,7 +90,6 @@ struct USBHostDevice {
+     uint32_t                         iso_urb_frames;
+     uint32_t                         options;
+     uint32_t                         loglevel;
+-    bool                             needs_autoscan;
+     bool                             allow_one_guest_reset;
+     bool                             allow_all_guest_resets;
+     bool                             suppress_remote_wake;
+@@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+ #if LIBUSB_API_VERSION >= 0x01000107 && !defined(CONFIG_WIN32)
+     if (s->hostdevice) {
+         int fd;
+-        s->needs_autoscan = false;
+         fd = qemu_open(s->hostdevice, O_RDWR, errp);
+         if (fd < 0) {
+             return;
+@@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+         !s->match.vendor_id &&
+         !s->match.product_id &&
+         !s->match.port) {
+-        s->needs_autoscan = false;
+         ldev = usb_host_find_ref(s->match.bus_num,
+                                  s->match.addr);
+         if (!ldev) {
+@@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+                        s->match.bus_num, s->match.addr);
+             return;
+         }
+-    } else {
+-        s->needs_autoscan = true;
+-        QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+-        usb_host_auto_check(NULL);
+     }
+ 
+     s->exit.notify = usb_host_exit_notifier;
+     qemu_add_exit_notifier(&s->exit);
++
++    QTAILQ_INSERT_TAIL(&hostdevs, s, next);
++    usb_host_auto_check(NULL);
+ }
+ 
+ static void usb_host_instance_init(Object *obj)
+@@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *udev)
+     USBHostDevice *s = USB_HOST_DEVICE(udev);
+ 
+     qemu_remove_exit_notifier(&s->exit);
+-    if (s->needs_autoscan) {
+-        QTAILQ_REMOVE(&hostdevs, s, next);
+-    }
++    QTAILQ_REMOVE(&hostdevs, s, next);
+     usb_host_close(s);
+ }
+ 
 
-[1] https://lore.kernel.org/virtio-comment/20250704101739.354522-1-lingshan.zhu@amd.com
-[2] https://github.com/oasis-tcs/virtio-spec/issues/229
+---
+base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
+change-id: 20250912-usbhost-disconnect-192ecaa8fc3e
 
-Zhu Lingshan (2):
-  virtio: implement virtio data-plane suspend and resume facility
-  virtio: implement virtio control-plane suspend and resume facility
-
- hw/net/virtio-net.c                           | 115 ++++++++++++++++++
- hw/virtio/virtio-pci.c                        |   5 +
- hw/virtio/virtio.c                            |  24 ++++
- include/hw/virtio/virtio.h                    |   1 +
- .../standard-headers/linux/virtio_config.h    |   6 +
- 5 files changed, 151 insertions(+)
-
+Best regards,
 -- 
-2.51.0
+Timo Teräs <timo.teras@iki.fi>
 
 
