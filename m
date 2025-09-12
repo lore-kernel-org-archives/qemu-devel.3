@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E45FCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2318CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3VY-000386-RK; Fri, 12 Sep 2025 09:08:08 -0400
+	id 1ux3VE-00034l-Gd; Fri, 12 Sep 2025 09:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3VU-00036U-0v
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3VB-00033T-Py
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:07:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3VI-0007FE-Ge
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:03 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3V5-0007CZ-57
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:07:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757682471;
+ s=mimecast20190719; t=1757682456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pQ6eXnaRjGbE2279NXjMpVHppzKa662WZ+l6h17+VKw=;
- b=PNxC6RikuGgrmtZzvN7FbcqYlm43jVzdgm/qgYHg/QuwAZqU9hmVvNFMto2OpqoRGk4RIO
- ZNkC4dTDO1IKTJBU0BzGjENxtElZPAEtXk1XZgL2F4bl4unewCjZrdY6X10IhWGwRurRde
- qIaPBzkVY+RWPRoIJKOxdtBoaafVE8Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=rnW7Ag/mnOCJBp8/F7ddftl4ySbNt/YOMToPJwQhAqI=;
+ b=J0zXrPDJKdEDERays0/DZzvNhrrtk5uYFYj1GOCDSwBZakrYLIha72BUAtio4kvp7/vbgO
+ ThqQ5GqaJ7VLzGY6EyymbaWyvor+5fTK4n6vhBcQLH65yY5/QBzwEjIUbP1U0YdgRI2qxv
+ 0Bm8vge3kY44wgQR4wag64cCxfjD8u4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-KupMY9vINwS4S0QIGuufWw-1; Fri,
- 12 Sep 2025 09:07:49 -0400
-X-MC-Unique: KupMY9vINwS4S0QIGuufWw-1
-X-Mimecast-MFC-AGG-ID: KupMY9vINwS4S0QIGuufWw_1757682467
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-aPcgghqSOR2ZgxxgTOD82Q-1; Fri,
+ 12 Sep 2025 09:07:33 -0400
+X-MC-Unique: aPcgghqSOR2ZgxxgTOD82Q-1
+X-Mimecast-MFC-AGG-ID: aPcgghqSOR2ZgxxgTOD82Q_1757682451
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB7591800447; Fri, 12 Sep 2025 13:07:47 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6496A19373DE; Fri, 12 Sep 2025 13:07:31 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.130])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CFB251944CCA; Fri, 12 Sep 2025 13:07:42 +0000 (UTC)
+ id CC44B1954126; Fri, 12 Sep 2025 13:07:26 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,21 +58,21 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v6 05/14] virtio: serialize extended features state
-Date: Fri, 12 Sep 2025 15:06:56 +0200
-Message-ID: <0c96908c9129d7377727f9b6490d5fe7a3aeac41.1757676218.git.pabeni@redhat.com>
+Subject: [PATCH v6 02/14] linux-headers: deal with counted_by annotation
+Date: Fri, 12 Sep 2025 15:06:53 +0200
+Message-ID: <f2c4df8385c1682302e5847470cfe1df968fa35c.1757676218.git.pabeni@redhat.com>
 In-Reply-To: <cover.1757676218.git.pabeni@redhat.com>
 References: <cover.1757676218.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -91,217 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the driver uses any of the extended features (i.e. 64 or above),
-store the extended features range (64-127 bits).
-
-At load time, let legacy features initialize the full features range
-and pass it to the set helper; sub-states loading will have filled-up
-the extended part as needed.
-
-This is one of the few spots that need explicitly to know and set
-in stone the extended features array size; add a build bug to prevent
-breaking the migration should such size change again in the future:
-more serialization plumbing will be needed.
+Such annotation is present into the kernel uAPI headers since
+v6.7, and will be used soon by the vhost_type.h. Deal with it
+just stripping it.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
-v3 -> v4:
- - move the build bug before vmstate_virtio
- - use new virtio_features macro names
+ scripts/update-linux-headers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-v2 -> v3:
- - 128bit_features state load/stores only the high bits
- - consolidate the load implementation to use a single set
-   helper for 128/64/32 bits features
- - _array -> _ex
-
-v1 -> v2:
- - uint128_t -> u64[2]
----
- hw/virtio/virtio.c | 88 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 57 insertions(+), 31 deletions(-)
-
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e..bf53c211e5 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2964,6 +2964,30 @@ static const VMStateDescription vmstate_virtio_disabled = {
-     }
- };
- 
-+static bool virtio_128bit_features_needed(void *opaque)
-+{
-+    VirtIODevice *vdev = opaque;
-+
-+    return virtio_features_use_ex(vdev->host_features_ex);
-+}
-+
-+static const VMStateDescription vmstate_virtio_128bit_features = {
-+    .name = "virtio/128bit_features",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = &virtio_128bit_features_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(guest_features_ex[1], VirtIODevice),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+/*
-+ * Avoid silently breaking migration should the feature space increase
-+ * even more in the (far away) future
-+ */
-+QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_NU64S != 2);
-+
- static const VMStateDescription vmstate_virtio = {
-     .name = "virtio",
-     .version_id = 1,
-@@ -2973,6 +2997,7 @@ static const VMStateDescription vmstate_virtio = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_virtio_device_endian,
-+        &vmstate_virtio_128bit_features,
-         &vmstate_virtio_64bit_features,
-         &vmstate_virtio_virtqueues,
-         &vmstate_virtio_ringsize,
-@@ -3069,23 +3094,28 @@ const VMStateInfo  virtio_vmstate_info = {
-     .put = virtio_device_put,
- };
- 
--static int virtio_set_features_nocheck(VirtIODevice *vdev, uint64_t val)
-+static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
- {
-     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
--    bool bad = (val & ~(vdev->host_features)) != 0;
-+    uint64_t tmp[VIRTIO_FEATURES_NU64S];
-+    bool bad;
-+
-+    bad = virtio_features_andnot(tmp, val, vdev->host_features_ex);
-+    virtio_features_and(tmp, val, vdev->host_features_ex);
- 
--    val &= vdev->host_features;
-     if (k->set_features) {
--        k->set_features(vdev, val);
-+        bad = bad || virtio_features_use_ex(tmp);
-+        k->set_features(vdev, tmp[0]);
-     }
--    vdev->guest_features = val;
-+
-+    virtio_features_copy(vdev->guest_features_ex, tmp);
-     return bad ? -1 : 0;
- }
- 
- typedef struct VirtioSetFeaturesNocheckData {
-     Coroutine *co;
-     VirtIODevice *vdev;
--    uint64_t val;
-+    uint64_t val[VIRTIO_FEATURES_NU64S];
-     int ret;
- } VirtioSetFeaturesNocheckData;
- 
-@@ -3098,14 +3128,15 @@ static void virtio_set_features_nocheck_bh(void *opaque)
- }
- 
- static int coroutine_mixed_fn
--virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev, uint64_t val)
-+virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev,
-+                                     const uint64_t *val)
- {
-     if (qemu_in_coroutine()) {
-         VirtioSetFeaturesNocheckData data = {
-             .co = qemu_coroutine_self(),
-             .vdev = vdev,
--            .val = val,
-         };
-+        virtio_features_copy(data.val, val);
-         aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
-                                 virtio_set_features_nocheck_bh, &data);
-         qemu_coroutine_yield();
-@@ -3117,6 +3148,7 @@ virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev, uint64_t val)
- 
- int virtio_set_features(VirtIODevice *vdev, uint64_t val)
- {
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-     int ret;
-     /*
-      * The driver must not attempt to set features after feature negotiation
-@@ -3132,7 +3164,8 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
-                       __func__, vdev->name);
-     }
- 
--    ret = virtio_set_features_nocheck(vdev, val);
-+    virtio_features_from_u64(features, val);
-+    ret = virtio_set_features_nocheck(vdev, features);
-     if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
-         /* VIRTIO_RING_F_EVENT_IDX changes the size of the caches.  */
-         int i;
-@@ -3155,6 +3188,7 @@ void virtio_reset(void *opaque)
- {
-     VirtIODevice *vdev = opaque;
-     VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-     int i;
- 
-     virtio_set_status(vdev, 0);
-@@ -3181,7 +3215,8 @@ void virtio_reset(void *opaque)
-     vdev->start_on_kick = false;
-     vdev->started = false;
-     vdev->broken = false;
--    virtio_set_features_nocheck(vdev, 0);
-+    virtio_features_clear(features);
-+    virtio_set_features_nocheck(vdev, features);
-     vdev->queue_sel = 0;
-     vdev->status = 0;
-     vdev->disabled = false;
-@@ -3264,7 +3299,7 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-      * Note: devices should always test host features in future - don't create
-      * new dependencies like this.
-      */
--    vdev->guest_features = features;
-+    virtio_features_from_u64(vdev->guest_features_ex, features);
- 
-     config_len = qemu_get_be32(f);
- 
-@@ -3343,26 +3378,17 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         vdev->device_endian = virtio_default_endian();
-     }
- 
--    if (virtio_64bit_features_needed(vdev)) {
--        /*
--         * Subsection load filled vdev->guest_features.  Run them
--         * through virtio_set_features to sanity-check them against
--         * host_features.
--         */
--        uint64_t features64 = vdev->guest_features;
--        if (virtio_set_features_nocheck_maybe_co(vdev, features64) < 0) {
--            error_report("Features 0x%" PRIx64 " unsupported. "
--                         "Allowed features: 0x%" PRIx64,
--                         features64, vdev->host_features);
--            return -1;
--        }
--    } else {
--        if (virtio_set_features_nocheck_maybe_co(vdev, features) < 0) {
--            error_report("Features 0x%x unsupported. "
--                         "Allowed features: 0x%" PRIx64,
--                         features, vdev->host_features);
--            return -1;
--        }
-+    /*
-+     * guest_features_ex is fully initialized with u32 features and upper
-+     * bits have been filled as needed by the later load.
-+     */
-+    if (virtio_set_features_nocheck_maybe_co(vdev,
-+                                             vdev->guest_features_ex) < 0) {
-+        error_report("Features 0x" VIRTIO_FEATURES_FMT " unsupported. "
-+                     "Allowed features: 0x" VIRTIO_FEATURES_FMT,
-+                     VIRTIO_FEATURES_PR(vdev->guest_features_ex),
-+                     VIRTIO_FEATURES_PR(vdev->host_features_ex));
-+        return -1;
-     }
- 
-     if (!virtio_device_started(vdev, vdev->status) &&
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 717c379f9e..64c0d7c4eb 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -90,6 +90,7 @@ cp_portable() {
+         -e 's/<linux\/\([^>]*\)>/"standard-headers\/linux\/\1"/' \
+         -e "$arch_cmd" \
+         -e 's/__bitwise//' \
++        -e 's/__counted_by(\w*)//' \
+         -e 's/__attribute__((packed))/QEMU_PACKED/' \
+         -e 's/__inline__/inline/' \
+         -e 's/__BITS_PER_LONG/HOST_LONG_BITS/' \
 -- 
 2.51.0
 
