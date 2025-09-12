@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7426CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457CCCAC58F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3VF-00034x-DP; Fri, 12 Sep 2025 09:07:49 -0400
+	id 1ux3VD-000342-U7; Fri, 12 Sep 2025 09:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3VB-00033X-UU
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3VB-00033S-No
  for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:07:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3V0-0007BF-5Y
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3V0-0007Bt-5e
  for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:07:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757682446;
+ s=mimecast20190719; t=1757682451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=81WeValSiXU50tyBwqjO7FgC1clHmtXMYhxav2pTr/A=;
- b=NOXDbwJknyOGUP/C4WpOEznMElZ6HINJU7vs5LtoNOkXDALDGjgR0aUiIpjXb0Pvt7UsBD
- 5/aLGOtjF0a9mTTnbbr85bbRoSQPJ+LwE35u33hCLkqC4aYh7dkXhPnnHGty7eGdu249YD
- fXymit+/4yE6LhcOtprnFtOwmLaNXC8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mawUjH/Yz9zPChY3rVoWMhGkW5BLeJ6uwyVQDoNH70k=;
+ b=T7v4V2PaRIsEo2VzY7VlaCjMhWWVoXrBL72nHBS9awI24Azzr2ws3fBBOn0eJclgK3B4zS
+ gS6nNPcswrU8zYSrwbx4APOkSrXeOZfn64h1VH9+GaB20yQUcUYY4SofD/Inl01IzewzET
+ sjM3OKnKxGcPIUPxKiOncTQygvpf1/0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-656-w_g1i2kjN0yYxKEGuT--3w-1; Fri,
- 12 Sep 2025 09:07:22 -0400
-X-MC-Unique: w_g1i2kjN0yYxKEGuT--3w-1
-X-Mimecast-MFC-AGG-ID: w_g1i2kjN0yYxKEGuT--3w_1757682441
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-VHpV2syjMvOoDiygN9X_BQ-1; Fri,
+ 12 Sep 2025 09:07:27 -0400
+X-MC-Unique: VHpV2syjMvOoDiygN9X_BQ-1
+X-Mimecast-MFC-AGG-ID: VHpV2syjMvOoDiygN9X_BQ_1757682446
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D39BE19560B2; Fri, 12 Sep 2025 13:07:20 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35EB11800365; Fri, 12 Sep 2025 13:07:26 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.130])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 072321944AB5; Fri, 12 Sep 2025 13:07:15 +0000 (UTC)
+ id 76FD51944CEB; Fri, 12 Sep 2025 13:07:21 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,13 +58,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v6 00/14] virtio: introduce support for GSO over UDP tunnel
-Date: Fri, 12 Sep 2025 15:06:51 +0200
-Message-ID: <cover.1757676218.git.pabeni@redhat.com>
+Subject: [PATCH v6 01/14] net: bundle all offloads in a single struct
+Date: Fri, 12 Sep 2025 15:06:52 +0200
+Message-ID: <cc1b23f5a9ebfb50b501663ba076e6cbcffa0e65.1757676218.git.pabeni@redhat.com>
+In-Reply-To: <cover.1757676218.git.pabeni@redhat.com>
+References: <cover.1757676218.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -72,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,155 +91,362 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some virtualized deployments use UDP tunnel pervasively and are impacted
-negatively by the lack of GSO support for such kind of traffic in the
-virtual NIC driver.
+The set_offload() argument list is already pretty long and
+we are going to introduce soon a bunch of additional offloads.
 
-The virtio_net specification recently introduced support for GSO over
-UDP tunnel, and the kernel side of the implementation has been merged
-into the net-next tree; this series updates the virtio implementation to
-support such a feature.
+Replace the offload arguments with a single struct and update
+all the relevant call-sites.
 
-Currently the qemu virtio support limits the feature space to 64 bits,
-while the virtio specification allows for a larger number of features.
-Specifically the GSO-over-UDP-tunnel-related virtio features use bits
-65-69; the larger part of this series (patches 4-12) actually deals with
-extending the features space.
+No functional changes intended.
 
-The extended features are carried by fixed size uint64_t arrays,
-bringing the current maximum features number to 128.
-
-The patches use some syntactic sugar to try to minimize the otherwise
-very large code churn. Specifically the extended features are boundled
-in an union with 'legacy' features definition, allowing no changes in
-the virtio devices not needing the extended features set.
-
-The actual offload implementation is in patches 13 and 14 and boils down
-to propagating the new offload to the tun devices and the vhost backend.
-
-Patch 1 is a small pre-req refactor that ideally could enter the
-tree separately; it's presented here in the same series to help
-reviewers more easily getting the full picture, patch 2 updates to 
-linux headers update script to deal with annotations recently introduce
-in the kernel and patch 3 is a needed linux headers update.
-
-Tested with basic stream transfer with all the possible permutations of
-host kernel/qemu/guest kernel with/without GSO over UDP tunnel support,
-vs snapshots creation and restore and vs migration.
-
-The new features are disabled by default to avoid compatibilty issues.
-They could be enabled with a later patch, together with the related
-compatiblity entries.
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
 v5 -> v6:
-  - colleted ack-by/reviewed-by tags
-  - re-included pre-req patch as per Michael's request
-  - minor checkpatch and whitestaces fixes
-
-v5: https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg02005.html
+  - re-included into the main series
 
 v4 -> v5:
-  - more sparse cleanup
-  - dropped RFC tag
-  - disable the new features by default
-
-v4: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05513.html
+  - sent as standalone patch
 
 v3 -> v4:
-  - more sparse cleanups
-  - fix build failures on a couple of targets
-v3: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg04872.html
+  - style fix for NetOffloads init
 
-v2 -> v3:
-  - consolidated suffixes for new fields to '_ex'
-  - avoid pre/post load trickery and relay on reset zeroing the features
-  - cleaned-up virtio store implementation deduplicating a bit of code
-  - many more cleanups, see the individual patches changelog for the
-    details
-  - I left patch 1 unmodified, still some hope we could live with that;)
-v2: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg03000.html
+v1 -> v2:
+  - drop unneeded 'struct' keywords
+  - moved to series start
+---
+ hw/net/e1000e_core.c |  5 +++--
+ hw/net/igb_core.c    |  5 +++--
+ hw/net/virtio-net.c  | 19 +++++++++++--------
+ hw/net/vmxnet3.c     | 13 +++++--------
+ include/net/net.h    | 15 ++++++++++++---
+ net/net.c            |  5 ++---
+ net/netmap.c         |  3 +--
+ net/tap-bsd.c        |  3 +--
+ net/tap-linux.c      | 21 ++++++++++++---------
+ net/tap-solaris.c    |  4 ++--
+ net/tap-stub.c       |  3 +--
+ net/tap.c            |  8 ++++----
+ net/tap_int.h        |  4 ++--
+ 13 files changed, 59 insertions(+), 49 deletions(-)
 
-Paolo Abeni (14):
-  net: bundle all offloads in a single struct
-  linux-headers: deal with counted_by annotation
-  linux-headers: Update to Linux v6.17-rc1
-  virtio: introduce extended features type
-  virtio: serialize extended features state
-  virtio: add support for negotiating extended features
-  virtio-pci: implement support for extended features
-  vhost: add support for negotiating extended features
-  qmp: update virtio features map to support extended features
-  vhost-backend: implement extended features support
-  vhost-net: implement extended features support
-  virtio-net: implement extended features support
-  net: implement tunnel probing
-  net: implement UDP tunnel features offloading
-
- hw/net/e1000e_core.c                          |   5 +-
- hw/net/igb_core.c                             |   5 +-
- hw/net/vhost_net-stub.c                       |   8 +-
- hw/net/vhost_net.c                            |  45 ++--
- hw/net/virtio-net.c                           | 234 ++++++++++++------
- hw/net/vmxnet3.c                              |  13 +-
- hw/virtio/vhost-backend.c                     |  62 ++++-
- hw/virtio/vhost.c                             |  68 +++--
- hw/virtio/virtio-bus.c                        |  11 +-
- hw/virtio/virtio-hmp-cmds.c                   |   3 +-
- hw/virtio/virtio-pci.c                        |  76 +++++-
- hw/virtio/virtio-qmp.c                        |  91 ++++---
- hw/virtio/virtio-qmp.h                        |   3 +-
- hw/virtio/virtio.c                            | 100 +++++---
- include/hw/virtio/vhost-backend.h             |   6 +
- include/hw/virtio/vhost.h                     |  56 ++++-
- include/hw/virtio/virtio-features.h           | 126 ++++++++++
- include/hw/virtio/virtio-net.h                |   2 +-
- include/hw/virtio/virtio-pci.h                |   2 +-
- include/hw/virtio/virtio.h                    |  11 +-
- include/net/net.h                             |  20 +-
- include/net/vhost_net.h                       |  33 ++-
- include/standard-headers/drm/drm_fourcc.h     |  56 ++++-
- include/standard-headers/linux/ethtool.h      |   4 +-
- .../linux/input-event-codes.h                 |   8 +
- include/standard-headers/linux/input.h        |   1 +
- include/standard-headers/linux/pci_regs.h     |   9 +
- include/standard-headers/linux/vhost_types.h  |   5 +
- include/standard-headers/linux/virtio_net.h   |  33 +++
- linux-headers/LICENSES/preferred/GPL-2.0      |  10 +-
- linux-headers/asm-arm64/unistd_64.h           |   2 +
- linux-headers/asm-generic/unistd.h            |   8 +-
- linux-headers/asm-loongarch/unistd_64.h       |   2 +
- linux-headers/asm-mips/unistd_n32.h           |   2 +
- linux-headers/asm-mips/unistd_n64.h           |   2 +
- linux-headers/asm-mips/unistd_o32.h           |   2 +
- linux-headers/asm-powerpc/kvm.h               |  13 -
- linux-headers/asm-powerpc/unistd_32.h         |   2 +
- linux-headers/asm-powerpc/unistd_64.h         |   2 +
- linux-headers/asm-riscv/kvm.h                 |   1 +
- linux-headers/asm-riscv/unistd_32.h           |   2 +
- linux-headers/asm-riscv/unistd_64.h           |   2 +
- linux-headers/asm-s390/unistd_32.h            |   2 +
- linux-headers/asm-s390/unistd_64.h            |   2 +
- linux-headers/asm-x86/unistd_32.h             |   2 +
- linux-headers/asm-x86/unistd_64.h             |   2 +
- linux-headers/asm-x86/unistd_x32.h            |   2 +
- linux-headers/linux/iommufd.h                 | 154 +++++++++++-
- linux-headers/linux/kvm.h                     |   2 +
- linux-headers/linux/vfio.h                    |  12 +-
- linux-headers/linux/vhost.h                   |  35 +++
- net/net.c                                     |  17 +-
- net/netmap.c                                  |   3 +-
- net/tap-bsd.c                                 |   8 +-
- net/tap-linux.c                               |  38 ++-
- net/tap-linux.h                               |   9 +
- net/tap-solaris.c                             |   9 +-
- net/tap-stub.c                                |   8 +-
- net/tap.c                                     |  21 +-
- net/tap_int.h                                 |   5 +-
- qapi/virtio.json                              |   9 +-
- scripts/update-linux-headers.sh               |   1 +
- 62 files changed, 1196 insertions(+), 291 deletions(-)
- create mode 100644 include/hw/virtio/virtio-features.h
-
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 06657bb3ac..8fef598b49 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -2822,8 +2822,9 @@ e1000e_update_rx_offloads(E1000ECore *core)
+     trace_e1000e_rx_set_cso(cso_state);
+ 
+     if (core->has_vnet) {
+-        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer,
+-                         cso_state, 0, 0, 0, 0, 0, 0);
++        NetOffloads ol = { .csum = cso_state };
++
++        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer, &ol);
+     }
+ }
+ 
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index 39e3ce1c8f..45d8fd795b 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -3058,8 +3058,9 @@ igb_update_rx_offloads(IGBCore *core)
+     trace_e1000e_rx_set_cso(cso_state);
+ 
+     if (core->has_vnet) {
+-        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer,
+-                         cso_state, 0, 0, 0, 0, 0, 0);
++        NetOffloads ol = {.csum = cso_state };
++
++        qemu_set_offload(qemu_get_queue(core->owner_nic)->peer, &ol);
+     }
+ }
+ 
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 6b5b5dace3..b86ba1fd27 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -773,14 +773,17 @@ static uint64_t virtio_net_bad_features(VirtIODevice *vdev)
+ 
+ static void virtio_net_apply_guest_offloads(VirtIONet *n)
+ {
+-    qemu_set_offload(qemu_get_queue(n->nic)->peer,
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_CSUM)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO4)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO6)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_ECN)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
+-            !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)));
++    NetOffloads ol = {
++       .csum = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_CSUM)),
++       .tso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO4)),
++       .tso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_TSO6)),
++       .ecn  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_ECN)),
++       .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
++       .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
++       .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
++    };
++
++    qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
+ }
+ 
+ static uint64_t virtio_net_guest_offloads_by_features(uint64_t features)
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index af73aa8ef2..03732375a7 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1322,14 +1322,11 @@ static void vmxnet3_update_features(VMXNET3State *s)
+               s->lro_supported, rxcso_supported,
+               s->rx_vlan_stripping);
+     if (s->peer_has_vhdr) {
+-        qemu_set_offload(qemu_get_queue(s->nic)->peer,
+-                         rxcso_supported,
+-                         s->lro_supported,
+-                         s->lro_supported,
+-                         0,
+-                         0,
+-                         0,
+-                         0);
++        NetOffloads ol = { .csum = rxcso_supported,
++                           .tso4 = s->lro_supported,
++                           .tso6 = s->lro_supported };
++
++        qemu_set_offload(qemu_get_queue(s->nic)->peer, &ol);
+     }
+ }
+ 
+diff --git a/include/net/net.h b/include/net/net.h
+index 84ee18e0f9..48ba333d02 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -35,6 +35,16 @@ typedef struct NICConf {
+     int32_t bootindex;
+ } NICConf;
+ 
++typedef struct NetOffloads {
++    bool csum;
++    bool tso4;
++    bool tso6;
++    bool ecn;
++    bool ufo;
++    bool uso4;
++    bool uso6;
++} NetOffloads;
++
+ #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
+     DEFINE_PROP_MACADDR("mac",   _state, _conf.macaddr),                \
+     DEFINE_PROP_NETDEV("netdev", _state, _conf.peers)
+@@ -57,7 +67,7 @@ typedef bool (HasUfo)(NetClientState *);
+ typedef bool (HasUso)(NetClientState *);
+ typedef bool (HasVnetHdr)(NetClientState *);
+ typedef bool (HasVnetHdrLen)(NetClientState *, int);
+-typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
++typedef void (SetOffload)(NetClientState *, const NetOffloads *);
+ typedef int (GetVnetHdrLen)(NetClientState *);
+ typedef void (SetVnetHdrLen)(NetClientState *, int);
+ typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
+@@ -189,8 +199,7 @@ bool qemu_has_ufo(NetClientState *nc);
+ bool qemu_has_uso(NetClientState *nc);
+ bool qemu_has_vnet_hdr(NetClientState *nc);
+ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
+-void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                      int ecn, int ufo, int uso4, int uso6);
++void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
+ int qemu_get_vnet_hdr_len(NetClientState *nc);
+ void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
+ bool qemu_get_vnet_hash_supported_types(NetClientState *nc, uint32_t *types);
+diff --git a/net/net.c b/net/net.c
+index da275db86e..63872b6855 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -540,14 +540,13 @@ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len)
+     return nc->info->has_vnet_hdr_len(nc, len);
+ }
+ 
+-void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                          int ecn, int ufo, int uso4, int uso6)
++void qemu_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+     if (!nc || !nc->info->set_offload) {
+         return;
+     }
+ 
+-    nc->info->set_offload(nc, csum, tso4, tso6, ecn, ufo, uso4, uso6);
++    nc->info->set_offload(nc, ol);
+ }
+ 
+ int qemu_get_vnet_hdr_len(NetClientState *nc)
+diff --git a/net/netmap.c b/net/netmap.c
+index 297510e190..6cd8f2bdc5 100644
+--- a/net/netmap.c
++++ b/net/netmap.c
+@@ -366,8 +366,7 @@ static void netmap_set_vnet_hdr_len(NetClientState *nc, int len)
+     }
+ }
+ 
+-static void netmap_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
+-                               int ecn, int ufo, int uso4, int uso6)
++static void netmap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+     NetmapState *s = DO_UPCAST(NetmapState, nc, nc);
+ 
+diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+index b4c84441ba..86b6edee94 100644
+--- a/net/tap-bsd.c
++++ b/net/tap-bsd.c
+@@ -231,8 +231,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index 22ec2f45d2..a1c58f74f5 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -239,8 +239,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     abort();
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+     unsigned int offload = 0;
+ 
+@@ -249,20 +248,24 @@ void tap_fd_set_offload(int fd, int csum, int tso4,
+         return;
+     }
+ 
+-    if (csum) {
++    if (ol->csum) {
+         offload |= TUN_F_CSUM;
+-        if (tso4)
++        if (ol->tso4) {
+             offload |= TUN_F_TSO4;
+-        if (tso6)
++        }
++        if (ol->tso6) {
+             offload |= TUN_F_TSO6;
+-        if ((tso4 || tso6) && ecn)
++        }
++        if ((ol->tso4 || ol->tso6) && ol->ecn) {
+             offload |= TUN_F_TSO_ECN;
+-        if (ufo)
++        }
++        if (ol->ufo) {
+             offload |= TUN_F_UFO;
+-        if (uso4) {
++        }
++        if (ol->uso4) {
+             offload |= TUN_F_USO4;
+         }
+-        if (uso6) {
++        if (ol->uso6) {
+             offload |= TUN_F_USO6;
+         }
+     }
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+index 51b7830bef..833c066bee 100644
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -27,6 +27,7 @@
+ #include "tap_int.h"
+ #include "qemu/ctype.h"
+ #include "qemu/cutils.h"
++#include "net/net.h"
+ 
+ #include <sys/ethernet.h>
+ #include <sys/sockio.h>
+@@ -235,8 +236,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap-stub.c b/net/tap-stub.c
+index 38673434cb..67d14ad4d5 100644
+--- a/net/tap-stub.c
++++ b/net/tap-stub.c
+@@ -66,8 +66,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     return -EINVAL;
+ }
+ 
+-void tap_fd_set_offload(int fd, int csum, int tso4,
+-                        int tso6, int ecn, int ufo, int uso4, int uso6)
++void tap_fd_set_offload(int fd, const NetOffloads *ol)
+ {
+ }
+ 
+diff --git a/net/tap.c b/net/tap.c
+index f7df702f97..72046a43aa 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -285,15 +285,14 @@ static int tap_set_vnet_be(NetClientState *nc, bool is_be)
+     return tap_fd_set_vnet_be(s->fd, is_be);
+ }
+ 
+-static void tap_set_offload(NetClientState *nc, int csum, int tso4,
+-                     int tso6, int ecn, int ufo, int uso4, int uso6)
++static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+     if (s->fd < 0) {
+         return;
+     }
+ 
+-    tap_fd_set_offload(s->fd, csum, tso4, tso6, ecn, ufo, uso4, uso6);
++    tap_fd_set_offload(s->fd, ol);
+ }
+ 
+ static void tap_exit_notify(Notifier *notifier, void *data)
+@@ -391,6 +390,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  int fd,
+                                  int vnet_hdr)
+ {
++    NetOffloads ol = {};
+     NetClientState *nc;
+     TAPState *s;
+ 
+@@ -404,7 +404,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     s->has_ufo = tap_probe_has_ufo(s->fd);
+     s->has_uso = tap_probe_has_uso(s->fd);
+     s->enabled = true;
+-    tap_set_offload(&s->nc, 0, 0, 0, 0, 0, 0, 0);
++    tap_set_offload(&s->nc, &ol);
+     /*
+      * Make sure host header length is set correctly in tap:
+      * it might have been modified by another instance of qemu.
+diff --git a/net/tap_int.h b/net/tap_int.h
+index 8857ff299d..f8bbe1cb0c 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -27,6 +27,7 @@
+ #define NET_TAP_INT_H
+ 
+ #include "qapi/qapi-types-net.h"
++#include "net/net.h"
+ 
+ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+              int vnet_hdr_required, int mq_required, Error **errp);
+@@ -37,8 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
+ int tap_probe_vnet_hdr(int fd, Error **errp);
+ int tap_probe_has_ufo(int fd);
+ int tap_probe_has_uso(int fd);
+-void tap_fd_set_offload(int fd, int csum, int tso4, int tso6, int ecn, int ufo,
+-                        int uso4, int uso6);
++void tap_fd_set_offload(int fd, const NetOffloads *ol);
+ void tap_fd_set_vnet_hdr_len(int fd, int len);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
+ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
 -- 
 2.51.0
 
