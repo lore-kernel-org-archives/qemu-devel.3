@@ -4,48 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CBDCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD429CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux4rE-0001lg-0J; Fri, 12 Sep 2025 10:34:36 -0400
+	id 1ux4wE-0003Nk-9I; Fri, 12 Sep 2025 10:39:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4rC-0001lH-0B
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:34:34 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux4wB-0003ND-U2
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:39:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4r9-0004zY-Lv
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:34:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=UC/sPgzgMcFDF96IBWuOtInXhnFruOQhXs3xgyo1TUA=; b=QvGjYxA3YQdQ9N5
- fcgIyDBRNNcAPkvQvLmOcwF5v4cYm1LcSxsiStvfC2tPuY7pjnQy1KbJJ7rdakVPJ+0+31y76G8+i
- 50Yzcn1rLPFCzSribjcwa+Ba4nSLqCF+EefnofW8ZVtgd9GZB5UkCgmM1ApSiKHp6PCeFyD8cQz2R
- ak=;
-Date: Fri, 12 Sep 2025 16:37:01 +0200
-To: qemu-devel@nongnu.org, philmd@linaro.org
-Subject: Re: [PATCH] target/mips: Fix msaregnames off-by-one
-Message-ID: <mejygpnvahkqhmbnhsgxdrogx7m27qnrkdo3ajbjlxvhuqickt@xewbbdagze3s>
-References: <20250912141325.17788-1-anjo@rev.ng>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux4w5-0005tZ-UG
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:39:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757687976;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XndAHQXz3pJqh92rZEbiXfbEhSH8/wawjXH8c4hu/fI=;
+ b=eVXem3cW7pcnuV3CV19QsQqpDyn7hY0u4rHsYnqh/rQPUx7KRMqRrMNOz1odLBIDWd3yc7
+ +EToTZTWyIc3lgV/nc9V88FUblYpqL4Kdis8M32W9KvtOIFzihYuNj4254Ge9gnJQcsbS+
+ eISBvLvaC6QUTVneOPYNLX8I6CIqW/A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-YRMl5rZmNUaBqgUYh-Y-bw-1; Fri,
+ 12 Sep 2025 10:39:31 -0400
+X-MC-Unique: YRMl5rZmNUaBqgUYh-Y-bw-1
+X-Mimecast-MFC-AGG-ID: YRMl5rZmNUaBqgUYh-Y-bw_1757687970
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D9B418004D8; Fri, 12 Sep 2025 14:39:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FB32180035E; Fri, 12 Sep 2025 14:39:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 96CB121E6A27; Fri, 12 Sep 2025 16:39:25 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com,  peterx@redhat.com,  farosas@suse.de,
+ raphael@enfabrica.net,  sgarzare@redhat.com,
+ marcandre.lureau@redhat.com,  pbonzini@redhat.com,  kwolf@redhat.com,
+ hreitz@redhat.com,  berrange@redhat.com,  eblake@redhat.com,
+ qemu-devel@nongnu.org,  qemu-block@nongnu.org,
+ steven.sistare@oracle.com,  den-plotnikov@yandex-team.ru,  Jason Wang
+ <jasowang@redhat.com>,  Fam Zheng <fam@euphon.net>, devel@lists.libvirt.org
+Subject: Re: [PATCH 02/33] vhost: drop backend_features field
+In-Reply-To: <20250813164856.950363-3-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 13 Aug 2025 19:48:23 +0300")
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-3-vsementsov@yandex-team.ru>
+Date: Fri, 12 Sep 2025 16:39:25 +0200
+Message-ID: <877by368gy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250912141325.17788-1-anjo@rev.ng>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,42 +89,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/09/25, Anton Johansson via wrote:
-> The names of w10.d0 and following registers are 7 bytes in length
-> including null-terminator, not 6 bytes.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->  target/mips/tcg/msa_translate.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-> index 82b149922f..0e947125a0 100644
-> --- a/target/mips/tcg/msa_translate.c
-> +++ b/target/mips/tcg/msa_translate.c
-> @@ -32,7 +32,7 @@ static inline int plus_2(DisasContext *s, int x)
->  /* Include the auto-generated decoder.  */
->  #include "decode-msa.c.inc"
+Cc: libvirt
+
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+
+> This field is mostly unused and sometimes confusing (we even have
+> a TODO-like comment to drop it). Let's finally do.
+>
+> The field is used to held VHOST_USER_F_PROTOCOL_FEATURES for vhost-user
+> and/or VHOST_NET_F_VIRTIO_NET_HDR for vhost-net (which may be
+> vhoust-user-net). But we can simply recalculte these two flags inplace
+> from hdev->features, and from net-client for
+> VHOST_NET_F_VIRTIO_NET_HDR.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+[...]
+
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 66be6afc88..9f9dd2d46d 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -100,16 +100,9 @@ struct vhost_dev {
+>       *
+>       * @features: available features provided by the backend
+>       * @acked_features: final negotiated features with front-end driver
+> -     *
+> -     * @backend_features: this is used in a couple of places to either
+> -     * store VHOST_USER_F_PROTOCOL_FEATURES to apply to
+> -     * VHOST_USER_SET_FEATURES or VHOST_NET_F_VIRTIO_NET_HDR. Its
+> -     * future use should be discouraged and the variable retired as
+> -     * its easy to confuse with the VirtIO backend_features.
+
+I guess this is the TODO-like comment mentioned in the commit message.
+
+>       */
+>      uint64_t features;
+>      uint64_t acked_features;
+> -    uint64_t backend_features;
 >  
-> -static const char msaregnames[][6] = {
-> +static const char msaregnames[][7] = {
->      "w0.d0",  "w0.d1",  "w1.d0",  "w1.d1",
->      "w2.d0",  "w2.d1",  "w3.d0",  "w3.d1",
->      "w4.d0",  "w4.d1",  "w5.d0",  "w5.d1",
-> -- 
-> 2.51.0
-> 
-> 
+>      /**
+>       * @protocol_features: is the vhost-user only feature set by
+> diff --git a/qapi/virtio.json b/qapi/virtio.json
+> index 9d652fe4a8..0aae77340d 100644
+> --- a/qapi/virtio.json
+> +++ b/qapi/virtio.json
+> @@ -85,8 +85,6 @@
+>  #
+>  # @acked-features: vhost_dev acked_features
+>  #
+> -# @backend-features: vhost_dev backend_features
+> -#
+>  # @protocol-features: vhost_dev protocol_features
+>  #
+>  # @max-queues: vhost_dev max_queues
+> @@ -106,7 +104,6 @@
+>              'vq-index': 'int',
+>              'features': 'VirtioDeviceFeatures',
+>              'acked-features': 'VirtioDeviceFeatures',
+> -            'backend-features': 'VirtioDeviceFeatures',
+>              'protocol-features': 'VhostDeviceProtocols',
+>              'max-queues': 'uint64',
+>              'backend-cap': 'uint64',
 
-Ignore this one, I missed muxregnames! You could say I was off-by-one.
-Sent a new patch fixing msaregnames and mxuregnames..
+Incompatible change.  We can do this because it's only visible in the
+return value of x-query-virtio-status, which is unstable.  Recommend to
+note this in the commit message.
 
--- 
-Anton Johansson
-rev.ng Labs Srl.
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
