@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672ABCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D131CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3W8-0003HL-JT; Fri, 12 Sep 2025 09:08:44 -0400
+	id 1ux3WC-0003Jf-6a; Fri, 12 Sep 2025 09:08:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3Vz-0003Bw-0w
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:35 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3W7-0003Gi-9g
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3Vp-0007J5-Uk
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:34 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3W4-0007KF-Iv
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757682504;
+ s=mimecast20190719; t=1757682516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HJUEMwk8eVOsIvxuBYIzTBMcSQjlWbM0YhLL6aQ6JSU=;
- b=RfEYqHt3fyBAKiNsVb+oDzltmspf3Tu86BZf8cHbWfheVcSX/v2b0b2nbq9D4bRlOdMuTd
- 6mz4sjty0Pq0yFm++KDMsWKXsU/JUHvonWkGw5OzHlw5SrGimsVhdNLLj2sMXdhZij68A7
- k0+6EnXXReNLnuc4c7wXjMkaL22foTk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=vLLpaL6Bh6GSzg23z27uRaeUXHzRJLLOzHU4uQWQnGA=;
+ b=WHFIWpVS9ISEwveoviJ0yyDZn56aiA+7dSZW9ma2+9HtJCB/aWtNKkTDkFfx3StWdfbNSo
+ 4Zn67CGUQVZiOJbagu8ep/Huussmge8w/2sGr6JUIQiyA2pjrbLb180/tUjFGrSwn+M57c
+ A1Hgvt7tqsrLNufFGlnjCFz2RZc1Q7I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-LIqirLV5M262tohG3lS13w-1; Fri,
- 12 Sep 2025 09:08:21 -0400
-X-MC-Unique: LIqirLV5M262tohG3lS13w-1
-X-Mimecast-MFC-AGG-ID: LIqirLV5M262tohG3lS13w_1757682499
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-v1yF-b1uNXyzDw5wusftxg-1; Fri,
+ 12 Sep 2025 09:08:31 -0400
+X-MC-Unique: v1yF-b1uNXyzDw5wusftxg-1
+X-Mimecast-MFC-AGG-ID: v1yF-b1uNXyzDw5wusftxg_1757682510
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD8721800289; Fri, 12 Sep 2025 13:08:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 858CB1955EAC; Fri, 12 Sep 2025 13:08:30 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.130])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F1F81954126; Fri, 12 Sep 2025 13:08:13 +0000 (UTC)
+ id E757A1954126; Fri, 12 Sep 2025 13:08:25 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,9 +58,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v6 11/14] vhost-net: implement extended features support
-Date: Fri, 12 Sep 2025 15:07:02 +0200
-Message-ID: <3bfa79b99acf1e7ab570cf80b96198db28ae0bdd.1757676218.git.pabeni@redhat.com>
+Subject: [PATCH v6 13/14] net: implement tunnel probing
+Date: Fri, 12 Sep 2025 15:07:04 +0200
+Message-ID: <5593bacc611b3e9e95cccf6ede12f41731b4e53e.1757676218.git.pabeni@redhat.com>
 In-Reply-To: <cover.1757676218.git.pabeni@redhat.com>
 References: <cover.1757676218.git.pabeni@redhat.com>
 MIME-Version: 1.0
@@ -75,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,233 +91,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide extended version of the features manipulation helpers,
-and let the device initialization deal with the full features space,
-adjusting the relevant format strings accordingly.
+Tap devices support GSO over UDP tunnel offload. Probe for such
+feature in a similar manner to other offloads.
+
+GSO over UDP tunnel needs to be enabled in addition to a "plain"
+offload (TSO or USO).
+
+No need to check separately for the outer header checksum offload:
+ithe kernel is going to support both of them or none.
+
+The new features are disabled by default to avoid compat issues,
+and could be enabled, after that hw_compat_10_1 will be added,
+together with the related compat entries.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
----
+--
+v4 -> v5:
+  - disable features by default
+  - DEFINE_PROP_FEATURE -> VIRTIO_DEFINE_PROP_FEATURE
+  - reformatted props definitions
+
 v3 -> v4:
-  - add missing features initialization
-  - use new virtio_features macro names
+  - move DEFINE_PROP_FEATURE() in patch 4
 
 v2 -> v3:
-  - use virtio_features_andnot return value instead of virtio_features_empty
-  - rebased on top of "net: Consolidate vhost feature bits into vhost_net
-    structure"
+  - use bool type for tap_probe_has_tunnel()
+  - rebased on top of 2deec9ab7d ("virtio-net: Move
+        virtio_net_get_features() down")
   - _array -> _ex
 
 v1 -> v2:
-  - uint128_t -> uint64_t[]
-  - provide extended variant of the features manipulation helpers
+  - peer_has_tunnel return a bool
+  - move TUN_F definition in net/tun-linux.h
 ---
- hw/net/vhost_net-stub.c |  8 +++-----
- hw/net/vhost_net.c      | 45 +++++++++++++++++++++++------------------
- include/net/vhost_net.h | 33 +++++++++++++++++++++++++++---
- 3 files changed, 58 insertions(+), 28 deletions(-)
+ hw/net/virtio-net.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ include/net/net.h   |  3 +++
+ net/net.c           |  9 +++++++++
+ net/tap-bsd.c       |  5 +++++
+ net/tap-linux.c     | 11 +++++++++++
+ net/tap-linux.h     |  9 +++++++++
+ net/tap-solaris.c   |  5 +++++
+ net/tap-stub.c      |  5 +++++
+ net/tap.c           | 11 +++++++++++
+ net/tap_int.h       |  1 +
+ 10 files changed, 100 insertions(+)
 
-diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
-index 7d49f82906..0740d5a2eb 100644
---- a/hw/net/vhost_net-stub.c
-+++ b/hw/net/vhost_net-stub.c
-@@ -46,9 +46,8 @@ void vhost_net_cleanup(struct vhost_net *net)
- {
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 89cf008401..0abb8c8a62 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
+     return qemu_has_uso(qemu_get_queue(n->nic)->peer);
  }
  
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
++static bool peer_has_tunnel(VirtIONet *n)
++{
++    if (!peer_has_vnet_hdr(n)) {
++        return false;
++    }
++
++    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
++}
++
+ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+                                        int version_1, int hash_report)
  {
--    return features;
+@@ -3073,6 +3082,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+ 
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
++
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+     }
+ 
+@@ -3086,6 +3102,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
+     }
+ 
++    if (!peer_has_tunnel(n)) {
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
++        virtio_clear_feature_ex(features,
++                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
++    }
++
+     if (!get_vhost_net(nc->peer)) {
+         if (!use_own_hash) {
+             virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
+@@ -4248,6 +4273,22 @@ static const Property virtio_net_properties[] = {
+                                   rss_data.specified_hash_types,
+                                   VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
+                                   ON_OFF_AUTO_AUTO),
++    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
++                               false),
++    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet,
++                               host_features_ex,
++                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
++                               false),
+ };
+ 
+ static void virtio_net_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/net/net.h b/include/net/net.h
+index 48ba333d02..9a9084690d 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -65,6 +65,7 @@ typedef void (NetClientDestructor)(NetClientState *);
+ typedef RxFilterInfo *(QueryRxFilter)(NetClientState *);
+ typedef bool (HasUfo)(NetClientState *);
+ typedef bool (HasUso)(NetClientState *);
++typedef bool (HasTunnel)(NetClientState *);
+ typedef bool (HasVnetHdr)(NetClientState *);
+ typedef bool (HasVnetHdrLen)(NetClientState *, int);
+ typedef void (SetOffload)(NetClientState *, const NetOffloads *);
+@@ -95,6 +96,7 @@ typedef struct NetClientInfo {
+     NetPoll *poll;
+     HasUfo *has_ufo;
+     HasUso *has_uso;
++    HasTunnel *has_tunnel;
+     HasVnetHdr *has_vnet_hdr;
+     HasVnetHdrLen *has_vnet_hdr_len;
+     SetOffload *set_offload;
+@@ -197,6 +199,7 @@ void qemu_set_info_str(NetClientState *nc,
+ void qemu_format_nic_info_str(NetClientState *nc, uint8_t macaddr[6]);
+ bool qemu_has_ufo(NetClientState *nc);
+ bool qemu_has_uso(NetClientState *nc);
++bool qemu_has_tunnel(NetClientState *nc);
+ bool qemu_has_vnet_hdr(NetClientState *nc);
+ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
+ void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
+diff --git a/net/net.c b/net/net.c
+index 63872b6855..9536184a0c 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -522,6 +522,15 @@ bool qemu_has_uso(NetClientState *nc)
+     return nc->info->has_uso(nc);
  }
  
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-@@ -62,13 +61,12 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
++bool qemu_has_tunnel(NetClientState *nc)
++{
++    if (!nc || !nc->info->has_tunnel) {
++        return false;
++    }
++
++    return nc->info->has_tunnel(nc);
++}
++
+ bool qemu_has_vnet_hdr(NetClientState *nc)
+ {
+     if (!nc || !nc->info->has_vnet_hdr) {
+diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+index 86b6edee94..751d4c819c 100644
+--- a/net/tap-bsd.c
++++ b/net/tap-bsd.c
+@@ -217,6 +217,11 @@ int tap_probe_has_uso(int fd)
      return 0;
  }
  
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return 0;
- }
- 
- bool vhost_net_virtqueue_pending(VHostNetState *net, int idx)
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 540492b37d..a8ee18a912 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -35,10 +35,9 @@
- #include "hw/virtio/virtio-bus.h"
- #include "linux-headers/linux/vhost.h"
- 
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
- {
--    return vhost_get_features(&net->dev, net->feature_bits,
--            features);
-+    vhost_get_features_ex(&net->dev, net->feature_bits, features);
- }
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len)
-@@ -51,10 +50,11 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
-     return vhost_dev_set_config(&net->dev, data, offset, size, flags);
- }
- 
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
--    net->dev.acked_features = net->dev.backend_features;
--    vhost_ack_features(&net->dev, net->feature_bits, features);
-+    virtio_features_copy(net->dev.acked_features_ex,
-+                         net->dev.backend_features_ex);
-+    vhost_ack_features_ex(&net->dev, net->feature_bits, features);
- }
- 
- uint64_t vhost_net_get_max_queues(VHostNetState *net)
-@@ -62,9 +62,9 @@ uint64_t vhost_net_get_max_queues(VHostNetState *net)
-     return net->dev.max_queues;
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return net->dev.acked_features;
-+    virtio_features_copy(features, net->dev.acked_features_ex);
- }
- 
- void vhost_net_save_acked_features(NetClientState *nc)
-@@ -234,7 +234,8 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     int r;
-     bool backend_kernel = options->backend_type == VHOST_BACKEND_TYPE_KERNEL;
-     struct vhost_net *net = g_new0(struct vhost_net, 1);
--    uint64_t features = 0;
-+    uint64_t missing_features[VIRTIO_FEATURES_NU64S];
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-     Error *local_err = NULL;
- 
-     if (!options->net_backend) {
-@@ -247,6 +248,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     net->save_acked_features = options->save_acked_features;
-     net->max_tx_queue_size = options->max_tx_queue_size;
-     net->is_vhost_user = options->is_vhost_user;
-+    virtio_features_clear(features);
- 
-     net->dev.max_queues = 1;
-     net->dev.vqs = net->vqs;
-@@ -261,7 +263,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-         net->backend = r;
-         net->dev.protocol_features = 0;
-     } else {
--        net->dev.backend_features = 0;
-+        virtio_features_clear(net->dev.backend_features_ex);
-         net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-@@ -281,26 +283,29 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-                                sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
-             net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
-         }
--        if (~net->dev.features & net->dev.backend_features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                   " for backend\n",
--                   (uint64_t)(~net->dev.features & net->dev.backend_features));
-+
-+        if (virtio_features_andnot(missing_features,
-+                                   net->dev.backend_features_ex,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
- 
-     /* Set sane init value. Override when guest acks. */
-     if (options->get_acked_features) {
--        features = options->get_acked_features(net->nc);
--        if (~net->dev.features & features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                    " for backend\n",
--                    (uint64_t)(~net->dev.features & features));
-+        virtio_features_from_u64(features,
-+                                 options->get_acked_features(net->nc));
-+        if (virtio_features_andnot(missing_features, features,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                    " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
- 
--    vhost_net_ack_features(net, features);
-+    vhost_net_ack_features_ex(net, features);
- 
-     return net;
- 
-diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
-index 879781dad7..0225207491 100644
---- a/include/net/vhost_net.h
-+++ b/include/net/vhost_net.h
-@@ -2,6 +2,7 @@
- #define VHOST_NET_H
- 
- #include "net/net.h"
-+#include "hw/virtio/virtio-features.h"
- #include "hw/virtio/vhost-backend.h"
- 
- struct vhost_net;
-@@ -33,8 +34,26 @@ void vhost_net_stop(VirtIODevice *dev, NetClientState *ncs,
- 
- void vhost_net_cleanup(VHostNetState *net);
- 
--uint64_t vhost_net_get_features(VHostNetState *net, uint64_t features);
--void vhost_net_ack_features(VHostNetState *net, uint64_t features);
-+void vhost_net_get_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_features(VHostNetState *net,
-+                                              uint64_t features)
++bool tap_probe_has_tunnel(int fd)
 +{
-+    uint64_t features_array[VIRTIO_FEATURES_NU64S];
-+
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_get_features_ex(net, features_array);
-+    return features_array[0];
++    return false;
 +}
 +
-+void vhost_net_ack_features_ex(VHostNetState *net, const uint64_t *features);
-+static inline void vhost_net_ack_features(VHostNetState *net,
-+                                          uint64_t features)
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index a1c58f74f5..e2628be798 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -196,6 +196,17 @@ int tap_probe_has_uso(int fd)
+     return 1;
+ }
+ 
++bool tap_probe_has_tunnel(int fd)
 +{
-+    uint64_t features_array[VIRTIO_FEATURES_NU64S];
++    unsigned offload;
 +
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_ack_features_ex(net, features_array);
++    offload = TUN_F_CSUM | TUN_F_TSO4 | TUN_F_UDP_TUNNEL_GSO;
++    if (ioctl(fd, TUNSETOFFLOAD, offload) < 0) {
++        return false;
++    }
++    return true;
 +}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+diff --git a/net/tap-linux.h b/net/tap-linux.h
+index 9a58cecb7f..8cd6b5874b 100644
+--- a/net/tap-linux.h
++++ b/net/tap-linux.h
+@@ -53,4 +53,13 @@
+ #define TUN_F_USO4    0x20    /* I can handle USO for IPv4 packets */
+ #define TUN_F_USO6    0x40    /* I can handle USO for IPv6 packets */
  
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len);
-@@ -51,7 +70,15 @@ VHostNetState *get_vhost_net(NetClientState *nc);
++/* I can handle TSO/USO for UDP tunneled packets */
++#define TUN_F_UDP_TUNNEL_GSO       0x080
++
++/*
++ * I can handle TSO/USO for UDP tunneled packets requiring csum offload for
++ * the outer header
++ */
++#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
++
+ #endif /* QEMU_TAP_LINUX_H */
+diff --git a/net/tap-solaris.c b/net/tap-solaris.c
+index 833c066bee..ac1ae25761 100644
+--- a/net/tap-solaris.c
++++ b/net/tap-solaris.c
+@@ -222,6 +222,11 @@ int tap_probe_has_uso(int fd)
+     return 0;
+ }
  
- int vhost_net_set_vring_enable(NetClientState *nc, int enable);
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net);
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_acked_features(VHostNetState *net)
++bool tap_probe_has_tunnel(int fd)
 +{
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-+
-+    vhost_net_get_acked_features_ex(net, features);
-+    assert(!virtio_features_use_ex(features));
-+    return features[0];
++    return false;
 +}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap-stub.c b/net/tap-stub.c
+index 67d14ad4d5..f7a5e0c163 100644
+--- a/net/tap-stub.c
++++ b/net/tap-stub.c
+@@ -52,6 +52,11 @@ int tap_probe_has_uso(int fd)
+     return 0;
+ }
  
- int vhost_net_set_mtu(struct vhost_net *net, uint16_t mtu);
++bool tap_probe_has_tunnel(int fd)
++{
++    return false;
++}
++
+ void tap_fd_set_vnet_hdr_len(int fd, int len)
+ {
+ }
+diff --git a/net/tap.c b/net/tap.c
+index 72046a43aa..9f65e3fb3d 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -76,6 +76,7 @@ typedef struct TAPState {
+     bool using_vnet_hdr;
+     bool has_ufo;
+     bool has_uso;
++    bool has_tunnel;
+     bool enabled;
+     VHostNetState *vhost_net;
+     unsigned host_vnet_hdr_len;
+@@ -246,6 +247,14 @@ static bool tap_has_uso(NetClientState *nc)
+     return s->has_uso;
+ }
  
++static bool tap_has_tunnel(NetClientState *nc)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->has_tunnel;
++}
++
+ static bool tap_has_vnet_hdr(NetClientState *nc)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+@@ -374,6 +383,7 @@ static NetClientInfo net_tap_info = {
+     .cleanup = tap_cleanup,
+     .has_ufo = tap_has_ufo,
+     .has_uso = tap_has_uso,
++    .has_tunnel = tap_has_tunnel,
+     .has_vnet_hdr = tap_has_vnet_hdr,
+     .has_vnet_hdr_len = tap_has_vnet_hdr_len,
+     .set_offload = tap_set_offload,
+@@ -403,6 +413,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     s->using_vnet_hdr = false;
+     s->has_ufo = tap_probe_has_ufo(s->fd);
+     s->has_uso = tap_probe_has_uso(s->fd);
++    s->has_tunnel = tap_probe_has_tunnel(s->fd);
+     s->enabled = true;
+     tap_set_offload(&s->nc, &ol);
+     /*
+diff --git a/net/tap_int.h b/net/tap_int.h
+index f8bbe1cb0c..b76a05044b 100644
+--- a/net/tap_int.h
++++ b/net/tap_int.h
+@@ -38,6 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
+ int tap_probe_vnet_hdr(int fd, Error **errp);
+ int tap_probe_has_ufo(int fd);
+ int tap_probe_has_uso(int fd);
++bool tap_probe_has_tunnel(int fd);
+ void tap_fd_set_offload(int fd, const NetOffloads *ol);
+ void tap_fd_set_vnet_hdr_len(int fd, int len);
+ int tap_fd_set_vnet_le(int fd, int vnet_is_le);
 -- 
 2.51.0
 
