@@ -4,101 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E974CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6ABECAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux5xa-0005sx-VC; Fri, 12 Sep 2025 11:45:15 -0400
+	id 1ux63Y-0007wv-2F; Fri, 12 Sep 2025 11:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5xQ-0005sC-CJ
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:45:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5xO-0007Au-Ad
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:45:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757691898;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2tUCufxwZ2AHej4pahnX+D80DLAGkvHKj9tgPDx7yC4=;
- b=QE/4YV+02ny7xh5YEvCtavyHcHtiur5RmNJnZ0EosZEqKoR1WF4H69DgHDGjkp/KxwB0N1
- c0topK1teKXbYxfllmyj82giQM6F0UWdf+5+RWus4x3HMz32FuSY1UJ3JroZbYYXJSbNw+
- AL9MQ2PPGlvZUtZev5XzvqH5uiBLP2I=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-HGsxw1xVN8KBsOp8cet3PQ-1; Fri, 12 Sep 2025 11:44:57 -0400
-X-MC-Unique: HGsxw1xVN8KBsOp8cet3PQ-1
-X-Mimecast-MFC-AGG-ID: HGsxw1xVN8KBsOp8cet3PQ_1757691897
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-7671821d5a7so35046626d6.3
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 08:44:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ux63U-0007wR-0Y
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:51:20 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ux63S-0000MC-03
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:51:19 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-71d60150590so13142357b3.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 08:51:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757692274; x=1758297074; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=lu6mlLT0PLoFbl1VC5pnBr/hANi9IR0prILlflPEtcA=;
+ b=xOTyrPTluLG04BmQpSvzC1Lzz7+Bd969dhzm0a9+IytOjtuaIKrEbOHjTMzQm9Gux7
+ 7OU7EIuVWiWXL3Pd77Y6isOw8mEKhrSwdsz2DOfWRyHWuJXNdssHZbPneUylbm2z72oX
+ NSH3dt5efEn7bH41lR3P8X+FwIgLX2Dadq6sY5PWvMga8QHEjWlDrtwG/fIfXqZlnLo4
+ iY8qtDRhnpF3vvDnY+4jZRu0bvtNKLQX7pPHC0CdKWDpqaKrAZARR1BDE9mEzl2wr0F0
+ Ze0C31/pSnuj5BJ4i57eDnmn/iFialoPktUvxLbAer4AwAkKwkTSEq8lAVDHngo6LVFh
+ Z3gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757691897; x=1758296697;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2tUCufxwZ2AHej4pahnX+D80DLAGkvHKj9tgPDx7yC4=;
- b=pf4ZUYmFWVN1+/qeEEbmtzRWGmw1zTmw221ntNo7ZoTrdbu9MA6hYiqRljyladY7EB
- jhoLQ8+yTNvT7dGTAsb1kKAW7nKzWjdEBzQIaX5mxOXrboqs8G1v9hgP5H61KgIL2tX3
- BH7cXcBdYZLvRfzeu85scF6dc0/i6f5ZhkYx2p0yXSofUQWt4j9EqRWPLUFRkMbvih1a
- 3UueXqdVbrFhxkdw/8ykePqVM/oXNbMwLH1hiop2RMqMCKPRV3fBa4N+GQDbOIJGDInc
- wS8Rci9hg/jYPg7UvTt9xx3XneFa4wTOPXyASoya6auL8auR48jR3K1Qp9cTNwykTrJU
- W3Pg==
-X-Gm-Message-State: AOJu0YyN4P2ROXdRrcCON5/ffunf6oo80gNj1/8sBCC7bzfKzQIsixgI
- iZaE2DE6efJEz86PcRt6BIZ25f0EcvURaokS5ZIVfssNnyvHIRAJEFMGxiHdoei3IiElBkOIwkp
- aCiRUXUUn59a62/gzlEQVVylELSY/p/cxeKladV3lUs8KZbwL7YOdQQcA
-X-Gm-Gg: ASbGnctttl+UfpADQwB9EmUA69IaxVX6KcOZEpCzuY760JrkmVh61iFK9AIWMTBITBn
- jZ1M57MjiR322om+LSfEewsFVqfKPU1hKblVSkhQLQ9mvgwjwRYWXpZ4LooMhuZwDWRpoRl7q7r
- Bv9oB4oW7Fg9/sX4czRlmSZUweec757c1ln3t7z7KFuNPhAc2bsPuZqhodU4VnRS3ewJGmihnk6
- F6WOB3wd+/AYvEwvzBy4ka3vG+08N7phi7YSKX7pGvAoNKJ4QMQa33/1KtpLrRnuS68fP9VlcR1
- t/0RraTVWUR9cO80JL7nM/KKNThwpEA7
-X-Received: by 2002:a05:6214:1c09:b0:727:e45a:562c with SMTP id
- 6a1803df08f44-767c5fc1237mr51504576d6.45.1757691896366; 
- Fri, 12 Sep 2025 08:44:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLW1odX3aZ/n3lLSGt/Q2HtgKjhuB3aEPNp+77FU6jUSBYcDBMHGuJF5YDscOaqCmA6Bk9vA==
-X-Received: by 2002:a05:6214:1c09:b0:727:e45a:562c with SMTP id
- 6a1803df08f44-767c5fc1237mr51504266d6.45.1757691896010; 
- Fri, 12 Sep 2025 08:44:56 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-763b6800370sm29280926d6.33.2025.09.12.08.44.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 08:44:55 -0700 (PDT)
-Date: Fri, 12 Sep 2025 11:44:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
-Message-ID: <aMQ_65_BybkbtZL4@x1.local>
-References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
- <aLsUQWjW8gyZjySs@x1.local>
- <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
- <aMBGnHXieiXpBCqF@x1.local>
- <992bf553-e622-4e51-b1c7-f59c1413558e@oracle.com>
- <aMB0BL5SEGfwjTFm@x1.local>
- <1a3c46b8-985e-4768-a3d1-e797370c0822@oracle.com>
+ d=1e100.net; s=20230601; t=1757692274; x=1758297074;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lu6mlLT0PLoFbl1VC5pnBr/hANi9IR0prILlflPEtcA=;
+ b=R4zkIKqFjHA+cQR2O7lnVmqq1JDJkpf3rpdLtkWUpZeWMAyZLjQ4QoxOgcgJLTzXvN
+ 63L20b/H5hxofLiahRw5cnrNCfHNhYNF2Qnydn7CG2nX983+RimYnF551XMy9FRvhbdI
+ TSCftfZNITK2OUljEnKB655qOaJ3an7ewx8aP6AYD3Ziu76LtGqPVszy2FzWqBRKVcBL
+ Z9b/4YsKELWDINkO7COVzi96MTGX0c94SXbzdhjVcC9IuS453umRdAT+SzJtdvMZxEkV
+ K+fbJFg3Hkv+REW4Yf8KzqY9I2Y7NvEIGZMqRH598FEhbDREwnExVGqPZ5VivhUky3+M
+ g3Xw==
+X-Gm-Message-State: AOJu0YyvIr7dU93eUf1emlFuSZHBMpfuhatleu2Bza9jv0fQNuePkHSb
+ KtbJUQC9JscHFVQtGi+i2SDV0D66QGTbwBlg2GKoAqehoU0rbcUQG/Y0y5Z0f6a+gXK8e56zSkz
+ lsN/5rjZwdnQj/VQruhwAQE4wSBR+GshoIXj6bNun5bIfkztPJQk1
+X-Gm-Gg: ASbGncvivXtUZdGN7GYlFWBAlQHzPfzVd6fv66Bnlaf0ZX6RNxGyx3Ft6MgEl9psHni
+ XN4Veuc2JxdjMRQ5DkliuglYy+QMd4op+KQTDXDVw5wiG9rOQghoRHg1jU9tabVjqOfmDc9vVZc
+ D6f4xG0PBXGPuTfRV3ELdXPrHlO1mf2YC5RHnd1IYIfgxnH09SQh3O9wJ5OQcf5jlPaAHxt/f8u
+ depU/OtVHogB+gQ6pw=
+X-Google-Smtp-Source: AGHT+IHTxbewP9W+aPhGpm4W0zQ8O9Mheuan5rRSFWBie7SprXD5HuvVAseYipkuInPfGkaElkHLq4Ynd0plOQKVLAo=
+X-Received: by 2002:a05:690c:6e93:b0:723:b330:3dd6 with SMTP id
+ 00721157ae682-7306338005cmr34478257b3.12.1757692274076; Fri, 12 Sep 2025
+ 08:51:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1a3c46b8-985e-4768-a3d1-e797370c0822@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Sep 2025 16:51:02 +0100
+X-Gm-Features: Ac12FXxGZ4f_ddUUQ4C4EZJqW8P6B0TzYh6DidrsAVZ99wd_2HRjIb8aQrv4mOw
+Message-ID: <CAFEAcA80LakER=eZY1yK4X8CJA9Uwd-9ckLP=p4D3BJLpSTXqQ@mail.gmail.com>
+Subject: when to use MemoryRegionCache vs direct address space read/write vs
+ address_space_map?
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,35 +90,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 10:50:34AM -0400, Steven Sistare wrote:
-> > > > How to guarantee src/dst device topology match
-> > > > exactly the same with the new cmdline?
-> > > 
-> > > That is up to the mgmt layer, to know how QEMU was originally started, and
-> > > what has been hot plugged afterwards.  The fast qom-list-get command that
-> > > I recently added can help here.
-> > 
-> > I see.  If you think that is the best way to consume cpr-exec, would you
-> > add a small section into the doc patch for it as well?
-> 
-> It is not related to cpr-exec.  It is related to hot plug, for any migration
-> type scenario, so it does not fit in the cpr-exec docs.
+For devices that need to do DMA-like operations, the memory subsystem
+provides three possible approaches:
 
-IMHO it matters.. With cpr-transfer, QMP hot plugs works and will not
-contribute to downtime.  cpr-exec also works, but will contribute to
-downtime.
+(1) simple direct reads and writes, via address_space_read()
+    and address_space_write(). Completely flexible, but every
+    individual access will go through the whole memory system
+    codepath, so not very fast.
 
-We could, in the comparison section between cpr-exec v.s. cpr-transfer,
-mention the potential difference on device hot plugs (out of many other
-differences), then also mention that there's an option to reduce downtime
-for cpr-exec due to hot-plug by converting QMP hot plugs into cmdlines
-leveraging qom-list-get and other facilities.  From there we could further
-link to a special small section describing the usage of qom-list-get, or
-stop there.
+(2) address_space_map(), which gets you a host pointer to the
+    RAM backing the guest address space, which you can then
+    directly access Subject to some limitations: can only use for
+    reads or writes, not for a read-modify-write; you might not get
+    the whole range you asked for; will use a bounce buffer if it's
+    not operating on RAM. Has a dma.h wrapper dma_memory_map().
+    Used by about a dozen devices.
 
-Thanks,
+(3) address_space_cache_init(), which initializes a MemoryRegionCache
+    which you can then use for hopefully faster read and write
+    operations via address_space_read_cached() and
+    address_space_write_cached(). Again, subject to limitations:
+    must operate on RAM; you might not be able to access the whole
+    range you wanted. This currently seems to be used solely by
+    virtio.
 
--- 
-Peter Xu
+The documentation in include/system/memory.h tells you the
+mechanics of the APIs, but it gives no guidance as to when you
+should use one or the other. Any suggestions ?
 
+In particular, I'm working on a GICv5 model. This device puts a
+lot of its working data structures into guest memory, so we're going
+to be accessing guest memory a lot. The device spec says if you point
+it at not-RAM you get to keep both pieces, and requires the guest
+not to try to change the contents of that memory underfoot without
+notifying it, so this seems like it ought to be a good candidate
+for some kind of "act like you have this memory cached so you don't
+need to keep looking it up every time" API...
+
+Does the MemoryRegionCache API cover all the use cases we use
+address_space_map() and dma_memory_map() for? (i.e. could we
+deprecate the latter and transition code over to the new API?)
+
+Incidentally, on the subject of the dma.h wrappers -- I've never
+really been very clear why we have these. Some devices use them,
+but a lot do not. The fact that the dma wrappers put in smp_mb()
+barriers leaves me wondering if all those other devices that
+don't use them have subtle bugs, but OTOH I've never noticed
+any problems...
+
+-- PMM
 
