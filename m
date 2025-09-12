@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4335CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCBECCAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux59l-0002s4-0W; Fri, 12 Sep 2025 10:53:45 -0400
+	id 1ux5Ck-0004hd-DK; Fri, 12 Sep 2025 10:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ux59f-0002rj-Cy
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:53:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux5Ci-0004h7-Nd
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:56:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ux59a-0008KP-2X
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:53:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux5Cf-0000VI-Eh
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:56:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757688812;
+ s=mimecast20190719; t=1757689003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7sbvxCNqbOKKZT97iQb8sjyjo8uIVsOZGY5+RyREqHk=;
- b=T9ouq/43tYliWWgKQoSoeOlfDXy98uoHQeNd+pl2OikDqOuSkeyP/RXMVNfpUlpzXmHp6P
- VnqaUm2mU8y9c2NZv4it/Ew/CXBJn8vxhPJVLlO6FmDg5aRa8dLylycZIgYApIHoQoXvf1
- UBR8BYEhhnhFFCc6I+wbexUe4xznHPw=
+ bh=GfPRBt3T7f76dO09EiMxEfCXHZlIzdu/X1ZCVRk/5Ic=;
+ b=MB0kNkIf5+WC1LvNqGJlbgmKSHr2qBNzDsnNCZq6HcYEBVe5qm5h0G1dcTeyLaGyh6wnO3
+ PqRjbAPItqX/X8AeRcBIoTC6H/0SjWU1lcidqgsrUQ9Y4jBuDr4DPlrDGlMGZa5RXA1And
+ kwz0iNUQZOY0Ttvdaswi1PvG+XHzm2c=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-PfCCmUWDPR688Z6sY6s0tw-1; Fri,
- 12 Sep 2025 10:53:30 -0400
-X-MC-Unique: PfCCmUWDPR688Z6sY6s0tw-1
-X-Mimecast-MFC-AGG-ID: PfCCmUWDPR688Z6sY6s0tw_1757688809
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207--ihtulM0NKuoFaZWNZHz3A-1; Fri,
+ 12 Sep 2025 10:56:42 -0400
+X-MC-Unique: -ihtulM0NKuoFaZWNZHz3A-1
+X-Mimecast-MFC-AGG-ID: -ihtulM0NKuoFaZWNZHz3A_1757689000
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 542E81800288; Fri, 12 Sep 2025 14:53:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.113])
+ id 7C7AB1800293; Fri, 12 Sep 2025 14:56:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C80FA19560BE; Fri, 12 Sep 2025 14:53:25 +0000 (UTC)
-Date: Fri, 12 Sep 2025 16:53:19 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
- hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>
-Subject: Re: Some iotests are failing with -luks
-Message-ID: <aMQz383L7sjWiPV_@redhat.com>
-References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
- <aMGijXg9XIpbbn-v@redhat.com>
- <58d82de4-25ac-48f5-ae80-181faf2bf8cf@redhat.com>
- <aMK8-4-xE0R7AnaK@redhat.com> <aMQs8pbZZPio0ikL@redhat.com>
+ id 5E16119560BE; Fri, 12 Sep 2025 14:56:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 853CC21E6A27; Fri, 12 Sep 2025 16:56:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com,  peterx@redhat.com,  farosas@suse.de,
+ raphael@enfabrica.net,  sgarzare@redhat.com,
+ marcandre.lureau@redhat.com,  pbonzini@redhat.com,  kwolf@redhat.com,
+ hreitz@redhat.com,  berrange@redhat.com,  eblake@redhat.com,
+ qemu-devel@nongnu.org,  qemu-block@nongnu.org,
+ steven.sistare@oracle.com,  den-plotnikov@yandex-team.ru,  Laurent Vivier
+ <lvivier@redhat.com>
+Subject: Re: [PATCH 24/33] chardev-add: support local migration
+In-Reply-To: <20250813164856.950363-25-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 13 Aug 2025 19:48:45 +0300")
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-25-vsementsov@yandex-team.ru>
+Date: Fri, 12 Sep 2025 16:56:36 +0200
+Message-ID: <87wm634t3v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMQs8pbZZPio0ikL@redhat.com>
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,134 +91,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.09.2025 um 16:23 hat Daniel P. Berrangé geschrieben:
-> On Thu, Sep 11, 2025 at 02:13:47PM +0200, Kevin Wolf wrote:
-> > Am 11.09.2025 um 13:21 hat Thomas Huth geschrieben:
-> > > On 10/09/2025 18.08, Kevin Wolf wrote:
-> > > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
-> > > > > 
-> > > > >   Hi,
-> > > > > 
-> > > > > when running "./check -luks" in the qemu-iotests directory,
-> > > > > some tests are failing for me:
-> > > > > 
-> > > > > 295 296 inactive-node-nbd luks-detached-header
-> > > > > 
-> > > > > Is that a known problem already?
-> > > > 
-> > > > Not to me anyway.
-> > > > 
-> > > > > FWIW, 295 is failing with the following output:
-> > > > > 
-> > > > > 295   fail       [17:03:01] [17:03:17]   15.7s                failed, exit status 1
-> > > > > [...]
-> > > > > +EWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
-> > > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=6 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
-> > > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=10 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
-> > > > > +E
-> > > > > [...]
-> > > > > 
-> > > > > etc.
-> > > > > 
-> > > > > 296 looks very similar (also a "qemu received signal 6" error),
-> > > > > but the others look like this:
-> > > > 
-> > > > When it gets signal 6 (i.e. SIGABRT), that usually means that you should
-> > > > have a look at the coredump.
-> > > 
-> > > With "-p" I additionally get this error message in the log:
-> > > 
-> > > qemu-system-x86_64: ../../devel/qemu/block/graph-lock.c:294:
-> > >  bdrv_graph_rdlock_main_loop: Assertion `!qemu_in_coroutine()' failed.
-> > > 
-> > > With -gdb I can get a back trace that looks like this:
-> > > 
-> > > Thread 1 "qemu-system-x86" received signal SIGABRT, Aborted.
-> > > 0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
-> > > --Type <RET> for more, q to quit, c to continue without paging--
-> > > #0  0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
-> > > #1  0x00007ffff4b4df3e in raise () from target:/lib64/libc.so.6
-> > > #2  0x00007ffff4b356d0 in abort () from target:/lib64/libc.so.6
-> > > #3  0x00007ffff4b35639 in __assert_fail_base.cold () from target:/lib64/libc.so.6
-> > > #4  0x0000555555574eae in bdrv_graph_rdlock_main_loop () at ../../devel/qemu/block/graph-lock.c:294
-> > > #5  0x0000555555aa2f43 in graph_lockable_auto_lock_mainloop (x=<optimized out>) at /home/thuth/devel/qemu/include/block/graph-lock.h:275
-> > > #6  block_crypto_read_func (block=<optimized out>, offset=4096, buf=0x555558324100 "", buflen=256000, opaque=0x555558a259d0, errp=0x555558a8c370)
-> > >     at ../../devel/qemu/block/crypto.c:71
-> > > #7  0x0000555555a5a308 in qcrypto_block_luks_load_key (block=block@entry=0x555558686ec0, slot_idx=slot_idx@entry=0,
-> > >     password=password@entry=0x555558626050 "hunter0", masterkey=masterkey@entry=0x55555886b2a0 "",
-> > >     readfunc=readfunc@entry=0x555555aa2f10 <block_crypto_read_func>, opaque=opaque@entry=0x555558a259d0, errp=0x555558a8c370)
-> > >     at ../../devel/qemu/crypto/block-luks.c:927
-> > > #8  0x0000555555a5ba7e in qcrypto_block_luks_find_key (block=0x555558686ec0, password=0x555558626050 "hunter0", masterkey=0x55555886b2a0 "",
-> > >     readfunc=0x555555aa2f10 <block_crypto_read_func>, opaque=0x555558a259d0, errp=0x555558a8c370) at ../../devel/qemu/crypto/block-luks.c:1045
-> > > #9  qcrypto_block_luks_amend_add_keyslot (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
-> > >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, opts_luks=0x7fffec5fff38, force=<optimized out>, errp=0x555558a8c370)
-> > >     at ../../devel/qemu/crypto/block-luks.c:1673
-> > > #10 qcrypto_block_luks_amend_options (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
-> > >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, options=0x7fffec5fff30, force=<optimized out>, errp=0x555558a8c370)
-> > >     at ../../devel/qemu/crypto/block-luks.c:1865
-> > > #11 0x0000555555aa3852 in block_crypto_amend_options_generic_luks (bs=<optimized out>, amend_options=<optimized out>, force=<optimized out>,
-> > >     errp=<optimized out>) at ../../devel/qemu/block/crypto.c:949
-> > > #12 0x0000555555aa38e9 in block_crypto_co_amend_luks (bs=<optimized out>, opts=<optimized out>, force=<optimized out>, errp=<optimized out>)
-> > >     at ../../devel/qemu/block/crypto.c:1008
-> > > #13 0x0000555555a96030 in blockdev_amend_run (job=0x555558a8c2b0, errp=0x555558a8c370) at ../../devel/qemu/block/amend.c:52
-> > > #14 0x0000555555a874ad in job_co_entry (opaque=0x555558a8c2b0) at ../../devel/qemu/job.c:1112
-> > > #15 0x0000555555bdc41b in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../../devel/qemu/util/coroutine-ucontext.c:175
-> > > #16 0x00007ffff4b68f70 in ?? () from target:/lib64/libc.so.6
-> > > #17 0x00007fffffffc310 in ?? ()
-> > > #18 0x0000000000000000 in ?? ()
-> > 
-> > Hm, so block_crypto_read_func() isn't prepared to be called in coroutine
-> > context, but block_crypto_co_amend_luks() still calls it from a
-> > coroutine. The indirection of going through QCrypto won't make it easier
-> > to fix this properly.
-> 
-> Historically block_crypto_read_func() didn't care/know whether it
-> was in a coroutine or not. Bisect tells me the regression was caused
-> by
-> 
->   commit 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
->   Author: Kevin Wolf <kwolf@redhat.com>
->   Date:   Fri Oct 27 17:53:33 2023 +0200
-> 
->     block: Protect bs->file with graph_lock
-> 
-> which added
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+
+> This commit introduces a possibility to migrate open chardev
+> socket fd through migration channel without reconnecting.
+>
+> For this, user should:
+>  - enable new migration capability local-char-socket
+>  - mark the socket by an option support-local-migration=true
+>  - on target add local-incoming=true option to the socket
+>
+> Motivation for the API:
+>
+> 1. We don't want to migrate all sockets. For example, QMP-connection is
+>    bad candidate, as it is separate on source and target. So, we need
+>    @support-local-migration option to mark sockets, which we want to
+>    migrate (after this series, we'll want to migrate chardev used to
+>    connect with vhost-user-server).
+>
+> 2. Still, for remote migration, we can't migrate any sockets, so, we
+>    need a capability, to enable/disable the whole feature.
+>
+> 3. And finally, we need a sign for the socket to not open a connection
+>    on initialization, but wait for incoming migration. We can't use
+>    @support-local-migration option for it, as it may be enabled, but we
+>    are in incoming-remote migration. Also, we can't rely on the
+>    migration capability, as user is free to setup capabilities before or
+>    after chardev creation, and it would be a bad precedent to create
+>    relations here.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+[...]
+
+> diff --git a/qapi/char.json b/qapi/char.json
+> index f0a53f742c..5b535c196a 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -280,11 +280,23 @@
+>  #     mutually exclusive with @reconnect.
+>  #     (default: 0) (Since: 9.2)
+>  #
+> +# @support-local-migration: The socket open file descriptor will
+> +#     migrate if this field is true and local-char-socket migration
+> +#     capability enabled (default: false) (Since: 10.2)
+> +#
+> +# @local-incoming: Do load open file descriptor for the socket
+> +#     on incoming migration. May be used only if QEMU is started
+> +#     for incoming migration and only together with local-char-socket
+> +#     migration capability (default: false) (Since: 10.2)
+> +#
+>  # Features:
+>  #
+>  # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+>  #     instead.
+>  #
+> +# @unstable: Members @support-local-migration and @local-incoming
+> +#            are experimental
+> +#
+>  # Since: 1.4
+>  ##
+>  { 'struct': 'ChardevSocket',
+> @@ -298,7 +310,9 @@
+>              '*tn3270': 'bool',
+>              '*websocket': 'bool',
+>              '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+> -            '*reconnect-ms': 'int' },
+> +            '*reconnect-ms': 'int',
+> +            '*support-local-migration': { 'type': 'bool', 'features': [ 'unstable' ] },
+> +            '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } },
+>    'base': 'ChardevCommon' }
 >  
->     GLOBAL_STATE_CODE();
->     GRAPH_RDLOCK_GUARD_MAINLOOP();
-> 
-> > It seems to me that while block_crypto_read/write_func are effectively
-> > no_coroutine_fn, qcrypto_block_amend_options() should really take
-> > function pointers that can be called from coroutines. It is called from
-> > both coroutine and non-coroutine code paths, so should the function
-> > pointers be coroutine_mixed_fn or do we want to change the callers?
-> >
-> > Either way, we should add the appropriate coroutine markers to the
-> > QCrypto interfaces to show the intention at least.
-> 
-> I'm unclear why QCrypto needs to know about coroutines at all ?
-> It just wants a function pointer that will send or recv a blob
-> of data. In the case of the block layer these functions end up
-> doing I/O via the block APIs, but QCrypto doesn't care about
-> this impl detail.
+>  ##
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 2387c21e9c..4f282d168e 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -517,6 +517,11 @@
+>  #     each RAM page.  Requires a migration URI that supports seeking,
+>  #     such as a file.  (since 9.0)
+>  #
+> +# @local-char-socket: Migrate socket chardevs open file descriptors.
+> +#     Only may be used when migration channel is unix socket. Only
+> +#     involves socket chardevs with "support-local-migration" option
+> +#     enabled.  (since 10.2)
+> +#
+>  # Features:
+>  #
+>  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> @@ -536,7 +541,8 @@
+>             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>             'validate-uuid', 'background-snapshot',
+>             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> -           'dirty-limit', 'mapped-ram'] }
+> +           'dirty-limit', 'mapped-ram',
+> +           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
+>  
+>  ##
+>  # @MigrationCapabilityStatus:
 
-Does a case where it's not in the context of the block layer even exist?
-The only callers of qcrypto_block_amend_options() are in block/crypto.c
-and block/qcow2.c. Apart from a test case, qcrypto_block_open() is the
-same.
+I understand why we need a knob to enable the feature.  A
+MigrationCapability looks fine to me.  We could perhaps come up with a
+better name, but let's leave that for later.
 
-And even ignoring the block layer, doing synchronous I/O outside of
-coroutines is arguably a bug anyway because that's a blocking operation
-that stops the mainloop from making progress.
+I'm unsure about making users mark the sockets (really: the sockets
+wrapped in a character device backend) to be migrated that way.
 
-But if we don't want to fix it at the QCrypto level, that makes the
-function pointer implicitly coroutine_mixed_fn and the function needs to
-be rewritten to check qemu_in_coroutine() and probably take the graph
-lock internally before calling bdrv_co_pread() in the coroutine case,
-unless we can prove that all callers already hold it. Unfortunately,
-function pointers still defeat TSA, so this proof will have to be
-manual.
+Which sockets are users supposed to mark, and how would they know?
 
-Kevin
+What happens when a user marks the QMP socket?  You called that a "bad
+candidate".
+
+Doesn't feel like good user interface design.
+
+Could QEMU decide (in principle) which sockets are suitable for
+sending down the migration channel?
+
+If yes, could we make it do the right thing automatically?  Or at least
+a check that stops the user from doing the wrong thing?
+
+[...]
 
 
