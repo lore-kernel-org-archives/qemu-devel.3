@@ -4,95 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBADCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA00CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux4hz-0005gj-TF; Fri, 12 Sep 2025 10:25:03 -0400
+	id 1ux4iM-0005xM-Fv; Fri, 12 Sep 2025 10:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1ux4hw-0005f2-A2
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:25:01 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1ux4hq-0003IJ-FH
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:24:58 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45b4d89217aso14262165e9.2
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 07:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757687089; x=1758291889; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ZyCCafLVvV0UlSRYrEruuSHnOO/jo644G6MfDusof/0=;
- b=jMQF0hrIbE++rQNGXmcEUQgF/hulslU9V0KTT2kUuC1btHHcs8RK9T4gnWA8EDkDkJ
- /GzUmmocw2ZZBGgiTF0MH2Cd8td7iC8O83ZgnpvkzlutX0urKc/bdrYxhoDHu1SGGotT
- IYcBBWccWmsRDT2BatyWUUDyPDmI5TUsFVLadtzXzx936U2MvIyYga1tiUQc18iG1ZWF
- /ZqdCLziiMneXnH00la/RPiiFRWNUsp2TXVTTMZIDjyRQByBDvwrr9rPkCc6cfRAZ1LN
- KdcfN+8aJNY406svdOOViV04vhQDFZWKysZNZSviKV6Dy00TCH31vW+OqH/Jfzn+S//p
- A1ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757687089; x=1758291889;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZyCCafLVvV0UlSRYrEruuSHnOO/jo644G6MfDusof/0=;
- b=F12kAg2vbWRjLaAXndvKrRjq6gdUYur0JEzpLHRezthTE2lNQLDILPuOezUHcIWFNw
- 6c2+aP4CgRcOv42LTU+bzWt0+OhS/2gpXZFwZLFzV+a/2kgbBhMnAg+N3QuLb2OGwnaU
- Xy5ZFHqBKHO1Fp6bPSdTp7sxtLCHT+Fc9PbIqUh/445deWtQo3ziGj5/stgdizmlSEOU
- W52gYr7CMdUIUbpt7ZOBcehKWcx2yyK/EoiiM6KWfGJ5C20mCE+wfGkIlfc7zQX2FnmX
- dEoRZlfvkndWiguU62jBYLeBfPTIwsI4UmgRG3JjQHBhjxRvr92xEFNS8njw8/NCn0su
- uXRQ==
-X-Gm-Message-State: AOJu0YyW96yb1NgK+RZqUt1xsHUF/3eGiw5GQ1c/CpS9ZiXG8i+j0Y/7
- ONaUGiD29pIEbsWVp234W/CrdfgfVkwTPzcwrdCBkmYBsO59bo8+B+ge
-X-Gm-Gg: ASbGncvouxbyqXf2Tbbov6bDrLEb4QFd3Xbme9pG82yceRzecKpmL01+m4Mkcq10nQw
- lIxLCgr/MeAq7cvM+EgJB5CarpDhcd6TRPRcbktX6m6Wv9OcxnWXuQ352Myg/rmfJw4FAz4t4Xm
- Lw0bQurKoblWKdV/Z/+JCXqmnNP6EyCWK74g7EsBNmKJHDkrgQo1esismf0/gO22GxmSaGl9U0C
- HvkUdEuMMFFuAPq4nA1FVP+60gFt2s3ATYsq+c4oRUW1kAzTEAhZhRD2BTO1tGpkiTMhTDcbIXt
- X7VjlPe77Mw+hD2bdxFRvxDZ4AVhDCiWMoJmM376nrEhtRtpzqOxK4c8MJqLlxbuIOcIGWyxklM
- FeHaBki6omoJI2vbh/jFNftfxmqHJcwKNm8ff6ziB43pkBuUsfecX1PBOyg==
-X-Google-Smtp-Source: AGHT+IH0Th07+gQJRkf8cLgaYEtz6KoW2mYxvKolAzW3RSaa9YdQ7qFxNC/U1W8bM/6GyJ9dLrfZbQ==
-X-Received: by 2002:a05:600c:45c4:b0:45d:f7f9:9822 with SMTP id
- 5b1f17b1804b1-45f211ef820mr35730975e9.12.1757687089161; 
- Fri, 12 Sep 2025 07:24:49 -0700 (PDT)
-Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e017b2a32sm67800485e9.18.2025.09.12.07.24.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 07:24:48 -0700 (PDT)
-Message-ID: <a37e5e5d594634d6cc73aa13b0853089a3964ec4.camel@gmail.com>
-Subject: Re: [PATCH v4 00/10] virtio-console: notify about the terminal size
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Laurent
- Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, Markus Armbruster
- <armbru@redhat.com>,  Eric Blake <eblake@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum	 <marcel.apfelbaum@gmail.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu	 <zhao1.liu@intel.com>, Szymon Lukasz
- <noh4hss@gmail.com>, "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=	
- <berrange@redhat.com>, Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Date: Fri, 12 Sep 2025 16:24:47 +0200
-In-Reply-To: <20250912042910-mutt-send-email-mst@kernel.org>
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <20250912042910-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ux4iJ-0005vm-Ow
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:25:23 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ux4iB-0003ab-Pa
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:25:23 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 09183C016F;
+ Fri, 12 Sep 2025 17:25:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b3c::1:2f] (unknown
+ [2a02:6bf:8080:b3c::1:2f])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 8PNaTs0GqqM0-cYXVvwCf; Fri, 12 Sep 2025 17:25:08 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757687108;
+ bh=Rt5WbGTY7r/RlvH96bkr+1KLHy6A23lZiYnVdqDcjgk=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=QNSWruB66MR3H/wI95ThQ/F4A9ZY2M51HFenoRnqBGkmnBeWV7tsdx84OzX+oRuI1
+ q+kKXwIZ70LRtJSbe0vYER9edjjAZV3t6TlMtK0rcWQ+xeahl94vO8TbF+tsd4pUmv
+ E5GJ473bjY6Qglb6Eur/U8lNLceDlR6Ws5z9N+yw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <ee11ef02-764a-42c2-a2ab-f1af489a86ae@yandex-team.ru>
+Date: Fri, 12 Sep 2025 17:25:08 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] qapi: net/tap: deprecate vhostforce option
+To: jasowang@redhat.com
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ devel@lists.libvirt.org
+References: <20250901153943.65235-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250901153943.65235-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,16 +78,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-09-12 at 04:41 -0400, Michael S. Tsirkin wrote:
+ping)
 
-> > The patch series in its current form provides no way to disable
-> > the console size functionality,
->=20
-> Well I see the console-size property, no?
+On 01.09.25 18:39, Vladimir Sementsov-Ogievskiy wrote:
+> This option doesn't make sense since long ago (10 years!)
+> commit 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X").
+> 
+> Prior 1e7398a140f7a6, to enable vhost for some specific kind of guests
+> (that don't have MSI-X support), you should have set vhostforce=on
+> (with vhost=on or unset).
+> 
+> Since 1e7398a140f7a6, guest type doesn't matter, all guests are equal
+> for vhost-enabling options logic.
+> 
+> The current logic is:
+>    vhost=on / vhost=off : vhostforce ignored, doesn't make sense
+>    vhost unset : vhostforce counts, enabling vhost
+> 
+> Currently you may enable vhost several ways:
+> - vhost=on
+> - vhostforce=on
+> - vhost=on + vhostforce=on
+> - and even vhost=on + vhostforce=off
+> 
+> - they are all equal.
+> 
+> Let's finally deprecate the extra option.
+> 
+> Also, fix @vhostforce documentation.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> ---
+> 
+> v3: - two spaces between sentences for vhostforce description
+>      - add r-b by Markus
+> 
+>   docs/about/deprecated.rst |  7 +++++++
+>   qapi/net.json             | 11 +++++++++--
+>   2 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index d50645a071..b17a5a41aa 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -516,6 +516,13 @@ Stream ``reconnect`` (since 9.2)
+>   The ``reconnect`` option only allows specifying second granularity timeouts,
+>   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+>   
+> +TAP ``vhostforce`` (since 10.2)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +The ``vhostforce`` option is redundant with the ``vhost`` option.
+> +If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
+> +
+> +
+>   VFIO device options
+>   '''''''''''''''''''
+>   
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 78bcc9871e..bab26e0c5d 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -346,13 +346,20 @@
+>   # @vhostfds: file descriptors of multiple already opened vhost net
+>   #     devices
+>   #
+> -# @vhostforce: vhost on for non-MSIX virtio guests
+> +# @vhostforce: enable vhost-net network accelerator.  Ignored when
+> +#    @vhost is set.
+>   #
+>   # @queues: number of queues to be created for multiqueue capable tap
+>   #
+>   # @poll-us: maximum number of microseconds that could be spent on busy
+>   #     polling for tap (since 2.7)
+>   #
+> +# Features:
+> +#
+> +# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
+> +#    option is redundant with the @vhost option. If they conflict,
+> +#    @vhost takes precedence.  Just use @vhost.
+> +#
+>   # Since: 1.2
+>   ##
+>   { 'struct': 'NetdevTapOptions',
+> @@ -369,7 +376,7 @@
+>       '*vhost':      'bool',
+>       '*vhostfd':    'str',
+>       '*vhostfds':   'str',
+> -    '*vhostforce': 'bool',
+> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
+>       '*queues':     'uint32',
+>       '*poll-us':    'uint32'} }
+>   
 
-That only disables the VIRTIO_CONSOLE_F_SIZE feature flag, but
-VIRTIO_CONSOLE_RESIZE messages will still be sent to multiport devices.
 
-I could of course change it to dislable those messages too. Shall I do
-so?
+-- 
+Best regards,
+Vladimir
 
