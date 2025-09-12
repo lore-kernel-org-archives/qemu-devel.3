@@ -4,76 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82C0CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4335CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux58f-0001YS-7o; Fri, 12 Sep 2025 10:52:38 -0400
+	id 1ux59l-0002s4-0W; Fri, 12 Sep 2025 10:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux58D-0001LH-E4
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:52:14 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ux59f-0002rj-Cy
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:53:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux588-0008CV-R0
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:52:08 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ux59a-0008KP-2X
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:53:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757688722;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1757688812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8SivYwmxhcrWx6IMF7LiJ3BDNqurAEuyyG92OCez6+A=;
- b=hincPQ1QJMA2BuaZuVoRy4rO+SnBoklXURrOLZPWxAuOnp1o8bO4Q+rgeAqhE9Vi9Tv+uO
- iowm8gYwy+0sMzk3KnJecXclwEXEnbvC696/3EnxXcFFw/DrREDXCBWhqUi+RWGno07/FH
- dfoYFKEdKV4NpJj1wb1T6ezw2eFTS3M=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7sbvxCNqbOKKZT97iQb8sjyjo8uIVsOZGY5+RyREqHk=;
+ b=T9ouq/43tYliWWgKQoSoeOlfDXy98uoHQeNd+pl2OikDqOuSkeyP/RXMVNfpUlpzXmHp6P
+ VnqaUm2mU8y9c2NZv4it/Ew/CXBJn8vxhPJVLlO6FmDg5aRa8dLylycZIgYApIHoQoXvf1
+ UBR8BYEhhnhFFCc6I+wbexUe4xznHPw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-Gt4KitLpP9W5ca0Lj9MWuQ-1; Fri,
- 12 Sep 2025 10:51:59 -0400
-X-MC-Unique: Gt4KitLpP9W5ca0Lj9MWuQ-1
-X-Mimecast-MFC-AGG-ID: Gt4KitLpP9W5ca0Lj9MWuQ_1757688718
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-PfCCmUWDPR688Z6sY6s0tw-1; Fri,
+ 12 Sep 2025 10:53:30 -0400
+X-MC-Unique: PfCCmUWDPR688Z6sY6s0tw-1
+X-Mimecast-MFC-AGG-ID: PfCCmUWDPR688Z6sY6s0tw_1757688809
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EB9A1800451; Fri, 12 Sep 2025 14:51:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.154])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7DB6300021A; Fri, 12 Sep 2025 14:51:53 +0000 (UTC)
-Date: Fri, 12 Sep 2025 15:51:50 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, peterx@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Coiby Xu <Coiby.Xu@gmail.com>
-Subject: Re: [PATCH 04/10] util: drop qemu_socket_set_nonblock()
-Message-ID: <aMQzhtn14Q4wZ-79@redhat.com>
-References: <20250903094411.1029449-1-vsementsov@yandex-team.ru>
- <20250903094411.1029449-5-vsementsov@yandex-team.ru>
- <aMFIhJp-GfOhv3AV@redhat.com>
- <2bfafcf7-7051-4c14-a580-fb33895a0a1a@yandex-team.ru>
- <aMHAQkYQ1kK4_yD_@redhat.com>
- <719b1b6e-524e-4993-9977-cbceaff2a776@yandex-team.ru>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 542E81800288; Fri, 12 Sep 2025 14:53:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.113])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C80FA19560BE; Fri, 12 Sep 2025 14:53:25 +0000 (UTC)
+Date: Fri, 12 Sep 2025 16:53:19 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
+ hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>
+Subject: Re: Some iotests are failing with -luks
+Message-ID: <aMQz383L7sjWiPV_@redhat.com>
+References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
+ <aMGijXg9XIpbbn-v@redhat.com>
+ <58d82de4-25ac-48f5-ae80-181faf2bf8cf@redhat.com>
+ <aMK8-4-xE0R7AnaK@redhat.com> <aMQs8pbZZPio0ikL@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <719b1b6e-524e-4993-9977-cbceaff2a776@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <aMQs8pbZZPio0ikL@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,58 +85,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 09:52:40PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 10.09.25 21:15, Daniel P. Berrangé wrote:
-> > On Wed, Sep 10, 2025 at 08:55:57PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > On 10.09.25 12:44, Daniel P. Berrangé wrote:
-> > > > > @@ -36,7 +37,11 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
-> > > > >            g_warning("error converting fd to gsocket: %s", strerror(errno));
-> > > > >            goto out;
-> > > > >        }
-> > > > > -    qemu_socket_set_nonblock(client_fd);
-> > > > > +    if (!qemu_set_blocking(client_fd, false, &err)) {
-> > > > > +        g_warning("errer: %s", error_get_pretty(err));
-> > > > s/errer/error/
+Am 12.09.2025 um 16:23 hat Daniel P. Berrang� geschrieben:
+> On Thu, Sep 11, 2025 at 02:13:47PM +0200, Kevin Wolf wrote:
+> > Am 11.09.2025 um 13:21 hat Thomas Huth geschrieben:
+> > > On 10/09/2025 18.08, Kevin Wolf wrote:
+> > > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
+> > > > > 
+> > > > >   Hi,
+> > > > > 
+> > > > > when running "./check -luks" in the qemu-iotests directory,
+> > > > > some tests are failing for me:
+> > > > > 
+> > > > > 295 296 inactive-node-nbd luks-detached-header
+> > > > > 
+> > > > > Is that a known problem already?
 > > > > 
+> > > > Not to me anyway.
 > > > > 
-> > > > This is a pre-existing problem, but none of this code should be using
-> > > > g_warning. g_printerr() should have been used for printing error
-> > > > messages. I'm not expecting you to fix that, just an observation.
+> > > > > FWIW, 295 is failing with the following output:
+> > > > > 
+> > > > > 295   fail       [17:03:01] [17:03:17]   15.7s                failed, exit status 1
+> > > > > [...]
+> > > > > +EWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=6 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=10 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > > +E
+> > > > > [...]
+> > > > > 
+> > > > > etc.
+> > > > > 
+> > > > > 296 looks very similar (also a "qemu received signal 6" error),
+> > > > > but the others look like this:
+> > > > 
+> > > > When it gets signal 6 (i.e. SIGABRT), that usually means that you should
+> > > > have a look at the coredump.
 > > > 
+> > > With "-p" I additionally get this error message in the log:
 > > > 
-> > > Why not g_error()? I see some g_warnings in qga code a correct "warnings", not "errors".. And if we use sometimes g_warning, the g_error is more correct pair for it.
+> > > qemu-system-x86_64: ../../devel/qemu/block/graph-lock.c:294:
+> > >  bdrv_graph_rdlock_main_loop: Assertion `!qemu_in_coroutine()' failed.
 > > > 
-> > > Or we don't want any of g_error / g_warning in QEMU code?
+> > > With -gdb I can get a back trace that looks like this:
+> > > 
+> > > Thread 1 "qemu-system-x86" received signal SIGABRT, Aborted.
+> > > 0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
+> > > --Type <RET> for more, q to quit, c to continue without paging--
+> > > #0  0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
+> > > #1  0x00007ffff4b4df3e in raise () from target:/lib64/libc.so.6
+> > > #2  0x00007ffff4b356d0 in abort () from target:/lib64/libc.so.6
+> > > #3  0x00007ffff4b35639 in __assert_fail_base.cold () from target:/lib64/libc.so.6
+> > > #4  0x0000555555574eae in bdrv_graph_rdlock_main_loop () at ../../devel/qemu/block/graph-lock.c:294
+> > > #5  0x0000555555aa2f43 in graph_lockable_auto_lock_mainloop (x=<optimized out>) at /home/thuth/devel/qemu/include/block/graph-lock.h:275
+> > > #6  block_crypto_read_func (block=<optimized out>, offset=4096, buf=0x555558324100 "", buflen=256000, opaque=0x555558a259d0, errp=0x555558a8c370)
+> > >     at ../../devel/qemu/block/crypto.c:71
+> > > #7  0x0000555555a5a308 in qcrypto_block_luks_load_key (block=block@entry=0x555558686ec0, slot_idx=slot_idx@entry=0,
+> > >     password=password@entry=0x555558626050 "hunter0", masterkey=masterkey@entry=0x55555886b2a0 "",
+> > >     readfunc=readfunc@entry=0x555555aa2f10 <block_crypto_read_func>, opaque=opaque@entry=0x555558a259d0, errp=0x555558a8c370)
+> > >     at ../../devel/qemu/crypto/block-luks.c:927
+> > > #8  0x0000555555a5ba7e in qcrypto_block_luks_find_key (block=0x555558686ec0, password=0x555558626050 "hunter0", masterkey=0x55555886b2a0 "",
+> > >     readfunc=0x555555aa2f10 <block_crypto_read_func>, opaque=0x555558a259d0, errp=0x555558a8c370) at ../../devel/qemu/crypto/block-luks.c:1045
+> > > #9  qcrypto_block_luks_amend_add_keyslot (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
+> > >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, opts_luks=0x7fffec5fff38, force=<optimized out>, errp=0x555558a8c370)
+> > >     at ../../devel/qemu/crypto/block-luks.c:1673
+> > > #10 qcrypto_block_luks_amend_options (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
+> > >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, options=0x7fffec5fff30, force=<optimized out>, errp=0x555558a8c370)
+> > >     at ../../devel/qemu/crypto/block-luks.c:1865
+> > > #11 0x0000555555aa3852 in block_crypto_amend_options_generic_luks (bs=<optimized out>, amend_options=<optimized out>, force=<optimized out>,
+> > >     errp=<optimized out>) at ../../devel/qemu/block/crypto.c:949
+> > > #12 0x0000555555aa38e9 in block_crypto_co_amend_luks (bs=<optimized out>, opts=<optimized out>, force=<optimized out>, errp=<optimized out>)
+> > >     at ../../devel/qemu/block/crypto.c:1008
+> > > #13 0x0000555555a96030 in blockdev_amend_run (job=0x555558a8c2b0, errp=0x555558a8c370) at ../../devel/qemu/block/amend.c:52
+> > > #14 0x0000555555a874ad in job_co_entry (opaque=0x555558a8c2b0) at ../../devel/qemu/job.c:1112
+> > > #15 0x0000555555bdc41b in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../../devel/qemu/util/coroutine-ucontext.c:175
+> > > #16 0x00007ffff4b68f70 in ?? () from target:/lib64/libc.so.6
+> > > #17 0x00007fffffffc310 in ?? ()
+> > > #18 0x0000000000000000 in ?? ()
 > > 
-> > g_error will call abort() after printing the message, which will
-> > prevent graceful cleanup and result in a core file, so is not
-> > very desirable to use.
+> > Hm, so block_crypto_read_func() isn't prepared to be called in coroutine
+> > context, but block_crypto_co_amend_luks() still calls it from a
+> > coroutine. The indirection of going through QCrypto won't make it easier
+> > to fix this properly.
 > 
-> Oh, right, I was stupid)
+> Historically block_crypto_read_func() didn't care/know whether it
+> was in a coroutine or not. Bisect tells me the regression was caused
+> by
 > 
-> > 
-> > g_warning will also turn into g_error if G_DEBUG=fatal-warnings
-> > is set.
-> > 
-> > We really just want a plain message printed on the console with
-> > no side effects, and g_printerr gives us that.
-> > 
-> > 
+>   commit 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
+>   Author: Kevin Wolf <kwolf@redhat.com>
+>   Date:   Fri Oct 27 17:53:33 2023 +0200
 > 
-> Still, it's strange for me, that we just not use error_reprot()/warn_report() everywhere.
+>     block: Protect bs->file with graph_lock
+> 
+> which added
+>  
+>     GLOBAL_STATE_CODE();
+>     GRAPH_RDLOCK_GUARD_MAINLOOP();
+> 
+> > It seems to me that while block_crypto_read/write_func are effectively
+> > no_coroutine_fn, qcrypto_block_amend_options() should really take
+> > function pointers that can be called from coroutines. It is called from
+> > both coroutine and non-coroutine code paths, so should the function
+> > pointers be coroutine_mixed_fn or do we want to change the callers?
+> >
+> > Either way, we should add the appropriate coroutine markers to the
+> > QCrypto interfaces to show the intention at least.
+> 
+> I'm unclear why QCrypto needs to know about coroutines at all ?
+> It just wants a function pointer that will send or recv a blob
+> of data. In the case of the block layer these functions end up
+> doing I/O via the block APIs, but QCrypto doesn't care about
+> this impl detail.
 
-Those would be viable alternatives too. Basically anything is better
-than 'g_warning' for this scenario :-)
+Does a case where it's not in the context of the block layer even exist?
+The only callers of qcrypto_block_amend_options() are in block/crypto.c
+and block/qcow2.c. Apart from a test case, qcrypto_block_open() is the
+same.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+And even ignoring the block layer, doing synchronous I/O outside of
+coroutines is arguably a bug anyway because that's a blocking operation
+that stops the mainloop from making progress.
+
+But if we don't want to fix it at the QCrypto level, that makes the
+function pointer implicitly coroutine_mixed_fn and the function needs to
+be rewritten to check qemu_in_coroutine() and probably take the graph
+lock internally before calling bdrv_co_pread() in the coroutine case,
+unless we can prove that all callers already hold it. Unfortunately,
+function pointers still defeat TSA, so this proof will have to be
+manual.
+
+Kevin
 
 
