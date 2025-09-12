@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40B3CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 18:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 495D0CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 20:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux8cM-0002HR-14; Fri, 12 Sep 2025 14:35:30 -0400
+	id 1uxAUI-0001oN-VT; Fri, 12 Sep 2025 16:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux8cJ-0002Gr-PR
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 14:35:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uxAUH-0001oB-Fb
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 16:35:17 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux8cG-0007fQ-D0
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 14:35:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757702120;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=znZhsJ4laQoT+tSC7lxKl5ciNrIyMx1U0a3qnP82zuY=;
- b=S4wzo9BMd9FbSupnYLSun88AGVS5T3apLJczpbufTuvLZTc4SS726fIzkZPc8v+xA1UdGK
- /r0TAYi5CWEzMxGJyLqbjbZbbVvFH/bo6SdGp6RBjRAhZ5aroeN69+NExPSqDHSQxH26L1
- oVfMAgOwrGFntgT1pqP7+XxtWSztQxY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-UC17OQTZPx-C0HsCZ-g5pA-1; Fri,
- 12 Sep 2025 14:35:18 -0400
-X-MC-Unique: UC17OQTZPx-C0HsCZ-g5pA-1
-X-Mimecast-MFC-AGG-ID: UC17OQTZPx-C0HsCZ-g5pA_1757702118
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCD6A19107D8; Fri, 12 Sep 2025 18:35:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.154])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9964918004D8; Fri, 12 Sep 2025 18:35:14 +0000 (UTC)
-Date: Fri, 12 Sep 2025 19:35:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
- hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>
-Subject: Re: Some iotests are failing with -luks
-Message-ID: <aMRn31T1Id5ceFjX@redhat.com>
-References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
- <aMGijXg9XIpbbn-v@redhat.com>
- <58d82de4-25ac-48f5-ae80-181faf2bf8cf@redhat.com>
- <aMK8-4-xE0R7AnaK@redhat.com> <aMQs8pbZZPio0ikL@redhat.com>
- <aMQz383L7sjWiPV_@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uxAUF-00013G-9l
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 16:35:17 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 37151153200;
+ Fri, 12 Sep 2025 23:34:59 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4475627EB78;
+ Fri, 12 Sep 2025 23:35:01 +0300 (MSK)
+Message-ID: <c6aa3d2a-dfc6-4303-9a47-e0e2c3ffb2a5@tls.msk.ru>
+Date: Fri, 12 Sep 2025 23:35:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMQz383L7sjWiPV_@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: Helge Deller <deller@gmx.de>
+Cc: QEMU Development <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: seabios-hppa: is it acpi-aware?
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,92 +98,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 04:53:19PM +0200, Kevin Wolf wrote:
-> Am 12.09.2025 um 16:23 hat Daniel P. Berrangé geschrieben:
-> > On Thu, Sep 11, 2025 at 02:13:47PM +0200, Kevin Wolf wrote:
-> > > Hm, so block_crypto_read_func() isn't prepared to be called in coroutine
-> > > context, but block_crypto_co_amend_luks() still calls it from a
-> > > coroutine. The indirection of going through QCrypto won't make it easier
-> > > to fix this properly.
-> > 
-> > Historically block_crypto_read_func() didn't care/know whether it
-> > was in a coroutine or not. Bisect tells me the regression was caused
-> > by
-> > 
-> >   commit 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
-> >   Author: Kevin Wolf <kwolf@redhat.com>
-> >   Date:   Fri Oct 27 17:53:33 2023 +0200
-> > 
-> >     block: Protect bs->file with graph_lock
-> > 
-> > which added
-> >  
-> >     GLOBAL_STATE_CODE();
-> >     GRAPH_RDLOCK_GUARD_MAINLOOP();
-> > 
-> > > It seems to me that while block_crypto_read/write_func are effectively
-> > > no_coroutine_fn, qcrypto_block_amend_options() should really take
-> > > function pointers that can be called from coroutines. It is called from
-> > > both coroutine and non-coroutine code paths, so should the function
-> > > pointers be coroutine_mixed_fn or do we want to change the callers?
-> > >
-> > > Either way, we should add the appropriate coroutine markers to the
-> > > QCrypto interfaces to show the intention at least.
-> > 
-> > I'm unclear why QCrypto needs to know about coroutines at all ?
-> > It just wants a function pointer that will send or recv a blob
-> > of data. In the case of the block layer these functions end up
-> > doing I/O via the block APIs, but QCrypto doesn't care about
-> > this impl detail.
-> 
-> Does a case where it's not in the context of the block layer even exist?
+Hi!
 
-Only the unit tests.
+Does seabios-hppa needs ACPI?
 
-> The only callers of qcrypto_block_amend_options() are in block/crypto.c
-> and block/qcow2.c. Apart from a test case, qcrypto_block_open() is the
-> same.
+When building, it embeds the acpi tables (src/fw/acpi-dsdt.hex etc).
+But I don't see any mentions of acpi in hppa-related qemu source
+files.
 
-Yep
+I just noticed I don't (re)build them in debian, and wonder why they
+used for, to begin with?
 
-> And even ignoring the block layer, doing synchronous I/O outside of
-> coroutines is arguably a bug anyway because that's a blocking operation
-> that stops the mainloop from making progress.
+Thanks,
 
-More generally, simply opening a LUKS volume can also impose a significant
-delay because key validation is intentionally slow in wallclock time. So we
-should get a minimum of 1 second delay, but if given an image created on a
-significantly faster machine (or a malicious image), the larger 'iterations'
-count could make us take way longer to open the image.
-
-I guess that's a potential problem too ?
-
-Amending the keys has the same performance penalty too as that involves
-same intentionally slow crypto
-
-> But if we don't want to fix it at the QCrypto level, that makes the
-> function pointer implicitly coroutine_mixed_fn and the function needs to
-> be rewritten to check qemu_in_coroutine() and probably take the graph
-> lock internally before calling bdrv_co_pread() in the coroutine case,
-> unless we can prove that all callers already hold it. Unfortunately,
-> function pointers still defeat TSA, so this proof will have to be
-> manual.
-
-So IIUC the 'open' operation is not in a coroutine, while the
-'amend' operation is in a coroutine ?
-
-IIUC the coroutine_mixed_fn is expanding to a no-op. What is the
-actual functional fix needed to stop the crash ?
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+/mjt
 
