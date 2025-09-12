@@ -4,115 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB34CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 16:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B579CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 16:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux6xd-00024a-5g; Fri, 12 Sep 2025 12:49:21 -0400
+	id 1ux6zt-0007mX-73; Fri, 12 Sep 2025 12:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ux6xQ-0001nJ-IO; Fri, 12 Sep 2025 12:49:08 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ux6zi-0007QN-C6
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 12:51:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ux6xO-0008Kw-Ax; Fri, 12 Sep 2025 12:49:08 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58CFg2ND017852;
- Fri, 12 Sep 2025 16:49:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Yp1rnR
- m1mtU0vDWAQJsbETwPEQ8gne7OPoZdYcgKjfU=; b=D4U++dRbifylIyvBeIG9fA
- VIcRnAmiGptuLUFWVoGenSst+L1Z6N73KIpiYGYU4uCVwifT8X5+JMvjy9M1nY/G
- Rhj5757vOQDw2BM/MEUXwsR0my6QTEwGLYY/Xkaj6Lam71vYeV/NRf3kwDdioA18
- pupI9SmfRQsg9Ksyd18lhw/yWQvGUi8Wp0UhVblESXH7S6RuAWKisnqqGPGCvGcm
- FYgn9ReIZY/TUh6pzpa0ycFcJ6dgUsQEUUXZ3jopJtFW3M0wlu4+tTdt4/0VHRDk
- KW2K+D0d7ujgrTYm08lrcMnIO7Ev3YlL2dx385WRCZUpmh3mDDapE1e6xpYzn0sQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490bctbbve-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Sep 2025 16:49:04 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58CGlWaP015883;
- Fri, 12 Sep 2025 16:49:03 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490bctbbvb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Sep 2025 16:49:03 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58CE5kkG007982;
- Fri, 12 Sep 2025 16:49:03 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49109q3wtv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Sep 2025 16:49:03 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58CGn1WM54002060
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Sep 2025 16:49:01 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25B835805E;
- Fri, 12 Sep 2025 16:49:01 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B08315805A;
- Fri, 12 Sep 2025 16:49:00 +0000 (GMT)
-Received: from mglenn-KVM.. (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 12 Sep 2025 16:49:00 +0000 (GMT)
-From: Glenn Miles <milesg@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
- npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
- rathc@linux.ibm.com, richard.henderson@linaro.org
-Subject: [PATCH v4 9/9] tests/functional: Add test for IBM PPE42 instructions
-Date: Fri, 12 Sep 2025 11:47:37 -0500
-Message-ID: <20250912164808.371944-10-milesg@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250912164808.371944-1-milesg@linux.ibm.com>
-References: <20250912164808.371944-1-milesg@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ux6zf-0000EP-4E
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 12:51:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757695885;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vmAsHjULGLQJBdHfodyBxFSKZ6/V5ppyuSPWZvJGAgc=;
+ b=IIi0D2WmLAhXJXjSRhXuVRivwNsMKlsGJfdpAEUmTxqxXpQfWLsoZCIyK/14nD7h14pvZB
+ DAu8A1DUYIvjdPEOluN18ctH8hS+xaj66qwdmzcKvOmws/yEUZc+InR+GDYdBwW/DYvknN
+ yeJsmwE4S9d7tiLiHd4IlL/oxQxVggc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-u28FXBgoOIWlCsp_hmaSKQ-1; Fri,
+ 12 Sep 2025 12:51:22 -0400
+X-MC-Unique: u28FXBgoOIWlCsp_hmaSKQ-1
+X-Mimecast-MFC-AGG-ID: u28FXBgoOIWlCsp_hmaSKQ_1757695881
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0398B180057F; Fri, 12 Sep 2025 16:51:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.154])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 092FD30002CA; Fri, 12 Sep 2025 16:51:17 +0000 (UTC)
+Date: Fri, 12 Sep 2025 17:51:13 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: Re: [PATCH v2 3/8] util: add qemu_set_blocking() function
+Message-ID: <aMRPgVbdZWaG8PXS@redhat.com>
+References: <20250911092007.1370002-1-vsementsov@yandex-team.ru>
+ <20250911092007.1370002-4-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxMCBTYWx0ZWRfX3NxSkJs3xwAt
- +YqvjkA7UuEoK3bnZZGo/AxRCOSIU3BJ0IuL5HTGeeowPQlbJRMIzC4rskjyU5rSqxdIu9lvqby
- aC7rrL9MzlBZ88ofmoGx+q2DRj1S/awBmbeEVNeE3cRg+tRYaWZOllmooHd5i6YR7QElSKY/wcb
- 5dd3SDKN4MM16rtnO5n8B4mlSUhq94kjNmTiLxQnq/gU0ZqeVYujAIdD3iuHhU4YvcxoAT0wSjQ
- 2g+myKAPzxAXa+qXjO6nl3y/Iju6gpDtcXBnvRTSz6TYlqJwX0RnaxK2Py2wiu8gfvP/s/vuXnJ
- Uf8ogRXzSRxDzUDm98BFSlcTDNfHx/gb1NA8t1wNKMz56ryZtXgFGKM6dWmXtdiqhzamttG8Y9H
- 7SQXScaE
-X-Authority-Analysis: v=2.4 cv=SKNCVPvH c=1 sm=1 tr=0 ts=68c44f00 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8 a=up-X0YpDAAAA:8 a=WP5zsaevAAAA:8
- a=NUakdCcs51WeiAtREWwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22 a=86FmjZgct7XXK6GGpxvI:22 a=t8Kx07QrZZTALmIZmm-o:22
-X-Proofpoint-GUID: 0pAwxREzxDXG9aGAOFmeG5R9FIC9L0pB
-X-Proofpoint-ORIG-GUID: d6-NYIPA_Gx_1a2GoQCsRowGeG0NyP6U
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-12_06,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060010
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20250911092007.1370002-4-vsementsov@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,147 +87,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a functional test for the IBM PPE42 instructions which
-downloads a test image from a public github repo and then
-loads and executes the image.
-(see https://github.com/milesg-github/ppe42-tests for details)
+On Thu, Sep 11, 2025 at 12:20:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> In generic code we have qio_channel_set_blocking(), which takes
+> bool parameter, and qemu_file_set_blocking(), which as well takes
+> bool parameter.
+> 
+> At lower fd-layer we have a mess of functions:
+> 
+> - enough direct calls to Unix-specific g_unix_set_fd_nonblocking()
+> (of course, all calls are out of Windows-compatible code), which
+> is glib specific with GError, which we can't use, and have to
+> handle error-reporting by hand after the call.
+> 
+> and several platform-agnostic qemu_* helpers:
+> 
+> - qemu_socket_set_nonblock(), which asserts success for posix (still,
+>   in most cases we can handle the error in better way) and ignores
+>   error for win32 realization
+> 
+> - qemu_socket_try_set_nonblock(), providing and error, but not errp,
+> so we have to handle it after the call
+> 
+> - qemu_socket_set_block(), which simply ignores an error
+> 
+> Note, that *_socket_* word in original API, which we are going
+> to substitute was intended, because Windows support these operations
+> only for sockets. What leads to solution of dropping it again?
+> 
+> 1. Having a QEMU-native wrapper with errp parameter
+> for g_unix_set_fd_nonblocking() for non-socket fds worth doing,
+> at least to unify error handling.
+> 
+> 2. So, if try to keep _socket_ vs _file_ words, we'll have two
+> actually duplicated functions for Linux, which actually will
+> be executed successfully on any (good enough) fds, and nothing
+> prevent using them improperly except for the name. That doesn't
+> look good.
+> 
+> 3. Naming helped us in the world where we crash on errors or
+> ignore them. Now, with errp parameter, callers are intended to
+> proper error checking. And for places where we really OK with
+> crash-on-error semantics (like tests), we have an explicit
+> &error_abort.
+> 
+> So, this commit starts a series, which will effectively revert
+> commit ff5927baa7ffb9 "util: rename qemu_*block() socket functions"
+> (which in turn was reverting f9e8cacc5557e43
+> "oslib-posix: rename socket_set_nonblock() to qemu_set_nonblock()",
+> so that's a long story).
+> Now we don't simply rename, instead we provide the new API and
+> update all the callers.
+> 
+> This commit only introduces a new fd-layer wrapper. Next commits
+> will replace old API calls with it, and finally remove old API.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  include/qemu/osdep.h |  1 +
+>  util/oslib-posix.c   | 15 +++++++++++++++
+>  util/oslib-win32.c   | 18 ++++++++++++++++++
+>  3 files changed, 34 insertions(+)
 
-Test status is checked by periodically issuing 'info register'
-commands and checking the NIP value.  If the NIP is 0xFFF80200
-then the test successfully executed to completion.  If the
-machine stops before the test completes or if a 90 second
-timeout is reached, then the test is marked as having failed.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-This test does not test any PowerPC instructions as it is
-expected that these instructions are well covered in other
-tests.  Only instructions that are unique to the IBM PPE42
-processor are tested.
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
-Changes from v3:
-  - Rebase required moving test into tests/functional/ppc
-
- MAINTAINERS                        |  1 +
- tests/functional/ppc/meson.build   |  1 +
- tests/functional/ppc/test_ppe42.py | 79 ++++++++++++++++++++++++++++++
- 3 files changed, 81 insertions(+)
- create mode 100644 tests/functional/ppc/test_ppe42.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 33ff9f14be..e20bab9b2a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1535,6 +1535,7 @@ M: Glenn Miles <milesg@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: hw/ppc/ppe42_machine.c
-+F: tests/functional/ppc/test_ppe42.py
- 
- PReP
- M: Hervé Poussineau <hpoussin@reactos.org>
-diff --git a/tests/functional/ppc/meson.build b/tests/functional/ppc/meson.build
-index 3d562010d8..ae061fe5a6 100644
---- a/tests/functional/ppc/meson.build
-+++ b/tests/functional/ppc/meson.build
-@@ -15,6 +15,7 @@ tests_ppc_system_thorough = [
-   'bamboo',
-   'mac',
-   'mpc8544ds',
-+  'ppe42',
-   'replay',
-   'sam460ex',
-   'tuxrun',
-diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-new file mode 100644
-index 0000000000..26bbe11b2d
---- /dev/null
-+++ b/tests/functional/ppc/test_ppe42.py
-@@ -0,0 +1,79 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the IBM PPE42 processor
-+#
-+# Copyright (c) 2025, IBM Corporation
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import QemuSystemTest, Asset
-+import asyncio
-+
-+class Ppe42Machine(QemuSystemTest):
-+
-+    timeout = 90
-+    poll_period = 1.0
-+
-+    ASSET_PPE42_TEST_IMAGE = Asset(
-+        ('https://github.com/milesg-github/ppe42-tests/raw/refs/heads/main/'
-+         'images/ppe42-test.out'),
-+        '03c1ac0fb7f6c025102a02776a93b35101dae7c14b75e4eab36a337e39042ea8')
-+
-+    def _test_completed(self):
-+        self.log.info("Checking for test completion...")
-+        try:
-+            output = self.vm.cmd('human-monitor-command',
-+                                 command_line='info registers')
-+        except Exception as err:
-+            self.log.debug(f"'info registers' cmd failed due to {err=},"
-+                            " {type(err)=}")
-+            raise
-+
-+        self.log.info(output)
-+        if "NIP fff80200" in output:
-+            self.log.info("<test completed>")
-+            return True
-+        else:
-+            self.log.info("<test not completed>")
-+            return False
-+
-+    def _wait_pass_fail(self, timeout):
-+        while not self._test_completed():
-+            if timeout >= self.poll_period:
-+                timeout = timeout - self.poll_period
-+                self.log.info(f"Waiting {self.poll_period} seconds for test"
-+                               " to complete...")
-+                e = None
-+                try:
-+                    e = self.vm.event_wait('STOP', self.poll_period)
-+
-+                except asyncio.TimeoutError:
-+                    self.log.info("Poll period ended.")
-+                    pass
-+
-+                except Exception as err:
-+                    self.log.debug(f"event_wait() failed due to {err=},"
-+                                    " {type(err)=}")
-+                    raise
-+
-+                if e != None:
-+                    self.log.debug(f"Execution stopped: {e}")
-+                    self.log.debug("Exiting due to test failure")
-+                    self.fail("Failure detected!")
-+                    break
-+            else:
-+                self.fail("Timed out waiting for test completion.")
-+
-+    def test_ppe42_instructions(self):
-+        self.set_machine('ppe42_machine')
-+        self.require_accelerator("tcg")
-+        image_path = self.ASSET_PPE42_TEST_IMAGE.fetch()
-+        self.vm.add_args('-nographic')
-+        self.vm.add_args('-device', f'loader,file={image_path}')
-+        self.vm.add_args('-device', 'loader,addr=0xfff80040,cpu-num=0')
-+        self.vm.add_args('-action', 'panic=pause')
-+        self.vm.launch()
-+        self._wait_pass_fail(self.timeout)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
