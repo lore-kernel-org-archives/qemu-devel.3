@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB1DFCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE96CAC58F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux5RI-0003Xe-N5; Fri, 12 Sep 2025 11:11:52 -0400
+	id 1ux5e2-0008US-WE; Fri, 12 Sep 2025 11:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux5Qx-0003Ux-42
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:11:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5dw-0008TZ-CZ
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:24:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ux5Qs-0002l7-Uk
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:11:30 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5dt-0004eU-M0
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:24:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757689876;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1757690690;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QCuls3ActUOdscIFQliUqDOlTaeTdzP3gvn/XMXkgX0=;
- b=DpPZ2aj4IKRC2dJprP290E7jiIPbFGnYVpqmtk5t/InBF71s/mPJ4M/8+6yoORPt7w7L7g
- R7Xb+TwgV5eHGN9IyWzsFVys32yYT9jaleDqtbvw6P4hWsBzuxJ8Yc1Y5ulFa5gF1OQz23
- 1WYgpSltfA7FNcr22JZ7wnuLqmJIf/A=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-IVhn3uQvOGiS0p-0x-5cjw-1; Fri,
- 12 Sep 2025 11:11:14 -0400
-X-MC-Unique: IVhn3uQvOGiS0p-0x-5cjw-1
-X-Mimecast-MFC-AGG-ID: IVhn3uQvOGiS0p-0x-5cjw_1757689872
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C47311800577; Fri, 12 Sep 2025 15:11:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.154])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2F021800451; Fri, 12 Sep 2025 15:11:07 +0000 (UTC)
-Date: Fri, 12 Sep 2025 16:11:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 09/20] ui/vnc: remove use of error_printf_unless_qmp()
-Message-ID: <aMQ4CHyGN5D_HyiC@redhat.com>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-10-berrange@redhat.com>
- <74df1365-b9d7-448d-9edd-4a25b8dbf6a2@linaro.org>
+ bh=BI7NQZDsHpptl+69ZLHqHqt7XzpXOCRk9KoYawQIovc=;
+ b=i7vQqgHYc3Ft/mKXAuf9wDrmJtSZ/vO0ebNm55qIkEjAgOIZX+6V64CJD4uOJyOoThhapY
+ SxQjaOjNVcFUI1K27eTlB+rYuhQxZKNhy88fkMfDUZ4SzRR6EAgL15iMPEtDsyCOsO844F
+ d1/7/D8Sp83WE2DiKTHicKAiBZPRRZU=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-416-0yByNRUEOfe7LzpwUivznA-1; Fri, 12 Sep 2025 11:24:48 -0400
+X-MC-Unique: 0yByNRUEOfe7LzpwUivznA-1
+X-Mimecast-MFC-AGG-ID: 0yByNRUEOfe7LzpwUivznA_1757690688
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4b633847b94so52638301cf.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 08:24:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757690688; x=1758295488;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BI7NQZDsHpptl+69ZLHqHqt7XzpXOCRk9KoYawQIovc=;
+ b=sMiDwVV7irBSgj97bakaoganhXBBfgPVcNIxmmx106wEOyN16M9VMIvA/MbZ9A929p
+ XyIaFXWUn1pWsUPAx6K98TSp80dfNaIhuUm95JmupUMFrEEep5uZhTPYsL93KIxaBEzN
+ ZUoYoTl9ZgR22nSMAKJSzjfmcM8+0X5ZOwIWZHZNiiiOjoCexlk5eQqb4sf2VdtCDvTm
+ 2Wc7yyybro4K9+x4E0si3XPu1rGzeZ7p2CKiOOzZWLGbHOvbUdiELNwt+bKlg85sMxgK
+ hRQG90uYIf3Wiz7j7OgXbp0T1KTeTcIQ0/adufFj9zOcl7udomV8rOMYYe9Jgjuxbh3P
+ SvMw==
+X-Gm-Message-State: AOJu0Yy02wrkypSuSB1kyo8qvxcFoG8fRn/SJVqwS/775m+D9+yeiOnr
+ AbYsJZ1FezuaxnrH2QxV+TsfX4CZL+vvQGF4vWzXNHJIIjMmvzEbxtJFiq9ZVfFjK8z9bEzXY4U
+ vE0w6XX1BIoUD5534tc+9uibRLeYaK3NcBOdKAprRS7Y4zoIMbdR0rZ1o
+X-Gm-Gg: ASbGnctgZz9FyZafl5260k2dOHIK7lPA2StpM2CTuSDInwsF+OtrXAUdx55uptYyPhs
+ PS3oYv/tRLs393diDPvzarPhSjCinGQLmBovZjEu5pgQfG0YPzrfRsbHpeSsD74v63N+v2JJsWQ
+ Q6CIkkTowQqvc4tVoXS2AfnSbrjfSFHJTXy1YkadHlN5+0JF0OzMKgABVt2v5FoQuO8At0eTG7L
+ RrX9c85AeT8SOYNygRRnmKDD3sbGyyHzoyE6ix3SYGaguMmXgyJuQM+mSsdrMwX2FbQValnVCsJ
+ xvAkEZnwYlwLgHPd3rOOw/zKx4seiEjw
+X-Received: by 2002:a05:622a:1813:b0:4b5:f7d4:3a0a with SMTP id
+ d75a77b69052e-4b77d044460mr41054061cf.52.1757690687830; 
+ Fri, 12 Sep 2025 08:24:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhLCY4YW7DIQL7hGU8c2PMrOHU8COf165kwKKckd9u/PjZFdnbOKqXYrxCPb/MMKrokCKvZg==
+X-Received: by 2002:a05:622a:1813:b0:4b5:f7d4:3a0a with SMTP id
+ d75a77b69052e-4b77d044460mr41053521cf.52.1757690687120; 
+ Fri, 12 Sep 2025 08:24:47 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b639b98927sm25623581cf.1.2025.09.12.08.24.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Sep 2025 08:24:46 -0700 (PDT)
+Date: Fri, 12 Sep 2025 11:24:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 1/3] io/crypto: Move tls premature termination
+ handling into QIO layer
+Message-ID: <aMQ7MgPj_TQKvdXN@x1.local>
+References: <20250911212355.1943494-1-peterx@redhat.com>
+ <20250911212355.1943494-2-peterx@redhat.com>
+ <aMQBehejwDPEO5C1@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <74df1365-b9d7-448d-9edd-4a25b8dbf6a2@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <aMQBehejwDPEO5C1@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,7 +93,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,66 +106,188 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 11, 2025 at 05:54:48PM +0000, Richard Henderson wrote:
-> On 9/10/25 18:03, Daniel P. Berrangé wrote:
-> > The error_printf_unless_qmp() will print to the monitor if the current
-> > one is HMP, if it is QMP nothing will be printed, otherwise stderr
-> > will be used.
+On Fri, Sep 12, 2025 at 12:18:18PM +0100, Daniel P. Berrangé wrote:
+> On Thu, Sep 11, 2025 at 05:23:53PM -0400, Peter Xu wrote:
+> > QCryptoTLSSession allows TLS premature termination in two cases, one of the
+> > case is when the channel shutdown() is invoked on READ side.
 > > 
-> > This scenario is easily handled by checking !monitor_cur_is_qmp() and
-> > then calling the error_printf() function.
+> > It's possible the shutdown() happened after the read thread blocked at
+> > gnutls_record_recv().  In this case, we should allow the premature
+> > termination to happen.
 > > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > The problem is by the time qcrypto_tls_session_read() was invoked,
+> > tioc->shutdown may not have been set, so this may instead be treated as an
+> > error if there is concurrent shutdown() calls.
+> > 
+> > To allow the flag to reflect the latest status of tioc->shutdown, move the
+> > check upper into the QIOChannel level, so as to read the flag only after
+> > QEMU gets an GNUTLS_E_PREMATURE_TERMINATION.
+> > 
+> > When at it, introduce qio_channel_tls_allow_premature_termination() helper
+> > to make the condition checks easier to read.
+> > 
+> > This patch will fix a qemu qtest warning when running the preempt tls test,
+> > reporting premature termination:
+> > 
+> > QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --full -r /x86_64/migration/postcopy/preempt/tls/psk
+> > ...
+> > qemu-kvm: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+> > ...
+> > 
+> > In this specific case, the error was set by postcopy_preempt_thread, which
+> > normally will be concurrently shutdown()ed by the main thread.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
 > > ---
-> >   ui/vnc.c | 14 +++++++++-----
-> >   1 file changed, 9 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/ui/vnc.c b/ui/vnc.c
-> > index 68ca4a68e7..439d586358 100644
-> > --- a/ui/vnc.c
-> > +++ b/ui/vnc.c
-> > @@ -3530,8 +3530,10 @@ int vnc_display_password(const char *id, const char *password)
-> >           return -EINVAL;
-> >       }
-> >       if (vd->auth == VNC_AUTH_NONE) {
-> > -        error_printf_unless_qmp("If you want use passwords please enable "
-> > -                                "password auth using '-vnc ${dpy},password'.\n");
-> > +        if (!monitor_cur_is_qmp()) {
-> > +            error_printf("If you want use passwords please enable "
-> > +                         "password auth using '-vnc ${dpy},password'.\n");
-> > +        }
-> >           return -EINVAL;
-> >       }
-> > @@ -3570,9 +3572,11 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
-> >           qapi_free_SocketAddress(addr);
-> >           return;
-> >       }
-> > -    error_printf_unless_qmp("VNC server running on %s:%s\n",
-> > -                            addr->u.inet.host,
-> > -                            addr->u.inet.port);
-> > +    if (!monitor_cur_is_qmp()) {
-> > +        error_printf("VNC server running on %s:%s\n",
-> > +                     addr->u.inet.host,
-> > +                     addr->u.inet.port);
-> > +    }
-> >       qapi_free_SocketAddress(addr);
-> >   }
+> >  include/crypto/tlssession.h |  7 +------
+> >  crypto/tlssession.c         |  7 ++-----
+> >  io/channel-tls.c            | 21 +++++++++++++++++++--
+> >  3 files changed, 22 insertions(+), 13 deletions(-)
 > 
-> With monitor_cur_hmp, you can use monitor_printf directly.
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> > diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
+> > index 2f62ce2d67..6b4fcadee7 100644
+> > --- a/include/crypto/tlssession.h
+> > +++ b/include/crypto/tlssession.h
+> > @@ -110,6 +110,7 @@
+> >  typedef struct QCryptoTLSSession QCryptoTLSSession;
+> >  
+> >  #define QCRYPTO_TLS_SESSION_ERR_BLOCK -2
+> > +#define QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION -3
+> >  
+> >  /**
+> >   * qcrypto_tls_session_new:
+> > @@ -259,7 +260,6 @@ ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
+> >   * @sess: the TLS session object
+> >   * @buf: to fill with plain text received
+> >   * @len: the length of @buf
+> > - * @gracefulTermination: treat premature termination as graceful EOF
+> >   * @errp: pointer to hold returned error object
+> >   *
+> >   * Receive up to @len bytes of data from the remote peer
+> > @@ -267,10 +267,6 @@ ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
+> >   * qcrypto_tls_session_set_callbacks(), decrypt it and
+> >   * store it in @buf.
+> >   *
+> > - * If @gracefulTermination is true, then a premature termination
+> > - * of the TLS session will be treated as indicating EOF, as
+> > - * opposed to an error.
+> > - *
+> 
+> 
+> Could you say something about QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION
+> being a possible return code here (no need to repost just for that). 
 
-We still need to be able to print to stderr when there is neither HMP
-nor QMP, which error_printf gets us, but monitor_printf would not.
+Definitely, I overlooked the doc there..
 
+I'll squash this when repost:
 
-With regards,
-Daniel
+diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
+index 6b4fcadee7..2e9fe11cf6 100644
+--- a/include/crypto/tlssession.h
++++ b/include/crypto/tlssession.h
+@@ -273,7 +273,8 @@ ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
+  *
+  * Returns: the number of bytes received,
+  * or QCRYPTO_TLS_SESSION_ERR_BLOCK if the receive would block,
+- * or -1 on error.
++ * or QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION if a premature termination
++ * is detected, or -1 on error.
+  */
+ ssize_t qcrypto_tls_session_read(QCryptoTLSSession *sess,
+                                  char *buf,
+
+> 
+> >   * It is an error to call this before
+> >   * qcrypto_tls_session_handshake() returns
+> >   * QCRYPTO_TLS_HANDSHAKE_COMPLETE
+> > @@ -282,7 +278,6 @@ ssize_t qcrypto_tls_session_write(QCryptoTLSSession *sess,
+> >  ssize_t qcrypto_tls_session_read(QCryptoTLSSession *sess,
+> >                                   char *buf,
+> >                                   size_t len,
+> > -                                 bool gracefulTermination,
+> >                                   Error **errp);
+> >  
+> >  /**
+> 
+> > +static bool
+> > +qio_channel_tls_allow_premature_termination(QIOChannelTLS *tioc, int flags)
+> > +{
+> > +    if (flags & QIO_CHANNEL_READ_FLAG_RELAXED_EOF) {
+> > +        return true;
+> > +    }
+> > +
+> > +    if (qatomic_read(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ) {
+> > +        return true;
+> > +    }
+> > +
+> > +    return false;
+> > +}
+> >  
+> >  static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+> >                                       const struct iovec *iov,
+> > @@ -364,8 +377,6 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+> >              tioc->session,
+> >              iov[i].iov_base,
+> >              iov[i].iov_len,
+> > -            flags & QIO_CHANNEL_READ_FLAG_RELAXED_EOF ||
+> > -            qatomic_load_acquire(&tioc->shutdown) & QIO_CHANNEL_SHUTDOWN_READ,
+> >              errp);
+> 
+> 
+> The original code uses qatomic_load_acquire() while the new code
+> uses qatomic_read() which imposes weaker ordering constraints.
+> 
+> Does this matter ? I'm not familiar enough with atomics to say
+> which we need here ?
+
+My bad, I explicitly changed it but I forgot to mention it in the commit
+message.
+
+I don't think we need memory barriers here, because memory barriers are
+only used to describe ordering of at least more than one memory operation.
+Here we sololy want to read the flag which implies whether a shutdown READ
+was initiated, so IMHO qatomic_read() is the thing we want.  Comparing to
+raw access to tioc->shutdown, it's almost "volatile" making sure we fetch
+from memory, so when another thread modifies it on the fly we'll see.
+
+I'll explain it in the commit message when repost.
+
+Thanks,
+
+> 
+> >          if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+> >              if (got) {
+> > @@ -373,6 +384,12 @@ static ssize_t qio_channel_tls_readv(QIOChannel *ioc,
+> >              } else {
+> >                  return QIO_CHANNEL_ERR_BLOCK;
+> >              }
+> > +        } else if (ret == QCRYPTO_TLS_SESSION_PREMATURE_TERMINATION) {
+> > +            if (qio_channel_tls_allow_premature_termination(tioc, flags)) {
+> > +                ret = 0;
+> > +            } else {
+> > +                return -1;
+> > +            }
+> >          } else if (ret < 0) {
+> >              return -1;
+> >          }
+> > -- 
+> > 2.50.1
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
