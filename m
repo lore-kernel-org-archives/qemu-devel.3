@@ -4,200 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFCACAC587
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 02:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F5ACAC587
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 02:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwtIX-0005sK-Kb; Thu, 11 Sep 2025 22:14:01 -0400
+	id 1uwtQq-0008I9-RW; Thu, 11 Sep 2025 22:22:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=343c7b6c6=wilfred.mallawa@wdc.com>)
- id 1uwtIU-0005lO-7M; Thu, 11 Sep 2025 22:13:58 -0400
-Received: from esa3.hgst.iphmx.com ([216.71.153.141])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=343c7b6c6=wilfred.mallawa@wdc.com>)
- id 1uwtIN-0005FP-Gn; Thu, 11 Sep 2025 22:13:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1757643231; x=1789179231;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=bzvl8LFZ8OpSAhtIwXRPOs5wM+Kyk6XTPErvXBxl8ss=;
- b=jgCK5aCLaA+Y2EAgQgNEYUlALmzoDmaB80/3pjN9l08q3P12JKcbhDek
- 5/VnSJ99mLVHV7tMMawyohTOExi9hDPul1+7ZUAl/YJCLNGPbii5bpPRm
- AfGcSjwiaOVS2sG03o1oJ7PD9aSHjpBnWtM+oSIt76AYUNXpSeyDUbYrv
- X7K6+fpFGKTDW67FN7X4OpufM32SmPBEGIx0Sn3c1QtvOfABOhd4v3E3h
- E+LBfK7/wvKeuuzVapoIzbLgi87Y9/iwO0Pdq5+dHdHeUKEYqeJKQtkEa
- ZlCLFHsh+dYZxt6Y28dKcgRX6or6L+ACDjjQclDDLsLdP4LB9b2ReMb3U g==;
-X-CSE-ConnectionGUID: uKQu1lCEQgeUds5l/kVbbQ==
-X-CSE-MsgGUID: ILXq3izgQUqUpfCNv/jyDw==
-X-IronPort-AV: E=Sophos;i="6.18,258,1751212800"; d="scan'208";a="117294469"
-Received: from mail-northcentralusazon11013007.outbound.protection.outlook.com
- (HELO CH4PR04CU002.outbound.protection.outlook.com) ([40.107.201.7])
- by ob1.hgst.iphmx.com with ESMTP; 12 Sep 2025 10:13:39 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cuqmZ2D3zAjD82Fcjdks82q8Ety1nQShu2AapPNizl0D+8RypOaXgaz5DRLoYSnXHQ1D/7nK29kKzsQERfTo0fglAccEmxy0kBFlfPOncmkSPAYG+l4wqZuBzT/ZivdFsXkyikzm3CNzZDswzVxH+zETsxsfzPRqu1Q0wDFfOIi9yQ1KOL/2JmrVBy6/kf0qQlipCV79GZ99bzk4Ko9ctimUTdZ+B/9eP1aSGCTB++3+ExZOnKxx4r6lW/La7pA5SW4Y6UZM0e3my96ZVjZUf1w+Ya8gikCmTwFBHGRy2TWfcHFMMGqKinfMpQAtW66tfQD3c8l4ZmOGRGw3wQ/SLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bzvl8LFZ8OpSAhtIwXRPOs5wM+Kyk6XTPErvXBxl8ss=;
- b=GH+EICX9RL8v6g3L+Vge/bbgciWABMSjpMxuzeW3a5KIwM/nfsIbeBzepuQ9gNGR7kSIP5CyZuOwhzmz81ohgq7UIsl0drokSO2SAjh7Jag4rBDJEP21a2JLXoKNcZcWA7GphhE7AKYAb0p8udXc0ovFMXyo87tCCsFJz4HhIRnaxND/x4FImgDtTFWrE9gUZiSAcny7WPB828r0YSzgBNd5UlFh9n/R1Yqn6morR3s3BYvZ8e/cFt4tNG8BToL3Euv4dRZU/+Lav2QPtlzfxPR7BmI5zvAfR089CUrNiK3uZ6Tf0MDHt2exEe3uVikBjgApXqNDqbjRK6TkpXx0gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uwtQp-0008Hf-23
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 22:22:35 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uwtQl-0006Fw-3T
+ for qemu-devel@nongnu.org; Thu, 11 Sep 2025 22:22:34 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-7e8704e9687so152291185a.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Sep 2025 19:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bzvl8LFZ8OpSAhtIwXRPOs5wM+Kyk6XTPErvXBxl8ss=;
- b=AQSWhhFU/BcwHL3se8+B/kY+E2yp75MmOSBAZ1kBz1hUQKmtB29koLvSgad356HM6Pie11izYXim1OCyBnWJYmhv1ZBcvlK9OsDP1WtKzc8L2+BO0VX/Na6+uYHqTxsjlqMmXbruwRpuHbMgBHVCb1bJcx26uncICk5uevu5k5k=
-Received: from PH0PR04MB8549.namprd04.prod.outlook.com (2603:10b6:510:294::20)
- by PH7PR04MB8682.namprd04.prod.outlook.com (2603:10b6:510:24d::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
- 2025 02:13:37 +0000
-Received: from PH0PR04MB8549.namprd04.prod.outlook.com
- ([fe80::5b38:4ce0:937:6d5e]) by PH0PR04MB8549.namprd04.prod.outlook.com
- ([fe80::5b38:4ce0:937:6d5e%4]) with mapi id 15.20.9031.014; Fri, 12 Sep 2025
- 02:13:36 +0000
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-To: "its@irrelevant.dk" <its@irrelevant.dk>
-CC: "hreitz@redhat.com" <hreitz@redhat.com>, Alistair Francis
- <Alistair.Francis@wdc.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "stefanha@redhat.com" <stefanha@redhat.com>, "fam@euphon.net"
- <fam@euphon.net>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "foss@defmacro.it" <foss@defmacro.it>, "kwolf@redhat.com" <kwolf@redhat.com>, 
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "kbusch@kernel.org" <kbusch@kernel.org>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v6 5/5] hw/nvme: connect SPDM over NVMe Security Send/Recv
-Thread-Topic: [PATCH v6 5/5] hw/nvme: connect SPDM over NVMe Security Send/Recv
-Thread-Index: AQHcIuGhcTqCkD26+UqwKX4VzXMh57SNhWkAgAFKg4A=
-Date: Fri, 12 Sep 2025 02:13:36 +0000
-Message-ID: <a16e627152815e95e6795ea5e685c2042910fadc.camel@wdc.com>
-References: <20250911060031.124683-1-wilfred.opensource@gmail.com>
- <20250911060031.124683-6-wilfred.opensource@gmail.com>
- <aMJsjobzyBEuny43@AALNPWKJENSEN.aal.scsc.local>
-In-Reply-To: <aMJsjobzyBEuny43@AALNPWKJENSEN.aal.scsc.local>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR04MB8549:EE_|PH7PR04MB8682:EE_
-x-ms-office365-filtering-correlation-id: f27f17af-9b15-4777-98e0-08ddf1a1fb54
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|19092799006|366016|376014|7416014|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?akRTTDJIbEJIa2xxL1ZKWGhYendGYzJUTkJ4WEd4ZlAwdnJ4UUttSWJ1c1pp?=
- =?utf-8?B?cTc3ZjJnVXZ4YVlqSFA2RU9QaFEvVFRlN0VBdktZSHdwS2N4dklJQTNIL3RU?=
- =?utf-8?B?TVYxWCtXdXBQaGhPNnNWRHQwek5qbEMwbnA4YzdoWG9YKzFWemxMNzFqYnBy?=
- =?utf-8?B?RU01SVB3akhKdVF2RzMreTFUYWdYVjFaclhRTWpWdy90dUlZZDVIdHZlamwz?=
- =?utf-8?B?Ti9tY2FMU0ZscVBSaFBOVWtXb2FJOE4yYkpjam5YTjU5aVpSN2pFTm00aitP?=
- =?utf-8?B?MFVDVmEzU05kM3lQRjN3NHAxVGljOS9XaXJISElkR3h5Wi9ZUHg4L3B6OWVz?=
- =?utf-8?B?Wi8zbmRVVE9zTEwzamdiSGVObXZualdjU1RCbjRRVlVLUnlPMmMzZW9ndDBl?=
- =?utf-8?B?R2s0alVLdUM3NUZ5OUFRb0Rlb1huMTY3bXhQd29OS0pDZi9zZG1Zaml0WXZr?=
- =?utf-8?B?M3lKY1RGL2FObXZFL3FaOEhBbDgwSnFpUlNWcW1wMDFYblJrMHpzOTV4bUpT?=
- =?utf-8?B?SnlCTG9RTnRPVFl1emtrUCtpS3lOeTBhcG9PQ3hvYW4rYzdNZmVNa3k3TGg2?=
- =?utf-8?B?Mm9YTC81aCtjd01ScWVLMFZBY3IwU3JCSkdTYXA1UXRManBLdWJRUHU1dHdH?=
- =?utf-8?B?dmhLQkNCMDBDYTF1blo1UTZCZ3ZWM1BCSGIwODhlN0Z6TW5PR0MraFg4L1RT?=
- =?utf-8?B?ZWdSSkZsYStjMHBudTl6UXdzZGFBMFZvYzRyaUtyU2tJL2NwUUdpVXh0Q2k5?=
- =?utf-8?B?VTdKelplNTAvdWxlSDg4VkpweWJwWTMwUVd2OTJpYXhYYXVndHJzc21NOXJV?=
- =?utf-8?B?WlVpZmRtZ0NvZ1hzVjBrYy9yWGNxNWZmOTdiaHZOTHBZUFdHckxTOGhPcDA1?=
- =?utf-8?B?SFVEQkQxNlpSKzBPaHIrK3JlNEo0RGlZdjVxV2xkTjMxVzVlVmphRERHdm92?=
- =?utf-8?B?Yys3ZWVQZzNkTWNKTzZHdzZPZkExUTRZdnFqTW5GZm9JRTY1NWI1anNyM29m?=
- =?utf-8?B?TW5TZ2FNeU04QktVbUcySlRwTnZXd25aRHZUWGdsblY3RTIxUGduekxVSzd6?=
- =?utf-8?B?U0M4NmNtb0dPakMvOXRKLzgyUWIzLzlpWDd0czExUE9pWU1xenhuWWJ6NDda?=
- =?utf-8?B?TlRHQW5ER25DZVEwSXZiL3Q0ZXBDSGY4LzZIeUVnT1ZyRjN6b2ZTMnpqK0pw?=
- =?utf-8?B?bFV4dWtMRU9FdWx3eG0vK1J1bDVyMjNzc3Rxa3pDTlo5dEVmdVBRYU44c3hs?=
- =?utf-8?B?Y0VvUEluS1VQcGgreDFCVGVNQjFDQy9XMTRvTkV0TGRFbTQ2SGdTblI1OXUw?=
- =?utf-8?B?MTJrYWNTOWRRdnIrOTB4YVcwbEtXOGFFd0NRWjhma0tCWERuSHNVOWRKbTlD?=
- =?utf-8?B?MmZDZ0swWnJWUE1SRElOYzlDc0JvbnhuenBBc095T29wR05oZEh3TFFJU2hz?=
- =?utf-8?B?SGVraDhLQzBhK3dKYXhwOHFvelRJY2tTZlUwL0lGWW9QWThNZmFMY0FIMDNR?=
- =?utf-8?B?cktzWktrVUVWcXllb0oyb0FRREdrZmxaN1IxckhDbGtkZldvand2bE8veDJB?=
- =?utf-8?B?TENETVI1NFB5TFJhN1gvdkdEV0c5ZkhHaU42eDg2aExpbUZySlhIeHJzQzFk?=
- =?utf-8?B?RFNnTE1zUzJWY1o1NW5pNHlXYWZPdHJhVWNTVGZuSUhFTEtLbTJZM2hzNFEw?=
- =?utf-8?B?WEFKcG9iUFNOQzdqUXhqM09WaHlCbjRtd09TdElpb3FJaStLam9DYlF4TEFC?=
- =?utf-8?B?cjVJdmtYQWIzTzVyc0JuZ3hsNVg5OWMyQk9tVS9MRnp2TFVzeUV0VmRWSUtZ?=
- =?utf-8?B?UUZBMWg5MW1jQ2VuMFlkdDdkVmMxbzBaNE5iUmNKNDBBdS9jdWVMQ3F5NHpP?=
- =?utf-8?B?eXVJd1NrOTJydkhFVzNoZk8yb08zUk0rVG5JbGNTajRpcVBhYlRvenpNb3Ax?=
- =?utf-8?B?WkJHVUFvQ1dpODFzNURHSVFmQ1pZaDBLcUc5MmZ6SkJVUzhHb0F5cXFrcXdV?=
- =?utf-8?Q?Xm1deF+OymAHTxX6zk7lf95no6C+kc=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR04MB8549.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(19092799006)(366016)(376014)(7416014)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Q0xWd0hlaU9pL2FxNTNhMXpyVHUreWhVQW5jZ0lDdWFzSU1TdVN1RStUYS9H?=
- =?utf-8?B?KzRhdFJGTGFQZ1NhMStoQzZhVG8vajROMHFGa240NUo5Vm9HVE84MkZnMlA1?=
- =?utf-8?B?ZzlwZ2VlOXdSdW9GSm1wb2FLT0krSUlpWU1tTHpldHZveW9xMlNpYzBuYlhZ?=
- =?utf-8?B?Zk55cnFJWitiWDBDVDF2ZHpEQjZxNE1jSTY4TThNbGdmSGorbTY0Mm5HNFB3?=
- =?utf-8?B?SGI3V2ZnSlR0UG5TK2EwWDkwb3BHRzZONjBOZE0wS2lSVkdWa3lZMDMzWGJa?=
- =?utf-8?B?MHd5YXRZd1NqeCs4MGpibm9VNTFYbGdYa1R0c3lVQ1g5TDl0Um42Si9oM1FN?=
- =?utf-8?B?UEg5d3RGbHZXNEp5anlidUg3UkYwRlBmRDRudzYzZXROVHBTbVdFOHBaQ2F5?=
- =?utf-8?B?Qzh6VGwranFzSWFnUXQxd3Q4dDlIeVVacDlFdWIwOHhsanZ4ekZ4TDNxRWw2?=
- =?utf-8?B?ZEx1aGVEeEswSkpzZlp2ZWRRRjNYa3pleWlhZFViVitvT3ZxZjFDZjBpUEZL?=
- =?utf-8?B?dWpIY1REU0txNi9UOFR4QkFsdU9vZFp6VjRua0Q5bGNnZnFkSFJUV3lWQkgy?=
- =?utf-8?B?YWZxRzBZM3E5QjIzZ1pPNUR4dzFaZ004QitHVFowTlNDamNnWXhYYTVNaDNQ?=
- =?utf-8?B?bUE2Tmg3UG52Y0xUODYvREREWGYzRTZiOURPY0lId09HcFBkcU9ubG5KSDdj?=
- =?utf-8?B?T25yZWdYMmk0eExIYUxXa0g5RkhvbVJZaGpCT21mT3JSNENHNnU4d255ZUFZ?=
- =?utf-8?B?bzVYb1h0UVNoOGM1UjJSVWxJZExNQ0ZsRjRDR05meklYeUlzRUsrUm80QkZm?=
- =?utf-8?B?RlNiVFZZYXluS0RZc0VITGw3elZUYWJrUm9zV2J2K0VQUjNqMGl2UmdGUEZq?=
- =?utf-8?B?dHlraVhGWlhraTl2OEJRMG8xcjFZbXFuVGRGNHhDd08xSDdCNU02UUN6QWJt?=
- =?utf-8?B?eTBZeGtVdFUwZEl6ZEQyemorczFNVko5aFlWQ2Jzb3c0WnNNdWU1aFk0U20r?=
- =?utf-8?B?dklBVGJmVGxZZDhqRGJKOWIvM2JoaGRMNzhuTVlxL2pPdGdpNStwOUF4UGY5?=
- =?utf-8?B?R0ExZ0lOZDJQb3ZFTUxTKysremJiMmw5THV0SWZESDFuYnl0b2JCczhpaHEv?=
- =?utf-8?B?OWRHWGhNRjBGYzFDUDRHTDArMXRaQ1lZVEhLZ3paWXQ0QmhnQk10NDhoZk8y?=
- =?utf-8?B?MDdGT3dUK2tJQyt2aXY1bDRnUUU2WjdzTjMrUmFXUmdHcGI0N3ArQ29GdWh2?=
- =?utf-8?B?R1BZeUkxWnFaVndKaHhpYVpBSU5kQ2lTZExmV3hna1JYRDdZaE5KSVREcmh2?=
- =?utf-8?B?NVpkU09HMlZKME5EbVZvTHF3YTNETTloWGhmSmN5cyt2SGZxUm9xV1I4N3Rw?=
- =?utf-8?B?cXQ5QktqTHFEU0VDdU5ZRzhoUHhjYy8wTTZrZUg0ZjBVZEpzSkVOeldmTEI1?=
- =?utf-8?B?OVF1dTQvaGxHR2lNdXFBS1YzdkltUEFhK3plUHFML1N5Um01dGV6dDd3d1pI?=
- =?utf-8?B?YXJ6Y0M5dlpKWVNpNXlkMjBRNlpvUmYxRmxibDgwM2s4SFEwMjZOTUdPaWxG?=
- =?utf-8?B?MGtuVDNZdjVwL1pXS0NsS0Jha2xjVXQxM3AzVWltbFhIOVE4c0dIZFlST3Fo?=
- =?utf-8?B?ZFlqaHZzeDJBZGNmNWpUZkhJNzAwT1R3RnI5enpDUzdOaUNySkJPTzZOelpQ?=
- =?utf-8?B?c3IraHFBdWV4czEzTmVFeHcyelRidVhvbDVyN1kyZlpuSjlNcmpnejFVSkVJ?=
- =?utf-8?B?dmxUbXQ5akk1VmpRM3VBNlYyZUJOZ2FjVWNmeVA5Y2xaR2UrSkozUjFHQXNk?=
- =?utf-8?B?WTVFdVBsMVRibTRjM3BQcitwT2Nma1QxU1pmTkZJalp3cXVqdEM1MERud1dh?=
- =?utf-8?B?NysrL3JIdE5vaDBWKzNMWlVNTFNzQURnU3RzNExkdHhvY1QyYzR3Mk1zZ1ht?=
- =?utf-8?B?bHF6K3pTMTVmcGNSdXp3MlJQUjVwbVRhMVV4Q2c1a2pwd3c4TEdaZlNuMkIx?=
- =?utf-8?B?blE5eFNORlNJUnB2a2l4dWZIU0xoV1EyUmY2cHVnWDA4cGo4SmJhWXFuTGpu?=
- =?utf-8?B?OENCQUhzb05ndUFVajMvMm5oRjBLeU9JWGxIbUl6cXBqSDVkdVM5MFREajAr?=
- =?utf-8?B?eFgvS3AwbTgxY2hXRHVMc2svandtKzhRREt1NFd2Y1JQZDR4WStKdTZUMU9s?=
- =?utf-8?B?b1E9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4A687609BABFF74BB68D8ED08EB79E6F@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ d=gmail.com; s=20230601; t=1757643746; x=1758248546; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XNGfVOHwOxsuG1+IlKfopeHk0m8RMByLbQO+DlJvGeE=;
+ b=GTR+X+Y0R1+gVI4EPj2Z5Un4MfAdNRprorIlhr0x55d6bGiVa3dHZ4YojtcebV71sP
+ 9rPFrZLBeXAJy693aMQluYf65Xn/Fs38RMug6t4URBobqpLeKOtkn4/Mbs3ISAunNVDK
+ vtTqW2CLJW/J3r3ZdaNJZ5rwxRVWZiXkO8VM+Bxyzo8guOcBTe9FKDL6DigdpRj0lTrF
+ b3u6fAH64vPUMWC7tSi0n/eX85K7eTXPwOQzRntSWVPjC6BZ7w0HBhldyuH92dU/oOSB
+ KhCX+Nd3UZJL0Jxnp9RIPSFKp9iNC0EvBJc17Mulr2eak9CB+bwGVWn3SLbEf1BOjgvS
+ pURw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757643746; x=1758248546;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XNGfVOHwOxsuG1+IlKfopeHk0m8RMByLbQO+DlJvGeE=;
+ b=Swkv0/KbCiNKOPF7N4EeaNTyhuTeA75/QGlx2IPE/k8/sLTljhuzp55fIhLobemKeW
+ J3gi/aLDWEP+CT7fFmO8PxjMl6oIFt5AoBevaIX/IjtcIE+kLShBFWPtT0bqJ36Esqoo
+ RYzYAZymgzpGBsnSODjpAzDdQ4NVjxMUUgleaFccGlhWi3k1R3GC4nYSx4UUWjdbPUe8
+ fSNJFPgDkQFm4Ru/BglvA5aYoAwxtrhhvvyGKVMlAFkSRhB1zum02ic0HrKfyWRYprJD
+ w2eD17xMd9S9ys6Gq/LMRTQeevcZ97G5tav2vKp9OK0W2MOzxQay8Z6a0U+HVyLR9cvM
+ qPmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMukObLsaM52jchY/j4ybPkjM+p/YprewMHDMjTbkMPpm7/40fxr5E7ED0LcspIoXB6zvtQFBgtcTF@nongnu.org
+X-Gm-Message-State: AOJu0YzikiVRMT+WvFY1e2csV0Gq2QckqKUSLEU6nx4xcmrhbpdltlXa
+ YtJ64VjhgGsV01UOGN10/VyHoxHAfoUhhn1g7CUw+xPhdQVPXLkZNAqO
+X-Gm-Gg: ASbGnctFVddOwa6xRILsbq/sRdYSy9ub9T1IwATIDt4E6BYVAtEIqxmEdIBrHxjBaIV
+ iMs9pLNrvfrJTPnjb6y/NwE7IvFTeD78PEDvFPla8xQV0a+FCCb0jDZljRuAESW2BPKKQGE7OCk
+ LBw9Qts7D0shlU4diYOU4dw4Hp8kFdQ6guTUJOeaFcKIVe/3qijsOh7SQLYtD66s16iPkY88TmA
+ xz7zP1zrWJ8hpIsGjg6tPD+q44IQmONjVGu2kMVvXIdSOkG5tkeSTBOldllFonnshtsn/8jfED4
+ x9MP7YEXNnEwowO386tXFsmCE1MeobrvLpXewXUJr3jvgJl6OUBwZ1PfGuQMM0/eyCU2/qbUwdT
+ 5MXJIZYPxdirBIuvOIIbq9dik91Y=
+X-Google-Smtp-Source: AGHT+IHVtuXca5QjEjQnbkgmShQiDWfazm7ar4GqJJt+/syQKvEDHfvC9HdyRTWiCeIVGI95zwOMtg==
+X-Received: by 2002:a05:620a:8a82:b0:81d:398d:fda8 with SMTP id
+ af79cd13be357-823fc1d4a80mr152939785a.22.1757643745788; 
+ Thu, 11 Sep 2025 19:22:25 -0700 (PDT)
+Received: from [192.168.0.156] ([45.62.219.80])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-820c8ac45a3sm198911985a.5.2025.09.11.19.22.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Sep 2025 19:22:25 -0700 (PDT)
+Message-ID: <f97b89e6-1faa-4f66-9630-99b7d387e90c@gmail.com>
+Date: Thu, 11 Sep 2025 22:22:24 -0400
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: zh0SEDOQ30w1i8U0JYGS4MOtFlU6jcnRGB4gG5HPWbFbgwHFq2ovIsPy+XmtHt3C7rDn1jrsXG6RXuw8q0Boo7PdOpzy8lr0dEFnpDRUFE7FoKJZVO5wTDxnad3D7ngXxRArAD57WtbNUdKo1nDYBHYSbEC0ljqzGpaPFYmJ0LUSl0FEIgu7c1G2o3cL7Vt7KGm6emSygxORnfnxISjFMH1xXdmIgRjXqNDxg6kQu5kq0ZFTY7SGUJl2qSWTViTlAcppmkv9UaS2ruNUHwwS8aoruAArGjhhYowZ1Fny34BPQmgRStz6GqsDGZ2CLu7rDzEQD0U4AchHcFiR/D+Jj3IWGYdFldLWd1svtu2eo/Tl4nwTnSWXkKZIblvrF5LsIlwFq5ErfExQGmxFoUCiiduzyaPVuoleDV7MTG07VQIsE7t5wcP+q2neMhh3jjUxvRq16C9CiMKSTlMbN/NXX6bORP5kQFcQw29K4Ep0aToddv++V0ALvnvrJgs5i3x7LJ8URq4/BsnB3p2Xi9EsPgvD6VR3M3us/69mA2GF80gA0aUNyUpwsOesAtJlV0T+frr+mcVzy8fIf3cpJAZhkCRn/3udjVM3PnftUGvDLwal42TTepq+V45wecVh/dsC
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR04MB8549.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f27f17af-9b15-4777-98e0-08ddf1a1fb54
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2025 02:13:36.4526 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: y4GY14WsqjSBmcyt/g7D40mTjW+dId67Mx3hiQVhlberMNeLUqftCwrifJR+X9tTahd6gK033ifTGhUmghJhEA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR04MB8682
-Received-SPF: pass client-ip=216.71.153.141;
- envelope-from=prvs=343c7b6c6=wilfred.mallawa@wdc.com; helo=esa3.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] iotests: add tests for FUSE-over-io_uring
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-5-hibriansong@gmail.com>
+ <20250909193830.GF218449@fedora>
+ <c280787c-0db5-4a63-8e22-ce50726e7ebe@gmail.com>
+ <20250910131418.GA246746@fedora>
+Content-Language: en-US
+From: Brian Song <hibriansong@gmail.com>
+In-Reply-To: <20250910131418.GA246746@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=hibriansong@gmail.com; helo=mail-qk1-x733.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -213,21 +108,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI1LTA5LTExIGF0IDA4OjMwICswMjAwLCBLbGF1cyBKZW5zZW4gd3JvdGU6DQo+
-IE9uIFNlcCAxMSAxNjowMCwgV2lsZnJlZCBNYWxsYXdhIHdyb3RlOg0KPiA+IEZyb206IFdpbGZy
-ZWQgTWFsbGF3YSA8d2lsZnJlZC5tYWxsYXdhQHdkYy5jb20+DQo+ID4gDQo+ID4gVGhpcyBwYXRj
-aCBleHRlbmRzIHRoZSBleGlzdGluZyBzdXBwb3J0IHdlIGhhdmUgZm9yIE5WTWUgd2l0aCBvbmx5
-DQo+ID4gRG9FDQo+ID4gdG8gYWxzbyBhZGQgc3VwcG9ydCB0byBTUERNIG92ZXIgdGhlIE5WTWUg
-U2VjdXJpdHkgU2VuZC9SZWN2DQo+ID4gY29tbWFuZHMuDQo+ID4gDQo+ID4gV2l0aCB0aGUgbmV3
-IGRlZmluaXRpb24gb2YgdGhlIGBzcGRtLXRyYW5zYCBhcmd1bWVudCwgdXNlcnMgY2FuDQo+ID4g
-c3BlY2lmeQ0KPiA+IGBzcGRtX3RyYW5zPW52bWVgIG9yIGBzcGRtX3RyYW5zPWRvZWAuIFRoaXMg
-YWxsb3dzIHVzIHRvIHNlbGVjdCB0aGUNCj4gPiBTUERNDQo+ID4gdHJhbnNwb3J0IHJlc3BlY3Rp
-dmVseS4gU1BETSBvdmVyIHRoZSBOVk1lIFNlY3VyaXR5IFNlbmQvUmVjdg0KPiA+IGNvbW1hbmRz
-DQo+ID4gYXJlIGRlZmluZWQgaW4gdGhlIERNVEYgRFNQMDI4Ni4NCj4gPiANCj4gPiBTaWduZWQt
-b2ZmLWJ5OiBXaWxmcmVkIE1hbGxhd2EgPHdpbGZyZWQubWFsbGF3YUB3ZGMuY29tPg0KPiA+IFJl
-dmlld2VkLWJ5OiBKb25hdGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+
-DQo+IA0KPiBMR1RNLiBPbmUgc21hbGwgbml0IGJlbG93IHRoYXQgSSBjYW4gZml4IHdoZW4gbWVy
-Z2luZyBpZiBhbm90aGVyDQo+IHJldmlzaW9uIGlzIG5vdCByb2xsZWQuDQpIZXkgS2xhdXMsDQoN
-CkkndmUgc2VudCBhIFY3IHdpdGggdGhpcyBhZGRyZXNzZWQuIFRoYW5rcyBmb3IgdGhlIGZlZWRi
-YWNrIQ0KDQpSZWdhcmRzLA0KV2lsZnJlZA0KDQpbLi4uXQ0K
+
+
+On 9/10/25 9:14 AM, Stefan Hajnoczi wrote:
+> On Tue, Sep 09, 2025 at 04:51:12PM -0400, Brian Song wrote:
+>>
+>>
+>> On 9/9/25 3:38 PM, Stefan Hajnoczi wrote:
+>>> On Fri, Aug 29, 2025 at 10:50:25PM -0400, Brian Song wrote:
+>>>> To test FUSE-over-io_uring, set the environment variable
+>>>> FUSE_OVER_IO_URING=1. This applies only when using the
+>>>> 'fuse' protocol.
+>>>>
+>>>> $ FUSE_OVER_IO_URING=1 ./check -fuse
+>>>>
+>>>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>>>> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+>>>> Signed-off-by: Brian Song <hibriansong@gmail.com>
+>>>> ---
+>>>>    tests/qemu-iotests/check     |  2 ++
+>>>>    tests/qemu-iotests/common.rc | 45 +++++++++++++++++++++++++++---------
+>>>>    2 files changed, 36 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
+>>>> index 545f9ec7bd..c6fa0f9e3d 100755
+>>>> --- a/tests/qemu-iotests/check
+>>>> +++ b/tests/qemu-iotests/check
+>>>> @@ -94,6 +94,8 @@ def make_argparser() -> argparse.ArgumentParser:
+>>>>            mg.add_argument('-' + fmt, dest='imgfmt', action='store_const',
+>>>>                            const=fmt, help=f'test {fmt}')
+>>>> +    # To test FUSE-over-io_uring, set the environment variable
+>>>> +    # FUSE_OVER_IO_URING=1. This applies only when using the 'fuse' protocol
+>>>>        protocol_list = ['file', 'rbd', 'nbd', 'ssh', 'nfs', 'fuse']
+>>>>        g_prt = p.add_argument_group(
+>>>>            '  image protocol options',
+>>>> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+>>>> index e977cb4eb6..f8b79c3810 100644
+>>>> --- a/tests/qemu-iotests/common.rc
+>>>> +++ b/tests/qemu-iotests/common.rc
+>>>> @@ -539,17 +539,38 @@ _make_test_img()
+>>>>            touch "$export_mp"
+>>>>            rm -f "$SOCK_DIR/fuse-output"
+>>>> -        # Usually, users would export formatted nodes.  But we present fuse as a
+>>>> -        # protocol-level driver here, so we have to leave the format to the
+>>>> -        # client.
+>>>> -        # Switch off allow-other, because in general we do not need it for
+>>>> -        # iotests.  The default allow-other=auto has the downside of printing a
+>>>> -        # fusermount error on its first attempt if allow_other is not
+>>>> -        # permissible, which we would need to filter.
+>>>
+>>> This comment applies to both branches of the if statement. I think
+>>> keeping it here is slightly better.
+>>>
+>>>> -        QSD_NEED_PID=y $QSD \
+>>>> -              --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
+>>>> -              --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
+>>>> -              &
+>>>> +        if [ -n "$FUSE_OVER_IO_URING" ]; then
+>>>> +            nr_cpu=$(nproc 2>/dev/null || echo 1)
+>>>> +            nr_iothreads=$((nr_cpu / 2))
+>>>> +            if [ $nr_iothreads -lt 1 ]; then
+>>>> +                nr_iothreads=1
+>>>> +            fi
+>>>
+>>> Please add a comment explaining that the purpose of this configuration
+>>> based on the number of CPUs is to test multiple IOThreads when the host
+>>> allows it, since that is a more interesting case then just 1 IOThread.
+>>> Many other configurations are possible as well, but not all of them can
+>>> be tested because the test matrix would be large.
+>>>
+>>>> +
+>>>> +            iothread_args=""
+>>>> +            iothread_export_args=""
+>>>> +            for ((i=0; i<$nr_iothreads; i++)); do
+>>>> +                iothread_args="$iothread_args --object iothread,id=iothread$i"
+>>>> +                iothread_export_args="$iothread_export_args,iothread.$i=iothread$i"
+>>>> +            done
+>>>> +
+>>>> +            QSD_NEED_PID=y $QSD \
+>>>> +                    $iothread_args \
+>>>> +                    --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
+>>>> +                    --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off,io-uring=on$iothread_export_args \
+>>>> +                &
+>>>> +        else
+>>>> +            # Usually, users would export formatted nodes.  But we present fuse as a
+>>>> +            # protocol-level driver here, so we have to leave the format to the
+>>>> +            # client.
+>>>> +            # Switch off allow-other, because in general we do not need it for
+>>>> +            # iotests.  The default allow-other=auto has the downside of printing a
+>>>> +            # fusermount error on its first attempt if allow_other is not
+>>>> +            # permissible, which we would need to filter.
+>>>> +            QSD_NEED_PID=y $QSD \
+>>>> +                --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
+>>>> +                --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
+>>>> +                &
+>>>> +        fi
+>>>>            pidfile="$QEMU_TEST_DIR/qemu-storage-daemon.pid"
+>>>> @@ -592,6 +613,8 @@ _rm_test_img()
+>>>>            kill "${FUSE_PIDS[index]}"
+>>>> +        sleep 1
+>>>> +
+>>>
+>>> What is the purpose of this sleep command?
+>>>
+>>
+>> I don’t exactly remember why. It might get stuck if there’s no sleep here. I
+>> remember we discussed this problem in earlier emails.
+> 
+> The purpose needs to be understood. Otherwise there is a good chance
+> that the test will fail randomly in a continuous integration environment
+> where things sometimes take a long time due to CPU contention.
+> 
+> Stefan
+
+I think the issue lies in our current approach of using df to check 
+whether the FUSE mount has been unmounted.
+
+When we traced df with strace, we found that its logic for checking the 
+mount point is:
+=> Call mount to read the system's mount information
+=> Use statfs() to get the filesystem statistics
+
+But our current test code exits with the following sequence:
+=> Kill the FUSE process
+=> The kernel starts cleaning up the FUSE mount point
+=> df calls statfs(), which requires communication with the FUSE process 
+But the FUSE process might still be cleaning up, causing the 
+communication to fail
+=> df then returns an error or stale information
+=> Our detection logic misinterprets this and immediately deletes the 
+mounted image
+
+Since we only need to check the system's mount information, we can just 
+call mount and grep "$img" to verify whether the image has been 
+successfully unmounted.
+
+Does it make sense?
+
+Brian
 
