@@ -4,218 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD029CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2FDCAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux4ar-0002Eb-Al; Fri, 12 Sep 2025 10:17:42 -0400
+	id 1ux4hB-0005VA-Tz; Fri, 12 Sep 2025 10:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1ux4ae-00026t-FM
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:17:29 -0400
-Received: from mail-co1nam11on20613.outbound.protection.outlook.com
- ([2a01:111:f403:2416::613]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ux4h6-0005UR-2E
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:24:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1ux4aY-00021X-HB
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:17:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W6JC7Ox9BUe7R4XrGx2ToiNCx/vnjmTuGCO/mJvswchTpUKwXEgelkCzNeHWI/0k9nglnIp81RlhoeY5i904vJ1cRp/ZgAktEjsuyyJsklcJMSD3MHC3+m1an7800ywkenDVJbH/JaewY+fXnjKroDmyqtejRfTeNF3Ju7OpwKAXbuZhQhH1t4izNZxhzII4PUv2PAxWsIGZDo3uWLWGR7nXgeIYyo9M6xArLNSjBDnxet1GnGx+n6MWlBANubo+47JhRA3IjjL7kDDwwlGMaLN6zzHrZoA9gQB7q+BC0eR9AM4FR7HQoUDWQgqXTM7beQm0uJGMF+cVjNlKC7FGWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+WSZRd1RHheyuZ5kDKnVasoHLXrYSMwotYHGF93Zld8=;
- b=MVWTaXj435Gzu9TY8AwrH6CFGUNM22foUO16VrPWrPJMdxa5QfDNeErjYk3XIHlGkq8jiS6CqOLWROpsHncpgAomWU0w7716MPWseWBLgCCazhrLiPx3iQUK2dkoFE2zIbLCx45A+c8SrRN9mLVd94FF791Y/EtbItLIF1j5zaOS0HCEPRS15rJhMj1SpNsvn0n+fR6ijLMYaA9gCcfGFyuv5vD8TDyCwtYAPnnFKmSIdjdH56pCyjzDjmS2wa21AYnlERe3lwTTF3L26JQ3D5ORmI3sUBA/OMsFOci/NY4R03XamcNStOZRBQW+/CveUh7n22/iWVSzDXtfqs1atA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+WSZRd1RHheyuZ5kDKnVasoHLXrYSMwotYHGF93Zld8=;
- b=BU0t4kKV2O7p8srzQnhojgt3rniKlkTw+ti8xkI/9uTRZua719WNI/TOygljwkCfyJCVRZD+UkVbwqGm8c8PFctoIwggVBYQNNksAlNeNqx2Ytx62FNBxChqEsP0ao37LJZzvyIWQXEq8OY4xAiLEKUMGTCP68QN2I67/I5zlUQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM4PR12MB5070.namprd12.prod.outlook.com (2603:10b6:5:389::22)
- by LV2PR12MB5798.namprd12.prod.outlook.com (2603:10b6:408:17a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
- 2025 14:17:14 +0000
-Received: from DM4PR12MB5070.namprd12.prod.outlook.com
- ([fe80::20a9:919e:fd6b:5a6e]) by DM4PR12MB5070.namprd12.prod.outlook.com
- ([fe80::20a9:919e:fd6b:5a6e%3]) with mapi id 15.20.9094.021; Fri, 12 Sep 2025
- 14:17:14 +0000
-Message-ID: <46c73e5c-70b2-4700-97aa-e5ed06cc622f@amd.com>
-Date: Fri, 12 Sep 2025 09:17:12 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 7/7] target/i386: SEV: Add support for enabling Secure
- AVIC SEV feature
-To: "Naveen N Rao (AMD)" <naveen@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Michael Roth <michael.roth@amd.com>,
- Neeraj Upadhyay <neeraj.upadhyay@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>
-References: <cover.1757589490.git.naveen@kernel.org>
- <632eaad0ef28943520a1285c8efb3d8a756e4624.1757589490.git.naveen@kernel.org>
-Content-Language: en-US
-From: Tom Lendacky <thomas.lendacky@amd.com>
-Autocrypt: addr=thomas.lendacky@amd.com; keydata=
- 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
- vFkWitqCJg==
-In-Reply-To: <632eaad0ef28943520a1285c8efb3d8a756e4624.1757589490.git.naveen@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7P222CA0029.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:124::23) To DM4PR12MB5070.namprd12.prod.outlook.com
- (2603:10b6:5:389::22)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ux4h2-000390-Oa
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:24:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757687040;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=5LO8a9BthN4thizunY1hOwda9VB0VVQfZZ7SKs8fZQs=;
+ b=aNoHh4LQs4LFNDi7JuqE+I0H8bj63gjjmW6qVX22qYl8yD6zJlyucIRWQplMsAXWHT7NCR
+ mqIl3uVW3kaIVszo4jfIIjtqY+4Fclaf8Vg0CHs+QpGwMdW4at+bN/vspTjMHelrYupzaM
+ 8NMTKM1EJH5VgvHLqQ1v3w6uNsokkWo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-zBUs880yNw-VNl6Md5PJiw-1; Fri,
+ 12 Sep 2025 10:23:54 -0400
+X-MC-Unique: zBUs880yNw-VNl6Md5PJiw-1
+X-Mimecast-MFC-AGG-ID: zBUs880yNw-VNl6Md5PJiw_1757687033
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27DFF18002C1; Fri, 12 Sep 2025 14:23:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.154])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7453E30002C8; Fri, 12 Sep 2025 14:23:50 +0000 (UTC)
+Date: Fri, 12 Sep 2025 15:23:46 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
+ hreitz@redhat.com, Maxim Levitsky <mlevitsk@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>
+Subject: Re: Some iotests are failing with -luks
+Message-ID: <aMQs8pbZZPio0ikL@redhat.com>
+References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
+ <aMGijXg9XIpbbn-v@redhat.com>
+ <58d82de4-25ac-48f5-ae80-181faf2bf8cf@redhat.com>
+ <aMK8-4-xE0R7AnaK@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5070:EE_|LV2PR12MB5798:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54d56cbb-bb45-4c6a-4a71-08ddf2071246
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bXJXRW1NbVQzZm1WRlZScFBRLy9WOXJjTk5WNTE3WGxIckJzUTNqMFJCOHYx?=
- =?utf-8?B?eTVZL1ZsUVFZL2hsVWNYZzNUTTF1YUhTcEROd0pPOG1xN0dXWWVIRUFCYi9j?=
- =?utf-8?B?dm54d1Z5KzdhNXpxSjRuSStwYzdFTjJNdDVNU0dTMms2dCt4dHl6dG9hSE93?=
- =?utf-8?B?K3hpNm9HdkVhTU5IL3pqUkFLRnVzSHY5RHM2UG5TdVdwN0VSdDBQd0hWeUpt?=
- =?utf-8?B?T0ZZTFhjNGFNcHc1VFpiVHc3aXgzMjZDc0M3c2l6UURGZmhUa3c2K29vRzIy?=
- =?utf-8?B?RFc3YmNyc1pZM0w0QS9HaE9reHpHYi9MVXJsc1d0Q0lhQ05LYmNhK1psR2Nz?=
- =?utf-8?B?aGR4WXk3ZW1GSysxM2Y2Z3FzbkY0QjdkaXkwcUprcnBjbjd2RHJaaFcxS0VM?=
- =?utf-8?B?QnRjZXJwYnJvQWoxeU8wR1VSTGZHY2phZXJRUFg2Z0ZJeDMwL1daU2g0OW9s?=
- =?utf-8?B?WXV1Sm1mQlpGRTNYNjc2NmJaSDFURTg5Zm9NYWJUVmU4K0g3SEMyMnBTVFBk?=
- =?utf-8?B?R0ZyVmxEY1ZSYzQ1UzZIZ3NIRlE5OGtMYXF2eWNGQnZOdHJWanAzSi8yQTh6?=
- =?utf-8?B?UEp0VmNVZUFrUkFxck9rckx6dzJibnI4eXNnNDlJK2FMSE8wc2Q2bnY2T3c2?=
- =?utf-8?B?QmM1VndYL3VxWlVDQ1NVMzUxc0dxaEpvaW1VbWdaR1BZeHQvNmpueGExZGV1?=
- =?utf-8?B?bEUwUEtkT0FvdEFJbkIzUTE4MmM5akRHMmpFZzJoajFnODQ5WVZTQ3VWZTN6?=
- =?utf-8?B?cHdSc1dobDRCcnN3eGUxMUxydzZrY2J6THp2OGVmWUZDRUlHN2c0RjcyYVh4?=
- =?utf-8?B?SGtKME9pUTRoek93cUxXbW5CeUJvc0tIbnQ0T0hyU3FEdzEvV3N3ZEh0N0xS?=
- =?utf-8?B?M0hFa0Y5UTVlQzkwdFFCcWZCNWc2VUN2Ty9iL2JEb0hFSU9UZEN1S251eTlR?=
- =?utf-8?B?S3NYM3hNMCtjNjVubjdYbFN0VXFoazhBbDBES1YwbmVBdzVSUFk0UmZBT2h5?=
- =?utf-8?B?TG5WNzBFTGNYL2h3MHhCWnFWdldjSW8xYmxpTFZuN3ZtMTdzKzVXQ0sxNUto?=
- =?utf-8?B?d2t0RldjTDBnaHhhYktHTlJtWllzK2JBZ0lRc2Q2ZG9uU2VRTWM0Q1Z4ZWM3?=
- =?utf-8?B?MTJQV0xkV1JTVTZyQWNOdjlQRGJoeElzNkNiV3RTcGRKMHZJNEp2ZFpvVXF3?=
- =?utf-8?B?Y21IQ3RVRUU4R2tXNTdscU16S3J0ZllwWHlYeW5nMVkySmlpa1JNTEhkazl6?=
- =?utf-8?B?OFF0THBzVUNtQVdYU2M3c08yUTRsSkNWYTVqOTF5N21DeHorblVTVlR3akpP?=
- =?utf-8?B?cEtYblVZK0VmN3RhNnlGeU5tZlBvaHpvUzNiZHoyRyt0bFNsdlhiRmtwUVFP?=
- =?utf-8?B?UTUxSlhpMDFCU1hVN08rL25VbnJzNWJJQ3N1eFhvVnBRQjgzbEIzUVAvcEt2?=
- =?utf-8?B?VUg4VzdsS0YyZDQrbG4vUndpaFNOcEFlQmJCWnNiTzVQbUlYWWs2OFdLV24r?=
- =?utf-8?B?YnozS2VHa3puNXZYZFo2WHNhVllFaityNjRjZ01wb2Z0YTQxN29BNjVhaWdL?=
- =?utf-8?B?RnF2SVdHbHlMekhGcG1wZTVsU09YeC9CVllGUHFSNzdoOWs4MExlTXNSUU5v?=
- =?utf-8?B?aFNlNUFNeXZtdGE4QjJKYm9vZEszd3BRSVh2a3RvUlB4VkxwdW5ZeHhVU0FR?=
- =?utf-8?B?NzQvTThiT0NYcEIrVjN2c2VydUZiL2ZqVzdrb3dWdjJ3cFFHeHBWb0crcFpu?=
- =?utf-8?B?Rkt5OU51Vk5aZ0JFVHJWbEU3S1lJUnpEeUZ2VWxKQU1rWXF5UjU0N0NjYXR3?=
- =?utf-8?B?Wk9uUXlIM0gzYXRoN21VSnVWeTdSTFBvZ05uZFBxNFBOWG9zcXZMYW1FczdF?=
- =?utf-8?B?UDBvbU5WNVhiSFluMUdPRlEzcmJvQ2NWb1A3bUJKamFQc3ZMUCs1VC83a2l5?=
- =?utf-8?Q?wzSEqamHT5Y=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5070.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UklCaXFSamRXT0Z4Mlk2Ly9vcURVZUFlcm1lUEVCV3Y1WXNwWlpxK1dqenpR?=
- =?utf-8?B?d255TEhzRWJHL2xsaXhrU0tyV0t5aTFIbTZuVUx2Q0QvR1FKWjRWc3JhSEJP?=
- =?utf-8?B?d3JZcVpiNnc5WEh4dHluUGoxQjdiSW5aVmIwTjV0dWJTalMvRE9WTmdBM0Qz?=
- =?utf-8?B?aEY5WUVNc0RkcW5qTFo2SHJVUm1HRFRmTzJUSk85N0h0WGZFU2w5RXdVSWpM?=
- =?utf-8?B?R1M0WFdkaWYwQmZZYVpqNk1RekhQcHl6QURKV2dFSndNaEszMHFZZWlCYkxi?=
- =?utf-8?B?aTV6RlBXMXRUWlljekRSSjNaYWNtcjEwcEFQQ2hOaFZ1ZG5jVm1uRDVGNVhj?=
- =?utf-8?B?Q3RrZGhtaWRCejNFc1pUWFhPamVXRVdTMkxCdTdXSTBXdEdaNDNJc1Jyak45?=
- =?utf-8?B?THg2aENnb1ZpV2VPR3ZhM2pKVURFZzZudWIwM1NpVGxva3E3ck1hU1lMeW0y?=
- =?utf-8?B?TEQyQWpicGZXazJEZ1o4Q3kvak1laUtvbmVtL2F6cjAxejZHelhleURnY0xG?=
- =?utf-8?B?a2xGTTlVYkhtZ3RpQnVMWWI3cytwekg5aDMwNldLL3pwdDNLNHppQnNtazFT?=
- =?utf-8?B?akRlWUlGZlViM1lrTjNWV0JlTHdyWXZHaFpXV1pycmZYRC9SdzNySkk2eW5M?=
- =?utf-8?B?ZkxSVDhYbWEwaDRnMzduYWd4MmVnRGxxL2JkbVIxc2FGYXBzWHNyMnR6Wjli?=
- =?utf-8?B?THA1NmpCeTRoaGYzZ1hIa2Z3MXM2aWxMUzlUd0lVNGxtMmVDQTc1bzZPK05E?=
- =?utf-8?B?YmxFM1RxVzhtdGg5a1V5eUhUclRvM01tZk10NnJ1R3hUeGZpNkdlQTZBVlN1?=
- =?utf-8?B?L0RNV0NCWXEyaXZOTXk4TWJUa0FERm5idnE0TklvUlB1RFBobkRHY0ZjdTVi?=
- =?utf-8?B?UkZwR3pWY0ErckkxbDluV01FVW1uK012VzBlbThMTW9BeW9zSlovbVN2cGJz?=
- =?utf-8?B?OUdnbVRnRkZNSFYrVG0zcEdYdW8waHhHeTE2Yk5POVRZVDFGM0VWY0dWMStR?=
- =?utf-8?B?ZVZhYzRQYXRoa2VGTjlQMk91TW9rZGtldFE3bS9lVlQxRnhQdFZwLyt2M1p4?=
- =?utf-8?B?UXJoeDA1Vk5CY2hDaEx6U1pTbTVUbTN4bDJxZUlKWW91dkkwWDBpNzRxc0di?=
- =?utf-8?B?b1ZSZU5lbmk3VWVJcnhCVTBTV3VzTmdObUV6Z1ZkU0Nsb2V5TUJML3Vkd3Fl?=
- =?utf-8?B?T0lMY0ZEam5YRExRR3MyRkMxVDQ0dWZQa1lzV2NvVk9FVWd3bkYvdFpsN1JJ?=
- =?utf-8?B?WHVMS1BTMnNTUXpuN0FHZmh4MUVIbjVDZk5ubERWWmlSOTY1ekJOVFhzL2JU?=
- =?utf-8?B?emhUQnFWMTFPNDVFaEJGZWZheWgzTTJqQ2huSlhHeGJLNVRHN2E2TTNScUJO?=
- =?utf-8?B?enF6V2VXK0g2dnZpd3ZRNjJVL1NSbXRoSGpnVDVTZ1QzbmdtK2RSdmgvK2lB?=
- =?utf-8?B?RU84b0RCNHkydXdaNDhibUxPY0RnQWE1dUVrVkViSEx0RVQyWGxYd2wxSTdO?=
- =?utf-8?B?ZUszeEdPa0ZLUEs0VW1JR2RydjF0T0tmeHFDVVBwRHdmSU51ZEVmM0g1OTQ5?=
- =?utf-8?B?K1dwMnhCa01SeGE1Tm1PSitCTWxLNDRVRE5xbkpFRW9IbzRDUkxERW90OG01?=
- =?utf-8?B?M1BTcDFTQ2I5blJ6UmtUQzl6bDBkcmZMNnh0akhGYmI2eDR3ZW5JcUxSR3VE?=
- =?utf-8?B?RGtOU014NmkyWEZqQjgzbXdmUk5yeVZlR0UweVU1eThPaTIza3p5TkRHcFVy?=
- =?utf-8?B?NXNrZnY4YVFVVDVVdjQ5UHF4MzdIeUVTcFNTOFlWZ3poZkYxdC9aK0hoTEx0?=
- =?utf-8?B?VFd4K08xNHJQM21CRXJUUWpUVFZvNEhlbTArbUg2TzRmeFl3Q2MwMk5wclBB?=
- =?utf-8?B?VVZsN3JROU4yV0VaTjFzZVhwTFhGdFQyMEEzVExFSjMvUFByc1VqVmVVc2VK?=
- =?utf-8?B?UXJFT0c0VnI1dWJYbmVWbHd1bXR4dlNrcEpuVmJsSDJMS0Z3bVVnR3hXZlhB?=
- =?utf-8?B?dmo0QkRNVTJpVUdhblE3QzVNdmg4bE1FU0Iza2tZbXdBMzVPN25idGo2dUJ5?=
- =?utf-8?B?bi9heC91K3VYbFFqUi9MSWIvVmJzeWl3ZVFReWJnVWJrR0hYbHYvK0Q4WU1E?=
- =?utf-8?Q?zIuQt8f5dduUlzAG1LBgg9n1/?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54d56cbb-bb45-4c6a-4a71-08ddf2071246
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5070.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 14:17:14.3281 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EVWExhSIM4b+sI95JO2Z9C/gMLd56FonNAdr3bsIALBlJSogYDlGIEDPtwGRvL1/Jv0dGeDJSL+EVIcvbTIfBA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5798
-Received-SPF: permerror client-ip=2a01:111:f403:2416::613;
- envelope-from=Thomas.Lendacky@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aMK8-4-xE0R7AnaK@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -229,98 +86,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/25 06:54, Naveen N Rao (AMD) wrote:
-> Add support for enabling Secure AVIC VMSA SEV feature in SEV-SNP guests
-> through a new "secure-avic" boolean property on SEV-SNP guest objects.
+On Thu, Sep 11, 2025 at 02:13:47PM +0200, Kevin Wolf wrote:
+> Am 11.09.2025 um 13:21 hat Thomas Huth geschrieben:
+> > On 10/09/2025 18.08, Kevin Wolf wrote:
+> > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
+> > > > 
+> > > >   Hi,
+> > > > 
+> > > > when running "./check -luks" in the qemu-iotests directory,
+> > > > some tests are failing for me:
+> > > > 
+> > > > 295 296 inactive-node-nbd luks-detached-header
+> > > > 
+> > > > Is that a known problem already?
+> > > 
+> > > Not to me anyway.
+> > > 
+> > > > FWIW, 295 is failing with the following output:
+> > > > 
+> > > > 295   fail       [17:03:01] [17:03:17]   15.7s                failed, exit status 1
+> > > > [...]
+> > > > +EWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=6 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > +EEWARNING:qemu.machine.machine:qemu received signal 6; command: "/home/thuth/tmp/qemu-build/qemu-system-x86_64 -display none -vga none -chardev socket,id=mon,fd=10 -mon chardev=mon,mode=control -chardev socket,id=qtest,fd=3 -qtest chardev:qtest -accel qtest -nodefaults -display none -accel qtest"
+> > > > +E
+> > > > [...]
+> > > > 
+> > > > etc.
+> > > > 
+> > > > 296 looks very similar (also a "qemu received signal 6" error),
+> > > > but the others look like this:
+> > > 
+> > > When it gets signal 6 (i.e. SIGABRT), that usually means that you should
+> > > have a look at the coredump.
+> > 
+> > With "-p" I additionally get this error message in the log:
+> > 
+> > qemu-system-x86_64: ../../devel/qemu/block/graph-lock.c:294:
+> >  bdrv_graph_rdlock_main_loop: Assertion `!qemu_in_coroutine()' failed.
+> > 
+> > With -gdb I can get a back trace that looks like this:
+> > 
+> > Thread 1 "qemu-system-x86" received signal SIGABRT, Aborted.
+> > 0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
+> > --Type <RET> for more, q to quit, c to continue without paging--
+> > #0  0x00007ffff4ba7e9c in __pthread_kill_implementation () from target:/lib64/libc.so.6
+> > #1  0x00007ffff4b4df3e in raise () from target:/lib64/libc.so.6
+> > #2  0x00007ffff4b356d0 in abort () from target:/lib64/libc.so.6
+> > #3  0x00007ffff4b35639 in __assert_fail_base.cold () from target:/lib64/libc.so.6
+> > #4  0x0000555555574eae in bdrv_graph_rdlock_main_loop () at ../../devel/qemu/block/graph-lock.c:294
+> > #5  0x0000555555aa2f43 in graph_lockable_auto_lock_mainloop (x=<optimized out>) at /home/thuth/devel/qemu/include/block/graph-lock.h:275
+> > #6  block_crypto_read_func (block=<optimized out>, offset=4096, buf=0x555558324100 "", buflen=256000, opaque=0x555558a259d0, errp=0x555558a8c370)
+> >     at ../../devel/qemu/block/crypto.c:71
+> > #7  0x0000555555a5a308 in qcrypto_block_luks_load_key (block=block@entry=0x555558686ec0, slot_idx=slot_idx@entry=0,
+> >     password=password@entry=0x555558626050 "hunter0", masterkey=masterkey@entry=0x55555886b2a0 "",
+> >     readfunc=readfunc@entry=0x555555aa2f10 <block_crypto_read_func>, opaque=opaque@entry=0x555558a259d0, errp=0x555558a8c370)
+> >     at ../../devel/qemu/crypto/block-luks.c:927
+> > #8  0x0000555555a5ba7e in qcrypto_block_luks_find_key (block=0x555558686ec0, password=0x555558626050 "hunter0", masterkey=0x55555886b2a0 "",
+> >     readfunc=0x555555aa2f10 <block_crypto_read_func>, opaque=0x555558a259d0, errp=0x555558a8c370) at ../../devel/qemu/crypto/block-luks.c:1045
+> > #9  qcrypto_block_luks_amend_add_keyslot (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
+> >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, opts_luks=0x7fffec5fff38, force=<optimized out>, errp=0x555558a8c370)
+> >     at ../../devel/qemu/crypto/block-luks.c:1673
+> > #10 qcrypto_block_luks_amend_options (block=0x555558686ec0, readfunc=0x555555aa2f10 <block_crypto_read_func>,
+> >     writefunc=0x555555aa2e50 <block_crypto_write_func>, opaque=0x555558a259d0, options=0x7fffec5fff30, force=<optimized out>, errp=0x555558a8c370)
+> >     at ../../devel/qemu/crypto/block-luks.c:1865
+> > #11 0x0000555555aa3852 in block_crypto_amend_options_generic_luks (bs=<optimized out>, amend_options=<optimized out>, force=<optimized out>,
+> >     errp=<optimized out>) at ../../devel/qemu/block/crypto.c:949
+> > #12 0x0000555555aa38e9 in block_crypto_co_amend_luks (bs=<optimized out>, opts=<optimized out>, force=<optimized out>, errp=<optimized out>)
+> >     at ../../devel/qemu/block/crypto.c:1008
+> > #13 0x0000555555a96030 in blockdev_amend_run (job=0x555558a8c2b0, errp=0x555558a8c370) at ../../devel/qemu/block/amend.c:52
+> > #14 0x0000555555a874ad in job_co_entry (opaque=0x555558a8c2b0) at ../../devel/qemu/job.c:1112
+> > #15 0x0000555555bdc41b in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../../devel/qemu/util/coroutine-ucontext.c:175
+> > #16 0x00007ffff4b68f70 in ?? () from target:/lib64/libc.so.6
+> > #17 0x00007fffffffc310 in ?? ()
+> > #18 0x0000000000000000 in ?? ()
 > 
-> Sample command-line:
->   -machine q35,confidential-guest-support=sev0 \
->   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-avic=on
+> Hm, so block_crypto_read_func() isn't prepared to be called in coroutine
+> context, but block_crypto_co_amend_luks() still calls it from a
+> coroutine. The indirection of going through QCrypto won't make it easier
+> to fix this properly.
 
-Since the hypervisor support for Secure AVIC is not accepted in KVM, yet,
-this should not be included yet until we know what the full VMM
-requirements might be.
+Historically block_crypto_read_func() didn't care/know whether it
+was in a coroutine or not. Bisect tells me the regression was caused
+by
 
-Thanks,
-Tom
+  commit 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
+  Author: Kevin Wolf <kwolf@redhat.com>
+  Date:   Fri Oct 27 17:53:33 2023 +0200
 
-> 
-> Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-> Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-> ---
->  target/i386/sev.h |  1 +
->  target/i386/sev.c | 13 +++++++++++++
->  qapi/qom.json     |  5 ++++-
->  3 files changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/sev.h b/target/i386/sev.h
-> index 87e73034ad15..a374c144bccd 100644
-> --- a/target/i386/sev.h
-> +++ b/target/i386/sev.h
-> @@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
->  #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
->  #define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
->  #define SVM_SEV_FEAT_SECURE_TSC     BIT(9)
-> +#define SVM_SEV_FEAT_SECURE_AVIC    BIT(16)
->  
->  typedef struct SevKernelLoaderContext {
->      char *setup_data;
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index facf51c810d9..f9170e21ca57 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -3147,6 +3147,16 @@ static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
->      sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
->  }
->  
-> +static bool sev_snp_guest_get_secure_avic(Object *obj, Error **errp)
-> +{
-> +    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_AVIC);
-> +}
-> +
-> +static void sev_snp_guest_set_secure_avic(Object *obj, bool value, Error **errp)
-> +{
-> +    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_AVIC, value);
-> +}
-> +
->  static void
->  sev_snp_guest_get_tsc_frequency(Object *obj, Visitor *v, const char *name,
->                                  void *opaque, Error **errp)
-> @@ -3210,6 +3220,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
->      object_class_property_add(oc, "tsc-frequency", "uint32",
->                                sev_snp_guest_get_tsc_frequency,
->                                sev_snp_guest_set_tsc_frequency, NULL, NULL);
-> +    object_class_property_add_bool(oc, "secure-avic",
-> +                                  sev_snp_guest_get_secure_avic,
-> +                                  sev_snp_guest_set_secure_avic);
->  }
->  
->  static void
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 5b99148cb790..5dce560a2f54 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1105,6 +1105,8 @@
->  # @tsc-frequency: set secure TSC frequency. Only valid if Secure TSC
->  #     is enabled (default: zero) (since 10.2)
->  #
-> +# @secure-avic: enable Secure AVIC (default: false) (since 10.2)
-> +#
->  # Since: 9.1
->  ##
->  { 'struct': 'SevSnpGuestProperties',
-> @@ -1118,7 +1120,8 @@
->              '*host-data': 'str',
->              '*vcek-disabled': 'bool',
->              '*secure-tsc': 'bool',
-> -            '*tsc-frequency': 'uint32' } }
-> +            '*tsc-frequency': 'uint32',
-> +            '*secure-avic': 'bool' } }
->  
->  ##
->  # @TdxGuestProperties:
+    block: Protect bs->file with graph_lock
+
+which added
+ 
+    GLOBAL_STATE_CODE();
+    GRAPH_RDLOCK_GUARD_MAINLOOP();
+
+> It seems to me that while block_crypto_read/write_func are effectively
+> no_coroutine_fn, qcrypto_block_amend_options() should really take
+> function pointers that can be called from coroutines. It is called from
+> both coroutine and non-coroutine code paths, so should the function
+> pointers be coroutine_mixed_fn or do we want to change the callers?
+>
+> Either way, we should add the appropriate coroutine markers to the
+> QCrypto interfaces to show the intention at least.
+
+I'm unclear why QCrypto needs to know about coroutines at all ?
+It just wants a function pointer that will send or recv a blob
+of data. In the case of the block layer these functions end up
+doing I/O via the block APIs, but QCrypto doesn't care about
+this impl detail.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
