@@ -4,99 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE0B6CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99CF5CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 15:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux5If-0007r8-Vm; Fri, 12 Sep 2025 11:02:58 -0400
+	id 1ux5Kh-0000SX-Rh; Fri, 12 Sep 2025 11:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5IH-0007lh-De
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:02:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ux5KE-0000Kb-1A; Fri, 12 Sep 2025 11:04:39 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ux5IE-0001Mj-QX
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 11:02:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757689348;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xDxmmQsdbNV57qc1x1BPb7pLiW147Xk9IM+S2sdl7nY=;
- b=Gq32Pgmpav5ChRxgSS2+H+YwV4dAnPwaNeeSbm6RMeYVLesLSBiW8mdxVFFB/j+K5CZRRp
- njxprUuhqTGXUwC9oOvxXKf+P+TqimFsnuYNyHMyKTKTUxFFkNas+VX45RgVfn4pDpOOAY
- ToXO61WMijQ1fHny34pVOhLKRBgEK8I=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512-CBYHx_DdMBiAEdVbem6Qzw-1; Fri, 12 Sep 2025 11:02:27 -0400
-X-MC-Unique: CBYHx_DdMBiAEdVbem6Qzw-1
-X-Mimecast-MFC-AGG-ID: CBYHx_DdMBiAEdVbem6Qzw_1757689346
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-81b8e3e2a5dso520138585a.1
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 08:02:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757689346; x=1758294146;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xDxmmQsdbNV57qc1x1BPb7pLiW147Xk9IM+S2sdl7nY=;
- b=uSbxHmnC4XBeSEOjtEPUBtuSg5EGl2jIvjt90DDsf092LLCfHZq51OaIwFBZIhQRYj
- Nu3k0gwHdj7kQ6FE88AXxXcxDkGeczWCHQAIc4oVal/QuO3m60dwrIDeWYhrVzbrvrIw
- cyY2se4gZnOJo+JyYyBlR+NeYUTD0AcbVy1AsGkhUps8T/4h2uZ1Hc9LWSbY6rBuE+6K
- jkkoZ7uLQZ07b3YCz+ACvuA/VQBA8RZbovgz9r8Zix+klFeVFxmTYGKM01HW3KF9KvU5
- RPslCBliyP+RCGKsyJ2NIPkmKNR7JMEgAbVkWLYU/L8u1b14lEpOK2y8X3z6dfBqtBnJ
- 2GRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWD6M9P1ImAwZniYMTD5lpk5USNqxykXLyLPPjw5D9lBh5JeM8J+NTntdVEy3vTsTQofJwO3R6DVDnA@nongnu.org
-X-Gm-Message-State: AOJu0YwVeoK8mb47+eCxBA8WUpNudvGBU8uNMKRZyKCXBPJUqJhloTwM
- 0/wXFhkH++T2w5Wi9lLcEkQVNxtdIQhYlRye/qfhV+MNmG/UGEsNLTAy8hqLH+wf36p5SLoEHll
- u7MUORXWUMfnemNOm60d/TcS/G6nje9FEzgSX+5CMx3YyL+xZXuTr40d+
-X-Gm-Gg: ASbGnctKZvfBBKmwAs4ekeeAFFT5ry2QdcK2UAJXeeGhaGEXSF62n/IWkrK0Kuztm3l
- iUPlje4lcJVYqSnlp9QBWLgjFBCE7Vmv/9D7xYq6UH4bEgKXbQs9FhGLl2m/G67YPcTViFES3sj
- AuZWxRwm9ylf4qS07FgjSOPwvzLrkiu6KQGy+/XbTDJLTeLswIeaU6DtUmNKY3srMTotpMj5IVO
- l0wlw3xM7P5Y5v6HLjT3IHcZS4hu+mcWBDRd+Vb+xEqnx/VNssaoWWMSWAGeRnKheibgLT807sl
- 1uMW5j8lnTEA8Pi81Gvp/eV/7JYWsfl8
-X-Received: by 2002:a05:620a:bc2:b0:816:492c:875a with SMTP id
- af79cd13be357-824017b0159mr346070085a.78.1757689346151; 
- Fri, 12 Sep 2025 08:02:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEV3o/+NhbEdQ5mGCCB39UvAJmhQKSdEiegiJ436g/lOM2HDc2rsmY8jmyDkdzSuDUMits23w==
-X-Received: by 2002:a05:620a:bc2:b0:816:492c:875a with SMTP id
- af79cd13be357-824017b0159mr346062985a.78.1757689345354; 
- Fri, 12 Sep 2025 08:02:25 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-820c8bb8daasm285673085a.6.2025.09.12.08.02.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 08:02:24 -0700 (PDT)
-Date: Fri, 12 Sep 2025 11:02:12 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Apply migration specific keep-alive defaults
- to inet socket
-Message-ID: <aMQ19NmgFkLs8jkA@x1.local>
-References: <20250909150127.1494626-1-jmarcin@redhat.com>
- <aMBDIwKDxTVrBJBQ@redhat.com> <aMCjGVUiM3MY-RM3@x1.local>
- <aMEkY3N9ITwH_Y8Z@redhat.com> <aMGpHBGth05JY2hl@x1.local>
- <aMPz0WFmstNmKBQc@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1ux5K8-0001Vc-UL; Fri, 12 Sep 2025 11:04:33 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B81AD8079E;
+ Fri, 12 Sep 2025 18:04:22 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b3c::1:2f] (unknown
+ [2a02:6bf:8080:b3c::1:2f])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id L4Od7j0GteA0-XgQdnLN4; Fri, 12 Sep 2025 18:04:22 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757689462;
+ bh=RDT8yG7+YHP1NRbDf0tqBWa1bSP08B/Npmo2Q8FUWD0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=GFw8Z/YUZtbgakMmCDW4KGdo6UlEWsSGsATRAVoIb1nBftupeYh53QxBo1/kRpXgi
+ BNQLTjT+gP68snRSsr5ohFWSavB/NhTT8iC68whYqHmxCdhqz9g2ZgmwQohePuCKTg
+ BuFQ3JtaYjg/y3sARp0jzNri6LWEN5mZBocjSMFc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <4baf248e-9578-4230-8417-ff7c776f59cf@yandex-team.ru>
+Date: Fri, 12 Sep 2025 18:04:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMPz0WFmstNmKBQc@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 24/33] chardev-add: support local migration
+To: Markus Armbruster <armbru@redhat.com>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eblake@redhat.com, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, steven.sistare@oracle.com,
+ den-plotnikov@yandex-team.ru, Laurent Vivier <lvivier@redhat.com>
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-25-vsementsov@yandex-team.ru>
+ <87wm634t3v.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87wm634t3v.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,130 +81,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 11:20:01AM +0100, Daniel P. Berrangé wrote:
-> On Wed, Sep 10, 2025 at 12:36:44PM -0400, Peter Xu wrote:
-> > On Wed, Sep 10, 2025 at 08:10:57AM +0100, Daniel P. Berrangé wrote:
-> > > On Tue, Sep 09, 2025 at 05:58:49PM -0400, Peter Xu wrote:
-> > > > On Tue, Sep 09, 2025 at 04:09:23PM +0100, Daniel P. Berrangé wrote:
-> > > > > On Tue, Sep 09, 2025 at 05:01:24PM +0200, Juraj Marcin wrote:
-> > > > > > From: Juraj Marcin <jmarcin@redhat.com>
-> > > > > > 
-> > > > > > Usual system defaults for TCP keep-alive options are too long for
-> > > > > > migration workload. On Linux, a TCP connection waits idle for 2 hours
-> > > > > > before it starts checking if the connection is not broken.
-> > > > > > 
-> > > > > > Now when InetSocketAddress supports keep-alive options [1], this patch
-> > > > > > applies migration specific defaults if they are not supplied by the user
-> > > > > > or the management software. With these defaults, a migration TCP stream
-> > > > > > waits idle for 1 minute and then sends 5 TCP keep-alive packets in 30
-> > > > > > second interval before considering the connection as broken.
-> > > > > > 
-> > > > > > System defaults can be still used by explicitly setting these parameters
-> > > > > > to 0.
-> > > > > 
-> > > > > IMHO this is not a good idea. This is a very short default, which
-> > > > > may be fine for the scenario where your network conn is permanently
-> > > > > dead, but it is going to cause undesirable failures when the network
-> > > > > conn is only temporarily dead.
-> > > > > 
-> > > > > Optimizing defaults for temporary outages is much more preferrable
-> > > > > as that maximises reliability of migration. In the case of permanent
-> > > > > outages, it is already possible to tear down the connection without
-> > > > > waiting for a keep-alive timeout, and liveliness checks can also be
-> > > > > perform by the mgmt app at a higher level too. The TCP keepalives
-> > > > > are just an eventual failsafe, and having those work on a long
-> > > > > timeframe is OK.
-> > > > 
-> > > > For precopy it looks fine indeed, because migrate_cancel should always work
-> > > > on src if src socket hanged, and even if dest QEMU socket hanged, it can
-> > > > simply be killed if src QEMU can be gracefully cancelled and rolled back to
-> > > > RUNNING, disregarding the socket status on dest QEMU.
-> > > > 
-> > > > For postcopy, we could still use migrate_pause to enforce src shutdown().
-> > > > Initially I thought we have no way of doing that for dest QEMU, but I just
-> > > > noticed two years ago I added that to dest QEMU for migrate_paused when
-> > > > working on commit f8c543e808f20b..  So looks like that part is covered too,
-> > > > so that if dest QEMU socket hanged we can also kick it out.
-> > > > 
-> > > > I'm not 100% sure though, on whether shutdown() would always be able to
-> > > > successfully kick out the hanged socket while the keepalive is ticking.  Is
-> > > > it guaranteed?
-> > > 
-> > > I don't know about shutdown(), but close() certainly works. If shutdown()
-> > > is not sufficient, then IMHO the migration code would need the ability to
-> > > use close() to deal with this situation.
-> > > 
-> > > 
-> > > > I also am not sure if that happens, whether libvirt would automatically do
-> > > > that, or provide some way so the user can trigger that.  The goal IIUC here
-> > > > is we shouldn't put user into a situation where the migration hanged but
-> > > > without any way to either cancel or recover.  With the default values Juraj
-> > > > provided here, it makes sure the hang won't happen more than a few minutes,
-> > > > which sounds like a sane timeout value.
-> > > 
-> > > Sufficient migration QMP commands should exist to ensure migration can
-> > > always be cancelled. Short keepalive timeouts should not be considered
-> > > a solution to any gaps in that respect.
-> > > 
-> > > Also there is yank, but IMHO apps shouldn't have to rely on yank - I see
-> > > yank as a safety net for apps to workaround limitations in QEMU.
-> > 
-> > The QMP facility looks to be all present, which is migrate-cancel and
-> > migrate-pause mentioned above.
-> > 
-> > For migrate_cancel (of precopy), is that Ctrl-C of "virsh migrate"?
-> > 
-> > Does libvirt exposes migrate_pause via any virsh command?  IIUC that's the
-> > only official way of pausing a postcopy VM on either side.  I also agree we
-> > shouldn't make yank the official tool to use.
+On 12.09.25 17:56, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> virsh will call virDomainAbortJob when Ctrl-C is done to a 'migrate'
-> command.
+>> This commit introduces a possibility to migrate open chardev
+>> socket fd through migration channel without reconnecting.
+>>
+>> For this, user should:
+>>   - enable new migration capability local-char-socket
+>>   - mark the socket by an option support-local-migration=true
+>>   - on target add local-incoming=true option to the socket
+>>
+>> Motivation for the API:
+>>
+>> 1. We don't want to migrate all sockets. For example, QMP-connection is
+>>     bad candidate, as it is separate on source and target. So, we need
+>>     @support-local-migration option to mark sockets, which we want to
+>>     migrate (after this series, we'll want to migrate chardev used to
+>>     connect with vhost-user-server).
+>>
+>> 2. Still, for remote migration, we can't migrate any sockets, so, we
+>>     need a capability, to enable/disable the whole feature.
+>>
+>> 3. And finally, we need a sign for the socket to not open a connection
+>>     on initialization, but wait for incoming migration. We can't use
+>>     @support-local-migration option for it, as it may be enabled, but we
+>>     are in incoming-remote migration. Also, we can't rely on the
+>>     migration capability, as user is free to setup capabilities before or
+>>     after chardev creation, and it would be a bad precedent to create
+>>     relations here.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > 
-> virDomainAbortJob will call migrate-cancel for pre-copy, or
-> 'migrate-pause' for post-copy.
-
-Would it call "migrate-pause" on both sides?
-
-I believe the problem we hit was, when during postcopy and the NIC was
-misfunctioning, src fell into postcopy-paused successfully but dest didn't,
-stuck in postcopy-active.
-
-We'll want to make sure both sides to be kicked into paused stage to
-recover.  Otherwise dest can hang in the stage for hours until the watchdog
-timeout triggers.
-
+> [...]
 > 
+>> diff --git a/qapi/char.json b/qapi/char.json
+>> index f0a53f742c..5b535c196a 100644
+>> --- a/qapi/char.json
+>> +++ b/qapi/char.json
+>> @@ -280,11 +280,23 @@
+>>   #     mutually exclusive with @reconnect.
+>>   #     (default: 0) (Since: 9.2)
+>>   #
+>> +# @support-local-migration: The socket open file descriptor will
+>> +#     migrate if this field is true and local-char-socket migration
+>> +#     capability enabled (default: false) (Since: 10.2)
+>> +#
+>> +# @local-incoming: Do load open file descriptor for the socket
+>> +#     on incoming migration. May be used only if QEMU is started
+>> +#     for incoming migration and only together with local-char-socket
+>> +#     migration capability (default: false) (Since: 10.2)
+>> +#
+>>   # Features:
+>>   #
+>>   # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+>>   #     instead.
+>>   #
+>> +# @unstable: Members @support-local-migration and @local-incoming
+>> +#            are experimental
+>> +#
+>>   # Since: 1.4
+>>   ##
+>>   { 'struct': 'ChardevSocket',
+>> @@ -298,7 +310,9 @@
+>>               '*tn3270': 'bool',
+>>               '*websocket': 'bool',
+>>               '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+>> -            '*reconnect-ms': 'int' },
+>> +            '*reconnect-ms': 'int',
+>> +            '*support-local-migration': { 'type': 'bool', 'features': [ 'unstable' ] },
+>> +            '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } },
+>>     'base': 'ChardevCommon' }
+>>   
+>>   ##
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 2387c21e9c..4f282d168e 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -517,6 +517,11 @@
+>>   #     each RAM page.  Requires a migration URI that supports seeking,
+>>   #     such as a file.  (since 9.0)
+>>   #
+>> +# @local-char-socket: Migrate socket chardevs open file descriptors.
+>> +#     Only may be used when migration channel is unix socket. Only
+>> +#     involves socket chardevs with "support-local-migration" option
+>> +#     enabled.  (since 10.2)
+>> +#
+>>   # Features:
+>>   #
+>>   # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+>> @@ -536,7 +541,8 @@
+>>              { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>>              'validate-uuid', 'background-snapshot',
+>>              'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+>> -           'dirty-limit', 'mapped-ram'] }
+>> +           'dirty-limit', 'mapped-ram',
+>> +           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
+>>   
+>>   ##
+>>   # @MigrationCapabilityStatus:
 > 
-> > OTOH, the default timeouts work without changing libvirt, making sure the
-> > customers will not be stuck in a likely-failing network for hours without
-> > providing a way to properly detach and recover when it's wanted.
+> I understand why we need a knob to enable the feature.  A
+> MigrationCapability looks fine to me.  We could perhaps come up with a
+> better name, but let's leave that for later.
 > 
-> "timeouts work" has the implicit assumpton that the only reason a
-> timeout will fire is due to a unrecoverable situation. IMHO that
-> assumption is not valid.
+> I'm unsure about making users mark the sockets (really: the sockets
+> wrapped in a character device backend) to be migrated that way.
+> 
+> Which sockets are users supposed to mark, and how would they know?
+> 
+> What happens when a user marks the QMP socket?  You called that a "bad
+> candidate".
+> 
+> Doesn't feel like good user interface design.
+> 
+> Could QEMU decide (in principle) which sockets are suitable for
+> sending down the migration channel?
+> 
+> If yes, could we make it do the right thing automatically?  Or at least
+> a check that stops the user from doing the wrong thing?
+> 
 
-I agree adjusting timeout is not the best.
+Yes, I'm thinking about this too. In my live-TAP series, I don't migrate TAP
+netdev in separate, but it's migrated as part of virtio-net device. I hope,
+it should be possible to do something similar here.
 
-If we can have solid way to kick two sides out, I think indeed we don't
-need to change the timeout.
-
-If not, we may still need to provide a way to allow user to try continue
-when the user found that the network is behaving abnormal.
-
-Here adjusting timeout is slightly better than any adhoc socket timeout
-that we'll adjust: it's the migration timeout, and we only have two cases:
-(1) precopy, which is ok to fail and retried, (2) postcopy, which is also
-ok to fail and recovered.
-
-The timeout made some corner cases more aggressive to converge to a
-failure/retry condition, but since we know exactly the property of the
-sockets so it's better than when we know nothing about what the sockets are
-used for.
-
-Thanks,
+So the good target interface for me now is one "migarate-fds" (or better named)
+capability, which turns on the whole feature both for virtio-net and vhost-user-blk
+devices (and probably future ones). With additional optional device parameters
+to be able to disable fds-migration per-device.
 
 -- 
-Peter Xu
-
+Best regards,
+Vladimir
 
