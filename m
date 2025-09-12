@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6426ACA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E50CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwwcs-0003w3-0a; Fri, 12 Sep 2025 01:47:14 -0400
+	id 1uwwdx-0004Us-O4; Fri, 12 Sep 2025 01:48:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwcq-0003vo-09
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:47:12 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1uwwdv-0004UY-Uo
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:48:20 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwco-0001ye-Gc
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:47:11 -0400
+ id 1uwwdu-00024S-EK
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:48:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757656030; x=1789192030;
+ t=1757656099; x=1789192099;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=OP4SWtX+POda+jNuua56TBgHbiy9PMnIrT0PPee0WD4=;
- b=aTiNJrpWO0+o6x73eMxOfxJKj4DHlvtiLQBVMHjEfPOfqlwUm/ZEHF8n
- doaxO8OxEOMnCSq0E72Zw3nLjH4sx5OE8znTUfLB0w6JPzVPnZAgOnOlG
- 49Wxm2Z0MV68eBC39YfPN7TVxBd7JkgZh2k8+pK5kfWlEglh7tLP0Tr4b
- GN5TdMnhIQ8zLM1TLpgikzk3Cn0H1pPcPMJXnZ0LvifQ8ud0B39TZpZdF
- Sdj9Qk3XDlR741iZSjME9hwilb7k9/OZlhtf/fy7iRE7C4bxzCLLvmR7g
- 77cUB89o9V+/Lx+TfvOE5WTf4Py4WPE+faY91gQq6TFdSYMeTvxS53t4s w==;
-X-CSE-ConnectionGUID: 4Ek2wmCrT5uESPiR2fqUTQ==
-X-CSE-MsgGUID: 7aXnt5PdTNO50SKLAMyGkQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="60058589"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="60058589"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:47:08 -0700
-X-CSE-ConnectionGUID: MxCQqb4/Qqe9P4IrmnKqrw==
-X-CSE-MsgGUID: T+iPD833QQOCISyqzV1x0Q==
+ bh=l/fz8e3A1LT1Ojjrl4SrFgeMpCn7Tn0ueX7nGpZ2TCg=;
+ b=ITNclFImgfjpnUbuBsIo/DYY6LptYN1BX8PWrX5YtQHddCB9KANADycp
+ fCul4rzd0PY3ayBsEBXInAc+X+Dj50Oef2zEMBg8Fzm/Hw5WJfg7PZB53
+ e+Qk93N6T7WdYDZtvkNiV+ntFWXv1bsKwqolGM2pC4AvUrkZ5kYj5lDI7
+ VsHWVr1DYO412zn6L0LkHhHxKM4hcsq0GPCU4z2d5WkENW1RhxYYO86cl
+ aQGOftFvuTn2IRS5LZG4cWqXGsaYrNAKcgS/nzTp/dTMfVpS76Km6bqoz
+ RaH9gJuzUIuzAC3UbZggTuUkm0vqoq4ULR99CuTF/awvscV3ajUOPgYuy w==;
+X-CSE-ConnectionGUID: /YledEX+SdqwWCfeLgvPRA==
+X-CSE-MsgGUID: 0mMdByLsRMKS0aO7XIetvw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="59855081"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="59855081"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 22:48:17 -0700
+X-CSE-ConnectionGUID: aoUKmbQpTmqm9uM8ISdeCQ==
+X-CSE-MsgGUID: zylQbzJOSYyS6anfYcGCLg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="178218374"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="173447157"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
  ([10.124.238.14])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:47:07 -0700
-Message-ID: <807f9e9c-40b0-46fa-b92e-81cde9f301a6@intel.com>
-Date: Fri, 12 Sep 2025 13:47:04 +0800
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 22:48:15 -0700
+Message-ID: <6d17efbc-fec8-45da-967a-449f63f64482@intel.com>
+Date: Fri, 12 Sep 2025 13:48:12 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] kvm: guest_memfd enhancement and fix for
- KVM_SET_USER_MEMORY_REGION2
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250728115707.1374614-1-xiaoyao.li@intel.com>
+Subject: Re: [PATCH 0/2] i386/kvm: Cleanups in kvm_arch_init()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org
+References: <20250729062014.1669578-1-xiaoyao.li@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250728115707.1374614-1-xiaoyao.li@intel.com>
+In-Reply-To: <20250729062014.1669578-1-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -87,30 +87,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/28/2025 7:57 PM, Xiaoyao Li wrote:
-> Patch 1 changes to check guest memfd CAP on VM instance.
+On 7/29/2025 2:20 PM, Xiaoyao Li wrote:
+> Patch 1 removes the object_dynamic_cast() check in kvm_arch_init();
 > 
-> Patch 2 is a fix for KVM_SET_USER_MEMORY_REGION2.
-> 
-> Patch 3 is an enhancement for guest_memfd_offset.
+> Patch 2 removes the unncessary kvm_check_extension(s, KVM_CAP_X86_SMM);
 
 Gentle ping.
 
-> ---
-> Changes in v2:
-> - Collect R-B tags;
-> - Use {} to zero out the struct instead of memset() in patch2;
-> - Initialize guest_memfd_offset at the original source in patch3;
+> Xiaoyao Li (2):
+>    i386/kvm: Get X86MachineState in kvm_arch_init() without the cast
+>      check
+>    i386/kvm: Drop KVM_CAP_X86_SMM check in kvm_arch_init()
 > 
-> Xiaoyao Li (3):
->    accel/kvm: Switch to check KVM_CAP_GUEST_MEMFD and
->      KVM_CAP_USER_MEMORY2 on VM
->    accel/kvm: Zero out mem explicitly in kvm_set_user_memory_region()
->    accel/kvm: Set guest_memfd_offset to non-zero value only when
->      guest_memfd is valid
-> 
->   accel/kvm/kvm-all.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+>   target/i386/kvm/kvm.c | 23 +++++++++--------------
+>   1 file changed, 9 insertions(+), 14 deletions(-)
 > 
 
 
