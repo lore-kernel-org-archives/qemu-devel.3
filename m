@@ -4,177 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42386CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 21:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C45CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 21:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxB4F-0002KG-N8; Fri, 12 Sep 2025 17:12:27 -0400
+	id 1uxBIM-0005QR-PQ; Fri, 12 Sep 2025 17:27:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1uxB4E-0002K3-Cj
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:12:26 -0400
-Received: from mout.gmx.net ([212.227.17.20])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uxBIK-0005Px-St
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:27:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1uxB4C-0006EO-5G
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:12:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1757711541; x=1758316341; i=deller@gmx.de;
- bh=a7mCyRxLWOiZtOZJEhQmO7xhnUsaYfCo6YSwU0rltrs=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=Dz+hrrmjpapx37xrpK5N8/EzSN2fQBaE5up4EEHv5+siC6sBhfKJAzVsMIc7fRK8
- wyEcLdFtRw0QbK5k48NrtroxXGEdWhSAFoE6Bd19cTuSFfLfuAeORyenn8qcgvqr8
- yaXts/GpVxxTOxaoiAJ5weZ4PG/Xq80JbzcCnMyNny8CS+P/KmN3BIZ2VP59h01zc
- OoMGnlhCOtfwOeG+/7bf7GaBPiR9cWXM+ykEeV2WAQtZOGey0DjDdFddHPplGaiBx
- cF9VNqDPZWOBfaXRzzNLewhpo9Io60/6CXEpeXjr3PA19+pdFfS4CuX1iDDpiSz9h
- 8IAJS+7yWqAsx26MAg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([109.250.63.58]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV67y-1unvff2v6U-00W6ch; Fri, 12
- Sep 2025 23:12:21 +0200
-Message-ID: <8bd6755a-3e32-4c56-a948-61f27bdefd6c@gmx.de>
-Date: Fri, 12 Sep 2025 23:12:21 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uxBII-0008N1-He
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 17:27:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757712415;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2OdcviHaxc0ZxN18Fc55Jn/oo/bxAS8OUZkEK0Pw4+U=;
+ b=UPf8TvfAFD7PtbaO6vc7h2A16Ey/gRhe8qrIqBMwCsFkBZ9CZBSB6SWHMi3/kNp0UYSX4j
+ UNTqaNoi6EqSk/PX4/+w+Wr3IYc/95zkHsMoGD0viabqWmyVVf/m2WDKIdHQgSxT3qqrUr
+ LlPG9qgjypwSH4JlmLsHltFH0dbN0rY=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-355-3zcDQTs0NYSEBovSnn_JAw-1; Fri, 12 Sep 2025 17:26:53 -0400
+X-MC-Unique: 3zcDQTs0NYSEBovSnn_JAw-1
+X-Mimecast-MFC-AGG-ID: 3zcDQTs0NYSEBovSnn_JAw_1757712413
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8217df6d44cso447543985a.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 14:26:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757712413; x=1758317213;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2OdcviHaxc0ZxN18Fc55Jn/oo/bxAS8OUZkEK0Pw4+U=;
+ b=fYatiih6lfa5wBEhvVgy2n16GmuNV+UdOuu7yZrCZrQGLL4D3jEPQKwBQ2BCGZlPLg
+ EY86uYxnO3zKW/FCLCMWv7Z840dJ1svswpxGQSqiKa/92ztQN026nj4DzS2+ZByvZhSu
+ ZDiRGa0XDdO+PK6qbyeN8JkmOwpXeFzd+5h63+8qlHADxr9wFEtX6p1fM38HgbAxD0Jh
+ HMIy3+r1ohHCYcENa8TcHNZnYGrSsvNk0GlWB9VDMaj5cCjNB6LvA2501ixGrErgdZBr
+ dzod7gCNJpNJajIqjn1Ty8jZYqZkPF79kinjxV+Ku6KCC1xEtOlzySFC5mYDqrUfi8ph
+ IiUw==
+X-Gm-Message-State: AOJu0YxU53vIAtOIVAz3P4ZrOsKTPA83FkuTy4X2ogsQLf6GMQTJytyE
+ IdENwomrehrRGjUrNNIQ2pVa95HLWFrN9nVc4htPhsi4y7JWYMU3gfR9wTiaYDOkWvQoQgCfQ2E
+ cAiMixOba3ZcjVwHg0ttJ+61uhF8LcXEXXCiRp1bYKhTwmAANL8X7CqBT
+X-Gm-Gg: ASbGncvmZyNO/HFgnK8jOHxb4dq61++BhgKjUvULzOluRvBwSypzkksIYp2+FUSqjBD
+ L0wC2qkzyTtCCx3TTzqQ9y+vnf1aqE1FB1mPCGaYZC0lL/KfQq56f/NfskPeHY+J5wrCng7fHwf
+ rUs7JRE9Nfrds5HZ+spRoaV5MA/Nov/at1ctDYJO7fyFp+qFaRvtDKtUb6en5lZPpcPtKiJOGK1
+ /Wg6sgZ/hLgfda/96Wz+hlFQE/eBn/IVvcvPzUdZXCLuLINYyYI0zlaVzOVAD6xGhRRb8KKR3Zv
+ 0gx3TPiw8asEopijhxI58ehuAWWCSM6o
+X-Received: by 2002:a05:620a:4626:b0:823:e519:c80a with SMTP id
+ af79cd13be357-823f6648c68mr625099985a.0.1757712413271; 
+ Fri, 12 Sep 2025 14:26:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdGUUqRDP/AzFo4/FSHDTilOYPm/as5dpmTtEPnHJU0adDMEIIygitwQd5ipQ1CIYdSIJyXA==
+X-Received: by 2002:a05:620a:4626:b0:823:e519:c80a with SMTP id
+ af79cd13be357-823f6648c68mr625095585a.0.1757712412631; 
+ Fri, 12 Sep 2025 14:26:52 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-825abc11db2sm100961985a.45.2025.09.12.14.26.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Sep 2025 14:26:51 -0700 (PDT)
+Date: Fri, 12 Sep 2025 17:26:38 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
+Message-ID: <aMSQDuVacnSG3MTV@x1.local>
+References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
+ <aMHidDl1tdx-2G4e@x1.local>
+ <1a5b7471-1799-44bd-9c1c-c3c07e478bb8@rsg.ci.i.u-tokyo.ac.jp>
+ <aMNBJF9E4BYrWEHO@x1.local>
+ <4d91c86f-4e3d-4850-8b8c-77ad3c9d5bce@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: seabios-hppa: is it acpi-aware?
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: QEMU Development <qemu-devel@nongnu.org>
-References: <c6aa3d2a-dfc6-4303-9a47-e0e2c3ffb2a5@tls.msk.ru>
- <9d4ae773-0414-4701-a59e-85873da26bf9@gmx.de>
- <ecfa6dad-aa24-46f5-8025-a42c7c31f623@tls.msk.ru>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <ecfa6dad-aa24-46f5-8025-a42c7c31f623@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:q1c9+N+lMzri/Ntu6d3FvMn8JDgArWYCosxw2DMdiW53mY0anZ0
- d4ycKmmNfED3x2YMGHzJO+HZFcr+AZLr4V6tTEPNb/3kP6yt+jhqDW+QiCgQ/TSPXyfLHgc
- TcpEb04V4FmgsQFvtngFcM4cq7RYHGLHhoqox1Np9IUee4ubK6fUXY5ZEsCa8L1DTVgGvmK
- fCtTEViUQ7BvbgedkcBdg==
-UI-OutboundReport: notjunk:1;M01:P0:yob5s4HooI8=;kv21Gv680636oQFrtso25KFwDqz
- 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
- s3mdGIA=
-Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4d91c86f-4e3d-4850-8b8c-77ad3c9d5bce@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -190,62 +140,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/25 23:09, Michael Tokarev wrote:
-> On 12.09.2025 23:49, Helge Deller wrote:
->> On 9/12/25 22:35, Michael Tokarev wrote:
->>> Does seabios-hppa needs ACPI?
->>
->> No.
->>
->>> When building, it embeds the acpi tables (src/fw/acpi-dsdt.hex etc).
->>
->> That table can be dropped.
->> If you come up with a patch to build without, I'm happy to
->> apply it.
->=20
-> It boils down to just this:
->=20
-> diff --git a/roms/seabios-hppa/Makefile.parisc b/roms/seabios-hppa/Makef=
-ile.parisc
-> index 751a3479ca..d64118aca0 100644
-> --- a/roms/seabios-hppa/Makefile.parisc
-> +++ b/roms/seabios-hppa/Makefile.parisc
-> @@ -44,5 +44,5 @@ SRC32FLAT=3D$(SRCBOTH) post.c e820map.c romfile.c opti=
-onroms.c \
->  =C2=A0=C2=A0=C2=A0=C2=A0 fw/coreboot.c fw/lzmadecode.c fw/multiboot.c f=
-w/biostables.c \
->  =C2=A0=C2=A0=C2=A0=C2=A0 fw/paravirt.c fw/shadow.c fw/pciinit.c fw/smm.=
-c fw/xen.c \
-> -=C2=A0=C2=A0=C2=A0 fw/acpi.c fw/mptable.c fw/pirtable.c fw/smbios.c fw/=
-romfile_loader.c \
-> +=C2=A0=C2=A0=C2=A0 fw/mptable.c fw/pirtable.c fw/smbios.c fw/romfile_lo=
-ader.c \
->  =C2=A0=C2=A0=C2=A0=C2=A0 hw/virtio-ring.c hw/virtio-pci.c hw/virtio-blk=
-.c hw/virtio-scsi.c \
->  =C2=A0=C2=A0=C2=A0=C2=A0 hw/tpm_drivers.c hw/nvme.c \
-> diff --git a/roms/seabios-hppa/src/fw/paravirt.c b/roms/seabios-hppa/src=
-/fw/paravirt.c
-> index fba4e52db6..37ddac9c0d 100644
-> --- a/roms/seabios-hppa/src/fw/paravirt.c
-> +++ b/roms/seabios-hppa/src/fw/paravirt.c
-> @@ -252,5 +252,5 @@ qemu_platform_setup(void)
->  =C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> -=C2=A0=C2=A0=C2=A0 acpi_setup();
-> +=C2=A0=C2=A0=C2=A0 //acpi_setup();
->  =C2=A0}
->=20
->=20
-> but I'm not sure this is the right approach - since it modifies
-> the original seabios source (in paravirt.c).
+On Fri, Sep 12, 2025 at 11:09:51AM +0900, Akihiko Odaki wrote:
+> > > > I think it still makes some sense to theoretically allow object_unparent()
+> > > > to happen, at least when it happens before owner's finalize().  IIUC that
+> > > > was the intention of the doc, pairing the memory_region_init*() operation.
+> > > 
+> > > Perhaps so, but this patch is only about the case where object_unparent() is
+> > > called in finalize().
+> > 
+> > You ignored my other comment.  That (using object_new() on MRs) was what I
+> > was thinking might be better than a split model you discussed here, so
+> > that's also a comment for patch 1 of your series.
+> 
+> I'm not sure what you mean by the "split model".
 
-I think that's Ok.
-Both versions diverged anyway in the meantime.
- =20
-> BTW, upstream seabios stopped embedding acpi tables in recent
-> version.
+I meant after similar change as what this patch proposes, (a) "owner of the
+MR lifecycle" (aka, who decides to finalize() the MR) is not the same as
+(b) "owner of the memory" (aka, who decides to free() the memory backing
+the MR struct), so the ownership model itself is more or less "split".
 
-Ok.
+Now it's very hard to tell who owns the MR, because each owns only part of
+it.
 
-Helge
+IMHO it'll be slightly better to have the instance lifecycle and the memory
+allocation of the MR struct be managed by the same object, no matter
+automatically by the memory core, or manually by the device (in the case of
+the current doc, it went with the latter, even though I agree with you it
+looks wrong).
+
+> 
+> This change removes object_unparent() in vfio_bars_finalize(). object_new()
+> will allow removing even g_free(), but we can do these changes
+> incrementally:
+> 1. remove object_unparent() in finalize(),
+>    which fixes a semantic problem (this patch)
+> 2. allow object_new() for MRs and remove g_free() in finalize()
+>    as a refactoring.
+> 
+> So I suggest focusing on object_unparent() in finalize() to keep this patch
+> and review concise.
+
+I agree that is the minimal change, but this is a common pattern.  It's not
+high risk, so I think we could still discuss it thoroughly.
+
+I further analyzed the risk here, it turns out object_unparent() in
+finalize() is still very safe so the current code is actually bug-free if
+it all works similarly like the vfio code: The object_property_del_all()
+(on top of the owner device) would do prop->release(), and here MR will
+kickoff object_finalize_child_property(), which resets mr->parent to NULL.
+
+So the 2nd object_unparent() will already see obj->parent==NULL.
+
+Directly dropping object_unparent() should work, but leads to confusion as
+"split ownership model" as I discussed above.
+
+Thanks to all recent discussions, IMHO we have much clearer picture of how
+MRs can be used.  I discussed it almostly in the first reply:
+
+https://lore.kernel.org/all/aMHidDl1tdx-2G4e@x1.local/
+
+I suspect we don't really have 2nd user I mentioned, because if so it'll
+likely require strict mr refcounting due to address_space_map(), in which
+case we should go the "create a temp obj as the owner of MR" idea, that you
+used to fix the virgl issue in patch 2 of your other series.
+
+For the current issue, I'd suggest as simple as below (I observed at least
+the current VFIO use case only uses MMIO memory regions, so we only need
+one such helper):
+
+/*
+ * Unlike memory_region_init_io(), @memory_region_alloc_io allocates an IO
+ * memory region object and returns.
+ *
+ * After the function returns, the MemoryRegion object will share the same
+ * lifecycle of the owner object.  If owner is not specified, the MR will
+ * never be released.
+ *
+ * The caller doesn't need to either detach or unref/free the MR object.
+ * It will be automatically detached and returned when the owner finalize.
+ * The caller can cache the MR object pointer, but it's only valid to
+ * operate before the owner finalizes.
+ */
+MemoryRegion *
+memory_region_alloc_io(MemoryRegion *mr,
+                       Object *owner,
+                       const MemoryRegionOps *ops,
+                       void *opaque,
+                       const char *name,
+                       uint64_t size)
+{
+    MemoryRegion = object_new(TYPE_MEMORY_REGION);
+    memory_region_do_init(mr, owner, name, size);
+    mr->ops = ops ? ops : &unassigned_mem_ops;
+    mr->opaque = opaque;
+    mr->terminates = true;
+}
+
+Here, IIUC if we can allocate the MR using memory_region_alloc_io() here,
+then the ownership of both (a)+(b) above will be done automatically by the
+memory core / object core code.  The device impl doesn't need to care about
+either removal of subregions, or free of MR struct, anymore.  Then we can
+drop not only the object_unparent(), but also g_free(), altogether.
+
+Would that sound like a better approach in general?
+
+Again, I don't think this is anything urgent, so we can take time to think
+it through.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
