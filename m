@@ -4,65 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA00CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1B2CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux4iM-0005xM-Fv; Fri, 12 Sep 2025 10:25:26 -0400
+	id 1ux4kJ-0007gn-2p; Fri, 12 Sep 2025 10:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ux4iJ-0005vm-Ow
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:25:23 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4kF-0007g5-Lx
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:27:23 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ux4iB-0003ab-Pa
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:25:23 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 09183C016F;
- Fri, 12 Sep 2025 17:25:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b3c::1:2f] (unknown
- [2a02:6bf:8080:b3c::1:2f])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8PNaTs0GqqM0-cYXVvwCf; Fri, 12 Sep 2025 17:25:08 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757687108;
- bh=Rt5WbGTY7r/RlvH96bkr+1KLHy6A23lZiYnVdqDcjgk=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QNSWruB66MR3H/wI95ThQ/F4A9ZY2M51HFenoRnqBGkmnBeWV7tsdx84OzX+oRuI1
- q+kKXwIZ70LRtJSbe0vYER9edjjAZV3t6TlMtK0rcWQ+xeahl94vO8TbF+tsd4pUmv
- E5GJ473bjY6Qglb6Eur/U8lNLceDlR6Ws5z9N+yw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <ee11ef02-764a-42c2-a2ab-f1af489a86ae@yandex-team.ru>
-Date: Fri, 12 Sep 2025 17:25:08 +0300
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4kA-0003kZ-UL
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:27:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+ To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=ud+tzr/c+3nOxcFP1jdrMUSZ12vMtxNXTILeXpfCYic=; b=qDXP12o0gBbJwkJ
+ VBhM5CvPwCwH8K6/rbTpSApieqmb7I6CMnaMC+p+eehajhtR5pKx3uk9NlBS0mKp+yWByuiYNu1GF
+ NVm0r6Y8K3auyquYjKH0Fckjit0NciWVE+njknSUhCGkXFl+V8EkebDvuZJbegiWNQwb5imtG/Sra
+ dk=;
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH] target/mips: Fix msaregnames and mxuregnames off-by-one
+Date: Fri, 12 Sep 2025 16:29:27 +0200
+Message-ID: <20250912142927.20919-1-anjo@rev.ng>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] qapi: net/tap: deprecate vhostforce option
-To: jasowang@redhat.com
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org
-References: <20250901153943.65235-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250901153943.65235-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,105 +56,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping)
+The msaregnames and mxuregnames arrays contains strings of 7 bytes
+("w10.d0", ...) and 5 bytes ("XR10", ...) in length including the
+NULL byte.
 
-On 01.09.25 18:39, Vladimir Sementsov-Ogievskiy wrote:
-> This option doesn't make sense since long ago (10 years!)
-> commit 1e7398a140f7a6 ("vhost: enable vhost without without MSI-X").
-> 
-> Prior 1e7398a140f7a6, to enable vhost for some specific kind of guests
-> (that don't have MSI-X support), you should have set vhostforce=on
-> (with vhost=on or unset).
-> 
-> Since 1e7398a140f7a6, guest type doesn't matter, all guests are equal
-> for vhost-enabling options logic.
-> 
-> The current logic is:
->    vhost=on / vhost=off : vhostforce ignored, doesn't make sense
->    vhost unset : vhostforce counts, enabling vhost
-> 
-> Currently you may enable vhost several ways:
-> - vhost=on
-> - vhostforce=on
-> - vhost=on + vhostforce=on
-> - and even vhost=on + vhostforce=off
-> 
-> - they are all equal.
-> 
-> Let's finally deprecate the extra option.
-> 
-> Also, fix @vhostforce documentation.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
-> 
-> v3: - two spaces between sentences for vhostforce description
->      - add r-b by Markus
-> 
->   docs/about/deprecated.rst |  7 +++++++
->   qapi/net.json             | 11 +++++++++--
->   2 files changed, 16 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index d50645a071..b17a5a41aa 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -516,6 +516,13 @@ Stream ``reconnect`` (since 9.2)
->   The ``reconnect`` option only allows specifying second granularity timeouts,
->   which is not enough for all types of use cases, use ``reconnect-ms`` instead.
->   
-> +TAP ``vhostforce`` (since 10.2)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +The ``vhostforce`` option is redundant with the ``vhost`` option.
-> +If they conflict, ``vhost`` takes precedence.  Just use ``vhost``.
-> +
-> +
->   VFIO device options
->   '''''''''''''''''''
->   
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 78bcc9871e..bab26e0c5d 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -346,13 +346,20 @@
->   # @vhostfds: file descriptors of multiple already opened vhost net
->   #     devices
->   #
-> -# @vhostforce: vhost on for non-MSIX virtio guests
-> +# @vhostforce: enable vhost-net network accelerator.  Ignored when
-> +#    @vhost is set.
->   #
->   # @queues: number of queues to be created for multiqueue capable tap
->   #
->   # @poll-us: maximum number of microseconds that could be spent on busy
->   #     polling for tap (since 2.7)
->   #
-> +# Features:
-> +#
-> +# @deprecated: Member @vhostforce is deprecated.  The @vhostforce
-> +#    option is redundant with the @vhost option. If they conflict,
-> +#    @vhost takes precedence.  Just use @vhost.
-> +#
->   # Since: 1.2
->   ##
->   { 'struct': 'NetdevTapOptions',
-> @@ -369,7 +376,7 @@
->       '*vhost':      'bool',
->       '*vhostfd':    'str',
->       '*vhostfds':   'str',
-> -    '*vhostforce': 'bool',
-> +    '*vhostforce': { 'type': 'bool', 'features': [ 'deprecated' ] },
->       '*queues':     'uint32',
->       '*poll-us':    'uint32'} }
->   
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/mips/tcg/msa_translate.c | 2 +-
+ target/mips/tcg/mxu_translate.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-
+diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
+index 82b149922f..0e947125a0 100644
+--- a/target/mips/tcg/msa_translate.c
++++ b/target/mips/tcg/msa_translate.c
+@@ -32,7 +32,7 @@ static inline int plus_2(DisasContext *s, int x)
+ /* Include the auto-generated decoder.  */
+ #include "decode-msa.c.inc"
+ 
+-static const char msaregnames[][6] = {
++static const char msaregnames[][7] = {
+     "w0.d0",  "w0.d1",  "w1.d0",  "w1.d1",
+     "w2.d0",  "w2.d1",  "w3.d0",  "w3.d1",
+     "w4.d0",  "w4.d1",  "w5.d0",  "w5.d1",
+diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
+index 35ebb0397d..7e8cc8b06f 100644
+--- a/target/mips/tcg/mxu_translate.c
++++ b/target/mips/tcg/mxu_translate.c
+@@ -609,7 +609,7 @@ enum {
+ static TCGv mxu_gpr[NUMBER_OF_MXU_REGISTERS - 1];
+ static TCGv mxu_CR;
+ 
+-static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][4] = {
++static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][5] = {
+     "XR1",  "XR2",  "XR3",  "XR4",  "XR5",  "XR6",  "XR7",  "XR8",
+     "XR9",  "XR10", "XR11", "XR12", "XR13", "XR14", "XR15", "XCR",
+ };
 -- 
-Best regards,
-Vladimir
+2.51.0
+
 
