@@ -4,80 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366F5CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A674DCAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux4Tn-0003jg-5a; Fri, 12 Sep 2025 10:10:23 -0400
+	id 1ux4W6-0006jC-H4; Fri, 12 Sep 2025 10:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux4O1-00074f-RP
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:04:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4UW-00054W-Uq
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:11:13 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ux4Nz-0008SZ-Lt
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:04:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757685861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w2MxUGe6lMDwAPfFSTYc7f8GSAViBQux1/MNYdcmjwg=;
- b=TPLXinV4Y3Ibxod3je8EqfMwkhoZcAmHk2ezgGvV5352cM0xO4fUjhMbZAznSdudXs58Kq
- dVDJZcWwfvvHQqBAokyM4U+0nnIZ9DmQHrKQkBZVxV4+3o9ATrst4sHR2TYle9DXh0nUe0
- MvYziBbIPgccXrgHvcSTI7VoY/yXD7Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-MZ1RlWWxOsm_6IrEQaSZhw-1; Fri,
- 12 Sep 2025 10:04:19 -0400
-X-MC-Unique: MZ1RlWWxOsm_6IrEQaSZhw-1
-X-Mimecast-MFC-AGG-ID: MZ1RlWWxOsm_6IrEQaSZhw_1757685857
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2AEC180047F; Fri, 12 Sep 2025 14:04:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2398330002C8; Fri, 12 Sep 2025 14:04:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 68B8F21E6A27; Fri, 12 Sep 2025 16:04:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Dmitry
- Fleytman <dmitry.fleytman@gmail.com>,  Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Jason Wang <jasowang@redhat.com>,  Sriram
- Yagnaraman <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Cornelia
- Huck <cohuck@redhat.com>,  Luigi Rizzo <lrizzo@google.com>,  Giuseppe
- Lettieri <g.lettieri@iet.unipi.it>,  Vincenzo Maffione
- <v.maffione@gmail.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v6 09/14] qmp: update virtio features map to support
- extended features
-In-Reply-To: <39761dc3-cd86-4cb2-9765-44bd0bdece1b@redhat.com> (Paolo Abeni's
- message of "Fri, 12 Sep 2025 15:57:28 +0200")
-References: <cover.1757676218.git.pabeni@redhat.com>
- <bef09bed78378da9c32d9913eefb83bd42ba8808.1757676218.git.pabeni@redhat.com>
- <87cy7v7pon.fsf@pond.sub.org>
- <39761dc3-cd86-4cb2-9765-44bd0bdece1b@redhat.com>
-Date: Fri, 12 Sep 2025 16:04:12 +0200
-Message-ID: <87bjnf6a3n.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1ux4UQ-0000z0-Bd
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:11:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+ To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=p0HHEe6L9orlDmso2RO9GMo26YlRt1uZftFyaLrXJiY=; b=WQ/u8Nmf985ihz5
+ mq2u6ZMv20SQxVZIfroJvVKNkYXlQgZbE+uAgUQEopAu+/9wqXyJ1kQqu4GIrW+udx2rKTqOC1DIC
+ ZaeeOnf6rWbmL3TwgK9ba0dwpGZPpWF8VVNFZR+XorDQHPgz9pvQWpGrit4R6yhYKBoLTo139ftKW
+ fw=;
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH] target/mips: Fix msaregnames off-by-one
+Date: Fri, 12 Sep 2025 16:13:25 +0200
+Message-ID: <20250912141325.17788-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,32 +56,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Abeni <pabeni@redhat.com> writes:
+The names of w10.d0 and following registers are 7 bytes in length
+including null-terminator, not 6 bytes.
 
-> On 9/12/25 3:42 PM, Markus Armbruster wrote:
->> Paolo Abeni <pabeni@redhat.com> writes:
->> 
->>> Extend the VirtioDeviceFeatures struct with an additional u64
->>> to track unknown features in the 64-127 bit range and decode
->>> the full virtio features spaces for vhost and virtio devices.
->>>
->>> Also add entries for the soon-to-be-supported virtio net GSO over
->>> UDP features.
->>>
->>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Acked-by: Jason Wang <jasowang@redhat.com>
->>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->> 
->> You lost my
->> Acked-by: Markus Armbruster <armbru@redhat.com>
->
-> Whoops, sorry!
->
-> And thanks for persisting with it :)
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/mips/tcg/msa_translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-No problem :)
+diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
+index 82b149922f..0e947125a0 100644
+--- a/target/mips/tcg/msa_translate.c
++++ b/target/mips/tcg/msa_translate.c
+@@ -32,7 +32,7 @@ static inline int plus_2(DisasContext *s, int x)
+ /* Include the auto-generated decoder.  */
+ #include "decode-msa.c.inc"
+ 
+-static const char msaregnames[][6] = {
++static const char msaregnames[][7] = {
+     "w0.d0",  "w0.d1",  "w1.d0",  "w1.d1",
+     "w2.d0",  "w2.d1",  "w3.d0",  "w3.d1",
+     "w4.d0",  "w4.d1",  "w5.d0",  "w5.d1",
+-- 
+2.51.0
 
 
