@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D08CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA23CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwwii-0007QZ-R9; Fri, 12 Sep 2025 01:53:21 -0400
+	id 1uwwnC-0000zp-Po; Fri, 12 Sep 2025 01:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwid-0007QG-KR
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:53:12 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ id 1uwwnA-0000zM-48
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:57:52 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwib-0002nS-T8
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:53:11 -0400
+ id 1uwwn8-0003pK-Ag
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:57:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757656390; x=1789192390;
+ t=1757656670; x=1789192670;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=74QQHGNvfPET3KVxpI7c3jfT/5/3xbP22PmvT+Ykefk=;
- b=GTN+QxunJHK4G+TVCsEpoWOIw3+r+3tBto+hNZCnyPIPlJ8cWJORsaoI
- 3IjWirQMdb4p4QgmmOKF+tYDIbJrjNu3UGMEMMlYYUPAwqJ85Qq829gnQ
- OIosahWyqFKlpxMhI8IPkIVeyAEZAIDGfyZjkUFEEUX0KQgZMgQt3s6qH
- s6Gki/o0LxPJtScpCB4VYE9Yu6BKZLtitB/GliQOd/13Q1XS6pvKYR28O
- dieOylN6hm/KA3XM8o4NM2UwVCZMofJHSnLFkJ3EqvcQW45sVAlPASo+P
- k8EmNFpgY4drSJpXTBHhnOWDPBSyVaphJoxtgAT9nXCl8jDNAawnJiatZ A==;
-X-CSE-ConnectionGUID: Ij7i8Y5ES220OQQ2/AqhLQ==
-X-CSE-MsgGUID: nrVwGaNWQJa1IBftAxr2ZA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="85434632"
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="85434632"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:53:08 -0700
-X-CSE-ConnectionGUID: FVc3r3FDSIe8eDUx5f/2nQ==
-X-CSE-MsgGUID: gD/wh6N/RA+mjOW7Sw+z9g==
+ bh=5hg2mWTWlH6GipyyvRx7sHhTjqd6+ezHH8qfKPsm0ss=;
+ b=bpwulalL4JPbLzvnvDQtzbh2O+ueRqtS8Wj1c5/IJ7g6UgwAOfbIWc1X
+ H6ieDUPp2rWgxL6ca4Cqj+MfJk9W0yJAnKiivTyNR4CzGKyBXUwq2b5FW
+ rODwWMUhocKFeNgQIDqzIOCTuDrH9Bg7k/fsGOxPDvfG7a/sYIna5RqUM
+ WEn61e4UZY/wMdSqusMKDDPd4YyLmmZeRV3iDu+0iyJWH1FruABUt1twC
+ T6XyWGxc0gYxTlHlzwF/ci5KlAFDjKvuFaKL6L7p/W5eyuENRO6PZmtor
+ E4FUvT3MRBIbahmjG+90jQL1jf5X4/HcxfVt044QHYgFPffgykUnm05oA A==;
+X-CSE-ConnectionGUID: 7Q+UZIz4RC2qim3YIF15Tw==
+X-CSE-MsgGUID: 6toslNDGTGiivS7a43GRBA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="59695250"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="59695250"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 22:57:47 -0700
+X-CSE-ConnectionGUID: 2Hxq9EHBTPOUA9ajlEXjeQ==
+X-CSE-MsgGUID: l6lUUnb+SE2eFR+57Inrww==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="204878448"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="174272634"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
  ([10.124.238.14])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:53:07 -0700
-Message-ID: <e75197fe-9b58-425c-8bf8-092270a5c01d@intel.com>
-Date: Fri, 12 Sep 2025 13:53:04 +0800
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2025 22:57:45 -0700
+Message-ID: <9242e7c6-be5c-4043-80b6-908b4297994e@intel.com>
+Date: Fri, 12 Sep 2025 13:57:42 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/tdx: Use .has_gpa field to check if the gpa is valid
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20250710141512.170302-1-xiaoyao.li@intel.com>
+Subject: Re: [PATCH 0/5] qemu-optios: Fix, cleanup and add description of
+ tdx-guest
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250714091953.448226-1-xiaoyao.li@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250710141512.170302-1-xiaoyao.li@intel.com>
+In-Reply-To: <20250714091953.448226-1-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -87,46 +88,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/14/2025 5:19 PM, Xiaoyao Li wrote:
+> Patch 1 is the fix to generated doc html.
+> 
+> Patch 2-4 are the cleanup of memory-encryption
+> 
+> Patch 5 add description of tdx-guest.
+
 Gentle ping.
 
-On 7/10/2025 10:15 PM, Xiaoyao Li wrote:
-> There is actually the .has_gpa field when translating the QAPI data
-> type GuestPanicInformationTdx to C structure.
+Appreciated if anyone could help cc the folks who are responsible for 
+the qemu-option but I missed to cc.
+
+> Xiaoyao Li (5):
+>    qemu-options: Move sgx-epc options from "M" to "machine"
+>    i386/sev: Remove the example that references memory-encryption
+>    qemu-options: Change memory-encryption to confidential-guest-support
+>      in the example
+>    qemu-options: Add confidential-guest-support to machine options
+>    qemu-options: Add description of tdx-guest object
 > 
-> Stop using the magic number -1 as the indicator for no valid gpa.
-> Instead just use .has_gpa field.
+>   qemu-options.hx   | 66 ++++++++++++++++++++++++++++++++++++++---------
+>   target/i386/sev.c |  4 ---
+>   2 files changed, 54 insertions(+), 16 deletions(-)
 > 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
->   system/runstate.c     | 2 +-
->   target/i386/kvm/tdx.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/system/runstate.c b/system/runstate.c
-> index 38900c935a35..87cdcab4f388 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -690,7 +690,7 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
->                             " error code: 0x%" PRIx32 " error message:\"%s\"\n",
->                             info->u.tdx.error_code, message);
->               g_free(message);
-> -            if (info->u.tdx.gpa != -1ull) {
-> +            if (info->u.tdx.has_gpa) {
->                   qemu_log_mask(LOG_GUEST_ERROR, "Additional error information "
->                                 "can be found at gpa page: 0x%" PRIx64 "\n",
->                                 info->u.tdx.gpa);
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index 370a9b6e656c..14704eb523c5 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -1298,7 +1298,7 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
->       uint64_t reg_mask = run->system_event.data[R_ECX];
->       char *message = NULL;
->       uint64_t *tmp;
-> -    uint64_t gpa = -1ull;
-> +    uint64_t gpa = 0;
->       bool has_gpa = false;
->   
->       if (error_code & 0xffff) {
 
 
