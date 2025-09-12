@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E94A0CAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 08:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31C0CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 08:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwyqT-0003u3-02; Fri, 12 Sep 2025 04:09:25 -0400
+	id 1uwyv2-0005NK-VR; Fri, 12 Sep 2025 04:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwyqP-0003t9-N5
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:09:22 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1uwyv1-0005Mq-2N
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:14:07 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uwyqK-0008TW-UT
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:09:21 -0400
+ id 1uwyur-0000yK-Fp
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:14:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757664556; x=1789200556;
+ t=1757664838; x=1789200838;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=fMgkQiXY7Jt6Nt1rrTnaC/uQn+hVzE2j3XJTpaXtgxY=;
- b=K4QpXm/QQMQXMaq7XWtqxey+wtPkj8B2dNJ3WzxkyFRRu+z4507GRAFK
- TS5jwiQ0L/jIgWp7t0D6Ue4m+SM4ZM6orGfnUP1NGiOc/SjQfY3k+qyNi
- BBzrOFdoYPz5As8A7nf+MsU+jc2cUsx4+jEAiohSSFMUZ3pVR2b7NpeIv
- VMmUutVAXO1k2V4I6mDzeEL8uerhPxi6HD8KJQkCMY+CD71cXck2ayOIk
- nADzOgvP3KSuqNtCoQxpucqwvHNKnvC7EUulsGixKS2ehFq/CgF+zDcZe
- r7j486iqmyE2XSeL1dzOzBj7HrnyqZLHuOezGqV9FNo4vB5ZfUJpXhrHX A==;
-X-CSE-ConnectionGUID: 9a40xbwdSDO9rDluYxad3A==
-X-CSE-MsgGUID: MACHznZQTBys5SG/CjbkAw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="71381290"
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="71381290"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Sep 2025 01:09:10 -0700
-X-CSE-ConnectionGUID: 92DS6rEoQ9uUyKseBfrk0g==
-X-CSE-MsgGUID: u64ghiitQcGkuTP9mn2OpQ==
+ bh=sQ5nwZ1sb/3GdRh141BaNUcGtXroNsf5f9WzS4fjWpo=;
+ b=MHq7t7SDEMiKvU88hOdmgImoaMrUGcPwmnXaxWxzSiON4lhzvUFrsC+D
+ gF5W4bEyKjOFtoy9+/72SGev0f7d3hPvT9cB0ox/CpqBBJHWFxsjVFnhK
+ kaq58Y0LkSBIJtfFImDcYtosPmsl1W1B1mAoqWtKsRbbDvtnnsyHwyd1J
+ z3gaULv7KJnJ3iqluHFShxYb7k4UK9BSh7p1ILseebv28FZ0wZKG+RQ5k
+ /FK4KiJfHuBv+62SpMxtn8kEGq0/Wb1V5g/HE3us42odD0+h6xSGhJVAD
+ VOY1OQEyXFbplZo1iyz72dmZdcMXOUukeUxAu10w4UGz1UXWhTcJQZXAi g==;
+X-CSE-ConnectionGUID: 18NVw8GURr6qmcd+FRGyzg==
+X-CSE-MsgGUID: IBf3pQO/Ri25tOBPJR+/zg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="62637797"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="62637797"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Sep 2025 01:13:54 -0700
+X-CSE-ConnectionGUID: zUMpOuEVQV+8Lv3CW9Jbnw==
+X-CSE-MsgGUID: A8ohQCf7Rnioh8pTB4PStA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="173202968"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="204906942"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 12 Sep 2025 01:09:08 -0700
-Date: Fri, 12 Sep 2025 16:31:01 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 12 Sep 2025 01:13:53 -0700
+Date: Fri, 12 Sep 2025 16:35:46 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 20/33] rust: split "bql" crate
-Message-ID: <aMPaRWk+oJN7n/Ug@intel.com>
+Subject: Re: [PATCH 22/33] rust: split "chardev" crate
+Message-ID: <aMPbYpt8oyRmUBKB@intel.com>
 References: <20250908105005.2119297-1-pbonzini@redhat.com>
- <20250908105005.2119297-21-pbonzini@redhat.com>
+ <20250908105005.2119297-23-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250908105005.2119297-21-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250908105005.2119297-23-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -85,87 +85,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 08, 2025 at 12:49:52PM +0200, Paolo Bonzini wrote:
-> Date: Mon,  8 Sep 2025 12:49:52 +0200
+On Mon, Sep 08, 2025 at 12:49:54PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  8 Sep 2025 12:49:54 +0200
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 20/33] rust: split "bql" crate
+> Subject: [PATCH 22/33] rust: split "chardev" crate
 > X-Mailer: git-send-email 2.51.0
 > 
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Unfortunately, an example had to be compile-time disabled, since it
-> relies on higher level crates (qdev, irq etc). The alternative is
-> probably to move that code to an example in qemu-api or elsewere and
-> make a link to it, or include_str.
-> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/r/20250827104147.717203-12-marcandre.lureau@redhat.com
+> Link: https://lore.kernel.org/r/20250827104147.717203-14-marcandre.lureau@redhat.com
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  MAINTAINERS                          |  1 +
->  rust/bql/wrapper.h                   | 27 ++++++++
->  rust/Cargo.lock                      | 10 +++
->  rust/Cargo.toml                      |  1 +
->  rust/bql/Cargo.toml                  | 23 +++++++
->  rust/bql/build.rs                    |  1 +
->  rust/bql/meson.build                 | 52 ++++++++++++++++
->  rust/bql/src/bindings.rs             | 25 ++++++++
->  rust/{qemu-api => bql}/src/cell.rs   | 92 ++++++++++------------------
->  rust/bql/src/lib.rs                  | 29 +++++++++
->  rust/common/src/opaque.rs            |  4 +-
->  rust/hw/char/pl011/Cargo.toml        |  1 +
->  rust/hw/char/pl011/meson.build       |  1 +
->  rust/hw/char/pl011/src/device.rs     |  1 +
->  rust/hw/timer/hpet/Cargo.toml        |  1 +
->  rust/hw/timer/hpet/meson.build       |  1 +
->  rust/hw/timer/hpet/src/device.rs     |  2 +-
->  rust/hw/timer/hpet/src/fw_cfg.rs     |  5 +-
->  rust/meson.build                     |  1 +
->  rust/migration/src/vmstate.rs        |  4 +-
->  rust/qemu-api/Cargo.toml             |  5 +-
->  rust/qemu-api/meson.build            | 18 +-----
->  rust/qemu-api/src/chardev.rs         | 17 +++--
->  rust/qemu-api/src/irq.rs             |  1 +
->  rust/qemu-api/src/lib.rs             |  1 -
->  rust/qemu-api/src/prelude.rs         |  3 -
->  rust/qemu-api/src/qdev.rs            |  5 +-
->  rust/qemu-api/src/qom.rs             | 13 ++--
->  rust/qemu-api/src/sysbus.rs          | 13 ++--
->  rust/qemu-api/tests/tests.rs         |  4 +-
->  rust/qemu-api/tests/vmstate_tests.rs |  2 +-
->  31 files changed, 244 insertions(+), 120 deletions(-)
->  create mode 100644 rust/bql/wrapper.h
->  create mode 100644 rust/bql/Cargo.toml
->  create mode 120000 rust/bql/build.rs
->  create mode 100644 rust/bql/meson.build
->  create mode 100644 rust/bql/src/bindings.rs
->  rename rust/{qemu-api => bql}/src/cell.rs (92%)
->  create mode 100644 rust/bql/src/lib.rs
-
-...
-
-> diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-> index 048dd74757f..73ca9582a56 100644
-> --- a/rust/Cargo.lock
-> +++ b/rust/Cargo.lock
-> @@ -44,6 +44,13 @@ dependencies = [
->   "qemu_api_macros",
->  ]
->  
-> +[[package]]
-> +name = "bql"
-> +version = "0.1.0"
-> +dependencies = [
-> + "migration",
-> +]
-
-Yes, I also think this dependency is not much proper.
-
-I also agree to move vmstate related things back to migration crate and
-then we can make migration depend on bql (in fact, migration itself
-indeed requires bql).
-
-Current bql is good for now, so
+>  MAINTAINERS                               |  1 +
+>  rust/chardev/wrapper.h                    | 28 ++++++++++++++++
+>  rust/qemu-api/wrapper.h                   |  2 --
+>  rust/Cargo.lock                           | 14 ++++++++
+>  rust/chardev/Cargo.toml                   | 24 +++++++++++++
+>  rust/chardev/build.rs                     |  1 +
+>  rust/chardev/meson.build                  | 41 +++++++++++++++++++++++
+>  rust/chardev/src/bindings.rs              | 36 ++++++++++++++++++++
+>  rust/{qemu-api => chardev}/src/chardev.rs |  0
+>  rust/chardev/src/lib.rs                   |  6 ++++
+>  rust/hw/char/pl011/Cargo.toml             |  1 +
+>  rust/hw/char/pl011/meson.build            |  1 +
+>  rust/hw/char/pl011/src/device.rs          |  2 +-
+>  rust/meson.build                          |  1 +
+>  rust/qemu-api/Cargo.toml                  |  1 +
+>  rust/qemu-api/meson.build                 |  9 +++--
+>  rust/qemu-api/src/bindings.rs             |  9 +----
+>  rust/qemu-api/src/lib.rs                  |  1 -
+>  rust/qemu-api/src/qdev.rs                 |  6 ++--
+>  19 files changed, 164 insertions(+), 20 deletions(-)
+>  create mode 100644 rust/chardev/wrapper.h
+>  create mode 100644 rust/chardev/Cargo.toml
+>  create mode 120000 rust/chardev/build.rs
+>  create mode 100644 rust/chardev/meson.build
+>  create mode 100644 rust/chardev/src/bindings.rs
+>  rename rust/{qemu-api => chardev}/src/chardev.rs (100%)
+>  create mode 100644 rust/chardev/src/lib.rs
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
