@@ -4,152 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C25CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 17:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8B5CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 18:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux7dB-0000r7-P8; Fri, 12 Sep 2025 13:32:18 -0400
+	id 1ux8A2-0007xz-Ns; Fri, 12 Sep 2025 14:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1ux7d0-0000qm-U6; Fri, 12 Sep 2025 13:32:08 -0400
-Received: from mail-mw2nam10on20624.outbound.protection.outlook.com
- ([2a01:111:f403:2412::624]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1ux8A0-0007nL-SE; Fri, 12 Sep 2025 14:06:12 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1ux7cw-0006Rx-VD; Fri, 12 Sep 2025 13:32:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xkxKiRXn1lbqyrzKTHBXSZlp3PxSfoBWtKyAHASMDgaAMin21suF8JUh8HsUj7MSXaCrbQoReVeFMCRliErJFwZa7PYOUQbJ1EHiuHaeT/iX339ZK91wOa80mhA0RMnL0/YNNkPS15PbfUMeq/IpqvJx8+VrqLV9a/OtILyWQthQxA/o2KSrLsh4zRRtqz+fIo7eDftW/WoUCKHjf3+EnUY3CysqqKZKb+Wo8Qky22eNCbhgpwrp/QaIjXmWUWEV9XWxExJ+H5DkmgMgbcndO/7EkuC4X0wtaQotPUhH2xYCtdBAnIYg67B3J81mxz1iEd5ddf7KbIIHvGAz/1/kVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D9Wg2/peuM1cZ9FPUJbuFaooHMLJ+N0ZGv4g0NfGZHk=;
- b=uaSPud7cQai87EpUicybsk5g/RBrY6z9QmEM4ETJE5FzYVT1Mx5Tj3QUL7ZD8IrJrVdx7h5UIbWYJTQPRLAdpFl9obhjzUafiYBPE9ToKRDxej74qXGPZtK3swWJaeR3pcjvMwoMlVuKkmmxDSvYxhozN2bBFoXneJXT6VoarTGD00HAzQ+5YkXNE3HlDBV4lBxyXf5eOVfbgTalj5nvuPTfRXZLxbz7fEfjMlPTtXM+8WcupibbYsXHoXohjOVglA9MgMO3Qmz1m4TCEI7lqspj7igTQf2HLhd5rT5dboFQtmsULl/O+7u0DyxbOwtxWi/Ex8sYPK+mqm1RWmDSRQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D9Wg2/peuM1cZ9FPUJbuFaooHMLJ+N0ZGv4g0NfGZHk=;
- b=OnURfC59K2C9X5FZije8WqzushhMd/DPjLkmjL8A81Q7iB51I0YYNlmc30mWUW+7jrj92Pw1APxQJ2elbmOmEBzOk3zVmzI2B4XM95OIRApgZBLjpMqh793Z1NRe9RYHeMnd5I8CgRw8uR/kc5HfqMn4c57HnTc1PpJE7wxzHwM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM6PR12MB4090.namprd12.prod.outlook.com (2603:10b6:5:217::11)
- by SA5PPF530AE3851.namprd12.prod.outlook.com (2603:10b6:80f:fc04::8c9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
- 2025 17:31:55 +0000
-Received: from DM6PR12MB4090.namprd12.prod.outlook.com
- ([fe80::671d:f94e:1c92:2f5d]) by DM6PR12MB4090.namprd12.prod.outlook.com
- ([fe80::671d:f94e:1c92:2f5d%3]) with mapi id 15.20.9094.021; Fri, 12 Sep 2025
- 17:31:55 +0000
-Date: Fri, 12 Sep 2025 19:31:52 +0200
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH v5 04/47] hw/arm/xlnx-versal: canfd: refactor creation
-Message-ID: <aMRZCBCAZLER7uzd@zapote>
-References: <20250912100059.103997-1-luc.michel@amd.com>
- <20250912100059.103997-5-luc.michel@amd.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250912100059.103997-5-luc.michel@amd.com>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-X-ClientProxiedBy: BN9PR03CA0879.namprd03.prod.outlook.com
- (2603:10b6:408:13c::14) To DM6PR12MB4090.namprd12.prod.outlook.com
- (2603:10b6:5:217::11)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1ux89w-0002ai-Au; Fri, 12 Sep 2025 14:06:11 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58C8mXCL004387;
+ Fri, 12 Sep 2025 18:05:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zSMqrk
+ DbOP3cBecAYWg9XI76hMVlEVpYNvfH3RiZW4k=; b=lICBsUumb5POG14rW1EuE8
+ rbz1SgCzjtHYmLdwRGUmjjSKrMOBvae0v2x9MuAfkq2r1FyGyTS1f6b+WmHPsVH5
+ hQwSDn0mI8lqfKa8oIWJd6e4eTdWMLvBSUlM1uKR++f/2Un7aIYqwSSjQdv246g8
+ zO8hHHwzrnnskiQuEd4j8L/GTOjDdI8t1aHyCea232EGc4yAEsWKDULHmvBP1Tqb
+ YP5qdxM7qJl6ftUKSUwKDaWZACIJQsvSTHfXTK0iBiGjfjHDcIzlYGE9aG4Hhe2C
+ 07kxeNJ91uH/0/mt49ZpVGSFn0VQcueN3LQBf5UZRJdjr97o3J1BkxtmAyHpETww
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 490bctbsv4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Sep 2025 18:05:53 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58CGx2d3020465;
+ Fri, 12 Sep 2025 18:05:53 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 490yp1cenc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Sep 2025 18:05:53 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58CI5pqs24052420
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Sep 2025 18:05:51 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B2F0C5805E;
+ Fri, 12 Sep 2025 18:05:51 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB11658052;
+ Fri, 12 Sep 2025 18:05:50 +0000 (GMT)
+Received: from [9.61.30.241] (unknown [9.61.30.241])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 12 Sep 2025 18:05:50 +0000 (GMT)
+Message-ID: <3d930413-d809-4650-b1d8-446eb4ee7daa@linux.ibm.com>
+Date: Fri, 12 Sep 2025 14:05:49 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4090:EE_|SA5PPF530AE3851:EE_
-X-MS-Office365-Filtering-Correlation-Id: 016eb3de-e8f5-484d-2132-08ddf22244a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?S4QVyaha0FxHbQosRq95Kbd1gaF2tgMyujMBsq5DSOtlTydicZ+QiTwD8i?=
- =?iso-8859-1?Q?UmZIoPsAsdOTqJfXulqIZp34OoTgmISTSnJ3HJ6cMisF/m+85jLBRkTOdZ?=
- =?iso-8859-1?Q?NjJLpZRyZ06/a0BPD4dDQN7g8jIRM3SdpFaqT+445o6UWpjqvdA5X5x3Ch?=
- =?iso-8859-1?Q?qZCRUXMKdzyYch5QQiADSxkNVmjWs4DrXCOS0OCsBaIhSmikgIdlcVcMFW?=
- =?iso-8859-1?Q?hXjL78ip69wIcuGxBZTX6FxiuxJcGzeIJ6wsGyBa6cS0hA0oVn/1ndgODR?=
- =?iso-8859-1?Q?0s5wXJRESZDmC43QBrt9a32Xik6t12k3utV6jZmBc7PSxA4Qy1ElUxlKrf?=
- =?iso-8859-1?Q?eCH9km6RsTxdXJeABk/hK6NIllpTwG2NY0DsH+ET/sJgLSDzMwkPLSA2Rx?=
- =?iso-8859-1?Q?krX5PDA5rrix8Mc1V1/r42OnYnI7MJDRYpq7U6wcYTkD5hiwFl0m3Ke6Se?=
- =?iso-8859-1?Q?axwF3oDLLnABrqU/6neNfAu6Q3MTqoftQu0wN4Z5qqxcBL+kMaZ7P+s9pi?=
- =?iso-8859-1?Q?dCBxS8Aqbq+o0R0sgbnlQej21jJNM9NAH68bZPa+nL5HingY6V42funFXT?=
- =?iso-8859-1?Q?5XF18UoEmfood4HXnyXKdQKyrIZJO9Y30vO2+CmytiXg1MlLIBRrfttPv7?=
- =?iso-8859-1?Q?1IzSXzM4/W5D7OzU7VPlulRd5pajMs63qw1JYdhPXgzIyI7XPeaT/gxUnZ?=
- =?iso-8859-1?Q?yaVf3fu8pSxjo27mmEF14xH5B6jJwYfhLNavJcLE0SD8GcNnjUnqfvf7zD?=
- =?iso-8859-1?Q?+gMbAAVPJSeibLYhvcBUdJrhZ16GuQCIic/Ublb40gOOSKRmtsa7L3nmQM?=
- =?iso-8859-1?Q?6bhy8838mbffncB0z5ZRERTCZTSMrBbshGXw/62GghdFt6irIgvo1LsoZb?=
- =?iso-8859-1?Q?xuqXeeUaaKGKZN2cfrIsWwi+QoLJ8hr45h5D8Cm8xTAvA2zKq3MvIykJ7n?=
- =?iso-8859-1?Q?zaCwTrgkAtmHdfOkkUQsft7C+AJDBoKLnzTLILOwX4MlEAmdq2GwmyZ+bB?=
- =?iso-8859-1?Q?xISxHH6WuhCLkG5UfhSaNVlgEFuc4GVWPSmZPydKjjJ4u4Qo8WrrsMpS5x?=
- =?iso-8859-1?Q?O/SwZwracKJd0+Y0aTpYX4vEHC9Ji/QAWTwRzYFBIONDaQjliTsOO+r2uk?=
- =?iso-8859-1?Q?Rnv61mUdCL3KGBtK/jA90WLJHaMeZZqhFK55gAvjq6yrNEb7IlRB+JYWoB?=
- =?iso-8859-1?Q?hg16CrJRwpYY4pJc6HVAnkaOHvOBbghCQsKuS84r39dDuqYknq0d5vHyhR?=
- =?iso-8859-1?Q?6Qe10SWh/Bt38l93WaJbCpxJF3KDzdJ0/5Zn8bFzGoKgMgTw3xN7OoZDtk?=
- =?iso-8859-1?Q?UmYbg8dj68hpwAG9ehqrcfQL6FUnDrw2jlyWzAruam5mFJNKhCkZpjH6tm?=
- =?iso-8859-1?Q?b/SFFn2KChHj5NpJNdFp2UrGjGoM5RmTPksfWFuUJG/UAb7yGY5+SGxF7C?=
- =?iso-8859-1?Q?GKnznAnzXB1oL2Fc/2LJZLmu6L8elmN4nKqDQO2W6mAjDkSSzIiHTBYo0J?=
- =?iso-8859-1?Q?I=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB4090.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?qC+rLH7X4ykeNnvSYY6t9eEZMfVrpJKoMiI7zezVmo+/bDGYZZMtdULpl5?=
- =?iso-8859-1?Q?9BOdkYFcShESNMVFcoxrdo/C71HlZnTCoiZwlEkNjRiPWzE/lfkXkFnMMG?=
- =?iso-8859-1?Q?ZHTHnMIj0GcpbIXUMc/cQgqmWLLp7OyvpiMLjklXrG2BAlX96F7gl5MY4r?=
- =?iso-8859-1?Q?e4/xl+vsFH1NMuBLNr70peJ+SHVH5XDv7aeHVMF9IT+43RfIB0f8ZpbkMe?=
- =?iso-8859-1?Q?XyZeaQO8T5mdlQh3HFWfJfOoZRkca4VZWHYd4Ra5Yt9MEVO5I+g07erjZR?=
- =?iso-8859-1?Q?PjBHfBNMq0u/GWMjstnKYDfLdxaWlSUjT2Vmdo4WyyOJkv7pFXbMHX4pNO?=
- =?iso-8859-1?Q?/Ey9bCyoOsjLs607wHJIIdR7cKWp1+OQcK3IrCDh9ECTXb37mWXLc9IcUy?=
- =?iso-8859-1?Q?ZqknoBS1ZpsRUjpboojSMJ0DIuauoW9ixQFQ1wZbA/bh1DjsTaGT74u3sL?=
- =?iso-8859-1?Q?TbfP+qk8WjqnEhZ/gYUqlH4RszA4eEQl58aUN1hkKOiTe/CkhLNtMiQjDk?=
- =?iso-8859-1?Q?X3RRL4XMw+5HJu+DwSkw35kIVv6gMeKoVVmHAckyazFXfFb2/XZsUCsD+v?=
- =?iso-8859-1?Q?myStnoWRtMDMAqoHRfyLH2LB2Mfi93vpUmABCTe3/RyT7be53Qrb/2SYhM?=
- =?iso-8859-1?Q?wkUx+iIB3iupSdixQfsb1prj8fH59Tak/yjJj3yFTcguOG3h2EaYLS0znD?=
- =?iso-8859-1?Q?iYS+x4eAvhNopixAaVtLwlNktzmh2ljTwp7lxZKqUFV/Pj+iF9xLW0vEiU?=
- =?iso-8859-1?Q?DZZ7AspUpD/mNhEJG6jgJPrX8Nmo/2JZyYLdAScpptndVU7Tb/3wDDPCvx?=
- =?iso-8859-1?Q?bRxAHnIY/HBJlbYqxLL09iwUKqFVjozGNUa9M5iorFRtfxzE2fCWmkOvsy?=
- =?iso-8859-1?Q?F5ShZzEzYA8/j7B/kl3xcAE2dFej0gwQIGx7jeGsEXA+Ty4diOibDORHHg?=
- =?iso-8859-1?Q?a9HfRCsA5vcird2ST/eBIJ0v/wS8Al1+DsoT43qPX43fni+zebVwjjov6r?=
- =?iso-8859-1?Q?DeNoIavx0Dn4g7JYQsa2pVckqX4MUqVBbt+mKCoMcENsa7aCIKfagEo26i?=
- =?iso-8859-1?Q?vINkD9prtfRuen+UgQc0TXOO/DbETNQlSfA6d0+mcn1joFpwWKatyoNbo+?=
- =?iso-8859-1?Q?MXwNKqfKzFfrkjxKvqBw9ONn6C4iU0rUgVJV659s8Nc/WHKbR6EjNV0FkN?=
- =?iso-8859-1?Q?ocOQhrYjpn/ONGKo3S28UwYHILe2KAcm5uNQ1P+Ojw4aSSZnoLta5NjfG6?=
- =?iso-8859-1?Q?a9LawBz28CsptENEt0Gwcari6+pzxBO4JvGDax4++LyWfil9VA+NTrtXAr?=
- =?iso-8859-1?Q?Fo+pJK+3qe1eC0dBBml7IEnycVAWrKaJW6HlHF1L8MhZE1cUMSoVOF/DHQ?=
- =?iso-8859-1?Q?iGImpS0skOye3bY5o/Zl5+Jo72tUqbAP412mZAB0FQ+memW1pQSoBIc5e6?=
- =?iso-8859-1?Q?lA/R//M5TDCkZM/D1APjaaPAMcdovtbViYSkInZjufCYwAnUpX+kbNoSpf?=
- =?iso-8859-1?Q?R7ZjoIiyRL+JCmvsorN4L6Nv4AZbH9d66Hwd00qMUgBfMRbXsHalzBKo4s?=
- =?iso-8859-1?Q?cciTYg/tDYL4wc9F57FleuNGLMLgAZE1pGxPwrHRsI2aaRre12KY1dJ185?=
- =?iso-8859-1?Q?I9vDzv7gExGcyuofrqybAzbDhuzIhalBM3?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 016eb3de-e8f5-484d-2132-08ddf22244a2
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4090.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 17:31:55.3330 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P9xheKWy+cZ0NC+3fZXKc8hfvpK83Q9pwSrjIlZN0Yx9CmYU6v514B7kVBHnlaoA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF530AE3851
-Received-SPF: permerror client-ip=2a01:111:f403:2412::624;
- envelope-from=Edgar.Iglesias@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 01/29] Add boot-certs to s390-ccw-virtio machine type
+ option
+To: Markus Armbruster <armbru@redhat.com>
+Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ alifm@linux.ibm.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-2-zycai@linux.ibm.com> <87v7lpjvsw.fsf@pond.sub.org>
+ <ffb4d32b-d2bc-45f0-91ce-6472d64c02bb@linux.ibm.com>
+ <87wm64b29p.fsf@pond.sub.org>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <87wm64b29p.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxMCBTYWx0ZWRfX+HFZHquHTiEF
+ xLBnzjp2LzwKrgrGhkt/N81sffP58xmfINJDSKNb1fYICLC6hms7l5Kxvsu1v8AjDdIHbjIOIVu
+ z49JAQhviYPuo1N22nlFlm/sCtl1eYn4NC79LWc8A3rOCvtj+0dFPA5gPm3+Rl7UH49s599Qi3r
+ Yy3g/rqq5LxHwjUVUjfIgMumi3IgeqQOJsLM4UVpwblaBtA2mU+OdUNZDreHTzB62FdDj3PR7iO
+ kFr9xtark+V8EogpqX8xHVcpPOHdzjHuicbuooxb2yNdaVQuFLYWOsAlwQ1qmlWvu7aYaA1yEPD
+ GFGSTKFKhCPrEOHRza7Y41iYvAOfGiYnn9YkyowU+28DRhIO+xOwbuFpzu2INSYh8bBxH9aJXL4
+ XxC+uxUq
+X-Authority-Analysis: v=2.4 cv=SKNCVPvH c=1 sm=1 tr=0 ts=68c46101 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=_BZWnx9QUCZQft_O9CsA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: _fooTIWCfqHHx67eTrciaWcF-ZwvRzNb
+X-Proofpoint-ORIG-GUID: _fooTIWCfqHHx67eTrciaWcF-ZwvRzNb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-12_06,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060010
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,427 +124,291 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-From:  "Edgar E. Iglesias" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 12:00:13PM +0200, Luc Michel wrote:
-> Refactor the CAN controllers creation using the VersalMap structure.
+On 9/12/25 2:42 AM, Markus Armbruster wrote:
+> Zhuoying Cai <zycai@linux.ibm.com> writes:
 > 
-> Note that the connection to the CRL is removed for now and will be
-> re-added by next commits.
+>> Thanks for the feedback.
+>>
+>> On 9/11/25 3:24 AM, Markus Armbruster wrote:
+>>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>>>
+>>>> Introduce a new `boot-certs` machine type option for the s390-ccw-virtio
+>>>> machine. This allows users to specify one or more certificate file paths
+>>>> or directories to be used during secure boot.
+>>>>
+>>>> Each entry is specified using the syntax:
+>>>> 	boot-certs.<index>.path=/path/to/cert.pem
+>>>>
+>>>> Multiple paths can be specify using array properties:
+>>>> 	boot-certs.0.path=/path/to/cert.pem,
+>>>> 	boot-certs.1.path=/path/to/cert-dir,
+>>>> 	boot-certs.2.path=/path/to/another-dir...
+>>>>
+>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>>>> ---
+>>>>  docs/system/s390x/secure-ipl.rst   | 20 ++++++++++++++++++++
+>>>>  hw/s390x/s390-virtio-ccw.c         | 30 ++++++++++++++++++++++++++++++
+>>>>  include/hw/s390x/s390-virtio-ccw.h |  2 ++
+>>>>  qapi/machine-s390x.json            | 24 ++++++++++++++++++++++++
+>>>>  qemu-options.hx                    |  6 +++++-
+>>>>  5 files changed, 81 insertions(+), 1 deletion(-)
+>>>>  create mode 100644 docs/system/s390x/secure-ipl.rst
+>>>>
+>>>> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+>>>> new file mode 100644
+>>>> index 0000000000..9b3fd25cc4
+>>>> --- /dev/null
+>>>> +++ b/docs/system/s390x/secure-ipl.rst
+>>>> @@ -0,0 +1,20 @@
+>>>> +.. SPDX-License-Identifier: GPL-2.0-or-later
+>>>> +
+>>>> +Secure IPL Command Line Options
+>>>> +===============================
+>>>> +
+>>>> +New parameters have been introduced to s390-ccw-virtio machine type option
+>>>> +to support secure IPL. These parameters allow users to provide certificates
+>>>> +and enable secure IPL directly via the command line.
+>>>
+>>> All too soon these parameters will no longer be new.  Consider something
+>>> like "The s390-ccw-virtio machine type supports secure TPL.  To enable
+>>> it, you need to provide certificates."
+>>>
+>>>> +
+>>>> +Providing Certificates
+>>>> +----------------------
+>>>> +
+>>>> +The certificate store can be populated by supplying a list of certificate file
+>>>> +paths or directories on the command-line:
+>>>
+>>> File is clear enough (use the certificate found in the file).  What does
+>>> directory do?
+>>
+>> A directory contains a list of certificate files, and allowing both
+>> files and directories could make the CLI more flexible.
 > 
-> The xlnx-versal-virt machine now dynamically creates the correct amount
-> of CAN bus link properties based on the number of CAN controller
-> advertised by the SoC.
+> I figure when @path names a file, it's an error when the file doesn't
+> contain a valid cetificate.
 > 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/hw/arm/xlnx-versal.h |  7 +--
->  hw/arm/xlnx-versal-virt.c    | 73 +++++++++-------------------
->  hw/arm/xlnx-versal.c         | 94 +++++++++++++++++++++++++-----------
->  3 files changed, 95 insertions(+), 79 deletions(-)
+> What is @path names a directory, and one of the directory's files
+> doesn't contain a valid certificate?
 > 
-> diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-> index b01ddeb1423..007c91b596e 100644
-> --- a/include/hw/arm/xlnx-versal.h
-> +++ b/include/hw/arm/xlnx-versal.h
-> @@ -29,11 +29,11 @@
->  #include "hw/ssi/xlnx-versal-ospi.h"
->  #include "hw/dma/xlnx_csu_dma.h"
->  #include "hw/misc/xlnx-versal-crl.h"
->  #include "hw/misc/xlnx-versal-pmc-iou-slcr.h"
->  #include "hw/misc/xlnx-versal-trng.h"
-> -#include "hw/net/xlnx-versal-canfd.h"
-> +#include "net/can_emu.h"
->  #include "hw/misc/xlnx-versal-cfu.h"
->  #include "hw/misc/xlnx-versal-cframe-reg.h"
->  #include "target/arm/cpu.h"
->  #include "hw/arm/xlnx-versal-version.h"
->  
-> @@ -81,12 +81,10 @@ struct Versal {
->          struct {
->              CadenceGEMState gem[XLNX_VERSAL_NR_GEMS];
->              OrIRQState gem_irq_orgate[XLNX_VERSAL_NR_GEMS];
->              XlnxZDMA adma[XLNX_VERSAL_NR_ADMAS];
->              VersalUsb2 usb;
-> -            CanBusState *canbus[XLNX_VERSAL_NR_CANFD];
-> -            XlnxVersalCANFDState canfd[XLNX_VERSAL_NR_CANFD];
->          } iou;
->  
->          /* Real-time Processing Unit.  */
->          struct {
->              MemoryRegion mr;
-> @@ -139,10 +137,11 @@ struct Versal {
->          uint32_t clk_125mhz;
->      } phandle;
->  
->      struct {
->          MemoryRegion *mr_ddr;
-> +        CanBusState **canbus;
->          void *fdt;
->      } cfg;
->  };
->  
->  struct VersalClass {
-> @@ -155,10 +154,12 @@ static inline void versal_set_fdt(Versal *s, void *fdt)
->  {
->      g_assert(!qdev_is_realized(DEVICE(s)));
->      s->cfg.fdt = fdt;
->  }
->  
-> +int versal_get_num_can(VersalVersion version);
-> +
->  /* Memory-map and IRQ definitions. Copied a subset from
->   * auto-generated files.  */
->  
->  #define VERSAL_GIC_MAINT_IRQ        9
->  #define VERSAL_TIMER_VIRT_IRQ       11
-> diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-> index e1deae11317..334252564be 100644
-> --- a/hw/arm/xlnx-versal-virt.c
-> +++ b/hw/arm/xlnx-versal-virt.c
-> @@ -41,15 +41,15 @@ struct VersalVirt {
->          uint32_t ethernet_phy[2];
->          uint32_t clk_125Mhz;
->          uint32_t clk_25Mhz;
->          uint32_t usb;
->          uint32_t dwc;
-> -        uint32_t canfd[2];
->      } phandle;
->      struct arm_boot_info binfo;
->  
-> -    CanBusState *canbus[XLNX_VERSAL_NR_CANFD];
-> +    CanBusState **canbus;
-> +
->      struct {
->          bool secure;
->      } cfg;
->      char *ospi_model;
->  };
-> @@ -207,42 +207,10 @@ static void fdt_add_usb_xhci_nodes(VersalVirt *s)
->      qemu_fdt_setprop_cell(s->fdt, name, "phandle", s->phandle.dwc);
->      qemu_fdt_setprop_string(s->fdt, name, "maximum-speed", "high-speed");
->      g_free(name);
->  }
->  
-> -static void fdt_add_canfd_nodes(VersalVirt *s)
-> -{
-> -    uint64_t addrs[] = { MM_CANFD1, MM_CANFD0 };
-> -    uint32_t size[] = { MM_CANFD1_SIZE, MM_CANFD0_SIZE };
-> -    unsigned int irqs[] = { VERSAL_CANFD1_IRQ_0, VERSAL_CANFD0_IRQ_0 };
-> -    const char clocknames[] = "can_clk\0s_axi_aclk";
-> -    int i;
-> -
-> -    /* Create and connect CANFD0 and CANFD1 nodes to canbus0. */
-> -    for (i = 0; i < ARRAY_SIZE(addrs); i++) {
-> -        char *name = g_strdup_printf("/canfd@%" PRIx64, addrs[i]);
-> -        qemu_fdt_add_subnode(s->fdt, name);
-> -
-> -        qemu_fdt_setprop_cell(s->fdt, name, "rx-fifo-depth", 0x40);
-> -        qemu_fdt_setprop_cell(s->fdt, name, "tx-mailbox-count", 0x20);
-> -
-> -        qemu_fdt_setprop_cells(s->fdt, name, "clocks",
-> -                               s->phandle.clk_25Mhz, s->phandle.clk_25Mhz);
-> -        qemu_fdt_setprop(s->fdt, name, "clock-names",
-> -                         clocknames, sizeof(clocknames));
-> -        qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
-> -                               GIC_FDT_IRQ_TYPE_SPI, irqs[i],
-> -                               GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-> -        qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
-> -                                     2, addrs[i], 2, size[i]);
-> -        qemu_fdt_setprop_string(s->fdt, name, "compatible",
-> -                                "xlnx,canfd-2.0");
-> -
-> -        g_free(name);
-> -    }
-> -}
-> -
->  static void fdt_add_fixed_link_nodes(VersalVirt *s, char *gemname,
->                                       uint32_t phandle)
->  {
->      char *name = g_strdup_printf("%s/fixed-link", gemname);
->  
-> @@ -659,22 +627,25 @@ static void versal_virt_init(MachineState *machine)
->  
->      object_initialize_child(OBJECT(machine), "xlnx-versal", &s->soc,
->                              TYPE_XLNX_VERSAL);
->      object_property_set_link(OBJECT(&s->soc), "ddr", OBJECT(machine->ram),
->                               &error_abort);
-> -    object_property_set_link(OBJECT(&s->soc), "canbus0", OBJECT(s->canbus[0]),
-> -                             &error_abort);
-> -    object_property_set_link(OBJECT(&s->soc), "canbus1", OBJECT(s->canbus[1]),
-> -                             &error_abort);
-> +
-> +    for (i = 0; i < versal_get_num_can(VERSAL_VER_VERSAL); i++) {
-> +        g_autofree char *prop_name = g_strdup_printf("canbus%d", i);
-> +
-> +        object_property_set_link(OBJECT(&s->soc), prop_name,
-> +                                 OBJECT(s->canbus[i]),
-> +                                 &error_abort);
-> +    }
->  
->      fdt_create(s);
->      versal_set_fdt(&s->soc, s->fdt);
->      sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
->      create_virtio_regions(s);
->  
->      fdt_add_gem_nodes(s);
-> -    fdt_add_canfd_nodes(s);
->      fdt_add_gic_nodes(s);
->      fdt_add_timer_nodes(s);
->      fdt_add_zdma_nodes(s);
->      fdt_add_usb_xhci_nodes(s);
->      fdt_add_sd_nodes(s);
-> @@ -753,30 +724,34 @@ static void versal_virt_init(MachineState *machine)
->  }
->  
->  static void versal_virt_machine_instance_init(Object *obj)
->  {
->      VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
-> +    size_t i, num_can;
-> +
-> +    num_can = versal_get_num_can(VERSAL_VER_VERSAL);
-> +    s->canbus = g_new0(CanBusState *, num_can);
->  
->      /*
-> -     * User can set canbus0 and canbus1 properties to can-bus object and connect
-> -     * to socketcan(optional) interface via command line.
-> +     * User can set canbusx properties to can-bus object and optionally connect
-> +     * to socketcan interface via command line.
->       */
-> -    object_property_add_link(obj, "canbus0", TYPE_CAN_BUS,
-> -                             (Object **)&s->canbus[0],
-> -                             object_property_allow_set_link,
-> -                             0);
-> -    object_property_add_link(obj, "canbus1", TYPE_CAN_BUS,
-> -                             (Object **)&s->canbus[1],
-> -                             object_property_allow_set_link,
-> -                             0);
-> +    for (i = 0; i < num_can; i++) {
-> +        g_autofree char *prop_name = g_strdup_printf("canbus%zu", i);
-> +
-> +        object_property_add_link(obj, prop_name, TYPE_CAN_BUS,
-> +                                 (Object **) &s->canbus[i],
-> +                                 object_property_allow_set_link, 0);
-> +    }
->  }
->  
->  static void versal_virt_machine_finalize(Object *obj)
->  {
->      VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
->  
->      g_free(s->ospi_model);
-> +    g_free(s->canbus);
->  }
->  
->  static void versal_virt_machine_class_init(ObjectClass *oc, const void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
-> diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> index 87468cbc291..7ed1001dab3 100644
-> --- a/hw/arm/xlnx-versal.c
-> +++ b/hw/arm/xlnx-versal.c
-> @@ -25,10 +25,11 @@
->  #include "target/arm/cpu-qom.h"
->  #include "target/arm/gtimer.h"
->  #include "system/device_tree.h"
->  #include "hw/arm/fdt.h"
->  #include "hw/char/pl011.h"
-> +#include "hw/net/xlnx-versal-canfd.h"
->  
->  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
->  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
->  #define GEM_REVISION        0x40070106
->  
-> @@ -41,16 +42,23 @@ typedef struct VersalSimplePeriphMap {
->  } VersalSimplePeriphMap;
->  
->  typedef struct VersalMap {
->      VersalSimplePeriphMap uart[2];
->      size_t num_uart;
-> +
-> +    VersalSimplePeriphMap canfd[4];
-> +    size_t num_canfd;
->  } VersalMap;
->  
->  static const VersalMap VERSAL_MAP = {
->      .uart[0] = { 0xff000000, 18 },
->      .uart[1] = { 0xff010000, 19 },
->      .num_uart = 2,
-> +
-> +    .canfd[0] = { 0xff060000, 20 },
-> +    .canfd[1] = { 0xff070000, 21 },
-> +    .num_canfd = 2,
->  };
->  
->  static const VersalMap *VERSION_TO_MAP[] = {
->      [VERSAL_VER_VERSAL] = &VERSAL_MAP,
->  };
-> @@ -284,40 +292,46 @@ static void versal_create_uart(Versal *s,
->      if (chardev_idx == 0) {
->          qemu_fdt_setprop_string(s->cfg.fdt, "/chosen", "stdout-path", node);
->      }
->  }
->  
-> -static void versal_create_canfds(Versal *s, qemu_irq *pic)
-> +static void versal_create_canfd(Versal *s, const VersalSimplePeriphMap *map,
-> +                                CanBusState *bus)
->  {
-> -    int i;
-> -    uint32_t irqs[] = { VERSAL_CANFD0_IRQ_0, VERSAL_CANFD1_IRQ_0};
-> -    uint64_t addrs[] = { MM_CANFD0, MM_CANFD1 };
-> +    SysBusDevice *sbd;
-> +    MemoryRegion *mr;
-> +    g_autofree char *node;
-> +    const char compatible[] = "xlnx,canfd-2.0";
-> +    const char clocknames[] = "can_clk\0s_axi_aclk";
->  
-> -    for (i = 0; i < ARRAY_SIZE(s->lpd.iou.canfd); i++) {
-> -        char *name = g_strdup_printf("canfd%d", i);
-> -        SysBusDevice *sbd;
-> -        MemoryRegion *mr;
-> +    sbd = SYS_BUS_DEVICE(qdev_new(TYPE_XILINX_CANFD));
-> +    object_property_add_child(OBJECT(s), "canfd[*]", OBJECT(sbd));
->  
-> -        object_initialize_child(OBJECT(s), name, &s->lpd.iou.canfd[i],
-> -                                TYPE_XILINX_CANFD);
-> -        sbd = SYS_BUS_DEVICE(&s->lpd.iou.canfd[i]);
-> +    object_property_set_int(OBJECT(sbd), "ext_clk_freq",
-> +                            25 * 1000 * 1000 , &error_abort);
->  
-> -        object_property_set_int(OBJECT(&s->lpd.iou.canfd[i]), "ext_clk_freq",
-> -                                XLNX_VERSAL_CANFD_REF_CLK , &error_abort);
-> +    object_property_set_link(OBJECT(sbd), "canfdbus", OBJECT(bus),
-> +                             &error_abort);
->  
-> -        object_property_set_link(OBJECT(&s->lpd.iou.canfd[i]), "canfdbus",
-> -                                 OBJECT(s->lpd.iou.canbus[i]),
-> -                                 &error_abort);
-> +    sysbus_realize_and_unref(sbd, &error_fatal);
->  
-> -        sysbus_realize(sbd, &error_fatal);
-> +    mr = sysbus_mmio_get_region(sbd, 0);
-> +    memory_region_add_subregion(&s->mr_ps, map->addr, mr);
->  
-> -        mr = sysbus_mmio_get_region(sbd, 0);
-> -        memory_region_add_subregion(&s->mr_ps, addrs[i], mr);
-> +    versal_sysbus_connect_irq(s, sbd, 0, map->irq);
->  
-> -        sysbus_connect_irq(sbd, 0, pic[irqs[i]]);
-> -        g_free(name);
-> -    }
-> +    node = versal_fdt_add_simple_subnode(s, "/canfd", map->addr, 0x10000,
-> +                                         compatible, sizeof(compatible));
-> +    qemu_fdt_setprop_cell(s->cfg.fdt, node, "rx-fifo-depth", 0x40);
-> +    qemu_fdt_setprop_cell(s->cfg.fdt, node, "tx-mailbox-count", 0x20);
-> +    qemu_fdt_setprop_cells(s->cfg.fdt, node, "clocks",
-> +                           s->phandle.clk_25mhz, s->phandle.clk_25mhz);
-> +    qemu_fdt_setprop(s->cfg.fdt, node, "clock-names",
-> +                     clocknames, sizeof(clocknames));
-> +    qemu_fdt_setprop_cells(s->cfg.fdt, node, "interrupts",
-> +                           GIC_FDT_IRQ_TYPE_SPI, map->irq,
-> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
->  }
->  
->  static void versal_create_usbs(Versal *s, qemu_irq *pic)
->  {
->      DeviceState *dev;
-> @@ -1046,11 +1060,14 @@ static void versal_realize(DeviceState *dev, Error **errp)
->  
->      for (i = 0; i < map->num_uart; i++) {
->          versal_create_uart(s, &map->uart[i], i);
->      }
->  
-> -    versal_create_canfds(s, pic);
-> +    for (i = 0; i < map->num_canfd; i++) {
-> +        versal_create_canfd(s, &map->canfd[i], s->cfg.canbus[i]);
-> +    }
-> +
->      versal_create_usbs(s, pic);
->      versal_create_gems(s, pic);
->      versal_create_admas(s, pic);
->      versal_create_sds(s, pic);
->      versal_create_pmc_apb_irq_orgate(s, pic);
-> @@ -1074,28 +1091,50 @@ static void versal_realize(DeviceState *dev, Error **errp)
->      memory_region_add_subregion_overlap(&s->fpd.apu.mr, 0, &s->mr_ps, 0);
->      memory_region_add_subregion_overlap(&s->lpd.rpu.mr, 0,
->                                          &s->lpd.rpu.mr_ps_alias, 0);
->  }
->  
-> +int versal_get_num_can(VersalVersion version)
-> +{
-> +    const VersalMap *map = VERSION_TO_MAP[version];
-> +
-> +    return map->num_canfd;
-> +}
+> Can a single file contain multiple certificates?
+> 
 
+A certificate file path is expected to contain exactly one certificate.
 
-Is there a QOM way to do this? Like a read-only prop?
-Or do we usually handle these kind of things by non-QOM side interfaces?
+Certificates provided through the CLI, whether as individual files or
+within a directory, are validated before use. If a certificate is
+invalid (e.g., unsupported format), it will be skipped and not added to
+the S390 certificate store.
 
+When iterating through the provided paths, the program will terminate on
+fatal configuration errors, such as when a specified path is neither a
+file nor a directory.
 
+>>>> +
+>>>> +.. code-block:: shell
+>>>> +
+>>>> +    qemu-system-s390x -machine s390-ccw-virtio, \
+>>>> +                               boot-certs.0.path=/.../qemu/certs, \
+>>>> +                               boot-certs.1.path=/another/path/cert.pem ...
+>>>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>>>> index c294106a74..9ac425c695 100644
+>>>> --- a/hw/s390x/s390-virtio-ccw.c
+>>>> +++ b/hw/s390x/s390-virtio-ccw.c
+>>>> @@ -45,6 +45,7 @@
+>>>>  #include "target/s390x/kvm/pv.h"
+>>>>  #include "migration/blocker.h"
+>>>>  #include "qapi/visitor.h"
+>>>> +#include "qapi/qapi-visit-machine-s390x.h"
+>>>>  #include "hw/s390x/cpu-topology.h"
+>>>>  #include "kvm/kvm_s390x.h"
+>>>>  #include "hw/virtio/virtio-md-pci.h"
+>>>> @@ -798,6 +799,30 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
+>>>>      g_free(val);
+>>>>  }
+>>>>  
+>>>> +static void machine_get_boot_certs(Object *obj, Visitor *v,
+>>>> +                                   const char *name, void *opaque,
+>>>> +                                   Error **errp)
+>>>> +{
+>>>> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>>>> +    BootCertPathList **certs = &ms->boot_certs;
+>>>> +
+>>>> +    visit_type_BootCertPathList(v, name, certs, errp);
+>>>> +}
+>>>> +
+>>>> +static void machine_set_boot_certs(Object *obj, Visitor *v, const char *name,
+>>>> +                                   void *opaque, Error **errp)
+>>>> +{
+>>>> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>>>> +    BootCertPathList *cert_list = NULL;
+>>>> +
+>>>> +    visit_type_BootCertPathList(v, name, &cert_list, errp);
+>>>> +    if (!cert_list) {
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    ms->boot_certs = cert_list;
+>>>> +}
+>>>> +
+>>>>  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>>>>  {
+>>>>      MachineClass *mc = MACHINE_CLASS(oc);
+>>>> @@ -851,6 +876,11 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+>>>>              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
+>>>>              " to upper case) to pass to machine loader, boot manager,"
+>>>>              " and guest kernel");
+>>>> +
+>>>> +    object_class_property_add(oc, "boot-certs", "BootCertPath",
+>>>
+>>> Isn't this a BootCertPathList, not a BootCertPath?
+>>
+>> If I understand correctly, would BootCerts also be the correct option to
+>> use here?
+> 
+> This is object_class_property_add()'s @type argument.  It's an arbitrary
+> string, not checked in any way.  When the property's actual type is a
+> QAPI type, like it is here, then the @type argument should be the name
+> of the QAPI type.
+> 
+> Questions?
+> 
+>>>> +                              machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
+>>>> +    object_class_property_set_description(oc, "boot-certs",
+>>>> +            "provide paths to a directory and/or a certificate file for secure boot");
+>>>>  }
+>>>>  
+>>>>  static inline void s390_machine_initfn(Object *obj)
+>>>> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+>>>> index 526078a4e2..b90949355c 100644
+>>>> --- a/include/hw/s390x/s390-virtio-ccw.h
+>>>> +++ b/include/hw/s390x/s390-virtio-ccw.h
+>>>> @@ -14,6 +14,7 @@
+>>>>  #include "hw/boards.h"
+>>>>  #include "qom/object.h"
+>>>>  #include "hw/s390x/sclp.h"
+>>>> +#include "qapi/qapi-types-machine-s390x.h"
+>>>>  
+>>>>  #define TYPE_S390_CCW_MACHINE               "s390-ccw-machine"
+>>>>  
+>>>> @@ -31,6 +32,7 @@ struct S390CcwMachineState {
+>>>>      uint8_t loadparm[8];
+>>>>      uint64_t memory_limit;
+>>>>      uint64_t max_pagesize;
+>>>> +    BootCertPathList *boot_certs;
+>>>>  
+>>>>      SCLPDevice *sclp;
+>>>>  };
+>>>> diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+>>>> index 966dbd61d2..3e89ef8320 100644
+>>>> --- a/qapi/machine-s390x.json
+>>>> +++ b/qapi/machine-s390x.json
+>>>> @@ -119,3 +119,27 @@
+>>>>  { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+>>>>    'features': [ 'unstable' ]
+>>>>  }
+>>>> +
+>>>> +##
+>>>> +# @BootCertPath:
+>>>> +#
+>>>> +# Boot certificate path.
+>>>> +#
+>>>> +# @path: path of certificate(s)
+>>>> +#
+>>>> +# Since: 10.1
+>>>> +##
+>>>
+>>> No mention of file vs. directory.
+>>>
+>>> Why do you wrap the file name in a struct?  One possible reason is
+>>> providing for future extensions.  Can you think of any?
+>>>
+>>> If you extend it, the name BootCertPath could become suboptimal.
+>>> BootCertificate?
+>>>
+>>
+>> I wrapped the path in a struct to follow the array-style structure used
+>> by cxl-fmw and smp-cache options (as Daniel suggested).
+>>
+>> ```
+>>   It would be something like this on the CLI:
+>>
+>>
+>> boot-certs.0.path=/path/to/dir,boot-certs.1.path=/to/other/dir,boot-certs.2.path=/some/...
+>> ```
+>>
+>> This could potentially leave room for future extensions, such as
+>> including details about the certificate (e.g., issuer, hashing
+>> algorithm, etc).
+> 
+> No objections to the wrapping.  I'd prefer naming the struct
+> BootCertificates.
+> 
 
+I'll update this in the next version.
 
-> +
->  static void versal_base_init(Object *obj)
->  {
->      Versal *s = XLNX_VERSAL_BASE(obj);
-> +    size_t i, num_can;
->  
->      memory_region_init(&s->fpd.apu.mr, obj, "mr-apu", UINT64_MAX);
->      memory_region_init(&s->lpd.rpu.mr, obj, "mr-rpu", UINT64_MAX);
->      memory_region_init(&s->mr_ps, obj, "mr-ps-switch", UINT64_MAX);
->      memory_region_init_alias(&s->lpd.rpu.mr_ps_alias, OBJECT(s),
->                               "mr-rpu-ps-alias", &s->mr_ps, 0, UINT64_MAX);
-> +
-> +    num_can = versal_get_map(s)->num_canfd;
-> +    s->cfg.canbus = g_new0(CanBusState *, num_can);
-> +
-> +    for (i = 0; i < num_can; i++) {
-> +        g_autofree char *prop_name = g_strdup_printf("canbus%zu", i);
-> +
-> +        object_property_add_link(obj, prop_name, TYPE_CAN_BUS,
-> +                                 (Object **) &s->cfg.canbus[i],
-> +                                 object_property_allow_set_link, 0);
-> +    }
-> +}
-> +
-> +static void versal_base_finalize(Object *obj)
-> +{
-> +    Versal *s = XLNX_VERSAL_BASE(obj);
-> +
-> +    g_free(s->cfg.canbus);
->  }
->  
->  static const Property versal_properties[] = {
->      DEFINE_PROP_LINK("ddr", Versal, cfg.mr_ddr, TYPE_MEMORY_REGION,
->                       MemoryRegion *),
-> -    DEFINE_PROP_LINK("canbus0", Versal, lpd.iou.canbus[0],
-> -                      TYPE_CAN_BUS, CanBusState *),
-> -    DEFINE_PROP_LINK("canbus1", Versal, lpd.iou.canbus[1],
-> -                      TYPE_CAN_BUS, CanBusState *),
->  };
->  
->  static void versal_base_class_init(ObjectClass *klass, const void *data)
->  {
->      DeviceClass *dc = DEVICE_CLASS(klass);
-> @@ -1115,10 +1154,11 @@ static void versal_class_init(ObjectClass *klass, const void *data)
->  static const TypeInfo versal_base_info = {
->      .name = TYPE_XLNX_VERSAL_BASE,
->      .parent = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(Versal),
->      .instance_init = versal_base_init,
-> +    .instance_finalize = versal_base_finalize,
->      .class_init = versal_base_class_init,
->      .class_size = sizeof(VersalClass),
->      .abstract = true,
->  };
->  
-> -- 
-> 2.50.1
+>>>> +{ 'struct': 'BootCertPath',
+>>>> +  'data': {'path': 'str'} }
+>>>> +
+>>>> +##
+>>>> +# @BootCerts:
+>>>> +#
+>>>> +# List of boot certificate paths.
+>>>> +#
+>>>> +# @boot-certs: List of BootCertPath
+>>>
+>>> Anti-pattern: the description text restates the type.
+>>>
+>>>> +#
+>>>> +# Since: 10.1
+>>>> +##
+>>>> +{ 'struct': 'BootCerts',
+>>>> +  'data': {'boot-certs': ['BootCertPath'] } }
+>>>
+>>> Where is this type used?
+>>
+>> Please correct me if I'm wrong, but from what I've seen, it is not used
+>> directly in the implementation. It provides a list property for
+>> BootCertPath, which makes the BootCertPathList definition valid and able
+>> to accept multiple paths. If BootCerts is removed, then BootCertPathList
+>> becomes underfined and results in compilation errors.
+> 
+> Aha!
+> 
+> Your QOM property setter and getter need visit_type_BootCertPathList().
+> 
+> The QAPI generator generates code for BootCertPathList, including
+> visit_type_BootCertPathList(), only when it knows it's actually used.
+> It can only see uses within the QAPI schema.  So, when ['BootCertPath']
+> doesn't occur there, visit_type_BootCertPathList() won't exist, and your
+> QOM code won't compile.
+> 
+> Since you don't actually need BootCertPathList in the schema, you need
+> to add an artifical use just to get it generated.  The common way to do
+> that is using it in a dummy type like this:
+> 
+>     ##
+>     # @DummyForceS390Arrays:
+>     #
+>     # Not used by QMP; hack to let us use BootCertPathList internally
+>     #
+>     # Since: 10.2
+>     ##
+>     { 'struct': 'DummyForceArrays',
+>       'data': { 'unused': ['BootCertPath'] } }
+> 
+> You also need to add it to pragme documentation-exceptions is
+> pragma.json.
+> 
+> Yes, this is clunky.  Sorry :)
+> 
+
+Thanks for all the explanations! I'll make the changes in the next version.
+
+> [...]
 > 
 
