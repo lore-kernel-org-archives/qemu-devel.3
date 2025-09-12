@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA23CA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC02CA101F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 05:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwwnC-0000zp-Po; Fri, 12 Sep 2025 01:57:54 -0400
+	id 1uwwo1-0001Fm-Uv; Fri, 12 Sep 2025 01:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwnA-0000zM-48
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:57:52 -0400
+ id 1uwwnr-00018K-Eq
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:58:36 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uwwn8-0003pK-Ag
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:57:51 -0400
+ id 1uwwnp-0003rb-SQ
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 01:58:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757656670; x=1789192670;
+ t=1757656714; x=1789192714;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=5hg2mWTWlH6GipyyvRx7sHhTjqd6+ezHH8qfKPsm0ss=;
- b=bpwulalL4JPbLzvnvDQtzbh2O+ueRqtS8Wj1c5/IJ7g6UgwAOfbIWc1X
- H6ieDUPp2rWgxL6ca4Cqj+MfJk9W0yJAnKiivTyNR4CzGKyBXUwq2b5FW
- rODwWMUhocKFeNgQIDqzIOCTuDrH9Bg7k/fsGOxPDvfG7a/sYIna5RqUM
- WEn61e4UZY/wMdSqusMKDDPd4YyLmmZeRV3iDu+0iyJWH1FruABUt1twC
- T6XyWGxc0gYxTlHlzwF/ci5KlAFDjKvuFaKL6L7p/W5eyuENRO6PZmtor
- E4FUvT3MRBIbahmjG+90jQL1jf5X4/HcxfVt044QHYgFPffgykUnm05oA A==;
-X-CSE-ConnectionGUID: 7Q+UZIz4RC2qim3YIF15Tw==
-X-CSE-MsgGUID: 6toslNDGTGiivS7a43GRBA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="59695250"
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="59695250"
+ bh=hAp5E8q3JRPpm/pbTjfnejaXZNpz/9zFv79frd5g7xI=;
+ b=W2kWjvrRFDvcw5Vs2wNMGyc8o8BNsnu1iP9RASsWJdsX2CeaK0xr1gQT
+ vCb3t8sRc0YkK+pVxRF7Y0sCVRF5Oc9qjYOAy+Aj6uFlW7uS/OebZ8phv
+ yosd4j3HsTK/72Ldbaok1wcVijbU0FEQv9+babQapVn1pDNjPGgRK6Oby
+ ggYi7WHPcIiV3pl6xm6cNAMfaqAZUHpUeS8KPadkvwdTLeaM1eWPG5gyw
+ 84OLzKeD38ZtY6+ozGprumv9E/9GSd6GBpA/Iy70tedP4MpBMJ72HvmPK
+ 8F4TJQoBUWj508FQXT1trmsiHUodUmq7pdNtiP7xP/eRk3+kaXsmRbR3n A==;
+X-CSE-ConnectionGUID: 4s54m22lSu+9bF3d4rVMxA==
+X-CSE-MsgGUID: Twqnz8b9T7OtoL76+c/sJg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11550"; a="59695283"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="59695283"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:57:47 -0700
-X-CSE-ConnectionGUID: 2Hxq9EHBTPOUA9ajlEXjeQ==
-X-CSE-MsgGUID: l6lUUnb+SE2eFR+57Inrww==
+ 11 Sep 2025 22:58:32 -0700
+X-CSE-ConnectionGUID: 2YTS9IaTT2C1UyDwCK3TVA==
+X-CSE-MsgGUID: wzvbxMJrSpO6nG6fwjyO9Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="174272634"
+X-IronPort-AV: E=Sophos;i="6.18,259,1751266800"; d="scan'208";a="174272820"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
  ([10.124.238.14])
  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Sep 2025 22:57:45 -0700
-Message-ID: <9242e7c6-be5c-4043-80b6-908b4297994e@intel.com>
-Date: Fri, 12 Sep 2025 13:57:42 +0800
+ 11 Sep 2025 22:58:31 -0700
+Message-ID: <d86395e0-4456-4bd0-b320-bbfc49f0e780@intel.com>
+Date: Fri, 12 Sep 2025 13:58:28 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] qemu-optios: Fix, cleanup and add description of
- tdx-guest
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20250714091953.448226-1-xiaoyao.li@intel.com>
+Subject: Re: [PATCH] x86/loader: Rectify the address of setup_data
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20250814141406.2371767-1-xiaoyao.li@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250714091953.448226-1-xiaoyao.li@intel.com>
+In-Reply-To: <20250814141406.2371767-1-xiaoyao.li@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
@@ -88,29 +85,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/2025 5:19 PM, Xiaoyao Li wrote:
-> Patch 1 is the fix to generated doc html.
+On 8/14/2025 10:14 PM, Xiaoyao Li wrote:
+> Commit 214191f6b574 ("x86/loader: read complete kernel") changed the
+> semantics of kernel_size from the piggyback kernel to the whole kernel
+> file, which leads to the setup_data_offset contains setup_size and leads
+> to wrong address of setup_data being written in header[0x250].
 > 
-> Patch 2-4 are the cleanup of memory-encryption
-> 
-> Patch 5 add description of tdx-guest.
+> Fix it by minusing setup_size.
 
 Gentle ping.
 
-Appreciated if anyone could help cc the folks who are responsible for 
-the qemu-option but I missed to cc.
-
-> Xiaoyao Li (5):
->    qemu-options: Move sgx-epc options from "M" to "machine"
->    i386/sev: Remove the example that references memory-encryption
->    qemu-options: Change memory-encryption to confidential-guest-support
->      in the example
->    qemu-options: Add confidential-guest-support to machine options
->    qemu-options: Add description of tdx-guest object
+> Fixes: 214191f6b574 ("x86/loader: read complete kernel")
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>   hw/i386/x86-common.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->   qemu-options.hx   | 66 ++++++++++++++++++++++++++++++++++++++---------
->   target/i386/sev.c |  4 ---
->   2 files changed, 54 insertions(+), 16 deletions(-)
-> 
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index 7512be64d67b..127b85eb02cc 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -935,7 +935,7 @@ void x86_load_linux(X86MachineState *x86ms,
+>           kernel_size = setup_data_offset + sizeof(struct setup_data) + dtb_size;
+>           kernel = g_realloc(kernel, kernel_size);
+>   
+> -        stq_le_p(header + 0x250, prot_addr + setup_data_offset);
+> +        stq_le_p(header + 0x250, prot_addr + setup_data_offset - setup_size);
+>   
+>           setup_data = (struct setup_data *)(kernel + setup_data_offset);
+>           setup_data->next = 0;
 
 
