@@ -4,79 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3822CCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB929CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 13:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux3WE-0003Kc-KG; Fri, 12 Sep 2025 09:08:50 -0400
+	id 1ux3ln-0006Lr-Th; Fri, 12 Sep 2025 09:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3W9-0003Ix-NJ
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
+ id 1uwx5a-0007w7-Rf
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:17:01 -0400
+Received: from mail-bn7nam10on2070.outbound.protection.outlook.com
+ ([40.107.92.70] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1ux3W6-0007Kg-HW
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 09:08:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757682520;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qnGJdo7BKyNSR+m9w4vYX6g7K4hQfLCTyiYVnWypmao=;
- b=P5+p+NfG8fnP6G6Qh44kQJ8Mm5TfJBOWkUTEOgyaPwHNtZzKu64xQuMDiGdrW8h+zYCkjN
- WoP/u+NdVMmaFnq8FWiFY08JJDan3v7FDe9oO594Ty5oxiUKSMZueSmqOc7H40PGOvCNCZ
- s5tKbXAn11Ywq4qe4GeK00/zLqhxIzE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-Z_dMksMkP5i8UJmIc0ttQQ-1; Fri,
- 12 Sep 2025 09:08:36 -0400
-X-MC-Unique: Z_dMksMkP5i8UJmIc0ttQQ-1
-X-Mimecast-MFC-AGG-ID: Z_dMksMkP5i8UJmIc0ttQQ_1757682515
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 625BD180047F; Fri, 12 Sep 2025 13:08:35 +0000 (UTC)
-Received: from gerbillo.redhat.com (unknown [10.44.32.130])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 105BE1954126; Fri, 12 Sep 2025 13:08:30 +0000 (UTC)
-From: Paolo Abeni <pabeni@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v6 14/14] net: implement UDP tunnel features offloading
-Date: Fri, 12 Sep 2025 15:07:05 +0200
-Message-ID: <2647432da216757b27ec3c14a6f3f37dd726cc76.1757676218.git.pabeni@redhat.com>
-In-Reply-To: <cover.1757676218.git.pabeni@redhat.com>
-References: <cover.1757676218.git.pabeni@redhat.com>
+ (Exim 4.90_1) (envelope-from <Lingshan.Zhu@amd.com>)
+ id 1uwx5Y-0006JM-Pz
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 02:16:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xsmVRFT7/++C897IHO438LBjkBHsLLVtWPW8nKkyrsGvEWwV95xkgoBdRdmnvFymKTEkl94IESk9jyek4savZaxxR8YyGn77b6Fj/11vcm1OS9Glb/wlO7b7kuiu3Wcl0TEu1v/XGK2/dazpFgCXSA03le2WVrcTL07+Or++KkVvrrqdIUPD0UbqEP7GSuIhVHSnSk3xhyKD+KfQv/u04de0mNbfWLvWZZXqJesTQ7MInoKt4pADyL54ZZJ7XitObbM5dGdcecHsEYwt0ncOcOEwbHl//WVJH2VulEM4ff6DM1sDMe/h45iWZCuFb9/8FlsOAGLk3hwSt8Y6w9mUGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l6auPqG5hPxwFsrp7yZSOW+0r/UOmX244ZQIdt7Kfp8=;
+ b=ZYgQEhiXEeEN8HtDA6JptTahasXHZF3HMGZuQuS5gi9HCnhF1q0om3r8W62Yg8Bbm3/SDJiLnZ1D0dQQX4fviU2gAOCEkfZaz/OqyI4quD6k+FBe+E/4W+68qCI1ysuTlUmnY/a9ZqD/i58zl1C8uzevBlmH+3vVOsqOdr1lCFWOZ9szz2v+m90NEc4ssh3baXvvnk5Jy6AisoVvGOXZuMfUL3/TN/RWz+s3xrQRS2RuU3n1LlewuofpkE2BZTGYnM4DbObAOv6dSfcqXc5w0bbcZ0XzMVDYn7gxcLNf0OcC1v/FwuDQO8raa47Hq5z/PYW+YGCEi/sqigO7KT8WLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l6auPqG5hPxwFsrp7yZSOW+0r/UOmX244ZQIdt7Kfp8=;
+ b=SdCkCtUeJYmmUNNnYQLN68w/rvRAr3oMsvY4xZpTFgNHg/UJYCtO0RtMC4b3ljDK21HQyzUKF53JLBX8j2J5ayZKZt/SOmfdr/VUi9IBhdcnDqX2oUA5jvdSZmE++nLugTJnbiAKeyqTOEahYF5BZVaUqgoWjnFpVm1PtXMh9rc=
+Received: from SA0PR11CA0007.namprd11.prod.outlook.com (2603:10b6:806:d3::12)
+ by CH3PR12MB9122.namprd12.prod.outlook.com (2603:10b6:610:196::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
+ 2025 06:11:44 +0000
+Received: from SA2PEPF00001507.namprd04.prod.outlook.com
+ (2603:10b6:806:d3:cafe::48) by SA0PR11CA0007.outlook.office365.com
+ (2603:10b6:806:d3::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.17 via Frontend Transport; Fri,
+ 12 Sep 2025 06:11:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SA2PEPF00001507.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9115.13 via Frontend Transport; Fri, 12 Sep 2025 06:11:44 +0000
+Received: from fedora.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 11 Sep
+ 2025 23:11:42 -0700
+From: Zhu Lingshan <lingshan.zhu@amd.com>
+To: <jasowang@redhat.com>, <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, Zhu Lingshan <lingshan.zhu@amd.com>
+Subject: [RFC 0/2] virtio: implement suspend and resume feature
+Date: Fri, 12 Sep 2025 14:11:23 +0800
+Message-ID: <20250912061125.262457-1-lingshan.zhu@amd.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001507:EE_|CH3PR12MB9122:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1a280d0b-f462-4b82-5d86-08ddf1c33f6d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|376014|82310400026|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?0/vqGjt/xDEEAMX8LydPE9RRlQ94rf5S0tpqfi6tE+xPWKlZR8T9SBPZWp5k?=
+ =?us-ascii?Q?bZ+t56amCXXtiJ9f0q3H2q1OrcmYvd3emQlnwiXGKP6qcy9mnKxqU1yNVv78?=
+ =?us-ascii?Q?NfAVy8oCwWV0e5dKxpGnORfRxofKMBjDrrunUqWOze2nRttVLMFe8rmRIgh6?=
+ =?us-ascii?Q?aFXZghC3wK+KTVZrHCLVaBYT6411JC93RhsIcFM99s3qQhn0yYyzcwr+joCH?=
+ =?us-ascii?Q?GPLDwop1hmCe1g3W6sSW53xCDip32/G6O8YCi7NYVTTHkbXyd8tobWpmwx2X?=
+ =?us-ascii?Q?rF9riK1k1duziQkAlS63vSyxQbyEToydEqSR9DvZ/UncAyhIsvArJJ/q6OTg?=
+ =?us-ascii?Q?6Ve8NnB+hut9FGX+dvdxrEMJk9fMy8/+ftwaNnhULQBdZd3y7MESprzN1BeJ?=
+ =?us-ascii?Q?Yk0suzTYkLNQVNY9kK+tE8mMuyyg2PMZzDbEaqpjOFngQK2ZYzIzGC/86z+V?=
+ =?us-ascii?Q?R2xa2gRMOTouIhzcb2lptAzWMWca9pNol35tQztxM0GpZ/5s+3zYs23wSbxt?=
+ =?us-ascii?Q?y/zw5eha+5DFuOVRa2KIhBP+J/KWsdOOMPfye2Our15fdr9Xt5FH/Q+arF4T?=
+ =?us-ascii?Q?zL+GMsGdehS6qdzXbO9RrgZM4425atJDFxe9DoB8cKTe4+SWgY44R6acOcWZ?=
+ =?us-ascii?Q?tpXBsZK9zClb4O2LW+PsgBbxBlYB9eKIdPE7HknS6Jpz2JuHgC40cH8bDMJp?=
+ =?us-ascii?Q?d3Oi8gVM29vCF08ASuA5sEzUbZcYVgvw0y8kBVlVXPfwBX5u1eGwz2zp3ZY6?=
+ =?us-ascii?Q?kwQG5plgzHqfzkcycdLz8Anu4DhDJmiFrNXtiafAQRNkI3IG71jeJ/iE8DFL?=
+ =?us-ascii?Q?Ddu1GPcxEKm4h7VQ18yV2DldwbJYdhvfqLzPlefCxuHcZ4/bCOSiYIgmtn5L?=
+ =?us-ascii?Q?J0cX3U7bhnmGwc42yum2VqfMUlBsELhuSjk148xuBb2ysYxw7xaK4rl6qasl?=
+ =?us-ascii?Q?QcEePIEgGTtJCtJ+kGiH2KuqLWeypqPR1R9sEWRCl0pjvNjZe/eQatBpuOFY?=
+ =?us-ascii?Q?eIXPJmvXOr//BxuQEZB8+6cdzWlg9LcNfnHLVbkn3E40c9E3bmBD6TAGlgBc?=
+ =?us-ascii?Q?Ani7XzaBC1SP3kdAWYuoxBtfAcUvzj6oH9VRkBTQ/Li/0qQMZdUSs5zsiuzZ?=
+ =?us-ascii?Q?GRqj8REYJvgsvQh2AH9+DZIgNXuWRLB1Imf/sXU7Hf9v57NbnBRQUnserzoH?=
+ =?us-ascii?Q?wEwxZ7hsdV5N0gV/ylkTzygSx1gVfJ9g1Zk90nxdg9o+XHCdGj9X0JaAGyUr?=
+ =?us-ascii?Q?XANhB4VbrIyiEPWOsO6WFrzccXrldx1XJcsr9E2aLcMcYJHiGZjU+KJDpBLq?=
+ =?us-ascii?Q?tW0E9Li3Dyvn66VBXiVp2KiaTZ2gosqiMWJQezLwDmuu16frW3MZVH3Xi4Kd?=
+ =?us-ascii?Q?9n+s1qvI1Qm6aJL9MJLnaOUfxSIgNDDXlwc7GwE/gQhaE1ortvUiFwRRjmfy?=
+ =?us-ascii?Q?TqB52jyij8a8kCoQVsqdsezuqZu5VgClVS7WW2h7V25Q6PtUE3GGXyWq1Nwy?=
+ =?us-ascii?Q?A+eAfyomUrVCM0M=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(376014)(82310400026)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 06:11:44.0915 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a280d0b-f462-4b82-5d86-08ddf1c33f6d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001507.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9122
+Received-SPF: permerror client-ip=40.107.92.70;
+ envelope-from=Lingshan.Zhu@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 12 Sep 2025 09:24:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,205 +148,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When any host or guest GSO over UDP tunnel offload is enabled the
-virtio net header includes the additional tunnel-related fields,
-update the size accordingly.
+According to the spec changes[1,2], this RFC series implements
+suspend and resume facility for virtio, and a reference design
+on virtio-net.
 
-Push the GSO over UDP tunnel offloads all the way down to the tap
-device extending the newly introduced NetFeatures struct, and
-eventually enable the associated features.
+This suspend and resume feature will be supported on more
+device types after the basic facilities settling down.
 
-As per virtio specification, to convert features bit to offload bit,
-map the extended features into the reserved range.
+Plese help review, Thanks!!!
 
-Finally, make the vhost backend aware of the exact header layout, to
-copy it correctly. The tunnel-related field are present if either
-the guest or the host negotiated any UDP tunnel related feature:
-add them to the kernel supported features list, to allow qemu
-transfer to the backend the needed information.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
----
-v3 -> v4:
-  - '|' -> '||'
+[1] https://lore.kernel.org/virtio-comment/20250704101739.354522-1-lingshan.zhu@amd.com
+[2] https://github.com/oasis-tcs/virtio-spec/issues/229
 
-v2 -> v3:
-  - rebased on top of "net: Consolidate vhost feature bits into vhost_net
-    structure"
-  - _array -> _ex
+Zhu Lingshan (2):
+  virtio: implement virtio data-plane suspend and resume facility
+  virtio: implement virtio control-plane suspend and resume facility
 
-v1 -> v2:
-  - squashed vhost support into this patch
-  - dropped tun offload consistency checks; they are implemented in
-    the kernel side
-  - virtio_has_tnl_hdr ->virtio_has_tunnel_hdr
----
- hw/net/virtio-net.c | 34 ++++++++++++++++++++++++++--------
- include/net/net.h   |  2 ++
- net/net.c           |  3 ++-
- net/tap-linux.c     |  6 ++++++
- net/tap.c           |  2 ++
- 5 files changed, 38 insertions(+), 9 deletions(-)
+ hw/net/virtio-net.c                           | 115 ++++++++++++++++++
+ hw/virtio/virtio-pci.c                        |   5 +
+ hw/virtio/virtio.c                            |  24 ++++
+ include/hw/virtio/virtio.h                    |   1 +
+ .../standard-headers/linux/virtio_config.h    |   6 +
+ 5 files changed, 151 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 0abb8c8a62..f021663f92 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -103,6 +103,12 @@
- #define VIRTIO_NET_F2O_SHIFT          (VIRTIO_NET_OFFLOAD_MAP_MIN - \
-                                        VIRTIO_NET_FEATURES_MAP_MIN + 64)
- 
-+static bool virtio_has_tunnel_hdr(const uint64_t *features)
-+{
-+    return virtio_has_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO) ||
-+           virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
-+}
-+
- static const VirtIOFeature feature_sizes[] = {
-     {.flags = 1ULL << VIRTIO_NET_F_MAC,
-      .end = endof(struct virtio_net_config, mac)},
-@@ -659,7 +665,8 @@ static bool peer_has_tunnel(VirtIONet *n)
- }
- 
- static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
--                                       int version_1, int hash_report)
-+                                       int version_1, int hash_report,
-+                                       int tunnel)
- {
-     int i;
-     NetClientState *nc;
-@@ -667,9 +674,11 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
- 
-     if (version_1) {
--        n->guest_hdr_len = hash_report ?
--            sizeof(struct virtio_net_hdr_v1_hash) :
--            sizeof(struct virtio_net_hdr_mrg_rxbuf);
-+        n->guest_hdr_len = tunnel ?
-+            sizeof(struct virtio_net_hdr_v1_hash_tunnel) :
-+            (hash_report ?
-+             sizeof(struct virtio_net_hdr_v1_hash) :
-+             sizeof(struct virtio_net_hdr_mrg_rxbuf));
-         n->rss_data.populate_hash = !!hash_report;
-     } else {
-         n->guest_hdr_len = n->mergeable_rx_bufs ?
-@@ -803,6 +812,10 @@ static void virtio_net_apply_guest_offloads(VirtIONet *n)
-        .ufo  = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_UFO)),
-        .uso4 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO4)),
-        .uso6 = !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_USO6)),
-+       .tnl  = !!(n->curr_guest_offloads &
-+                  (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED)),
-+       .tnl_csum = !!(n->curr_guest_offloads &
-+                      (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED)),
-     };
- 
-     qemu_set_offload(qemu_get_queue(n->nic)->peer, &ol);
-@@ -824,7 +837,9 @@ virtio_net_guest_offloads_by_features(const uint64_t *features)
-         (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
-         (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
-         (1ULL << VIRTIO_NET_F_GUEST_USO4) |
--        (1ULL << VIRTIO_NET_F_GUEST_USO6);
-+        (1ULL << VIRTIO_NET_F_GUEST_USO6) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_MAPPED) |
-+        (1ULL << VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM_MAPPED);
- 
-     return guest_offloads_mask & virtio_net_features_to_offload(features);
- }
-@@ -937,7 +952,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
-                                virtio_has_feature_ex(features,
-                                                   VIRTIO_F_VERSION_1),
-                                virtio_has_feature_ex(features,
--                                                  VIRTIO_NET_F_HASH_REPORT));
-+                                                  VIRTIO_NET_F_HASH_REPORT),
-+                               virtio_has_tunnel_hdr(features));
- 
-     n->rsc4_enabled = virtio_has_feature_ex(features, VIRTIO_NET_F_RSC_EXT) &&
-         virtio_has_feature_ex(features, VIRTIO_NET_F_GUEST_TSO4);
-@@ -3163,13 +3179,15 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     VirtIONet *n = opaque;
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int i, link_down;
-+    bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
- 
-     trace_virtio_net_post_load_device();
-     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-                                virtio_vdev_has_feature(vdev,
-                                                        VIRTIO_F_VERSION_1),
-                                virtio_vdev_has_feature(vdev,
--                                                       VIRTIO_NET_F_HASH_REPORT));
-+                                                      VIRTIO_NET_F_HASH_REPORT),
-+                               has_tunnel_hdr);
- 
-     /* MAC_TABLE_ENTRIES may be different from the saved image */
-     if (n->mac_table.in_use > MAC_TABLE_ENTRIES) {
-@@ -3989,7 +4007,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- 
-     n->vqs[0].tx_waiting = 0;
-     n->tx_burst = n->net_conf.txburst;
--    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0);
-+    virtio_net_set_mrg_rx_bufs(n, 0, 0, 0, 0);
-     n->promisc = 1; /* for compatibility */
- 
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
-diff --git a/include/net/net.h b/include/net/net.h
-index 9a9084690d..72b476ee1d 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -43,6 +43,8 @@ typedef struct NetOffloads {
-     bool ufo;
-     bool uso4;
-     bool uso6;
-+    bool tnl;
-+    bool tnl_csum;
- } NetOffloads;
- 
- #define DEFINE_NIC_PROPERTIES(_state, _conf)                            \
-diff --git a/net/net.c b/net/net.c
-index 9536184a0c..27e0d27807 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -575,7 +575,8 @@ void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
- 
-     assert(len == sizeof(struct virtio_net_hdr_mrg_rxbuf) ||
-            len == sizeof(struct virtio_net_hdr) ||
--           len == sizeof(struct virtio_net_hdr_v1_hash));
-+           len == sizeof(struct virtio_net_hdr_v1_hash) ||
-+           len == sizeof(struct virtio_net_hdr_v1_hash_tunnel));
- 
-     nc->vnet_hdr_len = len;
-     nc->info->set_vnet_hdr_len(nc, len);
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index e2628be798..8e275d2ea4 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -279,6 +279,12 @@ void tap_fd_set_offload(int fd, const NetOffloads *ol)
-         if (ol->uso6) {
-             offload |= TUN_F_USO6;
-         }
-+        if (ol->tnl) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO;
-+        }
-+        if (ol->tnl_csum) {
-+            offload |= TUN_F_UDP_TUNNEL_GSO_CSUM;
-+        }
-     }
- 
-     if (ioctl(fd, TUNSETOFFLOAD, offload) != 0) {
-diff --git a/net/tap.c b/net/tap.c
-index 9f65e3fb3d..dc2a2859ec 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -62,6 +62,8 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_NOTIFICATION_DATA,
-     VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-+    VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
-+    VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
 -- 
 2.51.0
 
