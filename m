@@ -4,103 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE0FCAC582
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 08:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17BE9CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 08:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uwzOI-0004WA-F4; Fri, 12 Sep 2025 04:44:23 -0400
+	id 1uwzRm-0005sR-0W; Fri, 12 Sep 2025 04:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uwzOH-0004W2-6c
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:44:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uwzOE-0005za-6n
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757666654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ci9Z5ywj6zcimbITQT2GE52cpp+UCl+cU2yzPir63Jk=;
- b=AZiHlA5EU8Fogs8zg/bCjf+Bqi76kRgfDqbNwc07MeaCcekMDD4R6d8b2xau3nCYliRCZv
- Cxzc9XHNlpyfPqt9OxpyCAnH4LNt3CT+XvZUo6484f8QudV+vQMT4XEWOMJhUQwRSwT34V
- WGY5CUToJDxT3+xw60GtH8/jnNA6w7c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-JTlg6qngMzyMrws_YOfiXw-1; Fri, 12 Sep 2025 04:44:13 -0400
-X-MC-Unique: JTlg6qngMzyMrws_YOfiXw-1
-X-Mimecast-MFC-AGG-ID: JTlg6qngMzyMrws_YOfiXw_1757666652
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b98de0e34so14238295e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 01:44:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757666652; x=1758271452;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uwzRl-0005sH-Ey
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:47:57 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uwzRb-0006R0-Lo
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 04:47:57 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4b5f79aa443so13911551cf.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 01:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1757666865; x=1758271665; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ci9Z5ywj6zcimbITQT2GE52cpp+UCl+cU2yzPir63Jk=;
- b=SoazhnhKqjqQjFiykeQypfPnsKlMwaLu8QHcUyFZ6bnS86mEMRGXEo/DVkq7RZfa2r
- TMsSwuIZnYwQB/ZHpiwRwBmm46boihZJ7sJ/35dCn9fu7obDxka10/iczTNvVXVpIOne
- ZAsexGUSqMXaTEAnK2Q9bXctfp0/M+rZ2j4tTlnHfzP6Q2Vb4wisQsqbbslorxWRJRaa
- +aJv7EKiUfiY9yOS8CEHbMZZyMaeAWspkAXHjv5EuXIv6F6oL1x+apx3xjQDjs7q7Kek
- Px1+UR/bLakOx/PL1px/SM8maPXH3eASr5ritADLZSgl5sAHVPE0p8nLAgjHcCkulhOt
- K1KQ==
-X-Gm-Message-State: AOJu0YzEsHxUAh7lwRwdfQEC8g4ofAp+dkPEYepGGycvoiGRAlu83ujX
- c0Ds4oEIoPnaCf7vd1NIOJDHPvSkVw+oMYeERi+smTK/C44o0wELUlAhadSWv1+vUde7Ns/XdNX
- IF8qQwU0xgAUmbkMUEhUAAcZkYKcKWS9oJPY2iRJBfe/fzvToGrCc3MDr
-X-Gm-Gg: ASbGncuNN1mA1eCkUKH5Z0uil/Dt1yICTAUaGpXTVXFYWsio7goxiHljj/ISCgof4ZC
- NDTH/fVUTZK0nbsyZVCp9rnYiEt6yNSne6po7jHrKPVWZOc7xlsijUFw8wbElLIDL2tcjSoOgcf
- XQTzyyPL4LNcgpmpE1npqA+omw0gz/GeuhUNPuyCs6eBS+vudY8aJX/3SwCC1mPGT7yNReNiNFt
- rQtVFff9s37KMEcRCENaObgWBUU4x462cYYYj/Ul6nfgh0dA72C81LcSoIqtMIBQJmjCdbBtWYq
- OoFRVIivTm5xMacxvTku6ueUc4lmz1HJ
-X-Received: by 2002:a05:600c:1c96:b0:45d:e135:6bb2 with SMTP id
- 5b1f17b1804b1-45f211f9efdmr21043335e9.21.1757666652060; 
- Fri, 12 Sep 2025 01:44:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG9BTnCsnEH150vEMmN/xUxHO9waCQXTorHe9xArzUqZD8vmf51ulEUSATECS568dHCuIFU9g==
-X-Received: by 2002:a05:600c:1c96:b0:45d:e135:6bb2 with SMTP id
- 5b1f17b1804b1-45f211f9efdmr21043015e9.21.1757666651607; 
- Fri, 12 Sep 2025 01:44:11 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1536:c800:2952:74e:d261:8021])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e03719235sm53728375e9.1.2025.09.12.01.44.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 01:44:11 -0700 (PDT)
-Date: Fri, 12 Sep 2025 04:44:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Szymon Lukasz <noh4hss@gmail.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Subject: Re: [PATCH v4 00/10] virtio-console: notify about the terminal size
-Message-ID: <20250912044306-mutt-send-email-mst@kernel.org>
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <20250912042910-mutt-send-email-mst@kernel.org>
+ bh=ZvDF9zJHT/BjdbOPEASN998Q36lT+8Had9rYleB5lhc=;
+ b=Uq8QDR6imT4nZcOmdmY359PNa5ztuQh75m2y0+FdjUNNHEyVEs9iM4V8yqoH8+lFE8
+ 9+Vw5F+oWPvoZKHXSho9zFGvYw6yqhq8z4L/PfUawPXByUyK/TYIOp7wVVk6ylk/Bzlp
+ RGq5Z3GPcQNw2SlqiApTcYqAZGOmma5NUYbqupJ2FUAdrw43aDLkyJ0g44JzeZBkeWGo
+ C86CLqWELTLaHFvHIjLgDZDIYOnMO/EzKEkuN29Ofn6Fqx+HQBHSNHlNd65OCL3lnwyA
+ YbJwTM+VehsEoLEg7cNhxNVUuOIVexgyRIIsjifySQcK2YzwAs9Pm7CoCz87nPqzA0Ob
+ m0xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757666865; x=1758271665;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZvDF9zJHT/BjdbOPEASN998Q36lT+8Had9rYleB5lhc=;
+ b=jQQ7osGQ4w4iApIBdHUZ/zwX/gB5/dIsR8nScX/xWXdP1rdwYQuyKdqCjFb5vfb33L
+ kMljYSreTUOD/8P3ND/X6Pb6GTJ2XELHejWaQcivuLPXrnsBsdLEK+3RcndijAfLMDpD
+ rPFALpOHrqZrdFKdyiuJ5FokS0V8j59nIOMAPCNfqn0vNkTp5piFXGJ8vLJy/O8RnJqF
+ 1mveoY/hIP4aHhsp+ZmU1vf4ra9JPQjdPiE7O97teF2p0FMVfEUSD6iBGM3RbIVmX+Ej
+ u1IyHoRVjiEzDlvoK7i52mVEK91IdujG4pExmePBPWp84QZifyYNKtqdVHCfz3FxyI+/
+ 1ZNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4cpxnPkOCI8kn4v/pRRfAVyihmXPZZaaaHBiOFtGYof8IC4ackwZ+C8rKNpNQgMhiE6m8L1xuxjha@nongnu.org
+X-Gm-Message-State: AOJu0Yx5p+FRJmUSaKAG87cNoO1z+eG3SH2nFfj9lLFIVWuluewFedq9
+ FVemCnYoldhFbeKzbN9A9febGI9a9Rg67t6kCOMbnTPBwN9sXw3s5i12S4zumrNHlVqXobcS3it
+ w/L7kkJI+NxB1QaLoh5/RxFyBV5mqs2k=
+X-Gm-Gg: ASbGncs8TP0bixLebYKJQlu6nToOq56arrtV5w/r8qKzvgiKCmtb7cCPGXPyaWz1F+2
+ piJ6tyHJURs3OL2KSIrP6Ro4IvoC1bDvwzv64RN/PIgGbPDtEYLcQfhvFzkygh67YezOOBtlvnd
+ ydC+imxJsipU9+tpOLl27Oh6WeGMfyVE9lHUeZPNODJJLz+P3T0EE2N3bssQNJuSJvN3i8ljJ9t
+ OvLfoj0lLQ9hKEK0r58YNZz
+X-Google-Smtp-Source: AGHT+IHj66frKyUYCxzcMNbIo8n0gd0VnEYGeQfYNX0sgnYqCZzmzNXTRgATpqkVLNDzzl2N10FvkcI7Lx3Z9i8biaM=
+X-Received: by 2002:a05:622a:5c94:b0:4b3:4c51:643e with SMTP id
+ d75a77b69052e-4b77d1a3cccmr21856711cf.68.1757666865024; Fri, 12 Sep 2025
+ 01:47:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250912042910-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250908105005.2119297-1-pbonzini@redhat.com>
+ <CAFEAcA8WZ1Aa==LZv+roEHdaOzoMoX3aoeBbsM4gc3d_Yq=GTA@mail.gmail.com>
+ <CAJ+F1CJCJUgnFRvc6LCCMdLVrXAoaTqWzuYtKE+siW+-8vZ4=Q@mail.gmail.com>
+ <aMPO5YZK3EgWBJdC@intel.com>
+In-Reply-To: <aMPO5YZK3EgWBJdC@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Fri, 12 Sep 2025 12:47:33 +0400
+X-Gm-Features: Ac12FXz3y1pzgF8HJlbLZsXlRZ0pC2PJ5yuRsSCSf8jYR6APzPpOryaglb52PBU
+Message-ID: <CAJ+F1CJKbmexhgc+jLko8RgYHxSF66HXQYHdagZLpagq-tXXNw@mail.gmail.com>
+Subject: Re: [PATCH 00/33] First Rust update for QEMU 10.2
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,150 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 04:41:05AM -0400, Michael S. Tsirkin wrote:
-> On Fri, Sep 12, 2025 at 05:39:45AM +0200, Filip Hejsek wrote:
-> > The goal of this series is to have a resizable terminal into a guest
-> > without having to set up networking and using, e.g. ssh.
-> > 
-> > The virtio spec allows a virtio-console device to notify the guest about
-> > terminal resizes in the host. Linux Kernel implements the driver part of
-> > the spec. This series implement the device part in QEMU.
-> > 
-> > This series adds support for a resizable terminal if a virtio console
-> > device is connected to the stdio backend.
-> > 
-> > This series also introduces resize messages that can be sent over QMP to
-> > notify QEMU about the size of the terminal connented to some chardev.
-> > In the libvirt setting, it will allow to implement a resizable terminal
-> > for virsh console and other libvirt clients.
-> > 
-> > This patch series was originally authored by Szymon Lukasz and submitted
-> > to qemu-devel about 5 years ago. The previous submission can be found at
-> > <https://lists.nongnu.org/archive/html/qemu-devel/2020-06/msg09591.html>.
-> > I have updated the patches to be compatible with latest master and made
-> > a few small changes of my own, including the addition of Windows support.
-> > 
-> > Probably the most important change I made is the swapping of rows and
-> > cols fields in resize messages. I would like to hear some feedback on
-> > this change from reviewers. The problem is that for a long time, the
-> > Linux kernel used a different field order from what was specified in the
-> > virtio spec. The kernel implementation was apparently merged around 2010,
-> > while the virtio spec came in 2014, so when a previous version of this
-> > patch series was being discussed here on this mailing list in 2020, it
-> > was decided that QEMU should match the Linux implementation, and ideally,
-> > the virtio spec should be changed.
-> > 
-> > However, recently, the Linux kernel implementation was changed to conform
-> > to the spec: <https://git.kernel.org/linus/5326ab737a47278dbd16ed3ee7380b26c7056ddd>.
-> > As a result, to be compatible with latest kernel releases, QEMU needs to
-> > also use the field order matching the specification. I have changed the
-> > patch to use the spec-compliant order, so it works correctly with latest
-> > kernels now.
+Hi Zhao
+
+On Fri, Sep 12, 2025 at 11:20=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
+te:
+>
+> On Thu, Sep 11, 2025 at 03:18:44PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Date: Thu, 11 Sep 2025 15:18:44 +0400
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com>
+> > Subject: Re: [PATCH 00/33] First Rust update for QEMU 10.2
 > >
-> 
-> Well this is not in any release yet. If you want me to revert that
-> one, let me know ASAP. Maximilian?
-> 
-> > That leaves the issue of older kernels. There are about 15 years' worth
-> > of kernel versions with the swapped field order, including the kernel
-> > currently shipped in Debian stable. The effects of the swapped dimensions
-> > can sometimes be quite annoying - e.g. if you have a terminal with
-> > 24 rows, this will be interpreted as 24 columns, and your shell may limit 
-> > line editing to this small space, most of which will be taken by your
-> > prompt. The patch series in its current form provides no way to disable
-> > the console size functionality,
-> 
-> Well I see the console-size property, no?
-> 
-> > so users may end up worse off than if
-> > the functionality were not implemented at all.
-> 
-> If we want to keep the Linux patch, the straight forward way is to send
-> the fix to stable@ then poke at Debian at al to fix their kernels.
-> 
-> Another option is to make the property default to off, have
-> management turn it on when guest is up to date.
-> 
-> But it really sounds like we should revert that Linux patch.
-> I posted a revert, pls comment.
+> > Hi
+> >
+> > On Thu, Sep 11, 2025 at 2:05=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org> wrote:
+> > >
+> > > On Mon, 8 Sept 2025 at 11:53, Paolo Bonzini <pbonzini@redhat.com> wro=
+te:
+> > > >
+> > > > This includes:
+> > > > - bumping MSRV to 1.83.0 to support const_refs_to_static
+> > > > - Zhao's safe, builder-based implementation of migration callbacks
+> > > > - Manos's qdev properties macro.  While bit-based properties are
+> > > >   not yet supported, that's a small change overall.
+> > > > - the Rust crate split from Marc-Andr=C3=A9
+> > > > - adding proc macro aliases in individual crates, also from Marc-An=
+dr=C3=A9
+> > > >
+> > > > I'm still not convinced about having "bql" depend on "migration",
+> > > > but I am convinced by the crate split between "util" and "bql",
+> > > > so we can move the implementation of VMState from "bql" to
+> > > > "migration" later if needed.
+> > > >
+> > > > For the purpose of getting this in as an easy-to-use base for futur=
+e
+> > > > development, I'm disabling CI from Debian and Ubuntu.  The plan is:
+> > > > - that Debian will require trixie to enable Rust usage
+> > > > - that Ubuntu will backport 1.83 to its 22.04 and 24.04 versions
+> > > >   (https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/212031=
+8)
+> > > > - that Marc-Andr=C3=A9 or someone else will add Rust to other CI jo=
+bs
+> > >
+> > > How far into the future does moving to 1.83.0 push our
+> > > "we can enable rust and make it mandatory" point? I was
+> > > hoping we would be able to do that sometime soon but this
+> > > sounds like we're going to be still a long way out from that :-(
+> >
+> > I suppose most distro will want to backport a newer rust in their
+> > stable distro, like ubuntu is doing or debian with rustc-web. With
+> > that, it shouldn't be too long before we could make Rust required.
+> >
+> > fwiw, I am working on a series to enable Rust on our various
+> > CI/docker/vm. I am mostly left with issues from windows and macos ..
+> > (btw, if someone can help me investigate the linking issue on mac
+> > https://gitlab.com/marcandre.lureau/qemu/-/jobs/11301499123, perhaps a
+> > temporary ssh somewhere?)
+>
+> Just a guess...
+>
+> It seems "-llibqemuutil.a" may tell the linker to search for
+> liblibqemuutil.a.dylib or liblibqemuutil.a.a [*] :-(
+>
+> [*]: https://manp.gs/mac/1/ld#l
 
-Oh no, I was confused. This was in 6.15 and 6.16 :(
+Good guess, the trouble seems to be the usage of -lstatic:+verbatim in meso=
+n:
 
+https://github.com/mesonbuild/meson/issues/15020
 
-Pls ignore this, I will reply separately.
-
-
-
-
-> > PS: One of the patches adds one additional noop switch case
-> >     to a bunch of files. I didn't include the maintainers of these files
-> >     in the Cc list. I hope that's OK. :)
-> > 
-> > v4:
-> > changed order of rows and cols fields
-> > added support for terminal size on Windows
-> > trace event is also emitted for legacy (non-multiport) drivers
-> > minor fixes required because of changes in QEMU (DECLARE_INSTANCE_CHECKER, qmp-example)
-> > updated version numbers ('Since: 10.2', hw_compat_10_1)
-> > 
-> > v3:
-> > add resize messages over QMP, as suggested by Daniel
-> > 
-> > v2:
-> > fix adding a new virtio feature bit to the virtio console device
-> > 
-> > ---
-> > Filip Hejsek (1):
-> >       char-win-stdio: add support for terminal size
-> > 
-> > Szymon Lukasz (9):
-> >       chardev: add cols, rows fields
-> >       chardev: add CHR_EVENT_RESIZE
-> >       chardev: add qemu_chr_resize()
-> >       char-mux: add support for the terminal size
-> >       main-loop: change the handling of SIGWINCH
-> >       char-stdio: add support for the terminal size
-> >       qmp: add chardev-resize command
-> >       virtio-serial-bus: add terminal resize messages
-> >       virtio-console: notify the guest about terminal resizes
-> > 
-> >  backends/cryptodev-vhost-user.c   |  1 +
-> >  chardev/char-fe.c                 | 13 ++++++++
-> >  chardev/char-mux.c                | 18 ++++++++++-
-> >  chardev/char-stdio.c              | 30 +++++++++++++++++++
-> >  chardev/char-win-stdio.c          | 19 ++++++++++++
-> >  chardev/char.c                    | 26 ++++++++++++++++
-> >  hw/block/vhost-user-blk.c         |  1 +
-> >  hw/char/terminal3270.c            |  1 +
-> >  hw/char/trace-events              |  1 +
-> >  hw/char/virtio-console.c          | 63 ++++++++++++++++++++++++++++++++++++---
-> >  hw/char/virtio-serial-bus.c       | 43 ++++++++++++++++++++++++--
-> >  hw/core/machine.c                 |  4 ++-
-> >  hw/ipmi/ipmi_bmc_extern.c         |  1 +
-> >  hw/scsi/vhost-user-scsi.c         |  1 +
-> >  hw/usb/ccid-card-passthru.c       |  1 +
-> >  hw/usb/dev-serial.c               |  1 +
-> >  hw/usb/redirect.c                 |  1 +
-> >  hw/virtio/vhost-user-base.c       |  1 +
-> >  hw/virtio/vhost-user-scmi.c       |  1 +
-> >  include/chardev/char-fe.h         | 10 +++++++
-> >  include/chardev/char.h            |  7 +++++
-> >  include/hw/virtio/virtio-serial.h |  5 ++++
-> >  include/qemu/main-loop.h          |  4 +++
-> >  monitor/hmp.c                     |  1 +
-> >  monitor/qmp.c                     |  1 +
-> >  net/passt.c                       |  1 +
-> >  net/vhost-user.c                  |  1 +
-> >  qapi/char.json                    | 22 ++++++++++++++
-> >  ui/curses.c                       | 11 +++----
-> >  util/main-loop.c                  | 21 +++++++++++++
-> >  30 files changed, 298 insertions(+), 13 deletions(-)
-> > ---
-> > base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
-> > change-id: 20250912-console-resize-96c42140ba08
-> > 
-> > Best regards,
-> > -- 
-> > Filip Hejsek <filip.hejsek@gmail.com>
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
