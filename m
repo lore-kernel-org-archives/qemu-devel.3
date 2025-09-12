@@ -4,190 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC7FCA101F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF5E2CAC582
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Sep 2025 14:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ux575-00085b-2J; Fri, 12 Sep 2025 10:50:59 -0400
+	id 1ux56X-0006zS-0m; Fri, 12 Sep 2025 10:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ux56w-0007uJ-Qz
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:50:50 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1ux56U-0006lq-7P
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:50:22 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1ux56t-00080z-TG
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:50:50 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58C1tlOU008462;
- Fri, 12 Sep 2025 14:50:44 GMT
+ id 1ux56H-0007uD-VB
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 10:50:21 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58CEmF9C022823;
+ Fri, 12 Sep 2025 14:50:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=IlV/U57R9ntb9NFNCG+1EyTgh223ct4Vvk+Fy+bO968=; b=
- KmTYzLwk5re5sJ/Xk9xjBydrt/aierTr6C8/jfU5ICyUyXX3lzF1admjo24SKSmu
- kylZmeIzKRP4B8Efj2jYhdppORLc+jfQ+sPdVV/GU0b/8H9fken/Owxt360PhrHW
- fuB8shQSyKdno4qyrvpFBYemeR6O9uVPrCiyInGm99h5OH2cxVw6nErgIfTFgT11
- TYheZ4Es+oW3Oc3iSkGvBdaYXRDreaXLTfRXn4SAmqXevpPirNcDomeJQSiAbUaF
- uU5M1tIxuWsH1ouxiH/m4w8eT4GZ1EPDrKSDP+J9f7ijgNTpMDTLuXg7cSAJJ3bx
- lbtSZFnA0G46vgi/fpQ/jA==
+ corp-2025-04-25; bh=OmGGi1q8L6VotGk1ePO559OQL5LuLNr+3Y+2AVy0xks=; b=
+ NjcP9i6Jf8dWqdiQQWu8iyRIHbqpYF0ykwlI1lt6ejveDGSgnHrwdGdpCCSuElNy
+ xEMnGlk20WZPMT53vG0wrKfb4MphbeWBQm1YVMTSy1FaNA2ULmri7EHyUsWRYe8s
+ XlWQZ6cKOrGlAeiRQI1YKU1jnPwnzOscvWjVH3gWhKiEqv37gZcp3lUmoVs7dCrQ
+ M+tvzNPTYp2zc8chQ7qIWup0KwHQe/70/H60wNG9b5Drw08430JgCUNsxt9JeWfY
+ i5C4325Ab5eMDMFIvQxt2YE9WOYlt5bVv1n5Cu/VcpAHgWTzA7p2fvxNuDuz6KGV
+ 6jK3Ew5hteW1hDOjNKw7VQ==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4921m30bqv-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4921pegcp1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Sep 2025 14:50:44 +0000 (GMT)
+ Fri, 12 Sep 2025 14:50:07 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58CEXWeb030839; Fri, 12 Sep 2025 14:50:43 GMT
-Received: from cy3pr05cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11013010.outbound.protection.outlook.com
- [40.93.201.10])
+ with ESMTP id 58CEkV2m030745; Fri, 12 Sep 2025 14:50:06 GMT
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11012010.outbound.protection.outlook.com
+ [40.107.200.10])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 490bddwujb-1
+ 490bddwtpd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Sep 2025 14:50:43 +0000
+ Fri, 12 Sep 2025 14:50:06 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GIV7WGBJ/RioU4FXzjPK/jwOKN8zSed71EwgCAfmDMe7HUOPYHy9TDA/NeHwm2PPV6jNgdbM9bePHR4IJ1yf5rVuEwkENYNvP5Ac7kkp5KkEOSjTaf3ISFNofYsVyXMKrrpJpn3KtYj8TVaHFaoGhieG3OyYywoPadTvVCnOwDhzRdyzEpQNu9ByE7muFu60pYcPRkGH2fHv7fU0pHvUNbcPdQLpbc6qPxUtTHCF2nfAZDDsRLZrxxg25TrH09lZ4bgr0aLCyKnJv4ooQdlZKs1wi/lQNv0X5O6QX0Wuv9UsPiGLB+JYoA3maYEnFFyOi6ROr/arOXGekPyzN3RHNw==
+ b=bX31H/6OV1W+FHeAq7C6AXuRPXQyxBCNSLlzmIwQt99Ksal/Wld2xZyViD6Snyi0o4kk/f8mGV1WKUbLhoqYu2mqw9fObOM+p+EZKgEBb/vt5Qn1HrRs1L86nVCOl2cUmuf3jFtdzhWn+//bjvxj+SF5iyHp3AcyQdX4VuJR2TyFpnaHhf6cJJ1dc0rL0Gy3d4ssKtiHU+Nw38UZ41URiqCl2khIK6LhjuO1hg5B6KgrRIIxGdnjL1uDkqakiI6ix+8sgXoZfX+4Gj7xA8wWNm1dcWA3tsYIM5Fgu9Bna2rfN+Ra+bq2Ogsyejgq63mK5DBY/IyQj60JYofeeT9TFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IlV/U57R9ntb9NFNCG+1EyTgh223ct4Vvk+Fy+bO968=;
- b=pWvouooygPDL6Y2jFb37p3U5IZzZBff3IoDxcE3HZBITCjcbXn3F+eNfIymO1JuhOPj3DETpZqJl2xq7YfjEMGumjuPADo4vpWXea4YidRCNXU0C+ySJvBiUk2/UIsqv1IzcKuTOdNvZPO5FbUX5hUlZe0Kgjadp/9FYhIfDnNdl/nFY8e6OWRKTTI5wNQW3PzQ4aUEi2cZeT0QuE8F0OeyjnZz+4VzahU919ilDNnfFsREf26rkK851YjZr8UN5ay6FSXOXXcZXUwKtAe8iLAHH1GCH+rDZ/9IEPwoX8FYYuIIpd1uIP/aGei09viRbLFRgLdQEzzdMzY3GQ/M9xg==
+ bh=OmGGi1q8L6VotGk1ePO559OQL5LuLNr+3Y+2AVy0xks=;
+ b=Z9+hognmU8xcfO51g566w0ewmoLpqO+gYjSnZmk+1g7QWkiZeuLiZI+gdVFH00k+mO6kXjZIdVzc5XkopIFsl59zjyfPuCEPm9WoBZMCwhcullPkbUsQeTosncfkcOJ+aTemD2hjx0Akc6f+mzqG3sBAIOvC6zySpffEj//o6t5E1dN3khgLDlBlqAsWPKgSjmNuT/NWJ0z55KzqJGTi1YJgz9cp6JHDlIOc+lYrK2wAb0IAlbEnc9+bNJcLZHLUOSA/CRutklMnT6AcUsZhq2zx8ACDEhrDnF+BgAEmWLU4LDgTp1QfWyXpGEcSx0gYcZuw0nJKyOX5DpQ8ERx+Og==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IlV/U57R9ntb9NFNCG+1EyTgh223ct4Vvk+Fy+bO968=;
- b=b0vNTyCPq4OWUWB/bjoS9g4xF3OeaVqVU5UA1bGJa5Xt+NZ3NqrBHeS4ZJkjFTwIjr4P14HAAFNCdEshhM/NJWTcDa/5dCCO8V5QSzSoDsMSNNAWP8hyPEj2/JpJA93cPj7vaqF4Hkgqwn5D9Z2xEj+Egsd+T/BZ14HYzY7mcWc=
+ bh=OmGGi1q8L6VotGk1ePO559OQL5LuLNr+3Y+2AVy0xks=;
+ b=f4OrziG537FW9A6v0hsWqTzoGNjPreunUzeXeJUl6V7SJYyGILHteKHN2RkfEytGK3FDARdNM2Y6nMVmsOLdXG+fwhgxKsOqOv72naMr+z7GuKPYFRYgdPtsJYblngfCILL+HeBtUO49p55L3FsrQmKmPKcQLSR/0rp/ngOU5z0=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
  by DS7PR10MB5087.namprd10.prod.outlook.com (2603:10b6:5:3b0::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
- 2025 14:50:39 +0000
+ 2025 14:50:00 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.9094.021; Fri, 12 Sep 2025
- 14:50:39 +0000
-Message-ID: <1a3c46b8-985e-4768-a3d1-e797370c0822@oracle.com>
-Date: Fri, 12 Sep 2025 10:50:34 -0400
+ 14:50:00 +0000
+Message-ID: <0239e0ba-b646-4b09-b84f-c0c90a908c40@oracle.com>
+Date: Fri, 12 Sep 2025 10:49:54 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
+Subject: Re: [PATCH V3 7/9] migration: cpr-exec mode
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ "Dr. David Alan Gilbert" <dave@treblig.org>
 References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
- <aLsUQWjW8gyZjySs@x1.local> <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
- <aMBGnHXieiXpBCqF@x1.local> <992bf553-e622-4e51-b1c7-f59c1413558e@oracle.com>
- <aMB0BL5SEGfwjTFm@x1.local>
+ <1755191843-283480-8-git-send-email-steven.sistare@oracle.com>
+ <aMBWjBGPnmz3rtwh@x1.local> <60f44830-d306-4dec-8f0d-65d3b32b3a2e@oracle.com>
+ <aMB_stJSkPgHzug0@x1.local>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <aMB0BL5SEGfwjTFm@x1.local>
+In-Reply-To: <aMB_stJSkPgHzug0@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH7PR17CA0042.namprd17.prod.outlook.com
- (2603:10b6:510:323::21) To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: PH7PR02CA0027.namprd02.prod.outlook.com
+ (2603:10b6:510:33d::16) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DS7PR10MB5087:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0383a8a-8b0e-4b2e-7a96-08ddf20bbd5c
+X-MS-Office365-Filtering-Correlation-Id: 8e4e86d7-fc01-44db-c623-08ddf20ba632
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OGF0dERxcXI4anEzTC9YZjMyM0s5dzRtMUxEVmNoaHNPeHZ3eVlhcWc5YXRq?=
- =?utf-8?B?SGpRZTdYUHZSRi9NUWUxQnlBYWZpRmsxbUp3b1FNN2dycnd0aTUzM0QraUxY?=
- =?utf-8?B?eWgxcFVnNEVDMjh2ajZ5TkU0MlZ4UGJheUU4YlZTTTE0enVuR1dzK1BxYlQ3?=
- =?utf-8?B?Z0lpdXo0U1NKS3F5dEZVQ1hpSVlFZUVONTVyVmJ1aW0xSVhoeUFBUitQNndK?=
- =?utf-8?B?UnZST0J3VlFxNnR2YTRjeWpMZGswT3FkUm5SL2N5SFFHdEtNZEZlYklha3c3?=
- =?utf-8?B?eEJmaU5yb1cxTFdpZWlkMTZkc3hEU2JQWERKNEtlenlIVmNxTjNrS0xSSmJq?=
- =?utf-8?B?aDc0TDVIKzA0bEVROEY5SXZ5MkphWTNqYjFLZHBZRWYxZ2NhUkpuT3liZkFx?=
- =?utf-8?B?R3VRYWR0NjRXVUpKZEJoRGRzQkRjK3N4WlZmdVMvb0RTTDFxTGpuNWJ2RC9N?=
- =?utf-8?B?Q05ScnpjTFIzQUorR3ZMUUhSZDdENEsyVko2SFhuOFRIVWxKZHROTzZIWnNI?=
- =?utf-8?B?NzhvZVgzaXNXdjZrb1JiSFozR05UYmZCVlZJeTlaZlpENk50aEhZd3k1cmZS?=
- =?utf-8?B?L0gyTHVlQlNKSHVWdThYNW1vMjJoVmVUbE1la01ucDV6cXFzU3NJT1NXbVZU?=
- =?utf-8?B?VURMNXl1NURpMnExNTYvVURhZi9WQXpNdkdzb3lhc25xK21vMEsyMGltY09z?=
- =?utf-8?B?SkpibUxNRDBkRG1jQ0JZMFNYeVZwVmxoMFYvdlJxNCtxblpIbHdPbFhhMkZF?=
- =?utf-8?B?MFo5K04rcU9rSGZ6Umo1NVRKR05xVTd1aHhBdG12MUhNaWN6YmdZR080YkNp?=
- =?utf-8?B?djZ6WUY1MGtmdS9xTjVadVh6ckdSdm5Wa1kxdldQaWhkREpXSUN0d3FCMHJK?=
- =?utf-8?B?N2tBL2Jhb0Q0b3NxVEcrMjViWC9Ha3o3enRJWGFtOUVXaU5PWWxrZnRrSGVZ?=
- =?utf-8?B?aENQQldDaXN4NGVxYU9vaXFjVDhrdlpmQmNGSXhVQmIyQ2phOUpwL3V2NFdi?=
- =?utf-8?B?NUx3WmRFS3RnUTNQRTRDcXh6K3NmcDk0V1FHWllCMEhiWTQrb3RhbEFqd2VO?=
- =?utf-8?B?N2FPeXM4QTJYRVNURlpLZ1FTK2x5Sy9lczRpZ3FkV1dvRVZETi9VK2Uyclp5?=
- =?utf-8?B?UU1kaGYzNFR6aGNuUFpsZnhwUEJSZVZCcWMvVlNrM0JxdUcwWjZQd2pNMW4x?=
- =?utf-8?B?RWVWZnlZR0JISWZMczBnZ21Ic1FXZDVOQkFzM1V5Vyt0by9OR3BXNldLTlZZ?=
- =?utf-8?B?MzVZb2s2SUcwaUdHOHZqbDU3NlAwTjFKekQya1pYUG04cXVYb1Y1RWFkcFN0?=
- =?utf-8?B?VjBmZzVtblJPNXBINERzT29mRkRXaFg0bElqUHBUb2lGazk5Q1VjZ1lnd1Nk?=
- =?utf-8?B?L0NKYUgyVW9zVGovSkNXY0J4S3UzZW0ydVljM2IvemR0M1ptTFREZnlkbkh4?=
- =?utf-8?B?aXAwT3hQbkRVQjVLOUJGMnJvczI1d1haeTI3UDVhcFNIVjJQZmZ3dXhoYnJ4?=
- =?utf-8?B?dzlIK2o3SVVkOHhVSVVMMWNwL3F2bS9EdFJFd2JRK3N4KzNzbnBzcXlNNnJX?=
- =?utf-8?B?aFZFalBOOXpqODEyenVzbzJJRTAvUFp1bFBQUXZoS1FDb2d5NTlENk1UYysw?=
- =?utf-8?B?Mk1ueHV0alBIL1BodzVPMzJoNnloRkl6YS80VmpuUHBRL1ZWdFQya2JoUnZx?=
- =?utf-8?B?dDJHRXI3dFVBeUVKVHBJNjlMWDYzWVVpQzMwMklsVDIxT01aTDJlUFhydzRI?=
- =?utf-8?B?VGtRMTh2MWRWd0dPNmgwcGhPZk11NmptNXJkSVdMOE5vb0dzbEgya0dWR2tn?=
- =?utf-8?B?NUpzRXZmNTgyd05KVVZMeWRJMys4NTlQcURKTDVRZEc2U20yOVI4eW1KNDJE?=
- =?utf-8?B?YndLUTZMaFhQTEF2YjRqczIxTUU2NTlVMlQ2akE5SnJCSmpoSDhCaTUzbWZz?=
- =?utf-8?Q?Tgdj2EJy9tQ=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UEl0ZEw5aDB5bUw3ODdhOTdMa2EvcTQycFlMUEhHV3pXMUVnWGwwbWpZVVlU?=
+ =?utf-8?B?WTdiVEF5NXVSRDZUZUZmWkozVEJldkZ3WTIvci96N0xCVDkrMWZzUnpWbUZn?=
+ =?utf-8?B?WVVEVE9JMDFKbWt5TmhEditvMnpxK0IzZUJvdk9OSWErYkM4VTk5QUs0dlps?=
+ =?utf-8?B?OWpkZG5Od0FsY2JkMlhuajAzOFFWVGhRVHlzUTJNcmRsWkxkbTFxUmFJMWNx?=
+ =?utf-8?B?MzhzdzEvbkVkUVdDVWl5SVlSZi9YdE54Tk5qVUZaTS9oa05ROFl6eDlsK1k0?=
+ =?utf-8?B?MTdHR1FSMWdjZ3BNN3phcCtXaHM2MCtVdU1JVXRLYzE5dkhEMVBpOHpKK2sr?=
+ =?utf-8?B?aWpTUnN6UG9HVW1Mek9SaTBiUWxibTYwT0J5SVVNNjFUM0Z3SUg4NDZOeStM?=
+ =?utf-8?B?Q1ZPRUhjYkdadzV2SGVMYm5TRGJUZWVYUWhTanI1cU9kU0tINFpWdGRpS3Vs?=
+ =?utf-8?B?SGFKOUVIRm9LYjRGQnVFemk2amFnRlBvYlJ5TXUwSSs0SE1TdFJNcFI2cUxX?=
+ =?utf-8?B?Um1mZk5TcXl6SjFTUTczMDJiQnhMVmFVWm5WMk9EMit5YkNJWmdmVnpxYzRC?=
+ =?utf-8?B?MVphbFZwc3RDMkh5dzI1SGpiUGtubVN5UFpxQUtvRGZMY2xhbERZQ1QxcURS?=
+ =?utf-8?B?L3ZuQUhZamFZdVRidmZvOWlKbExOdWxXQVhLOFY4aXkxWmQ4UTVTQWZRZFQv?=
+ =?utf-8?B?SStUdURtaDY1Slo4bUs2cEZQZ2JTYldqT1loV1JVK3N5SmJMbEpwTlBKVmhS?=
+ =?utf-8?B?WUNLV2FuWVNLWFBJc1doZm9MNmJDN2UxVXhTSDZVa1ZTL3JXVlhXcTE0U1RP?=
+ =?utf-8?B?UDVjY3g4OXUvc0x1ZGFHQlpNamVBcjFUWmdKdFV3cEF5Qzl6YTdXc0l2cktF?=
+ =?utf-8?B?SDVXMDkyV0JuNW5qbEU4SVNBRmpGdVMwVW5Qem1Fa1UvSjF4T3FSQlhRb3dk?=
+ =?utf-8?B?eHpjNitOWHNaMUhKRXMxQU8xOVBWOEF2UE0vY3I1NUozNmhXajAyVm5HajdK?=
+ =?utf-8?B?OXZMeGZzZGYxRExsWG5URndIdDF5bkd5YXh0ZWZZNzU2SmdXdDlEN3Z5WVBS?=
+ =?utf-8?B?MlkyVGQrWFhCT3dBQVVhWWpQQWRaMHpjT2xmcDJJVEk0QWFxWEtxcWFKNTNx?=
+ =?utf-8?B?aDNDNVV3elY3NGViazFyK21Ua2Zrek55bkswcHM4b3pUc25BR2xpS0RxK1Zv?=
+ =?utf-8?B?bndudTBVdFNac0d3aURwUE05SC9rMmZkYlozWWN4Ri9MbGVDZDZZeTVnSlgw?=
+ =?utf-8?B?b1I0K2N6eXZya3k4cUNsT1hwYkFnVjNnYjdpTWdsL0xtclRmbVhuVlowTlZv?=
+ =?utf-8?B?bkRJNS9QZEQrRzVDeWUxdFY1Rk9SSXRKY0pTcmZDYlQzdlNIbm0zdWI4OEM1?=
+ =?utf-8?B?dHF3WGp3QU9vcDRsR3NwblkyRkJUNW1mV05kaHRIU1dLQnFZdVk3bmpSUlRQ?=
+ =?utf-8?B?NTZTcVkwUHRVR3E2RFZ1NTM5ektZNlZzL293TURyUDMwRHFQZmJtZ1ppelhx?=
+ =?utf-8?B?S1hLN0ptVWxNdmN3MXBKUHFoSHBuVm13UGdvVVUrWXpDUFV3dS82N21SWFFi?=
+ =?utf-8?B?SFhhc1QzTFZoajd4MXRYVGg2U1Z5UnFGZlJVajY0aFpYeTlVYVdYRThINGlN?=
+ =?utf-8?B?VXRBMjFZUS9sRUFTYkUyNXI2SmZnNXhGSXZHUVZXTDJIV2tKdGZUT3RaZVEr?=
+ =?utf-8?B?bXJHVDhTSVZ1TGc4WU5lSXJYZ2thZnpFMHFsUTYvdFFGQy8weVJQeSt1c1pU?=
+ =?utf-8?B?WEFtV0UwdENucmJDR0hHUU5kZWJrT2FmODNCM21TS00zVWQ5a3BobEJtTXBh?=
+ =?utf-8?B?aExoVCsyUW1WdDJ1eU5PTlFjNk5xUWExcVVDV0sxMTN4dlhWekNScWQwSFc2?=
+ =?utf-8?B?YXlabDVkUzRqS1grbDZTMHRIOG5WN09qajVYWmRiV3I1T3c9PQ==?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?REQwbTNFZE4yWXR2bXR1ZkV0WU9SVDJiNnZIbmFoMjZJdHVjeWVwbit6L1RG?=
- =?utf-8?B?bTZCdFI3cGVEK2Y1Y1dYVnFoR1cxMytUVCtuYzhYNGtBOFJ1cExLT25tTVBo?=
- =?utf-8?B?S0txaVA3bjNYMlhyblJ3WGdCWXdWdXNYNnc4eHZrMllkQzV2bzEvdDk2RmNG?=
- =?utf-8?B?WDFPWHh3cXNWRkUrUTRsMDMxVEVEbUcyOGlFTFNrb3FZK0h0RUcrMitLQm5V?=
- =?utf-8?B?eUZraHlpenc4MlUxbldYdThLUDNIWWRsT2pjdG02d3N5NVIxaUpHcUw3U0Z2?=
- =?utf-8?B?ckJIU3ZINTdqR2x4TmkrZnJCNWdKWEVEMWcrWWZ3OEV0YVVFMnlFTjB0cUFz?=
- =?utf-8?B?eWVtcW9KSVF1N050bmkzUDVOU0p3eldCVCtpYTIxVmRkT09DbGpORktsc2hT?=
- =?utf-8?B?SW55b3N1dkFzR0Jza2tESkNMeTBRSjV0bVg2ZHQ3ZHdNYi9LaDZlUXBaYzl5?=
- =?utf-8?B?QWhacG9DY1l0bHExNTNMdFNvcUlFenU1YVFPRUE2K2tvbWcvMGxYd2lvbUp1?=
- =?utf-8?B?Y3N3YzA0MVhXd1MyejYwOWlYRE1SMW1WdHFUei9Ib09NUE4xZG1TWm80MzB2?=
- =?utf-8?B?bUlaTGlaS0p2dW5aV1pkUFRKcFZwaUxoTUF6TEIrbitpSUhZY1UzaWN5a210?=
- =?utf-8?B?Qm1lU0szQ0FqdEg3ZEFIOXBIaWgxVlJjMWVMZC83SThvZ3FIaXdNakVDMGYx?=
- =?utf-8?B?WXVwNW5GR1dJOHJyMXA1eWMzOWh6aCtxUFFleGdEZDY3WlRGZjE3UXZxVVh0?=
- =?utf-8?B?NXJCV01mVy82SzlpUWxxZE9lU3dNYTkyeE15bG9TeCtjaEFsQ1NmVUU3WlhC?=
- =?utf-8?B?RytIblMwcHdlQmpweE1yL3UwN3lxeWVFT1hleVdoRHFoRTZhVDBNR1FZK1Qx?=
- =?utf-8?B?ZWFiMTE1bzZQcjlaT3BWNklCcEthUGZpUnF4MFhyVEx3Q1BNbk1VWGZFWkZM?=
- =?utf-8?B?L1hveXozZk9IWGtFR1Fnd2U4amF2SUwvbktyQmFqazZ1bW8vbkJYeE5lSnNs?=
- =?utf-8?B?NlFtMzdBalhEeVRSMjJrUnd5TXRPN3d5aTd6djJWampaWVVCMFFaaDRKclNl?=
- =?utf-8?B?U3lacFZHM2F0akVvSTU5dmd6MEVZODhVQXJTTVRMNEZ2RHg5SUVrOGJEbjhr?=
- =?utf-8?B?UXhjNURkelFPcVhGYnJiOUlqTUFhUGsvV0x0OVQzY3Y1TFRMOUV5MDFpbEhX?=
- =?utf-8?B?ZTVvYWtWR2xXWFFwck5HbWxsN3NvZVBMN3lNSzlUWE5uVHRrcUo3RjNpNHpu?=
- =?utf-8?B?NlBlc1lnVk01R0V3bUhKQ2MyYVE2Z3N5Z0FFdzcyU1JTNlR4SEwvMTNTd3Rx?=
- =?utf-8?B?bGxxaXVreGFpQ1B2aTBna3c3dEUzZzNud0xMVzFTWjJ1Ti9GSU4vZGMzdC8v?=
- =?utf-8?B?eis5L3pYSlFRQWdRSG5uZ3U2K21KVWV4U1QzV2NpaDRLZHU4UTVLc1djc0V5?=
- =?utf-8?B?eUVRNEdlQlZQeGNLdXFHRTh2S1AwaWtpcTB1WjdUM2RtNm95NnVmV2N3VlJK?=
- =?utf-8?B?akhENFVPN1RjOEZvYWhLck9PaTZDWnVIWUpKVTdGNm56UEp4REt5WGFmME9o?=
- =?utf-8?B?RXhqUFBoV3cydXhFRWRjTUphcGozdU90WHpEUnNqN1R0Tlk2eUpOZ0lydHht?=
- =?utf-8?B?cGRYeERYNWpZZkdubXd2VGNkYWJYS0tQM1BZNXA2WmNkNWhCbldFU1pDNUhp?=
- =?utf-8?B?UEFTTEIwdU5iQzhkRVpsOCt2Tm5aRDhIL2JFV21PNnF3TGRkU2pHK1M5MEhI?=
- =?utf-8?B?S3o1eHZneTY0YWFMUkdGMzVmbVc4K0p3dFkzU3lIYW8xbXNTRnNVY3BZTk9v?=
- =?utf-8?B?aFJoWkdkeThkOVlVb1JjNmpHZ21CNHJkaElaK3V1UDRRbVIzbnVsK0FDSWlE?=
- =?utf-8?B?VDFZNi8yV1J4c0Q2OFV0b2pHWEFQd01VMjErUlU5TG5PY3FNZWtwaitKaDc2?=
- =?utf-8?B?aXZGTUJ1VHJLbmQ4cjZ3dHFxbVhvSXpRVHhXalBiRnVIaThVQ3dmbG1qdXEy?=
- =?utf-8?B?WU1JOEFXR2tFVVZEMlpKNzB3d29wSHoyeitiQ3lIOHRIWDN1MzdpeUNvV0xt?=
- =?utf-8?B?b2hNeXkwd1hqYTYwUXFMVlFjSVhyUzhtV1pXV3pwS2dENUhkWldodXFMUXFH?=
- =?utf-8?B?OEhFb1hBd1hBMk5jaGJUUm1iclBYUzFIV2x3Rm9wRjRnYUNnQ2hxM0xSSUdS?=
- =?utf-8?B?VlE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cjREcGo0M1o1L1Z1K0dMbkZqc3NaQ2I1SmFDL3pYRHhXWm52TXdNNzE4TFox?=
+ =?utf-8?B?cktDOE4rMkJmYmNONmI1Y3BXVWQrKzlNcllkYmVKVXU1NUZwTnFFc2JvRzky?=
+ =?utf-8?B?di9wRjZzem5WeC90azhxS1ByUThkTVR6aUp4Zm1WUW1JR2lUajNYcFNoNDNa?=
+ =?utf-8?B?RVpRRFdyZFFWcEhYbkFVODl6aUo0NHZaeGNkV1d3M0dHV2hTWHI3WXlyRjZK?=
+ =?utf-8?B?Q2V0Uy9EYlF1WElUcTZXZ1E3MDVCV1RMRGxVK29QK1RpbkRmWlFMWllwZFNj?=
+ =?utf-8?B?cXJpamFZbWh6d05nVzI5Mmx2WUg4ajRBWFhKTGNlc2pOUFdBVXZNSUhqVVNJ?=
+ =?utf-8?B?cTBxQVUwdVJScjY2UittczIzK1E1Vngzb2tBSmhYYnVyUk55dndWZmhmL3JK?=
+ =?utf-8?B?TzhyRXpKR3dUbUFMaThjZ0Q4bEFRYWk0Z2ZYNFFiUENJeFBkZUw4Qk5hZzhG?=
+ =?utf-8?B?bU5GZmJkSXNjVm5Vd2pOSlJGYVZBd3VoUzFwMk1id0xqR1JnU2w3TWN6UGZp?=
+ =?utf-8?B?aXpzZ2FnT2Eydld1TStSR2dqSHNYUW1VcmJud3l6cEJnL3RDcnNCTDBrOWNF?=
+ =?utf-8?B?K2o0TFJWcXk2K2hEaHZXS1JMaGhwMkE4TEJSVXl3Wi9BVW5uZ3hOQjU4VW1w?=
+ =?utf-8?B?OENnTHZ1NDRKSlZJL0pqc3o1UExnWnR0aVVDOGZrMGtCZ1dmb0h5b0hKMS9Y?=
+ =?utf-8?B?eGFINVM5SnBKeXFGQmRXZVR2NEVrdW41UEZ3ZDc0RDZ0SC9ieUtWN1NxVld6?=
+ =?utf-8?B?VlY1cU9yaEMxTFIxVUsrOVoydlBUb2Q4bUhHbi9NYzVVY1V4UExiUm4ybndw?=
+ =?utf-8?B?MWpQWTl3OU44bDJtZGtLNTZFcWJBU05yZ25DZlVvb1RweVdrMm5LaFRlYlhY?=
+ =?utf-8?B?OEY2eTZXMWRON3hOdnJGZlo3U28wVEdXUjdSV05JMGR6aUVwVFV0UkwwelBB?=
+ =?utf-8?B?aENYdkVuZHZJZi80OGQybEp0WU9ROUFEb2YyblcwZ3FTaTEzOXUvYnZTUGYv?=
+ =?utf-8?B?M1lITlFrZy9xMTkrVGxaZ0VnYU44Z3J5blJ0bXVHQ0VrSm41L0c1d2grTlNI?=
+ =?utf-8?B?WWhsT0Y0NnE1clhpenlGQW9LN29vQWJEKzVuMnVpS1ZXRnpVN0piZnBNaldI?=
+ =?utf-8?B?N01IUGtqS1FqdGx6bGVGTDNLRlRMbVE2NE5zNGFxSFN4SHFGVW52U3l4Ujhq?=
+ =?utf-8?B?Ymgva3ZYZElkZFN6Ukt2VVpHcUdldlpIaTZoUGtiZVQzdmxrMjhJejcxQ0xE?=
+ =?utf-8?B?K2c2TVlsU2RnNnhzTm1yTFptYTdRMmJnRERRK1JJc05qbkRlT2duZ3RGTXI4?=
+ =?utf-8?B?a2lyRy8wQkRDeFh6OENmSStTWFVIWEJuRXFwd2k2cjBudEdTaloxTk4xVXBq?=
+ =?utf-8?B?bGxEVmgxZFpsVGZyclk1SlZqcU5sWXp3ejkzby9hOElETGlxMFZSWHI0OXc0?=
+ =?utf-8?B?cmRVc3FrajhBdmpuVmlMWDh5bFB5UGdkcW1NLzZDMGR1Z3RpQXJUeldueGxr?=
+ =?utf-8?B?NVlKTmpXNXZETTZmcVZiUS9RaVlJMFp1bmkzb0xRcitld1NUb25OVEJ2Z1Mr?=
+ =?utf-8?B?emJkQVB0cFArelgvZzVBOU44SFA4MVZpNkxDVDBzNTBOTTlucWlnaXVGem9r?=
+ =?utf-8?B?TTVIOHFCU1I4SjYvcjh2cW1Kc2VYdWdVZkRvTzV5MmpwL2NNYjRWd3ZtZ3ZK?=
+ =?utf-8?B?L2l0emlWNU5LV1lwVC9wUmptVDRaQ2l1Q1lmeEVOdVNDbDlBU2tYaGYvUXNw?=
+ =?utf-8?B?UXNWZkFYRHJZQUVkb0cxY1NMTXVyRVRuaVNZVUJRUW1SQ3VSaVVlVXJGN0Nv?=
+ =?utf-8?B?TkVYUTNkNWhlRDQyUEVGNk9tcjgyRUxnOGticnM2a096KzZZZzFpUzExU1d1?=
+ =?utf-8?B?YnhvTDBCM2dQMG1FQ05RODFoV2MxdEUvTlcyRGIwbkE2dmhsWXNhTlRRU3ln?=
+ =?utf-8?B?Yzd6RmplaEhmQkhQOUp0ODBaTnFXVjdYT3F3dlBIcHRLeTY1dFNoSTNTSjZJ?=
+ =?utf-8?B?ZzVWNEVDQ0ZLL2ZOM0tHWXNtLzZsUU1jSFJGN0dxVFVBNEM4TDZWTVNEWGFw?=
+ =?utf-8?B?dmxyRktLUUxVUzViNzZOWGZkUVkvUkJuQzRrVnN2Qlk3WitlcmRVSDlvaVJD?=
+ =?utf-8?B?VitpS0dwcDlXTmljbmI2MS9YakpLY2VIMjZPR0UxVkVnLzBsQkphbkxiRC9W?=
+ =?utf-8?B?a1E9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ta5uyVuHZ7mwSKBuL/1lStIFy7EHPSJ8KLBZWZDlvdsfYKb19ExyD88lHbjDzPr9Z8fE02IZDBoNQReGFFNcIMBlV0B7T/KKUHiu36XGc/nBoQeEfrWqmisq1iLhH1RflFO0dpb+gICGoDW0cFSi1FGp5O8Ayd+JEn6Ip6/Hb5UL76sKMIl1fDdd4AwKKHG6K932Ie8Mum7Sqqb/IPoQKiiVXq2WX6tQXvQolhpunp+nJmqLSn0wlbZT4M5CUxhKgrzfF12VHHZu2TQTg2NLZxtD2Q5Db91EfC6ls5TNjBramPnOqizvznnXafqBw5pNvoMCFjYg2AzoKgkn/LOMc3FUZ6OnVZsHReYB6QAlN3954bEpltSSeS9X3ojSMwTZq5o57QCuqNXx3c+frEoroa9gn1dEs9uGH+Cbydmz0ZT8pQXxWwTEJSLGO2oHIOy9lfU3iFXAupDjBxiexiAft5gpJ6slJucJ5UmmMXJ9SoAYgv4kZifLWajMvTpXNTVhuqV8iRmAVCSTH2T3vh/8fGTaQ1cAdV/qE4ryPn3FA4RrtFcRiMhErSyPt8VeJj2jIehRuqXuB3nUyz4+NUrLHQGhCvYGk3uG3W/fFtBZ3Yw=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: nv2Np90UZ5J4Fh1tnX2n2mKJpEIa7fGuyi+/ks0SsRSL5/vTSK40oMRHu5ljdDhgOcfrcMO4O2Un5rOZ2HSx1mvYKtlfBGCdqrR9DMAAwX5XqHANPz4G8AxJpiZI2UHvofg4sfzXtTbvCadVQDjRGjHq7zZcygrbXTGjNCdjXVIUeBtG6dWCPWIOgwLKIOaRO7CBVd1cjr5g6N9bNqhqMDQTGEWlhE2/OV4jQdz9ZBpEEsdZ1VCiGPjdvtAmmvwXUNEi1BJjQ4gZNxrwatxCeyr1dp+kc3gxnt5R61zeb3RYoa1WuBs3Nedu5DsCFdghOFvVjZoBMB3aPdMvgbd0y6qWfte1gh3zjDBeuN7W0OAuobQOC/PCNKf9CBdLJekQ391mgBd9gPa/6xGYpWn7V0ISRsTvd2qEgeoGyliMCH+FNrB6Am4SP+GqRLUyZjq9bQk5sOuoGJhtK8LK//GNLVKcdM8gj/sYoNl33M61IMm72hM3LNYp+mZxa8ckLwUI6KmKzpXGfrDiRDzRcyMcuLbbAeJdRepZD12DI6/b9yGHN+OP4vRn9o4MX0gngwTgN/Ir+A5G6Rjb/btxqUT4bMmQFv3I90UoyOmhckbzIgQ=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0383a8a-8b0e-4b2e-7a96-08ddf20bbd5c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e4e86d7-fc01-44db-c623-08ddf20ba632
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 14:50:39.4080 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 14:50:00.6589 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QkdXONPKr8vJFUOjdZ3XD5B43P8d2cbHOKKiu4e/QcpP6byCKMJ9CJPPnRWFstbrik9zAELnDtcSvhjeE33ThG4XnI+qQj0zUwXMtNWlBDU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: KkpZ2V2GQQ1XbrbxIG3Zhd3MMUwGr+SSg1etM5K2g1/+0+KYiuPU+dIOYNvtCW7DzWKwPa6sFECqNJ+G4XFbTBx+o6kiHZqnjlgNKOk8H4U=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB5087
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
@@ -197,24 +194,24 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 mlxscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2508110000 definitions=main-2509120137
-X-Proofpoint-GUID: fPzVLS8PPfFuBaOdiOYkPB8YpqJEIILi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDE1MSBTYWx0ZWRfX9D7dJ7+3uuVy
- lZ5dfLwZ/3C0yxjtg2NkEWxkKkvQN4+QNzpjWsbgK0fw5V+/jDrT5D2E9PGmgURC22zXxe/WXIv
- 0k+/FFJ8uzigoKfMJ0HYRdd0UwZjmHUYG6j5qc9uwVwSePBd1CWPt57iuMtofRTUFPM915diyNh
- dLePxMnbQZsj0RrHLmujq4xiku2HegBUROG58alBZZwD+8u5F0VfKVYZvL/pX6Nm9JkU0QgcrkE
- UN2qWI40zD1TmSJfxtyYE4LvloRlVn4AzhYawgONUQkWvvMdQHjyI6wHBjQfGnyKruIgEqn9zju
- +AewRlurFbbw+qADOBOx8Fxzq7iDDcZtgYAqbCkK8lis0x+Cliv+mv4rviMRRDYYMHoSjtK4O49
- IeWrKArX
-X-Authority-Analysis: v=2.4 cv=Dp5W+H/+ c=1 sm=1 tr=0 ts=68c43344 cx=c_pps
+X-Proofpoint-GUID: zKB0YdzyS1W8BpVtijPyJMgh2OHpIg7h
+X-Proofpoint-ORIG-GUID: zKB0YdzyS1W8BpVtijPyJMgh2OHpIg7h
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDE1MiBTYWx0ZWRfX3pJBnV9iWxIH
+ wnUEYfHTzLBIYTPqAO343lQOL9Q4fk66u4lRWJWwvw/W2GNEnzUHxBSRZR0gO1YO/M4UfT7e5sx
+ mA4vN/s0cRvJaDnIhIIYdJrJDhodCANSKYdYEyE9pq+vfs/dVM8UF8hSBHPhhfvccabkMMrzBci
+ pLOlsamR2KGOCTvsTFqFHm7KeFSs+ZMeW1EAramsQz1tnsgy+jheyyjHgttbKRV3V02v0qlMXF7
+ P0sGP7GRYZV25+eCLN7Br7dE0LkeJOZ5jUheJnjfy2UQMkxSo00/zaIjs8DIrNaqcS+WU9qWAd6
+ XbY+2xxASLOtM+XsOgm1RL8kCMGiZsUrJwuYUincUMT8M5UOz5vmTFtGharmRnLlaNIh7Qc7lTM
+ s1VWDI7L
+X-Authority-Analysis: v=2.4 cv=b9Oy4sGx c=1 sm=1 tr=0 ts=68c4331f cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=QaHVeNbi0Ez19B9nJykA:9
+ a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=donITOIPcU3_ggj90i0A:9
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: fPzVLS8PPfFuBaOdiOYkPB8YpqJEIILi
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -222,7 +219,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -238,247 +235,396 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/9/2025 2:37 PM, Peter Xu wrote:
-> On Tue, Sep 09, 2025 at 12:03:11PM -0400, Steven Sistare wrote:
->> On 9/9/2025 11:24 AM, Peter Xu wrote:
->>> On Tue, Sep 09, 2025 at 10:36:16AM -0400, Steven Sistare wrote:
->>>> On 9/5/2025 12:48 PM, Peter Xu wrote:
->>>>> Add Vladimir and Dan.
->>>>>
->>>>> On Thu, Aug 14, 2025 at 10:17:14AM -0700, Steve Sistare wrote:
->>>>>> This patch series adds the live migration cpr-exec mode.
->>>>>>
->>>>>> The new user-visible interfaces are:
->>>>>>      * cpr-exec (MigMode migration parameter)
->>>>>>      * cpr-exec-command (migration parameter)
->>>>>>
->>>>>> cpr-exec mode is similar in most respects to cpr-transfer mode, with the
->>>>>> primary difference being that old QEMU directly exec's new QEMU.  The user
->>>>>> specifies the command to exec new QEMU in the migration parameter
->>>>>> cpr-exec-command.
->>>>>>
->>>>>> Why?
->>>>>>
->>>>>> In a containerized QEMU environment, cpr-exec reuses an existing QEMU
->>>>>> container and its assigned resources.  By contrast, cpr-transfer mode
->>>>>> requires a new container to be created on the same host as the target of
->>>>>> the CPR operation.  Resources must be reserved for the new container, while
->>>>>> the old container still reserves resources until the operation completes.
->>>>>> Avoiding over commitment requires extra work in the management layer.
->>>>>
->>>>> Can we spell out what are these resources?
->>>>>
->>>>> CPR definitely relies on completely shared memory.  That's already not a
->>>>> concern.
->>>>>
->>>>> CPR resolves resources that are bound to devices like VFIO by passing over
->>>>> FDs, these are not over commited either.
->>>>>
->>>>> Is it accounting QEMU/KVM process overhead?  That would really be trivial,
->>>>> IMHO, but maybe something else?
+On 9/9/2025 3:27 PM, Peter Xu wrote:
+> On Tue, Sep 09, 2025 at 02:10:14PM -0400, Steven Sistare wrote:
+>> On 9/9/2025 12:32 PM, Peter Xu wrote:
+>>> On Thu, Aug 14, 2025 at 10:17:21AM -0700, Steve Sistare wrote:
+>>>> Add the cpr-exec migration mode.  Usage:
+>>>>     qemu-system-$arch -machine aux-ram-share=on ...
+>>>>     migrate_set_parameter mode cpr-exec
+>>>>     migrate_set_parameter cpr-exec-command \
+>>>>       <arg1> <arg2> ... -incoming <uri-1> \
+>>>>     migrate -d <uri-1>
 >>>>
->>>> Accounting is one issue, and it is not trivial.  Another is arranging exclusive
->>>> use of a set of CPUs, the same set for the old and new container, concurrently.
->>>> Another is avoiding namespace conflicts, the kind that make localhost migration
->>>> difficult.
+>>>> The migrate command stops the VM, saves state to uri-1,
+>>>> directly exec's a new version of QEMU on the same host,
+>>>> replacing the original process while retaining its PID, and
+>>>> loads state from uri-1.  Guest RAM is preserved in place,
+>>>> albeit with new virtual addresses.
 >>>>
->>>>>> This is one reason why a cloud provider may prefer cpr-exec.  A second reason
->>>>>> is that the container may include agents with their own connections to the
->>>>>> outside world, and such connections remain intact if the container is reused.
->>>>>
->>>>> We discussed about this one.  Personally I still cannot understand why this
->>>>> is a concern if the agents can be trivially started as a new instance.  But
->>>>> I admit I may not know the whole picture.  To me, the above point is more
->>>>> persuasive, but I'll need to understand which part that is over-commited
->>>>> that can be a problem.
+>>>> The new QEMU process is started by exec'ing the command
+>>>> specified by the @cpr-exec-command parameter.  The first word of
+>>>> the command is the binary, and the remaining words are its
+>>>> arguments.  The command may be a direct invocation of new QEMU,
+>>>> or may be a non-QEMU command that exec's the new QEMU binary.
 >>>>
->>>> Agents can be restarted, but that would sever the connection to the outside
->>>> world.  With cpr-transfer or any local migration, you would need agents
->>>> outside of old and new containers that persist.
+>>>> This mode creates a second migration channel that is not visible
+>>>> to the user.  At the start of migration, old QEMU saves CPR state
+>>>> to the second channel, and at the end of migration, it tells the
+>>>> main loop to call cpr_exec.  New QEMU loads CPR state early, before
+>>>> objects are created.
 >>>>
->>>> With cpr-exec, connections can be preserved without requiring the end user
->>>> to reconnect, and can be done trivially, by preserving chardevs.  With that
->>>> support in qemu, the management layer does nothing extra to preserve them.
->>>> chardev support is not part of this series but is part of my vision,
->>>> and makes exec mode even more compelling.
+>>>> Because old QEMU terminates when new QEMU starts, one cannot
+>>>> stream data between the two, so uri-1 must be a type,
+>>>> such as a file, that accepts all data before old QEMU exits.
+>>>> Otherwise, old QEMU may quietly block writing to the channel.
 >>>>
->>>> Management layers have a lot of code and complexity to manage live migration,
->>>> resources, and connections.  It requires modification to support cpr-transfer.
->>>> All that can be bypassed with exec mode.  Less complexity, less maintainance,
->>>> and  fewer points of failure.  I know this because I implemented exec mode in
->>>> OCI at Oracle, and we use it in production.
+>>>> Memory-backend objects must have the share=on attribute, but
+>>>> memory-backend-epc is not supported.  The VM must be started with
+>>>> the '-machine aux-ram-share=on' option, which allows anonymous
+>>>> memory to be transferred in place to the new process.  The memfds
+>>>> are kept open across exec by clearing the close-on-exec flag, their
+>>>> values are saved in CPR state, and they are mmap'd in new QEMU.
 >>>
->>> I wonders how this part works in Vladimir's use case.
+>>> Some generic questions around exec..
 >>>
->>>>> After all, cloud hosts should preserve some extra memory anyway to make
->>>>> sure dynamic resources allocations all the time (e.g., when live migration
->>>>> starts, KVM pgtables can drastically increase if huge pages are enabled,
->>>>> for PAGE_SIZE trackings), I assumed the over-commit portion should be less
->>>>> that those.. and when it's also temporary (src QEMU will release all
->>>>> resources after live upgrade) then it looks manageable. >>
->>>>>> How?
->>>>>>
->>>>>> cpr-exec preserves descriptors across exec by clearing the CLOEXEC flag,
->>>>>> and by sending the unique name and value of each descriptor to new QEMU
->>>>>> via CPR state.
->>>>>>
->>>>>> CPR state cannot be sent over the normal migration channel, because devices
->>>>>> and backends are created prior to reading the channel, so this mode sends
->>>>>> CPR state over a second migration channel that is not visible to the user.
->>>>>> New QEMU reads the second channel prior to creating devices or backends.
->>>>>>
->>>>>> The exec itself is trivial.  After writing to the migration channels, the
->>>>>> migration code calls a new main-loop hook to perform the exec.
->>>>>>
->>>>>> Example:
->>>>>>
->>>>>> In this example, we simply restart the same version of QEMU, but in
->>>>>> a real scenario one would use a new QEMU binary path in cpr-exec-command.
->>>>>>
->>>>>>      # qemu-kvm -monitor stdio
->>>>>>      -object memory-backend-memfd,id=ram0,size=1G
->>>>>>      -machine memory-backend=ram0 -machine aux-ram-share=on ...
->>>>>>
->>>>>>      QEMU 10.1.50 monitor - type 'help' for more information
->>>>>>      (qemu) info status
->>>>>>      VM status: running
->>>>>>      (qemu) migrate_set_parameter mode cpr-exec
->>>>>>      (qemu) migrate_set_parameter cpr-exec-command qemu-kvm ... -incoming file:vm.state
->>>>>>      (qemu) migrate -d file:vm.state
->>>>>>      (qemu) QEMU 10.1.50 monitor - type 'help' for more information
->>>>>>      (qemu) info status
->>>>>>      VM status: running
->>>>>>
->>>>>> Steve Sistare (9):
->>>>>>      migration: multi-mode notifier
->>>>>>      migration: add cpr_walk_fd
->>>>>>      oslib: qemu_clear_cloexec
->>>>>>      vl: helper to request exec
->>>>>>      migration: cpr-exec-command parameter
->>>>>>      migration: cpr-exec save and load
->>>>>>      migration: cpr-exec mode
->>>>>>      migration: cpr-exec docs
->>>>>>      vfio: cpr-exec mode
->>>>>
->>>>> The other thing is, as Vladimir is working on (looks like) a cleaner way of
->>>>> passing FDs fully relying on unix sockets, I want to understand better on
->>>>> the relationships of his work and the exec model.
->>>>
->>>> His work is based on my work -- the ability to embed a file descriptor in a
->>>> migration stream with a VMSTATE_FD declaration -- so it is compatible.
->>>>
->>>> The cpr-exec series preserves VMSTATE_FD across exec by remembering the fd
->>>> integer and embedding that in the data stream.  See the changes in vmstate-types.c
->>>> in [PATCH V3 7/9] migration: cpr-exec mode.
->>>>
->>>> Thus cpr-exec will still preserve tap devices via Vladimir's code.
->>>>> I still personally think we should always stick with unix sockets, but I'm
->>>>> open to be convinced on above limitations.  If exec is better than
->>>>> cpr-transfer in any way, the hope is more people can and should adopt it.
->>>>
->>>> Various people and companies have expressed interest in CPR and want to explore
->>>> cpr-exec.  Vladimir was one, he chose transfer instead, and that is fine, but
->>>> give people the option.  And Oracle continues to use cpr-exec mode.
+>>> How do we know we can already safely kill all threads?
 >>>
->>> How does cpr-exec guarantees everything will go smoothly with no failure
->>> after the exec?  Essentially, this is Vladimir's question 1.
+>>> IIUC vcpu threads must be all stopped.  I wonder if we want to assert that
+>>> in the exec helper below.
+>>>
+>>> What about rest threads?  RCU threads should be for freeing resources,
+>>> looks ok if to be ignored.  But others?
 >>
->> Live migration can fail if dirty memory copy does not converge.  CPR does not.
-> 
-> As we're comparing cpr-transfer and cpr-exec, this one doesn't really count, AFAIU.
-> 
->> cpr-transfer can fail if it fails to create a new container.  cpr-exec cannot.
->> cpr-transfer can fail to allocate resources.  cpr-exec needs less.
-> 
-> These two could happen in very occpied hosts indeed, but is it really that
-> common an issue when ignoring the whole guest memory section after all?
-
-Conventional wisdom holds that in migration scenarios, we must have the option
-to fall back to the source if the target fails.  In all the above, I point out
-the reasons behind this wisdom, and that many of those reasons do not apply
-for cpr-exec.
->> cpr-exec failure is almost always due to a QEMU bug.  For example, a new feature
->> has been added to new QEMU, and is *not* forced to false in a compatibility entry
->> for the old machine model. We do our best to find and fix those before going into
->> production. In production, the success rate is high. That is one reason I like the
->> mode so much.
-> 
-> Yes, but this is still a major issue.  The problem is I don't think we have
-> good way to provide 100% coverage on the code base covering all kinds of
-> migrations.
-> 
-> After all, we have tons of needed() fields in VMSD, we need to always be
-> prepared that the migration stream can change from time to time with
-> exactly the same device setup, and some of them may prone to put() failures
-> on the other side.
-> 
-> After all, live migration was designed to be fine with such, so at least VM
-> won't crash on src if anything happens.
-> 
-> Precopy always does that, we're trying to make postcopy do the same, which
-> Juraj is working on, so that postcopy can FAIL and rollback to src too if
-> device state doesn't apply all fine.
-> 
-> It's still not uncommon to have guest OS / driver behavior change causing
-> some corner case migration failures but only when applying the states.
-> 
-> That's IMHO a high risk even if low possibility.
-
-No question, bugs are a risk and will occur.
-
->>> Feel free to
->>> answer there, because there's also question 2 (which we used to cover some
->>> but maybe not as much).
+>> These threads are dormant, just as they are in the post migration state.
+>> There is no difference.  They can be safely killed, just as they can be
+>> post migration.
 >>
->> Question 2 is about minimizing downtime by starting new QEMU while old QEMU
->> is still running.  That is true, but the savings are small.
+>>> Or would process states still matter in some cases? e.g. when QEMU is
+>>> talking to another vhost-user, or vfio-user, or virtio-fs, or ... whatever
+>>> other process, then suddenly the other process doesn't recognize this QEMU
+>>> anymore?
+>>
+>> These cases need more development to work with cpr.  The external process
+>> can be used by new qemu if the socket connection (fd) is preserved in new QEMU.
+>>
+>>> What about file locks or similiar shared locks that can be running in an
+>>> iothread?  Is it possible that old QEMU took some shared locks, suddenly
+>>> qemu exec(), then the lock is never released?
+>>
+>> Same as the post-migrate state.
 > 
-> I thought we discussed about this, and it should be known to have at least
-> below two major part of things that will increase downtime (either directly
-> accounted into downtime, or slow down vcpus later)?
+> IIUC the difference is "migrate" for cpr-transfer triggers migration only;
+> another "quit" required to gracefully stop the src QEMU instance from mgmt.
+> But for cpr-exec, it's attached to migration cleanup -> exec in a roll.
 > 
->    - Process pgtable, aka, QEMU's view of guest mem
->    - EPT pgtable, aka, vCPU's view of guest mem
+> I'm not sure if things can be missing within the period.  For example,
+> libvirt may have logic making sure "quit" runs only after dest QEMU evicts
+> some event.  But I confess I don't have an explicit example of what would
+> cause issues, so it's a pure question.
 > 
-> Populating these should normally take time when VM becomes huge, while
-> cpr-transfer can still benefit on pre-populations before switchover.
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>>    qapi/migration.json       | 25 +++++++++++++++-
+>>>>    include/migration/cpr.h   |  1 +
+>>>>    migration/cpr-exec.c      | 74 +++++++++++++++++++++++++++++++++++++++++++++++
+>>>>    migration/cpr.c           | 26 ++++++++++++++++-
+>>>>    migration/migration.c     | 10 ++++++-
+>>>>    migration/ram.c           |  1 +
+>>>>    migration/vmstate-types.c |  8 +++++
+>>>>    migration/trace-events    |  1 +
+>>>>    8 files changed, 143 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>> index ea410fd..cbc90e8 100644
+>>>> --- a/qapi/migration.json
+>>>> +++ b/qapi/migration.json
+>>>> @@ -694,9 +694,32 @@
+>>>>    #     until you issue the `migrate-incoming` command.
+>>>>    #
+>>>>    #     (since 10.0)
+>>>> +#
+>>>> +# @cpr-exec: The migrate command stops the VM, saves state to the
+>>>> +#     migration channel, directly exec's a new version of QEMU on the
+>>>> +#     same host, replacing the original process while retaining its
+>>>> +#     PID, and loads state from the channel.  Guest RAM is preserved
+>>>> +#     in place.  Devices and their pinned pages are also preserved for
+>>>> +#     VFIO and IOMMUFD.
+>>>> +#
+>>>> +#     Old QEMU starts new QEMU by exec'ing the command specified by
+>>>> +#     the @cpr-exec-command parameter.  The command may be a direct
+>>>> +#     invocation of new QEMU, or may be a non-QEMU command that exec's
+>>>> +#     the new QEMU binary.
+>>>> +#
+>>>> +#     Because old QEMU terminates when new QEMU starts, one cannot
+>>>> +#     stream data between the two, so the channel must be a type,
+>>>> +#     such as a file, that accepts all data before old QEMU exits.
+>>>> +#     Otherwise, old QEMU may quietly block writing to the channel.
+>>>
+>>> The CPR channel (in case of exec mode) is persisted via env var.  Why not
+>>> do that too for the main migration stream?
+>>>
+>>> Does it has something to do with the size of the binary chunk to store all
+>>> device states (and some private mem)?  Or other concerns?
+>>
+>> It was not necessary to add code for a new way to move migration data for
+>> the main stream when the existing code and interface works just fine.  One
+>> of the design principles pushed on me was to make cpr look as much like live
+>> migration as possible, and cpr-exec does that.  It has no issues juggling
+>> 2 streams, and no delayed start of the monitor. cpr-transfer is actually the
+>> oddball.
+>>   > It just feels like it would look cleaner for cpr-exec to not need -incoming
+>>> XXX at all, e.g. if the series already used envvar anyway, we can use that
+>>> too so new QEMU would know it's cpr-exec incoming migration, without
+>>> -incoming parameter at all.
+>>>>> +#
+>>>> +#     Memory-backend objects must have the share=on attribute, but
+>>>> +#     memory-backend-epc is not supported.  The VM must be started
+>>>> +#     with the '-machine aux-ram-share=on' option.
+>>>> +#
+>>>> +#     (since 10.2)
+>>>>    ##
+>>>>    { 'enum': 'MigMode',
+>>>> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
+>>>> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
+>>>>    ##
+>>>>    # @ZeroPageDetection:
+>>>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+>>>> index aaeec02..e99e48e 100644
+>>>> --- a/include/migration/cpr.h
+>>>> +++ b/include/migration/cpr.h
+>>>> @@ -54,6 +54,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index, bool cpr,
+>>>>    QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+>>>>    QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+>>>> +void cpr_exec_init(void);
+>>>>    QEMUFile *cpr_exec_output(Error **errp);
+>>>>    QEMUFile *cpr_exec_input(Error **errp);
+>>>>    void cpr_exec_persist_state(QEMUFile *f);
+>>>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+>>>> index 2c32e9c..7d0429f 100644
+>>>> --- a/migration/cpr-exec.c
+>>>> +++ b/migration/cpr-exec.c
+>>>> @@ -6,15 +6,20 @@
+>>>>    #include "qemu/osdep.h"
+>>>>    #include "qemu/cutils.h"
+>>>> +#include "qemu/error-report.h"
+>>>>    #include "qemu/memfd.h"
+>>>>    #include "qapi/error.h"
+>>>>    #include "io/channel-file.h"
+>>>>    #include "io/channel-socket.h"
+>>>> +#include "block/block-global-state.h"
+>>>> +#include "qemu/main-loop.h"
+>>>>    #include "migration/cpr.h"
+>>>>    #include "migration/qemu-file.h"
+>>>> +#include "migration/migration.h"
+>>>>    #include "migration/misc.h"
+>>>>    #include "migration/vmstate.h"
+>>>>    #include "system/runstate.h"
+>>>> +#include "trace.h"
+>>>>    #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
+>>>> @@ -92,3 +97,72 @@ QEMUFile *cpr_exec_input(Error **errp)
+>>>>        lseek(mfd, 0, SEEK_SET);
+>>>>        return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
+>>>>    }
+>>>> +
+>>>> +static bool preserve_fd(int fd)
+>>>> +{
+>>>> +    qemu_clear_cloexec(fd);
+>>>> +    return true;
+>>>> +}
+>>>> +
+>>>> +static bool unpreserve_fd(int fd)
+>>>> +{
+>>>> +    qemu_set_cloexec(fd);
+>>>> +    return true;
+>>>> +}
+>>>> +
+>>>> +static void cpr_exec(char **argv)
+>>>> +{
+>>>> +    MigrationState *s = migrate_get_current();
+>>>> +    Error *err = NULL;
+>>>> +
+>>>> +    /*
+>>>> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
+>>>> +     * earlier because they should not persist across miscellaneous fork and
+>>>> +     * exec calls that are performed during normal operation.
+>>>> +     */
+>>>> +    cpr_walk_fd(preserve_fd);
+>>>> +
+>>>> +    trace_cpr_exec();
+>>>> +    execvp(argv[0], argv);
+>>>> +
+>>>> +    cpr_walk_fd(unpreserve_fd);
+>>>> +
+>>>> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
+>>>> +    error_report_err(error_copy(err));
+>>>
+>>> Feel free to ignore my question in the other patch, so we dump some errors
+>>> here.. which makes sense.
+>>>
+>>>> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+>>>
+>>> This is indeed FAILED migration, however it seems to imply it can catch
+>>> whatever possible failures that incoming could have.  Strictly speaking
+>>> this is not migration failure, but exec failure..  Maybe we need a comment
+>>> above this one explaining that we won't be able to capture any migration
+>>> issues, it's too late after exec() succeeded, so there's higher risk of
+>>> crashing the VM.
+>>
+>> exec() can fail if the user provided a bogus cpr-exec-command, in which case
+>> recovery is possible.  exec() should never fail for valid exec arguments,
+>> unless the system is very sick and running out of resources, in which case
+>> all bets are off.
 > 
-> IIUC that's a known issue, but please correct me if I remembered it wrong.
-> I think it means this issue is more severe with larger VMs, which is a
-> trade-off.  It's just that I don't know what else might be relevant.
+> I really don't expect that to fail... bogus cpr-exec-command is more or
+> less a programming bug.  After all, I don't expect normal QEMU users would
+> use cpr-exec without a proper mgmt providing cpr-exec-command.
 > 
-> Personally I don't think this is a blocker for cpr-exec, but we should IMHO
-> record the differences.  It would be best, IMHO, to have a section in
-> cpr.rst to discuss this, helping user decide which to choose when both
-> benefits from CPR in general.
+> Adding some comment here on what the FAILED can capture (and what cannot)?
 
 Will do.
 
-> Meanwhile, just to mention unit test for cpr-exec is still missing.
-
-I will rebase and post it after receiving all comments for V3.
-I think we are almost there.
->>> The other thing I don't remember if we discussed, on how cpr-exec manages
->>> device hotplugs. Say, what happens if there are devices hot plugged (via
->>> QMP) then cpr-exec migration happens?One method: start new qemu with the original command-line arguments plus -S, then
->> mgmt re-sends the hot plug commands to the qemu monitor.  Same as for live
->> migration.
->>> Does cpr-exec cmdline needs to convert all QMP hot-plugged devices into
->>> cmdlines and append them?
->> That also works, and is a technique I have used to reduce guest pause time.
+>>> Luckily we still are on the same host, so things like mismatched kernel
+>>> versions at least won't crash this migration.. aka not as easy to fail a
+>>> migration as cross- hosts indeed. But still, I'd say I agree with Vladimir
+>>> that this is a major flaw of the design if so.
+>>>
+>>>> +    migrate_set_error(s, err);
+>>>> +
+>>>> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+>>>> +
+>>>> +    err = NULL;
+>>>> +    if (!migration_block_activate(&err)) {
+>>>> +        /* error was already reported */
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    if (runstate_is_live(s->vm_old_state)) {
+>>>> +        vm_start();
+>>>> +    }
+>>>> +}
+>>>> +
+>>>> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+>>>> +                             Error **errp)
+>>>> +{
+>>>> +    MigrationState *s = migrate_get_current();
+>>>> +
+>>>> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
+>>>> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
+>>>> +        qemu_system_exec_request(cpr_exec, s->parameters.cpr_exec_command);
+>>>> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+>>>> +        cpr_exec_unpersist_state();
+>>>> +    }
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +void cpr_exec_init(void)
+>>>> +{
+>>>> +    static NotifierWithReturn exec_notifier;
+>>>> +
+>>>> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
+>>>> +                                MIG_MODE_CPR_EXEC);
+>>>
+>>> Why using a notifier?  IMHO exec() is something important enough to not be
+>>> hiding in a notifier..  and CPR is already a major part of migration in the
+>>> framework, IMHO it'll be cleaner to invoke any CPR request in the migration
+>>> subsystem.  AFAIU notifiers are normally only for outside migration/ purposes.
 >>
->>> How to guarantee src/dst device topology match
->>> exactly the same with the new cmdline?
+>> This minimizes the number of control flow conditionals in the core migration code.
+>> That's a good thing, and I thought you would like it.
 >>
->> That is up to the mgmt layer, to know how QEMU was originally started, and
->> what has been hot plugged afterwards.  The fast qom-list-get command that
->> I recently added can help here.
+>> The alternative is to add code right after notifiers are called to check the
+>> mode, and call cpr_exec_notifier.  Seems silly when we have this generic
+>> mechanism to define callouts to occur at well-defined points during execution.
+>>
+>> Note that cpr_exec_notifier does not directly call exec.  It posts the exec
+>> request.  It also recovers if cpr failed.
 > 
-> I see.  If you think that is the best way to consume cpr-exec, would you
-> add a small section into the doc patch for it as well?
+> OK, I don't think I feel strongly on this one.
+> 
+> Initially I was concerned at least on some of the notifiers not invoked,
+> which looks to be completely random.  But I kind of agree you chose the
+> spot late enough so whatever should really have been done before an exec(),
+> should hopefully be processed already, maybe while we do or around
+> vm_stop() phase.
+> 
+> Feel free to keep it then if nobody else asks.
+> 
+>>
+>>>> +}
+>>>> diff --git a/migration/cpr.c b/migration/cpr.c
+>>>> index 021bd6a..2078d05 100644
+>>>> --- a/migration/cpr.c
+>>>> +++ b/migration/cpr.c
+>>>> @@ -198,6 +198,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>>        if (mode == MIG_MODE_CPR_TRANSFER) {
+>>>>            g_assert(channel);
+>>>>            f = cpr_transfer_output(channel, errp);
+>>>> +    } else if (mode == MIG_MODE_CPR_EXEC) {
+>>>> +        f = cpr_exec_output(errp);
+>>>>        } else {
+>>>>            return 0;
+>>>>        }
+>>>> @@ -215,6 +217,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>>            return ret;
+>>>>        }
+>>>> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+>>>> +        cpr_exec_persist_state(f);
+>>>> +    }
+>>>> +
+>>>>        /*
+>>>>         * Close the socket only partially so we can later detect when the other
+>>>>         * end closes by getting a HUP event.
+>>>> @@ -226,6 +232,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
+>>>>        return 0;
+>>>>    }
+>>>> +static bool unpreserve_fd(int fd)
+>>>> +{
+>>>> +    qemu_set_cloexec(fd);
+>>>> +    return true;
+>>>> +}
+>>>> +
+>>>>    int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>>    {
+>>>>        int ret;
+>>>> @@ -237,6 +249,12 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
+>>>>            mode = MIG_MODE_CPR_TRANSFER;
+>>>>            cpr_set_incoming_mode(mode);
+>>>>            f = cpr_transfer_input(channel, errp);
+>>>> +    } else if (cpr_exec_has_state()) {
+>>>> +        mode = MIG_MODE_CPR_EXEC;
+>>>> +        f = cpr_exec_input(errp);
+>>>> +        if (channel) {
+>>>> +            warn_report("ignoring cpr channel for migration mode cpr-exec");
+>>>
+>>> This looks like dead code?  channel can't be set when reaching here, AFAIU..
+>>
+>> The user could define a cpr channel in qemu command line arguments, and it would
+>> reach here.  In that case the user is confused, but I warn instead of abort, to
+>> keep new QEMU alive.  I perform this sanity check here, rather than at top level,
+>> because I have localized awareness of cpr_exec state to here.
+> 
+> The code (after this patch applied) looks like this:
+> 
+>      if (channel) {                                            <------- [*]
+>          mode = MIG_MODE_CPR_TRANSFER;
+>          cpr_set_incoming_mode(mode);
+>          f = cpr_transfer_input(channel, errp);
+>      } else if (cpr_exec_has_state()) {
+>          mode = MIG_MODE_CPR_EXEC;
+>          f = cpr_exec_input(errp);
+>          if (channel) {
+>              warn_report("ignoring cpr channel for migration mode cpr-exec");
+>          }
+>      } else {
+>          return 0;
+>      }
+> 
+> IIUC [*] will capture any channel!=NULL case.
 
-It is not related to cpr-exec.  It is related to hot plug, for any migration
-type scenario, so it does not fit in the cpr-exec docs.
+Oops, my bad, thanks.  I will re-arrange it:
+
+     if (cpr_exec_has_state()) {
+         mode = MIG_MODE_CPR_EXEC;
+         f = cpr_exec_input(errp);
+         if (channel) {
+             warn_report("ignoring cpr channel for migration mode cpr-exec");
+         }
+     } else if (channel) {
+         mode = MIG_MODE_CPR_TRANSFER;
+     ...
 
 - Steve
+
+
 
