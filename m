@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0630CAC587
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 10:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B027CAC58E
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 10:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxNhF-0000Wk-Ev; Sat, 13 Sep 2025 06:41:33 -0400
+	id 1uxNj5-0001Ih-I7; Sat, 13 Sep 2025 06:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uxNhA-0000Vn-1r
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:41:28 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1uxNiu-0001Hd-6l
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:43:17 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uxNh8-00075J-4q
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:41:27 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3e2fdddd01dso730349f8f.2
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 03:41:24 -0700 (PDT)
+ id 1uxNiq-0007Bw-Vp
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:43:14 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3dad6252eacso1172570f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 03:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757760082; x=1758364882; darn=nongnu.org;
+ d=linaro.org; s=google; t=1757760191; x=1758364991; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vh+SgW2hatK0SUgymNzrF8SEj3BK7LjCZUWvoGgzqqs=;
- b=Hn59elhJtGJ5rPHx7rvbHVoy8fn+ixFv56II1VnC90t3C73eP8cPXH96vhIlngzmNQ
- B6ZmtSLSNQcnEvpTMAH7nIZJOQCC6AzAP2trLBOgLxfp225zXm5yhh7dtVkR0nSOttWR
- 4GOvqfWqJUzrZIvFlaIpB8F3VpP70094BHGbwFf0nw97RnMEH6t7qGsllSGoJ8Bb6ABu
- eTsIda1AbYOIv8YvqgvjQyZuCKtDNHG/l8HAyHw5UTZMPbLyxJfhOoiRxMor3++5FGLw
- J1TtTsM6DDLHl6YKnSopCXeK7zwoNQnZV4Rk2MVGLZkdtTn2hRLArfFuBloqSBVrGt4B
- MMeg==
+ bh=roOkeYsJSJo4xShnJ5Df5hNGC4JiwdyRZWQP138uK2I=;
+ b=oPBE33daqjONFTYZhJLiIoBIANdDDTFpwvLu3vjRN8qUSntcpr/y4wAAaMy9I06L0v
+ KunkRcEmJJtq92WlIUUJJtiKZS3AEnw04bqUeYjh1PonPSJGkrDB8QowNBDxrnfvp2vC
+ WfkeYjlo3XUEVJnPYfwvSV1DzANnc48/dwKMS+oYy0CUhLWMTedr0oPoARU/zrH3vxBk
+ iphAgJwttBVcE9th4vzDC2mtHDZ9TLA9vGP14mr4BtvD0Mq8Uk9NbSu9J2AZa/qvJSYa
+ JFlW57gXaNRqtRkCHvrPSGJ0oFJMh/h3oszunqoMB3uJK3Xyg3IylujhF6NemxcBLBaf
+ nB+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757760082; x=1758364882;
+ d=1e100.net; s=20230601; t=1757760191; x=1758364991;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Vh+SgW2hatK0SUgymNzrF8SEj3BK7LjCZUWvoGgzqqs=;
- b=irravbdzDMi3CrViIj2GxzAoIUdO6pKF9LbP7VX75cmZZzJGvBONRtDnaAYviZgYZW
- az9kXhHZF8PDeaW18ZyvIBwRUxc47LTPctIo3d0K5xKQ2ymirNIHH27CLZJS37tAVkm9
- nfp1nBSt74TlQrX9qWmd5+G3ikun4M3TcQxBedyyvVR9lEbWpb5iMB6g2fg3pUQpbHlY
- AdPH6EqJhJqh9E5cuwUBZsKdaTs6b66DImkdpMVNSFQJtU+VjL0PhNQViQyO8vy5Op/h
- NrjADc82V9CvMrrV2UR3MkSZv20xwIFsvRh6h9UiRglT8dzVMIFv8iNOshizPs1eG2I1
- Mc/g==
-X-Gm-Message-State: AOJu0Yx977hsKHL2hUhdRv94gORQMAYE0mmfQrPa8WW9VlWRnJ7fHDJc
- AzWrtFma3NDnUTKXl/GXkdD9zCvKjTyCW299wreKazGoiJquoO2gGFvWsBZkt+KARn3jU4ksgMh
- tLkuaiRI=
-X-Gm-Gg: ASbGncvf3MNLEEv2DxKq5Xmur8lvtZ3nbTuec/0WeeUhI/N6+SnPn6hIkwFABbkLE8c
- heUKcpfcitFmQSrk8KGIA9ApmnppGGoKEVLsieAZajhIjSRfe8aruh073fr3PKhVXeLHgx5/Uv5
- qmrM6P9YOhjs366G5JlJIEGAe+C7Xoqm3fm5syHOJcRdwCDRvuDAPcnz47CkWKP86K2mxwKWRCQ
- LIb9siWzn5efFwgXOZsCyi7JdQMxnlNiDKW3bjGNvDDzV5Yd+dFcvNnRCDHscNjCUDVkQgj6ihz
- u8TTQ7EUZ9Vg/l5QUPI7SQRxioDyFI6HxtRMK4cT/Ip8Hlnzk/HxNtGOt09I6iWmZpc9Be25TTe
- AQIWfMMDKOTbOUiq23Ic6aypsK/9035hoDw==
-X-Google-Smtp-Source: AGHT+IF80KEbThwPIDK3iivFW5hiqHYuMq5JZvcu/0oSRvcbWyq31ppEDRCgmvWje0FIwCZEEYP4Zw==
-X-Received: by 2002:a5d:5d89:0:b0:3df:c5e3:55f8 with SMTP id
- ffacd0b85a97d-3e765a12a7fmr6134544f8f.54.1757760081601; 
- Sat, 13 Sep 2025 03:41:21 -0700 (PDT)
+ bh=roOkeYsJSJo4xShnJ5Df5hNGC4JiwdyRZWQP138uK2I=;
+ b=rKRVCPfeZW0mwcu8uIt6lWVAHv94dbEQXfSb4b1aofkNL9M6hBDERHmOaU6q8tNoGP
+ MC9dbRvAoGTkzhm69S2Mss1XAzV3trU90ibGr6vT9xOr+hzN8wa2LmkOYNwSi0pMo9rL
+ pLLcHJf9yv8lL8X5BiCL8VaUggYe3IM1U1zchQxJrEPfSLrMVdMijRUNivZCKANR7x/7
+ L0M/V7iH4lUFK9Bao+20ZnATMyQCVu5ndzwNmB6GkxfD2h8+E3S0smF6TwbPUcSt9jcO
+ AMFD6UnhckQml4YYV+jpEmB6Zi+e1Xp17s0LAItqyNEccr0o7A5z3as6Xt8/q0TxIkoA
+ +vag==
+X-Gm-Message-State: AOJu0Yx6QGiLGA3I3Nzd953Brz2jGOQxrOwf5ujFyC16FMAfIrUfLpEb
+ dxSyBaSuH0l7IorSZFL228JbhXtt6fVPwgAlkq4e4eewGyntynGHoc6KYqywhpSY+a1flvorKCh
+ /unq/SH4=
+X-Gm-Gg: ASbGnctOqAqf4rpTdsMDW+dw0XHw8XJJapf9wQ14QQNGNWEK0lGMETzYAuujHD8xkGE
+ iRcjOh/g20Kj7IsWjTtOjmmMCIIc5Bxg9VjUcDr7xpOJraxfEr8z3NiZJz/88Hiwf63zJ03/t0L
+ 3tvYE62lTPw6MeEuyMXMxCpHk2VFIulvyE2gHeyd6yioPIFjAG1UkM2875mGywIGqF+utKnfoQX
+ Edd52AyUpsUZxcbAoklz4I5KCb+ULhn5jB7iC2RXEzbsLdOOAq/4Rhe+9D3/bM8JxLL3W0ZUci8
+ kOTVaKmK8yu7Wa0dPm6jsu7eNl+vDpPQJM7tmrb7Q6e8PQX2Ej/AODZVwrUFA/Pd0SS08gIAClX
+ D+8eSNoIWQTYYnq1SRSslyudNf7y6mLe91w==
+X-Google-Smtp-Source: AGHT+IEx+ONiAdfieAwPpzl8/JhEUd1jFzsYRHVd353MkBayRTBBYAzOqAeHZGrMaK6BUbbQtK2eLQ==
+X-Received: by 2002:a05:6000:240b:b0:3e7:6457:ca85 with SMTP id
+ ffacd0b85a97d-3e765781280mr6510319f8f.5.1757760191026; 
+ Sat, 13 Sep 2025 03:43:11 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607e2d43sm9891223f8f.59.2025.09.13.03.41.19
+ 5b1f17b1804b1-45f28c193f9sm12327615e9.2.2025.09.13.03.43.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 03:41:20 -0700 (PDT)
+ Sat, 13 Sep 2025 03:43:10 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0C5125F7F7;
- Sat, 13 Sep 2025 11:41:19 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 8EA4A5F7F7;
+ Sat, 13 Sep 2025 11:43:09 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] .gitmodules: move u-boot mirrors to qemu-project-mirrors
-In-Reply-To: <20250908141911.2546063-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Mon, 8 Sep 2025 15:19:11 +0100")
-References: <20250908141911.2546063-1-alex.bennee@linaro.org>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH trivial] ui/gtk: Fix callback function signature
+In-Reply-To: <20250913-fix-signature-v1-1-974d16871432@gmail.com> (Filip
+ Hejsek's message of "Sat, 13 Sep 2025 00:58:35 +0200")
+References: <20250913-fix-signature-v1-1-974d16871432@gmail.com>
 User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Sat, 13 Sep 2025 11:41:18 +0100
-Message-ID: <87v7lm7hyp.fsf@draig.linaro.org>
+Date: Sat, 13 Sep 2025 11:43:09 +0100
+Message-ID: <87plbu7hvm.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +105,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Filip Hejsek <filip.hejsek@gmail.com> writes:
 
-> To continue our GitLab Open Source Program license we need to pass an
-> automated license check for all repos under qemu-project. While U-Boot
-> is clearly GPLv2 rather than fight with the automated validation
-> script just move the mirror across to a separate project.
+> The correct type for opaque pointer is gpointer,
+> not gpointer * (which is a pointer to a pointer).
 >
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 
-Gentle ping.
-
-The GitLab OSS SaaS license expires on the 28th and I'd like to get all
-the bits passing before then so I have time to address anything else
-that might come up.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
