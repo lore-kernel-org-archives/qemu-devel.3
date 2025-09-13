@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1412CAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 04:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66248CAC587
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 06:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxHyu-0004Nk-L6; Sat, 13 Sep 2025 00:35:24 -0400
+	id 1uxJfB-00071t-KM; Sat, 13 Sep 2025 02:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHyq-0004Ms-8Q
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:35:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uxJf9-00071c-NM; Sat, 13 Sep 2025 02:23:07 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHyo-0003o3-F5
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:35:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757738115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=aNNig8IYYdAPatRPAlT4JtfAF6iVzHoed3BTuZIPR6pdri3jOZhvZUqloAFlhiaH7JNm6d
- +gTT2gPBm0viwuOlTlUvWIvvH9e3IIWTWvKRRaZUkUwPTF19vN2c/T4SZ22UTs8RrcdwxT
- DIb5KmLLYSaNO+AVNEPMdFOpk0I5CME=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-tMI4RlcuNquDW8w--x7j3Q-1; Sat, 13 Sep 2025 00:35:14 -0400
-X-MC-Unique: tMI4RlcuNquDW8w--x7j3Q-1
-X-Mimecast-MFC-AGG-ID: tMI4RlcuNquDW8w--x7j3Q_1757738113
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45b920e0c25so16540795e9.3
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 21:35:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757738113; x=1758342913;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=T8cENXn96DM8+51li2YIHrjhvSEeteAHJD52CtPGudUNTHAx8tyr6x/YC6fz5fvGuR
- /kGnrMikJWiyzlqmS2LvbRYSIiDRzMBzn5+6yVjwUsSKOzs/CorbSdQR5HfoinSV+IGu
- a/pyDDXAoVffGSuLEAeTq/NNFAfhmrqLxUL7innpxauKazLC3qxF4Z3Sgz60tOZxghVR
- /Y1+leFib9C1A2sqwAf30PfTcZNtoJwTSyK2Va4zMI9XGOeRVRkeMzlOM2Fbc8V/3Z7a
- C5JVQZhjiMcry2RA9baGfpRo6lwrDEY+RM65F9W7D5JLJPYavet+d/Ft6e2xbq7jQQR6
- UCFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwJRBygzgJUJNYgra+6+/ilU9h0Av9N+69RF/vSwdGqBTPW1bhbvfIz+ohjeWfwSx0gZeEu0YbATtU@nongnu.org
-X-Gm-Message-State: AOJu0YxwUugCRD41KEt1UVsIUq5YusUMKtQiLyU623xbZp26jqUvA1i2
- 7KG1qjkfZlW8djDOEpbjqkvACoaSD3c6KGjmv2RQpTpLcTDz7dZWBgld5JIWtZdmTAjB8RB4c11
- B6QJAceKN82vu7YSyEmWT52MH+1PZlBGWGpdWTvvjzLylXvYPpM3HEueA
-X-Gm-Gg: ASbGncvhKAD1OttaNCxuXU8ewUsdITsqJtzIbfhBNhLQgZX9JG8Fb5+K7jhHATNZbBK
- 9DV+8DfLoV5HOADeusADcy0nLQhz1w7vL6iVWOwzYN0KJUL0K0mDdZEQUchajuV8f5OvyTezirF
- 8pm6UJHUeP0GWS6/3qOdRfMGQj/hIuUqcgvWv5XP0UzmXikSzTuMIlbTGYD5Mfag+0qjQb06e2Y
- xOeRkcZqxyjp/eTPgoSCBdsQjB8vCDuv1dc9HvsGA6hCESpmOJ892p4t8z8dC7OjNEwAjtYb2gc
- hxNLi3oCi5Krl4OCU12dkPBROYv4lqeESks5ErJpe9v+WitJuTCTduF2bDliPbEBrZMUQXS/J0A
- DYkV+kx2VyenbMNDFhkMewhMpe6UAYYghki+P4h1j5Ag=
-X-Received: by 2002:a7b:cd0b:0:b0:45d:dbf4:8880 with SMTP id
- 5b1f17b1804b1-45f211efda6mr30975135e9.27.1757738113050; 
- Fri, 12 Sep 2025 21:35:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFH6iJaz0mq774dFtPfmBg8sCpRJDY/WH4Bw/wQfHTFRdvvBcfJ4TKag7YaZSfBM78LnYlvg==
-X-Received: by 2002:a7b:cd0b:0:b0:45d:dbf4:8880 with SMTP id
- 5b1f17b1804b1-45f211efda6mr30975085e9.27.1757738112714; 
- Fri, 12 Sep 2025 21:35:12 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e764eacc0csm6023698f8f.18.2025.09.12.21.35.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 21:35:12 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/3] kvm: guest_memfd enhancement and fix for
- KVM_SET_USER_MEMORY_REGION2
-Date: Sat, 13 Sep 2025 06:35:10 +0200
-Message-ID: <20250913043510.2549873-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250728115707.1374614-1-xiaoyao.li@intel.com>
-References: 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uxJf7-0007fH-KO; Sat, 13 Sep 2025 02:23:07 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 08234153374;
+ Sat, 13 Sep 2025 09:22:56 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8D6127EEA7;
+ Sat, 13 Sep 2025 09:22:58 +0300 (MSK)
+Message-ID: <48ae7017-6388-454c-aaff-42ca82331b00@tls.msk.ru>
+Date: Sat, 13 Sep 2025 09:22:58 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: QEMU Development <qemu-devel@nongnu.org>, qemu-riscv@nongnu.org
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: target/riscv/pmu.c:216:riscv_pmu_icount_update_priv: assertion
+ failed: (newpriv <= PRV_S)
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,8 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Hi!
 
-Paolo
+Got an assertion failure for qemu 10.1 in debian today during
+EDK2 autopkgtes (CI) run, on ppc64el host, here:
 
+https://ci.debian.net/packages/e/edk2/testing/ppc64el/64438090/#L713
+
+The command line (from the test) is:
+
+/usr/bin/qemu-system-riscv64 -no-user-config -nodefaults -m 256 \
+  -smp 1,sockets=1,cores=1,threads=1 -display none -serial stdio \
+  -machine virt -device virtio-serial-device \
+  -drive 
+file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd,if=pflash,format=raw,unit=0,readonly=on 
+\
+  -drive 
+file=/tmp/RISCV_VIRT_VARS.fd2iapb3sq,if=pflash,format=raw,unit=1,readonly=off
+
+(it is testing just the bios/firmware code).
+
+There's a bug open on launchpad too:
+https://bugs.launchpad.net/ubuntu/+source/edk2/+bug/2120835
+
+Any ideas here, maybe it's not new, or maybe it's already clear from
+the code what's going on?
+
+Thanks,
+
+/mjt
 
