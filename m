@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD4ACAC592
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 04:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1412CAC58E
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 04:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxHwM-00030i-3z; Sat, 13 Sep 2025 00:32:46 -0400
+	id 1uxHyu-0004Nk-L6; Sat, 13 Sep 2025 00:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHwK-00030Q-2F
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:32:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uxHyq-0004Ms-8Q
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:35:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHwC-0002z6-QJ
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:32:43 -0400
+ id 1uxHyo-0003o3-F5
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 00:35:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757737952;
+ s=mimecast20190719; t=1757738115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Kadw1UGFepwdd5vESwftDEwJEZf4/sJ0tJaf5iPYyyld3Rco1wCaG2j15MGHWY6OYxcl9J
- KK2Uu49PUPrK+Vp3iIuNc+MtcWaMoU4G4yl4u+vHhMWMN8HUC9vbmsBCGEnNbNYAnE6Mq+
- 4/e9H++iZ9dMqvjl2bifoC4Q1h1Sic8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=aNNig8IYYdAPatRPAlT4JtfAF6iVzHoed3BTuZIPR6pdri3jOZhvZUqloAFlhiaH7JNm6d
+ +gTT2gPBm0viwuOlTlUvWIvvH9e3IIWTWvKRRaZUkUwPTF19vN2c/T4SZ22UTs8RrcdwxT
+ DIb5KmLLYSaNO+AVNEPMdFOpk0I5CME=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-vbfubfrAODaJm3FkRkdiFA-1; Sat, 13 Sep 2025 00:32:30 -0400
-X-MC-Unique: vbfubfrAODaJm3FkRkdiFA-1
-X-Mimecast-MFC-AGG-ID: vbfubfrAODaJm3FkRkdiFA_1757737949
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45dd5c1b67dso19054675e9.2
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 21:32:30 -0700 (PDT)
+ us-mta-542-tMI4RlcuNquDW8w--x7j3Q-1; Sat, 13 Sep 2025 00:35:14 -0400
+X-MC-Unique: tMI4RlcuNquDW8w--x7j3Q-1
+X-Mimecast-MFC-AGG-ID: tMI4RlcuNquDW8w--x7j3Q_1757738113
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45b920e0c25so16540795e9.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 21:35:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757737949; x=1758342749;
+ d=1e100.net; s=20230601; t=1757738113; x=1758342913;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=PpLUbJ3zV+IPf+DR+NR0khqMuswR2mNrQ/GiPbblSLO8r9ngkc5CFZmhlS3jfncW/W
- jYm/5cSrt65QKH/LpHAw+TviMk/qsw52XJbxQN2RkeFgKh7HTOm5zaZe7nLIExIJmChX
- JXQWYd3sRaYCsepm/klq+qKwFLx1DrTVMS0xE877mKGI0KzMYe6idKsUWFjgZn1q3uxs
- 6lCzGd5f/jh1a9zIbsZU9DSjMcb1coAKn6hb5EDfHQCZ+2DPu3Gyxvt2MJ5G+GuBvFI2
- l6LstXDEivbBS0Ukx9RGG/fP3LZxx776mVXgtvmaiFbJMxvJyZnEPRV7TXaIkyX8z1CP
- tPfg==
+ b=T8cENXn96DM8+51li2YIHrjhvSEeteAHJD52CtPGudUNTHAx8tyr6x/YC6fz5fvGuR
+ /kGnrMikJWiyzlqmS2LvbRYSIiDRzMBzn5+6yVjwUsSKOzs/CorbSdQR5HfoinSV+IGu
+ a/pyDDXAoVffGSuLEAeTq/NNFAfhmrqLxUL7innpxauKazLC3qxF4Z3Sgz60tOZxghVR
+ /Y1+leFib9C1A2sqwAf30PfTcZNtoJwTSyK2Va4zMI9XGOeRVRkeMzlOM2Fbc8V/3Z7a
+ C5JVQZhjiMcry2RA9baGfpRo6lwrDEY+RM65F9W7D5JLJPYavet+d/Ft6e2xbq7jQQR6
+ UCFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVK1PCDJUGvgqyMqDcLrc5Ugwx72Zhmiof6MptA65EF48jLlSq5aE7mDWMUUBFYWVSv5KYa4nhNoKbF@nongnu.org
-X-Gm-Message-State: AOJu0YwWeoEsC53uLPfwczz5r6WDMma4Wg+4ZN49cpUyQNw1PjRPY+t8
- oygrTNTAtTLovVsntzO5vmGdRRkFocGiM/PC4pEGFAoCnFQgZWbXsJFxHasjj1oL9ZPUh5yshJI
- GpnF0R43SZ3S483cDZjE8Fj3zOvwBFoovH5aSnTSiBL/H+BY+MXLYgv9g
-X-Gm-Gg: ASbGncuT8KBSg6wrVaaxPyFyGpTPD+sQmN5DpFqNEPYvvtdYwz1x4pfKwPXXO5u/qjj
- sx3ezGnnVCEWR1G4DK6fgBzxPVOtvWAtIlnBnMqjzuWDu8iGN05tVFM73chwS2Pe1orPRjn574G
- qQg/diTWPieH1Eit4YVZemLmLiEFSBkTpeiHSiLDcg2uhvSOTGNRckqc1wXfICWuGvOoFT3z9h9
- +l6d3DXH58RvP8oq/uqHaPpEn8zDAB6x3tOzesYkJ2cl3qTsnumyM5lPP4+e3zW2BUQZoyJPgH+
- aeFXjxHQYEuxlBko0lNTWHGCHlFLP7zYNIXNYn0SHTIoBQFgK0zmPXRUriZ2/K0sJP6iE9XKPE3
- qM1n6/499ivVYROShn8ywTMgg0dJcG79XxyImHmc9jeE=
-X-Received: by 2002:a05:600c:1c0b:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-45f212f9888mr45299535e9.18.1757737949304; 
- Fri, 12 Sep 2025 21:32:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBf3p6VDhdfGxTpCfks3gZZPB5LXum69hBit7fs1x0mK2XZc8HGQntmlBTZYJERgm0xf4oQw==
-X-Received: by 2002:a05:600c:1c0b:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-45f212f9888mr45299365e9.18.1757737948914; 
- Fri, 12 Sep 2025 21:32:28 -0700 (PDT)
+ AJvYcCUwJRBygzgJUJNYgra+6+/ilU9h0Av9N+69RF/vSwdGqBTPW1bhbvfIz+ohjeWfwSx0gZeEu0YbATtU@nongnu.org
+X-Gm-Message-State: AOJu0YxwUugCRD41KEt1UVsIUq5YusUMKtQiLyU623xbZp26jqUvA1i2
+ 7KG1qjkfZlW8djDOEpbjqkvACoaSD3c6KGjmv2RQpTpLcTDz7dZWBgld5JIWtZdmTAjB8RB4c11
+ B6QJAceKN82vu7YSyEmWT52MH+1PZlBGWGpdWTvvjzLylXvYPpM3HEueA
+X-Gm-Gg: ASbGncvhKAD1OttaNCxuXU8ewUsdITsqJtzIbfhBNhLQgZX9JG8Fb5+K7jhHATNZbBK
+ 9DV+8DfLoV5HOADeusADcy0nLQhz1w7vL6iVWOwzYN0KJUL0K0mDdZEQUchajuV8f5OvyTezirF
+ 8pm6UJHUeP0GWS6/3qOdRfMGQj/hIuUqcgvWv5XP0UzmXikSzTuMIlbTGYD5Mfag+0qjQb06e2Y
+ xOeRkcZqxyjp/eTPgoSCBdsQjB8vCDuv1dc9HvsGA6hCESpmOJ892p4t8z8dC7OjNEwAjtYb2gc
+ hxNLi3oCi5Krl4OCU12dkPBROYv4lqeESks5ErJpe9v+WitJuTCTduF2bDliPbEBrZMUQXS/J0A
+ DYkV+kx2VyenbMNDFhkMewhMpe6UAYYghki+P4h1j5Ag=
+X-Received: by 2002:a7b:cd0b:0:b0:45d:dbf4:8880 with SMTP id
+ 5b1f17b1804b1-45f211efda6mr30975135e9.27.1757738113050; 
+ Fri, 12 Sep 2025 21:35:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFH6iJaz0mq774dFtPfmBg8sCpRJDY/WH4Bw/wQfHTFRdvvBcfJ4TKag7YaZSfBM78LnYlvg==
+X-Received: by 2002:a7b:cd0b:0:b0:45d:dbf4:8880 with SMTP id
+ 5b1f17b1804b1-45f211efda6mr30975085e9.27.1757738112714; 
+ Fri, 12 Sep 2025 21:35:12 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760777851sm8938617f8f.4.2025.09.12.21.32.27
+ ffacd0b85a97d-3e764eacc0csm6023698f8f.18.2025.09.12.21.35.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Sep 2025 21:32:28 -0700 (PDT)
+ Fri, 12 Sep 2025 21:35:12 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 0/2] i386/kvm: Enable SMM address space for i386 cpu
-Date: Sat, 13 Sep 2025 06:32:26 +0200
-Message-ID: <20250913043226.2549151-1-pbonzini@redhat.com>
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 0/3] kvm: guest_memfd enhancement and fix for
+ KVM_SET_USER_MEMORY_REGION2
+Date: Sat, 13 Sep 2025 06:35:10 +0200
+Message-ID: <20250913043510.2549873-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250730095253.1833411-1-xiaoyao.li@intel.com>
+In-Reply-To: <20250728115707.1374614-1-xiaoyao.li@intel.com>
 References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
