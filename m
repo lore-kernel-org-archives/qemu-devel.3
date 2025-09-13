@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBA5CAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51807CAC58F
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxLNd-0003hC-0u; Sat, 13 Sep 2025 04:13:09 -0400
+	id 1uxLNV-00039S-0q; Sat, 13 Sep 2025 04:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLMx-0001gS-Df
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uxLMz-0001oD-Jb
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLMp-0005H3-RR
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:27 -0400
+ id 1uxLMv-0005I6-1S
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757751138;
+ s=mimecast20190719; t=1757751143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kXV8lyIjHzKxLuPEWkgQ4DrNPB+JccPFBiYkgzxwKUQ=;
- b=QEKhLMOs4knW69J3pgACjJtFAXBIoiZx6rNvqmJDcem3kJBOBVpYkLfo8WGMmuPdArqGWK
- pXX4COewLgjl/rNNupkYgDT7zza/eUA5PFXY4FvS9BA4WdKnCWKZeX9X7TO6Fd7L6EP8WD
- 2SKXJiBhCdTCy/CJ23Fb3HypJyFYztg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/RYT4EV24HdySf7n68KFr07DQnEMbY9GA58BqcX1V4k=;
+ b=VoPNM/Bz51nn9ytw08d7CZ2NUceP7oOAz9qPLOidhWgdiAS78YmVO59EM1HJr3SbHh4tim
+ X1eEF2RxOk74n9m7K7v4ogsgmYpVmRIcye3HPVEEESL3WZegGxEZcIo7IlisP7fW5q2YJV
+ 7DPG6pcUpRf7DF8ditorN2BkQspU4xs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-ZuAyM5Z4OxmmDrcUbFtEZw-1; Sat, 13 Sep 2025 04:12:16 -0400
-X-MC-Unique: ZuAyM5Z4OxmmDrcUbFtEZw-1
-X-Mimecast-MFC-AGG-ID: ZuAyM5Z4OxmmDrcUbFtEZw_1757751136
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45d6c770066so12719695e9.0
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:16 -0700 (PDT)
+ us-mta-524-ogphgreuPrCtrVYq3qOOEg-1; Sat, 13 Sep 2025 04:12:21 -0400
+X-MC-Unique: ogphgreuPrCtrVYq3qOOEg-1
+X-Mimecast-MFC-AGG-ID: ogphgreuPrCtrVYq3qOOEg_1757751141
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3e75fcdddbdso1295768f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757751134; x=1758355934;
+ d=1e100.net; s=20230601; t=1757751140; x=1758355940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kXV8lyIjHzKxLuPEWkgQ4DrNPB+JccPFBiYkgzxwKUQ=;
- b=YkZptVcX4RqotqLv5un/8Vw97NfOKHbaDnhVRNYubkG/V5lOtMVN4nt8NjqwcZ8hZA
- kq73//dRru2SUbTIXTPh4yk5p1MRuxu/iXxz4Xg1v9b4Q9fsMex6CB82QzQPjAtscFqL
- DmZ5saw13MAkeogbpVsjwE7qlKcELQAzQtwkUpsQXk5QsMksCEwdzMrSYB9BrHdF1yCv
- SmfERC85mbbYeY9qwr8C+CfDPN2NXTA/EE18w2eM/GUYU3f9WMLU+DgjWb0D5QS2D/oN
- a0+2v/w2PARiC27rSfZDYOEaQPzKVyJSXeBCu9e1w8fwB5KgBCum6UF0c67ZbPExRfJQ
- CyEA==
-X-Gm-Message-State: AOJu0YwCqgHIMY4ozJ4xvS36wJCG86+2A/2wHHTep4yL5GS0n8cpSiqV
- r4f/pQqLnmFST4XORs+DiEzns5jBMp/Rt9qMObfgpbVJAkafdoI3/B2Ku/Yypm56bRtN8HJBT+m
- 5gcY9t3PU+Riv6ranYP3RmNDjj594R9XrqlRzdQKw8PZV9cP0mZ8w4h7YWuOEkAB5pgvWSmbsXG
- ZG5JNTQ9CeotvUub9T7aWaVDrXWGQb1GBgrhTIZwZZ
-X-Gm-Gg: ASbGncusTgJwG52TNzNCF87o/sd2jk6FWW1s4c1sjAaXuZc2JdqaqqjBPSjiRNd8g3V
- 8SgNnCGPUx/qg1GMOgzKCPfbCb7QvUirgZM/WWZ1rLMcAvQXoDzuMNn6v3eC95LoYzFN5M/8upD
- znbxe6+R2NyQtPgjx0lgFjYeNlYfdEiIVW+3NdHvlOlXtjLdVGZUXqbc47BWP6FTCq7jQ0Yt2am
- okZYhq9/8ivl/QKLnNwnxkYp4medIeWP19F44TE5jXWD5SpZ19dFW8HerK17k098f0dEPts9Zs2
- mypHnPL3vOAl4l5yPAD6q/Yb0QvqJHwWKHFnQbbuUrAfOKJL0Nqg74+Yu1hpjgAOvLB84iDrisH
- KAqeGK7N7cBiDozQ1kJUZMA7VlgX1ex23/ySQ2NDecrw=
-X-Received: by 2002:a05:600c:364b:b0:45d:dae8:b137 with SMTP id
- 5b1f17b1804b1-45f211f3140mr39730665e9.22.1757751134406; 
- Sat, 13 Sep 2025 01:12:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHP6pu/Hcg3CnH5TXuMk4llyoUElyCIeSvuynbeIkybWWTxciigS6OBh2u/qLw/qjSFQ3burg==
-X-Received: by 2002:a05:600c:364b:b0:45d:dae8:b137 with SMTP id
- 5b1f17b1804b1-45f211f3140mr39730405e9.22.1757751133848; 
- Sat, 13 Sep 2025 01:12:13 -0700 (PDT)
+ bh=/RYT4EV24HdySf7n68KFr07DQnEMbY9GA58BqcX1V4k=;
+ b=tNRC91q3OQB6GDLuwRWGMq8nswFFNBR148r30HwhP9VcmTvP9T69bGtHkfnwmJlOJ9
+ MPZKtrIbZqQcLzAt0GPLvPh3EuBYgheZiQjIkfpVkvR1bdx/6E7+59GaYDrgCibc1Go6
+ QY/odsrlCEX0xovaSmVm1x63p+Hq9I5MkBMAcfK1RFT85LsJCQ3iY5f5AWLvWoKVewlh
+ CWdxYggZvLjfyDd/2DcODaD/aSEvlmOENGOqo6BNvFfqU9FR04VILkxZgCVepesbxrD1
+ A97qlZO13fvdLnhQf7jOeChLek6JKwtJZInZ9vGppbfuOlI6eMgMFJzuCFUgN3WdL9Bu
+ Pavg==
+X-Gm-Message-State: AOJu0YyfFKuM5/tyJNe1+meltyLwQSR3r578Vq7Hv1rslpVHPRXbNBcS
+ HxiFVYwBs63JW2PcqiucCU7ra7FwTN42cPWAFyskSAnEktxKd/Xg5oCNcvVzi64ZDT4oj3UahJZ
+ NSSViL+UOTxPqe8yqV47pVsyooYgg7EqOqM86D/hN1A2+w8PROLN1lHZRh0hyKnTwGKKZStRs06
+ BZBe/qT64uakAzOfS0aOpwiT+JhNTQ7qG+u/fHOzMM
+X-Gm-Gg: ASbGncsjKAKLEiIQ5AYVWJ9rtEgWN3LdykVm7MV3ayOGJDf7QWDN5o6V0zQQKo1787m
+ DQ9t8QltXBusQlwfhyvj28hJyEk4+BiA/FABWlzM9CFSTFyrJ45pXqPGrgVKjXqNh7vXUw2HsiP
+ MggSNvvd7pU/YS/N9jb1ce16duEXZaCkXz9avyBlFWefxukhfXUTDlz8BnVFAncHwoWOQza+/Di
+ Fg/RbdeVqy0LYwbGaENpHJMesExOrK9vfRAxbKh7YNW7MyPn2Uh7mNCUS9ZAkEgmnLDu6B8M3RQ
+ O/HP6m5oDldKRpDuP90V62qKvwUcCxespAyZ9kyx0Al1z9PvvRK1ZZBsuJycAQNBvqG4C90YAjX
+ 6pPBYOETqYeaOa/ryPKE5T2MjDRgsR2+jgThw7lZfObk=
+X-Received: by 2002:a05:6000:2c07:b0:3e7:441e:ca19 with SMTP id
+ ffacd0b85a97d-3e7659e20c9mr5003908f8f.43.1757751139732; 
+ Sat, 13 Sep 2025 01:12:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVUi8JUn8NNJp0NVBiBC9SiXcumRjOPqS/uwhfPsQtN7bv1Iu690oMO7/h8JeJlnRR87TVFA==
+X-Received: by 2002:a05:6000:2c07:b0:3e7:441e:ca19 with SMTP id
+ ffacd0b85a97d-3e7659e20c9mr5003884f8f.43.1757751139261; 
+ Sat, 13 Sep 2025 01:12:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e01832af1sm50583305e9.3.2025.09.13.01.12.12
+ ffacd0b85a97d-3e7607d822fsm9525783f8f.53.2025.09.13.01.12.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 01:12:12 -0700 (PDT)
+ Sat, 13 Sep 2025 01:12:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- Kirill Martynov <stdcalllevi@yandex-team.ru>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 54/61] i386/cpu: Enable SMM cpu address space under KVM
-Date: Sat, 13 Sep 2025 10:09:35 +0200
-Message-ID: <20250913080943.11710-55-pbonzini@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 56/61] multiboot: Fix the split lock
+Date: Sat, 13 Sep 2025 10:09:37 +0200
+Message-ID: <20250913080943.11710-57-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
 References: <20250913080943.11710-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,105 +113,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Kirill Martynov reported assertation in cpu_asidx_from_attrs() being hit
-when x86_cpu_dump_state() is called to dump the CPU state[*]. It happens
-when the CPU is in SMM and KVM emulation failure due to misbehaving
-guest.
+While running the kvm-unit-tests on Intel platforms with "split lock
+disable" feature, every test triggers a kernel warning of
 
-The root cause is that QEMU i386 never enables the SMM address space for
-cpu since KVM SMM support has been added.
+  x86/split lock detection: #AC: qemu-system-x86_64/373232 took a split_lock trap at address: 0x1e3
 
-Enable the SMM cpu address space under KVM when the SMM is enabled for
-the x86machine.
+Hack KVM by exiting to QEMU on split lock #AC, we get
 
-[*] https://lore.kernel.org/qemu-devel/20250523154431.506993-1-stdcalllevi@yandex-team.ru/
+KVM: exception 17 exit (error code 0x0)
+EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
+ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
+EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
+ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
+CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
+SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
+DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
+FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
+GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
+LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
+TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
+GDT=     000c02b4 00000027
+IDT=     00000000 000003ff
+CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
+DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
+DR6=00000000ffff0ff0 DR7=0000000000000400
+EFER=0000000000000000
+Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 ba 10 05 66
 
-Reported-by: Kirill Martynov <stdcalllevi@yandex-team.ru>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Kirill Martynov <stdcalllevi@yandex-team.ru>
+And it matches with what disassembled from multiboo_dma.bin:
+
+ #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
+
+  1d1:   08 00                   or     %al,(%eax)
+  1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
+  1d8:   06                      push   %es
+  1d9:   00 66 b8                add    %ah,-0x48(%esi)
+  1dc:   01 00                   add    %eax,(%eax)
+  1de:   00 00                   add    %al,(%eax)
+  1e0:   0f 22 c0                mov    %eax,%cr0
+> 1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
+  1e7:   00 00                   add    %al,(%eax)
+  1e9:   b8 10 00 00 00          mov    $0x10,%eax
+  1ee:   8e d0                   mov    %eax,%ss
+  1f0:   8e d8                   mov    %eax,%ds
+  1f2:   8e c0                   mov    %eax,%es
+  1f4:   8e e0                   mov    %eax,%fs
+  1f6:   8e e8                   mov    %eax,%gs
+  1f8:   66 b8 08 00             mov    $0x8,%ax
+  1fc:   66 ba 10 05             mov    $0x510,%dx
+
+We can see that the instruction at 0x1e3 is a far jmp through the GDT.
+However, the GDT is not 8 byte aligned, the base is 0xc02b4.
+
+Intel processors follow the LOCK semantics to set the accessed flag of the
+segment descriptor when loading a segment descriptor. If the the segment
+descriptor crosses two cache line, it causes split lock.
+
+Fix it by aligning the GDT on 8 bytes, so that segment descriptor cannot
+span two cache lines.
+
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250730095253.1833411-2-xiaoyao.li@intel.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250808035027.2194673-1-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- system/physmem.c          |  5 -----
- target/i386/kvm/kvm-cpu.c | 10 ++++++++++
- target/i386/kvm/kvm.c     |  5 +++++
- 3 files changed, 15 insertions(+), 5 deletions(-)
+ pc-bios/multiboot_dma.bin     | Bin 1024 -> 1024 bytes
+ pc-bios/optionrom/multiboot.S |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 311011156c7..a12c7ea1956 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -793,9 +793,6 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-         cpu->as = as;
-     }
+diff --git a/pc-bios/multiboot_dma.bin b/pc-bios/multiboot_dma.bin
+index c0e2c3102a3358207c61d3ae113524fb6007abc3..e6d0c97093b4fc11bc87fd58cbe6e577c2841cd0 100644
+GIT binary patch
+delta 42
+ycmZqRXyBNj#r%xv^+a8N?gvb%opNjpY29*<Hny8GP2Rzz#<*kieI^-3#%KUKiVj8q
+
+delta 46
+zcmZqRXyBNj#r%lr`9xiR?mJAWopNjpY29-7Hny8GO+LV+#JFYiV<s8K$pXwQjQId`
+CSPu9A
+
+diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
+index 181a4b03a3f..c95e35c9cb6 100644
+--- a/pc-bios/optionrom/multiboot.S
++++ b/pc-bios/optionrom/multiboot.S
+@@ -208,7 +208,7 @@ ljmp2:
+ prot_jump:	.long prot_mode
+ 		.short 8
  
--    /* KVM cannot currently support multiple address spaces. */
--    assert(asidx == 0 || !kvm_enabled());
--
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-         cpu->cpu_ases_count = cpu->num_ases;
-@@ -818,8 +815,6 @@ void cpu_address_space_destroy(CPUState *cpu, int asidx)
- 
-     assert(cpu->cpu_ases);
-     assert(asidx >= 0 && asidx < cpu->num_ases);
--    /* KVM cannot currently support multiple address spaces. */
--    assert(asidx == 0 || !kvm_enabled());
- 
-     cpuas = &cpu->cpu_ases[asidx];
-     if (tcg_enabled()) {
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 89a79536594..1dc1ba9b486 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -13,6 +13,7 @@
- #include "qapi/error.h"
- #include "system/system.h"
- #include "hw/boards.h"
-+#include "hw/i386/x86.h"
- 
- #include "kvm_i386.h"
- #include "accel/accel-cpu-target.h"
-@@ -91,6 +92,15 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-         kvm_set_guest_phys_bits(cs);
-     }
- 
-+    /*
-+     * When SMM is enabled, there is 2 address spaces. Otherwise only 1.
-+     *
-+     * Only initialize address space 0 here, the second one for SMM is
-+     * initialized at register_smram_listener() after machine init done.
-+     */
-+    cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
-+    cpu_address_space_init(cs, 0, "cpu-memory", cs->memory);
-+
-     return true;
- }
- 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 34e74f24470..d191d7177f1 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2704,6 +2704,7 @@ static MemoryRegion smram_as_mem;
- 
- static void register_smram_listener(Notifier *n, void *unused)
- {
-+    CPUState *cpu;
-     MemoryRegion *smram =
-         (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
- 
-@@ -2728,6 +2729,10 @@ static void register_smram_listener(Notifier *n, void *unused)
-     address_space_init(&smram_address_space, &smram_as_root, "KVM-SMRAM");
-     kvm_memory_listener_register(kvm_state, &smram_listener,
-                                  &smram_address_space, 1, "kvm-smram");
-+
-+    CPU_FOREACH(cpu) {
-+        cpu_address_space_init(cpu, 1, "cpu-smm", &smram_as_root);
-+    }
- }
- 
- static void *kvm_msr_energy_thread(void *data)
+-.align 4, 0
++.align 8, 0
+ gdt:
+ 	/* 0x00 */
+ .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 -- 
 2.51.0
 
