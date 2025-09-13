@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348BACAC587
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75216CAC587
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxLKZ-0005dh-3e; Sat, 13 Sep 2025 04:09:59 -0400
+	id 1uxLL1-0005ol-74; Sat, 13 Sep 2025 04:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLKX-0005d7-7x
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:09:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uxLKz-0005o9-Uk
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:10:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLKV-0004Zq-0I
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:09:56 -0400
+ id 1uxLKx-0004tc-S4
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:10:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757750993;
+ s=mimecast20190719; t=1757751022;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7F7JtBib3HtIMCET12RYVWnFXL3A+/WcjU3+rd9Ob6M=;
- b=YEzFEhHbZisysNn0WG41PlslZoSPVPP4XJZC9NAot0EeFkmp/Fu6dmMW0zqZ5rmjWgVJ0G
- sVrggz+Ub36kLt5tU8Mj70TQHDMNkWcxmivudlm16ltvL0MHkaGi4FUn0Ir8F9CvRd5r2l
- m36ygXRufE33Ilu9GdCuowU9LA7AjsY=
+ bh=OhCG+WyJrPhBH4S92lRWZ920ib0X1m6ZPw+jICRCIIg=;
+ b=CVBKb/ds38ETLMqAvz75rHe5AW75KT+s0lmB8aQnHCTXolb1gazN3bpWSyEdpOc/TGD3PQ
+ lxqNlabDFhpL6Bu12VkYsJ4jYL9iX9nW1WVOS/ynZwPRq3TXeI1aELf6xhrVjoWlUqAla8
+ A6JJsq3VznxjHrx7d8gXMgamYX5MT7Y=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-hQdZRjUaN2u4p49ij2XVEA-1; Sat, 13 Sep 2025 04:09:52 -0400
-X-MC-Unique: hQdZRjUaN2u4p49ij2XVEA-1
-X-Mimecast-MFC-AGG-ID: hQdZRjUaN2u4p49ij2XVEA_1757750991
+ us-mta-520-wRG_nrDzNY2vxp0jXm9pcA-1; Sat, 13 Sep 2025 04:10:21 -0400
+X-MC-Unique: wRG_nrDzNY2vxp0jXm9pcA-1
+X-Mimecast-MFC-AGG-ID: wRG_nrDzNY2vxp0jXm9pcA_1757751020
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45dcfc6558cso20047995e9.1
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:09:52 -0700 (PDT)
+ 5b1f17b1804b1-45b99c18484so9752045e9.1
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:10:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757750990; x=1758355790;
+ d=1e100.net; s=20230601; t=1757751019; x=1758355819;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7F7JtBib3HtIMCET12RYVWnFXL3A+/WcjU3+rd9Ob6M=;
- b=DgFwTSUUdkxYHsuJq8Ho/9fYMYZKXL8qK1XmqKKWCMwM9v9BNaxloVQiPlEXIs8JDc
- LGyK1vqRLN5HjYb/BGw+QlX7zatH1ElI4//qmzKLI8pZuD4NPRok0vkoAgn6IHFPZ4Ko
- XviyfkztpuqjHI2+NVJVw5kFcS7VeXQf7SysRNAhuIODyjqrTEfLQveC56GNQT2DnS5L
- cMsI6ANHsDqchRlM31vinFeodE2xhVDqRuV3VLjjSr9nNE2UFAni/YjJa1cppN5qBJbo
- 6wjSEPkeQLzd0l93hdpGLIIGu8PEYCnpzWMTfY9xcZ7GPljAA+WqiWqMLNzhsVLhku+/
- SL7g==
-X-Gm-Message-State: AOJu0YxC11/iVuvIV87cgTIqGBkC1oCAu82q7QIqqcdrEeESGxdmS981
- qyoLl58Ywt7FL0Cll/Mxn1woa1OXqBHH4/bhEgtzRMH1gclTYyXwItxdGYr+Xr7JCOvM0xDyPDM
- eBn9vmQixty64Ydpm6xEXzAVyWKBdxujmvKFtKt0TczFWLHbNbLRnBAvHxdxYRcx/tes5YQwLCp
- 8dFRnQQogdy77IT+u1Qil1satKsCr8fPrmG1UibZog
-X-Gm-Gg: ASbGnctl/dE9VEgVobkA2yTTVuw7r/QqqcuywJvj0h8WFADWYTHu8xM/Fx/jtiLH3ii
- 3ljuGq4ZiqoHOYYUVZ+m0+GWFPHGj/524vbGobsTiG198MFjLjgpMVAgKurEt8v6Ru3LUamiU8l
- JK7bh8yYRpXCEfb3JF/sZ5QXYKvvUw3DRSRjNJLT6zbBUY3ijtKnaU32fPdt3eSDzxfhrg5MRJK
- 2ZCHLZEXXFze7bU5qM4Ns8ssUVzBkhJYez9T0WRyF4xUHZnsLqmkyHDm1JL0Efib3RH15cYzQ3N
- duxFCfma/bDBImu2Xi6xHNX3zXw9CLA+2SGGEHgn1cXONuhYdvPvwZs15XvZiEEnl9cS1GJz0xG
- OdwJH3ZGgh+E6USNeaSgcXk82akWzK9LqkUv471R1nWM=
-X-Received: by 2002:a05:600c:4ed1:b0:45f:280d:15ea with SMTP id
- 5b1f17b1804b1-45f280d1cc8mr9541235e9.26.1757750990134; 
- Sat, 13 Sep 2025 01:09:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEC11Zoxy0Fa2GZwYApBFBrCf1/4pBkVMrVKI8bW9Ly3tyor9J8hlM5OA4Z9wWy5jhPFDtyLA==
-X-Received: by 2002:a05:600c:4ed1:b0:45f:280d:15ea with SMTP id
- 5b1f17b1804b1-45f280d1cc8mr9540885e9.26.1757750989674; 
- Sat, 13 Sep 2025 01:09:49 -0700 (PDT)
+ bh=OhCG+WyJrPhBH4S92lRWZ920ib0X1m6ZPw+jICRCIIg=;
+ b=xB+2l3V25ZQPgZfXkYW5fYejTMDctkts2EtauZwjtY6kGpgpKwyoveKH2ipSwzD1NP
+ Zpaxpc6ZSpk8OuzH0Bf44Yqx1mI4NZmy7z8JRmBwnZ5sBi28lOavc2kDxRU0k5qBu7BA
+ I5M4uVH++TvUzT6ANHIzfcPs2GzA5tAcAQp70cwnvLPPPga9f8AZxEYdWmnP4d/6m9BY
+ Xm/N+YYFcs70KGnR+2fgoOYFAyI3DKDy6he+EW48WN4uiqOGr599n5E/OTB0PZR9OYAm
+ eat1WrZltljdY1IDm+er/4cXY263fJ0oEUaZiJknk28C9fhmgxJrzdO+gTc+Cri5EGQI
+ GY+Q==
+X-Gm-Message-State: AOJu0Yx/VeVqLn127YZ6NKS2RNxS/LfyTMazSxH4YBSqTbCdeNNatgtZ
+ xIvSU/i+pAyiT0kqA6215Ba3ALtk8FRqM5KBNsanDUDfryNlHLXG90bU0EjhOp3/9GjEEXzWYsA
+ cJNWIMJNIABXBodD02ZznvMwe+vvqnS2e5wWIW7UbLYYT+xTaLjr420/raLrbKNbbVAkruABH9A
+ tPJt2CTxm0WCx4s5WqDIhZuvLcDH98GEFsue1gxv2f
+X-Gm-Gg: ASbGncuylxE2Doxh7elPcOaaIwFcHHU/1Tff0IBSbiQrurWTz8zG8KQ/zfwF9wC+bHx
+ IfSEAn0W1UHCU1GcDEHTVd3xMKVZldy8ZU1zI0VIXNg/buPWwyShz5Tep5H9hfjlz0y6ETd+uEb
+ wqWa5ik3ouXK2Vsj3z0qUtWq9sJkRwRp9z9LqVXkUi5VqrwaltRS0LRJ0uS+ORXo34JBWd8YSYy
+ DdveWUU+uf5IfRzOlXXEUmGFNnX4uRh36PjwmQMIoTeeGq857BMkj+1oeH4rnpdc+Hdtqx2j/mu
+ Tzhn07HVwEby1o7yFLYWNiq1xhKZ+vW3VMmJB0CEN6nJK0eX4F3KDhmZjGr4QXB4FMR89Yuw3Wm
+ Gg5lFFcULp3h3lQ+rlvEKkFZN+IW5zmpYWEsWuKGJqgA=
+X-Received: by 2002:a05:600c:6044:b0:456:29da:bb25 with SMTP id
+ 5b1f17b1804b1-45f211f8e90mr34817255e9.19.1757751018885; 
+ Sat, 13 Sep 2025 01:10:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtiew4Zhoaexs0obWQaITl9KRQDaZU7Lc9HmMnazY0lKjJKaIM6LTlHs05J5ThyRhkjXtR0g==
+X-Received: by 2002:a05:600c:6044:b0:456:29da:bb25 with SMTP id
+ 5b1f17b1804b1-45f211f8e90mr34817055e9.19.1757751018491; 
+ Sat, 13 Sep 2025 01:10:18 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e859a278c1sm2067283f8f.24.2025.09.13.01.09.46
+ 5b1f17b1804b1-45e016b5c5dsm93721635e9.14.2025.09.13.01.10.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 01:09:47 -0700 (PDT)
+ Sat, 13 Sep 2025 01:10:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Igor Mammedov <imammedo@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 02/61] target/sparc: limit cpu_check_irqs to system emulation
-Date: Sat, 13 Sep 2025 10:08:43 +0200
-Message-ID: <20250913080943.11710-3-pbonzini@redhat.com>
+Subject: [PULL 12/61] accel/tcg: inline cpu_exit()
+Date: Sat, 13 Sep 2025 10:08:53 +0200
+Message-ID: <20250913080943.11710-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
 References: <20250913080943.11710-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,57 +110,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is not used by user-mode emulation and is the only caller of
-cpu_interrupt() in qemu-sparc* binaries.
+Right now, cpu_exit() is not usable from all accelerators because it
+includes a TCG-specific thread kick.  In fact, cpu_exit() doubles as
+the TCG thread-kick via tcg_kick_vcpu_thread().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In preparation for changing that, inline cpu_exit() into
+tcg_kick_vcpu_thread().  The direction of the calls can then be
+reversed, with an accelerator-independent cpu_exit() calling into
+qemu_vcpu_kick() rather than the opposite.
+
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/sparc/int32_helper.c | 2 ++
- target/sparc/int64_helper.c | 2 ++
- 2 files changed, 4 insertions(+)
+ accel/tcg/cpu-exec.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index 39db4ffa70a..fdcaa0a578b 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -65,6 +65,7 @@ static const char *excp_name_str(int32_t exception_index)
-     return excp_names[exception_index];
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 9241bcadb5f..3ae545e888f 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -751,7 +751,16 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+ 
+ void tcg_kick_vcpu_thread(CPUState *cpu)
+ {
+-    cpu_exit(cpu);
++    /*
++     * Ensure cpu_exec will see the reason why the exit request was set.
++     * FIXME: this is not always needed.  Other accelerators instead
++     * read interrupt_request and set exit_request on demand from the
++     * CPU thread; see kvm_arch_pre_run() for example.
++     */
++    qatomic_store_release(&cpu->exit_request, true);
++
++    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
++    qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
  }
  
-+#if !defined(CONFIG_USER_ONLY)
- void cpu_check_irqs(CPUSPARCState *env)
- {
-     CPUState *cs;
-@@ -96,6 +97,7 @@ void cpu_check_irqs(CPUSPARCState *env)
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-     }
- }
-+#endif
+ static inline bool icount_exit_request(CPUState *cpu)
+@@ -780,7 +789,8 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+     /* Clear the interrupt flag now since we're processing
+      * cpu->interrupt_request and cpu->exit_request.
+      * Ensure zeroing happens before reading cpu->exit_request or
+-     * cpu->interrupt_request (see also smp_wmb in cpu_exit())
++     * cpu->interrupt_request (see also store-release in
++     * tcg_kick_vcpu_thread())
+      */
+     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
  
- void sparc_cpu_do_interrupt(CPUState *cs)
- {
-diff --git a/target/sparc/int64_helper.c b/target/sparc/int64_helper.c
-index 49e4e51c6dc..23adda4cad7 100644
---- a/target/sparc/int64_helper.c
-+++ b/target/sparc/int64_helper.c
-@@ -62,6 +62,7 @@ static const char * const excp_names[0x80] = {
- };
- #endif
- 
-+#if !defined(CONFIG_USER_ONLY)
- void cpu_check_irqs(CPUSPARCState *env)
- {
-     CPUState *cs;
-@@ -127,6 +128,7 @@ void cpu_check_irqs(CPUSPARCState *env)
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-     }
- }
-+#endif
- 
- void sparc_cpu_do_interrupt(CPUState *cs)
- {
 -- 
 2.51.0
 
