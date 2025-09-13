@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DFDCA101F
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 02:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87DACA101F
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 02:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxGKC-0004Yp-Ev; Fri, 12 Sep 2025 22:49:16 -0400
+	id 1uxGLR-0005D7-7V; Fri, 12 Sep 2025 22:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uxGKA-0004YK-9L
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 22:49:14 -0400
+ id 1uxGLO-0005CK-Am
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 22:50:30 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uxGK5-0006BG-7k
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 22:49:14 -0400
+ id 1uxGLI-0006Yx-RM
+ for qemu-devel@nongnu.org; Fri, 12 Sep 2025 22:50:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1757731749; x=1789267749;
+ t=1757731825; x=1789267825;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=H6NvxqZ4ooq694eyPT7DfGfVXuhdcwIjFxbN2300THM=;
- b=G0f1I6PuPZZpe3K05N6WYCrWHxmkT0+dkgUKXDw7+nmleG9bUaieqFNx
- zMPPyqfVqYRbb4Yu41TDidiOeil9SbZojXhrqzsfRAD1a89vAXBasW+7H
- qFcvY7as6BYR4pGtSh8+e+ahPD58gR7Y2cA4Icjd7Q2tre1LCx4O+TmF/
- buAHDxxiJ6lye8pyTrMjDAdJN5WGVNVXepUkVZA2samYuNQMrbPi/hNd4
- wJl4Wy05GZfuPFjLLpvc7X2UVyNR9fi+Ojf4WyTJNQB71BpnUvWcM5NIA
- o7pSozMpdviN78NOIGV6ErVl27KgpeHsq9t6l2hhJdR0oRsFPDNQ2eEV0 w==;
-X-CSE-ConnectionGUID: ALtqQY4XQTCuOv+aafuQgQ==
-X-CSE-MsgGUID: f72THaiUTi2UGAi51tFF6Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11551"; a="60184199"
-X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; d="scan'208";a="60184199"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ bh=3AyvaJd1Ed/84YHMXPGJzG2DLwpRVhUISYjoqkP3xh8=;
+ b=VtnWbsegLmVWRozU2D18EeBo+FDvAaZC9t2M1ZsjMEMJy7znhGbm17Mz
+ sD4GY9BR0U/3FnPLACWr6CUc4kzx8fHNr50Y6hhi7SxBbNIJ3vZECwaTX
+ k0ebXC8sTxNw/WLKK9ZpKmhykiH8j6apsYvG7kedX2wtkQa9DM25zC+uA
+ 7Xoyb/nRZBMt465cq6Z6pu5NAs+khMZcKM9JxO7+NU21bM4+YSYDRMLPD
+ NB5BRDTLLQO0yhdCaS2FLX2x+0bmU2+mQjug3YlY4Pe7GqPxIm3ocBbzA
+ zCO0h/bW42zh4wWhjJdZP7PzLJ0sZUJDHcPnwe5IHCBrmernNnhMXC5t2 Q==;
+X-CSE-ConnectionGUID: DiI40yGvSUi+FyOXAXRHhw==
+X-CSE-MsgGUID: lGEeOEFiRO6CUgK6kGd3Ag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11551"; a="60184247"
+X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; d="scan'208";a="60184247"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Sep 2025 19:49:00 -0700
-X-CSE-ConnectionGUID: QifkPN1XTraq1CucPHkdKA==
-X-CSE-MsgGUID: w83QqdkVQwCzmf8M6JWDQg==
+ 12 Sep 2025 19:50:18 -0700
+X-CSE-ConnectionGUID: zqoG09kESvqa5umXFPDeYw==
+X-CSE-MsgGUID: UY4GkdWUQ0akcp5DtAYblA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; d="scan'208";a="179308099"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Sep 2025 19:49:00 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; d="scan'208";a="173968661"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+ by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Sep 2025 19:50:17 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 12 Sep 2025 19:48:59 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ 15.2.2562.17; Fri, 12 Sep 2025 19:50:16 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Fri, 12 Sep 2025 19:48:59 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.81) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ 15.2.2562.17 via Frontend Transport; Fri, 12 Sep 2025 19:50:16 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.58) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Fri, 12 Sep 2025 19:48:59 -0700
+ 15.2.2562.17; Fri, 12 Sep 2025 19:50:16 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PfiW+gnWx/IY4V+VVfKDtYyppb6pfRmjCSQ2hJECLJ9gPQ8AHEbB7VixqbT7hhvdzFmBShFo5OQQrHP/tgsoh3W/4sj63taABNJ8uYNiYOknJlnk3D3wFCXAdOd2V0reea0wX1nPhKqZcGaZCqr6T56kRcGU3huucK8MWd1EYar/tbc+lA3NJ7Cw8W2CmBmE93HXZL9eStscjrVFxv1rGdqHjjtOGCGeaDMxVbpv/kgB4vGb3b6b3EWVt7+dUwSXWD98WYFavQ3nB7DyUPVj6tlft7d3vbe53CVY8356aOX7CwzKYZurPSIa1IalOtkDc7CmYj7POTnYld4R+n9jgA==
+ b=EgtY1lcWxSdh296pBu3MUQqCFEo010mZZD+mXoVeyWj6Qu5NH+0hG6EtKfFMm6/prJSqoyvkJ/QboaPuAh7/NY3DhonEgB0H2gpiTzXrTWD74UYS8SCyVCRA/mbF59JNe7gXzwq+vXVhIqtOBxgbMHHcOEYqZiTZsT5kiZMv7GQAyrAZQ/NCZ6cgyY8D5fgtsY10gZo9sXSJLzmqZ2GaC4RBYz1CSbcP0Ai8/MuZYCnrxGxej9vBh3TSEQXHYfvdNXvy9rEkg22Q5XOcFt+THppdXewqo337+z+CDoj5WYD6PwSfXZQZw7+bwNGReF2zldtgAg4mXncWrUsuYy2SpQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mJea/dLdgecPOuPja+IuQqkEZVUcqNaIAfLABVxA19U=;
- b=HjM7REDksIGCySXtEtLKjnrGGKOoj+mJDcmKZqF0Fb7Adkz+QaFOcvxe12G6Ua4wjKH/iF5HJ7NdqSPNbYwUh8C1zKj1dYS3LiHu2h3fjKQYzIVag9Qu8ff/M2991BhsslM40rYiyt7eiT4ZUuilkS+ne4ODwBqMjJv+VxT5kmygMfCDu18yV77ggVqN6OkDShRThv1tbrQGovxAZqthZRtBrOC+iL6pDQtVZOkBh/EAgm/IIsdjG/BFSe2KloeT/KXoTtrilfTId5UEAfzzKFdhdo2VpDIZjNIsHUtL3c27HOp4gDHDuIbYl4+FmHsWRwXYL2vaYh/wrvLURAIAkg==
+ bh=xk99Af9OXBdnSa8JzRDsSeiZi6Og0SBfunaaXPsqjoI=;
+ b=EYDMd9JU0hDaUr8RpxVhAzSa/ePCEOebgSiDkwYoJn/bY77D1355u7tdG7Fb9BmxVFPyC5SEUf6169KZhlTDLVnmPEeg/Uo09OVVXEaWznSyORIW3I6SHHzOCCUOkRhDnEopzmlj6wr6mZCWd2dsrj/J3AsrIphiNWAUBInRaKxA3GEtkTat9GSQUo+tMtMiXmaYNNWn3mCjfoPN8AdW7kRgmuQrh9fpjiI3OH/GAMuoFk++rwr7LVgO/F3hPhxgguhgpf60xU9dayaWoW9E/Ik2L5VigPoY78i+CcNxiygbkpSbPC8hE6KerOOMaWO0fWp9bTZ+dUZu5mO3Fg59XQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -72,28 +72,28 @@ Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
  by MN2PR11MB4567.namprd11.prod.outlook.com (2603:10b6:208:26d::16)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Sat, 13 Sep
- 2025 02:48:52 +0000
+ 2025 02:50:14 +0000
 Received: from IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::dd3b:ce77:841a:722b]) by IA0PR11MB7185.namprd11.prod.outlook.com
  ([fe80::dd3b:ce77:841a:722b%4]) with mapi id 15.20.9094.021; Sat, 13 Sep 2025
- 02:48:52 +0000
+ 02:50:14 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
 CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
  =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
  <dmitry.osipenko@collabora.com>
-Subject: RE: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
- resources
-Thread-Topic: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
- resources
-Thread-Index: AQHcHJY2YKFPoBQc1k6SDELAvZKU07SFiqKAgAqO7zA=
-Date: Sat, 13 Sep 2025 02:48:52 +0000
-Message-ID: <IA0PR11MB7185758D6CD5D2774E6373BBF80BA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: RE: [RFC 5/6] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Thread-Topic: [RFC 5/6] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Thread-Index: AQHcHJY1NxrjCrIu8EKO1Np84D4OYLSFi+OAgAqRuRA=
+Date: Sat, 13 Sep 2025 02:50:14 +0000
+Message-ID: <IA0PR11MB718530C3E677A674E67B08DCF80BA@IA0PR11MB7185.namprd11.prod.outlook.com>
 References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
- <20250903054438.1179384-5-vivek.kasireddy@intel.com>
- <26c02124-eb57-4d50-bf8d-1fa809984adc@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <26c02124-eb57-4d50-bf8d-1fa809984adc@rsg.ci.i.u-tokyo.ac.jp>
+ <20250903054438.1179384-6-vivek.kasireddy@intel.com>
+ <98ba7bf7-3d27-4040-b01c-c769a058fb19@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <98ba7bf7-3d27-4040-b01c-c769a058fb19@rsg.ci.i.u-tokyo.ac.jp>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -102,80 +102,80 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|MN2PR11MB4567:EE_
-x-ms-office365-filtering-correlation-id: e76bb9bb-c506-4ca4-b480-08ddf270132e
+x-ms-office365-filtering-correlation-id: 64d438e3-bc8f-46ed-3050-08ddf27043fa
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?Isvij4aDhNHUJspdmyNqRnrP1WdXmipsmQokWgU+R2dcXbP1ZnSXCh+/p7?=
- =?iso-8859-1?Q?BorsUj8ypCYW5AAVAFBL/6h2G4KlaHZeTMqhTfIHglMrGDUphAnBhWO6Hh?=
- =?iso-8859-1?Q?hrrq8SuboXhu1AF3iEUnGOPWi0BZ9HfZTRArt1sJhFLH6qOVkTYTVKq5P9?=
- =?iso-8859-1?Q?vF+kuGI2U4yMQohQfxQvEmG1U0eRFrbZIfgBuAcvcZswh4fg0bK6+VwwN9?=
- =?iso-8859-1?Q?PqgMavg2PEUJyPc/ZO3p1nWqB3Nfl3gqE0H2soN56oOt4F5Vo3UOf4O7Vz?=
- =?iso-8859-1?Q?94eq/XeSL5PU9DjGEfhfX8FbUIN8HdIR/NqZoFrLg3qh0tG5XSBrelQ7yD?=
- =?iso-8859-1?Q?brc0HAq5Lku13C8SCplUi11cHqG0/ehQ0O9kXJY+Z7jvqoDOfdTn/5ICGA?=
- =?iso-8859-1?Q?27q0/kZ7gKRndCTaCvkDMjc4bvO6ufRnZwHictoeZzjLkx7kQIDlePdxz1?=
- =?iso-8859-1?Q?W+z53DNur8Dh0B1FkUbBl+cX/521qSTGX3BAmImZZe95s22t0g4EFHDbBV?=
- =?iso-8859-1?Q?lS+aR9xQwdfsO6L0B5FUKy2R19OeCHOOkUKhDO+IaakDdK8VkPwjlCLutW?=
- =?iso-8859-1?Q?D9bGWullDvF+wmqg907CRAwqc3uyp3XB2LMAB9JhEMoWQMc9DR0/+89YIb?=
- =?iso-8859-1?Q?aQgffzKa4vt5FjpNcqg/YvdYF9ck8csxPWjADcvmBuIScg5NSFBz9VdPzF?=
- =?iso-8859-1?Q?o7+mjiAVpOFpiGaaNSR1G1x9j8QJwsWUO/lM46yHgw29UhlCyVM2nYGBsp?=
- =?iso-8859-1?Q?8IdpS4TNOOuHbH4Acm3JjaFuXBj0DCgSqjKQLiEPuqYt4TODjc4G6GphAV?=
- =?iso-8859-1?Q?rZRVxfwXt5nJMM86zPpESSFHRMtvEATD1fNwRAspLiqADSBwIJphaEqn8p?=
- =?iso-8859-1?Q?UiNv6R2HwmOzg37PzIkcqVj8JwFS7HeckYPAnr2m5pN8wqVGreANbofQop?=
- =?iso-8859-1?Q?tB22coYttHoSHGp7oebGE/eVO70+jNeQ1PkouWdwpucnpj0V5lda4vriRJ?=
- =?iso-8859-1?Q?AoQT9H1y35JwYX7btJ1sBzLFWyb5r9Dz+cfsu7+P0oXNCRfEHRaW4VEJGi?=
- =?iso-8859-1?Q?khOQmjz8rYyeA0RifZspgaxoypJitngE3A/KQqaAU3vr8vOt+SV3QnD65t?=
- =?iso-8859-1?Q?theZivczON+YZdf6WftXsy/2wj9U9AejPrubzPfikNZ9+oFFV5hXEz9Ojs?=
- =?iso-8859-1?Q?nnc7ScQ1n8HC/okSipfym3NYGoU563DjEhi+iRTrNYDC9Yb19L1wxiDbp9?=
- =?iso-8859-1?Q?b69pmSebebZYS9wSSpQrl3EstIK6MC4P5I6/Sq1ht6sf5NRZ73xOOMwYAn?=
- =?iso-8859-1?Q?0hla9cGWbZTP8c0dQFF8ncJl3xFeavSqu42euEcmkdioe28CpVhAoJ8QFc?=
- =?iso-8859-1?Q?iEbqlaRQgxFliGqqMJmgV0e7QDUdXXnPke0AAAV7XlEnq9ZlYXOyUhzTQ5?=
- =?iso-8859-1?Q?gOp+RddSI4q+v97lEoAaJvHDgbY6L3ny5aDq/Mw1DUdYFReYD8VZbXmaTV?=
- =?iso-8859-1?Q?p76zqjjIHa2bEkFS6TG42LXMqKllQdV2thKETT0HGf1LwT38+B7+acXxvh?=
- =?iso-8859-1?Q?MjexdZc=3D?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?jyw1psks7VD6/9uI9KkxnWv3zvw/tni/FDLILd/FxVo6+NW6J0XyvgtWyo?=
+ =?iso-8859-1?Q?+NdFIgL4HjB/74937HtElwAFtHSM7Zc7sHntOA3n1ATRUq6gbh37Ch4Ysc?=
+ =?iso-8859-1?Q?2Y0OGwqZ6iMO9YMC8Y6y5CcXQRGR0PMG57uvKCcnH67q6kSH8puEvW5oGt?=
+ =?iso-8859-1?Q?1bFFWoJfA0upbfnhgMFTVsEdw2jyF3GZ26XpPptefCaeY6b9DuIagXM/kU?=
+ =?iso-8859-1?Q?6bDwb+BnQpw6HTxG1cV4osr2px/3VoeE/6X+sGmTLwQojNi/pNqfyG0rKF?=
+ =?iso-8859-1?Q?bAPphGgMEs9HhMQFhtKMRkyW7Fe+sZUFIux3/MNUkF1cwnbC5+CFSNMrlI?=
+ =?iso-8859-1?Q?ZeRn4xkqHw416cAyXrp87H/x20OXntuUlmvjjpWmjdqfGedFC2ZtprAz7t?=
+ =?iso-8859-1?Q?L66XNT7TyKMgHF3JXJIrB0tpOiNW+2moOOlUd8s0HRG3req+OsyuZytO/x?=
+ =?iso-8859-1?Q?kp1Z0t7mJfE0XhzXBVUMe9f4LkXMVeoMhr/j6p+HbGFJXjD7Dz0GI5egfO?=
+ =?iso-8859-1?Q?ENlMc9Vvbr786unem4CCPUL66nmQcua3DpboxwHwPDkOt5OjY4QzUB46Z2?=
+ =?iso-8859-1?Q?0b7woYJ9Rc2CXY/pcFc07JWJ2pTUPz3Hjg/sH2d5nGfd2Y3IxHX7jgK1tE?=
+ =?iso-8859-1?Q?emCoa0PI6b9Sr26AqbC3loo3x6t0eCA9PmhzU/nht58h0100iiJBNjQ4ew?=
+ =?iso-8859-1?Q?Hwa/LpuHn/B15isnSxSNBHH+OpKvAZoqk/OYJNNbq5AE8sRjulXAzhea5K?=
+ =?iso-8859-1?Q?cxRFZiGfTwq/tccLT8w5KJQB1RXPHF7xhzLiz2g4DRNhZjmYoh+YALDaZC?=
+ =?iso-8859-1?Q?GZGFSlrTFkQ7qWAxO5RRmZD/lPY7X1gWV3tkudIx9EfizNiq9CxHo4XAIc?=
+ =?iso-8859-1?Q?pwuw51FZcCaQLrYjzkd2svdqDNcRollVFdzay78nfbezwwwLtHRtK3lKxA?=
+ =?iso-8859-1?Q?2RmrZdH/c4vHOxNn5c2afz8NCHVr9pacwQvS9tmP9nTblIrx0+M38WmQDB?=
+ =?iso-8859-1?Q?SnqwH2NG1SEjPHOoFIMevgkD/oA8QkUgie51FspDxM8n3U1/Ubf3IZG3XD?=
+ =?iso-8859-1?Q?0m13mzFu2rslyUcSRHZ2yiAD93S9CwJsgyUOZN5tpUNp7Jgkjo6yq1zIOJ?=
+ =?iso-8859-1?Q?UZw9p+/04ksysVz1GImx55QeB0bzH/LRUj/pX7OQSte/H1KeuobnSr8di4?=
+ =?iso-8859-1?Q?wJ9e7CutX58RVg/2yfwhSV/FbWX1T5VsYyv9/MyKXfAXs0ijWbTT8LyG5c?=
+ =?iso-8859-1?Q?hT9GZKe+7lQzLmp22ZgmI1nVBzzK6BOyv59FYdHx13uu8U1PJCyK7/BFTq?=
+ =?iso-8859-1?Q?o2r4FTxXyFRPaGKYC7Xsix+1noaD1y1ZlcbZqx9H8P4Tf99SQWzxyHUWIV?=
+ =?iso-8859-1?Q?tGxRBAEiWbIbeS5woYquIuGpGoGyChIdiiYoyVL/YrZzdLUsrjJm74zmez?=
+ =?iso-8859-1?Q?3AefRH0NL/fcSM6dJCs7BPhUVDm4v8bC6UAVVjNjA5hn9x+39bIZn7UNVF?=
+ =?iso-8859-1?Q?iwkqfRShvIafW17EBpx/QBaVbSBN+d+1nAAzN+Uh3bVEHWYqme2dERJmED?=
+ =?iso-8859-1?Q?LStjX54=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?2d/dAbEmPxcvBtUhdhWTiCHelIkhD7F/xMvsddKO3SKY4m7Pj9t+i3+sYu?=
- =?iso-8859-1?Q?jwtpQTiGhOv+IzijEdHIoswil27rhZK52ad1oAvLtXxyWmgRdeD3bDw+Ro?=
- =?iso-8859-1?Q?9WTwkLVUcveCjUKXWQOPjFjmQ1DRc01dOErAzOL6ASIig84PoiiLPZnetY?=
- =?iso-8859-1?Q?yIdy/hRyLRASR8Ewk9Ru03onKVQwM72DW720pSKkJ/XunR7gXs3b/RriO5?=
- =?iso-8859-1?Q?GL3618RDAC3Aon0s7J8T6Qa21kEX4aeDSySvvObnTtnVZ4ArCeNitTdrq+?=
- =?iso-8859-1?Q?vAina77ro0nZJTMt8Bgoea5QKEZk4ooWib2IZBnxggDWn447FSbBBuoipJ?=
- =?iso-8859-1?Q?pqaGe7/ZuOeIE2LlixkkmVy33+L85608RJoPNLI6f/eyWSNn/iGloh42Lg?=
- =?iso-8859-1?Q?JHWRurAmzE4ii6fjZzpaCrCKJAwIFsCK0igUB+xQx0opDcSS9IcugpCf29?=
- =?iso-8859-1?Q?Fjmwyol8gb5Hkwl4I8rsT2u4/YyjrrjtO2kQ2cZHvI6J5kKpxip/BTI8ix?=
- =?iso-8859-1?Q?cHjE7B6wqBWDF+ZOMtY4GQd/GCOb9p0jbLiR9yyVG9tv3lm5yO+9X05MFs?=
- =?iso-8859-1?Q?++bSxnygB/78Cue9TLFbP8IUBMI/UeSG1UR6hZMFGBi7vF93UYAEtRObP/?=
- =?iso-8859-1?Q?FzZObdDHjcHMYKq/+u2VLgzTur8rYu23WTZzxOya4VQh4rmR3TGzjTWJyU?=
- =?iso-8859-1?Q?ErrJ/44NlMWxj/9933E0F0MgPzqlyj3Va3H6ZvlXnoQB3Z35YZLPklpTer?=
- =?iso-8859-1?Q?iVJ4vXTIYS+SNS325EWeFV9FTQ+7ncRgJCU2uYAwwZFe3C31r9ZAgKP1v0?=
- =?iso-8859-1?Q?LcINEd3/MwZTzuQkXIDQqsFm2YtfA9EbyIBiAOyeSpXpqAcXryM6zwbjY1?=
- =?iso-8859-1?Q?2qjjp4PRjP4/1JfAtzKtXbb4GQTYfRDEV1dTVB/R7bOP2JYlFMOnfMNhpg?=
- =?iso-8859-1?Q?asl2tMcJMDBXvTEObXo2qHuKvg1+YfnRtLdp1WCMnFACLOhtoeUu/hL6Zl?=
- =?iso-8859-1?Q?TCqKwP47u8Xp3h3ExwEOEPQqaihMc4/VKDMGmV9JXeFCrurR1SfquREPDB?=
- =?iso-8859-1?Q?ASjlbtwEVkxWWfLNE2H7CwcXknpqvWMKKtHVyCLtRHau6ZTfB75e1lx/WV?=
- =?iso-8859-1?Q?7qTXX+/oblwVkG5w/VY4Fej+vcemcNNTLufd7vb9Q7tlLA4l92aZbi/vPh?=
- =?iso-8859-1?Q?MKIWZ1hNayawxIT5XMvHqmsAeZra929Y5sSftEE+9MjFvLT/SSCSYj+l4x?=
- =?iso-8859-1?Q?9N3XI+BaVOrQ1Mbza7Y1YxipNM8Wrfpqbkll0zFMuEplZ4/QNu4M/raq6e?=
- =?iso-8859-1?Q?my6a7uEId98+sVtU1HQCx7O1CrQiJgbT1KtQ1rS6DidrpwsikgfFq9VCvC?=
- =?iso-8859-1?Q?hL41Yejw/gvVg35NmekrozbN66f1b1WtfqU75/Y6gv8OnvF4snMyiLM7nX?=
- =?iso-8859-1?Q?YGz+rfsCKsNT13TkVMuVThsEZuIiXSiFE2tulbD81LABPu/JyBtXs6BJB+?=
- =?iso-8859-1?Q?l/cYTPHHMIjnKibGww4WkathyyQJBlmplLjiJiKMm9VcorB19zFx5C7Y+f?=
- =?iso-8859-1?Q?XZfh7V0jRSXDsEInw0NFvuzJmiuMoe0GNma6RV/8LLEMWnSHbhmUPVlaEW?=
- =?iso-8859-1?Q?An83lUbzRAiDa83ZZJM6rAmMPyFPehb3F6?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Zf4zvVv7C7hAkXnvK7ftnh9TlOHwP3fY3NTTAjytSGuQRrv/vDhWY07yoq?=
+ =?iso-8859-1?Q?jVAHxgWVCpa5Vgok9VsTSCBzFXhuM/mxYD2X5hwwMpItt85A6z4xaPH+lF?=
+ =?iso-8859-1?Q?W685TLzREFmRYDof/lZohiCYQBRjkrMZ21VaXlZdSZLnMPo7vt+aqAJIt6?=
+ =?iso-8859-1?Q?xswQcJL78j3fO57t0TQsmwvKTjNPcBKCgTQv4lohTPSJEWg1pdg/tZajrj?=
+ =?iso-8859-1?Q?7oIDMt82d6Kcrd2/huIrpKiUwaNM39uyGUACLxmJK7qxPAXY2TRxPFHRHc?=
+ =?iso-8859-1?Q?z+km0idrF68/L08TuGxr89aVJgD07PSXL7mvZB3updvublvcfuhFHyxwCl?=
+ =?iso-8859-1?Q?dnZgMfIy4Q04T6l2akG0JoXVMBwK0XmzgjNmlrmDcoq8FratuUVoGC//CC?=
+ =?iso-8859-1?Q?qNYfKamW8NbvuDNT4DTshpMuRm62+ggepRZC4nUqz2C5scxkE8KJWEjkgn?=
+ =?iso-8859-1?Q?LSYuzvJ3W3tdMs7i3ZIAm1C9OhL1vKPsM5CdjlhjYAGiN9eGU3y2tSIHFc?=
+ =?iso-8859-1?Q?z7b8RcSVDxxapgFGQlrCLi7SCmuQBeTIx4W6b+i0KzWXHafLOmVaRkxTCa?=
+ =?iso-8859-1?Q?EkGfsqtWha89L4NPny7r9HC2XV4x8UqgjWoCuL7NZ2IxYuQAshy/HzSbQb?=
+ =?iso-8859-1?Q?uu5R5STtlTionxojnl0yzgDuy93QEaJLYzXgTT3f6Of+DhedAb70xMcqv7?=
+ =?iso-8859-1?Q?jeiXADU2vWM3mh+L8JVFrBlRT/rNGtcoXmhmH3D92v5sDtUX3OuZG5Kv/2?=
+ =?iso-8859-1?Q?6mBwj6tatTEG+6YMGHjLaokbewpZvBsMtEm4W4vHHPj/HnMMzkVut3mil3?=
+ =?iso-8859-1?Q?OWmv5McRGfQNcjX9D3tlEvM1d23/ef9sazuGCHjKBP5o6tBmy9AYLmEQMx?=
+ =?iso-8859-1?Q?2d0LPfwHBEXVgr7trATRrLi80pxcJvfuxX56h5uUTShksb3liLdD0lmB7U?=
+ =?iso-8859-1?Q?uyn02NahNJ85eOBU/h5oACrmnAyjrAOTfA0B6H3EtOzQr67JlwM5HIJpCn?=
+ =?iso-8859-1?Q?omAgTR+sGRxgXG8Wwp3YtYvuzUdlhYSUMlkuOHS8a4zRr9igtf4GDVHQsJ?=
+ =?iso-8859-1?Q?LvhYIWGZW0reTzA/ikSlGUYQ75qUxlvfAfj248lxkrppf99Nkr573ZNag4?=
+ =?iso-8859-1?Q?DskK7y6q1xZ/hiijcZsWW8Yyj5ZyycHoZDeg6yxoidKl6LkpSoR4ou7eB6?=
+ =?iso-8859-1?Q?qwm8nhumYbSYyDtgfPC78izDtJG8QiTVBdHZty1Rt6fBSKCaOMiXIMlojL?=
+ =?iso-8859-1?Q?YYLDuG93SsXk9Zqpikww3dhc9eLUTHdUWnQ2Z1D8TAjpe3GB4e3usSCrIH?=
+ =?iso-8859-1?Q?cWe1oMWpyD35Rrb0Ybg8691ylsincBCPIUaPQi8scC6mE841j8sBpVZvIw?=
+ =?iso-8859-1?Q?WvGq/GyCoHx+aJjUKZD8aqDeOLTWWcMrWyG5R76b8fUMpUohM3h5lc0Fha?=
+ =?iso-8859-1?Q?Pj6aFeEAb0Lc4Q+E//fukkr/l2onk2uD3WW4gvJYW/LQfMhjSt5EYNtoRa?=
+ =?iso-8859-1?Q?APMNvyihg2sv6yunRQqN03/ddv6KrWdoeLAVfgGeYaeSoRLuIvAd3vUSws?=
+ =?iso-8859-1?Q?E5qF3lA9KYTRCm4KjVPud1W1JplGJKo697FSYCaUZQ/TkK8LRgMenAI10N?=
+ =?iso-8859-1?Q?hPc4OJWh/Hw42I6DjLMJ2MkYC72BV8PcrD?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e76bb9bb-c506-4ca4-b480-08ddf270132e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Sep 2025 02:48:52.8492 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 64d438e3-bc8f-46ed-3050-08ddf27043fa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Sep 2025 02:50:14.6629 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: rCqtefRvxUvYCyfKV5PRRNdb/96NTa1BSrrrsRlZV2BqboxpYW9GDInjfnxF4XFgsIDGIeWx2ARL+4WgKnXGlHyuuhGNxgLwGH5RMFLr19w=
+X-MS-Exchange-CrossTenant-userprincipalname: tkAiBHBMUXeZUraUUA2Rm5V/RtFOxM7aixL+3y6I9LFDS1NvdASlpRaTMIg9SzUPLloeL8d3zVoIDzatW0kjL+V+F+jWw0wyGqBb7/OK9zw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4567
 X-OriginatorOrg: intel.com
 Received-SPF: pass client-ip=192.198.163.15;
@@ -203,24 +203,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
-
-> Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify bl=
-ob
-> resources
+> Subject: Re: [RFC 5/6] virtio-gpu: Recreate the resource's dmabuf if new
+> backing is attached
 >=20
 > On 2025/09/03 7:42, Vivek Kasireddy wrote:
-> > The res->blob pointer is only valid for blobs that have their
-> > backing storage in memfd. Therefore, we cannot use it to determine
-> > if a resource is a blob or not. Instead, we could use res->blob_size
-> > to make this determination as it is non-zero for blob resources
-> > regardless of where their backing storage is located.
+> > There are cases when a blob resource's backing might get detached
+> > and re-attached again such as when the underlying object is getting
+> > migrated in the Guest. In these situations, we need to obtain a new
+> > dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
 >=20
-> I guess this change needs to be applied before "[RFC 3/6]
-> virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
-> devices"; without this patch, the "create dmabuf" patch will probably
-> create an invalid blob.
-Ok, makes sense. I'll move it earlier in the patch series.
+> It sounds like a bug fix. Perhaps you may add a Fixes: tag and reorder
+> patches to make this change come first.
+Sure, I can do that.
+
+Thanks,
+Vivek
 
 >=20
 > >
@@ -230,113 +227,24 @@ Ok, makes sense. I'll move it earlier in the patch series.
 > > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > > ---
-> >   hw/display/virtio-gpu.c | 19 +++++++++++--------
-> >   1 file changed, 11 insertions(+), 8 deletions(-)
+> >   hw/display/virtio-gpu.c | 4 ++++
+> >   1 file changed, 4 insertions(+)
 > >
 > > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> > index 0a1a625b0e..2f9133c3b6 100644
+> > index 2f9133c3b6..1654a417b8 100644
 > > --- a/hw/display/virtio-gpu.c
 > > +++ b/hw/display/virtio-gpu.c
-> > @@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-> >       }
-> >
-> >       if (res->blob_size) {
-> > -        if (res->blob_size < (s->current_cursor->width *
-> > +        if (!res->blob || res->blob_size < (s->current_cursor->width *
->=20
-> I doubt that rejecting a valid blob due to an implementation concern
-> (whether the backing storage is in memfd) is tolerated in the specificati=
-on.
-Are you suggesting that the whole if (res->blob_size < (s->current_cursor->=
-width *...
-check needs to be removed? I think it is just a sanity check to ensure that=
- the blob
-size is big enough for cursor.
-
-Thanks,
-Vivek
-
->=20
-> >                                 s->current_cursor->height * 4)) {
-> >               return;
-> >           }
-> > @@ -144,7 +144,7 @@ virtio_gpu_find_check_resource(VirtIOGPU *g,
-> uint32_t resource_id,
-> >       }
-> >
-> >       if (require_backing) {
-> > -        if (!res->iov || (!res->image && !res->blob)) {
-> > +        if (!res->iov || (!res->image && !res->blob_size)) {
-> >               qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage
-> %d\n",
-> >                             caller, resource_id);
-> >               if (error) {
-> > @@ -444,7 +444,7 @@ static void
-> virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
-> >
-> >       res =3D virtio_gpu_find_check_resource(g, t2d.resource_id, true,
-> >                                            __func__, &cmd->error);
-> > -    if (!res || res->blob) {
-> > +    if (!res || res->blob_size) {
-> >           return;
-> >       }
-> >
-> > @@ -507,7 +507,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-> >           return;
-> >       }
-> >
-> > -    if (res->blob) {
-> > +    if (res->blob_size) {
-> >           for (i =3D 0; i < g->parent_obj.conf.max_outputs; i++) {
-> >               scanout =3D &g->parent_obj.scanout[i];
-> >               if (scanout->resource_id =3D=3D res->resource_id &&
-> > @@ -538,7 +538,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-> >           }
-> >       }
-> >
-> > -    if (!res->blob &&
-> > +    if (!res->blob_size &&
-> >           (rf.r.x > res->width ||
-> >           rf.r.y > res->height ||
-> >           rf.r.width > res->width ||
-> > @@ -634,7 +634,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU
+> > @@ -938,6 +938,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU
 > *g,
-> >
-> >       g->parent_obj.enable =3D 1;
-> >
-> > -    if (res->blob) {
-> > +    if (res->blob_size) {
-> >           if (console_has_gl(scanout->con)) {
-> >               if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r))=
- {
-> >                   virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-> > @@ -645,13 +645,16 @@ static bool
-> virtio_gpu_do_set_scanout(VirtIOGPU *g,
-> >               return true;
-> >           }
-> >
-> > +        if (!res->blob) {
-> > +            return false;
-> > +        }
-> >           data =3D res->blob;
-> >       } else {
-> >           data =3D (uint8_t *)pixman_image_get_data(res->image);
+> >           cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
+> >           return;
 > >       }
-> >
-> >       /* create a surface for this scanout */
-> > -    if ((res->blob && !console_has_gl(scanout->con)) ||
-> > +    if ((res->blob_size && !console_has_gl(scanout->con)) ||
-> >           !scanout->ds ||
-> >           surface_data(scanout->ds) !=3D data + fb->offset ||
-> >           scanout->width !=3D r->width ||
-> > @@ -899,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
-> >       g_free(res->addrs);
-> >       res->addrs =3D NULL;
-> >
-> > -    if (res->blob) {
-> > +    if (res->blob_size) {
-> >           virtio_gpu_fini_udmabuf(res);
-> >       }
+> > +
+> > +    if (res->blob_size && res->dmabuf_fd < 0) {
+> > +        virtio_gpu_init_udmabuf(res);
+> > +    }
 > >   }
+> >
+> >   static void
 
 
