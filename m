@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E351BCAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72788CAC58F
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxLNV-00038m-0W; Sat, 13 Sep 2025 04:13:01 -0400
+	id 1uxLNW-0003Ky-J5; Sat, 13 Sep 2025 04:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLN2-0001xz-Aw
+ id 1uxLN4-0001yV-L9
  for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLMy-0005JP-RG
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:32 -0400
+ id 1uxLN2-0005KP-QC
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757751147;
+ s=mimecast20190719; t=1757751150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p9SNH9xZqw17k1dQa+6YNWYLqrGHzK/6Bj3FxrwgA7I=;
- b=AkVdlZLmrft+6HExA9wkl/cj4bo7DR+mIO2kzFD1BXZPaXrwVWdwkmVGeob58SaAV7M4lx
- 88rB1cqNqhbC30xsKJZZotv20Gg/Hs7YWnHHneoUtKDuYbaBBymRZFk3BoM52rzz8rCk8Y
- KAK4bKKKTi50LFfqWckeBT5q3VdLc5E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M/f46ar4NQt0D82z+vsB//+J/IGWmriKTQDbJURGYEg=;
+ b=W+7QIurI34AjYbFnvnrulgbtpzoKq8516Y+ekKXh/de7QUOBp4XQ6BNHWyXbNZ833qhS74
+ 6LxJP8iwkWJV5ol/ulOZITcubod+m6Q1Sdl5GxfPNdBqWz6dhx3HlwYsPQU/gJq7s8fhsB
+ U8qMeREkHVfSOQu+YGJLdyjuqrU4eWU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-iJIGwg7nObCY_jx5albS3w-1; Sat, 13 Sep 2025 04:12:26 -0400
-X-MC-Unique: iJIGwg7nObCY_jx5albS3w-1
-X-Mimecast-MFC-AGG-ID: iJIGwg7nObCY_jx5albS3w_1757751145
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3e3f8616125so2193378f8f.1
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:26 -0700 (PDT)
+ us-mta-97-r-q_KDPFNMqWyAvOmla7lg-1; Sat, 13 Sep 2025 04:12:29 -0400
+X-MC-Unique: r-q_KDPFNMqWyAvOmla7lg-1
+X-Mimecast-MFC-AGG-ID: r-q_KDPFNMqWyAvOmla7lg_1757751148
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45de27bf706so12817075e9.0
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757751144; x=1758355944;
+ d=1e100.net; s=20230601; t=1757751147; x=1758355947;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p9SNH9xZqw17k1dQa+6YNWYLqrGHzK/6Bj3FxrwgA7I=;
- b=bqkwJhIE0YdKZVxFSkIgurwD5ln0Sl0cZz8rJfpq6oDZfNZHporc/lRM2+uy/N91UB
- ESHd9qD77UN/qeCgEmVDvJ7PlZ/2XP/bFBxmAWe7L/nQkm97jI7FHMug+p1bKiI3ofUH
- Ex62XrfUC3iYg/HBJiM+efQ/XdtUnBu3m3pL28VLFCGbFAMi14qkqCPMZmbZSnl7lw+n
- hmuxGRGE9OwN45eN1aqQQLk0i4ROPpaWg1kZ12ckd+NsCiRkCA0pa1fXVo9+lUTuDduR
- 3F2kcnzqt38RID2pq0HVoxWPaeCj5Svn84Y3VlxPdQM2nqkf6lnxaiTkaa1PQ9NjX2x3
- 7BDg==
-X-Gm-Message-State: AOJu0YwMCImNgThQHXWsul/ofCFBOSZgww2EhuQhnVwavoNsaGnI84LK
- VglTKFYfSbiAgzeyXm77MLBd7tkaYoSg7L72lEA/4OugmTOfjr8jtisRbGs9F7cF217kpynPy0c
- AQUGOG+8Inogw4wgv4fWmCJ6tXsAKBRIGdsTsHav38jTrEnqEs14vklLkXrHL9nd8Qve8ky0o2Z
- i26t1HnxFlwjNLPrP2eg9HFlMgVSiKNallElcVpk6h
-X-Gm-Gg: ASbGnctSZsdlRi0KfO00nuJCsJ/eFRVZEImE7WLpQ6M4/myxtz0K/QPA0ciA46G2dX7
- r1grVcsW3GRWcQ3KO6hdydtII8wa1Tn3mR5NPnavQbGlhkZLmxSylvxbAWYLBrMgwaX5jXmEKlR
- oUm6J5j6XjQW5NOTbRSR80s/o7c9qrPJFAgFf6wERQF7DggsG85FGkpoVW6NubO0MQvjaCjlox1
- pMunGCeMR7cJGx0Mf3UMdD3N+lFclsCP86pUeGKl4Q/n1dolLakhwBXPh6z2Pcj3v/PXHGCXAuz
- GO+2dgCQfS/RM7gA/13DvVQZ7g0lHHWBAQqQiKmOcolvmctKBwn8DONiKng/eaIYU4o441P4kvs
- k4gLYQ9qnLOlaUIHBBukE8uv63KOJ8zCTw099o/hJgdA=
-X-Received: by 2002:a05:6000:240a:b0:3d8:3eca:a97d with SMTP id
- ffacd0b85a97d-3e7657aa17fmr4834509f8f.11.1757751144302; 
- Sat, 13 Sep 2025 01:12:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4PcvJu1lIPyQyLVKnpvdWupEXB9+VsmgBph6gOu8ZoRRaowBoFFFSHA28B4A5V2lbI/ZWTQ==
-X-Received: by 2002:a05:6000:240a:b0:3d8:3eca:a97d with SMTP id
- ffacd0b85a97d-3e7657aa17fmr4834484f8f.11.1757751143819; 
- Sat, 13 Sep 2025 01:12:23 -0700 (PDT)
+ bh=M/f46ar4NQt0D82z+vsB//+J/IGWmriKTQDbJURGYEg=;
+ b=d4heeFHPolxLFaZEbjZ56sDxlOkG31CaaQnhXBRjee6f0Rv/NIGDsv4w6NmnV+ekCp
+ gThkib6xQOFDvg+DjolGwkQkmf6ucXj1xuzT2ljfhodjeHtkW0lh2JDQcDcLJZrioJXZ
+ essd8JZ2KDoM2rfCyLcUfkiHF5rPaUljvUmgKU9Lwf38Fz9mo2FB9/le/go/DmrFp/S8
+ Rde4d+bFrADe1ZEE4p4P2FVM+AmzsZ0rKI5sYSFtS5Y3Nh4UklQi0RkHPJSdAEHwsp3f
+ QZKQiec2KoO1qjg+TdiNBmMGd3FSw3i5SihXGpMuGnMUKr8lIMfLivpbqCYMLtrdys/u
+ CM7w==
+X-Gm-Message-State: AOJu0YwUg/CtnJRFHdLLibPpSH2+5bR44h4nSpyZzd9hc856mtSYfFUm
+ mWSHnDkQxWliU35BkcTDvEeONGJXFKvGZ1js7TgrI47/XcG2ZhtIPdOAILQW3fxbBPEc9bVI8jd
+ 0D8ZbMvH/uzGt9RqSOJ8bdLkstMo/4l5R62fV6mopo2OWjJV8y64nvhbZP8jTwl1aRAOgZvWQ7r
+ hejBPxAsY3X0OT/XDP92/wWTwPc8XkbbhWCu2eKqRi
+X-Gm-Gg: ASbGncuSCaip1e2O6FhjeRYuW8KiwHSbnE/hvvGrNPS8mP/sqX/zP9u7xDZjcBhrLoL
+ q1Bj/ACu0kWJXvkMESky0tEIannB7VjzStQyrPaL4EOOziSNG47hTgp9qtBBPuF8YzKaQXw0gLH
+ Q8WauhkIo7Y7ciEvAVfzHni39rbvU6YBxBgwfSVPaunkaiCiE7vxmsG3tXqkWxHztanIPDCEUMF
+ K16AKauahoToTdH9mv4vT8P8rPKk6oCpt4+2xehebd58S/xO9vlP7N79EPcayRGbZKJLJ53YBac
+ GmfAws6o+2LB3OgJqufkW7ZC3v0xlhTgxjYGHilKLIyF1ar0rqeqxCL6h4ixAyr3Fxlf65AAkux
+ SIvZWL2JOgCT7lyDkzuU4ysh5kvHwzFUaApt90JaL4ok=
+X-Received: by 2002:a05:600c:190d:b0:45f:28c9:4261 with SMTP id
+ 5b1f17b1804b1-45f28c94362mr6143975e9.20.1757751146879; 
+ Sat, 13 Sep 2025 01:12:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFccGLYb1kgD9rsY9/uhSVBamxYu66kvpVDifLnQ5iBklVhgSMB1dnQ1HwmXJ/YeydsTu+KtA==
+X-Received: by 2002:a05:600c:190d:b0:45f:28c9:4261 with SMTP id
+ 5b1f17b1804b1-45f28c94362mr6143785e9.20.1757751146440; 
+ Sat, 13 Sep 2025 01:12:26 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607e2d43sm9431076f8f.59.2025.09.13.01.12.22
+ ffacd0b85a97d-3e8f4d644adsm590429f8f.52.2025.09.13.01.12.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 01:12:22 -0700 (PDT)
+ Sat, 13 Sep 2025 01:12:24 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 58/61] i386/kvm: Drop KVM_CAP_X86_SMM check in kvm_arch_init()
-Date: Sat, 13 Sep 2025 10:09:39 +0200
-Message-ID: <20250913080943.11710-59-pbonzini@redhat.com>
+Subject: [PULL 59/61] accel/kvm: Switch to check KVM_CAP_GUEST_MEMFD and
+ KVM_CAP_USER_MEMORY2 on VM
+Date: Sat, 13 Sep 2025 10:09:40 +0200
+Message-ID: <20250913080943.11710-60-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
 References: <20250913080943.11710-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,32 +112,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-x86_machine_is_smm_enabled() checks the KVM_CAP_X86_SMM for KVM
-case. No need to check KVM_CAP_X86_SMM in kvm_arch_init().
-
-So just drop the check of KVM_CAP_X86_SMM to simplify the code.
+It returns more accruate result on checking KVM_CAP_GUEST_MEMFD and
+KVM_CAP_USER_MEMORY2 on VM instance instead of on KVM platform.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250729062014.1669578-3-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250728115707.1374614-2-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ accel/kvm/kvm-all.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 728ad401157..c9856d471ab 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3316,8 +3316,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index d13156bee87..633b72bde2d 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2776,8 +2776,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
  
--    if (kvm_check_extension(s, KVM_CAP_X86_SMM) &&
--        x86_machine_is_smm_enabled(x86ms)) {
-+    if (x86_machine_is_smm_enabled(x86ms)) {
-         smram_machine_done.notify = register_smram_listener;
-         qemu_add_machine_init_done_notifier(&smram_machine_done);
-     }
+     kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
+     kvm_guest_memfd_supported =
+-        kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+-        kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
++        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
++        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
+         (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+     kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
+ 
 -- 
 2.51.0
 
