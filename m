@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51807CAC58F
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88397CAC58E
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxLNV-00039S-0q; Sat, 13 Sep 2025 04:13:01 -0400
+	id 1uxLNO-0002i8-AI; Sat, 13 Sep 2025 04:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLMz-0001oD-Jb
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uxLMg-0000ta-UF
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLMv-0005I6-1S
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:29 -0400
+ id 1uxLMc-0005Ck-OF
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757751143;
+ s=mimecast20190719; t=1757751125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/RYT4EV24HdySf7n68KFr07DQnEMbY9GA58BqcX1V4k=;
- b=VoPNM/Bz51nn9ytw08d7CZ2NUceP7oOAz9qPLOidhWgdiAS78YmVO59EM1HJr3SbHh4tim
- X1eEF2RxOk74n9m7K7v4ogsgmYpVmRIcye3HPVEEESL3WZegGxEZcIo7IlisP7fW5q2YJV
- 7DPG6pcUpRf7DF8ditorN2BkQspU4xs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Er0y421yFdGhHTiJqDqg2wnXxCk9uNzxTd4iS/AjYEs=;
+ b=FU/7XbJOvIaoEytBj2IVRoPMi5QGe/8KYfQu15NyyfM7h8gwUtUUdMe3VNM4QKjDmZuSvP
+ ydJSXTb0WHpuD1y8IrCkC57NN+t2WBR1LDxMVT/anTdWzERsgt376eHT4bgY7jiqHDWe9g
+ cb0xqUMShuSr4QWGnXayrU+yQ/Ndfmw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-ogphgreuPrCtrVYq3qOOEg-1; Sat, 13 Sep 2025 04:12:21 -0400
-X-MC-Unique: ogphgreuPrCtrVYq3qOOEg-1
-X-Mimecast-MFC-AGG-ID: ogphgreuPrCtrVYq3qOOEg_1757751141
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3e75fcdddbdso1295768f8f.2
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:21 -0700 (PDT)
+ us-mta-605-fa15fcfmO1-U6Mu9rdZQ-g-1; Sat, 13 Sep 2025 04:12:04 -0400
+X-MC-Unique: fa15fcfmO1-U6Mu9rdZQ-g-1
+X-Mimecast-MFC-AGG-ID: fa15fcfmO1-U6Mu9rdZQ-g_1757751123
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45cb4f23156so15626535e9.2
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757751140; x=1758355940;
+ d=1e100.net; s=20230601; t=1757751121; x=1758355921;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/RYT4EV24HdySf7n68KFr07DQnEMbY9GA58BqcX1V4k=;
- b=tNRC91q3OQB6GDLuwRWGMq8nswFFNBR148r30HwhP9VcmTvP9T69bGtHkfnwmJlOJ9
- MPZKtrIbZqQcLzAt0GPLvPh3EuBYgheZiQjIkfpVkvR1bdx/6E7+59GaYDrgCibc1Go6
- QY/odsrlCEX0xovaSmVm1x63p+Hq9I5MkBMAcfK1RFT85LsJCQ3iY5f5AWLvWoKVewlh
- CWdxYggZvLjfyDd/2DcODaD/aSEvlmOENGOqo6BNvFfqU9FR04VILkxZgCVepesbxrD1
- A97qlZO13fvdLnhQf7jOeChLek6JKwtJZInZ9vGppbfuOlI6eMgMFJzuCFUgN3WdL9Bu
- Pavg==
-X-Gm-Message-State: AOJu0YyfFKuM5/tyJNe1+meltyLwQSR3r578Vq7Hv1rslpVHPRXbNBcS
- HxiFVYwBs63JW2PcqiucCU7ra7FwTN42cPWAFyskSAnEktxKd/Xg5oCNcvVzi64ZDT4oj3UahJZ
- NSSViL+UOTxPqe8yqV47pVsyooYgg7EqOqM86D/hN1A2+w8PROLN1lHZRh0hyKnTwGKKZStRs06
- BZBe/qT64uakAzOfS0aOpwiT+JhNTQ7qG+u/fHOzMM
-X-Gm-Gg: ASbGncsjKAKLEiIQ5AYVWJ9rtEgWN3LdykVm7MV3ayOGJDf7QWDN5o6V0zQQKo1787m
- DQ9t8QltXBusQlwfhyvj28hJyEk4+BiA/FABWlzM9CFSTFyrJ45pXqPGrgVKjXqNh7vXUw2HsiP
- MggSNvvd7pU/YS/N9jb1ce16duEXZaCkXz9avyBlFWefxukhfXUTDlz8BnVFAncHwoWOQza+/Di
- Fg/RbdeVqy0LYwbGaENpHJMesExOrK9vfRAxbKh7YNW7MyPn2Uh7mNCUS9ZAkEgmnLDu6B8M3RQ
- O/HP6m5oDldKRpDuP90V62qKvwUcCxespAyZ9kyx0Al1z9PvvRK1ZZBsuJycAQNBvqG4C90YAjX
- 6pPBYOETqYeaOa/ryPKE5T2MjDRgsR2+jgThw7lZfObk=
-X-Received: by 2002:a05:6000:2c07:b0:3e7:441e:ca19 with SMTP id
- ffacd0b85a97d-3e7659e20c9mr5003908f8f.43.1757751139732; 
- Sat, 13 Sep 2025 01:12:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVUi8JUn8NNJp0NVBiBC9SiXcumRjOPqS/uwhfPsQtN7bv1Iu690oMO7/h8JeJlnRR87TVFA==
-X-Received: by 2002:a05:6000:2c07:b0:3e7:441e:ca19 with SMTP id
- ffacd0b85a97d-3e7659e20c9mr5003884f8f.43.1757751139261; 
- Sat, 13 Sep 2025 01:12:19 -0700 (PDT)
+ bh=Er0y421yFdGhHTiJqDqg2wnXxCk9uNzxTd4iS/AjYEs=;
+ b=NDek6ihMWuUVtacYrugDRbOKWlNqQE0C7sAVtatzBfxeVOV/o2Tlq2k79jYCdaqaeB
+ 1DsRzyl3JIyIO14zFrLl9D29DqL4TxRdK5s2yHrYLMlCW+4sPXpdHSsu4HV9EpUukEow
+ nx49gDy5WdPH+IyGzvVKdfTKQ6y2a21SWsQHwBATa3YeZc8dbccyGzAH4K9AFoV80Xae
+ HlJGzReiIh2LsYiJ+Gb0C0QwtQOCrSkr6cLDiwOhdp68BqrUlhfYsK3CdNFY7DO4ICXS
+ nHW5kR+sF9l3O59vN73gW58mcogtnWeYjrneV5t2g/UknXO1uhDo+/CpJjpYZQfnjfaD
+ 2tDA==
+X-Gm-Message-State: AOJu0YxRw5QLHYdJLDTXQtIXW27J8aNa/6Saj5TRzWymZQVTTJERzb0z
+ 49O8sB5mY4euuefEzeDF2CAYUEQRlnjmHoV65D0Irn5ZRpqe2oNwDjCzM7UaB9b5EYf1HJrVK4x
+ UCxgoL+YitDtr0Znl4FzbLQXqYBoDHzBa971YWW+DaDhGzG4vqh3bYjeUM9zYfJZzPFDS5kx7S7
+ VgtKlkihyao8GQpFPYjse2dQw9Bs2qdig7acOoh4Gi
+X-Gm-Gg: ASbGncu7YCD6gaUmgywtroaY/1Uvxf6HbZbtEVQDUL6b/jJV81hpV4cS3C7t+cgtIhX
+ PuHvOCjp+It77RviZlBGXfVstZTjA1JaiOBhhRFPcU06w6RYQp227YEfddnF4qOYnvU8zZSVFMX
+ X3EsIvaNF712ERP9M6rgRRb7E3qwh37TQQo7FzY5eutDGJ0pTu6RxeZtvvjmoXWBJS8ZZyoEPU4
+ sqZpRigkwOabnMJUlYIJEEB/QaInp64SNTlvXQL5OiDk6lJf5mduw7KAexypIF3RTt4QUWjq4pg
+ iH+EfOUS39EmOs5dhtdLdL1G8mc0GjW3b2nJseDnlfGQ2/dpcgNctOHDfh+hW4oF3BcEfhzW45Y
+ VXn0iUty+/dBdXTExrK641YDChQAagYy7k7laJBUdEY8=
+X-Received: by 2002:a05:600c:3515:b0:45f:28ed:6e1e with SMTP id
+ 5b1f17b1804b1-45f28ed71c9mr6355835e9.16.1757751121406; 
+ Sat, 13 Sep 2025 01:12:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECO6gazLVNKoRKlo7HCANk9o+l/EzDw0crNKUMP5vMxmtEla/Tm29thgBcgdeG5Frd/XkaQQ==
+X-Received: by 2002:a05:600c:3515:b0:45f:28ed:6e1e with SMTP id
+ 5b1f17b1804b1-45f28ed71c9mr6355295e9.16.1757751120705; 
+ Sat, 13 Sep 2025 01:12:00 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607d822fsm9525783f8f.53.2025.09.13.01.12.17
+ 5b1f17b1804b1-45e017b3137sm95001445e9.19.2025.09.13.01.11.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 01:12:18 -0700 (PDT)
+ Sat, 13 Sep 2025 01:11:59 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 56/61] multiboot: Fix the split lock
-Date: Sat, 13 Sep 2025 10:09:37 +0200
-Message-ID: <20250913080943.11710-57-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 49/61] rust: re-export qemu macros from common/qom/hwcore
+Date: Sat, 13 Sep 2025 10:09:30 +0200
+Message-ID: <20250913080943.11710-50-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
 References: <20250913080943.11710-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,99 +111,608 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-While running the kvm-unit-tests on Intel platforms with "split lock
-disable" feature, every test triggers a kernel warning of
+This is just a bit nicer.
 
-  x86/split lock detection: #AC: qemu-system-x86_64/373232 took a split_lock trap at address: 0x1e3
-
-Hack KVM by exiting to QEMU on split lock #AC, we get
-
-KVM: exception 17 exit (error code 0x0)
-EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
-ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
-EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
-ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
-CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
-SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
-DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
-FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
-GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
-LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
-TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
-GDT=     000c02b4 00000027
-IDT=     00000000 000003ff
-CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
-DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
-DR6=00000000ffff0ff0 DR7=0000000000000400
-EFER=0000000000000000
-Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 ba 10 05 66
-
-And it matches with what disassembled from multiboo_dma.bin:
-
- #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
-
-  1d1:   08 00                   or     %al,(%eax)
-  1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
-  1d8:   06                      push   %es
-  1d9:   00 66 b8                add    %ah,-0x48(%esi)
-  1dc:   01 00                   add    %eax,(%eax)
-  1de:   00 00                   add    %al,(%eax)
-  1e0:   0f 22 c0                mov    %eax,%cr0
-> 1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
-  1e7:   00 00                   add    %al,(%eax)
-  1e9:   b8 10 00 00 00          mov    $0x10,%eax
-  1ee:   8e d0                   mov    %eax,%ss
-  1f0:   8e d8                   mov    %eax,%ds
-  1f2:   8e c0                   mov    %eax,%es
-  1f4:   8e e0                   mov    %eax,%fs
-  1f6:   8e e8                   mov    %eax,%gs
-  1f8:   66 b8 08 00             mov    $0x8,%ax
-  1fc:   66 ba 10 05             mov    $0x510,%dx
-
-We can see that the instruction at 0x1e3 is a far jmp through the GDT.
-However, the GDT is not 8 byte aligned, the base is 0xc02b4.
-
-Intel processors follow the LOCK semantics to set the accessed flag of the
-segment descriptor when loading a segment descriptor. If the the segment
-descriptor crosses two cache line, it causes split lock.
-
-Fix it by aligning the GDT on 8 bytes, so that segment descriptor cannot
-span two cache lines.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250808035027.2194673-1-xiaoyao.li@intel.com
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20250827104147.717203-22-marcandre.lureau@redhat.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- pc-bios/multiboot_dma.bin     | Bin 1024 -> 1024 bytes
- pc-bios/optionrom/multiboot.S |   2 +-
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ docs/devel/rust.rst                 | 2 +-
+ rust/Cargo.lock                     | 8 +-------
+ rust/chardev/Cargo.toml             | 1 -
+ rust/chardev/meson.build            | 2 +-
+ rust/chardev/src/chardev.rs         | 2 +-
+ rust/common/Cargo.toml              | 1 +
+ rust/common/meson.build             | 2 +-
+ rust/common/src/lib.rs              | 2 ++
+ rust/common/src/opaque.rs           | 4 +---
+ rust/hw/char/pl011/Cargo.toml       | 1 -
+ rust/hw/char/pl011/meson.build      | 1 -
+ rust/hw/char/pl011/src/device.rs    | 4 ++--
+ rust/hw/char/pl011/src/registers.rs | 2 +-
+ rust/hw/core/Cargo.toml             | 2 +-
+ rust/hw/core/meson.build            | 2 +-
+ rust/hw/core/src/irq.rs             | 2 +-
+ rust/hw/core/src/lib.rs             | 1 +
+ rust/hw/core/src/qdev.rs            | 4 ++--
+ rust/hw/core/src/sysbus.rs          | 2 +-
+ rust/hw/core/tests/tests.rs         | 4 ++--
+ rust/hw/timer/hpet/Cargo.toml       | 1 -
+ rust/hw/timer/hpet/meson.build      | 1 -
+ rust/hw/timer/hpet/src/device.rs    | 6 +++---
+ rust/meson.build                    | 3 ++-
+ rust/migration/Cargo.toml           | 1 -
+ rust/qom/src/lib.rs                 | 2 ++
+ rust/qom/src/qom.rs                 | 4 ++--
+ rust/system/Cargo.toml              | 1 -
+ rust/system/meson.build             | 2 +-
+ rust/system/src/memory.rs           | 2 +-
+ rust/tests/Cargo.toml               | 1 -
+ rust/util/Cargo.toml                | 1 -
+ rust/util/meson.build               | 2 +-
+ rust/util/src/timer.rs              | 4 ++--
+ 34 files changed, 35 insertions(+), 45 deletions(-)
 
-diff --git a/pc-bios/multiboot_dma.bin b/pc-bios/multiboot_dma.bin
-index c0e2c3102a3358207c61d3ae113524fb6007abc3..e6d0c97093b4fc11bc87fd58cbe6e577c2841cd0 100644
-GIT binary patch
-delta 42
-ycmZqRXyBNj#r%xv^+a8N?gvb%opNjpY29*<Hny8GP2Rzz#<*kieI^-3#%KUKiVj8q
-
-delta 46
-zcmZqRXyBNj#r%lr`9xiR?mJAWopNjpY29-7Hny8GO+LV+#JFYiV<s8K$pXwQjQId`
-CSPu9A
-
-diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
-index 181a4b03a3f..c95e35c9cb6 100644
---- a/pc-bios/optionrom/multiboot.S
-+++ b/pc-bios/optionrom/multiboot.S
-@@ -208,7 +208,7 @@ ljmp2:
- prot_jump:	.long prot_mode
- 		.short 8
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 20d15347def..29eb48af35b 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -278,7 +278,7 @@ a raw pointer, for use in calls to C functions.  It can be used for
+ example as follows::
  
--.align 4, 0
-+.align 8, 0
- gdt:
- 	/* 0x00 */
- .byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+     #[repr(transparent)]
+-    #[derive(Debug, qemu_api_macros::Wrapper)]
++    #[derive(Debug, common::Wrapper)]
+     pub struct Object(Opaque<bindings::Object>);
+ 
+ where the special ``derive`` macro provides useful methods such as
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index ac79c6a34a9..eea928621a7 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -58,7 +58,6 @@ dependencies = [
+  "bql",
+  "common",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "util",
+ ]
+@@ -68,6 +67,7 @@ name = "common"
+ version = "0.1.0"
+ dependencies = [
+  "libc",
++ "qemu_macros",
+ ]
+ 
+ [[package]]
+@@ -93,7 +93,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -133,7 +132,6 @@ name = "migration"
+ version = "0.1.0"
+ dependencies = [
+  "common",
+- "qemu_macros",
+  "util",
+ ]
+ 
+@@ -149,7 +147,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -232,7 +229,6 @@ name = "system"
+ version = "0.1.0"
+ dependencies = [
+  "common",
+- "qemu_macros",
+  "qom",
+  "util",
+ ]
+@@ -246,7 +242,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -266,7 +261,6 @@ dependencies = [
+  "common",
+  "foreign",
+  "libc",
+- "qemu_macros",
+ ]
+ 
+ [[package]]
+diff --git a/rust/chardev/Cargo.toml b/rust/chardev/Cargo.toml
+index c1391773078..3e77972546e 100644
+--- a/rust/chardev/Cargo.toml
++++ b/rust/chardev/Cargo.toml
+@@ -18,7 +18,6 @@ bql = { path = "../bql" }
+ migration = { path = "../migration" }
+ qom = { path = "../qom" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
+index a2fa3268d21..370895c111f 100644
+--- a/rust/chardev/meson.build
++++ b/rust/chardev/meson.build
+@@ -38,4 +38,4 @@ _chardev_rs = static_library(
+   dependencies: [common_rs, qemu_macros],
+ )
+ 
+-chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [qemu_macros, chardev, qemuutil])
++chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev, qemuutil])
+diff --git a/rust/chardev/src/chardev.rs b/rust/chardev/src/chardev.rs
+index cb6f99398eb..2014479674f 100644
+--- a/rust/chardev/src/chardev.rs
++++ b/rust/chardev/src/chardev.rs
+@@ -26,7 +26,7 @@
+ 
+ /// A safe wrapper around [`bindings::Chardev`].
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct Chardev(Opaque<bindings::Chardev>);
+ 
+ pub type ChardevClass = bindings::ChardevClass;
+diff --git a/rust/common/Cargo.toml b/rust/common/Cargo.toml
+index 5e106427e80..0e1b4fc5050 100644
+--- a/rust/common/Cargo.toml
++++ b/rust/common/Cargo.toml
+@@ -14,6 +14,7 @@ rust-version.workspace = true
+ 
+ [dependencies]
+ libc.workspace = true
++qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/common/meson.build b/rust/common/meson.build
+index 230a967760d..b805e0faf57 100644
+--- a/rust/common/meson.build
++++ b/rust/common/meson.build
+@@ -19,7 +19,7 @@ _common_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _common_cfg,
+-  dependencies: [libc_rs],
++  dependencies: [libc_rs, qemu_macros],
+ )
+ 
+ common_rs = declare_dependency(link_with: [_common_rs])
+diff --git a/rust/common/src/lib.rs b/rust/common/src/lib.rs
+index 25216503aab..8311bf945da 100644
+--- a/rust/common/src/lib.rs
++++ b/rust/common/src/lib.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use qemu_macros::{TryInto, Wrapper};
++
+ pub mod assertions;
+ 
+ pub mod bitops;
+diff --git a/rust/common/src/opaque.rs b/rust/common/src/opaque.rs
+index 3b3263acaa3..c941fb45462 100644
+--- a/rust/common/src/opaque.rs
++++ b/rust/common/src/opaque.rs
+@@ -192,7 +192,7 @@ pub unsafe fn new() -> Self {
+ 
+ /// Annotates [`Self`] as a transparent wrapper for another type.
+ ///
+-/// Usually defined via the [`qemu_macros::Wrapper`] derive macro.
++/// Usually defined via the [`crate::Wrapper`] derive macro.
+ ///
+ /// # Examples
+ ///
+@@ -227,8 +227,6 @@ pub unsafe fn new() -> Self {
+ /// ```
+ ///
+ /// They are not defined here to allow them to be `const`.
+-///
+-/// [`qemu_macros::Wrapper`]: ../../qemu_macros/derive.Wrapper.html
+ pub unsafe trait Wrapper {
+     type Wrapped;
+ }
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+index 285d25c2178..b2418abc4bf 100644
+--- a/rust/hw/char/pl011/Cargo.toml
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -24,7 +24,6 @@ qom = { path = "../../../qom" }
+ chardev = { path = "../../../chardev" }
+ system = { path = "../../../system" }
+ hwcore = { path = "../../../hw/core" }
+-qemu_macros = { path = "../../../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index a14993f6921..628a5238702 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -35,7 +35,6 @@ _libpl011_rs = static_library(
+     util_rs,
+     migration_rs,
+     bql_rs,
+-    qemu_macros,
+     qom_rs,
+     chardev_rs,
+     system_rs,
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 85626a969d4..1b4587d5f60 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -97,7 +97,7 @@ pub struct PL011Registers {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object, qemu_macros::Device)]
++#[derive(qom::Object, hwcore::Device)]
+ /// PL011 Device Model in QEMU
+ pub struct PL011State {
+     pub parent_obj: ParentField<SysBusDevice>,
+@@ -683,7 +683,7 @@ pub fn post_load(&self, _version_id: u8) -> Result<(), migration::InvalidError>
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object, qemu_macros::Device)]
++#[derive(qom::Object, hwcore::Device)]
+ /// PL011 Luminary device model.
+ pub struct PL011Luminary {
+     parent_obj: ParentField<PL011State>,
+diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
+index a1c41347ed5..0c3a4d7d214 100644
+--- a/rust/hw/char/pl011/src/registers.rs
++++ b/rust/hw/char/pl011/src/registers.rs
+@@ -16,7 +16,7 @@
+ #[doc(alias = "offset")]
+ #[allow(non_camel_case_types)]
+ #[repr(u64)]
+-#[derive(Debug, Eq, PartialEq, qemu_macros::TryInto)]
++#[derive(Debug, Eq, PartialEq, common::TryInto)]
+ pub enum RegisterOffset {
+     /// Data Register
+     ///
+diff --git a/rust/hw/core/Cargo.toml b/rust/hw/core/Cargo.toml
+index 0eb9ffee263..9a9aa517082 100644
+--- a/rust/hw/core/Cargo.toml
++++ b/rust/hw/core/Cargo.toml
+@@ -13,6 +13,7 @@ repository.workspace = true
+ rust-version.workspace = true
+ 
+ [dependencies]
++qemu_macros = { path = "../../qemu-macros" }
+ common = { path = "../../common" }
+ bql = { path = "../../bql" }
+ qom = { path = "../../qom" }
+@@ -20,7 +21,6 @@ chardev = { path = "../../chardev" }
+ migration = { path = "../../migration" }
+ system = { path = "../../system" }
+ util = { path = "../../util" }
+-qemu_macros = { path = "../../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
+index 67eacf854fe..81d8c77f9ad 100644
+--- a/rust/hw/core/meson.build
++++ b/rust/hw/core/meson.build
+@@ -71,7 +71,7 @@ test('rust-hwcore-rs-integration',
+         override_options: ['rust_std=2021', 'build.rust_std=2021'],
+         rust_args: ['--test'],
+         install: false,
+-        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, qemu_macros, util_rs]),
++        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_rs]),
+     args: [
+         '--test', '--test-threads', '1',
+         '--format', 'pretty',
+diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
+index d8d964cad27..e0d7784d97b 100644
+--- a/rust/hw/core/src/irq.rs
++++ b/rust/hw/core/src/irq.rs
+@@ -18,7 +18,7 @@
+ 
+ /// An opaque wrapper around [`bindings::IRQState`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct IRQState(Opaque<bindings::IRQState>);
+ 
+ /// Interrupt sources are used by devices to pass changes to a value (typically
+diff --git a/rust/hw/core/src/lib.rs b/rust/hw/core/src/lib.rs
+index c5588d9bc27..b40801eb843 100644
+--- a/rust/hw/core/src/lib.rs
++++ b/rust/hw/core/src/lib.rs
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use qemu_macros::Device;
+ pub use qom;
+ 
+ pub mod bindings;
+diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+index c9faf44a71d..71b9ef141c3 100644
+--- a/rust/hw/core/src/qdev.rs
++++ b/rust/hw/core/src/qdev.rs
+@@ -23,7 +23,7 @@
+ 
+ /// A safe wrapper around [`bindings::Clock`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Clock(Opaque<bindings::Clock>);
+ 
+ unsafe impl Send for Clock {}
+@@ -31,7 +31,7 @@ unsafe impl Sync for Clock {}
+ 
+ /// A safe wrapper around [`bindings::DeviceState`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct DeviceState(Opaque<bindings::DeviceState>);
+ 
+ unsafe impl Send for DeviceState {}
+diff --git a/rust/hw/core/src/sysbus.rs b/rust/hw/core/src/sysbus.rs
+index 92c7449b802..282315fce99 100644
+--- a/rust/hw/core/src/sysbus.rs
++++ b/rust/hw/core/src/sysbus.rs
+@@ -19,7 +19,7 @@
+ 
+ /// A safe wrapper around [`bindings::SysBusDevice`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct SysBusDevice(Opaque<bindings::SysBusDevice>);
+ 
+ unsafe impl Send for SysBusDevice {}
+diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
+index 2f08b8f3bfe..247d812866d 100644
+--- a/rust/hw/core/tests/tests.rs
++++ b/rust/hw/core/tests/tests.rs
+@@ -17,7 +17,7 @@
+     .build();
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object, qemu_macros::Device)]
++#[derive(qom::Object, hwcore::Device)]
+ pub struct DummyState {
+     parent: ParentField<DeviceState>,
+     #[property(rename = "migrate-clk", default = true)]
+@@ -54,7 +54,7 @@ impl DeviceImpl for DummyState {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object, qemu_macros::Device)]
++#[derive(qom::Object, hwcore::Device)]
+ pub struct DummyChildState {
+     parent: ParentField<DummyState>,
+ }
+diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
+index 08bf97af553..f781b28d8b3 100644
+--- a/rust/hw/timer/hpet/Cargo.toml
++++ b/rust/hw/timer/hpet/Cargo.toml
+@@ -17,7 +17,6 @@ migration = { path = "../../../migration" }
+ bql = { path = "../../../bql" }
+ qom = { path = "../../../qom" }
+ system = { path = "../../../system" }
+-qemu_macros = { path = "../../../qemu-macros" }
+ hwcore = { path = "../../../hw/core" }
+ 
+ [lints]
+diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
+index 8ab26630d95..b6bb9477f0c 100644
+--- a/rust/hw/timer/hpet/meson.build
++++ b/rust/hw/timer/hpet/meson.build
+@@ -8,7 +8,6 @@ _libhpet_rs = static_library(
+     util_rs,
+     migration_rs,
+     bql_rs,
+-    qemu_macros,
+     qom_rs,
+     system_rs,
+     hwcore_rs,
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 07e0f639fc4..3cfbe9c32bb 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -97,7 +97,7 @@
+ /// Timer N Interrupt Routing Capability (bits 32:63)
+ const HPET_TN_CFG_INT_ROUTE_CAP_SHIFT: usize = 32;
+ 
+-#[derive(qemu_macros::TryInto)]
++#[derive(common::TryInto)]
+ #[repr(u64)]
+ #[allow(non_camel_case_types)]
+ /// Timer registers, masked by 0x18
+@@ -110,7 +110,7 @@ enum TimerRegister {
+     ROUTE = 16,
+ }
+ 
+-#[derive(qemu_macros::TryInto)]
++#[derive(common::TryInto)]
+ #[repr(u64)]
+ #[allow(non_camel_case_types)]
+ /// Global registers
+@@ -520,7 +520,7 @@ fn write(&mut self, reg: TimerRegister, value: u64, shift: u32, len: u32) {
+ 
+ /// HPET Event Timer Block Abstraction
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ pub struct HPETState {
+     parent_obj: ParentField<SysBusDevice>,
+     iomem: MemoryRegion,
+diff --git a/rust/meson.build b/rust/meson.build
+index bd9b9cb83ea..c7bd6aba45f 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -20,8 +20,9 @@ proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
+ 
+ genrs = []
+ 
+-subdir('common')
+ subdir('qemu-macros')
++
++subdir('common')
+ subdir('bits')
+ subdir('util')
+ subdir('migration')
+diff --git a/rust/migration/Cargo.toml b/rust/migration/Cargo.toml
+index 66af81e0a35..708bfaaa682 100644
+--- a/rust/migration/Cargo.toml
++++ b/rust/migration/Cargo.toml
+@@ -15,7 +15,6 @@ rust-version.workspace = true
+ [dependencies]
+ common = { path = "../common" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/qom/src/lib.rs b/rust/qom/src/lib.rs
+index 204c6fea2ff..24c44fc2afb 100644
+--- a/rust/qom/src/lib.rs
++++ b/rust/qom/src/lib.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use qemu_macros::Object;
++
+ pub mod bindings;
+ 
+ // preserve one-item-per-"use" syntax, it is clearer
+diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
+index 2cd1d850112..5808051cd77 100644
+--- a/rust/qom/src/qom.rs
++++ b/rust/qom/src/qom.rs
+@@ -112,7 +112,7 @@
+ 
+ /// A safe wrapper around [`bindings::Object`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Object(Opaque<bindings::Object>);
+ 
+ unsafe impl Send for Object {}
+@@ -173,7 +173,7 @@ fn as_ref(&self) -> &$parent {
+ ///
+ /// ```ignore
+ /// #[repr(C)]
+-/// #[derive(qemu_macros::Object)]
++/// #[derive(qom::Object)]
+ /// pub struct MyDevice {
+ ///     parent: ParentField<DeviceState>,
+ ///     ...
+diff --git a/rust/system/Cargo.toml b/rust/system/Cargo.toml
+index d8338c8348d..7fd369b9e32 100644
+--- a/rust/system/Cargo.toml
++++ b/rust/system/Cargo.toml
+@@ -16,7 +16,6 @@ rust-version.workspace = true
+ common = { path = "../common" }
+ qom = { path = "../qom" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/system/meson.build b/rust/system/meson.build
+index 9f88166f3d3..3ec140de018 100644
+--- a/rust/system/meson.build
++++ b/rust/system/meson.build
+@@ -39,4 +39,4 @@ _system_rs = static_library(
+ )
+ 
+ system_rs = declare_dependency(link_with: [_system_rs],
+-  dependencies: [qemu_macros, hwcore])
++  dependencies: [hwcore])
+diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
+index 7312f809f51..02aa3af7b13 100644
+--- a/rust/system/src/memory.rs
++++ b/rust/system/src/memory.rs
+@@ -129,7 +129,7 @@ fn default() -> Self {
+ 
+ /// A safe wrapper around [`bindings::MemoryRegion`].
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct MemoryRegion(Opaque<bindings::MemoryRegion>);
+ 
+ unsafe impl Send for MemoryRegion {}
+diff --git a/rust/tests/Cargo.toml b/rust/tests/Cargo.toml
+index 8d106d896d7..d47dc3314d8 100644
+--- a/rust/tests/Cargo.toml
++++ b/rust/tests/Cargo.toml
+@@ -19,7 +19,6 @@ hwcore = { path = "../hw/core" }
+ migration = { path = "../migration" }
+ util = { path = "../util" }
+ bql = { path = "../bql" }
+-qemu_macros = { path = "../qemu-macros" }
+ qom = { path = "../qom" }
+ system = { path = "../system" }
+ 
+diff --git a/rust/util/Cargo.toml b/rust/util/Cargo.toml
+index 18e6619ca06..1f6767ed9d1 100644
+--- a/rust/util/Cargo.toml
++++ b/rust/util/Cargo.toml
+@@ -17,7 +17,6 @@ anyhow = { workspace = true }
+ foreign = { workspace = true }
+ libc = { workspace = true }
+ common = { path = "../common" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 197872c9b23..87a893673d2 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -39,7 +39,7 @@ _util_rs = static_library(
+   ),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+-  dependencies: [anyhow_rs, libc_rs, foreign_rs, common_rs, qemu_macros, qom, qemuutil],
++  dependencies: [anyhow_rs, libc_rs, foreign_rs, common_rs, qom, qemuutil],
+ )
+ 
+ util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
+diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
+index 622b6ee3097..c6b3e4088ec 100644
+--- a/rust/util/src/timer.rs
++++ b/rust/util/src/timer.rs
+@@ -15,14 +15,14 @@
+ 
+ /// A safe wrapper around [`bindings::QEMUTimer`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Timer(Opaque<bindings::QEMUTimer>);
+ 
+ unsafe impl Send for Timer {}
+ unsafe impl Sync for Timer {}
+ 
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
+ 
+ unsafe impl Send for TimerListGroup {}
 -- 
 2.51.0
 
