@@ -4,135 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F83CAC587
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 03:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E979CAC587
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 04:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxHJt-000288-0I; Fri, 12 Sep 2025 23:53:01 -0400
+	id 1uxHeK-0006cQ-Om; Sat, 13 Sep 2025 00:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHJr-00027v-Um
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 23:52:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <guoren@kernel.org>)
+ id 1uxHeI-0006bj-EP; Sat, 13 Sep 2025 00:14:06 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxHJo-0006CT-RI
- for qemu-devel@nongnu.org; Fri, 12 Sep 2025 23:52:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757735570;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=slp1MAvstM1nWPMP/d8PIrasA/SyjQwoLDmXI7z0c70=;
- b=GdugVH4JEfVl0RySiMeJtwqXbnCInj8TVTNXtBtjF+gitqHzNefVJ/5vP2Rkw95c0ZCOl0
- UXiboGf4wLAQbuTeTGVAxhp6HTkvy3qksRGBMMWRhWg3+IEH3jSg6+f4D84iOQkvi/Rvgk
- cJE9PvnIGGoZgBHAMn5GW4ds41h4LWs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-eyd-CWzfO7mJ8IDaO90_vQ-1; Fri, 12 Sep 2025 23:52:49 -0400
-X-MC-Unique: eyd-CWzfO7mJ8IDaO90_vQ-1
-X-Mimecast-MFC-AGG-ID: eyd-CWzfO7mJ8IDaO90_vQ_1757735568
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3db4cfcc23eso1116870f8f.3
- for <qemu-devel@nongnu.org>; Fri, 12 Sep 2025 20:52:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757735568; x=1758340368;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=slp1MAvstM1nWPMP/d8PIrasA/SyjQwoLDmXI7z0c70=;
- b=PfXsLJNZaUBsEMAF3PMhEwXj2wQni4AzxxVp20qydX1iksWkfbrNOeA70wXxvycKcB
- fHQOa4z58LKyGaqT5cXDs9xwwB5t4tI1rM3DWeiCh0w7NZSHfa8FvD5NvF+7vMcLJryJ
- Y0Dga4WXaL39G4Z5kO726BHDQ69irkkm8dVRqFzrDpmArCCPII09zlqAkO4QamK5LfAP
- Aopbfz+xKGBqm7DUPuEHuhItWlFu3oeLzuGNdA74b2SE1EQ4yNQPs4qCCs8cxWTavMLV
- fA4LRzNcFM9phzMd/kbgJfelHlWeyRi7JAOPXKNkr/ELjlef9+AxuoOjFaZ5WbnMNRKJ
- /OLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGRPdVcnyVKM7aZC1kN7jCBBSFsZgNxHc9vbauAVdy8zGFBRfTCe44OoCcfKGGpYJXRP+N2m9wY2rz@nongnu.org
-X-Gm-Message-State: AOJu0YyVspdJs6vVfagJuSJNzOYW68g4DHZST+1VuiAC3VYOWgakI4R3
- PKwpN5VN4ofBSKslkcSB/FhLQmh1ManJOowjgf5z3wtqL1Dw6RdgvYT4HKNddKwH9UL/fCH7rYp
- 0dw2KvxO0fVVvC337+dZq7aptKxiOLSbr5wbvlOwpR0hzzRBSyiY7u0n+
-X-Gm-Gg: ASbGnctibU8VL14L7JK9p5liFJaKbno0hr6sFWN+WBEll1O9yN3QZauaJLk/ssGub0Q
- U4Z/1o4S3qA1ENeqKpHAEbNMoS2iTy3j4TLNeRhStemAvMD9b4BbKM5j2bbCn3N3PifkXK149CU
- 7V9B+xz/WG3gVXmmzvRgDq9juP1KDMuviMgNQkHQr6tXxro4j5FGRbdcNjKvG3mmPDXF7kXWIgH
- sDKH3FJpb2f6FhJ7qY5TFUOuzKF4UcPR2h/nrCVPoCIi7mAMpzXbHtt3YZu0MVpiQNkQHYZxZXU
- iou114stwoUc9esvG6AdJjOUsHXCK+fNZxTFJHDy+5svOpIHUBvp7Y/X8+66tvNQomNyNmmM+u0
- GqPeiVh0uJmgJrZacE1lDdDQxeM9UVL6GAdn0KuEmzLs=
-X-Received: by 2002:a05:6000:144d:b0:3e7:6312:a98f with SMTP id
- ffacd0b85a97d-3e765a48205mr5472651f8f.45.1757735567831; 
- Fri, 12 Sep 2025 20:52:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyORB/4/pM2rskl1fvtHxm0xSrLJlsdRf6mOyIp20WcwQ4frC/NpGHPzAvCl96qgb4jAocLQ==
-X-Received: by 2002:a05:6000:144d:b0:3e7:6312:a98f with SMTP id
- ffacd0b85a97d-3e765a48205mr5472637f8f.45.1757735567380; 
- Fri, 12 Sep 2025 20:52:47 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-45e016b5a2esm86030015e9.13.2025.09.12.20.52.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Sep 2025 20:52:46 -0700 (PDT)
-Message-ID: <15a04956-df98-4c3a-b2c7-b4812106b25b@redhat.com>
-Date: Sat, 13 Sep 2025 05:52:45 +0200
+ (Exim 4.90_1) (envelope-from <guoren@kernel.org>)
+ id 1uxHeF-0000Kd-LB; Sat, 13 Sep 2025 00:14:06 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id CEACC60205;
+ Sat, 13 Sep 2025 04:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37039C4CEF7;
+ Sat, 13 Sep 2025 04:13:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1757736832;
+ bh=yI/wNKoKkiHhntq9dZLbgPTDK0G9sGYrWumBMXKUjQU=;
+ h=From:To:Cc:Subject:Date:From;
+ b=WuwmmhK+io3Nyq50EfdI+HY8M4n7n2HwX7iEezxiEwZYFXNvU1FBsgpkbWKSg//TD
+ Pa2BRAPA1nAm7iUAalY8t2kyq2tDUE/LL5g1mbMr52LpDRlobwniMNZZzR6kw9Fx8v
+ L6BsxvpHDZMtLJOSxc/DrKgMFaamOR5aBTfoBi7K78nKZdDS5Pa6GspxppXjQ5XVwc
+ xrX1Y8dHMM7xb8zztYmzJe5bFTq1MsZv8U1G6HemOLbjgwl2xaBT7XpSou8OtnI+oQ
+ EHUHwv+6v1juS1+T6y1bb0NyWvN7PknWzS0u697lH07gaRbRlmgU6s/7BSY3Ch8uxn
+ MOOq5tsy2IhJg==
+From: guoren@kernel.org
+To: zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com,
+ alistair.francis@wdc.com, seb@rivosinc.com, tjeznach@rivosinc.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
+ qemu-stable@nongnu.org, Nutty Liu <liujingqi@lanxincomputing.com>
+Subject: [PATCH V3] hw/riscv/riscv-iommu: Fixup PDT Nested Walk
+Date: Sat, 13 Sep 2025 00:12:33 -0400
+Message-Id: <20250913041233.972870-1-guoren@kernel.org>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: when to use MemoryRegionCache vs direct address space read/write
- vs address_space_map?
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <CAFEAcA80LakER=eZY1yK4X8CJA9Uwd-9ckLP=p4D3BJLpSTXqQ@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA80LakER=eZY1yK4X8CJA9Uwd-9ckLP=p4D3BJLpSTXqQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=guoren@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,84 +69,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/25 17:51, Peter Maydell wrote:
-> (3) address_space_cache_init(), which initializes a MemoryRegionCache
->      which you can then use for hopefully faster read and write
->      operations via address_space_read_cached() and
->      address_space_write_cached().
+From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
 
-(And the cached ld/st variants as well)
+Current implementation is wrong when iohgatp != bare. The RISC-V
+IOMMU specification has defined that the PDT is based on GPA, not
+SPA. So this patch fixes the problem, making PDT walk correctly
+when the G-stage table walk is enabled.
 
->      Again, subject to limitations: must operate on RAM;
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Cc: qemu-stable@nongnu.org
+Cc: Sebastien Boeuf <seb@rivosinc.com>
+Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
+Reviewed-by: Weiwei Li <liwei1518@gmail.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+---
+Changes in V3:
+ - Fixup inner non-leaf walking for 4KB-align.
+ - Add two Reviewed-by tags.
 
-You can operate on non-RAM but it will not be any faster.
+Changes in V2:
+ - Remove nested param to make patch clearer.
+---
+ hw/riscv/riscv-iommu.c | 141 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 139 insertions(+), 2 deletions(-)
 
->      you might not be able to access the whole
->      range you wanted. This currently seems to be used solely by
->      virtio.
-
-Indeed.  The APIs compare like this
-
-              fast            gives void*          limits
-direct         -                  -                  -
-map            y                  y           1 MR, 1 bounce buffer
-cached         y                  -                1 MR
-
-MemoryRegionCache has the additional complication of needing a 
-MemoryListener to invalidate the cache, if the MemoryRegionCache is long 
-lived.  This could be done globally, it just wasn't necessary while 
-virtio was the only user.
-
-You could create a MemoryRegionCache for the duration of (say) a single 
-function call, and then you don't need to deal with invalidation; but 
-then the single bounce buffer limitation is not a problem and map/unmap 
-is probably easier to use.
-
-> In particular, I'm working on a GICv5 model. This device puts a
-> lot of its working data structures into guest memory, so we're going
-> to be accessing guest memory a lot. The device spec says if you point
-> it at not-RAM you get to keep both pieces, and requires the guest
-> not to try to change the contents of that memory underfoot without
-> notifying it, so this seems like it ought to be a good candidate
-> for some kind of "act like you have this memory cached so you don't
-> need to keep looking it up every time" API...
-
-Yes, that is indeed a good use.
-
-> Does the MemoryRegionCache API cover all the use cases we use
-> address_space_map() and dma_memory_map() for? (i.e. could we
-> deprecate the latter and transition code over to the new API?)
-
-No, there's no way to get a void* from MemoryRegionCache (you could get 
-one when the underlying block is RAM by peeking at the struct members; 
-but there's no bounce buffering by design).
-
-> Incidentally, on the subject of the dma.h wrappers -- I've never
-> really been very clear why we have these. Some devices use them,
-> but a lot do not. 
-
-All PCI devices use them.
-
-> The fact that the dma wrappers put in smp_mb()
-> barriers leaves me wondering if all those other devices that
-> don't use them have subtle bugs, but OTOH I've never noticed
-> any problems...
-
-The idea was that PCI specifies the ordering of DMA operations and the 
-memory barrier provides that ordering when the operations are performed 
-by the host CPU.
-
-In practice the cases in which ordering is required are limited, and 
-personally I prefer to write these barriers in the device model so that 
-the synchronization algorithm is documented.  That means you can use 
-map/unmap or MemoryRegionCache instead, both of which are also faster.
-
-The original and more unique DMA wrapper is dma_blk_io(), which is a 
-wrapper around block layer APIs that supports cross-memory-region 
-operations and the fact that the address_space_map() bounce buffer is 
-only 1 page long.  This one, which works together with QEMUSGList, is 
-used in several block device models (IDE, SCSI, NVMe).
-
-Paolo
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 96a7fbdefcf3..ddb5236f55d1 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -866,6 +866,143 @@ static bool riscv_iommu_validate_process_ctx(RISCVIOMMUState *s,
+     return true;
+ }
+ 
++/**
++ * pdt_memory_read: PDT wrapper of dma_memory_read.
++ *
++ * @s: IOMMU Device State
++ * @ctx: Device Translation Context with devid and pasid set
++ * @addr: address within that address space
++ * @buf: buffer with the data transferred
++ * @len: length of the data transferred
++ * @attrs: memory transaction attributes
++ */
++static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
++                                   RISCVIOMMUContext *ctx,
++                                   dma_addr_t addr,
++                                   void *buf, dma_addr_t len,
++                                   MemTxAttrs attrs)
++{
++    uint64_t gatp_mode, pte;
++    struct {
++        unsigned char step;
++        unsigned char levels;
++        unsigned char ptidxbits;
++        unsigned char ptesize;
++    } sc;
++    MemTxResult ret;
++    dma_addr_t base = addr;
++
++    /* G stages translation mode */
++    gatp_mode = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
++    if (gatp_mode == RISCV_IOMMU_DC_IOHGATP_MODE_BARE)
++        goto out;
++
++    /* G stages translation tables root pointer */
++    base = PPN_PHYS(get_field(ctx->gatp, RISCV_IOMMU_ATP_PPN_FIELD));
++
++    /* Start at step 0 */
++    sc.step = 0;
++
++    if (s->fctl & RISCV_IOMMU_FCTL_GXL) {
++        /* 32bit mode for GXL == 1 */
++        switch (gatp_mode) {
++        case RISCV_IOMMU_DC_IOHGATP_MODE_SV32X4:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV32X4)) {
++                return MEMTX_ACCESS_ERROR;
++            }
++            sc.levels    = 2;
++            sc.ptidxbits = 10;
++            sc.ptesize   = 4;
++            break;
++        default:
++            return MEMTX_ACCESS_ERROR;
++        }
++    } else {
++        /* 64bit mode for GXL == 0 */
++        switch (gatp_mode) {
++        case RISCV_IOMMU_DC_IOHGATP_MODE_SV39X4:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV39X4)) {
++                return MEMTX_ACCESS_ERROR;
++            }
++            sc.levels    = 3;
++            sc.ptidxbits = 9;
++            sc.ptesize   = 8;
++            break;
++        case RISCV_IOMMU_DC_IOHGATP_MODE_SV48X4:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV48X4)) {
++                return MEMTX_ACCESS_ERROR;
++            }
++            sc.levels    = 4;
++            sc.ptidxbits = 9;
++            sc.ptesize   = 8;
++            break;
++        case RISCV_IOMMU_DC_IOHGATP_MODE_SV57X4:
++            if (!(s->cap & RISCV_IOMMU_CAP_SV57X4)) {
++                return MEMTX_ACCESS_ERROR;
++            }
++            sc.levels    = 5;
++            sc.ptidxbits = 9;
++            sc.ptesize   = 8;
++            break;
++        default:
++            return MEMTX_ACCESS_ERROR;
++        }
++    }
++
++    do {
++        const unsigned va_bits = (sc.step ? 0 : 2) + sc.ptidxbits;
++        const unsigned va_skip = TARGET_PAGE_BITS + sc.ptidxbits *
++                                 (sc.levels - 1 - sc.step);
++        const unsigned idx = (addr >> va_skip) & ((1 << va_bits) - 1);
++        const dma_addr_t pte_addr = base + idx * sc.ptesize;
++
++        /* Address range check before first level lookup */
++        if (!sc.step) {
++            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
++            if ((addr & va_mask) != addr) {
++                return MEMTX_ACCESS_ERROR;
++            }
++        }
++
++        /* Read page table entry */
++        if (sc.ptesize == 4) {
++            uint32_t pte32 = 0;
++            ret = ldl_le_dma(s->target_as, pte_addr, &pte32, attrs);
++            pte = pte32;
++        } else {
++            ret = ldq_le_dma(s->target_as, pte_addr, &pte, attrs);
++        }
++        if (ret != MEMTX_OK)
++            return ret;
++
++        sc.step++;
++        hwaddr ppn = pte >> PTE_PPN_SHIFT;
++
++        if (!(pte & PTE_V)) {
++            return MEMTX_ACCESS_ERROR; /* Invalid PTE */
++        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
++            base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
++        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
++            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W */
++        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == (PTE_W | PTE_X)) {
++            return MEMTX_ACCESS_ERROR; /* Reserved leaf PTE flags: PTE_W + PTE_X */
++        } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
++            return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
++        } else {
++            /* Leaf PTE, translation completed. */
++            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            break;
++        }
++
++        if (sc.step == sc.levels) {
++            return MEMTX_ACCESS_ERROR; /* Can't find leaf PTE */
++        }
++    } while (1);
++
++out:
++    return dma_memory_read(s->target_as, base, buf, len, attrs);
++}
++
+ /*
+  * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
+  *
+@@ -1038,7 +1175,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+          */
+         const int split = depth * 9 + 8;
+         addr |= ((ctx->process_id >> split) << 3) & ~TARGET_PAGE_MASK;
+-        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
++        if (pdt_memory_read(s, ctx, addr, &de, sizeof(de),
+                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+             return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+         }
+@@ -1053,7 +1190,7 @@ static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+ 
+     /* Leaf entry in PDT */
+     addr |= (ctx->process_id << 4) & ~TARGET_PAGE_MASK;
+-    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
++    if (pdt_memory_read(s, ctx, addr, &dc.ta, sizeof(uint64_t) * 2,
+                         MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+         return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+     }
+-- 
+2.40.1
 
 
