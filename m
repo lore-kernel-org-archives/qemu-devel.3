@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E457CAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A820BCAC58E
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 08:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxLM1-0007pP-27; Sat, 13 Sep 2025 04:11:29 -0400
+	id 1uxLNS-0002zL-7x; Sat, 13 Sep 2025 04:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLLy-0007cX-KT
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:11:26 -0400
+ id 1uxLN5-00021k-Vf
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uxLLu-00055Z-VI
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:11:26 -0400
+ id 1uxLN3-0005KZ-Bv
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 04:12:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757751081;
+ s=mimecast20190719; t=1757751152;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NPKlaqghrOHsPLYrmGUDyXPckj2KbtMRtLHKQbrgvNc=;
- b=fzrkZPmVW1DNP48E+FVz4YZRJT3eHzB2rr/E9t441bub3GcabgsJEpJhYVtr6okJYqLxpr
- PTElidaAsfe7PACf/WQKf85XRGnADno1I0Yz5XotL4ifSdG9yc0lvgQCF3IcoVT1DzargZ
- ta59k61/UMQw7KSXZzacIczLnNo03zQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KoI6yvC21dslA1v98yDlQjqFTRjNFP/v63K9eXeIsBI=;
+ b=cKlFq5sTnWmWh10czgr8ZMThBHe19up1o6nY04jkmlNe7LW0jJL9WtDgkrduKmMUlEltgP
+ 68nH+rowbEMVrYOQ/wBynOqrKjT/pA9CuZqX/oL8EvFzlyoPt4gG+dfsSyu+zUC+uXkl/j
+ vx4yUJuYgzToJFH2vMuYSYtCHC+N5iI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-XqQpuwbuOw2Cs67mNXHM2w-1; Sat, 13 Sep 2025 04:11:20 -0400
-X-MC-Unique: XqQpuwbuOw2Cs67mNXHM2w-1
-X-Mimecast-MFC-AGG-ID: XqQpuwbuOw2Cs67mNXHM2w_1757751079
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de5fdda1aso13460165e9.1
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:11:19 -0700 (PDT)
+ us-mta-57-pUaZbQgMOgO5lJVkXi1jHw-1; Sat, 13 Sep 2025 04:12:30 -0400
+X-MC-Unique: pUaZbQgMOgO5lJVkXi1jHw-1
+X-Mimecast-MFC-AGG-ID: pUaZbQgMOgO5lJVkXi1jHw_1757751150
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3e75fcdddbdso1295799f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 01:12:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757751078; x=1758355878;
+ d=1e100.net; s=20230601; t=1757751149; x=1758355949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NPKlaqghrOHsPLYrmGUDyXPckj2KbtMRtLHKQbrgvNc=;
- b=pMo+Ekvkn7u2rEJkGhrpB5HJxwny71IgaVIBORn99Hqnbo70cQu5LWOw6MIwJ0n6Uk
- FGA6xBK0MVVOF3w7aM5QId3omMq+6zMcQwdMGV6RdndFqXARpCTl1FPEq9zmtVmwd7pT
- YoJsbbVsGdbVplkdoObY2fLdjsQonia5nvv1E3lxzi6JT1t4xCiSpZUbXdti4TrxHGIY
- CKkD1Teev49y4fZuVqJ2PKx21wBvFRpjeKgaN2UyUdsq8cSNh/11ypcAc+kjF3BH2jJL
- ZOUOdLFSVpNkSlVEgdB+izmb/l2p4ndd6vqVsY3fyGw/77B9t3NwqGuKVMBGNHo87H5/
- FJ6A==
-X-Gm-Message-State: AOJu0YyLda0aYgVEMjT8BvyyMaDczHaLNhQsOENI2Zg7DXI0+go3BOGT
- TeAeWxPKIeZlRKyITdkrFzyOH17hx75LW9j/x48YlKzMmCBp2mp+nfjar2l/TwQdtgL5a5RIqet
- JrAZ8LxE8hkyqATzBWsF08s5DFpWGMNKPv4WF4FdSmpkPcGZxMFcYvSzALTrwcN/W7YetQhlpTN
- uv3slv1tLrZM0ucIVbjMqCIzAtQ+tNcamWpQmkef5x
-X-Gm-Gg: ASbGncs3JG7w9VndEVw3jp5uu7dmXcd66NNsthB46K7ITLOWvxhUw41qlr1tt96yDER
- ukQfWefhn2ucWoJCzpEuDbgjG3m0ewjUSExsKPG6H0DuJTNexwNzb3TTNbMz4GUW/ORsK3SplyM
- 4Au/jdkmhcnl/8heAW29uropqYCeDD1Nsh3uD5DXLT5HgbIlKG8CizEt1A0o1K695DHuifmSRqV
- SkoUc9A3etofDCsoNPxsZpPmd4UyrsbMOjnSXwPtu1EYqEEf8l4R9SGFy1leWe/8uKRLR1gk/uv
- r3vVqhdXoy8RmpVo7SnUlEbmDvcecvdaIy3USim69esVZtCGutPS24gCilcNNmkyI21BIr0pQv6
- bTPzV2L/WNLYD5D/OavEa4+Mg3hfZ1tlhKgamTiZonUM=
-X-Received: by 2002:a05:600c:3b1f:b0:45c:b6fa:352e with SMTP id
- 5b1f17b1804b1-45f2130999emr56672945e9.18.1757751078292; 
- Sat, 13 Sep 2025 01:11:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLZxsqZmn/6f5dxt+hQlSele7k9N5HhNQN605HifFw4Gky3/BmrqGML91LF8u9ztXpTLWjDw==
-X-Received: by 2002:a05:600c:3b1f:b0:45c:b6fa:352e with SMTP id
- 5b1f17b1804b1-45f2130999emr56672555e9.18.1757751077821; 
- Sat, 13 Sep 2025 01:11:17 -0700 (PDT)
+ bh=KoI6yvC21dslA1v98yDlQjqFTRjNFP/v63K9eXeIsBI=;
+ b=cUFJ6SjIUPboW+tTF8Bzh1eCjhOH58YL4vkwulDJaiSzPOmYNjpTWwKlABuAvPEHHP
+ zf5b3jtCUiN8ZkTKPEi5Irb3PEUazy0zBV62joa1LmSLgiL2rUt1C48WofNOmCg4xSjf
+ Y4vkET8jQu5OGsEZoANB+Nj6ILA+WIEvdbu13CQuRo/reXbhVBk086rPIOqvtBvS7akV
+ sWW5CLUoI9W26i4CsoLY8VEcF9EvTb/zwxIvYfCWty7twID16eWifzcJncihqjFxNMwH
+ PDlWFPqDAL9Bv73pb5zR9Ln+LXqu3w/LfGI1QTKd8hHaU0rUNzIThvxovliCj4rVzMU2
+ OYYQ==
+X-Gm-Message-State: AOJu0YzD3UxAYMiwkftjep8/OsyTsRM460huqAoM+Vzrc09WtqebCyBg
+ rsqgxpxQro/+jo+eUm6DldahY+73fr87YMqlbVeTSJwfNyGxbIDuqkn4Vj7FEVqjzQiJ7XUA3uV
+ 0okfPKxBlFmWL3++4N69fq5ymR44XE4biYDuSwlaLOTXgUZ08PqDY+9RmyJWssx2B70Z++ttsJ2
+ Jr2LtSP2ZNnEdA/P7vtGgiF4076qVSm5X2d50ozETy
+X-Gm-Gg: ASbGncu1rS8lI2rbiTQEKCEFiDN8fRwVfCOgvPRve8WtUif81FmErsSTEYRWuWhQSkH
+ JQUNXE50lkhH9F+sNTiPbhoGqgqbM9N33HCsvKYzEb0bOBPAF7DmF5dQL/5hW3GBS6CIQqxAFzD
+ iavf/K+H+bnGEeVcKac+Z2Y/3EZUe7heWr1I7NKIhTJxaWdii2NWnu0LlSaTknvRaouoMt64cTT
+ Amb8425SEFTJNz2PrN0jY0N8HpyRvJH5903FqP5NjDJTUqSCSu9N1X3J4O+PBCLEtse8nfpV1h6
+ +47jRSGvoQ2vCSWh3gtzUXmqoQn/zIRjvv2AvrjFpMAHc/Aub6nY0Xe9qMxeH0z2Wn/XSQh8nid
+ 5BP8PwKmk9nxHIatigFFBYztdFbGmJEltNpg03VxJpd8=
+X-Received: by 2002:a05:6000:420f:b0:3e5:955d:a81b with SMTP id
+ ffacd0b85a97d-3e7659c4248mr5016865f8f.34.1757751148850; 
+ Sat, 13 Sep 2025 01:12:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEIE+15wQYUhMNqii8b89mH4X0yxHS5Pb4oyidKdzD45sVy0lZSe5czC38SfsyaH3c3EQOGtA==
+X-Received: by 2002:a05:6000:420f:b0:3e5:955d:a81b with SMTP id
+ ffacd0b85a97d-3e7659c4248mr5016843f8f.34.1757751148392; 
+ Sat, 13 Sep 2025 01:12:28 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e037c3cbdsm96129125e9.17.2025.09.13.01.11.16
+ ffacd0b85a97d-3e766659ea0sm6028410f8f.43.2025.09.13.01.12.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 01:11:16 -0700 (PDT)
+ Sat, 13 Sep 2025 01:12:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 33/61] rust: move VMState handling to QOM module
-Date: Sat, 13 Sep 2025 10:09:14 +0200
-Message-ID: <20250913080943.11710-34-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 60/61] accel/kvm: Zero out mem explicitly in
+ kvm_set_user_memory_region()
+Date: Sat, 13 Sep 2025 10:09:41 +0200
+Message-ID: <20250913080943.11710-61-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
 References: <20250913080943.11710-1-pbonzini@redhat.com>
@@ -111,82 +112,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-This will allow to split vmstate to a standalone crate next.
+Zero out the entire mem explicitly before it's used, to ensure the unused
+feilds (pad1, pad2) are all zeros. Otherwise, it might cause problem when
+the pad fields are extended by future KVM.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20250827104147.717203-9-marcandre.lureau@redhat.com
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Fixes: ce5a983233b4 ("kvm: Enable KVM_SET_USER_MEMORY_REGION2 for memslot")
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250728115707.1374614-3-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/qom.rs     |  3 +++
- rust/qemu-api/src/vmstate.rs | 11 +++++------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ accel/kvm/kvm-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 014ffb1fd88..12c6fc6752c 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -109,6 +109,7 @@
-         object_get_typename, object_new, object_ref, object_unref, TypeInfo,
-     },
-     cell::{bql_locked, Opaque},
-+    impl_vmstate_pointer,
- };
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 633b72bde2d..72b571a6972 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -358,7 +358,7 @@ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram,
+ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, bool new)
+ {
+     KVMState *s = kvm_state;
+-    struct kvm_userspace_memory_region2 mem;
++    struct kvm_userspace_memory_region2 mem = {};
+     int ret;
  
- /// A safe wrapper around [`bindings::Object`].
-@@ -948,3 +949,5 @@ fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
- 
- impl<T> ObjectClassMethods for T where T: IsA<Object> {}
- impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
-+
-+impl_vmstate_pointer!(Owned<T> where T: VMState + ObjectType);
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 59c7950a5aa..4e1086779ac 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -40,8 +40,6 @@
-     bindings::{self, VMStateFlags},
-     callbacks::FnCall,
-     errno::{into_neg_errno, Errno},
--    prelude::*,
--    qom::Owned,
-     zeroable::Zeroable,
- };
- 
-@@ -128,7 +126,8 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
- /// * a transparent wrapper for any of the above (`Cell`, `UnsafeCell`,
- ///   [`BqlCell`], [`BqlRefCell`]
- /// * a raw pointer to any of the above
--/// * a `NonNull` pointer, a `Box` or an [`Owned`] for any of the above
-+/// * a `NonNull` pointer, a `Box` or an [`Owned`](crate::qom::Owned) for any of
-+///   the above
- /// * an array of any of the above
- ///
- /// In order to support other types, the trait `VMState` must be implemented
-@@ -335,10 +334,11 @@ unsafe impl VMState for $type {
- // Note that references are not supported, though references to cells
- // could be allowed.
- 
-+#[macro_export]
- macro_rules! impl_vmstate_pointer {
-     ($type:ty where $base:tt: VMState $($where:tt)*) => {
--        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
--            const BASE: VMStateField = <$base as VMState>::BASE.with_pointer_flag();
-+        unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmstate::VMState $($where)* {
-+            const BASE: $crate::vmstate::VMStateField = <$base as $crate::vmstate::VMState>::BASE.with_pointer_flag();
-         }
-     };
- }
-@@ -350,7 +350,6 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
- // Unlike C pointers, Box is always non-null therefore there is no need
- // to specify VMS_ALLOC.
- impl_vmstate_pointer!(Box<T> where T: VMState);
--impl_vmstate_pointer!(Owned<T> where T: VMState + ObjectType);
- 
- // Arrays using the underlying type's VMState plus
- // VMS_ARRAY/VMS_ARRAY_OF_POINTER
+     mem.slot = slot->slot | (kml->as_id << 16);
 -- 
 2.51.0
 
