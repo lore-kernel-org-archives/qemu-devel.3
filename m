@@ -4,47 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8859ACAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 09:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AB8CAC587
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 09:39:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxMSf-0002Dz-Mv; Sat, 13 Sep 2025 05:22:25 -0400
+	id 1uxMhy-00006o-J7; Sat, 13 Sep 2025 05:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uxMSa-0002Ch-B8; Sat, 13 Sep 2025 05:22:20 -0400
-Received: from [115.124.28.59] (helo=out28-59.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uxMSX-0004ys-Ex; Sat, 13 Sep 2025 05:22:20 -0400
-Received: from ZEVORN-PC(mailfrom:chao.liu@zevorn.cn
- fp:SMTPD_---.eeCn-2Y_1757755078 cluster:ay29) by smtp.aliyun-inc.com;
- Sat, 13 Sep 2025 17:17:58 +0800
-From: Chao Liu <chao.liu@zevorn.cn>
-To: richard.henderson@linaro.org, paolo.savini@embecosm.com, npiggin@gmail.com,
- ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@yeah.net>,
- Chao Liu <chao.liu@zevorn.cn>
-Subject: [PATCH v8 2/2] tests/tcg/riscv64: Add test for vlsseg8e32 instruction
-Date: Sat, 13 Sep 2025 17:17:10 +0800
-Message-ID: <bb1fca151e17b6b5bf25ee8565d3f5b2764a22b2.1757690407.git.chao.liu@zevorn.cn>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <cover.1757690407.git.chao.liu@zevorn.cn>
-References: <cover.1757690407.git.chao.liu@zevorn.cn>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uxMhu-00006S-4P
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 05:38:10 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uxMhs-000799-8V
+ for qemu-devel@nongnu.org; Sat, 13 Sep 2025 05:38:09 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-72e565bf2feso18540577b3.3
+ for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 02:38:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757756286; x=1758361086; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6YjNpsb27vlwkqD6z6Ug03Vx4JXahpIRVAOEtgwUFbo=;
+ b=nrh5gQT1uq9S5zIAlEvEEaoCb3CT3yX5caXL3P03A4whfdXnpA2J23weunpERVkwCt
+ ehPNRmbQtrwLlZ0dUZyWUEOhHXriUf9TTNf4/i1hFbHp377WYOwfqJ2Xmt7qNLWYlUYx
+ W88mRjoJlF9+zVHyMZi787hdlq0rCbn/ygvuXDCn3t8ZcrAiC+CZuK9AnkbBMp7HGpUH
+ /JVFQG9E1p6l7hPsI+Lty3EQlypv1Hvowo8zSjSYsGichbIToO6mBjJe9Cd6nF4xvpr3
+ HkA6lm4d2HrXvSoxZeygiDiwEilXu3eXAekfKg3+8TPuOEx46DkTQ0s8hh+gQ6dWFcbP
+ c+Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757756286; x=1758361086;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6YjNpsb27vlwkqD6z6Ug03Vx4JXahpIRVAOEtgwUFbo=;
+ b=uYO9jCTlv/X2ZctRuE64A6F8j8IVTo9Qqh/7jjwBQS2ZhA+7PU0YwERpbuFlAQXDyw
+ Cc5frPmOuLnpDVOzb3NQvZc1MzNJNySl5arbNYURfSZLqrOlmjZOnwrs2mi5+xhranvD
+ BzWlSPVzJ6UQxMB0ByOrOpPUJJXKVQh/4QPxcGTp9CJ3azbNVD+baXElf8aohGD2rGxn
+ 6mkmZLJsJE5dfyvPD7BZRiXgiW6rPZCbhcE4qz4a6HA+mQRb8N87fAFi5GWHjB8bwgi3
+ Iadv+4jzYna4X1cF6GEpnAUfmR38mtmfAfRgROoGk+N/5yzAf346pBaU0060F6aS0dqa
+ udwQ==
+X-Gm-Message-State: AOJu0YxOHHa3uDH7y3elZTWYRooAPObjGRGw5+dGf+rLb+8QztyRFwPP
+ 9qq8QBUzEJVl+ZzxYimuZx6/A6elBCJ+mvKVIzadtJAMIu8YjpGbRpw+p95PlXZN/qtz91hkCyg
+ GBgaLBOKVTcyGuLvIJ1o5sE94OiTuJgbI70qRIjih3g==
+X-Gm-Gg: ASbGncs7gjdz3QRZZykAmaOkG1BFgKAUkR6eAt7GaUfjTEm3SjtSxQ5aFgsGz4V7bDf
+ A/TJFODrl8OebIa1hkhMRHN2pYSrSJuHHZywsgcXGS9Qas54AgDjOmNtPacNBeT0mDcyZehQGXE
+ Fl319LaYgwrekU3OKQip+/yQgTy4z2x361cJPj72FUwdcWtB67TOQqh1eKOSgVZGlhFwn8Peq8P
+ pG3KcWGb5FWwGQCup8=
+X-Google-Smtp-Source: AGHT+IFKtmuaXhpKBE/+oxuV+j88nsPZAcX17c9N8vw9iNp5IL2f34+aAh7c9Qd9hgMmUnJeMLA+QNvcsSc6ms4Ejlg=
+X-Received: by 2002:a05:690c:dd5:b0:721:10a3:6584 with SMTP id
+ 00721157ae682-73062ab418emr61376257b3.11.1757756286519; Sat, 13 Sep 2025
+ 02:38:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.59 (deferred)
-Received-SPF: pass client-ip=115.124.28.59; envelope-from=chao.liu@zevorn.cn;
- helo=out28-59.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+References: <20250913080943.11710-1-pbonzini@redhat.com>
+In-Reply-To: <20250913080943.11710-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 13 Sep 2025 10:37:55 +0100
+X-Gm-Features: Ac12FXwOu-udXj5_a8Evw5w6LcA9FBFobd3saC-nt2mUHqMaGjEWKEz_lnsgwZc
+Message-ID: <CAFEAcA8nFU1fRFMQ_jLcDzKPoPKeV789L5iTgq-kqoa0zULmaQ@mail.gmail.com>
+Subject: Re: [PULL 00/61] CPU, Rust, x86 changes for 2025-09-13
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,157 +92,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu@yeah.net>
+On Sat, 13 Sept 2025 at 09:12, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
+>
+>   Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 8733ddc08165d901eb2c87f364f814f58ab9fd19:
+>
+>   accel/kvm: Set guest_memfd_offset to non-zero value only when guest_memfd is valid (2025-09-13 07:52:55 +0200)
+>
+> ----------------------------------------------------------------
+> * cpu-exec: more cleanups to CPU loop exits
+> * python: bump bundled Meson to 1.9.0
+> * rust: require Rust 1.83.0
 
-This case, it copied 64 bytes from a0 to a1 with vlsseg8e32.
+I still have an unanswered question about moving our Rust
+minimum version forwards which I'd like to get clarity
+on before we commit to this, please.
 
-Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Eric Biggers <ebiggers@kernel.org>
----
- tests/tcg/riscv64/Makefile.softmmu-target |   7 +-
- tests/tcg/riscv64/test-vlsseg8e32.S       | 107 ++++++++++++++++++++++
- 2 files changed, 113 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/riscv64/test-vlsseg8e32.S
+https://lore.kernel.org/qemu-devel/CAFEAcA8WZ1Aa==LZv+roEHdaOzoMoX3aoeBbsM4gc3d_Yq=GTA@mail.gmail.com/
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 3ca595335d..e52c005f87 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -7,7 +7,7 @@ VPATH += $(TEST_SRC)
- 
- LINK_SCRIPT = $(TEST_SRC)/semihost.ld
- LDFLAGS = -T $(LINK_SCRIPT)
--CFLAGS += -g -Og
-+CFLAGS += -march=rv64gcv -mabi=lp64d -g -Og
- 
- %.o: %.S
- 	$(CC) $(CFLAGS) $< -Wa,--noexecstack -c -o $@
-@@ -24,5 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-vlsseg8e32
-+run-vlsseg8e32: QEMU_OPTS := -cpu rv64,v=true $(QEMU_OPTS)
-+run-vlsseg8e32: test-vlsseg8e32
-+	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-vlsseg8e32.S b/tests/tcg/riscv64/test-vlsseg8e32.S
-new file mode 100644
-index 0000000000..bbc79d5e8d
---- /dev/null
-+++ b/tests/tcg/riscv64/test-vlsseg8e32.S
-@@ -0,0 +1,107 @@
-+#
-+# QEMU RISC-V Vector Strided Load Instruction testcase
-+#
-+# Copyright (c) 2025 Chao Liu chao.liu@yeah.net
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+	.option	norvc
-+
-+	.section .data
-+	.align 4
-+source_data:
-+	.asciz "Test the vssseg8e32 insn by copy 64b and verifying correctness."
-+	.equ source_len, 64
-+
-+	.text
-+	.global _start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+
-+enable_rvv:
-+
-+	li	x15, 0x800000000024112d
-+	csrw	0x301, x15
-+	li	x1, 0x2200
-+	csrr	x2, mstatus
-+	or	x2, x2, x1
-+	csrw	mstatus, x2
-+
-+rvv_test_func:
-+	la	a0, source_data
-+	li	a1, 0x80020000
-+	vsetivli	zero, 1, e32, m1, ta, ma
-+	li	t0, 64
-+
-+	vlsseg8e32.v	v0, (a0), t0
-+	addi	a0, a0, 32
-+	vlsseg8e32.v	v8, (a0), t0
-+
-+	vssseg8e32.v	v0, (a1), t0
-+	addi	a1, a1, 32
-+	vssseg8e32.v	v8, (a1), t0
-+
-+compare_start:
-+	la	a0, source_data
-+	li	a1, 0x80020000
-+	li	t0, 0
-+	li	t1, source_len
-+
-+compare_loop:
-+	# when t0 >= len, compare end
-+	bge	 t0, t1, compare_done
-+
-+	lb	t2, 0(a0)
-+	lb	t3, 0(a1)
-+	bne	t2, t3, compare_fail
-+
-+	addi	a0, a0, 1
-+	addi	a1, a1, 1
-+	addi	t0, t0, 1
-+	j	compare_loop
-+
-+compare_done:
-+	# compare ok, return 0
-+	li	a0, 0
-+	j	_exit
-+
-+compare_fail:
-+	# compare failed, return 2
-+	li	a0, 2
-+	j	_exit
-+
-+trap:
-+	# When an instruction traps, compare it to the insn in memory.
-+	csrr	t0, mepc
-+	csrr	t1, mtval
-+	lwu	t2, 0(t0)
-+	bne	t1, t2, fail
-+
-+	# Skip the insn and continue.
-+	addi	t0, t0, 4
-+	csrw	mepc, t0
-+	mret
-+
-+fail:
-+	li	a0, 1
-+
-+# Exit code in a0
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-+
-+	# Semihosting call sequence
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
--- 
-2.51.0
-
+thanks
+-- PMM
 
