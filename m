@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66248CAC587
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 06:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BCACAC587
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 06:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxJfB-00071t-KM; Sat, 13 Sep 2025 02:23:10 -0400
+	id 1uxJjw-00006l-6b; Sat, 13 Sep 2025 02:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uxJf9-00071c-NM; Sat, 13 Sep 2025 02:23:07 -0400
+ id 1uxJju-00005x-F2; Sat, 13 Sep 2025 02:28:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uxJf7-0007fH-KO; Sat, 13 Sep 2025 02:23:07 -0400
+ id 1uxJjr-0008AP-03; Sat, 13 Sep 2025 02:28:02 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08234153374;
- Sat, 13 Sep 2025 09:22:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC3B6153378;
+ Sat, 13 Sep 2025 09:27:53 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8D6127EEA7;
- Sat, 13 Sep 2025 09:22:58 +0300 (MSK)
-Message-ID: <48ae7017-6388-454c-aaff-42ca82331b00@tls.msk.ru>
-Date: Sat, 13 Sep 2025 09:22:58 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 886FD27EEAC;
+ Sat, 13 Sep 2025 09:27:56 +0300 (MSK)
+Message-ID: <0032d919-d99c-4ad6-8883-b13d08510bd1@tls.msk.ru>
+Date: Sat, 13 Sep 2025 09:27:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>, qemu-riscv@nongnu.org
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: target/riscv/pmu.c:216:riscv_pmu_icount_update_priv: assertion
+Subject: Re: target/riscv/pmu.c:216:riscv_pmu_icount_update_priv: assertion
  failed: (newpriv <= PRV_S)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: QEMU Development <qemu-devel@nongnu.org>, qemu-riscv@nongnu.org
+References: <48ae7017-6388-454c-aaff-42ca82331b00@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,6 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <48ae7017-6388-454c-aaff-42ca82331b00@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -101,31 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+On 13.09.2025 09:22, Michael Tokarev wrote:
 
-Got an assertion failure for qemu 10.1 in debian today during
-EDK2 autopkgtes (CI) run, on ppc64el host, here:
+> There's a bug open on launchpad too:
+> https://bugs.launchpad.net/ubuntu/+source/edk2/+bug/2120835
 
-https://ci.debian.net/packages/e/edk2/testing/ppc64el/64438090/#L713
+Hmm, I should consume some coffee before sending emails in the morning.
 
-The command line (from the test) is:
-
-/usr/bin/qemu-system-riscv64 -no-user-config -nodefaults -m 256 \
-  -smp 1,sockets=1,cores=1,threads=1 -display none -serial stdio \
-  -machine virt -device virtio-serial-device \
-  -drive 
-file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd,if=pflash,format=raw,unit=0,readonly=on 
-\
-  -drive 
-file=/tmp/RISCV_VIRT_VARS.fd2iapb3sq,if=pflash,format=raw,unit=1,readonly=off
-
-(it is testing just the bios/firmware code).
-
-There's a bug open on launchpad too:
-https://bugs.launchpad.net/ubuntu/+source/edk2/+bug/2120835
-
-Any ideas here, maybe it's not new, or maybe it's already clear from
-the code what's going on?
+https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg03901.html
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=121689
 
 Thanks,
 
