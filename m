@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B027CAC58E
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Sep 2025 10:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DDACAC58F
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Sep 2025 07:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxNj5-0001Ih-I7; Sat, 13 Sep 2025 06:43:27 -0400
+	id 1uxh6v-0007Se-Lw; Sun, 14 Sep 2025 03:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uxNiu-0001Hd-6l
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:43:17 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uxNiq-0007Bw-Vp
- for qemu-devel@nongnu.org; Sat, 13 Sep 2025 06:43:14 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3dad6252eacso1172570f8f.1
- for <qemu-devel@nongnu.org>; Sat, 13 Sep 2025 03:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757760191; x=1758364991; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=roOkeYsJSJo4xShnJ5Df5hNGC4JiwdyRZWQP138uK2I=;
- b=oPBE33daqjONFTYZhJLiIoBIANdDDTFpwvLu3vjRN8qUSntcpr/y4wAAaMy9I06L0v
- KunkRcEmJJtq92WlIUUJJtiKZS3AEnw04bqUeYjh1PonPSJGkrDB8QowNBDxrnfvp2vC
- WfkeYjlo3XUEVJnPYfwvSV1DzANnc48/dwKMS+oYy0CUhLWMTedr0oPoARU/zrH3vxBk
- iphAgJwttBVcE9th4vzDC2mtHDZ9TLA9vGP14mr4BtvD0Mq8Uk9NbSu9J2AZa/qvJSYa
- JFlW57gXaNRqtRkCHvrPSGJ0oFJMh/h3oszunqoMB3uJK3Xyg3IylujhF6NemxcBLBaf
- nB+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757760191; x=1758364991;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=roOkeYsJSJo4xShnJ5Df5hNGC4JiwdyRZWQP138uK2I=;
- b=rKRVCPfeZW0mwcu8uIt6lWVAHv94dbEQXfSb4b1aofkNL9M6hBDERHmOaU6q8tNoGP
- MC9dbRvAoGTkzhm69S2Mss1XAzV3trU90ibGr6vT9xOr+hzN8wa2LmkOYNwSi0pMo9rL
- pLLcHJf9yv8lL8X5BiCL8VaUggYe3IM1U1zchQxJrEPfSLrMVdMijRUNivZCKANR7x/7
- L0M/V7iH4lUFK9Bao+20ZnATMyQCVu5ndzwNmB6GkxfD2h8+E3S0smF6TwbPUcSt9jcO
- AMFD6UnhckQml4YYV+jpEmB6Zi+e1Xp17s0LAItqyNEccr0o7A5z3as6Xt8/q0TxIkoA
- +vag==
-X-Gm-Message-State: AOJu0Yx6QGiLGA3I3Nzd953Brz2jGOQxrOwf5ujFyC16FMAfIrUfLpEb
- dxSyBaSuH0l7IorSZFL228JbhXtt6fVPwgAlkq4e4eewGyntynGHoc6KYqywhpSY+a1flvorKCh
- /unq/SH4=
-X-Gm-Gg: ASbGnctOqAqf4rpTdsMDW+dw0XHw8XJJapf9wQ14QQNGNWEK0lGMETzYAuujHD8xkGE
- iRcjOh/g20Kj7IsWjTtOjmmMCIIc5Bxg9VjUcDr7xpOJraxfEr8z3NiZJz/88Hiwf63zJ03/t0L
- 3tvYE62lTPw6MeEuyMXMxCpHk2VFIulvyE2gHeyd6yioPIFjAG1UkM2875mGywIGqF+utKnfoQX
- Edd52AyUpsUZxcbAoklz4I5KCb+ULhn5jB7iC2RXEzbsLdOOAq/4Rhe+9D3/bM8JxLL3W0ZUci8
- kOTVaKmK8yu7Wa0dPm6jsu7eNl+vDpPQJM7tmrb7Q6e8PQX2Ej/AODZVwrUFA/Pd0SS08gIAClX
- D+8eSNoIWQTYYnq1SRSslyudNf7y6mLe91w==
-X-Google-Smtp-Source: AGHT+IEx+ONiAdfieAwPpzl8/JhEUd1jFzsYRHVd353MkBayRTBBYAzOqAeHZGrMaK6BUbbQtK2eLQ==
-X-Received: by 2002:a05:6000:240b:b0:3e7:6457:ca85 with SMTP id
- ffacd0b85a97d-3e765781280mr6510319f8f.5.1757760191026; 
- Sat, 13 Sep 2025 03:43:11 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45f28c193f9sm12327615e9.2.2025.09.13.03.43.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 13 Sep 2025 03:43:10 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8EA4A5F7F7;
- Sat, 13 Sep 2025 11:43:09 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, qemu-trivial@nongnu.org
-Subject: Re: [PATCH trivial] ui/gtk: Fix callback function signature
-In-Reply-To: <20250913-fix-signature-v1-1-974d16871432@gmail.com> (Filip
- Hejsek's message of "Sat, 13 Sep 2025 00:58:35 +0200")
-References: <20250913-fix-signature-v1-1-974d16871432@gmail.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Sat, 13 Sep 2025 11:43:09 +0100
-Message-ID: <87plbu7hvm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uxh6s-0007SP-PY
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 03:25:18 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uxh6j-0006dr-I9
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 03:25:18 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58E7Oi6x076734
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 14 Sep 2025 16:24:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=nnP7L3uMTVTC9CstiOcUew02m2VUfVxGnPYdXunvaOk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1757834684; v=1;
+ b=YxIFlWo9sYmPN1ky2xMo1Ukc28dyGJPWZqtSvQKMkAoPP7X97mo2FTcfZW8lFdS+
+ cVZXMNzMX8wCNEhUp86+kH7oluJ87ayue1/Wa5O2gSlVMBxqSawrS66bOot7wJoq
+ WeIvew5kM7G2ESj1wH1M45eCQRM688m3y5fQGzeUlrqFhr4z8EiIOb7xvUSltFWR
+ Eawc6abM2E+XpR9L2zihr4Kn7JU29FOvVjJBu+haWTuVAJpffAykLzYRBtpimSyR
+ M4b4M59d00NLbd3m2KbXevw/kefnRWRQB+H+hS78fsv+j3MBYRJPt6nYuYTWpJ2Z
+ /BCRGR5pViCVM4p0U4QNrg==
+Message-ID: <43a98363-0607-42c6-906b-4f79e5740ea8@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 14 Sep 2025 16:24:43 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+ resources
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+ <20250903054438.1179384-5-vivek.kasireddy@intel.com>
+ <26c02124-eb57-4d50-bf8d-1fa809984adc@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185758D6CD5D2774E6373BBF80BA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB7185758D6CD5D2774E6373BBF80BA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +80,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filip Hejsek <filip.hejsek@gmail.com> writes:
+On 2025/09/13 11:48, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+>> resources
+>>
+>> On 2025/09/03 7:42, Vivek Kasireddy wrote:
+>>> The res->blob pointer is only valid for blobs that have their
+>>> backing storage in memfd. Therefore, we cannot use it to determine
+>>> if a resource is a blob or not. Instead, we could use res->blob_size
+>>> to make this determination as it is non-zero for blob resources
+>>> regardless of where their backing storage is located.
+>>
+>> I guess this change needs to be applied before "[RFC 3/6]
+>> virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
+>> devices"; without this patch, the "create dmabuf" patch will probably
+>> create an invalid blob.
+> Ok, makes sense. I'll move it earlier in the patch series.
+> 
+>>
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu.c | 19 +++++++++++--------
+>>>    1 file changed, 11 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>>> index 0a1a625b0e..2f9133c3b6 100644
+>>> --- a/hw/display/virtio-gpu.c
+>>> +++ b/hw/display/virtio-gpu.c
+>>> @@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>>>        }
+>>>
+>>>        if (res->blob_size) {
+>>> -        if (res->blob_size < (s->current_cursor->width *
+>>> +        if (!res->blob || res->blob_size < (s->current_cursor->width *
+>>
+>> I doubt that rejecting a valid blob due to an implementation concern
+>> (whether the backing storage is in memfd) is tolerated in the specification.
+> Are you suggesting that the whole if (res->blob_size < (s->current_cursor->width *...
+> check needs to be removed? I think it is just a sanity check to ensure that the blob
+> size is big enough for cursor.
 
-> The correct type for opaque pointer is gpointer,
-> not gpointer * (which is a pointer to a pointer).
->
-> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+I referred to !res->blob, the new condition. It rejects a valid blob 
+that is backed by VFIO.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Regards,
+Akihiko Odaki
 
