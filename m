@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB2A9CAC594
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Sep 2025 12:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0488CAC582
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Sep 2025 12:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxlme-0002U3-Iu; Sun, 14 Sep 2025 08:24:44 -0400
+	id 1uxlmQ-0002SF-BK; Sun, 14 Sep 2025 08:24:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1uxlmS-0002TQ-II; Sun, 14 Sep 2025 08:24:32 -0400
+ id 1uxlmE-0002RK-0w; Sun, 14 Sep 2025 08:24:18 -0400
 Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
  ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1uxlmH-0007KW-HI; Sun, 14 Sep 2025 08:24:30 -0400
+ id 1uxlm8-0007KW-S1; Sun, 14 Sep 2025 08:24:17 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GQx9E4DIxxRLxdNIGJ6mrfb90UlVMAxv4Zwnb3rqY5a8EYsZDQJRF+u7g7+OP+F9UkJB4UrYPus9OrzoAW9EXeYZ6uFwljCGQgRZhsmHlqcQm85d4rjlGNW/P1MfglmNBMFiTfplthRlIH1y0jPUObSZsvS624ITariIJr6XR0NRYPfPGDVX1di0Mg7gGqj9KoFyc/TckMQTpIuWYfDv6qDW/AkIZE1wRU9DSdZSeIqJO+42jB5kWT7rnN93214UZyWGNbqTavpjKKMYJ5yw1R/jTHjwtcT19DVZhXmPCVAOahAePhvVdENKMgMdkLAklh6U46/GaYcSrHDYb7H8mA==
+ b=in1oMiC98od3xYqjG1RZqXYwVyCtLSoe1oL4Ic2Crj6F8N3Y4VSzIf9BgVMXXs1aPZP+a4MaNOnBYuuA+Om7DKX1ntOXE3FAL+Pl8IFERxUEFxsam3gfED08WUQra83XI5gFayZS4V8xGoHeOF3E2m14Bc9UsbGBYgUykzesH+tUYGYsGtqj6a6gXMaJCe5wuB4AkHGW2ejM71buRMW7PFhmQ+Jg/iBqLudlG5G1WNRaiVi1iPHhZXR4DmJsB0jRhll31O84kMhykBbiFijzr9z7iQxASyChwVVz6EqikRkIsS7QH2rYqQDWjRklBT58qF3Kc7KRhpKqtbtuTWCndw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=StqUYs2dkK1gXuOzwZLryiZJnlGMtqe/s/g9fNVFhXQ=;
- b=kpSQFt7GoRlF3xvK6q6tTtN26+FUq8VxlUV2WsNpa8Z0Pu0i6ju0FnrCaq0IFyXcVJW/VR5kCafprWXLC3oWoepnXSMYc8z99TJ4PzPYXdMngDoMz58yjgv8d0XkUJBroAJ3N5XC+aXACUv6mCO9LaOR8+kxZQMY34/JbznUG2wnxHeHw//dRojJ7SZbAezOV1jHZa6Q0Gehttsf9DOFmmK2q6xzUWoWVD/dWssaIA0j9UCZ9vos6eNnF05qG8zOQWla3sSyaSQ8oGVSUUdEDU4iSU19YIWmMWPi7j/2mE7gFXT9kgAFNB1EL5rE462k0qYTQIYgw+8zHmo6rZBfig==
+ bh=yCQV3cfivSLJzCUecf4W8ttY3S2YmHq2XuM0H+7cr4o=;
+ b=zIBEuHgUswX5nM05ZTb43P0tYXP/Pv7YvKVd045etTcSUxLoU7H/mk0FKzRg3L4+nvzKPvo/Wh51HwEb2nDYv/pHyFP5WFi2zUJkYwFcnprkpEeyS9BTUVrSALlFV1yJXgnJBp6dgmOV6Qnj4xFPVJ1RT8wVXkwk1MuA8+OlxFYXbLb/PgW16uDK23/zOMeSm6lYLzbD2Djs2DMrW1oq0+AU/cb2bt5tFXygpH1WaEJQv+ijVorXmJCA89Ha58TRLeWmZwSnooWhZUw1VTDyRhNAA5vLfZ2HJLrFl272VmaPIyoY3x2hQGVCLBOxRnQ1SUFcmgjw2/PLU6oNE9jw2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
  dkim=pass header.d=siemens.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=StqUYs2dkK1gXuOzwZLryiZJnlGMtqe/s/g9fNVFhXQ=;
- b=afOo0BEBcFLbxmMAWkO3xBUlXBBp6UFOhb8wKZJVKuSBdQSgoUFW38W9l0J938pdu+bfitxZ7VUfJvIVOwQfBzNuYcY3Sm0ecn3YwGuilC6VlF/ePDeplRlW75Uf5f5YccCoy1v5yHa0NFTALRAjFuRTmJql/ElclBnxRMxeUmlmEzH3T4Ntb97Knkh+UTLxrVuq/i0YY62t+TTm/x7R9EhcMHekM6AxGKZmbdyaczA9zMVafxlwftJXrXZ9COcniUC54xqeSoZm5IRyOI4scpIYPowrL2WkrKT5XKk2h36XwP9oTchHAA8W1OxBzVlAHrWJuW+pdyV2P/hVmMQedw==
+ bh=yCQV3cfivSLJzCUecf4W8ttY3S2YmHq2XuM0H+7cr4o=;
+ b=rpvj4Q7TY8+qzOIcgqJdoBQRDikKGuOc0iG2JY3oC0c3NoWlz43WX9K4pzvfCkVxrXNfjT+2/KA2VkYLOK39Sd0PMoI2bss7o2PaxQ/O0M6RaSxFZaDLhKlSog7+8xte4B38gxByUndcSDkPx+Z5BMLA//pqJgp6j5H8nQ1lo8/6PAGA6so3sMyLVWsVRCKPQLCSVEgmsPq1748raojhTBJgkndCS5XGUlH197G30hdo6aI8vCEMO8Ny4X9+nHThHEsOsxJ7Skj2Aypl//3Rxn60tnN1NCdMhZu9GLKAglh0nuijC4Q86YPz7o9uGZ8QnWwJMRGV/4iRfVm93nW2Ig==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=siemens.com;
 Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:76::15)
  by DU4PR10MB8780.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:55f::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.19; Sun, 14 Sep
- 2025 12:23:55 +0000
+ 2025 12:23:53 +0000
 Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::7fc:74bb:a781:a286]) by GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::7fc:74bb:a781:a286%6]) with mapi id 15.20.9094.021; Sun, 14 Sep 2025
- 12:23:55 +0000
-Message-ID: <d1cdafb7-e249-46ea-b29e-cc8f0ce6b9ef@siemens.com>
-Date: Sun, 14 Sep 2025 14:23:49 +0200
+ 12:23:52 +0000
+Message-ID: <ce1ddb62-319c-4385-a3f8-c1fd36081457@siemens.com>
+Date: Sun, 14 Sep 2025 14:23:43 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/6] docs: Add eMMC device model description
-To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+Subject: Re: [PATCH 8/8] scripts: Add helper script to generate eMMC block
+ device images
+To: Jerome Forissier <jerome.forissier@linaro.org>,
  qemu-devel <qemu-devel@nongnu.org>
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <cover.1757422256.git.jan.kiszka@siemens.com>
- <2a8d6226903d8dcf9615b5ac5a40522b6bf2f7c3.1757422256.git.jan.kiszka@siemens.com>
- <4d7760a559948fe8b16517fd4a17abde0606bae5.camel@pengutronix.de>
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>
+References: <cover.1756019920.git.jan.kiszka@siemens.com>
+ <c8ee22c72a87c6bd8d9495995868cb22a633de41.1756019920.git.jan.kiszka@siemens.com>
+ <891712cb-0dee-482f-888c-2649ae2d4ca9@linaro.org>
 From: Jan Kiszka <jan.kiszka@siemens.com>
 Content-Language: en-US
 Autocrypt: addr=jan.kiszka@siemens.com; keydata=
@@ -103,102 +103,102 @@ Autocrypt: addr=jan.kiszka@siemens.com; keydata=
  qH4kDzsqKX8zzTzfAWFxrkXA/kFpR3JsMzNmvextkN2kOLCCHkym0zz5Y3vxaYtbXG2wTrqJ
  8WpkWIE8STUhQa9AkezgucXN7r6uSrzW8IQXxBInZwFIyBgM0f/fzyNqzThFT15QMrYUqhhW
  ZffO4PeNJOUYfXdH13A6rbU0y6xE7Okuoa01EqNi9yqyLA8gPgg/DhOpGtK8KokCsdYsTbk=
-In-Reply-To: <4d7760a559948fe8b16517fd4a17abde0606bae5.camel@pengutronix.de>
+In-Reply-To: <891712cb-0dee-482f-888c-2649ae2d4ca9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: FR4P281CA0106.DEUP281.PROD.OUTLOOK.COM
  (2603:10a6:d10:bb::10) To GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:150:76::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR10MB6186:EE_|DU4PR10MB8780:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27f4c5aa-ae83-4233-05bb-08ddf3899236
+X-MS-Office365-Filtering-Correlation-Id: d663e767-abf9-42b4-034e-08ddf389908a
 X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z01NeVo4eVF5UGRrcWJpcnE5ckpWbmd2SFRrVytDUUFhWDc1cGxZc0tMYk1K?=
- =?utf-8?B?MXUyR2lZeHlPZjJjWlluYVRsMC9mOWdPZ1NRRkNwRUhsTk1iMW0rUHdyeWxG?=
- =?utf-8?B?TkpTVVE1M3dCeEZtNzJ5YWFHUDNIdmhkN3hSVFJ3bXRybkJodFM4Q2Q3RjBS?=
- =?utf-8?B?VmZCSTlXLzVsL25BcG4rOWhlWFE3VHNSOVB6eittWlAzRTZxMncxM2ZPZTBW?=
- =?utf-8?B?K3BMYWppWmJlV29VMDI4QS8wbllMM1Q2OTZpVDZHd1R1dnhRU2FlRERvODJT?=
- =?utf-8?B?ajhjbWVHVCtFT3JaK2dkV3JJWDdlMmpxdzB5TTliRTVTSlJITGd2RVVsczR5?=
- =?utf-8?B?QVFxYTQ2cERvdkFZa2t6WVZyNDhqc01kSWtqSEJGNEhPVUtLY3VEbWxqREpo?=
- =?utf-8?B?VWFzcldmZ2sxY2FUQjEzSXVYMU5rdzRMMTN4bnN3MUpsNkNsUVlpa0o0OG9X?=
- =?utf-8?B?b09JUzIxcEtHbm4xQTBkN3BDYmtHcjcvTDJzR2MwSHRxckYyRDM4Z21BSWVK?=
- =?utf-8?B?OG5EZGVWWFFRYytZR08yNktYVWQ0ay85OEZtTDJMbE92SXphQW5GenEzYmJt?=
- =?utf-8?B?a1JNeHhmUGtNdG02bUtkNEVMYkM5dXk1WmQ1ZVMwQUhxZ0xZeTRhaG56NUpu?=
- =?utf-8?B?NmE2cFNNWStQYXZPeGoxMmFRTjAxL0VhNU9DQTU3TlVwYzVJV3RraHJ3UzJE?=
- =?utf-8?B?RUtrVmxVWEJmNkdhdkp6bUgyRnkzQi9mSllQVWFSNXF1UXVCRkdlTnhjOTNE?=
- =?utf-8?B?K1c0NzB2K29DS2FTYTYrQTRuTWIwUVluQ3BxK1pWZCtDN0djTW1xTXZJbnRu?=
- =?utf-8?B?TTZSSzBUbkdvd0VIVzlYVUZwMGpJcUJoMlNpOUJKVUhhbHJ3dlhRS0FlaThW?=
- =?utf-8?B?TjUrK2xFZFpVeE5Lc3VaMTFybXNxWUVmZlNWYm43NjA1WjNXTzZ2NC9hQWxX?=
- =?utf-8?B?RlBCRlJpQkNpdlVsamFIUFlwdHNrTGRCWUhYV2dWTTNsR0RCWFluYnlYWWVk?=
- =?utf-8?B?aGNHR1JNTkM2ODA2eWhwbmJuUFd5MXBDVFppYTVGUUFvUWw1OUpQNlNiT2FU?=
- =?utf-8?B?bDFDTWM2ZUdTQ3RLQ0JJRzd0eUZjT1hoMzJnazhDS3V1UGhaMlRqaEdSamFv?=
- =?utf-8?B?b2UrazNTaWlzZzhIZ3g4cEZOSGdWME1DNEsvai92dElZL1IzeitGQ2twdFFq?=
- =?utf-8?B?cjJOc2ZYcFZCRmdocXN6ZW4xYWh2UTJCQ2Y4MHVST0hqK2VscGYra1VaK3ha?=
- =?utf-8?B?STNESC9nL0FkbkM2ZW8zM0dFbE5ZajZTc05wcFI0TWY3dUhGRDh0SVd5NE1B?=
- =?utf-8?B?Q2lRbklqa3NESEZPclVSVXh0a3VBVm8wa2liS1J3TWVUVUxqTDBnNTdxUkpJ?=
- =?utf-8?B?alFzOUNtTkw4dEpmTkxMWjllWWxoN2l4bVkwUlYvd1MzRlR6SEFCRzEySzJF?=
- =?utf-8?B?K1hSNFJQckV5NnNvY3VtQ1VJOThjRTRNa2RoK1UxMlBrVEJCVUJFek9yT21R?=
- =?utf-8?B?bDRUTVJUQXJMejVGQmlSZFc5cjFzQ0dxcHNWbEViWWw5UVpuVWdQR1NvU2cv?=
- =?utf-8?B?RkdRNVBjV1V5bldERTdJN2xHRHVhL2wySmFOK2JITmoySlFQcnUwOE1oK2ta?=
- =?utf-8?B?K2t5byt2cWRWS2NSUjNmUU5RK3dmY012d3VPdjdqcjBDU016TzM2a0RNWmo0?=
- =?utf-8?B?cHh3a1ZqSmp4Ym5YaExBOUNjTklDZFdWZmV6UUFuWWczRlJGb2o1K1ZTcU5Z?=
- =?utf-8?B?amN2L3d6dHRVRHNEd0UwYnpNT3VrTGdMNE1ET3JQYmoxV1QwNkY4NGYxK1du?=
- =?utf-8?B?M1g1eXhXRkdxaUtabWpVVGNVbTN0TEtSSnhBSXhpOEJiL1lDYm5aWFNFT0h4?=
- =?utf-8?B?NkFkdEE2Ni9LdEx0UXREMzJXTWhmM1pseGZUbWt1T2VWYWhvWTZpZkkzYnVx?=
- =?utf-8?Q?u6/kLI9k8QY=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WFVTdE5XU1k4cDQ5SDRmUTQ0WnhhMmtHWjRIcHNONDJReXQzTm5VdjlONktB?=
+ =?utf-8?B?NU1rTXJsUjhEUzlSM0VwcjNUZUYralBXdldDNFZ2amJCNmFjUDdNS0ZJRWJa?=
+ =?utf-8?B?Wm5lL0Y3SlRvYzdwZWFLYkJNOER6Mm11alRkZjc5Q0RHbzdJVTFoRVFOWkp1?=
+ =?utf-8?B?bzJNdWZ1NHFxakxvdXBTYlE0WVVtQ3hmaFlwelN1QjVTSnhvdzh0OVN0MmNi?=
+ =?utf-8?B?WWs2MHJiMVRSaDVYUzgyT2FCRUFQbE1KYWhaMDRmZzJLcU5hZldsdXY3TS92?=
+ =?utf-8?B?OUR0c3dac2k2RWFOTVlXSWhxaEZzbk9wZ3dqaEw4K2gwcjR0aWt5U2Y0WUxX?=
+ =?utf-8?B?RzVoczh5OWxwODI2OFAvbDgzcjZFcnlNemN6REYrZkFpZVRrQmVvcTJMNEE5?=
+ =?utf-8?B?UmdPUUM4RDdKTTB1SGhjSlZQZkVDb3U5ZlFjSFZ4bEJ4bk5ubS9BNHA4WUYz?=
+ =?utf-8?B?SDZRYStMNEdCb3Ruck5jZVVwa2p2V2hCNEQ2cjBsOVRNTjQrL1dZTWpQL3J3?=
+ =?utf-8?B?Qm10RkhQTDJGenZQdzJHTFJ6Z1BSb1FHc0pTUWhrQ3B4NjAwUnQxOTI5WURy?=
+ =?utf-8?B?WHhiMHR6b0hmVUVrUkxNaGt6K3I3djRXdDdEWDM4RkxjcnpPMThiOFdYaTNk?=
+ =?utf-8?B?ZHlzUUhlMXExUC90Ym4vRXBxSXQzbEwyS2xSUTBCcXJZbG5XM0d0K2c1SDNS?=
+ =?utf-8?B?OGtFME81T2RVelJObTkrb0VHc0VyQTBacXY2M1prSkNKbDZwTnh4cUQ4bzlD?=
+ =?utf-8?B?Y2w3dWI2WTNKYXJJWDB5S3ROcjZUdCtNb29zUXJZWTZSUmtpaXo4RjFmMm53?=
+ =?utf-8?B?Z3RZQytWYTE3L042Y1lQN0ZaWjBUMlRUZ0hDSDM4bU5Fd3FQSE9FQ2E2ZVRG?=
+ =?utf-8?B?N2FOaUdRVXlqZk5yU21FbGh2V2hxdEFFRUY2eTlBT0hBNitGOHg0c3JGSGx2?=
+ =?utf-8?B?WXVzOEVEM0U5Vm5CTVJmam0xZDJQcDgxV3M1WDE5Vkk4akduTDZlT3lsVFk2?=
+ =?utf-8?B?Qk1TbEZpRHBWRmVUa2F0akltSnRPSDdXZ3Q4M0p0aGpUaE9pa2JVM2lMZXNN?=
+ =?utf-8?B?Z25zZnRXZTE3bmxpcEdmVWlPMWpaYWgzMXowTnNxaUh0TkIrREo0eS9hbnF0?=
+ =?utf-8?B?K1A1dkozVmprcDJLNWUzbktSTGtkQ2pRTk9mby9iZjRXblQ1NkJpUTVSaHl6?=
+ =?utf-8?B?WGJzMHY5ZVowU1h4bHlQOUhTQkJFaUw2Rzh4ZnVpUjlwczVISWw5ajNhQmNp?=
+ =?utf-8?B?OUhyYjRhOGhhUnpsRjdUVU02Z1k5cm5sUDllQnk5MExyRlU3T24yMXkrYXNQ?=
+ =?utf-8?B?bmRDMUtyRlJRcy92Y0lIaG9ZalZ3RjE2bGtGNHlLYjl5bTZFUHFHNlJPMzFW?=
+ =?utf-8?B?UEVXQVVwN2JMZWZvWVNMaG5vVU1rQ0dBenRqc3hnUlhVbWNBbnhJdXgwZlA2?=
+ =?utf-8?B?T0VWb0lKQXFsbzVrQW5Ydm4reEY5MXV4VnpvNG1xOHI3YVFLM3ByejkzL1g1?=
+ =?utf-8?B?S0lIVm5lMVBQYUxoaVgvU3padXdLaDh6VEh0b0wxRENvY0xRUVkvYTZOVisy?=
+ =?utf-8?B?UU1RNlZVY3oxREhVcXhSL1J2Y2hXRUtLKy9ES1NaeWc1aTVZcXVTSDcwSGY5?=
+ =?utf-8?B?bkhCS3MrNEg3MDBMTndOd3Y4Q2xDekJVYUR1aTlMMFB1czVoOHZRWXRVM3JB?=
+ =?utf-8?B?SXIxUVRkd1BFZWZrNFZna2c4bzQ5SGdXL3VtUVQxb0V4S3hGZU83aUUxbDFY?=
+ =?utf-8?B?K1pza205ZkdoU1hodnpwbjkwbGx1UmZNaTFUNEprNDVycGNTRjNDL0ZYck5t?=
+ =?utf-8?B?bUlhUWVJSjMrYkNFbUhNMWFUYjc2U2tkNFMrK2dlb2xZeUhUL2k1NFFWYTN0?=
+ =?utf-8?B?YTduNkYrNHZ2VzRLamJ4YkZhYXNEYTVzQWx4Qzh3Z2tHdmF0REw3Sy83YW14?=
+ =?utf-8?Q?O6Q+4T1PqlI=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bmowVDVmRGk4SFY4cEdQSW16Zm9TSU5Db0FOZ05Tdm9jOUkyckdYSzFxbFo0?=
- =?utf-8?B?RDRhZjZvZXlFd241V3JSeFRnNGtYWFI2L2NMTGsyOVpMeVNzV0xLSFloaGpt?=
- =?utf-8?B?dCs3ek0wa0tzNnFTb3crMzZJRHM5TG1HeFJPTVZFWE84RTlhWDhjKzJmVG0x?=
- =?utf-8?B?S2VHajNUNWhjWnFqeFZZNFVNZ1Joa3Jybjk2RTNMOHlSNkVRNWxGVTlZSlhH?=
- =?utf-8?B?K1M2TXlwVFdJaENpUW4vS2RpMG1UTGJVeUpoQlc5N2dldFhpY081bjkxWHN1?=
- =?utf-8?B?cStseFkvM3BpekRueUFub3BiMURUSWNLOXR2c0dJMHhxa2FDYktXTERZaWp3?=
- =?utf-8?B?ZmliVVloYWhmdVdrK3N2SFZybkxYR0x0dm1hSEpSaEJCMFFVaTVMRWFvQUZt?=
- =?utf-8?B?QTR3NFpKUmRkQ0xkc1VleUNUNWQwYlg1eVY4T2R1QkVYbVc0MXNvOWFtaXRM?=
- =?utf-8?B?WHFwVUtaWU92SURTVFM1Z2w2VzBiaFNTektNM1RFSjFycEFXQ0sxdnhqSHhE?=
- =?utf-8?B?MFFQZzBjb1lsTG9iNEM3aVRvdUx3eE1ka096R2VtcjBibkIyMGtzemtOMUxx?=
- =?utf-8?B?QUUvbVdyZTVxeFZpdkVVSlRQVWwrRCt1RGNwL25hek5RNjJHbUJiVDgxaVlv?=
- =?utf-8?B?Snc4cVVBd0t6M0VlN1pzZXZJT0JGVExxSnVCNCtmQ09SNlJPNmZjZVVlQzRH?=
- =?utf-8?B?eVB6NTh0OGM0TGdNbnJnWXVmRDRNMUdYaWhBdTZwU0gzOXZyMVZ0eFpOUGxT?=
- =?utf-8?B?cXl2alMwK1ZvWGRFa0xNd1JtYmhiVnJ6UUdiYVlpY3I5eHNqK0VjdGNFcjha?=
- =?utf-8?B?SW5BMWlOaFhEQVRTbm5zODhZdFVhWktqMENsMkcwYjh4MzNxOWUzYUlFcit1?=
- =?utf-8?B?dS8rK0hrVjJKWnl3OHhHdW5OUXN0TFg1MW44Y3U2KzNrdkRNdERKZzJMZm9Z?=
- =?utf-8?B?VHRzaUZUbWtWalU3YmIwdllxTFA1bmUzelRObENyaUh1QVVmM2FBYkFnRVlw?=
- =?utf-8?B?Q0x5d1dRS0hZVThtbWxoV3QxNEdha0p6TzNrUG1OYU5xQ3htWld3N1Y4Nysy?=
- =?utf-8?B?MGhiU0IyUU9uR2JiNlphWGVqTUo1Y1lpNkRhOWR3SEpnNGozSUJaaU1ZYWJX?=
- =?utf-8?B?TzlDYmJnSExJSDc4bGQ2YXR1ay9aaFlReng0VFdVYzZwQU4vWHR5ZnNaWEZl?=
- =?utf-8?B?b1ZDQ2M5TXdQZkRqTnc5eDZidTFTaXVVNFA1U2NWajA1NEhaL2pJSjZ2cmJw?=
- =?utf-8?B?cXhvVzNuVWp2cjZYZlRBVmpGUGV5SFpRakFVOE9vbzV0T0E5ci9IOXA4T1FP?=
- =?utf-8?B?bTQwT21oUCtJSjdSVTF5NnVSbFdiVFZLQWQ1eGtEQ0dydlFKVUhGRWFWK2p1?=
- =?utf-8?B?TDQ0L3pDaUFhNnE3THBGenJtQmtuVFp1NHFjYjJOdmdnbm41QVZnN0drOVlN?=
- =?utf-8?B?UW5IbXc3a0ZwV1c2M1c0RUd6b3VlZkN6T1NFcUQ0d2ZZS0FvMTlmdHkrZGZZ?=
- =?utf-8?B?SWRqd3RhTmVpOTFYOEtqZkRTYWJkM25Db0FIWWV5WWlUZGFtbmRaS21wQUtU?=
- =?utf-8?B?cG9xSTVkamZhZlY2VlYrK25FN2xCMXBSalZjT2lIZWduTHpkZHhIUTBRemFa?=
- =?utf-8?B?L05zNHJmWXlPTitLR2wrWEVzWGt2Q1Zod2hoNFIwcFVnME5wYWgveTM2MkFE?=
- =?utf-8?B?ZHBPNFM2NGxMRmIxalhDQk9BWVQ4YWVKQllOTDgreDlWcm5ZeEtIVytqOUw0?=
- =?utf-8?B?eWllZkNKNlIrOEY0R0VhOGhzUDlUWnRnL3pCNFZGZGtURHFtTzdpcDVzdHMz?=
- =?utf-8?B?MWp3RjRycTNySkZwb242c1ZyRUk3b1FIQnplNVhDL2NObG5rMHl4RTFEeElG?=
- =?utf-8?B?QU1DMXNYVWdkZGxzZzFIMm9CZThMRWVVcFIrWTZKQXBMckx2UWVBbEJkS2RU?=
- =?utf-8?B?VVRMZFZyVGNibTRxS2IvOW5MNlduNXVnTk5xSXQxbGVQVlluL3p5T1pZVTFq?=
- =?utf-8?B?OFU1ZVZnL0h2ZWRUUGRDcWpqR3lyNHAyZER1N0QvbjdhTDMzSGpzeWo1WEN3?=
- =?utf-8?B?QzE0aExsZHpyNzZuR3pLOTZCcHBGVkVZNnZTOVFHUmJJTjJxcVhDUVVocWFv?=
- =?utf-8?Q?gwnI0Hh9qx38umQ7c+HmY0lja?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aTF6VVY0MVlqYlZGZTRRcStsZ3M4V1VmdkxyUFJFU1NDNHE1cDJuVXZDd1ll?=
+ =?utf-8?B?OFk3VmJ3V2FJcFVMWXE0dm50MjlFSzVVNklJbnlpcEVadVFXVjFJT2F0WitH?=
+ =?utf-8?B?RS94ZWZaQWJYWEtDVkI4UUdqSUNBMVR5RTFJWUhWZFQ4aTlzU25MbHpkam8w?=
+ =?utf-8?B?cmt5RGszdVN6TmpPK0lIT0s1RWtXK1d6SnIwOVlwTm9hbFNiWjFLcDFiNEtv?=
+ =?utf-8?B?VE90M2lobUdQdEFXWm1TYjdsZHphSzVRTHJJd0llK05UajFEdGdiUU1vYkJm?=
+ =?utf-8?B?NFRLcDJXSUc2VzNwdUE2N2VLSDljWE52b2ZkbE54c2J5TVF4MkE0a1BadERp?=
+ =?utf-8?B?bTlnWCtFRmd0VE9GUEtqOEtkWjk3ZWg5WHp1cGhwK2ZCNVVKS3BJbHdlcklO?=
+ =?utf-8?B?cHFPb0VNZXY4RElnOVRxQ3dXYjhaQkJ1MFF5WG5nY1NxY3J3NDBvMTlXdytV?=
+ =?utf-8?B?NENoWndSaHM0WkprRWVwbzVFTXpXR1FPYm9KaUxlTXFxYkJsdmlqSXgvOXZU?=
+ =?utf-8?B?eWFTcmo1aUtxazEzYXlzME1XbUxLT0ZNRVNxOW5SaFVjMjZQV0tBWTBkbjQx?=
+ =?utf-8?B?N2ljWFFoZVROd2hwbjRNTk9MS0VhY3ppWFRxbC94bVQ2dzRBdmJVQ3ZKNWxl?=
+ =?utf-8?B?ajlSWWMxWFRLdVhtdTdwazQyL0dQUVVZMVZnd3NhQU9ySkpJQ0gxZTR3R0pR?=
+ =?utf-8?B?V3lDeFpmSmlpeFQvSkhiUTFadjFpZ1VkWHNydkRPOCtSUkw0WVBoOHdEeVBY?=
+ =?utf-8?B?NldDellPWWxHZ0xhUXJuM1B3b01xRUlCYVM1ak5Gemp5OE9rZWlKZ3BZbXZF?=
+ =?utf-8?B?ZnJRMXRqell0VzBGRU9MVWgyN1hKbXRTbnBnaWFKdzkrbURXRUlzY3NOQW1R?=
+ =?utf-8?B?V1o4bzM5NzNHSXVGWTNWaWlJR1VmQUpHWkxRT1ZkSUVkNjI5UFpXVWdiMjI0?=
+ =?utf-8?B?U3ZGVGhLeS80aS95Tm9PREtmZ2s1RnJKTDNPSGtHQ2NVUHBCdjNYdGc1MTBW?=
+ =?utf-8?B?a0QzRDREc2RVOXVib0s2QklIcnFxR1UrbVhudVZVanRlbFZaNjVQR2U4RjJ3?=
+ =?utf-8?B?bkFMRnRndVF0ZnVwZkJTVHZTSk9BVkNIbU9BMnNWbHdaT2duaUVWUTkvS2xn?=
+ =?utf-8?B?bjV5WmJjRUYxcCtiSklSWER2dzU5VWdBL1p4WmwzRFgrSHQ1ejJsdmtidkJk?=
+ =?utf-8?B?a0FuekRpWG96MVN2eU9EZGs2UlZoczliQk1SdG9MZGZ0OUdyeVdzdGRkTXI4?=
+ =?utf-8?B?Yy9NT0xidWUzOE9ZYnlGM25lVFdtbTUzZzJmb2h4ZFZYVitKbmovYzBpNThy?=
+ =?utf-8?B?ZERwdE1mOWplRnQ2VTJOWXlsWjNaVWxIOTNoOGk5azNKc09kRFZxdjlNbTlh?=
+ =?utf-8?B?Z1Rycmdacm9UVnIzSWhLQU1ZVSsxZ1RMZG02cWViRFVVS1JXZFhnQTlieitV?=
+ =?utf-8?B?RjlQL2VJcHRGREhIUnhFcEZSMUJuMUpZUnJMSXI2a2J0WjMxQ0NYSnBMTFpR?=
+ =?utf-8?B?TFd4QlZONmtXckNHcUJnUFRwL3N4cDFlRUNWZGJROEhUbzBDNFhFVEpPa3Za?=
+ =?utf-8?B?ZXpzczRkQjNQenFiR3dsdm0rSmRkeFRCRG1WMzlGVnEyTTZsQ05HL1ByMEFV?=
+ =?utf-8?B?VC9WVmM0WWdabVRLbS9QUUxXanJ1WlREenoxcmZFbEEwZWpmQkI4UWlqT0Rq?=
+ =?utf-8?B?VzVPZUt2Smo4QUZReVRoUnlabnlzWGhYVmJqRkZWY1M1SjFNcHROc1NCclJO?=
+ =?utf-8?B?MTVkZmRXa0pVVVZmOHp5QkhOTEFhYVQrSXZmNVFjZjk4QVhxMVMralRNR0Z6?=
+ =?utf-8?B?cHh1enJ2NGsvdU9JZTc3bFFIMjBaOVpIU0IrNUNFeW1YUVlYVy9OeUQzZG5W?=
+ =?utf-8?B?L3h3UHpHdjk1NHpCdXkzRlBmOHovN2Z6SytvRVBJOTN6RzJ4QkdOZXNjc1lB?=
+ =?utf-8?B?V2t6dlFUTmsydHhib1kwVGpBTWZBY2NOTVkxWFpGTCtWSE0zZTZ2MXJxcEdz?=
+ =?utf-8?B?VFNsUkJjendiMSsxRkpXN3haSGFhd3RaQndQVjB6dFVJaCs0dkZkWVRsRENB?=
+ =?utf-8?B?T0JjSzd1OTVpb29jN21XcXhCMS9wSjNTRGhZTHpOMnBPdGNUeExud1RYZVNJ?=
+ =?utf-8?Q?pIFnXf150Rz9xO8HxXDKhN8Q+?=
 X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27f4c5aa-ae83-4233-05bb-08ddf3899236
+X-MS-Exchange-CrossTenant-Network-Message-Id: d663e767-abf9-42b4-034e-08ddf389908a
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2025 12:23:54.9980 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2025 12:23:52.7632 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lcahYl8iY/trU280paS6clrQM6pOcGDs/6HvgpmrGHj2Dm9WtZZUlnOeM5uiJOaUXEqvyjlRKNGep3P0GCJkqg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: WYKU4AKjmL7taXLJ8oYU4d4E1Pz3A5L4Ja0beHlm87XK+qANWxlhxEkZqkjRbkFpyRZ7qH2WQoDD5Kvf4hvH/A==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR10MB8780
 Received-SPF: pass client-ip=2a01:111:f403:c201::3;
  envelope-from=jan.kiszka@siemens.com;
@@ -225,92 +225,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.09.25 15:28, Jan Lübbe wrote:
-> On Tue, 2025-09-09 at 14:50 +0200, Jan Kiszka wrote:
+On 09.09.25 16:25, Jerome Forissier wrote:
+> Hi Jan,
+> 
+> 
+> On 8/24/25 09:18, Jan Kiszka wrote:
 >> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>
+>> As an eMMC block device image may consist of more than just the user
+>> data partition, provide a helper script that can compose the image from
+>> boot partitions, an RPMB partition and the user data image. The script
+>> also does the required size validation and/or rounding.
 >>
 >> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 >> ---
->>  docs/system/device-emulation.rst |  1 +
->>  docs/system/devices/emmc.rst     | 52 ++++++++++++++++++++++++++++++++
->>  2 files changed, 53 insertions(+)
->>  create mode 100644 docs/system/devices/emmc.rst
+>>  scripts/mkemmc.sh | 185 ++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 185 insertions(+)
+>>  create mode 100755 scripts/mkemmc.sh
 >>
->> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
->> index 911381643f..36429b1d17 100644
->> --- a/docs/system/device-emulation.rst
->> +++ b/docs/system/device-emulation.rst
->> @@ -101,3 +101,4 @@ Emulated Devices
->>     devices/canokey.rst
->>     devices/usb-u2f.rst
->>     devices/igb.rst
->> +   devices/emmc.rst
->> diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
->> new file mode 100644
->> index 0000000000..3bd70c0e94
+>> diff --git a/scripts/mkemmc.sh b/scripts/mkemmc.sh
+>> new file mode 100755
+>> index 0000000000..5d40c2889b
 >> --- /dev/null
->> +++ b/docs/system/devices/emmc.rst
->> @@ -0,0 +1,52 @@
->> +==============
->> +eMMC Emulation
->> +==============
+>> +++ b/scripts/mkemmc.sh
+>> @@ -0,0 +1,185 @@
+>> +#!/bin/sh -e
+>> +#
+>> +# Create eMMC block device image from boot, RPMB and user data images
+>> +#
+>> +# Copyright (c) Siemens, 2025
+>> +#
+>> +# Authors:
+>> +#  Jan Kiszka <jan.kiszka@siemens.com>
+>> +#
+>> +# This work is licensed under the terms of the GNU GPL version 2.
+>> +# See the COPYING file in the top-level directory.
+>> +#
 >> +
->> +Besides SD card emulation, QEMU also offers an eMMC model as found on many
->> +embedded boards. An eMMC, just like an SD card, is connected to the machine
->> +via an SDHCI controller.
->> +
->> +Create eMMC Images
->> +==================
->> +
->> +A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay protected
->> +Memory Block (RPMB), and the user data area. QEMU expects backing images for
->> +the eMMC to contain those partitions concatenated in exactly that order.
->> +However, the boot partitions as well as the RPMB might be absent if their sizes
->> +are configured to zero.
->> +
->> +The eMMC specification defines alignment constraints for the partitions. The
->> +two boot partitions must be of the same size. Furthermore, boot and RPMB
->> +partitions must be multiples of 128 KB with a maximum of 32640 KB for each
->> +boot partition and 16384K for the RPMB partition.
->> +
->> +The alignment constrain of the user data area depends on its size. Up to 2
->> +GByte, the size must be a power of 2. From 2 GByte onward, the size has to be
->> +multiples of 512 byte.
->> +
->> +QEMU is enforcing those alignment rules before instantiating the device.
->> +Therefore, the provided image has to strictly follow them as well. The helper
->> +script `scripts/mkemmc.sh` can be used to create compliant images, with or
->> +without pre-filled partitions. E.g., to create an eMMC image from a firmware
->> +image and an OS image with an empty 2 MByte RPMB, use the following command:
->> +
->> +.. code-block:: console
->> +
->> +    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
->> +
->> +This will take care of rounding up the partition sizes to the next valid value
->> +and will leave the RPMB and the second boot partition empty (zeroed).
->> +
->> +Adding eMMC Devices
->> +===================
->> +
->> +An eMMC is either automatically created by a machine model (e.g. Aspeed boards)
->> +or can be user-created when using a PCI-attached SDHCI controller. To
->> +instantiate the eMMC image form the example above while assuming that the
+>> +usage() {
+>> +    echo "$0 [OPTIONS] USER_IMG[:SIZE] OUTPUT_IMG"
+>> +    echo ""
+>> +    echo "SIZE must be a power of 2. If no SIZE is specified, the size of USER_ING will"
+>> +    echo "be used (rounded up)."
+>> +    echo ""
+>> +    echo "Supported options:"
+>> +    echo "  -b BOOT1_IMG[:SIZE]   Add boot partitions. SIZE must be multiples of 128K. If"
+>> +    echo "                          no SIZE is specified, the size of BOOT_IMG will be"
 > 
-> s/form/from/
-> 
->> +firmware needs a boot partitions of 1 MB, use the following options:
->> +
->> +.. code-block:: console
->> +
->> +    -drive file=emmc.img,if=none,format=raw,id=emmc-img
->> +    -device sdhci-pci
->> +    -device emmc,drive=emmc-img,boot-partition-size=1048576 rpmb-partition-size=2097152
-> 
-> Missing ',' before rpmb-partition-size?
+> the size of BOOT1_IMG
 > 
 
-Thanks, both fixed.
+Thanks, fixed.
+
+>> +    echo "                          used (rounded up). BOOT1_IMG will be stored in boot"
+>> +    echo "                          partition 1, and a boot partition 2 of the same size"
+>> +    echo "                          will be created as empty (all zeros) unless -B is"
+>> +    echo "                          specified as well."
+>> +    echo "  -B BOOT2_IMG          Fill boot partition 2 with BOOT2_IMG. Must be combined"
+>> +    echo "                          with -b which is also defining the partition size."
+>> +    echo "  -r RPMB_IMG[:SIZE]    Add RPMB partition. SIZE must be multiples of 128K. If"
+>> +    echo "                          no SIZE is specified, the size of RPMB_IMG will be"
+>> +    echo "                          used (rounded up)."
+>> +    echo "  -h, --help            This help"
+>> +    echo ""
+>> +    echo "All SIZE parameters support the units K, M, G. If SIZE is smaller than the"
+>> +    echo "associated image, it will be truncated in the output image."
+>> +    exit "$1"
+>> +}
+>> +
+>> +process_size() {
+>> +    if [ "${4#*:}" = "$4"  ]; then
+>> +        if ! size=$(stat -L -c %s "$2" 2>/dev/null); then
+>> +            echo "Missing $1 image '$2'." >&2
+>> +            exit 1
+>> +        fi
+>> +        if [ "$3" = 128 ]; then
+>> +            size=$(( (size + 128 * 1024 - 1) & ~(128 * 1024 - 1) ))
+>> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+>> +            n=0
+>> +            while [ "$size" -gt 0 ]; do
+>> +                size=$((size >> 1))
+>> +                n=$((n + 1))
+>> +            done
+>> +            size=$((1 << n))
+>> +        fi
+>> +    else
+>> +        value="${4#*:}"
+>> +        if [ "${value%K}" != "$value" ]; then
+>> +            size=${value%K}
+>> +            multiplier=1024
+>> +        elif [ "${value%M}" != "$value" ]; then
+>> +            size=${value%M}
+>> +            multiplier=$((1024 * 1024))
+>> +        elif [ "${value%G}" != "$value" ]; then
+>> +            size=${value%G}
+>> +            multiplier=$((1024 * 1024 * 1024))
+>> +        else
+>> +            size=$value
+>> +            multiplier=1
+>> +        fi
+>> +        if [ "$size" -eq "$size" ] 2>/dev/null; then
+>> +            size=$((size * multiplier))
+>> +        else
+>> +            echo "Invalid value '$value' specified for $2 image size." >&2
+>> +            exit 1
+>> +        fi
+>> +        if [ "$3" = 128 ]; then
+>> +            if [ $(( size & (128 * 1024 - 1) )) -ne 0 ]; then
+>> +                echo "The $2 image size must be multiples of 128K." >&2
+>> +                exit 1
+>> +            fi
+>> +        elif [ $(( size & (size - 1) )) -gt 0 ]; then
+>> +            echo "The %2 image size must be power of 2." >&2
+>> +            exit 1
+>> +        fi
+>> +    fi
+>> +    echo $size
+>> +}
+>> +
+>> +userimg=
+>> +outimg=
+>> +bootimg1=
+>> +bootimg2=/dev/zero
+>> +bootsz=0
+>> +rpmbimg=
+>> +rpmbsz=0
+>> +
+>> +while [ $# -gt 0 ]; do
+>> +    case "$1" in
+>> +        -b)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            bootimg1=${1%%:*}
+>> +            bootsz=$(process_size boot "$bootimg1" 128 "$1")
+>> +            shift
+>> +            ;;
+>> +        -B)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            bootimg2=$1
+>> +            shift
+>> +            ;;
+>> +        -r)
+>> +            shift
+>> +            [ $# -ge 1 ] || usage 1
+>> +            rpmbimg=${1%%:*}
+>> +            rpmbsz=$(process_size RPMB "$rpmbimg" 128 "$1")
+>> +            shift
+>> +            ;;
+>> +        -h|--help)
+>> +            usage 0
+>> +            ;;
+>> +        *)
+>> +            if [ -z "$userimg" ]; then
+>> +                userimg=${1%%:*}
+>> +                usersz=$(process_size user "$userimg" 2 "$1")
+>> +            elif [ -z "$outimg" ]; then
+>> +                outimg=$1
+>> +            else
+>> +                usage 1
+>> +            fi
+>> +            shift
+>> +            ;;
+>> +    esac
+>> +done
+>> +
+>> +[ -n "$outimg" ] || usage 1
+>> +
+>> +if [ "$bootsz" -gt $((32640 * 1024)) ]; then
+>> +    echo "Boot image size is larger than 32640K." >&2
+>> +    exit 1
+>> +fi
+> 
+> Should we warn if BOOT1_IMG and/or BOOT2_IMG are truncated as a result
+> of $bootsz being too small? I can see how providing a larger size can be
+> useful to be able to later extend the filesystem, but a smaller size is
+> more likely to indicate an error I suppose?
+
+Done, will be part of v4.
+
+> 
+>> +if [ "$rpmbsz" -gt $((16384 * 1024)) ]; then
+>> +    echo "RPMB image size is larger than 16384K." >&2
+>> +    exit 1
+>> +fi> +
+>> +echo "Creating eMMC image"
+>> +
+>> +truncate "$outimg" -s 0
+>> +pos=0
+>> +
+>> +if [ "$bootsz" -gt 0 ]; then
+>> +    echo "  Boot partition 1 and 2:   $((bootsz / 1024))K each"
+>> +    blocks=$(( bootsz / (128 * 1024) ))
+>> +    dd if="$bootimg1" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        status=none
+>> +    dd if="$bootimg2" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        seek=$blocks status=none
+>> +    pos=$((2 * bootsz))
+>> +fi
+>> +
+>> +if [ "$rpmbsz" -gt 0 ]; then
+>> +    echo "  RPMB partition:           $((rpmbsz / 1024))K"
+>> +    blocks=$(( rpmbsz / (128 * 1024) ))
+>> +    dd if="$rpmbimg" of="$outimg" conv=sparse bs=128K count=$blocks \
+>> +        seek=$(( pos / (128 * 1024) )) status=none
+>> +    pos=$((pos + rpmbsz))
+>> +fi
+>> +
+>> +if [ "$usersz" -lt 1024 ]; then
+>> +    echo "  User data:                $usersz bytes"
+>> +elif [ "$usersz" -lt $((1024 * 1024)) ]; then
+>> +    echo "  User data:                $(( (usersz + 1023) / 1024 ))K ($usersz)"
+>> +elif [ "$usersz" -lt $((1024 * 1024 * 1024)) ]; then
+>> +    echo "  User data:                $(( (usersz + 1048575) / 1048576))M ($usersz)"
+>> +else
+>> +    echo "  User data:                $(( (usersz + 1073741823) / 1073741824))G ($usersz)"
+>> +fi
+>> +dd if="$userimg" of="$outimg" conv=sparse bs=128K seek=$(( pos / (128 * 1024) )) \
+>> +    count=$(( (usersz + 128 * 1024 - 1) / (128 * 1024) )) status=none
+>> +pos=$((pos + usersz))
+>> +truncate "$outimg" -s $pos
+>> +
+>> +echo ""
+>> +echo "Instantiate via '-device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=$outimg'"
+> 
+> That did not work for me. I had to provide a drive name, not the image path.
+
+Yeah, I already fixed that in v3.
+
+> An also create PCIe and SDHCI devices. That is:
+> 
+> -device pcie-root-port,id=pcie-root,bus=pcie.0 \
+> -device sdhci-pci,bus=pcie-root \
+
+At least for the virt machine, just "-device sdhci-pci" is enough.
+
+> -device emmc,boot-partition-size=$bootsz,rpmb-partition-size=$rpmbsz,drive=mmc0
+> -drive if=none,id=mmc0,file=$outimg,format=raw"
+> 
+> I applied the patches on top of QEMU 10.1.0 if that matters.
+> 
+> Regards,
+
+Thanks for review and testing!
 
 Jan
 
