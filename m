@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34270CAC598
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315AECAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy67e-0007a0-Am; Mon, 15 Sep 2025 06:07:47 -0400
+	id 1uy67c-0007ZA-By; Mon, 15 Sep 2025 06:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1uy67Z-0007Yg-6S
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:42 -0400
-Received: from m204-227.eu.mailgun.net ([161.38.204.227])
+ id 1uy67X-0007YP-Ub
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:40 -0400
+Received: from m239-4.eu.mailgun.net ([185.250.239.4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1uy67H-00066H-2X
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:39 -0400
+ id 1uy67G-00066J-Uk
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
  s=email; t=1757930835; x=1757938035; 
- h=Content-Transfer-Encoding: MIME-Version: References: In-Reply-To:
- Message-ID: Date: Subject: Subject: Cc: To: To: From: From: Sender: Sender; 
- bh=Ef9WWfDKKJeIQWBsT8z6C3UgYBxxs9P5Yo4QHnZh3IU=;
- b=OV4qQJdVpOXfefzUO5b7BSs18ibshRJCwd3Un8my/xE9RTivSuZ8Htr9bToYgAFJ+ilkAkWqdlGvHXvj4MRj+aKRizXRqPjrpws1XDQUPhpsi7B6DSXvS4VJ+oFcS/XXw7lUQIY2GpytslmRajwfhGKkv2IYUqrMGN59MB5NRWJagn335z2o5GaQct1LEwJClnKu7vT9sqjdK3rf99FiV2CjUFBoD4BP5htBWLhnJ9vCwXaWFWTALFZLnStU05s/wmofy1uYAGwXItQ2kmFZBsBsjTzgZCj9j6M1pxM6ttIVikob24ix575DEQ9Z8fqJ+KTb5leW6E+eCayEhl8sYg==
+ h=Content-Transfer-Encoding: Content-Type: MIME-Version: Message-ID: Date:
+ Subject: Subject: Cc: To: To: From: From: Sender: Sender; 
+ bh=h4jLD4Rr/R88hs8O2K+L/cU/piXpEFdNsRzJyBeUBhs=;
+ b=YbS6Z3lIBLTjQNz+fScV8mxEg5DkKi6pu5LgD5vGYrypc9kJQ4uqEYLNBMiBxBuKHLTpbHa12xEIbCV0T0QfNZx15Nc9y/AgbKWHzme6su8H19l4HtIAotF2aky/Z0Njd9GGcDEHLzeGgqoaCS67gDw9bQHYJ17ifUq4dV+9QqyV4uafM7bbkwuCn44TKjbaD3Ki9AGAWHelqYEqvO7kY5npSPiUtA80/d+fJJFjLT1BlcTfW+0vmNdHrFHXCXPDBcjTC7+bG00kyH+gW/oycsE3+XqjKvwuFRMj4k4oRKswrZ7o5ayFgXaXHAsBz+adWb+O4LA4g7WKZeRJThTdNw==
 X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
 Received: from fedora (pub082136115007.dh-hfc.datazug.ch [82.136.115.7]) by
  72144cfb99b61755965ba36ab48da239f3e5d8856025c89e1aebabc970f2747b with SMTP id
- 68c7e550e2b51d529c044bb1; Mon, 15 Sep 2025 10:07:12 GMT
-X-Mailgun-Sending-Ip: 161.38.204.227
+ 68c7e550e845e547b35073d5; Mon, 15 Sep 2025 10:07:12 GMT
+X-Mailgun-Sending-Ip: 185.250.239.4
 From: Alessandro Ratti <alessandro@0x65c.net>
 To: qemu-devel@nongnu.org
-Cc: alessandro.ratti@gmail.com, philmd@linaro.org, alex.bennee@linaro.org,
- Alessandro Ratti <alessandro@0x65c.net>
+Cc: alessandro.ratti@gmail.com,
+	philmd@linaro.org,
+	alex.bennee@linaro.org
 Subject: [PATCH] virtio: Add function name to error messages
-Date: Mon, 15 Sep 2025 12:01:07 +0200
-Message-ID: <20250915100701.224156-2-alessandro@0x65c.net>
+Date: Mon, 15 Sep 2025 12:01:06 +0200
+Message-ID: <20250915100701.224156-1-alessandro@0x65c.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250915100701.224156-1-alessandro@0x65c.net>
-References: <20250915100701.224156-1-alessandro@0x65c.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=161.38.204.227;
+Received-SPF: pass client-ip=185.250.239.4;
  envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=m204-227.eu.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ helo=m239-4.eu.mailgun.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,56 +70,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace virtio_error() with a macro that automatically prepends the
-calling function name to error messages. This provides better context
-for debugging virtio issues by showing exactly which function
-encountered the error.
 
-Before: "Invalid queue size: 1024"
-After:  "virtio_queue_set_num: Invalid queue size: 1024"
+Hi,
 
-The implementation uses a macro to insert __func__ at compile time,
-avoiding any runtime overhead while providing more specific error
-context than a generic "virtio:" prefix.
+In a previous attempt [1] to improve virtio error messages I didn’t fully
+understand the suggestion made by Alex Bennée in a previous attempt [2].
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+This patch implements his idea more faithfully: instead of hard-coding a
+"virtio" prefix at the call sites, we prepend the function name within
+virtio_error() itself. This centralizes the change, avoids duplication,
+and makes the log messages more informative.
 
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
----
- hw/virtio/virtio.c         | 2 +-
- include/hw/virtio/virtio.h | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+For example, after forcibly triggering an error inside
+virtio_init_region_cache(), the resulting output now shows the function
+context clearly:
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e..44528d7f2b 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3931,7 +3931,7 @@ void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name)
-     vdev->bus_name = g_strdup(bus_name);
- }
- 
--void G_GNUC_PRINTF(2, 3) virtio_error(VirtIODevice *vdev, const char *fmt, ...)
-+void G_GNUC_PRINTF(2, 3) virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...)
- {
-     va_list ap;
- 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index c594764f23..961d021497 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -249,7 +249,9 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size);
- 
- void virtio_cleanup(VirtIODevice *vdev);
- 
--void virtio_error(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-+#define virtio_error(vdev, fmt, ...) \
-+    virtio_error_impl(vdev, "%s: " fmt, __func__, ##__VA_ARGS__)
-+void virtio_error_impl(VirtIODevice *vdev, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
- 
- /* Set the child bus name. */
- void virtio_device_set_child_bus_name(VirtIODevice *vdev, char *bus_name);
--- 
-2.39.5
+    ~/qemu/build$ sudo ./qemu-system-x86_64  \
+    -enable-kvm   \
+    -m 512   \
+    -drive \
+    if=virtio,file=/tmp/some.img,format=raw
+    qemu-system-x86_64: virtio_init_region_cache: Cannot map used
+    qemu-system-x86_64: virtio_init_region_cache: Cannot map used
+    ...
 
+This should address the original concern in a cleaner and more
+maintainable way.
+
+Thank you for your time and consideration.
+
+Best regards,
+Alessandro Ratti
+
+[1]: https://lore.kernel.org/qemu-devel/20250830093844.452039-2-alessandro@0x65c.net/T/#t
+[2]: https://patchwork.kernel.org/project/qemu-devel/patch/20220414112902.41390-1-codeguy.moteen@gmail.com/
 
