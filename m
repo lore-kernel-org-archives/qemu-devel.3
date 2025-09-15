@@ -4,47 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F09CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 17:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D335CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 17:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyCvU-0001vJ-Ke; Mon, 15 Sep 2025 13:23:41 -0400
+	id 1uyDA6-0005co-6H; Mon, 15 Sep 2025 13:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=keIv=32=kaod.org=clg@ozlabs.org>)
- id 1uyCvR-0001tB-Lf; Mon, 15 Sep 2025 13:23:37 -0400
+ id 1uyD9t-0005bV-M6; Mon, 15 Sep 2025 13:38:33 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=keIv=32=kaod.org=clg@ozlabs.org>)
- id 1uyCvH-0006hl-DL; Mon, 15 Sep 2025 13:23:35 -0400
+ id 1uyD9e-0001Wr-Mm; Mon, 15 Sep 2025 13:38:31 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cQX1L74Dgz4wBL;
- Tue, 16 Sep 2025 03:23:18 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cQXLQ2SrNz4w9W;
+ Tue, 16 Sep 2025 03:38:06 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cQX1F4XVGz4w9b;
- Tue, 16 Sep 2025 03:23:13 +1000 (AEST)
-Message-ID: <65d001ce-72c7-42ad-a96d-7c71075a3a57@kaod.org>
-Date: Mon, 15 Sep 2025 19:23:11 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cQXLL64p7z4w2B;
+ Tue, 16 Sep 2025 03:38:01 +1000 (AEST)
+Message-ID: <e718145e-f39b-4af8-997a-cc4c8972049a@kaod.org>
+Date: Mon, 15 Sep 2025 19:37:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v2 10/14] hw/pci-host/aspeed: Add AST2700 PCIe
- config with dedicated H2X blocks
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
- titusr@google.com
-References: <20250911072452.314553-1-jamin_lin@aspeedtech.com>
- <20250911072452.314553-11-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v4 6/6] docs: Add eMMC device model description
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>
+References: <cover.1757854006.git.jan.kiszka@siemens.com>
+ <bf2b2d675264fd41fbe55ad3fb2e528e6d72ad97.1757854006.git.jan.kiszka@siemens.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,9 +85,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250911072452.314553-11-jamin_lin@aspeedtech.com>
+In-Reply-To: <bf2b2d675264fd41fbe55ad3fb2e528e6d72ad97.1757854006.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=keIv=32=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -99,8 +95,8 @@ X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,275 +112,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/25 09:24, Jamin Lin wrote:
-> Introduce PCIe config (H2X) support for the AST2700 SoC.
+On 9/14/25 14:46, Jan Kiszka wrote:
+> From: Jan Kiszka <jan.kiszka@siemens.com>
 > 
-> Unlike the AST2600, the AST2700 provides three independent Root Complexes,
-> each with its own H2X (AHB to PCIe bridge) register block of size 0x100.
-> All RCs use the same MSI address (0x000000F0). The H2X block includes
-> two different access paths:
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   docs/system/device-emulation.rst |  1 +
+>   docs/system/devices/emmc.rst     | 52 ++++++++++++++++++++++++++++++++
+>   2 files changed, 53 insertions(+)
+>   create mode 100644 docs/system/devices/emmc.rst
 > 
-> 1. CFGI (internal bridge): used to access the host bridge itself, always
->     with BDF=0. The AST2700 controller simplifies the design by exposing
->     only one register (H2X_CFGI_TLP) with fields for ADDR[15:0], BEN[19:16],
->     and WR[20]. This is not a full TLP descriptor as in the external case.
->     For QEMU readability and code reuse, the model converts H2X_CFGI_TLP
->     into a standard TLP TX descriptor with BDF forced to 0 and then calls
->     the existing helpers aspeed_pcie_cfg_readwrite() and
->     aspeed_pcie_cfg_translate_write().
-> 
-> 2. CFGE (external EP access): used to access external endpoints. The
->     AST2700 design provides H2X_CFGE_TLP1 and a small FIFO at H2X_CFGE_TLPN.
->     For reads, TX DESC0 is stored in TLP1 and DESC1/DESC2 in TLPN FIFO
->     slots. For writes, TX DESC0 is stored in TLP1, DESC1/DESC2 in TLPN
->     FIFO[0..1], and TX write data in TLPN FIFO[2].
-> 
-> The implementation extends AspeedPCIECfgState with a small FIFO and index,
-> wires up new register definitions for AST2700, and adds a specific ops
-> table and class (TYPE_ASPEED_2700_PCIE_CFG). The reset handler clears the
-> FIFO state. Interrupt and MSI status registers are also supported.
-> 
-> This provides enough modeling for firmware and drivers to use any of the
-> three PCIe RCs on AST2700 with their own dedicated H2X config window,
-> while reusing existing TLP decode helpers in QEMU.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> diff --git a/docs/system/device-emulation.rst b/docs/system/device-emulation.rst
+> index 911381643f..36429b1d17 100644
+> --- a/docs/system/device-emulation.rst
+> +++ b/docs/system/device-emulation.rst
+> @@ -101,3 +101,4 @@ Emulated Devices
+>      devices/canokey.rst
+>      devices/usb-u2f.rst
+>      devices/igb.rst
+> +   devices/emmc.rst
+> diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
+> new file mode 100644
+> index 0000000000..dbea6d6c7e
+> --- /dev/null
+> +++ b/docs/system/devices/emmc.rst
+> @@ -0,0 +1,52 @@
+> +==============
+> +eMMC Emulation
+> +==============
+> +
+> +Besides SD card emulation, QEMU also offers an eMMC model as found on many
+> +embedded boards. An eMMC, just like an SD card, is connected to the machine
+> +via an SDHCI controller.
+> +
+> +Create eMMC Images
+> +==================
+> +
+> +A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay protected
+> +Memory Block (RPMB), and the user data area. QEMU expects backing images for
+> +the eMMC to contain those partitions concatenated in exactly that order.
+> +However, the boot partitions as well as the RPMB might be absent if their sizes
+> +are configured to zero.
+> +
+> +The eMMC specification defines alignment constraints for the partitions. The
+> +two boot partitions must be of the same size. Furthermore, boot and RPMB
+> +partitions must be multiples of 128 KB with a maximum of 32640 KB for each
+> +boot partition and 16384K for the RPMB partition.
+> +
+> +The alignment constrain of the user data area depends on its size. Up to 2
+> +GByte, the size must be a power of 2. From 2 GByte onward, the size has to be
+> +multiples of 512 byte.
+> +
+> +QEMU is enforcing those alignment rules before instantiating the device.
+> +Therefore, the provided image has to strictly follow them as well. The helper
+> +script `scripts/mkemmc.sh` can be used to create compliant images, with or
 
-I thinks this implementation has endianess issues when accessing the
-descriptors.
+the single backquote would interpret scripts/mkemmc.sh as a ref. I think
+you want ``scripts/mkemmc.sh``
+
+> +without pre-filled partitions. E.g., to create an eMMC image from a firmware
+> +image and an OS image with an empty 2 MByte RPMB, use the following command:
+> +
+> +.. code-block:: console
+> +
+> +    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
+> +
+> +This will take care of rounding up the partition sizes to the next valid value
+> +and will leave the RPMB and the second boot partition empty (zeroed).
+> +
+> +Adding eMMC Devices
+> +===================
+> +
+> +An eMMC is either automatically created by a machine model (e.g. Aspeed boards)
+> +or can be user-created when using a PCI-attached SDHCI controller. To
+> +instantiate the eMMC image from the example above while assuming that the
+> +firmware needs a boot partitions of 1 MB, use the following options:
+> +
+> +.. code-block:: console
+> +
+> +    -drive file=emmc.img,if=none,format=raw,id=emmc-img
+> +    -device sdhci-pci
+> +    -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-partition-size=2097152
+
+I will see if I can adjust the existing aspeed test with your proposal.
+
+Thanks,
 
 C.
-
-
-> ---
->   include/hw/pci-host/aspeed_pcie.h |   3 +
->   hw/pci-host/aspeed_pcie.c         | 158 ++++++++++++++++++++++++++++++
->   2 files changed, 161 insertions(+)
-> 
-> diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-> index c0d46e6a03..d7b4b66f75 100644
-> --- a/include/hw/pci-host/aspeed_pcie.h
-> +++ b/include/hw/pci-host/aspeed_pcie.h
-> @@ -89,6 +89,7 @@ struct AspeedPCIERcState {
->   
->   /* Bridge between AHB bus and PCIe RC. */
->   #define TYPE_ASPEED_PCIE_CFG "aspeed.pcie-cfg"
-> +#define TYPE_ASPEED_2700_PCIE_CFG TYPE_ASPEED_PCIE_CFG "-ast2700"
->   OBJECT_DECLARE_TYPE(AspeedPCIECfgState, AspeedPCIECfgClass, ASPEED_PCIE_CFG);
->   
->   struct AspeedPCIECfgState {
-> @@ -99,6 +100,8 @@ struct AspeedPCIECfgState {
->       uint32_t id;
->   
->       AspeedPCIERcState rc;
-> +    uint32_t tlpn_fifo[3];
-> +    uint32_t tlpn_idx;
->   };
->   
->   struct AspeedPCIECfgClass {
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index bc491aa7bf..4adf17e40b 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -336,6 +336,11 @@ static const TypeInfo aspeed_pcie_rc_info = {
->    * - Registers 0x00 - 0x7F are shared by both PCIe0 (rc_l) and PCIe1 (rc_h).
->    * - Registers 0x80 - 0xBF are specific to PCIe0.
->    * - Registers 0xC0 - 0xFF are specific to PCIe1.
-> + *
-> + * On the AST2700:
-> + * - The register range 0x00 - 0xFF is assigned to a single PCIe configuration.
-> + * - There are three PCIe Root Complexes (RCs), each with its own dedicated H2X
-> + *   register set of size 0x100 (covering offsets 0x00 to 0xFF).
->    */
->   
->   /* AST2600 */
-> @@ -365,6 +370,31 @@ REG32(H2X_RC_H_MSI_EN1,     0xE4)
->   REG32(H2X_RC_H_MSI_STS0,    0xE8)
->   REG32(H2X_RC_H_MSI_STS1,    0xEC)
->   
-> +/* AST2700 */
-> +REG32(H2X_CFGE_INT_STS,         0x08)
-> +    FIELD(H2X_CFGE_INT_STS, TX_IDEL, 0, 1)
-> +    FIELD(H2X_CFGE_INT_STS, RX_BUSY, 1, 1)
-> +REG32(H2X_CFGI_TLP,         0x20)
-> +    FIELD(H2X_CFGI_TLP, ADDR, 0, 16)
-> +    FIELD(H2X_CFGI_TLP, BEN, 16, 4)
-> +    FIELD(H2X_CFGI_TLP, WR, 20, 1)
-> +REG32(H2X_CFGI_WDATA,       0x24)
-> +REG32(H2X_CFGI_CTRL,        0x28)
-> +    FIELD(H2X_CFGI_CTRL, FIRE, 0, 1)
-> +REG32(H2X_CFGI_RDATA,       0x2C)
-> +REG32(H2X_CFGE_TLP1,        0x30)
-> +REG32(H2X_CFGE_TLPN,        0x34)
-> +REG32(H2X_CFGE_CTRL,        0x38)
-> +    FIELD(H2X_CFGE_CTRL, FIRE, 0, 1)
-> +REG32(H2X_CFGE_RDATA,       0x3C)
-> +REG32(H2X_INT_EN,          0x40)
-> +REG32(H2X_INT_STS,         0x48)
-> +    FIELD(H2X_INT_STS, INTX, 0, 4)
-> +REG32(H2X_MSI_EN0,          0x50)
-> +REG32(H2X_MSI_EN1,          0x54)
-> +REG32(H2X_MSI_STS0,         0x58)
-> +REG32(H2X_MSI_STS1,         0x5C)
-> +
->   #define TLP_FMTTYPE_CFGRD0  0x04 /* Configuration Read  Type 0 */
->   #define TLP_FMTTYPE_CFGWR0  0x44 /* Configuration Write Type 0 */
->   #define TLP_FMTTYPE_CFGRD1  0x05 /* Configuration Read  Type 1 */
-> @@ -382,6 +412,15 @@ static const AspeedPCIERegMap aspeed_regmap = {
->       },
->   };
->   
-> +static const AspeedPCIERegMap aspeed_2700_regmap = {
-> +    .rc = {
-> +        .int_en_reg     = R_H2X_INT_EN,
-> +        .int_sts_reg    = R_H2X_INT_STS,
-> +        .msi_sts0_reg   = R_H2X_MSI_STS0,
-> +        .msi_sts1_reg   = R_H2X_MSI_STS1,
-> +    },
-> +};
-> +
->   static uint64_t aspeed_pcie_cfg_read(void *opaque, hwaddr addr,
->                                        unsigned int size)
->   {
-> @@ -606,6 +645,8 @@ static void aspeed_pcie_cfg_reset(DeviceState *dev)
->       AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
->   
->       memset(s->regs, 0, apc->nr_regs << 2);
-> +    memset(s->tlpn_fifo, 0, sizeof(s->tlpn_fifo));
-> +    s->tlpn_idx = 0;
->   }
->   
->   static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
-> @@ -679,6 +720,122 @@ static const TypeInfo aspeed_pcie_cfg_info = {
->       .class_size = sizeof(AspeedPCIECfgClass),
->   };
->   
-> +static void aspeed_2700_pcie_cfg_write(void *opaque, hwaddr addr,
-> +                                       uint64_t data, unsigned int size)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
-> +    AspeedPCIECfgTxDesc desc;
-> +    uint32_t reg = addr >> 2;
-> +
-> +    trace_aspeed_pcie_cfg_write(s->id, addr, data);
-> +
-> +    switch (reg) {
-> +    case R_H2X_CFGE_INT_STS:
-> +        if (data & R_H2X_CFGE_INT_STS_TX_IDEL_MASK) {
-> +            s->regs[R_H2X_CFGE_INT_STS] &= ~R_H2X_CFGE_INT_STS_TX_IDEL_MASK;
-> +        }
-> +
-> +        if (data & R_H2X_CFGE_INT_STS_RX_BUSY_MASK) {
-> +            s->regs[R_H2X_CFGE_INT_STS] &= ~R_H2X_CFGE_INT_STS_RX_BUSY_MASK;
-> +        }
-> +        break;
-> +    case R_H2X_CFGI_CTRL:
-> +        if (data & R_H2X_CFGI_CTRL_FIRE_MASK) {
-> +            /*
-> +             * Internal access to bridge
-> +             * Type and BDF are 0
-> +             */
-> +            desc.desc0 = 0x04000001 |
-> +                (ARRAY_FIELD_EX32(s->regs, H2X_CFGI_TLP, WR) << 30);
-> +            desc.desc1 = 0x00401000 |
-> +                ARRAY_FIELD_EX32(s->regs, H2X_CFGI_TLP, BEN);
-> +            desc.desc2 = 0x00000000 |
-> +                ARRAY_FIELD_EX32(s->regs, H2X_CFGI_TLP, ADDR);
-> +            desc.wdata = s->regs[R_H2X_CFGI_WDATA];
-> +            desc.rdata_reg = R_H2X_CFGI_RDATA;
-> +            aspeed_pcie_cfg_readwrite(s, &desc);
-> +        }
-> +        break;
-> +    case R_H2X_CFGE_TLPN:
-> +        s->tlpn_fifo[s->tlpn_idx] = data;
-> +        s->tlpn_idx = (s->tlpn_idx + 1) % ARRAY_SIZE(s->tlpn_fifo);
-> +        break;
-> +    case R_H2X_CFGE_CTRL:
-> +        if (data & R_H2X_CFGE_CTRL_FIRE_MASK) {
-> +            desc.desc0 = s->regs[R_H2X_CFGE_TLP1];
-> +            desc.desc1 = s->tlpn_fifo[0];
-> +            desc.desc2 = s->tlpn_fifo[1];
-> +            desc.wdata = s->tlpn_fifo[2];
-> +            desc.rdata_reg = R_H2X_CFGE_RDATA;
-> +            aspeed_pcie_cfg_readwrite(s, &desc);
-> +            s->regs[R_H2X_CFGE_INT_STS] |= R_H2X_CFGE_INT_STS_TX_IDEL_MASK;
-> +            s->regs[R_H2X_CFGE_INT_STS] |= R_H2X_CFGE_INT_STS_RX_BUSY_MASK;
-> +            s->tlpn_idx = 0;
-> +        }
-> +        break;
-> +
-> +    case R_H2X_INT_STS:
-> +        s->regs[reg] &= ~data | R_H2X_INT_STS_INTX_MASK;
-> +        break;
-> +    /*
-> +     * These status registers are used for notify sources ISR are executed.
-> +     * If one source ISR is executed, it will clear one bit.
-> +     * If it clear all bits, it means to initialize this register status
-> +     * rather than sources ISR are executed.
-> +     */
-> +    case R_H2X_MSI_STS0:
-> +    case R_H2X_MSI_STS1:
-> +        if (data == 0) {
-> +            return ;
-> +        }
-> +
-> +        s->regs[reg] &= ~data;
-> +        if (data == 0xffffffff) {
-> +            return;
-> +        }
-> +
-> +        if (!s->regs[R_H2X_MSI_STS0] &&
-> +            !s->regs[R_H2X_MSI_STS1]) {
-> +            trace_aspeed_pcie_rc_msi_clear_irq(s->id, 0);
-> +            qemu_set_irq(s->rc.irq, 0);
-> +        }
-> +        break;
-> +    default:
-> +        s->regs[reg] = data;
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps aspeed_2700_pcie_cfg_ops = {
-> +    .read = aspeed_pcie_cfg_read,
-> +    .write = aspeed_2700_pcie_cfg_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 1,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void aspeed_2700_pcie_cfg_class_init(ObjectClass *klass,
-> +                                            const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED 2700 PCIe Config";
-> +    apc->reg_ops = &aspeed_2700_pcie_cfg_ops;
-> +    apc->reg_map = &aspeed_2700_regmap;
-> +    apc->nr_regs = 0x100 >> 2;
-> +    apc->rc_msi_addr = 0x000000F0;
-> +    apc->rc_bus_nr = 0;
-> +}
-> +
-> +static const TypeInfo aspeed_2700_pcie_cfg_info = {
-> +    .name = TYPE_ASPEED_2700_PCIE_CFG,
-> +    .parent = TYPE_ASPEED_PCIE_CFG,
-> +    .class_init = aspeed_2700_pcie_cfg_class_init,
-> +};
-> +
->   /*
->    * PCIe PHY
->    *
-> @@ -846,6 +1003,7 @@ static void aspeed_pcie_register_types(void)
->       type_register_static(&aspeed_pcie_root_device_info);
->       type_register_static(&aspeed_pcie_root_port_info);
->       type_register_static(&aspeed_pcie_cfg_info);
-> +    type_register_static(&aspeed_2700_pcie_cfg_info);
->       type_register_static(&aspeed_pcie_phy_info);
->       type_register_static(&aspeed_2700_pcie_phy_info);
->   }
-
 
