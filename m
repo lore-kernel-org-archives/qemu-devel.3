@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C9ECAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FEACAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy53s-0001Yt-Pr; Mon, 15 Sep 2025 04:59:48 -0400
+	id 1uy5I4-0007E7-FC; Mon, 15 Sep 2025 05:14:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uy53p-0001YI-2t
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 04:59:45 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1uy5I1-0007Dc-1G
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:14:26 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1uy53f-00049N-Dz
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 04:59:43 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45f2313dd86so24690995e9.2
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 01:59:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1uy5Hw-00061J-TI
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:14:24 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45f28aba94cso74805e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 02:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1757926770; x=1758531570; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xu0NbMZt6WlaBqY9vl8/Allq8aeiTc/NFNCPm9H71tI=;
- b=jWegJs8buOT+T362XxYv2pRzXGHAKvXiFii41vKlufeiNbu1DPlo0ZdXan0ZhYr7oj
- Ve6Wj7bDWPvl0jz5wn9IW9ussoSAJ29LmKAB+kuB1JUlQnEiy7nIuqEjF1J/PZAFF6dv
- Dhe4xr55hznl0hc7dbOuHA+EIx9L+pClGxPIO7LxCk778EA1xz/ZEQFII+S3i3KzbpBZ
- eu22lIvn0anNHPzgwX1FIKEAv5wnjrSPBwha35mqK8qedpFzqawO4zVOKpjPV5ZAaM8X
- SIrRhxiwGuiln1bTUZkgeEvLQKK36aDzMY4ihdRmI9jFPe6D/hVjnoDjH0Pfo8pJY9pB
- wPyg==
+ d=google.com; s=20230601; t=1757927653; x=1758532453; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=phvkTGlJ19Pg5EKrxfwNjliEXWpnCXO5oXj3aYMdwo8=;
+ b=wSLtvv8/2pvqZ8zjTbWcYmxTe0q7pSnHgwIpGHQN9MxegzNL4y9wqnM+t9u869wjGR
+ jQ8oObMo/TAvysiz4CzCOXZCVaRlGb2zUL4AkXUEG+ECxDaF9zXlxhB7Hx85VTukmIOu
+ 7p+aij0isgwTFJrgjz1o1daRtLalcY71ibB3h6GVYpiuxCGd5MKfcHd6cw5Uy3GRunVM
+ p1JQe7wayA4/tJSVUCvc9kWuWfSKUQvjTwk1BudZ3Mu2Dly6XT1IKuif64x0eXMc4/wi
+ zaksoklchqCjDuI3aO+/e+g5OpkE/mNbzgdXCbF02KUMY5QrgACEjAt8F6uTNd0g8vJe
+ hZqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757926770; x=1758531570;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xu0NbMZt6WlaBqY9vl8/Allq8aeiTc/NFNCPm9H71tI=;
- b=uUBfAOXBD6mbjWFyHFKkOy3XmD4EdopXEvcqF2fnCWQPWkSRaFHUSJ/W9beZsHTMzt
- HKX2BsOAryV0VXyivB83LzFh7F3YbXrJsbin91Orhe4s5pnY6tQfFy+7uqAKTr2XBK+Y
- RIJbzgIynD8yxp5RMZpXY6Z8OHYyxoFCZZX6Yt/+cxpZV5RsZUFUeffvOP3R7jUeREw1
- EYFdoRlIPb6jc2PzTgTAyKlLNHAg/Tlue6NWZxbCEcxu373L5pbgLqV6fy3I2aydoClU
- VbWFFfnw5LkSYxKOFZbY8keeRXC01uiAuAkFnLOFtl3hAqff6YY/Nj6mFsxlx650g9QY
- BK/Q==
-X-Gm-Message-State: AOJu0YwlV5Q8NRY+rpjUPdodOPHD5F6hW/kLleQvV58GWbxwIsICwwvU
- LXxd7p5qcyZqXuydbfJgDf8FtU2H56WyQZ2gRpKRDc8WAa+CuoxGdmqQwt3ZelAzpzAaE0kun1q
- hZRE=
-X-Gm-Gg: ASbGncvTj9eYVI0DnCRYnxY6XoY3s91m38CGcft4jjpUHK+meGtBl87+gBmaJ2/5f48
- fawOoEU2dztukRsev5us0MjaxVdJm5FBnu4w74RZwMhpTF7ezHvuYIdHviwcuxoh3UwaooU9uYV
- NeeFajeK9ZGCHv+bnlyxyYwtn+q7X3sFJAJ7Xw8Zi0lP16RasSuLAxuoejgHCa3LuZcs6PjfQ/d
- CsGFgsNTD1eYY7tKgR1X/rjmYPb8DJ+MflAb8AU0U9FFBeG03IKCmIekRdGegxKodwBwZqkspvN
- JhRdewYOus8JHCTFrlpE2IKm7PohfnLVj2crrzaGXooXhA0M9XqnWtKwagZ/1+WvCqZ9fMF1AcD
- qvDJsJlvrBRI9+S2HTbMCQXNps7f8q2xjcygGN5RZ8Qg6IICigym7Y7dRBkkDcTmu14w2cX/B1t
- ic8EgkPDDz2/Z5I3nRMKI=
-X-Google-Smtp-Source: AGHT+IEKVyrmnuq5lnuAKfnMCp7MWHFSxHtsoHfmV88me4mbfpFb2luGFEBVjSVIztw7m+/xFyNhuA==
-X-Received: by 2002:a05:600c:c4b8:b0:45f:2919:5e6c with SMTP id
- 5b1f17b1804b1-45f29d33122mr61177365e9.16.1757926770173; 
- Mon, 15 Sep 2025 01:59:30 -0700 (PDT)
-Received: from chigot-Dell.telnowedge.local
- (lmontsouris-659-1-24-67.w81-250.abo.wanadoo.fr. [81.250.175.67])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45e03719235sm168074625e9.1.2025.09.15.01.59.29
+ d=1e100.net; s=20230601; t=1757927653; x=1758532453;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=phvkTGlJ19Pg5EKrxfwNjliEXWpnCXO5oXj3aYMdwo8=;
+ b=JiJjNvXyJtUOzpz/ZG3gJ37jatnHb6NPkP49kMbXeDKLYdollD465poCLAyqPJ0Xpu
+ i1dAUHIUfHniqqetjAdYWduRyihDWORLXVaeAjpXGVwH5LTUION5k0gJ/Yc6xAMZIaYN
+ WGaOuJpBPmH7Q3j/569kRLFpyoBXDPPWWXljSMPN0e2kXHKD5Nj4lDo2CzVCOfL76AZG
+ UQB0qF3JSplZGYpu1Ai3C9MpIDrsO2MI/n7e9I0SGrqDW17mVAjDIS6AmMeOePt8S0yp
+ UsBsdwaq0BwSJ43AFvHQOdhBiY9jsXyLBnB/91jyQfQaauH6+0SHCoRAngDtnDsuxKVZ
+ UjMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWERx9ZQCyFTBH59ihRbT5XfKuBaJnMWddnzlCsMyrZRSpw5XSh5GgZhmEE71BPmZF9zIOXjy+9P4tG@nongnu.org
+X-Gm-Message-State: AOJu0YwUrxAOfoRr7zq8A9v+zhib44ZRsjq79OjdTXZT0uNDgEvFbFvl
+ mM0t+YsF34MJwsI8nqYuNTc04eDixYrwuyqllp8AMO3IntCAs1896JI1Ay4w5A6ZFg==
+X-Gm-Gg: ASbGncs9k/ptRIbpNeE7IKrvedfvp/3jsCvXsH57GOdeQY3dspJrsxnmcFf73o7uJGm
+ h/SHf97XufpJIxsboRcsHng7dOV8XGhou2AaJDru8cfbKWyUTTUclCQVVvub+YHIat3yQ9gdss6
+ W5rDqsridiwAoWEAloRW1vM3lT7Iwua95r/YxMBME3Vl+B+rd/7zcmvawKuF954QZC7dM0nihs1
+ y6flP9jqaeKTMoiPKSctilBRb3KnFLcZlCHeMV5rW182E5LjQCBGs3qcAWYRlyV6gndcCjbny5r
+ Y0e9mns21BCJNe+iB5Aa9afRyRZ+t/RVRv9ieG9fVoWkx2LkLqw7CoPw2u0J4DEHsADwjecy+0y
+ SfzesqKh5zlJ0FLBcW66IP71CVZ6/n5/RLwecfbrsbtgeEfPYqiE38JlNl6qPVc/7niZyzd1N3A
+ 1afUf3
+X-Google-Smtp-Source: AGHT+IGPsiXisLlbtqMfSI5sEwS3oLEv4PMIGXS/nEgWPO1eXkh7PR2Oxr9Q5TDh/MCpDAYXaiZOlQ==
+X-Received: by 2002:a05:600c:64c7:b0:45d:f6a6:a13e with SMTP id
+ 5b1f17b1804b1-45f2d98f76dmr1147585e9.1.1757927652895; 
+ Mon, 15 Sep 2025 02:14:12 -0700 (PDT)
+Received: from google.com (157.24.148.146.bc.googleusercontent.com.
+ [146.148.24.157]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e7c778f764sm11513990f8f.57.2025.09.15.02.14.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 01:59:29 -0700 (PDT)
-From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
-Subject: [RESEND PATCH] hw/arm/xlnx-zynqmp: wire a second GIC for the Cortex-R5
-Date: Mon, 15 Sep 2025 10:59:14 +0200
-Message-Id: <20250915085914.526890-1-chigot@adacore.com>
-X-Mailer: git-send-email 2.34.1
+ Mon, 15 Sep 2025 02:14:12 -0700 (PDT)
+Date: Mon, 15 Sep 2025 09:14:08 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ jean-philippe@linaro.org
+Subject: Re: [RFC 02/11] hw/arm/smmuv3: Implement read/write logic for secure
+ registers
+Message-ID: <aMfY4LJVEGw3egdP@google.com>
+References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
+ <20250806151134.365755-3-tangtao1634@phytium.com.cn>
+ <aKOaIcPp26kbS3Nn@google.com>
+ <53607fe8-0555-4408-bfa6-e4b95d44e230@phytium.com.cn>
+ <aKma98hlAWG9M4h_@google.com>
+ <8987bd11-afae-4157-979d-ef10be69a7a5@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=chigot@adacore.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <8987bd11-afae-4157-979d-ef10be69a7a5@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,238 +116,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Konrad <konrad.frederic@yahoo.fr>
+Hi Tao,
 
-This wires a second GIC for the Cortex-R5, all the IRQs are split when there
-is an RPU instanciated.
+On Thu, Sep 11, 2025 at 11:27:50PM +0800, Tao Tang wrote:
+> 
+> Hi Mostafa,
+> 
+> First, my apologies for the long delay in getting back to you. I was away on
+> paternity leave for the last few weeks.
 
-Signed-off-by: Clément Chigot <chigot@adacore.com>
+No worries!
 
----
+> 
+> Thank you for the detailed follow-up, your advice is very helpful for
+> simplifying the series.
+> 
+> 
+> On 2025/8/23 18:41, Mostafa Saleh wrote:
+> > On Wed, Aug 20, 2025 at 11:21:02PM +0800, Tao Tang wrote:
+> > > On 2025/8/19 05:24, Mostafa Saleh wrote:
+> > > > On Wed, Aug 06, 2025 at 11:11:25PM +0800, Tao Tang wrote:
+> > > > > This patch builds upon the previous introduction of secure register
+> > > > > definitions by providing the functional implementation for their access.
+> > > > > 
+> > > > > The availability of the secure programming interface is now correctly
+> > > > > gated by the S_IDR1.SECURE_IMPL bit. When this bit indicates that
+> > > > > secure functionality is enabled, the I/O handlers (smmuv3_read and
+> > > > > smmuv3_write) will correctly dispatch accesses to the secure
+> > > > > register space.
+> > > > > 
+> > > > > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> > > > > ---
+> > > > >    hw/arm/smmuv3-internal.h |   5 +
+> > > > >    hw/arm/smmuv3.c          | 451 +++++++++++++++++++++++++++++++++++++++
+> > > > >    2 files changed, 456 insertions(+)
+> > > > > 
+> > > > > diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> > > > > index 483aaa915e..1a8b1cb204 100644
+> > > > > --- a/hw/arm/smmuv3-internal.h
+> > > > > +++ b/hw/arm/smmuv3-internal.h
+> > > > > @@ -122,6 +122,11 @@ REG32(CR0,                 0x20)
+> > > > >    #define SMMU_CR0_RESERVED 0xFFFFFC20
+> > > > > +/*
+> > > > > + * BIT1 and BIT4 are RES0 in SMMU_S_CRO
+> > > > > + */
+> > > > > +#define SMMU_S_CR0_RESERVED 0xFFFFFC12
+> > > > > +
+> > > > >    REG32(CR0ACK,              0x24)
+> > > > >    REG32(CR1,                 0x28)
+> > > > >    REG32(CR2,                 0x2c)
+> > > > > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> > > > > index ab67972353..619180d204 100644
+> > > > > --- a/hw/arm/smmuv3.c
+> > > > > +++ b/hw/arm/smmuv3.c
+> > > > > @@ -317,6 +317,18 @@ static void smmuv3_init_regs(SMMUv3State *s)
+> > > > >        s->gerrorn = 0;
+> > > > >        s->statusr = 0;
+> > > > >        s->gbpa = SMMU_GBPA_RESET_VAL;
+> > > > > +
+> > > > > +    /* Initialize secure state */
+> > > > > +    memset(s->secure_idr, 0, sizeof(s->secure_idr));
+> > > > > +    /* Secure EL2 and Secure stage 2 support */
+> > > > > +    s->secure_idr[1] = FIELD_DP32(s->secure_idr[1], S_IDR1, SEL2, 1);
+> > > > AFAIU, this is wrong, SEL2 means that the SMMU has dual stage-2,
+> > > > one for secure (S_S2TTB) and one for non-secure IPAs(S2TTB).
+> > > > Which is not implemented in this series.
+> > > 
+> > > Hi Mostafa,
+> > > 
+> > > Thank you for the very detailed and helpful review. Your feedback is spot
+> > > on, and I'd like to address your points and ask for a quick confirmation on
+> > > them.
+> > > 
+> > > Regarding the SEL2 bit, you are absolutely right, my understanding was
+> > > incorrect. I've spent the last few days reviewing the manual to better
+> > > understand the selection between Secure and Non-secure Stage 2 translations.
+> > > I would be very grateful if you could confirm if my new understanding is
+> > > correct:
+> > > 
+> > > - In Stage 2-only mode (Stage 1 bypassed), the choice between a Secure or
+> > > Non-secure IPA translation is determined solely by STE.NSCFG.
+> > > 
+> > Yes, but that's only with SMMU_IDR1.ATTR_PERMS_OVR which Qemu doesn't
+> > advertise, so in our case it's always secure.
+> > 
+> > > - In Stage 1-enabled mode, STE.NSCFG is ignored. The choice is determined by
+> > > the translation process, starting from CD.NSCFGx, with the output NS
+> > > attribute being the result of intermediate NSTable flags and the final
+> > > descriptor.NS bit (TTD.NSTable, TTD.NS).
+> > > 
+> > You have to differentiate between the security state of the translation and
+> > the security state of the translation table access.
+> > 
+> > For stage-1, the security state is determined by the NS bit in the last
+> > level PTE, which in case of nested translation it will choose between S2TTB
+> > or S_S2TTB.
+> > 
+> > Also, note that the stage-2 also have an NS which define the final attribute
+> > of the transaction.
+> > 
+> > You have to also be careful around things such as NSCFG{0,1} as it might
+> > change which stage-2 is used for the stage-1 TTB walk.
+> > 
+> > I see, in your patches, all the page-table access is done using the secure
+> > state of the SID which is not correct.
+> > 
+> > 
+> > > Based on this, I plan to have an internal flag, perhaps named
+> > > target_ipa_is_ns in SMMUTransCfg.SMMUS2Cfg struct, to track the outcome of
+> > > this process. This flag will then determine whether S_S2TTB or S2TTB is used
+> > > for the Stage 2 translation.
+> > > 
+> > I am worried that it's not that simple for a single secure nested translation
+> > you can have multiple stage-2 walks where some might be secure and others not,
+> > so I imagine this some how will be determined from each stage-1 walk and
+> > some how returned (maybe in the TLB struct) which is then the stage-2
+> > walk looks into.
+> > 
+> > I am not sure how complicated it is to manage 2 stage-2 with the current code
+> > base, so my advice would be to split the problem; for now you can drop SEL2
+> > from this series and rely on NS stage-2.
+> 
+> 
+> I would like to confirm my understanding of the implementation. Does this
+> mean that for the current RFC, we should set S_IDR1.SEL2=0, which implies
+> that all Stage-2 translations will begin with a Non-secure IPA? And the
+> final output PA space will then almost always be Non-secure PA, with the
+> sole exception being when S2SW, S2SA, S2NSW, and S2NSA are ALL ZERO.
+> 
+> 
+> However, since these fields are RES0 when S_IDR1.SEL2=0, it seems we can
+> conclude that for this version, the output will definitively be a Non-secure
+> PA. I believe this is what you meant by your advice to "rely on NS stage-2".
+> I would be grateful if you could let me know whether this interpretation is
+> on the right track.
 
-Originally, this patch was member of a wider series. Other patches have
-been merged since thus submit it back as a standalone patch.
- https://lists.gnu.org/archive/html/qemu-devel/2025-06/msg02328.html
+Yes, that’s what I meant, I think that simplifies a lot, in this series we
+can focus on the infrastructure for the secure SMMU (registers, TLBs..),
+and then extra features such as secure stage-2 can be added later.
 
----
- hw/arm/xlnx-zynqmp.c         | 103 +++++++++++++++++++++++++++++++----
- include/hw/arm/xlnx-zynqmp.h |   5 ++
- 2 files changed, 98 insertions(+), 10 deletions(-)
+> 
+> 
+> ------------------------------<snip>------------------------------
+> 
+> > > The new code performs a single, necessary security state check at the entry
+> > > point of the MMIO handlers. The rest of the logic relies on the banking
+> > > mechanism, which makes the implementation generic for Non-secure, Secure,
+> > > and future states like Realm/Root. The new structure looks like this:
+> > > 
+> > > /* Structure for one register bank */
+> > > typedef struct SMMUv3Bank {
+> > >      uint32_t idr[6];     /* IDR0-IDR5, note: IDR5 only used for NS bank */
+> > >      uint32_t cr[3];      /* CR0-CR2 */
+> > >      uint32_t cr0ack;
+> > >      uint32_t init;       /* S_INIT register (secure only), reserved for NS
+> > > */
+> > >      uint32_t gbpa;
+> > > 
+> > > ......
+> > > 
+> > >      SMMUQueue eventq, cmdq;
+> > > } SMMUv3Bank;
+> > > 
+> > > struct SMMUv3State {
+> > >      SMMUState     smmu_state;
+> > > 
+> > >      /* Shared (non-banked) registers and state */
+> > >      uint32_t features;
+> > >      uint8_t sid_size;
+> > >      uint8_t sid_split;
+> > > 
+> > > ......
+> > > 
+> > >      /* Banked registers for all access */
+> > >      SMMUv3Bank bank[SMMU_SEC_IDX_NUM];
+> > > ......
+> > > };
+> > > 
+> > Yes, IMO,that’s the right approach. Although that might make the
+> > migration code more complicated as we changed the state struct.
+> > 
+> > Thanks,
+> > Mostafa
+> I have almost completed the refactoring based on this new structure, and I
+> will send out the v2 patch series in the next few days for review.
 
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index ec96a46eec..ffed6e5126 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -26,8 +26,6 @@
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
- 
--#define GIC_NUM_SPI_INTR 160
--
- #define ARM_PHYS_TIMER_PPI  30
- #define ARM_VIRT_TIMER_PPI  27
- #define ARM_HYP_TIMER_PPI   26
-@@ -206,17 +204,26 @@ static const XlnxZynqMPGICRegion xlnx_zynqmp_gic_regions[] = {
- 
- static inline int arm_gic_ppi_index(int cpu_nr, int ppi_index)
- {
--    return GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
-+    return XLNX_ZYNQMP_GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
-+}
-+
-+static unsigned int xlnx_zynqmp_get_rpu_number(MachineState *ms)
-+{
-+    /*
-+     * RPUs will be created only if "-smp" is higher than the maximum
-+     * of APUs. Round it up to 0 to avoid dealing with negative values.
-+     */
-+    return MAX(0, MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
-+                      XLNX_ZYNQMP_NUM_RPU_CPUS));
- }
- 
- static void xlnx_zynqmp_create_rpu(MachineState *ms, XlnxZynqMPState *s,
-                                    const char *boot_cpu, Error **errp)
- {
-     int i;
--    int num_rpus = MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
--                       XLNX_ZYNQMP_NUM_RPU_CPUS);
-+    int num_rpus = xlnx_zynqmp_get_rpu_number(ms);
- 
--    if (num_rpus <= 0) {
-+    if (!num_rpus) {
-         /* Don't create rpu-cluster object if there's nothing to put in it */
-         return;
-     }
-@@ -377,6 +384,7 @@ static void xlnx_zynqmp_init(Object *obj)
-     XlnxZynqMPState *s = XLNX_ZYNQMP(obj);
-     int i;
-     int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
-+    int num_rpus = xlnx_zynqmp_get_rpu_number(ms);
- 
-     object_initialize_child(obj, "apu-cluster", &s->apu_cluster,
-                             TYPE_CPU_CLUSTER);
-@@ -390,6 +398,12 @@ static void xlnx_zynqmp_init(Object *obj)
- 
-     object_initialize_child(obj, "gic", &s->gic, gic_class_name());
- 
-+    if (num_rpus) {
-+        /* Do not create the rpu_gic if we don't have rpus */
-+        object_initialize_child(obj, "rpu_gic", &s->rpu_gic,
-+                                gic_class_name());
-+    }
-+
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
-         object_initialize_child(obj, "gem[*]", &s->gem[i], TYPE_CADENCE_GEM);
-         object_initialize_child(obj, "gem-irq-orgate[*]",
-@@ -439,6 +453,15 @@ static void xlnx_zynqmp_init(Object *obj)
-     object_initialize_child(obj, "qspi-irq-orgate",
-                             &s->qspi_irq_orgate, TYPE_OR_IRQ);
- 
-+    if (num_rpus) {
-+        for (i = 0; i < ARRAY_SIZE(s->splitter); i++) {
-+            g_autofree char *name = g_strdup_printf("irq-splitter%d", i);
-+            object_initialize_child(obj, name, &s->splitter[i], TYPE_SPLIT_IRQ);
-+        }
-+    }
-+
-+
-+
-     for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
-         object_initialize_child(obj, "usb[*]", &s->usb[i], TYPE_USB_DWC3);
-     }
-@@ -452,9 +475,10 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     uint8_t i;
-     uint64_t ram_size;
-     int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
-+    int num_rpus = xlnx_zynqmp_get_rpu_number(ms);
-     const char *boot_cpu = s->boot_cpu ? s->boot_cpu : "apu-cpu[0]";
-     ram_addr_t ddr_low_size, ddr_high_size;
--    qemu_irq gic_spi[GIC_NUM_SPI_INTR];
-+    qemu_irq gic_spi[XLNX_ZYNQMP_GIC_NUM_SPI_INTR];
-     Error *err = NULL;
- 
-     ram_size = memory_region_size(s->ddr_ram);
-@@ -502,13 +526,22 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-         g_free(ocm_name);
-     }
- 
--    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", GIC_NUM_SPI_INTR + 32);
-+    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq",
-+                         XLNX_ZYNQMP_GIC_NUM_SPI_INTR + 32);
-     qdev_prop_set_uint32(DEVICE(&s->gic), "revision", 2);
-     qdev_prop_set_uint32(DEVICE(&s->gic), "num-cpu", num_apus);
-     qdev_prop_set_bit(DEVICE(&s->gic), "has-security-extensions", s->secure);
-     qdev_prop_set_bit(DEVICE(&s->gic),
-                       "has-virtualization-extensions", s->virt);
- 
-+    if (num_rpus) {
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-irq",
-+                             XLNX_ZYNQMP_GIC_NUM_SPI_INTR + 32);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "revision", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-cpu", num_rpus);
-+        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "first-cpu-index", 4);
-+    }
-+
-     qdev_realize(DEVICE(&s->apu_cluster), NULL, &error_fatal);
- 
-     /* Realize APUs before realizing the GIC. KVM requires this.  */
-@@ -608,13 +641,63 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (num_rpus) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->rpu_gic), errp)) {
-+            return;
-+        }
-+
-+        for (i = 0; i < num_rpus; i++) {
-+            qemu_irq irq;
-+
-+            sysbus_mmio_map(SYS_BUS_DEVICE(&s->rpu_gic), i + 1,
-+                            GIC_BASE_ADDR + i * 0x1000);
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_IRQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_FIQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus * 2,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_VIRQ));
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->rpu_gic), i + num_rpus * 3,
-+                               qdev_get_gpio_in(DEVICE(&s->rpu_cpu[i]),
-+                                                ARM_CPU_VFIQ));
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_PHYS_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_PHYS, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_VIRT_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_VIRT, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_HYP_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_HYP, irq);
-+            irq = qdev_get_gpio_in(DEVICE(&s->rpu_gic),
-+                                   arm_gic_ppi_index(i, ARM_SEC_TIMER_PPI));
-+            qdev_connect_gpio_out(DEVICE(&s->rpu_cpu[i]), GTIMER_SEC, irq);
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->rpu_gic), 0, GIC_BASE_ADDR);
-+    }
-+
-     if (!s->boot_cpu_ptr) {
-         error_setg(errp, "ZynqMP Boot cpu %s not found", boot_cpu);
-         return;
-     }
- 
--    for (i = 0; i < GIC_NUM_SPI_INTR; i++) {
--        gic_spi[i] = qdev_get_gpio_in(DEVICE(&s->gic), i);
-+    for (i = 0; i < XLNX_ZYNQMP_GIC_NUM_SPI_INTR; i++) {
-+        if (num_rpus) {
-+            DeviceState *splitter = DEVICE(&s->splitter[i]);
-+            qdev_prop_set_uint16(splitter, "num-lines", 2);
-+            qdev_realize(splitter, NULL, &error_abort);
-+            gic_spi[i] = qdev_get_gpio_in(splitter, 0);
-+            qdev_connect_gpio_out(splitter, 0,
-+                                  qdev_get_gpio_in(DEVICE(&s->gic), i));
-+            qdev_connect_gpio_out(splitter, 1,
-+                                  qdev_get_gpio_in(DEVICE(&s->rpu_gic), i));
-+        } else {
-+            gic_spi[i] = qdev_get_gpio_in(DEVICE(&s->gic), i);
-+        }
-     }
- 
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
-diff --git a/include/hw/arm/xlnx-zynqmp.h b/include/hw/arm/xlnx-zynqmp.h
-index c137ac59e8..0ae00e10f6 100644
---- a/include/hw/arm/xlnx-zynqmp.h
-+++ b/include/hw/arm/xlnx-zynqmp.h
-@@ -42,6 +42,7 @@
- #include "hw/misc/xlnx-zynqmp-crf.h"
- #include "hw/timer/cadence_ttc.h"
- #include "hw/usb/hcd-dwc3.h"
-+#include "hw/core/split-irq.h"
- 
- #define TYPE_XLNX_ZYNQMP "xlnx-zynqmp"
- OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
-@@ -87,6 +88,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
-                                   XLNX_ZYNQMP_MAX_HIGH_RAM_SIZE)
- 
- #define XLNX_ZYNQMP_NUM_TTC 4
-+#define XLNX_ZYNQMP_GIC_NUM_SPI_INTR 160
- 
- /*
-  * Unimplemented mmio regions needed to boot some images.
-@@ -105,6 +107,9 @@ struct XlnxZynqMPState {
-     GICState gic;
-     MemoryRegion gic_mr[XLNX_ZYNQMP_GIC_REGIONS][XLNX_ZYNQMP_GIC_ALIASES];
- 
-+    GICState rpu_gic;
-+    SplitIRQ splitter[XLNX_ZYNQMP_GIC_NUM_SPI_INTR];
-+
-     MemoryRegion ocm_ram[XLNX_ZYNQMP_NUM_OCM_BANKS];
- 
-     MemoryRegion *ddr_ram;
--- 
-2.34.1
+Sounds good!
 
+Thanks,
+Mostafa
+
+> 
+> Thanks again for your invaluable guidance.
+> 
+> Best regards,
+> 
+> Tao
+> 
 
