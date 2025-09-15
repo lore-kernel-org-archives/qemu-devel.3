@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E63CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547F0CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyBBV-0003kx-9y; Mon, 15 Sep 2025 11:32:05 -0400
+	id 1uyBP6-00008v-WF; Mon, 15 Sep 2025 11:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uyBBQ-0003kS-Lp
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:32:01 -0400
-Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1uyBBE-0003sC-8o
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:31:58 -0400
-Received: by mail-io1-xd2a.google.com with SMTP id
- ca18e2360f4ac-887764c2868so376721339f.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 08:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1757950293; x=1758555093; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=aq6RCJ0wdukZ1Q4R5ZbXYvLxhYL8PqHTPfLVyEwUqrQ=;
- b=SdP2tajq7gKsJsAOd0qBhd/8ay97oCESy21FmqGMldtYYcgricycUljm9WGxzv26vI
- j0aw0NAtsJvXPrnZhKO11JzBYwi8uHD/5K5jejSJpA5r1SXOfF4d1Bh3AIP1CAc7HhlE
- UX3Q2smhLSGmsDbsb0qngOD+YP4RJ1BplqtFhANr5eqNTqd532V3LoivdDheDtbD87Y/
- fAhenMS5fQKdzEquhJpZSpEuzh2dTTcA4NvyLHygkt1MVIWdXBXd2DIrYVJ33jNkhxJ7
- vkk5ON94y/aYZJfrYehL/cUc/oXtqubPJHFXAFxzR9cv16OAh6t1yLojPByrP3z0R1U8
- 3MNQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyBP3-00008B-OX
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:46:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyBOt-0006sC-Mm
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:46:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757951142;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+fxGt5AeT0IJNVP/fiweqHqFrzaB95yd4leksNI92jg=;
+ b=A1B75L5HYm/wXiJq/qyNTxf9qAiIvkgsk0CIQaOwIrFBMwCCC2EJ528U+wFtYYY90LoTvF
+ vzNXL84HteKsvmYnmnUkvu2MXPR5g1dDn1mBSPOcKF9pcoX0RYwaPM9ndfGuthwyG5K7jz
+ cgA6elV6zFXsb+XXAefpud/+xfNmUyw=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-gRHsJ5wiMZSv_RQpaqs5zQ-1; Mon, 15 Sep 2025 11:45:41 -0400
+X-MC-Unique: gRHsJ5wiMZSv_RQpaqs5zQ-1
+X-Mimecast-MFC-AGG-ID: gRHsJ5wiMZSv_RQpaqs5zQ_1757951140
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b60dd9634dso107017141cf.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 08:45:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757950293; x=1758555093;
+ d=1e100.net; s=20230601; t=1757951140; x=1758555940;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aq6RCJ0wdukZ1Q4R5ZbXYvLxhYL8PqHTPfLVyEwUqrQ=;
- b=sgkSrX6ql9svGyJWS7tgLW4bpe/M86ZB+TiD8/M6deu+RqG4WEydFuSdnyaaSj5PYF
- lG8s3P4QaC3kPFTJliDs72pbuhQta12eRJJem8tcaQ/RAZEbW7gZoUviETWQFXkpYGka
- 5qN/ZxQbobhfFFn+XZ3Kc24Zg0EruA+caFI65rwbf6ax4KkGcZrsb24I4OqbA4AniZWa
- PFlO15kqJ1ud5Upk/ZYba2aCeV6t7HyWRBqCZHN1GQeph/6Bs3AsRKioxJpBQeRAaT5i
- qKzvxkugNj5R4mLAvVDxvdUtuQusoj99gFswTKd1O3wIviw3l+vPT89vfhakhJpUnuvo
- GOIA==
-X-Gm-Message-State: AOJu0YyA6gmPMg2BnVnZE9u9L15mbpka6AgznsC7h672HR39eTRjsMqZ
- 2fMJi0T0FGVlGrHBqPAMFw9OdPjc53Zz7Ud9qkFOpQwMd+WGlLpqn2TTHSe64QdgR1s=
-X-Gm-Gg: ASbGnctp37PN9cC5UEIcTWoplP94UorT6kAiACelHGvR57kF6tBJNKq1osZB3kGbrYf
- qzfM6g9Zh40b5v4QnOYWYq/4lqztBwrVMhDpWdkpf2QPd2xWbrwcbiWLntdfKzH3N4wXT+AKLkg
- my9Z3OOQcIZRE2ypTA4qDzzFDnoc0ZxGgB4748sXbzqr8Nxhuo7ngSotb5qt5JvI1uV6zerdETM
- twXNNVH+r9WeKv7vOREPsak0fc7eK3Rt0vfUVW4Kn80x1drQpq2rjXUbB5tHrpnZ3ZDQyoDzbjS
- /fdMa3ovDzVqfuDX8kmeap/6tbFu4Y9S6tPQLNTHhCsloRyBcUrjD5ZGRcQoAE1fMwHSQuLNY20
- ZW0brxCiu8rU9pQh/4RaK+f9cxxhiN0ZkzAA=
-X-Google-Smtp-Source: AGHT+IF+RoXGyypxsQmN5LU58CWXW+LffefM+VQMEp0Wt0n4UMehnF3ta5VR4L9fSYiwM9x6UIJ9hQ==
-X-Received: by 2002:a92:ca0f:0:b0:424:7bb:775c with SMTP id
- e9e14a558f8ab-42407bb7949mr28284665ab.31.1757950293164; 
- Mon, 15 Sep 2025 08:31:33 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-4240a4cc099sm6178925ab.29.2025.09.15.08.31.32
+ bh=+fxGt5AeT0IJNVP/fiweqHqFrzaB95yd4leksNI92jg=;
+ b=DI/zxsvg20gtj2b+/u2oWGq+vg/fXPu1IEVRdMcu0fpNr3Qd+DOhf2jmJXQCR/3LZO
+ 2eWE7GvTU9WJD2cUQXqkBybiw47QlmVZ6UDpWdrFqsXX6WYqbmMORBPx3Gb4UwOkk6C+
+ 9SnCvI72DxMPSllLjuL6MRE64HVjK4nDqiATryG+PdhUAfB5dL6CAr3Vp2pLrHjJgJ9I
+ e9rIf5KtseSo4evPDaTtVBUHqNfmjAJzGB7g3Qw4aHdDHFoTuwUjRg+XLZdd2dwelsZJ
+ 4YrB3bBaLOVSGktPYQeneDqd9L5Y0m9cLl0H3yL9OhtO6pvCMmewUq1jAW4eOBMs/fxb
+ RRGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6aKTmNXOJBZ6Bxo3yvN0Wfc0kRLUSeCcEmfguAAAsh1gD75U8c4HgiqNLi+xhKzA6VTziqYecHk33@nongnu.org
+X-Gm-Message-State: AOJu0Yzsb9L0cwHEFz5FMOOSz2anAcM56/03DNyWaJQde4HRrFJ/3ETf
+ lIa8dzHn4c6c0go2+Uj9ia+c+u6PD31qr5heiGM3wDCQxQHU5IRw2LbC4vEFWB0VC+4gDWr5JpX
+ EWwcpXdO2VxdHGOZsEDDH55QlB4wom2YAixHvhBdx+KOStl67lH5FrED+
+X-Gm-Gg: ASbGncuwIpaCI//096vNBrUCSkqGUEFy6wJ5L20suNWlGLl2mT1QFt6lRkwSAfQP/d4
+ 7tyQG9jwNQ5LNij/FXhPenm4XSGTIGv/zZD5yy6/8acM266viZ1tJGXEcCMWvHgwsmft8NRdslU
+ jzSu05uHJkLw7nejy1cWjSiKPty5PkqcEEyhjS7kGeN8pgFFBzTuoChUfLzVCXGJYR/14L0Bhbb
+ FUXWcoliRW7ds5oC+9MwkNrgypN02IBcqnBMBSmt+7lwR0rk1E9HyrXv20Qjufg/ZHippe+6qkm
+ cVOXIWdSZTIJU3RNzoqnyDNqAeAzpXO7
+X-Received: by 2002:a05:622a:4c0b:b0:4b7:a92d:3d99 with SMTP id
+ d75a77b69052e-4b7a92d421cmr28851371cf.1.1757951140234; 
+ Mon, 15 Sep 2025 08:45:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGl1h1U3aZGsXc7C3qs3PDdIunDw0pvR6fi/pXoVm4LBkeiy+I+Wnod+Mo6bvZFmkh4GQv4CQ==
+X-Received: by 2002:a05:622a:4c0b:b0:4b7:a92d:3d99 with SMTP id
+ d75a77b69052e-4b7a92d421cmr28850951cf.1.1757951139653; 
+ Mon, 15 Sep 2025 08:45:39 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b639deecf4sm71185231cf.49.2025.09.15.08.45.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 08:31:32 -0700 (PDT)
-Date: Mon, 15 Sep 2025 10:31:31 -0500
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Xie Bo <xb@ultrarisc.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair23@gmail.com, 
- pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com, 
- rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com
-Subject: Re: [PATCH v9 0/2] =?utf-8?B?dGFyZ2V0L3Jpc2N277yaRmk=?=
- =?utf-8?Q?x?= riscv64 kvm migration
-Message-ID: <20250915-da26ba5c012a2d49fb07f4fa@orel>
-References: <20250915070811.3422578-1-xb@ultrarisc.com>
+ Mon, 15 Sep 2025 08:45:39 -0700 (PDT)
+Date: Mon, 15 Sep 2025 11:45:27 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH v3 04/13] util/error: add &error_reporter
+Message-ID: <aMg0l0xgq3hdiDnh@x1.local>
+References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
+ <20250915132211.135095-5-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250915070811.3422578-1-xb@ultrarisc.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
- envelope-from=ajones@ventanamicro.com; helo=mail-io1-xd2a.google.com
+In-Reply-To: <20250915132211.135095-5-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001,
  T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,42 +109,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 03:08:06PM +0800, Xie Bo wrote:
-> This is v9 of the series. Compared to v8, the patches are now based on
-> the 'riscv-to-apply.next' branch from Alistair's repository:
+On Mon, Sep 15, 2025 at 04:22:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Add a pair to &error_warn helper, to reduce the pattern like
 > 
-> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+>     Error *local_err = NULL;
 > 
-> Changes since v8:
-> - Rebased the series onto [alistair/riscv-to-apply.next]
-> - Removed the previous 'Reviewed-by' tags due to the rebase
-
-Please don't do that. If the rebase doesn't require a rework of the logic,
-then the patches don't change in any significant way, so reviewers
-shouldn't need to look at them again.
-
-Anyway, for the series (since I can't see any difference from before)
-
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-
-Thanks,
-drew
-
->   * The changes are purely mechanical; no code logic was altered *
-> - Added 'Cc: qemu-stable@nongnu.org'
+>     ...
 > 
-> Xie Bo (2):
->   Set KVM initial privilege mode and mp_state
->   Fix VM resume after QEMU+KVM migration
+>     if (!foo(..., &local_err)) {
+>         error_report_err(local_err);
+>         return false;
+>     }
 > 
->  target/riscv/cpu.c           | 17 +++++++++-
->  target/riscv/cpu.h           |  2 ++
->  target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
->  target/riscv/kvm/kvm_riscv.h |  3 +-
->  target/riscv/machine.c       |  5 +--
->  5 files changed, 70 insertions(+), 17 deletions(-)
+> to simply
 > 
+>     if (!foo(..., &error_reporter)) {
+>         return false;
+>     }
+> 
+> Of course, for new interfaces, it's better to always support and handle
+> errp argument. But when have to rework the old ones, it's not always
+> feasible to convert everything to support/handle errp.
+> 
+> The new helper is used in following commits.
+
+Could we add some explanation of why we need this if we already have
+error_warn?
+
+I don't see much difference except error_warn will prepend it with
+"warning: ", but that doesn't sound like a real problem..
+
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  include/qapi/error.h | 6 ++++++
+>  util/error.c         | 3 +++
+>  2 files changed, 9 insertions(+)
+> 
+> diff --git a/include/qapi/error.h b/include/qapi/error.h
+> index 41e3816380..cea95f5c36 100644
+> --- a/include/qapi/error.h
+> +++ b/include/qapi/error.h
+> @@ -539,6 +539,12 @@ G_DEFINE_AUTO_CLEANUP_CLEAR_FUNC(ErrorPropagator, error_propagator_cleanup);
+>   */
+>  extern Error *error_warn;
+>  
+> +/*
+> + * Special error destination to report on error.
+> + * See error_setg() and error_propagate() for details.
+> + */
+> +extern Error *error_reporter;
+> +
+>  /*
+>   * Special error destination to abort on error.
+>   * See error_setg() and error_propagate() for details.
+> diff --git a/util/error.c b/util/error.c
+> index daea2142f3..5160435c86 100644
+> --- a/util/error.c
+> +++ b/util/error.c
+> @@ -20,6 +20,7 @@
+>  Error *error_abort;
+>  Error *error_fatal;
+>  Error *error_warn;
+> +Error *error_reporter;
+>  
+>  static void error_handle(Error **errp, Error *err)
+>  {
+> @@ -43,6 +44,8 @@ static void error_handle(Error **errp, Error *err)
+>      }
+>      if (errp == &error_warn) {
+>          warn_report_err(err);
+> +    } else if (errp == &error_reporter) {
+> +        error_report_err(err);
+>      } else if (errp && !*errp) {
+>          *errp = err;
+>      } else {
 > -- 
-> 2.43.0
+> 2.48.1
 > 
+
+-- 
+Peter Xu
+
 
