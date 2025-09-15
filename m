@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E931FCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D86CAC59A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy96S-0007wi-1R; Mon, 15 Sep 2025 09:18:44 -0400
+	id 1uy988-0000Gb-8I; Mon, 15 Sep 2025 09:20:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uy96K-0007w6-U8
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:18:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uy969-0006QP-Ur
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:18:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757942298;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cxDpM3oOshrkkfAL4w7nNaLQXDDb34A2zn6jblc5LU8=;
- b=VmBxjbUf968UF0q2MSax3QHWP/HRlXIHRUl+muqtb5jZqvJF4tdsiz1lC2+njKrcH1ZeIH
- ELvzpL0mvWFZJNLyYbmO4M/XCGvZQYC2RnC+uLe/On2296wRxpQnfg7Bj/45s2vTUJmvyf
- G0PA5eM3tF5HFEnlX6QmAB/aQwdbAnI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-kF-GgS1uMiyfXkyvVvlzDA-1; Mon,
- 15 Sep 2025 09:18:14 -0400
-X-MC-Unique: kF-GgS1uMiyfXkyvVvlzDA-1
-X-Mimecast-MFC-AGG-ID: kF-GgS1uMiyfXkyvVvlzDA_1757942293
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56035195608E; Mon, 15 Sep 2025 13:18:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.139])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 047BE18003FC; Mon, 15 Sep 2025 13:18:10 +0000 (UTC)
-Date: Mon, 15 Sep 2025 15:18:00 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Yong Huang <yong.huang@smartx.com>, Thomas Huth <thuth@redhat.com>,
- QEMU Developers <qemu-devel@nongnu.org>, hreitz@redhat.com,
- Maxim Levitsky <mlevitsk@redhat.com>, armbru@redhat.com
-Subject: Re: Some iotests are failing with -luks
-Message-ID: <aMgSCKrnbAcJAwId@redhat.com>
-References: <425ef990-85cb-4c02-bb41-2f88f939d147@redhat.com>
- <aMGijXg9XIpbbn-v@redhat.com> <aMHFrDEW8cbnXajG@redhat.com>
- <CAK9dgmYY-193Nom=DteAp2mDCNCMdA-fUMi8PH5iAoVVZ59cKQ@mail.gmail.com>
- <aMKeqBDvzEM0682l@redhat.com> <aMKmvQ1IyBzK93lD@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy983-000085-N3
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:20:24 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy97q-0006kP-4m
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:20:21 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3df726ecff3so2291844f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 06:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757942404; x=1758547204; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tPtRKiIFi33S9+Y+4Q75JN86dN5SfMk6I761gsc/7+I=;
+ b=hCTh96/CXgeszA+PKCDhFPMJponWPmek/drfxHoiQ8LEzYMky0YK+ByVjSXPOP8Wdf
+ eC0Gf2dWiIwY7ZKdNTnjfwQXrPjDF/eDYQ5QFqsM4cI4V0I6QKtRrKF5FcGBujyzBaTz
+ Dx+EmXaIlq8lv76VzrLmYJw7CDvzh80JTTHq38UJ/vgckM+kJ9zpwm3KkbNgq1+eSD24
+ P3U/JzaV5/NhCpFmq+6fwIl5KkgWgedKfkVv+6CL2U0NRFbwX0mfH4wPh/93Q//aZo8R
+ Y4Rfhfcwg4jvMsj2UdBSfZxZ+ok3tywxF0JP93oo7eLo2EFrqv5RAGiDtljcYZBJpbzg
+ uK/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757942404; x=1758547204;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tPtRKiIFi33S9+Y+4Q75JN86dN5SfMk6I761gsc/7+I=;
+ b=Q0z3NrSvH4FcsnkhE0e5XEdM8RUHGyd48b+madY4QZgHElMlIVtuYqOHeSeQQGztP+
+ ffozyomIryIpWL+FeaQ0WAg2I71PVkJVud4vrgn4n99UNMVW6C3Zlbk5eDjnLFsLtiY7
+ toaZoH+ZP7UHiGU/0m1tHkfYMfj4f17E6e+vjCvxBDrpXmEcA3qTwb1C6ltE4X5itMfj
+ bwauEKgEYAcXVL/bcXgDPAk+ZQHGbLFeOxKfId651Ss++JdlLPraYB0YPH7nFQbnQbVW
+ NOEXEydxCgeKwwgH187C3IQFQUCtj74jeIKmYXPirJ41l6E3QfowZz5FJr729FLo2S3k
+ +oVQ==
+X-Gm-Message-State: AOJu0YwiLdZxsWhXbRT74CCt9O1K/MwLfoByHs95rOFjEj8TtZLGO5sv
+ FypeuLI1pFXPN2l32mvC1/lYkT5ti3qEvWCSb6LWczl+6h4UV+49ujBjqFDlU2l2sqUbqYWLo5V
+ fWIW5Qj0=
+X-Gm-Gg: ASbGncs1a/wqkrFS7mTXhzxVPLzFAdJweeAlwb9kxaXXQout4IeRXFM3bBTBYU3RWM4
+ vOTDH0QLyN0xCelj48mY+OGJh0oCzTCFeAJpm7Jf+Onso4RzJyVp0PluiW0m4hrIKJeAdcqh/yE
+ HEYfAbFUDuUfXbRk9KhDwaKh/j4Y2xeU7cioRh7/T4I1qh+DS8cgeHfIYhrhB+zzfjb8TYFL4Ra
+ mtgo3M3w9pW7rwNCa2i+KAOgKEoQb/6Zbyx1HN14R4y6Efuel4e6zQjjBOpUOwsscQKOdsRMtLK
+ z7E6w10cketUCnehdKt/YHAIh69mIEPMSF9epEmomhIixD6bB+Rz/AbYNfkYHhbbuVs7m50F2i2
+ gPTb553v8KxLZqOpIc22PMWycnXtdsVyHwQ==
+X-Google-Smtp-Source: AGHT+IGSuPnkwokPfDpkECZVumBI6kO+AKAaBsOn/n6xDV78BLYx90AGXbR2eqrXpMagN8irLW0i4A==
+X-Received: by 2002:a05:6000:438a:b0:3eb:5ff:cb2e with SMTP id
+ ffacd0b85a97d-3eb05ffcfdbmr1772234f8f.29.1757942403923; 
+ Mon, 15 Sep 2025 06:20:03 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e9a591a41csm7183521f8f.7.2025.09.15.06.20.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 06:20:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8050F5F867;
+ Mon, 15 Sep 2025 14:20:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org, Michael Tokarev
+ <mjt@tls.msk.ru>
+Subject: Re: [PATCH] .gitmodules: move u-boot mirrors to qemu-project-mirrors
+In-Reply-To: <aMgD83wAjZMurYnI@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 15 Sep 2025 13:17:55 +0100")
+References: <20250908141911.2546063-1-alex.bennee@linaro.org>
+ <aMgD83wAjZMurYnI@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 15 Sep 2025 14:20:01 +0100
+Message-ID: <87segnq2da.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMKmvQ1IyBzK93lD@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,122 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 11.09.2025 um 12:38 hat Daniel P. Berrangé geschrieben:
-> On Thu, Sep 11, 2025 at 12:04:24PM +0200, Kevin Wolf wrote:
-> > Am 11.09.2025 um 04:33 hat Yong Huang geschrieben:
-> > > On Thu, Sep 11, 2025 at 2:38 AM Kevin Wolf <kwolf@redhat.com> wrote:
-> > > 
-> > > > Am 10.09.2025 um 18:08 hat Kevin Wolf geschrieben:
-> > > > > Am 10.09.2025 um 17:16 hat Thomas Huth geschrieben:
-> > > > > > luks-detached-header   fail       [17:15:26] [17:15:38]   12.2s
-> > > >         failed, exit status 1
-> > > > > > ---
-> > > > /home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header.out
-> > > > > > +++
-> > > > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/luks-detached-header.out.bad
-> > > > > > @@ -1,5 +1,55 @@
-> > > > > > -..
-> > > > > > +EE
-> > > > > > +======================================================================
-> > > > > > +ERROR: test_detached_luks_header
-> > > > (__main__.TestDetachedLUKSHeader.test_detached_luks_header)
-> > > > > > +----------------------------------------------------------------------
-> > > > > > +Traceback (most recent call last):
-> > > > > > +  File
-> > > > "/home/thuth/devel/qemu/tests/qemu-iotests/tests/luks-detached-header",
-> > > > line 139, in setUp
-> > > > > > +    res = qemu_img_create(
-> > > > > > +          ^^^^^^^^^^^^^^^^
-> > > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > > > 278, in qemu_img_create
-> > > > > > +    return qemu_img('create', *args)
-> > > > > > +           ^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > > > 261, in qemu_img
-> > > > > > +    return qemu_tool(*full_args, check=check,
-> > > > combine_stdio=combine_stdio)
-> > > > > > +
-> > > >  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > > > > > +  File "/home/thuth/devel/qemu/tests/qemu-iotests/iotests.py", line
-> > > > 241, in qemu_tool
-> > > > > > +    raise VerboseProcessError(
-> > > > > > +qemu.utils.VerboseProcessError: Command
-> > > > '('/home/thuth/tmp/qemu-build/qemu-img', 'create', '-f', 'luks', '-o',
-> > > > 'iter-time=10', '-o', 'key-secret=sec0', '-o', 'detached-header=true',
-> > > > '--object', 'secret,id=sec0,data=foo',
-> > > > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luks-file-luks-detached-header/detached_header.img2')'
-> > > > returned non-zero exit status 1.
-> > > > > > +  ┏━ output
-> > > > ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > > > > > +  ┃ Formatting
-> > > > '/home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/l
-> > > > > > +  ┃ uks-file-luks-detached-header/detached_header.img2', fmt=luks
-> > > > > > +  ┃ size=-1 key-secret=sec0 iter-time=10 detached-header=true
-> > > > > > +  ┃ qemu-img:
-> > > > /home/thuth/tmp/qemu-build/tests/qemu-iotests/scratch/luk
-> > > > > > +  ┃ s-file-luks-detached-header/detached_header.img2: Parameter
-> > > > > > +  ┃ 'detached-header' is unexpected
-> > > > > > +
-> > > > ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-> > > > >
-> > > > > This one is surprising. I don't think anything relevant in the luks
-> > > > > driver has changed since the test was introduced. At the same time, the
-> > > > > code clearly has a problem when it tries to convert a QemuOpts
-> > > > > containing a "detached-header" option into a QAPI object when the schema
-> > > > > doesn't even have this option. Was this broken from the beginning? Would
-> > > > > have been for a year and half.
-> > > >
-> > > > I bisected this one because I was curious how this could happen, and it
-> > > > was broken quite explicitly by commit e818c01a:
-> > > >
-> > > > commit e818c01ae6e7c54c7019baaf307be59d99ce80b9 (HEAD)
-> > > > Author: Daniel P. Berrangé <berrange@redhat.com>
-> > > > Date:   Mon Feb 19 15:12:59 2024 +0000
-> > > >
-> > > >     qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
-> > > >
-> > > >     The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
-> > > >     was left over from earlier patch iterations.
-> > > >
-> > > >     Acked-by: Markus Armbruster <armbru@redhat.com>
-> > > >     Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > >
-> > > > The test case demonstrates that it actually wasn't unused.
-> > > >
-> > > > If we don't want to reintroduce the field in QAPI, we need to explicitly
-> > > >
-> > > 
-> > > Keeping the detached-header option is more convenient for users when
-> > > creating a detached-header image.
-> > > 
-> > > My inclination is to bring this optionback.  Any suggestions? cc @Daniel P.
-> > > Berrangé <berrange@redhat.com>
-> > 
-> > Having it available for users in qemu-img is different from having it in
-> > QAPI. Arguably there is no use for it in QAPI, as long as you make sure
-> > that it's taken out of the QemuOpts before going to QAPI.
-> 
-> Ah so what we actually need to fix is
-> 
-> diff --git a/block/crypto.c b/block/crypto.c
-> index 4eed3ffa6a..8b60510c61 100644
-> --- a/block/crypto.c
-> +++ b/block/crypto.c
-> @@ -792,7 +792,7 @@ block_crypto_co_create_opts_luks(BlockDriver *drv, const char *filename,
->      char *buf = NULL;
->      int64_t size;
->      bool detached_hdr =
-> -        qemu_opt_get_bool(opts, "detached-header", false);
-> +        qemu_opt_get_bool_del(opts, "detached-header", false);
->      unsigned int cflags = 0;
->      int ret;
->      Error *local_err = NULL;
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-That's what I had in mind, but we need to verify that we don't get a
-scenario like what you hinted at where converting the options back to
-some non-QAPI data structure (QemuOpts or QDict) would still use it
-later.
+> On Mon, Sep 08, 2025 at 03:19:11PM +0100, Alex Benn=C3=A9e wrote:
+>> To continue our GitLab Open Source Program license we need to pass an
+>> automated license check for all repos under qemu-project. While U-Boot
+>> is clearly GPLv2 rather than fight with the automated validation
+>> script just move the mirror across to a separate project.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> Cc: qemu-stable@nongnu.org
+>> ---
+>>  .gitmodules | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/.gitmodules b/.gitmodules
+>> index 73cae4cd4da..e27dfe8c2c1 100644
+>> --- a/.gitmodules
+>> +++ b/.gitmodules
+>> @@ -15,7 +15,7 @@
+>>  	url =3D https://gitlab.com/qemu-project/qemu-palcode.git
+>>  [submodule "roms/u-boot"]
+>>  	path =3D roms/u-boot
+>> -	url =3D https://gitlab.com/qemu-project/u-boot.git
+>> +	url =3D https://gitlab.com/qemu-project-mirrors/u-boot.git
+>>  [submodule "roms/skiboot"]
+>>  	path =3D roms/skiboot
+>>  	url =3D https://gitlab.com/qemu-project/skiboot.git
+>> @@ -27,7 +27,7 @@
+>>  	url =3D https://gitlab.com/qemu-project/seabios-hppa.git
+>>  [submodule "roms/u-boot-sam460ex"]
+>>  	path =3D roms/u-boot-sam460ex
+>> -	url =3D https://gitlab.com/qemu-project/u-boot-sam460ex.git
+>> +	url =3D https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
+>>  [submodule "roms/edk2"]
+>>  	path =3D roms/edk2
+>>  	url =3D https://gitlab.com/qemu-project/edk2.git
+>
+> Are these the only 2 repos that are still blocking the OSS program
+> approval checks we need ?
 
-Kevin
+There are two biosbits repos and the s390 tools as well, see:
 
+  https://gitlab.com/qemu-project-mirrors
+
+but we don't reference them as submodules.
+
+>
+> This is pretty ugly, but unless upstream u-boot is willing to add a COPYI=
+NG
+> file very quickly, I'm not seeing better options, given that GitLab's OSS
+> Program approval is driven off entirely automated processing of the
+> COPYING/LICENSE file contents.
+>
+> If upstream u-boot.git added a good COPYING file, we would have to handle
+> the u-boot-sam460ex fork by pulling all of u-boot.git modern histry into
+> u-boot-sam460ex.git and ensuring the primary branch was master so GitLab
+> sees the COPYING file. The QEMU sub-module would still point to the
+> original old commit with the sam640ex changes we need, lacking a COPYING
+> file but that won't be a problem.
+>
+>
+> My only comment is that if we go down the route of this patch, I think we
+> should aim to move all read-only mirrored 3rd party stuff under the new
+> /qemu-project-mirrors group, so that /qemu is exclusively for code which
+> we actively maintain ourselves (and thus have control over licensing)
+
+Sure - I just wanted the minimum to get over the renewal.
+
+However I can't hit the button now, something is stopping me and its not
+entirely clear. I think maybe we need a Tax ID.
+
+> Every single active stable branch will need this change too, otherwise
+> they'll be unable to find the submodules we moved.
+
+Once this is in it will be easy enough to apply to the stable branches.
+
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> With regards,
+> Daniel
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
