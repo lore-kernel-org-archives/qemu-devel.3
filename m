@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAE6CAC598
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF01CAC598
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6I0-0003Wn-IF; Mon, 15 Sep 2025 06:18:28 -0400
+	id 1uy6JG-00042i-OA; Mon, 15 Sep 2025 06:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6Hu-0003WQ-LE; Mon, 15 Sep 2025 06:18:22 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6Hl-0007fl-JJ; Mon, 15 Sep 2025 06:18:20 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMH006344
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 15 Sep 2025 19:09:01 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=3cGH6b5E85/I0U4om6lK9pPVs4VMPnqongUbGQsfkaQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757930941; v=1;
- b=H6gOX82RhLk1eTTbMkH8Jx5HBc51mysXyRFlq5ULd29mTwVFK9R6rhI9Gwcj/o/y
- WIxwBpQqs71l6QSw72NRBEnFjOnygAlvN3vXYW5B1q4Yc0I1kFALkQrB6WcC2zgn
- 2K5v4l5O16ZbbGPYh/OAcRWIUgkylZ5mV6Vtenn7ovbHjBpWN4fAHhitP/CD/476
- eeNPCGZZ4b2P47k3rudwPq8PkRXZfykrTCndKNb5LqNyZhrvmlOXJMyoWXbhYxNA
- beisTr+wqglRhuMRRlGEIePLnpjzn/igX5vznUct/3H6VrrE9M01agO+teEFrBNi
- L7qdyETaHLol0jUKFvDuLQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 15 Sep 2025 19:08:45 +0900
-Subject: [PATCH v2 04/15] vfio-user: Do not delete the subregion
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy6JA-0003x6-JS
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:19:41 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy6Iz-0007kR-VL
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:19:39 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45f2acb5f42so7922505e9.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 03:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757931562; x=1758536362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Uy0HCfE3DMpSzqeuh6VRDtUO9lvr0BfKdeK87q9qIms=;
+ b=JJfSRsCkV0ZQ37I/BHEcQwo5C2OHuNQygJkPk1ftizOD+hxHC3k96bz5OLuKTlGvSD
+ NPv41tnlqd6URX+rKucK8RJGo957bZf2FAhoTmekUgW/+m4a7tFRh9qDRBBE2YHxiDSS
+ PFvaN6SB1qeKX2UClFIigwPoQ+F/jIX337LmAklN9OkJmQLaQfD/J9b33VS4FqHNizDM
+ SFHESDG7ZMiajBoIT2NpmgeNTiAWtNUdd7ABvms+i2qIdeLg24s7+g/J0eLgqek1dCyY
+ LUc8oSKnMQzjFoAwF7exaDCK6zs9ueu7xDZCMDA0Ju96C/ozA+HAV7YtDDGzAxaJu/lg
+ 1lyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757931562; x=1758536362;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Uy0HCfE3DMpSzqeuh6VRDtUO9lvr0BfKdeK87q9qIms=;
+ b=EXQWtM0ig8x8k60Mj1FjgnIjKuVIBDaZNdKQlvtu5Ep0oo1kVsD9zezS6TA/BS/f/e
+ HtywUHibN1s+WqMa2AnXAKz5v8cVufoI9U2+Yjl0+fK3hJZGYUTsNDNg8ORv+/igBmiN
+ +pHNtUd7Z7Lug7YZIk7calo8Nvv2E948lquGlLPq8prTP/6BerecFwFcrfBuPFx1ZokV
+ YGURYlW76IzTrWFs0PCH855x4Zwdedm2t9Un2fqupRtmvXMVD9vjvtElMvV1ng/MZvRN
+ UvAFz233wEqCg6L+F7NDQkE+96YDaTzwTOPrxWwU/zk9tGOnDetS62kAAy9Od/33i5EV
+ LXHw==
+X-Gm-Message-State: AOJu0Yxql3na2Kk6RRSOeZK1N8QZe030xzLiUZTT+fxmYm1Uztyndonw
+ +ISdAZXuVj93Vu8zuFO8iYa6CaXSQxiV5PWTOv6Uj5MtNCbIvO3XC2PClo4nTg7hEAdJbnWG4mh
+ qVYRTIso=
+X-Gm-Gg: ASbGncv9D7NNcToO50A32ZGoFqncPEM7uhiq12UYb1+igXaH+K7GsdkKPiXrCxmFFw3
+ 9qqNZbPUlV4WclB2Ny6RyhpOSq0Nh3ANuy/n4qraKbXQbF96NiKOAfvaeUEUvdsGozpl+NCvte7
+ mmaKtVfxCXGc+xfSPPQfcnmBkEbVvgD0IxfgMcdn0M57soUCSK4D03P4iMig4g1JMSllTtT6lyN
+ ijXrcYtafNYzkFQ6ENgDlwC+GWT+yy/p7ecb9SE1JEfjgTc02H+L2gxpdPy4EflJoM9UUrEylZq
+ KjGcfM4HbxbcfBf4kBdpSNSaLxVZ0dtUo15RWWee36FZkpH4QZjv/X3Iqv6Wic6SHzFAsxWYa+t
+ UqgSNAUREbQXEFPAhqqvVYJw=
+X-Google-Smtp-Source: AGHT+IEtDCfXPHLFMgJ9ukZS/1W2Ue1oFQ/DhePDg9KsJAQeE68l/7x4JUKXY7ysIoJXWovNcpU55A==
+X-Received: by 2002:a05:600c:8010:b0:45f:2a9f:79da with SMTP id
+ 5b1f17b1804b1-45f2a9f7d5fmr41272735e9.18.1757931562363; 
+ Mon, 15 Sep 2025 03:19:22 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45e015784c3sm182003365e9.10.2025.09.15.03.19.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 03:19:21 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1BC705F867;
+ Mon, 15 Sep 2025 11:19:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 6/6] tests/functional: use self.log for all logging
+In-Reply-To: <20250912182200.643909-7-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 12 Sep 2025 19:22:00
+ +0100")
+References: <20250912182200.643909-1-berrange@redhat.com>
+ <20250912182200.643909-7-berrange@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 15 Sep 2025 11:19:21 +0100
+Message-ID: <87wm60qaqe.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-use-v2-4-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- hw/vfio-user/pci.c | 6 ------
- 1 file changed, 6 deletions(-)
+> Some tests are creating their on logger category which means any
+> output they log is not captured in base.log.
 
-diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index be71c777291f..0b6c6a1c5ed3 100644
---- a/hw/vfio-user/pci.c
-+++ b/hw/vfio-user/pci.c
-@@ -73,12 +73,6 @@ static void vfio_user_msix_setup(VFIOPCIDevice *vdev)
- 
- static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
- {
--    MemoryRegion *mr, *sub;
--
--    mr = vdev->bars[vdev->msix->pba_bar].mr;
--    sub = vdev->msix->pba_region;
--    memory_region_del_subregion(mr, sub);
--
-     g_free(vdev->msix->pba_region);
-     vdev->msix->pba_region = NULL;
- }
+This seems unrelated to reverse debugging and perhaps should be split to
+each test. But otherwise LGTM:
 
--- 
-2.51.0
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
