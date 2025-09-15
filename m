@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB11CA101F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 05:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9CECA101F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 05:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy1Qc-0001F9-79; Mon, 15 Sep 2025 01:07:02 -0400
+	id 1uy201-00011p-Mz; Mon, 15 Sep 2025 01:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy1QZ-0001El-M4
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 01:06:59 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uy1zp-0000zC-8J
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 01:43:27 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy1QP-0002DI-Ei
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 01:06:58 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-afcb7322da8so716956466b.0
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 22:06:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uy1zi-0006D8-Fj
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 01:43:22 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-31d6e39817fso5820321fac.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 22:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757912803; x=1758517603; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757914993; x=1758519793; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d4mxnX93sxVltgwLPrlDOvOXUv0zxLe/o5zISseAaXQ=;
- b=fFiPITCR3MoOqV5fu9cKLiGR4SydXj0c5vTuEOydXjnhqQ2RWtf3QzqrBOLIIJfJq/
- wtYkCmdcVHq7IbONrSiaGM1wPwfSpN01Z4EF+G4XnBOXMt1WX2ZSRHypIC5keopJDDOh
- BukmvQAOBuRZvWc3MtPweSxsj2uF8F1pIO2/OGXow6ThFYUmJkFFfIC4STJBkzLKvVLE
- sq3MMHm0Q0aFup2SiBnqN9pxZ3KvIQsfST5427eE97cJyPOjh8PiC9m6c2D+beqBDPzo
- TwBSnbExdi0/XphULtvhUWNKLY9Wkx1hh8+VjDndCLCUiCaPaT4zlcUSWOr/3QC2TVly
- GZSg==
+ bh=gVzP2AR/wuRPmR296FjuNtuRHrpKr4/naBzA5rmYYO8=;
+ b=Jc7Pg4Jd2AYeGY2ckG38m1Tas5l/jMD1XCL6RiHpCdLaTIEBjnKL0iko95ZB9MSSyF
+ Zh6wLavJxsjfiB+N/gRwghEpkK/E94iMo9V2Hv05mSejNH2hF8ddLLcv6JXNZyMGyIyF
+ QLZzl/b7Eg9M002zazmrGS/Z3KpmTe7XSV6DkAo4WAFLjhDZQEFxYHqG6R8Kj2TCuC8R
+ CA16urSRP6XsKSCtZRpVmX3Q3uCJCBQs1C+V5JyH7DtBQHqpkpNMYHPuIX2GyYD9wqjR
+ vb5QpRqahR1HB24zvbcigKsCPj4DGS6a9hp7Sb09GJJTX3CtN4eDR0YgxBbZv5T5Xx8P
+ /y7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757912803; x=1758517603;
+ d=1e100.net; s=20230601; t=1757914993; x=1758519793;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d4mxnX93sxVltgwLPrlDOvOXUv0zxLe/o5zISseAaXQ=;
- b=scWrDy0BY4gkwkRqkzhXxdFIymwAxoKcomf9GtH6SOKTSIpQbHCImv++TcD+u+WsmF
- Dp8bQyP/h0WoEqHg5P2mtsR01uDO13QJwKHMecu1x/VOPnna4iyosIiW6nDegrdzPUq/
- I1XU4hZipM8RlG77+mE7O+1g6oLjfSgAwp6UTJHYd7tWIl7xoXJ8EofK5RP0SJayLM8j
- 8LSKFa+ciDPUPsMx+5/kGI/CKSAic+aRlPW1uUC8Yietlqbb02JQIBcMocWxuie/z2iW
- K2cN/8RvmilGUPwdoP3wSqPGyx+M26I5iWJABaxhZw5LypLpOTsAueVCVm5fy83LqCK/
- 1/ew==
-X-Gm-Message-State: AOJu0YzZ6f7CqV+Zkrg7tQP13vNXVRwASSPcmNUrL5iWl3c0naCmWYut
- ADeP6I/WOyxtsENqE/APUOe/QzTTA3Esht5ppIY5tuHWfGOvRiop9+eqACFVUBE5D7SS2TC88i6
- 8BgM/ZeEPQ/ofOBetgmXjdpsTk7yDp6A=
-X-Gm-Gg: ASbGncvcChblqCd7i7CORBdmvYcA2EiTAzL+QCC/BnaejOvu1ziWg2NPDL2E1vi/fW6
- tofJeSie9rDdJ/W7FLkWR0Q//t/axSFMlGjKks9ncWeOe07m1/qOtAaVSLSEv1fVASaY7thjjQ8
- VcKA3GbOhOzH9pQDDCrl+zZ0pOkAoqd3ewppt9/yv+XigWFNx13X83zWaua1MRhMd4Hxx8uACH2
- uPF71IvTvuWIxF7UiV+T4ls9EIfGb7zXi540hPs79UXFddgW6hdKvqfJc0=
-X-Google-Smtp-Source: AGHT+IEB4xf1dufoLMbPrxZlj2+lwGLELqaN9P5AG6AGY/B+s4p17guODIe2wuF0M2Wq9tp0YYjdjagPjszvSH3ZkZ8=
-X-Received: by 2002:a17:907:9710:b0:b0c:6cae:51e3 with SMTP id
- a640c23a62f3a-b0c6cae688fmr531574866b.35.1757912802690; Sun, 14 Sep 2025
- 22:06:42 -0700 (PDT)
+ bh=gVzP2AR/wuRPmR296FjuNtuRHrpKr4/naBzA5rmYYO8=;
+ b=VeM210kWXN/Rtx0pPuHkSSPG3eYFzaDOIGb4UnoeA4Y8dreHeMpwv4LmrHl0lm8UN9
+ QQAC72W60BB2ip1+oZwZasig39T6HPozEJ5U9bILCS6U/uXPrwWLnlwvvYk3QzoJgnk+
+ Djv1bKxsbJ1gUomkNnBmy2XGmxpCRsmTLkF0e1TZXBsKUp8BdZ89z5rFLesZTYl+S0Sm
+ 905kDSINL9jP2Eg+4hqz1TR1gs53w/cPALSjmVEkWElxq2MRMg/nT0/F2ugrGA1tJywD
+ 53wfWev+h66c8BbjL5uRtHOT/9jCbAJbgpbLzpc1QFtoTytU/uBgUFhSYr4PECV5TJjR
+ 64dQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuYtNBQn2H5kbsrlAzxzm0pYnAhlTHhDFUIo8JQvKLRkr6ZFnKeWWE0+3xDUnnw+5RmNe+Vz4h7ua7@nongnu.org
+X-Gm-Message-State: AOJu0YyKjRokC9tAhakmw+arVJknU/a/hx0LEPFCyyZB/xI83TIaacvL
+ MzYbV1vlo82xdGR/7X4me2XPzcqAIHt3UnLI5vTwU6eqJWk63N9A2eEsGiyThXvPYmgF2ySZh85
+ oD8oTLbwN2aL2Ry8t7Y2cdCW/Kd7fOrY=
+X-Gm-Gg: ASbGncv85t2FnqID0G8yq2mQ/uqM3q0PrOAeW4O2JlQDswA7FA84IQASLhQtGmlIpj+
+ +UNl5RobFoK6v8krtcz2n4M8gat5yFntRx3e20ncoE02Pt2Yu90TK3Kw6S1jRZwvwSa3IKiuOC1
+ U6QLaZ7D7z+MNTIK9+gbHlrCC0d1lJA4lpjw0JrjjqHRypNprCnKehUoYXXoTBGFO5ouX4Z5lAK
+ NlfhA==
+X-Google-Smtp-Source: AGHT+IEO/r905gqdf1XASeNM4AHPYHqhi4m+tUkJNJul3t02rWlguj6XRTYUxWTwX5PVfBA2ZIb+RXeNLMSjnEdSRAw=
+X-Received: by 2002:a05:6870:818c:b0:332:8147:25b3 with SMTP id
+ 586e51a60fabf-3328147369dmr1078921fac.47.1757914993416; Sun, 14 Sep 2025
+ 22:43:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250912085535.1649347-1-xb@ultrarisc.com>
-In-Reply-To: <20250912085535.1649347-1-xb@ultrarisc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 15:06:16 +1000
-X-Gm-Features: AS18NWAOAH6kFhTj-SfOJoxNDIX44u9uTMmdNgyVbeScHsQYJPVZbUbRA_TXY1c
-Message-ID: <CAKmqyKN80GDakc6MzBcPur2BtLJCMFMg39fLTgKBh1W8GfZ-AA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v8_for_v10=2E0=2E0_0=2F2=5D_target=2Friscv=EF=BC=9AFix_ri?=
- =?UTF-8?Q?scv64_kvm_migration?=
-To: Xie Bo <xb@ultrarisc.com>
-Cc: qemu-devel@nongnu.org, ajones@ventanamicro.com, qemu-riscv@nongnu.org, 
- mjt@tls.msk.ru, pbonzini@redhat.com, anup@brainfault.org, 
- alistair.francis@wdc.com, rkrcmar@ventanamicro.com, palmer@dabbelt.com, 
- xiamy@ultrarisc.com
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-4-hibriansong@gmail.com>
+ <20250909193358.GE218449@fedora>
+In-Reply-To: <20250909193358.GE218449@fedora>
+From: Brian Song <hibriansong@gmail.com>
+Date: Mon, 15 Sep 2025 01:43:00 -0400
+X-Gm-Features: Ac12FXwgttSMeBlBqERMYETINL7__2ictmvHhUlnoIiW6mgkcvZi6BO9AHv4KHc
+Message-ID: <CAKWCU7VFbJius06j1pXvP_5aSpmhmaJq6Z41H4efWFmeMjr4OQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] export/fuse: Safe termination for FUSE-uring
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=hibriansong@gmail.com; helo=mail-oa1-x32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,43 +99,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 6:56=E2=80=AFPM Xie Bo <xb@ultrarisc.com> wrote:
->
-> This series(v8) replaces the earlier series patch"[PATCH v7 for v10.0.0 0=
-/2]
-> target/riscv: Fix riscv64 kvm migration".
->
-> Changes since v7:
-> - Patch 1: unchanged; keep Reviewed-by from Andrew Jones <ajones@ventanam=
-icro.com>
-> - Patch 2: add Reviewed-by from Andrew Jones <ajones@ventanamicro.com>
-> - No other changes (code is the same as v7)
->
-> Xie Bo (2):
->   Set KVM initial privilege mode and mp_state
->   Fix VM resume after QEMU+KVM migration
+Hi Hanna,
 
-Can you add the following tag:
+Stefan raised the above issue and proposed a preliminary solution: keep
+closing the file descriptor in the delete section, but perform
+umount separately for FUSE uring and traditional FUSE in the shutdown
+and delete sections respectively. This approach avoids the race
+condition on the file descriptor.
 
-Cc: qemu-stable@nongnu.org
+In the case of FUSE uring, umount must be performed in the shutdown
+section. The reason is that the kernel currently lacks an interface to
+explicitly cancel submitted SQEs. Performing umount forces the kernel to
+flush all pending SQEs and return their CQEs. Without this step, CQEs
+may arrive after the export has already been deleted, and invoking the
+CQE handler at that point would dereference freed memory and trigger a
+segmentation fault.
 
-to each commit message. That way it will be picked up for stable.
+I=E2=80=99m curious about traditional FUSE: is it strictly necessary to per=
+form
+umount in the delete section, or could it also be done in shutdown?
+Additionally, what is the correct ordering between close(fd) and
+umount, does one need to precede the other?
 
-Can you also rebase the series on:
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+Thanks,
+Brian
 
-Alistair
-
->
->  target/riscv/cpu.c           | 17 +++++++++-
->  target/riscv/cpu.h           |  2 ++
->  target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
->  target/riscv/kvm/kvm_riscv.h |  3 +-
->  target/riscv/machine.c       |  5 +--
->  5 files changed, 70 insertions(+), 17 deletions(-)
->
-> --
-> 2.43.0
->
->
+On 9/9/25 3:33 PM, Stefan Hajnoczi wrote:
+ > On Fri, Aug 29, 2025 at 10:50:24PM -0400, Brian Song wrote:
+ >> @@ -901,24 +941,15 @@ static void fuse_export_shutdown(BlockExport
+*blk_exp)
+ >>            */
+ >>           g_hash_table_remove(exports, exp->mountpoint);
+ >>       }
+ >> -}
+ >> -
+ >> -static void fuse_export_delete(BlockExport *blk_exp)
+ >> -{
+ >> -    FuseExport *exp =3D container_of(blk_exp, FuseExport, common);
+ >>
+ >> -    for (int i =3D 0; i < exp->num_queues; i++) {
+ >> +    for (size_t i =3D 0; i < exp->num_queues; i++) {
+ >>           FuseQueue *q =3D &exp->queues[i];
+ >>
+ >>           /* Queue 0's FD belongs to the FUSE session */
+ >>           if (i > 0 && q->fuse_fd >=3D 0) {
+ >>               close(q->fuse_fd);
+ >
+ > This changes the behavior of the non-io_uring code. Now all fuse fds and
+ > fuse_session are closed while requests are potentially still being
+ > processed.
+ >
+ > There is a race condition: if an IOThread is processing a request here
+ > then it may invoke a system call on q->fuse_fd just after it has been
+ > closed but not set to -1. If another thread has also opened a new file
+ > then the fd could be reused, resulting in an accidental write(2) to the
+ > new file. I'm not sure whether there is a way to trigger this in
+ > practice, but it looks like a problem waiting to happen.
+ >
+ > Simply setting q->fuse_fd to -1 here doesn't fix the race. It would be
+ > necessary to stop processing fuse_fd in the thread before closing it
+ > here or to schedule a BH in each thread so that fuse_fd can be closed
+ > in the thread that uses the fd.
 
