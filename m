@@ -4,57 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315AECAC58E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 758DACAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy67c-0007ZA-By; Mon, 15 Sep 2025 06:07:44 -0400
+	id 1uy67A-0007SN-N1; Mon, 15 Sep 2025 06:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1uy67X-0007YP-Ub
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:40 -0400
-Received: from m239-4.eu.mailgun.net ([185.250.239.4])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy679-0007S6-1Q
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:15 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1uy67G-00066J-Uk
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:37 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
- s=email; t=1757930835; x=1757938035; 
- h=Content-Transfer-Encoding: Content-Type: MIME-Version: Message-ID: Date:
- Subject: Subject: Cc: To: To: From: From: Sender: Sender; 
- bh=h4jLD4Rr/R88hs8O2K+L/cU/piXpEFdNsRzJyBeUBhs=;
- b=YbS6Z3lIBLTjQNz+fScV8mxEg5DkKi6pu5LgD5vGYrypc9kJQ4uqEYLNBMiBxBuKHLTpbHa12xEIbCV0T0QfNZx15Nc9y/AgbKWHzme6su8H19l4HtIAotF2aky/Z0Njd9GGcDEHLzeGgqoaCS67gDw9bQHYJ17ifUq4dV+9QqyV4uafM7bbkwuCn44TKjbaD3Ki9AGAWHelqYEqvO7kY5npSPiUtA80/d+fJJFjLT1BlcTfW+0vmNdHrFHXCXPDBcjTC7+bG00kyH+gW/oycsE3+XqjKvwuFRMj4k4oRKswrZ7o5ayFgXaXHAsBz+adWb+O4LA4g7WKZeRJThTdNw==
-X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
-Received: from fedora (pub082136115007.dh-hfc.datazug.ch [82.136.115.7]) by
- 72144cfb99b61755965ba36ab48da239f3e5d8856025c89e1aebabc970f2747b with SMTP id
- 68c7e550e845e547b35073d5; Mon, 15 Sep 2025 10:07:12 GMT
-X-Mailgun-Sending-Ip: 185.250.239.4
-From: Alessandro Ratti <alessandro@0x65c.net>
-To: qemu-devel@nongnu.org
-Cc: alessandro.ratti@gmail.com,
-	philmd@linaro.org,
-	alex.bennee@linaro.org
-Subject: [PATCH] virtio: Add function name to error messages
-Date: Mon, 15 Sep 2025 12:01:06 +0200
-Message-ID: <20250915100701.224156-1-alessandro@0x65c.net>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy66y-00062r-H8
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:14 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45f2c4c3853so3938285e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 03:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757930811; x=1758535611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t7Cej6W9Z+heWxnF9n4qOiGD66PtXt1v/jqyKpsxBpY=;
+ b=G2Ww/qX61hg/0U7SidYoepA9VyCh0Cy8jViNcOb5rQl7ndL6Gr1Y15Cjj/G4IG/Pzc
+ 88+OAYeOKQlXjwqoS9K8OETnpvFt7Wx24QAA70wnnM8guTYvz0cSFkqDxYp3sJgFdS+r
+ pSxCriIMlauKEj5H0NPMP4s9WUW3HylnO2MAm/ZO1III0mEU0kmnKJ8MtiHWfTSM079r
+ eeMONwMTzVT+2E3xV0M5BWXTkdbKhw8eE6Bzg2qfebPnbvIp4wZW0iPDBilReaZRndOy
+ clugZbADOFnWoyXvhe8+H+AFFJMceIQgtEeo+gErdZHe+KTrDaEzXEnnzRzjYIY0b4Os
+ mkXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757930811; x=1758535611;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t7Cej6W9Z+heWxnF9n4qOiGD66PtXt1v/jqyKpsxBpY=;
+ b=FoeTbhNSgtvJLAWu6pBBDrOJztn4S3Fl288lw4RPO95dw79GumAdCKL7x82cyp45qC
+ QSfpg7kh+BHsUqp1g3kF/UoLxZpUXoFbutNFdffR6mMyxmZDZoYKH7qDnxkT7djQRvTl
+ WeOu2TA9Y3BNVtXNruHLT0qufKM3izA8o0vpkw44Cm7dxiRztKAUcxHxgpgtzzD6JCZz
+ 2g8tZoiGO9KUStS4lbh+B2t8TpxcGr2HBya0PaA9ZA2UPb6cEJ9RzTe3zYTcEU8xKe/6
+ /C6S9nCUmWPJ2k+WaigQqQfSVmbgUIsiufDCpC1ZhK9ikuUF6DxeZa7SZdW9dbVAlqUJ
+ JT6g==
+X-Gm-Message-State: AOJu0Ywoq/5WZdz/USqU2b7zt+PFwLRg4auhwxXdf2GqyKCIcaACWGt8
+ QOEjnj8WaZVvwLUhlSXrbrVDTX1sp+o2MyMcqV+bFODBp6Yg4og8nfjSM42yk22xC0ZnXQbEwEL
+ diKDDkOk=
+X-Gm-Gg: ASbGncuREH/8Hq/V5v+nqH6c9Jjvp83PUT9YfOlrhHAMv/JWDzT8dParbCVm/kZMa4E
+ mmM0m22NvD0PoWjSjUlJi8AZRCU5msP6aicPffRO4fA+vdJEXlTC32nZMTH/98n1MhVaBfG2i04
+ /EX8AAYUYzDfDikucXlTQpIngT6YZrp5FvBq8eWUgikfgRsw6abToaBnwAo4QduapBnxM3fdf7g
+ Fa6bEtByc/YKz8Jz5uNB+HfYFZfaGnlvVQoKjbIDl0ZyFoxUta7fStxq5qVS+VFMbGt2ZnPPcs8
+ M9tAWSXRNTxNOJ21KThQ3HekZEsAIIItOgi9CKhvqI+UdeDF8xHEXTu6tvVGeBVGffTcUQtaN93
+ c9ScaBn+FTWt3mDcFxErabuA05oDYuCfSKg==
+X-Google-Smtp-Source: AGHT+IHUJF+VoEvtB2q/RoUqOFnj+VExusJGirA+izpNv0lujdO+L0bUAD+TQeil5NHrxTQzsR/WEQ==
+X-Received: by 2002:a05:600c:4ed2:b0:45b:8ac2:975e with SMTP id
+ 5b1f17b1804b1-45f2c410b69mr34903565e9.26.1757930811185; 
+ Mon, 15 Sep 2025 03:06:51 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45e037d638dsm166153555e9.22.2025.09.15.03.06.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 03:06:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 04B105F867;
+ Mon, 15 Sep 2025 11:06:50 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 2/6] tests/functional: convert reverse debug test to
+ local gdb module
+In-Reply-To: <20250912182200.643909-3-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 12 Sep 2025 19:21:56
+ +0100")
+References: <20250912182200.643909-1-berrange@redhat.com>
+ <20250912182200.643909-3-berrange@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 15 Sep 2025 11:06:50 +0100
+Message-ID: <87jz20rpvp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.250.239.4;
- envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=m239-4.eu.mailgun.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,38 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Hi,
+> This replaces the use of Avocado for the GDBRemote class with
+> our in-tree copy.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-In a previous attempt [1] to improve virtio error messages I didn’t fully
-understand the suggestion made by Alex Bennée in a previous attempt [2].
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-This patch implements his idea more faithfully: instead of hard-coding a
-"virtio" prefix at the call sites, we prepend the function name within
-virtio_error() itself. This centralizes the change, avoids duplication,
-and makes the log messages more informative.
-
-For example, after forcibly triggering an error inside
-virtio_init_region_cache(), the resulting output now shows the function
-context clearly:
-
-    ~/qemu/build$ sudo ./qemu-system-x86_64  \
-    -enable-kvm   \
-    -m 512   \
-    -drive \
-    if=virtio,file=/tmp/some.img,format=raw
-    qemu-system-x86_64: virtio_init_region_cache: Cannot map used
-    qemu-system-x86_64: virtio_init_region_cache: Cannot map used
-    ...
-
-This should address the original concern in a cleaner and more
-maintainable way.
-
-Thank you for your time and consideration.
-
-Best regards,
-Alessandro Ratti
-
-[1]: https://lore.kernel.org/qemu-devel/20250830093844.452039-2-alessandro@0x65c.net/T/#t
-[2]: https://patchwork.kernel.org/project/qemu-devel/patch/20220414112902.41390-1-codeguy.moteen@gmail.com/
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
