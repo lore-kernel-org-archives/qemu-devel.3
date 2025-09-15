@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61939CAC598
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D7ACAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy64t-0006OY-6K; Mon, 15 Sep 2025 06:04:55 -0400
+	id 1uy67g-0007aY-K1; Mon, 15 Sep 2025 06:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy64m-0006NO-SE; Mon, 15 Sep 2025 06:04:49 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy64f-0005cP-5P; Mon, 15 Sep 2025 06:04:48 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:999c:0:640:51a7:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 82FFAC0166;
- Mon, 15 Sep 2025 13:04:26 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:130::1:7] (unknown [2a02:6bf:8080:130::1:7])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id P4MLxh1Gw8c0-SYdFSUJY; Mon, 15 Sep 2025 13:04:26 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757930666;
- bh=Dd4QO+/302SYGLq2Lyc9EAalzfkBk6p8GK+UN1KL840=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=0PqKlZF2DNSU05T7il3swVhsWXrWt5ZpssL8n1lEFHwi6wKY0ZuSH5BApJIwTbDv/
- AKImZEHMy8SuljShwcCfd4POoAnhiDWi5jzzJTkUXU1RgHAVBtiTWGPd51GXPJqadc
- 7v1yaLuuqMgi1I8+6Y7Z+hOrxWrb4WZ7Ug8hRWh4=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c578236f-d145-4a2f-8317-f3931b63da88@yandex-team.ru>
-Date: Mon, 15 Sep 2025 13:04:24 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy67d-0007Zp-Sx
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:46 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uy67Q-00066c-Ne
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:07:44 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45f2a69d876so7358025e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 03:07:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757930840; x=1758535640; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WndymZA4HVXt6LIz7FmHpmeuzG3wCd/8zjNhhzjcMZk=;
+ b=RFUvNGSWIix/WG0B8+EF4gHeyvRlaRjWG/Ao+VmOCz+UpN+KdZ3BW9wzx45/cZuC7x
+ 3aCbCEfOe/curFFwuW9qdAdxFgy6xhrzMSMQf9tcie1M4aYmp+U3RSx1RdeYDPM+KNYW
+ HXozgl0obAa5ugivxJFvmGhpDRCi2jPP/+XBk6c1IqsWk+sX9xTAl+hQ7BfrvX5hViVU
+ sMnue+3Hs4+6LUPPBTJB9nY/c3EwlGIF/UiwTj/90VxM0ugGSWfTxmBzkJYcpoDaVYOD
+ 1yDMBhoPHiBeFAwRrc/1XcmoipLnTrhgEU9Jr/Xw9TFAk3orWl8GQ9uMzltz6mymEleN
+ cu8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757930840; x=1758535640;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WndymZA4HVXt6LIz7FmHpmeuzG3wCd/8zjNhhzjcMZk=;
+ b=pjA+CxePCOFHvpZfn+TitUlRMeGrjFvdBZF6BopYrTfAd2w3NT+6r0enSj7HjzPIEh
+ L4Guzu0tocOn0hMdRzLIec0oVv5qgemYdFcKLe2DxOH8AHf0ZmP9j2TE4qbKrNB85we7
+ hJZl87O5j1QgqPP3QBSg586cI0mVQsKAgK89e9gN17hlrCYsG8T6pItGE6Fim4d2bCeD
+ BXwG3Ps7h2qUUOEifBcaykbV0K53H9d6QLQFgq5xgUsZwa6ooavSOybl6EQt8ay7F5sQ
+ Me98sZV2XQdWswK9h0HWsNSh8MMusXz4lQg/QtsnzVh1hXybTbCmiWZANRYU5bPtpApv
+ 86Yw==
+X-Gm-Message-State: AOJu0YzdMHg/vH/0qSvz5wyuJ/KF7kt3EKB2Xc7a5vHynrnKGFGMn8n8
+ psCVNVsDez0VHljMfGLv8I36gOB4yvS8olSn0GEOBjfFo8dGQzzUWJlmdTULis0orNNvvUki+e7
+ 39l7yjZ0=
+X-Gm-Gg: ASbGncsnFJrHWpZL+wC5Dho8Vx0HIYbwPRjwwRWqCyjAUdNm9sKpjuulhl2P4pVW4F5
+ wvLe3YsxObBp+aHxnA4+jM8c/FiI2DeCqdm3G1gHiX05o2TvkFaA1LOXWE5jkfj9NiLW9Kj7rsv
+ 0YH6ybQZnGhgg23a7K31jsQPBgbDzVoZGwso0wqR7eNo0FGnwf2cLQXIfXCeOx2F7ZceAukNC5y
+ qisgxjkMCnJEFO+DeVredR5Cg8K1t4+2vi6oKrO3hqjrkJWfBwxbzrpSBFrXj5OEAlSbr/RGZxp
+ GEJFOvK7laL9NIi3CmBSCQxZCUa7EH0kAMqKCM7H4b28Okmcny6TnhCGO0690MecG9jEcEnmhts
+ 6EMtvFWC7qXDiXLfRkhpMNRIdSTSjiZ+nuA==
+X-Google-Smtp-Source: AGHT+IHQH+hAD5E2m6ScHuOonE0VUIfe9/GYxVM7UCTXVKiPtCh/I4bZj+eqtOiq+nLMcSRh7FFRhQ==
+X-Received: by 2002:a05:600c:5813:b0:45d:d96e:6176 with SMTP id
+ 5b1f17b1804b1-45f211fe9d2mr82011145e9.25.1757930840288; 
+ Mon, 15 Sep 2025 03:07:20 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45e016b5a16sm174074845e9.12.2025.09.15.03.07.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 03:07:18 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 350E95F867;
+ Mon, 15 Sep 2025 11:07:18 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 3/6] tests/functional: replace avocado process with
+ subprocess
+In-Reply-To: <20250912182200.643909-4-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 12 Sep 2025 19:21:57
+ +0100")
+References: <20250912182200.643909-1-berrange@redhat.com>
+ <20250912182200.643909-4-berrange@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 15 Sep 2025 11:07:18 +0100
+Message-ID: <87ecs8rpux.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] use qemu_set_blocking instead of
- g_unix_set_fd_nonblocking
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- leiyang@redhat.com, marcandre.lureau@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, Stefano Garzarella <sgarzare@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Bandan Das <bsd@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Laurent Vivier <lvivier@redhat.com>
-References: <20250911092007.1370002-1-vsementsov@yandex-team.ru>
- <20250911092007.1370002-9-vsementsov@yandex-team.ru>
- <aMRUWCLd_U6FRLM9@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aMRUWCLd_U6FRLM9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,86 +107,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.09.25 20:11, Daniel P. Berrangé wrote:
-> On Thu, Sep 11, 2025 at 12:20:06PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Instead of open-coded g_unix_set_fd_nonblocking() calls, use
->> QEMU wrapper qemu_set_blocking().
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   chardev/char-fd.c                  |  4 ++--
->>   chardev/char-pty.c                 |  3 +--
->>   chardev/char-serial.c              |  3 +--
->>   chardev/char-stdio.c               |  3 +--
->>   hw/input/virtio-input-host.c       |  3 +--
->>   hw/misc/ivshmem-flat.c             |  3 ++-
->>   hw/misc/ivshmem-pci.c              |  7 ++++++-
->>   hw/virtio/vhost-vsock.c            |  8 ++------
->>   io/channel-command.c               |  9 ++++++---
->>   io/channel-file.c                  |  3 +--
->>   net/tap-bsd.c                      | 12 ++++++++++--
->>   net/tap-linux.c                    |  7 ++++++-
->>   net/tap-solaris.c                  |  7 ++++++-
->>   net/tap.c                          | 21 ++++++---------------
->>   qga/commands-posix.c               |  3 +--
->>   tests/qtest/fuzz/virtio_net_fuzz.c |  2 +-
->>   tests/qtest/vhost-user-test.c      |  3 +--
->>   tests/unit/test-iov.c              |  5 +++--
->>   ui/input-linux.c                   |  3 +--
->>   util/event_notifier-posix.c        |  4 ++--
->>   util/main-loop.c                   |  5 ++++-
->>   21 files changed, 64 insertions(+), 54 deletions(-)
->>
->> diff --git a/chardev/char-fd.c b/chardev/char-fd.c
->> index 6f03adf872..739dc68c36 100644
->> --- a/chardev/char-fd.c
->> +++ b/chardev/char-fd.c
->> @@ -212,8 +212,8 @@ void qemu_chr_open_fd(Chardev *chr,
->>       FDChardev *s = FD_CHARDEV(chr);
->>       g_autofree char *name = NULL;
->>   
->> -    if (fd_out >= 0 && !g_unix_set_fd_nonblocking(fd_out, true, NULL)) {
->> -        assert(!"Failed to set FD nonblocking");
->> +    if (fd_out >= 0) {
->> +        qemu_set_blocking(fd_out, false, &error_abort);
-> 
-> Every caller of this method has an 'errp' available that we
-> can plumb into qemu_chr_open_fd().
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Will look a it.
+> The standard python subprocess.check_call method is better than
+> avocado.utils.process as it doesn't require stuffing all args
+> into a single string.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-> 
->>       }
->>   
->>       if (fd_out == fd_in && fd_in >= 0) {
-> 
-> 
->> diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
->> index fe4be6be17..89495f6a11 100644
->> --- a/hw/misc/ivshmem-flat.c
->> +++ b/hw/misc/ivshmem-flat.c
->> @@ -154,7 +154,8 @@ static void ivshmem_flat_add_vector(IvshmemFTState *s, IvshmemPeer *peer,
->>        * peer.
->>        */
->>       peer->vector[peer->vector_counter].id = peer->vector_counter;
->> -    g_unix_set_fd_nonblocking(vector_fd, true, NULL);
->> +    /* WARNING: qemu_socket_set_nonblock() return code ignored */
->> +    qemu_set_blocking(vector_fd, false, NULL);
-> 
-> Perhaps &warn_report so we at least diagnose this awkward situation ?
-> 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Ok
-
->>       event_notifier_init_fd(&peer->vector[peer->vector_counter].event_notifier,
->>                              vector_fd);
->>   
-> 
-> 
-
-Thanks for reviewing!
-
--- 
-Best regards,
-Vladimir
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
