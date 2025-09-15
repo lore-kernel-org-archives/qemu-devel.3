@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08C0CAC58E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 06:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF3DCAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 07:10:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy35Q-0001n2-0c; Mon, 15 Sep 2025 02:53:18 -0400
+	id 1uy3Kh-0005dk-7b; Mon, 15 Sep 2025 03:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uy35F-0001lr-7l
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uy355-0005y7-Vi
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:53:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757919172;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hFnnPhcU4RBd3C5qFZyUV0l/D6x17Ps8MlGyZLx54f0=;
- b=SL2kHixgxNGSPNYEj00iM529ECqQU+zUsdRz6pYCZx7FoGgmY0LcYaWQgUy0LcjT3SPQl8
- nIySwOCXWzfYUfvYhHnp0rHcHWlyg1EIL1eefOxLdgl03f0vgbHXfaSEmt/CvL15YzGi21
- GL2CTUFIoIItXhzrACZQKKAqI2Cvsg0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-HUhvMThBOImcduzKTgBbZg-1; Mon,
- 15 Sep 2025 02:52:48 -0400
-X-MC-Unique: HUhvMThBOImcduzKTgBbZg-1
-X-Mimecast-MFC-AGG-ID: HUhvMThBOImcduzKTgBbZg_1757919167
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B24C21800578; Mon, 15 Sep 2025 06:52:47 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.55])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3911E300021A; Mon, 15 Sep 2025 06:52:47 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D801D1800399; Mon, 15 Sep 2025 08:52:44 +0200 (CEST)
-Date: Mon, 15 Sep 2025 08:52:44 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, roy.hopkins@randomman.co.uk
-Subject: Re: [PATCH] igvm: add initial support for non-cc firmware in igvm
- format
-Message-ID: <vaze7a2ropbvcy6vcvcqq53xmwj2syg3z67tbjvqqtwxpqhfys@mci3lzrsdqgw>
-References: <20250709123007.1039675-1-kraxel@redhat.com>
- <ub32mvhexl7ppqwzie53ztfnplamfsl6ahrlwlirvno56es36s@m6ozo7p4ao2j>
- <aMQgLMnz2YD6Tlo_@redhat.com>
+ (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
+ id 1uy3KX-0005dF-HP; Mon, 15 Sep 2025 03:08:53 -0400
+Received: from [218.76.62.146] (helo=ultrarisc.com)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <xb@ultrarisc.com>)
+ id 1uy3KN-0007M2-G8; Mon, 15 Sep 2025 03:08:51 -0400
+Received: from ur-dp1000.. (unknown [192.168.100.1])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAfwCXwdChu8do+wkuAA--.45058S4; 
+ Mon, 15 Sep 2025 15:09:39 +0800 (CST)
+From: Xie Bo <xb@ultrarisc.com>
+To: qemu-devel@nongnu.org
+Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, alistair23@gmail.com,
+ pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
+ rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com,
+ Xie Bo <xb@ultrarisc.com>
+Subject: [PATCH v9 2/2] Fix VM resume after QEMU+KVM migration
+Date: Mon, 15 Sep 2025 15:08:08 +0800
+Message-ID: <20250915070811.3422578-3-xb@ultrarisc.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250915070811.3422578-1-xb@ultrarisc.com>
+References: <20250915070811.3422578-1-xb@ultrarisc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMQgLMnz2YD6Tlo_@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAfwCXwdChu8do+wkuAA--.45058S4
+X-Coremail-Antispam: 1UD129KBjvJXoWxtF4fKr4kXr1xArWfZFy5urg_yoW7WFW8pr
+ s8GFZxCr93GrWxXw1fJ34DXFn5Gw47GwsxC3y8ur4akF45GrZ09r1kKay2yrs5G348Ar12
+ 9F45AFy3ua15tFJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUQS14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
+ x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+ Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
+ ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2kK
+ e7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I
+ 80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCj
+ c4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YV
+ CY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE-syl42xK82IYc2Ij
+ 64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x
+ 8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE
+ 2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42
+ xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF
+ 7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUoOzVDUUUU
+X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAGB2jHbnEAKQAAsZ
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
+Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
+ helo=ultrarisc.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,39 +81,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 02:29:16PM +0100, Daniel P. Berrangé wrote:
-> On Fri, Sep 12, 2025 at 03:25:08PM +0200, Gerd Hoffmann wrote:
-> > On Wed, Jul 09, 2025 at 02:30:07PM +0200, Gerd Hoffmann wrote:
-> > > Implement a ConfidentialGuestSupportClass for non-confidential VMs.
-> > > This allows the igvm support code work without sev/tdx.
-> > > 
-> > > RfC: Not fully sure this is the best way to implement this.
-> > > Alternatively we could add this directly into the igvm backend and run
-> > > it in case no confidential guest support object is present.
-> > 
-> > Started to look at this again.  Noticed that at least simple native
-> > igvm files (with memory regions only) boot just fine without an
-> > ConfidentialGuestSupportClass.  Which kind-of underlines that going for
-> > a pseudo-ConfidentialGuestSupportClass for native mode is maybe not the
-> > best design idea ...
-> > 
-> > Nevertheless we'll go need target-specific code for some IGVM features.
-> > That is obviously the case for loading some custom initial CPU state.
-> > But also things like the memory map are not the same across targets,
-> > even though some targets might share an implementation (e820 on x86,
-> > fdt elsewhere).
-> > 
-> > Suggestions how to wire that up best?
-> 
-> I'm not familiar with the details of IGVM wrt varying technologies.
-> Consider that x86 can boot a guest non-confidential, SEV-SNP or TDX.
-> Do we have a single IGVM file that provides enough data for all
-> three scenarios, or does each deployment technology need a separate
-> IGVM file to be provided ?
+Fix two migration issues for virtual machines in KVM mode:
+1.It saves and restores the vCPU's privilege mode to ensure that the
+vCPU's privilege mode is correct after migration.
+2.It saves and restores the vCPU's mp_state (runnable or stopped) and
+includes this state in the migration sequence, upgrading the vmstate
+version to ensure that the vCPU's mp_state is correct after migration.
 
-You can have a single igvm file supporting all platforms.
+KVM_PUT_RUNTIME_STATE only synchronizes the vCPUâ€™s runtime-modified
+state (such as registers), whereas mp_state is related to system boot,
+multi-core initialization, and is not modified during normal operation.
+Therefore, mp_state is only synchronized to KVM during KVM_PUT_RESET_STATE
+and KVM_PUT_FULL_STATE.
 
-take care,
-  Gerd
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+---
+ target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
+ target/riscv/kvm/kvm_riscv.h |  3 +-
+ target/riscv/machine.c       |  5 +--
+ 3 files changed, 52 insertions(+), 16 deletions(-)
+
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 5c19062c19..1fa755bd96 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -594,6 +594,12 @@ static int kvm_riscv_get_regs_core(CPUState *cs)
+     }
+     env->pc = reg;
+ 
++    ret = kvm_get_one_reg(cs, RISCV_CORE_REG(mode), &reg);
++    if (ret) {
++        return ret;
++    }
++    env->priv = reg;
++
+     for (i = 1; i < 32; i++) {
+         uint64_t id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+         ret = kvm_get_one_reg(cs, id, &reg);
+@@ -619,6 +625,12 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+         return ret;
+     }
+ 
++    reg = env->priv;
++    ret = kvm_set_one_reg(cs, RISCV_CORE_REG(mode), &reg);
++    if (ret) {
++        return ret;
++    }
++
+     for (i = 1; i < 32; i++) {
+         uint64_t id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+         reg = env->gpr[i];
+@@ -1348,25 +1360,52 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+         return ret;
+     }
+ 
++    ret = kvm_riscv_sync_mpstate_to_qemu(cs);
++    if (ret) {
++        return ret;
++    }
++
+     return ret;
+ }
+ 
+-int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
++int kvm_riscv_sync_mpstate_to_kvm(CPUState *cs)
+ {
++    int ret = 0;
++    CPURISCVState *env = &RISCV_CPU(cs)->env;
++
+     if (cap_has_mp_state) {
+         struct kvm_mp_state mp_state = {
+-            .mp_state = state
++            .mp_state = env->mp_state
+         };
+ 
+-        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
++        ret = kvm_vcpu_ioctl(cs, KVM_SET_MP_STATE, &mp_state);
+         if (ret) {
+-            fprintf(stderr, "%s: failed to sync MP_STATE %d/%s\n",
++            fprintf(stderr, "%s: failed to sync MP_STATE to KVM %d/%s\n",
+                     __func__, ret, strerror(-ret));
+-            return -1;
+         }
+     }
+ 
+-    return 0;
++    return ret;
++}
++
++int kvm_riscv_sync_mpstate_to_qemu(CPUState *cs)
++{
++    int ret = 0;
++    CPURISCVState *env = &RISCV_CPU(cs)->env;
++
++    if (cap_has_mp_state) {
++        struct kvm_mp_state mp_state;
++
++        ret = kvm_vcpu_ioctl(cs, KVM_GET_MP_STATE, &mp_state);
++        if (ret) {
++            fprintf(stderr, "%s: failed to sync MP_STATE to QEMU %d/%s\n",
++                    __func__, ret, strerror(-ret));
++            return ret;
++        }
++        env->mp_state = mp_state.mp_state;
++    }
++
++    return ret;
+ }
+ 
+ int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+@@ -1393,13 +1432,8 @@ int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+         return ret;
+     }
+ 
+-    if (KVM_PUT_RESET_STATE == level) {
+-        RISCVCPU *cpu = RISCV_CPU(cs);
+-        if (cs->cpu_index == 0) {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
+-        } else {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
+-        }
++    if (level >= KVM_PUT_RESET_STATE) {
++        ret = kvm_riscv_sync_mpstate_to_kvm(cs);
+         if (ret) {
+             return ret;
+         }
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index b2bcd1041f..953db94160 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -28,7 +28,8 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+                           uint64_t aplic_base, uint64_t imsic_base,
+                           uint64_t guest_num);
+ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+-int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
++int kvm_riscv_sync_mpstate_to_kvm(CPUState *cs);
++int kvm_riscv_sync_mpstate_to_qemu(CPUState *cs);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 51e0567ed3..6e5be17c27 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -426,8 +426,8 @@ static const VMStateDescription vmstate_sstc = {
+ 
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+-    .version_id = 10,
+-    .minimum_version_id = 10,
++    .version_id = 11,
++    .minimum_version_id = 11,
+     .post_load = riscv_cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+@@ -447,6 +447,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UNUSED(4),
+         VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+         VMSTATE_UINTTL(env.priv, RISCVCPU),
++        VMSTATE_UINT32(env.mp_state, RISCVCPU),
+         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+         VMSTATE_UINT64(env.resetvec, RISCVCPU),
+         VMSTATE_UINTTL(env.mhartid, RISCVCPU),
+-- 
+2.43.0
 
 
