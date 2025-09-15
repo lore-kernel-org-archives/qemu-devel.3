@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50837CAC587
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 01:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F731CAC587
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 02:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxyQo-0007Mm-4W; Sun, 14 Sep 2025 21:55:02 -0400
+	id 1uxyXW-0001PN-3E; Sun, 14 Sep 2025 22:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxyQi-0007ET-5L
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 21:54:56 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1uxyXS-0001Oh-Dt
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:01:54 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxyQZ-0003c2-4f
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 21:54:55 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-afcb7ae6ed0so554231366b.3
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 18:54:41 -0700 (PDT)
+ id 1uxyXA-0004Pz-IB
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:01:52 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b046f6fb230so715573766b.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 19:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757901279; x=1758506079; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757901688; x=1758506488; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wh35gwmePaTudZC9v7TbD45o+/CFAax/uaC0LPtvB+w=;
- b=NMfhGdTFz5O0A7pgCbFBBKixjSzq8JvlGx0/6Dayfr01p14fcBfOwZAFKKoNUOUh8V
- IiUwfVVwDoHarHf4FWkKoIn7q2OdIrfPgqtXdTjVoaORVjuTdIjocTkiWYoWxHzDYYcV
- Rd8c7bbsAveLb8VKXp3BEffW41O43BkVEJotJkpX2k8Rjua6VhxHcBV1MMAb6SFOipXP
- cvAAGFD4Cm6d/oAdWP3FXm5/0jEwILhJ/2GRjOX/aDWh0UFTqVWOg8ic5waPQaluoHVk
- zaVIWlzBpIq1iHsHjyDMYjyh03nfjUSBck2oqn0JRO+YA+0jmDYvJVHtRyzCvt5h4X7D
- NgUA==
+ bh=q+JUgZufonoMc4XGkF8Fb8laH8HONSdx9SjZ2sG+nGs=;
+ b=WUbCRCu+H1T3ARAzLD7XLa4GEnExEexHVx2TBvqWkBp0PZad+n/vB+llnTYF6/d630
+ U2cjdcScmRbbybDR8HVqCDYZv7JWWJYGbpMGALo/9MHDgxUMpTzMHa6ZEyNsuYspq7AI
+ 7l/wv7+UQNC0bA6QGyHeX0B3XXC1oOgxsQjRgwu7HAglRZQ7Rtg/cs4ZW2IctG8Q+nEc
+ iPID74M/Xjm9vpU2PkRkbrFy1U3L8wRxxeTYfRCo52wL5htN5FYb1UbadhnJLZNoH+df
+ PCbWmbjaTH38hfFcsIR/mPHlomMTg9jREUys9LblX1pMAQIW+LMUNuA8HCmWoKamDmaJ
+ yzIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757901279; x=1758506079;
+ d=1e100.net; s=20230601; t=1757901688; x=1758506488;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wh35gwmePaTudZC9v7TbD45o+/CFAax/uaC0LPtvB+w=;
- b=Eqa9wTAWP2QwAyKr3hA9XcXMD8+eZcmd+R785V02E7Mt54I3nTHyhkxwLStvyKvpQO
- CeMJn2yrDBZoYst5NRkDHPDxuHkw4h2Q9pO4UuGe7QZq7KcLECbSfWO3t3TEraqP7SjP
- YJlMR3QBskMavcHxBIvW9obPiCVoJWQxUCdn7FB8tWYJ4UJb4T8jK+8c5mjzIlkllOqV
- +te0rLRAv0SFNOmyn2ZhgYAJUMGwx3eOYyMC3yA9zjRrgPwhEjAuITn0cC7Fgn2As8eW
- s026/Jdc7s0fRxq0fbbgG0zmlV33BExm8KquSIsRDqsroJaVO8Ld1e5bsYV7jreKGmP3
- g6Pg==
-X-Gm-Message-State: AOJu0Ywi8lJwhBJD1sISePW4w+7C3ohu++X6nJsNT7+2gqPrlJiCeWp5
- 8S0RNQ9Ff7KJ6cmv6yOo7qsNhO6HGTEkcV/E2NVBbyuf96EUuYAn7DKfWV9PzeKjaDapbwBVC6M
- uNKB5B96Abr6xVSnidWGctuPQ5LFWl30=
-X-Gm-Gg: ASbGnctVvXeOPPYDpPKzKEty7yEY+gw1ofcQ3Hj01RmnqgEJlgZsO6k0XQIQfwtuwUS
- 2FJTA4xATXQ40vaMDB7/K8zzEq29FTSclj8lRzg2Y2U6/CsBP7HRU7DQcbrhu/U1exbj7ng3zm5
- GZ3Nh0MMaRZHbGuKFtfSEH7nfU61S5OwiK6MPU4w7CVRT3SYW5j/cQhqVeIQR3YAn/HpXj4hg8r
- N3WLf6c2rvBj6/BmN5/Ub0vUlSk2w131G6nc3hB38joUNko
-X-Google-Smtp-Source: AGHT+IHHhFE8mit4GABCpz+WIhIP3mTGk5t711eCNN4WnVkrcgy3BwYyiLDWhT5hlNTLQU2TzSTO3S9IhwpiT2bHkFE=
-X-Received: by 2002:a17:907:3e1a:b0:b01:6e50:208c with SMTP id
- a640c23a62f3a-b07c3582d6amr1052572466b.22.1757901278587; Sun, 14 Sep 2025
- 18:54:38 -0700 (PDT)
+ bh=q+JUgZufonoMc4XGkF8Fb8laH8HONSdx9SjZ2sG+nGs=;
+ b=unf8RFLdUsDrGMSFogXrpSB6fPRHDfYmL30nBTuBcCy2ZO7KaYYjHrs/4kPkw2Ave6
+ zqvFVEZvX2Nr/529uorPI56tzUP+tLfaVDl2EH+lTnrmc44cnu03Qhs93gGcetlP6Aj3
+ tDKeJhnQvzYrgKQW+/fgrJnMhOfcdybG8juR88qOL5apbmmu7blN2dOFm9PFKOaxL3+C
+ XKN2h4JxJF0IwCxzJwRi1sY7DPXexdtXR0Po02nM3kON+UxqZwKLjT4gIGtFw51tPjxq
+ KeXGyyWqsXscEExk7wiRMsjP7bO0QjYIxtcp/7CTObqcz+Mi7tEUeCax94Li5ym9XDRX
+ Bs5Q==
+X-Gm-Message-State: AOJu0YzECLqpjdrWUJNIOpys0UkMT8Sz2iSvdltHd9iqMBMOR73Xuawy
+ 6XHGFh0b/gOTnFbUgPHXuBQ95kSkWHpSpmfOHP6WpKCNnGfNfLkQFmm1LboQMS+ld14GslCcLCK
+ IS3BWN4J37xdh00EA98G3vnyLS/YxTaI=
+X-Gm-Gg: ASbGnct/tFrR3CZakVlI+uHb90sF39ZIrIa/S0TMJ8ID44d3iz8XRbp0UTLxFGMM64X
+ rBknHqKg6lbuTMg4imb3A9UlgK2NVDOfoVCqLglVfBySQFyuQnuyW/q6ua7vNB+xaT5XZ8OIgwW
+ UkJcNhmgAkiIXRi58si1ULluFBnDWDQYG+NQXsGG3H0E7kNioPgcCTUuMh8ZWXRo+uArKUGvC+/
+ rEPcPIUP/QPBRBddt4rQlI2sl1xMZVmBECzlw==
+X-Google-Smtp-Source: AGHT+IHZrImXQyW1U2Zw3tMwU8EfHw6efECEeX2WN6KnAF1ynPgo+6Z2oGwonrhufqS7iTGf0HX/Kw2uBG61wnEBnz4=
+X-Received: by 2002:a17:906:c10e:b0:b07:dd5e:16be with SMTP id
+ a640c23a62f3a-b07dd5e1716mr791675366b.4.1757901688340; Sun, 14 Sep 2025
+ 19:01:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250904132723.614507-2-ajones@ventanamicro.com>
-In-Reply-To: <20250904132723.614507-2-ajones@ventanamicro.com>
+References: <20250910121501.676219-1-abologna@redhat.com>
+In-Reply-To: <20250910121501.676219-1-abologna@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 11:54:12 +1000
-X-Gm-Features: AS18NWCtTED248ft_V2kU4jhEn2xmvZcu2m95t_6Kx-DYH1dFOblDP5Zu8AS-DE
-Message-ID: <CAKmqyKMoPeCQV9Ag-UK613GqUU1M+FcP+H08jTozNE4hH1hmzA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix MSI table size limit
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- tjeznach@rivosinc.com
+Date: Mon, 15 Sep 2025 12:01:01 +1000
+X-Gm-Features: AS18NWAuGs76Ix_seQc737uZXwP7Y1h56RVFjAUAvbYDxrIwn0Ca3qqadu-DQO8
+Message-ID: <CAKmqyKOo_soHFOzXvmgrpBjy9x8W=ymu4K1=Z5qN_7uJSBH_2A@mail.gmail.com>
+Subject: Re: [PATCH] docs/interop/firmware: Add riscv64 to FirmwareArchitecture
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -81,7 +82,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,16 +98,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 4, 2025 at 11:29=E2=80=AFPM Andrew Jones <ajones@ventanamicro.c=
-om> wrote:
+On Wed, Sep 10, 2025 at 10:16=E2=80=AFPM Andrea Bolognani <abologna@redhat.=
+com> wrote:
 >
-> The MSI table is not limited to 4k. The only constraint the table has
-> is that its base address must be aligned to its size, ensuring no
-> offsets of the table size will overrun when added to the base address
-> (see "8.5. MSI page tables" of the AIA spec).
+> Descriptors using this value have been shipped for years
+> by distros, so we just need to update the spec to match
+> reality.
 >
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
 
 Thanks!
 
@@ -115,52 +114,32 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  hw/riscv/riscv-iommu.c | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
+>  docs/interop/firmware.json | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 96a7fbdefcf3..155190d032dd 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -558,6 +558,7 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUSt=
-ate *s,
->      MemTxResult res;
->      dma_addr_t addr;
->      uint64_t intn;
-> +    size_t offset;
->      uint32_t n190;
->      uint64_t pte[2];
->      int fault_type =3D RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
-> @@ -565,16 +566,18 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMU=
-State *s,
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index 6bbe2cce0a..ccbfaf828d 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -85,12 +85,14 @@
+>  #
+>  # @loongarch64: 64-bit LoongArch. (since: 7.1)
+>  #
+> +# @riscv64: 64-bit RISC-V.
+> +#
+>  # @x86_64: 64-bit x86.
+>  #
+>  # Since: 3.0
+>  ##
+>  { 'enum' : 'FirmwareArchitecture',
+> -  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
+> +  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64=
+' ] }
 >
->      /* Interrupt File Number */
->      intn =3D riscv_iommu_pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
-> -    if (intn >=3D 256) {
-> -        /* Interrupt file number out of range */
-> -        res =3D MEMTX_ACCESS_ERROR;
-> -        cause =3D RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
-> -        goto err;
-> -    }
-> +    offset =3D intn * sizeof(pte);
->
->      /* fetch MSI PTE */
->      addr =3D PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN))=
-;
-> -    addr =3D addr | (intn * sizeof(pte));
-> +    if (addr & offset) {
-> +        /* Interrupt file number out of range */
-> +        res =3D MEMTX_ACCESS_ERROR;
-> +        cause =3D RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
-> +        goto err;
-> +    }
-> +
-> +    addr |=3D offset;
->      res =3D dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
->              MEMTXATTRS_UNSPECIFIED);
->      if (res !=3D MEMTX_OK) {
+>  ##
+>  # @FirmwareTarget:
 > --
-> 2.49.0
+> 2.51.0
 >
 >
 
