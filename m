@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06C3CA101F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 04:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B34CAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 04:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy0it-00062s-9F; Mon, 15 Sep 2025 00:21:51 -0400
+	id 1uy0jU-0006Aq-T3; Mon, 15 Sep 2025 00:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy0i9-0005bs-Nk
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:21:06 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1uy0jR-00069k-Vd
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:22:26 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy0i7-0004yz-FJ
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:21:05 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b042cc3954fso669852166b.0
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 21:20:59 -0700 (PDT)
+ id 1uy0jK-00056J-Sq
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:22:24 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-b042eb09948so782688666b.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 21:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757910056; x=1758514856; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757910133; x=1758514933; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XIscQse6rRzky1C+APHweQPSvau+Qslqmy42YW2bpek=;
- b=ijV/h1kgxnfX/z3z9iyUOWHFRICjY86KUolEg/G5koET9xd5wy0OyvFQAAwV6/Jx/D
- qmxPovXZKCOaz8835t+8YiDHk3fni1evCJ2RQv7P6bo61Lc/6y/J4RuIOFXnp6NiNR31
- WKG1UJCZ4MrvF1QRvrhr44UKisWvDyiEr/WVzFSo2ZlD68WFwYmJ6YhEls+l+kEzKHlT
- Lck2aMBKTTQ20aeGIb0ZX5GmIPxeMKQnF/8G50wU3zOuxm7NVPHohaJM7KWNfhlgy7Ad
- tcucOyXJRqUhWe3oiVU5KbkryYnkZcs5QkJKWDMCAT+5ej54TwuYsBwC7urfPDJ2oyIL
- 1aQg==
+ bh=Jumm2xu+sZ/TP65LQQULuz9ZRHV2Yiy5Lh9gUoMfBTk=;
+ b=TakRBarG49tGbkystmUWBtwRFJKNGTam6xrEolssfdFN+K6G9S3lSyXt7UC0sZ+KyH
+ +1Xx7jFx1TwkaVQeSTRRcD1u7KGIQNnQSn53bauxaYl45PzfAKD4knDokPrkdKa5XFJz
+ 4KIwskIb3v1WHFB8AlUhVwwzkZtnHPgxSaC4DfW95iyg1HeKF/OlnUbNzewlb/UcLB1x
+ g9IY04h03YgvHANRTkKXeIXOivSxXSzNqq1t+f443G1P5Rk3/aGhMnji3gqItI53wwNf
+ jb7Bp3iUvfQvAH882KKTSf3uC3OIDLSfdDSxhtDWGc6Qq09OWtVZG0gDLsepUtAGnu0P
+ Uw4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757910056; x=1758514856;
+ d=1e100.net; s=20230601; t=1757910133; x=1758514933;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XIscQse6rRzky1C+APHweQPSvau+Qslqmy42YW2bpek=;
- b=PKNm35bXHShVm4adTNhTOZAgKG2Jmb1tfYTWzbbaOZLLCl8smDnD6V0zZ5mM7cDz0R
- tzdwiB1M+MSy0MdFtb9rEY1xI+k3eYa8r5CTGkT4pOVWXV+PnXnzC1Ki+gmZIoS0b3y2
- EEBBbLWCxuT6SRirvU8/W34/VckC/vSdRY4XSHyhvftC6sioRJAyN3XUGbDbzIeiGr0J
- zPHYXwghiPsI359u4eSQInJKsdKk9FmxYAmx8GqHREfqCb8ZuDCzxjZIY2B85smNtOzr
- ozemDo7gW1vwQfbO9pUpPaGkWfxHnKbRVVt8rC9SG+/pJw4ItWSc/6IM6uUA3aoP3U8Q
- aYZg==
-X-Gm-Message-State: AOJu0YxXYCM+SEDcpwA/B7SRTparEyNqu7Tl6iAu7aA44Sv6/y4F4aQC
- QWZfh945kOT76CqvUrfTcpwN8sFtvo+QgU3G/lh3aLFehWiI5x7bIal4FcfQW+kAliLDmll7SMj
- d48tq0WWoD1W+/b3q2atsmPqmngSxL5I=
-X-Gm-Gg: ASbGncu3zN0esSTQhK6fZ00dcw2Kni2LF7m29xeFVQ6KeZ//SMViEUYflPNhuYs1fCF
- p9jKfLt/FBPNczCePa1uzFT9G0N0tNYxloV3Amkf7pxq5cN0GFxClihHMscKD67zlSiIJbZzWO5
- YI9RCLUWjrNtxZ2BneTSqFnBD1PVQ3UNqws9cIiBxopuUwdl1YpNyo3bXcZIv+9SctLXcWCJs80
- 4w2HSf5W93i3wqvPluh3klovfHWQnIJj1sDX11/rWew3e1+
-X-Google-Smtp-Source: AGHT+IHZnGx22gHF8feD4z5TF/B1K5J4hFV2n9qy2QITqARZdtg/Jqweq/0oJPWXicn8KCesTPqBkCDAioxGAbev774=
-X-Received: by 2002:a17:907:6e9e:b0:b04:aa9d:2240 with SMTP id
- a640c23a62f3a-b07c37dbd64mr1104503866b.39.1757910056446; Sun, 14 Sep 2025
- 21:20:56 -0700 (PDT)
+ bh=Jumm2xu+sZ/TP65LQQULuz9ZRHV2Yiy5Lh9gUoMfBTk=;
+ b=e96xeYEC3LI2il0nhlAVscDOEdtH1oBqSgwvPe6+ItAhTcqQnrzwFGhi9nJYH+8hbj
+ mNvR+XsGqlnp5uCYoe+Yy3iFGs/qMqaBxrj6/cJ3SDs0wJbaDeLk9m7yYmfGOXL/fjtp
+ lTsVsKmfkVYbMUI79Sc/ZWHhMyfLbjKumMv3h4ZurDUYp2NIRL/j1jsXi4CTC7bgBl/g
+ CB8gyfboVNAlea83lNb5Qjxz93U7iDWLZKUtny1Fl0TBqb/pjw+9DuNTWinYTj7voNGF
+ BhlHbmtH/EXvro8+Lurbn2DJPTRsl1pUY71fy9bVbYVtiBWur622M2EE+lPbLorXrqJD
+ jBJA==
+X-Gm-Message-State: AOJu0Yzo55mKla1NT+2lPoL7xNSoTWeA+cr7oDVwhv3lHQX0hWZ4Ezgf
+ YpMynci5607R4WlnzJFCMgNq1sRalKopNu9ZmlGzFMkDqFI/JoTiXNkzNfq1OytXSO++1gd2A2Z
+ lw7FFDCYRkZ8nucqz0MhV35gMDvsOA6c=
+X-Gm-Gg: ASbGnctVui+39seCHj5qLEkyFJsTf3VB7LWeVi0psRX9xiuEATTLVe0+zhXV3fh7Up1
+ vtibTThD2rc1VRN89cgSpa3X8bBKQPOgT1EmCZsBCcpKSUavLNvK8+jU3V0uSJd9upI65OhRGKN
+ /iLcebINVhuNBaEePcHb6Q4fJLq/lo0OgI+kVgbVcD+ttxHw+j2N4iU93X65v15Gjk6wQUR0SXJ
+ Uz7YUL8Soqm426TIiFY6i5ffMHlH1StrfO94R9230B0/fYj
+X-Google-Smtp-Source: AGHT+IGJxV+QMjYWeJ1s5c+xhEcvtb5oaXBWDirMyP55GJIDpA9FsgxxY1Xa3lPycnDOgaooHHlTHEH3swk2f/U0E2U=
+X-Received: by 2002:a17:907:25c7:b0:af9:eace:8a52 with SMTP id
+ a640c23a62f3a-b07c3833af7mr1119115066b.50.1757910132676; Sun, 14 Sep 2025
+ 21:22:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
- <20250911-timers-v3-3-60508f640050@linux.alibaba.com>
-In-Reply-To: <20250911-timers-v3-3-60508f640050@linux.alibaba.com>
+ <20250911-timers-v3-4-60508f640050@linux.alibaba.com>
+In-Reply-To: <20250911-timers-v3-4-60508f640050@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 14:20:30 +1000
-X-Gm-Features: Ac12FXySeSKkI_XtFQmkUQWYXR10NUbIlpWxKEG52B2vx2iPsxtid5Bpn20qFP4
-Message-ID: <CAKmqyKOOoefb+bVs-OwGmor5+qL6HdthUvJbCjBHbubud1iAdQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] hw/intc: Save timers array in RISC-V mtimer VMState
+Date: Mon, 15 Sep 2025 14:21:45 +1000
+X-Gm-Features: Ac12FXwxVWkBg8Hizdafgdb9lCejHZ9lc71fnso-m1UPCpPDRKdXQuq7QzaMr6o
+Message-ID: <CAKmqyKPFJMAy4YJNxsH=qaE9po65w=yeiT-ah6yNu77K3NCYcA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] target/riscv: Save stimer and vstimer in CPU
+ vmstate
 To: TANG Tiancheng <lyndra@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
@@ -76,8 +77,8 @@ Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,36 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 11, 2025 at 7:58=E2=80=AFPM TANG Tiancheng <lyndra@linux.alibab=
+On Thu, Sep 11, 2025 at 7:59=E2=80=AFPM TANG Tiancheng <lyndra@linux.alibab=
 a.com> wrote:
 >
-> The current 'timecmp' field in vmstate_riscv_mtimer is insufficient to ke=
-ep
-> timers functional after migration.
+> vmstate_riscv_cpu was missing env.stimer and env.vstimer.
+> Without migrating these QEMUTimer fields, active S/VS-mode
+> timer events are lost after snapshot or migration.
 >
-> If an mtimer's entry in 'mtimer->timers' is active at the time the snapsh=
-ot
-> is taken, it means riscv_aclint_mtimer_write_timecmp() has written to
-> 'mtimecmp' and scheduled a timer into QEMU's main loop 'timer_list'.
->
-> During snapshot save, these active timers must also be migrated; otherwis=
-e,
-> after snapshot load there is no mechanism to restore 'mtimer->timers' bac=
-k
-> into the 'timer_list', and any pending timer events would be lost.
->
-> QEMU's migration framework commonly uses VMSTATE_TIMER_xxx macros to save
-> and restore 'QEMUTimer' variables. However, 'timers' is a pointer array
-> with variable length, and vmstate.h did not previously provide a helper
-> macro for such type.
->
-> This commit adds a new macro, 'VMSTATE_TIMER_PTR_VARRAY', to handle savin=
-g
-> and restoring a variable-length array of 'QEMUTimer *'. We then use this
-> macro to migrate the 'mtimer->timers' array, ensuring that timer events
-> remain scheduled correctly after snapshot load.
+> Add VMSTATE_TIMER_PTR() entries to save and restore them.
 >
 > Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -138,49 +120,53 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/intc/riscv_aclint.c         | 6 ++++--
->  include/hw/intc/riscv_aclint.h | 4 ++++
->  2 files changed, 8 insertions(+), 2 deletions(-)
+>  target/riscv/machine.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
 >
-> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-> index 318a9c8248432a8cd4c3f3fa990739917ecf7ca1..9f4c36e965e2aa379d75c0a9f=
-656177f0dd82a45 100644
-> --- a/hw/intc/riscv_aclint.c
-> +++ b/hw/intc/riscv_aclint.c
-> @@ -323,13 +323,15 @@ static void riscv_aclint_mtimer_reset_enter(Object =
-*obj, ResetType type)
->
->  static const VMStateDescription vmstate_riscv_mtimer =3D {
->      .name =3D "riscv_mtimer",
-> -    .version_id =3D 2,
-> -    .minimum_version_id =3D 2,
-> +    .version_id =3D 3,
-> +    .minimum_version_id =3D 3,
->      .fields =3D (const VMStateField[]) {
->              VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
->              VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
->                                    num_harts, 0,
->                                    vmstate_info_uint64, uint64_t),
-> +            VMSTATE_TIMER_PTR_VARRAY(timers, RISCVAclintMTimerState,
-> +                                     num_harts),
->              VMSTATE_END_OF_LIST()
->          }
->  };
-> diff --git a/include/hw/intc/riscv_aclint.h b/include/hw/intc/riscv_aclin=
-t.h
-> index 693415eb6defe4454e5731a681e025f3bac3ad2e..4b7406eec005a06b7c040d848=
-3a8790866a39297 100644
-> --- a/include/hw/intc/riscv_aclint.h
-> +++ b/include/hw/intc/riscv_aclint.h
-> @@ -80,4 +80,8 @@ enum {
->      RISCV_ACLINT_SWI_SIZE              =3D 0x4000
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 1600ec44f0b755fdd49fc0df47c2288c9940afe0..51e0567ed30cbab5e791ea904=
+165bc1854709192 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -400,6 +400,30 @@ static const VMStateDescription vmstate_ssp =3D {
+>      }
 >  };
 >
-> +#define VMSTATE_TIMER_PTR_VARRAY(_f, _s, _f_n)                        \
-> +VMSTATE_VARRAY_OF_POINTER_UINT32(_f, _s, _f_n, 0, vmstate_info_timer, \
-> +                                                        QEMUTimer *)
+> +static bool sstc_timer_needed(void *opaque)
+> +{
+> +    RISCVCPU *cpu =3D opaque;
+> +    CPURISCVState *env =3D &cpu->env;
 > +
->  #endif
+> +    if (!cpu->cfg.ext_sstc) {
+> +        return false;
+> +    }
+> +
+> +    return env->stimer !=3D NULL || env->vstimer !=3D NULL;
+> +}
+> +
+> +static const VMStateDescription vmstate_sstc =3D {
+> +    .name =3D "cpu/timer",
+> +    .version_id =3D 1,
+> +    .minimum_version_id =3D 1,
+> +    .needed =3D sstc_timer_needed,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_TIMER_PTR(env.stimer, RISCVCPU),
+> +        VMSTATE_TIMER_PTR(env.vstimer, RISCVCPU),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  const VMStateDescription vmstate_riscv_cpu =3D {
+>      .name =3D "cpu",
+>      .version_id =3D 10,
+> @@ -476,6 +500,7 @@ const VMStateDescription vmstate_riscv_cpu =3D {
+>          &vmstate_elp,
+>          &vmstate_ssp,
+>          &vmstate_ctr,
+> +        &vmstate_sstc,
+>          NULL
+>      }
+>  };
 >
 > --
 > 2.43.0
