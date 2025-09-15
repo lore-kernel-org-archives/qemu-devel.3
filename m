@@ -4,52 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D26CA101F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 07:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22293CA101F
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 07:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy3Vf-0002KA-4F; Mon, 15 Sep 2025 03:20:23 -0400
+	id 1uy3dV-0008Qr-Qy; Mon, 15 Sep 2025 03:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uy3Vc-0002Iu-Fj
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 03:20:20 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uy3VH-0000Kn-0u
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 03:20:19 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxLvAVvsdo+2wKAA--.22283S3;
- Mon, 15 Sep 2025 15:19:49 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAxVOQSvsdoXteWAA--.24724S9;
- Mon, 15 Sep 2025 15:19:48 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 7/8] hw/loongarch/virt: Add high MMIO support with GPEX host
-Date: Mon, 15 Sep 2025 15:19:45 +0800
-Message-Id: <20250915071946.315171-8-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250915071946.315171-1-maobibo@loongson.cn>
-References: <20250915071946.315171-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uy3dM-0008Pw-Fr
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 03:28:21 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uy3dC-0001Gj-QI
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 03:28:20 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58F7RiHu017845
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 15 Sep 2025 16:27:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=W1pRs3VTa9X252Grall8l13aqBaVEu0moyKS3NmsQmk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1757921264; v=1;
+ b=Y4NTU2drahiflOn6poWy4BhvGBCsi7+FUfXeTCan4gr4uvAS0B3sZ8akyAN2tfNG
+ q7sjhJR4sJcrrUASgqD9J9KH9RmPHdE1s+gI0CEGaGsSlwV4LS9gO5pSG2LRe07s
+ r9k4SA6i0zum60D35LUXwlqwNVTNA0YKWZI3AyaVMJPxuEzJLpyC2cw6YsF4gr1G
+ 9OLLw+IQYLVRDlbOze1RXkLKpP5KX0IP94vnvr1h2GK5AgWr1x390T95uKHGBC0Q
+ 0Moz6uuewMjhHhqNeEkrXV79kSRYFh7O9Ro8o3oZ1jxCn2N36dqawRc6S2sGQVA/
+ TUAJFZXTPPnnCLu7Ho9aAw==
+Message-ID: <d107e7d4-f5cc-4714-b5f7-cd7d9a35dd6d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 15 Sep 2025 16:27:43 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+ resources
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+ <20250903054438.1179384-5-vivek.kasireddy@intel.com>
+ <26c02124-eb57-4d50-bf8d-1fa809984adc@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185758D6CD5D2774E6373BBF80BA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <43a98363-0607-42c6-906b-4f79e5740ea8@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185329E174E270F6911FF03F815A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB7185329E174E270F6911FF03F815A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxVOQSvsdoXteWAA--.24724S9
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,159 +82,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With high MMIO supported, its base address comes from physical end
-address of DRAM. Also add high MMIO support with GPEX host bridge.
+On 2025/09/15 15:33, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+>> resources
+>>
+>> On 2025/09/13 11:48, Kasireddy, Vivek wrote:
+>>> Hi Akihiko,
+>>>
+>>>> Subject: Re: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+>>>> resources
+>>>>
+>>>> On 2025/09/03 7:42, Vivek Kasireddy wrote:
+>>>>> The res->blob pointer is only valid for blobs that have their
+>>>>> backing storage in memfd. Therefore, we cannot use it to determine
+>>>>> if a resource is a blob or not. Instead, we could use res->blob_size
+>>>>> to make this determination as it is non-zero for blob resources
+>>>>> regardless of where their backing storage is located.
+>>>>
+>>>> I guess this change needs to be applied before "[RFC 3/6]
+>>>> virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
+>>>> devices"; without this patch, the "create dmabuf" patch will probably
+>>>> create an invalid blob.
+>>> Ok, makes sense. I'll move it earlier in the patch series.
+>>>
+>>>>
+>>>>>
+>>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>>>> ---
+>>>>>     hw/display/virtio-gpu.c | 19 +++++++++++--------
+>>>>>     1 file changed, 11 insertions(+), 8 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>>>>> index 0a1a625b0e..2f9133c3b6 100644
+>>>>> --- a/hw/display/virtio-gpu.c
+>>>>> +++ b/hw/display/virtio-gpu.c
+>>>>> @@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+>>>>>         }
+>>>>>
+>>>>>         if (res->blob_size) {
+>>>>> -        if (res->blob_size < (s->current_cursor->width *
+>>>>> +        if (!res->blob || res->blob_size < (s->current_cursor->width *
+>>>>
+>>>> I doubt that rejecting a valid blob due to an implementation concern
+>>>> (whether the backing storage is in memfd) is tolerated in the specification.
+>>> Are you suggesting that the whole if (res->blob_size < (s->current_cursor-
+>>> width *...
+>>> check needs to be removed? I think it is just a sanity check to ensure that the
+>> blob
+>>> size is big enough for cursor.
+>>
+>> I referred to !res->blob, the new condition. It rejects a valid blob
+>> that is backed by VFIO.
+> The problem is that for blobs backed by VFIO, res->blob can be NULL but this function
+> (virtio_gpu_update_cursor_data) is relying on res->blob always being valid. That's why
+> the new condition !res->blob is needed here to check the validity of res->blob.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/virt-fdt-build.c | 33 +++++++++++++++++-----
- hw/loongarch/virt.c           | 53 +++++++++++++++++++++++++++++++++--
- 2 files changed, 77 insertions(+), 9 deletions(-)
+I understand the host-side implementation difficulty to support this 
+operation for VFIO, but the guest may not be prepared for the failure of 
+the operation so we shouldn't simply reject it.
 
-diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-index 5453805ca1..e4d3d80fe5 100644
---- a/hw/loongarch/virt-fdt-build.c
-+++ b/hw/loongarch/virt-fdt-build.c
-@@ -367,8 +367,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-                               uint32_t *pch_msi_phandle)
- {
-     char *nodename;
--    hwaddr base_mmio = lvms->gpex.mmio64.base;
--    hwaddr size_mmio = lvms->gpex.mmio64.size;
-+    hwaddr base_mmio, base_mmio_high;
-+    hwaddr size_mmio, size_mmio_high;
-     hwaddr base_pio = lvms->gpex.pio.base;
-     hwaddr size_pio = lvms->gpex.pio.size;
-     hwaddr base_pcie = lvms->gpex.ecam.base;
-@@ -389,11 +389,30 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-     qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
-     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
-                                  2, base_pcie, 2, size_pcie);
--    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "ranges",
--                                 1, FDT_PCI_RANGE_IOPORT, 2, VIRT_PCI_IO_OFFSET,
--                                 2, base_pio, 2, size_pio,
--                                 1, FDT_PCI_RANGE_MMIO, 2, base_mmio,
--                                 2, base_mmio, 2, size_mmio);
-+    if (lvms->highmem_mmio) {
-+        base_mmio_high = lvms->gpex.mmio64.base;
-+        size_mmio_high = lvms->gpex.mmio64.size;
-+        base_mmio = lvms->gpex.mmio32.base;
-+        size_mmio = lvms->gpex.mmio32.size;
-+        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "ranges",
-+                                     1, FDT_PCI_RANGE_IOPORT,
-+                                     2, VIRT_PCI_IO_OFFSET,
-+                                     2, base_pio, 2, size_pio,
-+                                     1, FDT_PCI_RANGE_MMIO, 2, base_mmio,
-+                                     2, base_mmio, 2, size_mmio,
-+                                     1, FDT_PCI_RANGE_MMIO_64BIT,
-+                                     2, base_mmio_high,
-+                                     2, base_mmio_high, 2, size_mmio_high);
-+    } else {
-+        base_mmio = lvms->gpex.mmio64.base;
-+        size_mmio = lvms->gpex.mmio64.size;
-+        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "ranges",
-+                                     1, FDT_PCI_RANGE_IOPORT,
-+                                     2, VIRT_PCI_IO_OFFSET,
-+                                     2, base_pio, 2, size_pio,
-+                                     1, FDT_PCI_RANGE_MMIO, 2, base_mmio,
-+                                     2, base_mmio, 2, size_mmio);
-+    }
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
-                            0, *pch_msi_phandle, 0, 0x10000);
-     fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 894e60e474..73c0494422 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -48,6 +48,9 @@
- #include "qemu/error-report.h"
- #include "kvm/kvm_loongarch.h"
- 
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
-+#define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
-+
- static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
-                               void *opaque, Error **errp)
- {
-@@ -273,6 +276,31 @@ static DeviceState *create_platform_bus(DeviceState *pch_pic)
-     return dev;
- }
- 
-+static void virt_set_highmmio(LoongArchVirtMachineState *lvms)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(first_cpu);
-+    CPULoongArchState *env = &cpu->env;
-+    struct GPEXConfig *gpex;
-+
-+    if (env->phys_bits <= 32) {
-+        return;
-+    }
-+
-+    gpex = &lvms->gpex;
-+    if (gpex->mmio64.size == 0) {
-+        gpex->mmio64.size = DEFAULT_HIGH_PCIE_MMIO_SIZE;
-+    }
-+
-+    gpex->mmio64.base = ROUND_UP(lvms->ram_end, gpex->mmio64.size);
-+    if (gpex->mmio64.base + gpex->mmio64.size > BIT_ULL(env->phys_bits)) {
-+        error_report("GPEX region base %" PRIu64 " size %" PRIu64
-+                     " exceeds %d physical bits",
-+                     gpex->mmio64.base, gpex->mmio64.size,
-+                     env->phys_bits);
-+        exit(EXIT_FAILURE);
-+    }
-+}
-+
- static void virt_devices_init(DeviceState *pch_pic,
-                                    LoongArchVirtMachineState *lvms)
- {
-@@ -289,8 +317,6 @@ static void virt_devices_init(DeviceState *pch_pic,
-     d = SYS_BUS_DEVICE(gpex_dev);
-     sysbus_realize_and_unref(d, &error_fatal);
-     pci_bus = PCI_HOST_BRIDGE(gpex_dev)->bus;
--    lvms->gpex.mmio64.base = VIRT_PCI_MEM_BASE;
--    lvms->gpex.mmio64.size = VIRT_PCI_MEM_SIZE;
-     lvms->gpex.pio.base = VIRT_PCI_IO_BASE;
-     lvms->gpex.pio.size = VIRT_PCI_IO_SIZE;
-     lvms->gpex.ecam.base = VIRT_PCI_CFG_BASE;
-@@ -299,6 +325,18 @@ static void virt_devices_init(DeviceState *pch_pic,
-     lvms->gpex.bus = pci_bus;
-     mmio_base = lvms->gpex.mmio64.base;
-     mmio_size = lvms->gpex.mmio64.size;
-+    if (lvms->highmem_mmio) {
-+        virt_set_highmmio(lvms);
-+        lvms->gpex.mmio32.base = VIRT_PCI_MEM_BASE;
-+        lvms->gpex.mmio32.size = VIRT_PCI_MEM_SIZE;
-+        mmio_base = lvms->gpex.mmio32.base;
-+        mmio_size = lvms->gpex.mmio32.size;
-+    } else {
-+        lvms->gpex.mmio64.base = VIRT_PCI_MEM_BASE;
-+        lvms->gpex.mmio64.size = VIRT_PCI_MEM_SIZE;
-+        mmio_base = lvms->gpex.mmio64.base;
-+        mmio_size = lvms->gpex.mmio64.size;
-+    }
- 
-     /* Map only part size_ecam bytes of ECAM space */
-     ecam_alias = g_new0(MemoryRegion, 1);
-@@ -314,6 +352,17 @@ static void virt_devices_init(DeviceState *pch_pic,
-     memory_region_init_alias(mmio_alias, OBJECT(gpex_dev), "pcie-mmio",
-                              mmio_reg, mmio_base, mmio_size);
-     memory_region_add_subregion(get_system_memory(), mmio_base, mmio_alias);
-+    if (lvms->highmem_mmio) {
-+        /* Map high MMIO space */
-+        mmio_alias = g_new0(MemoryRegion, 1);
-+        mmio_base = lvms->gpex.mmio64.base;
-+        mmio_size = lvms->gpex.mmio64.size;
-+        memory_region_init_alias(mmio_alias, OBJECT(gpex_dev),
-+                                 "pcie-mmio-high", mmio_reg,
-+                                 mmio_base, mmio_size);
-+        memory_region_add_subregion(get_system_memory(), mmio_base,
-+                                    mmio_alias);
-+    }
- 
-     /* Map PCI IO port space. */
-     pio_alias = g_new0(MemoryRegion, 1);
--- 
-2.39.3
+By the way, perhaps it may be possible to provide res->blob for VFIO. 
+Since "[RFC 3/6] virtio-gpu-udmabuf: Create dmabuf for blobs associated 
+with VFIO devices" checks memory_region_is_ram_device(), the VFIO 
+backend providing the blob should support mmap().
 
+Regards,
+Akihiko Odaki
 
