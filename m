@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94518CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 14:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F102DCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 14:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyANG-0000oo-3X; Mon, 15 Sep 2025 10:40:10 -0400
+	id 1uyAQi-0002BM-CG; Mon, 15 Sep 2025 10:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uyAND-0000na-0x
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 10:40:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1uyAMu-0002V0-JC
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 10:40:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757947184;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E/R1isj+/R1buCjtuAnl1yl9vVKRCHjpkZujIQMDBTU=;
- b=gvEit3RDkyzApY3RBlAifgdoqaNIW7KAMRTm33tsef5OFJSGLPqKH+SL9mmgURCeJz1w4q
- 2PSL4KDERqNdvhngqdKvno7bdQ6FpROveY+SVXUdkYl+Ml12BJ+j/m+2AdgiYLJKk872Hy
- /H56s5ILDv4pTE8KPIc1f3TPq5e7+Zg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-Rz7C4BtSP9WD1vfTDuz5eg-1; Mon, 15 Sep 2025 10:39:40 -0400
-X-MC-Unique: Rz7C4BtSP9WD1vfTDuz5eg-1
-X-Mimecast-MFC-AGG-ID: Rz7C4BtSP9WD1vfTDuz5eg_1757947180
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b0bb71dead2so174100566b.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 07:39:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uyAQe-0002Az-7d
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 10:43:40 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uyAQP-0003A5-KV
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 10:43:35 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3e8ea11a325so2333795f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 07:43:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757947399; x=1758552199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NcUUXAMd8YK+PjgoqRiVZNTZFmhDpQdf/tI2oCUspHk=;
+ b=wYYAcyyDvGuvbH0eK1acVnFzUS6JEhATnnVgt6Ts0Nk179Ijc4IhF1GehNFYPhopiU
+ 93b1YkoTpKqmz7GR0BuROoqMNYliUA7CV/QtcFtpphSsAf9utHmhVxGjLeU6or95R8KT
+ Boc3Q2jCI5MBFFqhWTT0zrqkSf68atii4kRLfn8h57DWcIAjIhaTEKI7wUHaHTW3GwEu
+ 1ne1th5fRbHrbewbf35mMPxPCNpFuYFuR1eNfqSOVXBhkfh/1KlKHf0IeatyiPKYugT3
+ S7OH1ekH+QquLLZs/cs8EU3dmWdEjlrq0OVi12xrPdyXWkbMYT5yQDfRX8XIj9szCcJI
+ V1gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757947179; x=1758551979;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E/R1isj+/R1buCjtuAnl1yl9vVKRCHjpkZujIQMDBTU=;
- b=GrJfb6HsvTXZWZ1GneS45Xlspi2EKvMcMjQe780QgtaXbO5YHVpoQ+m46vdMc6OJu1
- WSL7kYSMNYItIWX6GYfcFeFPiOhT+Z4medzFdAWCQYNYa0QPKZYUxqB6stmBdTtl7aQ/
- kCodbMnhRcCHsvWlv2lORKJ3HiWM6EtZwhukJVlBMX6HhpceFaKONh0bFYsV3wltb+m7
- s1TQe44zFKw6aWujTiYxSwcZuX81U3q03joRrtinuXeFEcRNQ1dciptznMvSexuYK8Ec
- vQt3h3cJZQHnWRDXYbMMYxQcjHlFwtEENQvZIMtyRncDFeBPW2mC44OTLyTsgd7ZzII5
- JkHg==
-X-Gm-Message-State: AOJu0Yw3YMh/K4qRemUTwrNiUWi5mIX1crNPw+PRw67U7MLiAgWh7bmo
- Z6cbdmxqUmu0Iyh1DOoWBF6fEBOp6e9vmwfavR1L2p3WoGClz1afI89DGMXnkt8vkwx7EcfU9ql
- GdR0UxnyZ+xEa2jNhovcHDBe68z/LQodbuZRpjg4zIpFBEHU+L8EdHs0uFHz5XgKdJlCwaufGGY
- gmMIRcfEw8TPch1byTMcKSINsgPhFRXYo=
-X-Gm-Gg: ASbGncsy0jrANZryVPDzfu8kvHii49IE6qL0Dzl19HDJhkV2ZgZyJJh43xciY6Qzirb
- so5a/Yo8K+RZL44fUOCN0imRZV36KCG6A2WT3+GSfnF6eLOVIBdOvAlgRbyBkUvnJCeJFAnKNPF
- sDvWtDKW7+WS4V5R5pg3/a+g==
-X-Received: by 2002:a17:906:c393:b0:b07:d79f:756e with SMTP id
- a640c23a62f3a-b07d79f7b12mr717586166b.65.1757947179524; 
- Mon, 15 Sep 2025 07:39:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElP42gDEywjoTukGG3RVe0xcRmZHFoWjn5Pu9U9oLCtk727VlywSWGaa+aBpMMGcIaIZoYQTGzLmxVzz3UQGk=
-X-Received: by 2002:a17:906:c393:b0:b07:d79f:756e with SMTP id
- a640c23a62f3a-b07d79f7b12mr717583366b.65.1757947179013; Mon, 15 Sep 2025
- 07:39:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1757947399; x=1758552199;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NcUUXAMd8YK+PjgoqRiVZNTZFmhDpQdf/tI2oCUspHk=;
+ b=ayYjX41p4ti19z5vZz7Hnikc6WQg37kBWeHGhHPhZqhbgelcfNHYbu/95bTUSUlzqS
+ I8byqp8wmCJC+v4nGBpEGpfcZ62J8s5ua3VqtRRRxNd7BoYt1SzjOikivMyIOkazTauu
+ SYyLOCbspyiUqqnLkzVE2f3AVqgo8vUvxWP6/2sJ0Len4lhsq0LTTXUsh32S1PLQQFPk
+ o7ez+97FonnWk3p+319i3j3s94nUlQ82XvKRFd9zoXzAO4IAx3sqssPavWBI1mjQvCuM
+ 3GUl86gQ1xWZrIbmQU3zFYSI/O1ksVNr6dg0Qt9o+YGEd4zQz1MPAC1EQYjsA9zOipTm
+ Gfuw==
+X-Gm-Message-State: AOJu0YzAxle1AOgPV2gZLU3s6Dmde9QuQHYzBKs4ydD32pCkQ9/xFp6V
+ IqBUM+TilmjuPd8f106l1kNjf6AkX6GwEYFKNK2jK7Mvc3HJ2pXcq6eUtV5N2zbU+rQPZGqTxtD
+ TX8KlNPk=
+X-Gm-Gg: ASbGncsYaA68c5mDzuM6l5wkIZaqzPTsKklBPeRWQvQSNg/bwCsDjbW2Qs/a/G9iGA/
+ m/90D5xcWvxrfuVmDWxp1caQETxFBaYE4cMEhA65IrU7UMoUgAUm0NONT9fUkGZiAxngW3gReRW
+ tHD51/5cS/x3myTC+awgU6YgbjwWhBYVI6SC5HkTwFLUtmpJPbXN13fFW52h82/JPXNsPvfO1aD
+ kIj9M2W2vcHEr6aKW84WtZQTxp3itYb+9zrr/Er9hAQgo5wLhQAF0oMnpA8+TEn2/Xz0iiUAOtV
+ wA4aWFq6TQM7AjpVPReMxFVwru2L+zre9m8Zjc9tHXMEmjI2YXbB7tsGFn+IKIhmk7I57xPVbx1
+ WiqMY93Xp4nCeR+nDCf8er3I=
+X-Google-Smtp-Source: AGHT+IHSZ7jfNLOvT/+bXc4QAp8kLmjb7KMa8YPywDeBejaUYMM+UH3SYQiNLiB5e3E06FqdtwXNpA==
+X-Received: by 2002:a05:6000:4028:b0:3ea:ac25:b6b9 with SMTP id
+ ffacd0b85a97d-3eaac350106mr3595383f8f.11.1757947399131; 
+ Mon, 15 Sep 2025 07:43:19 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e9a591a41csm7452509f8f.7.2025.09.15.07.43.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 07:43:18 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6F6B05F867;
+ Mon, 15 Sep 2025 15:43:17 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Anton Johansson via <qemu-devel@nongnu.org>
+Cc: Anton Johansson <anjo@rev.ng>,  philmd@linaro.org
+Subject: Re: [PATCH] target/mips: Fix msaregnames and mxuregnames off-by-one
+In-Reply-To: <20250912142927.20919-1-anjo@rev.ng> (Anton Johansson via's
+ message of "Fri, 12 Sep 2025 16:29:27 +0200")
+References: <20250912142927.20919-1-anjo@rev.ng>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 15 Sep 2025 15:43:17 +0100
+Message-ID: <87h5x3pyii.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <cover.1757676218.git.pabeni@redhat.com>
-In-Reply-To: <cover.1757676218.git.pabeni@redhat.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Mon, 15 Sep 2025 22:39:02 +0800
-X-Gm-Features: AS18NWCyHdZvAJzMae6dfEchHJpJvoyJrn1zQNH6JjvO9R8noD_fa0zckRgGjJY
-Message-ID: <CAPpAL=yfdoDzXZw+JPAfGym9me=9a+u5p97xAzJyn_VJXJTBYA@mail.gmail.com>
-Subject: Re: [PATCH v6 00/14] virtio: introduce support for GSO over UDP tunnel
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,166 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this series of patches v6 with virtio-net regression tests,
-everything works fine.
+Anton Johansson via <qemu-devel@nongnu.org> writes:
 
-Tested-by: Lei Yang <leiyang@redhat.com>
-
-On Fri, Sep 12, 2025 at 9:10=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wro=
-te:
+> The msaregnames and mxuregnames arrays contains strings of 7 bytes
+> ("w10.d0", ...) and 5 bytes ("XR10", ...) in length including the
+> NULL byte.
 >
-> Some virtualized deployments use UDP tunnel pervasively and are impacted
-> negatively by the lack of GSO support for such kind of traffic in the
-> virtual NIC driver.
->
-> The virtio_net specification recently introduced support for GSO over
-> UDP tunnel, and the kernel side of the implementation has been merged
-> into the net-next tree; this series updates the virtio implementation to
-> support such a feature.
->
-> Currently the qemu virtio support limits the feature space to 64 bits,
-> while the virtio specification allows for a larger number of features.
-> Specifically the GSO-over-UDP-tunnel-related virtio features use bits
-> 65-69; the larger part of this series (patches 4-12) actually deals with
-> extending the features space.
->
-> The extended features are carried by fixed size uint64_t arrays,
-> bringing the current maximum features number to 128.
->
-> The patches use some syntactic sugar to try to minimize the otherwise
-> very large code churn. Specifically the extended features are boundled
-> in an union with 'legacy' features definition, allowing no changes in
-> the virtio devices not needing the extended features set.
->
-> The actual offload implementation is in patches 13 and 14 and boils down
-> to propagating the new offload to the tun devices and the vhost backend.
->
-> Patch 1 is a small pre-req refactor that ideally could enter the
-> tree separately; it's presented here in the same series to help
-> reviewers more easily getting the full picture, patch 2 updates to
-> linux headers update script to deal with annotations recently introduce
-> in the kernel and patch 3 is a needed linux headers update.
->
-> Tested with basic stream transfer with all the possible permutations of
-> host kernel/qemu/guest kernel with/without GSO over UDP tunnel support,
-> vs snapshots creation and restore and vs migration.
->
-> The new features are disabled by default to avoid compatibilty issues.
-> They could be enabled with a later patch, together with the related
-> compatiblity entries.
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
-> v5 -> v6:
->   - colleted ack-by/reviewed-by tags
->   - re-included pre-req patch as per Michael's request
->   - minor checkpatch and whitestaces fixes
+>  target/mips/tcg/msa_translate.c | 2 +-
+>  target/mips/tcg/mxu_translate.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 >
-> v5: https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg02005.html
->
-> v4 -> v5:
->   - more sparse cleanup
->   - dropped RFC tag
->   - disable the new features by default
->
-> v4: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05513.html
->
-> v3 -> v4:
->   - more sparse cleanups
->   - fix build failures on a couple of targets
-> v3: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg04872.html
->
-> v2 -> v3:
->   - consolidated suffixes for new fields to '_ex'
->   - avoid pre/post load trickery and relay on reset zeroing the features
->   - cleaned-up virtio store implementation deduplicating a bit of code
->   - many more cleanups, see the individual patches changelog for the
->     details
->   - I left patch 1 unmodified, still some hope we could live with that;)
-> v2: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg03000.html
->
-> Paolo Abeni (14):
->   net: bundle all offloads in a single struct
->   linux-headers: deal with counted_by annotation
->   linux-headers: Update to Linux v6.17-rc1
->   virtio: introduce extended features type
->   virtio: serialize extended features state
->   virtio: add support for negotiating extended features
->   virtio-pci: implement support for extended features
->   vhost: add support for negotiating extended features
->   qmp: update virtio features map to support extended features
->   vhost-backend: implement extended features support
->   vhost-net: implement extended features support
->   virtio-net: implement extended features support
->   net: implement tunnel probing
->   net: implement UDP tunnel features offloading
->
->  hw/net/e1000e_core.c                          |   5 +-
->  hw/net/igb_core.c                             |   5 +-
->  hw/net/vhost_net-stub.c                       |   8 +-
->  hw/net/vhost_net.c                            |  45 ++--
->  hw/net/virtio-net.c                           | 234 ++++++++++++------
->  hw/net/vmxnet3.c                              |  13 +-
->  hw/virtio/vhost-backend.c                     |  62 ++++-
->  hw/virtio/vhost.c                             |  68 +++--
->  hw/virtio/virtio-bus.c                        |  11 +-
->  hw/virtio/virtio-hmp-cmds.c                   |   3 +-
->  hw/virtio/virtio-pci.c                        |  76 +++++-
->  hw/virtio/virtio-qmp.c                        |  91 ++++---
->  hw/virtio/virtio-qmp.h                        |   3 +-
->  hw/virtio/virtio.c                            | 100 +++++---
->  include/hw/virtio/vhost-backend.h             |   6 +
->  include/hw/virtio/vhost.h                     |  56 ++++-
->  include/hw/virtio/virtio-features.h           | 126 ++++++++++
->  include/hw/virtio/virtio-net.h                |   2 +-
->  include/hw/virtio/virtio-pci.h                |   2 +-
->  include/hw/virtio/virtio.h                    |  11 +-
->  include/net/net.h                             |  20 +-
->  include/net/vhost_net.h                       |  33 ++-
->  include/standard-headers/drm/drm_fourcc.h     |  56 ++++-
->  include/standard-headers/linux/ethtool.h      |   4 +-
->  .../linux/input-event-codes.h                 |   8 +
->  include/standard-headers/linux/input.h        |   1 +
->  include/standard-headers/linux/pci_regs.h     |   9 +
->  include/standard-headers/linux/vhost_types.h  |   5 +
->  include/standard-headers/linux/virtio_net.h   |  33 +++
->  linux-headers/LICENSES/preferred/GPL-2.0      |  10 +-
->  linux-headers/asm-arm64/unistd_64.h           |   2 +
->  linux-headers/asm-generic/unistd.h            |   8 +-
->  linux-headers/asm-loongarch/unistd_64.h       |   2 +
->  linux-headers/asm-mips/unistd_n32.h           |   2 +
->  linux-headers/asm-mips/unistd_n64.h           |   2 +
->  linux-headers/asm-mips/unistd_o32.h           |   2 +
->  linux-headers/asm-powerpc/kvm.h               |  13 -
->  linux-headers/asm-powerpc/unistd_32.h         |   2 +
->  linux-headers/asm-powerpc/unistd_64.h         |   2 +
->  linux-headers/asm-riscv/kvm.h                 |   1 +
->  linux-headers/asm-riscv/unistd_32.h           |   2 +
->  linux-headers/asm-riscv/unistd_64.h           |   2 +
->  linux-headers/asm-s390/unistd_32.h            |   2 +
->  linux-headers/asm-s390/unistd_64.h            |   2 +
->  linux-headers/asm-x86/unistd_32.h             |   2 +
->  linux-headers/asm-x86/unistd_64.h             |   2 +
->  linux-headers/asm-x86/unistd_x32.h            |   2 +
->  linux-headers/linux/iommufd.h                 | 154 +++++++++++-
->  linux-headers/linux/kvm.h                     |   2 +
->  linux-headers/linux/vfio.h                    |  12 +-
->  linux-headers/linux/vhost.h                   |  35 +++
->  net/net.c                                     |  17 +-
->  net/netmap.c                                  |   3 +-
->  net/tap-bsd.c                                 |   8 +-
->  net/tap-linux.c                               |  38 ++-
->  net/tap-linux.h                               |   9 +
->  net/tap-solaris.c                             |   9 +-
->  net/tap-stub.c                                |   8 +-
->  net/tap.c                                     |  21 +-
->  net/tap_int.h                                 |   5 +-
->  qapi/virtio.json                              |   9 +-
->  scripts/update-linux-headers.sh               |   1 +
->  62 files changed, 1196 insertions(+), 291 deletions(-)
->  create mode 100644 include/hw/virtio/virtio-features.h
->
-> --
-> 2.51.0
->
->
+> diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_transl=
+ate.c
+> index 82b149922f..0e947125a0 100644
+> --- a/target/mips/tcg/msa_translate.c
+> +++ b/target/mips/tcg/msa_translate.c
+> @@ -32,7 +32,7 @@ static inline int plus_2(DisasContext *s, int x)
+>  /* Include the auto-generated decoder.  */
+>  #include "decode-msa.c.inc"
+>=20=20
+> -static const char msaregnames[][6] =3D {
+> +static const char msaregnames[][7] =3D {
+>      "w0.d0",  "w0.d1",  "w1.d0",  "w1.d1",
+>      "w2.d0",  "w2.d1",  "w3.d0",  "w3.d1",
+>      "w4.d0",  "w4.d1",  "w5.d0",  "w5.d1",
+> diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_transl=
+ate.c
+> index 35ebb0397d..7e8cc8b06f 100644
+> --- a/target/mips/tcg/mxu_translate.c
+> +++ b/target/mips/tcg/mxu_translate.c
+> @@ -609,7 +609,7 @@ enum {
+>  static TCGv mxu_gpr[NUMBER_OF_MXU_REGISTERS - 1];
+>  static TCGv mxu_CR;
+>=20=20
+> -static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][4] =3D {
+> +static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][5] =3D {
+>      "XR1",  "XR2",  "XR3",  "XR4",  "XR5",  "XR6",  "XR7",  "XR8",
+>      "XR9",  "XR10", "XR11", "XR12", "XR13", "XR14", "XR15", "XCR",
+>  };
 
+Maybe not quite so silly question. Why are we setting 2D dimensions on
+the regnames anyway? Shouldn't we just use static const char * and be
+done with it?
+
+AFAICT all the references only care about the number anyway.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
