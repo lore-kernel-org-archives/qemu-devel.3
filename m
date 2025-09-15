@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED326CAC59C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8416DCAC592
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy9AW-0001lC-H8; Mon, 15 Sep 2025 09:22:58 -0400
+	id 1uy9B6-00024D-6h; Mon, 15 Sep 2025 09:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9AM-0001gW-9X; Mon, 15 Sep 2025 09:22:47 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1uy9Ac-0001q2-LG; Mon, 15 Sep 2025 09:23:03 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9A7-0006zF-UQ; Mon, 15 Sep 2025 09:22:44 -0400
+ id 1uy9AO-00071a-FO; Mon, 15 Sep 2025 09:23:01 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 5CDA9807F6;
- Mon, 15 Sep 2025 16:22:25 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4503980792;
+ Mon, 15 Sep 2025 16:22:28 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:130::1:7])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id GMPC4o1FuGk0-SwGhUiqD; Mon, 15 Sep 2025 16:22:24 +0300
+ ESMTPSA id GMPC4o1FuGk0-Y4ymLv4U; Mon, 15 Sep 2025 16:22:27 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757942544;
- bh=pyuFrVsIASANJ+N7QppBHO2Se495Z6bX5OmLVwFaQlA=;
+ s=default; t=1757942547;
+ bh=36EHUPLR3VaIfiFnW3F4FmeCYaVIfFNWQKmJV9g5FmQ=;
  h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=LMOki59NEMjc2+srIQjRmcBwfvcnB7dO4YIxFU+Mvdl6XKkz+cMKJffSXIwOp50tb
- 39WuI9Wt9rOxJhHn5PRvdcCDXTIn9d2lj5HfHkl7OQLKXszr2oD75srL0l9aD24cS5
- FKA6Rb8L70NDHj0LJ5xLQUc17NF2SrtzXCJQByrU=
+ b=N7NplewMMHnS2ikmGqUxyE9uXUDnbcoAywtDSqXIKDEn/M633t+dKyGzX6CNuR/NA
+ W55upR6GRRs2tA8ou0FONr19RBeQqzvFPnscTTOhLRPTxDnnS+R8ovix9aTKQBJq3A
+ KOlh4g2yAVHQTlPznxfyEA0X5SJzGDIhBcsLBmLw=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
  vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH v3 08/13] util: drop qemu_socket_try_set_nonblock()
-Date: Mon, 15 Sep 2025 16:22:05 +0300
-Message-ID: <20250915132211.135095-9-vsementsov@yandex-team.ru>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 12/13] chardev: qemu_chr_open_fd(): add errp
+Date: Mon, 15 Sep 2025 16:22:09 +0300
+Message-ID: <20250915132211.135095-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,198 +74,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we can use qemu_set_blocking() in these cases.
+Every caller already support errp, let's go further.
 
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/sockets.h |  1 -
- net/dgram.c            | 12 +++---------
- net/socket.c           |  7 ++-----
- net/stream.c           |  9 +++------
- net/stream_data.c      | 10 ++++------
- util/oslib-posix.c     |  4 ----
- util/oslib-win32.c     |  9 ---------
- 7 files changed, 12 insertions(+), 40 deletions(-)
+ chardev/char-fd.c         | 12 ++++++++----
+ chardev/char-file.c       |  6 +++++-
+ chardev/char-pipe.c       |  9 ++++++++-
+ chardev/char-serial.c     |  5 ++++-
+ chardev/char-stdio.c      |  7 +++++--
+ include/chardev/char-fd.h |  2 +-
+ 6 files changed, 31 insertions(+), 10 deletions(-)
 
-diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
-index 6477f90b9e..9512fec514 100644
---- a/include/qemu/sockets.h
-+++ b/include/qemu/sockets.h
-@@ -47,7 +47,6 @@ ssize_t qemu_send_full(int s, const void *buf, size_t count)
- int socket_set_cork(int fd, int v);
- int socket_set_nodelay(int fd);
- void qemu_socket_set_block(int fd);
--int qemu_socket_try_set_nonblock(int fd);
- int socket_set_fast_reuse(int fd);
+diff --git a/chardev/char-fd.c b/chardev/char-fd.c
+index 739dc68c36..4ee286f323 100644
+--- a/chardev/char-fd.c
++++ b/chardev/char-fd.c
+@@ -206,14 +206,16 @@ int qmp_chardev_open_file_source(char *src, int flags, Error **errp)
+ }
  
- #ifdef WIN32
-diff --git a/net/dgram.c b/net/dgram.c
-index fb9ded30df..baa126d514 100644
---- a/net/dgram.c
-+++ b/net/dgram.c
-@@ -287,7 +287,7 @@ static int net_dgram_mcast_init(NetClientState *peer,
-                                 Error **errp)
+ /* open a character device to a unix fd */
+-void qemu_chr_open_fd(Chardev *chr,
+-                      int fd_in, int fd_out)
++bool qemu_chr_open_fd(Chardev *chr,
++                      int fd_in, int fd_out, Error **errp)
  {
-     NetDgramState *s;
--    int fd, ret;
-+    int fd;
-     struct sockaddr_in *saddr;
+     FDChardev *s = FD_CHARDEV(chr);
+     g_autofree char *name = NULL;
  
-     if (remote->type != SOCKET_ADDRESS_TYPE_INET) {
-@@ -335,11 +335,8 @@ static int net_dgram_mcast_init(NetClientState *peer,
-                 g_free(saddr);
-                 return -1;
-             }
--            ret = qemu_socket_try_set_nonblock(fd);
--            if (ret < 0) {
-+            if (!qemu_set_blocking(fd, false, errp)) {
-                 g_free(saddr);
--                error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                                 name, fd);
-                 return -1;
-             }
- 
-@@ -572,10 +569,7 @@ int net_init_dgram(const Netdev *netdev, const char *name,
-         if (fd == -1) {
-             return -1;
-         }
--        ret = qemu_socket_try_set_nonblock(fd);
--        if (ret < 0) {
--            error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                             name, fd);
-+        if (!qemu_set_blocking(fd, false, errp)) {
-             return -1;
-         }
-         dest_addr = NULL;
-diff --git a/net/socket.c b/net/socket.c
-index db25e3d9ae..1ad03fc9d4 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -718,7 +718,7 @@ int net_init_socket(const Netdev *netdev, const char *name,
+     if (fd_out >= 0) {
+-        qemu_set_blocking(fd_out, false, &error_abort);
++        if (!qemu_set_blocking(fd_out, false, errp)) {
++            return false;
++        }
      }
  
-     if (sock->fd) {
--        int fd, ret, so_type;
-+        int fd, so_type;
+     if (fd_out == fd_in && fd_in >= 0) {
+@@ -221,7 +223,7 @@ void qemu_chr_open_fd(Chardev *chr,
+         name = g_strdup_printf("chardev-file-%s", chr->label);
+         qio_channel_set_name(QIO_CHANNEL(s->ioc_in), name);
+         s->ioc_out = QIO_CHANNEL(object_ref(s->ioc_in));
+-        return;
++        return true;
+     }
  
-         fd = monitor_fd_param(monitor_cur(), sock->fd, errp);
-         if (fd == -1) {
-@@ -728,10 +728,7 @@ int net_init_socket(const Netdev *netdev, const char *name,
-         if (so_type < 0) {
-             return -1;
+     if (fd_in >= 0) {
+@@ -236,6 +238,8 @@ void qemu_chr_open_fd(Chardev *chr,
+         name = g_strdup_printf("chardev-file-out-%s", chr->label);
+         qio_channel_set_name(QIO_CHANNEL(s->ioc_out), name);
+     }
++
++    return true;
+ }
+ 
+ static void char_fd_class_init(ObjectClass *oc, const void *data)
+diff --git a/chardev/char-file.c b/chardev/char-file.c
+index a9e8c5e0d7..89e9cb849c 100644
+--- a/chardev/char-file.c
++++ b/chardev/char-file.c
+@@ -92,7 +92,11 @@ static void qmp_chardev_open_file(Chardev *chr,
          }
--        ret = qemu_socket_try_set_nonblock(fd);
--        if (ret < 0) {
--            error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                             name, fd);
-+        if (!qemu_set_blocking(fd, false, errp)) {
-             return -1;
+     }
+ 
+-    qemu_chr_open_fd(chr, in, out);
++    if (!qemu_chr_open_fd(chr, in, out, errp)) {
++        qemu_close(out);
++        qemu_close(in);
++        return;
++    }
+ #endif
+ }
+ 
+diff --git a/chardev/char-pipe.c b/chardev/char-pipe.c
+index 3d1b0ce2d2..e9f3bb8290 100644
+--- a/chardev/char-pipe.c
++++ b/chardev/char-pipe.c
+@@ -150,7 +150,14 @@ static void qemu_chr_open_pipe(Chardev *chr,
+             return;
          }
-         switch (so_type) {
-diff --git a/net/stream.c b/net/stream.c
-index d893f02cab..94f823a2a7 100644
---- a/net/stream.c
-+++ b/net/stream.c
-@@ -138,7 +138,6 @@ static void net_stream_server_listening(QIOTask *task, gpointer opaque)
-     NetStreamData *d = opaque;
-     QIOChannelSocket *listen_sioc = QIO_CHANNEL_SOCKET(d->listen_ioc);
-     SocketAddress *addr;
--    int ret;
-     Error *err = NULL;
+     }
+-    qemu_chr_open_fd(chr, fd_in, fd_out);
++
++    if (!qemu_chr_open_fd(chr, fd_in, fd_out, errp)) {
++        close(fd_in);
++        if (fd_out != fd_in) {
++            close(fd_out);
++        }
++        return;
++    }
+ }
  
-     if (qio_task_propagate_error(task, &err)) {
-@@ -149,13 +148,11 @@ static void net_stream_server_listening(QIOTask *task, gpointer opaque)
+ #endif /* !_WIN32 */
+diff --git a/chardev/char-serial.c b/chardev/char-serial.c
+index 1ff31dcde3..c622d758db 100644
+--- a/chardev/char-serial.c
++++ b/chardev/char-serial.c
+@@ -276,7 +276,10 @@ static void qmp_chardev_open_serial(Chardev *chr,
+     }
+     tty_serial_init(fd, 115200, 'N', 8, 1);
  
-     addr = qio_channel_socket_get_local_address(listen_sioc, NULL);
-     g_assert(addr != NULL);
--    ret = qemu_socket_try_set_nonblock(listen_sioc->fd);
--    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
--                          addr->u.fd.str, -ret);
-+    if (!qemu_set_blocking(listen_sioc->fd, false, &err)) {
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-+        error_free(err);
+-    qemu_chr_open_fd(chr, fd, fd);
++    if (!qemu_chr_open_fd(chr, fd, fd, errp)) {
++        close(fd);
++        return;
++    }
+ }
+ #endif /* __linux__ || __sun__ */
+ 
+diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
+index 193727e807..2568164a10 100644
+--- a/chardev/char-stdio.c
++++ b/chardev/char-stdio.c
+@@ -110,14 +110,17 @@ static void qemu_chr_open_stdio(Chardev *chr,
+     if (!qemu_set_blocking(0, false, errp)) {
          return;
      }
--    g_assert(ret == 0);
-     qapi_free_SocketAddress(addr);
++
++    if (!qemu_chr_open_fd(chr, 0, 1, errp)) {
++        return;
++    }
++
+     atexit(term_exit);
  
-     d->nc.link_down = true;
-diff --git a/net/stream_data.c b/net/stream_data.c
-index 5af27e0d1d..03740e9f73 100644
---- a/net/stream_data.c
-+++ b/net/stream_data.c
-@@ -12,6 +12,7 @@
- #include "net/net.h"
- #include "io/channel.h"
- #include "io/net-listener.h"
-+#include "qemu/sockets.h"
+     memset(&act, 0, sizeof(act));
+     act.sa_handler = term_stdio_handler;
+     sigaction(SIGCONT, &act, NULL);
  
- #include "stream_data.h"
- 
-@@ -154,7 +155,6 @@ int net_stream_data_client_connected(QIOTask *task, NetStreamData *d)
- {
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(d->ioc);
-     SocketAddress *addr;
--    int ret;
-     Error *err = NULL;
- 
-     if (qio_task_propagate_error(task, &err)) {
-@@ -166,14 +166,12 @@ int net_stream_data_client_connected(QIOTask *task, NetStreamData *d)
-     addr = qio_channel_socket_get_remote_address(sioc, NULL);
-     g_assert(addr != NULL);
- 
--    ret = qemu_socket_try_set_nonblock(sioc->fd);
--    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
--                          addr->u.fd.str, -ret);
-+    if (!qemu_set_blocking(sioc->fd, false, &err)) {
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-+        error_free(err);
-         qapi_free_SocketAddress(addr);
-         goto error;
-     }
--    g_assert(ret == 0);
-     qapi_free_SocketAddress(addr);
- 
-     net_socket_rs_init(&d->rs, net_stream_data_rs_finalize, false);
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 599993d40d..7654febfa5 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -270,10 +270,6 @@ void qemu_socket_set_block(int fd)
-     g_unix_set_fd_nonblocking(fd, false, NULL);
- }
- 
--int qemu_socket_try_set_nonblock(int fd)
--{
--    return g_unix_set_fd_nonblocking(fd, true, NULL) ? 0 : -errno;
--}
- 
- int socket_set_fast_reuse(int fd)
- {
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 1566eb57e7..bf5d478c5c 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -202,15 +202,6 @@ void qemu_socket_set_block(int fd)
-     ioctlsocket(fd, FIONBIO, &opt);
- }
- 
--int qemu_socket_try_set_nonblock(int fd)
--{
--    unsigned long opt = 1;
--    if (ioctlsocket(fd, FIONBIO, &opt) != NO_ERROR) {
--        return -socket_error();
--    }
--    return 0;
--}
+-    qemu_chr_open_fd(chr, 0, 1);
 -
- int socket_set_fast_reuse(int fd)
- {
-     /* Enabling the reuse of an endpoint that was used by a socket still in
+     stdio_allow_signal = !opts->has_signal || opts->signal;
+     qemu_chr_set_echo_stdio(chr, false);
+ }
+diff --git a/include/chardev/char-fd.h b/include/chardev/char-fd.h
+index 9de0e440de..6fe43062ca 100644
+--- a/include/chardev/char-fd.h
++++ b/include/chardev/char-fd.h
+@@ -41,7 +41,7 @@ typedef struct FDChardev FDChardev;
+ DECLARE_INSTANCE_CHECKER(FDChardev, FD_CHARDEV,
+                          TYPE_CHARDEV_FD)
+ 
+-void qemu_chr_open_fd(Chardev *chr, int fd_in, int fd_out);
++bool qemu_chr_open_fd(Chardev *chr, int fd_in, int fd_out, Error **errp);
+ int qmp_chardev_open_file_source(char *src, int flags, Error **errp);
+ 
+ #endif /* CHAR_FD_H */
 -- 
 2.48.1
 
