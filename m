@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCEBCAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E63CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyB5V-0000to-HW; Mon, 15 Sep 2025 11:25:54 -0400
+	id 1uyBBV-0003kx-9y; Mon, 15 Sep 2025 11:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyB5L-0000mp-Nm
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:25:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyB58-0002jI-OL
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:25:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757949921;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Or8tFp0X2sXL6PcoF6av8olO8ZMlugZgMkZ+MIu4auM=;
- b=PEqQhNbpITWplc3iowXjN5KWMCPkaLubXLEks94IT2LmWrP2gfTH2k1WBCfu+jOr9mTIN+
- MiJnkxsG7ziGAkm0CBBGciu586RwC/pLid7XZnlQibycsOj3GiBSSk403Z6c3m2V7MKrcr
- 7nY2F7U20DHZGGyoiv6ne4En0XzSt10=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-bY4B7ZOTOV28HHWAAXeiEA-1; Mon,
- 15 Sep 2025 11:25:19 -0400
-X-MC-Unique: bY4B7ZOTOV28HHWAAXeiEA-1
-X-Mimecast-MFC-AGG-ID: bY4B7ZOTOV28HHWAAXeiEA_1757949919
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF1771953943; Mon, 15 Sep 2025 15:25:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6E2319560A2; Mon, 15 Sep 2025 15:25:14 +0000 (UTC)
-Date: Mon, 15 Sep 2025 16:25:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- leiyang@redhat.com, marcandre.lureau@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 13/13] chardev: close an fd on failure path
-Message-ID: <aMgv06SgMewTZ6h0@redhat.com>
-References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
- <20250915132211.135095-14-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uyBBQ-0003kS-Lp
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:32:01 -0400
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1uyBBE-0003sC-8o
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:31:58 -0400
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-887764c2868so376721339f.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 08:31:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1757950293; x=1758555093; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=aq6RCJ0wdukZ1Q4R5ZbXYvLxhYL8PqHTPfLVyEwUqrQ=;
+ b=SdP2tajq7gKsJsAOd0qBhd/8ay97oCESy21FmqGMldtYYcgricycUljm9WGxzv26vI
+ j0aw0NAtsJvXPrnZhKO11JzBYwi8uHD/5K5jejSJpA5r1SXOfF4d1Bh3AIP1CAc7HhlE
+ UX3Q2smhLSGmsDbsb0qngOD+YP4RJ1BplqtFhANr5eqNTqd532V3LoivdDheDtbD87Y/
+ fAhenMS5fQKdzEquhJpZSpEuzh2dTTcA4NvyLHygkt1MVIWdXBXd2DIrYVJ33jNkhxJ7
+ vkk5ON94y/aYZJfrYehL/cUc/oXtqubPJHFXAFxzR9cv16OAh6t1yLojPByrP3z0R1U8
+ 3MNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757950293; x=1758555093;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aq6RCJ0wdukZ1Q4R5ZbXYvLxhYL8PqHTPfLVyEwUqrQ=;
+ b=sgkSrX6ql9svGyJWS7tgLW4bpe/M86ZB+TiD8/M6deu+RqG4WEydFuSdnyaaSj5PYF
+ lG8s3P4QaC3kPFTJliDs72pbuhQta12eRJJem8tcaQ/RAZEbW7gZoUviETWQFXkpYGka
+ 5qN/ZxQbobhfFFn+XZ3Kc24Zg0EruA+caFI65rwbf6ax4KkGcZrsb24I4OqbA4AniZWa
+ PFlO15kqJ1ud5Upk/ZYba2aCeV6t7HyWRBqCZHN1GQeph/6Bs3AsRKioxJpBQeRAaT5i
+ qKzvxkugNj5R4mLAvVDxvdUtuQusoj99gFswTKd1O3wIviw3l+vPT89vfhakhJpUnuvo
+ GOIA==
+X-Gm-Message-State: AOJu0YyA6gmPMg2BnVnZE9u9L15mbpka6AgznsC7h672HR39eTRjsMqZ
+ 2fMJi0T0FGVlGrHBqPAMFw9OdPjc53Zz7Ud9qkFOpQwMd+WGlLpqn2TTHSe64QdgR1s=
+X-Gm-Gg: ASbGnctp37PN9cC5UEIcTWoplP94UorT6kAiACelHGvR57kF6tBJNKq1osZB3kGbrYf
+ qzfM6g9Zh40b5v4QnOYWYq/4lqztBwrVMhDpWdkpf2QPd2xWbrwcbiWLntdfKzH3N4wXT+AKLkg
+ my9Z3OOQcIZRE2ypTA4qDzzFDnoc0ZxGgB4748sXbzqr8Nxhuo7ngSotb5qt5JvI1uV6zerdETM
+ twXNNVH+r9WeKv7vOREPsak0fc7eK3Rt0vfUVW4Kn80x1drQpq2rjXUbB5tHrpnZ3ZDQyoDzbjS
+ /fdMa3ovDzVqfuDX8kmeap/6tbFu4Y9S6tPQLNTHhCsloRyBcUrjD5ZGRcQoAE1fMwHSQuLNY20
+ ZW0brxCiu8rU9pQh/4RaK+f9cxxhiN0ZkzAA=
+X-Google-Smtp-Source: AGHT+IF+RoXGyypxsQmN5LU58CWXW+LffefM+VQMEp0Wt0n4UMehnF3ta5VR4L9fSYiwM9x6UIJ9hQ==
+X-Received: by 2002:a92:ca0f:0:b0:424:7bb:775c with SMTP id
+ e9e14a558f8ab-42407bb7949mr28284665ab.31.1757950293164; 
+ Mon, 15 Sep 2025 08:31:33 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-4240a4cc099sm6178925ab.29.2025.09.15.08.31.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 08:31:32 -0700 (PDT)
+Date: Mon, 15 Sep 2025 10:31:31 -0500
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Xie Bo <xb@ultrarisc.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair23@gmail.com, 
+ pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com, 
+ rkrcmar@ventanamicro.com, palmer@dabbelt.com, xiamy@ultrarisc.com
+Subject: Re: [PATCH v9 0/2] =?utf-8?B?dGFyZ2V0L3Jpc2N277yaRmk=?=
+ =?utf-8?Q?x?= riscv64 kvm migration
+Message-ID: <20250915-da26ba5c012a2d49fb07f4fa@orel>
+References: <20250915070811.3422578-1-xb@ultrarisc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250915132211.135095-14-vsementsov@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20250915070811.3422578-1-xb@ultrarisc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=ajones@ventanamicro.com; helo=mail-io1-xd2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- T_SPF_HELO_TEMPERROR=0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,27 +97,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 04:22:10PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> There are at least two failure paths, where we forget
-> to close an fd.
+On Mon, Sep 15, 2025 at 03:08:06PM +0800, Xie Bo wrote:
+> This is v9 of the series. Compared to v8, the patches are now based on
+> the 'riscv-to-apply.next' branch from Alistair's repository:
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  chardev/char-pty.c    | 1 +
->  chardev/char-serial.c | 1 +
->  2 files changed, 2 insertions(+)
+> https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+> 
+> Changes since v8:
+> - Rebased the series onto [alistair/riscv-to-apply.next]
+> - Removed the previous 'Reviewed-by' tags due to the rebase
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Please don't do that. If the rebase doesn't require a rework of the logic,
+then the patches don't change in any significant way, so reviewers
+shouldn't need to look at them again.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Anyway, for the series (since I can't see any difference from before)
 
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+
+Thanks,
+drew
+
+>   * The changes are purely mechanical; no code logic was altered *
+> - Added 'Cc: qemu-stable@nongnu.org'
+> 
+> Xie Bo (2):
+>   Set KVM initial privilege mode and mp_state
+>   Fix VM resume after QEMU+KVM migration
+> 
+>  target/riscv/cpu.c           | 17 +++++++++-
+>  target/riscv/cpu.h           |  2 ++
+>  target/riscv/kvm/kvm-cpu.c   | 60 ++++++++++++++++++++++++++++--------
+>  target/riscv/kvm/kvm_riscv.h |  3 +-
+>  target/riscv/machine.c       |  5 +--
+>  5 files changed, 70 insertions(+), 17 deletions(-)
+> 
+> -- 
+> 2.43.0
+> 
 
