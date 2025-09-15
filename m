@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E1CCAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2747CAC598
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6Ay-0002DM-7n; Mon, 15 Sep 2025 06:11:12 -0400
+	id 1uy6FI-00015T-2G; Mon, 15 Sep 2025 06:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6AZ-00027v-3m; Mon, 15 Sep 2025 06:10:50 -0400
+ id 1uy6F7-0000tn-8i; Mon, 15 Sep 2025 06:15:31 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6AN-0006bV-QD; Mon, 15 Sep 2025 06:10:46 -0400
+ id 1uy6Ez-0007LJ-4J; Mon, 15 Sep 2025 06:15:28 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMF006344
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMK006344
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 15 Sep 2025 19:09:00 +0900 (JST)
+ Mon, 15 Sep 2025 19:09:02 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=feDbk9J/yWdV06ehpX8rW3/wvLj8rzMauO12ghjmdGI=; 
+DKIM-Signature: a=rsa-sha256; bh=TnkAVUPt94jHFzYRxW+Zo8oRA9b9oUhjR9/nHExe2Gw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757930940; v=1;
- b=UsyzbwL4S41cOpFkW74xM9hAxTzjyASeYh7FcT3+FwYANDA51izLPNKlH6uTX4Uy
- +ePtDbC5PvgMQ77k0KpsRUrrj3q0a60yH+QiKWVVeoaoZ05dNaIJYgLX8M1Gp28a
- vqWBGPG+mvGEj2wPXbLFDVn4iIuRNjgWvVgBozipAOJJ9MGtcVPwn5Q+Eu3MrsHa
- RqoxtwHlCRPmmRaR8WZ39Vtu8COp7YRb5YXFlsJ70jYvsyoKSqxlwocepNI9YoKC
- 6J/vxrsWHXfr4yCB5h0ATjw1nRbr4Jzui4aDAQyed3NyyTbE0PIfqw+adfqu6O2a
- U+/AP2r5E9L8oZ/e+v6HpQ==
+ s=rs20250326; t=1757930943; v=1;
+ b=Ibq/37dbT9jDjX5vwLTDEVgbhMDdIMJYpTFdfz6bgSts0/f4l+Pj47BdXuI97qE6
+ ZQqOfq7mz/cnOrcZEvoEqH14JwaeuZrJSbP47CHiM63/PmkU+7hn8l0s5ZVJJBsN
+ sUqMQfXBSH0yES0YALdm4OvxLkSh0yeExYwz9ynOoSRjcO5341mSYL2fLIPFn/bf
+ jKhSLOTJMfjkKPSAbCu7rlnWpTb8xA7QeFsulzhsPXgRPSi+bZFOyRBFRoQ5KZhP
+ gbR+kiKu9I3Y4OP7rYKloNEa39ssOD46gqjuHJ/fl8k8P0yEmXJxc6cbS8+kYeq1
+ cuRwKHq6zRCmGzHmNxk+0g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 15 Sep 2025 19:08:43 +0900
-Subject: [PATCH v2 02/15] vfio/pci: Do not unparent in instance_finalize()
+Date: Mon, 15 Sep 2025 19:08:48 +0900
+Subject: [PATCH v2 07/15] secondary-vga: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-use-v2-2-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250915-use-v2-7-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -103,41 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Children are automatically unparented so manually unparenting is
-unnecessary.
-
-Worse, automatic unparenting happens before the insntance_finalize()
-callback of the parent gets called, so object_unparent() calls in
-the callback will refer to objects that are already unparented, which
-is semantically incorrect.
+It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/vfio/pci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/display/vga-pci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 07257d0fa049..2e909c190f86 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
-         vfio_region_finalize(&bar->region);
-         if (bar->mr) {
-             assert(bar->size);
--            object_unparent(OBJECT(bar->mr));
-             g_free(bar->mr);
-             bar->mr = NULL;
-         }
-@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index b81f7fd2d0fd..90b4545d3821 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -307,14 +307,6 @@ static void pci_secondary_vga_exit(PCIDevice *dev)
+     VGACommonState *s = &d->vga;
  
-     if (vdev->vga) {
-         vfio_vga_quirk_finalize(vdev);
--        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
--            object_unparent(OBJECT(&vdev->vga->region[i].mem));
--        }
-         g_free(vdev->vga);
-     }
+     graphic_console_close(s->con);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[0]);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[1]);
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[2]);
+-    }
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_EDID)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[3]);
+-    }
  }
+ 
+ static void pci_secondary_vga_init(Object *obj)
 
 -- 
 2.51.0
