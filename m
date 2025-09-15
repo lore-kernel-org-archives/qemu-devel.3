@@ -4,97 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE81CCAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 22:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9ACCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 22:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyHR0-0001ja-OH; Mon, 15 Sep 2025 18:12:30 -0400
+	id 1uyHdD-0004kQ-ES; Mon, 15 Sep 2025 18:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uyHQu-0001iE-GH
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 18:12:24 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyHd2-0004jq-8o
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 18:24:56 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uyHQg-0002Y3-MU
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 18:12:20 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-b4755f37c3eso3986071a12.3
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 15:12:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyHaz-0004m4-A0
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 18:24:50 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-afcb7322da8so180846666b.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 15:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757974322; x=1758579122; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QxVOYWyd2LkvoUg7aXq+N53uRKsFD9A2D50a62UMNmw=;
- b=JvvnDbc3MovCSHemx8GLOY9XTLJg724MFx8qMXN87shoU7ticv7m59aIhtN3dM/Cl9
- gZZDCobbCw9AuFPRJC6WT10SRrmJ78rM4MuRBpXek8u0KxFdrSuZgFGgfqihmENlbu3y
- rqV4r9XAntJoCtLewmNgJGkkHMFu0RmWMju1u7xnXaYyzW5eQC9362mkZPK/oxlxWPCt
- TYnc1yo8E25T1A1jJxgnms8I03J8y6dn3CRA5OCeJuIB3Iml6Nbdhb090naW/yQQ74A7
- kg/52fXnhjZWZyuE/Ri8LlGBVVL6djmKHk2IryD5ZmHN/Ol73Q3r2XZg9BXPGTlz6f+z
- wcxQ==
+ d=gmail.com; s=20230601; t=1757974965; x=1758579765; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=skklARrPmD4M6aZRsTLvMkkhok/6vzLeO8WV41uLebk=;
+ b=PccTMBCTaj/SK2AYTM5EgAXHtc5chsrJO+Y7Zk7rIRt358XQ21Q+VjQTKrIw1DQpjI
+ QsR5l7Yqpfh6rVGHmLBYqlOYEN+aK4xatowFeWH6pKRPSoOjueWqj1rskcUBIT4zydkl
+ RoH1p5Y72XOmTT5Dw7yxz/vf803/spDx5XAib8ObxfOXHM74ol3B0ivQymsykKps3YCd
+ 1yWCWUW4h5a6AKxdMxQmsy1diu7Ic3y6GyCKi9gH/2s6NbH8H/m1y4YMN+ZKNZH9gqTP
+ jdLBDXwP7/kkRr9ptmnREXubIrBRNWo2O9rfnxFKKQOQvER2v5W0xuTFMyuJu+UNn0Z5
+ Xrig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757974322; x=1758579122;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QxVOYWyd2LkvoUg7aXq+N53uRKsFD9A2D50a62UMNmw=;
- b=kcOYCFhw0REKoUYE4ENVBl3umdByH51xPC3AHeHkarrD2VA5zWw7SfrZdUiXzW7vwN
- STqU4T0WvbkcSofDQa4S54lrmjGTriWicmsy/sJoeZTy0nT1ZGl/bKowiH6GKcGWbYcj
- MvkajZhZXNeStodej1WACwfgCLDOAoKe1BUo13RuTk+VRqWPFEEVBtzdary+qK7FZ/0A
- udsQQNbBtpYVvCmy4I8q0EN1WLf1A28KiXmpCIWLiqWoplAZKl99hQe+HFjKhhGueFos
- frp983AVf/TJvTf2DKpoqUi7W53Z4d/PGNkrmr87mTswJGblq3eeLzol0bZV8rBf4UZe
- erRw==
-X-Gm-Message-State: AOJu0Yw9//NTy89PeuM+/zc+1bTuOVmoFSYbkGPFmnJOUGgXgEoFUONz
- fIe0w6OQrfNMDD2GoIHoCv2j3i3xBqQK/+7FOhmtVs78OuGrPS3tcF1YL9aQUCcxXCE=
-X-Gm-Gg: ASbGncssJ5wHXJLFrsVx4e4cX2KhsbcvCAmfkWJDKJJ13KgyxTUmpPiVLZ8yRkPqbGr
- VD1fumkoGC/K3NggWlb5RxXcc0Q8fSJYR1iFH5IswAMbCJL2VTgphiEwcg26m/CMKEAKiI33466
- 3WUms6+E1C6QlGUUux6uHl+KR+pP6Pk/V2jZEL8xNHhWLczb/doTlL06iX7+9JoTCba2RCELjvH
- HfEjYWqtge10zKqQjwWPb1DzcPfvQ8waNd2zgzX6CS9GWkWQdUIqSy3TmkWDuSR1auPuCHUYRQf
- Kn/DbHhJwKOQQYa8wUWw39+keceHjmwrxNBvm+Hqqn76GrzVhLFPzowjEkPi0ZO+iW3DUUUsSrq
- i3Rtgki9/JGOLgXC/QHGkS9v2eTaB5fdcnC5Z4ZWz35PxlGJ1ww3/wBxmTyBhau5txXpD9udg7Q
- hVCQ0vwZCWOjJnEw==
-X-Google-Smtp-Source: AGHT+IFgx4CBu/xfSaotDfHsoNW/PZTGhhh2rjr1RWdqoop8rfQotEXy7LNxM43XyBZvCd8aL2vs7g==
-X-Received: by 2002:a17:903:2290:b0:246:76ee:535b with SMTP id
- d9443c01a7336-25d2557fbb1mr199599905ad.27.1757974322214; 
- Mon, 15 Sep 2025 15:12:02 -0700 (PDT)
-Received: from [192.168.0.102] (200-162-224-93.static-corp.ajato.com.br.
- [200.162.224.93]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-261333a972dsm78979455ad.75.2025.09.15.15.11.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Sep 2025 15:12:01 -0700 (PDT)
-Message-ID: <5f65fb4a-c90f-4765-9040-394c65ec2744@linaro.org>
-Date: Mon, 15 Sep 2025 19:11:57 -0300
+ d=1e100.net; s=20230601; t=1757974965; x=1758579765;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=skklARrPmD4M6aZRsTLvMkkhok/6vzLeO8WV41uLebk=;
+ b=EmtTFLBD02MA6/jcgD6wQ47rB1C6N28OfJejbPTuNuf8xTTcZnUa4ww60ln6PniDEs
+ /rp9CXOwMSXYkLqeFZwGoUGYa8VxDEIlKQrAN6LewQPVvurcqZwVdEFTytYTKUaedDZx
+ Ni7VvdmLVJmKqOerDPRWW4GMjP/6x8Ab2c05x/nsexefNDoEfW7sFkcG8A8pH2CAnVDc
+ H/So0QaMEqECW3+Q9k1UqtkX7hEweJFz+EFfv6/RDdPViOTrxXTc7LV3fsx/Vjw2kSQ9
+ haZVrC9h1y5XJW2hCHKWoH3GVMu6Wsc2pdhjSTdkmzAThkPXVqxs0svdcSTZTrSz0qnY
+ UQQA==
+X-Gm-Message-State: AOJu0YwutMZCFEhiLYtrnD1V5LA/8vD6ENZlvDjDWg1/hR135YLRc5Pf
+ 1T4HyJUwKeAQ/0zwbl+TqGKovtrldlyTQ0HSyLCSvh0zVtX12IErYGTrcveqJtvW
+X-Gm-Gg: ASbGnctwe1paHTf2IBNZxQmv6CbaxjwnXxk2wRGYTRZ5SXkxmLWcWF5mwNHGtt4a3c2
+ HDBqkOMyU1ykW+PtF+Ibt5rgfzZZlZxQBTv5fibaNcBVX6SnclIz/45oxK0YKoiNV1qeg9X/Aw7
+ KQukLlQmFAUcjcll69onTbmp7/LjKRy1Gu6Akb3re5gCH/wCj1SYYncp0xGvxnwQW6yrCMcr9N4
+ ivOFjvtRhwFyPCT+XWXKXYSbThb86KOMISArUh+eglfs3a7lak2BR5sWj3Cg+I1wmsuBo6N7qtp
+ ONOAFxRm/ZMidX403CcCJ3wlL2f0g6zhWQvbqkZ83Yp6pYfcze08tXiFu2vThVM6QpMfk7zVTmy
+ FOpWdoMYPSDdRPwHKwzIdSOJkeDydf4ZbBWAYy7oLYQxqsiu0TIX/WdbKgRd2
+X-Google-Smtp-Source: AGHT+IHYo/aqIMEjT999Hl0YmvMX2oO1r5AknvcOV2r6W25f8zVTTI9bnW0w0MGKBcJieCx94/pLjg==
+X-Received: by 2002:a17:907:9717:b0:b07:88ef:fe1c with SMTP id
+ a640c23a62f3a-b07c386a791mr1415668366b.44.1757974964845; 
+ Mon, 15 Sep 2025 15:22:44 -0700 (PDT)
+Received: from [10.192.92.112] (cgnat129.sys-data.com. [79.98.72.129])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b07b32f20dcsm1017713266b.90.2025.09.15.15.22.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 15:22:44 -0700 (PDT)
+Message-ID: <ffa90309f0ce8c81836e5e7074d67ae76033b67f.camel@gmail.com>
+Subject: Re: [PATCH v4 07/10] qmp: add chardev-resize command
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, Eric Blake	 <eblake@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum	
+ <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu	
+ <zhao1.liu@intel.com>, Szymon Lukasz <noh4hss@gmail.com>, Daniel
+ =?ISO-8859-1?Q?P=2EBerrang=E9?=	 <berrange@redhat.com>,
+ devel@lists.libvirt.org
+Date: Tue, 16 Sep 2025 00:22:43 +0200
+In-Reply-To: <87cy7s1auw.fsf@pond.sub.org>
+References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
+ <20250912-console-resize-v4-7-7925e444afc4@gmail.com>
+ <871pob7ot7.fsf@pond.sub.org>
+ <64d6252959750b8da6f3bc4ac7c738b10463bf6d.camel@gmail.com>
+ <87cy7s1auw.fsf@pond.sub.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] tests/functional: Adapt reverse_debugging to run
- w/o Avocado
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20250904154640.52687-1-gustavo.romero@linaro.org>
- <aL7CsSppNc-WZFY-@redhat.com>
- <a6320118-84f0-4088-82de-7192be6093cd@linaro.org>
- <aMQzD0m3QluWzlmh@redhat.com> <871pob64iv.fsf@draig.linaro.org>
- <aMRJ6nfXF2l7iu7b@redhat.com>
- <07635935-fc6c-48bf-81b6-bc3709197411@redhat.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <07635935-fc6c-48bf-81b6-bc3709197411@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x62c.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,162 +105,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas and folks,
+On Mon, 2025-09-15 at 08:35 +0200, Markus Armbruster wrote:
+> Filip Hejsek <filip.hejsek@gmail.com> writes:
+>=20
+> > On Fri, 2025-09-12 at 16:01 +0200, Markus Armbruster wrote:
+> > > Cc: libvirt
+> > >=20
+> > > Filip Hejsek <filip.hejsek@gmail.com> writes:
+> > >=20
+> > > > From: Szymon Lukasz <noh4hss@gmail.com>
+> > > >=20
+> > > > The managment software can use this command to notify QEMU about th=
+e
+> > > > size of the terminal connected to a chardev, QEMU can then forward =
+this
+> > > > information to the guest if the chardev is connected to a virtio co=
+nsole
+> > > > device.
+> > > >=20
+> > > > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> > > > Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > > > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> > > > ---
+> > > >  chardev/char.c | 14 ++++++++++++++
+> > > >  qapi/char.json | 22 ++++++++++++++++++++++
+> > > >  2 files changed, 36 insertions(+)
+> > > >=20
+> > > > diff --git a/chardev/char.c b/chardev/char.c
+> > > > index b45d79cb9b57643827eb7479257fdda2cf6b0434..6e3ade98614c949be80=
+41ec5905a490ff536dee9 100644
+> > > > --- a/chardev/char.c
+> > > > +++ b/chardev/char.c
+> > > > @@ -1269,6 +1269,20 @@ bool qmp_add_client_char(int fd, bool has_sk=
+ipauth, bool skipauth,
+> > > >      return true;
+> > > >  }
+> > > > =20
+> > > > +void qmp_chardev_resize(const char *id, uint16_t cols, uint16_t ro=
+ws,
+> > > > +                        Error **errp)
+> > > > +{
+> > > > +    Chardev *chr;
+> > > > +
+> > > > +    chr =3D qemu_chr_find(id);
+> > > > +    if (chr =3D=3D NULL) {
+> > > > +        error_setg(errp, "Chardev '%s' not found", id);
+> > > > +        return;
+> > > > +    }
+> > > > +
+> > > > +    qemu_chr_resize(chr, cols, rows);
+> > > > +}
+> > > > +
+> > > >  /*
+> > > >   * Add a timeout callback for the chardev (in milliseconds), retur=
+n
+> > > >   * the GSource object created. Please use this to add timeout hook=
+ for
+> > > > diff --git a/qapi/char.json b/qapi/char.json
+> > > > index f0a53f742c8bee24c377551803a864fd36ac78cf..0a26c5eee6b71bc5de1=
+27a91b253cc69a9fe8ce6 100644
+> > > > --- a/qapi/char.json
+> > > > +++ b/qapi/char.json
+> > > > @@ -874,6 +874,28 @@
+> > > >  { 'command': 'chardev-send-break',
+> > > >    'data': { 'id': 'str' } }
+> > > > =20
+> > > > +##
+> > > > +# @chardev-resize:
+> > >=20
+> > > This name doesn't tell me what is being resized.  PATCH 04 uses
+> > > "winsize", which is better.  The (losely) related SIGWINCH suggests
+> > > "window change" or "window size change".  Below, you use "terminal
+> > > size".
+> >=20
+> > How about chardev-console-resize? That would match the name of the
+> > virtio event (VIRTIO_CONSOLE_RESIZE).
+>=20
+> Not bad.  It could become slightly bad if we make devices other than
+> "consoles" make us of it.  Would that be possible?
 
-On 9/15/25 09:49, Thomas Huth wrote:
-> On 12/09/2025 18.27, Daniel P. Berrangé wrote:
->> On Fri, Sep 12, 2025 at 05:04:40PM +0100, Alex Bennée wrote:
->>> Daniel P. Berrangé <berrange@redhat.com> writes:
->>>
->>>> On Thu, Sep 11, 2025 at 08:51:08PM -0300, Gustavo Romero wrote:
->>>>> Hi Daniel,
->>>>>
->>>>> Thanks a lot for review and the suggestions.
->>>>>
->>>>> On 9/8/25 08:49, Daniel P. Berrangé wrote:
->>>>>> On Thu, Sep 04, 2025 at 03:46:35PM +0000, Gustavo Romero wrote:
->>>>>>> In this series, we leveraged the run-test.py script used in the
->>>>>>> check-tcg tests, making it a GDB runner capable of calling a test script
->>>>>>> without spawning any VMs. In this configuration, the test scripts can
->>>>>>> manage the VM and also import gdb, making the GDB Python API inside the
->>>>>>> functional test scripts.
->>>>>>>
->>>>>>> A --quiet option has been added to run-test.py so it doesn't print the
->>>>>>> command line used to execute GDB to the stdout. This ensures that users
->>>>>>> don't get confused about how to re-run the tests. One can re-run the
->>>>>>> test simply by copying and pasting the command line shown by Meson when
->>>>>>> V=1 is passed:
->>>>>>>
->>>>>>> $ make -j check-functional V=1
->>>>>>>
->>>>>>> or, alternatively, once the test run completes, the exact command found
->>>>>>> in the 'command:' field of the build/meson-logs/testlog-thorough.txt
->>>>>>> file generated by Meson. Both methods provide the correct environment
->>>>>>> variables required to run the test, such as the proper $PYTHONPATH.
->>>>>>
->>>>>> While I like the conceptual idea of just sending human GDB commands,
->>>>>> instead of working with GDB protocol packets, I really dislike the
->>>>>> effect this has on the execution / startup of the functional tests
->>>>>> via use of the custom runner for a number of reasons
->>>>>>
->>>>>>    * The command line for launching the test outside of meson is very
->>>>>>      complicated, so not memorable
->>>>>
->>>>> Why very complicated? It calls a simple runner instead of calling the
->>>>> test script directly, but it doesn't change the way to re-run a single
->>>>> test. One just have to pass V=1 to see make's command line  and copy
->>>>> and paste the full command line to re-run the test. I mentioned
->>>>> inspecting 'testlog-thorough.txt' just for completeness.
->>>>
->>>> Today we can run the individual tests directly
->>>>
->>>>   # ./tests/functional/x86_64/test_reverse_debug.py
->>>>   TAP version 13
->>>>   ok 1 test_reverse_debug.ReverseDebugging_X86_64.test_x86_64_pc
->>>>   1..1
->>>>
->>>>
->>>> (assuming you have PYTHONPATH and QEMU_TEST_QEMU_BINARY env set)
->>>
->>> and the old version of Avocado...
->>>
->>>> This gives you a very easy way to interact with the test, see
->>>> its progress, understand what failed, and debug it with strace,
->>>> etc.
->>>>
->>>> This change looses all that. It appears I can run it with
->>>>
->>>>    # ./tests/guest-debug/run-test.py --quiet --gdb gdb --test \
->>>>         ./tests/functional/x86_64/test_reverse_debug.py
->>>>
->>> <snip>
->>>>
->>>>
->>>> This undermines the core goals of what we aimed to achieve with
->>>> the new functional test harness.
->>>>
->>>>>
->>>>>>    * It makes the meson.build rules much more complicated
->>>>>
->>>>> Do we want to never augment functional tests' meson.build? Nothing
->>>>> complicated is being added. Basically, just a new variable suffixed with
->>>>> '_with_runner' which holds a tuple (test, runner) that tell the test
->>>>> to be executed, following the same logic we already have for all the other
->>>>> variables that specify the tests per arch/mode/speed.
->>>>>
->>>>> Another option would be to select a runner based on a suffix in the test
->>>>> name, for instance, 'reverse_debug_with_runner.py'.
->>>>
->>>> IMHO the overall concept of using the run-test.py runner for launching
->>>> the tests is flawed and not viable. It adds too much complexity to the
->>>> use of the tests, and harms the output.
->>>
->>>
->>>
->>>>
->>>>>>    * Running standalone there is no TAP output available making the
->>>>>>      test hard to debug on failure or timeout
->>>>>
->>>>> This is because of an unfortunate GDB Python API issue, please see my
->>>>> reply in your comment on patch 5/5. This can be solved but needs more
->>>>> investigation on GDB side.
->>>>>
->>>>>
->>>>>> I understand the need to spawn the test via gdb, in order to be able
->>>>>> to import the 'gdb' python module. Looking at what reverse_debugging.py
->>>>>> does, however, makes me question whether we actually need to directly
->>>>>> use the 'gdb' python module.
->>>>>>
->>>>>> The only APIs we use are 'gdb.execute' and 'gdb.parse_and_eval'.
->>>>>>
->>>>>> The latter is only used once as
->>>>>>
->>>>>>     gdb.parse_and_eval("$pc")
->>>>>>
->>>>>> and I believe that can be changed to
->>>>>>
->>>>>>     gdb.execute("printf \"0x%x\", $pc", to_string=True)
->>>>>>
->>>>>> IOW, all we need is 'gdb.execute("....", to_string=True)'
->>>>>
->>>>> Yes, I do want to directly use the 'gdb' python module directly in the
->>>>> tests. We shouldn't look at a solution only for reverse_debug.py but also
->>>>> think of any future tests that will require the GDB Python API, so I don't
->>>>> want to specialize here and reduce the API to a single method.
->>>>
->>>> If any other tests needing GDB arrive int he future we can consider
->>>> them at that time.
->>>
->>> We already have a whole chunk of gdb tests under check-tcg. Maybe it
->>> would be easier just to re-write the tests to use the check-tcg system
->>> tests rather than jumping through hoops to fit in with the
->>> check-functional requirements.
->>
->> Well if 'easy' is our goal, then we can just copy the gdbmi.py
->> file from avocado into our test suite.
-> 
-> But maintaining that stuff in the QEMU repository is also kind of ugly.
+I don't think the size has any meaning for devices that are not
+connected to a console, although the code does not care whether it
+actually is a console and simply has a size for every chardev.
 
-I totally agree.
+I guess I could also rename it to chardev-window-resize
+or chardev-set-window-size. Let me know if you prefer one of these.
 
 
-> I took another stab at the problem:
-> 
->   https://lore.kernel.org/qemu-devel/20250915124207.42053-1-thuth@redhat.com/
-> 
-> It's basically Gustavo's patches, but I removed all the stuff around tests/guest-debug/run-test.py and the cumbersome code for running a test through gdb via meson.build.
-> 
-> The test start in normal pycotap mode, then call a new function called reverse_debug() which then takes care of calling gdb with the right arguments (i.e. this logic has been copied from the run-test.py script).
-> 
-> It seems to work fine with the aarch64 test already, but details and other architectures still need some more love.
-> 
-> WDYT? Is it worth to pursue that approach?
+> > > > +#
+> > > > +# Notifies a chardev about the current size of the terminal connec=
+ted
+> > > > +# to this chardev.
+> > >=20
+> > > Yes, but what is it good for?  Your commit message tells: "managment
+> > > software can use this command to notify QEMU about the size of the
+> > > terminal connected to a chardev, QEMU can then forward this informati=
+on
+> > > to the guest if the chardev is connected to a virtio console device."
+> >=20
+> > How about:
+> >=20
+> >    Notifies a chardev about the current size of the terminal connected
+> >    to this chardev. The information will be forwarded to the guest if
+> >    the chardev is connected to a virtio console device.
+>=20
+> Works for me.
+>=20
+> > > > +#
+> > > > +# @id: the chardev's ID, must exist
+> > > > +# @cols: the number of columns
+> > > > +# @rows: the number of rows
+> > >=20
+> > > Blank lines between the argument descriptions, bease.
+> > >=20
+> > > What's the initial size?
+> >=20
+> > 0x0
+>=20
+> A clearly invalid size.  I guess it effectively means "unknown size".
+> Should we document that?
 
-Thanks Thomas, I prefer your approach. I've reviewed your
-series and had some minor comments on it but overall it
-looks good! :)
+Probably. 0x0 is I think also the default size in the Linux kernel, but
+I don't think the Linux kernel documents this. Another question is if
+the 0x0 size should be propagated to the guest over virtio. I think it
+should be, although the virtio spec says nothing about 0x0 size.
 
+I'm not sure what is the right place to document this.
 
-Cheers,
-Gustavo
+> > > Do we need a way to query the size?
+> >=20
+> > I don't think it is necessary. What would be the usecase for that?
+>=20
+> I don't know, but it's my standard question when I see an interface to
+> set something without an interface to get it.  Its purpose is to make us
+> think, not to make us at the get blindly.
+
+I guess it might be useful for debugging. If the size is not propagated
+correctly, one might query it to find out on which side the problem is.
+
+> > > > +#
+> > > > +# Since: 10.2
+> > > > +#
+> > > > +# .. qmp-example::
+> > > > +#
+> > > > +#     -> { "execute": "chardev-resize", "arguments": { "id": "foo"=
+, "cols": 80, "rows": 24 } }
+> > > > +#     <- { "return": {} }
+> > > > +##
+> > > > +{ 'command': 'chardev-resize',
+> > > > +  'data': { 'id': 'str',
+> > > > +            'cols': 'uint16',
+> > > > +            'rows': 'uint16' } }
+> > > > +
+> > > >  ##
+> > > >  # @VSERPORT_CHANGE:
+> > > >  #
 
