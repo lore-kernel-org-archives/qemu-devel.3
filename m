@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93DDFCAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAE6CAC598
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:19:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6IK-0003de-OY; Mon, 15 Sep 2025 06:18:48 -0400
+	id 1uy6I0-0003Wn-IF; Mon, 15 Sep 2025 06:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uy6IB-0003aa-8F
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:18:39 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uy6Hv-0007gl-5d
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:18:36 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3e4aeaa57b9so3390699f8f.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 03:18:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757931497; x=1758536297; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3j6kpaAA/zdlWJrqLVWFFIySs9ZJWfWWyxqZnZNzRhU=;
- b=YcVrQ4gKv3IqIFmWL0O+Rsd2maK9nwBaMDLd+C3fPGd/dkEZY+wwcZ9AbH6S/nAAnm
- XQxeVkAX1pLev+EHcbwSc4WhV5EdXhsgtT6SrgExwLc3iOAdCsKyFUPZ3zyltYzeLEAj
- iKFIPZQakg0vbgqMRWLYDeNrbwYEM1IyWwDXaU+djCchK8pcBEYhCvMRnzCVgQ3j7NTK
- rPR0K5W8LC5TmC+w20FgWDv0JvH7V5V06t0Fsd2FoRSip0pguGDG8Zpaus69uNiX4UAx
- fO0m6c5aU342lXLMZ1qy/8xZqnFdvEGE7fBosYjzkQwNMWhABAkyDafyBrSj4Mts/jYG
- FZrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757931497; x=1758536297;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3j6kpaAA/zdlWJrqLVWFFIySs9ZJWfWWyxqZnZNzRhU=;
- b=TSLe/8q6DiRSIx1Wbbp7j6P4MWbm9acI/G20T0o6AZkppRxhQUwBGUv7w8m3iZGgsb
- Ie8UTpe4KqbSaPLmttKzYN/Pn53KbFW/tkdhOcChvFgh7Jd3P7B+wrPY3wGDg8pwBCr1
- Q0iVTJP4PYKXps0Q4b0DM9j+yp7699wfPfYXl8guZzpKLoVwhWo/2s1t7Ku4iCWEZN7Q
- UqY6yr6yQBJOFXma+Gq3dgCZFA3fWUGfqi7xccQM1Sx7jbIymafaZ/yBlKEQkKlsoWSS
- rDyXBU0+9zEEOPkchQOVgFWwenIahJEWDMjX3njsS2DTW6/fz3aztZZBrjK+MI8NY2XZ
- 48Og==
-X-Gm-Message-State: AOJu0YyYU5+ONjH2Io4kN8HsHRhiBRO8CNtPey1tw1H8VkwGQ37aNrZy
- XfCThJhH1xtvTaAJCsjKdUoidJykNljVR7XwgtXSCT8oKautOGq/opH0v99vT5UX6JdP7syFYvs
- CeCsT1zc=
-X-Gm-Gg: ASbGncupcJ4eWZoGGy3EDjFpplJ2RGS4A4JZPWwHW0XVZju5ImoY/tHmbrHOSmQ61u5
- dYyIxxw2RrbIZNWRCHCs3zUCOECbXMRHw4S+8F+8JDu36M/JyK7XBGOv+Vv35wiw08Jl6PDAu0D
- fW64S6QKnwMIj8eJEmhYWhnwXXNSdw654+ghSBdowZT6NAVG+jz3SoLiS3BD9hvxmIhFPc9tz8w
- Nmscky4VllOu0nkcwHzHPvX7rJnVuPBKi/4Qw1vcMIqDpBsRPQ2Bk9L/6fN5Mlt5vahoMo6Kiey
- hLZbdCK7H0ULRJED8GTs93g7sufkzBSxzpRTRhM8h9JaFIi6xDbxkrsq2RC6XOdyEsXIwUsM4c0
- SIbTHIrihYMmio0+W1GHwTKDxzwB8LNuGIg==
-X-Google-Smtp-Source: AGHT+IGAmZR2LnSLJup6SXh3H/OaQcCINmFBUrqn2y1GVw6vgVAT9BrtBytaQIokleP6CnndkfVTqw==
-X-Received: by 2002:a5d:5d01:0:b0:3d7:38a7:35d0 with SMTP id
- ffacd0b85a97d-3e765a263c3mr9731994f8f.62.1757931497484; 
- Mon, 15 Sep 2025 03:18:17 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e8b7b6ff8fsm9051158f8f.61.2025.09.15.03.18.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 03:18:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 217435F867;
- Mon, 15 Sep 2025 11:18:16 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 5/6] tests/functional: close GDB socket in reverse
- debugging test
-In-Reply-To: <20250912182200.643909-6-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 12 Sep 2025 19:21:59
- +0100")
-References: <20250912182200.643909-1-berrange@redhat.com>
- <20250912182200.643909-6-berrange@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 15 Sep 2025 11:18:16 +0100
-Message-ID: <87348orpcn.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uy6Hu-0003WQ-LE; Mon, 15 Sep 2025 06:18:22 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uy6Hl-0007fl-JJ; Mon, 15 Sep 2025 06:18:20 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMH006344
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 15 Sep 2025 19:09:01 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=3cGH6b5E85/I0U4om6lK9pPVs4VMPnqongUbGQsfkaQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1757930941; v=1;
+ b=H6gOX82RhLk1eTTbMkH8Jx5HBc51mysXyRFlq5ULd29mTwVFK9R6rhI9Gwcj/o/y
+ WIxwBpQqs71l6QSw72NRBEnFjOnygAlvN3vXYW5B1q4Yc0I1kFALkQrB6WcC2zgn
+ 2K5v4l5O16ZbbGPYh/OAcRWIUgkylZ5mV6Vtenn7ovbHjBpWN4fAHhitP/CD/476
+ eeNPCGZZ4b2P47k3rudwPq8PkRXZfykrTCndKNb5LqNyZhrvmlOXJMyoWXbhYxNA
+ beisTr+wqglRhuMRRlGEIePLnpjzn/igX5vznUct/3H6VrrE9M01agO+teEFrBNi
+ L7qdyETaHLol0jUKFvDuLQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 15 Sep 2025 19:08:45 +0900
+Subject: [PATCH v2 04/15] vfio-user: Do not delete the subregion
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250915-use-v2-4-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+References: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,16 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+It is no longer necessary.
 
-> The GDB socket FD is leaked currently resulting in a warning from
-> python about the unclosed resource.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/vfio-user/pci.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index be71c777291f..0b6c6a1c5ed3 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -73,12 +73,6 @@ static void vfio_user_msix_setup(VFIOPCIDevice *vdev)
+ 
+ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
+ {
+-    MemoryRegion *mr, *sub;
+-
+-    mr = vdev->bars[vdev->msix->pba_bar].mr;
+-    sub = vdev->msix->pba_region;
+-    memory_region_del_subregion(mr, sub);
+-
+     g_free(vdev->msix->pba_region);
+     vdev->msix->pba_region = NULL;
+ }
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+-- 
+2.51.0
+
 
