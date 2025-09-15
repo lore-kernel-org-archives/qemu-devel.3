@@ -4,55 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0CACAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 655E9CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy9Ah-0001pb-6B; Mon, 15 Sep 2025 09:23:09 -0400
+	id 1uy9AR-0001js-92; Mon, 15 Sep 2025 09:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9AQ-0001jM-BG; Mon, 15 Sep 2025 09:22:50 -0400
+ id 1uy9AF-0001d1-0x; Mon, 15 Sep 2025 09:22:40 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9A9-0006z6-22; Mon, 15 Sep 2025 09:22:48 -0400
+ id 1uy9A7-0006yd-GO; Mon, 15 Sep 2025 09:22:38 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 97F7D807EF;
- Mon, 15 Sep 2025 16:22:24 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C83B8807DA;
+ Mon, 15 Sep 2025 16:22:22 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:130::1:7])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id GMPC4o1FuGk0-r8Q0a859; Mon, 15 Sep 2025 16:22:24 +0300
+ ESMTPSA id GMPC4o1FuGk0-FEf5mDQv; Mon, 15 Sep 2025 16:22:22 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757942544;
- bh=eHSbhZivSSL6A70/eVcP41ZLHRUQcIsarokD4DDvIFI=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=JjX82Pd9YwiWgqudJIEQX18BCae+blTeJK1jkaP3weyduluPFPcfVV3RMouHbWm72
- tFioycz4TvNLHj3vcLjq6TbxPYPrVGmo+vHnS79wdh8GaF8QzZdWqQt+qp5dY02abp
- HsPEYNsD+V/KLFOEBGh9DG6b7v0M8FPE/Vf84qVs=
+ s=default; t=1757942542;
+ bh=A/anb5GTGHyTVzSF7lyEHgHk0tKzKlBRgAbujLiMlXg=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=c9mnNHjAf6Fb4a10pRQBD+JLTTpLIn9neCtfIUsi2d4wTLxfLeRX/kynAeiboceQN
+ A1Jehjbre0RFcTAqrLEs3NGQKxYLoxs7Iecyggb0zNe7u192R3VQchqpMPHKahHyfx
+ VCeEMS9QclErB/eagG5joUIWew2LENVdEDdU3ejA=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
  vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Coiby Xu <Coiby.Xu@gmail.com>
-Subject: [PATCH v3 07/13] util: drop qemu_socket_set_nonblock()
-Date: Mon, 15 Sep 2025 16:22:04 +0300
-Message-ID: <20250915132211.135095-8-vsementsov@yandex-team.ru>
+ Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH v3 05/13] handle result of qio_channel_set_blocking()
+Date: Mon, 15 Sep 2025 16:22:02 +0300
+Message-ID: <20250915132211.135095-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -61,8 +66,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,401 +83,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use common qemu_set_blocking() instead.
+Currently, we just always pass NULL as errp argument. That doesn't
+look good.
 
-Note that pre-patch the behavior of Win32 and Linux realizations
-are inconsistent: we ignore failure for Win32, and assert success
-for Linux.
+Some realizations of interface may actually report errors.
+Channel-socket realization actually either ignore or crash on
+errors, but we are going to straighten it out to always reporting
+an errp in further commits.
 
-How do we convert the callers?
+So, convert all callers to either handle the error (where environment
+allows) or explicitly use &error_abort.
 
-1. Most of callers call qemu_socket_set_nonblock() on a
-freshly created socket fd, in conditions when we may simply
-report an error. Seems correct switching to error handling
-both for Windows (pre-patch error is ignored) and Linux
-(pre-patch we assert success). Anyway, we normally don't
-expect errors in these cases.
+Take also a chance to change the return value to more convenient
+bool (keeping also in mind, that underlying realizations may
+return -1 on failure, not -errno).
 
-Still in tests let's use &error_abort for simplicity.
-
-What are exclusions?
-
-2. hw/virtio/vhost-user.c - we are inside #ifdef CONFIG_LINUX,
-so no damage in switching to error handling from assertion.
-
-3. io/channel-socket.c: here we convert both old calls to
-qemu_socket_set_nonblock() and qemu_socket_set_block() to
-one new call. Pre-patch we assert success for Linux in
-qemu_socket_set_nonblock(), and ignore all other errors here.
-So, for Windows switch is a bit dangerous: we may get
-new errors or crashes(when error_abort is passed) in
-cases where we have silently ignored the error before
-(was it correct in all such cases, if they were?) Still,
-there is no other way to stricter API than take
-this risk.
-
-4. util/vhost-user-server - compiled only for Linux (see
-util/meson.build), so we are safe, switching from assertion to
-&error_abort.
-
-Note: In qga/channel-posix.c we use g_warning(), where g_printerr()
-would actually be a better choice. Still let's for now follow
-common style of qga, where g_warning() is commonly used to print
-such messages, and no call to g_printerr(). Converting everything
-to use g_printerr() should better be another series.
-
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- contrib/ivshmem-server/ivshmem-server.c |  7 ++++++-
- hw/hyperv/syndbg.c                      |  4 +++-
- hw/virtio/vhost-user.c                  |  5 ++++-
- include/qemu/sockets.h                  |  1 -
- io/channel-socket.c                     |  7 +++----
- net/dgram.c                             | 16 +++++++++++++---
- net/l2tpv3.c                            |  5 +++--
- net/socket.c                            | 20 ++++++++++++++++----
- qga/channel-posix.c                     |  7 ++++++-
- tests/unit/socket-helpers.c             |  4 +++-
- tests/unit/test-crypto-tlssession.c     |  8 ++++----
- util/oslib-posix.c                      |  7 -------
- util/oslib-win32.c                      |  5 -----
- util/vhost-user-server.c                |  4 ++--
- 14 files changed, 63 insertions(+), 37 deletions(-)
+ block/nbd.c                      |  5 ++++-
+ chardev/char-socket.c            | 14 ++++++++++----
+ hw/remote/proxy.c                |  6 +++++-
+ hw/remote/remote-obj.c           |  5 ++++-
+ hw/vfio-user/proxy.c             | 11 ++++++++---
+ include/io/channel.h             |  6 +++---
+ io/channel.c                     |  4 ++--
+ nbd/server.c                     |  4 +++-
+ scsi/qemu-pr-helper.c            |  9 ++++++---
+ tests/unit/io-channel-helpers.c  |  5 +++--
+ tests/unit/test-io-channel-tls.c |  4 ++--
+ tools/i386/qemu-vmsr-helper.c    |  6 ++++--
+ ui/vnc.c                         |  2 +-
+ util/vhost-user-server.c         |  5 ++++-
+ 14 files changed, 59 insertions(+), 27 deletions(-)
 
-diff --git a/contrib/ivshmem-server/ivshmem-server.c b/contrib/ivshmem-server/ivshmem-server.c
-index 2f3c7320a6..ff1c74a744 100644
---- a/contrib/ivshmem-server/ivshmem-server.c
-+++ b/contrib/ivshmem-server/ivshmem-server.c
-@@ -6,6 +6,7 @@
-  * top-level directory.
-  */
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qemu/host-utils.h"
- #include "qemu/sockets.h"
+diff --git a/block/nbd.c b/block/nbd.c
+index d5a2b21c6d..d598189667 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -351,7 +351,10 @@ int coroutine_fn nbd_co_do_establish_connection(BlockDriverState *bs,
+         return ret;
+     }
  
-@@ -146,9 +147,13 @@ ivshmem_server_handle_new_conn(IvshmemServer *server)
+-    qio_channel_set_blocking(s->ioc, false, NULL);
++    ret = qio_channel_set_blocking(s->ioc, false, errp);
++    if (ret < 0) {
++        return ret;
++    }
+     qio_channel_set_follow_coroutine_ctx(s->ioc, true);
+ 
+     /* successfully connected */
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 1be078dfc0..1fa2e0a6f8 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -535,11 +535,15 @@ static int tcp_chr_sync_read(Chardev *chr, const uint8_t *buf, int len)
+         return 0;
+     }
+ 
+-    qio_channel_set_blocking(s->ioc, true, NULL);
++    if (!qio_channel_set_blocking(s->ioc, true, &error_reporter)) {
++        return -1;
++    }
+     size = tcp_chr_recv(chr, (void *) buf, len);
+     saved_errno = errno;
+     if (s->state != TCP_CHARDEV_STATE_DISCONNECTED) {
+-        qio_channel_set_blocking(s->ioc, false, NULL);
++        if (!qio_channel_set_blocking(s->ioc, false, &error_reporter)) {
++            return -1;
++        }
+     }
+     if (size == 0) {
+         /* connection closed */
+@@ -889,13 +893,15 @@ static int tcp_chr_new_client(Chardev *chr, QIOChannelSocket *sioc)
          return -1;
      }
  
--    qemu_socket_set_nonblock(newfd);
-     IVSHMEM_SERVER_DEBUG(server, "accept()=%d\n", newfd);
- 
-+    if (!qemu_set_blocking(newfd, false, &error_reporter)) {
-+        close(newfd);
++    if (!qio_channel_set_blocking(QIO_CHANNEL(sioc), false, &error_reporter)) {
 +        return -1;
 +    }
 +
-     /* allocate new structure for this peer */
-     peer = g_malloc0(sizeof(*peer));
-     peer->sock_fd = newfd;
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index ac7e15f6f1..bcdfdf6af7 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -338,7 +338,9 @@ static void hv_syndbg_realize(DeviceState *dev, Error **errp)
+     s->ioc = QIO_CHANNEL(sioc);
+     object_ref(OBJECT(sioc));
+     s->sioc = sioc;
+     object_ref(OBJECT(sioc));
+ 
+-    qio_channel_set_blocking(s->ioc, false, NULL);
+-
+     if (s->do_nodelay) {
+         qio_channel_set_delay(s->ioc, false);
+     }
+diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
+index b0165aa2a1..18e0f7a064 100644
+--- a/hw/remote/proxy.c
++++ b/hw/remote/proxy.c
+@@ -112,8 +112,12 @@ static void pci_proxy_dev_realize(PCIDevice *device, Error **errp)
          return;
      }
  
--    qemu_socket_set_nonblock(syndbg->socket);
-+    if (!qemu_set_blocking(syndbg->socket, false, errp)) {
++    if (!qio_channel_set_blocking(dev->ioc, true, errp)) {
++        object_unref(dev->ioc);
++        return;
++    }
++
+     qemu_mutex_init(&dev->io_mutex);
+-    qio_channel_set_blocking(dev->ioc, true, NULL);
+ 
+     pci_conf[PCI_LATENCY_TIMER] = 0xff;
+     pci_conf[PCI_INTERRUPT_PIN] = 0x01;
+diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
+index 85882902d7..c434c8309f 100644
+--- a/hw/remote/remote-obj.c
++++ b/hw/remote/remote-obj.c
+@@ -107,7 +107,10 @@ static void remote_object_machine_done(Notifier *notifier, void *data)
+         error_report_err(err);
+         return;
+     }
+-    qio_channel_set_blocking(ioc, false, NULL);
++    if (!qio_channel_set_blocking(ioc, false, &error_reporter)) {
++        object_unref(OBJECT(ioc));
 +        return;
 +    }
  
-     syndbg->servaddr.sin_port = htons(syndbg->host_port);
-     syndbg->servaddr.sin_family = AF_INET;
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 1e1d6b0d6e..36c9c2e04d 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -2039,7 +2039,10 @@ static int vhost_user_postcopy_advise(struct vhost_dev *dev, Error **errp)
-         error_setg(errp, "%s: Failed to get ufd", __func__);
-         return -EIO;
+     o->dev = dev;
+ 
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 2c03d49f97..bbd7ec243d 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -886,10 +886,11 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     sioc = qio_channel_socket_new();
+     ioc = QIO_CHANNEL(sioc);
+     if (qio_channel_socket_connect_sync(sioc, addr, errp) < 0) {
+-        object_unref(OBJECT(ioc));
+-        return NULL;
++        goto fail;
++    }
++    if (!qio_channel_set_blocking(ioc, false, errp)) {
++        goto fail;
      }
--    qemu_socket_set_nonblock(ufd);
-+    if (!qemu_set_blocking(ufd, false, errp)) {
-+        close(ufd);
+-    qio_channel_set_blocking(ioc, false, NULL);
+ 
+     proxy = g_malloc0(sizeof(VFIOUserProxy));
+     proxy->sockname = g_strdup_printf("unix:%s", sockname);
+@@ -923,6 +924,10 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     QLIST_INSERT_HEAD(&vfio_user_sockets, proxy, next);
+ 
+     return proxy;
++
++fail:
++    object_unref(OBJECT(ioc));
++    return NULL;
+ }
+ 
+ void vfio_user_set_handler(VFIODevice *vbasedev,
+diff --git a/include/io/channel.h b/include/io/channel.h
+index c7f64506f7..999a8f5f23 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -531,9 +531,9 @@ int coroutine_mixed_fn qio_channel_write_all(QIOChannel *ioc,
+  * return QIO_CHANNEL_ERR_BLOCK if they would otherwise
+  * block on I/O
+  */
+-int qio_channel_set_blocking(QIOChannel *ioc,
+-                             bool enabled,
+-                             Error **errp);
++bool qio_channel_set_blocking(QIOChannel *ioc,
++                              bool enabled,
++                              Error **errp);
+ 
+ /**
+  * qio_channel_set_follow_coroutine_ctx:
+diff --git a/io/channel.c b/io/channel.c
+index ebd9322765..852e684938 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -359,12 +359,12 @@ int coroutine_mixed_fn qio_channel_write_all(QIOChannel *ioc,
+ }
+ 
+ 
+-int qio_channel_set_blocking(QIOChannel *ioc,
++bool qio_channel_set_blocking(QIOChannel *ioc,
+                               bool enabled,
+                               Error **errp)
+ {
+     QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
+-    return klass->io_set_blocking(ioc, enabled, errp);
++    return klass->io_set_blocking(ioc, enabled, errp) == 0;
+ }
+ 
+ 
+diff --git a/nbd/server.c b/nbd/server.c
+index d242be9811..acec0487a8 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -1411,7 +1411,9 @@ static coroutine_fn int nbd_negotiate(NBDClient *client, Error **errp)
+         ....options sent, ending in NBD_OPT_EXPORT_NAME or NBD_OPT_GO....
+      */
+ 
+-    qio_channel_set_blocking(client->ioc, false, NULL);
++    if (!qio_channel_set_blocking(client->ioc, false, errp)) {
 +        return -EINVAL;
 +    }
+     qio_channel_set_follow_coroutine_ctx(client->ioc, true);
  
-     /* register ufd with userfault thread */
-     u->postcopy_fd.fd = ufd;
-diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
-index c562690d89..6477f90b9e 100644
---- a/include/qemu/sockets.h
-+++ b/include/qemu/sockets.h
-@@ -48,7 +48,6 @@ int socket_set_cork(int fd, int v);
- int socket_set_nodelay(int fd);
- void qemu_socket_set_block(int fd);
- int qemu_socket_try_set_nonblock(int fd);
--void qemu_socket_set_nonblock(int fd);
- int socket_set_fast_reuse(int fd);
+     trace_nbd_negotiate_begin();
+diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
+index b69dd982d6..074b4db472 100644
+--- a/scsi/qemu-pr-helper.c
++++ b/scsi/qemu-pr-helper.c
+@@ -733,8 +733,11 @@ static void coroutine_fn prh_co_entry(void *opaque)
+     uint32_t flags;
+     int r;
  
- #ifdef WIN32
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 21f8f2e0c5..f7e3cb9742 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -825,11 +825,10 @@ qio_channel_socket_set_blocking(QIOChannel *ioc,
- {
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
- 
--    if (enabled) {
--        qemu_socket_set_block(sioc->fd);
--    } else {
--        qemu_socket_set_nonblock(sioc->fd);
-+    if (!qemu_set_blocking(sioc->fd, enabled, errp)) {
-+        return -1;
-     }
-+
-     return 0;
- }
- 
-diff --git a/net/dgram.c b/net/dgram.c
-index 48f653bceb..fb9ded30df 100644
---- a/net/dgram.c
-+++ b/net/dgram.c
-@@ -226,7 +226,10 @@ static int net_dgram_mcast_create(struct sockaddr_in *mcastaddr,
-         }
-     }
- 
--    qemu_socket_set_nonblock(fd);
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        goto fail;
-+    }
-+
-     return fd;
- fail:
-     if (fd >= 0) {
-@@ -504,7 +507,11 @@ int net_init_dgram(const Netdev *netdev, const char *name,
-             close(fd);
-             return -1;
-         }
--        qemu_socket_set_nonblock(fd);
-+
-+        if (!qemu_set_blocking(fd, false, errp)) {
-+            close(fd);
-+            return -1;
-+        }
- 
-         dest_len = sizeof(raddr_in);
-         dest_addr = g_malloc(dest_len);
-@@ -551,7 +558,10 @@ int net_init_dgram(const Netdev *netdev, const char *name,
-             close(fd);
-             return -1;
-         }
--        qemu_socket_set_nonblock(fd);
-+        if (!qemu_set_blocking(fd, false, errp)) {
-+            close(fd);
-+            return -1;
-+        }
- 
-         dest_len = sizeof(raddr_un);
-         dest_addr = g_malloc(dest_len);
-diff --git a/net/l2tpv3.c b/net/l2tpv3.c
-index b5547cb917..cdfc641aa6 100644
---- a/net/l2tpv3.c
-+++ b/net/l2tpv3.c
-@@ -648,6 +648,9 @@ int net_init_l2tpv3(const Netdev *netdev,
-         error_setg(errp, "could not bind socket err=%i", errno);
-         goto outerr;
-     }
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        goto outerr;
-+    }
- 
-     freeaddrinfo(result);
- 
-@@ -709,8 +712,6 @@ int net_init_l2tpv3(const Netdev *netdev,
-     s->vec = g_new(struct iovec, MAX_L2TPV3_IOVCNT);
-     s->header_buf = g_malloc(s->header_size);
- 
--    qemu_socket_set_nonblock(fd);
--
-     s->fd = fd;
-     s->counter = 0;
- 
-diff --git a/net/socket.c b/net/socket.c
-index 784dda686f..db25e3d9ae 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -295,7 +295,10 @@ static int net_socket_mcast_create(struct sockaddr_in *mcastaddr,
-         }
-     }
- 
--    qemu_socket_set_nonblock(fd);
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        goto fail;
-+    }
-+
-     return fd;
- fail:
-     if (fd >= 0)
-@@ -508,7 +511,10 @@ static int net_socket_listen_init(NetClientState *peer,
-         error_setg_errno(errp, errno, "can't create stream socket");
-         return -1;
-     }
--    qemu_socket_set_nonblock(fd);
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        close(fd);
-+        return -1;
-+    }
- 
-     socket_set_fast_reuse(fd);
- 
-@@ -556,7 +562,10 @@ static int net_socket_connect_init(NetClientState *peer,
-         error_setg_errno(errp, errno, "can't create stream socket");
-         return -1;
-     }
--    qemu_socket_set_nonblock(fd);
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        close(fd);
-+        return -1;
-+    }
- 
-     connected = 0;
-     for(;;) {
-@@ -671,7 +680,10 @@ static int net_socket_udp_init(NetClientState *peer,
-         close(fd);
-         return -1;
-     }
--    qemu_socket_set_nonblock(fd);
-+    if (!qemu_set_blocking(fd, false, errp)) {
-+        close(fd);
-+        return -1;
-+    }
- 
-     s = net_socket_fd_init_dgram(peer, model, name, fd, 0, NULL, errp);
-     if (!s) {
-diff --git a/qga/channel-posix.c b/qga/channel-posix.c
-index 465d688ecb..9ccc8b7bd1 100644
---- a/qga/channel-posix.c
-+++ b/qga/channel-posix.c
-@@ -28,6 +28,7 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
-     GAChannel *c = data;
-     int ret, client_fd;
-     bool accepted = false;
-+    Error *err = NULL;
- 
-     g_assert(channel != NULL);
- 
-@@ -36,7 +37,11 @@ static gboolean ga_channel_listen_accept(GIOChannel *channel,
-         g_warning("error converting fd to gsocket: %s", strerror(errno));
-         goto out;
-     }
--    qemu_socket_set_nonblock(client_fd);
-+    if (!qemu_set_blocking(client_fd, false, &err)) {
-+        g_warning("%s", error_get_pretty(err));
-+        error_free(err);
+-    qio_channel_set_blocking(QIO_CHANNEL(client->ioc),
+-                             false, NULL);
++    if (!qio_channel_set_blocking(QIO_CHANNEL(client->ioc),
++                                  false, &local_err)) {
 +        goto out;
 +    }
-     ret = ga_channel_client_add(c, client_fd);
-     if (ret) {
-         g_warning("error setting up connection");
-diff --git a/tests/unit/socket-helpers.c b/tests/unit/socket-helpers.c
-index 37db24f72a..46d2ff101c 100644
---- a/tests/unit/socket-helpers.c
-+++ b/tests/unit/socket-helpers.c
-@@ -19,6 +19,7 @@
-  */
++
+     qio_channel_set_follow_coroutine_ctx(QIO_CHANNEL(client->ioc), true);
+ 
+     /* A very simple negotiation for future extensibility.  No features
+@@ -786,6 +789,7 @@ static void coroutine_fn prh_co_entry(void *opaque)
+         }
+     }
+ 
++out:
+     if (local_err) {
+         if (verbose == 0) {
+             error_free(local_err);
+@@ -794,7 +798,6 @@ static void coroutine_fn prh_co_entry(void *opaque)
+         }
+     }
+ 
+-out:
+     object_unref(OBJECT(client->ioc));
+     g_free(client);
+ }
+diff --git a/tests/unit/io-channel-helpers.c b/tests/unit/io-channel-helpers.c
+index c0799c21c2..22b42d14cd 100644
+--- a/tests/unit/io-channel-helpers.c
++++ b/tests/unit/io-channel-helpers.c
+@@ -20,6 +20,7 @@
  
  #include "qemu/osdep.h"
+ #include "io-channel-helpers.h"
 +#include "qapi/error.h"
- #include "qemu/sockets.h"
- #include "socket-helpers.h"
+ #include "qemu/iov.h"
  
-@@ -88,7 +89,8 @@ static int socket_can_bind_connect(const char *hostname, int family)
-         goto cleanup;
+ struct QIOChannelTest {
+@@ -109,8 +110,8 @@ void qio_channel_test_run_threads(QIOChannelTest *test,
+     test->src = src;
+     test->dst = dst;
+ 
+-    qio_channel_set_blocking(test->dst, blocking, NULL);
+-    qio_channel_set_blocking(test->src, blocking, NULL);
++    qio_channel_set_blocking(test->dst, blocking, &error_abort);
++    qio_channel_set_blocking(test->src, blocking, &error_abort);
+ 
+     reader = g_thread_new("reader",
+                           test_io_thread_reader,
+diff --git a/tests/unit/test-io-channel-tls.c b/tests/unit/test-io-channel-tls.c
+index e036ac5df4..6f282ad45d 100644
+--- a/tests/unit/test-io-channel-tls.c
++++ b/tests/unit/test-io-channel-tls.c
+@@ -184,8 +184,8 @@ static void test_io_channel_tls(const void *opaque)
+      * thread, so we need these non-blocking to avoid deadlock
+      * of ourselves
+      */
+-    qio_channel_set_blocking(QIO_CHANNEL(clientChanSock), false, NULL);
+-    qio_channel_set_blocking(QIO_CHANNEL(serverChanSock), false, NULL);
++    qio_channel_set_blocking(QIO_CHANNEL(clientChanSock), false, &error_abort);
++    qio_channel_set_blocking(QIO_CHANNEL(serverChanSock), false, &error_abort);
+ 
+     /* Now the real part of the test, setup the sessions */
+     clientChanTLS = qio_channel_tls_new_client(
+diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
+index 5f19a48cbd..6c0f4fe870 100644
+--- a/tools/i386/qemu-vmsr-helper.c
++++ b/tools/i386/qemu-vmsr-helper.c
+@@ -213,8 +213,10 @@ static void coroutine_fn vh_co_entry(void *opaque)
+     uint64_t vmsr;
+     int r;
+ 
+-    qio_channel_set_blocking(QIO_CHANNEL(client->ioc),
+-                             false, NULL);
++    if (!qio_channel_set_blocking(QIO_CHANNEL(client->ioc),
++                                  false, &local_err)) {
++        goto out;
++    }
+ 
+     qio_channel_set_follow_coroutine_ctx(QIO_CHANNEL(client->ioc), true);
+ 
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 68ca4a68e7..8ca77b2971 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3337,7 +3337,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+ 
+     VNC_DEBUG("New client on socket %p\n", vs->sioc);
+     update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
+-    qio_channel_set_blocking(vs->ioc, false, NULL);
++    qio_channel_set_blocking(vs->ioc, false, &error_abort);
+     if (vs->ioc_tag) {
+         g_source_remove(vs->ioc_tag);
      }
- 
--    qemu_socket_set_nonblock(cfd);
-+    qemu_set_blocking(cfd, false, &error_abort);
-+
-     if (connect(cfd, (struct sockaddr *)&ss, sslen) < 0) {
-         if (errno == EINPROGRESS) {
-             check_soerr = true;
-diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
-index 554054e934..61311cbe6e 100644
---- a/tests/unit/test-crypto-tlssession.c
-+++ b/tests/unit/test-crypto-tlssession.c
-@@ -112,8 +112,8 @@ static void test_crypto_tls_session_psk(void)
-      * thread, so we need these non-blocking to avoid deadlock
-      * of ourselves
-      */
--    qemu_socket_set_nonblock(channel[0]);
--    qemu_socket_set_nonblock(channel[1]);
-+    qemu_set_blocking(channel[0], false, &error_abort);
-+    qemu_set_blocking(channel[1], false, &error_abort);
- 
-     clientCreds = test_tls_creds_psk_create(
-         QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT,
-@@ -264,8 +264,8 @@ static void test_crypto_tls_session_x509(const void *opaque)
-      * thread, so we need these non-blocking to avoid deadlock
-      * of ourselves
-      */
--    qemu_socket_set_nonblock(channel[0]);
--    qemu_socket_set_nonblock(channel[1]);
-+    qemu_set_blocking(channel[0], false, &error_abort);
-+    qemu_set_blocking(channel[1], false, &error_abort);
- 
- #define CLIENT_CERT_DIR "tests/test-crypto-tlssession-client/"
- #define SERVER_CERT_DIR "tests/test-crypto-tlssession-server/"
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index c737701075..599993d40d 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -275,13 +275,6 @@ int qemu_socket_try_set_nonblock(int fd)
-     return g_unix_set_fd_nonblocking(fd, true, NULL) ? 0 : -errno;
- }
- 
--void qemu_socket_set_nonblock(int fd)
--{
--    int f;
--    f = qemu_socket_try_set_nonblock(fd);
--    assert(f == 0);
--}
--
- int socket_set_fast_reuse(int fd)
- {
-     int val = 1, ret;
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 03044f5b59..1566eb57e7 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -211,11 +211,6 @@ int qemu_socket_try_set_nonblock(int fd)
-     return 0;
- }
- 
--void qemu_socket_set_nonblock(int fd)
--{
--    (void)qemu_socket_try_set_nonblock(fd);
--}
--
- int socket_set_fast_reuse(int fd)
- {
-     /* Enabling the reuse of an endpoint that was used by a socket still in
 diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
-index fd59cd253e..127fdaf779 100644
+index b19229074a..fd59cd253e 100644
 --- a/util/vhost-user-server.c
 +++ b/util/vhost-user-server.c
-@@ -78,7 +78,7 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
-     }
+@@ -368,7 +368,10 @@ static void vu_accept(QIONetListener *listener, QIOChannelSocket *sioc,
+     object_ref(OBJECT(server->ioc));
  
-     for (i = 0; i < vmsg->fd_num; i++) {
--        qemu_socket_set_nonblock(vmsg->fds[i]);
-+        qemu_set_blocking(vmsg->fds[i], false, &error_abort);
-     }
- }
+     /* TODO vu_message_write() spins if non-blocking! */
+-    qio_channel_set_blocking(server->ioc, false, NULL);
++    if (!qio_channel_set_blocking(server->ioc, false, &error_reporter)) {
++        vu_deinit(&server->vu_dev);
++        return;
++    }
  
-@@ -303,7 +303,7 @@ set_watch(VuDev *vu_dev, int fd, int vu_evt,
+     qio_channel_set_follow_coroutine_ctx(server->ioc, true);
  
-         vu_fd_watch->fd = fd;
-         vu_fd_watch->cb = cb;
--        qemu_socket_set_nonblock(fd);
-+        qemu_set_blocking(fd, false, &error_abort);
-         aio_set_fd_handler(server->ctx, fd, kick_handler,
-                            NULL, NULL, NULL, vu_fd_watch);
-         vu_fd_watch->vu_dev = vu_dev;
 -- 
 2.48.1
 
