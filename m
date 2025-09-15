@@ -4,96 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D045CAC58E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D40BCAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy5RQ-0003Lt-5v; Mon, 15 Sep 2025 05:24:08 -0400
+	id 1uy5e3-0008UK-FM; Mon, 15 Sep 2025 05:37:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1uy5RO-0003Lf-8J
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:24:06 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uy5dx-0008Ry-MS
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:37:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1uy5RD-0007OH-Mi
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:24:04 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uy5c1-0001Iv-0Q
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:37:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757928227;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1757928899;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MuKMJMFGpHOUjgD++H49kWACmXGEqnoX/pKs+7Ky/gM=;
- b=AOF146KtWnzhrmzO790ow8W0fIfYfRpsTApOYdx/wElIF4E0mOayyzC232GlsiRanrV8CY
- O3ua/pTHuYJOxzhD1ZSNO3SsU9OqlxAfctFe3U0pmXJshtAmiONJvwTJHkHA3dbaioIqXo
- hGq3hx7j01GuwGKMO9O/nd+yQi2qmBc=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/H12fGchyrIH7qwRBNagf9r7hA/DpMHPJxFYE+/ei7g=;
+ b=VZitlBkBgecnT9C+6ZPlUfNL/U41M7f4eAkQ1abcCpvc/DJsv6ycpVIDOZ1nB9sDl4AQ1B
+ UhJbzOJSaCFUR9JOdhFA9toyjflbXqn1aljVJfuWIwMzNOLm+hK9FIOIhobzVNcxVI6gky
+ ba/S67LBrw7uRa+D4ovwZOz+46HPVvY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-g5gcLQhjPqyKmSv9OYKdIQ-1; Mon, 15 Sep 2025 05:23:45 -0400
-X-MC-Unique: g5gcLQhjPqyKmSv9OYKdIQ-1
-X-Mimecast-MFC-AGG-ID: g5gcLQhjPqyKmSv9OYKdIQ_1757928224
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b521995d498so2923554a12.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 02:23:45 -0700 (PDT)
+ us-mta-136-vUFOEoZDO9e8cCYDpJZ39g-1; Mon, 15 Sep 2025 05:34:58 -0400
+X-MC-Unique: vUFOEoZDO9e8cCYDpJZ39g-1
+X-Mimecast-MFC-AGG-ID: vUFOEoZDO9e8cCYDpJZ39g_1757928897
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45dd9a66cfbso34980475e9.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 02:34:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757928224; x=1758533024;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MuKMJMFGpHOUjgD++H49kWACmXGEqnoX/pKs+7Ky/gM=;
- b=ndq0OhkHkPcA0kL4mTPO28FdMUKDpfpErM1I3PoENQIA+sjIq9hhckIwgrveUEtDpd
- FwsWEA85m2BtIpsvk6ilH5p1V8tdIbSBup33UxdelzChYHMV6QzZHKMIvxjID4TPbu8w
- YSzh/dEcTFSyizyETwXs3vWOo6AMRJoz7LJz9aKsmsdgn8ig81FiyCSMY0Vmy9PuJjmz
- Y86uzkfIGPxooBoXPvJOG5UkvcgOLzR0p7fl3v9z7EhFwMdTm/TAEfR0p4q34Inv+aLL
- uRID9ZHSQaKAonvHRU+6+E4y4KQW69CBwotkra+Ydk9rPATqsGmtytUedyqsVrs+cQ23
- 4LHA==
+ d=1e100.net; s=20230601; t=1757928897; x=1758533697;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/H12fGchyrIH7qwRBNagf9r7hA/DpMHPJxFYE+/ei7g=;
+ b=TOPRVH4OXXy5AwHWVyip8GT4h4y8CU71qRqrqhLcH6+ChfotzIGVxueHi4m7A6ppzh
+ 9tL4/RGaf2zca5guYH1bZx9r8F+iS+NKhkgnSeel0uBqhFy+836mAlgNC9Mn3dKx4LXy
+ 1RM7M6TDB/47pWOtbn4/30C8qcEmITvW/TkOxX/ULw/KfkBu8ll7wXBp5UjkGpQRI8cc
+ arAbRkawW9P+MtpJG2QWrH2e9VWopNa4zlMjJPHjdxxQrYsV7dn2DeiYueXvcc6hVd4b
+ w1os/VbOKolYpFWtgwBYb2ZfGFW1f7qgh1ptqkwM5leYxR78ns3KS2kaRLIw7qi3Pe4y
+ IJNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmLvwHSDCKnLxP3lWz6+wQIQavjONRPA9dBepe8RO5ProUB8WwOyreuNoJL4s91N+7R3xcXdaxVLBj@nongnu.org
-X-Gm-Message-State: AOJu0Yxzt9T1yVDGBmZJoBu6yK7uZJ8mMd6AbOS9pfS4JCDIRcd4t3PO
- D8CqdyyrlxYeGnJ5J+ewwDnGmrfFcESv65fgZfSwPoQZy09Hh6K5i5uHRBYQBcSZRZnsjSYDmRq
- Lg2L0l0voQ3BVvrG3f5uuWpSVzgFYi8RiYfy9vIbWsg3flUybFsWZ1BSdGOyKHq6osoS3ueGjnq
- 4d2KeIIkxdJqT0Z6D3zEMsI1j/zV/vyXA=
-X-Gm-Gg: ASbGncveQORdHPFdbnc8I5Oop+EKEfxTqpN5EHjL9QkLYeStTXWTa4Y9H+rzqUhIU/3
- HC01x6N7aDYMOMfxi3oSIDnCvTjXcSsmQg0uUoZdLcRxJ2+zsNCIMmclanKg8Rt6fpXwKz/M1Fr
- 7T5c+XO2hyrLuT5vRQ
-X-Received: by 2002:a17:903:1b4c:b0:24c:b2a4:7089 with SMTP id
- d9443c01a7336-25d26077175mr149798775ad.31.1757928224377; 
- Mon, 15 Sep 2025 02:23:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXpN70DALWCcd5PgZX9lrLPSKZhplTMQnuSH0oUcJwtKfcGepxRnr4M9WGz1RT5WDKH0GrFyFHhMg4f7t+cCU=
-X-Received: by 2002:a17:903:1b4c:b0:24c:b2a4:7089 with SMTP id
- d9443c01a7336-25d26077175mr149798525ad.31.1757928224031; Mon, 15 Sep 2025
- 02:23:44 -0700 (PDT)
+ AJvYcCUbJJLWYy6kUOtwZRNmbrG9VTp63LAi6bscOP43hU2cdg405tTztVl6c6xWJ9oVZI1SP2PbcujmDbZS@nongnu.org
+X-Gm-Message-State: AOJu0Yz5XGekSeZxP9MB8JjIfaCG4R899j1dcy8STDX7x0NdYYrPRLt0
+ brb79BcpT5XKB+/iTvUQXPQkfYfg589OClxYP/zr4Qo9K/SUGBiBDYqhVEPQaIoDNIy1kcWpdr7
+ ODV8euV9yWfkTaR/tco6FC2FPvuqyb0UA9UdN9hjN+jR2S5ELtX26iv8u
+X-Gm-Gg: ASbGnctZAEZxqary1xnOPR+5vXJCCf6EjiGVbxY9DBB3WQQTdPpslSgmv5KfluKOahn
+ GICUt4rBN2Yu5ZbIazeqD2slQLTPVbqdtNmW5AKMDDKZZfo50kom/bGOeLuLyEIx0+93w16CSJz
+ BGJiBV5xCtzTI71a0SGevR3IplezEfZ0DNn21EG+dbUuywp9Hh0DERhi6XjBQ6RdE34TDIaH5K2
+ UsB1/MrbUA1/MmjXd/tLbyCUdRZ2P3BtPpMXvDbMQx2b6UxKOwtDleWcqDTZd7dLWqiKhMPstBS
+ lxR20OhxP23IO5ttZBZ9bjjdvbKJvWv5PURGeRrqfHsl+/fNAjnysPFRxXM2JfvjrAMghwsju4b
+ +ivejGqMgQMQ=
+X-Received: by 2002:a05:600c:3505:b0:45f:2843:e76b with SMTP id
+ 5b1f17b1804b1-45f2843e99cmr53793115e9.2.1757928897246; 
+ Mon, 15 Sep 2025 02:34:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKtlqdKidjryuc8tCVhgCeBwAJANsW36ih8aaFYsF/eKtndaf8UCw54QZDfwJcDnXfD5cF5A==
+X-Received: by 2002:a05:600c:3505:b0:45f:2843:e76b with SMTP id
+ 5b1f17b1804b1-45f2843e99cmr53792735e9.2.1757928896682; 
+ Mon, 15 Sep 2025 02:34:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45f2978ad91sm83548575e9.6.2025.09.15.02.34.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Sep 2025 02:34:56 -0700 (PDT)
+Message-ID: <39d51d3c-e773-42e4-8161-c9d283379498@redhat.com>
+Date: Mon, 15 Sep 2025 11:34:54 +0200
 MIME-Version: 1.0
-References: <20241107180309.1713601-1-dbassey@redhat.com>
- <v5p6ztswg7wrooyg4fnenbvbnwf2svm6j6jg7dm4pavwocft3x@ub5mgg5e3dyo>
- <CACzuRyy5urdAzPqRQ__VOZ6R-43LKLFzqj1w_+hsZYs+ovHxtg@mail.gmail.com>
-In-Reply-To: <CACzuRyy5urdAzPqRQ__VOZ6R-43LKLFzqj1w_+hsZYs+ovHxtg@mail.gmail.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 15 Sep 2025 11:23:32 +0200
-X-Gm-Features: AS18NWBFnB4k6OcDgjksYDxL0_U3MFPcc4gSUWa7jCqE95otsnZB1P0OA0CSBx0
-Message-ID: <CADSE00LnkhQtTbnWgxMyOcMU+NsB_UnHTJyDWvXQf31Nwvr9Ow@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio-dmabuf: Ensure UUID persistence for hash table
- insertion
-To: Dorinda Bassey <dbassey@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com, Michael Tsirkin <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 02/11] hw/arm/smmuv3: Implement read/write logic for secure
+ registers
+Content-Language: en-US
+To: Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ jean-philippe@linaro.org
+References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
+ <20250806151134.365755-3-tangtao1634@phytium.com.cn>
+ <aKOaIcPp26kbS3Nn@google.com>
+ <53607fe8-0555-4408-bfa6-e4b95d44e230@phytium.com.cn>
+ <aKma98hlAWG9M4h_@google.com>
+ <8987bd11-afae-4157-979d-ef10be69a7a5@phytium.com.cn>
+ <aMfY4LJVEGw3egdP@google.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aMfY4LJVEGw3egdP@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,74 +115,209 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 11:16=E2=80=AFAM Dorinda Bassey <dbassey@redhat.com=
-> wrote:
->
-> Hi Albert and Michael,
->
-> seems this patch fell through the cracks, It was posted but never picked =
-up. Could you help push it? thanks!
+Hi Tao,
 
-I do not remember this patch! Great that you checked, as this fixes a
-legitimate issue. Hopefully will get integrated this time.
-
+On 9/15/25 11:14 AM, Mostafa Saleh wrote:
+> Hi Tao,
 >
-> BR,
-> Dorinda.
->
-> On Fri, Nov 8, 2024 at 10:29=E2=80=AFAM Stefano Garzarella <sgarzare@redh=
-at.com> wrote:
+> On Thu, Sep 11, 2025 at 11:27:50PM +0800, Tao Tang wrote:
+>> Hi Mostafa,
 >>
->> On Thu, Nov 07, 2024 at 07:00:31PM +0100, Dorinda Bassey wrote:
->> >In `virtio_add_resource` function, the UUID used as a key for
->> >`g_hash_table_insert` was temporary, which could lead to
->> >invalid lookups when accessed later. This patch ensures that
->> >the UUID remains valid by duplicating it into a newly allocated
->> >memory space. The value is then inserted into the hash table
->> >with this persistent UUID key to ensure that the key stored in
->> >the hash table remains valid as long as the hash table entry
->> >exists.
->> >
->> >Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
->> >
->> >Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
->> >---
->> > hw/display/virtio-dmabuf.c | 6 ++++--
->> > 1 file changed, 4 insertions(+), 2 deletions(-)
+>> First, my apologies for the long delay in getting back to you. I was away on
+>> paternity leave for the last few weeks.
+> No worries!
+>
+>> Thank you for the detailed follow-up, your advice is very helpful for
+>> simplifying the series.
 >>
->> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
-Reviewed-by: Albert Esteve <aesteve@redhat.com>
-
 >>
->> >
->> >diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
->> >index 3dba4577ca7..5e0395be77c 100644
->> >--- a/hw/display/virtio-dmabuf.c
->> >+++ b/hw/display/virtio-dmabuf.c
->> >@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, Vir=
-tioSharedObject *value)
->> >     if (resource_uuids =3D=3D NULL) {
->> >         resource_uuids =3D g_hash_table_new_full(qemu_uuid_hash,
->> >                                                uuid_equal_func,
->> >-                                               NULL,
->> >+                                               g_free,
->> >                                                g_free);
->> >     }
->> >     if (g_hash_table_lookup(resource_uuids, uuid) =3D=3D NULL) {
->> >-        g_hash_table_insert(resource_uuids, uuid, value);
->> >+        g_hash_table_insert(resource_uuids,
->> >+                            g_memdup2(uuid, sizeof(*uuid)),
->> >+                            value);
->> >     } else {
->> >         result =3D false;
->> >     }
->> >--
->> >2.47.0
->> >
+>> On 2025/8/23 18:41, Mostafa Saleh wrote:
+>>> On Wed, Aug 20, 2025 at 11:21:02PM +0800, Tao Tang wrote:
+>>>> On 2025/8/19 05:24, Mostafa Saleh wrote:
+>>>>> On Wed, Aug 06, 2025 at 11:11:25PM +0800, Tao Tang wrote:
+>>>>>> This patch builds upon the previous introduction of secure register
+>>>>>> definitions by providing the functional implementation for their access.
+>>>>>>
+>>>>>> The availability of the secure programming interface is now correctly
+>>>>>> gated by the S_IDR1.SECURE_IMPL bit. When this bit indicates that
+>>>>>> secure functionality is enabled, the I/O handlers (smmuv3_read and
+>>>>>> smmuv3_write) will correctly dispatch accesses to the secure
+>>>>>> register space.
+>>>>>>
+>>>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>>>> ---
+>>>>>>    hw/arm/smmuv3-internal.h |   5 +
+>>>>>>    hw/arm/smmuv3.c          | 451 +++++++++++++++++++++++++++++++++++++++
+>>>>>>    2 files changed, 456 insertions(+)
+>>>>>>
+>>>>>> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+>>>>>> index 483aaa915e..1a8b1cb204 100644
+>>>>>> --- a/hw/arm/smmuv3-internal.h
+>>>>>> +++ b/hw/arm/smmuv3-internal.h
+>>>>>> @@ -122,6 +122,11 @@ REG32(CR0,                 0x20)
+>>>>>>    #define SMMU_CR0_RESERVED 0xFFFFFC20
+>>>>>> +/*
+>>>>>> + * BIT1 and BIT4 are RES0 in SMMU_S_CRO
+>>>>>> + */
+>>>>>> +#define SMMU_S_CR0_RESERVED 0xFFFFFC12
+>>>>>> +
+>>>>>>    REG32(CR0ACK,              0x24)
+>>>>>>    REG32(CR1,                 0x28)
+>>>>>>    REG32(CR2,                 0x2c)
+>>>>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>>>>> index ab67972353..619180d204 100644
+>>>>>> --- a/hw/arm/smmuv3.c
+>>>>>> +++ b/hw/arm/smmuv3.c
+>>>>>> @@ -317,6 +317,18 @@ static void smmuv3_init_regs(SMMUv3State *s)
+>>>>>>        s->gerrorn = 0;
+>>>>>>        s->statusr = 0;
+>>>>>>        s->gbpa = SMMU_GBPA_RESET_VAL;
+>>>>>> +
+>>>>>> +    /* Initialize secure state */
+>>>>>> +    memset(s->secure_idr, 0, sizeof(s->secure_idr));
+>>>>>> +    /* Secure EL2 and Secure stage 2 support */
+>>>>>> +    s->secure_idr[1] = FIELD_DP32(s->secure_idr[1], S_IDR1, SEL2, 1);
+>>>>> AFAIU, this is wrong, SEL2 means that the SMMU has dual stage-2,
+>>>>> one for secure (S_S2TTB) and one for non-secure IPAs(S2TTB).
+>>>>> Which is not implemented in this series.
+>>>> Hi Mostafa,
+>>>>
+>>>> Thank you for the very detailed and helpful review. Your feedback is spot
+>>>> on, and I'd like to address your points and ask for a quick confirmation on
+>>>> them.
+>>>>
+>>>> Regarding the SEL2 bit, you are absolutely right, my understanding was
+>>>> incorrect. I've spent the last few days reviewing the manual to better
+>>>> understand the selection between Secure and Non-secure Stage 2 translations.
+>>>> I would be very grateful if you could confirm if my new understanding is
+>>>> correct:
+>>>>
+>>>> - In Stage 2-only mode (Stage 1 bypassed), the choice between a Secure or
+>>>> Non-secure IPA translation is determined solely by STE.NSCFG.
+>>>>
+>>> Yes, but that's only with SMMU_IDR1.ATTR_PERMS_OVR which Qemu doesn't
+>>> advertise, so in our case it's always secure.
+>>>
+>>>> - In Stage 1-enabled mode, STE.NSCFG is ignored. The choice is determined by
+>>>> the translation process, starting from CD.NSCFGx, with the output NS
+>>>> attribute being the result of intermediate NSTable flags and the final
+>>>> descriptor.NS bit (TTD.NSTable, TTD.NS).
+>>>>
+>>> You have to differentiate between the security state of the translation and
+>>> the security state of the translation table access.
+>>>
+>>> For stage-1, the security state is determined by the NS bit in the last
+>>> level PTE, which in case of nested translation it will choose between S2TTB
+>>> or S_S2TTB.
+>>>
+>>> Also, note that the stage-2 also have an NS which define the final attribute
+>>> of the transaction.
+>>>
+>>> You have to also be careful around things such as NSCFG{0,1} as it might
+>>> change which stage-2 is used for the stage-1 TTB walk.
+>>>
+>>> I see, in your patches, all the page-table access is done using the secure
+>>> state of the SID which is not correct.
+>>>
+>>>
+>>>> Based on this, I plan to have an internal flag, perhaps named
+>>>> target_ipa_is_ns in SMMUTransCfg.SMMUS2Cfg struct, to track the outcome of
+>>>> this process. This flag will then determine whether S_S2TTB or S2TTB is used
+>>>> for the Stage 2 translation.
+>>>>
+>>> I am worried that it's not that simple for a single secure nested translation
+>>> you can have multiple stage-2 walks where some might be secure and others not,
+>>> so I imagine this some how will be determined from each stage-1 walk and
+>>> some how returned (maybe in the TLB struct) which is then the stage-2
+>>> walk looks into.
+>>>
+>>> I am not sure how complicated it is to manage 2 stage-2 with the current code
+>>> base, so my advice would be to split the problem; for now you can drop SEL2
+>>> from this series and rely on NS stage-2.
+>>
+>> I would like to confirm my understanding of the implementation. Does this
+>> mean that for the current RFC, we should set S_IDR1.SEL2=0, which implies
+>> that all Stage-2 translations will begin with a Non-secure IPA? And the
+>> final output PA space will then almost always be Non-secure PA, with the
+>> sole exception being when S2SW, S2SA, S2NSW, and S2NSA are ALL ZERO.
+>>
+>>
+>> However, since these fields are RES0 when S_IDR1.SEL2=0, it seems we can
+>> conclude that for this version, the output will definitively be a Non-secure
+>> PA. I believe this is what you meant by your advice to "rely on NS stage-2".
+>> I would be grateful if you could let me know whether this interpretation is
+>> on the right track.
+> Yes, that’s what I meant, I think that simplifies a lot, in this series we
+> can focus on the infrastructure for the secure SMMU (registers, TLBs..),
+> and then extra features such as secure stage-2 can be added later.
+>
+>>
+>> ------------------------------<snip>------------------------------
+>>
+>>>> The new code performs a single, necessary security state check at the entry
+>>>> point of the MMIO handlers. The rest of the logic relies on the banking
+>>>> mechanism, which makes the implementation generic for Non-secure, Secure,
+>>>> and future states like Realm/Root. The new structure looks like this:
+>>>>
+>>>> /* Structure for one register bank */
+>>>> typedef struct SMMUv3Bank {
+>>>>      uint32_t idr[6];     /* IDR0-IDR5, note: IDR5 only used for NS bank */
+>>>>      uint32_t cr[3];      /* CR0-CR2 */
+>>>>      uint32_t cr0ack;
+>>>>      uint32_t init;       /* S_INIT register (secure only), reserved for NS
+>>>> */
+>>>>      uint32_t gbpa;
+>>>>
+>>>> ......
+>>>>
+>>>>      SMMUQueue eventq, cmdq;
+>>>> } SMMUv3Bank;
+>>>>
+>>>> struct SMMUv3State {
+>>>>      SMMUState     smmu_state;
+>>>>
+>>>>      /* Shared (non-banked) registers and state */
+>>>>      uint32_t features;
+>>>>      uint8_t sid_size;
+>>>>      uint8_t sid_split;
+>>>>
+>>>> ......
+>>>>
+>>>>      /* Banked registers for all access */
+>>>>      SMMUv3Bank bank[SMMU_SEC_IDX_NUM];
+>>>> ......
+>>>> };
+>>>>
+>>> Yes, IMO,that’s the right approach. Although that might make the
+>>> migration code more complicated as we changed the state struct.
+>>>
+>>> Thanks,
+>>> Mostafa
+>> I have almost completed the refactoring based on this new structure, and I
+>> will send out the v2 patch series in the next few days for review.
+> Sounds good!
+Sorry for having failed to review the RFC on time. Thanks to other
+reviewers I think you've got quite a lot of feedbacks already. I will
+review v2.
+
+Looking forward to receiving your respin.
+
+Thanks
+
+Eric
+>
+> Thanks,
+> Mostafa
+>
+>> Thanks again for your invaluable guidance.
+>>
+>> Best regards,
+>>
+>> Tao
 >>
 
 
