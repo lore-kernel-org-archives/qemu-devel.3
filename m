@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C30CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97EEFCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy9GH-0001XZ-9D; Mon, 15 Sep 2025 09:28:53 -0400
+	id 1uy9H1-0002Fv-9i; Mon, 15 Sep 2025 09:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9G0-0001Mg-QQ; Mon, 15 Sep 2025 09:28:39 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9Fq-0007xv-Vf; Mon, 15 Sep 2025 09:28:35 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7C0128071B;
- Mon, 15 Sep 2025 16:28:16 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:130::1:7] (unknown [2a02:6bf:8080:130::1:7])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ESPMVg1FmiE0-r5y543rI; Mon, 15 Sep 2025 16:28:15 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757942895;
- bh=976EOc+9cn2+G4jFX6QTzmqmFIZCLK3lSxahIu42Bc8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=WRlft+ttn14Y/RlKT44yyPbfm1AkFuFR69rQrI9zVOYaJ37xaTeeav2hzLstJLCOq
- 1KrfJmG1SCXtouJ21i0u1ZRURUhRbIvvVX4AKsi/BPMa6Fnu97XrCbya4HOK7HhJUZ
- 4CWS01e7TCmesmjg2IrtmsTOs3m3pH9SUDGlVzFo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3cbfa394-0b7e-4847-add9-479a749e061b@yandex-team.ru>
-Date: Mon, 15 Sep 2025 16:28:14 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uy9Gs-00029X-RW
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:29:32 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uy9Gj-00086P-SI
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:29:30 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3dae49b1293so2376883f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 06:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757942953; x=1758547753; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BBugnVxa6GIRx7PYLmryOGEGnPy1qRYdN+ScLxAmtdM=;
+ b=Fbvu3JAFRdDkNrZn3BMzUE/RHkvAj187hPguYpcSnqLsOwfYgWGBgUrz+y9KVQkXOL
+ JLEptmnsgudshOGvi4KEC+41Na31Tpw/+Ya/3J6LNuhdluoWlbEB7moMtHCQLZE5OY70
+ s/jhl40GygTikJJlV9X2YVaz+r+TovGd/zjcoyDAhmWXm1ev7g2X4F7QC2ZX1HR5/mFi
+ 3BQ2I2YPIWeiJqTrEIoDsjOsBIIPYdWOzR/DeUjtWvw84MrXb5hePv8Vc+FwmXpDf5EU
+ YWOOZSGqZM2YNKrZpa5zkZJpBGk3lCWz7d4B3GnwqXGxElyqFTGimcZDjUGyWfm8RR+E
+ /bFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757942953; x=1758547753;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BBugnVxa6GIRx7PYLmryOGEGnPy1qRYdN+ScLxAmtdM=;
+ b=kqph/LbEIAx1deRW+GWbnmmPg5GndJGLokty4CuBMXOykSNlIbqiO4cQ1Pc2I7noYC
+ vFZQ4EjWUP6bZUr3KRHPCE1MQwRmq7oG75zT2NuTHgAaWSTcjU81+bJYNXHd2K4SElny
+ to0utkpxKX5Q41fGs8J6/A2lJP3ZyGdULHBBtvRoXusEBlwKOC5V22FmB3jsF1ryIujG
+ W6GlRHO2C0nAiQmUYcdxkl7j/2qXkLlgcbBDqFVHFtDGs1xYO3xUWyTZba3XqvT7DyMZ
+ SJYAnZQpQLsbj4IwFiIBOw8tB5mPDNFDxDTmBNZ+XpVUPRh6LZgk5ZJqI94ebRLpUBTr
+ OZMA==
+X-Gm-Message-State: AOJu0YxcaHYDrE7o4MfDORj0h4/8lf1+vGyOafZ6WAD+BATDjWdP71Mw
+ JR6CQQgBtNWC/JNxysEY0mFoXy+LYz/ogu13l7+4O0wXEvQ0BDkAhoRr4aOkzLZ/pDlroK91CAQ
+ YNsTA
+X-Gm-Gg: ASbGncuWsasJS1X7p3z/cgWqT0HJMokvVTT70UEu78TDT8Pw812SHxCjTJw/+nPG5Go
+ +f8+uGUuQ9rZdT/VQ2rxVMHWGi8XLLo8K3KvSP2CUND44cjrOeoKM6JynR/Wsg/nKrWgC6Y1XLX
+ d3lidwVgF2RMq9tEq6pmzMCl7kIWqu5goLUWq0OP87l56Gx/EpHaWSFcHw1m7j79gjiUGnGH4dJ
+ CM/HJzOlkT+l48Rw0CTWfIonffa3zUSAGhliFegSF0uK2aXUjL+7T/B5wcuPR0e1IfuplvLlR1+
+ aIgaq3MsNp328dENH8UgvscF7cbwhkQF9cojogGt9yjEvYe9Ttq3I9KSVJBDahmNZ4lAH9S5CIp
+ Op+z1b8pt3fMvf0aQm0WqI6PVfYJ/
+X-Google-Smtp-Source: AGHT+IEmbqBRLwhIHvbpPbZtNEJdmgrx+f+zXv2ApaMM83WSCR/AWVXzwRmnC0JeCE5Mk2t+ND7yLQ==
+X-Received: by 2002:a05:6000:2909:b0:3ea:f093:97d2 with SMTP id
+ ffacd0b85a97d-3eaf093a09bmr1955710f8f.1.1757942953121; 
+ Mon, 15 Sep 2025 06:29:13 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45e0156b0a8sm181366835e9.3.2025.09.15.06.29.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 06:29:12 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH] hw/usb/hcd-uhci: don't assert for SETUP to non-0 endpoint
+Date: Mon, 15 Sep 2025 14:29:10 +0100
+Message-ID: <20250915132910.1252212-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 24/33] chardev-add: support local migration
-To: Steven Sistare <steven.sistare@oracle.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, den-plotnikov@yandex-team.ru,
- Laurent Vivier <lvivier@redhat.com>
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-25-vsementsov@yandex-team.ru>
- <87wm634t3v.fsf@pond.sub.org>
- <1227d603-dde3-403b-aa79-3f22b43d12fb@oracle.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <1227d603-dde3-403b-aa79-3f22b43d12fb@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,146 +98,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.09.25 18:24, Steven Sistare wrote:
-> On 9/12/2025 10:56 AM, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>
->>> This commit introduces a possibility to migrate open chardev
->>> socket fd through migration channel without reconnecting.
->>>
->>> For this, user should:
->>>   - enable new migration capability local-char-socket
->>>   - mark the socket by an option support-local-migration=true
->>>   - on target add local-incoming=true option to the socket
->>>
->>> Motivation for the API:
->>>
->>> 1. We don't want to migrate all sockets. For example, QMP-connection is
->>>     bad candidate, as it is separate on source and target. So, we need
->>>     @support-local-migration option to mark sockets, which we want to
->>>     migrate (after this series, we'll want to migrate chardev used to
->>>     connect with vhost-user-server).
->>>
->>> 2. Still, for remote migration, we can't migrate any sockets, so, we
->>>     need a capability, to enable/disable the whole feature.
->>>
->>> 3. And finally, we need a sign for the socket to not open a connection
->>>     on initialization, but wait for incoming migration. We can't use
->>>     @support-local-migration option for it, as it may be enabled, but we
->>>     are in incoming-remote migration. Also, we can't rely on the
->>>     migration capability, as user is free to setup capabilities before or
->>>     after chardev creation, and it would be a bad precedent to create
->>>     relations here.
->>>
->>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>
->> [...]
->>
->>> diff --git a/qapi/char.json b/qapi/char.json
->>> index f0a53f742c..5b535c196a 100644
->>> --- a/qapi/char.json
->>> +++ b/qapi/char.json
->>> @@ -280,11 +280,23 @@
->>>   #     mutually exclusive with @reconnect.
->>>   #     (default: 0) (Since: 9.2)
->>>   #
->>> +# @support-local-migration: The socket open file descriptor will
->>> +#     migrate if this field is true and local-char-socket migration
->>> +#     capability enabled (default: false) (Since: 10.2)
->>> +#
->>> +# @local-incoming: Do load open file descriptor for the socket
->>> +#     on incoming migration. May be used only if QEMU is started
->>> +#     for incoming migration and only together with local-char-socket
->>> +#     migration capability (default: false) (Since: 10.2)
->>> +#
->>>   # Features:
->>>   #
->>>   # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
->>>   #     instead.
->>>   #
->>> +# @unstable: Members @support-local-migration and @local-incoming
->>> +#            are experimental
->>> +#
->>>   # Since: 1.4
->>>   ##
->>>   { 'struct': 'ChardevSocket',
->>> @@ -298,7 +310,9 @@
->>>               '*tn3270': 'bool',
->>>               '*websocket': 'bool',
->>>               '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
->>> -            '*reconnect-ms': 'int' },
->>> +            '*reconnect-ms': 'int',
->>> +            '*support-local-migration': { 'type': 'bool', 'features': [ 'unstable' ] },
->>> +            '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } },
->>>     'base': 'ChardevCommon' }
->>>   ##
->>> diff --git a/qapi/migration.json b/qapi/migration.json
->>> index 2387c21e9c..4f282d168e 100644
->>> --- a/qapi/migration.json
->>> +++ b/qapi/migration.json
->>> @@ -517,6 +517,11 @@
->>>   #     each RAM page.  Requires a migration URI that supports seeking,
->>>   #     such as a file.  (since 9.0)
->>>   #
->>> +# @local-char-socket: Migrate socket chardevs open file descriptors.
->>> +#     Only may be used when migration channel is unix socket. Only
->>> +#     involves socket chardevs with "support-local-migration" option
->>> +#     enabled.  (since 10.2)
->>> +#
->>>   # Features:
->>>   #
->>>   # @unstable: Members @x-colo and @x-ignore-shared are experimental.
->>> @@ -536,7 +541,8 @@
->>>              { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
->>>              'validate-uuid', 'background-snapshot',
->>>              'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
->>> -           'dirty-limit', 'mapped-ram'] }
->>> +           'dirty-limit', 'mapped-ram',
->>> +           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
->>>   ##
->>>   # @MigrationCapabilityStatus:
->>
->> I understand why we need a knob to enable the feature.  A
->> MigrationCapability looks fine to me.  We could perhaps come up with a
->> better name, but let's leave that for later.
->>
->> I'm unsure about making users mark the sockets (really: the sockets
->> wrapped in a character device backend) to be migrated that way.
->>
->> Which sockets are users supposed to mark, and how would they know?
->>
->> What happens when a user marks the QMP socket?  You called that a "bad
->> candidate".
->>
->> Doesn't feel like good user interface design.
->>
->> Could QEMU decide (in principle) which sockets are suitable for
->> sending down the migration channel?
->>
->> If yes, could we make it do the right thing automatically?  Or at least
->> a check that stops the user from doing the wrong thing?
->>
->> [...]
-> 
-> Hi Vladimir, I did not notice this patch before.
-> I also submitted patches for preserving chardevs including sockets, here:
->    https://lore.kernel.org/qemu-devel/1658851843-236870-40-git-send-email-steven.sistare@oracle.com
-> and have fixed more bugs since then. I have attached my latest unsubmitted version
-> from my workspace.
-> 
-> My interface for enabling it is here:
->    https://lore.kernel.org/qemu-devel/1658851843-236870-37-git-send-email-steven.sistare@oracle.com/
-> 
-> I am not wedded to either the interface or my socket patch, but the capability
-> must be supported for CPR.  And an acknowledgement of the prior work would
-> be nice.
-> 
+If the guest feeds invalid data to the UHCI controller, we
+can assert:
+qemu-system-x86_64: ../../hw/usb/core.c:744: usb_ep_get: Assertion `pid == USB_TOKEN_IN || pid == USB_TOKEN_OUT' failed.
 
-Thanks! I'll consider this when preparing a new version for vhost-user-blk.
+(see issue 2548 for the repro case).  This happens because the guest
+attempts USB_TOKEN_SETUP to an endpoint other than 0, which is not
+valid.  The controller code doesn't catch this guest error, so
+instead we hit the assertion in the USB core code.
 
+Catch the case of SETUP to non-zero endpoint, and treat it as a fatal
+error in the TD, in the same way we do for an invalid PID value in
+the TD.
 
+This is the UHCI equivalent of the same bug in OHCI that we fixed in
+commit 3c3c233677 ("hw/usb/hcd-ohci: Fix #1510, #303: pid not IN or
+OUT").
 
+This bug has been tracked as CVE-2024-8354.
+
+Cc: qemu-stable@nongnu.org
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2548
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/usb/hcd-uhci.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 4822c704f69..e207d0587a1 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -735,6 +735,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+     bool spd;
+     bool queuing = (q != NULL);
+     uint8_t pid = td->token & 0xff;
++    uint8_t ep_id = (td->token >> 15) & 0xf;
+     UHCIAsync *async;
+ 
+     async = uhci_async_find_td(s, td_addr);
+@@ -778,9 +779,14 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+ 
+     switch (pid) {
+     case USB_TOKEN_OUT:
+-    case USB_TOKEN_SETUP:
+     case USB_TOKEN_IN:
+         break;
++    case USB_TOKEN_SETUP:
++        /* SETUP is only valid to endpoint 0 */
++        if (ep_id == 0) {
++            break;
++        }
++        /* fallthrough */
+     default:
+         /* invalid pid : frame interrupted */
+         s->status |= UHCI_STS_HCPERR;
+@@ -829,7 +835,7 @@ static int uhci_handle_td(UHCIState *s, UHCIQueue *q, uint32_t qh_addr,
+             return uhci_handle_td_error(s, td, td_addr, USB_RET_NODEV,
+                                         int_mask);
+         }
+-        ep = usb_ep_get(dev, pid, (td->token >> 15) & 0xf);
++        ep = usb_ep_get(dev, pid, ep_id);
+         q = uhci_queue_new(s, qh_addr, td, ep);
+     }
+     async = uhci_async_alloc(q, td_addr);
 -- 
-Best regards,
-Vladimir
+2.43.0
+
 
