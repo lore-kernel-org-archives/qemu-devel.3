@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1901CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 23:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C114CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 23:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyID5-0006gt-Qi; Mon, 15 Sep 2025 19:02:11 -0400
+	id 1uyIJx-0000B5-5i; Mon, 15 Sep 2025 19:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1uyID3-0006gL-Pq
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:02:09 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1uyID1-0002jt-KK
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:02:09 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b07883a5feeso823926666b.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 16:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757977324; x=1758582124; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=xEkZik1YGk47OpDU1f55FZimd5u4mFr3OyKc3J65ewM=;
- b=C4ZDsMvLiJ4vrNDH9hjbX5Nd3llybDg6RNYNbjYAZkEo84DISPT/C7pIcMSh8eiBpt
- j9cKK34n3jepz8xTWGu4syDOhcqSeTPWtI/w6BMbkhlaVadWigQ0E86deGquIkrKWHHz
- 78euUtu2saZXiq3ykjvLB4wBF8G5HuqpBAoL0bvZhixCpg83eYrzoajw5G/Na/LyJyoc
- bhArPKxAFBwidPrD8Tda0EZ6TiOUxZ5BCTBD+1uLz0M8SpscIpQnIg7KZpyajAQT/0Ks
- wS0r5UfZVs3NpDHcXnwe8lHr6FWxv4tbVBXzuqcbv3DVFbTPG8MyaKQTRvID9RWQ3+1U
- 0VHA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uyIJs-0000AN-JP
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:09:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uyIJe-0003P1-LD
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:09:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757977722;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UmrCQY5qy1q8dffJaRkx41XnKkWEw8BoFx8icIA+RLE=;
+ b=A7o5V67rfsDOzeoWISm//nA/ciy9dOitp4XMEHApGZSiJacuMxnPMEklrjdK8tbjlIA/Oh
+ phcfMVZs+pGfN7O9JHQDNXqImXXGFNwnAXVVxNGP6BVuFwpHMP44fCV87kkPvyJTwoXyqi
+ c7AC+aJhjirSvrKNOgWlwofp4FemIy4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-315-MYUsDOxOOX-Q3sIRR6qLyQ-1; Mon, 15 Sep 2025 19:08:40 -0400
+X-MC-Unique: MYUsDOxOOX-Q3sIRR6qLyQ-1
+X-Mimecast-MFC-AGG-ID: MYUsDOxOOX-Q3sIRR6qLyQ_1757977720
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-afe6216085aso60716466b.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 16:08:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757977324; x=1758582124;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xEkZik1YGk47OpDU1f55FZimd5u4mFr3OyKc3J65ewM=;
- b=briiM5j2cf5zIJHLE6Mh4r1PLZOK3tORVlpfUhi9x0FdimcrRBoLui2KB0hH1OmnHv
- mbOkonGhibuBjh7USoFpgZmzyqfOmesfn0CMlU3Q9AWKsuDhXylbKrTkgHmIJE3woCdJ
- FcoUffBRQbWd8gfP4CMgJlq3zdv6yt4CqkOjFbsrEd9xk3V5a2DzlHyQ5JIDpja78q3T
- m3eO5YrVpb28ReQ/xQ5fd1vKF4SnaST8bRNVWsWYsw5VIX1gE1A1A8OKsi85N5Ucusiz
- Wv6NnAKNBrdO1jIbZqpXUPshQ2lBne0zyrivHknl00F9JUMnP5vrU+V6NR9BfZ75bZJG
- ItJA==
-X-Gm-Message-State: AOJu0YwSE/wvhc6elij2F5ffI9UsjEEKHjM2vUe4/9Vcatn7thUO7Cw3
- trCMKc2+P8uQv6sA6pAEy3K+vFGSaCddvjSYkEnfZgBuNYrf+2W/auWNJpeObzaZ
-X-Gm-Gg: ASbGnctMRp+Rub31zEaFpDmLXZHqNoeyfUpzywb4myTGaD22VwjSCJo4jxGzpbiHBxY
- 9ajw8IV3+5e7+n6+CaoWdYadICAXKAeLXxZ3WJlrt3nT4QQP6BSXfToJiHyNekADiTISw2m86SZ
- FIa0BefBqGUQ/UNdTNFq9jEUcftbzNgPmZSmUphPOr7pV+42lWGb5fhOxVYoGv84xvnYwx2ew1o
- DXzl99eiGVfi43qDyDFFvaswUUDl7YMcpcbk9C+4D7/O1CU4QNZpaLuFJHjLvI55f1kfRjxfSnm
- M1itFX4uyl5l72ekNC34AP2JkzHLu3OURPdIFmc27lppG1wJS3kI6Mujt2wf8xbQqEDtDYg76Z5
- VjoHd4iy0b4Bjk01wVEwEPqUm7OMkri8BcRf415qFggt+DUE/GHfCTl0vWZ4Y
-X-Google-Smtp-Source: AGHT+IHFBDjatHuEWlSqWk3dsMkijnNM1NZnfhgj9q4YdPUvxNdEYRXmhqvrJc1yqV8nSHuNSGe5AQ==
-X-Received: by 2002:a17:907:3d16:b0:b07:b7c2:d7fc with SMTP id
- a640c23a62f3a-b07c354074dmr1185225566b.6.1757977324370; 
- Mon, 15 Sep 2025 16:02:04 -0700 (PDT)
-Received: from [10.192.92.112] (cgnat129.sys-data.com. [79.98.72.129])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b0906a9640esm579660766b.110.2025.09.15.16.02.03
+ d=1e100.net; s=20230601; t=1757977719; x=1758582519;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UmrCQY5qy1q8dffJaRkx41XnKkWEw8BoFx8icIA+RLE=;
+ b=titApYHvu8sHHA2p1i54dzgLvG3++RTUM6JJJdAwys5Ee2pLrIEI/flRIEd2Tf4bUB
+ qmHINO3PYbRsl8SknCPiSEa8GytjC63L513VjqgAe3aJTPRQyQPiyJOzKZSNJbtVcAgu
+ y/3XqdAMsVHmLOk12dWSFxrQWCx5zNKTp6rQqJsCtlzcGokr9SKkUElYEa9CFsq2GMpS
+ cZQ35yzgjuSXrKW+YuvM+PKG9R9EMBNNTa3ts38ueKD/D0J9iz81hnm9DLnjTN1AIb0h
+ r6xax/B6EGW723LO+ODxbefM1JHX9BrBQ/i4SiyvUWRuM1xFLFQg/BQXWeaPw4H+jgQ3
+ VFgw==
+X-Gm-Message-State: AOJu0YyKvpWwrJjrDsGzirSGZwf/Lrz5irxWEDxHzAQfHpaenivJ2A80
+ qt2yNTbuv5McV2K7WhrEIgdTRUvyyVpTo93aPzwALamTZkBOJjW7iDAjV7Z2XD+3D33ydROz9r5
+ QkqWi/QLh4E1E7vx45kvl76R01JHqC1essMVewOnBNw3Wte4TZ8m0A6Op
+X-Gm-Gg: ASbGncvq0JQ99OLB2HskiauoCrddNUQSfsIDCs5/+C/bqvuleMYvTy0KOPO42A3QMr2
+ l49tmJy7spbWebk3q84v3Pu8GHYivs/f1asggq1f5pG5UIy5ANguywc6oCEsScPAa/LFS8G6Hl2
+ Eea3gG2lKQmX1EinQDAZxscFI2s1zDa+u/Duuf6JN+We6YioK3vVeEa8B0eDI5Vv0AOo12vnYjn
+ 4WNspmWG8+XYsEGHlIxdJzxCYCRxDOw7uplStRnqG9UH93whV4H3GfcQPkuT9NCd2z0KHoRhp2w
+ /ZYu5Ug8RlH+F4/trFYiUrbwdJNg
+X-Received: by 2002:a05:6402:4559:b0:62b:2899:5b31 with SMTP id
+ 4fb4d7f45d1cf-62ed80b6b91mr12207089a12.5.1757977719639; 
+ Mon, 15 Sep 2025 16:08:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcLWBItfP7dzGQYzT5Doeuz7bgzQ62gQTnv78tBHSGy8Qf7wuwed5bTgbiOa+Pu2s4iVvP4A==
+X-Received: by 2002:a05:6402:4559:b0:62b:2899:5b31 with SMTP id
+ 4fb4d7f45d1cf-62ed80b6b91mr12207072a12.5.1757977719291; 
+ Mon, 15 Sep 2025 16:08:39 -0700 (PDT)
+Received: from redhat.com ([31.187.78.47]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-62ec33ae181sm10383955a12.22.2025.09.15.16.08.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 16:02:03 -0700 (PDT)
-Message-ID: <ecb9a5310ec1b846124a6342232dd421778df064.camel@gmail.com>
+ Mon, 15 Sep 2025 16:08:38 -0700 (PDT)
+Date: Mon, 15 Sep 2025 19:08:35 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Szymon Lukasz <noh4hss@gmail.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Subject: Re: [PATCH v4 00/10] virtio-console: notify about the terminal size
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,  Amit Shah <amit@kernel.org>, Markus
- Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,  Eduardo
- Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu	
- <zhao1.liu@intel.com>, Szymon Lukasz <noh4hss@gmail.com>, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>
-Date: Tue, 16 Sep 2025 01:02:02 +0200
-In-Reply-To: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
+Message-ID: <20250915190638-mutt-send-email-mst@kernel.org>
 References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+ <ecb9a5310ec1b846124a6342232dd421778df064.camel@gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ecb9a5310ec1b846124a6342232dd421778df064.camel@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,21 +114,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While thinking about the patches, a few questions about the virtio spec
-have popped into my head.
+On Tue, Sep 16, 2025 at 01:02:02AM +0200, Filip Hejsek wrote:
+> While thinking about the patches, a few questions about the virtio spec
+> have popped into my head.
+> 
+> 1. Should the config space size also be updated (for port 0) when
+> multiport is used? Based on my reading of the spec, I think yes.
+> 
+> 2. Can VIRTIO_CONSOLE_RESIZE be sent if VIRTIO_CONSOLE_F_SIZE is not
+> negotiated? The spec does not say, which I think means it can.
 
-1. Should the config space size also be updated (for port 0) when
-multiport is used? Based on my reading of the spec, I think yes.
+But the guest can't do anything useful here.
 
-2. Can VIRTIO_CONSOLE_RESIZE be sent if VIRTIO_CONSOLE_F_SIZE is not
-negotiated? The spec does not say, which I think means it can.
+> 3. The spec says that reading from config space fields that are
+> conditional on features should be allowed even if the driver has not
+> (yet) accepted the feature. Does it mean that we have to update the
+> size even if the feature is not accepted (yet), or is it OK if the
+> reads return 0?
 
-3. The spec says that reading from config space fields that are
-conditional on features should be allowed even if the driver has not
-(yet) accepted the feature. Does it mean that we have to update the
-size even if the feature is not accepted (yet), or is it OK if the
-reads return 0?
+This is talking about the window before FEATURES_OK (and so DRIVER_OK)
+is set.  It is best to update the size. There's no interrupt to send
+though.
 
-Thanks for any answers or opinions,
-Filip Hejsek
+
+> Thanks for any answers or opinions,
+> Filip Hejsek
+
 
