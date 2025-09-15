@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A1A7CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C30CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy9Ez-0008RU-30; Mon, 15 Sep 2025 09:27:33 -0400
+	id 1uy9GH-0001XZ-9D; Mon, 15 Sep 2025 09:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uy9Es-0008G9-Rz
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:27:27 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uy9EN-0007j9-0H
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:27:08 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-71d60150590so25773947b3.0
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 06:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757942804; x=1758547604; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3QZ2Wx1HpeTG6nb+EFKIpGJJt1y4dxGPuginnej6FHY=;
- b=Eb7d+xh61INdlRsTivXk2SZrJfyMXOaC5M5zXMEvKNrkpVsuSPDXmu5yYnFjPEXw9F
- NlVBzhgUSrhsf9VK9ok9WCMptSLOPNH3/xrDpsh8yChrqxO+4wKa0pGaksQxuqCSxTee
- WGt0Gzz91+OYcBmPE5gOwhggMFZ3HyLXKMPGJP+8mo9Qy6T/C6vVZ9Kwx2yc92kfSSJ9
- QPZBA9JDTzT1rMs1R/m1wugD7j7YFFVSW+A73/hUxebQCYpsEYvV81p5e65laqhlrEN3
- FmNaTzAoGeMQAc1R6oUAoPo9KtvxtjTj2pQFR7qnZ0F0TqqtJLGga00a7yLApBhFXTtm
- BZgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757942805; x=1758547605;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3QZ2Wx1HpeTG6nb+EFKIpGJJt1y4dxGPuginnej6FHY=;
- b=RaHnDhXOiaYDvmcq9TUXh2x+sGQq1KWrtuXBHLJouJR+HaXlQOwnqBkkS11NmTD2Xa
- Gn0jgS3/l0zJxBTErxEwcyQbcoFX9DlHN9ESHYzZ9IbNz1Uf7t8J2+m2L8sdeQTc24Oz
- vKJePGP8NmlfAud+R5AHrHRaapvfGB7u6am+9oJ2cMCm1Ji8zIZZqzog22h4E6nUzQNC
- UkDv/siET0TWQZBvuKghg+lkHtI8cR4dOIFkajG7J9OkersnTjCMe7Q3z4AOZRXXuY1q
- 7ibIcW21p0QxzJZ3OtgltIsRnj14R4TDqUlWj4M0RAN5sRAX682+mTrve/4eKGi4CKnN
- /Ovg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXv7n8a4Qe587SwhXpvSV0/rhWooYp3L4s9t9IPz+YHgVxEpZ6xLCvKZqpFtw9OscHsEx+hjQNvb+pT@nongnu.org
-X-Gm-Message-State: AOJu0YwF0iN331ol8wwbxQL+W/VudK2qJBaF2thCGhkylJiQjnsT8JOv
- vrx+7+AZt+Wlh6CpakPQ4hlhdEZukfRSHGL0QPy4+UBsSh1ODpmkhdXLb/NWWlArGMGgtIHKJGJ
- nuYRNqnPTbeoGKQtq4/3vaWzuxKb1gFFSEVQeOer2iA==
-X-Gm-Gg: ASbGncu6h0MjrgihV0RTky8hgOAqcfHWi8ME+H60MN50gfJDEh5rj7lVsuF4bmJi6XM
- Pp3Nh6EcGBNPWh1fY+bRxORMIixBtMDJ1tGmFSAMYaxUElYEU02tOJWI4PHtIabOQe2AOJ55pwK
- pn0Ow6riSovyYUIOcMWxUEpXduM9slVDZB0p9p5Qjo3aElhXtEiEIqFDp+EV66wIXYpFnxpbRqj
- 7RKcbaz
-X-Google-Smtp-Source: AGHT+IEhA9KMQU4R0BLymNyjfWKQ1eyEZJ2OXZdM/4BT3SnZfYSA3Ezf2CgI3uqKoFcw0/gwt1CXodH/EHRZ1Zh6ZrY=
-X-Received: by 2002:a05:690c:724a:b0:735:4c38:5413 with SMTP id
- 00721157ae682-7354c386134mr10202837b3.9.1757942804377; Mon, 15 Sep 2025
- 06:26:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy9G0-0001Mg-QQ; Mon, 15 Sep 2025 09:28:39 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy9Fq-0007xv-Vf; Mon, 15 Sep 2025 09:28:35 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7C0128071B;
+ Mon, 15 Sep 2025 16:28:16 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:130::1:7] (unknown [2a02:6bf:8080:130::1:7])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ESPMVg1FmiE0-r5y543rI; Mon, 15 Sep 2025 16:28:15 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757942895;
+ bh=976EOc+9cn2+G4jFX6QTzmqmFIZCLK3lSxahIu42Bc8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=WRlft+ttn14Y/RlKT44yyPbfm1AkFuFR69rQrI9zVOYaJ37xaTeeav2hzLstJLCOq
+ 1KrfJmG1SCXtouJ21i0u1ZRURUhRbIvvVX4AKsi/BPMa6Fnu97XrCbya4HOK7HhJUZ
+ 4CWS01e7TCmesmjg2IrtmsTOs3m3pH9SUDGlVzFo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3cbfa394-0b7e-4847-add9-479a749e061b@yandex-team.ru>
+Date: Mon, 15 Sep 2025 16:28:14 +0300
 MIME-Version: 1.0
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
- <20250829125935.1526984-25-pbonzini@redhat.com>
- <aL7oe3sis3bKJhLW@redhat.com> <20250910131633.4b66856d@fedora>
- <CABgObfZz8pYRSDMw0Hq+wpcWPL1Oaq_TPtcbSAnLZW0Gr3XSng@mail.gmail.com>
- <20250910145631.32a805dd@fedora>
-In-Reply-To: <20250910145631.32a805dd@fedora>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 15 Sep 2025 14:26:32 +0100
-X-Gm-Features: Ac12FXwd8_GJLwxWa-UydgzDLfrOS0SgKJmcmm9eUIvCtZUZ-d8Ujos7Ofnk10k
-Message-ID: <CAFEAcA818dNUH51ih0dxWtDY30K1kiYxN1Y987tSsYaxziuELw@mail.gmail.com>
-Subject: Re: [PULL 24/28] hpet: switch to fine-grained device locking
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Woodhouse <dwmw@amazon.co.uk>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 24/33] chardev-add: support local migration
+To: Steven Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael@enfabrica.net, sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eblake@redhat.com, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, den-plotnikov@yandex-team.ru,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-25-vsementsov@yandex-team.ru>
+ <87wm634t3v.fsf@pond.sub.org>
+ <1227d603-dde3-403b-aa79-3f22b43d12fb@oracle.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <1227d603-dde3-403b-aa79-3f22b43d12fb@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,21 +82,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Sept 2025 at 13:57, Igor Mammedov <imammedo@redhat.com> wrote:
->
-> On Wed, 10 Sep 2025 13:23:10 +0200
-> Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > I've only looked at it briefly, but it fails on the bql_locked()
-> > assertion of xen_evtchn_set_gsi().
-> >
-> > I think the assertion can be moved inside "if (gsi && gsi == s->callback_gsi)".
->
-> given it's manipulating interrupts,
-> shouldn't we take BQL when doing so?
+On 12.09.25 18:24, Steven Sistare wrote:
+> On 9/12/2025 10:56 AM, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>
+>>> This commit introduces a possibility to migrate open chardev
+>>> socket fd through migration channel without reconnecting.
+>>>
+>>> For this, user should:
+>>>   - enable new migration capability local-char-socket
+>>>   - mark the socket by an option support-local-migration=true
+>>>   - on target add local-incoming=true option to the socket
+>>>
+>>> Motivation for the API:
+>>>
+>>> 1. We don't want to migrate all sockets. For example, QMP-connection is
+>>>     bad candidate, as it is separate on source and target. So, we need
+>>>     @support-local-migration option to mark sockets, which we want to
+>>>     migrate (after this series, we'll want to migrate chardev used to
+>>>     connect with vhost-user-server).
+>>>
+>>> 2. Still, for remote migration, we can't migrate any sockets, so, we
+>>>     need a capability, to enable/disable the whole feature.
+>>>
+>>> 3. And finally, we need a sign for the socket to not open a connection
+>>>     on initialization, but wait for incoming migration. We can't use
+>>>     @support-local-migration option for it, as it may be enabled, but we
+>>>     are in incoming-remote migration. Also, we can't rely on the
+>>>     migration capability, as user is free to setup capabilities before or
+>>>     after chardev creation, and it would be a bad precedent to create
+>>>     relations here.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>
+>> [...]
+>>
+>>> diff --git a/qapi/char.json b/qapi/char.json
+>>> index f0a53f742c..5b535c196a 100644
+>>> --- a/qapi/char.json
+>>> +++ b/qapi/char.json
+>>> @@ -280,11 +280,23 @@
+>>>   #     mutually exclusive with @reconnect.
+>>>   #     (default: 0) (Since: 9.2)
+>>>   #
+>>> +# @support-local-migration: The socket open file descriptor will
+>>> +#     migrate if this field is true and local-char-socket migration
+>>> +#     capability enabled (default: false) (Since: 10.2)
+>>> +#
+>>> +# @local-incoming: Do load open file descriptor for the socket
+>>> +#     on incoming migration. May be used only if QEMU is started
+>>> +#     for incoming migration and only together with local-char-socket
+>>> +#     migration capability (default: false) (Since: 10.2)
+>>> +#
+>>>   # Features:
+>>>   #
+>>>   # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+>>>   #     instead.
+>>>   #
+>>> +# @unstable: Members @support-local-migration and @local-incoming
+>>> +#            are experimental
+>>> +#
+>>>   # Since: 1.4
+>>>   ##
+>>>   { 'struct': 'ChardevSocket',
+>>> @@ -298,7 +310,9 @@
+>>>               '*tn3270': 'bool',
+>>>               '*websocket': 'bool',
+>>>               '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+>>> -            '*reconnect-ms': 'int' },
+>>> +            '*reconnect-ms': 'int',
+>>> +            '*support-local-migration': { 'type': 'bool', 'features': [ 'unstable' ] },
+>>> +            '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } },
+>>>     'base': 'ChardevCommon' }
+>>>   ##
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index 2387c21e9c..4f282d168e 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -517,6 +517,11 @@
+>>>   #     each RAM page.  Requires a migration URI that supports seeking,
+>>>   #     such as a file.  (since 9.0)
+>>>   #
+>>> +# @local-char-socket: Migrate socket chardevs open file descriptors.
+>>> +#     Only may be used when migration channel is unix socket. Only
+>>> +#     involves socket chardevs with "support-local-migration" option
+>>> +#     enabled.  (since 10.2)
+>>> +#
+>>>   # Features:
+>>>   #
+>>>   # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+>>> @@ -536,7 +541,8 @@
+>>>              { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>>>              'validate-uuid', 'background-snapshot',
+>>>              'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+>>> -           'dirty-limit', 'mapped-ram'] }
+>>> +           'dirty-limit', 'mapped-ram',
+>>> +           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
+>>>   ##
+>>>   # @MigrationCapabilityStatus:
+>>
+>> I understand why we need a knob to enable the feature.  A
+>> MigrationCapability looks fine to me.  We could perhaps come up with a
+>> better name, but let's leave that for later.
+>>
+>> I'm unsure about making users mark the sockets (really: the sockets
+>> wrapped in a character device backend) to be migrated that way.
+>>
+>> Which sockets are users supposed to mark, and how would they know?
+>>
+>> What happens when a user marks the QMP socket?  You called that a "bad
+>> candidate".
+>>
+>> Doesn't feel like good user interface design.
+>>
+>> Could QEMU decide (in principle) which sockets are suitable for
+>> sending down the migration channel?
+>>
+>> If yes, could we make it do the right thing automatically?  Or at least
+>> a check that stops the user from doing the wrong thing?
+>>
+>> [...]
+> 
+> Hi Vladimir, I did not notice this patch before.
+> I also submitted patches for preserving chardevs including sockets, here:
+>    https://lore.kernel.org/qemu-devel/1658851843-236870-40-git-send-email-steven.sistare@oracle.com
+> and have fixed more bugs since then. I have attached my latest unsubmitted version
+> from my workspace.
+> 
+> My interface for enabling it is here:
+>    https://lore.kernel.org/qemu-devel/1658851843-236870-37-git-send-email-steven.sistare@oracle.com/
+> 
+> I am not wedded to either the interface or my socket patch, but the capability
+> must be supported for CPR.  And an acknowledgement of the prior work would
+> be nice.
+> 
 
-Yes, if you call qemu_irq_* then you must hold the BQL, because
-you can't guarantee what's on the other end and it may be assuming
-it has the BQL.
+Thanks! I'll consider this when preparing a new version for vhost-user-blk.
 
--- PMM
+
+
+-- 
+Best regards,
+Vladimir
 
