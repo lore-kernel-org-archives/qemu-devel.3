@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B282BCA101F
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 06:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8EECAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 06:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy2sK-0006Xe-Hq; Mon, 15 Sep 2025 02:39:44 -0400
+	id 1uy2wr-00084I-MH; Mon, 15 Sep 2025 02:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uy2sG-0006Wn-Bb
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:39:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uy2wo-00083z-Fc
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:44:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uy2sC-0004KK-GT
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:39:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uy2wi-0004mD-QJ
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 02:44:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757918367;
+ s=mimecast20190719; t=1757918651;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=HSWqyYfOzKDU8p059dQRKF41gx+JZDiIS5lsnZInSIQ=;
- b=YBI0A65MJYyty4anuJZDKJyHNcrX7v59SCpPuPWAZORqLiw+2wUc7oMs1ELBKcK+xGFK9j
- 65vOI2Ca75bR4X3reNMIkdkc4UZLJqK/FtC17GH1x5LXNutgTLnIMkvkEkLgrHtO++iYtT
- EPRQ4gf9ICuscIpdfVe58+sjX44psNM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=52J4XT6nxlSlpvckviPS0k5KMSIjaF/9aULPTAf6VAM=;
+ b=hrVeiqSXSPbjz0izk292UMaicrt4/wUzW4Bz/JQLwEcc/mp9/9DSMC74ZzINWGSN9YylOp
+ BMnIkQSwLTMfuHYHvpLZPHpqax4rmQdCvv+zYJUkMeGPfLeaphGM6z4TB+PRESciHm89l/
+ 56QUFsBcVkaJTAwFTXHGdhJzKkoaH3o=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-amjVgC3FP1aeQw5o6_RG_Q-1; Mon,
- 15 Sep 2025 02:39:23 -0400
-X-MC-Unique: amjVgC3FP1aeQw5o6_RG_Q-1
-X-Mimecast-MFC-AGG-ID: amjVgC3FP1aeQw5o6_RG_Q_1757918362
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-PP9qLJDuMfaVbW48v6A9Pg-1; Mon,
+ 15 Sep 2025 02:44:07 -0400
+X-MC-Unique: PP9qLJDuMfaVbW48v6A9Pg-1
+X-Mimecast-MFC-AGG-ID: PP9qLJDuMfaVbW48v6A9Pg_1757918646
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98C471800297; Mon, 15 Sep 2025 06:39:21 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B29C419774FA; Mon, 15 Sep 2025 06:44:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F3CA300021A; Mon, 15 Sep 2025 06:39:20 +0000 (UTC)
+ id 239EC300021A; Mon, 15 Sep 2025 06:44:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D77A621E6A27; Mon, 15 Sep 2025 08:39:17 +0200 (CEST)
-Resent-To: filip.hejsek@gmail.com, marcel.apfelbaum@gmail.com,
- noh4hss@gmail.com, eduardo@habkost.net, wangyanan55@huawei.com,
- zhao1.liu@intel.com, amit@kernel.org, philmd@linaro.org,
- devel@lists.libvirt.org, qemu-devel@nongnu.org
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Mon, 15 Sep 2025 08:39:17 +0200
-Resent-Message-ID: <87wm60z0bu.fsf@pond.sub.org>
+ id B420921E6A27; Mon, 15 Sep 2025 08:44:02 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,  Amit Shah
- <amit@kernel.org>,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
- <wangyanan55@huawei.com>,  Zhao Liu <zhao1.liu@intel.com>,  Szymon Lukasz
- <noh4hss@gmail.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
- <berrange@redhat.com>, devel@lists.libvirt.org
-Subject: Re: [PATCH v4 07/10] qmp: add chardev-resize command
-In-Reply-To: <64d6252959750b8da6f3bc4ac7c738b10463bf6d.camel@gmail.com> (Filip
- Hejsek's message of "Fri, 12 Sep 2025 20:10:32 +0200")
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <20250912-console-resize-v4-7-7925e444afc4@gmail.com>
- <871pob7ot7.fsf@pond.sub.org>
- <64d6252959750b8da6f3bc4ac7c738b10463bf6d.camel@gmail.com>
-Date: Mon, 15 Sep 2025 08:35:51 +0200
-Message-ID: <87cy7s1auw.fsf@pond.sub.org>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: thuth@redhat.com,  berrange@redhat.com,  richard.henderson@linaro.org,
+ david@redhat.com,  jrossi@linux.ibm.com,  qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org,  walling@linux.ibm.com,  jjherne@linux.ibm.com,
+ pasic@linux.ibm.com,  borntraeger@linux.ibm.com,  farman@linux.ibm.com,
+ mjrosato@linux.ibm.com,  iii@linux.ibm.com,  eblake@redhat.com,
+ alifm@linux.ibm.com
+Subject: Re: [PATCH v5 01/29] Add boot-certs to s390-ccw-virtio machine type
+ option
+In-Reply-To: <3d930413-d809-4650-b1d8-446eb4ee7daa@linux.ibm.com> (Zhuoying
+ Cai's message of "Fri, 12 Sep 2025 14:05:49 -0400")
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-2-zycai@linux.ibm.com>
+ <87v7lpjvsw.fsf@pond.sub.org>
+ <ffb4d32b-d2bc-45f0-91ce-6472d64c02bb@linux.ibm.com>
+ <87wm64b29p.fsf@pond.sub.org>
+ <3d930413-d809-4650-b1d8-446eb4ee7daa@linux.ibm.com>
+Date: Mon, 15 Sep 2025 08:44:02 +0200
+Message-ID: <87tt14z03x.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,7 +79,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,134 +95,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filip Hejsek <filip.hejsek@gmail.com> writes:
+Zhuoying Cai <zycai@linux.ibm.com> writes:
 
-> On Fri, 2025-09-12 at 16:01 +0200, Markus Armbruster wrote:
->> Cc: libvirt
->>=20
->> Filip Hejsek <filip.hejsek@gmail.com> writes:
->>=20
->> > From: Szymon Lukasz <noh4hss@gmail.com>
->> >=20
->> > The managment software can use this command to notify QEMU about the
->> > size of the terminal connected to a chardev, QEMU can then forward this
->> > information to the guest if the chardev is connected to a virtio conso=
-le
->> > device.
->> >=20
->> > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
->> > Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
->> > ---
->> >  chardev/char.c | 14 ++++++++++++++
->> >  qapi/char.json | 22 ++++++++++++++++++++++
->> >  2 files changed, 36 insertions(+)
->> >=20
->> > diff --git a/chardev/char.c b/chardev/char.c
->> > index b45d79cb9b57643827eb7479257fdda2cf6b0434..6e3ade98614c949be8041e=
-c5905a490ff536dee9 100644
->> > --- a/chardev/char.c
->> > +++ b/chardev/char.c
->> > @@ -1269,6 +1269,20 @@ bool qmp_add_client_char(int fd, bool has_skipa=
-uth, bool skipauth,
->> >      return true;
->> >  }
->> >=20=20
->> > +void qmp_chardev_resize(const char *id, uint16_t cols, uint16_t rows,
->> > +                        Error **errp)
->> > +{
->> > +    Chardev *chr;
->> > +
->> > +    chr =3D qemu_chr_find(id);
->> > +    if (chr =3D=3D NULL) {
->> > +        error_setg(errp, "Chardev '%s' not found", id);
->> > +        return;
->> > +    }
->> > +
->> > +    qemu_chr_resize(chr, cols, rows);
->> > +}
->> > +
->> >  /*
->> >   * Add a timeout callback for the chardev (in milliseconds), return
->> >   * the GSource object created. Please use this to add timeout hook for
->> > diff --git a/qapi/char.json b/qapi/char.json
->> > index f0a53f742c8bee24c377551803a864fd36ac78cf..0a26c5eee6b71bc5de127a=
-91b253cc69a9fe8ce6 100644
->> > --- a/qapi/char.json
->> > +++ b/qapi/char.json
->> > @@ -874,6 +874,28 @@
->> >  { 'command': 'chardev-send-break',
->> >    'data': { 'id': 'str' } }
->> >=20=20
->> > +##
->> > +# @chardev-resize:
->>=20
->> This name doesn't tell me what is being resized.  PATCH 04 uses
->> "winsize", which is better.  The (losely) related SIGWINCH suggests
->> "window change" or "window size change".  Below, you use "terminal
->> size".
+> On 9/12/25 2:42 AM, Markus Armbruster wrote:
+>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>> 
+>>> Thanks for the feedback.
+>>>
+>>> On 9/11/25 3:24 AM, Markus Armbruster wrote:
+>>>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>>>>
+>>>>> Introduce a new `boot-certs` machine type option for the s390-ccw-virtio
+>>>>> machine. This allows users to specify one or more certificate file paths
+>>>>> or directories to be used during secure boot.
+>>>>>
+>>>>> Each entry is specified using the syntax:
+>>>>> 	boot-certs.<index>.path=/path/to/cert.pem
+>>>>>
+>>>>> Multiple paths can be specify using array properties:
+>>>>> 	boot-certs.0.path=/path/to/cert.pem,
+>>>>> 	boot-certs.1.path=/path/to/cert-dir,
+>>>>> 	boot-certs.2.path=/path/to/another-dir...
+>>>>>
+>>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>>>>> ---
+>>>>>  docs/system/s390x/secure-ipl.rst   | 20 ++++++++++++++++++++
+>>>>>  hw/s390x/s390-virtio-ccw.c         | 30 ++++++++++++++++++++++++++++++
+>>>>>  include/hw/s390x/s390-virtio-ccw.h |  2 ++
+>>>>>  qapi/machine-s390x.json            | 24 ++++++++++++++++++++++++
+>>>>>  qemu-options.hx                    |  6 +++++-
+>>>>>  5 files changed, 81 insertions(+), 1 deletion(-)
+>>>>>  create mode 100644 docs/system/s390x/secure-ipl.rst
+>>>>>
+>>>>> diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+>>>>> new file mode 100644
+>>>>> index 0000000000..9b3fd25cc4
+>>>>> --- /dev/null
+>>>>> +++ b/docs/system/s390x/secure-ipl.rst
+>>>>> @@ -0,0 +1,20 @@
+>>>>> +.. SPDX-License-Identifier: GPL-2.0-or-later
+>>>>> +
+>>>>> +Secure IPL Command Line Options
+>>>>> +===============================
+>>>>> +
+>>>>> +New parameters have been introduced to s390-ccw-virtio machine type option
+>>>>> +to support secure IPL. These parameters allow users to provide certificates
+>>>>> +and enable secure IPL directly via the command line.
+>>>>
+>>>> All too soon these parameters will no longer be new.  Consider something
+>>>> like "The s390-ccw-virtio machine type supports secure TPL.  To enable
+>>>> it, you need to provide certificates."
+>>>>
+>>>>> +
+>>>>> +Providing Certificates
+>>>>> +----------------------
+>>>>> +
+>>>>> +The certificate store can be populated by supplying a list of certificate file
+>>>>> +paths or directories on the command-line:
+>>>>
+>>>> File is clear enough (use the certificate found in the file).  What does
+>>>> directory do?
+>>>
+>>> A directory contains a list of certificate files, and allowing both
+>>> files and directories could make the CLI more flexible.
+>> 
+>> I figure when @path names a file, it's an error when the file doesn't
+>> contain a valid cetificate.
+>> 
+>> What is @path names a directory, and one of the directory's files
+>> doesn't contain a valid certificate?
+>> 
+>> Can a single file contain multiple certificates?
 >
-> How about chardev-console-resize? That would match the name of the
-> virtio event (VIRTIO_CONSOLE_RESIZE).
-
-Not bad.  It could become slightly bad if we make devices other than
-"consoles" make us of it.  Would that be possible?
-
->> > +#
->> > +# Notifies a chardev about the current size of the terminal connected
->> > +# to this chardev.
->>=20
->> Yes, but what is it good for?  Your commit message tells: "managment
->> software can use this command to notify QEMU about the size of the
->> terminal connected to a chardev, QEMU can then forward this information
->> to the guest if the chardev is connected to a virtio console device."
+> A certificate file path is expected to contain exactly one certificate.
 >
-> How about:
->
->    Notifies a chardev about the current size of the terminal connected
->    to this chardev. The information will be forwarded to the guest if
->    the chardev is connected to a virtio console device.
+> Certificates provided through the CLI, whether as individual files or
+> within a directory, are validated before use. If a certificate is
+> invalid (e.g., unsupported format), it will be skipped and not added to
+> the S390 certificate store.
 
-Works for me.
+Hmm.  What exactly happens when I configure a certificate file like
 
->> > +#
->> > +# @id: the chardev's ID, must exist
->> > +# @cols: the number of columns
->> > +# @rows: the number of rows
->>=20
->> Blank lines between the argument descriptions, bease.
->>=20
->> What's the initial size?
->
-> 0x0
+    -machine s390-ccw-virtio,boot-certs.0.path=/dev/null
 
-A clearly invalid size.  I guess it effectively means "unknown size".
-Should we document that?
+or some other file that doesn't contain a valud certificate?  Is it
+silently ignored, or is it an error?
 
->> Do we need a way to query the size?
->
-> I don't think it is necessary. What would be the usecase for that?
+> When iterating through the provided paths, the program will terminate on
+> fatal configuration errors, such as when a specified path is neither a
+> file nor a directory.
 
-I don't know, but it's my standard question when I see an interface to
-set something without an interface to get it.  Its purpose is to make us
-think, not to make us at the get blindly.
-
->> > +#
->> > +# Since: 10.2
->> > +#
->> > +# .. qmp-example::
->> > +#
->> > +#     -> { "execute": "chardev-resize", "arguments": { "id": "foo", "=
-cols": 80, "rows": 24 } }
->> > +#     <- { "return": {} }
->> > +##
->> > +{ 'command': 'chardev-resize',
->> > +  'data': { 'id': 'str',
->> > +            'cols': 'uint16',
->> > +            'rows': 'uint16' } }
->> > +
->> >  ##
->> >  # @VSERPORT_CHANGE:
->> >  #
+[...]
 
 
