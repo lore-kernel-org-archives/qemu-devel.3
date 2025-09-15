@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53BDCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B4E9CAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 15:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyAoV-0001XL-Bl; Mon, 15 Sep 2025 11:08:19 -0400
+	id 1uyB1T-0006ds-TR; Mon, 15 Sep 2025 11:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uyAoJ-0001Tn-DC
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:08:09 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uyAo5-0008Ja-OV
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:08:06 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-62f28da25b9so2085085a12.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 08:07:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757948863; x=1758553663; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=i/gk1wcd0tfcAPjvuX3k0K5vHvVRZQUqfNIFTz4jE2Q=;
- b=ddLR0aYwvcHq3ay+UsxWEHKwGJjh/wSMNDVogU50i0f58vuvyB0atytmyFy7Ca3xLM
- h7uK7+avZUGFP25O+nNUlZ66PLh41LEWuy/0/SWbEcQTZfZ+qp77bUZqLipzoVnpc3sv
- f2YiIlbHSvwcngaOnJvgdDGcETASyXv7L9cSAw6no3UnrRt0Q+NYc5GP1pGlG9sqWS0K
- E/6IaM1GUePy8RoMOR5AOGTwOSYg+UeoeuY4UI4mCD4A4VOZcalett0LDHOIY5PbpLnZ
- FURre6HTqmA+RnyjbIHKIBhRuQEWUNQryswTD8pMaC+y3uOR3at5gsElOtuQBFoOtghu
- xYhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757948863; x=1758553663;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=i/gk1wcd0tfcAPjvuX3k0K5vHvVRZQUqfNIFTz4jE2Q=;
- b=cY7dcqY/eoySdInXuhlZsl3/N6VCk/Qg6mD8wHHxNulPtscGTOfAHi1bk68s88B85m
- 80DI/sYrbuezOCgemT6E2OS39+8mVaLMU5wyLJzh65iSU6EzUBZCBtEe9p9q2Kf5T9ce
- coGzEjEWIQoSYk/OmKD0H4V376JQM0YnTTG3yA6q2qB+soM6pfe3FtqXgxmu2WUBYiN1
- PJtrxR+1QKEJnToSnQ4trJmPkmY1FnktmSvwVlW76dbXbzfRhPSesOYVOa2OVwDqLw/R
- ztxg4TR2oPR7TWPhfvJ47gkGk1UaJoD764eIJPLTJ86td4Fy6DMgew+RNIZG6G1FkaI5
- gVNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXcvTxwhksnrwJGWEIiW2Tj3cMhDVF3q9Axj4ekZjyJnmBrKgytNX32HRAPFTzaf9mWfZtbySJy/7Q@nongnu.org
-X-Gm-Message-State: AOJu0YwHPU9G2FCQnUqkq9XfX9IsrFMUtjulzgWrr+hY2/LCD2rt6iv6
- 6SYav04ILcErTwmCoPcXkoNZpucnZLtJ3AaxfBHtW8nG3vH/L6QMlFF7OeuKf/Lic+f7oLWN4GL
- XkZVL5/J8Wt/tWeBhEYadqeAe9D+Wcro=
-X-Gm-Gg: ASbGncua70FHsrMngww4Jd2VDyt6NI6DlmeE7Rqib/O2cDQjpz79GP03pAnhuWS/NP9
- 9ENv08lNlKyevQcpvxA9WT0RCZnEnEUdVu+wyjFNdNTUWahFEtBuQezJKDaf8+YsxCuNAmMkwJm
- Msekjabh4DrGsvWUueHoGTPvnNl8L5HxWFJ7zW0xY4YARlUAijSRYlHYBOypibWP/BzKZyoe0sk
- R4rjqRcMgqulz/n
-X-Google-Smtp-Source: AGHT+IHsk43BrUxq2AjuHY+HfsyCUMY1UwQuJnWIXD/IFVT+5luiz/nbEw9QRq4D0rBGJy7oL3xuqaoYVNiburWqMMY=
-X-Received: by 2002:a05:6402:454c:b0:61c:935d:da3e with SMTP id
- 4fb4d7f45d1cf-62ed8288d19mr10105373a12.15.1757948863178; Mon, 15 Sep 2025
- 08:07:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyB1Q-0006an-5c
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:21:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyB1F-0001rU-T0
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 11:21:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757949680;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H3ZLzzp0nz8fpGm6+TVnQUXsptqEu7/YT1oyTtndr/w=;
+ b=RLLDbyQdOtQuKkZAaSrsRPSS5mXUE7pFTH8snXUbjd7kE8ZSv8PL/0AxAbgg6lrDNpKjxn
+ BL5FhUTDxBVfhRnboM72pKKrzv9fz7cYIwo3zTs01Al2/6EgIcT/wVn1Ui1is5i1n1f/03
+ 2H9l1fj2bDUpVOmPUVzvjF4aVr0G1q0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-GxFZGvUsP2aWoXfx5wlmmw-1; Mon,
+ 15 Sep 2025 11:21:15 -0400
+X-MC-Unique: GxFZGvUsP2aWoXfx5wlmmw-1
+X-Mimecast-MFC-AGG-ID: GxFZGvUsP2aWoXfx5wlmmw_1757949675
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C1C3D1800576; Mon, 15 Sep 2025 15:21:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1052319560B4; Mon, 15 Sep 2025 15:21:11 +0000 (UTC)
+Date: Mon, 15 Sep 2025 16:21:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com
+Subject: Re: [PATCH v3 09/13] io/channel-socket: rework
+ qio_channel_socket_copy_fds()
+Message-ID: <aMgu5L8R8JlhjiEi@redhat.com>
+References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
+ <20250915132211.135095-10-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-References: <20250723094213.2975268-1-dbarboza@ventanamicro.com>
- <20250723094213.2975268-2-dbarboza@ventanamicro.com>
- <CAKmqyKPirO4wLus3kWeHk_ir6kOTru6U745AVUW1jNzYXbzr2Q@mail.gmail.com>
- <5319bc5d-ee82-43e0-adb2-2657b150a0ea@ventanamicro.com>
-In-Reply-To: <5319bc5d-ee82-43e0-adb2-2657b150a0ea@ventanamicro.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 15 Sep 2025 11:07:30 -0400
-X-Gm-Features: AS18NWAFYVloW4Yc36_cKw5fGk9A7oMS-DBP1tvduBOLFVfSXAk-FtHfp6ogQwM
-Message-ID: <CAJSP0QU0XeuQML+kLGBZgk2V2ABsqdyUA__M4YL_VSp+oYJYaA@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 1/1] roms/opensbi: Update to v1.7
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250915132211.135095-10-vsementsov@yandex-team.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,45 +87,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-I saw you requested access to the opensbi mirror repo on QEMU's GitLab project.
+On Mon, Sep 15, 2025 at 04:22:06PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> We want to switch from qemu_socket_set_block() to newer
+> qemu_set_blocking(), which provides return status of operation,
+> to handle errors.
+> 
+> Still, we want to keep qio_channel_socket_readv() interface clean,
+> as currently it allocate @fds only on success.
+> 
+> So, in case of error, we should close all incoming fds and keep
+> user's @fds untouched or zero.
+> 
+> Let's make separate functions qio_channel_handle_fds() and
+> qio_channel_cleanup_fds(), to achieve what we want.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  include/io/channel.h |  8 +++---
+>  io/channel-socket.c  | 67 +++++++++++++++++++++++++++++++++-----------
+>  2 files changed, 55 insertions(+), 20 deletions(-)
 
-I went ahead and pushed the latest OpenSBI master branch to QEMU's mirror:
-https://gitlab.com/qemu-project/opensbi/-/commits/master?ref_type=HEADS
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-The mirror got stuck because commit a2807646a858 ("include: Adjust
-Sscofpmf mhpmevent mask for upper 6 bits") is not present in the
-upstream repo. There was probably a force push upstream that replaced
-it with commit df997c6e55fe ("include: Adjust Sscofpmf mhpmevent mask
-for upper 8 bits"). The diff of the QEMU mirror commit and the
-upstream commit is:
 
-diff --git a/include/sbi/riscv_encoding.h b/include/sbi/riscv_encoding.h
-index 050674a..2ed05f2 100644
---- a/include/sbi/riscv_encoding.h
-+++ b/include/sbi/riscv_encoding.h
-@@ -207,7 +207,7 @@
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
- #endif
-
--#define MHPMEVENT_SSCOF_MASK           _ULL(0xFC00000000000000)
-+#define MHPMEVENT_SSCOF_MASK           _ULL(0xFF00000000000000)
-
- #define ENVCFG_STCE                    (_ULL(1) << 63)
- #define ENVCFG_PBMTE                   (_ULL(1) << 62)
-
-I looked at the upstream discussion about the reserved bits and I
-guess that the author changed their mind and force pushed with an
-updated mask constant. I mention this because I came to the conclusion
-that there was nothing nefarious about the force push and that it's
-safe to update QEMU's mirror to follow upstream again.
-
-Please let me know if you have any issues updating OpenSBI in QEMU and
-I can tweak the QEMU mirror repository as needed.
-
-Thanks,
-Stefan
 
