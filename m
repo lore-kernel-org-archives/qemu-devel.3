@@ -4,61 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E390CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BE8CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyEvW-0001lF-7W; Mon, 15 Sep 2025 15:31:50 -0400
+	id 1uyF8l-0004NP-A9; Mon, 15 Sep 2025 15:45:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEvP-0001kE-Lp; Mon, 15 Sep 2025 15:31:44 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEv6-0001uO-DB; Mon, 15 Sep 2025 15:31:42 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id C5970809BE;
- Mon, 15 Sep 2025 22:31:18 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:184::1:6])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AVVVql1FrOs0-6EbsWmZh; Mon, 15 Sep 2025 22:31:18 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757964678;
- bh=pyuFrVsIASANJ+N7QppBHO2Se495Z6bX5OmLVwFaQlA=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=JSqxjIypqKPnB7+xfCqC1N05jx5+Icxjy6/lDXjk+vJOt8Omg2MaXsVvS9YllrcVJ
- fhla8nF7UAntNx2Dt9QAFXLkReVqmUtGdaSZMNvnqKpVFCbx9hRK+Dm9R+5z3yIEN5
- U7duDBhaD24DWyxHZ7K8Yz6p7z4TmTamXX6Le7fA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH v4 07/12] util: drop qemu_socket_try_set_nonblock()
-Date: Mon, 15 Sep 2025 22:30:59 +0300
-Message-ID: <20250915193105.230085-8-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250915193105.230085-1-vsementsov@yandex-team.ru>
-References: <20250915193105.230085-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyF8b-0004D8-0x
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 15:45:28 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyF8W-0003qE-A9
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 15:45:20 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-32df5cae0b1so3323879a91.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 12:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757965507; x=1758570307; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CZjhAiAeVJ43Zq9j+jJhfVnjGNz1MNSHpN2V18BY9Lc=;
+ b=im5CUpHLxQ54q8Ek7y409JCEKLxoLcWj0L0R8wb0ydDriMyt6jzGFEj4mc/xBNKXnd
+ zPoUXOrbrbdiyYUmzZZImcbAJsAu6gJEoJesbiKwQT4GrhXVS5im6uneauE06oLrX8M0
+ rntcKYcEXQcw3FGgPU7z2aa9223vt939yvq8SZpMfiGD8sM/BXvU1JV4yWIf72yAjO4J
+ 1YjJRNpJVZCilYdizOCDnWrX5Ch6CBp+f+vTp1uzr9t3I3JuKTUXlLlEbdLLn8ZugV+h
+ MXiQ+6Lk6cuJqe/wAuK904JYAL7PqE8fMuQHAPP33P+9HKRkGj0/T8ec9ITgG4pIiMC6
+ WnYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757965507; x=1758570307;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CZjhAiAeVJ43Zq9j+jJhfVnjGNz1MNSHpN2V18BY9Lc=;
+ b=bxZnJasQrM9Jec98lb4b9tQhnWUpNjUjbA8X2+PKTi9vKKSSxofdZRZVX7+ZmaYvBc
+ fT5q06aHhom9AARke8IXM6eALdc7eFunr2SGkpFvKCYCH5H8H3jQmZRm74wjva/y54bb
+ jHphQ6/CdAYXx99CSulrMP/83hcXG+Cb7SnqUR3aauRjEdcsp8o9NeHTqIm1zH91Ba2S
+ Ob5FDZhvH7O11CWQj2b1w6/bcIIqZB65p+mkHs1RaSqyh+Cq6HWle3iXyiWc0D77qcpm
+ 6MfBsxfa0z1ZhVvbIVReOaHJtpvnmlHY9khDEzDZgyuIYGnEHi2W6bwTwV2kfNQmdlAT
+ P1wA==
+X-Gm-Message-State: AOJu0YwjE9I4JwvPDcHr2MqRvgvEDfeGie06w3dXtof8/Qbi/pPWXWn4
+ jxOxcD3bC2kkZh3IBQy1UeDztyeKQiWnv7sIj/7JodfwrseaTAQ3MAS/hcTYBzhNKes=
+X-Gm-Gg: ASbGnctZDTXKtcRTD+RWPfB+Z/hEEfnsNVcGGXHOlbBxzC9ISGpCzVL3d9ACGHNupcO
+ F09alBbCchElNEolMxd0pZKxs9Z+tJAryfxCmYKibxF4YjaAtIcN18wKvXCC3eSQgw65s62Ha4l
+ i3fSKwvCRGGqJsHbpOSyP3tDxlzIBA3qJ8fLgnGLUlhxonUhVwSdE8ro+Ii778bvGanhvBDBnYf
+ w73QFL4MAbNnNG6YwPQiD2nchtZhwE/71kIVJHn879NknCbHGKVa4mgTE+/JAwe2POOp4tyuvit
+ tkM52jm6NryCEsdryXKV060ilJfWPgCcc+lL/xulPQ8uXL9c2JIWVCDJ49IiI8cktzFgFzMc6tz
+ u6osgZovQIMpXIBBgRbUUyQqqZIjBIsfmtX/YDttJ3QGIE+g=
+X-Google-Smtp-Source: AGHT+IGZmoHNFN+hq1ukdEEA9K/NjQLZASrYd5dyC1u8bpW4/otVeeNYcLQkiZuzYXGJEOIMhjD+8w==
+X-Received: by 2002:a17:90b:3fc3:b0:32e:27a3:44b4 with SMTP id
+ 98e67ed59e1d1-32e27a34648mr8410687a91.26.1757965506813; 
+ Mon, 15 Sep 2025 12:45:06 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-32dd98b438esm15321766a91.14.2025.09.15.12.45.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Sep 2025 12:45:06 -0700 (PDT)
+Message-ID: <b1116aa2-8441-4d2f-bbc4-b1b6b121350e@linaro.org>
+Date: Mon, 15 Sep 2025 12:45:04 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 50/84] target/arm: Expand pstate to 64 bits
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ <20250830054128.448363-51-richard.henderson@linaro.org>
+ <CAFEAcA-DbtHsjPPhRwhbDQ+QZxwSu2Yfs9xacRbFFJVNvm8M=A@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-DbtHsjPPhRwhbDQ+QZxwSu2Yfs9xacRbFFJVNvm8M=A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,199 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we can use qemu_set_blocking() in these cases.
+On 9/8/25 08:57, Peter Maydell wrote:
+>> +static int get_pstate64_1(QEMUFile *f, void *opaque, size_t size,
+>> +                          const VMStateField *field)
+> 
+> Why the _1 suffix ?
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/qemu/sockets.h |  1 -
- net/dgram.c            | 12 +++---------
- net/socket.c           |  7 ++-----
- net/stream.c           |  9 +++------
- net/stream_data.c      | 10 ++++------
- util/oslib-posix.c     |  4 ----
- util/oslib-win32.c     |  9 ---------
- 7 files changed, 12 insertions(+), 40 deletions(-)
+Symbol conflict:
 
-diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
-index 6477f90b9e..9512fec514 100644
---- a/include/qemu/sockets.h
-+++ b/include/qemu/sockets.h
-@@ -47,7 +47,6 @@ ssize_t qemu_send_full(int s, const void *buf, size_t count)
- int socket_set_cork(int fd, int v);
- int socket_set_nodelay(int fd);
- void qemu_socket_set_block(int fd);
--int qemu_socket_try_set_nonblock(int fd);
- int socket_set_fast_reuse(int fd);
- 
- #ifdef WIN32
-diff --git a/net/dgram.c b/net/dgram.c
-index fb9ded30df..baa126d514 100644
---- a/net/dgram.c
-+++ b/net/dgram.c
-@@ -287,7 +287,7 @@ static int net_dgram_mcast_init(NetClientState *peer,
-                                 Error **errp)
- {
-     NetDgramState *s;
--    int fd, ret;
-+    int fd;
-     struct sockaddr_in *saddr;
- 
-     if (remote->type != SOCKET_ADDRESS_TYPE_INET) {
-@@ -335,11 +335,8 @@ static int net_dgram_mcast_init(NetClientState *peer,
-                 g_free(saddr);
-                 return -1;
-             }
--            ret = qemu_socket_try_set_nonblock(fd);
--            if (ret < 0) {
-+            if (!qemu_set_blocking(fd, false, errp)) {
-                 g_free(saddr);
--                error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                                 name, fd);
-                 return -1;
-             }
- 
-@@ -572,10 +569,7 @@ int net_init_dgram(const Netdev *netdev, const char *name,
-         if (fd == -1) {
-             return -1;
-         }
--        ret = qemu_socket_try_set_nonblock(fd);
--        if (ret < 0) {
--            error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                             name, fd);
-+        if (!qemu_set_blocking(fd, false, errp)) {
-             return -1;
-         }
-         dest_addr = NULL;
-diff --git a/net/socket.c b/net/socket.c
-index db25e3d9ae..1ad03fc9d4 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -718,7 +718,7 @@ int net_init_socket(const Netdev *netdev, const char *name,
-     }
- 
-     if (sock->fd) {
--        int fd, ret, so_type;
-+        int fd, so_type;
- 
-         fd = monitor_fd_param(monitor_cur(), sock->fd, errp);
-         if (fd == -1) {
-@@ -728,10 +728,7 @@ int net_init_socket(const Netdev *netdev, const char *name,
-         if (so_type < 0) {
-             return -1;
-         }
--        ret = qemu_socket_try_set_nonblock(fd);
--        if (ret < 0) {
--            error_setg_errno(errp, -ret, "%s: Can't use file descriptor %d",
--                             name, fd);
-+        if (!qemu_set_blocking(fd, false, errp)) {
-             return -1;
-         }
-         switch (so_type) {
-diff --git a/net/stream.c b/net/stream.c
-index d893f02cab..94f823a2a7 100644
---- a/net/stream.c
-+++ b/net/stream.c
-@@ -138,7 +138,6 @@ static void net_stream_server_listening(QIOTask *task, gpointer opaque)
-     NetStreamData *d = opaque;
-     QIOChannelSocket *listen_sioc = QIO_CHANNEL_SOCKET(d->listen_ioc);
-     SocketAddress *addr;
--    int ret;
-     Error *err = NULL;
- 
-     if (qio_task_propagate_error(task, &err)) {
-@@ -149,13 +148,11 @@ static void net_stream_server_listening(QIOTask *task, gpointer opaque)
- 
-     addr = qio_channel_socket_get_local_address(listen_sioc, NULL);
-     g_assert(addr != NULL);
--    ret = qemu_socket_try_set_nonblock(listen_sioc->fd);
--    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
--                          addr->u.fd.str, -ret);
-+    if (!qemu_set_blocking(listen_sioc->fd, false, &err)) {
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-+        error_free(err);
-         return;
-     }
--    g_assert(ret == 0);
-     qapi_free_SocketAddress(addr);
- 
-     d->nc.link_down = true;
-diff --git a/net/stream_data.c b/net/stream_data.c
-index 5af27e0d1d..03740e9f73 100644
---- a/net/stream_data.c
-+++ b/net/stream_data.c
-@@ -12,6 +12,7 @@
- #include "net/net.h"
- #include "io/channel.h"
- #include "io/net-listener.h"
-+#include "qemu/sockets.h"
- 
- #include "stream_data.h"
- 
-@@ -154,7 +155,6 @@ int net_stream_data_client_connected(QIOTask *task, NetStreamData *d)
- {
-     QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(d->ioc);
-     SocketAddress *addr;
--    int ret;
-     Error *err = NULL;
- 
-     if (qio_task_propagate_error(task, &err)) {
-@@ -166,14 +166,12 @@ int net_stream_data_client_connected(QIOTask *task, NetStreamData *d)
-     addr = qio_channel_socket_get_remote_address(sioc, NULL);
-     g_assert(addr != NULL);
- 
--    ret = qemu_socket_try_set_nonblock(sioc->fd);
--    if (addr->type == SOCKET_ADDRESS_TYPE_FD && ret < 0) {
--        qemu_set_info_str(&d->nc, "can't use file descriptor %s (errno %d)",
--                          addr->u.fd.str, -ret);
-+    if (!qemu_set_blocking(sioc->fd, false, &err)) {
-+        qemu_set_info_str(&d->nc, "error: %s", error_get_pretty(err));
-+        error_free(err);
-         qapi_free_SocketAddress(addr);
-         goto error;
-     }
--    g_assert(ret == 0);
-     qapi_free_SocketAddress(addr);
- 
-     net_socket_rs_init(&d->rs, net_stream_data_rs_finalize, false);
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 599993d40d..7654febfa5 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -270,10 +270,6 @@ void qemu_socket_set_block(int fd)
-     g_unix_set_fd_nonblocking(fd, false, NULL);
- }
- 
--int qemu_socket_try_set_nonblock(int fd)
--{
--    return g_unix_set_fd_nonblocking(fd, true, NULL) ? 0 : -errno;
--}
- 
- int socket_set_fast_reuse(int fd)
- {
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index 1566eb57e7..bf5d478c5c 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -202,15 +202,6 @@ void qemu_socket_set_block(int fd)
-     ioctlsocket(fd, FIONBIO, &opt);
- }
- 
--int qemu_socket_try_set_nonblock(int fd)
--{
--    unsigned long opt = 1;
--    if (ioctlsocket(fd, FIONBIO, &opt) != NO_ERROR) {
--        return -socket_error();
--    }
--    return 0;
--}
--
- int socket_set_fast_reuse(int fd)
- {
-     /* Enabling the reuse of an endpoint that was used by a socket still in
--- 
-2.48.1
+  static const VMStateInfo vmstate_pstate64_1 = {
+...
+  static const VMStateDescription vmstate_pstate64 = {
 
+The get/set_pstate64_1 symbols are named to match usage.
+
+Naming suggestions welcome.  :-)
+
+> I note that there is actually a defined bit above 32
+> in the SPSR_ELx format for exceptions taken from
+> AArch32 to AArch64: PPEND, used with FEAT_SEBEP. That
+> suggests we should probably at least consider handling
+> 64-bit AArch32 "CPSR" values, though FEAT_SEBEP in
+> particular may be out of scope for us.
+> 
+> Incidentally I think we are not correctly migrating
+> PSTATE.SS when in AArch32 -- we will migrate the CPSR
+> via cpsr_read() / cpsr_write(), but that view doesn't have
+> the PSTATE.SS bit in it. Possibly these things could
+> be addressed at the same time, so we have a subsection
+> for 64-bit pstate/cpsr, and its save/load uses
+> cpsr_read_for_spsr_elx() (and a corresponding _write_
+> that we don't have yet) when AArch32, and the .needed
+> function is "if top 32 bits not all zero, or PSTATE_SS bit
+> is set".
+
+Good catch.  I'll have a look at this.
+
+
+r~
 
