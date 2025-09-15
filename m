@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2A2CAC598
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA3BCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6bh-0003v8-8k; Mon, 15 Sep 2025 06:38:49 -0400
+	id 1uy6cz-0004Cr-IJ; Mon, 15 Sep 2025 06:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uy6be-0003uo-CU
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:38:46 -0400
+ id 1uy6cw-0004BB-Du
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:40:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uy6bX-0001Zr-Th
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:38:45 -0400
+ id 1uy6cl-0001f6-8j
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 06:40:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757932714;
+ s=mimecast20190719; t=1757932791;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aWVoBeq6JLRiW2zG8qJnca9frOGFntt9EEtk7QvB2sQ=;
- b=RSx7uLoF/wYklzgLwjR1Aw2sbiM9oAwhCaMblHWC8GM2Iixn8j8EoksZST/jIl+oBvpKm8
- KZmw0Y/vNSbP3WTYakEZQeEcaThvnSmQMekeb6E1jIH73g0h3/eEjxFNJZhjzy97sgp6/R
- lI3KoaaAWVJKxKFsHHdJJaz4Lfmy83Y=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PtVL/17jEjXCOtSUULG7MCwroEIbC1H04Wg+MdCnYzg=;
+ b=SM9oELRuxUxnPh3X93aFeNjK0WxQVxNQfaD3pKy1mvtAlWCUjYGQ0zsFOhj+zz92JPOJ8a
+ 6G4NPAZwbW/WwVOqxf0oNKuaok7+Lg/rE3y6HFcVk8T1eg/FkbtYcucW1fWHykaMEbcJiC
+ INIvdw38OT7Hy1WkxZhUr2lzvWQE1ek=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-HdnXtgJBMTOdN2GuJA7omg-1; Mon,
- 15 Sep 2025 06:38:33 -0400
-X-MC-Unique: HdnXtgJBMTOdN2GuJA7omg-1
-X-Mimecast-MFC-AGG-ID: HdnXtgJBMTOdN2GuJA7omg_1757932712
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-VVB480fTMFqfKJA9unJw2Q-1; Mon,
+ 15 Sep 2025 06:39:48 -0400
+X-MC-Unique: VVB480fTMFqfKJA9unJw2Q-1
+X-Mimecast-MFC-AGG-ID: VVB480fTMFqfKJA9unJw2Q_1757932787
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 852C219560AD; Mon, 15 Sep 2025 10:38:32 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F5641955DBB; Mon, 15 Sep 2025 10:39:47 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D994B300021A; Mon, 15 Sep 2025 10:38:30 +0000 (UTC)
-Date: Mon, 15 Sep 2025 11:38:27 +0100
+ id 8951330002CA; Mon, 15 Sep 2025 10:39:45 +0000 (UTC)
+Date: Mon, 15 Sep 2025 11:39:41 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 4/6] tests/functional: drop datadrainer class in reverse
- debugging
-Message-ID: <aMfso1ksrXgznBvi@redhat.com>
+Subject: Re: [PATCH 6/6] tests/functional: use self.log for all logging
+Message-ID: <aMfs7bIXzY76EIyU@redhat.com>
 References: <20250912182200.643909-1-berrange@redhat.com>
- <20250912182200.643909-5-berrange@redhat.com>
- <878qigrpcu.fsf@draig.linaro.org>
+ <20250912182200.643909-7-berrange@redhat.com>
+ <87wm60qaqe.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <878qigrpcu.fsf@draig.linaro.org>
+In-Reply-To: <87wm60qaqe.fsf@draig.linaro.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -91,57 +90,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 11:18:09AM +0100, Alex Bennée wrote:
+On Mon, Sep 15, 2025 at 11:19:21AM +0100, Alex Bennée wrote:
 > Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> > The reverse debugging test uses the avocado datadrainer class to
-> > create a background thread that reads from the console socket and
-> > dumps it via python logger.
-> >
-> > Most tests log console output as a side effect of doing calls
-> > to match strings, but this test never tries to match anything.
-> >
-> > This isn't critical, so just drop the functionality.
+> > Some tests are creating their on logger category which means any
+> > output they log is not captured in base.log.
 > 
-> We do end up with zero length logs for all console output although I don't know
-> if we got that far before:
+> This seems unrelated to reverse debugging and perhaps should be split to
+> each test. But otherwise LGTM:
 
-AFAICT, the logs were also zero-length with the current code.
-When I ran it with the datadrainer code, there didn't seem
-to be any output to be drained.  I'm unclear if that's expected
-or a sign I did something wrong, or something has broken since
-the test was first written ?
+The reverse_debugging.py changes were because I wanted to see the log
+messages from that test when debugging this series. I then noticed
+several other tests had the same problem of logging to a category
+that is not saved.
 
-
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  tests/functional/reverse_debugging.py | 6 ------
-> >  1 file changed, 6 deletions(-)
-> >
-> > diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
-> > index 1b880cda8f..9c89f5c897 100644
-> > --- a/tests/functional/reverse_debugging.py
-> > +++ b/tests/functional/reverse_debugging.py
-> > @@ -35,8 +35,6 @@ class ReverseDebugging(LinuxKernelTest):
-> >      endian_is_le = True
-> >  
-> >      def run_vm(self, record, shift, args, replay_path, image_path, port):
-> > -        from avocado.utils import datadrainer
-> > -
-> >          logger = logging.getLogger('replay')
-> >          vm = self.get_vm(name='record' if record else 'replay')
-> >          vm.set_console()
-> > @@ -54,10 +52,6 @@ def run_vm(self, record, shift, args, replay_path, image_path, port):
-> >          if args:
-> >              vm.add_args(*args)
-> >          vm.launch()
-> > -        console_drainer = datadrainer.LineLogger(vm.console_socket.fileno(),
-> > -                                    logger=self.log.getChild('console'),
-> > -                                    stop_check=(lambda : not vm.is_running()))
-> > -        console_drainer.start()
-> >          return vm
-> >  
-> >      @staticmethod
+> 
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 > 
 > -- 
 > Alex Bennée
