@@ -4,51 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FD6CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 16:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CCCCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 16:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyBe0-0004pu-2N; Mon, 15 Sep 2025 12:01:32 -0400
+	id 1uyBgb-00070N-G5; Mon, 15 Sep 2025 12:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1uyBdP-0004dQ-9k
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 12:00:55 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyBgL-0006og-JZ
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 12:04:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1uyBd0-0000oB-Hx
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 12:00:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=MysrRuEtvpP4IcBeszM2iANpf3LYtSBk08ItDNxCbqY=; b=EwhuCdHSZSgCJD9
- i2MXB1YvIdkJR+DQJRvDH+VH9W7BpnWW7wFDgkdimehQLWsMG0V/62VIJuZjppqXL00Na6fo7+ZzP
- xOrFOka3lDu7Yu7hZSP3Q4glswVb1CVUQ4nkrsamCGVHGW6esL4vMVnLQsTFZhbl+OuwY3MBnhUae
- +g=;
-Date: Mon, 15 Sep 2025 18:02:32 +0200
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Anton Johansson via <qemu-devel@nongnu.org>, philmd@linaro.org
-Subject: Re: [PATCH] target/mips: Fix msaregnames and mxuregnames off-by-one
-Message-ID: <3lpthf7dt2vhvhwvih5cvbtmt64ultmyn4pqrivurejxugeecc@re7qb3aonrgk>
-References: <20250912142927.20919-1-anjo@rev.ng>
- <87h5x3pyii.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyBgF-0001ZX-It
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 12:03:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757952223;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TJx7K6GnlFWVWEx9Tw/jFNFzzx4h4KWFrMnTIEk2YMw=;
+ b=I+Ic2/vBtbBU+aEUWo41htDL7+obvLAH9jN/Vt40d7ssS2jBFoj/ktk+2JXn2oiMZPP7/e
+ cXTWFGb/erpERG8w5JIULlKjKdVhEvBXTsEoG3TGRy2XLJZPzFFo/0lizGIXCLL3BFCvzl
+ 1CT3ZxMIM5WNxE8rGsVAsyGn7i9b1ik=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-26-Ri2TDAYRN5CGIuSGto2KRw-1; Mon, 15 Sep 2025 12:03:42 -0400
+X-MC-Unique: Ri2TDAYRN5CGIuSGto2KRw-1
+X-Mimecast-MFC-AGG-ID: Ri2TDAYRN5CGIuSGto2KRw_1757952221
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-827887699easo486245885a.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 09:03:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757952221; x=1758557021;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TJx7K6GnlFWVWEx9Tw/jFNFzzx4h4KWFrMnTIEk2YMw=;
+ b=biamrCyzNS+pWv6eUJ0iXEWsW3gkWArqmD93FHlon7+D2ijC0YxDjJ6ZEHO1qe2fOG
+ MUZUGhupjSYWrhrakQfGW4Q3VvDBgA8U4E9eGlmTPuycVUewseqj3w5oUtvHLwMdg6AP
+ O0SO+cZ7xWqY3ubKqZ1q/b0poJnTw9a8/j1UUmQAH+YUaZEdWZdh/LkUZBgX4tCtgAT3
+ 89+mPdpQnEO7UZmWGAIyOE0w9ApBEo3FXYUZJOlhJIvBQ2QQ86ntSHCDbn8pjfyrub+S
+ 2ai1zkOp0WhEEOdh83NDQ+HLPEL4iCXUIK91FNjC0LtIf83XEiZwvNDf6Pdm5OBr5qEf
+ Kmxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTqXq/2lKiT0FMmQCGoatY8smeurlLdeiaJabPi+rjuR4kSzqnrYtIDqGbUE8KNG0YVasgEwFu8NBx@nongnu.org
+X-Gm-Message-State: AOJu0Yyy8dnF1qYGiqyV1xhr/96TBWyh93raaKymHFWOeIun0tZ4kMYH
+ 6lmIO/tA4njNZg3RXlfV5nlvIr7VNQGdhX28zbvDz9A5vDz68U7jsedZegf9Xq3ngkRjQuZaB0d
+ sEU+I8hZlcu3HehBlvv//Ws7d/MuPGpj1LCXN8RZE1gNbNsZyvJe3ftFe
+X-Gm-Gg: ASbGnctrUs8hTx5locIgoZvIrd145HVtFAtZOQdvw+wbNuAraxfDnAtEgeBVrgPLz2u
+ ReXXGjMwSL60hq7mFJFYHX+Pr7PzfGmF+//EvH2zYoZnQZ66Gz/QIU97uoOvY5kZcSQanpkQ95M
+ N8c05IjtxzIoeM6iLtDl/Mm0Yj5E3hRatlJQbxqaSgSjEQSXc0aQ2mjrUI2hrrNjtZA8qR7ecKQ
+ haD2ETTnoGs7k6dfWu3obsxzAubwCNVG+bnorJ7k5Nxm4KX6xwsub5LcfXr7FIoClu4juY4KRmL
+ U5gRwoioDQKAff/L4c/EGPDDbqe9fQ==
+X-Received: by 2002:a05:620a:4003:b0:824:6f4a:6e28 with SMTP id
+ af79cd13be357-8246f4a7167mr1590443385a.17.1757952221172; 
+ Mon, 15 Sep 2025 09:03:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0/NvguET1db0ieJAaJQ8vpGs/J9e+nVTKRB2tWQ7FsHG8z2a3PNXtLkzpthe9zDNeSwhr4A==
+X-Received: by 2002:a05:620a:4003:b0:824:6f4a:6e28 with SMTP id
+ af79cd13be357-8246f4a7167mr1590436485a.17.1757952220514; 
+ Mon, 15 Sep 2025 09:03:40 -0700 (PDT)
+Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-820ce19e020sm796565385a.52.2025.09.15.09.03.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 09:03:39 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: peterx@redhat.com, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 0/2] Mem staging patches
+Date: Mon, 15 Sep 2025 12:03:26 -0400
+Message-ID: <20250915160328.2080723-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h5x3pyii.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,78 +103,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/09/25, Alex Bennée wrote:
-> Anton Johansson via <qemu-devel@nongnu.org> writes:
-> 
-> > The msaregnames and mxuregnames arrays contains strings of 7 bytes
-> > ("w10.d0", ...) and 5 bytes ("XR10", ...) in length including the
-> > NULL byte.
-> >
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >  target/mips/tcg/msa_translate.c | 2 +-
-> >  target/mips/tcg/mxu_translate.c | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-> > index 82b149922f..0e947125a0 100644
-> > --- a/target/mips/tcg/msa_translate.c
-> > +++ b/target/mips/tcg/msa_translate.c
-> > @@ -32,7 +32,7 @@ static inline int plus_2(DisasContext *s, int x)
-> >  /* Include the auto-generated decoder.  */
-> >  #include "decode-msa.c.inc"
-> >  
-> > -static const char msaregnames[][6] = {
-> > +static const char msaregnames[][7] = {
-> >      "w0.d0",  "w0.d1",  "w1.d0",  "w1.d1",
-> >      "w2.d0",  "w2.d1",  "w3.d0",  "w3.d1",
-> >      "w4.d0",  "w4.d1",  "w5.d0",  "w5.d1",
-> > diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
-> > index 35ebb0397d..7e8cc8b06f 100644
-> > --- a/target/mips/tcg/mxu_translate.c
-> > +++ b/target/mips/tcg/mxu_translate.c
-> > @@ -609,7 +609,7 @@ enum {
-> >  static TCGv mxu_gpr[NUMBER_OF_MXU_REGISTERS - 1];
-> >  static TCGv mxu_CR;
-> >  
-> > -static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][4] = {
-> > +static const char mxuregnames[NUMBER_OF_MXU_REGISTERS][5] = {
-> >      "XR1",  "XR2",  "XR3",  "XR4",  "XR5",  "XR6",  "XR7",  "XR8",
-> >      "XR9",  "XR10", "XR11", "XR12", "XR13", "XR14", "XR15", "XCR",
-> >  };
-> 
-> Maybe not quite so silly question. Why are we setting 2D dimensions on
-> the regnames anyway? Shouldn't we just use static const char * and be
-> done with it?
-> 
-> AFAICT all the references only care about the number anyway.
+The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
 
-Previously a 1D array of pointers was used, here's the original patch
-introducing the 2D array
+  Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
 
-  https://lists.gnu.org/archive/html/qemu-devel/2021-06/msg04706.html
+are available in the Git repository at:
 
-It's an optimization to reduce memory usage and runtime relocations.
+  https://gitlab.com/peterx/qemu.git tags/mem-staging-pull-request
 
-Assuming a 64-bit linux system we can estimate the memory required for
-using 1D arrays for msaregnames and mxuregnames to
+for you to fetch changes up to ac7a892fd37ce4427d390ca8556203c9a2eb9d38:
 
-    64*(8 + 24) + 16*(8 + 24) = 2560 bytes
+  memory: Fix leaks due to owner-shared MRs circular references (2025-09-15 12:00:12 -0400)
 
-with 8 byte pointers and 24 byte relocation table entries, the above
-does not include the memory for the actual strings. And with the 1D
-change we get
+----------------------------------------------------------------
+Memory pull for 10.2
 
-    64*7 + 16*5 = 528 bytes
+- Peter's fix on flatview_access_allowed()
+- Peter's fix on MR circular ref
 
-Though I can't speak to the impact on runtime performance.
+----------------------------------------------------------------
+
+Peter Xu (2):
+  memory: Fix addr/len for flatview_access_allowed()
+  memory: Fix leaks due to owner-shared MRs circular references
+
+ docs/devel/memory.rst |  7 +++++--
+ system/memory.c       | 46 ++++++++++++++++++++++++++++++++++---------
+ system/physmem.c      |  4 ++--
+ 3 files changed, 44 insertions(+), 13 deletions(-)
 
 -- 
-Anton Johansson
-rev.ng Labs Srl.
+2.50.1
+
 
