@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FF3CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4A1CAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 09:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy5K8-0008Nz-71; Mon, 15 Sep 2025 05:16:36 -0400
+	id 1uy5M4-00019e-TH; Mon, 15 Sep 2025 05:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uy5K5-0008MA-4D
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:16:33 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uy5Jy-0006LT-Rs
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:16:32 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxnr9g2cdoVngKAA--.21214S3;
- Mon, 15 Sep 2025 17:16:16 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxZORd2cdoE_eWAA--.20947S3;
- Mon, 15 Sep 2025 17:16:15 +0800 (CST)
-Subject: Re: [PATCH 0/8] Add high MMIO support with GPEX host bridge
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org
-References: <20250915071946.315171-1-maobibo@loongson.cn>
- <20250915101109.00001833@huawei.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <b6b7e9f1-2da9-0460-9122-5fac812b71ad@loongson.cn>
-Date: Mon, 15 Sep 2025 17:14:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1uy5M1-000199-Qm
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:18:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1uy5Lq-0006Z2-K9
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 05:18:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757927894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nupJgd1x0JdbOIQmlL4i3PZeQdIjVeKg1giAHactmtc=;
+ b=N238lUs9GcRHH89al7E162aAFj/tLgb8tJWm83+VYe24Rh/vyv3oaUF6vgp884IkA30WOP
+ 0eZfNAksR97aE+QFkK0gaQfrn5cYXgmwCknqcxCGq5lrTIo2Q/Uuq8sIMcsUFVNA5ISZ5G
+ ydtoVY90AD9TROZZegqkqtuagFHhGI8=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-U9j29XgzPkuIcYGIathpyg-1; Mon, 15 Sep 2025 05:16:41 -0400
+X-MC-Unique: U9j29XgzPkuIcYGIathpyg-1
+X-Mimecast-MFC-AGG-ID: U9j29XgzPkuIcYGIathpyg_1757927801
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-42404bb4284so10260485ab.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 02:16:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757927801; x=1758532601;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nupJgd1x0JdbOIQmlL4i3PZeQdIjVeKg1giAHactmtc=;
+ b=uolSITA87+pgwthQDlLa9i0YhbS+cQahdVI/jOm+HSrk5poWTxPoVKTrJAihLafVvH
+ S3ds19EAoLbjwjidA9wbAMxUrBPKmRsv5GAKdboBlmdwq1/AlI3dZ18acz5Z1pTy5RcU
+ X2Uvy+Fi0wUHd729z+L6znJ+zKXKhoB3B2F/ZDRs6Dd3GAxnx2v7efxTqZi9YyDKfXRL
+ Wg0Y8OnJelMq38PExNuTkVksP+wGMrrs5mnhQG6Pf4cpmbLsYiA3RhTk04T6Qi3UtRxU
+ NzZCOMLAR23xfsn1SOR1jOtxlFs+oC5vD7waL4uiM3c6PXDbzNb+jbdW4MuTX9o/mj9t
+ Nsgw==
+X-Gm-Message-State: AOJu0YxDVlVFSpy6fLZqMEYqEbDFDdTKj58Jo66hkVFhcllTLbEs8Ljo
+ SpKNU8bSCkTUf2aBusgRXRPrVm/SmK28c6wyzOx2N+yzQ7gWkXLxH9TwFF3IrR6eGZZLfpXQcH5
+ YdbksPdCYoWDEnBxcu9Ximqn/YgTmdlgnEv2+4yes4qieT4kQ9MbyqKHm3671YeqDIZNJzVwVmJ
+ l/jLqpmBAQYzwIK+OuSvmXhb1uzzEmbTQ=
+X-Gm-Gg: ASbGncvR/A2s8pzyHMh/moCdEqbnrQOp8bzAh89CJTfeuX1CfAUoTsyBJM0rrh+FShG
+ BABhBa2mS4MN9CiSo9khBieno+xYA0fIQOkv87l8a1vJ//cRRYHkZj1NrLjLBgVFB5tnD98mC8m
+ 18DQj0wCCJlJUi0kLgQ9/j8xI=
+X-Received: by 2002:a05:6e02:1aa2:b0:3f2:a771:9fb3 with SMTP id
+ e9e14a558f8ab-420a4268714mr126361295ab.27.1757927800709; 
+ Mon, 15 Sep 2025 02:16:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvICMap2pd6a2bo0Q8XXJWmbNVvEW9h4CGRObhG3YoPPDfZmt8IvfMtqve5C9wrfhI/dBpmSs3nS61qx3MkSQ=
+X-Received: by 2002:a05:6e02:1aa2:b0:3f2:a771:9fb3 with SMTP id
+ e9e14a558f8ab-420a4268714mr126361185ab.27.1757927800392; Mon, 15 Sep 2025
+ 02:16:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250915101109.00001833@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxZORd2cdoE_eWAA--.20947S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Zr4UZFykCw4fJF1fAF4DWrX_yoW8ZF4xpr
- W7ZFnYyr48JrySkwnIya45WF90yrn3Gr1IqF1aqrW8CrsxXr15ur1xA34q9FWjy348JF1v
- qr1kG34UWF1UZ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AK
- xVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.242,
+References: <20241107180309.1713601-1-dbassey@redhat.com>
+ <v5p6ztswg7wrooyg4fnenbvbnwf2svm6j6jg7dm4pavwocft3x@ub5mgg5e3dyo>
+In-Reply-To: <v5p6ztswg7wrooyg4fnenbvbnwf2svm6j6jg7dm4pavwocft3x@ub5mgg5e3dyo>
+From: Dorinda Bassey <dbassey@redhat.com>
+Date: Mon, 15 Sep 2025 11:16:29 +0200
+X-Gm-Features: AS18NWAmMseFDEogem8DABUVSQfJjEN83Nogv4YKDMxUdp4p9LFQaMmo6dwXwSg
+Message-ID: <CACzuRyy5urdAzPqRQ__VOZ6R-43LKLFzqj1w_+hsZYs+ovHxtg@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-dmabuf: Ensure UUID persistence for hash table
+ insertion
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, aesteve@redhat.com, marcandre.lureau@redhat.com, 
+ Michael Tsirkin <mst@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000157086063ed37659"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=dbassey@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,55 +103,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000157086063ed37659
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Albert and Michael,
 
-On 2025/9/15 下午5:11, Jonathan Cameron wrote:
-> On Mon, 15 Sep 2025 15:19:38 +0800
-> Bibo Mao <maobibo@loongson.cn> wrote:
-> 
->> On LoongArch Virt Machine, MMIO region with GPEX host bridge is
->> 0x40000000 -- 0x7FFFFFFF. The total size is 1G bytes and it is enough
->> for emulated virtio devices basically.
->>
->> However on some conditions such as hostmem is added with virtio-gpu
->> device with -device virtio-gpu-gl,hostmem=4G. The PCIE MMIO region is
->> not enough, 64-bit high MMIO region is required.
->>
->> Here property highmem-mmio is added on virt machine to add 64-bit high
->> MMIO region supported. With high MMIO region added, it is not compatible
->> with old machine, so property highmem-mmio is disabled by default.
-> 
-> Trivial request. Please mention loongarch in the cover letter title.
-> It will help people make a quick decision on whether they should be looking
-> at the thread or not.
-Thanks for reminder, I notice this when it is sent out.
-Will be cautious about this in future.
+seems this patch fell through the cracks, It was posted but never picked
+up. Could you help push it? thanks!
 
-Regards
-Bibo Mao
-> 
-> Jonathan
-> 
->>
->> Bibo Mao (8):
->>    target/loongarch: Add phys_bits in CPULoongArchState
->>    hw/loongarch/virt: Add field ram_end in LoongArchVirtMachineState
->>    hw/loongarch/virt: Add field gpx in LoongArchVirtMachineState
->>    hw/loongarch/virt: Get irq number from gpex config info
->>    hw/loongarch/virt: Get PCI info from gpex config info
->>    hw/loongarch/virt: Add property highmem_mmio with virt machine
->>    hw/loongarch/virt: Add high MMIO support with GPEX host
->>    hw/loongarch/virt: Add property highmem-mmio-size with virt machine
->>
->>   hw/loongarch/virt-acpi-build.c |  17 +---
->>   hw/loongarch/virt-fdt-build.c  |  43 +++++++---
->>   hw/loongarch/virt.c            | 152 ++++++++++++++++++++++++++++++---
->>   include/hw/loongarch/virt.h    |   5 +-
->>   target/loongarch/cpu.c         |  13 +--
->>   target/loongarch/cpu.h         |   2 +
->>   6 files changed, 186 insertions(+), 46 deletions(-)
->>
->>
->> base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
+BR,
+Dorinda.
+
+On Fri, Nov 8, 2024 at 10:29=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
+.com>
+wrote:
+
+> On Thu, Nov 07, 2024 at 07:00:31PM +0100, Dorinda Bassey wrote:
+> >In `virtio_add_resource` function, the UUID used as a key for
+> >`g_hash_table_insert` was temporary, which could lead to
+> >invalid lookups when accessed later. This patch ensures that
+> >the UUID remains valid by duplicating it into a newly allocated
+> >memory space. The value is then inserted into the hash table
+> >with this persistent UUID key to ensure that the key stored in
+> >the hash table remains valid as long as the hash table entry
+> >exists.
+> >
+> >Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
+> >
+> >Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> >---
+> > hw/display/virtio-dmabuf.c | 6 ++++--
+> > 1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+>
+> >
+> >diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+> >index 3dba4577ca7..5e0395be77c 100644
+> >--- a/hw/display/virtio-dmabuf.c
+> >+++ b/hw/display/virtio-dmabuf.c
+> >@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid,
+> VirtioSharedObject *value)
+> >     if (resource_uuids =3D=3D NULL) {
+> >         resource_uuids =3D g_hash_table_new_full(qemu_uuid_hash,
+> >                                                uuid_equal_func,
+> >-                                               NULL,
+> >+                                               g_free,
+> >                                                g_free);
+> >     }
+> >     if (g_hash_table_lookup(resource_uuids, uuid) =3D=3D NULL) {
+> >-        g_hash_table_insert(resource_uuids, uuid, value);
+> >+        g_hash_table_insert(resource_uuids,
+> >+                            g_memdup2(uuid, sizeof(*uuid)),
+> >+                            value);
+> >     } else {
+> >         result =3D false;
+> >     }
+> >--
+> >2.47.0
+> >
+>
+>
+
+--000000000000157086063ed37659
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Albert and Michael,</div><div><br></div><div>seems=
+ this patch fell through the cracks, It was posted but never picked up. Cou=
+ld you help push it? thanks!</div><div><br></div><div>BR,</div><div>Dorinda=
+.</div></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Fri, Nov 8, 2024 at 10:29=E2=80=AFAM Stefa=
+no Garzarella &lt;<a href=3D"mailto:sgarzare@redhat.com">sgarzare@redhat.co=
+m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>On Thu, Nov 07, 2024 at 07:00:31PM +0100, Dorinda Bassey wrote:<br>
+&gt;In `virtio_add_resource` function, the UUID used as a key for<br>
+&gt;`g_hash_table_insert` was temporary, which could lead to<br>
+&gt;invalid lookups when accessed later. This patch ensures that<br>
+&gt;the UUID remains valid by duplicating it into a newly allocated<br>
+&gt;memory space. The value is then inserted into the hash table<br>
+&gt;with this persistent UUID key to ensure that the key stored in<br>
+&gt;the hash table remains valid as long as the hash table entry<br>
+&gt;exists.<br>
+&gt;<br>
+&gt;Fixes: faefdba847 (&quot;hw/display: introduce virtio-dmabuf&quot;)<br>
+&gt;<br>
+&gt;Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dbassey@redhat.com"=
+ target=3D"_blank">dbassey@redhat.com</a>&gt;<br>
+&gt;---<br>
+&gt; hw/display/virtio-dmabuf.c | 6 ++++--<br>
+&gt; 1 file changed, 4 insertions(+), 2 deletions(-)<br>
+<br>
+Reviewed-by: Stefano Garzarella &lt;<a href=3D"mailto:sgarzare@redhat.com" =
+target=3D"_blank">sgarzare@redhat.com</a>&gt;<br>
+<br>
+&gt;<br>
+&gt;diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c<br=
+>
+&gt;index 3dba4577ca7..5e0395be77c 100644<br>
+&gt;--- a/hw/display/virtio-dmabuf.c<br>
+&gt;+++ b/hw/display/virtio-dmabuf.c<br>
+&gt;@@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, Vir=
+tioSharedObject *value)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0if (resource_uuids =3D=3D NULL) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0resource_uuids =3D g_hash_table_new_f=
+ull(qemu_uuid_hash,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 uuid_equal_func,<br>
+&gt;-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0NULL,<br>
+&gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0g_free,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 g_free);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0if (g_hash_table_lookup(resource_uuids, uuid) =3D=
+=3D NULL) {<br>
+&gt;-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_uuids, uuid, =
+value);<br>
+&gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_hash_table_insert(resource_uuids,<br>
+&gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_memdup2(uuid, sizeof(*uuid)),<br>
+&gt;+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 value);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0result =3D false;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt;-- <br>
+&gt;2.47.0<br>
+&gt;<br>
+<br>
+</blockquote></div>
+
+--000000000000157086063ed37659--
 
 
