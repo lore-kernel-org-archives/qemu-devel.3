@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EE6CAC58E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 04:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D24C6CAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 04:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy0Z7-0003jE-0O; Mon, 15 Sep 2025 00:11:45 -0400
+	id 1uy0j4-000659-LD; Mon, 15 Sep 2025 00:22:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy0Vw-0002uw-SW
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:08:28 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1uy0df-00057R-2X
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:16:29 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uy0VY-0003Xj-AF
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:08:19 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b0e7bc49263so96067866b.1
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 21:08:00 -0700 (PDT)
+ id 1uy0dV-0004TO-7g
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 00:16:26 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b042cc39551so622562466b.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 21:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757909278; x=1758514078; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757909771; x=1758514571; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a7hRccTaisOnLlGXWrSjseXeJrY/CW00mlm9v4LgCgM=;
- b=PcPKhR4hPI0hFEpY2xSMSQM8+S4/LMmBItcTkUk+LOm1eLmigoZnqlavKKk/hntEg5
- 2hjBsJbKXjcCoHASxQv+HyErTIH0UgW4dJHED0oTjDeeooEU/D11taNAxRdw74Xd1Jg6
- V5Uy6by3oRNdEV9Dzd0SnsC2NbDdSDM5k2bayjpEW8hDeMj0eDnj8eCkohje/+a2SgG3
- 2VsdDeKwYAcBOh1I6bIMkbzfFXhSMzb7+AsI+coQo8/dY/wjK4EvAF6ez9BXY3sf9iG3
- ZVo6pgLfAhDNCYCJkp05E0IL1c511v1+/65hLlK6k+uBwgZ5C9k4Mhyr/KZ3BGOATXv1
- FADA==
+ bh=uiP2a+PQHrai/8lzBHIJPwicEm/+mdnWjTR+mliZyWY=;
+ b=cR7mnC4mqGxJ+pGx8g5Yqff5a656Bfunvk2SUwSI6pQ6WpbrFAZZLHknVRF0rJC7mY
+ 7Tm8UT5z9yNkr6Qt6bFyORNiEKdSByDnfjQxQuNihZaK7+zZXFtFkefYL739b+YmWJ8H
+ MJLnx2D7lHY++3AEyBZMbNhRxy/cvDnZ06DF8j6wlXc+9hgalf+XEOVcg9N4v9vMuqoS
+ 9KqIzRhR2dJ6C1bo6kvvfqYNPXmXuG4EmlGA/0SMBZBa0B7jlwtAKIcSy9XTSEXwEiuf
+ aYaVLdiqnV3z4/J+ZdiTtDZ7MsS1bFpjYhs0HKz8Vhd/6wExkaDvEE6+qZei6KCNlaJs
+ +z/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757909278; x=1758514078;
+ d=1e100.net; s=20230601; t=1757909771; x=1758514571;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a7hRccTaisOnLlGXWrSjseXeJrY/CW00mlm9v4LgCgM=;
- b=C2Jsdlnf7oUaAdPGPRGxhue0rbLVBFM6KvVF4q6/S28Jp/NO/7QnYGDaNCfWDFE13O
- T4RNqqUFPqTEwcMd+0bK9igVJam9du1BB0JU2okE1PmHFMnfLDYGOnfZ4x4U9sk92z5U
- OuXe9WcHoDFZqM9ckXxiFKfIzoonyFlu564UkBlmFQVNrczSYCER9R11yEef4C3Pxnam
- CIXJ4LZ+g8ZxKAaBd5k8RMhDQLdB5JV2hf4Z2cDNS5zUwdoMlMAYG1KXQBAk0X5sGY0T
- Cy9FcVmJjcj4C0metXIVJJ+lYYQz7gTdcRrvYn5M+3bPPx0pkh5tTzr3LiHWBboTjcoN
- ftug==
-X-Gm-Message-State: AOJu0YytjIxTXK5sOpieFpM+UKgABO5EGJ+uhaCH2yD0TmM2/YctgZbp
- yeqBzTfK0G75mQpJoxa5d3hLRxAJPsWHT7xYpVOxcrbsfTM42lGoJwX2RzkSEYQ3hfhbmbAYnnq
- PrM7aY+jpIAsUz6DiMJXbEPrLe7l927w=
-X-Gm-Gg: ASbGncvr1oZsyKWPujnDXAuI1xGhQP/xOV4eywwuh2il0RxjDSMN4FUHMt4YwYtFZfU
- TuI2jaoHI+MoSFwmwjxzipWOeqYt4np85XX1OXDvMFHchEB2y6YAJGC4VvkJz1wAD5ZUQp9xMSx
- 9cHf1ucMZSQc+1G6bP8tLnMUgjDkBFUl6uqple+H2Xd1BRsy+XWsvZWGXsGM9zFgTvGx+plXLzE
- RP/w/08cSOoPTe2c7P2esiUktS3pYZDMGscuQ==
-X-Google-Smtp-Source: AGHT+IH9nmI2V4iAzmJQ8rLm0zSLBUJwvQAmCFo0wZIDIdS12SZl7Vm/alRPO+Rgj9bXnTmugX3HNjiPvMVOphNa9k0=
-X-Received: by 2002:a17:907:60d0:b0:afe:a6d3:b4a2 with SMTP id
- a640c23a62f3a-b07c353ecfdmr1176100966b.11.1757909278265; Sun, 14 Sep 2025
- 21:07:58 -0700 (PDT)
+ bh=uiP2a+PQHrai/8lzBHIJPwicEm/+mdnWjTR+mliZyWY=;
+ b=eOWTLQaSoF8lmZIB5EvWCkL219wjblcUqzXcstxN6NkXK6IexNNJ8HkSHAqKtjiC1I
+ CL+RMyfwFWVOfltihws3OptJMEz789I/amkRxG6snJtWz2wzjN3VcONkHl0jNZ2CjdPu
+ FSg3v1MIpX7n55izrwbi6C0ZX/FWEhoy3VvjuobdHfWVovahwsc3otMeMB1QZ0bv4tCw
+ TBPmYAIJnkLUN5O/xgjHRfCXuNFNUiKHu4NTpIW/SDNmKLwjhT/0/Co3h8L6bfa+Cnh4
+ LB5cDGwlRK0MXDADmrsydvqcty4rvWXopfAypf3lFi+oMr6N0xF6j9p8RZWryuC8NddB
+ 9MNQ==
+X-Gm-Message-State: AOJu0Yx3/ct9wZx+Egjt4RpjauviZVrnwafu/mBGergrKfZe+EEeDbbq
+ rokuBPGb0PHJm/P+8CDLWeWNQrtkgXETElUey18FRYN8JiDVdJ5036fT1P7BboA4Y7RDfMmmQkP
+ Z6jWatHnvy8Q0Jhi/z/Mw/6d/zHlUjtZifQ==
+X-Gm-Gg: ASbGncsD3IpeJf0C0aTSDF4KtnsAWxx7L4FixE6x/WG7bVq6SXicuAvxFnjhNCNK13r
+ onm1SumFCUqHdFug4dgM95YHpc1mGVbY+p8JLO2srU0WqKI2eNe3yt7kI3/nEAxpqPhCTVBkTkU
+ SltnoOlAZ4ERhvFkg0dOHEwfwTxm/fuX3DpV1G4QdmPGk0aXt7/ud8Tctuiz0A36b19kzH+snTT
+ 3mj9WRnEU+ShqEONLxObn5BVs6Au3/hwTvTxg==
+X-Google-Smtp-Source: AGHT+IHpUmeo8u3894+hkt5PK10gZVkp5DN0SvPvBdhLFSVAfQdGwPcUzEXWYLgtUQ8903yWGqJsbFpm5tsQof3BB1s=
+X-Received: by 2002:a17:907:980c:b0:b07:6444:a6dc with SMTP id
+ a640c23a62f3a-b07c3878986mr1149830266b.56.1757909771382; Sun, 14 Sep 2025
+ 21:16:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250911160647.5710-1-frank.chang@sifive.com>
-In-Reply-To: <20250911160647.5710-1-frank.chang@sifive.com>
+References: <20250911-timers-v3-0-60508f640050@linux.alibaba.com>
+ <20250911-timers-v3-1-60508f640050@linux.alibaba.com>
+In-Reply-To: <20250911-timers-v3-1-60508f640050@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 14:07:31 +1000
-X-Gm-Features: Ac12FXxvO_cI_-M5TjsOSGMYZyAB8ijeknvqUbPHk_ZVL9arQmFZiCWbDQ22pWI
-Message-ID: <CAKmqyKMkXDoh6A2iY80CH5m9YKFjFjDnRvaXU=AuRD7jSPx59Q@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Fix SiFive UART character drop issue and minor
- refactors
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:SiFive Machines" <qemu-riscv@nongnu.org>
+Date: Mon, 15 Sep 2025 14:15:44 +1000
+X-Gm-Features: Ac12FXzsckx6ShqPZ0kxvTCOndJBIxhS2-h73VvQ0fwi39G3nuLwtOSV47KjXhA
+Message-ID: <CAKmqyKNSzwrvB-DnLZrMvA-he00CqNPkqKg_e4-U2Vcp52XVYg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] hw/intc: Save time_delta in RISC-V mtimer VMState
+To: TANG Tiancheng <lyndra@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-riscv@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,60 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 2:08=E2=80=AFAM <frank.chang@sifive.com> wrote:
+On Thu, Sep 11, 2025 at 7:58=E2=80=AFPM TANG Tiancheng <lyndra@linux.alibab=
+a.com> wrote:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> In QEMU's RISC-V ACLINT timer model, 'mtime' is not stored directly as a
+> state variable. It is computed on demand as:
 >
-> This patch set fixes the SiFive UART character drop issue introduced
-> after commit [1], which changed character printing from synchronous to
-> asynchronous.
+>     mtime =3D rtc_r + time_delta
 >
-> Since UART now transmits characters asynchronously, it is possible for
-> the Tx FIFO to become full, causing new characters to be ignored and
-> dropped when running Linux. This happens because:
+> where:
+> - 'rtc_r' is the current VM virtual time (in ticks) obtained via
+>   cpu_riscv_read_rtc_raw() from QEMU_CLOCK_VIRTUAL.
+> - 'time_delta' is an offset applied when the guest writes a new 'mtime'
+>   value via riscv_aclint_mtimer_write():
 >
->   1. The Linux SiFive UART driver sets the transmit watermark level to 1
->      [2], meaning a transmit watermark interrupt is raised whenever a
->      character is enqueued into the Tx FIFO.
->   2. Upon receiving a transmit watermark interrupt, the Linux driver
->      transfers up to a full Tx FIFO's worth of characters from the Linux
->      serial transmit buffer [3], without checking the txdata.full flag
->      before transferring multiple characters [4].
+>     time_delta =3D value - rtc_r
 >
-> This patch set updates QEMU to honor the Tx/Rx watermark thresholds and
-> raise interrupts only when the Tx threshold is exceeded or the Rx
-> threshold is undercut.
+> Under this design, 'rtc_r' is assumed to be monotonically increasing
+> during VM execution. Even if the guest writes an 'mtime' value smaller
+> than the current one (making 'time_delta' negative in signed arithmetic,
+> or underflow in unsigned arithmetic), the computed 'mtime' remains
+> correct because 'rtc_r_new > rtc_r_old':
 >
-> The remaining patches contain minor refactors, including removing an
-> outdated comment about the Tx FIFO.
+>     mtime_new =3D rtc_r_new + (value - rtc_r_old)
 >
-> [1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
-> [2] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifi=
-ve.c#L1039
-> [3] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifi=
-ve.c#L538
-> [4] https://github.com/torvalds/linux/blob/master/drivers/tty/serial/sifi=
-ve.c#L291
+> However, this monotonicity assumption breaks on snapshot load.
 >
-> Frank Chang (4):
->   hw/char: sifive_uart: Raise IRQ according to the Tx/Rx watermark
->     thresholds
->   hw/char: sifive_uart: Avoid pushing Tx FIFO when size is zero
->   hw/char: sifive_uart: Remove outdated comment about Tx FIFO
->   hw/char: sifive_uart: Add newline to error message
+> Before restoring a snapshot, QEMU resets the guest, which calls
+> riscv_aclint_mtimer_reset_enter() to set 'mtime' to 0 and recompute
+> 'time_delta' as:
+>
+>     time_delta =3D 0 - rtc_r_reset
+>
+> Here, the time_delta differs from the value that was present when the
+> snapshot was saved. As a result, subsequent reads produce a fixed offset
+> from the true mtime.
+>
+> This can be observed with the 'date' command inside the guest: after load=
+ing
+> a snapshot, the reported time appears "frozen" at the save point, and onl=
+y
+> resumes correctly after the guest has run long enough to compensate for t=
+he
+> erroneous offset.
+>
+> The fix is to treat 'time_delta' as part of the device's migratable
+> state and save/restore it via vmstate. This preserves the correct
+> relation between 'rtc_r' and 'mtime' across snapshot save/load, ensuring
+> 'mtime' continues incrementing from the precise saved value after
+> restore.
+>
+> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  hw/intc/riscv_aclint.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
->  hw/char/sifive_uart.c | 36 ++++++++++++++++--------------------
->  1 file changed, 16 insertions(+), 20 deletions(-)
+> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+> index 4623cfa029365c6cbdead4bd4a9f0d8b9e88b939..318a9c8248432a8cd4c3f3fa9=
+90739917ecf7ca1 100644
+> --- a/hw/intc/riscv_aclint.c
+> +++ b/hw/intc/riscv_aclint.c
+> @@ -323,9 +323,10 @@ static void riscv_aclint_mtimer_reset_enter(Object *=
+obj, ResetType type)
+>
+>  static const VMStateDescription vmstate_riscv_mtimer =3D {
+>      .name =3D "riscv_mtimer",
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
+>      .fields =3D (const VMStateField[]) {
+> +            VMSTATE_UINT64(time_delta, RISCVAclintMTimerState),
+>              VMSTATE_VARRAY_UINT32(timecmp, RISCVAclintMTimerState,
+>                                    num_harts, 0,
+>                                    vmstate_info_uint64, uint64_t),
 >
 > --
-> 2.49.0
+> 2.43.0
 >
 >
 
