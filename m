@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E084CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E1CCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6Cy-00050d-47; Mon, 15 Sep 2025 06:13:16 -0400
+	id 1uy6Ay-0002DM-7n; Mon, 15 Sep 2025 06:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6Cw-0004v0-G1; Mon, 15 Sep 2025 06:13:14 -0400
+ id 1uy6AZ-00027v-3m; Mon, 15 Sep 2025 06:10:50 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6Cn-0006vt-US; Mon, 15 Sep 2025 06:13:14 -0400
+ id 1uy6AN-0006bV-QD; Mon, 15 Sep 2025 06:10:46 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMP006344
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMF006344
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 15 Sep 2025 19:09:05 +0900 (JST)
+ Mon, 15 Sep 2025 19:09:00 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=9xkJspHpPQNQBoWKZvm2Uj1/DqAf0CZcwgKhdBrA1QA=; 
+DKIM-Signature: a=rsa-sha256; bh=feDbk9J/yWdV06ehpX8rW3/wvLj8rzMauO12ghjmdGI=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757930945; v=1;
- b=j870JCne3OfNUsYEESLnb/I35Tn+rD9Im4No2J9whV0/zQV7PLvFXaBdSnyW1BsH
- 6NbHU4t4KZyVVF5GcTUDTZQczOwHYay06PWqn07bXC+EYFl6Hx90W8BwhHUyRMmE
- D4uCX1cUBTD1Lu3w9v0WsJeA78ouDwFm3GRHJ0+MWbne3qc9Y6t5mljqGbGWcX0f
- hdoGLuuEP+3GCwgja16o8jHenHxuZhHUqX1Jnx+LdTZ1Lfb1nw4EagrXjFuaMWV+
- 0bRI2K9qapOdYXngPny9jLNZ2yeAwqGl8kcr1qTBc1cyPgPJPs4SesLYV3Dlo/S0
- bgXOGkKPVM9DknUssmSgxQ==
+ s=rs20250326; t=1757930940; v=1;
+ b=UsyzbwL4S41cOpFkW74xM9hAxTzjyASeYh7FcT3+FwYANDA51izLPNKlH6uTX4Uy
+ +ePtDbC5PvgMQ77k0KpsRUrrj3q0a60yH+QiKWVVeoaoZ05dNaIJYgLX8M1Gp28a
+ vqWBGPG+mvGEj2wPXbLFDVn4iIuRNjgWvVgBozipAOJJ9MGtcVPwn5Q+Eu3MrsHa
+ RqoxtwHlCRPmmRaR8WZ39Vtu8COp7YRb5YXFlsJ70jYvsyoKSqxlwocepNI9YoKC
+ 6J/vxrsWHXfr4yCB5h0ATjw1nRbr4Jzui4aDAQyed3NyyTbE0PIfqw+adfqu6O2a
+ U+/AP2r5E9L8oZ/e+v6HpQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 15 Sep 2025 19:08:53 +0900
-Subject: [PATCH v2 12/15] pci: Do not delete the subregions
+Date: Mon, 15 Sep 2025 19:08:43 +0900
+Subject: [PATCH v2 02/15] vfio/pci: Do not unparent in instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-use-v2-12-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250915-use-v2-2-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -103,56 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+Children are automatically unparented so manually unparenting is
+unnecessary.
+
+Worse, automatic unparenting happens before the insntance_finalize()
+callback of the parent gets called, so object_unparent() calls in
+the callback will refer to objects that are already unparented, which
+is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/pci/pci.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ hw/vfio/pci.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 516029f66cda..2b408c7ec336 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1188,10 +1188,6 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
-     if (xen_mode == XEN_EMULATE) {
-         xen_evtchn_remove_pci_device(pci_dev);
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 07257d0fa049..2e909c190f86 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+         vfio_region_finalize(&bar->region);
+         if (bar->mr) {
+             assert(bar->size);
+-            object_unparent(OBJECT(bar->mr));
+             g_free(bar->mr);
+             bar->mr = NULL;
+         }
+@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+ 
+     if (vdev->vga) {
+         vfio_vga_quirk_finalize(vdev);
+-        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+-            object_unparent(OBJECT(&vdev->vga->region[i].mem));
+-        }
+         g_free(vdev->vga);
      }
--    if (memory_region_is_mapped(&pci_dev->bus_master_enable_region)) {
--        memory_region_del_subregion(&pci_dev->bus_master_container_region,
--                                    &pci_dev->bus_master_enable_region);
--    }
-     address_space_destroy(&pci_dev->bus_master_as);
  }
- 
-@@ -1417,27 +1413,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-     return pci_dev;
- }
- 
--static void pci_unregister_io_regions(PCIDevice *pci_dev)
--{
--    PCIIORegion *r;
--    int i;
--
--    for(i = 0; i < PCI_NUM_REGIONS; i++) {
--        r = &pci_dev->io_regions[i];
--        if (!r->size || r->addr == PCI_BAR_UNMAPPED)
--            continue;
--        memory_region_del_subregion(r->address_space, r->memory);
--    }
--
--    pci_unregister_vga(pci_dev);
--}
--
- static void pci_qdev_unrealize(DeviceState *dev)
- {
-     PCIDevice *pci_dev = PCI_DEVICE(dev);
-     PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
- 
--    pci_unregister_io_regions(pci_dev);
-     pci_del_option_rom(pci_dev);
-     pcie_sriov_unregister_device(pci_dev);
- 
 
 -- 
 2.51.0
