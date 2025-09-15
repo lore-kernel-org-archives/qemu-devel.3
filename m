@@ -4,64 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5044ECAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 12:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDBFCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 12:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy8cq-0005Ck-AD; Mon, 15 Sep 2025 08:48:08 -0400
+	id 1uy8ee-0007Hn-AE; Mon, 15 Sep 2025 08:50:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1uy8c3-0004j2-CA; Mon, 15 Sep 2025 08:47:22 -0400
-Received: from forward101d.mail.yandex.net ([178.154.239.212])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uy8eR-0007D2-Vq
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 08:49:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1uy8bp-0002a3-HJ; Mon, 15 Sep 2025 08:47:14 -0400
-Received: from mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:3928:0:640:8b00:0])
- by forward101d.mail.yandex.net (Yandex) with ESMTPS id D1956C00D9;
- Mon, 15 Sep 2025 15:46:52 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id okOftstMV4Y0-wIy92qyz; 
- Mon, 15 Sep 2025 15:46:52 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
- t=1757940412; bh=O9hW0c4Ttcubk5ra00YW4qEl7dFasP/KlwU4xmJPyMw=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=FontJn9X7PfP55jadlsCUXNSUUF2bsrfrGk7L6Wlz88GyVCB7cQm/jaMEuHcmvvSi
- YKsjTGEluB2w9U8+We0taMIWN0ddNxOqH+ZC9NSMZEuVLv6HF+mIr9xARE4hORomaQ
- 0XQNUCzNXOgW1detjcHyIXKSeFV4Fm3cmLVd47d8=
-Authentication-Results: mail-nwsmtp-smtp-production-main-84.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex.ru
-From: Danila Zhebryakov <d.zhebryakov@yandex.ru>
-To: qemu-devel@nongnu.org
-Cc: Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Danila Zhebryakov <d.zhebryakov@yandex.ru>
-Subject: [PATCH v3 2/4] target/ppc: refactor MMU helpers
-Date: Mon, 15 Sep 2025 15:46:48 +0300
-Message-ID: <20250915124650.435777-3-d.zhebryakov@yandex.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250915124650.435777-1-d.zhebryakov@yandex.ru>
-References: <20250915124650.435777-1-d.zhebryakov@yandex.ru>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uy8eG-0002qT-UN
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 08:49:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1757940571;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BUUKoAo41CJwreQ9ZCD61KMP24ARohN8mBV2SYIsYz8=;
+ b=b7YnJW4A00NbcyFjlHj6KXFwcvahseiiioKek0W49t302I5U1byutTjhG1YB3qnYl0G7Dy
+ a8GfhRBtSZkPQixlHM1kyNvJz2dc2sXge6lnpkkWHEZDeARD5GffJRPK006pMp9bcUhg8N
+ dP94O0r6BnHhjV/jcK8LeKZf5+9oUHc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-241-O4cHnyysNAiwLXiBHhOB5Q-1; Mon, 15 Sep 2025 08:49:29 -0400
+X-MC-Unique: O4cHnyysNAiwLXiBHhOB5Q-1
+X-Mimecast-MFC-AGG-ID: O4cHnyysNAiwLXiBHhOB5Q_1757940567
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b467f5173so28269355e9.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 05:49:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1757940567; x=1758545367;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BUUKoAo41CJwreQ9ZCD61KMP24ARohN8mBV2SYIsYz8=;
+ b=QJYceYqF4JpesgxwhYStWZmsxn5qFxu7IGuMtG5ILSxy0ibw3AfaCl0VvaIM7fpYEg
+ tONyz/rf1NlEaCsGeoiqkNL/DRCcsXPbXGrCfixxbYyyzH3YSjuzc95hR/i3vdBQtgIJ
+ ovVLs5SydFuCWLX6sUxf0nu/I/U9Mz6SzwD+dCU9Ob2hOJSqcyANB1uwHMxfbTMVKBi0
+ j5Adh5AXPQhEQGSqAEq82Ewcq8Ujvogq2v+wxUkfCkqmrRhUBPsPRTKUvtadac2NhZcU
+ 8RyNTcQPmcc9xez1ZkFS4cI6AcAhcgg0bjHEIPiB8f0FmA2XYgGNJEGHJ53Lm/B1D8Ww
+ nC7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoiN25XzRY5Wc+naFQDzrPE/v1NtJwT2Yn8vUU8GHIWSFUtmrkvoREnaiJ+RZK7FLQVaUUqi9OCxXs@nongnu.org
+X-Gm-Message-State: AOJu0YwRtqTnLJFHZABP1sLFUlnvuwCpLsQExy2tF95//25IdNwT6CVv
+ REwGMdOUvtEmeHMcljq3yezLnt9noXIFk32sgxUi3cpImXymCypC2X4XikxjJgsHZs27qgUWfK3
+ lm3NDT112klGo5zrlDcwUPVKzdq1nX1AE7ByC1TcEod4pSZpdDcsPPwxP
+X-Gm-Gg: ASbGncvoutILZqyjIMokSww2kA05oEn4zcakmVKj8/kR2RP5B3VKotU2+mbvyoXn22M
+ J0U00KvwBn9cYSrqjJuSqWbJXvVpnD/z1DcdGYA4dkqM/XSMjM4AOjyMraYHeVWcPUIdV8dwQJM
+ OYLntcTE4Ppfye8vs2XA91hkp9fIZ0Jp++ZUWDe+JmqtUC7T6mHxMGCKpuGbbQpAoSG08K2Yjzc
+ yG1ksICdH8q07uHUITWcDN2880IvmzvE3vVX1O+2yhHPeBTTKTwTK36KeCLBX7j59ALxgFKszFA
+ Zv3TT46goLDmakAt8kwJ2/KbzUlotLUEBzThDUaSB+UESezOlEOxsj9u4Y2SD+IQGzlZD7nUXOt
+ uyKjUiw==
+X-Received: by 2002:a05:600c:4fd6:b0:45b:76c6:cfb8 with SMTP id
+ 5b1f17b1804b1-45f211d5d7bmr105599955e9.9.1757940567231; 
+ Mon, 15 Sep 2025 05:49:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9jZtjvbleadooUxhVdf5bWxz4eh2s5Zn5cTlQZ9Qif/+ThvjzpuyPM8TWvE3InE1yuYbDjA==
+X-Received: by 2002:a05:600c:4fd6:b0:45b:76c6:cfb8 with SMTP id
+ 5b1f17b1804b1-45f211d5d7bmr105599615e9.9.1757940566738; 
+ Mon, 15 Sep 2025 05:49:26 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-183.pools.arcor-ip.net.
+ [47.64.113.183]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45e017b2722sm96511295e9.1.2025.09.15.05.49.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Sep 2025 05:49:26 -0700 (PDT)
+Message-ID: <07635935-fc6c-48bf-81b6-bc3709197411@redhat.com>
+Date: Mon, 15 Sep 2025 14:49:23 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/5] tests/functional: Adapt reverse_debugging to run
+ w/o Avocado
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+References: <20250904154640.52687-1-gustavo.romero@linaro.org>
+ <aL7CsSppNc-WZFY-@redhat.com>
+ <a6320118-84f0-4088-82de-7192be6093cd@linaro.org>
+ <aMQzD0m3QluWzlmh@redhat.com> <871pob64iv.fsf@draig.linaro.org>
+ <aMRJ6nfXF2l7iu7b@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <aMRJ6nfXF2l7iu7b@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.212;
- envelope-from=d.zhebryakov@yandex.ru; helo=forward101d.mail.yandex.net
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,660 +161,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changed most of the PPC MMU helpers to take CPUTLBEntryFull* instead of pointers to real address, prot and size.
-This is needed at least for booke206 MMU to support LE bits (which need to set TLB_BSWAP in tlb_fill_flags), but also seems reasonable to do to other MMUs for consistency.
-This should not change any behavior at all.
+On 12/09/2025 18.27, Daniel P. Berrangé wrote:
+> On Fri, Sep 12, 2025 at 05:04:40PM +0100, Alex Bennée wrote:
+>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>
+>>> On Thu, Sep 11, 2025 at 08:51:08PM -0300, Gustavo Romero wrote:
+>>>> Hi Daniel,
+>>>>
+>>>> Thanks a lot for review and the suggestions.
+>>>>
+>>>> On 9/8/25 08:49, Daniel P. Berrangé wrote:
+>>>>> On Thu, Sep 04, 2025 at 03:46:35PM +0000, Gustavo Romero wrote:
+>>>>>> In this series, we leveraged the run-test.py script used in the
+>>>>>> check-tcg tests, making it a GDB runner capable of calling a test script
+>>>>>> without spawning any VMs. In this configuration, the test scripts can
+>>>>>> manage the VM and also import gdb, making the GDB Python API inside the
+>>>>>> functional test scripts.
+>>>>>>
+>>>>>> A --quiet option has been added to run-test.py so it doesn't print the
+>>>>>> command line used to execute GDB to the stdout. This ensures that users
+>>>>>> don't get confused about how to re-run the tests. One can re-run the
+>>>>>> test simply by copying and pasting the command line shown by Meson when
+>>>>>> V=1 is passed:
+>>>>>>
+>>>>>> $ make -j check-functional V=1
+>>>>>>
+>>>>>> or, alternatively, once the test run completes, the exact command found
+>>>>>> in the 'command:' field of the build/meson-logs/testlog-thorough.txt
+>>>>>> file generated by Meson. Both methods provide the correct environment
+>>>>>> variables required to run the test, such as the proper $PYTHONPATH.
+>>>>>
+>>>>> While I like the conceptual idea of just sending human GDB commands,
+>>>>> instead of working with GDB protocol packets, I really dislike the
+>>>>> effect this has on the execution / startup of the functional tests
+>>>>> via use of the custom runner for a number of reasons
+>>>>>
+>>>>>    * The command line for launching the test outside of meson is very
+>>>>>      complicated, so not memorable
+>>>>
+>>>> Why very complicated? It calls a simple runner instead of calling the
+>>>> test script directly, but it doesn't change the way to re-run a single
+>>>> test. One just have to pass V=1 to see make's command line  and copy
+>>>> and paste the full command line to re-run the test. I mentioned
+>>>> inspecting 'testlog-thorough.txt' just for completeness.
+>>>
+>>> Today we can run the individual tests directly
+>>>
+>>>   # ./tests/functional/x86_64/test_reverse_debug.py
+>>>   TAP version 13
+>>>   ok 1 test_reverse_debug.ReverseDebugging_X86_64.test_x86_64_pc
+>>>   1..1
+>>>
+>>>
+>>> (assuming you have PYTHONPATH and QEMU_TEST_QEMU_BINARY env set)
+>>
+>> and the old version of Avocado...
+>>
+>>> This gives you a very easy way to interact with the test, see
+>>> its progress, understand what failed, and debug it with strace,
+>>> etc.
+>>>
+>>> This change looses all that. It appears I can run it with
+>>>
+>>>    # ./tests/guest-debug/run-test.py --quiet --gdb gdb --test \
+>>>         ./tests/functional/x86_64/test_reverse_debug.py
+>>>
+>> <snip>
+>>>
+>>>
+>>> This undermines the core goals of what we aimed to achieve with
+>>> the new functional test harness.
+>>>
+>>>>
+>>>>>    * It makes the meson.build rules much more complicated
+>>>>
+>>>> Do we want to never augment functional tests' meson.build? Nothing
+>>>> complicated is being added. Basically, just a new variable suffixed with
+>>>> '_with_runner' which holds a tuple (test, runner) that tell the test
+>>>> to be executed, following the same logic we already have for all the other
+>>>> variables that specify the tests per arch/mode/speed.
+>>>>
+>>>> Another option would be to select a runner based on a suffix in the test
+>>>> name, for instance, 'reverse_debug_with_runner.py'.
+>>>
+>>> IMHO the overall concept of using the run-test.py runner for launching
+>>> the tests is flawed and not viable. It adds too much complexity to the
+>>> use of the tests, and harms the output.
+>>
+>>
+>>
+>>>
+>>>>>    * Running standalone there is no TAP output available making the
+>>>>>      test hard to debug on failure or timeout
+>>>>
+>>>> This is because of an unfortunate GDB Python API issue, please see my
+>>>> reply in your comment on patch 5/5. This can be solved but needs more
+>>>> investigation on GDB side.
+>>>>
+>>>>
+>>>>> I understand the need to spawn the test via gdb, in order to be able
+>>>>> to import the 'gdb' python module. Looking at what reverse_debugging.py
+>>>>> does, however, makes me question whether we actually need to directly
+>>>>> use the 'gdb' python module.
+>>>>>
+>>>>> The only APIs we use are 'gdb.execute' and 'gdb.parse_and_eval'.
+>>>>>
+>>>>> The latter is only used once as
+>>>>>
+>>>>>     gdb.parse_and_eval("$pc")
+>>>>>
+>>>>> and I believe that can be changed to
+>>>>>
+>>>>>     gdb.execute("printf \"0x%x\", $pc", to_string=True)
+>>>>>
+>>>>> IOW, all we need is 'gdb.execute("....", to_string=True)'
+>>>>
+>>>> Yes, I do want to directly use the 'gdb' python module directly in the
+>>>> tests. We shouldn't look at a solution only for reverse_debug.py but also
+>>>> think of any future tests that will require the GDB Python API, so I don't
+>>>> want to specialize here and reduce the API to a single method.
+>>>
+>>> If any other tests needing GDB arrive int he future we can consider
+>>> them at that time.
+>>
+>> We already have a whole chunk of gdb tests under check-tcg. Maybe it
+>> would be easier just to re-write the tests to use the check-tcg system
+>> tests rather than jumping through hoops to fit in with the
+>> check-functional requirements.
+> 
+> Well if 'easy' is our goal, then we can just copy the gdbmi.py
+> file from avocado into our test suite.
 
-Signed-off-by: Danila Zhebryakov <d.zhebryakov@yandex.ru>
----
- target/ppc/internal.h    |  3 +-
- target/ppc/mmu-booke.c   | 63 +++++++++++++++++----------------
- target/ppc/mmu-booke.h   |  2 +-
- target/ppc/mmu-hash32.c  | 30 +++++++++-------
- target/ppc/mmu-hash32.h  |  3 +-
- target/ppc/mmu-hash64.c  | 14 ++++----
- target/ppc/mmu-hash64.h  |  2 +-
- target/ppc/mmu-radix64.c | 20 +++++++----
- target/ppc/mmu-radix64.h |  2 +-
- target/ppc/mmu_common.c  | 75 ++++++++++++++++++++--------------------
- target/ppc/mmu_helper.c  | 15 ++++----
- 11 files changed, 121 insertions(+), 108 deletions(-)
+But maintaining that stuff in the QEMU repository is also kind of ugly.
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 7723350227..81f9a9f2cf 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -246,8 +246,7 @@ static inline int check_prot_access_type(int prot, MMUAccessType access_type)
- /* PowerPC MMU emulation */
- 
- bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp,
--                      int mmu_idx, bool guest_visible);
-+               CPUTLBEntryFull *full, int mmu_idx, bool guest_visible);
- 
- /* Software driven TLB helpers */
- int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
-diff --git a/target/ppc/mmu-booke.c b/target/ppc/mmu-booke.c
-index 55e5dd7c6b..10ba8052d4 100644
---- a/target/ppc/mmu-booke.c
-+++ b/target/ppc/mmu-booke.c
-@@ -23,6 +23,7 @@
- #include "cpu.h"
- #include "internal.h"
- #include "mmu-booke.h"
-+#include "exec/tlb-flags.h"
- 
- /* Generic TLB check function for embedded PowerPC implementations */
- static bool ppcemb_tlb_check(CPUPPCState *env, ppcemb_tlb_t *tlb,
-@@ -155,10 +156,10 @@ static bool mmubooke_check_pid(CPUPPCState *env, ppcemb_tlb_t *tlb,
- }
- 
- static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
--                              hwaddr *raddr, int *prot, target_ulong address,
-+                              CPUTLBEntryFull *full, target_ulong address,
-                               MMUAccessType access_type, int i)
- {
--    if (!mmubooke_check_pid(env, tlb, raddr, address, i)) {
-+    if (!mmubooke_check_pid(env, tlb, &(full->phys_addr), address, i)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: TLB entry not found\n", __func__);
-         return -1;
-     }
-@@ -172,21 +173,22 @@ static int mmubooke_check_tlb(CPUPPCState *env, ppcemb_tlb_t *tlb,
-     }
- 
-     if (FIELD_EX64(env->msr, MSR, PR)) {
--        *prot = tlb->prot & 0xF;
-+        full->prot = tlb->prot & 0xF;
-     } else {
--        *prot = (tlb->prot >> 4) & 0xF;
-+        full->prot = (tlb->prot >> 4) & 0xF;
-     }
--    if (check_prot_access_type(*prot, access_type)) {
-+    if (check_prot_access_type(full->prot, access_type)) {
-         qemu_log_mask(CPU_LOG_MMU, "%s: good TLB!\n", __func__);
-         return 0;
-     }
- 
--    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, *prot);
-+    qemu_log_mask(CPU_LOG_MMU, "%s: no prot match: %x\n", __func__, full->prot);
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
--static int mmubooke_get_physical_address(CPUPPCState *env, hwaddr *raddr,
--                                         int *prot, target_ulong address,
-+static int mmubooke_get_physical_address(CPUPPCState *env,
-+                                         CPUTLBEntryFull *full,
-+                                         target_ulong address,
-                                          MMUAccessType access_type)
- {
-     ppcemb_tlb_t *tlb;
-@@ -194,7 +196,7 @@ static int mmubooke_get_physical_address(CPUPPCState *env, hwaddr *raddr,
- 
-     for (i = 0; i < env->nb_tlb; i++) {
-         tlb = &env->tlb.tlbe[i];
--        ret = mmubooke_check_tlb(env, tlb, raddr, prot, address,
-+        ret = mmubooke_check_tlb(env, tlb, full, address,
-                                  access_type, i);
-         if (ret != -1) {
-             break;
-@@ -203,7 +205,8 @@ static int mmubooke_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-     qemu_log_mask(CPU_LOG_MMU,
-                   "%s: access %s " TARGET_FMT_lx " => " HWADDR_FMT_plx
-                   " %d %d\n", __func__, ret < 0 ? "refused" : "granted",
--                  address, ret < 0 ? -1 : *raddr, ret == -1 ? 0 : *prot, ret);
-+                  address, ret < 0 ? -1 : full->phys_addr,
-+                  ret == -1 ? 0 : full->prot, ret);
-     return ret;
- }
- 
-@@ -307,8 +310,7 @@ static bool mmubooke206_get_as(CPUPPCState *env,
- 
- /* Check if the tlb found by hashing really matches */
- static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
--                                 hwaddr *raddr, int *prot,
--                                 target_ulong address,
-+                                 CPUTLBEntryFull *full, target_ulong address,
-                                  MMUAccessType access_type, int mmu_idx)
- {
-     uint32_t epid;
-@@ -316,24 +318,25 @@ static int mmubooke206_check_tlb(CPUPPCState *env, ppcmas_tlb_t *tlb,
-     bool use_epid = mmubooke206_get_as(env, mmu_idx, &epid, &as, &pr);
- 
-     if (!use_epid) {
--        if (ppcmas_tlb_check(env, tlb, raddr, address,
-+        if (ppcmas_tlb_check(env, tlb, &(full->phys_addr), address,
-                              env->spr[SPR_BOOKE_PID]) >= 0) {
-             goto found_tlb;
-         }
- 
-         if (env->spr[SPR_BOOKE_PID1] &&
--            ppcmas_tlb_check(env, tlb, raddr, address,
-+            ppcmas_tlb_check(env, tlb, &(full->phys_addr), address,
-                              env->spr[SPR_BOOKE_PID1]) >= 0) {
-             goto found_tlb;
-         }
- 
-         if (env->spr[SPR_BOOKE_PID2] &&
--            ppcmas_tlb_check(env, tlb, raddr, address,
-+            ppcmas_tlb_check(env, tlb, &(full->phys_addr), address,
-                              env->spr[SPR_BOOKE_PID2]) >= 0) {
-             goto found_tlb;
-         }
-     } else {
--        if (ppcmas_tlb_check(env, tlb, raddr, address, epid) >= 0) {
-+        if (ppcmas_tlb_check(env, tlb, &(full->phys_addr),
-+                             address, epid) >= 0) {
-             goto found_tlb;
-         }
-     }
-@@ -356,7 +359,9 @@ found_tlb:
-         return -1;
-     }
- 
-+    uint8_t *prot = &(full->prot);
-     *prot = 0;
-+
-     if (pr) {
-         if (tlb->mas7_3 & MAS3_UR) {
-             *prot |= PAGE_READ;
-@@ -387,8 +392,9 @@ found_tlb:
-     return access_type == MMU_INST_FETCH ? -3 : -2;
- }
- 
--static int mmubooke206_get_physical_address(CPUPPCState *env, hwaddr *raddr,
--                                            int *prot, target_ulong address,
-+static int mmubooke206_get_physical_address(CPUPPCState *env,
-+                                            CPUTLBEntryFull *full,
-+                                            target_ulong address,
-                                             MMUAccessType access_type,
-                                             int mmu_idx)
- {
-@@ -402,7 +408,7 @@ static int mmubooke206_get_physical_address(CPUPPCState *env, hwaddr *raddr,
-             if (!tlb) {
-                 continue;
-             }
--            ret = mmubooke206_check_tlb(env, tlb, raddr, prot, address,
-+            ret = mmubooke206_check_tlb(env, tlb, full, address,
-                                         access_type, mmu_idx);
-             if (ret != -1) {
-                 goto found_tlb;
-@@ -415,7 +421,8 @@ found_tlb:
-     qemu_log_mask(CPU_LOG_MMU, "%s: access %s " TARGET_FMT_lx " => "
-                   HWADDR_FMT_plx " %d %d\n", __func__,
-                   ret < 0 ? "refused" : "granted", address,
--                  ret < 0 ? -1 : *raddr, ret == -1 ? 0 : *prot, ret);
-+                  ret < 0 ? -1 : full->phys_addr,
-+                  ret == -1 ? 0 : full->prot, ret);
-     return ret;
- }
- 
-@@ -474,27 +481,25 @@ static void booke206_update_mas_tlb_miss(CPUPPCState *env, target_ulong address,
- }
- 
- bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                     hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                     CPUTLBEntryFull *full, int mmu_idx,
-                      bool guest_visible)
- {
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
--    hwaddr raddr;
--    int prot, ret;
-+    int ret;
- 
-     if (env->mmu_model == POWERPC_MMU_BOOKE206) {
--        ret = mmubooke206_get_physical_address(env, &raddr, &prot, eaddr,
-+        ret = mmubooke206_get_physical_address(env, full, eaddr,
-                                                access_type, mmu_idx);
-     } else {
--        ret = mmubooke_get_physical_address(env, &raddr, &prot, eaddr,
--                                            access_type);
-+        ret = mmubooke_get_physical_address(env, full, eaddr, access_type);
-     }
-     if (ret == 0) {
--        *raddrp = raddr;
--        *protp = prot;
--        *psizep = TARGET_PAGE_BITS;
-+        full->lg_page_size = TARGET_PAGE_BITS;
-         return true;
-     } else if (!guest_visible) {
-+        full->prot = 0;
-+        full->phys_addr = 0;
-         return false;
-     }
- 
-diff --git a/target/ppc/mmu-booke.h b/target/ppc/mmu-booke.h
-index f972843bbb..4d15ddd176 100644
---- a/target/ppc/mmu-booke.h
-+++ b/target/ppc/mmu-booke.h
-@@ -11,7 +11,7 @@ hwaddr booke206_tlb_to_page_size(CPUPPCState *env, ppcmas_tlb_t *tlb);
- int ppcmas_tlb_check(CPUPPCState *env, ppcmas_tlb_t *tlb, hwaddr *raddrp,
-                      target_ulong address, uint32_t pid);
- bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                     hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                     CPUTLBEntryFull *full, int mmu_idx,
-                      bool guest_visible);
- 
- #endif
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 8b980a5aa9..469ebbc883 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -292,7 +292,7 @@ static hwaddr ppc_hash32_htab_lookup(PowerPCCPU *cpu,
- }
- 
- bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                      CPUTLBEntryFull *full, int mmu_idx,
-                       bool guest_visible)
- {
-     CPUState *cs = CPU(cpu);
-@@ -301,24 +301,26 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     hwaddr pte_offset, raddr;
-     ppc_hash_pte32_t pte;
-     bool key;
--    int prot;
-+    int prot = 0;
- 
-     /* There are no hash32 large pages. */
--    *psizep = TARGET_PAGE_BITS;
-+    full->lg_page_size = TARGET_PAGE_BITS;
- 
-     /* 1. Handle real mode accesses */
-     if (mmuidx_real(mmu_idx)) {
-         /* Translation is off */
--        *raddrp = eaddr;
--        *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        full->phys_addr = eaddr;
-+        full->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-         return true;
-     }
- 
-     /* 2. Check Block Address Translation entries (BATs) */
-     if (env->nb_BATs != 0) {
--        raddr = ppc_hash32_bat_lookup(cpu, eaddr, access_type, protp, mmu_idx);
-+        raddr = ppc_hash32_bat_lookup(cpu, eaddr, access_type, &prot, mmu_idx);
-+        full->prot = prot;
-+
-         if (raddr != -1) {
--            if (!check_prot_access_type(*protp, access_type)) {
-+            if (!check_prot_access_type(full->prot, access_type)) {
-                 if (guest_visible) {
-                     if (access_type == MMU_INST_FETCH) {
-                         cs->exception_index = POWERPC_EXCP_ISI;
-@@ -336,7 +338,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-                 }
-                 return false;
-             }
--            *raddrp = raddr;
-+            full->phys_addr = raddr;
-             return true;
-         }
-     }
-@@ -347,7 +349,9 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     /* 4. Handle direct store segments */
-     if (sr & SR32_T) {
-         return ppc_hash32_direct_store(cpu, sr, eaddr, access_type,
--                                       raddrp, protp, mmu_idx, guest_visible);
-+                                       &(full->phys_addr), &prot, mmu_idx,
-+                                       guest_visible);
-+        full->prot = prot;
-     }
- 
-     /* 5. Check for segment level no-execute violation */
-@@ -425,11 +429,11 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-             prot &= ~PAGE_WRITE;
-         }
-     }
--    *protp = prot;
-+    full->prot = prot;
- 
-     /* 9. Determine the real address from the PTE */
--    *raddrp = pte.pte1 & HPTE32_R_RPN;
--    *raddrp &= TARGET_PAGE_MASK;
--    *raddrp |= eaddr & ~TARGET_PAGE_MASK;
-+    full->phys_addr = pte.pte1 & HPTE32_R_RPN;
-+    full->phys_addr &= TARGET_PAGE_MASK;
-+    full->phys_addr |= eaddr & ~TARGET_PAGE_MASK;
-     return true;
- }
-diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
-index 04c23ea75e..dd9da7729b 100644
---- a/target/ppc/mmu-hash32.h
-+++ b/target/ppc/mmu-hash32.h
-@@ -6,8 +6,7 @@
- #include "system/memory.h"
- 
- bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
--                      bool guest_visible);
-+                      CPUTLBEntryFull *full, int mmu_idx, bool guest_visible);
- 
- /*
-  * Segment register definitions
-diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-index dd337558aa..2927be8144 100644
---- a/target/ppc/mmu-hash64.c
-+++ b/target/ppc/mmu-hash64.c
-@@ -980,7 +980,7 @@ static int build_vrma_slbe(PowerPCCPU *cpu, ppc_slb_t *slb)
- }
- 
- bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                      CPUTLBEntryFull *full, int mmu_idx,
-                       bool guest_visible)
- {
-     CPUState *cs = CPU(cpu);
-@@ -1063,9 +1063,9 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-             raddr |= env->spr[SPR_RMOR];
-         }
- 
--        *raddrp = raddr;
--        *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
--        *psizep = TARGET_PAGE_BITS;
-+        full->phys_addr = raddr;
-+        full->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+        full->lg_page_size = TARGET_PAGE_BITS;
-         return true;
-     }
- 
-@@ -1201,9 +1201,9 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- 
-     /* 7. Determine the real address from the PTE */
- 
--    *raddrp = deposit64(pte.pte1 & HPTE64_R_RPN, 0, apshift, eaddr);
--    *protp = prot;
--    *psizep = apshift;
-+    full->phys_addr = deposit64(pte.pte1 & HPTE64_R_RPN, 0, apshift, eaddr);
-+    full->prot = prot;
-+    full->lg_page_size = apshift;
-     return true;
- }
- 
-diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
-index ae8d4b37ae..8e51b220a8 100644
---- a/target/ppc/mmu-hash64.h
-+++ b/target/ppc/mmu-hash64.h
-@@ -8,7 +8,7 @@ void dump_slb(PowerPCCPU *cpu);
- int ppc_store_slb(PowerPCCPU *cpu, target_ulong slot,
-                   target_ulong esid, target_ulong vsid);
- bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                      CPUTLBEntryFull *full, int mmu_idx,
-                       bool guest_visible);
- void ppc_hash64_tlb_flush_hpte(PowerPCCPU *cpu,
-                                target_ulong pte_index,
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index 33ac341290..b358f724e3 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -820,20 +820,26 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, vaddr eaddr,
- }
- 
- bool ppc_radix64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                       hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
-+                       CPUTLBEntryFull *full, int mmu_idx,
-                        bool guest_visible)
- {
--    bool ret = ppc_radix64_xlate_impl(cpu, eaddr, access_type, raddrp,
--                                      psizep, protp, mmu_idx, guest_visible);
-+    int prot = 0, psize = 0;
-+    hwaddr raddr = 0;
-+    bool ret = ppc_radix64_xlate_impl(cpu, eaddr, access_type, &raddr,
-+                                      &psize, &prot, mmu_idx, guest_visible);
-+
-+    full->phys_addr = raddr;
-+    full->prot = prot;
-+    full->lg_page_size = psize;
- 
-     qemu_log_mask(CPU_LOG_MMU, "%s for %s @0x%"VADDR_PRIx
-                   " mmu_idx %u (prot %c%c%c) -> 0x%"HWADDR_PRIx"\n",
-                   __func__, access_str(access_type),
-                   eaddr, mmu_idx,
--                  *protp & PAGE_READ ? 'r' : '-',
--                  *protp & PAGE_WRITE ? 'w' : '-',
--                  *protp & PAGE_EXEC ? 'x' : '-',
--                  *raddrp);
-+                  prot & PAGE_READ ? 'r' : '-',
-+                  prot & PAGE_WRITE ? 'w' : '-',
-+                  prot & PAGE_EXEC ? 'x' : '-',
-+                  raddr);
- 
-     return ret;
- }
-diff --git a/target/ppc/mmu-radix64.h b/target/ppc/mmu-radix64.h
-index 6620b3d648..ef7a125efe 100644
---- a/target/ppc/mmu-radix64.h
-+++ b/target/ppc/mmu-radix64.h
-@@ -15,7 +15,7 @@
- #define R_EADDR_QUADRANT3       0xC000000000000000
- 
- bool ppc_radix64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                       hwaddr *raddr, int *psizep, int *protp, int mmu_idx,
-+                       CPUTLBEntryFull *full, int mmu_idx,
-                        bool guest_visible);
- 
- #endif /* TARGET_PPC64 */
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 52d48615ac..6ec74e61e8 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -85,7 +85,7 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong eaddr,
- 
- /* Software driven TLB helpers */
- 
--static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, int *prot,
-+static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, uint8_t *prot,
-                             target_ulong eaddr, MMUAccessType access_type,
-                             target_ulong ptem, bool key, bool nx)
- {
-@@ -187,7 +187,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env, hwaddr *raddr, int *prot,
-     return ret;
- }
- 
--static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, int *prot,
-+static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, uint8_t *prot,
-                            target_ulong eaddr, MMUAccessType access_type,
-                            bool pr)
- {
-@@ -259,7 +259,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, hwaddr *raddr, int *prot,
- }
- 
- static int mmu6xx_get_physical_address(CPUPPCState *env, hwaddr *raddr,
--                                       int *prot, target_ulong eaddr,
-+                                       uint8_t *prot, target_ulong eaddr,
-                                        hwaddr *hashp, bool *keyp,
-                                        MMUAccessType access_type, int type)
- {
-@@ -583,15 +583,15 @@ void dump_mmu(CPUPPCState *env)
- 
- static bool ppc_real_mode_xlate(PowerPCCPU *cpu, vaddr eaddr,
-                                 MMUAccessType access_type,
--                                hwaddr *raddrp, int *psizep, int *protp)
-+                                CPUTLBEntryFull *full)
- {
-     CPUPPCState *env = &cpu->env;
- 
-     if (access_type == MMU_INST_FETCH ? !FIELD_EX64(env->msr, MSR, IR)
-                                       : !FIELD_EX64(env->msr, MSR, DR)) {
--        *raddrp = eaddr;
--        *protp = PAGE_RWX;
--        *psizep = TARGET_PAGE_BITS;
-+        full->phys_addr = eaddr;
-+        full->prot = PAGE_RWX;
-+        full->lg_page_size = TARGET_PAGE_BITS;
-         return true;
-     } else if (env->mmu_model == POWERPC_MMU_REAL) {
-         cpu_abort(CPU(cpu), "PowerPC in real mode shold not do translation\n");
-@@ -600,21 +600,24 @@ static bool ppc_real_mode_xlate(PowerPCCPU *cpu, vaddr eaddr,
- }
- 
- static bool ppc_40x_xlate(PowerPCCPU *cpu, vaddr eaddr,
--                          MMUAccessType access_type,
--                          hwaddr *raddrp, int *psizep, int *protp,
-+                          MMUAccessType access_type, CPUTLBEntryFull *full,
-                           int mmu_idx, bool guest_visible)
- {
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     int ret;
- 
--    if (ppc_real_mode_xlate(cpu, eaddr, access_type, raddrp, psizep, protp)) {
-+    if (ppc_real_mode_xlate(cpu, eaddr, access_type, full)) {
-         return true;
-     }
- 
--    ret = mmu40x_get_physical_address(env, raddrp, protp, eaddr, access_type);
-+    int prot = 0;
-+    ret = mmu40x_get_physical_address(env, &(full->phys_addr), &prot,
-+                                      eaddr, access_type);
-+    full->prot = prot;
-+
-     if (ret == 0) {
--        *psizep = TARGET_PAGE_BITS;
-+        full->lg_page_size = TARGET_PAGE_BITS;
-         return true;
-     } else if (!guest_visible) {
-         return false;
-@@ -668,8 +671,7 @@ static bool ppc_40x_xlate(PowerPCCPU *cpu, vaddr eaddr,
- }
- 
- static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
--                          MMUAccessType access_type,
--                          hwaddr *raddrp, int *psizep, int *protp,
-+                          MMUAccessType access_type, CPUTLBEntryFull *full,
-                           int mmu_idx, bool guest_visible)
- {
-     CPUState *cs = CPU(cpu);
-@@ -678,7 +680,7 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-     bool key;
-     int type, ret;
- 
--    if (ppc_real_mode_xlate(cpu, eaddr, access_type, raddrp, psizep, protp)) {
-+    if (ppc_real_mode_xlate(cpu, eaddr, access_type, full)) {
-         return true;
-     }
- 
-@@ -692,10 +694,10 @@ static bool ppc_6xx_xlate(PowerPCCPU *cpu, vaddr eaddr,
-         type = ACCESS_INT;
-     }
- 
--    ret = mmu6xx_get_physical_address(env, raddrp, protp, eaddr, &hash, &key,
--                                      access_type, type);
-+    ret = mmu6xx_get_physical_address(env, &(full->phys_addr), &(full->prot),
-+                                      eaddr, &hash, &key, access_type, type);
-     if (ret == 0) {
--        *psizep = TARGET_PAGE_BITS;
-+        full->lg_page_size = TARGET_PAGE_BITS;
-         return true;
-     } else if (!guest_visible) {
-         return false;
-@@ -806,15 +808,14 @@ tlb_miss:
- /*****************************************************************************/
- 
- bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
--                      hwaddr *raddrp, int *psizep, int *protp,
--                      int mmu_idx, bool guest_visible)
-+               CPUTLBEntryFull *full, int mmu_idx, bool guest_visible)
- {
-     switch (cpu->env.mmu_model) {
- #if defined(TARGET_PPC64)
-     case POWERPC_MMU_3_00:
-         if (ppc64_v3_radix(cpu)) {
--            return ppc_radix64_xlate(cpu, eaddr, access_type, raddrp,
--                                     psizep, protp, mmu_idx, guest_visible);
-+            return ppc_radix64_xlate(cpu, eaddr, access_type,
-+                                     full, mmu_idx, guest_visible);
-         }
-         /* fall through */
-     case POWERPC_MMU_64B:
-@@ -822,25 +823,24 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     case POWERPC_MMU_2_06:
-     case POWERPC_MMU_2_07:
-         return ppc_hash64_xlate(cpu, eaddr, access_type,
--                                raddrp, psizep, protp, mmu_idx, guest_visible);
-+                                full, mmu_idx, guest_visible);
- #endif
- 
-     case POWERPC_MMU_32B:
--        return ppc_hash32_xlate(cpu, eaddr, access_type, raddrp,
--                               psizep, protp, mmu_idx, guest_visible);
-+        return ppc_hash32_xlate(cpu, eaddr, access_type, full,
-+                                mmu_idx, guest_visible);
-     case POWERPC_MMU_BOOKE:
-     case POWERPC_MMU_BOOKE206:
--        return ppc_booke_xlate(cpu, eaddr, access_type, raddrp,
--                               psizep, protp, mmu_idx, guest_visible);
-+        return ppc_booke_xlate(cpu, eaddr, access_type,
-+                               full, mmu_idx, guest_visible);
-     case POWERPC_MMU_SOFT_4xx:
--        return ppc_40x_xlate(cpu, eaddr, access_type, raddrp,
--                             psizep, protp, mmu_idx, guest_visible);
-+        return ppc_40x_xlate(cpu, eaddr, access_type,
-+                             full, mmu_idx, guest_visible);
-     case POWERPC_MMU_SOFT_6xx:
--        return ppc_6xx_xlate(cpu, eaddr, access_type, raddrp,
--                             psizep, protp, mmu_idx, guest_visible);
-+        return ppc_6xx_xlate(cpu, eaddr, access_type,
-+                             full, mmu_idx, guest_visible);
-     case POWERPC_MMU_REAL:
--        return ppc_real_mode_xlate(cpu, eaddr, access_type, raddrp, psizep,
--                                   protp);
-+        return ppc_real_mode_xlate(cpu, eaddr, access_type, full);
-     case POWERPC_MMU_MPC8xx:
-         cpu_abort(env_cpu(&cpu->env), "MPC8xx MMU model is not implemented\n");
-     default:
-@@ -851,19 +851,18 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
- hwaddr ppc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
--    hwaddr raddr;
--    int s, p;
-+    CPUTLBEntryFull full;
- 
-     /*
-      * Some MMUs have separate TLBs for code and data. If we only
-      * try an MMU_DATA_LOAD, we may not be able to read instructions
-      * mapped by code TLBs, so we also try a MMU_INST_FETCH.
-      */
--    if (ppc_xlate(cpu, addr, MMU_DATA_LOAD, &raddr, &s, &p,
-+    if (ppc_xlate(cpu, addr, MMU_DATA_LOAD, &full,
-                   ppc_env_mmu_index(&cpu->env, false), false) ||
--        ppc_xlate(cpu, addr, MMU_INST_FETCH, &raddr, &s, &p,
-+        ppc_xlate(cpu, addr, MMU_INST_FETCH, &full,
-                   ppc_env_mmu_index(&cpu->env, true), false)) {
--        return raddr & TARGET_PAGE_MASK;
-+        return full.phys_addr & TARGET_PAGE_MASK;
-     }
-     return -1;
- }
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index ac60705402..85815196eb 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -1363,13 +1363,14 @@ bool ppc_cpu_tlb_fill(CPUState *cs, vaddr eaddr, int size,
-                       bool probe, uintptr_t retaddr)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
--    hwaddr raddr;
--    int page_size, prot;
--
--    if (ppc_xlate(cpu, eaddr, access_type, &raddr,
--                  &page_size, &prot, mmu_idx, !probe)) {
--        tlb_set_page(cs, eaddr & TARGET_PAGE_MASK, raddr & TARGET_PAGE_MASK,
--                     prot, mmu_idx, 1UL << page_size);
-+    CPUTLBEntryFull full = {
-+        .attrs = MEMTXATTRS_UNSPECIFIED
-+    };
-+
-+    if (ppc_xlate(cpu, eaddr, access_type,
-+                  &full, mmu_idx, !probe)) {
-+        full.phys_addr &= TARGET_PAGE_MASK;
-+        tlb_set_page_full(cs, mmu_idx, eaddr & TARGET_PAGE_MASK, &full);
-         return true;
-     }
-     if (probe) {
--- 
-2.47.2
+I took another stab at the problem:
+
+  https://lore.kernel.org/qemu-devel/20250915124207.42053-1-thuth@redhat.com/
+
+It's basically Gustavo's patches, but I removed all the stuff around 
+tests/guest-debug/run-test.py and the cumbersome code for running a test 
+through gdb via meson.build.
+
+The test start in normal pycotap mode, then call a new function called 
+reverse_debug() which then takes care of calling gdb with the right 
+arguments (i.e. this logic has been copied from the run-test.py script).
+
+It seems to work fine with the aarch64 test already, but details and other 
+architectures still need some more love.
+
+WDYT? Is it worth to pursue that approach?
+
+  Thomas
 
 
