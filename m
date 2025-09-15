@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDECCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4EFCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 20:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyFHv-0007Ur-L3; Mon, 15 Sep 2025 15:54:59 -0400
+	id 1uyFTJ-0002Fj-SJ; Mon, 15 Sep 2025 16:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uyFHt-0007UU-Ck
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 15:54:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyFTE-0002En-U6
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:06:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uyFHg-0004rO-IQ
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 15:54:56 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyFSt-0006Md-Cv
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:06:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757966074;
+ s=mimecast20190719; t=1757966769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TiTdltcZAf63/8za+FWhkX79CP4oy4KcSVYEi99loNI=;
- b=Ge5W0JKCLC+mCvRCbuWgdg0tNDrM3sLMl8t9zi5A4QZEULn0PPO4TkaVrT6T5XaYom9wX8
- Q8eDm0MDMoK53ZT9Xd7JpY+fTyA07oMbzy/K9bBgPn72Uu/10mQs4t3jLQp/swUOU20xB1
- Rc3sevDjJonBUe3jx5wGFz6f7v2ewYo=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ezBCrpSrBKZAj7K3nO6wbNjMJg/5GEYD4AnMHmv1tiI=;
+ b=ifZ8MiQmVIG1/H3a6ifcSM4Agj9/yvKPe0TUZWVGc9pm39M2sLX9Qt8O6oHoe04CTxYPMe
+ X4bWHd45f8ss0dBUgVSgP8cmmdNARcVoM5iLJYGqf5n2EAc5KiJABOOXqunwetOjJI1Woj
+ 0G4o2z0p44GRrursaYg64SBoQi0dAYA=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-bSRqidpINEiFn4fgLJe22w-1; Mon, 15 Sep 2025 15:54:33 -0400
-X-MC-Unique: bSRqidpINEiFn4fgLJe22w-1
-X-Mimecast-MFC-AGG-ID: bSRqidpINEiFn4fgLJe22w_1757966072
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-267a5c98d47so9841765ad.2
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 12:54:32 -0700 (PDT)
+ us-mta-567-tLWsZuKYMyOxUprBHWmWew-1; Mon, 15 Sep 2025 16:06:05 -0400
+X-MC-Unique: tLWsZuKYMyOxUprBHWmWew-1
+X-Mimecast-MFC-AGG-ID: tLWsZuKYMyOxUprBHWmWew_1757966765
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-829080582b4so354731385a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 13:06:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757966072; x=1758570872;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TiTdltcZAf63/8za+FWhkX79CP4oy4KcSVYEi99loNI=;
- b=NNKyrV05rYd9BK2okmr6Zw9nnC4VF9xynj+ISSlQ3lDAczXzdA2lZG6or9gtp3y1Id
- C3aHGwYgUTH/0j2YO8qwARaMO7jYXlCBiXSMW6fOJ91qbbQrKTJh+hOunXQIx7oTaiUp
- lpZRqvkRMkErEuutqDYRV8WnONd/kKE7C2ueLW//ccDUHc9GpPpwUY+iRiRO0o5dBqsJ
- DI/d+5o2EF9w9wINhgEEd8AfGOdJ0kLpC93xs+qF4H3lbHOWwr3eiz/PYu08bz+kvcFj
- mRk8v88nIxQaOFCf7Y9Q+F2auM4q5UYRRtXzmyRAWKV6n5tHP2t5QHTJc8Olri32hFf8
- e76w==
+ d=1e100.net; s=20230601; t=1757966765; x=1758571565;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ezBCrpSrBKZAj7K3nO6wbNjMJg/5GEYD4AnMHmv1tiI=;
+ b=lJbRCEJKivWVOotFqbDUnkSpEcQ7hFwGeK6EYQkLSiKyu2PFfoeaNBltaHN6xRJ9W9
+ pweH/X5iJDH+nUDPERVUmXlKSr03Hj0RbDrEJg7zKjTe77zfMeEZO7Q6Cg/32YPSxY2n
+ maG8K8rQjrqtm9RsfeohsbhKa8DZpfqUju7Jgj0rLwk7mBV8za7FZYrZ3WFOTkL33s8i
+ 8MdS1+xmgVBYhoN6dojAQ5Xum0TV8FOZ7vmMlfjC4YKZVPgBOR5aF9j/7tbzVSaKDFvr
+ WLxURyKfubGocfO5xcZZisTU4lmjPfXaulcs7j2tmzXcxP/cajX9hvRRqkjVZQ7J8CkD
+ j5tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUy8vnyZYuFdIMy+PAAa/tf5bJ/wNIU6+mc3dXWOY/dRNKw4wUXRVz8sZ4/pHKRCZ23Ea/z/Ax7eFKV@nongnu.org
-X-Gm-Message-State: AOJu0YyJfxcyJOIP3QWa2p1g7F6J+rgxDf26giglKHjHl2Kn0P0+EqAA
- vat+qYMpIca8gaTm2FZmnFBfh2xswdykWXyji1gTzeMazpXOOifiB4ej+NcFSbuVYu1hmQFkHaj
- 4FM13fiBg/cUoRqe013fxiE+kT7M8sfRqYLu+9NX072IZDsnJgdhHvgjZX9dnB/OoaMyEG5U1q7
- cNYdQsT0+Jn9mz2VAOlM0Inis3Ms+yKkc=
-X-Gm-Gg: ASbGncsPHsprIapm8Q7vyxauMUbjMaqrPHZbWQjiidy3fvVGLTqe9i72UNTrzY6/OI/
- yL7KojifGjzvbTOxr2SjmQ2OAX+Q6rZljlf0CYkxH+uISTWlRMwiRGUUjjQcJRE1qaJCkJ1vlxb
- vsmsjEILk0qXMw0kbo195rriP2qq3ZTYTVPo9/Wopl2indkS0YFTri
-X-Received: by 2002:a17:902:f542:b0:25f:2aeb:2f75 with SMTP id
- d9443c01a7336-25f2aeb32dfmr155929615ad.12.1757966071924; 
- Mon, 15 Sep 2025 12:54:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHTDFA4/ZUgbBMncN6SIVoRVuesCYzA/DdNpC7+QbU4fZiWbZVb7JwN4boX7kiFeU2pbTULkKsqld76ULcSqnE=
-X-Received: by 2002:a17:902:f542:b0:25f:2aeb:2f75 with SMTP id
- d9443c01a7336-25f2aeb32dfmr155929445ad.12.1757966071554; Mon, 15 Sep 2025
- 12:54:31 -0700 (PDT)
+ AJvYcCUQC8JEBRm0HDC5b6K5zLZKhEs4+rZ5ERYgfMTqGEt/vC7/T03LDsFAfGsQEScxsPRPClHzu1cM3ieo@nongnu.org
+X-Gm-Message-State: AOJu0YwQca2KsuVXDrxMO1PER/RWZb5rUcXAgGYzDru339prBtd4npDD
+ E9cZppZZ38fFS3qlJ2jNdeNM0qBUmbOEaZ//xjU0qHrFCvmfnnk6e3iOJRgSnlmOXKbQrOLOung
+ 1YQ9NhgbMm+lsLAPbILUGU1K/i4QkoqmqUosn+utlOlPL8fl3mN6UyTeh
+X-Gm-Gg: ASbGncv/KiHO7PM9aVuxg9J7odQGnaL5fLHXbuhOrNhrqESrwYFQDHI4kzQyQ82Wztn
+ rDlvHYmZrBv0PrvWeIc/qsLUEpluvR12E5nAO4N0DdSBdwAPiQ7JhswXegKZTKaQIkzFqNb0Jdv
+ YC0QOfHZTAryhBQI+Ha75u1dtHWo1o2j3CmEq4vwLfkmaxIBXiwWSTBUWFb71dC44/AesSuKhof
+ 30BA6tUB1Jzl+JlERl23JSpvTfx1Ma9BleqCrTwB6OtrpyT7wJj6EJt1aELpWcHHzlLOWMY2nM+
+ XDo0eM5b4RQaFMGLCXic4Bq7O4OU3BM1
+X-Received: by 2002:a05:620a:25d4:b0:80a:436f:18e6 with SMTP id
+ af79cd13be357-82400ffa501mr1560005285a.70.1757966765201; 
+ Mon, 15 Sep 2025 13:06:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0QyII3D/Jp0M0tnhxnfsa0mzr+mOwivZXBqcEVMHCYeEcJgZOgJAYiE4ET+lv8UMxzlBDDA==
+X-Received: by 2002:a05:620a:25d4:b0:80a:436f:18e6 with SMTP id
+ af79cd13be357-82400ffa501mr1559999485a.70.1757966764494; 
+ Mon, 15 Sep 2025 13:06:04 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-820ce19df73sm818855885a.51.2025.09.15.13.06.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Sep 2025 13:06:03 -0700 (PDT)
+Date: Mon, 15 Sep 2025 16:05:52 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Apply migration specific keep-alive defaults
+ to inet socket
+Message-ID: <aMhxoEQqckG_p9Tq@x1.local>
+References: <20250909150127.1494626-1-jmarcin@redhat.com>
+ <aMBDIwKDxTVrBJBQ@redhat.com> <aMCjGVUiM3MY-RM3@x1.local>
+ <aMEkY3N9ITwH_Y8Z@redhat.com> <aMGpHBGth05JY2hl@x1.local>
+ <aMPz0WFmstNmKBQc@redhat.com> <aMQ19NmgFkLs8jkA@x1.local>
+ <aMhZn-fbq67WQX8u@redhat.com>
 MIME-Version: 1.0
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <87ms93xl69.fsf@draig.linaro.org>
- <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
- <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
- <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
- <147a8aaf-5895-435d-8394-ef6a5e03b638@redhat.com>
-In-Reply-To: <147a8aaf-5895-435d-8394-ef6a5e03b638@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 15 Sep 2025 15:54:19 -0400
-X-Gm-Features: Ac12FXxQ8jlSHLtRxEsha2JlmuFodiVPEzRDQamiM9ZXTGuBPjJtf9dzbxfrGGw
-Message-ID: <CAFn=p-Z_Du_xbOKg+2wMPzshgOT1MX+AKLNNE9FLpEp+gkQLhQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-To: Thomas Huth <thuth@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aMhZn-fbq67WQX8u@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,93 +112,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 9, 2025 at 6:37=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote=
-:
->
-> On 07/08/2025 23.46, John Snow wrote:
-> > On Thu, Jul 24, 2025 at 3:47=E2=80=AFPM Thomas Huth <thuth@redhat.com> =
-wrote:
-> >>
-> >> On 21/07/2025 22.38, John Snow wrote:
-> >>> On Thu, Jul 17, 2025 at 4:44=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee=
-@linaro.org> wrote:
-> >> ...
-> >>>> Am I holding it wrong?
-> >>>>
-> >>>>     =E2=9E=9C  ./pyvenv/bin/python ../../tests/functional/test_aarch=
-64_virt.py --help
-> >>>>     Traceback (most recent call last):
-> >>>>       File "/home/alex/lsrc/qemu.git/builds/all/../../tests/function=
-al/test_aarch64_virt.py", line 16, in <module>
-> >>>>         from qemu_test import QemuSystemTest, Asset, exec_command_an=
-d_wait_for_pattern
-> >>>>       File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__in=
-it__.py", line 14, in <module>
-> >>>>         from .testcase import QemuBaseTest, QemuUserTest, QemuSystem=
-Test
-> >>>>       File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/test=
-case.py", line 26, in <module>
-> >>>>         from qemu.machine import QEMUMachine
-> >>>>     ModuleNotFoundError: No module named 'qemu'
-> >>>>
-> >>>> I thought the point of the venv is we had all the modules we need
-> >>>> automatically available to the PYTHONPATH?
-> >>>
-> >>> As Thomas points out, "qemu" is special since it's already in the
-> >>> tree. There has been some dragging-of-feet by yours-truly because
-> >>> installing the "qemu" module by default when running configure
-> >>> introduces a considerable startup lag time, and the module is not
-> >>> actually needed for the simple configuration and building of QEMU -
-> >>> only testing.
-> >>>
-> >>> It's something I want to fix, but must admit to being a bit stumped a=
-s
-> >>> to how I will bridge that gap long term. Currently, all of the module=
-s
-> >>> we need are in the tree with no dependencies, so it can be fixed with
-> >>> a simple PYTHONPATH hack. However, if I actually remove the QMP
-> >>> library from the tree like I have wanted to, then we need pip to do a
-> >>> real install and process dependencies, and this creates some
-> >>> complications and extra startup lag.
-> >>
-> >> Wouldn't it be possible to add the module as a wheel in python/wheels/=
- ?
-> >> That's maybe the easiest solution, isn't it?
-> >
-> > The qemu.qmp wheel, yes, because it's purepython. The part I am
-> > worried about is that by removing qemu.qmp from the tree, you cannot
-> > just use the PYTHONPATH hack anymore to use the remaining in-tree
-> > goodies, namely the machine module used extensively throughout
-> > testing, because they will now rely on an external dependency.
->
-> Would it maybe be possible to add the machine part to the qemu.qmp module=
-,
-> too? (Gerd also ask me at KVM forum about this, so there is certainly
-> interest for extending the qemu.qmp module with the machine part)
+On Mon, Sep 15, 2025 at 07:23:27PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Sep 12, 2025 at 11:02:12AM -0400, Peter Xu wrote:
+> > On Fri, Sep 12, 2025 at 11:20:01AM +0100, Daniel P. Berrangé wrote:
+> > > On Wed, Sep 10, 2025 at 12:36:44PM -0400, Peter Xu wrote:
+> > > > On Wed, Sep 10, 2025 at 08:10:57AM +0100, Daniel P. Berrangé wrote:
+> > > > > On Tue, Sep 09, 2025 at 05:58:49PM -0400, Peter Xu wrote:
+> > > > > > On Tue, Sep 09, 2025 at 04:09:23PM +0100, Daniel P. Berrangé wrote:
+> > > > > > > On Tue, Sep 09, 2025 at 05:01:24PM +0200, Juraj Marcin wrote:
+> > > > > > > > From: Juraj Marcin <jmarcin@redhat.com>
+> > > > > > > > 
+> > > > > > > > Usual system defaults for TCP keep-alive options are too long for
+> > > > > > > > migration workload. On Linux, a TCP connection waits idle for 2 hours
+> > > > > > > > before it starts checking if the connection is not broken.
+> > > > > > > > 
+> > > > > > > > Now when InetSocketAddress supports keep-alive options [1], this patch
+> > > > > > > > applies migration specific defaults if they are not supplied by the user
+> > > > > > > > or the management software. With these defaults, a migration TCP stream
+> > > > > > > > waits idle for 1 minute and then sends 5 TCP keep-alive packets in 30
+> > > > > > > > second interval before considering the connection as broken.
+> > > > > > > > 
+> > > > > > > > System defaults can be still used by explicitly setting these parameters
+> > > > > > > > to 0.
+> > > > > > > 
+> > > > > > > IMHO this is not a good idea. This is a very short default, which
+> > > > > > > may be fine for the scenario where your network conn is permanently
+> > > > > > > dead, but it is going to cause undesirable failures when the network
+> > > > > > > conn is only temporarily dead.
+> > > > > > > 
+> > > > > > > Optimizing defaults for temporary outages is much more preferrable
+> > > > > > > as that maximises reliability of migration. In the case of permanent
+> > > > > > > outages, it is already possible to tear down the connection without
+> > > > > > > waiting for a keep-alive timeout, and liveliness checks can also be
+> > > > > > > perform by the mgmt app at a higher level too. The TCP keepalives
+> > > > > > > are just an eventual failsafe, and having those work on a long
+> > > > > > > timeframe is OK.
+> > > > > > 
+> > > > > > For precopy it looks fine indeed, because migrate_cancel should always work
+> > > > > > on src if src socket hanged, and even if dest QEMU socket hanged, it can
+> > > > > > simply be killed if src QEMU can be gracefully cancelled and rolled back to
+> > > > > > RUNNING, disregarding the socket status on dest QEMU.
+> > > > > > 
+> > > > > > For postcopy, we could still use migrate_pause to enforce src shutdown().
+> > > > > > Initially I thought we have no way of doing that for dest QEMU, but I just
+> > > > > > noticed two years ago I added that to dest QEMU for migrate_paused when
+> > > > > > working on commit f8c543e808f20b..  So looks like that part is covered too,
+> > > > > > so that if dest QEMU socket hanged we can also kick it out.
+> > > > > > 
+> > > > > > I'm not 100% sure though, on whether shutdown() would always be able to
+> > > > > > successfully kick out the hanged socket while the keepalive is ticking.  Is
+> > > > > > it guaranteed?
+> > > > > 
+> > > > > I don't know about shutdown(), but close() certainly works. If shutdown()
+> > > > > is not sufficient, then IMHO the migration code would need the ability to
+> > > > > use close() to deal with this situation.
+> > > > > 
+> > > > > 
+> > > > > > I also am not sure if that happens, whether libvirt would automatically do
+> > > > > > that, or provide some way so the user can trigger that.  The goal IIUC here
+> > > > > > is we shouldn't put user into a situation where the migration hanged but
+> > > > > > without any way to either cancel or recover.  With the default values Juraj
+> > > > > > provided here, it makes sure the hang won't happen more than a few minutes,
+> > > > > > which sounds like a sane timeout value.
+> > > > > 
+> > > > > Sufficient migration QMP commands should exist to ensure migration can
+> > > > > always be cancelled. Short keepalive timeouts should not be considered
+> > > > > a solution to any gaps in that respect.
+> > > > > 
+> > > > > Also there is yank, but IMHO apps shouldn't have to rely on yank - I see
+> > > > > yank as a safety net for apps to workaround limitations in QEMU.
+> > > > 
+> > > > The QMP facility looks to be all present, which is migrate-cancel and
+> > > > migrate-pause mentioned above.
+> > > > 
+> > > > For migrate_cancel (of precopy), is that Ctrl-C of "virsh migrate"?
+> > > > 
+> > > > Does libvirt exposes migrate_pause via any virsh command?  IIUC that's the
+> > > > only official way of pausing a postcopy VM on either side.  I also agree we
+> > > > shouldn't make yank the official tool to use.
+> > > 
+> > > virsh will call virDomainAbortJob when Ctrl-C is done to a 'migrate'
+> > > command.
+> > > 
+> > > virDomainAbortJob will call migrate-cancel for pre-copy, or
+> > > 'migrate-pause' for post-copy.
+> > 
+> > Would it call "migrate-pause" on both sides?
+> 
+> Not 100% sure, but with virDomainAbortJob I think libvirt only calls
+> migrate-pause on the source host.
+> 
+> > I believe the problem we hit was, when during postcopy and the NIC was
+> > misfunctioning, src fell into postcopy-paused successfully but dest didn't,
+> > stuck in postcopy-active.
+> 
+> If something has interrupted src<->dst host comms for QEMU it may well
+> impact libvirt <-> libvirt comms too, unless migration was being done
+> over a separate NIC than the mgmt LAN.  IOW, it may be impossible for
 
-I could, can you explain a little why we want it? It would involve
-cleaning up the interfaces a good deal and while I don't think it is
-hard, it will be a lot of clerical work and shuffling for a little
-while. I have some drafts somewhere that add an asyncio VM appliance
-to replace the existing one in the same manner as for what I did for
-async QMP to help solve the complicated logging stack we have for VM
-console scripts.
+Do you know what's the common setup?  Do they normally share the network or
+not?
 
-Having a solid justification and guinea pigs^H^H^H^H^H^H^H^H^H^H^H^H
-beta users would push the project over the line for me.
+> libvirt to call migrate-pause on both sides, at least not until the
+> NIC problem has been resolved.
+> 
+> > We'll want to make sure both sides to be kicked into paused stage to
+> > recover.  Otherwise dest can hang in the stage for hours until the watchdog
+> > timeout triggers.
+> 
+> Once the network problem has been resolved, then it ought to be possible
+> to get libvirt to issue 'migrate-pause' on both hosts, and thus be able
+> to recover.
+> 
+> Possibly the act of starting migration recovery in libvirt should attempt
+> to issue 'migrate-pause' to cleanup the previously running migration if
+> it is still in the stuck state.
 
->
-> > I'm sure it's solvable, I just tried once a while back and hit a wall,
-> > got distracted, and haven't revisited it yet... Maybe a good
-> > rubber-ducking session would help.
->
-> For the (removed) avocado tests, they had a dependency on the "check-venv=
-"
-> target in QEMU, so its python dependencies were only added when you ran
-> "make check-avocado". We could maybe do the same for "check-functional", =
-too?
+Yes we can do that.  But normally libvirt will need to monitor the
+migration process, migration-pause won't be initiated until it thinks the
+migration is interrupted.  We'll need to check whether it only relies on
+src QEMU status, or both sides.
 
-Something like that, yeah. I'm going to send a patchset soon that does
-the dumbest possible thing and we can chat in review for that series.
+If we do that, libvirt will need to monitor migration status on both sides,
+no matter which side fell into a postcopy-paused, libvirt should kick out
+the other side.  That sounds OK.
+
+Said that, maybe we should still provide an explicit way to pause migration
+on both sides.  For example, I'm not sure whether the timeout could happen
+on both sides at the same time without being kicked out, so that both sides
+are postcopy-active but in reality the network is already unplugged.  In
+that case we'd want to have libvirt be able to provide a "virsh" command to
+pause both sides at least when the mgmt network is still working, and when
+the user knows it's stuck (instead of waiting for hours)?
+
+> 
+> > 
+> > > 
+> > > 
+> > > > OTOH, the default timeouts work without changing libvirt, making sure the
+> > > > customers will not be stuck in a likely-failing network for hours without
+> > > > providing a way to properly detach and recover when it's wanted.
+> > > 
+> > > "timeouts work" has the implicit assumpton that the only reason a
+> > > timeout will fire is due to a unrecoverable situation. IMHO that
+> > > assumption is not valid.
+> > 
+> > I agree adjusting timeout is not the best.
+> > 
+> > If we can have solid way to kick two sides out, I think indeed we don't
+> > need to change the timeout.
+> > 
+> > If not, we may still need to provide a way to allow user to try continue
+> > when the user found that the network is behaving abnormal.
+> > 
+> > Here adjusting timeout is slightly better than any adhoc socket timeout
+> > that we'll adjust: it's the migration timeout, and we only have two cases:
+> > (1) precopy, which is ok to fail and retried, (2) postcopy, which is also
+> > ok to fail and recovered.
+> 
+> Fail & retry/recover is not without cost / risk though. Users can have
+> successful migrations that are many hours long when dealing with big
+> VMs. IOW, returning to the start of pre-copy could be a non-trivial
+> time delay.
+> 
+> Consider if the reason for the migration is to evacuate workloads off
+> a host that is suffering technical problems. It could well be that
+> periodic unexpected network outages are what is triggering the need
+> to evacuate workloads. If we timeout a migration with keepalives they
+> may never be able to get through a migration op quickly enough, or
+> they can be delayed such that the host has a fatal error loosing the
+> workload before the retried migration is complete.
+> 
+> IMHO, once a migration has been started we should not proactively
+> interrupt that with things like keepalives, unless the admin made a
+> concious decision they wanted that behaviour enabled.
+
+For postcopy, we don't have such cost.  Postcopy pause will keep both QEMUs
+persist their data sent / received, then when recover it'll handshake once
+more to synchronize the states between two sides.  They'll continue the
+migration from the previous state, not completely retransfer but only diff.
+
+In this case, normally it's the dest QEMU that has less data, IOW, it's
+possible something "sent" from the src QEMU didn't get "received" on
+destination but lost on the wire.  Hence what we do is synchronizing the
+received bitmap from dest to src so src QEMU knows what to re-transmit.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
