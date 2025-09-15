@@ -4,94 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D86CAC59A
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E123CCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy988-0000Gb-8I; Mon, 15 Sep 2025 09:20:28 -0400
+	id 1uy9AV-0001li-Qi; Mon, 15 Sep 2025 09:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uy983-000085-N3
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:20:24 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uy97q-0006kP-4m
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 09:20:21 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3df726ecff3so2291844f8f.3
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 06:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757942404; x=1758547204; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tPtRKiIFi33S9+Y+4Q75JN86dN5SfMk6I761gsc/7+I=;
- b=hCTh96/CXgeszA+PKCDhFPMJponWPmek/drfxHoiQ8LEzYMky0YK+ByVjSXPOP8Wdf
- eC0Gf2dWiIwY7ZKdNTnjfwQXrPjDF/eDYQ5QFqsM4cI4V0I6QKtRrKF5FcGBujyzBaTz
- Dx+EmXaIlq8lv76VzrLmYJw7CDvzh80JTTHq38UJ/vgckM+kJ9zpwm3KkbNgq1+eSD24
- P3U/JzaV5/NhCpFmq+6fwIl5KkgWgedKfkVv+6CL2U0NRFbwX0mfH4wPh/93Q//aZo8R
- Y4Rfhfcwg4jvMsj2UdBSfZxZ+ok3tywxF0JP93oo7eLo2EFrqv5RAGiDtljcYZBJpbzg
- uK/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757942404; x=1758547204;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tPtRKiIFi33S9+Y+4Q75JN86dN5SfMk6I761gsc/7+I=;
- b=Q0z3NrSvH4FcsnkhE0e5XEdM8RUHGyd48b+madY4QZgHElMlIVtuYqOHeSeQQGztP+
- ffozyomIryIpWL+FeaQ0WAg2I71PVkJVud4vrgn4n99UNMVW6C3Zlbk5eDjnLFsLtiY7
- toaZoH+ZP7UHiGU/0m1tHkfYMfj4f17E6e+vjCvxBDrpXmEcA3qTwb1C6ltE4X5itMfj
- bwauEKgEYAcXVL/bcXgDPAk+ZQHGbLFeOxKfId651Ss++JdlLPraYB0YPH7nFQbnQbVW
- NOEXEydxCgeKwwgH187C3IQFQUCtj74jeIKmYXPirJ41l6E3QfowZz5FJr729FLo2S3k
- +oVQ==
-X-Gm-Message-State: AOJu0YwiLdZxsWhXbRT74CCt9O1K/MwLfoByHs95rOFjEj8TtZLGO5sv
- FypeuLI1pFXPN2l32mvC1/lYkT5ti3qEvWCSb6LWczl+6h4UV+49ujBjqFDlU2l2sqUbqYWLo5V
- fWIW5Qj0=
-X-Gm-Gg: ASbGncs1a/wqkrFS7mTXhzxVPLzFAdJweeAlwb9kxaXXQout4IeRXFM3bBTBYU3RWM4
- vOTDH0QLyN0xCelj48mY+OGJh0oCzTCFeAJpm7Jf+Onso4RzJyVp0PluiW0m4hrIKJeAdcqh/yE
- HEYfAbFUDuUfXbRk9KhDwaKh/j4Y2xeU7cioRh7/T4I1qh+DS8cgeHfIYhrhB+zzfjb8TYFL4Ra
- mtgo3M3w9pW7rwNCa2i+KAOgKEoQb/6Zbyx1HN14R4y6Efuel4e6zQjjBOpUOwsscQKOdsRMtLK
- z7E6w10cketUCnehdKt/YHAIh69mIEPMSF9epEmomhIixD6bB+Rz/AbYNfkYHhbbuVs7m50F2i2
- gPTb553v8KxLZqOpIc22PMWycnXtdsVyHwQ==
-X-Google-Smtp-Source: AGHT+IGSuPnkwokPfDpkECZVumBI6kO+AKAaBsOn/n6xDV78BLYx90AGXbR2eqrXpMagN8irLW0i4A==
-X-Received: by 2002:a05:6000:438a:b0:3eb:5ff:cb2e with SMTP id
- ffacd0b85a97d-3eb05ffcfdbmr1772234f8f.29.1757942403923; 
- Mon, 15 Sep 2025 06:20:03 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e9a591a41csm7183521f8f.7.2025.09.15.06.20.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 06:20:02 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8050F5F867;
- Mon, 15 Sep 2025 14:20:01 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org, Michael Tokarev
- <mjt@tls.msk.ru>
-Subject: Re: [PATCH] .gitmodules: move u-boot mirrors to qemu-project-mirrors
-In-Reply-To: <aMgD83wAjZMurYnI@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 15 Sep 2025 13:17:55 +0100")
-References: <20250908141911.2546063-1-alex.bennee@linaro.org>
- <aMgD83wAjZMurYnI@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 15 Sep 2025 14:20:01 +0100
-Message-ID: <87segnq2da.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy9AI-0001fb-8S; Mon, 15 Sep 2025 09:22:42 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy9A5-0006xU-Pl; Mon, 15 Sep 2025 09:22:42 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id F0CCE807AB;
+ Mon, 15 Sep 2025 16:22:17 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:130::1:7])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id GMPC4o1FuGk0-32KhOPoQ; Mon, 15 Sep 2025 16:22:17 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757942537;
+ bh=rZ/8anOCcz54GzE9PzIV9CBWgq17XZzQZp/aEQiurNw=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=E2dehFZXZMpwdr6QoQ11P++jZu/D90nhxClaVPfp5Og0rmacWd91DQyUL3/dDgAZ1
+ rL0N8DvE4rL12XW2jWlnq6Ikv1Fb+93QhQ297S/n8y383H2lEb6wAmQxC69MxNwPg2
+ dyRQ7JHbdncT8oD8rjKfureiQyROnPn2bp+bGoEY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com
+Subject: [PATCH v3 00/13] io: deal with blocking/non-blocking fds
+Date: Mon, 15 Sep 2025 16:21:57 +0300
+Message-ID: <20250915132211.135095-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,90 +71,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi all!
 
-> On Mon, Sep 08, 2025 at 03:19:11PM +0100, Alex Benn=C3=A9e wrote:
->> To continue our GitLab Open Source Program license we need to pass an
->> automated license check for all repos under qemu-project. While U-Boot
->> is clearly GPLv2 rather than fight with the automated validation
->> script just move the mirror across to a separate project.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Cc: qemu-stable@nongnu.org
->> ---
->>  .gitmodules | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/.gitmodules b/.gitmodules
->> index 73cae4cd4da..e27dfe8c2c1 100644
->> --- a/.gitmodules
->> +++ b/.gitmodules
->> @@ -15,7 +15,7 @@
->>  	url =3D https://gitlab.com/qemu-project/qemu-palcode.git
->>  [submodule "roms/u-boot"]
->>  	path =3D roms/u-boot
->> -	url =3D https://gitlab.com/qemu-project/u-boot.git
->> +	url =3D https://gitlab.com/qemu-project-mirrors/u-boot.git
->>  [submodule "roms/skiboot"]
->>  	path =3D roms/skiboot
->>  	url =3D https://gitlab.com/qemu-project/skiboot.git
->> @@ -27,7 +27,7 @@
->>  	url =3D https://gitlab.com/qemu-project/seabios-hppa.git
->>  [submodule "roms/u-boot-sam460ex"]
->>  	path =3D roms/u-boot-sam460ex
->> -	url =3D https://gitlab.com/qemu-project/u-boot-sam460ex.git
->> +	url =3D https://gitlab.com/qemu-project-mirrors/u-boot-sam460ex.git
->>  [submodule "roms/edk2"]
->>  	path =3D roms/edk2
->>  	url =3D https://gitlab.com/qemu-project/edk2.git
->
-> Are these the only 2 repos that are still blocking the OSS program
-> approval checks we need ?
+The series aims to unify code which sets fds blocking/non-blocking
+through the whole source.
 
-There are two biosbits repos and the s390 tools as well, see:
+v3:
+01-03: add r-b by Daniel
+04-06: new
+07: rebased onto 04-05, drop r-b
+08: add r-b by Daniel
+09: rework to use g_clear_pointer
+10: add r-b by Daniel
+11: avoid errp=NULL in updated code
+12,13: new
 
-  https://gitlab.com/qemu-project-mirrors
+Series based on
+"[PATCH v4 0/2] save qemu-file incoming non-blocking fds"
+Based-on: <20250910193112.1220763-1-vsementsov@yandex-team.ru>
 
-but we don't reference them as submodules.
+Vladimir Sementsov-Ogievskiy (13):
+  char-socket: tcp_chr_recv(): drop extra _set_(block,cloexec)
+  char-socket: tcp_chr_recv(): add comment
+  util: add qemu_set_blocking() function
+  util/error: add &error_reporter
+  handle result of qio_channel_set_blocking()
+  migration: qemu_file_set_blocking(): add errp parameter
+  util: drop qemu_socket_set_nonblock()
+  util: drop qemu_socket_try_set_nonblock()
+  io/channel-socket: rework qio_channel_socket_copy_fds()
+  util: drop qemu_socket_set_block()
+  use qemu_set_blocking instead of g_unix_set_fd_nonblocking
+  chardev: qemu_chr_open_fd(): add errp
+  chardev: close an fd on failure path
 
->
-> This is pretty ugly, but unless upstream u-boot is willing to add a COPYI=
-NG
-> file very quickly, I'm not seeing better options, given that GitLab's OSS
-> Program approval is driven off entirely automated processing of the
-> COPYING/LICENSE file contents.
->
-> If upstream u-boot.git added a good COPYING file, we would have to handle
-> the u-boot-sam460ex fork by pulling all of u-boot.git modern histry into
-> u-boot-sam460ex.git and ensuring the primary branch was master so GitLab
-> sees the COPYING file. The QEMU sub-module would still point to the
-> original old commit with the sam640ex changes we need, lacking a COPYING
-> file but that won't be a problem.
->
->
-> My only comment is that if we go down the route of this patch, I think we
-> should aim to move all read-only mirrored 3rd party stuff under the new
-> /qemu-project-mirrors group, so that /qemu is exclusively for code which
-> we actively maintain ourselves (and thus have control over licensing)
+ block/nbd.c                             |  5 +-
+ chardev/char-fd.c                       | 14 +++--
+ chardev/char-file.c                     |  6 +-
+ chardev/char-pipe.c                     |  9 ++-
+ chardev/char-pty.c                      |  4 +-
+ chardev/char-serial.c                   |  9 ++-
+ chardev/char-socket.c                   | 35 ++++++------
+ chardev/char-stdio.c                    | 10 ++--
+ contrib/ivshmem-server/ivshmem-server.c |  7 ++-
+ hw/hyperv/syndbg.c                      |  4 +-
+ hw/input/virtio-input-host.c            |  3 +-
+ hw/misc/ivshmem-flat.c                  |  3 +-
+ hw/misc/ivshmem-pci.c                   |  7 ++-
+ hw/remote/proxy.c                       |  6 +-
+ hw/remote/remote-obj.c                  |  5 +-
+ hw/vfio-user/proxy.c                    | 11 +++-
+ hw/virtio/vhost-user.c                  |  5 +-
+ hw/virtio/vhost-vsock.c                 |  8 +--
+ include/chardev/char-fd.h               |  2 +-
+ include/io/channel.h                    | 14 ++---
+ include/qapi/error.h                    |  6 ++
+ include/qemu/osdep.h                    |  1 +
+ include/qemu/sockets.h                  |  3 -
+ io/channel-command.c                    |  9 ++-
+ io/channel-file.c                       |  3 +-
+ io/channel-socket.c                     | 74 ++++++++++++++++++-------
+ io/channel.c                            |  4 +-
+ migration/colo.c                        |  4 +-
+ migration/migration.c                   |  8 ++-
+ migration/postcopy-ram.c                |  2 +-
+ migration/qemu-file.c                   |  4 +-
+ migration/qemu-file.h                   |  2 +-
+ migration/savevm.c                      |  4 +-
+ nbd/server.c                            |  4 +-
+ net/dgram.c                             | 28 ++++++----
+ net/l2tpv3.c                            |  5 +-
+ net/socket.c                            | 27 ++++++---
+ net/stream.c                            |  9 +--
+ net/stream_data.c                       | 10 ++--
+ net/tap-bsd.c                           | 12 +++-
+ net/tap-linux.c                         |  7 ++-
+ net/tap-solaris.c                       |  7 ++-
+ net/tap.c                               | 21 ++-----
+ qga/channel-posix.c                     |  7 ++-
+ qga/commands-posix.c                    |  3 +-
+ scsi/qemu-pr-helper.c                   |  9 ++-
+ tests/qtest/fuzz/virtio_net_fuzz.c      |  2 +-
+ tests/qtest/vhost-user-test.c           |  3 +-
+ tests/unit/io-channel-helpers.c         |  5 +-
+ tests/unit/socket-helpers.c             |  4 +-
+ tests/unit/test-crypto-tlssession.c     |  8 +--
+ tests/unit/test-io-channel-tls.c        |  4 +-
+ tests/unit/test-iov.c                   |  5 +-
+ tools/i386/qemu-vmsr-helper.c           |  6 +-
+ ui/input-linux.c                        |  3 +-
+ ui/vnc.c                                |  2 +-
+ util/error.c                            |  3 +
+ util/event_notifier-posix.c             |  5 +-
+ util/main-loop.c                        |  5 +-
+ util/oslib-posix.c                      | 22 ++++----
+ util/oslib-win32.c                      | 25 ++++-----
+ util/vhost-user-server.c                |  9 ++-
+ 62 files changed, 337 insertions(+), 214 deletions(-)
 
-Sure - I just wanted the minimum to get over the renewal.
+-- 
+2.48.1
 
-However I can't hit the button now, something is stopping me and its not
-entirely clear. I think maybe we need a Tax ID.
-
-> Every single active stable branch will need this change too, otherwise
-> they'll be unable to find the submodules we moved.
-
-Once this is in it will be easy enough to apply to the stable branches.
-
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> With regards,
-> Daniel
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
