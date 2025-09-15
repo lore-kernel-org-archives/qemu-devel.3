@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8416DCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC7DCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 13:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy9B6-00024D-6h; Mon, 15 Sep 2025 09:23:32 -0400
+	id 1uy9AQ-0001jl-UU; Mon, 15 Sep 2025 09:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9Ac-0001q2-LG; Mon, 15 Sep 2025 09:23:03 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1uy9AL-0001gb-EF; Mon, 15 Sep 2025 09:22:45 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uy9AO-00071a-FO; Mon, 15 Sep 2025 09:23:01 -0400
+ id 1uy9A8-0006y3-Jo; Mon, 15 Sep 2025 09:22:45 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4503980792;
- Mon, 15 Sep 2025 16:22:28 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 95097807C0;
+ Mon, 15 Sep 2025 16:22:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:130::1:7])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id GMPC4o1FuGk0-Y4ymLv4U; Mon, 15 Sep 2025 16:22:27 +0300
+ ESMTPSA id GMPC4o1FuGk0-QSQ7UMxK; Mon, 15 Sep 2025 16:22:20 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757942547;
- bh=36EHUPLR3VaIfiFnW3F4FmeCYaVIfFNWQKmJV9g5FmQ=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=N7NplewMMHnS2ikmGqUxyE9uXUDnbcoAywtDSqXIKDEn/M633t+dKyGzX6CNuR/NA
- W55upR6GRRs2tA8ou0FONr19RBeQqzvFPnscTTOhLRPTxDnnS+R8ovix9aTKQBJq3A
- KOlh4g2yAVHQTlPznxfyEA0X5SJzGDIhBcsLBmLw=
+ s=default; t=1757942540;
+ bh=Bsj2a9jOX7m78cJ8iWjmy3wV+irNgid7QKDe6IJBGGY=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=gY3jsz2kk7ZiSLHE7eVO0Qx27xsBA0OtrNO2jtekoG+/4Qh00eoQHrBkeEIb99JEp
+ O4ycfXqXPfayb3Pg8pJ1Gek6JNMT002YYEZZBjZfTHnyJqYgs4htW0Gd69b/BpdIiB
+ +epIt/xlZIBZ7nGZulxah9ll3iLB6UT7rEIurpRc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
  vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 12/13] chardev: qemu_chr_open_fd(): add errp
-Date: Mon, 15 Sep 2025 16:22:09 +0300
-Message-ID: <20250915132211.135095-13-vsementsov@yandex-team.ru>
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH v3 04/13] util/error: add &error_reporter
+Date: Mon, 15 Sep 2025 16:22:01 +0300
+Message-ID: <20250915132211.135095-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,151 +73,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Every caller already support errp, let's go further.
+Add a pair to &error_warn helper, to reduce the pattern like
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+    Error *local_err = NULL;
+
+    ...
+
+    if (!foo(..., &local_err)) {
+        error_report_err(local_err);
+        return false;
+    }
+
+to simply
+
+    if (!foo(..., &error_reporter)) {
+        return false;
+    }
+
+Of course, for new interfaces, it's better to always support and handle
+errp argument. But when have to rework the old ones, it's not always
+feasible to convert everything to support/handle errp.
+
+The new helper is used in following commits.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- chardev/char-fd.c         | 12 ++++++++----
- chardev/char-file.c       |  6 +++++-
- chardev/char-pipe.c       |  9 ++++++++-
- chardev/char-serial.c     |  5 ++++-
- chardev/char-stdio.c      |  7 +++++--
- include/chardev/char-fd.h |  2 +-
- 6 files changed, 31 insertions(+), 10 deletions(-)
+ include/qapi/error.h | 6 ++++++
+ util/error.c         | 3 +++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/chardev/char-fd.c b/chardev/char-fd.c
-index 739dc68c36..4ee286f323 100644
---- a/chardev/char-fd.c
-+++ b/chardev/char-fd.c
-@@ -206,14 +206,16 @@ int qmp_chardev_open_file_source(char *src, int flags, Error **errp)
- }
+diff --git a/include/qapi/error.h b/include/qapi/error.h
+index 41e3816380..cea95f5c36 100644
+--- a/include/qapi/error.h
++++ b/include/qapi/error.h
+@@ -539,6 +539,12 @@ G_DEFINE_AUTO_CLEANUP_CLEAR_FUNC(ErrorPropagator, error_propagator_cleanup);
+  */
+ extern Error *error_warn;
  
- /* open a character device to a unix fd */
--void qemu_chr_open_fd(Chardev *chr,
--                      int fd_in, int fd_out)
-+bool qemu_chr_open_fd(Chardev *chr,
-+                      int fd_in, int fd_out, Error **errp)
++/*
++ * Special error destination to report on error.
++ * See error_setg() and error_propagate() for details.
++ */
++extern Error *error_reporter;
++
+ /*
+  * Special error destination to abort on error.
+  * See error_setg() and error_propagate() for details.
+diff --git a/util/error.c b/util/error.c
+index daea2142f3..5160435c86 100644
+--- a/util/error.c
++++ b/util/error.c
+@@ -20,6 +20,7 @@
+ Error *error_abort;
+ Error *error_fatal;
+ Error *error_warn;
++Error *error_reporter;
+ 
+ static void error_handle(Error **errp, Error *err)
  {
-     FDChardev *s = FD_CHARDEV(chr);
-     g_autofree char *name = NULL;
- 
-     if (fd_out >= 0) {
--        qemu_set_blocking(fd_out, false, &error_abort);
-+        if (!qemu_set_blocking(fd_out, false, errp)) {
-+            return false;
-+        }
+@@ -43,6 +44,8 @@ static void error_handle(Error **errp, Error *err)
      }
- 
-     if (fd_out == fd_in && fd_in >= 0) {
-@@ -221,7 +223,7 @@ void qemu_chr_open_fd(Chardev *chr,
-         name = g_strdup_printf("chardev-file-%s", chr->label);
-         qio_channel_set_name(QIO_CHANNEL(s->ioc_in), name);
-         s->ioc_out = QIO_CHANNEL(object_ref(s->ioc_in));
--        return;
-+        return true;
-     }
- 
-     if (fd_in >= 0) {
-@@ -236,6 +238,8 @@ void qemu_chr_open_fd(Chardev *chr,
-         name = g_strdup_printf("chardev-file-out-%s", chr->label);
-         qio_channel_set_name(QIO_CHANNEL(s->ioc_out), name);
-     }
-+
-+    return true;
- }
- 
- static void char_fd_class_init(ObjectClass *oc, const void *data)
-diff --git a/chardev/char-file.c b/chardev/char-file.c
-index a9e8c5e0d7..89e9cb849c 100644
---- a/chardev/char-file.c
-+++ b/chardev/char-file.c
-@@ -92,7 +92,11 @@ static void qmp_chardev_open_file(Chardev *chr,
-         }
-     }
- 
--    qemu_chr_open_fd(chr, in, out);
-+    if (!qemu_chr_open_fd(chr, in, out, errp)) {
-+        qemu_close(out);
-+        qemu_close(in);
-+        return;
-+    }
- #endif
- }
- 
-diff --git a/chardev/char-pipe.c b/chardev/char-pipe.c
-index 3d1b0ce2d2..e9f3bb8290 100644
---- a/chardev/char-pipe.c
-+++ b/chardev/char-pipe.c
-@@ -150,7 +150,14 @@ static void qemu_chr_open_pipe(Chardev *chr,
-             return;
-         }
-     }
--    qemu_chr_open_fd(chr, fd_in, fd_out);
-+
-+    if (!qemu_chr_open_fd(chr, fd_in, fd_out, errp)) {
-+        close(fd_in);
-+        if (fd_out != fd_in) {
-+            close(fd_out);
-+        }
-+        return;
-+    }
- }
- 
- #endif /* !_WIN32 */
-diff --git a/chardev/char-serial.c b/chardev/char-serial.c
-index 1ff31dcde3..c622d758db 100644
---- a/chardev/char-serial.c
-+++ b/chardev/char-serial.c
-@@ -276,7 +276,10 @@ static void qmp_chardev_open_serial(Chardev *chr,
-     }
-     tty_serial_init(fd, 115200, 'N', 8, 1);
- 
--    qemu_chr_open_fd(chr, fd, fd);
-+    if (!qemu_chr_open_fd(chr, fd, fd, errp)) {
-+        close(fd);
-+        return;
-+    }
- }
- #endif /* __linux__ || __sun__ */
- 
-diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
-index 193727e807..2568164a10 100644
---- a/chardev/char-stdio.c
-+++ b/chardev/char-stdio.c
-@@ -110,14 +110,17 @@ static void qemu_chr_open_stdio(Chardev *chr,
-     if (!qemu_set_blocking(0, false, errp)) {
-         return;
-     }
-+
-+    if (!qemu_chr_open_fd(chr, 0, 1, errp)) {
-+        return;
-+    }
-+
-     atexit(term_exit);
- 
-     memset(&act, 0, sizeof(act));
-     act.sa_handler = term_stdio_handler;
-     sigaction(SIGCONT, &act, NULL);
- 
--    qemu_chr_open_fd(chr, 0, 1);
--
-     stdio_allow_signal = !opts->has_signal || opts->signal;
-     qemu_chr_set_echo_stdio(chr, false);
- }
-diff --git a/include/chardev/char-fd.h b/include/chardev/char-fd.h
-index 9de0e440de..6fe43062ca 100644
---- a/include/chardev/char-fd.h
-+++ b/include/chardev/char-fd.h
-@@ -41,7 +41,7 @@ typedef struct FDChardev FDChardev;
- DECLARE_INSTANCE_CHECKER(FDChardev, FD_CHARDEV,
-                          TYPE_CHARDEV_FD)
- 
--void qemu_chr_open_fd(Chardev *chr, int fd_in, int fd_out);
-+bool qemu_chr_open_fd(Chardev *chr, int fd_in, int fd_out, Error **errp);
- int qmp_chardev_open_file_source(char *src, int flags, Error **errp);
- 
- #endif /* CHAR_FD_H */
+     if (errp == &error_warn) {
+         warn_report_err(err);
++    } else if (errp == &error_reporter) {
++        error_report_err(err);
+     } else if (errp && !*errp) {
+         *errp = err;
+     } else {
 -- 
 2.48.1
 
