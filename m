@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85214CAC59C
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBB0CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyEwI-00029g-1R; Mon, 15 Sep 2025 15:32:39 -0400
+	id 1uyEwJ-0002Af-Nr; Mon, 15 Sep 2025 15:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEvp-0001u1-Ra; Mon, 15 Sep 2025 15:32:10 -0400
+ id 1uyEvY-0001o2-9R; Mon, 15 Sep 2025 15:31:52 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEvU-0001wk-OT; Mon, 15 Sep 2025 15:32:09 -0400
+ id 1uyEvA-0001ub-Cp; Mon, 15 Sep 2025 15:31:51 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7F344809B4;
- Mon, 15 Sep 2025 22:31:22 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D827C809C2;
+ Mon, 15 Sep 2025 22:31:19 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:184::1:6])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AVVVql1FrOs0-s5AhM4u2; Mon, 15 Sep 2025 22:31:22 +0300
+ ESMTPSA id AVVVql1FrOs0-ShEqLEdD; Mon, 15 Sep 2025 22:31:19 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757964682;
- bh=U0iIBse8ZC8ENtg6o1H6rx8s5OyGvuvA2kcUutepzk4=;
+ s=default; t=1757964679;
+ bh=wnQ0IZ7DL77fQvEXOsbqMh7icg1uQk/N/bd4HdRvKWE=;
  h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=nWct6KKZ+zpUIAyWiBqE1h5DeuiT5qPM8W5G21p/nLhKDHy0XwDLIU74pdZQ8AGY5
- WtDfj6t+SwgbW0CLi42wmgBlAmvDXuRMC8XBTbFWX5cmLKjPSyjbYShzQK4ckjT6Gd
- HZHg38lwv9TifSGzeEmRqEtx3ktGOoSN1W3sOuSs=
+ b=v2/M5mwlpT5lz570Py6aWQzJZYsGHO1hEVoIuAmlOCRdfXbh5Y9/DKfBZdrN3wK83
+ riHX2iyrpX6rilSopa3DaLdmhwCmcilP6g58T3joxqDKWxdxJbKfzYTuJqQ/TepVYL
+ vuuE2AQtBhfaiMBGu7BYRoR5g9BkoddVekTb/S0U=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
  vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 12/12] chardev: close an fd on failure path
-Date: Mon, 15 Sep 2025 22:31:04 +0300
-Message-ID: <20250915193105.230085-13-vsementsov@yandex-team.ru>
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH v4 09/12] util: drop qemu_socket_set_block()
+Date: Mon, 15 Sep 2025 22:31:01 +0300
+Message-ID: <20250915193105.230085-10-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250915193105.230085-1-vsementsov@yandex-team.ru>
 References: <20250915193105.230085-1-vsementsov@yandex-team.ru>
@@ -74,40 +74,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are at least two failure paths, where we forget
-to close an fd.
+Now it's unused.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- chardev/char-pty.c    | 1 +
- chardev/char-serial.c | 1 +
- 2 files changed, 2 insertions(+)
+ include/qemu/sockets.h | 1 -
+ util/oslib-posix.c     | 6 ------
+ util/oslib-win32.c     | 7 -------
+ 3 files changed, 14 deletions(-)
 
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index fe6bfb043d..b066f01412 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -350,6 +350,7 @@ static void char_pty_open(Chardev *chr,
+diff --git a/include/qemu/sockets.h b/include/qemu/sockets.h
+index 9512fec514..be351d85f7 100644
+--- a/include/qemu/sockets.h
++++ b/include/qemu/sockets.h
+@@ -46,7 +46,6 @@ ssize_t qemu_send_full(int s, const void *buf, size_t count)
+     G_GNUC_WARN_UNUSED_RESULT;
+ int socket_set_cork(int fd, int v);
+ int socket_set_nodelay(int fd);
+-void qemu_socket_set_block(int fd);
+ int socket_set_fast_reuse(int fd);
  
-     close(slave_fd);
-     if (!qemu_set_blocking(master_fd, false, errp)) {
-+        close(master_fd);
-         return;
-     }
+ #ifdef WIN32
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index 7654febfa5..14cf94ac03 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -265,12 +265,6 @@ bool qemu_set_blocking(int fd, bool block, Error **errp)
+     return true;
+ }
  
-diff --git a/chardev/char-serial.c b/chardev/char-serial.c
-index c622d758db..4c6ca713eb 100644
---- a/chardev/char-serial.c
-+++ b/chardev/char-serial.c
-@@ -272,6 +272,7 @@ static void qmp_chardev_open_serial(Chardev *chr,
-         return;
-     }
-     if (!qemu_set_blocking(fd, false, errp)) {
-+        close(fd);
-         return;
-     }
-     tty_serial_init(fd, 115200, 'N', 8, 1);
+-void qemu_socket_set_block(int fd)
+-{
+-    g_unix_set_fd_nonblocking(fd, false, NULL);
+-}
+-
+-
+ int socket_set_fast_reuse(int fd)
+ {
+     int val = 1, ret;
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index bf5d478c5c..b9ce2f96ee 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -195,13 +195,6 @@ bool qemu_set_blocking(int fd, bool block, Error **errp)
+     return true;
+ }
+ 
+-void qemu_socket_set_block(int fd)
+-{
+-    unsigned long opt = 0;
+-    qemu_socket_unselect(fd, NULL);
+-    ioctlsocket(fd, FIONBIO, &opt);
+-}
+-
+ int socket_set_fast_reuse(int fd)
+ {
+     /* Enabling the reuse of an endpoint that was used by a socket still in
 -- 
 2.48.1
 
