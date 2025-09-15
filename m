@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE2DCAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 18:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756CCCAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyEMR-0007Th-A1; Mon, 15 Sep 2025 14:55:35 -0400
+	id 1uyEQK-0000O3-9F; Mon, 15 Sep 2025 14:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyEMM-0007TG-Fq
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 14:55:31 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1uyEQH-0000Nq-TQ
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 14:59:33 -0400
+Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyEMB-0005Qj-1A
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 14:55:29 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b54abd46747so3159757a12.0
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 11:55:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1uyEQ6-0005qQ-RN
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 14:59:33 -0400
+Received: by mail-il1-x134.google.com with SMTP id
+ e9e14a558f8ab-412a2fe2f36so21885ab.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 11:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1757962511; x=1758567311; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hY4Kh7N0I8trIBDZa9aSCYLr3VeF8+jqFR+jQBwwPmM=;
- b=NM6hntp9NLJave9csGtrFSfO61PV+8haqnkGxix+ldBUffve7BdlNZH82FHCCaovRd
- FYwsuu8VK949DLk1FD11Eto8C7FqsyGCC3AUGajfNbvyrWxdhonAO85pNwvSU1oSAKKz
- QIH2mnibJSEUN8cWDIUgSZS1ZLHnQBB/gVUPh5egW2cTDfYJfUU3rVWWzhf+rX7Vzenb
- 2eK2Dvau4Fu0Gsq3tMTNmMFT1A6YeAq5MMQJsuagApgUeQbfHnLUWBseS/e3Fm4k4Lqq
- ue2Af7ReCSBMxxVWIv+WD1DWK7HCGIBwP3ygkHVvNxftDntnAJv4UGEG5nEvrjCkOL+b
- zl0g==
+ d=google.com; s=20230601; t=1757962754; x=1758567554; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xaX/fWfP49+8SaeYksc9gJpAga6hEcFc4Rbmx4y7b/E=;
+ b=sDk1CvT1JBsPJ7bKCPKXq0lJoPJvQbxomFfr2xdSaYJEYOKiPjndaLVF6/PrjLRLoR
+ XYYGbPsqbCsgmwzzkC5H9ZndsYJY8nhdd1StVZZKlpgErO0SosTj3+T/FvfTkVHZbQb8
+ CACJcS1Ymxy1ZIaAY5RhzeVJNxCzSpczjsDrV7OZ/LbWZdyjd+m29Ir2OO14zUUDyga1
+ MjwGr780nehSwRVscRSwg6XM6NVqDp4OZYyx3leT4HbXn20ENPlvjvJ5foXHtCOiETaL
+ DVfDlufFToO/tF24qlny56igU03al5RUmHX2dtGghIO9BkCWwSTVMnN8epeVbPumiqVQ
+ 8prQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757962511; x=1758567311;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hY4Kh7N0I8trIBDZa9aSCYLr3VeF8+jqFR+jQBwwPmM=;
- b=MrOoMGNCBFhwCZTeG6lx8DXqqmXL4EnfmFf5SeaeBaPnFgzNKs9zDJewKPq1/AwXe+
- UeM30nbxZPD2Mgabkd3YpC3p/C34jtKb2Ljfl+1IQrtZlIaq7F+voGLodjoZuHs4XMWf
- /W6HZoERJg8tOpRyDDZUD+07yiS7wtpHj3P/TwsmNHh87FGFvt2ablrLNCzsimWIMgWs
- 05EbAfJ4ExOlAJeJ4wvrIKkPpGCCknF47Xfi+bhbDqruOoU3JrQRwvzeeC+igTaY3QB7
- mMll6SbqLiu1JRugZCRHtv9XRYO+sLzhrh9j/oLthltXRxCwQPqDkaQ8mvgZI1WOsnlI
- r8qg==
-X-Gm-Message-State: AOJu0Yw3m/N0waiwfBvmUrTE8cgSZCB3WbGSGOfTnBzgO1d2Y0Syv4KQ
- JtJcszA61GH4/FBM2W53kjFJKkz7R/QLIh6JhWhaWGDK8WPcibEP0rk6XTVMVpL9+Rg1DtJspZX
- OcRB9
-X-Gm-Gg: ASbGnctS3acPXVmidTBBEMT7wOpT+KykV7bTXG/S0Lm1Wx8nHUF8c5qAIgoJMxnAJ0J
- EkMWFxrupknE8+wy9d2OA8sgIagXGi77vQZHHWebH751GadDZieE+QbSLxmXLD02YTafbBs2Jvt
- cLAZ39aHCBpliP3Ve9eP31R1ACD/6Pfs6v/nRdJ2z3WQ8CCUcrGn2W5Q/4B+qHO6lRojlm3bIK9
- cN+fxvrtU+DvrxROIZySippvAxY4wi7U8EP1sO9DuHld9iLc46f8Yty2Kvig9ZzSB6HENJIgN0T
- FIM+mAE0/OAENIJq04fsbk5RuyPjrm8f4+06uzqg0db0wq2FjhWn1w1T7itlCK8vjAsZckhqOb/
- 681zhR+1LFzYmfuJo0VTu/16+T07RZsLTFn4OokY=
-X-Google-Smtp-Source: AGHT+IHp4OmsCCkNL9qWa2kr4u+j1x4dBsikNa3bUmIldxD52zaxFmqfgTwNHe2MTsm0L6kACSNW6g==
-X-Received: by 2002:a05:6a20:3949:b0:262:af30:e4c with SMTP id
- adf61e73a8af0-262af303e80mr9401385637.53.1757962511527; 
- Mon, 15 Sep 2025 11:55:11 -0700 (PDT)
-Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b54a35ca2basm12300378a12.12.2025.09.15.11.55.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 11:55:11 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-Subject: [PATCH] tests/functional/x86_64: Accept a few locked pages in
- test_memlock.py
-Date: Mon, 15 Sep 2025 11:55:09 -0700
-Message-ID: <20250915185509.340022-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1757962754; x=1758567554;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xaX/fWfP49+8SaeYksc9gJpAga6hEcFc4Rbmx4y7b/E=;
+ b=d9hLOuhKdptB1L1UbEuq8fV6rd5RNjAI9N2ESsLkhWCRf8580Y8qxY809T4a6WE/3j
+ tDNz6GraU+aTOf5aW3CLxbivnDt1iHGU1/Ib7z5Y2Qw/WyTGzTSc5rbGK0MJKt53vHzT
+ Pc8mGbTcD/2wG2NfgnMR86lZk5dqJ/R+WMXN99TiwSfUz5mvFssTqlbA2QmRirAgaAtq
+ TS6xCUlII/2QMWTUTtxh97qWa8JOuFty72smsBpY3T49qpzl1OdG215INYcN/Jpw8QJY
+ 6ubL2LWpwA2Y0yhc9rWQKL6QWmJUr++rjbAsXJJBDJJn4lpbUeGRsKZfluoHqZP6WvAB
+ AxuA==
+X-Gm-Message-State: AOJu0YzqRV9SOF4pOm2hP+Ask1MUHmyJprvfdEmdVNuu794jM391rDQe
+ 1VoChCBJWFiIxQJP7fxua4pK4Yl2IArX4pTjgMz++bCEo5RlMC41hYrsd38buJrl0o0PdiwMW4L
+ YXm46DKmDprX98mBJqhXKP5V0xdhQq+CV0V+aHkm5fRfdTlH5fcBTkjVQ
+X-Gm-Gg: ASbGncs6z2aMHOwwUyymEWEZbszN7ayxxpXiR6kYG0jleKsDTg7wU5JTruDsCwQUKpM
+ tM/qlezFiJq0Ht9rtoaq0ShXM/nbhMoHufQkTp3WYnPIIpFI3Um5trgW38TF6pNsnhhlLHdp6Yh
+ Bq2GQg6XsGUp9hmUcyLbhI1kea1DfkOC/+lujgoadxtn/cUGPnEzthSmQAbGtlKC2q3hZQR4w4u
+ O1/Iw02Pk8eH4dv4fCkeRzlj69aAG5AGjvgDe1inwCFMIdd0bCDALA=
+X-Google-Smtp-Source: AGHT+IG/FYbAUpLehiM2CGbvzvb6R/fA21DB/7YbaRSE6zKP2riUX38a6++H7pGcRNg3Sh5Vls+0OUQt7kbmwZqxkFI=
+X-Received: by 2002:a05:6e02:16cc:b0:400:7d06:dd68 with SMTP id
+ e9e14a558f8ab-4240e84c7b0mr1128405ab.14.1757962753627; Mon, 15 Sep 2025
+ 11:59:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20250826205532.1500639-1-nabihestefan@google.com>
+In-Reply-To: <20250826205532.1500639-1-nabihestefan@google.com>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Mon, 15 Sep 2025 11:59:02 -0700
+X-Gm-Features: Ac12FXxY-dOQCNhWaS39kHKbUJB3gxyTEdAqWSJX4-gSDrsadKbDHx3-7h4aBqk
+Message-ID: <CA+QoejUmDgKMuTbWY_1-7ok1spag-ANP-+TvsMgytkka+5PBdg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/pci-bridge: Create PLX Virtual Switch Device
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com, 
+ venture@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
+ envelope-from=nabihestefan@google.com; helo=mail-il1-x134.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,30 +96,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Startup of libgcrypt locks a small pool of pages -- by default 16k.
-Testing for zero locked pages is isn't correct, while testing for
-32k is a decent compromise.
+Friendly ping on the review!
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/functional/x86_64/test_memlock.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks,
+Nabih
 
-diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/x86_64/test_memlock.py
-index 2b515ff979..81bce80b0c 100755
---- a/tests/functional/x86_64/test_memlock.py
-+++ b/tests/functional/x86_64/test_memlock.py
-@@ -37,7 +37,8 @@ def test_memlock_off(self):
- 
-         status = self.get_process_status_values(self.vm.get_pid())
- 
--        self.assertTrue(status['VmLck'] == 0)
-+        # libgcrypt may mlock a few pages
-+        self.assertTrue(status['VmLck'] < 32)
- 
-     def test_memlock_on(self):
-         self.common_vm_setup_with_memlock('on')
--- 
-2.43.0
 
+On Tue, Aug 26, 2025 at 1:55=E2=80=AFPM Nabih Estefan <nabihestefan@google.=
+com> wrote:
+>
+> Create a PLX PEX PCIe Virtual Switch implementation that can be used
+> for modeling trays. This is a generalized version of the xio3130 switch w=
+here
+> we can set the PCI information on creation, allowing us to model differen=
+t
+> trays without creating specific devices for all of them. It is used the s=
+ame
+> way the xio3130 switch is used + the PCI Signature information.
+>
+> The idea is to minimize the difficulty of creating different trays whose
+> only difference is recognition by some daemon through PCI signatures.
+> Instead of having to create 8 different versions of xio3130 that have
+> the same functionality but different PCI Signatures, we create one
+> general version where you can declare the PCI Signature information,
+> while keeping the same base functionality. This is not meant to fully
+> replace xio3130 since that is easier to use without knowledge of the PCI
+> Signature, this is meant to decrease the difficulty of creating switch
+> trays that require certain PCI information for recognition without any
+> significant change from a normal PLX Virtual Switch functionality.
+>
+> Changes from v1&2: Updating different formatting and API changes that
+> ocurred QEMU-wide since these patches were first staged in 8.1.
+>
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> Signed-off-by: Patrick Venture <venture@google.com>
+>
+> Nabih Estefan (2):
+>   hw/pci-bridge: Create Initial revision for PLX Virtual Switch
+>   MAINTAINERS: Add entry for PLX VSwitches
+>
+>  MAINTAINERS                            |   6 +
+>  hw/pci-bridge/Kconfig                  |   5 +
+>  hw/pci-bridge/meson.build              |   1 +
+>  hw/pci-bridge/plx_vswitch_downstream.c | 188 +++++++++++++++++++++++++
+>  hw/pci-bridge/plx_vswitch_upstream.c   | 178 +++++++++++++++++++++++
+>  include/hw/pci-bridge/plx_vswitch.h    |  43 ++++++
+>  6 files changed, 421 insertions(+)
+>  create mode 100644 hw/pci-bridge/plx_vswitch_downstream.c
+>  create mode 100644 hw/pci-bridge/plx_vswitch_upstream.c
+>  create mode 100644 include/hw/pci-bridge/plx_vswitch.h
+>
+> --
+> 2.51.0.318.gd7df087d1a-goog
+>
 
