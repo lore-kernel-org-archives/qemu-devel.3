@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06ECBCAC598
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2B4CAC598
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 10:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy6B9-0002hC-C8; Mon, 15 Sep 2025 06:11:23 -0400
+	id 1uy6BC-0002hY-08; Mon, 15 Sep 2025 06:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6AZ-00027y-Ib; Mon, 15 Sep 2025 06:10:50 -0400
+ id 1uy6B3-0002TD-N5; Mon, 15 Sep 2025 06:11:18 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uy6AP-0006Zp-Os; Mon, 15 Sep 2025 06:10:47 -0400
+ id 1uy6Aw-0006i7-He; Mon, 15 Sep 2025 06:11:17 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMQ006344
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58FA8uMN006344
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 15 Sep 2025 19:09:05 +0900 (JST)
+ Mon, 15 Sep 2025 19:09:04 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=hwAXHArhJLR6ifvReRiyEc7DJ0CC9c83Sf7dL+LBIpA=; 
+DKIM-Signature: a=rsa-sha256; bh=N6KvdcMXa6qsZ06cdDLF8MQ7k2CfW5mVvMJOUaALk2A=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1757930946; v=1;
- b=t5NEnCSsK8dFMjAK2VoM5vWCDM6bApHmhydjS525e5cbDUq40308bxtkUR9VRBX1
- Nd+w+ByqOp8ouEaIFj3YggNPC9YSThsxESxfIENx5H0iUPckpUN+8pxswt7zHMQO
- psbI0YxPngvdj+JQL4/AbudGCE7zjddYpeJsJpRlR8ckTd+51eJJI4hbOVM+PSUL
- ur0rGhHZbqSltaFwYObEZ0sb+wwQDuDANxVG7kCMB2QWhKDHxdO4Dz/Cb+beIjKR
- CXhtb5gun0t1ENeugtuT5MaCctqs27Esg+GZ5yxoBQiNKtW4PVrl/E/7dnuimOhI
- bZr2QlCYNjzz1eerjX0GFw==
+ s=rs20250326; t=1757930944; v=1;
+ b=hOvX/d/Xfgjod7qFtiKMTBxLoSJwvr7zx1ONJOZGfXf1mMJ97Sc2ZEUOk8qiwZ8m
+ HhJYo5//hXKdoiCPpooMkLpxrWC17bDKw2qIL4UATZksFkf1R68XcTO7TSrvs4An
+ S+6cZtNwCM+iqB60VW91jl5Wum04NvBk5+p6uplcDrFYs8yT6711aTieWdGoFJt9
+ W2CV8lRUGXEeOmxAeVpEOZJBxlNN2/gi3l+pHzzQjXmnMuEUpNEGbOCwu14XFTKD
+ gF2754JtfMxNmzWllbkbpotwxvPT7k0x/FMUXi+yo9EyPhqIkTjo3stX1l0rV7PK
+ 9WKK58QMDUNP3ogmBh5YGQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 15 Sep 2025 19:08:54 +0900
-Subject: [PATCH v2 13/15] hw/ppc/spapr_pci: Do not delete the subregions
+Date: Mon, 15 Sep 2025 19:08:51 +0900
+Subject: [PATCH v2 10/15] hw/ide/via: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-use-v2-13-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250915-use-v2-10-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,63 +107,39 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ppc/spapr_pci.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ hw/ide/via.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 1ac1185825e8..b4043ee752c5 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1735,27 +1735,13 @@ static void spapr_phb_unrealize(DeviceState *dev)
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
-     SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(phb);
--    SpaprTceTable *tcet;
-     int i;
--    const unsigned windows_supported = spapr_phb_windows_supported(sphb);
- 
-     if (sphb->msi) {
-         g_hash_table_unref(sphb->msi);
-         sphb->msi = NULL;
+diff --git a/hw/ide/via.c b/hw/ide/via.c
+index dedc2674c002..cbaf4ad1548b 100644
+--- a/hw/ide/via.c
++++ b/hw/ide/via.c
+@@ -234,17 +234,6 @@ static void via_ide_realize(PCIDevice *dev, Error **errp)
      }
- 
--    /*
--     * Remove IO/MMIO subregions and aliases, rest should get cleaned
--     * via PHB's unrealize->object_finalize
--     */
--    for (i = windows_supported - 1; i >= 0; i--) {
--        tcet = spapr_tce_find_by_liobn(sphb->dma_liobn[i]);
--        if (tcet) {
--            memory_region_del_subregion(&sphb->iommu_root,
--                                        spapr_tce_get_iommu(tcet));
--        }
--    }
--
-     remove_drcs(sphb, phb->bus);
- 
-     for (i = PCI_NUM_PINS - 1; i >= 0; i--) {
-@@ -1767,8 +1753,6 @@ static void spapr_phb_unrealize(DeviceState *dev)
- 
-     QLIST_REMOVE(sphb, list);
- 
--    memory_region_del_subregion(&sphb->iommu_root, &sphb->msiwindow);
--
-     /*
-      * An attached PCI device may have memory listeners, eg. VFIO PCI. We have
-      * unmapped all sections. Remove the listeners now, before destroying the
-@@ -1779,12 +1763,6 @@ static void spapr_phb_unrealize(DeviceState *dev)
- 
-     qbus_set_hotplug_handler(BUS(phb->bus), NULL);
-     pci_unregister_root_bus(phb->bus);
--
--    memory_region_del_subregion(get_system_memory(), &sphb->iowindow);
--    if (sphb->mem64_win_pciaddr != (hwaddr)-1) {
--        memory_region_del_subregion(get_system_memory(), &sphb->mem64window);
--    }
--    memory_region_del_subregion(get_system_memory(), &sphb->mem32window);
  }
  
- static void spapr_phb_destroy_msi(gpointer opaque)
+-static void via_ide_exitfn(PCIDevice *dev)
+-{
+-    PCIIDEState *d = PCI_IDE(dev);
+-    unsigned i;
+-
+-    for (i = 0; i < ARRAY_SIZE(d->bmdma); ++i) {
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
+-        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
+-    }
+-}
+-
+ static void via_ide_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -258,7 +247,6 @@ static void via_ide_class_init(ObjectClass *klass, const void *data)
+     k->config_read = via_ide_cfg_read;
+     k->config_write = via_ide_cfg_write;
+     k->realize = via_ide_realize;
+-    k->exit = via_ide_exitfn;
+     k->vendor_id = PCI_VENDOR_ID_VIA;
+     k->device_id = PCI_DEVICE_ID_VIA_IDE;
+     k->revision = 0x06;
 
 -- 
 2.51.0
