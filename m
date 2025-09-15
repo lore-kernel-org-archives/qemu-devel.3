@@ -4,87 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B53CAC597
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 08:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF72CAC597
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 08:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uy4pS-0003ku-Pr; Mon, 15 Sep 2025 04:44:54 -0400
+	id 1uy4sb-0006Jv-KI; Mon, 15 Sep 2025 04:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uy4pO-0003iw-29
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 04:44:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy4sX-0006Is-2o; Mon, 15 Sep 2025 04:48:05 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uy4pC-0002ZR-Bt
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 04:44:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757925869;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NQomQXxFuzPkrqX0lPJiGwHDpgfxwDcJPVIa2FJ/67Q=;
- b=NFPj+wcV8dP8rOzqrQnKXvdzXFI7T8YIyqJhlQJ/EhWt3LHJQ4xhO73XvKgWiUhXav1Zuk
- rBqSZuQK5wUCDtusasfCN0gU/NfZ4PoG8bFw4+tnvw4kcAtrkTaiAI2qiGP3XMcKOdDVN8
- KMSFKYMa/KZV1pbgs1aH4F1KyZhdtW0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-arpKemd7OI6CvANHdqnDlA-1; Mon,
- 15 Sep 2025 04:44:26 -0400
-X-MC-Unique: arpKemd7OI6CvANHdqnDlA-1
-X-Mimecast-MFC-AGG-ID: arpKemd7OI6CvANHdqnDlA_1757925864
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7ABF41800562; Mon, 15 Sep 2025 08:44:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9752D1800451; Mon, 15 Sep 2025 08:44:17 +0000 (UTC)
-Date: Mon, 15 Sep 2025 09:44:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Filip Hejsek <filip.hejsek@gmail.com>, qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Szymon Lukasz <noh4hss@gmail.com>
-Subject: Re: [PATCH v4 00/10] virtio-console: notify about the terminal size
-Message-ID: <aMfR3N3z6_fp6Lg9@redhat.com>
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <20250912042910-mutt-send-email-mst@kernel.org>
- <aMPe1vB3cZAlNBq1@redhat.com>
- <866f7190cf6423a7fc1e85070e2059ae7014c231.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uy4sM-0002xc-4p; Mon, 15 Sep 2025 04:48:04 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:999c:0:640:51a7:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8465FC0166;
+ Mon, 15 Sep 2025 11:47:41 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c82::1:39] (unknown
+ [2a02:6bf:8080:c82::1:39])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id elKZjg1Gp8c0-YORNYuxv; Mon, 15 Sep 2025 11:47:40 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1757926060;
+ bh=ImrDI0YpKkT5wUC0gi61+xObu4MwsdQ/++UsGW3NkmY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=CeQVezJH2AnLuJpoSXqlX1e30lcCSbCm0KxGaaINajsGkntNUz09iz51pXM2TbjZ/
+ ugr/pmZChDFCYG35BQL8K30Ovilki45JhhLCubO2BLtW1Vqw6lcFe/PGCwU8rqba2T
+ ffc1FPQC64+1OO+wlM1MVzLiWl0gcaLgT7MAwZus=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <09d002d8-ecb1-49d6-844f-2c2d2012e6bb@yandex-team.ru>
+Date: Mon, 15 Sep 2025 11:47:40 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] io/channel-socket: rework
+ qio_channel_socket_copy_fds()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com
+References: <20250911092007.1370002-1-vsementsov@yandex-team.ru>
+ <20250911092007.1370002-7-vsementsov@yandex-team.ru>
+ <aMRS9kVQg70m_JWX@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aMRS9kVQg70m_JWX@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <866f7190cf6423a7fc1e85070e2059ae7014c231.camel@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,122 +75,185 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 10:41:44AM +0200, Maximilian Immanuel Brandtner wrote:
-> On Fri, 2025-09-12 at 09:50 +0100, Daniel P. Berrangé wrote:
-> > On Fri, Sep 12, 2025 at 04:41:02AM -0400, Michael S. Tsirkin wrote:
-> > > On Fri, Sep 12, 2025 at 05:39:45AM +0200, Filip Hejsek wrote:
-> > > > The goal of this series is to have a resizable terminal into a
-> > > > guest
-> > > > without having to set up networking and using, e.g. ssh.
-> > > > 
-> > > > The virtio spec allows a virtio-console device to notify the
-> > > > guest about
-> > > > terminal resizes in the host. Linux Kernel implements the driver
-> > > > part of
-> > > > the spec. This series implement the device part in QEMU.
-> > > > 
-> > > > This series adds support for a resizable terminal if a virtio
-> > > > console
-> > > > device is connected to the stdio backend.
-> > > > 
-> > > > This series also introduces resize messages that can be sent over
-> > > > QMP to
-> > > > notify QEMU about the size of the terminal connented to some
-> > > > chardev.
-> > > > In the libvirt setting, it will allow to implement a resizable
-> > > > terminal
-> > > > for virsh console and other libvirt clients.
-> > > > 
-> > > > This patch series was originally authored by Szymon Lukasz and
-> > > > submitted
-> > > > to qemu-devel about 5 years ago. The previous submission can be
-> > > > found at
-> > > > <
-> > > > https://lists.nongnu.org/archive/html/qemu-devel/2020-06/msg09591.
-> > > > html>.
-> > > > I have updated the patches to be compatible with latest master
-> > > > and made
-> > > > a few small changes of my own, including the addition of Windows
-> > > > support.
-> > > > 
-> > > > Probably the most important change I made is the swapping of rows
-> > > > and
-> > > > cols fields in resize messages. I would like to hear some
-> > > > feedback on
-> > > > this change from reviewers. The problem is that for a long time,
-> > > > the
-> > > > Linux kernel used a different field order from what was specified
-> > > > in the
-> > > > virtio spec. The kernel implementation was apparently merged
-> > > > around 2010,
-> > > > while the virtio spec came in 2014, so when a previous version of
-> > > > this
-> > > > patch series was being discussed here on this mailing list in
-> > > > 2020, it
-> > > > was decided that QEMU should match the Linux implementation, and
-> > > > ideally,
-> > > > the virtio spec should be changed.
-> > > > 
-> > > > However, recently, the Linux kernel implementation was changed to
-> > > > conform
-> > > > to the spec:
-> > > > <https://git.kernel.org/linus/5326ab737a47278dbd16ed3ee7380b26c70
-> > > > 56ddd>.
-> > > > As a result, to be compatible with latest kernel releases, QEMU
-> > > > needs to
-> > > > also use the field order matching the specification. I have
-> > > > changed the
-> > > > patch to use the spec-compliant order, so it works correctly with
-> > > > latest
-> > > > kernels now.
-> > > > 
-> > > 
-> > > Well this is not in any release yet. If you want me to revert that
-> > > one, let me know ASAP. Maximilian?
-> > > 
-> > > > That leaves the issue of older kernels. There are about 15 years'
-> > > > worth
-> > > > of kernel versions with the swapped field order, including the
-> > > > kernel
-> > > > currently shipped in Debian stable. The effects of the swapped
-> > > > dimensions
-> > > > can sometimes be quite annoying - e.g. if you have a terminal
-> > > > with
-> > > > 24 rows, this will be interpreted as 24 columns, and your shell
-> > > > may limit 
-> > > > line editing to this small space, most of which will be taken by
-> > > > your
-> > > > prompt. The patch series in its current form provides no way to
-> > > > disable
-> > > > the console size functionality,
-> > > 
-> > > Well I see the console-size property, no?
-> > 
-> > At least in the case of libvirt managed VMs, this series does
-> > nothin by default, as they won't be using the 'stdio' chardev,
-> > they'll require libvirt to first wire up the new QMP command,
-> > and then apps using libvirt to call it. So in that sense, it'll
-> > take a while before the effects are seen by users.
+On 12.09.25 20:05, Daniel P. Berrangé wrote:
+> On Thu, Sep 11, 2025 at 12:20:04PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> We want to switch from qemu_socket_set_block() to newer
+>> qemu_set_blocking(), which provides return status of operation,
+>> to handle errors.
+>>
+>> Still, we want to keep qio_channel_socket_readv() interface clean,
+>> as currently it set @fds and @nfds only on success.
+>>
+>> So, in case of error, we should to close all incoming fds and don't
+>> touch user's @fds and @nfds.
+>>
+>> Let's make separate functions qio_channel_handle_fds() and
+>> qio_channel_cleanup_fds(), to achieve what we want.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   io/channel-socket.c | 73 +++++++++++++++++++++++++++++++++++----------
+>>   1 file changed, 57 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/io/channel-socket.c b/io/channel-socket.c
+>> index f7e3cb9742..afae97b2ef 100644
+>> --- a/io/channel-socket.c
+>> +++ b/io/channel-socket.c
+>> @@ -464,8 +464,7 @@ static void qio_channel_socket_finalize(Object *obj)
+>>   
+>>   #ifndef WIN32
+>>   static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>> -                                        int **fds, size_t *nfds,
+>> -                                        bool preserve_blocking)
+>> +                                        int **fds, size_t *nfds)
+>>   {
+>>       struct cmsghdr *cmsg;
+>>   
+>> @@ -473,7 +472,7 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>>       *fds = NULL;
+>>   
+>>       for (cmsg = CMSG_FIRSTHDR(msg); cmsg; cmsg = CMSG_NXTHDR(msg, cmsg)) {
+>> -        int fd_size, i;
+>> +        int fd_size;
+>>           int gotfds;
+>>   
+>>           if (cmsg->cmsg_len < CMSG_LEN(sizeof(int)) ||
+>> @@ -491,24 +490,54 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>>           gotfds = fd_size / sizeof(int);
+>>           *fds = g_renew(int, *fds, *nfds + gotfds);
+>>           memcpy(*fds + *nfds, CMSG_DATA(cmsg), fd_size);
+>> +        *nfds += gotfds;
+>> +    }
+>> +}
+>>   
+>> -        for (i = 0; i < gotfds; i++) {
+>> -            int fd = (*fds)[*nfds + i];
+>> -            if (fd < 0) {
+>> -                continue;
+>> -            }
+>> +static bool qio_channel_handle_fds(int *fds, size_t nfds,
+>> +                                   bool preserve_blocking, Error **errp)
+>> +{
+>> +    int *end = fds + nfds, *fd;
+>> +
+>> +#ifdef MSG_CMSG_CLOEXEC
+>> +    if (preserve_blocking) {
+>> +        /* Nothing to do */
+>> +        return true;
+>> +    }
+>> +#endif
+>>   
+>> -            if (!preserve_blocking) {
+>> -                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+>> -                qemu_socket_set_block(fd);
+>> +    for (fd = fds; fd != end; fd++) {
+>> +        if (*fd < 0) {
+>> +            continue;
+>> +        }
+>> +
+>> +        if (!preserve_blocking) {
+>> +            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+>> +            if (!qemu_set_blocking(*fd, true, errp)) {
+>> +                return false;
+>>               }
+>> +        }
+>>   
+>>   #ifndef MSG_CMSG_CLOEXEC
+>> -            qemu_set_cloexec(fd);
+>> +        qemu_set_cloexec(*fd);
+>>   #endif
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +static void qio_channel_cleanup_fds(int *fds, size_t nfds)
 > 
-> Correct me if I'm wrong on this, but shouldn't the 'pty' chardev also
-> be able to take advantage of the same size change mechanisms as the
-> 'stdio' chardev (receiving SIGWINCH and being able to use the ioctl
-> TIOCGWINSZ)? If so the work for the 'stdio' chardev should probably be
-> replicated for the 'pty' chardev.
+> Suggest we change this to
+> 
+>   ...  qio_channel_cleanup_fds(int **fds, size_t *nfds)
+> 
+>> +{
+>> +    int *end = fds + nfds, *fd;
+>> +
+>> +    for (fd = fds; fd != end; fd++) {
+> 
+> I can't help feeling this would be clearer as
+> 
+>    for (size_t i = 0; i < nfds; i++) {
 
-Yes, if using a suitable client app, it ought to work for
-'pty' I think.
+Ok. Didn't know it's acceptable)
+
+I missed
+
+4b77429adbecf9 "docs/style: permit inline loop variables"
+
+> 
+>> +        if (*fd < 0) {
+>> +            continue;
+>>           }
+>> -        *nfds += gotfds;
+>> +        close(*fd);
+>>       }
+>> +
+>> +    g_free(fds);
+> 
+> Then here we can use:
+> 
+>     g_clear_poointer(fds, g_free);
+>     *nfds = 0;
+> 
+
+Ok
+
+>>   }
+>>   
+>>   
+>> @@ -559,9 +588,21 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+>>       }
+>>   
+>>       if (fds && nfds) {
+>> -        qio_channel_socket_copy_fds(
+>> -            &msg, fds, nfds,
+>> -            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
+>> +        int *local_fds;
+>> +        size_t local_nfds;
+>> +        bool preserve_blocking =
+>> +            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING;
+>> +
+>> +        qio_channel_socket_copy_fds(&msg, &local_fds, &local_nfds);
+>> +
+>> +        if (!qio_channel_handle_fds(local_fds, local_nfds,
+>> +                                    preserve_blocking, errp)) {
+>> +            qio_channel_cleanup_fds(local_fds, local_nfds);
+>> +            return -1;
+>> +        }
+>> +
+>> +        *fds = local_fds;
+>> +        *nfds = local_nfds;
+> 
+> We could eliminate the 'local_fds' / 'local_nfds' here and directly use
+> 'fds' and 'nfds' when we make qio_channel_cleanup_fds responsible for
+> clearing the pointers it receives.
+
+This way, we'll still modify user given fds on failure path (to NULL). But that's not a big deal, of course.
+
+> 
+>>       }
+>>   
+>>       return ret;
+>> -- 
+>> 2.48.1
+>>
+> 
+> With regards,
+> Daniel
 
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Best regards,
+Vladimir
 
