@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EFFCAC59D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B11CAC598
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 19:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyEw5-00021T-FR; Mon, 15 Sep 2025 15:32:26 -0400
+	id 1uyEvk-0001rb-Jd; Mon, 15 Sep 2025 15:32:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEvO-0001kG-OQ; Mon, 15 Sep 2025 15:31:44 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1uyEvZ-0001oI-0c; Mon, 15 Sep 2025 15:31:54 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uyEv6-0001uW-OX; Mon, 15 Sep 2025 15:31:42 -0400
+ id 1uyEvC-0001u5-9T; Mon, 15 Sep 2025 15:31:52 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 5ABE0809BF;
- Mon, 15 Sep 2025 22:31:19 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 286968099A;
+ Mon, 15 Sep 2025 22:31:17 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:184::1:6])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AVVVql1FrOs0-FzLUl7uh; Mon, 15 Sep 2025 22:31:18 +0300
+ ESMTPSA id AVVVql1FrOs0-UIrkraLT; Mon, 15 Sep 2025 22:31:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1757964678;
- bh=zrq9XhA2TuK4K/azMAe1NuiXl/HbWLCQkj9cUHTX4o8=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=etZXnylO4DecNbboxCe7zXpVnge2Jb6nXifyTFcsweaDcU8i0b3iSI6hFQ9EWu53Y
- iBUVYRcB4b0csdxRgng0ixcYA6Z+MD0OtXnkiTuhPLr7woJ7s0+qKHWeeU6PuNFwuh
- H4fQYYYzjWOS317OPtzbxuHFblT51N3OW1Q4cFRY=
+ s=default; t=1757964676;
+ bh=dSoRpVPRnci8f0kJaoOmL6uYo62KUNPttjNJEMfNbuw=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=qHr2Kdo0yEkZomNAOUgDbhI2VqvQoolc9e0Fn7HQEdWUXfR3U18SGVsMA349KJApq
+ cvra21n8BC0JmXcGfUV7UXOhtq2IaRbzigwvCF66+cV5e7sXsSLY/dEPGmncXrDY5Z
+ /tevQfHbwNGEdgiIwwGMH/CGv6xqOLf/G+TEtOH0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: berrange@redhat.com
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com
-Subject: [PATCH v4 08/12] io/channel-socket: rework
- qio_channel_socket_copy_fds()
-Date: Mon, 15 Sep 2025 22:31:00 +0300
-Message-ID: <20250915193105.230085-9-vsementsov@yandex-team.ru>
+ vsementsov@yandex-team.ru, leiyang@redhat.com, marcandre.lureau@redhat.com,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v4 05/12] migration: qemu_file_set_blocking(): add errp
+ parameter
+Date: Mon, 15 Sep 2025 22:30:57 +0300
+Message-ID: <20250915193105.230085-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250915193105.230085-1-vsementsov@yandex-team.ru>
 References: <20250915193105.230085-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,159 +74,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to switch from qemu_socket_set_block() to newer
-qemu_set_blocking(), which provides return status of operation,
-to handle errors.
-
-Still, we want to keep qio_channel_socket_readv() interface clean,
-as currently it allocate @fds only on success.
-
-So, in case of error, we should close all incoming fds and keep
-user's @fds untouched or zero.
-
-Let's make separate functions qio_channel_handle_fds() and
-qio_channel_cleanup_fds(), to achieve what we want.
+qemu_file_set_blocking() is a wrapper on qio_channel_set_blocking(),
+so let's passthrough the errp.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/io/channel.h |  8 +++---
- io/channel-socket.c  | 67 +++++++++++++++++++++++++++++++++-----------
- 2 files changed, 55 insertions(+), 20 deletions(-)
+ migration/colo.c         | 5 ++++-
+ migration/migration.c    | 8 +++++---
+ migration/postcopy-ram.c | 2 +-
+ migration/qemu-file.c    | 4 ++--
+ migration/qemu-file.h    | 2 +-
+ migration/savevm.c       | 4 ++--
+ 6 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 999a8f5f23..0f25ae0069 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -124,8 +124,8 @@ struct QIOChannelClass {
-      * incoming fds are set BLOCKING (unless
-      * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag is set) and
-      * CLOEXEC (if available).
--     * @fds and @nfds are set only on success path, and untouched
--     * in case of errors.
-+     * @fds and @nfds are set only on success path. Still, setting
-+     * @fds and @nfds to zero is acceptable on failure path.
+diff --git a/migration/colo.c b/migration/colo.c
+index e0f713c837..cf4d71d9ed 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -859,7 +859,10 @@ static void *colo_process_incoming_thread(void *opaque)
+      * coroutine, and here we are in the COLO incoming thread, so it is ok to
+      * set the fd back to blocked.
       */
-     ssize_t (*io_readv)(QIOChannel *ioc,
-                         const struct iovec *iov,
-@@ -246,8 +246,8 @@ void qio_channel_set_name(QIOChannel *ioc,
-  * to call close() on each file descriptor and to
-  * call g_free() on the array pointer in @fds.
-  * @fds allocated and set (and @nfds is set too)
-- * _only_ on success path. These parameters are
-- * untouched in case of errors.
-+ * _only_ on success path. Still, @fds and @nfds
-+ * may be set to zero on failure path.
-  * qio_channel_readv_full() guarantees that all
-  * incoming fds are set BLOCKING (unless
-  * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index f7e3cb9742..e53d9ac76f 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -464,8 +464,7 @@ static void qio_channel_socket_finalize(Object *obj)
- 
- #ifndef WIN32
- static void qio_channel_socket_copy_fds(struct msghdr *msg,
--                                        int **fds, size_t *nfds,
--                                        bool preserve_blocking)
-+                                        int **fds, size_t *nfds)
- {
-     struct cmsghdr *cmsg;
- 
-@@ -473,7 +472,7 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-     *fds = NULL;
- 
-     for (cmsg = CMSG_FIRSTHDR(msg); cmsg; cmsg = CMSG_NXTHDR(msg, cmsg)) {
--        int fd_size, i;
-+        int fd_size;
-         int gotfds;
- 
-         if (cmsg->cmsg_len < CMSG_LEN(sizeof(int)) ||
-@@ -491,24 +490,53 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-         gotfds = fd_size / sizeof(int);
-         *fds = g_renew(int, *fds, *nfds + gotfds);
-         memcpy(*fds + *nfds, CMSG_DATA(cmsg), fd_size);
-+        *nfds += gotfds;
+-    qemu_file_set_blocking(mis->from_src_file, true);
++    if (!qemu_file_set_blocking(mis->from_src_file, true, &local_err)) {
++        error_report_err(local_err);
++        goto out;
 +    }
-+}
  
--        for (i = 0; i < gotfds; i++) {
--            int fd = (*fds)[*nfds + i];
--            if (fd < 0) {
--                continue;
--            }
-+static bool qio_channel_handle_fds(int *fds, size_t nfds,
-+                                   bool preserve_blocking, Error **errp)
-+{
-+    int *end = fds + nfds, *fd;
-+
-+#ifdef MSG_CMSG_CLOEXEC
-+    if (preserve_blocking) {
-+        /* Nothing to do */
-+        return true;
-+    }
-+#endif
+     colo_incoming_start_dirty_log();
  
--            if (!preserve_blocking) {
--                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
--                qemu_socket_set_block(fd);
-+    for (fd = fds; fd != end; fd++) {
-+        if (*fd < 0) {
-+            continue;
-+        }
-+
-+        if (!preserve_blocking) {
-+            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
-+            if (!qemu_set_blocking(*fd, true, errp)) {
-+                return false;
-             }
-+        }
+diff --git a/migration/migration.c b/migration/migration.c
+index 10c216d25d..e1ac4d73c2 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -951,7 +951,7 @@ static void migration_incoming_setup(QEMUFile *f)
  
- #ifndef MSG_CMSG_CLOEXEC
--            qemu_set_cloexec(fd);
-+        qemu_set_cloexec(*fd);
- #endif
-+    }
-+
-+    return true;
-+}
-+
-+static void qio_channel_cleanup_fds(int **fds, size_t *nfds)
-+{
-+    for (size_t i = 0; i < *nfds; i++) {
-+        if ((*fds)[i] < 0) {
-+            continue;
-         }
--        *nfds += gotfds;
-+        close((*fds)[i]);
-     }
-+
-+    g_clear_pointer(fds, g_free);
-+    *nfds = 0;
+     assert(!mis->from_src_file);
+     mis->from_src_file = f;
+-    qemu_file_set_blocking(f, false);
++    qemu_file_set_blocking(f, false, &error_abort);
  }
  
+ void migration_incoming_process(void)
+@@ -971,7 +971,7 @@ static bool postcopy_try_recover(void)
+         /* This should be set already in migration_incoming_setup() */
+         assert(mis->from_src_file);
+         /* Postcopy has standalone thread to do vm load */
+-        qemu_file_set_blocking(mis->from_src_file, true);
++        qemu_file_set_blocking(mis->from_src_file, true, &error_abort);
  
-@@ -559,9 +587,16 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+         /* Re-configure the return path */
+         mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
+@@ -4002,7 +4002,9 @@ void migration_connect(MigrationState *s, Error *error_in)
      }
  
-     if (fds && nfds) {
--        qio_channel_socket_copy_fds(
--            &msg, fds, nfds,
--            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
-+        bool preserve_blocking =
-+            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING;
-+
-+        qio_channel_socket_copy_fds(&msg, fds, nfds);
-+
-+        if (!qio_channel_handle_fds(*fds, *nfds,
-+                                    preserve_blocking, errp)) {
-+            qio_channel_cleanup_fds(fds, nfds);
-+            return -1;
-+        }
-     }
+     migration_rate_set(rate_limit);
+-    qemu_file_set_blocking(s->to_dst_file, true);
++    if (!qemu_file_set_blocking(s->to_dst_file, true, &local_err)) {
++        goto fail;
++    }
  
-     return ret;
+     /*
+      * Open the return path. For postcopy, it is used exclusively. For
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 45af9a361e..0172172343 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1909,7 +1909,7 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file)
+      * The new loading channel has its own threads, so it needs to be
+      * blocked too.  It's by default true, just be explicit.
+      */
+-    qemu_file_set_blocking(file, true);
++    qemu_file_set_blocking(file, true, &error_abort);
+     mis->postcopy_qemufile_dst = file;
+     qemu_sem_post(&mis->postcopy_qemufile_dst_done);
+     trace_postcopy_preempt_new_channel();
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index d5c6e7ec61..0f4280df21 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -888,9 +888,9 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
+  *       both directions, and thus changing the blocking on the main
+  *       QEMUFile can also affect the return path.
+  */
+-void qemu_file_set_blocking(QEMUFile *f, bool block)
++bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp)
+ {
+-    qio_channel_set_blocking(f->ioc, block, NULL);
++    return qio_channel_set_blocking(f->ioc, block, errp);
+ }
+ 
+ /*
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index f5b9f430e0..c13c967167 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -71,7 +71,7 @@ void qemu_file_set_error(QEMUFile *f, int ret);
+ int qemu_file_shutdown(QEMUFile *f);
+ QEMUFile *qemu_file_get_return_path(QEMUFile *f);
+ int qemu_fflush(QEMUFile *f);
+-void qemu_file_set_blocking(QEMUFile *f, bool block);
++bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp);
+ int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size);
+ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+ off_t qemu_get_offset(QEMUFile *f);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index fabbeb296a..abe0547f9b 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2095,7 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+      * Because we're a thread and not a coroutine we can't yield
+      * in qemu_file, and thus we must be blocking now.
+      */
+-    qemu_file_set_blocking(f, true);
++    qemu_file_set_blocking(f, true, &error_fatal);
+ 
+     /* TODO: sanity check that only postcopiable data will be loaded here */
+     load_res = qemu_loadvm_state_main(f, mis);
+@@ -2108,7 +2108,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+     f = mis->from_src_file;
+ 
+     /* And non-blocking again so we don't block in any cleanup */
+-    qemu_file_set_blocking(f, false);
++    qemu_file_set_blocking(f, false, &error_fatal);
+ 
+     trace_postcopy_ram_listen_thread_exit();
+     if (load_res < 0) {
 -- 
 2.48.1
 
