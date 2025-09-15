@@ -4,129 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05522CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 20:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFFACAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 20:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyFqx-0000sl-Sr; Mon, 15 Sep 2025 16:31:12 -0400
+	id 1uyFx2-0002oc-Du; Mon, 15 Sep 2025 16:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyFqs-0000s4-S7
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:31:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyFqe-00011k-I4
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:31:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757968246;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyFwx-0002nz-Ur
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:37:24 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyFwl-0001x2-BG
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 16:37:22 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EEF431F7FE;
+ Mon, 15 Sep 2025 20:36:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1757968619; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JE/4b6x6MwwvsB/R33aefbk4Yj2nR47ofv9+CGCdWM0=;
- b=iYyRxQU1FELYHY4fnPuNX4cUE3rWvA8ZiCLI0PWQ0F+k/i1BBRHxjPvKwNwDC+fjMJ5AAq
- iAtemp4uCNjTB/k5O8Pins7OgX/WXReMmLLbJA2iveckC9frT7WT4oxgHRds0+rKMJcj4u
- nHTwRLFWT8JSDDO1VY29/OuCdsi4FQU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-YnWHMmVtP7mK4xEmuCSLtA-1; Mon, 15 Sep 2025 16:30:45 -0400
-X-MC-Unique: YnWHMmVtP7mK4xEmuCSLtA-1
-X-Mimecast-MFC-AGG-ID: YnWHMmVtP7mK4xEmuCSLtA_1757968244
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-814370a9f58so992106885a.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 13:30:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757968244; x=1758573044;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JE/4b6x6MwwvsB/R33aefbk4Yj2nR47ofv9+CGCdWM0=;
- b=uLBGMLrFZ5DKLkzR949w87ObZDGLYyk7ZJ3je1YRZkeidMvX92vQn07YJSMxxcdD2L
- +RDBBjivs+ZKP/28j8Lk64uVDAkryO6chPIjZD6cyLsZOM0DM+PgbbPcUT5dtrk1fj9I
- yaXcnm4MnOeSzeYGZrRwymXvgc1OAyvquBQ7dgl3CPYix+F6zRgp3d4C6xQBD6+zwAPr
- 5NCYlmimHH1yagJK3Cidf+fnyqTvhNPUDaI9McjsVY9m5NELH4zKjWIalaIqrE/3pz86
- Ug3boRmsGUk68LkB7yWoeM+BLvogTX/R1f50EE/xXS2QZZ7aMFx99kiTSU7SRMpnEx44
- KkXA==
-X-Gm-Message-State: AOJu0YzwOqcYmUJIp7YZOdOc9b3hCCYFTOZai8MIeUqH6EvH2nFKWgGJ
- S73cdKVnq470CUb4xmays/i4MTrnPUuXFRwrJZFw6wh73ifN/+FhUklIc6bqrD2dkaqbAwEZ0Cm
- g+4HjZT5C5y1iq17xxz/vxbhs/cvnpsH+iI7Wn+t/0S5j/Xq8J2BK+1oZ
-X-Gm-Gg: ASbGnctcj88uJoXH5ZrRXXiojytZoTTl/zX7KtQeeUX5CHc2NWyK6+eJoIWVtNmIKbG
- 6BdJ5d7GPe49SfJ41lJxPsxtvfSM1WMs+DcWzZpJ32fbsHDxWIBXV4B7ENeQMMxHnaFYFqKqA8J
- pn8KRxrh4LL2KkKgmzwHxLz1nYTaI/v93bSIMRb2hiTxNj+ybBsRGs6KRyKYrJNjQrJczP6m4kF
- wqHoxeNHdgs5HNr9N903u5krRdQsEq7/Xo7q5vJ8Dp8C79eL2nJS2kuAZBNFQos04Vj0LopF83P
- WKa/MWfMsKGt+LSwByg+7fFclaPrtPVk
-X-Received: by 2002:a05:620a:4045:b0:811:cf4:a1f3 with SMTP id
- af79cd13be357-823feb3c056mr1212008385a.38.1757968244399; 
- Mon, 15 Sep 2025 13:30:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/Gm8E4e60ZH/gE/UTHgQ008U/fRk6+qf2A5VtKrX/sg0Y2uRvDYM/dcEzpf76YP+8BulqxQ==
-X-Received: by 2002:a05:620a:4045:b0:811:cf4:a1f3 with SMTP id
- af79cd13be357-823feb3c056mr1212005285a.38.1757968243908; 
- Mon, 15 Sep 2025 13:30:43 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-763b549866dsm82763426d6.19.2025.09.15.13.30.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 13:30:43 -0700 (PDT)
-Date: Mon, 15 Sep 2025 16:30:29 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Re: [PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()
-Message-ID: <aMh3ZfUQ3Ksjn56e@x1.local>
-References: <20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-use-v1-2-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp>
- <aMHidDl1tdx-2G4e@x1.local>
- <1a5b7471-1799-44bd-9c1c-c3c07e478bb8@rsg.ci.i.u-tokyo.ac.jp>
- <aMNBJF9E4BYrWEHO@x1.local>
- <4d91c86f-4e3d-4850-8b8c-77ad3c9d5bce@rsg.ci.i.u-tokyo.ac.jp>
- <aMSQDuVacnSG3MTV@x1.local>
- <04eac866-74ea-46ae-9170-aa3ad5fc1b11@rsg.ci.i.u-tokyo.ac.jp>
+ bh=y8wSKPGH/Tp3X+Be7s0PiK3WpCNN6PGUG4mB7x2nd4U=;
+ b=Ib66SGYODCxvqb25KnO9B0qW9dx30GBYdLMuOx/qucbAjBGM7eLwVdSXgeeAvUyJlu7G9z
+ qFsC2txFpkOTBAWLnIbxyt1KaiVDx8AjHQyzrB4cD7X+5tdZp3k4+oT435YvpeeWp/SxCZ
+ mOzSH/21RaK1s1U/lq4fl5clzqTuJ5o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1757968619;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y8wSKPGH/Tp3X+Be7s0PiK3WpCNN6PGUG4mB7x2nd4U=;
+ b=F3MAkXHViihxn1qB7JTdWmGN65BJlXLZVeVV6tFacdhxoECp0ick8CJNoCCVBBfMhRxC4V
+ PV1THYbweYBNn5Cg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KkBXc5+c;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="S/zwUqPt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1757968618; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y8wSKPGH/Tp3X+Be7s0PiK3WpCNN6PGUG4mB7x2nd4U=;
+ b=KkBXc5+ct1c49+suKsTp9Nh7DVoMQJRZI7iwVkg/gjTKFELLzZccQjySezmuY9fL+Czoc3
+ 5PQsRh5yPXnlqIKZEmFqoe8KyxlmT4eQQ5aPJ2drCNK7kJaYnNG0XziOgFgwHkpL3R6nhO
+ zIU93MCuUSVaEUERj5/Ey69rgJuRD28=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1757968618;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=y8wSKPGH/Tp3X+Be7s0PiK3WpCNN6PGUG4mB7x2nd4U=;
+ b=S/zwUqPtrbi+TO1LgZQL69qBdqhP5UH72TAvDGDNR1hqnExwRoGMQMrV64/4MyqoGwC/10
+ uOs9eTzbs2RlMLDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62AD61372E;
+ Mon, 15 Sep 2025 20:36:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tCKOCOl4yGhlWQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 15 Sep 2025 20:36:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, "Dr.
+ David Alan Gilbert" <dave@treblig.org>, Steve Sistare
+ <steven.sistare@oracle.com>
+Subject: Re: [PATCH V3 8/9] migration: cpr-exec docs
+In-Reply-To: <1755191843-283480-9-git-send-email-steven.sistare@oracle.com>
+References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
+ <1755191843-283480-9-git-send-email-steven.sistare@oracle.com>
+Date: Mon, 15 Sep 2025 17:36:54 -0300
+Message-ID: <87h5x3sba1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <04eac866-74ea-46ae-9170-aa3ad5fc1b11@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: EEF431F7FE
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,33 +125,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 14, 2025 at 06:06:44PM +0900, Akihiko Odaki wrote:
-> It makes sense to have a through review, but my argument here is the
-> de-duplication of object_unparent() and the replacement of g_free() with
-> object_new() are logically distinct and should be split into distinct
-> patches. Each patch can independently have through review, be
-> applied/backported, or be reverted in case of regression.
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-We're discussing a change in the memory.rst on suggested way to use dynamic
-MRs, so I think we can do it in one shot rather than making it confusing.
-It's not a huge change even in one go.
+> Update developer documentation for cpr-exec mode.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-It's fine.  You're right we can remove the object_unparent() first when
-it's always a no-op.  We'll update the doc twice, though I assume it's fine.
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-If you would, please consider sending this part as a separate series.
+Just a typo below.
 
-The subject should be something like "remove unnecessary object_unparent()
-for dynamic MRs" or something like that.  It has nothing to do with
-memleaks on this part.
+> ---
+>  docs/devel/migration/CPR.rst | 103 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 102 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
+> index 0a0fd4f..abc9a90 100644
+> --- a/docs/devel/migration/CPR.rst
+> +++ b/docs/devel/migration/CPR.rst
+> @@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
+>  VM is migrated to a new QEMU instance on the same host.  It is
+>  intended for use when the goal is to update host software components
+>  that run the VM, such as QEMU or even the host kernel.  At this time,
+> -the cpr-reboot and cpr-transfer modes are available.
+> +the cpr-reboot, cpr-transfer, and cpr-exec modes are available.
+>  
+>  Because QEMU is restarted on the same host, with access to the same
+>  local devices, CPR is allowed in certain cases where normal migration
+> @@ -324,3 +324,104 @@ descriptors from old to new QEMU.  In the future, descriptors for
+>  vhost, and char devices could be transferred,
+>  preserving those devices and their kernel state without interruption,
+>  even if they do not explicitly support live migration.
+> +
+> +cpr-exec mode
+> +-------------
+> +
+> +In this mode, QEMU stops the VM, writes VM state to the migration
+> +URI, and directly exec's a new version of QEMU on the same host,
+> +replacing the original process while retaining its PID.  Guest RAM is
+> +preserved in place, albeit with new virtual addresses.  The user
+> +completes the migration by specifying the ``-incoming`` option, and
+> +by issuing the ``migrate-incoming`` command if necessary; see details
+> +below.
+> +
+> +This mode supports VFIO/IOMMUFD devices by preserving device descriptors
+> +and hence kernel state across the exec, even for devices that do not
+> +support live migration.
+> +
+> +Because the old and new QEMU instances are not active concurrently,
+> +the URI cannot be a type that streams data from one instance to the
+> +other.
+> +
+> +Usage
+> +^^^^^
+> +
+> +Arguments for the new QEMU process are taken from the
+> +@cpr-exec-args parameter.  The first argument should be the
+> +path of a new QEMU binary, or a prefix command that exec's the
+> +new QEMU binary, and the arguments should include the ''-incoming''
+> +option.
+> +
+> +Memory backend objects must have the ``share=on`` attribute.
+> +The VM must be started with the ``-machine aux-ram-share=on`` option.
+> +
+> +Outgoing:
+> +  * Set the migration mode parameter to ``cpr-exec``.
+> +  * Set the ``cpr-exec-args`` parameter.
+> +  * Issue the ``migrate`` command.  It is recommended the the URI be
 
-Please cover tests as much as possible and if we touch the doc we need to
-convert everything that uses dynamic MRs, including the missing ones in
-VFIO, and also the rest occurances.
+s/the the/that the/
 
-Thanks,
-
--- 
-Peter Xu
-
+> +    a ``file`` type, but one can use other types such as ``exec``,
+> +    provided the command captures all the data from the outgoing side,
+> +    and provides all the data to the incoming side.
+> +
+> +Incoming:
+> +  * You do not need to explicitly start new QEMU.  It is started as
+> +    a side effect of the migrate command above.
+> +  * If the VM was running when the outgoing ``migrate`` command was
+> +    issued, then QEMU automatically resumes VM execution.
+> +
+> +Example 1: incoming URI
+> +^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +In these examples, we simply restart the same version of QEMU, but in
+> +a real scenario one would set a new QEMU binary path in cpr-exec-args.
+> +
+> +::
+> +
+> +  # qemu-kvm -monitor stdio
+> +  -object memory-backend-memfd,id=ram0,size=4G
+> +  -machine memory-backend=ram0
+> +  -machine aux-ram-share=on
+> +  ...
+> +
+> +  QEMU 10.2.50 monitor - type 'help' for more information
+> +  (qemu) info status
+> +  VM status: running
+> +  (qemu) migrate_set_parameter mode cpr-exec
+> +  (qemu) migrate_set_parameter cpr-exec-args qemu-kvm ... -incoming file:vm.state
+> +  (qemu) migrate -d file:vm.state
+> +  (qemu) QEMU 10.2.50 monitor - type 'help' for more information
+> +  (qemu) info status
+> +  VM status: running
+> +
+> +Example 2: incoming defer
+> +^^^^^^^^^^^^^^^^^^^^^^^^^
+> +::
+> +
+> +  # qemu-kvm -monitor stdio
+> +  -object memory-backend-memfd,id=ram0,size=4G
+> +  -machine memory-backend=ram0
+> +  -machine aux-ram-share=on
+> +  ...
+> +
+> +  QEMU 10.2.50 monitor - type 'help' for more information
+> +  (qemu) info status
+> +  VM status: running
+> +  (qemu) migrate_set_parameter mode cpr-exec
+> +  (qemu) migrate_set_parameter cpr-exec-args qemu-kvm ... -incoming defer
+> +  (qemu) migrate -d file:vm.state
+> +  (qemu) QEMU 10.2.50 monitor - type 'help' for more information
+> +  (qemu) info status
+> +  status: paused (inmigrate)
+> +  (qemu) migrate_incoming file:vm.state
+> +  (qemu) info status
+> +  VM status: running
+> +
+> +Caveats
+> +^^^^^^^
+> +
+> +cpr-exec mode may not be used with postcopy, background-snapshot,
+> +or COLO.
+> +
+> +cpr-exec mode requires permission to use the exec system call, which
+> +is denied by certain sandbox options, such as spawn.
 
