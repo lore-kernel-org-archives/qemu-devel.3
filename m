@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F731CAC587
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 02:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1EBCAC587
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 02:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxyXW-0001PN-3E; Sun, 14 Sep 2025 22:01:58 -0400
+	id 1uxyiB-00046N-GB; Sun, 14 Sep 2025 22:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxyXS-0001Oh-Dt
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:01:54 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1uxyi8-00045a-8U
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:12:56 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxyXA-0004Pz-IB
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:01:52 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b046f6fb230so715573766b.1
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 19:01:32 -0700 (PDT)
+ id 1uxyhv-0005kc-Iw
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 22:12:55 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-62ecd3c21d3so4767471a12.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 19:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757901688; x=1758506488; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757902357; x=1758507157; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q+JUgZufonoMc4XGkF8Fb8laH8HONSdx9SjZ2sG+nGs=;
- b=WUbCRCu+H1T3ARAzLD7XLa4GEnExEexHVx2TBvqWkBp0PZad+n/vB+llnTYF6/d630
- U2cjdcScmRbbybDR8HVqCDYZv7JWWJYGbpMGALo/9MHDgxUMpTzMHa6ZEyNsuYspq7AI
- 7l/wv7+UQNC0bA6QGyHeX0B3XXC1oOgxsQjRgwu7HAglRZQ7Rtg/cs4ZW2IctG8Q+nEc
- iPID74M/Xjm9vpU2PkRkbrFy1U3L8wRxxeTYfRCo52wL5htN5FYb1UbadhnJLZNoH+df
- PCbWmbjaTH38hfFcsIR/mPHlomMTg9jREUys9LblX1pMAQIW+LMUNuA8HCmWoKamDmaJ
- yzIA==
+ bh=Cgs/gwT/Li3NjQ9nXCI/LXVX5CL9/PfvDPoWbLk/92c=;
+ b=nK6Fm9dXORLmFIF4gi9VWWydvhz1YDpBPHwrCpBAe7yUVSY/wyj7rtRDvHSs1774NW
+ 25eehGBgYveXRrnsr2p85lfx6PkuE2tAFBE20PhF0Bytn6maNDuuhNrrUkHaYvRsiB+s
+ CymWDxy8LB6STUCgWknrsspdu4J2h3p81SdSMQC6iwCAoyiipY6sU3QIJO13AuX7xfLN
+ BVGatS6JT5VH/yRFEZQte05eLz47r9ul+Yn1/xngdV146xeua0Do9OyU4asFL6wUcZgL
+ 2XcS1lXjKh3IvZIFREkfqXhG091RsRz97DneASGM7NgQK0YqJ/UtEKbNkPwl5BdnfbbB
+ hjhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757901688; x=1758506488;
+ d=1e100.net; s=20230601; t=1757902357; x=1758507157;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q+JUgZufonoMc4XGkF8Fb8laH8HONSdx9SjZ2sG+nGs=;
- b=unf8RFLdUsDrGMSFogXrpSB6fPRHDfYmL30nBTuBcCy2ZO7KaYYjHrs/4kPkw2Ave6
- zqvFVEZvX2Nr/529uorPI56tzUP+tLfaVDl2EH+lTnrmc44cnu03Qhs93gGcetlP6Aj3
- tDKeJhnQvzYrgKQW+/fgrJnMhOfcdybG8juR88qOL5apbmmu7blN2dOFm9PFKOaxL3+C
- XKN2h4JxJF0IwCxzJwRi1sY7DPXexdtXR0Po02nM3kON+UxqZwKLjT4gIGtFw51tPjxq
- KeXGyyWqsXscEExk7wiRMsjP7bO0QjYIxtcp/7CTObqcz+Mi7tEUeCax94Li5ym9XDRX
- Bs5Q==
-X-Gm-Message-State: AOJu0YzECLqpjdrWUJNIOpys0UkMT8Sz2iSvdltHd9iqMBMOR73Xuawy
- 6XHGFh0b/gOTnFbUgPHXuBQ95kSkWHpSpmfOHP6WpKCNnGfNfLkQFmm1LboQMS+ld14GslCcLCK
- IS3BWN4J37xdh00EA98G3vnyLS/YxTaI=
-X-Gm-Gg: ASbGnct/tFrR3CZakVlI+uHb90sF39ZIrIa/S0TMJ8ID44d3iz8XRbp0UTLxFGMM64X
- rBknHqKg6lbuTMg4imb3A9UlgK2NVDOfoVCqLglVfBySQFyuQnuyW/q6ua7vNB+xaT5XZ8OIgwW
- UkJcNhmgAkiIXRi58si1ULluFBnDWDQYG+NQXsGG3H0E7kNioPgcCTUuMh8ZWXRo+uArKUGvC+/
- rEPcPIUP/QPBRBddt4rQlI2sl1xMZVmBECzlw==
-X-Google-Smtp-Source: AGHT+IHZrImXQyW1U2Zw3tMwU8EfHw6efECEeX2WN6KnAF1ynPgo+6Z2oGwonrhufqS7iTGf0HX/Kw2uBG61wnEBnz4=
-X-Received: by 2002:a17:906:c10e:b0:b07:dd5e:16be with SMTP id
- a640c23a62f3a-b07dd5e1716mr791675366b.4.1757901688340; Sun, 14 Sep 2025
- 19:01:28 -0700 (PDT)
+ bh=Cgs/gwT/Li3NjQ9nXCI/LXVX5CL9/PfvDPoWbLk/92c=;
+ b=bs4QF40rm+nd+nnYMYgdoRsB4p8tPTNdk2ABqGGx6jeG/laOJjelm0os2aXZ9hE807
+ i8l/HfrHNlNYplo+DbRDXVvSd6jDbCf2kFLaZLpPvxfKn1tzosPQvvYlUdShrFEcxYOj
+ cotVO2ewxoN+3rqzFvUaovJP6pprWMhCB9B3K/oO34dQ78XGGH7tdU4Zr4DqpqT0TET/
+ rg2pO0PzEhyNhCPcndHrqN/9PLIBatDPhw615fpsGV7WhRTDMNhh8zZhXRKP4J5ElqBy
+ SHec1+GK/RwhzJbYcwZcaH+Z671HtVBaJZpPRXJe00cFjJFbJoK4zk5FnpTFCmttPFfH
+ dOpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXywDG7Lgqb/L1fFaRex2+1OHYeS4jfwUNXBwHGzBf3V+YscZn8/RODorTDRqVxZVLxVUDJ6Yxm27QB@nongnu.org
+X-Gm-Message-State: AOJu0YyZ3N0Mp4vLVBa6bwVaAeWjg8WU9LDUX6eixnWluGbiMW24lRdB
+ NmvQM0zaD4DD42yD+InwuG/9ZqgaTl7/AyUtHGEp9glDo9E8Mg9RHeL0odasFYu1PcmpbUK860v
+ nYCgoupUwMALy5Sl+6qyVCiR6QAr4cgU=
+X-Gm-Gg: ASbGnculdrMJjlu9yuiKZDquHOlti9VnpS6p0Vt5vAnzjcPhFYaWzpfVJ14Hsb/72ge
+ 9Nuz4H24T28TRgJdFTZi/HW5CWebGmCRD36QCr73D04+m9eidfkBPrbTHLEQLnENlsgY9LMLCYh
+ ZDDZXWpeIejJHwvWA6zWRnjv3RW1BNdZtPFtuy5TEHkyVBvczLUZTvNrkxf0jtjEgtQIE9fmk1Q
+ TWwNBoVVtNMBqObxmCDSBgCS1d43bG+kVKaF4nu9TyLt4R1
+X-Google-Smtp-Source: AGHT+IHYWuc/3WbMsIsCneNPQ0WKClxu3JFlbtvzOypfXPdaIPRigKSEOXtd+gUvXuHjz6ihj9o5lAtDXRdg55KXwpM=
+X-Received: by 2002:a17:907:2d2c:b0:b07:9c13:153e with SMTP id
+ a640c23a62f3a-b07c353e3f8mr1100157866b.2.1757902356716; Sun, 14 Sep 2025
+ 19:12:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250910121501.676219-1-abologna@redhat.com>
-In-Reply-To: <20250910121501.676219-1-abologna@redhat.com>
+References: <20250904060022.2828441-1-z_bajeer@yeah.net>
+In-Reply-To: <20250904060022.2828441-1-z_bajeer@yeah.net>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 12:01:01 +1000
-X-Gm-Features: AS18NWAuGs76Ix_seQc737uZXwP7Y1h56RVFjAUAvbYDxrIwn0Ca3qqadu-DQO8
-Message-ID: <CAKmqyKOo_soHFOzXvmgrpBjy9x8W=ymu4K1=Z5qN_7uJSBH_2A@mail.gmail.com>
-Subject: Re: [PATCH] docs/interop/firmware: Add riscv64 to FirmwareArchitecture
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kashyap Chamarthy <kchamart@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Date: Mon, 15 Sep 2025 12:12:10 +1000
+X-Gm-Features: Ac12FXymf6svEVRdwz-_1pLRMEMKOawNIfQaD47n5TeIRoChNp_KkOG5zawGKNA
+Message-ID: <CAKmqyKNN_+zgALV_5aa7mW7Fs+XnwLwG2298xAuH5o-7BH9Obg@mail.gmail.com>
+Subject: Re: [PATCH] intc/aia: fix the read of in_clrip register
+To: Yang Jialong <z_bajeer@yeah.net>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, yangjialong@rvcore.com, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,48 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 10, 2025 at 10:16=E2=80=AFPM Andrea Bolognani <abologna@redhat.=
-com> wrote:
+On Thu, Sep 4, 2025 at 4:02=E2=80=AFPM Yang Jialong <z_bajeer@yeah.net> wro=
+te:
 >
-> Descriptors using this value have been shipped for years
-> by distros, so we just need to update the spec to match
-> reality.
->
-> Signed-off-by: Andrea Bolognani <abologna@redhat.com>
+> 4.5.7. Rectified inputs, clear interrupt-pending bits
+> A read of an in_clrip register returns the rectified input values of the
+> corresponding interrupt sources.
+> A read of an in_clrip register doesn't should be an active interrupt
+> source.
+> A write of an in_clrip register should be an active interrupt source.
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Can you please explain in the commit message what is wrong with the
+current code and why your patch fixes it
 
 Alistair
 
+>
+> Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
 > ---
->  docs/interop/firmware.json | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  hw/intc/riscv_aplic.c | 3 ---
+>  1 file changed, 3 deletions(-)
 >
-> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-> index 6bbe2cce0a..ccbfaf828d 100644
-> --- a/docs/interop/firmware.json
-> +++ b/docs/interop/firmware.json
-> @@ -85,12 +85,14 @@
->  #
->  # @loongarch64: 64-bit LoongArch. (since: 7.1)
->  #
-> +# @riscv64: 64-bit RISC-V.
-> +#
->  # @x86_64: 64-bit x86.
->  #
->  # Since: 3.0
->  ##
->  { 'enum' : 'FirmwareArchitecture',
-> -  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
-> +  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'riscv64', 'x86_64=
-' ] }
+> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> index a1d9fa5085..2583d6d305 100644
+> --- a/hw/intc/riscv_aplic.c
+> +++ b/hw/intc/riscv_aplic.c
+> @@ -204,9 +204,6 @@ static bool riscv_aplic_irq_rectified_val(RISCVAPLICS=
+tate *aplic,
+>      }
 >
->  ##
->  # @FirmwareTarget:
+>      sm =3D sourcecfg & APLIC_SOURCECFG_SM_MASK;
+> -    if (sm =3D=3D APLIC_SOURCECFG_SM_INACTIVE) {
+> -        return false;
+> -    }
+>
+>      raw_input =3D (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+>      irq_inverted =3D (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW ||
 > --
-> 2.51.0
+> 2.34.1
 >
 >
 
