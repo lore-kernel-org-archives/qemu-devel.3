@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCE1CAC58E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 03:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58911CAC58E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 03:26:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uxznz-0007YZ-OS; Sun, 14 Sep 2025 23:23:04 -0400
+	id 1uxzpz-0008JH-31; Sun, 14 Sep 2025 23:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxznv-0007Xc-Oz
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 23:22:59 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1uxzpw-0008IK-Ao
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 23:25:04 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uxzno-0006ZM-DV
- for qemu-devel@nongnu.org; Sun, 14 Sep 2025 23:22:59 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b0428b537e5so497264566b.3
- for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 20:22:50 -0700 (PDT)
+ id 1uxzpj-0006hz-E8
+ for qemu-devel@nongnu.org; Sun, 14 Sep 2025 23:25:03 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b00a9989633so712029266b.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Sep 2025 20:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1757906567; x=1758511367; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1757906684; x=1758511484; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hzSieYjn+YPZkmZiNqI7FYMauvbyqHoL0JIML4wB6mE=;
- b=Smy/cRogUi3Sr8EZqIBA48jIEmuG8y3pwP+5xr3TlWVpELy1c1j6oXMW1SeBrj4Q77
- liihhDTYKaLgjc9VwL5hbWRQF3oSGsa2m/qllUtqflVvGrSoiWmqtKQ5b/c+zFFtCWCT
- 2SaYx+BqZOM6IKOZ2IOIht/nBOSv650c1Mb+W9CQEVCh6ZXj81H4b3uL8H0XFpds7gea
- NCHCgO2Dg7NbhGdcYx7qDg7uvmVec05CUmFSq9Qbcv12K+W3yhzzT6zWweRsI1MFqPl7
- QjaTqhyDTivWgKX/MQC09o5ug+wWAFHRrwPJw5bKXDCtJrbQvcZG1oXW5slWwa7UsX9n
- 5+3g==
+ bh=sgCskFXuUsUjbjjHf89rRVbnS1RbwW/emE2kv+a/jR8=;
+ b=HqFbfti6JlVf97MOlCCD1KmsMWHrfnihHobjIrs5AALEoboo/iV8rSk3GGl4LWrnl+
+ 7WCycvm/lmEttvRlWM3eZ6oIrF0r7NtuobdKdmS5Z9EPKLIZqz8JNjGO6JU7nBzVExaH
+ FvU+q47If0hOPR1njWjRrb63wPf3XV/r/ZciUaChlmePMLBiprtFoKucWk78pBBthPEm
+ M8zMWP7KKNs2QahAU0EG9muo0nDEPF+CZRpwXXvFQEsJzfC3KsGJG/8U5YmY3cvDxl4z
+ 4CFFTXEFFdG4lk2k0LkBQIEiTIRIyBhWRSn8pCXNpzsR+2v8dFqr7P2YP6un6cwaKEEP
+ nzpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757906567; x=1758511367;
+ d=1e100.net; s=20230601; t=1757906684; x=1758511484;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hzSieYjn+YPZkmZiNqI7FYMauvbyqHoL0JIML4wB6mE=;
- b=lXW/7nnC1brsV5ti1pmSqOUpFllaFFXk4Z1OoIsliN7mggbmQjm9L704Kbx7P9RMVy
- cN+7e9spAv5kxvlM5+lPalgIKkgtYJXnxv07s1XMFGZfG+zK676UzLc/XDlNyHzXEFJ/
- bpTyTB0PaqOF2bGIxsNPcgItTuehhQGY79ctnj7aXkaL8ZVfPEt9fvt5M/EjP0LYTKaK
- BhGUc4Bb1GoODHhNZs5TkGVqHddwLxnm7L62BlJ9zN9/8bUcZwT5BcZRa0iiYd9pbBHf
- Frcdp1ea+N7cbU23zpezGULW5FHPD/En8irVeBxuknAJrMSZ0j7E5WmHA1O+eqXQFGo4
- y0GQ==
-X-Gm-Message-State: AOJu0YyGr0L0lmFq3R37b80z8lfTVGXdDPqEU5JxBiBr1YaRSqx1AJjO
- +hg0/M5K3LXHeLMkkP/jZQQfoIvBKxim/ec83vrrrH4XkbT2g60/4YdqP3sI/iDuxR4B20L/oY1
- 3euDDloClWybMSwkDsYee9+58Ll07GpY=
-X-Gm-Gg: ASbGnctQaKHZBWse+Tc1LC0zBMqX2P2V45JTICUcdBB0jkH2nB2kSpVwuIHvZhnEHYF
- HEFq+nvsRFPxZYYrWsKlHIZ80V7BGX3rE5kO9f5q09nqsM9f28uoO7pPghaN0gSOPOMqxSXck1Z
- 1olzknRDivRqdEjk+6tSs9kZNymhUJLg2FljsWL5NPQmM49SutUtu4+dlPVPuaULTtygge0HD7V
- SohhA7H0XmPH+/TNuJrM8oxnol5D6qZZDrx0bDBUkF1ZIE5
-X-Google-Smtp-Source: AGHT+IEg9fXfrd6LEC5xpvEQE8K6yPhPebeJzaSee/Ewwz1SxIeQrcJMQvYfiXT0QG7P8ERIrsRPAeumk7dJXb/9LFs=
-X-Received: by 2002:a17:907:3fa1:b0:b07:88aa:255b with SMTP id
- a640c23a62f3a-b07c354ed12mr1033337066b.11.1757906567408; Sun, 14 Sep 2025
- 20:22:47 -0700 (PDT)
+ bh=sgCskFXuUsUjbjjHf89rRVbnS1RbwW/emE2kv+a/jR8=;
+ b=tXKHOK8vaU6CD23PQDi8QMsdNzy0aaMfa79hQtlVDdAC3oOJQRDcuAn1oF8mUw8Tna
+ bilInX6X9K3dBevwAIiaGsxbxjaU2OGBxu0lOwLssqxwkor3aQ7EWvj5QI8bbW1XkW2q
+ mz/DWsGcnAZymTRA97HCb1bTd00WQf36eSRDWzMfz6Zk+cQ/AJoGdB125DlA5MJZzD/M
+ MGfqeneWKZScNwEA+Ecc2Bf6d679/s+CdcTGWOnLru6PRb1U/scLULWvJdXJS9VQJxiy
+ Uv9Lm5ojLyjVdnk9iN94D5tuQhBb1MCKdT8FkcGneZQkWXSkmi2gVYMx7FgvpTDxD2nC
+ IMuw==
+X-Gm-Message-State: AOJu0Yz0DvGvZxQHCZ7CxSRAanmfTiYrVYPOoG7uGwUw0V3fFh8+cDux
+ sXuj1TELakEJFplxpOrLmzImWxmGMb/wSAgYw/9hxGshsyaV7807TEkf1v7RWsKXFXV4r+dpPOo
+ VztSNohs2svtkIdsE24kjnwLaG/apkdZnaw==
+X-Gm-Gg: ASbGncvPDh1grSK4FQcKCOwyzvYWOnJwbx5UUsFIrZhz2irBN9LxRbF+Ckud5Pf9mK0
+ bebxTcejDMmSS8TQKO73JnsIG8EV8j3d1+3fCGIfGFDcLC5kJdw6RRUQhQb4KDOkNxNBq0Il+t9
+ bWbdVyKuWsYx3VfX2uwzbeKut60S9pnbnbgAYOvFyroNX0OKfBlG79xCVIyUDK2mTtJJ2Tt99/a
+ RNSKCq7a+t40230wMdhXMVUzJ+j8CAsvd/RxL2l41nYcjpe
+X-Google-Smtp-Source: AGHT+IEKvrnaEqgza7PqoB5amQsHRkhpOZATzkHFU+n1AlNc4hNqcEbkt0XdzXcthuW08mLV6ralF11zJRk0pTZ0zp8=
+X-Received: by 2002:a17:907:74e:b0:b04:6546:3475 with SMTP id
+ a640c23a62f3a-b07c22b2136mr1298716166b.6.1757906684192; Sun, 14 Sep 2025
+ 20:24:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250623172119.997166-1-dbarboza@ventanamicro.com>
- <20250623172119.997166-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20250623172119.997166-4-dbarboza@ventanamicro.com>
+References: <20250723094213.2975268-1-dbarboza@ventanamicro.com>
+ <20250723094213.2975268-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250723094213.2975268-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Sep 2025 13:22:21 +1000
-X-Gm-Features: Ac12FXznicl5WyEcFDEb1JqHtX700k4KZY25Q8IifBx3oEdzvx-3duVN2tLG2FY
-Message-ID: <CAKmqyKMdio17PjxfRVUbF33Y0p2vk8SxFUCr0WXN_uSDE+25gA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] target/riscv: print all available CSRs in
- riscv_cpu_dump_state()
+Date: Mon, 15 Sep 2025 13:24:17 +1000
+X-Gm-Features: Ac12FXw0UJN9dMKdDlNnDyFddzgomQDaqWghFDGwHaLuP6-gT94mpVUbq35sr5U
+Message-ID: <CAKmqyKP_iM0GAM4cZFQsTcvMvi3DjCS6h7_60EPSBnh-UQsb7A@mail.gmail.com>
+Subject: Re: [PATCH for-10.1 1/1] roms/opensbi: Update to v1.7
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,158 +97,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 24, 2025 at 3:22=E2=80=AFAM Daniel Henrique Barboza
+On Wed, Jul 23, 2025 at 7:43=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> At this moment we're printing a small selection of CSRs. There's no
-> particular reason to not print all of them.
-
-The reason was that there are just so many and printing everything
-makes it hard for people to read. So we just print the "main" ones and
-people can then probe the more obscure ones they are interested in.
-
-Do we actually want to print all of them?
-
+> Update OpenSBI and the pre-built opensbi32 and opensbi64 images to
+> version 1.7.
 >
-> We're ignoring the note about CSR_SSTATUS being ommited because it can
-> be read via CSR_MSTATUS. There's a huge list of CSRs that would fall in
-> this category and it would be an extra burden to manage them, not
-> mentioning having to document "we're not listing X because it's the same
-> value as Y" to users.
+> It has been almost an year since we last updated OpenSBI (at the time,
+> up to v1.5.1) and we're missing a lot of good stuff from both v1.6 and
+> v1.7, including SBI 3.0 and RPMI 1.0.
 >
-> Remove 'dump_csrs' and use the existing 'csr_ops' array to print all
-> available CSRs. Create two helpers in csr.c to identify FPU and VPU CSRs
-> and skip them - they'll be printed in the FPU/VPU blocks later.
+> The changelog is too large and tedious to post in the commit msg so I
+> encourage referring to [1] and [2] to see the new features we're adding
+> into the QEMU roms.
+>
+> [1] https://github.com/riscv-software-src/opensbi/releases/tag/v1.6
+> [2] https://github.com/riscv-software-src/opensbi/releases/tag/v1.7
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-The actual code looks fine though
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c | 55 ++++++++++++++++------------------------------
->  target/riscv/cpu.h |  2 ++
->  target/riscv/csr.c | 18 +++++++++++++++
->  3 files changed, 39 insertions(+), 36 deletions(-)
+>  .../opensbi-riscv32-generic-fw_dynamic.bin    | Bin 268312 -> 268752 byt=
+es
+>  .../opensbi-riscv64-generic-fw_dynamic.bin    | Bin 272504 -> 273048 byt=
+es
+>  roms/opensbi                                  |   2 +-
+>  3 files changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 95d0b88937..ed1bf18625 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -544,44 +544,27 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE=
- *f, int flags)
->  #endif
->      qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
->  #ifndef CONFIG_USER_ONLY
-> -    {
-> -        static const int dump_csrs[] =3D {
-> -            CSR_MHARTID,
-> -            CSR_MSTATUS,
-> -            CSR_MSTATUSH,
-> -            /*
-> -             * CSR_SSTATUS is intentionally omitted here as its value
-> -             * can be figured out by looking at CSR_MSTATUS
-> -             */
-> -            CSR_HSTATUS,
-> -            CSR_VSSTATUS,
-> -            CSR_MIP,
-> -            CSR_MIE,
-> -            CSR_MIDELEG,
-> -            CSR_HIDELEG,
-> -            CSR_MEDELEG,
-> -            CSR_HEDELEG,
-> -            CSR_MTVEC,
-> -            CSR_STVEC,
-> -            CSR_VSTVEC,
-> -            CSR_MEPC,
-> -            CSR_SEPC,
-> -            CSR_VSEPC,
-> -            CSR_MCAUSE,
-> -            CSR_SCAUSE,
-> -            CSR_VSCAUSE,
-> -            CSR_MTVAL,
-> -            CSR_STVAL,
-> -            CSR_HTVAL,
-> -            CSR_MTVAL2,
-> -            CSR_MSCRATCH,
-> -            CSR_SSCRATCH,
-> -            CSR_SATP,
-> -        };
-> +    for (i =3D 0; i < ARRAY_SIZE(csr_ops); i++) {
-> +        int csrno =3D i;
->
-> -        for (i =3D 0; i < ARRAY_SIZE(dump_csrs); ++i) {
-> -            riscv_dump_csr(env, dump_csrs[i], f);
-> +        /*
-> +         * Early skip when possible since we're going
-> +         * through a lot of NULL entries.
-> +         */
-> +        if (csr_ops[csrno].predicate =3D=3D NULL) {
-> +            continue;
->          }
-> +
-> +        /*
-> +         * FPU and VPU CSRs will be printed in the
-> +         * CPU_DUMP_FPU/CPU_DUMP_VPU blocks later.
-> +         */
-> +        if (riscv_csr_is_fpu(csrno) ||
-> +            riscv_csr_is_vpu(csrno)) {
-> +            continue;
-> +        }
-> +
-> +        riscv_dump_csr(env, csrno, f);
->      }
->  #endif
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 4a862da615..ecdf709c2d 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -967,6 +967,8 @@ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
->
->  /* CSR function table */
->  extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
-> +bool riscv_csr_is_fpu(int csrno);
-> +bool riscv_csr_is_vpu(int csrno);
->
->  extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 6296ecd1e1..229257b31b 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -5799,6 +5799,24 @@ static RISCVException write_jvt(CPURISCVState *env=
-, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->
-> +bool riscv_csr_is_fpu(int csrno)
-> +{
-> +    if (!csr_ops[csrno].predicate) {
-> +        return false;
-> +    }
-> +
-> +    return csr_ops[csrno].predicate =3D=3D fs;
-> +}
-> +
-> +bool riscv_csr_is_vpu(int csrno)
-> +{
-> +    if (!csr_ops[csrno].predicate) {
-> +        return false;
-> +    }
-> +
-> +    return csr_ops[csrno].predicate =3D=3D vs;
-> +}
-> +
->  /*
->   * Control and Status Register function table
->   * riscv_csr_operations::predicate() must be provided for an implemented=
- CSR
+> diff --git a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin b/pc-bios/ope=
+nsbi-riscv32-generic-fw_dynamic.bin
+> index b2e740010b..02be3a72a8 100644
+> Binary files a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin and b/pc-bi=
+os/opensbi-riscv32-generic-fw_dynamic.bin differ
+> diff --git a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin b/pc-bios/ope=
+nsbi-riscv64-generic-fw_dynamic.bin
+> index 018b4731a7..cce35c65c2 100644
+> Binary files a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin and b/pc-bi=
+os/opensbi-riscv64-generic-fw_dynamic.bin differ
+> diff --git a/roms/opensbi b/roms/opensbi
+> index 43cace6c36..a32a910691 160000
+> --- a/roms/opensbi
+> +++ b/roms/opensbi
+> @@ -1 +1 @@
+> -Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
+> +Subproject commit a32a91069119e7a5aa31e6bc51d5e00860be3d80
 > --
-> 2.49.0
+> 2.50.1
 >
 >
 
