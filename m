@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C61CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D928CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyR3A-00045x-Jx; Tue, 16 Sep 2025 04:28:32 -0400
+	id 1uyR81-0005vl-6I; Tue, 16 Sep 2025 04:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyR39-00045Y-NO
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:28:31 -0400
+ id 1uyR7x-0005vA-Mj
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:33:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyR37-0005YY-62
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:28:31 -0400
+ id 1uyR7s-0005vS-1p
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:33:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758011306;
+ s=mimecast20190719; t=1758011601;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1JzctO1HNQVySkb42iphrUbmyIZys3cWDEQaxz/ot9Q=;
- b=f7H0zIohx2VMB+E4tKhedwfn33JwrBsN2iUGW31cD3N0rYbY9d3EcIazL4JV46VRoNlxsh
- t6rE7thK2f2QvAJbCis3SHzogBoibPwwk/jiQ8bq5eTtQ+2SkseHy4P2r9Y1/Nk+sp1/Mb
- 5vw/NVq2uIdwwDj1c47nooHXbbzkEaw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=vvTDlb4UjeARLk7ny3NZlaug8tFqjjbSEOcKnmUpme4=;
+ b=h/8dpUQF6hYr6x04s0UBx1FMIRkUdF5F6Wtho2RphlWy1SJvIzorDBwEXC8oImPgsD5ZmX
+ Zd5Nv7z0c7/DKKlzWB70U7P6SDK1W7oeayZy8MdIycfhELui1facRoB89xn4rM5zt6U3fK
+ ZcbBt4ef9UrAgixDsDtsXDHcHxb+ZUM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-xoKumOi6NqCvGy5hn6UeQg-1; Tue,
- 16 Sep 2025 04:28:23 -0400
-X-MC-Unique: xoKumOi6NqCvGy5hn6UeQg-1
-X-Mimecast-MFC-AGG-ID: xoKumOi6NqCvGy5hn6UeQg_1758011302
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-zPqhcYPcOkqMAs4ZZkoqMQ-1; Tue,
+ 16 Sep 2025 04:33:18 -0400
+X-MC-Unique: zPqhcYPcOkqMAs4ZZkoqMQ-1
+X-Mimecast-MFC-AGG-ID: zPqhcYPcOkqMAs4ZZkoqMQ_1758011596
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C1F9195608E; Tue, 16 Sep 2025 08:28:22 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0C0A18005A5; Tue, 16 Sep 2025 08:33:15 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.153])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 388D318003FC; Tue, 16 Sep 2025 08:28:18 +0000 (UTC)
-Date: Tue, 16 Sep 2025 09:28:15 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8DCD11800579; Tue, 16 Sep 2025 08:33:10 +0000 (UTC)
+Date: Tue, 16 Sep 2025 09:33:06 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, leiyang@redhat.com,
- marcandre.lureau@redhat.com, Hailiang Zhang <zhanghailiang@xfusion.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v4 05/12] migration: qemu_file_set_blocking(): add errp
- parameter
-Message-ID: <aMkfn2_GBUDlUB6O@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Coiby Xu <Coiby.Xu@gmail.com>
+Subject: Re: [PATCH v4 06/12] util: drop qemu_socket_set_nonblock()
+Message-ID: <aMkgwkjM_fwoOCf8@redhat.com>
 References: <20250915193105.230085-1-vsementsov@yandex-team.ru>
- <20250915193105.230085-6-vsementsov@yandex-team.ru>
- <aMh0sjXkQ9IYo_SB@x1.local>
+ <20250915193105.230085-7-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aMh0sjXkQ9IYo_SB@x1.local>
+In-Reply-To: <20250915193105.230085-7-vsementsov@yandex-team.ru>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -74,7 +76,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,166 +94,101 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 04:18:58PM -0400, Peter Xu wrote:
-> On Mon, Sep 15, 2025 at 10:30:57PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > qemu_file_set_blocking() is a wrapper on qio_channel_set_blocking(),
-> > so let's passthrough the errp.
+On Mon, Sep 15, 2025 at 10:30:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Use common qemu_set_blocking() instead.
 > 
-> This looks all reasonable in general.
+> Note that pre-patch the behavior of Win32 and Linux realizations
+> are inconsistent: we ignore failure for Win32, and assert success
+> for Linux.
 > 
-> Said that, using error_abort in migration code normally are not suggested
-> because it's too strong.
+> How do we convert the callers?
+> 
+> 1. Most of callers call qemu_socket_set_nonblock() on a
+> freshly created socket fd, in conditions when we may simply
+> report an error. Seems correct switching to error handling
+> both for Windows (pre-patch error is ignored) and Linux
+> (pre-patch we assert success). Anyway, we normally don't
+> expect errors in these cases.
+> 
+> Still in tests let's use &error_abort for simplicity.
+> 
+> What are exclusions?
+> 
+> 2. hw/virtio/vhost-user.c - we are inside #ifdef CONFIG_LINUX,
+> so no damage in switching to error handling from assertion.
+> 
+> 3. io/channel-socket.c: here we convert both old calls to
+> qemu_socket_set_nonblock() and qemu_socket_set_block() to
+> one new call. Pre-patch we assert success for Linux in
+> qemu_socket_set_nonblock(), and ignore all other errors here.
+> So, for Windows switch is a bit dangerous: we may get
+> new errors or crashes(when error_abort is passed) in
+> cases where we have silently ignored the error before
+> (was it correct in all such cases, if they were?) Still,
+> there is no other way to stricter API than take
+> this risk.
+> 
+> 4. util/vhost-user-server - compiled only for Linux (see
+> util/meson.build), so we are safe, switching from assertion to
+> &error_abort.
+> 
+> Note: In qga/channel-posix.c we use g_warning(), where g_printerr()
+> would actually be a better choice. Still let's for now follow
+> common style of qga, where g_warning() is commonly used to print
+> such messages, and no call to g_printerr(). Converting everything
+> to use g_printerr() should better be another series.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  contrib/ivshmem-server/ivshmem-server.c |  9 ++++++++-
+>  hw/hyperv/syndbg.c                      |  4 +++-
+>  hw/virtio/vhost-user.c                  |  5 ++++-
+>  include/qemu/sockets.h                  |  1 -
+>  io/channel-socket.c                     |  7 +++----
+>  net/dgram.c                             | 16 +++++++++++++---
+>  net/l2tpv3.c                            |  5 +++--
+>  net/socket.c                            | 20 ++++++++++++++++----
+>  qga/channel-posix.c                     |  7 ++++++-
+>  tests/unit/socket-helpers.c             |  4 +++-
+>  tests/unit/test-crypto-tlssession.c     |  8 ++++----
+>  util/oslib-posix.c                      |  7 -------
+>  util/oslib-win32.c                      |  5 -----
+>  util/vhost-user-server.c                |  4 ++--
+>  14 files changed, 65 insertions(+), 37 deletions(-)
 
-Note, that prior to this series, the existing qemu_socket_set_nonblock
-method that migration is calling will assert on failure. This series
-removes that assert and propagates it back to the callers to let them
-decide what to do. Ideally they would gracefully handle it, but if
-they assert that is no worse than current behaviour.
 
-> I did check all of below should be on the incoming side which is not as
-> severe (because killing dest qemu before switchover is normally
-> benign). Still, can we switch all below users to error_warn (including the
-> one below that may want to error_report_err(), IMHO a warn report is fine
-> even for such error)?
+> diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
+> index d805a92394..b3416ab956 100644
+> --- a/util/vhost-user-server.c
+> +++ b/util/vhost-user-server.c
+> @@ -78,7 +78,7 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
+>      }
+>  
+>      for (i = 0; i < vmsg->fd_num; i++) {
+> -        qemu_socket_set_nonblock(vmsg->fds[i]);
+> +        qemu_set_blocking(vmsg->fds[i], false, &error_abort);
+>      }
+>  }
 
-IMHO ignoring a failure to change the blocking flag status is not
-a warnnig, it is unrecoverable for the migration operation. It
-should be possible to propagate the error in some way, but it will
-potentially require changes across multiple migration methods to
-handle this.
+The caller of this method is able to handle errors more gracefully
+than abort.
 
-> 
-> > 
-> > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > ---
-> >  migration/colo.c         | 5 ++++-
-> >  migration/migration.c    | 8 +++++---
-> >  migration/postcopy-ram.c | 2 +-
-> >  migration/qemu-file.c    | 4 ++--
-> >  migration/qemu-file.h    | 2 +-
-> >  migration/savevm.c       | 4 ++--
-> >  6 files changed, 15 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/migration/colo.c b/migration/colo.c
-> > index e0f713c837..cf4d71d9ed 100644
-> > --- a/migration/colo.c
-> > +++ b/migration/colo.c
-> > @@ -859,7 +859,10 @@ static void *colo_process_incoming_thread(void *opaque)
-> >       * coroutine, and here we are in the COLO incoming thread, so it is ok to
-> >       * set the fd back to blocked.
-> >       */
-> > -    qemu_file_set_blocking(mis->from_src_file, true);
-> > +    if (!qemu_file_set_blocking(mis->from_src_file, true, &local_err)) {
-> > +        error_report_err(local_err);
-> > +        goto out;
-> > +    }
-> >  
-> >      colo_incoming_start_dirty_log();
-> >  
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 10c216d25d..e1ac4d73c2 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -951,7 +951,7 @@ static void migration_incoming_setup(QEMUFile *f)
-> >  
-> >      assert(!mis->from_src_file);
-> >      mis->from_src_file = f;
-> > -    qemu_file_set_blocking(f, false);
-> > +    qemu_file_set_blocking(f, false, &error_abort);
-> >  }
-> >  
-> >  void migration_incoming_process(void)
-> > @@ -971,7 +971,7 @@ static bool postcopy_try_recover(void)
-> >          /* This should be set already in migration_incoming_setup() */
-> >          assert(mis->from_src_file);
-> >          /* Postcopy has standalone thread to do vm load */
-> > -        qemu_file_set_blocking(mis->from_src_file, true);
-> > +        qemu_file_set_blocking(mis->from_src_file, true, &error_abort);
-> >  
-> >          /* Re-configure the return path */
-> >          mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
-> > @@ -4002,7 +4002,9 @@ void migration_connect(MigrationState *s, Error *error_in)
-> >      }
-> >  
-> >      migration_rate_set(rate_limit);
-> > -    qemu_file_set_blocking(s->to_dst_file, true);
-> > +    if (!qemu_file_set_blocking(s->to_dst_file, true, &local_err)) {
-> > +        goto fail;
-> > +    }
-> >  
-> >      /*
-> >       * Open the return path. For postcopy, it is used exclusively. For
-> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> > index 45af9a361e..0172172343 100644
-> > --- a/migration/postcopy-ram.c
-> > +++ b/migration/postcopy-ram.c
-> > @@ -1909,7 +1909,7 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file)
-> >       * The new loading channel has its own threads, so it needs to be
-> >       * blocked too.  It's by default true, just be explicit.
-> >       */
-> > -    qemu_file_set_blocking(file, true);
-> > +    qemu_file_set_blocking(file, true, &error_abort);
-> >      mis->postcopy_qemufile_dst = file;
-> >      qemu_sem_post(&mis->postcopy_qemufile_dst_done);
-> >      trace_postcopy_preempt_new_channel();
-> > diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-> > index d5c6e7ec61..0f4280df21 100644
-> > --- a/migration/qemu-file.c
-> > +++ b/migration/qemu-file.c
-> > @@ -888,9 +888,9 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
-> >   *       both directions, and thus changing the blocking on the main
-> >   *       QEMUFile can also affect the return path.
-> >   */
-> > -void qemu_file_set_blocking(QEMUFile *f, bool block)
-> > +bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp)
-> >  {
-> > -    qio_channel_set_blocking(f->ioc, block, NULL);
-> > +    return qio_channel_set_blocking(f->ioc, block, errp);
-> >  }
-> >  
-> >  /*
-> > diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-> > index f5b9f430e0..c13c967167 100644
-> > --- a/migration/qemu-file.h
-> > +++ b/migration/qemu-file.h
-> > @@ -71,7 +71,7 @@ void qemu_file_set_error(QEMUFile *f, int ret);
-> >  int qemu_file_shutdown(QEMUFile *f);
-> >  QEMUFile *qemu_file_get_return_path(QEMUFile *f);
-> >  int qemu_fflush(QEMUFile *f);
-> > -void qemu_file_set_blocking(QEMUFile *f, bool block);
-> > +bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp);
-> >  int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size);
-> >  void qemu_set_offset(QEMUFile *f, off_t off, int whence);
-> >  off_t qemu_get_offset(QEMUFile *f);
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index fabbeb296a..abe0547f9b 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -2095,7 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-> >       * Because we're a thread and not a coroutine we can't yield
-> >       * in qemu_file, and thus we must be blocking now.
-> >       */
-> > -    qemu_file_set_blocking(f, true);
-> > +    qemu_file_set_blocking(f, true, &error_fatal);
-> >  
-> >      /* TODO: sanity check that only postcopiable data will be loaded here */
-> >      load_res = qemu_loadvm_state_main(f, mis);
-> > @@ -2108,7 +2108,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-> >      f = mis->from_src_file;
-> >  
-> >      /* And non-blocking again so we don't block in any cleanup */
-> > -    qemu_file_set_blocking(f, false);
-> > +    qemu_file_set_blocking(f, false, &error_fatal);
-> >  
-> >      trace_postcopy_ram_listen_thread_exit();
-> >      if (load_res < 0) {
-> > -- 
-> > 2.48.1
-> > 
-> 
-> -- 
-> Peter Xu
-> 
+
+
+> @@ -303,7 +303,7 @@ set_watch(VuDev *vu_dev, int fd, int vu_evt,
+>  
+>          vu_fd_watch->fd = fd;
+>          vu_fd_watch->cb = cb;
+> -        qemu_socket_set_nonblock(fd);
+> +        qemu_set_blocking(fd, false, &error_abort);
+>          aio_set_fd_handler(server->ctx, fd, kick_handler,
+>                             NULL, NULL, NULL, vu_fd_watch);
+>          vu_fd_watch->vu_dev = vu_dev;
+
+Can we put a TODO here that error_abort should be fixed to be more
+graceful - either by moving the set_blocking call out of this
+callback entirely, or allowing this method to return errors.
+
 
 With regards,
 Daniel
