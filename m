@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B40CAC592
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F355DCAC598
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyZB9-0005zJ-0G; Tue, 16 Sep 2025 13:09:19 -0400
+	id 1uyZB9-0005zu-T9; Tue, 16 Sep 2025 13:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyZB6-0005ym-Sf
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:09:16 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1uyZB8-0005zH-Bt
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:09:18 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyZB5-0001Ou-63
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:09:16 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b4c1fc383eeso3854567a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 10:09:14 -0700 (PDT)
+ id 1uyZB6-0001P4-62
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:09:17 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-327f87275d4so5542691a91.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 10:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758042553; x=1758647353; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PHNssKe8hNkq5OW2n5ixjguJvVB6rE41HLGD8y9vUjQ=;
- b=N6XHudwHZ846B4SCnLyFMjAEIVCL+Qm8dxc2hynwbPWhbFewZ7wkEd7I3EwWrsVBfa
- IDpLgp/4JgINi590jLPbufmxWOepJHxkFn9350uc6ImStxjXoml1Ys6tI0XZ57vHCFN9
- 36ya/aEM592aZKT9W9mCc5AoCfjZpWbkT3ZNVBV3vUYP+jz5HeAj8x/6yVR5G/odtAJX
- 1KLsZ2CXJXckrcwPLYYOMTj4Ge5zC4ajxIOWNC3g/Opny4uzFAL5pDv7UUwIe+UBI0jQ
- Y/Wu5Ze+NhIDzk0oOOgT2+X2R7mzOBnBSBnrUnQBBiE9WNyqX1cvwSP8fxwDnNq2Mi01
- Ol3w==
+ d=linaro.org; s=google; t=1758042554; x=1758647354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GoK+dtpaofxfWpfSRy8xfu6FnNTXifoVzDy23ofU9fg=;
+ b=JspJa8SpTYzYXe4+NOXzZDFWIcUG8tVKkvCAvK7hNiyVVwg5LkNc88kbQBaTAalHmy
+ u5anj2M4QyZdDc+QT0fA4QD35C9JQXsxyDFjm9do5wXPY15NoMDS7OhLrOsyy27ETFXn
+ LiA/6PRBYPTj3e7ruw1Op9Qmu/dS7AGX5O8x/t52qJmjouSERYTYFnBWbb9M2dyiwkcn
+ nA89Hovx3xj/drWh+dwAuf23RSBiQ+0tWeF6cQa7s9++vob+RKxIO3XPswdZNy+RUO48
+ PVQqT37moH1DcEF5j2RIQi5F9E1BT74FlcO5VmaBRsFgXt8yD9oTs2cp5Rx+gvNWBCdo
+ qqVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758042553; x=1758647353;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PHNssKe8hNkq5OW2n5ixjguJvVB6rE41HLGD8y9vUjQ=;
- b=JTd34xqduHyHHF/oAO+/Q3l/C1rQirICaSJnaFKmXrTo23o74DUHpW0pjQAyKqLP6P
- hCjRwqNDt0AFXPubdD2RIK6OBSoAHduHTNDf0kokNgH2dT75ijTHX3E2zCW2yC+wPXk8
- HD9n69z1J/rn6YnKxvDsRWlZUw0T5qrJ3GBXySqt5/j0nilzpSpl3Ha99dwwfg9xDkQW
- pGBDfW/0TzSe6VmGP4nQvjRcxaLNdX6I86w9xRgOSDtUGmWnJulAg2otaQUN9+oC6FmX
- ghMo/4yN4oAt4sYEZbKx7RN00lqZxyKNMLYHIhFP+5GnBFK/CpFZt0QzNdsJOYMuikMQ
- vRjQ==
-X-Gm-Message-State: AOJu0Yw9GXrhg6Zr7ChSyy4qSsnwwuSBqQ5V3FZKEAxw4b1duj+s5H5S
- KcvTBMgXuULuS1jytfSIuRIw0SEpOztnEFnRb+IHYBwQhdY0oBQwdllsUGx86MqP5cfHdgFeyZc
- ddQao
-X-Gm-Gg: ASbGncuzHIPFKOGIRonF4h5a6sc4BG0GsIoiWpKZS2uC0PZhL8i0JuMeI/N1KAYDMqx
- hoQrup15t5g1J9dDQkzFhRvqEq+7FJd5OR+eB9hfue/7UKfSwrNYZFKbcgtc4jJnU61WhZS7mul
- WQ9onGyubBcx6u10kkgTLe3tQDI5Sx9tb9jiLuiI0lnPsRltRKqkqj1uYqCtAr6XD7o0ICYohwR
- PsIFiQ2HOWz9qKGvDVmT0RUmn6PeUCDINi4AT7H0NeCsm1QS9uWnKDY56jbv5ZCCQqPOmrHlatw
- fahSE7dGHimIkEl2GbQJFMbJpCN5zxGVAK6PwwwsphfYEPENELgLe5hXPYahs7CJj335XjEJT7R
- cS7bcXNyAExkGqNudILphPCNBybBo
-X-Google-Smtp-Source: AGHT+IE2d5jROfU8RRizUHMBWfr7NCsY7GrEW6UVQk3TYRFRnCmhipN0cuq+sHxeFVlM6StsTb0kAg==
-X-Received: by 2002:a17:90b:574b:b0:32e:3f93:69dc with SMTP id
- 98e67ed59e1d1-32e3f936d2bmr10436135a91.25.1758042553197; 
+ d=1e100.net; s=20230601; t=1758042554; x=1758647354;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GoK+dtpaofxfWpfSRy8xfu6FnNTXifoVzDy23ofU9fg=;
+ b=Ic7a22g+AbGmcwFeSWBL1wMZR7rFbAHUzJy69Nb35FvNqyhed5qopAOoVBHsax+izv
+ VSevFv/SNvOY5ICMm7u20jN19UEog3ExRwFn/rtJsAEaIkbVDAbP2t5HU1+kqSP12iEi
+ pHAwdXoPq6VCf3FjBwTk5HIPgiLdF7HBwThguUsEYExeWH3ufor9P7XguovhED7LYbiS
+ c7o5G5Q2CE5pjBeKhw5eFx1tHjkofEIUBtJBMJsb72fImDPzNeW1FT4Uy0JmuIlPkgo4
+ hC9RW0vF+BH2lAvii0p/nLJv4W7gL3PEd+Bf+0Hj2/vXrwk6PsxU+DfiSuQf9gQX4+ct
+ gXaQ==
+X-Gm-Message-State: AOJu0YxuG57LGhIfv4u0xglT/2iYSzMb3aP6JwqvjCGNW9MqHGcIz63K
+ UdQL98IspfKag+Nyn21ZAYwf4NrOIIaFc2tq7r2oNWc2n5gBc9HZNmll/AYwmX0OE9KOuuY53H1
+ SUgpk
+X-Gm-Gg: ASbGnctMXanqRdbwRdtov8g+yWmNtEbTdSPdpSQL+9MoH3mFLr8JG5byZ3HZzAnBV2Y
+ UPUTzxMLvAGLvEBWf2kiuhKcD6SD+xw3wW/n4qCE6ErnI2AModP1XsN9T+VlcPmECD5m4siPr4W
+ LtWBs2GD3D7ALrpQZiy+YCDBNHKYiq1R6vLunKqy/OEhveBQtR7LtnloeqPCkVoTV5TggN/PiVU
+ kkjufyKxsi5YWa7PSHTIk5caFbQ0OIpjkSjMukntjDwihcGAjdhsVwo4nbZ7oSGoEfy/EjeZ/P1
+ vDjANbRMreGARZUkuep9r97nPYEnj4tNhV6a9tu5Zi8jFub+8Wat4ABe39EBIUckDSvlYJ5hjF0
+ FMExDVs+8CsPBdcr2N2NUuHYQtT1OAK30JpN4q4o=
+X-Google-Smtp-Source: AGHT+IHuse+UqIRRMrTEt6yQIVBprNfbLh4vlck0r7lRbe0m74ukbC0SVkK3ZwB/oNwL1hnuO38h4w==
+X-Received: by 2002:a17:90b:3a08:b0:32e:a5c2:7f87 with SMTP id
+ 98e67ed59e1d1-32ea5c28057mr3497054a91.22.1758042553774; 
  Tue, 16 Sep 2025 10:09:13 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32ed275e795sm95531a91.19.2025.09.16.10.09.12
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-32ed275e795sm95531a91.19.2025.09.16.10.09.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 10:09:12 -0700 (PDT)
+ Tue, 16 Sep 2025 10:09:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/2] misc patch queue
-Date: Tue, 16 Sep 2025 10:09:10 -0700
-Message-ID: <20250916170912.706610-1-richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 1/2] tests/functional/x86_64: Accept a few locked pages in
+ test_memlock.py
+Date: Tue, 16 Sep 2025 10:09:11 -0700
+Message-ID: <20250916170912.706610-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250916170912.706610-1-richard.henderson@linaro.org>
+References: <20250916170912.706610-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,30 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
+Startup of libgcrypt locks a small pool of pages -- by default 16k.
+Testing for zero locked pages is isn't correct, while testing for
+32k is a decent compromise.
 
-  Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/rth7680/qemu.git tags/pull-misc-20250916
-
-for you to fetch changes up to a11d1847d5ef8a7db58e6d4e44f36fec708f0981:
-
-  .gitmodules: move u-boot mirrors to qemu-project-mirrors (2025-09-16 09:58:20 -0700)
-
-----------------------------------------------------------------
-.gitmodules: move u-boot mirrors to qemu-project-mirrors
-tests/functional/x86_64: Accept a few locked pages in test_memlock.py
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      .gitmodules: move u-boot mirrors to qemu-project-mirrors
-
-Richard Henderson (1):
-      tests/functional/x86_64: Accept a few locked pages in test_memlock.py
-
- .gitmodules                             | 4 ++--
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
  tests/functional/x86_64/test_memlock.py | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/x86_64/test_memlock.py
+index 2b515ff979..81bce80b0c 100755
+--- a/tests/functional/x86_64/test_memlock.py
++++ b/tests/functional/x86_64/test_memlock.py
+@@ -37,7 +37,8 @@ def test_memlock_off(self):
+ 
+         status = self.get_process_status_values(self.vm.get_pid())
+ 
+-        self.assertTrue(status['VmLck'] == 0)
++        # libgcrypt may mlock a few pages
++        self.assertTrue(status['VmLck'] < 32)
+ 
+     def test_memlock_on(self):
+         self.common_vm_setup_with_memlock('on')
+-- 
+2.43.0
+
 
