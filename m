@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07178CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0C1CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uya4a-000370-Cj; Tue, 16 Sep 2025 14:06:36 -0400
+	id 1uya5i-0004Ub-Td; Tue, 16 Sep 2025 14:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4X-00035i-Rs
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:34 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1uya4z-0003DJ-Al
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:03 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4U-0001bH-IC
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:33 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45dcfecdc0fso58276305e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:30 -0700 (PDT)
+ id 1uya4v-0001dt-Tl
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:00 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3e9ca387425so2284407f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758045989; x=1758650789; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758046006; x=1758650806; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=962IUHk4Fm5KFmeKbrFTpPCwGn8ge5yNRC9E10wxbT4=;
- b=sPaQS4P+BSRsyuDiiWdQgMOdQ94/Fc/UqV8VlGd9skSAN6pMZ8ZGehUJV2xPhvenc4
- 8vODIVtkwGbHM6Yvv2gfnC/RiDa79MSid66CiMhB5VOOhJo7jmwkJxF/TOlAl2oHyWU4
- tmAENKpEKvxl4voWMo0ip+s23puvJ9rqdEd3mWOhvhJzmZR5e/bHj3NE8qZmajWRYW2B
- pnFFuPVqJUhxI05kW3Gw+iD5a8m4swtVCM8xmT2sMlbquB8nsF5xCAY3LNgf6a97dAFq
- miTqYn+0CBaa00MKqIZXB9jL2Wa2tsl/plib4S66UKnneKRkJBLLDohV9+jDZ2lmHB7F
- 1rxA==
+ :reply-to; bh=WKrPXfhV0yZcHSRkAd9uqCS4QKSHcYCg0rne8WnkpnI=;
+ b=ER8lvKoSqFqzfCfLj1NDCd6bmPyc/Q08usr2BgC1z3TuRPWwZ+wjJgHOKxxYmfTAc6
+ nfLbQsrVR1fCB0rfRLfQIjGEUdvEPmXxW8wQqNPVu6pB3pFbeMvi74Gciyj8bqFOjQET
+ uZouIxUC0oEZ9vqW8p0pxhTrUQMH27LmSOcOx9aqQj3CzujWDYwPezFSe0JoBKAYbWta
+ DC8PRhFNDGElxNOcrKhGwnNTHQuWIXlFszJ15B33/vq+Kt/dKb156opDnPtoaZPG2rU5
+ Cu51uTHyWrMoNYPX9n67tekQq2PHu1EGvLkKAOxjjgWtXzxoaXTtsNRwtY40sA/M9U2M
+ Ah/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758045989; x=1758650789;
+ d=1e100.net; s=20230601; t=1758046006; x=1758650806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=962IUHk4Fm5KFmeKbrFTpPCwGn8ge5yNRC9E10wxbT4=;
- b=Pnkjn/pf70TGtN/GxmDPm8rT/0hmoK7PPy2uPaRtuKGAASgsv6s3PimSqoc6AEozhi
- Yz9vCY91csBLK204w56k6AmhkK2+y4bFUZryeQYD1KDQ4HgY5kz3WJahS6drjIdmpc2u
- bF+qJ9PY7bQEW6tWzfXMBMs1Iyv6OhkrHkcL5jJCI9ESpdvxtnUUYMPAvRwDrVeU4aGN
- 7O/ZVOi2pjtNN2ABO6oT51UIqBRR2CEkB4KXzD59nLqVkHPLa6UDlku3FkVynNYYgGe1
- NH3wjf7TRzpTfu1m908BWHNhAhXrx4QiqAqV4pdPIzvZW4QFiRFmwjAgGGlgXv3ofdQb
- jctg==
-X-Gm-Message-State: AOJu0YxAI2Z8/7upxZ90vXOixyRl+dXc/2VA5hu1WBU7LUFc2TQZntU1
- C48pG5V2q2a3oW+dIZAXbWf1xN82he/5SMT2GROfcdRcOZBkFjE2VRTXqXgADDNNqh2kxBZ5Q1x
- 8P1KR
-X-Gm-Gg: ASbGnctPM1Fa+q42ocyW4DxLP66Nz7hXPqNE7TERaNYK+mP9HRdWATdPprwJI1SMoyK
- +fsWhJ3jOE44d2YyPWLwhQ8HJ0stZ4YxHb0Ejqo8Gu8CRIB5yUmqSmDnWWRf+V6TQCpCBcPIS57
- COemJn7pFdE6EUb1rI9rDsnRtLdLoAO6LQVcz26cVyV8wOTIdueR1T0QO8n3xBiMvYbrb31zPLD
- iOh2mCDsY+hju24AaNTIDQCigts38+6xy8p82d2ehjXciKnHjU3ZWtQQ+wvdo/bntxVF1TAUHDc
- abM0OmXky93hf/wxXdBcwPahSh5icLQaXPWacoA5/yFz5GBa2plTBQZgUumRV+I7NiXY8Vjsb8e
- VbDCXhT98hIezXFtStxzpi/C6EiJZ
-X-Google-Smtp-Source: AGHT+IFEXCWxSB5HAmMaNbHPRz3FibqOa9ns3O5p9NQ2qAhRyzaKMOqZepNY6usatT4uSFI3CD68Hw==
-X-Received: by 2002:a7b:cd97:0:b0:45d:f7dc:f71 with SMTP id
- 5b1f17b1804b1-45f211efc4dmr129586365e9.25.1758045988713; 
- Tue, 16 Sep 2025 11:06:28 -0700 (PDT)
+ bh=WKrPXfhV0yZcHSRkAd9uqCS4QKSHcYCg0rne8WnkpnI=;
+ b=q6U3nZCcC+tCArTNmX0GnCyORQ1e5ZgYughiFqeLoGwzz+rYWa1x9+J2KbV5SvJcvq
+ oC32DokkI6JHBu//R1q+P5ZjqsSOpUtxmEUCr0/qjk0bFXTIO+rNbXNmYu18VldPADMi
+ yemJS0tsCviTVAq1CwlcOrULzDj26JUeazUeZ9UvBWBQRYtNO83f9QOLCRXX5CIRZ+uP
+ OTvUNJK/Jkk84Jg21TJkL09nZjTDBAXWFztNf1h2mG5MtVEIJFUKI8vcBHX4D4Y/u0RY
+ ZDb2uRZSdFe5MJY3pV7JP8QwONwXYtOMBgq47TU5JclAF2cnwdjBIuiwgfSXP8REIbfX
+ cTiQ==
+X-Gm-Message-State: AOJu0YwOha+PcQu9U6sIM4+DdIKW9j4Qx094Gnem/GvUTp6/rbyGqkfl
+ 8kXUB4rNzQN9XLGIC8GKNtE+IXIQYrBHuVMzzeRCVcbzGDBtkadPBHCMH7H90xzahjfKecrGtAS
+ d5YOQ
+X-Gm-Gg: ASbGncuBdHQPGvJXApiDCuO9mDqOrVqW+5aO9T575nKO0FvX9ssr9HzBO/1+SGVz599
+ IzEP7/bKYmRhWAckAmbqwMyh3q4XDlBPzizky3j5Dc5W9QMeSoyLE1RB+B21s6ADDQGdUmUUE8Z
+ esTTKluYb6oq/hWieHsWP87YOegydOjraaYJOQ+moQPGMTY4U33RH4kWnBuOk8LlVt1X05ppMmx
+ wuha4mGImdQmAzRXXHoHQV5Urz8FwE1BBvBJcUQ1219wHbeY+1/EpT6p8fMOOs8ivQnZLC/AgdS
+ 8Uuufr+BEs16jugEplZIj8xQ3eskWMa8a7O/T2VdA1hRjmkHLV2M5WvxhnZqGbivh7jUr45r4Qs
+ POrNOTEBXqFEpWePRbzxiRucLWXfG
+X-Google-Smtp-Source: AGHT+IGG/xL9OT5ukmdFF6iyS38WHQqljS5zhtvsweQV6Si2QyaUwWa1ZhbRurwpdy4mMpFX8+JCmQ==
+X-Received: by 2002:a05:6000:40de:b0:3e9:978e:48fd with SMTP id
+ ffacd0b85a97d-3e9978e8e25mr10239585f8f.23.1758046005711; 
+ Tue, 16 Sep 2025 11:06:45 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.27
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 11:06:28 -0700 (PDT)
+ Tue, 16 Sep 2025 11:06:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/36] target/arm: Remove deprecated pxa CPU family
-Date: Tue, 16 Sep 2025 19:05:49 +0100
-Message-ID: <20250916180611.1481266-16-peter.maydell@linaro.org>
+Subject: [PULL 28/36] hw/arm/virt: Factor out common SMMUV3 dt bindings code
+Date: Tue, 16 Sep 2025 19:06:02 +0100
+Message-ID: <20250916180611.1481266-29-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
 References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,262 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 10.0 we deprecated the pxa CPU family (pxa250, pxa255, pxa260
-pxa261, pxa262, pxa270-a0, pxa270-a1, pxa270, pxa270-b0, pxa270-b1,
-pxa270-c0, pxa270-c5).  Now we have released 10.1 we can remove them.
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-This commit removes only the top level CPU definitions and updates
-the documentation. Removing the CPUs means that there is now a lot
-of dead iwMMXt code, which we will delete in subsequent commits.
+No functional changes intended. This will be useful when we
+add support for user-creatable smmuv3 device.
 
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nathan Chen <nathanc@nvidia.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Message-id: 20250829082543.7680-5-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250828140422.3271703-2-peter.maydell@linaro.org
 ---
- docs/about/deprecated.rst       |  21 ----
- docs/about/removed-features.rst |  14 +++
- target/arm/tcg/cpu32.c          | 163 --------------------------------
- 3 files changed, 14 insertions(+), 184 deletions(-)
+ hw/arm/virt.c | 54 +++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index b2420732e1d..f0314147698 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -236,27 +236,6 @@ Keeping 32-bit host support alive is a substantial burden for the
- QEMU project.  Thus QEMU will in future drop the support for all
- 32-bit host systems.
- 
--linux-user mode CPUs
----------------------
--
--iwMMXt emulation and the ``pxa`` CPUs (since 10.0)
--''''''''''''''''''''''''''''''''''''''''''''''''''
--
--The ``pxa`` CPU family (``pxa250``, ``pxa255``, ``pxa260``,
--``pxa261``, ``pxa262``, ``pxa270-a0``, ``pxa270-a1``, ``pxa270``,
--``pxa270-b0``, ``pxa270-b1``, ``pxa270-c0``, ``pxa270-c5``) are no
--longer used in system emulation, because all the machine types which
--used these CPUs were removed in the QEMU 9.2 release. These CPUs can
--now only be used in linux-user mode, and to do that you would have to
--explicitly select one of these CPUs with the ``-cpu`` command line
--option or the ``QEMU_CPU`` environment variable.
--
--We don't believe that anybody is using the iwMMXt emulation, and we do
--not have any tests to validate it or any real hardware or similar
--known-good implementation to test against. GCC is in the process of
--dropping their support for iwMMXt codegen. These CPU types are
--therefore deprecated in QEMU, and will be removed in a future release.
--
- System emulator CPUs
- --------------------
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index fff781d6b7c..65fd564d229 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1138,6 +1138,20 @@ reason the maintainers strongly suspected no one actually used it.
- QEMU Nios II architecture was orphan; Intel has EOL'ed the Nios II
- processor IP (see `Intel discontinuance notification`_).
- 
-+iwMMXt emulation and the ``pxa`` CPUs (removed in 10.2)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The ``pxa`` CPU family (``pxa250``, ``pxa255``, ``pxa260``,
-+``pxa261``, ``pxa262``, ``pxa270-a0``, ``pxa270-a1``, ``pxa270``,
-+``pxa270-b0``, ``pxa270-b1``, ``pxa270-c0``, ``pxa270-c5``) were
-+not available in system emulation, because all the machine types which
-+used these CPUs were removed in the QEMU 9.2 release. We don't
-+believe that anybody was using the iwMMXt emulation (which you
-+would have to explicitly enable on the command line), and we did
-+not have any tests to validate it or any real hardware or similar
-+known-good implementation to test against. These CPUs have
-+therefore been removed in linux-user mode as well.
-+
- TCG introspection features
- --------------------------
- 
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index a2a23eae0d7..f0761410ad0 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -807,144 +807,6 @@ static void sa1110_initfn(Object *obj)
-     cpu->reset_sctlr = 0x00000070;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 16a1ac3c2d9..bebe2d8cea9 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1444,19 +1444,43 @@ static void create_pcie_irq_map(const MachineState *ms,
+                            0x7           /* PCI irq */);
  }
  
--static void pxa250_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
++static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
++                                      hwaddr size, int irq)
++{
++    char *node;
++    const char compat[] = "arm,smmu-v3";
++    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
++    MachineState *ms = MACHINE(vms);
++
++    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, node);
++    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
++
++    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
++            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
++            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++
++    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
++                     sizeof(irq_names));
++
++    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
++    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
++    g_free(node);
++}
++
+ static void create_smmu(const VirtMachineState *vms,
+                         PCIBus *bus)
+ {
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+-    char *node;
+-    const char compat[] = "arm,smmu-v3";
+     int irq =  vms->irqmap[VIRT_SMMU];
+     int i;
+     hwaddr base = vms->memmap[VIRT_SMMU].base;
+     hwaddr size = vms->memmap[VIRT_SMMU].size;
+-    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
+     DeviceState *dev;
+-    MachineState *ms = MACHINE(vms);
+ 
+     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
+         return;
+@@ -1475,27 +1499,7 @@ static void create_smmu(const VirtMachineState *vms,
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+                            qdev_get_gpio_in(vms->gic, irq + i));
+     }
 -
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    cpu->midr = 0x69052100;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
+-    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
+-    qemu_fdt_add_subnode(ms->fdt, node);
+-    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
+-    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
 -
--static void pxa255_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
+-    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
+-            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
+-            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
 -
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    cpu->midr = 0x69052d00;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
+-    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
+-                     sizeof(irq_names));
 -
--static void pxa260_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
+-    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
 -
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    cpu->midr = 0x69052903;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
+-    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
 -
--static void pxa261_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    cpu->midr = 0x69052d05;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa262_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    cpu->midr = 0x69052d06;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270a0_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054110;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270a1_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054111;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270b0_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054112;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270b1_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054113;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270c0_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054114;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
--static void pxa270c5_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    cpu->dtb_compatible = "marvell,xscale";
--    set_feature(&cpu->env, ARM_FEATURE_V5);
--    set_feature(&cpu->env, ARM_FEATURE_XSCALE);
--    set_feature(&cpu->env, ARM_FEATURE_IWMMXT);
--    cpu->midr = 0x69054117;
--    cpu->ctr = 0xd172172;
--    cpu->reset_sctlr = 0x00000078;
--}
--
- #ifndef TARGET_AARCH64
- /*
-  * -cpu max: a CPU with as many features enabled as our emulation supports.
-@@ -1032,31 +894,6 @@ static const ARMCPUInfo arm_tcg_cpus[] = {
-     { .name = "ti925t",      .initfn = ti925t_initfn },
-     { .name = "sa1100",      .initfn = sa1100_initfn },
-     { .name = "sa1110",      .initfn = sa1110_initfn },
--    { .name = "pxa250",      .initfn = pxa250_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa255",      .initfn = pxa255_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa260",      .initfn = pxa260_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa261",      .initfn = pxa261_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa262",      .initfn = pxa262_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    /* "pxa270" is an alias for "pxa270-a0" */
--    { .name = "pxa270",      .initfn = pxa270a0_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-a0",   .initfn = pxa270a0_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-a1",   .initfn = pxa270a1_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-b0",   .initfn = pxa270b0_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-b1",   .initfn = pxa270b1_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-c0",   .initfn = pxa270c0_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
--    { .name = "pxa270-c5",   .initfn = pxa270c5_initfn,
--      .deprecation_note = "iwMMXt CPUs are no longer supported", },
- #ifndef TARGET_AARCH64
-     { .name = "max",         .initfn = arm_max_initfn },
- #endif
+-    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
+-    g_free(node);
++    create_smmuv3_dt_bindings(vms, base, size, irq);
+ }
+ 
+ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
 -- 
 2.43.0
 
