@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D928CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC61CAC59A
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyR81-0005vl-6I; Tue, 16 Sep 2025 04:33:33 -0400
+	id 1uyR8z-0006aa-GN; Tue, 16 Sep 2025 04:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyR7x-0005vA-Mj
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:33:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uyR8q-0006RR-7f; Tue, 16 Sep 2025 04:34:25 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyR7s-0005vS-1p
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:33:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758011601;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=vvTDlb4UjeARLk7ny3NZlaug8tFqjjbSEOcKnmUpme4=;
- b=h/8dpUQF6hYr6x04s0UBx1FMIRkUdF5F6Wtho2RphlWy1SJvIzorDBwEXC8oImPgsD5ZmX
- Zd5Nv7z0c7/DKKlzWB70U7P6SDK1W7oeayZy8MdIycfhELui1facRoB89xn4rM5zt6U3fK
- ZcbBt4ef9UrAgixDsDtsXDHcHxb+ZUM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-zPqhcYPcOkqMAs4ZZkoqMQ-1; Tue,
- 16 Sep 2025 04:33:18 -0400
-X-MC-Unique: zPqhcYPcOkqMAs4ZZkoqMQ-1
-X-Mimecast-MFC-AGG-ID: zPqhcYPcOkqMAs4ZZkoqMQ_1758011596
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0C0A18005A5; Tue, 16 Sep 2025 08:33:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.153])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DCD11800579; Tue, 16 Sep 2025 08:33:10 +0000 (UTC)
-Date: Tue, 16 Sep 2025 09:33:06 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- leiyang@redhat.com, marcandre.lureau@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Coiby Xu <Coiby.Xu@gmail.com>
-Subject: Re: [PATCH v4 06/12] util: drop qemu_socket_set_nonblock()
-Message-ID: <aMkgwkjM_fwoOCf8@redhat.com>
-References: <20250915193105.230085-1-vsementsov@yandex-team.ru>
- <20250915193105.230085-7-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uyR8l-0005zx-Bp; Tue, 16 Sep 2025 04:34:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1758011659; x=1789547659;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=fFiQva2H+sKhH01fGDe/OdD0HBnTFMbT9bzsKhKkEaA=;
+ b=ktc6c8ojwu734IYAfmZZZLGp10nU3H5YEUh1rsE2q1nWk2LAnqIfJNj8
+ SeIEdPZP9MGQgsAYWXu+H0OyTiQrlb/MFG/R5nq4uccvMEOmr6ywUUqLs
+ 786MwsEZqHkGFd8WOE7/i/yErxj2QjVm1iTjzuRmoSSwha58K0yraxFjN
+ b/K/3Sx+UfWJ0HKm+NiOHDbgHTYP0Jc0BOiVMJ7rv9TknMXoZsIGhjnAc
+ iO49d7AB3z8GHaU3/+tilBihKtOzjgGPSY8QLokYEZyAfKw2RQq6R60o0
+ IA4I80YPFIMUJvY8fOvrSINoKErvuOjWNyX9yVfddN/wJGjbWSj0xzaZQ Q==;
+X-CSE-ConnectionGUID: cbMZ6IQ/Qza3z1EeNud1ww==
+X-CSE-MsgGUID: 5gcz3rPlTGu103vJBPShtQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11554"; a="77725132"
+X-IronPort-AV: E=Sophos;i="6.18,268,1751266800"; d="scan'208";a="77725132"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Sep 2025 01:34:12 -0700
+X-CSE-ConnectionGUID: Fco1SyDoQJy6oYrDFwSO7g==
+X-CSE-MsgGUID: vHVACnGCT5qrXkKlUZr7IA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,268,1751266800"; d="scan'208";a="174691003"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 16 Sep 2025 01:34:10 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 01/12] subprojects: Update .gitignore for proc-macro2 and syn
+Date: Tue, 16 Sep 2025 16:55:46 +0800
+Message-Id: <20250916085557.2008344-2-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250916085557.2008344-1-zhao1.liu@intel.com>
+References: <20250916085557.2008344-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250915193105.230085-7-vsementsov@yandex-team.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,111 +77,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 15, 2025 at 10:30:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Use common qemu_set_blocking() instead.
-> 
-> Note that pre-patch the behavior of Win32 and Linux realizations
-> are inconsistent: we ignore failure for Win32, and assert success
-> for Linux.
-> 
-> How do we convert the callers?
-> 
-> 1. Most of callers call qemu_socket_set_nonblock() on a
-> freshly created socket fd, in conditions when we may simply
-> report an error. Seems correct switching to error handling
-> both for Windows (pre-patch error is ignored) and Linux
-> (pre-patch we assert success). Anyway, we normally don't
-> expect errors in these cases.
-> 
-> Still in tests let's use &error_abort for simplicity.
-> 
-> What are exclusions?
-> 
-> 2. hw/virtio/vhost-user.c - we are inside #ifdef CONFIG_LINUX,
-> so no damage in switching to error handling from assertion.
-> 
-> 3. io/channel-socket.c: here we convert both old calls to
-> qemu_socket_set_nonblock() and qemu_socket_set_block() to
-> one new call. Pre-patch we assert success for Linux in
-> qemu_socket_set_nonblock(), and ignore all other errors here.
-> So, for Windows switch is a bit dangerous: we may get
-> new errors or crashes(when error_abort is passed) in
-> cases where we have silently ignored the error before
-> (was it correct in all such cases, if they were?) Still,
-> there is no other way to stricter API than take
-> this risk.
-> 
-> 4. util/vhost-user-server - compiled only for Linux (see
-> util/meson.build), so we are safe, switching from assertion to
-> &error_abort.
-> 
-> Note: In qga/channel-posix.c we use g_warning(), where g_printerr()
-> would actually be a better choice. Still let's for now follow
-> common style of qga, where g_warning() is commonly used to print
-> such messages, and no call to g_printerr(). Converting everything
-> to use g_printerr() should better be another series.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  contrib/ivshmem-server/ivshmem-server.c |  9 ++++++++-
->  hw/hyperv/syndbg.c                      |  4 +++-
->  hw/virtio/vhost-user.c                  |  5 ++++-
->  include/qemu/sockets.h                  |  1 -
->  io/channel-socket.c                     |  7 +++----
->  net/dgram.c                             | 16 +++++++++++++---
->  net/l2tpv3.c                            |  5 +++--
->  net/socket.c                            | 20 ++++++++++++++++----
->  qga/channel-posix.c                     |  7 ++++++-
->  tests/unit/socket-helpers.c             |  4 +++-
->  tests/unit/test-crypto-tlssession.c     |  8 ++++----
->  util/oslib-posix.c                      |  7 -------
->  util/oslib-win32.c                      |  5 -----
->  util/vhost-user-server.c                |  4 ++--
->  14 files changed, 65 insertions(+), 37 deletions(-)
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ subprojects/.gitignore | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-> diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
-> index d805a92394..b3416ab956 100644
-> --- a/util/vhost-user-server.c
-> +++ b/util/vhost-user-server.c
-> @@ -78,7 +78,7 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
->      }
->  
->      for (i = 0; i < vmsg->fd_num; i++) {
-> -        qemu_socket_set_nonblock(vmsg->fds[i]);
-> +        qemu_set_blocking(vmsg->fds[i], false, &error_abort);
->      }
->  }
-
-The caller of this method is able to handle errors more gracefully
-than abort.
-
-
-
-> @@ -303,7 +303,7 @@ set_watch(VuDev *vu_dev, int fd, int vu_evt,
->  
->          vu_fd_watch->fd = fd;
->          vu_fd_watch->cb = cb;
-> -        qemu_socket_set_nonblock(fd);
-> +        qemu_set_blocking(fd, false, &error_abort);
->          aio_set_fd_handler(server->ctx, fd, kick_handler,
->                             NULL, NULL, NULL, vu_fd_watch);
->          vu_fd_watch->vu_dev = vu_dev;
-
-Can we put a TODO here that error_abort should be fixed to be more
-graceful - either by moving the set_blocking call out of this
-callback entirely, or allowing this method to return errors.
-
-
-With regards,
-Daniel
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index f4281934ce11..9d579f72d121 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -16,7 +16,7 @@
+ /libc-0.2.162
+ /proc-macro-error-1.0.4
+ /proc-macro-error-attr-1.0.4
+-/proc-macro2-1.0.84
++/proc-macro2-1.0.95
+ /quote-1.0.36
+-/syn-2.0.66
++/syn-2.0.104
+ /unicode-ident-1.0.12
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.34.1
 
 
