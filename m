@@ -4,77 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938FECAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7AACAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyYml-0006A6-NG; Tue, 16 Sep 2025 12:44:07 -0400
+	id 1uyYrs-0008HC-O9; Tue, 16 Sep 2025 12:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyYmf-000691-R0
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:44:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyYmd-0005tZ-5B
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:44:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758041037;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ldRKioNtr38YyudBKX9urW+fjxnP5yE9BhYynvXtATk=;
- b=V7NF4JWlfToaNbEDqTkWTBeCjqzwcwG9kcj8IlUmaU1Nm9bktssV0JmEfJXcFnf/0srypc
- rlGiv33HER2z7HBxFwCDE3oiBhzQXmJiGf/Pu1KOrG68HVY+AqxKyknzgiqiKBhY4PZC4g
- eSGnfRabLj2rEfvTZAL0uhB7FDl30ak=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-LSJEv8pAMuCEh93OfdsoQw-1; Tue,
- 16 Sep 2025 12:43:55 -0400
-X-MC-Unique: LSJEv8pAMuCEh93OfdsoQw-1
-X-Mimecast-MFC-AGG-ID: LSJEv8pAMuCEh93OfdsoQw_1758041034
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B944219560B2; Tue, 16 Sep 2025 16:43:54 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.153])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 429F11800451; Tue, 16 Sep 2025 16:43:52 +0000 (UTC)
-Date: Tue, 16 Sep 2025 17:43:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uyYrr-0008Fj-6x
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:49:23 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYrl-0006Q9-BM
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:49:22 -0400
+Received: from localhost.localdomain (unknown [167.220.208.43])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 04F7C20154ED;
+ Tue, 16 Sep 2025 09:49:10 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 04F7C20154ED
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1758041355;
+ bh=MsYvYaG6IPmeEZ7uQjHqywRPxY5PH02KC5Rg/XDy06c=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Eg7P4eogMiobR+dRKqHiA/nUKpEcJFCnNrvXmGdYzHh/jtFJ0NMjykgA/pVBeHXG/
+ +O+eVHicErfX2LGGeEtSh1vpzVnjrbmKlm6DqHzJErfNIYwrg1T0SwaAJ5oreuN8ZP
+ 5a/YgX0FWWX4gKZLRSLoQLFw1wP2JzN88gvjN9uI=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH <RFC> 00/15] Encode object type security status in code
-Message-ID: <aMmTxNB2eq6hSS9o@redhat.com>
-References: <20250909165726.3814465-1-berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v4 00/27] Implementing a MSHV (Microsoft Hypervisor)
+ accelerator
+Date: Tue, 16 Sep 2025 18:48:20 +0200
+Message-Id: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250909165726.3814465-1-berrange@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,245 +77,188 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping: anyone have thoughts on this idea of annotating security
-status of our code against QOM classes ?
+Hello all,
 
-On Tue, Sep 09, 2025 at 05:57:11PM +0100, Daniel P. Berrangé wrote:
-> Our docs/system/security.rst file loosely classifies code into that
-> applicable for 'virtualization' vs 'non-virtualization' use cases.
-> Only code relevant to the former group is eligible for security
-> bug handling. Peter's recent proposal pointed out that we are
-> increasingly hitting the limits of such a crude classification:
-> 
->   https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01520.html
-> 
-> Michael suggested that with the increased complexity, docs are not
-> going to be an effective way to convey the information, and we
-> need to re-consider embedding this info in code:
-> 
->   https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg01566.html
-> 
-> This also allows users to validate a configuration's security status
-> when starting a guest, or modifying a running guest. This series is
-> an attempt to start the embedding process.
-> 
-> It starts with QOM, adding "bool secure" and "bool insecure"
-> properties to the TypeInfo struct, which get turned into flags
-> on the Type struct. This enables querying any ObjectClass to
-> ask whether or not it is declared secure or insecure.
-> 
-> By default no statement will be made about whether a class is
-> secure or insecure, reflecting our historical defaults. Over
-> time we should annotate as many classes as possible with an
-> explicit statement.
-> 
-> The "-machine" argument gains two new parameters
-> 
->   * prohibit-insecure=yes|no  - a weak security boundary, only
->     excluding stuff that is explicitly declared insecure,
->     permiting stuff that is secure & anything without a stetement
-> 
->   * require-secure=yes|no - a strong security boundary, only
->     permitting stuff that is explicitly declared secure,
->     excluding insecure stuff & anything without a statement
-> 
-> As illustration, I have added explicit annotations for many machine
-> types, some accelerators, all NICs (all insecure except xen,
-> e1000(e) and virtio), and all PCI virtio devices (all secure).
-> 
-> Example: TCG is explicitly insecure, KVM is explicitly secure,
->          qtest has no statement:
-> 
->   $ qemu-system-x86_64 -display none -machine pc,prohibit-insecure=yes -accel tcg
->   qemu-system-x86_64: Type 'tcg-accel' is declared as insecure
-> 
->   $ qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel tcg
->   qemu-system-x86_64: Type 'tcg-accel' is not declared as secure
-> 
->   $ qemu-system-x86_64 -display none -machine pc,prohibit-insecure=yes -accel kvm
->   ^Cqemu-system-x86_64: terminating on signal 2
-> 
->   $ qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel kvm
->   ^Cqemu-system-x86_64: terminating on signal 2
-> 
->   $ qemu-system-x86_64 -display none -machine pc,prohibit-insecure=yes -accel qtest
->   ^Cqemu-system-x86_64: terminating on signal 2
-> 
->   $ qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel qtest
->   qemu-system-x86_64: Type 'qtest-accel' is not declared as secure
-> 
-> Example: isapc machine type is explicitly insecure
-> 
->   $ qemu-system-x86_64 -display none -machine isapc,require-secure=yes -accel kvm
->   qemu-system-x86_64: Type 'isapc-machine' is not declared as secure
-> 
-> Example: devices which have no security statement are allowed if
->          merely excluding insecure devices:
-> 
->   $ qemu-system-x86_64 -display none -machine pc,prohibit-insecure=yes -accel kvm -device i6300esb
->   ^Cqemu-system-x86_64: terminating on signal 2
-> 
-> Example: devices which have no security statement are rejected if
->          requiring explicit security:
-> 
->   $ qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel kvm -device i6300esb
->   qemu-system-x86_64: -device i6300esb: Type 'i6300esb' is not declared as secure
-> 
-> Example: checks also apply in HMP, rtl8139 is explicitly insecure,
->          virtio is explicitly secure
-> 
->   $ qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel kvm -monitor stdio
->   QEMU 10.1.50 monitor - type 'help' for more information
->   (qemu) device_add rtl8139
->   Error: Type 'rtl8139' is not declared as secure
->   (qemu) device_add virtio-net
-> 
-> Example: checks also apply in QMP:
-> 
->   $ ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 -display none -machine pc,require-secure=yes -accel kvm
->   Welcome to the QMP low-level shell!
->   Connected
->   (QEMU) device_add driver=rtl8139
->   {"error": {"class": "GenericError", "desc": "Type 'rtl8139' is not declared as secure"}}
->   (QEMU) device_add driver=virtio-net
->   {"return": {}}
-> 
-> Some questions....
-> 
->   * Is using '-machine' the right place to express the policy ?
-> 
->   * Can we change '-accel help' to report 'secure' / 'insecure'
->     as we did for '-machine help' and '-device help'.
-> 
->   * Should we have 'query-devices' for QMP to allow the 'secure'
->     or 'insecure' status to be queried for every device.
-> 
->   * Should we have 'query-accel' for QMP to allow the 'secure'
->     or 'insecure' status to be queried for every accelerator.
-> 
->   * Should we enforce checks for -object & object_add too ?
->     Easy to add code for this, but do we need the ability to
->     exclude some object backends of dubious code quality ?
-> 
->   * Likewise for -chardev / -netdev / etc which are
->     conceptual specializations of -object
-> 
->   * BlockDriver structs don't use QOM, so we can't mark
->     'vvfat' block backend as insecure
-> 
-> The first one about '-machine' is probably the main blocker
-> from a design POV. Other things are just potential future
-> incremental work.
-> 
-> This series has had only 1/2 a day's work / thought put into
-> it, hence RFC status. It has been compiled and minimally tested
-> with the examples shown above. I have not pushed this through
-> CI nor considered tests yet. Still it gives a good illustration
-> of what's involved in recording security info in code.
-> 
-> Daniel P. Berrangé (15):
->   qom: replace 'abstract' with 'flags'
->   qom: add tracking of security state of object types
->   machine: add 'require-secure' and 'prohibit-insecure' properties
->   machine: check security for machine and accelerator types
->   system: report machine security status in help output
->   system: check security of device types
->   system: report device security status in help output
->   hw/core: report secure/insecure status in query-machines
->   accel: mark 'kvm' as secure and 'tcg' as insecure
->   hw/virtio: mark all virtio PCI devices as secure
->   hw: mark x86, s390, ppc, arm versioned machine types as secure
->   hw: declare Xen & microvm machines as secure, isapc as insecure
->   hw/core: declare 'none' machine to be insecure
->   hw/net: mark all NICs as insecure except e1000, e1000e & xen
->   docs: expand security docs with info about secure/insecure markers
-> 
->  accel/kvm/kvm-all.c            |  1 +
->  accel/tcg/tcg-all.c            |  1 +
->  docs/system/security.rst       | 41 +++++++++++++++++++++
->  hw/arm/virt.c                  |  1 +
->  hw/arm/xen-pvh.c               |  1 +
->  hw/core/machine-qmp-cmds.c     |  2 ++
->  hw/core/machine.c              | 66 ++++++++++++++++++++++++++++++++++
->  hw/core/null-machine.c         |  2 +-
->  hw/i386/isapc.c                |  2 +-
->  hw/i386/microvm.c              |  1 +
->  hw/i386/pc_piix.c              |  4 +--
->  hw/i386/xen/xen-pvh.c          |  1 +
->  hw/i386/xen/xen_pvdevice.c     |  1 +
->  hw/net/allwinner-sun8i-emac.c  |  1 +
->  hw/net/allwinner_emac.c        |  3 +-
->  hw/net/cadence_gem.c           |  1 +
->  hw/net/can/can_kvaser_pci.c    |  1 +
->  hw/net/can/can_mioe3680_pci.c  |  1 +
->  hw/net/can/can_pcm3680_pci.c   |  1 +
->  hw/net/can/ctucan_pci.c        |  1 +
->  hw/net/can/xlnx-versal-canfd.c |  1 +
->  hw/net/can/xlnx-zynqmp-can.c   |  1 +
->  hw/net/dp8393x.c               |  1 +
->  hw/net/e1000.c                 |  1 +
->  hw/net/e1000e.c                |  1 +
->  hw/net/eepro100.c              |  1 +
->  hw/net/fsl_etsec/etsec.c       |  1 +
->  hw/net/ftgmac100.c             |  1 +
->  hw/net/igb.c                   |  1 +
->  hw/net/igbvf.c                 |  1 +
->  hw/net/imx_fec.c               |  2 ++
->  hw/net/lan9118.c               |  1 +
->  hw/net/lan9118_phy.c           |  1 +
->  hw/net/lance.c                 |  1 +
->  hw/net/lasi_i82596.c           |  1 +
->  hw/net/mcf_fec.c               |  1 +
->  hw/net/msf2-emac.c             |  1 +
->  hw/net/mv88w8618_eth.c         |  1 +
->  hw/net/ne2000-isa.c            |  1 +
->  hw/net/ne2000-pci.c            |  1 +
->  hw/net/npcm7xx_emc.c           |  1 +
->  hw/net/npcm_gmac.c             |  1 +
->  hw/net/npcm_pcs.c              |  1 +
->  hw/net/opencores_eth.c         |  1 +
->  hw/net/pcnet-pci.c             |  1 +
->  hw/net/rocker/rocker.c         |  1 +
->  hw/net/rtl8139.c               |  1 +
->  hw/net/smc91c111.c             |  1 +
->  hw/net/spapr_llan.c            |  1 +
->  hw/net/stellaris_enet.c        |  1 +
->  hw/net/sungem.c                |  1 +
->  hw/net/sunhme.c                |  1 +
->  hw/net/tulip.c                 |  1 +
->  hw/net/virtio-net.c            |  1 +
->  hw/net/vmxnet3.c               |  1 +
->  hw/net/xen_nic.c               |  1 +
->  hw/net/xgmac.c                 |  1 +
->  hw/net/xilinx_axienet.c        |  1 +
->  hw/net/xilinx_ethlite.c        |  1 +
->  hw/ppc/spapr.c                 |  1 +
->  hw/s390x/s390-virtio-ccw.c     |  1 +
->  hw/virtio/virtio-pci.c         |  3 ++
->  hw/xen/xen-pvh-common.c        |  1 +
->  hw/xenpv/xen_machine_pv.c      |  2 +-
->  include/hw/boards.h            | 18 +++++++++-
->  include/hw/i386/pc.h           |  5 ++-
->  include/qom/object.h           | 24 +++++++++++++
->  qapi/machine.json              |  9 ++++-
->  qom/object.c                   | 40 +++++++++++++++++----
->  system/qdev-monitor.c          | 10 ++++++
->  system/vl.c                    |  6 ++--
->  71 files changed, 275 insertions(+), 18 deletions(-)
-> 
-> -- 
-> 2.50.1
-> 
+This is the fourth revision of a patch set implementing an accelerator
+for the MSHV kernel driver, exposing HyperV to Linux "Dom0" hosts in
+various scenarios. Thanks for the feedback to the previous revision, I
+tried to incorporate those. The changes in the currenct patchset beyond
+the suggested fixes are mostly related to the replacement of retired
+ioctl calls that will not part of the upstreamed MSHV kernel driver.
 
-With regards,
-Daniel
+Best regards,
+
+magnus
+
+Changelog:
+
+v3 => v4
+
+- Addressed code review comments
+- Extended mention of MSHV accelerator in documentation
+- Reworked the QMP `query-mshv` command to work like other accelerator's
+  implementations (availability of the accelerator, instead of issueing
+  stat() on /dev/mshv)
+- Added a HMP `info mshv` command
+- Replaced ioctls `MSHV_GET_VP_REGISTERS`, `MSHV_SET_VP_REGISTERS`,
+  and `MSHV_TRANSLATE_GVA` with calls to `MSHV_ROOT_HVCALL`
+- Allocate static pages in cpu->accel for the HVCALL input/output params
+  (to avoid allocations in the MMIO exit path)
+
+v2 => v3
+
+- Addressed code review comments (style)
+- Reserve GSI 01-23 for IO-APIC pins (this resolved a problem in which MSI
+  routes would be overwritten with interrupts from legacy devices, breaking
+  irqfd notification for virtio-blk queues)
+- Guard memory slot table with mutex and RCU mechanism (multiple threads
+  might access the memory slot table, and in the event of an UNMAPPED_GPA
+  exit we need to query the table for an unmapped region covering that GPA)
+- Include memory slot manager in MshvState
+- Produce mshv.h kernel header with ./scripts/update-linux-headers.sh from
+  linux 6.16 (not all UAPI definitions are defined in the upstream kernel,
+  hence we ship hw/hyper/hvgdk*.h and hw/hyperv/hvhdk*.h headers)
+- Added a QMP command query-mshv (a requirement for integration into
+  higher-level tooling)
+- Removed handling of HALT vm exit, since this is not a supported HV
+  message any more.
+- Added 2 maintainers from Microsoft for the respective file hierarchy
+- Added mshv as accelerator option in the documentation
+
+RFC (v1) => v2
+
+- Addressed code review comments (style, consilidation).
+- Rewrote the logic that handles overlap-in-userspace mappings to use
+  a static list of slots, inspired by the HVF accelerator code.
+- Fixed a bug that wrote corrupt payload in a MSHV_SET_MSI_ROUTING
+  call, preventing vhost=on to work on tap network devices.
+- Removed an erronous truncation of guest addresses to 32bit when
+  registering ioeventfd's using MSHV_IOEVENTFD. This resulted in
+  shadowing of low memory when ioevents were registered with
+  addresses beyond the 4gb barrier and thus unexpected "unmapped gpa"
+  vm exits in lower mem regions (impacting io performance).
+- Fixed problem in which the MSI routing table was committed for KVM
+  KVM instead of MSHV in virtio-pci bus initialization.
+- Added handler for HLT vm exits.
+- The above fixes removed a few limitation present in the previous
+  revision:
+  - Guest with machine type "pc" are booting (testing is still mostly
+    performed with q35)
+  - Tap network devices can be used with vhost=on option.
+  - Seabios can be used with >2.75G memory and multiple virtio-pci
+    devices
+  - I/O performance improvement as extranous MMIO vm exits are avoided
+    by registering ioevents with a correct address.
+
+Notes:
+
+- A discrete kernel ioctl "set_immediate_exit" (to avoid a race condition
+  when handling terminiation signals like ctrl-a x) has been tested and
+  proven to mitigate the problem. Since other consumers of /dev/mshv have
+  simular requirements as QEMU, we opted to iterate a bit more on the
+  respective kernel interface.
+
+Magnus Kulke (26):
+  accel: Add Meson and config support for MSHV accelerator
+  target/i386/emulate: Allow instruction decoding from stream
+  target/i386/mshv: Add x86 decoder/emu implementation
+  hw/intc: Generalize APIC helper names from kvm_* to accel_*
+  include/hw/hyperv: Add MSHV ABI header definitions
+  linux-headers/linux: Add mshv.h headers
+  accel/mshv: Add accelerator skeleton
+  accel/mshv: Register memory region listeners
+  accel/mshv: Initialize VM partition
+  accel/mshv: Add vCPU creation and execution loop
+  accel/mshv: Add vCPU signal handling
+  target/i386/mshv: Add CPU create and remove logic
+  target/i386/mshv: Implement mshv_store_regs()
+  target/i386/mshv: Implement mshv_get_standard_regs()
+  target/i386/mshv: Implement mshv_get_special_regs()
+  target/i386/mshv: Implement mshv_arch_put_registers()
+  target/i386/mshv: Set local interrupt controller state
+  target/i386/mshv: Register CPUID entries with MSHV
+  target/i386/mshv: Register MSRs with MSHV
+  target/i386/mshv: Integrate x86 instruction decoder/emulator
+  target/i386/mshv: Write MSRs to the hypervisor
+  target/i386/mshv: Implement mshv_vcpu_run()
+  accel/mshv: Handle overlapping mem mappings
+  target/i386/mshv: Use preallocated page for hvcall
+  docs: Add mshv to documentation
+  MAINTAINERS: Add maintainers for mshv accelerator
+
+Praveen K Paladugu (1):
+  qapi/accel: Allow to query mshv capabilities
+
+ MAINTAINERS                      |   15 +
+ accel/Kconfig                    |    3 +
+ accel/accel-irq.c                |  106 ++
+ accel/meson.build                |    3 +-
+ accel/mshv/irq.c                 |  397 +++++++
+ accel/mshv/mem.c                 |  562 ++++++++++
+ accel/mshv/meson.build           |    9 +
+ accel/mshv/mshv-all.c            |  728 ++++++++++++
+ accel/mshv/msr.c                 |  374 +++++++
+ accel/mshv/trace-events          |   33 +
+ accel/mshv/trace.h               |   14 +
+ docs/about/build-platforms.rst   |    2 +-
+ docs/devel/codebase.rst          |    2 +-
+ docs/glossary.rst                |    6 +-
+ docs/system/introduction.rst     |    3 +
+ hmp-commands-info.hx             |   13 +
+ hw/core/machine-hmp-cmds.c       |   15 +
+ hw/core/machine-qmp-cmds.c       |   14 +
+ hw/intc/apic.c                   |    8 +
+ hw/intc/ioapic.c                 |   20 +-
+ hw/virtio/virtio-pci.c           |   21 +-
+ include/hw/hyperv/hvgdk.h        |   20 +
+ include/hw/hyperv/hvgdk_mini.h   |  817 ++++++++++++++
+ include/hw/hyperv/hvhdk.h        |  249 +++++
+ include/hw/hyperv/hvhdk_mini.h   |  102 ++
+ include/monitor/hmp.h            |    1 +
+ include/system/accel-irq.h       |   37 +
+ include/system/hw_accel.h        |    1 +
+ include/system/mshv.h            |  196 ++++
+ linux-headers/linux/mshv.h       |  291 +++++
+ meson.build                      |   11 +
+ meson_options.txt                |    2 +
+ qapi/accelerator.json            |   29 +
+ qemu-options.hx                  |   16 +-
+ scripts/meson-buildoptions.sh    |    3 +
+ scripts/update-linux-headers.sh  |    2 +-
+ target/i386/cpu.h                |    4 +-
+ target/i386/emulate/meson.build  |    7 +-
+ target/i386/emulate/x86_decode.c |   27 +-
+ target/i386/emulate/x86_decode.h |    9 +
+ target/i386/emulate/x86_emu.c    |    3 +-
+ target/i386/emulate/x86_emu.h    |    2 +
+ target/i386/meson.build          |    2 +
+ target/i386/mshv/meson.build     |    8 +
+ target/i386/mshv/mshv-cpu.c      | 1764 ++++++++++++++++++++++++++++++
+ target/i386/mshv/x86.c           |  297 +++++
+ 46 files changed, 6208 insertions(+), 40 deletions(-)
+ create mode 100644 accel/accel-irq.c
+ create mode 100644 accel/mshv/irq.c
+ create mode 100644 accel/mshv/mem.c
+ create mode 100644 accel/mshv/meson.build
+ create mode 100644 accel/mshv/mshv-all.c
+ create mode 100644 accel/mshv/msr.c
+ create mode 100644 accel/mshv/trace-events
+ create mode 100644 accel/mshv/trace.h
+ create mode 100644 include/hw/hyperv/hvgdk.h
+ create mode 100644 include/hw/hyperv/hvgdk_mini.h
+ create mode 100644 include/hw/hyperv/hvhdk.h
+ create mode 100644 include/hw/hyperv/hvhdk_mini.h
+ create mode 100644 include/system/accel-irq.h
+ create mode 100644 include/system/mshv.h
+ create mode 100644 linux-headers/linux/mshv.h
+ create mode 100644 target/i386/mshv/meson.build
+ create mode 100644 target/i386/mshv/mshv-cpu.c
+ create mode 100644 target/i386/mshv/x86.c
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.34.1
 
 
