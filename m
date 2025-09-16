@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87AFACAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F940CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyYru-0008HM-1U; Tue, 16 Sep 2025 12:49:26 -0400
+	id 1uyYth-0002jl-8V; Tue, 16 Sep 2025 12:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyYrs-0008Fx-6J
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:49:24 -0400
+ id 1uyYtP-0002IL-TN
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:51:01 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYrq-0006QO-7w
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:49:23 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYtM-0006qi-GX
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:58 -0400
 Received: from localhost.localdomain (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 68D38201551D;
- Tue, 16 Sep 2025 09:49:16 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 68D38201551D
+ by linux.microsoft.com (Postfix) with ESMTPSA id B23EB201551D;
+ Tue, 16 Sep 2025 09:50:49 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B23EB201551D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758041360;
- bh=8KammitWYqIpX7N3FRxNLCjC3grTl49hco37a6bOKoE=;
+ s=default; t=1758041454;
+ bh=+Q/G6oBPcAz/NsYtv5GdYxMdgdVn+iCcKC3nXkDG4OU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qH/aY9byeYhPX3rGnzf9xyHHUeZ6ufwXh81wbTFCzYu62ggsQK6UGjM14JGlw2p/j
- +CPl2trUvXZn47B9uKuoPKMZ9JCpqjvJABoVDtXe4jLPkF1IErXW1aVKSP4+pI4MPv
- nBhKnH1zD6Uomy1UMEgRVmqy2fSi1oSLwwsciaPQ=
+ b=Jwt8U/kGNzddquEcO03qf8g/Eua3UXJl469eo+Rc5roO0T82KhsZLYbtcsvJmu5++
+ dEJ0kmk3jdU+SWh7gBsQGr1kCSiia62oVlnl+18tlXsJwLBQGropCakuslQri4mMYW
+ LdplVI09heXpzXZBwSJDwfWiCID7QjALQJT1Sv00=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -49,10 +49,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 01/27] accel: Add Meson and config support for MSHV
- accelerator
-Date: Tue, 16 Sep 2025 18:48:21 +0200
-Message-Id: <20250916164847.77883-2-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v4 18/27] target/i386/mshv: Register CPUID entries with MSHV
+Date: Tue, 16 Sep 2025 18:48:38 +0200
+Message-Id: <20250916164847.77883-19-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
 References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
@@ -82,102 +81,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a Meson feature option and default-config entry to allow
-building QEMU with MSHV (Microsoft Hypervisor) acceleration support.
-
-This is the first step toward implementing an MSHV backend in QEMU.
+Convert the guest CPU's CPUID model into MSHV's format and register it
+with the hypervisor. This ensures that the guest observes the correct
+CPU feature set during CPUID instructions.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/Kconfig                 |  3 +++
- meson.build                   | 10 ++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 4 files changed, 18 insertions(+)
+ target/i386/mshv/mshv-cpu.c | 206 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 206 insertions(+)
 
-diff --git a/accel/Kconfig b/accel/Kconfig
-index 4263cab722..a60f114923 100644
---- a/accel/Kconfig
-+++ b/accel/Kconfig
-@@ -13,6 +13,9 @@ config TCG
- config KVM
-     bool
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index daa41b92c9..54ab36e76a 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -402,6 +402,206 @@ int mshv_load_regs(CPUState *cpu)
+     return 0;
+ }
  
-+config MSHV
-+    bool
++static void add_cpuid_entry(GList *cpuid_entries,
++                            uint32_t function, uint32_t index,
++                            uint32_t eax, uint32_t ebx,
++                            uint32_t ecx, uint32_t edx)
++{
++    struct hv_cpuid_entry *entry;
 +
- config XEN
-     bool
-     select FSDEV_9P if VIRTFS
-diff --git a/meson.build b/meson.build
-index 3d73873356..6bd1d897e3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -334,6 +334,7 @@ elif cpu == 'x86_64'
-     'CONFIG_HVF': ['x86_64-softmmu'],
-     'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
-     'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_MSHV': ['x86_64-softmmu'],
-   }
- endif
++    entry = g_malloc0(sizeof(struct hv_cpuid_entry));
++    entry->function = function;
++    entry->index = index;
++    entry->eax = eax;
++    entry->ebx = ebx;
++    entry->ecx = ecx;
++    entry->edx = edx;
++
++    cpuid_entries = g_list_append(cpuid_entries, entry);
++}
++
++static void collect_cpuid_entries(const CPUState *cpu, GList *cpuid_entries)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t leaf, subleaf;
++    size_t max_leaf = 0x1F;
++    size_t max_subleaf = 0x20;
++
++    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
++    int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
++
++    /* Regular leaves without subleaves */
++    for (leaf = 0; leaf <= max_leaf; leaf++) {
++        bool has_subleaves = false;
++        for (int i = 0; i < n_subleaf_leaves; i++) {
++            if (leaf == leaves_with_subleaves[i]) {
++                has_subleaves = true;
++                break;
++            }
++        }
++
++        if (!has_subleaves) {
++            cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                continue;
++            }
++
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            continue;
++        }
++
++        subleaf = 0;
++        while (subleaf < max_subleaf) {
++            cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
++
++            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
++                /* all zeroes indicates no more leaves */
++                break;
++            }
++            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
++            subleaf++;
++        }
++    }
++}
++
++static int register_intercept_result_cpuid_entry(const CPUState *cpu,
++                                                 uint8_t subleaf_specific,
++                                                 uint8_t always_override,
++                                                 struct hv_cpuid_entry *entry)
++{
++    int ret;
++    int vp_index = cpu->cpu_index;
++    int cpu_fd = mshv_vcpufd(cpu);
++
++    struct hv_register_x64_cpuid_result_parameters cpuid_params = {
++        .input.eax = entry->function,
++        .input.ecx = entry->index,
++        .input.subleaf_specific = subleaf_specific,
++        .input.always_override = always_override,
++        .input.padding = 0,
++        /*
++         * With regard to masks - these are to specify bits to be overwritten
++         * The current CpuidEntry structure wouldn't allow to carry the masks
++         * in addition to the actual register values. For this reason, the
++         * masks are set to the exact values of the corresponding register bits
++         * to be registered for an overwrite. To view resulting values the
++         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
++         * used.
++         */
++        .result.eax = entry->eax,
++        .result.eax_mask = entry->eax,
++        .result.ebx = entry->ebx,
++        .result.ebx_mask = entry->ebx,
++        .result.ecx = entry->ecx,
++        .result.ecx_mask = entry->ecx,
++        .result.edx = entry->edx,
++        .result.edx_mask = entry->edx,
++    };
++    union hv_register_intercept_result_parameters parameters = {
++        .cpuid = cpuid_params,
++    };
++
++    hv_input_register_intercept_result in = {0};
++    in.vp_index = vp_index;
++    in.intercept_type = HV_INTERCEPT_TYPE_X64_CPUID;
++    in.parameters = parameters;
++
++    struct mshv_root_hvcall args = {0};
++    args.code   = HVCALL_REGISTER_INTERCEPT_RESULT;
++    args.in_sz  = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("failed to register intercept result for cpuid");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int register_intercept_result_cpuid(const CPUState *cpu,
++                                           struct hv_cpuid *cpuid)
++{
++    int ret = 0, entry_ret;
++    struct hv_cpuid_entry *entry;
++    uint8_t subleaf_specific, always_override;
++
++    for (size_t i = 0; i < cpuid->nent; i++) {
++        entry = &cpuid->entries[i];
++
++        /* set defaults */
++        subleaf_specific = 0;
++        always_override = 1;
++
++        /* Intel */
++        /* 0xb - Extended Topology Enumeration Leaf */
++        /* 0x1f - V2 Extended Topology Enumeration Leaf */
++        /* AMD */
++        /* 0x8000_001e - Processor Topology Information */
++        /* 0x8000_0026 - Extended CPU Topology */
++        if (entry->function == 0xb
++            || entry->function == 0x1f
++            || entry->function == 0x8000001e
++            || entry->function == 0x80000026) {
++            subleaf_specific = 1;
++            always_override = 1;
++        } else if (entry->function == 0x00000001
++            || entry->function == 0x80000000
++            || entry->function == 0x80000001
++            || entry->function == 0x80000008) {
++            subleaf_specific = 0;
++            always_override = 1;
++        }
++
++        entry_ret = register_intercept_result_cpuid_entry(cpu, subleaf_specific,
++                                                          always_override,
++                                                          entry);
++        if ((entry_ret < 0) && (ret == 0)) {
++            ret = entry_ret;
++        }
++    }
++
++    return ret;
++}
++
++static int set_cpuid2(const CPUState *cpu)
++{
++    int ret;
++    size_t n_entries, cpuid_size;
++    struct hv_cpuid *cpuid;
++    struct hv_cpuid_entry *entry;
++    GList *entries = NULL;
++
++    collect_cpuid_entries(cpu, entries);
++    n_entries = g_list_length(entries);
++
++    cpuid_size = sizeof(struct hv_cpuid)
++        + n_entries * sizeof(struct hv_cpuid_entry);
++
++    cpuid = g_malloc0(cpuid_size);
++    cpuid->nent = n_entries;
++    cpuid->padding = 0;
++
++    for (size_t i = 0; i < n_entries; i++) {
++        entry = g_list_nth_data(entries, i);
++        cpuid->entries[i] = *entry;
++        g_free(entry);
++    }
++    g_list_free(entries);
++
++    ret = register_intercept_result_cpuid(cpu, cpuid);
++    g_free(cpuid);
++    if (ret < 0) {
++        return ret;
++    }
++
++    return 0;
++}
++
+ static inline void populate_hv_segment_reg(SegmentCache *seg,
+                                            hv_x64_segment_register *hv_reg)
+ {
+@@ -684,6 +884,12 @@ int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
+     int ret;
+     int cpu_fd = mshv_vcpufd(cpu);
  
-@@ -880,6 +881,14 @@ accelerators = []
- if get_option('kvm').allowed() and host_os == 'linux'
-   accelerators += 'CONFIG_KVM'
- endif
++    ret = set_cpuid2(cpu);
++    if (ret < 0) {
++        error_report("failed to set cpuid");
++        return -1;
++    }
 +
-+if get_option('mshv').allowed() and host_os == 'linux'
-+  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
-+    error('mshv accelerator requires x64_64 host')
-+  endif
-+  accelerators += 'CONFIG_MSHV'
-+endif
-+
- if get_option('whpx').allowed() and host_os == 'windows'
-   if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
-     error('WHPX requires 64-bit host')
-@@ -4821,6 +4830,7 @@ if have_system
-   summary_info += {'HVF support':       config_all_accel.has_key('CONFIG_HVF')}
-   summary_info += {'WHPX support':      config_all_accel.has_key('CONFIG_WHPX')}
-   summary_info += {'NVMM support':      config_all_accel.has_key('CONFIG_NVMM')}
-+  summary_info += {'MSHV support':      config_all_accel.has_key('CONFIG_MSHV')}
-   summary_info += {'Xen support':       xen.found()}
-   if xen.found()
-     summary_info += {'xen ctrl version':  xen.version()}
-diff --git a/meson_options.txt b/meson_options.txt
-index fff1521e58..1be7d61efd 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -71,6 +71,8 @@ option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemalloc'],
- 
- option('kvm', type: 'feature', value: 'auto',
-        description: 'KVM acceleration support')
-+option('mshv', type: 'feature', value: 'auto',
-+       description: 'MSHV acceleration support')
- option('whpx', type: 'feature', value: 'auto',
-        description: 'WHPX acceleration support')
- option('hvf', type: 'feature', value: 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 0ebe6bc52a..d3d8f48bbb 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -154,6 +154,7 @@ meson_options_help() {
-   printf "%s\n" '  membarrier      membarrier system call (for Linux 4.14+ or Windows'
-   printf "%s\n" '  modules         modules support (non Windows)'
-   printf "%s\n" '  mpath           Multipath persistent reservation passthrough'
-+  printf "%s\n" '  mshv            MSHV acceleration support'
-   printf "%s\n" '  multiprocess    Out of process device emulation support'
-   printf "%s\n" '  netmap          netmap network backend support'
-   printf "%s\n" '  nettle          nettle cryptography support'
-@@ -408,6 +409,8 @@ _meson_option_parse() {
-     --disable-modules) printf "%s" -Dmodules=disabled ;;
-     --enable-mpath) printf "%s" -Dmpath=enabled ;;
-     --disable-mpath) printf "%s" -Dmpath=disabled ;;
-+    --enable-mshv) printf "%s" -Dmshv=enabled ;;
-+    --disable-mshv) printf "%s" -Dmshv=disabled ;;
-     --enable-multiprocess) printf "%s" -Dmultiprocess=enabled ;;
-     --disable-multiprocess) printf "%s" -Dmultiprocess=disabled ;;
-     --enable-netmap) printf "%s" -Dnetmap=enabled ;;
+     ret = set_cpu_state(cpu, fpu, xcr0);
+     if (ret < 0) {
+         error_report("failed to set cpu state");
 -- 
 2.34.1
 
