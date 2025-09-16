@@ -4,101 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C114CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Sep 2025 23:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8FCCAC597
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 01:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyIJx-0000B5-5i; Mon, 15 Sep 2025 19:09:17 -0400
+	id 1uyK3p-0001gl-Ah; Mon, 15 Sep 2025 21:00:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uyIJs-0000AN-JP
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:09:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uyIJe-0003P1-LD
- for qemu-devel@nongnu.org; Mon, 15 Sep 2025 19:09:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1757977722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UmrCQY5qy1q8dffJaRkx41XnKkWEw8BoFx8icIA+RLE=;
- b=A7o5V67rfsDOzeoWISm//nA/ciy9dOitp4XMEHApGZSiJacuMxnPMEklrjdK8tbjlIA/Oh
- phcfMVZs+pGfN7O9JHQDNXqImXXGFNwnAXVVxNGP6BVuFwpHMP44fCV87kkPvyJTwoXyqi
- c7AC+aJhjirSvrKNOgWlwofp4FemIy4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-MYUsDOxOOX-Q3sIRR6qLyQ-1; Mon, 15 Sep 2025 19:08:40 -0400
-X-MC-Unique: MYUsDOxOOX-Q3sIRR6qLyQ-1
-X-Mimecast-MFC-AGG-ID: MYUsDOxOOX-Q3sIRR6qLyQ_1757977720
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-afe6216085aso60716466b.1
- for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 16:08:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyK3a-0001VJ-MZ
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 21:00:31 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyK3X-0006YZ-QC
+ for qemu-devel@nongnu.org; Mon, 15 Sep 2025 21:00:30 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b4f7053cc38so3198177a12.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Sep 2025 18:00:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1757984425; x=1758589225; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4VORNWWIAd7pPP67I1ECz1kK2tfhafOoMG6VBf3ICpI=;
+ b=cqGSLfO1R2+THBmJnsH5vOciS3RSI4KWOxNySDvhEX+vjNVIH0cWSt3Tg7qxYduzRj
+ mCNmouHN+ID3KIa/xsDUf5aVQmPkvJrZmr3Uymd7XCkEI6FG/LywUkwmR3jNxafKUvqu
+ aOGeHJ3A60vUMgRQqIKGIMztDsfNi5KlSIOJXybdGSdDvIzL203N0R9d5keFJcdc2R9C
+ u803KNLiRBaj86oUJdUZkhKMB908qxSN9tjGXyzXt5gw3TYdXnbN38/uNNopCX3x6flw
+ xvYENZ8RvOBESJO02XpUhy7boh0diTUu0nEoE99YMqlYL63dIJRWXjMK9j/VDyhGFwSo
+ q4tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1757977719; x=1758582519;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UmrCQY5qy1q8dffJaRkx41XnKkWEw8BoFx8icIA+RLE=;
- b=titApYHvu8sHHA2p1i54dzgLvG3++RTUM6JJJdAwys5Ee2pLrIEI/flRIEd2Tf4bUB
- qmHINO3PYbRsl8SknCPiSEa8GytjC63L513VjqgAe3aJTPRQyQPiyJOzKZSNJbtVcAgu
- y/3XqdAMsVHmLOk12dWSFxrQWCx5zNKTp6rQqJsCtlzcGokr9SKkUElYEa9CFsq2GMpS
- cZQ35yzgjuSXrKW+YuvM+PKG9R9EMBNNTa3ts38ueKD/D0J9iz81hnm9DLnjTN1AIb0h
- r6xax/B6EGW723LO+ODxbefM1JHX9BrBQ/i4SiyvUWRuM1xFLFQg/BQXWeaPw4H+jgQ3
- VFgw==
-X-Gm-Message-State: AOJu0YyKvpWwrJjrDsGzirSGZwf/Lrz5irxWEDxHzAQfHpaenivJ2A80
- qt2yNTbuv5McV2K7WhrEIgdTRUvyyVpTo93aPzwALamTZkBOJjW7iDAjV7Z2XD+3D33ydROz9r5
- QkqWi/QLh4E1E7vx45kvl76R01JHqC1essMVewOnBNw3Wte4TZ8m0A6Op
-X-Gm-Gg: ASbGncvq0JQ99OLB2HskiauoCrddNUQSfsIDCs5/+C/bqvuleMYvTy0KOPO42A3QMr2
- l49tmJy7spbWebk3q84v3Pu8GHYivs/f1asggq1f5pG5UIy5ANguywc6oCEsScPAa/LFS8G6Hl2
- Eea3gG2lKQmX1EinQDAZxscFI2s1zDa+u/Duuf6JN+We6YioK3vVeEa8B0eDI5Vv0AOo12vnYjn
- 4WNspmWG8+XYsEGHlIxdJzxCYCRxDOw7uplStRnqG9UH93whV4H3GfcQPkuT9NCd2z0KHoRhp2w
- /ZYu5Ug8RlH+F4/trFYiUrbwdJNg
-X-Received: by 2002:a05:6402:4559:b0:62b:2899:5b31 with SMTP id
- 4fb4d7f45d1cf-62ed80b6b91mr12207089a12.5.1757977719639; 
- Mon, 15 Sep 2025 16:08:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcLWBItfP7dzGQYzT5Doeuz7bgzQ62gQTnv78tBHSGy8Qf7wuwed5bTgbiOa+Pu2s4iVvP4A==
-X-Received: by 2002:a05:6402:4559:b0:62b:2899:5b31 with SMTP id
- 4fb4d7f45d1cf-62ed80b6b91mr12207072a12.5.1757977719291; 
- Mon, 15 Sep 2025 16:08:39 -0700 (PDT)
-Received: from redhat.com ([31.187.78.47]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-62ec33ae181sm10383955a12.22.2025.09.15.16.08.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Sep 2025 16:08:38 -0700 (PDT)
-Date: Mon, 15 Sep 2025 19:08:35 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Szymon Lukasz <noh4hss@gmail.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v4 00/10] virtio-console: notify about the terminal size
-Message-ID: <20250915190638-mutt-send-email-mst@kernel.org>
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <ecb9a5310ec1b846124a6342232dd421778df064.camel@gmail.com>
+ d=1e100.net; s=20230601; t=1757984425; x=1758589225;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4VORNWWIAd7pPP67I1ECz1kK2tfhafOoMG6VBf3ICpI=;
+ b=EeUTCAn+zVuUg7c0WP6NM754OJAlKnLqq1eOx2dbZxvu7rJsRG8n2661YChLfvVbtC
+ ho2U/0vXDXld5ak7/k75DRiBwo5QXkG3nSV2oKqkTUCReWIH4ZPJQtJMH36Zf9j5/UCY
+ w0HMYLaES2gvqxAJNf6sh2b8zo9qkE2QJEqTsMLRM43VA3AVfN4Z3xCrB4R7vxdZskQB
+ JH2d430I1jryQtfJJob6xPtB/MOMR/nXNifGvrDTSOkMikLXmsuhJbRTnFpjFsyWU732
+ NFrcfuRH0afBRxQj+GwWxqWMfy0WoFcNs6zcFTa2BAOlz1xtTRr/qY2q8m7CkTlzFcCq
+ mLcQ==
+X-Gm-Message-State: AOJu0YxNTyjCeBaexYRlj6L/pPC6w2AzrDdzUKYfGvwokrIiRyKK4+Ws
+ ZdRXDuJdR9L68RWE9lYsw3ws+7XnNs9DewqFOKJ8DebwvWD7yarqvbf2eismsTOJeyw=
+X-Gm-Gg: ASbGncsV2RCwyFGTYond9gWSsfmC4MvP643kf0g+RR9ufjHm3EriQ/uZIyKil+D+XSt
+ ORBFH7IOW4Ifg7iyrZ0KE/mdfROO/+xxO5Qq8AucFGGNxZGVxSypPHcui7s0YUDm+1BQbRorb4x
+ VGERQukEK+pQkVayVouMimQ18XtbcMOsV9ITHDLy6Ij9RpFASAOt8eki/fOQPEqMf0YVs6rBYrC
+ s61zcH+kyBijrh5IsopGdD2biuK4H186IqiueTpTetVrf0mVT3qH2BZXj9XuG15KaPIY5wpL+JM
+ kdIN6NjB5YRa8Qghyl/Syw1Ut52J/oBK+19PneGj4tmzUEXaRDdK1S2JgbQaUGoHLZOZ1YIW3wd
+ Crn3iSj3ZQ+ClA1Cry9yV05wrkleTAwAxw9t3
+X-Google-Smtp-Source: AGHT+IFRcreltfXmPk6Fe8waennf3Ep67ETE6Ctbbjylwf6R9MgVOl/jO5RhLCOc4Bxz6mx1BCY0qg==
+X-Received: by 2002:a17:903:1b4c:b0:24c:965a:f94d with SMTP id
+ d9443c01a7336-25d26a595d2mr184714495ad.46.1757984425065; 
+ Mon, 15 Sep 2025 18:00:25 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-260cf673181sm85284995ad.99.2025.09.15.18.00.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Sep 2025 18:00:24 -0700 (PDT)
+Message-ID: <961b4cc0-4705-41c9-a575-2fba28d7a938@linaro.org>
+Date: Mon, 15 Sep 2025 18:00:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ecb9a5310ec1b846124a6342232dd421778df064.camel@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 55/84] target/arm: Emit HSTR trap exception out of line
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ <20250830054128.448363-56-richard.henderson@linaro.org>
+ <CAFEAcA_1QRqHm-CsNn1SsvxiHybRDRob3fvn8U38uZorYtf0Ag@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA_1QRqHm-CsNn1SsvxiHybRDRob3fvn8U38uZorYtf0Ag@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,30 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 01:02:02AM +0200, Filip Hejsek wrote:
-> While thinking about the patches, a few questions about the virtio spec
-> have popped into my head.
+On 9/9/25 06:33, Peter Maydell wrote:
+>> -            TCGv_i32 t;
+>> -            DisasLabel over = gen_disas_label(s);
+>> +            TCGLabel *fail = delay_exception_el(s, EXCP_UDEF, syndrome, 2);
+>> +            TCGv_i32 t =
+>> +                load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
+>>
+>> -            t = load_cpu_offset(offsetoflow32(CPUARMState, cp15.hstr_el2));
 > 
-> 1. Should the config space size also be updated (for port 0) when
-> multiport is used? Based on my reading of the spec, I think yes.
-> 
-> 2. Can VIRTIO_CONSOLE_RESIZE be sent if VIRTIO_CONSOLE_F_SIZE is not
-> negotiated? The spec does not say, which I think means it can.
+> I almost certainly originally wrote this line with the declaration
+> of t and its initialization split to avoid this awkward linebreak
+> that you get if you put them together...
 
-But the guest can't do anything useful here.
-
-> 3. The spec says that reading from config space fields that are
-> conditional on features should be allowed even if the driver has not
-> (yet) accepted the feature. Does it mean that we have to update the
-> size even if the feature is not accepted (yet), or is it OK if the
-> reads return 0?
-
-This is talking about the window before FEATURES_OK (and so DRIVER_OK)
-is set.  It is best to update the size. There's no interrupt to send
-though.
+With -ftrivial-auto-var-init, it's always better not to split declaration from init.
 
 
-> Thanks for any answers or opinions,
-> Filip Hejsek
-
+r~
 
