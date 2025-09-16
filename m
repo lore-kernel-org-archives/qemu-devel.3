@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443D0CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB39CAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyZjx-0004Uy-L8; Tue, 16 Sep 2025 13:45:17 -0400
+	id 1uyZp2-0006un-Tu; Tue, 16 Sep 2025 13:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uyZjt-0004UR-Tx
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:45:15 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from
+ <3Y6PJaAYKCh4SO5CHTAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--yubinz.bounces.google.com>)
+ id 1uyZp0-0006tf-Uf
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:50:30 -0400
+Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uyZjr-00078N-Pn
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:45:13 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-45e03730f83so27460905e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 10:45:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3Y6PJaAYKCh4SO5CHTAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--yubinz.bounces.google.com>)
+ id 1uyZoz-0008A2-04
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:50:30 -0400
+Received: by mail-yb1-xb49.google.com with SMTP id
+ 3f1490d57ef6-e96dc0032e6so8297361276.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 10:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758044709; x=1758649509; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o7UP/4Lw93msGinfUMmin2LERced09YSnvwvDnwE9+I=;
- b=Zr4gK72ERpv6MN1K4mXSbWhI+G2r7Zh0TXgEyYFL1LkHGyMoESI4zMHcpuc2ONDxGe
- Y0y1cScjykXbEFLr5WN4KGZj1mY20j6PKibsPBxmzsw7ozLSikusYArEa0Q35yIsVBHB
- ZeZAqoBG0nnoha9CN0GRHAeuXLtkxZVMHaoRNZIOaPqGQejwrLi2rY1X0bdz5EmBMpP8
- s8EeWz3Q0ge2GhQrALAOs0ZzzHPkZ0qOpfC21ycneWNICPngFC3ZFbJ0PQc5xMX/m1XW
- syuEJaOd/CmnuHnU/AdEDBNHJ56+4jsz5eTJAqA/xBW4g/vRGxEfJbzen0lj+rQniKAe
- RECg==
+ d=google.com; s=20230601; t=1758045027; x=1758649827; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=rVlErkAKc50MZMZDYr0nE/2HAp3uCy7UnfuAK6J/Eh0=;
+ b=rOMKTZ+af+6hvOjhhlWUtFxBXQraUdy5JKnA1WOnlsNGOxRhPOPUXikMR1JjC1kaF8
+ FpI+z3Eu5MP1diCcreZRYfdFMQD70qv1t6QBRXQeFCBhb/5ovNDQfdI2PIrt99SbcmeA
+ 9ilkIp9QrT7MYCo2fygapD8HCKzKd9PmTsQbGSgoRHcxvHemB5t0jLWv7vF4F1i9Z3UE
+ 7EtaVdr4NuXitNYOt80x9r0AAhGdaDhaqZaJ+N0YDqXcjkIUx9P1ON+F93iB/dDpetkN
+ 7XMISISMkiQUsiyjkilrzAS4UT9M7fgkH92BnyQ0YMrCZ5Bp13Tb4DYLvM+9yzxogQeO
+ 2i+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758044709; x=1758649509;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=o7UP/4Lw93msGinfUMmin2LERced09YSnvwvDnwE9+I=;
- b=UMcOtdwvmOl77WKnFVJyPiQ8tD14CE4AuHY4rwi4lY7b9yojMYe+SczqLmRRMnRVL1
- gDUeDa5WOfESOvaiZpbfhhuAUqaNK7r9jPkbMRcklGute9ThS6MhzxnnBjP9ZKRlD+2v
- RR4oYp1/Qlx1IUhcVXhSYQ5h8gDCfbjsOLWpLlZaT0oSkpDoAgKlpWQRdycxD/CjzkNH
- 41mM5SN92iMA10sDRPSnA9oEVvkL1NYB1L9COS8b4csPc3Y0t4oZ/kbsMjbGyjh6jh4w
- HYBF7yEZKKdricBlMVmw+vORps9R0buuPETG0Ih7/Vvuxx2q0lJytKk+nVFbxca0O6jl
- PapQ==
-X-Gm-Message-State: AOJu0YxRd78yKVVzQik8AuXUph0XlHCI7sojP/bCs3RKfz+LTLtj+BXG
- CnUOQNq0MbDa70BucsJiO6xnApm8Z6mNxxGTxRQ3z87PJb3h5m6PFHOF4qnW10M6JCw=
-X-Gm-Gg: ASbGncvqLCg82t/B+thhj/+mpkzTPAuTKODksUL4J+Ufh17G+yCUN6ThvmPRRpmK2Vv
- jXJWvMKA3DIacw8/Ysl9gTR4Y8CjVJk3KuNYrtpXyWekbHiQyoFFgiBAjw76z7Fny4IquT8KlfY
- YGahdZJjpQbQoCBsq0vQ0PNnevrmXxJtETKv9Un2M9q/kAWdrJgGgQF9i+RUTEX6SZAWjYgzUNV
- TAm4PaIJTEPZnZ5GywzLTqBCFR2BBQ8/ta0XZMEkDpQHEbGKL9kW1rYEMrqdBxbS2SAWJGxPkeg
- AofEu0RQs+TUbpO8LlIKjrMiVhww8SjO7j8ipe697GPywkxTQQpo9oc0XnSrhbk3IXYAd6YAvoL
- tJ1G0AgqBAy0/416KENNWX1I=
-X-Google-Smtp-Source: AGHT+IGkeHJC98jGQ4UQUzXB4BMZa9cmEpPBXfZVlHtq59fCYP147tisIB+IZ0HTAmJzYWfWS3AANA==
-X-Received: by 2002:a05:600c:4f0b:b0:45d:d718:3b9e with SMTP id
- 5b1f17b1804b1-45f2165e852mr175915325e9.10.1758044709285; 
- Tue, 16 Sep 2025 10:45:09 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46137a252fasm2922675e9.7.2025.09.16.10.45.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 10:45:08 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A754B5F7DC;
- Tue, 16 Sep 2025 18:45:07 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] .gitlab-ci.d/buildtest.yml: Unset CI_COMMIT_DESCRIPTION
- for htags
-In-Reply-To: <20250916163030.1467893-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Tue, 16 Sep 2025 17:30:30 +0100")
-References: <20250916163030.1467893-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 16 Sep 2025 18:45:07 +0100
-Message-ID: <87cy7qnvfg.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1758045027; x=1758649827;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rVlErkAKc50MZMZDYr0nE/2HAp3uCy7UnfuAK6J/Eh0=;
+ b=egM/jGwPq/35EHUSPIOI7Mggtzajx3PC79Pm5xeBExUhgznukPt+/hB4fCiHSBLsdu
+ 0xLGQgS/vr/oQRJKqMeQIsv5177uDFgJK1dwJOp8mhuFp+p+Z5z1P9NU9zOszY7KPISA
+ NEIFKQvMudMob7OZHoYxKNSluHOCYY2ewqGZ5GQyO3G7UblICvEZn8m5tSUsg0vDKyBz
+ cCPp3XPYzY1OG/8aQH9zgkQRLnBu7c/SxMVb4l0o4owmil0EZuzSKc6Elx5dqaHep+RR
+ HzoU1zgovfv5qnkUMvCdwDLk0Ym4EJToUfx9U/qo/OMA0PPZbVUQYPc6xQP1e4Ccv1+G
+ vTIw==
+X-Gm-Message-State: AOJu0Yxm37v/58T9cPKzm+eorEAaJEFlV5PxP2ELk692jssldQvRUQBX
+ rLQVHWCOjqrM8LMT4OHiQg2HbFijGfkNtz3kKiOt5Mtvp3Z8ot9NXotxbqWRhCrfcMGI8Y9P6cE
+ Qiu80BIuz9MpVQQqzXcvnTVGEDb2UiOKSPk1uuMUrIHukVZ105xcr/7U16rHZXYnKMiIU+6Qpt8
+ T9viTUjrVMmKkgUndVSzHRHp7N7CqaQ/9XL2g=
+X-Google-Smtp-Source: AGHT+IGN4ZKUQFs8/oLG+fRBfUoUkdh3rLmQENSz6qpfnt3vqYO84J/Am9XPes8XlzIJeqAS8VC4q2EI/Es=
+X-Received: from ybbgr6.prod.google.com ([2002:a05:6902:6206:b0:ea5:bb58:2a02])
+ (user=yubinz job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6902:2d05:b0:ea4:156d:2cab
+ with SMTP id 3f1490d57ef6-ea4156d2eccmr6513816276.0.1758045027069; Tue, 16
+ Sep 2025 10:50:27 -0700 (PDT)
+Date: Tue, 16 Sep 2025 17:50:14 +0000
+Mime-Version: 1.0
+X-B4-Tracking: v=1; b=H4sIAFajyWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDS0Mz3cLSxLySRN1Cc8Mc3dTUgqL83GJdg9SkZLNUAxMLsxRzJaDOgqL
+ UtMwKsKnRsbW1APUixodlAAAA
+X-Change-Id: 20250916-quanta-q71l-eeproms-0ebc6e0486d7
+X-Mailer: b4 0.14.2
+Message-ID: <20250916-quanta-q71l-eeproms-v1-0-3648692cc441@google.com>
+Subject: [PATCH 0/2] Add drive-backed EEPROM support to quanta-q71l
+From: Yubin Zou <yubinz@google.com>
+To: qemu-devel@nongnu.org
+Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ Yubin Zou <yubinz@google.com>, Patrick Venture <venture@google.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
+ envelope-from=3Y6PJaAYKCh4SO5CHTAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--yubinz.bounces.google.com;
+ helo=mail-yb1-xb49.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,26 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Overview of Changes:
+This two-patch series introduces I2C EEPROM devices (AT24C64) to the
+quanta-q71l machine model, representing the Baseboard, Frontpanel,
+BIOS, PDB, and BMC FRUs.
 
-> In commit 52a21689cd829 we added a workaround for a bug in older
-> versions of htags where they fail with a weird error message if the
-> environment is too large.  However, we missed one variable which
-> gitlab CI can set to the body of the commit message:
-> CI_COMMIT_DESCRIPTION.
->
-> Add this to the variables we unset when running htags, so that
-> the 'pages' job doesn't fail if the most recent commit happens
-> to have a very large commit message.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 52a21689cd8 (".gitlab-ci.d/buildtest.yml: Work around htags bug wh=
-en environment is large")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Improvement to QEMU:
+These changes enhance the simulation fidelity of the quanta-q71l board.
+By modeling the FRU EEPROMs and allowing them to be backed by drives.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Impact (Before/After):
+Before:
+The quanta-q71l machine model did not include the I2C EEPROMs for FRU
+data storage.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+After:
+The EEPROMs are added to the appropriate I2C buses at their respective
+addresses. Each eeprom now can be associated with a QEMU driver backend
+by using the `-drive`option.
+
+Signed-off-by: Yubin Zou <yubinz@google.com>
+---
+Patrick Venture (2):
+      hw/arm: add eeproms to quanta-q7l1 board
+      hw/arm: enable eeproms for quanta-q71l
+
+ hw/arm/aspeed.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+---
+base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
+change-id: 20250916-quanta-q71l-eeproms-0ebc6e0486d7
+
+Best regards,
+-- 
+Yubin Zou <yubinz@google.com>
+
 
