@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418A6CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C66CCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyYtR-0002Gx-Iu; Tue, 16 Sep 2025 12:51:03 -0400
+	id 1uyYsf-0000l4-P4; Tue, 16 Sep 2025 12:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyYt9-0001km-12
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:44 -0400
+ id 1uyYsW-0000T7-MX
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:07 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYt6-0006oP-59
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:42 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYsT-0006UT-Uh
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:03 -0400
 Received: from localhost.localdomain (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 04CEE20154ED;
- Tue, 16 Sep 2025 09:50:33 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 04CEE20154ED
+ by linux.microsoft.com (Postfix) with ESMTPSA id 1279B201551B;
+ Tue, 16 Sep 2025 09:49:55 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1279B201551B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758041438;
- bh=Mx1xsQgDHMAVHD2jNZ8xPOqdZeGkSU2umVzz7nLSBKI=;
+ s=default; t=1758041400;
+ bh=gI13jGwHxhzOeKPxlYT6kPvxWpB0OnEI3BfrT+GvtiQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jS1T/buW/f6tK0OViWoOAXxt8HYIqhiJmHSqb4cJN3U7eMtrdy4ERmcDSYEOaJeN7
- Oalg3pRJMJGa43lVDLtluQ0rOnoUQXPIXdNQYGgAOeusC8LHP9JD4ZEanQ5CgkhHBs
- wNpbE2LPAjnWO2kutz1DzHpd32BEAI89JPGjUfQk=
+ b=YFmtlKWVRQjA0JeSffR+xs/r/rUuDu5m9VGrEzeX/Ri8NHdQ0iYjTG7XatU3QzFMf
+ xxY/PKs6LyZj6f5yi/ckahif0g+62zqxObazUX98YRvkFY+Uw+QcsQdTAwVasrPpZq
+ +rfdszZBQ3oUfENR562OtaKnN7SAJQ2crP70E0ZA=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -49,9 +49,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 15/27] target/i386/mshv: Implement mshv_get_special_regs()
-Date: Tue, 16 Sep 2025 18:48:35 +0200
-Message-Id: <20250916164847.77883-16-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v4 08/27] accel/mshv: Register memory region listeners
+Date: Tue, 16 Sep 2025 18:48:28 +0200
+Message-Id: <20250916164847.77883-9-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
 References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
@@ -81,159 +81,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Retrieve special registers (e.g. segment, control, and descriptor
-table registers) from MSHV vCPUs.
+Add memory listener hooks for the MSHV accelerator to track guest
+memory regions. This enables the backend to respond to region
+additions, removals and will be used to manage guest memory mappings
+inside the hypervisor.
 
-Various helper functions to map register state representations between
-Qemu and MSHV are introduced.
+Actually registering physical memory in the hypervisor is still stubbed
+out.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv.h       |   1 +
- target/i386/mshv/mshv-cpu.c | 104 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 105 insertions(+)
+ accel/mshv/mem.c       | 24 +++++++++++++++
+ accel/mshv/meson.build |  1 +
+ accel/mshv/mshv-all.c  | 67 ++++++++++++++++++++++++++++++++++++++++--
+ include/system/mshv.h  |  4 +++
+ 4 files changed, 94 insertions(+), 2 deletions(-)
+ create mode 100644 accel/mshv/mem.c
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index a893caf254..6f3d5ea9d1 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -91,6 +91,7 @@ void mshv_init_mmio_emu(void);
- int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
- void mshv_remove_vcpu(int vm_fd, int cpu_fd);
- int mshv_get_standard_regs(CPUState *cpu);
-+int mshv_get_special_regs(CPUState *cpu);
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
- int mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index f51b6461d1..b32bb7070f 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -52,6 +52,26 @@ static enum hv_register_name STANDARD_REGISTER_NAMES[18] = {
-     HV_X64_REGISTER_RFLAGS,
- };
+diff --git a/accel/mshv/mem.c b/accel/mshv/mem.c
+new file mode 100644
+index 0000000000..ad5e62c89c
+--- /dev/null
++++ b/accel/mshv/mem.c
+@@ -0,0 +1,24 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2025
++ *
++ * Authors:
++ *  Magnus Kulke      <magnuskulke@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "system/address-spaces.h"
++#include "system/mshv.h"
++
++void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
++                       bool add)
++{
++    error_report("unimplemented");
++    abort();
++}
++
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index 4c03ac7921..8a6beb3fb1 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,5 +1,6 @@
+ mshv_ss = ss.source_set()
+ mshv_ss.add(if_true: files(
++  'mem.c',
+   'mshv-all.c'
+ ))
  
-+static enum hv_register_name SPECIAL_REGISTER_NAMES[17] = {
-+    HV_X64_REGISTER_CS,
-+    HV_X64_REGISTER_DS,
-+    HV_X64_REGISTER_ES,
-+    HV_X64_REGISTER_FS,
-+    HV_X64_REGISTER_GS,
-+    HV_X64_REGISTER_SS,
-+    HV_X64_REGISTER_TR,
-+    HV_X64_REGISTER_LDTR,
-+    HV_X64_REGISTER_GDTR,
-+    HV_X64_REGISTER_IDTR,
-+    HV_X64_REGISTER_CR0,
-+    HV_X64_REGISTER_CR2,
-+    HV_X64_REGISTER_CR3,
-+    HV_X64_REGISTER_CR4,
-+    HV_X64_REGISTER_CR8,
-+    HV_X64_REGISTER_EFER,
-+    HV_X64_REGISTER_APIC_BASE,
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index f548b1187b..2094966c8c 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -48,10 +48,73 @@ bool mshv_allowed;
+ 
+ MshvState *mshv_state;
+ 
++static void mem_region_add(MemoryListener *listener,
++                           MemoryRegionSection *section)
++{
++    MshvMemoryListener *mml;
++    mml = container_of(listener, MshvMemoryListener, listener);
++    memory_region_ref(section->mr);
++    mshv_set_phys_mem(mml, section, true);
++}
++
++static void mem_region_del(MemoryListener *listener,
++                           MemoryRegionSection *section)
++{
++    MshvMemoryListener *mml;
++    mml = container_of(listener, MshvMemoryListener, listener);
++    mshv_set_phys_mem(mml, section, false);
++    memory_region_unref(section->mr);
++}
++
++static MemoryListener mshv_memory_listener = {
++    .name = "mshv",
++    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
++    .region_add = mem_region_add,
++    .region_del = mem_region_del,
 +};
 +
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs)
++static MemoryListener mshv_io_listener = {
++    .name = "mshv", .priority = MEMORY_LISTENER_PRIORITY_DEV_BACKEND,
++    /* MSHV does not support PIO eventfd */
++};
++
++static void register_mshv_memory_listener(MshvState *s, MshvMemoryListener *mml,
++                                          AddressSpace *as, int as_id,
++                                          const char *name)
++{
++    int i;
++
++    mml->listener = mshv_memory_listener;
++    mml->listener.name = name;
++    memory_listener_register(&mml->listener, as);
++    for (i = 0; i < s->nr_as; ++i) {
++        if (!s->as[i].as) {
++            s->as[i].as = as;
++            s->as[i].ml = mml;
++            break;
++        }
++    }
++}
++
+ static int mshv_init(AccelState *as, MachineState *ms)
  {
-@@ -254,6 +274,84 @@ int mshv_get_standard_regs(CPUState *cpu)
-     return 0;
- }
- 
-+static inline void populate_segment_reg(const hv_x64_segment_register *hv_seg,
-+                                        SegmentCache *seg)
-+{
-+    memset(seg, 0, sizeof(SegmentCache));
+-    error_report("unimplemented");
+-    abort();
++    MshvState *s;
++    s = MSHV_STATE(as);
 +
-+    seg->base = hv_seg->base;
-+    seg->limit = hv_seg->limit;
-+    seg->selector = hv_seg->selector;
++    accel_blocker_init();
 +
-+    seg->flags = (hv_seg->segment_type << DESC_TYPE_SHIFT)
-+                 | (hv_seg->present * DESC_P_MASK)
-+                 | (hv_seg->descriptor_privilege_level << DESC_DPL_SHIFT)
-+                 | (hv_seg->_default << DESC_B_SHIFT)
-+                 | (hv_seg->non_system_segment * DESC_S_MASK)
-+                 | (hv_seg->_long << DESC_L_SHIFT)
-+                 | (hv_seg->granularity * DESC_G_MASK)
-+                 | (hv_seg->available * DESC_AVL_MASK);
++    s->vm = 0;
 +
-+}
++    s->nr_as = 1;
++    s->as = g_new0(MshvAddressSpace, s->nr_as);
 +
-+static inline void populate_table_reg(const hv_x64_table_register *hv_seg,
-+                                      SegmentCache *tbl)
-+{
-+    memset(tbl, 0, sizeof(SegmentCache));
++    mshv_state = s;
 +
-+    tbl->base = hv_seg->base;
-+    tbl->limit = hv_seg->limit;
-+}
++    register_mshv_memory_listener(s, &s->memory_listener, &address_space_memory,
++                                  0, "mshv-memory");
++    memory_listener_register(&mshv_io_listener, &address_space_io);
 +
-+static void populate_special_regs(const hv_register_assoc *assocs,
-+                                  X86CPU *x86cpu)
-+{
-+    CPUX86State *env = &x86cpu->env;
-+
-+    populate_segment_reg(&assocs[0].value.segment, &env->segs[R_CS]);
-+    populate_segment_reg(&assocs[1].value.segment, &env->segs[R_DS]);
-+    populate_segment_reg(&assocs[2].value.segment, &env->segs[R_ES]);
-+    populate_segment_reg(&assocs[3].value.segment, &env->segs[R_FS]);
-+    populate_segment_reg(&assocs[4].value.segment, &env->segs[R_GS]);
-+    populate_segment_reg(&assocs[5].value.segment, &env->segs[R_SS]);
-+
-+    populate_segment_reg(&assocs[6].value.segment, &env->tr);
-+    populate_segment_reg(&assocs[7].value.segment, &env->ldt);
-+
-+    populate_table_reg(&assocs[8].value.table, &env->gdt);
-+    populate_table_reg(&assocs[9].value.table, &env->idt);
-+
-+    env->cr[0] = assocs[10].value.reg64;
-+    env->cr[2] = assocs[11].value.reg64;
-+    env->cr[3] = assocs[12].value.reg64;
-+    env->cr[4] = assocs[13].value.reg64;
-+
-+    cpu_set_apic_tpr(x86cpu->apic_state, assocs[14].value.reg64);
-+    env->efer = assocs[15].value.reg64;
-+    cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
-+}
-+
-+
-+int mshv_get_special_regs(CPUState *cpu)
-+{
-+    struct hv_register_assoc assocs[ARRAY_SIZE(SPECIAL_REGISTER_NAMES)];
-+    int ret;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    size_t n_regs = ARRAY_SIZE(SPECIAL_REGISTER_NAMES);
-+
-+    for (size_t i = 0; i < n_regs; i++) {
-+        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-+    }
-+    ret = get_generic_regs(cpu, assocs, n_regs);
-+    if (ret < 0) {
-+        error_report("failed to get special registers");
-+        return -errno;
-+    }
-+
-+    populate_special_regs(assocs, x86cpu);
 +    return 0;
-+}
-+
- int mshv_load_regs(CPUState *cpu)
- {
-     int ret;
-@@ -264,6 +362,12 @@ int mshv_load_regs(CPUState *cpu)
-         return -1;
-     }
- 
-+    ret = mshv_get_special_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to load special registers");
-+        return -1;
-+    }
-+
-     return 0;
  }
  
+ static void mshv_start_vcpu_thread(CPUState *cpu)
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 45808c5c50..c5d33cd990 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -69,6 +69,10 @@ struct AccelCPUState {
+ #define mshv_msi_via_irqfd_enabled() false
+ #endif
+ 
++/* memory */
++void mshv_set_phys_mem(MshvMemoryListener *mml, MemoryRegionSection *section,
++                       bool add);
++
+ /* interrupt */
+ int mshv_irqchip_add_msi_route(int vector, PCIDevice *dev);
+ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
 -- 
 2.34.1
 
