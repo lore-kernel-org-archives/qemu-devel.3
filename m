@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34481CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABAACAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uySV4-0004aP-Ec; Tue, 16 Sep 2025 06:01:27 -0400
+	id 1uySeX-0006ee-22; Tue, 16 Sep 2025 06:11:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySUo-0004Bu-PK
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:01:12 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1uySeW-0006eH-7P
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:11:12 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySUm-0007JC-Ds
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:01:10 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b042cc39551so872111666b.0
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 03:01:07 -0700 (PDT)
+ id 1uySeT-00083E-6y
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:11:11 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b07c2908f3eso619188466b.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 03:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758016866; x=1758621666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758017466; x=1758622266; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/9zZhr/cBmyMqoJPq7F1A7QHp7oKqo/gSSYmV5LJALY=;
- b=RReqVUIilwEjqFXx5/M6oVIgllHNmQ6GiszB4m4ot5ZYmZBW1ZTPNhBn7QU4iAarSh
- aUAYLOOlavPrfmivJ1AwiYRCC7oidjL7lNVaY8pxvSjTvPYkDILjmG9MFndpvzi3EcBR
- Q3oz8bzARTSnR5DnoTaDrq8c/OneuUrUr6XRK/UZ1Ev8UCPp6Jg8jLC/sqiLlUqQatLS
- u1NA6K+Obvp527PGwy9Bqs6IOHL7onL20Og0uPRsKtBYsgwmQ+AJTzjzMU6D+Mr2DdNk
- 1F4q9iqvZDR0RqLQ6hrZNv/eIb170aJb4SiicIxhMiJDKHzt2/M8ijvBKaXMfq3GexLV
- U40w==
+ bh=TVPY7uekT7ttZ1PK4mcFTnDMT/Mh7ZY2HqvheGzOtU4=;
+ b=oEwrjq+GNIMYKcnvEq4OiJouhRvKtxI5REW1dK29oJjYFYdtPtgS+3oFhBT4IBXREW
+ 4liBa2CsN+H2zGs78OdAhKVJhxjK/6KuAPUpOTnuMODcHN7LHWFocCZiNdpDUf+EW5HM
+ K5AQcTbSBLeVxJ5k1qhizETo2KG2P+Fi9m+Ml4fwL+kX5kCnVeDCUWWV4ZNngv+9UasF
+ TNu2nU0ZapnzgES21jC25eDg35uMpspOZcdcXoFI7/ccWUzzPTtW9T1IpEFwWm2Ozkq0
+ 1aj01Cx1wTIDupnu1MhUGwsdZAM93aPkThRUFRtnh7HX5ltyKjqyTGyjytE63oj9r9aD
+ AItg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758016866; x=1758621666;
+ d=1e100.net; s=20230601; t=1758017466; x=1758622266;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/9zZhr/cBmyMqoJPq7F1A7QHp7oKqo/gSSYmV5LJALY=;
- b=HzY526KCamcStuSTFwGXXjKad1zj+/4zJoLoJ6A2R4zqcRDR4+zvCITKH5/2JBOXKJ
- 4TZHsbNHM3X7NUILWCjD1jhkaCJ0do4w71H9fgGvFJds5/ydv6nkMvObG4Ot5MloOsw2
- Q74N1bAVYpfFvt5C1LjB9RLcUAMAXDQup3sRgEGOoIwgYkcGRMdMhqAw7qs7tEM3PLXs
- OZJ+FUs4k+zbki4haVvgQUi5cOkFez3Yd0AkFh+eKPKlLrSZIqCzlM4KM2P5l6UgDZG9
- 4OP6sh8vafhcpIMo/zQmjkcgLD5pkkejojLq7jmbxdr8C3BsBWc5OGjrVDoN7Qg2WfDb
- O7pw==
+ bh=TVPY7uekT7ttZ1PK4mcFTnDMT/Mh7ZY2HqvheGzOtU4=;
+ b=jSgGH5KpWQkzOUPyYcyD5WEhMdIjcY4LnYWRXWC/G8nZgssNXlWrFW+VpMePyZxMFB
+ G+kmnHW5o2BBynLfbdabvoIspttEC06UlbDsTFzNMJe7Dr6Y5feOrJqqv4hjug9MP5nN
+ dPCFlae7OvrTh4k9TSdaOXlgSN6xp94JKUbO9kngbdqnn/2FsMLKI25duE2aFcZfdAHC
+ aKPprRYaqJT2opJDNxBKksjfwOF18T4Ju/zby5dzyskpaYbZ4bwwCbA5KLL4akTdWvPk
+ Ip8bqoKHnqlxtCdzvpsNbQmDfAfXn54jMfJeueqe2OKU3chr3AxKnvUn3RYnH+OXiCdY
+ YRsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN33n63io3BkanUmB1yr6pUIFS7tHyMozBtFM67/B3tzsG50lV4ZuQ0AJtIAsYHZv25RWYPjohQMJh@nongnu.org
-X-Gm-Message-State: AOJu0YxHf+fvJWkYrbdRs5fxbBhBvL4EXXmfB6d2e6iPTgR3i4XEOeJC
- aF4KVwr/w+VaNSwu5btn5wZnQB4eSj+7GV25tetan2MqTQyNIf/oacUWofuuEw8stuVS5eMQnc4
- UebPybr1aaXj6tfjWyU9WzZRQepsE2EjD3P6hD3MZgg==
-X-Gm-Gg: ASbGncuQn7A6kgyJVeobppGksCXAZWBnKKqAZ6/Ct6D/oHjjvmTL2FJHP/M1jdRZClp
- 3ssSQI5k9ebXkdotWdDMqiX1pPhrJpu9r9BLFd9+7Id0N+tRNKCS6NYxevvTJLEwgujzP//fv7N
- NjGw9IHqc73ab1TZR9+023FZmvHyBAy0pjN3C0UZc1yKsNI8A7qgcKQakSzoFNjy2B+WtkOz3cZ
- XdDTRsP
-X-Google-Smtp-Source: AGHT+IHkPEzX0/RZnpQXSEc9IHspHnI6c6iALVGIJaBF8g+MbvJFIxX0lX1yl0smkMZC31YwB5gkSUkWW1wDBxduqko=
-X-Received: by 2002:a17:906:f5a2:b0:b04:65b4:707 with SMTP id
- a640c23a62f3a-b07c353eb4fmr1505717666b.13.1758016866360; Tue, 16 Sep 2025
- 03:01:06 -0700 (PDT)
+ AJvYcCXDFRHfWLRE9Jey8D2w9lH4jkkQaC2jUsPfvI8MQrixC/NCFQL/g2LHlR9KaenLVSlBsfCMxsVsJ3EP@nongnu.org
+X-Gm-Message-State: AOJu0YxjWndI3qVFOFm6gKJxyhpOh2pCUHnptRqV9TBD1sOwvWnndRLk
+ H2fZIknudjI57zaG9ZSkFLUjK8f7RyZbr/LDM58st2Y37nYb0uQlSvTa0CVGfwh2A5mCOkUsNnG
+ exMQ5MDZBosTgNThYIdU8WPvBmuPkpwglqX+m0A1WTg==
+X-Gm-Gg: ASbGnctIKM6OXgj5t2V8HvBHOkj87aUtZvRaGnCUtXIdORAQhDYOcVxlDztTCT8kBM7
+ B6jrk+EpZxITSg3IlxKn3it7FR/3STwgqbDtIoO/49i2BNVj0l+Z4GhGe2n2NFzuDsDr52UlODP
+ rcVnSe53xQO7F+W8GDnnYO2/28Ruyi9gJDlCZxWKBY0295sAvoqpQb3DJ0fcFnp4j/xr0+Xa7QZ
+ +KJWow2
+X-Google-Smtp-Source: AGHT+IFxk4/rK/TiR6ty6xI1vTGob9miOCjR+xMMXdwKQVDJGYcntW9P8Es7y71I7RR8gtommKGFKEOW3QXYCYKkTaU=
+X-Received: by 2002:a17:906:6a02:b0:b07:6538:4dc5 with SMTP id
+ a640c23a62f3a-b07c37b82a8mr1460077566b.64.1758017465584; Tue, 16 Sep 2025
+ 03:11:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250916085557.2008344-1-zhao1.liu@intel.com>
- <20250916085557.2008344-5-zhao1.liu@intel.com>
-In-Reply-To: <20250916085557.2008344-5-zhao1.liu@intel.com>
+ <20250916085557.2008344-8-zhao1.liu@intel.com>
+In-Reply-To: <20250916085557.2008344-8-zhao1.liu@intel.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 16 Sep 2025 13:00:40 +0300
-X-Gm-Features: AS18NWClx_pMNMtGfdG_SrJnW0bv4lgs4QhyDFJd5TKRS4EIxYgUGvCtHktg87o
-Message-ID: <CAAjaMXYc_1naU04HvEHqLF0T9cAjZ16gCdGro_kNTpe2gnsr-g@mail.gmail.com>
-Subject: Re: [PATCH 04/12] rust/common/uninit: Fix Clippy's complaints about
- lifetime
+Date: Tue, 16 Sep 2025 13:10:39 +0300
+X-Gm-Features: AS18NWBESi6M1krANzHKZch9WuTciZPFirSuXRS8OnET6hs1MHWxFDwBr3ZDA8I
+Message-ID: <CAAjaMXYSDGCr4H_Pk8gOHn6NbsOp0+q==V7GgdtR_60tT4FCPw@mail.gmail.com>
+Subject: Re: [PATCH 07/12] rust/qdev: Rename PropertyInfo field from VALUE to
+ BASE_INFO
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,73 +102,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Sep 16, 2025 at 11:34=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
 te:
 >
-> Clippy complains about the following cases and following its suggestion
-> to fix these warnings.
->
-> warning: the following explicit lifetimes could be elided: 'a
->   --> common/src/uninit.rs:38:6
->    |
-> 38 | impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
->    |      ^^                                   ^^
->    |
->    =3D help: for further information visit https://rust-lang.github.io/ru=
-st-clippy/master/index.html#needless_lifetimes
->    =3D note: `#[warn(clippy::needless_lifetimes)]` on by default
-> help: elide the lifetimes
->    |
-> 38 - impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-> 38 + impl<T, U> Deref for MaybeUninitField<'_, T, U> {
->    |
->
-> warning: the following explicit lifetimes could be elided: 'a
->   --> common/src/uninit.rs:49:6
->    |
-> 49 | impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
->    |      ^^                                      ^^
->    |
->    =3D help: for further information visit https://rust-lang.github.io/ru=
-st-clippy/master/index.html#needless_lifetimes
-> help: elide the lifetimes
->    |
-> 49 - impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-> 49 + impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
->    |
->
-> warning: `common` (lib) generated 2 warnings (run `cargo clippy --fix --l=
-ib -p common` to apply 2 suggestions)
+> Bit property info will added next. To distinguish different info fields,
+> rename `VALUE` to `BASE_INFO`, then it can better reflect that it
+> represents the basic property info.
 >
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  rust/common/src/uninit.rs | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+You can squash this patch to the bit info one
+
+>  rust/hw/core/src/qdev.rs    | 12 ++++++------
+>  rust/qemu-macros/src/lib.rs |  2 +-
+>  2 files changed, 7 insertions(+), 7 deletions(-)
 >
-> diff --git a/rust/common/src/uninit.rs b/rust/common/src/uninit.rs
-> index e7f9fcd2e3fb..8d021b1dfc6e 100644
-> --- a/rust/common/src/uninit.rs
-> +++ b/rust/common/src/uninit.rs
-> @@ -35,7 +35,7 @@ pub const fn parent_mut(f: &mut Self) -> *mut T {
->      }
+> diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+> index 2735e2b2c109..d887046d8de1 100644
+> --- a/rust/hw/core/src/qdev.rs
+> +++ b/rust/hw/core/src/qdev.rs
+> @@ -109,13 +109,13 @@ pub trait ResettablePhasesImpl {
+>  ///
+>  /// # Safety
+>  ///
+> -/// This trait is marked as `unsafe` because `VALUE` must be a valid raw
+> +/// This trait is marked as `unsafe` because `BASE_INFO` must be a valid=
+ raw
+>  /// reference to a [`bindings::PropertyInfo`].
+>  ///
+>  /// Note we could not use a regular reference:
+>  ///
+>  /// ```text
+> -/// const VALUE: &bindings::PropertyInfo =3D ...
+> +/// const BASE_INFO: &bindings::PropertyInfo =3D ...
+>  /// ```
+>  ///
+>  /// because this results in the following compiler error:
+> @@ -131,22 +131,22 @@ pub trait ResettablePhasesImpl {
+>  /// It is the implementer's responsibility to provide a valid
+>  /// [`bindings::PropertyInfo`] pointer for the trait implementation to b=
+e safe.
+>  pub unsafe trait QDevProp {
+> -    const VALUE: *const bindings::PropertyInfo;
+> +    const BASE_INFO: *const bindings::PropertyInfo;
 >  }
 >
-> -impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-> +impl<T, U> Deref for MaybeUninitField<'_, T, U> {
->      type Target =3D MaybeUninit<U>;
->
->      fn deref(&self) -> &MaybeUninit<U> {
-> @@ -46,7 +46,7 @@ fn deref(&self) -> &MaybeUninit<U> {
->      }
+>  /// Use [`bindings::qdev_prop_bool`] for `bool`.
+>  unsafe impl QDevProp for bool {
+> -    const VALUE: *const bindings::PropertyInfo =3D addr_of!(bindings::qd=
+ev_prop_bool);
+> +    const BASE_INFO: *const bindings::PropertyInfo =3D addr_of!(bindings=
+::qdev_prop_bool);
 >  }
 >
-> -impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-> +impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
->      fn deref_mut(&mut self) -> &mut MaybeUninit<U> {
->          // SAFETY: self.child was obtained by dereferencing a valid muta=
-ble
->          // reference; the content of the memory may be invalid or uninit=
-ialized
+>  /// Use [`bindings::qdev_prop_uint64`] for `u64`.
+>  unsafe impl QDevProp for u64 {
+> -    const VALUE: *const bindings::PropertyInfo =3D addr_of!(bindings::qd=
+ev_prop_uint64);
+> +    const BASE_INFO: *const bindings::PropertyInfo =3D addr_of!(bindings=
+::qdev_prop_uint64);
+>  }
+>
+>  /// Use [`bindings::qdev_prop_chr`] for [`chardev::CharBackend`].
+>  unsafe impl QDevProp for chardev::CharBackend {
+> -    const VALUE: *const bindings::PropertyInfo =3D addr_of!(bindings::qd=
+ev_prop_chr);
+> +    const BASE_INFO: *const bindings::PropertyInfo =3D addr_of!(bindings=
+::qdev_prop_chr);
+>  }
+>
+>  /// Trait to define device properties.
+> diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+> index ed4064d6e110..b43ca31bae30 100644
+> --- a/rust/qemu-macros/src/lib.rs
+> +++ b/rust/qemu-macros/src/lib.rs
+> @@ -272,7 +272,7 @@ macro_rules! str_to_c_str {
+>              },
+>          )?;
+>          let field_ty =3D field.ty.clone();
+> -        let qdev_prop =3D quote! { <#field_ty as ::hwcore::QDevProp>::VA=
+LUE };
+> +        let qdev_prop =3D quote! { <#field_ty as ::hwcore::QDevProp>::BA=
+SE_INFO };
+>          let set_default =3D defval.is_some();
+>          let defval =3D defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }=
+));
+>          properties_expanded.push(quote! {
 > --
 > 2.34.1
 >
