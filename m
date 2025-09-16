@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C4ACAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF91CAC59B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyYtk-00036u-LO; Tue, 16 Sep 2025 12:51:20 -0400
+	id 1uyYte-0002Wy-NO; Tue, 16 Sep 2025 12:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyYte-0002XJ-ER
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:51:14 -0400
+ id 1uyYtD-0001s1-NF
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:47 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYtb-0006sr-Cw
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:51:14 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYtB-0006pN-DI
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:50:47 -0400
 Received: from localhost.localdomain (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 12C0F20154ED;
- Tue, 16 Sep 2025 09:51:05 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 12C0F20154ED
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2C60920154FA;
+ Tue, 16 Sep 2025 09:50:39 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2C60920154FA
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758041470;
- bh=FmUbb2ga9uGC9tNNJuupj1Ijs2+s359X0IOcEMWzf9o=;
+ s=default; t=1758041443;
+ bh=Wwe8KG+LMWXQlIvkOXlBvK+HvYpoNXYwOlAop5Mcs1o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Dd1zQw/0zgQE9g4DK6RgW8hsOXW6GmRGVnTzqzM5mKJdUSiPDrE5pf9eBuvYKvkML
- sgLS1gJIFrWIxYCGWz7/mZ9ppwt/3Uetxn1zelj4tHnp+9NgJMxARQ05oOeO54dowN
- 5zp2EihfKA+Hl5qN0vcNvhnklXE9KwY/9ZZ3l64Y=
+ b=OH5L9rKbgyFkR2n6ba3576Ky6euct6hmJdAsDZ7ZrAoDzvXmxsgDFb6Skwfcbl1jM
+ HCuQYhq+N/MTvDdxEcgBgOV8DcwXJ6mpPr9I3xw5HVgTPj6TRiXRQLFwCUWAFahVlQ
+ dcmRoVYUbWJiU2cYjjcqC0IM9TNunSU3omK3lET0=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -49,9 +49,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 21/27] target/i386/mshv: Write MSRs to the hypervisor
-Date: Tue, 16 Sep 2025 18:48:41 +0200
-Message-Id: <20250916164847.77883-22-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v4 16/27] target/i386/mshv: Implement mshv_arch_put_registers()
+Date: Tue, 16 Sep 2025 18:48:36 +0200
+Message-Id: <20250916164847.77883-17-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
 References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
@@ -81,100 +81,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Push current model-specific register (MSR) values to MSHV's vCPUs as
-part of setting state to the hypervisor.
+Write CPU register state to MSHV vCPUs. Various mapping functions to
+prepare the payload for the HV call have been implemented.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 68 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 66 insertions(+), 2 deletions(-)
+ include/system/mshv.h       |  15 +++
+ target/i386/mshv/mshv-cpu.c | 237 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 252 insertions(+)
 
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 6f3d5ea9d1..8036e1c3c0 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -81,6 +81,20 @@ typedef struct MshvMsiControl {
+ #define mshv_msi_via_irqfd_enabled() mshv_enabled()
+ 
+ /* cpu */
++typedef struct MshvFPU {
++    uint8_t fpr[8][16];
++    uint16_t fcw;
++    uint16_t fsw;
++    uint8_t ftwx;
++    uint8_t pad1;
++    uint16_t last_opcode;
++    uint64_t last_ip;
++    uint64_t last_dp;
++    uint8_t xmm[16][16];
++    uint32_t mxcsr;
++    uint32_t pad2;
++} MshvFPU;
++
+ typedef enum MshvVmExit {
+     MshvVmExitIgnore   = 0,
+     MshvVmExitShutdown = 1,
+@@ -90,6 +104,7 @@ typedef enum MshvVmExit {
+ void mshv_init_mmio_emu(void);
+ int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd);
+ void mshv_remove_vcpu(int vm_fd, int cpu_fd);
++int mshv_configure_vcpu(const CPUState *cpu, const MshvFPU *fpu, uint64_t xcr0);
+ int mshv_get_standard_regs(CPUState *cpu);
+ int mshv_get_special_regs(CPUState *cpu);
+ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit);
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index ef0fce5719..6cb4473124 100644
+index b32bb7070f..98715621ba 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -997,6 +997,65 @@ static int put_regs(const CPUState *cpu)
+@@ -72,6 +72,35 @@ static enum hv_register_name SPECIAL_REGISTER_NAMES[17] = {
+     HV_X64_REGISTER_APIC_BASE,
+ };
+ 
++static enum hv_register_name FPU_REGISTER_NAMES[26] = {
++    HV_X64_REGISTER_XMM0,
++    HV_X64_REGISTER_XMM1,
++    HV_X64_REGISTER_XMM2,
++    HV_X64_REGISTER_XMM3,
++    HV_X64_REGISTER_XMM4,
++    HV_X64_REGISTER_XMM5,
++    HV_X64_REGISTER_XMM6,
++    HV_X64_REGISTER_XMM7,
++    HV_X64_REGISTER_XMM8,
++    HV_X64_REGISTER_XMM9,
++    HV_X64_REGISTER_XMM10,
++    HV_X64_REGISTER_XMM11,
++    HV_X64_REGISTER_XMM12,
++    HV_X64_REGISTER_XMM13,
++    HV_X64_REGISTER_XMM14,
++    HV_X64_REGISTER_XMM15,
++    HV_X64_REGISTER_FP_MMX0,
++    HV_X64_REGISTER_FP_MMX1,
++    HV_X64_REGISTER_FP_MMX2,
++    HV_X64_REGISTER_FP_MMX3,
++    HV_X64_REGISTER_FP_MMX4,
++    HV_X64_REGISTER_FP_MMX5,
++    HV_X64_REGISTER_FP_MMX6,
++    HV_X64_REGISTER_FP_MMX7,
++    HV_X64_REGISTER_FP_CONTROL_STATUS,
++    HV_X64_REGISTER_XMM_CONTROL_STATUS,
++};
++
+ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+                           size_t n_regs)
+ {
+@@ -371,8 +400,216 @@ int mshv_load_regs(CPUState *cpu)
      return 0;
  }
  
-+struct MsrPair {
-+    uint32_t index;
-+    uint64_t value;
-+};
-+
-+static int put_msrs(const CPUState *cpu)
++static inline void populate_hv_segment_reg(SegmentCache *seg,
++                                           hv_x64_segment_register *hv_reg)
 +{
-+    int ret = 0;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    MshvMsrEntries *msrs = g_malloc0(sizeof(MshvMsrEntries));
++    uint32_t flags = seg->flags;
 +
-+    struct MsrPair pairs[] = {
-+        { MSR_IA32_SYSENTER_CS,    env->sysenter_cs },
-+        { MSR_IA32_SYSENTER_ESP,   env->sysenter_esp },
-+        { MSR_IA32_SYSENTER_EIP,   env->sysenter_eip },
-+        { MSR_EFER,                env->efer },
-+        { MSR_PAT,                 env->pat },
-+        { MSR_STAR,                env->star },
-+        { MSR_CSTAR,               env->cstar },
-+        { MSR_LSTAR,               env->lstar },
-+        { MSR_KERNELGSBASE,        env->kernelgsbase },
-+        { MSR_FMASK,               env->fmask },
-+        { MSR_MTRRdefType,         env->mtrr_deftype },
-+        { MSR_VM_HSAVE_PA,         env->vm_hsave },
-+        { MSR_SMI_COUNT,           env->msr_smi_count },
-+        { MSR_IA32_PKRS,           env->pkrs },
-+        { MSR_IA32_BNDCFGS,        env->msr_bndcfgs },
-+        { MSR_IA32_XSS,            env->xss },
-+        { MSR_IA32_UMWAIT_CONTROL, env->umwait },
-+        { MSR_IA32_TSX_CTRL,       env->tsx_ctrl },
-+        { MSR_AMD64_TSC_RATIO,     env->amd_tsc_scale_msr },
-+        { MSR_TSC_AUX,             env->tsc_aux },
-+        { MSR_TSC_ADJUST,          env->tsc_adjust },
-+        { MSR_IA32_SMBASE,         env->smbase },
-+        { MSR_IA32_SPEC_CTRL,      env->spec_ctrl },
-+        { MSR_VIRT_SSBD,           env->virt_ssbd },
-+    };
-+
-+    if (ARRAY_SIZE(pairs) > MSHV_MSR_ENTRIES_COUNT) {
-+        error_report("MSR entries exceed maximum size");
-+        g_free(msrs);
-+        return -1;
-+    }
-+
-+    for (size_t i = 0; i < ARRAY_SIZE(pairs); i++) {
-+        MshvMsrEntry *entry = &msrs->entries[i];
-+        entry->index = pairs[i].index;
-+        entry->reserved = 0;
-+        entry->data = pairs[i].value;
-+        msrs->nmsrs++;
-+    }
-+
-+    ret = mshv_configure_msr(cpu, &msrs->entries[0], msrs->nmsrs);
-+    g_free(msrs);
-+    return ret;
++    hv_reg->base = seg->base;
++    hv_reg->limit = seg->limit;
++    hv_reg->selector = seg->selector;
++    hv_reg->segment_type = (flags >> DESC_TYPE_SHIFT) & 0xF;
++    hv_reg->non_system_segment = (flags & DESC_S_MASK) != 0;
++    hv_reg->descriptor_privilege_level = (flags >> DESC_DPL_SHIFT) & 0x3;
++    hv_reg->present = (flags & DESC_P_MASK) != 0;
++    hv_reg->reserved = 0;
++    hv_reg->available = (flags & DESC_AVL_MASK) != 0;
++    hv_reg->_long = (flags >> DESC_L_SHIFT) & 0x1;
++    hv_reg->_default = (flags >> DESC_B_SHIFT) & 0x1;
++    hv_reg->granularity = (flags & DESC_G_MASK) != 0;
 +}
 +
++static inline void populate_hv_table_reg(const struct SegmentCache *seg,
++                                         hv_x64_table_register *hv_reg)
++{
++    memset(hv_reg, 0, sizeof(*hv_reg));
 +
- int mshv_arch_put_registers(const CPUState *cpu)
- {
-     int ret;
-@@ -1007,8 +1066,13 @@ int mshv_arch_put_registers(const CPUState *cpu)
-         return -1;
-     }
- 
--    error_report("unimplemented");
--    abort();
-+    ret = put_msrs(cpu);
++    hv_reg->base = seg->base;
++    hv_reg->limit = seg->limit;
++}
++
++static int set_special_regs(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    struct hv_register_assoc assocs[ARRAY_SIZE(SPECIAL_REGISTER_NAMES)];
++    size_t n_regs = ARRAY_SIZE(SPECIAL_REGISTER_NAMES);
++    int ret;
++
++    /* set names */
++    for (size_t i = 0; i < n_regs; i++) {
++        assocs[i].name = SPECIAL_REGISTER_NAMES[i];
++    }
++    populate_hv_segment_reg(&env->segs[R_CS], &assocs[0].value.segment);
++    populate_hv_segment_reg(&env->segs[R_DS], &assocs[1].value.segment);
++    populate_hv_segment_reg(&env->segs[R_ES], &assocs[2].value.segment);
++    populate_hv_segment_reg(&env->segs[R_FS], &assocs[3].value.segment);
++    populate_hv_segment_reg(&env->segs[R_GS], &assocs[4].value.segment);
++    populate_hv_segment_reg(&env->segs[R_SS], &assocs[5].value.segment);
++    populate_hv_segment_reg(&env->tr, &assocs[6].value.segment);
++    populate_hv_segment_reg(&env->ldt, &assocs[7].value.segment);
++
++    populate_hv_table_reg(&env->gdt, &assocs[8].value.table);
++    populate_hv_table_reg(&env->idt, &assocs[9].value.table);
++
++    assocs[10].value.reg64 = env->cr[0];
++    assocs[11].value.reg64 = env->cr[2];
++    assocs[12].value.reg64 = env->cr[3];
++    assocs[13].value.reg64 = env->cr[4];
++    assocs[14].value.reg64 = cpu_get_apic_tpr(x86cpu->apic_state);
++    assocs[15].value.reg64 = env->efer;
++    assocs[16].value.reg64 = cpu_get_apic_base(x86cpu->apic_state);
++
++    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
 +    if (ret < 0) {
-+        error_report("Failed to put msrs");
++        error_report("failed to set special registers");
 +        return -1;
 +    }
 +
 +    return 0;
++}
++
++static int set_fpu(const CPUState *cpu, const struct MshvFPU *regs)
++{
++    struct hv_register_assoc assocs[ARRAY_SIZE(FPU_REGISTER_NAMES)];
++    union hv_register_value *value;
++    size_t fp_i;
++    union hv_x64_fp_control_status_register *ctrl_status;
++    union hv_x64_xmm_control_status_register *xmm_ctrl_status;
++    int ret;
++    size_t n_regs = ARRAY_SIZE(FPU_REGISTER_NAMES);
++
++    /* first 16 registers are xmm0-xmm15 */
++    for (size_t i = 0; i < 16; i++) {
++        assocs[i].name = FPU_REGISTER_NAMES[i];
++        value = &assocs[i].value;
++        memcpy(&value->reg128, &regs->xmm[i], 16);
++    }
++
++    /* next 8 registers are fp_mmx0-fp_mmx7 */
++    for (size_t i = 16; i < 24; i++) {
++        assocs[i].name = FPU_REGISTER_NAMES[i];
++        fp_i = (i - 16);
++        value = &assocs[i].value;
++        memcpy(&value->reg128, &regs->fpr[fp_i], 16);
++    }
++
++    /* last two registers are fp_control_status and xmm_control_status */
++    assocs[24].name = FPU_REGISTER_NAMES[24];
++    value = &assocs[24].value;
++    ctrl_status = &value->fp_control_status;
++    ctrl_status->fp_control = regs->fcw;
++    ctrl_status->fp_status = regs->fsw;
++    ctrl_status->fp_tag = regs->ftwx;
++    ctrl_status->reserved = 0;
++    ctrl_status->last_fp_op = regs->last_opcode;
++    ctrl_status->last_fp_rip = regs->last_ip;
++
++    assocs[25].name = FPU_REGISTER_NAMES[25];
++    value = &assocs[25].value;
++    xmm_ctrl_status = &value->xmm_control_status;
++    xmm_ctrl_status->xmm_status_control = regs->mxcsr;
++    xmm_ctrl_status->xmm_status_control_mask = 0;
++    xmm_ctrl_status->last_fp_rdp = regs->last_dp;
++
++    ret = mshv_set_generic_regs(cpu, assocs, n_regs);
++    if (ret < 0) {
++        error_report("failed to set fpu registers");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int set_xc_reg(const CPUState *cpu, uint64_t xcr0)
++{
++    int ret;
++    struct hv_register_assoc assoc = {
++        .name = HV_X64_REGISTER_XFEM,
++        .value.reg64 = xcr0,
++    };
++
++    ret = mshv_set_generic_regs(cpu, &assoc, 1);
++    if (ret < 0) {
++        error_report("failed to set xcr0");
++        return -errno;
++    }
++    return 0;
++}
++
++static int set_cpu_state(const CPUState *cpu, const MshvFPU *fpu_regs,
++                         uint64_t xcr0)
++{
++    int ret;
++
++    ret = set_standard_regs(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++    ret = set_special_regs(cpu);
++    if (ret < 0) {
++        return ret;
++    }
++    ret = set_fpu(cpu, fpu_regs);
++    if (ret < 0) {
++        return ret;
++    }
++    ret = set_xc_reg(cpu, xcr0);
++    if (ret < 0) {
++        return ret;
++    }
++    return 0;
++}
++
++/*
++ * TODO: populate topology info:
++ *
++ * X86CPU *x86cpu = X86_CPU(cpu);
++ * CPUX86State *env = &x86cpu->env;
++ * X86CPUTopoInfo *topo_info = &env->topo_info;
++ */
++int mshv_configure_vcpu(const CPUState *cpu, const struct MshvFPU *fpu,
++                        uint64_t xcr0)
++{
++    int ret;
++
++    ret = set_cpu_state(cpu, fpu, xcr0);
++    if (ret < 0) {
++        error_report("failed to set cpu state");
++        return -1;
++    }
++
++    return 0;
++}
++
++static int put_regs(const CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    MshvFPU fpu = {0};
++    int ret;
++
++    memset(&fpu, 0, sizeof(fpu));
++
++    ret = mshv_configure_vcpu(cpu, &fpu, env->xcr0);
++    if (ret < 0) {
++        error_report("failed to configure vcpu");
++        return ret;
++    }
++
++    return 0;
++}
++
+ int mshv_arch_put_registers(const CPUState *cpu)
+ {
++    int ret;
++
++    ret = put_regs(cpu);
++    if (ret < 0) {
++        error_report("Failed to put registers");
++        return -1;
++    }
++
+     error_report("unimplemented");
+     abort();
  }
- 
- void mshv_arch_amend_proc_features(
 -- 
 2.34.1
 
