@@ -4,118 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADB9CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 22:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F027CAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 22:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyeKp-0000OK-EF; Tue, 16 Sep 2025 18:39:39 -0400
+	id 1uyeTz-00033D-Rj; Tue, 16 Sep 2025 18:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyeKn-0000Nn-0A
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:39:37 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyeKl-0003xz-9u
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:39:36 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id AF6AA1F387;
- Tue, 16 Sep 2025 22:39:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758062374; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MnBdihMLi9coYUwHFYWo4DfI8FDgNlV8XDmh95O2ch0=;
- b=jySPXeFsRrDw7sfGlj1T8pbXTy4frj0TGwrZ6Qd56kfY+4j6f9iASDbXC/JECb0Vyz/Aa+
- jvyMB/H99sb/OOyY4/YOli2ZWnaHdDguorEnFwrAKid/pvdXoD/znhL4Ygnd7Yxt5pAuvY
- rzLx07Aw2Rl79hyXuDiXJSUCN/MEG9E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758062374;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MnBdihMLi9coYUwHFYWo4DfI8FDgNlV8XDmh95O2ch0=;
- b=a2SunHpwyRCPkMkR4GFuDl5R3ANMe0tNewbnDyM97SXJXXEOLPaF2XoJkJUWXB+knDntI/
- Z19+/prYd3kGoNBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="HXWVjF9/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GRxsOMyu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758062373; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MnBdihMLi9coYUwHFYWo4DfI8FDgNlV8XDmh95O2ch0=;
- b=HXWVjF9/3S4v+nSiR2RgUCX6JSAmYJbagj/t+yQQxP8tItT+9eep6tuyQJVqnG/fUPtgd6
- 1TufSvkEzryoAyxWaM/3oeAFzuntLLzm0z4OnIVPnIrWl/Xr78QAJ40HGG6fBp/GGLLTuS
- JTid8ZFvsQMr+LzPhLwkdFxxSvZW9ns=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758062373;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MnBdihMLi9coYUwHFYWo4DfI8FDgNlV8XDmh95O2ch0=;
- b=GRxsOMyu/QtyL9GvzU/2geUtsVtK3an6OdahGDb6XlDK6fLgPcgUAIJF3ysljXtu6kRiQL
- 35jyurjHJixjJSDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 17DF513A63;
- Tue, 16 Sep 2025 22:39:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id HorAMSTnyWgKYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 16 Sep 2025 22:39:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Kevin
- Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?D?=
- =?utf-8?Q?aniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Hailiang Zhang
- <zhanghailiang@xfusion.com>, Yury Kotov <yury-kotov@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Prasad Pandit
- <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Li Zhijian
- <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 6/9] migration/rdma: Remove coroutine path in
- qemu_rdma_wait_comp_channel
-In-Reply-To: <20250827205949.364606-7-peterx@redhat.com>
-References: <20250827205949.364606-1-peterx@redhat.com>
- <20250827205949.364606-7-peterx@redhat.com>
-Date: Tue, 16 Sep 2025 19:39:30 -0300
-Message-ID: <87ikhivx7h.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[14];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_CC(0.00)[treblig.org,redhat.com,xfusion.com,yandex-team.ru,gmail.com,fujitsu.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim]
-X-Rspamd-Queue-Id: AF6AA1F387
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uyeTw-000310-Sg
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:49:05 -0400
+Received: from p-east3-cluster7-host12-snip4-5.eps.apple.com ([57.103.84.246]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1uyeTv-0004rN-2T
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:49:04 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
+ 717CD1800129; Tue, 16 Sep 2025 22:48:56 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=mDbLg3wYfQ7NV1O3oBi8gVjmH0TooxeneM6zmpMd7cA=;
+ h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
+ b=O7b8NGoAiw2mH581MqejkRkl0GtghjFEkgkr9hOnQpLDt89rolPd31azK5SJ38uNaB7CHpiCKP/sU6CDkl2a69e0OLvaBGvFkc898jnw+rVDzpNaTT0Rl7qHvcQl1d20lQeL5TaWP1FLbObFy0OtcsKYIWgqjZ7aaQKO/IKUdTf3q8hnJZtjXdfGZdAgw220itUutUhPrF38bEkFdlyKVhniGz8fHdyJtIUWcFnVIwyDesC1kzWBeVVJDxJ3n83Z/VYAbnWaR8Ol7TKn+GUP6mTyv1cBLf8BPY+PfUHZEvuIjLWQAJ/8JIcdVhbwTjwI+NtvH3b69miVQ8UNdUfLtA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
+ 4D65E1800115; Tue, 16 Sep 2025 22:48:53 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Message-Id: <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [PATCH v4 03/27] target/i386/mshv: Add x86 decoder/emu
+ implementation
+Date: Wed, 17 Sep 2025 00:48:41 +0200
+In-Reply-To: <aMmg_K8N1fKGUV4o@gallifrey>
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <20250916164847.77883-4-magnuskulke@linux.microsoft.com>
+ <aMmg_K8N1fKGUV4o@gallifrey>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
+X-Proofpoint-ORIG-GUID: A2bviv6Fn1cclaOWZkpAkuiIMsmiT9iU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIxNCBTYWx0ZWRfX//UdMfRCd51f
+ WYu8gSk+0W9dv7hQtAAkDSdjfOTj9XSLZ+ZfwziLNAX7nP+URr/IzCDTVTnysTZSLmZRsr9iLRb
+ c5zLAE4IbfolElc3iE5U2wH9LgeCBhi9hHRxWLV3Hs2VF0bqwp2GgUY2wj1vjVCDhmpJv+SUdSy
+ YmYxnpmPEB6J4+uje835Lkf9FRtJ9o31ZF5GjmyRSJ77vsjlBC6SZ+fde4sSnFhXp+wbEK2u5in
+ hAHOupbXBAQvyPXlKpUSMTxA/ubgGlqPFLR4frzqhVULqwJam4ajIVUOOX4TACffdips0gBA8=
+X-Proofpoint-GUID: A2bviv6Fn1cclaOWZkpAkuiIMsmiT9iU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-16_02,2025-09-16_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ malwarescore=0 bulkscore=0 mlxscore=0 adultscore=0
+ suspectscore=0
+ clxscore=1030 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2509160214
+X-JNJ: AAAAAAABNhi7O3dzlkCfLC60iuN/Pxt0Uvh/ff+qSrnALJRA/tr6Pr7icjmBSxLrGUY4wBIdyj8pdKgatNmK2+BodqBZznI1b2AYk3IR6HrGsaQb4K5K97m9FNP4GovV/9Lkh0cjhyQakQqWgqt8C1ywb6V/Vf8vc+lTGJcLQqGHzRa4lcuaM5+3O+51m/tB/UQnnZo8QOUU2wckoDsG2fOGXd+HSrmm6eQghjit/yWDFMXHuJ+o4HEDl5wg6Fmf4+jSB9SRH8W3DxSsFVo4E6O5ZPVK/VgRZtDaupe1AXhIjVVwYjubnamcu4CNlgKfy7U9eda0f+pq4/4cQlps4brOvdInkGmYp1RkuJbNip1pomeoZOFO0S3yJyKHV5Xy4vPEAW9/ipumU4AQJZwmBYF7L5ZmicHP9e0ZKJ3rtlACVlRSimGgz4t7VUSgMRkU+8THKECMD7CQCB5K6Nk3re9Ji7KfSqeFFxq07R5wcQ5ZiZWWT4nZ2KR5V3JRuC713ZcfCelX61ctv+7a1CR1EcSEEPRTxOajxEwgPhqkNDfPLhrffT7k4twA+OXmGOsmVhCunb+ft5G9mrC6PN7n76vuftKqQ4aRiIctMMe8a3HUXWTtYvevV6UEUi0GF/c6V5CpRo8dFzr9vh1WtOPv6+L4MVi+MzqbtTqhdMuTW1BdFspPekEIeetlO+voPe5swVr1u8MpPwl/1E5RH8ljcyILRg+pIWJroRF2yWrJ7TVNP8lYpagR6sUTQ+J1ahSr0SSIYoZ/4I0333cxsqjYR7nRdgDqWHtojnq80+2B2H4HHbcSOvgl49N6WhiOwefH3sQgql36LfrwbT5jxbzNFEVHCARexYTn0onf7rNiUycw0+tUPbE0yRDMmudqg1xYrubI
+Received-SPF: pass client-ip=57.103.84.246;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,162 +104,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> Now after threadified dest VM load during precopy, we will always in a
-> thread context rather than within a coroutine.  We can remove this path
-> now.
->
-> With that, migration_started_on_destination can go away too.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/rdma.c | 102 +++++++++++++++++++----------------------------
->  1 file changed, 41 insertions(+), 61 deletions(-)
->
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 2b995513aa..7751262460 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -29,7 +29,6 @@
->  #include "qemu/rcu.h"
->  #include "qemu/sockets.h"
->  #include "qemu/bitmap.h"
-> -#include "qemu/coroutine.h"
->  #include "system/memory.h"
->  #include <sys/socket.h>
->  #include <netdb.h>
-> @@ -357,13 +356,6 @@ typedef struct RDMAContext {
->      /* Index of the next RAMBlock received during block registration */
->      unsigned int    next_src_index;
->  
-> -    /*
-> -     * Migration on *destination* started.
-> -     * Then use coroutine yield function.
-> -     * Source runs in a thread, so we don't care.
-> -     */
-> -    int migration_started_on_destination;
-> -
->      int total_registrations;
->      int total_writes;
->  
-> @@ -1353,66 +1345,55 @@ static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
->      struct rdma_cm_event *cm_event;
->  
->      /*
-> -     * Coroutine doesn't start until migration_fd_process_incoming()
-> -     * so don't yield unless we know we're running inside of a coroutine.
-> +     * This is the source or dest side, either during precopy or
-> +     * postcopy.  We're always in a separate thread when reaching here.
-> +     * Poll the fd.  We need to be able to handle 'cancel' or an error
-> +     * without hanging forever.
->       */
-> -    if (rdma->migration_started_on_destination &&
-> -        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE &&
-> -        qemu_in_coroutine()) {
-> -        yield_until_fd_readable(comp_channel->fd);
-> -    } else {
-> -        /* This is the source side, we're in a separate thread
-> -         * or destination prior to migration_fd_process_incoming()
-> -         * after postcopy, the destination also in a separate thread.
-> -         * we can't yield; so we have to poll the fd.
-> -         * But we need to be able to handle 'cancel' or an error
-> -         * without hanging forever.
-> -         */
-> -        while (!rdma->errored && !rdma->received_error) {
-> -            GPollFD pfds[2];
-> -            pfds[0].fd = comp_channel->fd;
-> -            pfds[0].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
-> -            pfds[0].revents = 0;
-> -
-> -            pfds[1].fd = rdma->channel->fd;
-> -            pfds[1].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
-> -            pfds[1].revents = 0;
-> -
-> -            /* 0.1s timeout, should be fine for a 'cancel' */
-> -            switch (qemu_poll_ns(pfds, 2, 100 * 1000 * 1000)) {
-> -            case 2:
-> -            case 1: /* fd active */
-> -                if (pfds[0].revents) {
-> -                    return 0;
-> -                }
-> +    while (!rdma->errored && !rdma->received_error) {
-> +        GPollFD pfds[2];
-> +        pfds[0].fd = comp_channel->fd;
-> +        pfds[0].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
-> +        pfds[0].revents = 0;
-> +
-> +        pfds[1].fd = rdma->channel->fd;
-> +        pfds[1].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
-> +        pfds[1].revents = 0;
-> +
-> +        /* 0.1s timeout, should be fine for a 'cancel' */
-> +        switch (qemu_poll_ns(pfds, 2, 100 * 1000 * 1000)) {
+--Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Don't glib have facilities for polling? Isn't this what
-qio_channel_rdma_create_watch() is for already?
 
-> +        case 2:
-> +        case 1: /* fd active */
-> +            if (pfds[0].revents) {
-> +                return 0;
-> +            }
->  
-> -                if (pfds[1].revents) {
-> -                    if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
-> -                        return -1;
-> -                    }
-> +            if (pfds[1].revents) {
-> +                if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
-> +                    return -1;
-> +                }
->  
-> -                    if (cm_event->event == RDMA_CM_EVENT_DISCONNECTED ||
-> -                        cm_event->event == RDMA_CM_EVENT_DEVICE_REMOVAL) {
-> -                        rdma_ack_cm_event(cm_event);
-> -                        return -1;
-> -                    }
-> +                if (cm_event->event == RDMA_CM_EVENT_DISCONNECTED ||
-> +                    cm_event->event == RDMA_CM_EVENT_DEVICE_REMOVAL) {
->                      rdma_ack_cm_event(cm_event);
-> +                    return -1;
->                  }
-> -                break;
-> +                rdma_ack_cm_event(cm_event);
-> +            }
-> +            break;
->  
-> -            case 0: /* Timeout, go around again */
-> -                break;
-> +        case 0: /* Timeout, go around again */
-> +            break;
->  
-> -            default: /* Error of some type -
-> -                      * I don't trust errno from qemu_poll_ns
-> -                     */
-> -                return -1;
-> -            }
-> +        default: /* Error of some type -
-> +                  * I don't trust errno from qemu_poll_ns
-> +                  */
-> +            return -1;
-> +        }
->  
-> -            if (migrate_get_current()->state == MIGRATION_STATUS_CANCELLING) {
-> -                /* Bail out and let the cancellation happen */
-> -                return -1;
-> -            }
-> +        if (migrate_get_current()->state == MIGRATION_STATUS_CANCELLING) {
-> +            /* Bail out and let the cancellation happen */
-> +            return -1;
->          }
->      }
->  
-> @@ -3817,7 +3798,6 @@ static void rdma_accept_incoming_migration(void *opaque)
->          return;
->      }
->  
-> -    rdma->migration_started_on_destination = 1;
->      migration_fd_process_incoming(f);
->  }
+
+> On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert <dave@treblig.org> =
+wrote:
+>=20
+> For example 'x86_is_real' is declared in target/i386/emulate/x86.h
+> and defined in target/i386/hvf/x86.c  (hmm that's a bit weird).
+> So it's probably best to check if what you want already exists,
+> move it into target/i386 somewhere I guess, and everyone shares it.
+Currently there isn=E2=80=99t a backend-agnostic interface for this.=20
+It was part of the import of HVF support to qemu from downstream.
+
+Notably means that the emulate infrastructure isn=E2=80=99t usable by =
+multiple
+backends in the same build. It might be possible to get away without =
+that
+however as HVF is macOS specific, MSHV is Linux-specific and WHPX
+(which is currently using winhvemulator instead of this) is =
+Windows-specific...
+=20
+
+
+--Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert =
+&lt;dave@treblig.org&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">For example 'x86_is_real' is declared in =
+target/i386/emulate/x86.h</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">and =
+defined in target/i386/hvf/x86.c &nbsp;(hmm that's a bit =
+weird).</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;">So it's probably best to =
+check if what you want already exists,</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">move it =
+into target/i386 somewhere I guess, and everyone shares it.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: =
+none;"></div></blockquote></div>Currently there isn=E2=80=99t a =
+backend-agnostic interface for this.&nbsp;<div>It was part of the import =
+of HVF support to qemu from downstream.<div><br></div><div>Notably means =
+that the emulate infrastructure isn=E2=80=99t usable by =
+multiple</div></div><div>backends in the same build. It might be =
+possible to get away without that</div><div>however as HVF is macOS =
+specific, MSHV is Linux-specific and WHPX</div><div>(which is currently =
+using winhvemulator instead of this) is =
+Windows-specific...</div><div>&nbsp;</div><div><br></div></body></html>=
+
+--Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD--
 
