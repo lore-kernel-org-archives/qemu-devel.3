@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF6DCCAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5912FCAC59A
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uySna-0002Vs-2Z; Tue, 16 Sep 2025 06:20:34 -0400
+	id 1uySy5-0005Ch-21; Tue, 16 Sep 2025 06:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySnP-0002MA-5H
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:20:24 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySnM-0000ne-J0
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:20:22 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b0473327e70so262443466b.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 03:20:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758018017; x=1758622817; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fw/wjxliZDSj8JvRwsa1dpja2LrMHrTyuaXLoozbE9w=;
- b=zr1zN6kXKZVv6T96GxX6NQ/wrzHQ7NshaIg0SWX0bP+Jt38qMcTPjK79r7DbjZh0cO
- bpygnZ6OA3Im716ywlLhMTTo/35g1jRySprJhDKF8CsIMRk7qj4MKSSbCEr9t8UleqFK
- Z17ZNS3WwvTyjCHF0APAVmGmyYTihMz0k0WnB+P4F1P7JcLLoMg2SL2HJTbsPy5NSPYU
- pyXDbnu4tIrBRSyfahuS8Hi8Kgzc3bPvV9KgWKhaSVvcXxpTzLaAZlhoEUvWnrpnOouP
- rcm0pdU8wzDUWz0gb2F7FJTDO+TDiIIA5RA6E8CelyIOcghFkTwoodoONI6nz7f9iesc
- lUww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758018017; x=1758622817;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fw/wjxliZDSj8JvRwsa1dpja2LrMHrTyuaXLoozbE9w=;
- b=cqC7dFV4AFmFKhojR4+fyqvpuvxPbviKyoaF5LFo48bhdgwY+qokWMmXCInZUBa+hP
- k7uJh1zAnEdQq2UT0bayemsXFLr2byrpCFC7gpNdTVCBN9oPfqpWts/N6PKAzsF9WD4/
- Pr5js8wSTZDc9E4eTeAjOUvOOTd7vMRoxLCmNUbQxANFPhnUIWMw1h+7yA4BITM8QLLc
- ++LqFcpN/icQ2gI6G1f2J4vau+zr5eIUSYoyjc10vjeqJVKfXDMv2gm5hq+YMrE4cC53
- +wxqfA/HSY14gKU/epJqszWtn4027FnS5ShBXp4PHEBBpm9RX4qbrfMwu2AAEZscXbhL
- r27A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWXxuKoq18YuHdpJUcqXkcPUF2PaX20jA4IQyi//3089e20Pdm9wzTZG5AMNGM5Pn5YsPfEgpmvvRa4@nongnu.org
-X-Gm-Message-State: AOJu0YzNI19/c7m+3u/pDa6I3UkKDOKBnwKcSM/Qi4zn2ACRbxQTMDk2
- tdZr7lqx2dyCx3baQ0XNAlJXJQYnamhN6j8grhmrYPhtXVQCsb7blyweAlRJScUJ9DBUrvygqcT
- QijjbLnUw1xAmQuu4m4Greiyhv0YrqzfWVCe+tzx1wQ==
-X-Gm-Gg: ASbGncv6YxybnyvxOQsKHjEWnr19ijvYzqVJuQ+onDLStcEz7SqId3vBCoK9UfRjRgV
- IXpTVgXJPL/9FtX0QTNdP9xmqlMnWP93wFcf2k49s2zV98ZZcfpq9oujOJ9VKCfbwHslYuJoMX5
- zxolcCfEb1ss9L9h23mQSpStcWBIJ+16OuEvhbMy/e6EBuYveQg/t59WYkow8U+6XtsFAKQKLfV
- AYA1yfY
-X-Google-Smtp-Source: AGHT+IE1GBIydRoX5P8Nc+MnGeslCswHihhmkY2s2WrFRy0Evh0eUI4FYYLvQIljznNScu7SyrFtZlvGvwjQ0+kSR0Q=
-X-Received: by 2002:a17:907:3f89:b0:b04:3bfe:5b20 with SMTP id
- a640c23a62f3a-b07c38295fbmr1649957766b.30.1758018017305; Tue, 16 Sep 2025
- 03:20:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uySy1-0005Bm-7F
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:31:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uySxw-0002Ci-9U
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:31:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758018671;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HoLLtDqNGVTdiRisEdK/jURVkbxy+tmYmSz13Vku/6Y=;
+ b=ALsQgthlB/zIWWCpQiCK3eD/ZDe9T9zP+JNr9F2koZePLUl/jxsyfZy5hzgvHJBKJJ4wKu
+ zuGhGYKXodb5LK3121xsXyMij8wNLQLGoh3JJEfIT4h1ley6X4ctu/C/jnHIEzT5/oq9wb
+ WDcnSRnVW48hL9k8jNWqxMCGjVpgZ4g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-VALydNDCNxyt0L8s6eUKiw-1; Tue,
+ 16 Sep 2025 06:31:07 -0400
+X-MC-Unique: VALydNDCNxyt0L8s6eUKiw-1
+X-Mimecast-MFC-AGG-ID: VALydNDCNxyt0L8s6eUKiw_1758018666
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E57D1956094; Tue, 16 Sep 2025 10:31:06 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.55])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E599819560B8; Tue, 16 Sep 2025 10:31:05 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 8ABC71800D58; Tue, 16 Sep 2025 12:31:03 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH 1/2] igvm: move igvm.h file to include/system
+Date: Tue, 16 Sep 2025 12:31:02 +0200
+Message-ID: <20250916103103.400662-2-kraxel@redhat.com>
+In-Reply-To: <20250916103103.400662-1-kraxel@redhat.com>
+References: <20250916103103.400662-1-kraxel@redhat.com>
 MIME-Version: 1.0
-References: <20250916085557.2008344-1-zhao1.liu@intel.com>
- <20250916085557.2008344-13-zhao1.liu@intel.com>
-In-Reply-To: <20250916085557.2008344-13-zhao1.liu@intel.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 16 Sep 2025 13:19:51 +0300
-X-Gm-Features: AS18NWDFGpAaxu0D9scCyky5HoAKpT5quRYXz1Ujc-bxH20MJv1y5dWwwSd0WgI
-Message-ID: <CAAjaMXaNCc2hE-n+TwxfGauhT+f+5rj2tL9j1iDbf0bOLdgWfw@mail.gmail.com>
-Subject: Re: [PATCH 12/12] rust/qdev: Drop declare_properties &
- define_property macros
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,93 +84,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 11:34=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
-te:
->
-> After HPET's #property conversion, there's no use case for
-> declare_properties & define_property. So get rid of them for now.
->
-> In future, if there's something that #property really cannot resolve,
-> they can be brought back.
->
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
+Prepare for arch-specific igvm code being added to the code base.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ {backends => include/system}/igvm.h | 0
+ backends/igvm-cfg.c                 | 2 +-
+ backends/igvm.c                     | 2 +-
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename {backends => include/system}/igvm.h (100%)
 
->  rust/hw/core/src/qdev.rs | 53 ----------------------------------------
->  1 file changed, 53 deletions(-)
->
-> diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-> index a8cd9e3c2fd5..a32ada4c175e 100644
-> --- a/rust/hw/core/src/qdev.rs
-> +++ b/rust/hw/core/src/qdev.rs
-> @@ -248,59 +248,6 @@ pub fn class_init<T: DeviceImpl>(&mut self) {
->      }
->  }
->
-> -#[macro_export]
-> -macro_rules! define_property {
-> -    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit =3D =
-$bitnr:expr, default =3D $defval:expr$(,)*) =3D> {
-> -        $crate::bindings::Property {
-> -            // use associated function syntax for type checking
-> -            name: ::std::ffi::CStr::as_ptr($name),
-> -            info: $prop,
-> -            offset: ::std::mem::offset_of!($state, $field) as isize,
-> -            bitnr: $bitnr,
-> -            set_default: true,
-> -            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defva=
-l as u64 },
-> -            ..::common::zeroable::Zeroable::ZERO
-> -        }
-> -    };
-> -    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default =
-=3D $defval:expr$(,)*) =3D> {
-> -        $crate::bindings::Property {
-> -            // use associated function syntax for type checking
-> -            name: ::std::ffi::CStr::as_ptr($name),
-> -            info: $prop,
-> -            offset: ::std::mem::offset_of!($state, $field) as isize,
-> -            set_default: true,
-> -            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defva=
-l as u64 },
-> -            ..::common::zeroable::Zeroable::ZERO
-> -        }
-> -    };
-> -    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty$(,)*) =3D=
-> {
-> -        $crate::bindings::Property {
-> -            // use associated function syntax for type checking
-> -            name: ::std::ffi::CStr::as_ptr($name),
-> -            info: $prop,
-> -            offset: ::std::mem::offset_of!($state, $field) as isize,
-> -            set_default: false,
-> -            ..::common::zeroable::Zeroable::ZERO
-> -        }
-> -    };
-> -}
-> -
-> -#[macro_export]
-> -macro_rules! declare_properties {
-> -    ($ident:ident, $($prop:expr),*$(,)*) =3D> {
-> -        pub static $ident: [$crate::bindings::Property; {
-> -            let mut len =3D 0;
-> -            $({
-> -                _ =3D stringify!($prop);
-> -                len +=3D 1;
-> -            })*
-> -            len
-> -        }] =3D [
-> -            $($prop),*,
-> -        ];
-> -    };
-> -}
-> -
->  unsafe impl ObjectType for DeviceState {
->      type Class =3D DeviceClass;
->      const TYPE_NAME: &'static CStr =3D
-> --
-> 2.34.1
->
+diff --git a/backends/igvm.h b/include/system/igvm.h
+similarity index 100%
+rename from backends/igvm.h
+rename to include/system/igvm.h
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+index 45df63e06c1a..d00acf351249 100644
+--- a/backends/igvm-cfg.c
++++ b/backends/igvm-cfg.c
+@@ -12,7 +12,7 @@
+ #include "qemu/osdep.h"
+ 
+ #include "system/igvm-cfg.h"
+-#include "igvm.h"
++#include "system/igvm.h"
+ #include "qom/object_interfaces.h"
+ 
+ static char *get_igvm(Object *obj, Error **errp)
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 9ad41582ee5e..723d45b755a0 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -11,8 +11,8 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "igvm.h"
+ #include "qapi/error.h"
++#include "system/igvm.h"
+ #include "system/memory.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
+-- 
+2.51.0
+
 
