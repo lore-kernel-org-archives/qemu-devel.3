@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D49CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469D4CAC59B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyWcz-0000xu-2c; Tue, 16 Sep 2025 10:25:53 -0400
+	id 1uyWcz-0000yv-Fu; Tue, 16 Sep 2025 10:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyWac-000618-W6
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:23:27 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1uyWaf-00062p-1n
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:23:29 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyWaT-0008Kk-RA
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:23:26 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-b4d1e7d5036so3629302a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:22:54 -0700 (PDT)
+ id 1uyWaU-0008JI-ED
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:23:28 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-25669596955so57003035ad.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758032573; x=1758637373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758032567; x=1758637367; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5WNm+peGJ2zUSPWUGzDEpnW/8pjrsxmYerIn3jmpQec=;
- b=ISDnKVuCGLEbKdUqbw2oeMnRl4ZZMf5+WNohibxD53yzGhkg8nI1r+ibQCOpX/k9xi
- 2Niy9kl6hZawwxqNI8SSO8orn6KQq31jmuxnQl6GZXa04uqogcSpDQTuK/IN9812anEn
- TK2ZugVb0V88L+Fk6GSn0tjWii7uW7DkjxahYiOYJ7iRDd1Tw2207P4fza8rxlFrxke3
- zvktsElc12cYXS6G65plvlVbosD8qPiv3iR/jsmrqttifZ4UHEO9n2SL5oU8Eak5fDAx
- hDRZ9xlxu2NNKau3aPtZABfdcvThH0RqgAOKFVd1zLz0cLbxDpAZjk8TjtV/ARNSrBXO
- kKbw==
+ bh=ZH0mjB8So3ur3KXNJMzLcfZFHoI3w+OVbUHK09CkjfQ=;
+ b=ri8/oyhVzcYjI6fJtE1HND5l+cMhBbLAJ2SwUZFP2rPA/Juia/8zVIgmxlWd1y03dJ
+ cDB64/JoJa2pkpOgki1BTEWaj6DI0xYYq2lWDrlRUYzSfA88MJfiRZ+RItj6ttiAY4Ir
+ H1TnT9Z9m0xNS36I8AHeYxD+5GaxGAmaUUH1utXH8trdYzDO9214rXhaAvQPvDcHCE4+
+ v1kF5iB2Nc/5UyOmKS06VvRtFcd7qmCAlRjoI3e83s07KmmKBKLl2z7Zyv8WxiDu08HG
+ AuRpNfbGb4axRq2vW0J7GK+v92vOw13w3onDAloMMHz0pd3bLmrBiqbiEXTEoqisIJfA
+ L5Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758032573; x=1758637373;
+ d=1e100.net; s=20230601; t=1758032567; x=1758637367;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5WNm+peGJ2zUSPWUGzDEpnW/8pjrsxmYerIn3jmpQec=;
- b=fRQE0/LQpwJ3bijI1OBG/dG/KKk/gBh+cCPYDkGs6iiTKHGD29Kg2U8/PpkD3xRodO
- ERwzzMM2S1s901wFy5YI6BP3OLfA0nlTZPDA3Q4p89TZ72sgtpaTX6372pK1mwJXIEfk
- mxFT0mmQPogwhKqBXgaSG2209oWBUvEne4NQxuFa4OYLgs2lOb/of/MdjSPjsm2+IeR1
- cOaXFNI8AdOa0aNxqFQkk7OWmnL30BEiNnfow74zyQnNGrFRe9wNRuX0gkkaBZ9yeQLy
- XLc2Q0TMV26rYjKgIoH71aVIUXygi4AnMgoItRv8PfuRlTrmojb980NDJiHr1LPhuJA0
- hxXQ==
-X-Gm-Message-State: AOJu0Ywg9OQtkjK70QiWNzN/i53ek/zZotZcB/OWhy1jpwVgTV+zF4oM
- ebVeQvp29wQZeZpoifP1KD6eoguKIFTRHX3SBGgDkkUPlif00WXkGLkG5gWOBdTySjy1fUOBjnk
- kzBe8
-X-Gm-Gg: ASbGncvhAjIMIyHxaHH2l/Lqhs6M+ay9f/RzSm9ZcPfeGB0edoyTHiQRN2f06LsHYii
- QnfgF7UijwqD7mCfT5WukTmdeNB5+kITlbr1mzuO4DwAtV+o/26eQuUZP0kznE3GItm54URjSr7
- mIq0NSDJd0qkcW3LndlBBUb4krE0kEhGYOIDdKqroechnh8uXsaOgRuJB5tWfxg2GOU662rBmR9
- vTWqo7N+XUs69NmkzkRs2a07Elq2Mc9AvSS7TK18bmHXbij4EhlK1rS/Djx4kIGJGf+OWDmeAep
- q+OdfLVC2xlmLfNiNZu23oh6vvAVDvFSCGzX09jv4h9sQqTFip6KADQ2WDmH/8ZMwtZtci/eU/e
- S0TH1voYFao/debTzyGwMyNX06SH/
-X-Google-Smtp-Source: AGHT+IF0PNhtt1zGo8dj/E1sITwfcw6yGZWUjoOyDjGhs5mlvkinOMwL0GlUVAwRFM5ap/0bXCdEjQ==
-X-Received: by 2002:a17:902:ef47:b0:265:c476:9a53 with SMTP id
- d9443c01a7336-265c4769c71mr90990815ad.41.1758032573227; 
- Tue, 16 Sep 2025 07:22:53 -0700 (PDT)
+ bh=ZH0mjB8So3ur3KXNJMzLcfZFHoI3w+OVbUHK09CkjfQ=;
+ b=olbFJTDkUByuefPTOl33XFv9+8w66XaEwmur5x3NCNg9PJNDDFdaSy5EeqEF3ToHub
+ LNQT9FYMFg5pb9ifTOqopGuZ3ML0CkOAnNXt4JF4jnXvgiKAxLH4QfCo4uEOKnM1K9A5
+ RxYSDUVq3c2KrJU014zc7e6ZWTMdv8o4SpgKhv6EesIpfCRsVzcImr1MChGw1YNnI5D5
+ PZT/UpsDN+b2wDU07LpNONoqTNrAsWgrSYjfpE+bkillkXSqN+8IsRKfm7v+aI6HE9GT
+ ye8La0UHFygdi2koKa1Krizd2W4gNR6nZoE21zwH4fzIVNY3fISm3dC5tEBasF4rlJ9X
+ Bffw==
+X-Gm-Message-State: AOJu0YxWuMHm2wCnliALB0Q5y34Oz4MBlBaFU9DqHRjLZNdgr63OBq9T
+ j6nqKNQFkaAdthY6qUqUAKPp4roTDYzHvyoJSR7HB8iBNeLzdr0YdfeImN+vf8ILfzFkvgWDmnk
+ VcR/3
+X-Gm-Gg: ASbGncuTKSypBBy68YVaQwCLdMrNkLQMzJ4LKd8ugNGRVlNpg063wwJQWAm9RFRA+DM
+ sThzC90ARoebHD5glgi9S0ghHuYGfTKVUr6PBFLSCoan6pRuHGi6/ql1COA/mQ+HRlnU38cczuR
+ nEIS17689wNuh7WpBxlKvUeozZvJSv0OVXnL1Bg0vGdkj5CEtMhS9DEHOTZbaot38U8IkBAaCRi
+ tmzfhvqp58yiRdZU0UVMbkrcfY5sFvS1zWCf58SKuir/wLnmzNUIoKNQ95ta5bzXDoQTXAlOtMb
+ 4ZNcSK8nDTsJ0yvBsG0egQPM6hNvw7WB2cDKRg57VOL3AfGFG5dkU5W9q1TUhyMyp30tEmmRFVg
+ KQV0y1o/9kOUtu5f3S62jx+8iais9AVEb1P31zQY=
+X-Google-Smtp-Source: AGHT+IG+v3H3/O7Wr4EKQVM8edjAxAdCdo/aABxMlATr82uHWyL3hoOKbDN+lOcn/r4nSc30WgXFuQ==
+X-Received: by 2002:a17:903:478d:b0:264:8a8d:92dd with SMTP id
+ d9443c01a7336-2648a8da428mr133255525ad.20.1758032567416; 
+ Tue, 16 Sep 2025 07:22:47 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2651d2df15esm73459905ad.45.2025.09.16.07.22.52
+ d9443c01a7336-2651d2df15esm73459905ad.45.2025.09.16.07.22.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 07:22:52 -0700 (PDT)
+ Tue, 16 Sep 2025 07:22:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	peter.maydell@linaro.org
-Subject: [PATCH v2 17/36] target/arm: Convert init_cpreg_list to
- g_hash_table_foreach
-Date: Tue, 16 Sep 2025 07:22:18 -0700
-Message-ID: <20250916142238.664316-18-richard.henderson@linaro.org>
+Subject: [PATCH v2 09/36] target/arm/hvf: Use raw_read, raw_write to access
+Date: Tue, 16 Sep 2025 07:22:10 -0700
+Message-ID: <20250916142238.664316-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916142238.664316-1-richard.henderson@linaro.org>
 References: <20250916142238.664316-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,120 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adjust count_cpreg and add_cpreg_to_list to be used with
-g_hash_table_foreach instead of g_list_foreach.  In this way we have
-the ARMCPRegInfo pointer directly rather than having to look it up
-from the key.
-
-Delay the sorting of the cpreg_indexes until after add_cpreg_to_list.
-This allows us to sort the data that we actually care about,
-the kvm id, as computed within add_cpreg_to_list, instead of
-having to repeatedly compute the kvm id within cpreg_key_compare.
+Reduce the places that know about field types by 2.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 54 ++++++++++++++++++---------------------------
- 1 file changed, 21 insertions(+), 33 deletions(-)
+ target/arm/hvf/hvf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index b7c483b0d9..cc924adbc7 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -229,11 +229,11 @@ bool write_list_to_cpustate(ARMCPU *cpu)
-     return ok;
- }
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 99d8672b9b..694584cc13 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1153,7 +1153,7 @@ static bool hvf_sysreg_read_cp(CPUState *cpu, uint32_t reg, uint64_t *val)
+         } else if (ri->readfn) {
+             *val = ri->readfn(env, ri);
+         } else {
+-            *val = CPREG_FIELD64(env, ri);
++            *val = raw_read(env, ri);
+         }
+         trace_hvf_vgic_read(ri->name, *val);
+         return true;
+@@ -1435,7 +1435,7 @@ static bool hvf_sysreg_write_cp(CPUState *cpu, uint32_t reg, uint64_t val)
+         if (ri->writefn) {
+             ri->writefn(env, ri, val);
+         } else {
+-            CPREG_FIELD64(env, ri) = val;
++            raw_write(env, ri, val);
+         }
  
--static void add_cpreg_to_list(gpointer key, gpointer opaque)
-+static void add_cpreg_to_list(gpointer key, gpointer value, gpointer opaque)
- {
-     ARMCPU *cpu = opaque;
-     uint32_t regidx = (uintptr_t)key;
--    const ARMCPRegInfo *ri = get_arm_cp_reginfo(cpu->cp_regs, regidx);
-+    const ARMCPRegInfo *ri = value;
- 
-     if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
-         cpu->cpreg_indexes[cpu->cpreg_array_len] = cpreg_to_kvm_id(regidx);
-@@ -242,61 +242,49 @@ static void add_cpreg_to_list(gpointer key, gpointer opaque)
-     }
- }
- 
--static void count_cpreg(gpointer key, gpointer opaque)
-+static void count_cpreg(gpointer key, gpointer value, gpointer opaque)
- {
-     ARMCPU *cpu = opaque;
--    const ARMCPRegInfo *ri;
--
--    ri = g_hash_table_lookup(cpu->cp_regs, key);
-+    const ARMCPRegInfo *ri = value;
- 
-     if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
-         cpu->cpreg_array_len++;
-     }
- }
- 
--static gint cpreg_key_compare(gconstpointer a, gconstpointer b, gpointer d)
--{
--    uint64_t aidx = cpreg_to_kvm_id((uintptr_t)a);
--    uint64_t bidx = cpreg_to_kvm_id((uintptr_t)b);
--
--    if (aidx > bidx) {
--        return 1;
--    }
--    if (aidx < bidx) {
--        return -1;
--    }
--    return 0;
--}
--
- void init_cpreg_list(ARMCPU *cpu)
- {
-     /*
-      * Initialise the cpreg_tuples[] array based on the cp_regs hash.
-      * Note that we require cpreg_tuples[] to be sorted by key ID.
-      */
--    GList *keys;
-     int arraylen;
- 
--    keys = g_hash_table_get_keys(cpu->cp_regs);
--    keys = g_list_sort_with_data(keys, cpreg_key_compare, NULL);
--
-     cpu->cpreg_array_len = 0;
--
--    g_list_foreach(keys, count_cpreg, cpu);
-+    g_hash_table_foreach(cpu->cp_regs, count_cpreg, cpu);
- 
-     arraylen = cpu->cpreg_array_len;
--    cpu->cpreg_indexes = g_new(uint64_t, arraylen);
--    cpu->cpreg_values = g_new(uint64_t, arraylen);
--    cpu->cpreg_vmstate_indexes = g_new(uint64_t, arraylen);
--    cpu->cpreg_vmstate_values = g_new(uint64_t, arraylen);
--    cpu->cpreg_vmstate_array_len = cpu->cpreg_array_len;
-+    if (arraylen) {
-+        cpu->cpreg_indexes = g_new(uint64_t, arraylen);
-+        cpu->cpreg_values = g_new(uint64_t, arraylen);
-+        cpu->cpreg_vmstate_indexes = g_new(uint64_t, arraylen);
-+        cpu->cpreg_vmstate_values = g_new(uint64_t, arraylen);
-+    } else {
-+        cpu->cpreg_indexes = NULL;
-+        cpu->cpreg_values = NULL;
-+        cpu->cpreg_vmstate_indexes = NULL;
-+        cpu->cpreg_vmstate_values = NULL;
-+    }
-+    cpu->cpreg_vmstate_array_len = arraylen;
-     cpu->cpreg_array_len = 0;
- 
--    g_list_foreach(keys, add_cpreg_to_list, cpu);
-+    g_hash_table_foreach(cpu->cp_regs, add_cpreg_to_list, cpu);
- 
-     assert(cpu->cpreg_array_len == arraylen);
- 
--    g_list_free(keys);
-+    if (arraylen) {
-+        qsort(cpu->cpreg_indexes, arraylen, sizeof(uint64_t), compare_u64);
-+    }
- }
- 
- bool arm_pan_enabled(CPUARMState *env)
+         trace_hvf_vgic_write(ri->name, val);
 -- 
 2.43.0
 
