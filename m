@@ -4,81 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3FACAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5E3CAC59B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyaIC-0008Eg-FO; Tue, 16 Sep 2025 14:20:40 -0400
+	id 1uyaay-0007pI-4p; Tue, 16 Sep 2025 14:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uyaI5-0008DS-Gm
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:20:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uyaav-0007nd-AS
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:40:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uyaI1-0003io-Mv
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:20:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uyaat-0005zR-Ar
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758046828;
+ s=mimecast20190719; t=1758047995;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=293JgCySNIjXCRLHwd80u5lJNKbyKNZBn2UUV3LqwpY=;
- b=YfQoRKgGTo5aiDDvdzfa481yPK7z4fl9/FWXay4oIYYEewNp9AB7EaYe3kizCjBIPhsxB2
- AS2p1hREQoA55ro/IGGS750DbCSvKC92lpeIl14wuypqMZnLpO2P8ubAQ4fX083SGs6kxu
- gGg4+BAugZ/X/K7+4fAHCbFz6nfW9qU=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cXfIdys3lphGw4K/13BaPVw1yfiAPP2uG8GiLofMl/I=;
+ b=iMfOEwkVgVjE8SVcmJ2YOfuL6w6Vv4yAVhVEral0y9emCzr0lBnB1yuhJ8GiBB/qJl7Zs7
+ 2qApv/7+dUk8H+Z+q+hqXADKBt4SHO9zyi3hx12i4CQaFzPGedHzF/+BHNhKcrMQb4g6nD
+ uwQvouUj6gfkGKNbsvX6mnHRHuXWK+M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-m07yw-4ZNoyg3TvuF2MOXw-1; Tue, 16 Sep 2025 14:20:27 -0400
-X-MC-Unique: m07yw-4ZNoyg3TvuF2MOXw-1
-X-Mimecast-MFC-AGG-ID: m07yw-4ZNoyg3TvuF2MOXw_1758046826
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-25bdf8126ceso100305815ad.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:20:27 -0700 (PDT)
+ us-mta-589-8-5IBdIONx64ZG6eCcHLWw-1; Tue, 16 Sep 2025 14:39:54 -0400
+X-MC-Unique: 8-5IBdIONx64ZG6eCcHLWw-1
+X-Mimecast-MFC-AGG-ID: 8-5IBdIONx64ZG6eCcHLWw_1758047993
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45de13167aaso52530585e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:39:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758046825; x=1758651625;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=293JgCySNIjXCRLHwd80u5lJNKbyKNZBn2UUV3LqwpY=;
- b=WblQwsbqZoaq3OERECHV+HantyYOEVZdTDaO+uTXUGaHPHgqNO5lihFhP660uODQRb
- 4yjrNeocZrkfjfTOEmAjFgry2Iw46nveYalt1Q1RhFa77t5OA1H47EbClhIwjxhfWJhu
- wkbQ8zBx5EEGjHUKwB3ovabURfEJ5psuq3iKzZpFJokcpG86xRznDeuMeO4Vu5Z8H/MR
- j7PQ4dk0Y1ArXKoqvhjmuW1txyhFggfll3/F3b3/QxYuXKMr2FsR6xYIoc4RjUAswBpp
- 4ORpSdD3Zyeh1/bpi1Bg3SOwLUazMMaIaitGshiK17e6EQ+dCVtlE/x6uH+tNlzH8sPO
- kaMw==
-X-Gm-Message-State: AOJu0YwrvAEOT/nJkomUVFyZgp5nlBaruhReuw3pdHb7l1rrEUEZ2o02
- q86qSi/TAOjif52XeV70kBYWKnjgrcRHNvNiYad+5MV0VwmPJGEtivBesg0EOGQO/jP5Cgcbj85
- rgxiT47wKUD9M2CZbZ7Ja/UPVf2wEoywA+W4IkRnRuG2xVSjVu9ghV/q+qqQ8MQJCIY5EDkUQL/
- GVs4G7FXyRCHtXCC6gWfR2cGvGs5OnXbPn5BMkNE2VMQ==
-X-Gm-Gg: ASbGncsT6g87ZhlXH720k+xxUSuqMTxwT4u0fDfT02vUptRdwTFvpnptp2m5wrtezau
- Rz+v+9J8f2rWD1XpN+EVGFARnt3GHuOuEqY38RQZLVYqSlm7/3yXFzbfMZ32FcChMFRqQHVNl2A
- cA3W/Upvu35LNFGTM4EmcYuSZ5j6RX8LjSEu555a2dOSBZ0j0OpXfZ
-X-Received: by 2002:a17:903:1b08:b0:25c:9688:bdca with SMTP id
- d9443c01a7336-25d26e43a33mr221841875ad.50.1758046825399; 
- Tue, 16 Sep 2025 11:20:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvzfOWT7IBBRnckyQCf2xL4aCvfgRSrfJwpeAAA6M2QPWPaLjzrUbLSXJK2ZVfYifV4lQNpd7XHLr8Nmw8Zp4=
-X-Received: by 2002:a17:903:1b08:b0:25c:9688:bdca with SMTP id
- d9443c01a7336-25d26e43a33mr221841705ad.50.1758046825005; Tue, 16 Sep 2025
- 11:20:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758047993; x=1758652793;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cXfIdys3lphGw4K/13BaPVw1yfiAPP2uG8GiLofMl/I=;
+ b=KUmgPGN0leoi6aenS+LUzcBcIQ81fSTd41ahVabRHTvDaS3ym1/6ayUpEdU6ipfPtn
+ dCNwI3IAdK+rVsE3FbIoxizstOFSSrZeXc4wpie6oxuEknHDDeoOhWhm4oX1RwS2BWuA
+ sn0kEMwLtQzbN62cwnKlFkWOd1GhhdPR88FCIMjh6ggoi/BZJEW+rpZiI1SOL/ZN29O1
+ Lu5FnpN4MYCMLNgFZqwlh5wiZeMOo74mVa7d3tBm8QRulkyXujU7OkhJMbqOUfvqNhPa
+ DDqMHwVBBkTJJ3i0pfF9BQ8uc9hwJn3ZcyBcFFxFGKoQBdoDdVjtjwfAMYCZAiB9cSF6
+ ReNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWn3VEgP1Buo8E9pT3pAl3LhohM1vprfljZq9xxgQiqjJrDjIErTUCCONUMM3h6qSBMqCP0tF80Ra6l@nongnu.org
+X-Gm-Message-State: AOJu0YwW0lkNFabpYWehu3dNJlcPagrC9xjWvTvxca+fojGIsOTR2qFv
+ Ofuop77HF506DwyCFkges+gEwzK8fAJsGc0N5v3sbOfSBmTyrl38dVRj6zAtC77XTfSIShr5h7F
+ r5622mpsqbFehfHFnbVetG43h1mi3OZct0A9OVjaZcbG3ui/MK8SRqifE
+X-Gm-Gg: ASbGncvXbLV9/1oJM7oNP/Sqm0aCOGGledKwwoLptr/vY+mVAWZo3hY0QP16wkyd118
+ t1XI1ovuO7UQj9cbopLhZs1qtHJ3oPBM60mOIefykMcWudinBIVZ5Bb+DjVnGZCrsDAHGkO4EIE
+ aDDXRonI0PySh3lkNTq1uk/bSgoH3GohPwgiIyD7WvZY/QLy75+sdDva/pPiDhQQ07Fqr9X9elw
+ O9XTPVkqZjcxudn+w8ZP9bE/6r6oUqZMBTRvndpswLi/ScZfGLX9ee4hKuIKDW2Lfn71GuE8J8d
+ potsNjAhYkOjF7CMhf4rnPdiCTgzP64mLSLAlfyZ+vicNCvFHyYQudhlGfXhrmfzHTy3KHHnoSx
+ PuSmu2g==
+X-Received: by 2002:a05:600c:c178:b0:45d:e54b:fa29 with SMTP id
+ 5b1f17b1804b1-45f211c8cd3mr164711665e9.14.1758047992867; 
+ Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHu8tz9+Z4aUrNZa1GjVloA2UnVgOMBvAkB4qqLcWIl+X1tWyquNVwhZISkG3jyWXGVzkkTTA==
+X-Received: by 2002:a05:600c:c178:b0:45d:e54b:fa29 with SMTP id
+ 5b1f17b1804b1-45f211c8cd3mr164711535e9.14.1758047992482; 
+ Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-218.pools.arcor-ip.net.
+ [47.64.113.218]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46136daf992sm5547925e9.1.2025.09.16.11.39.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
+Message-ID: <855b4ed1-556e-41e7-84b2-9233e9823128@redhat.com>
+Date: Tue, 16 Sep 2025 20:39:50 +0200
 MIME-Version: 1.0
-References: <20250916162404.9195-1-jsnow@redhat.com>
-In-Reply-To: <20250916162404.9195-1-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 16 Sep 2025 14:20:12 -0400
-X-Gm-Features: AS18NWCA3BJ5D8ODPq5Nc95z3uWGtgzjFy6zkOR8hzu8Xb0lovG3BiC1yEv7gF4
-Message-ID: <CAFn=p-ZgY=2XsBySA0KtZgoXfw0oLAg44cObC2KfyA3xfUUHqg@mail.gmail.com>
-Subject: Re: [PULL 00/19] Python patches
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Hanna Reitz <hreitz@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>, qemu-block@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/x86_64: Accept a few locked pages in
+ test_memlock.py
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250915185509.340022-1-richard.henderson@linaro.org>
+ <a6108491-9e0e-45df-9448-45de99e373a0@linaro.org>
+ <8865c3ad-341a-446e-ba29-e4c9f6bab514@redhat.com>
+ <8ebea8ef-42b9-4e8a-b0dd-9e0bb3bccdef@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <8ebea8ef-42b9-4e8a-b0dd-9e0bb3bccdef@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,114 +156,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 12:24=E2=80=AFPM John Snow <jsnow@redhat.com> wrote=
-:
->
-> The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b=
-5d:
->
->   Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu in=
-to staging (2025-09-11 12:41:01 +0100)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
->
-> for you to fetch changes up to 9a494d83538680651197651031375c2b6fa2490b:
->
->   iotests/check: always enable all python warnings (2025-09-15 14:36:02 -=
-0400)
->
-> ----------------------------------------------------------------
-> Python Pull Request
->
-> Python 3.14 support & synchronize with python-qemu-qmp repo
->
-> ----------------------------------------------------------------
->
-> Adam Dorsey (1):
->   python: backport 'feat: allow setting read buffer limit'
->
-> Daniel P. Berrang=C3=A9 (5):
->   iotests: drop compat for old version context manager
->   python: ensure QEMUQtestProtocol closes its socket
->   iotests/147: ensure temporary sockets are closed before exiting
->   iotests/151: ensure subprocesses are cleaned up
->   iotests/check: always enable all python warnings
->
-> John Snow (13):
->   python: backport 'Change error classes to have better repr methods'
->   python: backport 'EventListener: add __repr__ method'
->   python: backport 'kick event queue on legacy event_pull()'
->   python: backport 'protocol: adjust logging name when changing client
->     name'
->   python: backport 'drop Python3.6 workarounds'
->   python: backport 'Use @asynciocontextmanager'
->   python: backport 'qmp-shell: add common_parser()'
->   python: backport 'make require() preserve async-ness'
->   python: backport 'qmp-shell-wrap: handle missing binary gracefully'
->   python: backport 'qmp-tui: Do not crash if optional dependencies are
->     not met'
->   python: backport 'Remove deprecated get_event_loop calls'
->   python: backport 'avoid creating additional event loops per thread'
->   python: synchronize qemu.qmp documentation
->
->  python/qemu/machine/qtest.py     |   2 +
->  python/qemu/qmp/__init__.py      |   3 +-
->  python/qemu/qmp/error.py         |   7 +-
->  python/qemu/qmp/events.py        |  50 ++++++--
->  python/qemu/qmp/legacy.py        |  46 +++++---
->  python/qemu/qmp/message.py       |  22 ++--
->  python/qemu/qmp/models.py        |   8 +-
->  python/qemu/qmp/protocol.py      | 194 +++++++++++++++++++------------
->  python/qemu/qmp/qmp_client.py    | 155 +++++++++++++++++-------
->  python/qemu/qmp/qmp_shell.py     | 165 ++++++++++++++++++--------
->  python/qemu/qmp/qmp_tui.py       |  30 +++--
->  python/qemu/qmp/util.py          | 143 ++++++-----------------
->  python/tests/protocol.py         |  10 +-
->  tests/qemu-iotests/147           |   1 +
->  tests/qemu-iotests/151           |   5 +
->  tests/qemu-iotests/check         |   4 +
->  tests/qemu-iotests/testenv.py    |   7 +-
->  tests/qemu-iotests/testrunner.py |   9 +-
->  18 files changed, 532 insertions(+), 329 deletions(-)
->
-> --
-> 2.51.0
->
->
+On 16/09/2025 18.55, Richard Henderson wrote:
+> On 9/15/25 22:18, Thomas Huth wrote:
+>> On 16/09/2025 03.38, Richard Henderson wrote:
+>>> On 9/15/25 11:55, Richard Henderson wrote:
+>>>> Startup of libgcrypt locks a small pool of pages -- by default 16k.
+>>>> Testing for zero locked pages is isn't correct, while testing for
+>>>> 32k is a decent compromise.
+>>>>
+>>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>>> ---
+>>>>   tests/functional/x86_64/test_memlock.py | 3 ++-
+>>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/ 
+>>>> x86_64/ test_memlock.py
+>>>> index 2b515ff979..81bce80b0c 100755
+>>>> --- a/tests/functional/x86_64/test_memlock.py
+>>>> +++ b/tests/functional/x86_64/test_memlock.py
+>>>> @@ -37,7 +37,8 @@ def test_memlock_off(self):
+>>>>           status = self.get_process_status_values(self.vm.get_pid())
+>>>> -        self.assertTrue(status['VmLck'] == 0)
+>>>> +        # libgcrypt may mlock a few pages
+>>>> +        self.assertTrue(status['VmLck'] < 32)
+>>>>       def test_memlock_on(self):
+>>>>           self.common_vm_setup_with_memlock('on')
+>>>
+>>> I wonder if I should have chosen 64k, which might be one 64k page...
+>>
+>> It's a x86 test, so we should not have to worry about 64k pages there, I 
+>> hope?
+> 
+> Fair enough, though it does beg the question of why it's an x86-specific 
+> test.  Don't all host architectures support memory locking?
 
-CC qemu-stable. For the stable pull, this subset of patches should be
-sufficient:
+I guess you need at least a target machine that runs a firmware by default, 
+since this test does not download any assets...?
 
-jsnow@jsnow-thinkpadp16vgen1 ~/s/q/build (python)> stg series --description
-+ python-backport-kick-event     # python: backport 'kick event queue
-on legacy event_pull()'
-+ python-backport-drop-python3.6 # python: backport 'drop Python3.6 workaro=
-unds'
-+ python-backport-use            # python: backport 'Use @asynciocontextman=
-ager'
-+ python-backport-remove         # python: backport 'Remove deprecated
-get_event_loop calls'
-+ python-backport-avoid-creating # python: backport 'avoid creating
-additional event loops per thread'
-+ iotests-drop-compat-for-old    # iotests: drop compat for old
-version context manager
-+ python-ensure                  # python: ensure QEMUQtestProtocol
-closes its socket
-+ iotests-147-ensure-temporary   # iotests/147: ensure temporary
-sockets are closed before exiting
-+ iotests-151-ensure             # iotests/151: ensure subprocesses
-are cleaned up
-> iotests-check-always-enable    # iotests/check: always enable all python =
-warnings
-
-i.e. patches 3, 5-6, 12-13, and 15-19. Tested locally in the python
-tests dir (make check-dev && make check-tox && make check-minreqs) and
-via normal build and test (../configure --enable-docs && make -j13 &&
-make check)
-
-Thanks,
---js.
+  Thomas
 
 
