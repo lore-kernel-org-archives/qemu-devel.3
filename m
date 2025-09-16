@@ -4,110 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788D3CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 06:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 299F1CAC599
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 07:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyP17-00026S-4r; Tue, 16 Sep 2025 02:18:17 -0400
+	id 1uyPqe-0006Jo-3k; Tue, 16 Sep 2025 03:11:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uyP15-00025d-5B; Tue, 16 Sep 2025 02:18:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <SRS0=MCvy=33=kaod.org=clg@ozlabs.org>)
+ id 1uyPqX-0005yp-2N; Tue, 16 Sep 2025 03:11:25 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uyP12-00076Q-1z; Tue, 16 Sep 2025 02:18:14 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58G5VsGD031553;
- Tue, 16 Sep 2025 06:18:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=o8FvyA884sDbTFyfaccM/3oCnolBTd6Hw/6ZhdXs+
- 2k=; b=BqugnTqzjwH2CFMM7quItzy20XfOLSV9RMm/ik2iVgW0CZOQRQFaL36Vz
- gZOmsA5uoxi/GUOARTjN/mu2bgd1ljPY72U532R5/4sl3O1Xj4hy+GRjrVHFRhwV
- L/kui5yZGas5n8/yU8sMLkBXF1GqNo+1Lgycibj3S7MfZppxcNq17/sQQo7cknPP
- Yj93eO+pdD3TRDhyzo9U2eplnos1G6JQ0HmjmANZvE/ufV4xLj7cP07h5MGtYlei
- VNifZTdyeARQclTcPfH+3wXQRwf26foDZiP10nqrBkj9aAjjOyKGhFd2tk97dDhC
- Dl2m/iY/jgmcoXFCPQaH6vG8PtM8A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 494x1tenug-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Sep 2025 06:18:07 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58G6FDQK007283;
- Tue, 16 Sep 2025 06:18:07 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 494x1tenuf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Sep 2025 06:18:07 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58G3BkFc027358;
- Tue, 16 Sep 2025 06:18:06 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495men2ck1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Sep 2025 06:18:06 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58G6I2kQ48365832
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Sep 2025 06:18:02 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D6CE20043;
- Tue, 16 Sep 2025 06:18:02 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8CA02004B;
- Tue, 16 Sep 2025 06:17:59 +0000 (GMT)
-Received: from mac.in.ibm.com (unknown [9.109.215.35])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Sep 2025 06:17:59 +0000 (GMT)
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: harshpb@linux.ibm.com, vaibhav@linux.ibm.com, nicholas@linux.ibm.com,
- rathc@linux.ibm.com, npiggin@gmail.com, pbonzini@redhat.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4] hw/ppc/spapr_hcall: Return host mitigation characteristics
- in KVM mode
-Date: Tue, 16 Sep 2025 11:47:53 +0530
-Message-Id: <20250916061753.20517-1-gautam@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+ (Exim 4.90_1) (envelope-from <SRS0=MCvy=33=kaod.org=clg@ozlabs.org>)
+ id 1uyPqO-00046V-5S; Tue, 16 Sep 2025 03:11:24 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cQtNQ1XsSz4wB5;
+ Tue, 16 Sep 2025 17:11:02 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cQtNL58VNz4wBF;
+ Tue, 16 Sep 2025 17:10:58 +1000 (AEST)
+Message-ID: <805d6be9-f511-4393-aedb-3faf2b56daec@kaod.org>
+Date: Tue, 16 Sep 2025 09:10:55 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] docs: Add eMMC device model description
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ Jerome Forissier <jerome.forissier@linaro.org>
+References: <cover.1757854006.git.jan.kiszka@siemens.com>
+ <bf2b2d675264fd41fbe55ad3fb2e528e6d72ad97.1757854006.git.jan.kiszka@siemens.com>
+ <e718145e-f39b-4af8-997a-cc4c8972049a@kaod.org>
+ <ee929dcc-f83c-489f-8a1c-f74398cbaa57@siemens.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <ee929dcc-f83c-489f-8a1c-f74398cbaa57@siemens.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=OMsn3TaB c=1 sm=1 tr=0 ts=68c9011f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=yJojWOMRYYMA:10 a=voM4FWlXAAAA:8 a=VnNF1IyMAAAA:8 a=TfJWrzbei0Lz0DVUvboA:9
- a=IC2XNlieTeVoXbcui8wp:22
-X-Proofpoint-ORIG-GUID: sZ0cQy4fzVJ7D2SdVJxLYBghDOIlUj--
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAwMSBTYWx0ZWRfX82wY3QhDOETz
- w7RdLwgenkAL/2dDIqYf2nfEi7xQHOy/SfiGSgFy6EzvVwxX7LEq09dZ+1NBzGJ51iCBatgzLR3
- uSkCAOkKzp0wzxZZtfh8JJp/7Forl3XPRSjo4gr/SxPEWLbccV33MFmK6ZdQf9ALfEfVy3ai55y
- hmYZp8pRkUSr3IJq6cvi0iPFDAxe7HB3R9b2Wf4tYdMUnS7FPeozc11/AcNz4MRrpPbHVfhzLFt
- NRFXjhgOo3Khd6R4d51B7s0ZPeC/AGAn9hipPOtNbtxJE1Tq2Gpa2bQhq8yDClAuTf30r0v+/jc
- BZ1GTPaujDM1c6Ru8+61R5JAwPMdFR30Ayo+MTLU/rmgm1vfwfvMtvcq7d4dVE3cBuEMsbwaTE7
- N+BHffhb
-X-Proofpoint-GUID: VkLv9Z2maXFr-SK59hw8ERgRF1MbbAbW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-16_01,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 spamscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130001
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=MCvy=33=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,156 +113,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, on a P10 KVM guest, the mitigations seen in the output of
-"lscpu" command are different from the host. The reason for this
-behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
-hcall, QEMU does not consider the data it received from the host via the
-KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
-spapr->eff.caps[], which in turn just contain the default values set in
-spapr_machine_class_init().
+On 9/16/25 08:02, Jan Kiszka wrote:
+> On 15.09.25 19:37, Cédric Le Goater wrote:
+>> On 9/14/25 14:46, Jan Kiszka wrote:
+>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>>
+>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+>>> ---
+>>>    docs/system/device-emulation.rst |  1 +
+>>>    docs/system/devices/emmc.rst     | 52 ++++++++++++++++++++++++++++++++
+>>>    2 files changed, 53 insertions(+)
+>>>    create mode 100644 docs/system/devices/emmc.rst
+>>>
+>>> diff --git a/docs/system/device-emulation.rst b/docs/system/device-
+>>> emulation.rst
+>>> index 911381643f..36429b1d17 100644
+>>> --- a/docs/system/device-emulation.rst
+>>> +++ b/docs/system/device-emulation.rst
+>>> @@ -101,3 +101,4 @@ Emulated Devices
+>>>       devices/canokey.rst
+>>>       devices/usb-u2f.rst
+>>>       devices/igb.rst
+>>> +   devices/emmc.rst
+>>> diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
+>>> new file mode 100644
+>>> index 0000000000..dbea6d6c7e
+>>> --- /dev/null
+>>> +++ b/docs/system/devices/emmc.rst
+>>> @@ -0,0 +1,52 @@
+>>> +==============
+>>> +eMMC Emulation
+>>> +==============
+>>> +
+>>> +Besides SD card emulation, QEMU also offers an eMMC model as found on
+>>> many
+>>> +embedded boards. An eMMC, just like an SD card, is connected to the
+>>> machine
+>>> +via an SDHCI controller.
+>>> +
+>>> +Create eMMC Images
+>>> +==================
+>>> +
+>>> +A recent eMMC consists of 4 partitions: 2 boot partitions, 1 Replay
+>>> protected
+>>> +Memory Block (RPMB), and the user data area. QEMU expects backing
+>>> images for
+>>> +the eMMC to contain those partitions concatenated in exactly that order.
+>>> +However, the boot partitions as well as the RPMB might be absent if
+>>> their sizes
+>>> +are configured to zero.
+>>> +
+>>> +The eMMC specification defines alignment constraints for the
+>>> partitions. The
+>>> +two boot partitions must be of the same size. Furthermore, boot and RPMB
+>>> +partitions must be multiples of 128 KB with a maximum of 32640 KB for
+>>> each
+>>> +boot partition and 16384K for the RPMB partition.
+>>> +
+>>> +The alignment constrain of the user data area depends on its size. Up
+>>> to 2
+>>> +GByte, the size must be a power of 2. From 2 GByte onward, the size
+>>> has to be
+>>> +multiples of 512 byte.
+>>> +
+>>> +QEMU is enforcing those alignment rules before instantiating the device.
+>>> +Therefore, the provided image has to strictly follow them as well.
+>>> The helper
+>>> +script `scripts/mkemmc.sh` can be used to create compliant images,
+>>> with or
+>>
+>> the single backquote would interpret scripts/mkemmc.sh as a ref. I think
+>> you want ``scripts/mkemmc.sh``
+>>
+>>> +without pre-filled partitions. E.g., to create an eMMC image from a
+>>> firmware
+>>> +image and an OS image with an empty 2 MByte RPMB, use the following
+>>> command:
+>>> +
+>>> +.. code-block:: console
+>>> +
+>>> +    scripts/mkemmc.sh -b firmware.img -r /dev/zero:2MB os.img emmc.img
+>>> +
+>>> +This will take care of rounding up the partition sizes to the next
+>>> valid value
+>>> +and will leave the RPMB and the second boot partition empty (zeroed).
+>>> +
+>>> +Adding eMMC Devices
+>>> +===================
+>>> +
+>>> +An eMMC is either automatically created by a machine model (e.g.
+>>> Aspeed boards)
+>>> +or can be user-created when using a PCI-attached SDHCI controller. To
+>>> +instantiate the eMMC image from the example above while assuming that
+>>> the
+>>> +firmware needs a boot partitions of 1 MB, use the following options:
+>>> +
+>>> +.. code-block:: console
+>>> +
+>>> +    -drive file=emmc.img,if=none,format=raw,id=emmc-img
+>>> +    -device sdhci-pci
+>>> +    -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-
+>>> partition-size=2097152
+>>
+>> I will see if I can adjust the existing aspeed test with your proposal.
+>>
+> 
+> Thanks in advance! Yeah, the existing alignment rules were incorrect
+> once you turned on boot partitions. So there is unfortunately no way
+> around fixing images that followed them.
 
-Fix this behaviour by making sure that h_get_cpu_characteristics()
-returns the data received from the KVM ioctl for a KVM guest.
+Ideally we should generate the rainier emmc image with your script
+from the OpenBMC artifacts [1]. The current image is not broken by
+this series, so, we have time.
 
-Mitigation status seen in lscpu output:
-1. P10 LPAR (host)
-$ lscpu | grep -i mitigation
-Vulnerability Spectre v1:             Mitigation; __user pointer sanitization, ori31 speculation barrier enabled
-Vulnerability Spectre v2:             Mitigation; Software count cache flush (hardware accelerated), Software link stack flush
 
-2. KVM guest on P10 LPAR with upstream QEMU
-$ lscpu | grep -i mitig
-Vulnerability L1tf:                   Mitigation; RFI Flush, L1D private per thread
-Vulnerability Meltdown:               Mitigation; RFI Flush, L1D private per thread
-Vulnerability Spec store bypass:      Mitigation; Kernel entry/exit barrier (eieio)
-Vulnerability Spectre v1:             Mitigation; __user pointer sanitization
-Vulnerability Spectre v2:             Mitigation; Software count cache flush (hardware accelerated), Software link stack flush
+However, regarding this command line :
 
-3. KVM guest on P10 LPAR (this patch applied)
-$ lscpu | grep -i mitigation
-Vulnerability Spectre v1:             Mitigation; __user pointer sanitization, ori31 speculation barrier enabled
-Vulnerability Spectre v2:             Mitigation; Software count cache flush (hardware accelerated), Software link stack flush
+     -drive file=emmc.img,if=none,format=raw,id=emmc-img
+     -device sdhci-pci
+     -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-size=2097152
 
-Perf impact:
-With null syscall benchmark[1], ~45% improvement is observed.
+a few assumptions are made.
 
-1. Vanilla QEMU
-$ ./null_syscall
-132.19 ns     456.54 cycles
+Machines can have multiple sdhci controllers with several slots. In
+the, case above, the emmc device is "blindly" attached to slot 0 on
+a bus named "sd-bus".
 
-2. With this patch
-$ ./null_syscall
-91.18 ns     314.57 cycles
+Removing all QEMU internal references to "sd-bus" will require some work.
 
-[1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
 
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
-v1 -> v2:
-Handle the case where KVM_PPC_GET_CPU_CHAR ioctl fails
+Philippe,
 
-v2 -> v3:
-Add the lscpu output in the patch description
+Should we allow automatic bus numbering  :
 
-v3 -> v4:
-Fix QEMU CI build failure
+-    qbus_init(&s->sdbus, sizeof(s->sdbus), TYPE_SDHCI_BUS, DEVICE(s), "sd-bus");
++    qbus_init(&s->sdbus, sizeof(s->sdbus), TYPE_SDHCI_BUS, DEVICE(s), NULL);
 
- hw/ppc/spapr_hcall.c | 10 ++++++++++
- target/ppc/kvm.c     | 27 +++++++++++++++++++--------
- target/ppc/kvm_ppc.h |  1 +
- 3 files changed, 30 insertions(+), 8 deletions(-)
+and replace all :
 
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 1e936f35e4..7d695ffc93 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -1415,6 +1415,16 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
-     uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
-                                                      SPAPR_CAP_CCF_ASSIST);
- 
-+    #ifdef CONFIG_KVM
-+    struct kvm_ppc_cpu_char c = kvmppc_get_cpu_chars();
-+
-+    if (kvm_enabled() && c.character) {
-+        args[0] = c.character;
-+        args[1] = c.behaviour;
-+        return H_SUCCESS;
-+    }
-+    #endif
-+
-     switch (safe_cache) {
-     case SPAPR_CAP_WORKAROUND:
-         characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 015658049e..28dcf62f58 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -93,6 +93,7 @@ static int cap_fwnmi;
- static int cap_rpt_invalidate;
- static int cap_ail_mode_3;
- static int cap_dawr1;
-+static struct kvm_ppc_cpu_char cpu_chars = {0};
- 
- #ifdef CONFIG_PSERIES
- static int cap_papr;
-@@ -2515,7 +2516,6 @@ bool kvmppc_has_cap_xive(void)
- 
- static void kvmppc_get_cpu_characteristics(KVMState *s)
- {
--    struct kvm_ppc_cpu_char c;
-     int ret;
- 
-     /* Assume broken */
-@@ -2525,18 +2525,29 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
- 
-     ret = kvm_vm_check_extension(s, KVM_CAP_PPC_GET_CPU_CHAR);
-     if (!ret) {
--        return;
-+        goto err;
-     }
--    ret = kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &c);
-+    ret = kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &cpu_chars);
-     if (ret < 0) {
--        return;
-+        goto err;
-     }
- 
--    cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
--    cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
--    cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
-+    cap_ppc_safe_cache = parse_cap_ppc_safe_cache(cpu_chars);
-+    cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(cpu_chars);
-+    cap_ppc_safe_indirect_branch =
-+        parse_cap_ppc_safe_indirect_branch(cpu_chars);
-     cap_ppc_count_cache_flush_assist =
--        parse_cap_ppc_count_cache_flush_assist(c);
-+        parse_cap_ppc_count_cache_flush_assist(cpu_chars);
-+
-+    return;
-+
-+err:
-+    memset(&cpu_chars, 0, sizeof(struct kvm_ppc_cpu_char));
-+}
-+
-+struct kvm_ppc_cpu_char kvmppc_get_cpu_chars(void)
-+{
-+    return cpu_chars;
- }
- 
- int kvmppc_get_cap_safe_cache(void)
-diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
-index a1d9ce9f9a..51c1c7d1a0 100644
---- a/target/ppc/kvm_ppc.h
-+++ b/target/ppc/kvm_ppc.h
-@@ -87,6 +87,7 @@ void kvmppc_check_papr_resize_hpt(Error **errp);
- int kvmppc_resize_hpt_prepare(PowerPCCPU *cpu, target_ulong flags, int shift);
- int kvmppc_resize_hpt_commit(PowerPCCPU *cpu, target_ulong flags, int shift);
- bool kvmppc_pvr_workaround_required(PowerPCCPU *cpu);
-+struct kvm_ppc_cpu_char kvmppc_get_cpu_chars(void);
- 
- bool kvmppc_hpt_needs_host_contiguous_pages(void);
- void kvm_check_mmu(PowerPCCPU *cpu, Error **errp);
--- 
-2.39.5 (Apple Git-154)
+-        BusState *bus = qdev_get_child_bus(DEVICE(sdhci), "sd-bus");
++        BusState *bus = BUS(&sdhci->sdbus);
+
+
+Thanks,
+
+C.
+
+
+[1] https://jenkins.openbmc.org/job/ci-openbmc/distro=ubuntu,label=docker-builder,target=p10bmc/32112/artifact/openbmc/build/tmp/deploy/images/p10bmc/
 
 
