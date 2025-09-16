@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1E0CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288EACAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 16:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyYy8-0006Lx-23; Tue, 16 Sep 2025 12:55:52 -0400
+	id 1uyYuK-0006nm-Nq; Tue, 16 Sep 2025 12:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyYy0-0006GS-8t
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:55:44 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyYxy-0007Yk-Bo
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:55:43 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7761b83fd01so4027984b3a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 09:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758041740; x=1758646540; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+QjKZyGjCb3MN36kEbgasSIbCOxnuFaPqUzO030KLaI=;
- b=hBN2ntWccXwaENktd/ltpfMH//PTtzmkh9RvcX0m2/sZS0H2y871fH7tDW4McTsOsv
- 2tPyOCXAu7oEtyg/z+yDohzRKgx9/AGONlWwGi8VYV+fp1EjLMZKDoJMuBnIvap4t9c1
- NWZDkivXGDQd78az8JgONI5jOApSoEvuK6g47TTCm9gBqnFAhMWuPuHrMgA0VbktZ734
- RG6q3dzo2ZEZM/nvFm/MgtWP+Q/U1YAKGcVIBC7io5e/4UZqOS4gbiXlhibw9hEoVWFc
- S67o+HNwOs8Olna/VlvZTJlCOzmsOq8Iyg7ZicOqV4I7w4XJZYpdqtFY4D8C1i8DQr7T
- O6+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758041740; x=1758646540;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+QjKZyGjCb3MN36kEbgasSIbCOxnuFaPqUzO030KLaI=;
- b=EOq8Lt0+UG3dXbUTTxjWPkGc0Uw8ez5mcGToHmVyu4oBnRjIPNfrwzZhYJ7B5QJUiI
- fDtMv2I3QWHnh+8XJBFLaPwuBvyddzDqFRBOfM08jN9G94oBvsneBSDeqqS3foP0DwDo
- kVPMhvSERBpFo/N5J+QmIzm3znoHEQPEXDQFOeKi3Hx4vMojEKO4s3xZW3pRU91rrZEJ
- VuVpjd04PrPocIU0Tn+EKZn1qIe0u0D+3LKpck6gFcOqOFW4/ciPbp6i/wXzKK9pbZ6O
- wazTxT+ypScPgPAORWeoCA6fl/cLz0qWMedxo2r1q11WYtnTUfBeRh/6FgDkdQ2crCJQ
- 2qVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZBPsLvuXVrPrDlhv6AsLmhSYSJYsTgbUE5OlShfHNMMQuD1jKUaEAXeF5iF0col5J5Hsrr8+OHhG3@nongnu.org
-X-Gm-Message-State: AOJu0Yyy9t01dps2zMpuBtshrJB9YP6tWelx1IXWnBikBnKk/rmkrz2k
- Y/CKdPZoiSynsy2/foAtes0kS8TpDcjLRecl9p/eT3NlVSYAlldfv+Z3RU80FMHqXMs=
-X-Gm-Gg: ASbGncv3QXINti4UtgxkR2/kFAe9E8DZibIvb468GMehJBW40IyLtqpYI1+1C7GDcix
- Y7uvYYIbS7OSZGn+ucIv4qJuOBNOmVJmtPu1wlDfOsX5KefpAHVktUIexdGv1gWQ5WlHMP7Sj5H
- WAK7FCS5a+THh2jD1kmvw5iff8cGOAlyjrsjw8kdSr35lGs2QhslNM7vyuBNRJ4EMoDfeD4r6Iw
- eEAnt2q+mZnWLG1uXTCTGbcyF5yUfPM3kcompNDN8cCjQdQE31NaisaD/iBPKlJLEbGdci7A8nM
- 1MdOCNRbKmqYBLF9R8UPCM0X3deurwKsq51MM1VOg5I8AFNGQr1KGzLi/bAmymynsOoqaQ7+shA
- QTXdcjV2SuGAABB+ZwFElbUJlvKdFVihuQBNQ
-X-Google-Smtp-Source: AGHT+IGsM7Ql5eCEVW/0SXjb37VbkeKQfIjMTGmH04l+AMdz9pBHpJpx8C9edgqBFRGNNYXy7zw3NA==
-X-Received: by 2002:a05:6a00:4601:b0:772:43a9:d587 with SMTP id
- d2e1a72fcca58-77612167539mr16307210b3a.20.1758041740069; 
- Tue, 16 Sep 2025 09:55:40 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77607b18ec7sm17000303b3a.54.2025.09.16.09.55.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Sep 2025 09:55:39 -0700 (PDT)
-Message-ID: <8ebea8ef-42b9-4e8a-b0dd-9e0bb3bccdef@linaro.org>
-Date: Tue, 16 Sep 2025 09:55:38 -0700
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uyYuI-0006ck-I7
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:51:54 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyYuD-0006x9-2D
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:51:54 -0400
+Received: from localhost.localdomain (unknown [167.220.208.43])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4254820154ED;
+ Tue, 16 Sep 2025 09:51:33 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4254820154ED
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1758041497;
+ bh=C7NCJc4y06Z06yg3ax79By+mM2/zrQZx9Z/eT5BQJEc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Bvur6OaREMkiH+1fkm8nFcor5Py5Je8PDac1modUqfKjXxmjv/xSwPkzrrCpt3Ze3
+ speG4iC+MoHz41kEFp0dm2nS1/ydRHm56lToU6+nsZdUAz9IMeP9xrebmaTcwGCG6g
+ gE1AI0i4M8zcX8UzdqwJ9kkJ5r+Uynp3m+MvTrCc=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v4 26/27] docs: Add mshv to documentation
+Date: Tue, 16 Sep 2025 18:48:46 +0200
+Message-Id: <20250916164847.77883-27-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/x86_64: Accept a few locked pages in
- test_memlock.py
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20250915185509.340022-1-richard.henderson@linaro.org>
- <a6108491-9e0e-45df-9448-45de99e373a0@linaro.org>
- <8865c3ad-341a-446e-ba29-e4c9f6bab514@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <8865c3ad-341a-446e-ba29-e4c9f6bab514@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,37 +81,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/15/25 22:18, Thomas Huth wrote:
-> On 16/09/2025 03.38, Richard Henderson wrote:
->> On 9/15/25 11:55, Richard Henderson wrote:
->>> Startup of libgcrypt locks a small pool of pages -- by default 16k.
->>> Testing for zero locked pages is isn't correct, while testing for
->>> 32k is a decent compromise.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   tests/functional/x86_64/test_memlock.py | 3 ++-
->>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/ x86_64/ 
->>> test_memlock.py
->>> index 2b515ff979..81bce80b0c 100755
->>> --- a/tests/functional/x86_64/test_memlock.py
->>> +++ b/tests/functional/x86_64/test_memlock.py
->>> @@ -37,7 +37,8 @@ def test_memlock_off(self):
->>>           status = self.get_process_status_values(self.vm.get_pid())
->>> -        self.assertTrue(status['VmLck'] == 0)
->>> +        # libgcrypt may mlock a few pages
->>> +        self.assertTrue(status['VmLck'] < 32)
->>>       def test_memlock_on(self):
->>>           self.common_vm_setup_with_memlock('on')
->>
->> I wonder if I should have chosen 64k, which might be one 64k page...
-> 
-> It's a x86 test, so we should not have to worry about 64k pages there, I hope?
+Added mshv to the list of accelerators in doc text.
 
-Fair enough, though it does beg the question of why it's an x86-specific test.  Don't all 
-host architectures support memory locking?
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ docs/about/build-platforms.rst |  2 +-
+ docs/devel/codebase.rst        |  2 +-
+ docs/glossary.rst              |  6 +++---
+ docs/system/introduction.rst   |  3 +++
+ qemu-options.hx                | 16 ++++++++--------
+ 5 files changed, 16 insertions(+), 13 deletions(-)
 
-r~
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index 8671c3be9c..06ba0ddc9a 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -55,7 +55,7 @@ Those hosts are officially supported, with various accelerators:
+    * - SPARC
+      - tcg
+    * - x86
+-     - hvf (64 bit only), kvm, nvmm, tcg, whpx (64 bit only), xen
++     - hvf (64 bit only), mshv (64 bit only), kvm, nvmm, tcg, whpx (64 bit only), xen
+ 
+ Other host architectures are not supported. It is possible to build QEMU system
+ emulation on an unsupported host architecture using the configure
+diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
+index 2a3143787a..69d8827117 100644
+--- a/docs/devel/codebase.rst
++++ b/docs/devel/codebase.rst
+@@ -48,7 +48,7 @@ yet, so sometimes the source code is all you have.
+ * `accel <https://gitlab.com/qemu-project/qemu/-/tree/master/accel>`_:
+   Infrastructure and architecture agnostic code related to the various
+   `accelerators <Accelerators>` supported by QEMU
+-  (TCG, KVM, hvf, whpx, xen, nvmm).
++  (TCG, KVM, hvf, whpx, xen, nvmm, mshv).
+   Contains interfaces for operations that will be implemented per
+   `target <https://gitlab.com/qemu-project/qemu/-/tree/master/target>`_.
+ * `audio <https://gitlab.com/qemu-project/qemu/-/tree/master/audio>`_:
+diff --git a/docs/glossary.rst b/docs/glossary.rst
+index 4fa044bfb6..0fa75c9d1e 100644
+--- a/docs/glossary.rst
++++ b/docs/glossary.rst
+@@ -12,7 +12,7 @@ Accelerator
+ 
+ A specific API used to accelerate execution of guest instructions. It can be
+ hardware-based, through a virtualization API provided by the host OS (kvm, hvf,
+-whpx, ...), or software-based (tcg). See this description of `supported
++whpx, mshv, ...), or software-based (tcg). See this description of `supported
+ accelerators<Accelerators>`.
+ 
+ Board
+@@ -102,8 +102,8 @@ hypervisors.
+ 
+ In the context of QEMU, an hypervisor is an API, provided by the Host OS,
+ allowing to execute virtual machines. Linux implementation is KVM (and supports
+-Xen as well). For MacOS, it's HVF. Windows defines WHPX. And NetBSD provides
+-NVMM.
++Xen and MSHV as well). For MacOS, it's HVF. Windows defines WHPX. And NetBSD
++provides NVMM.
+ 
+ .. _machine:
+ 
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index 4cd46b5b8f..9c57523b6c 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -23,6 +23,9 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
+   * - Xen
+     - Linux (as dom0)
+     - Arm, x86
++  * - MSHV
++    - Linux (as dom0)
++    - x86
+   * - Hypervisor Framework (hvf)
+     - MacOS
+     - x86 (64 bit only), Arm (64 bit only)
+diff --git a/qemu-options.hx b/qemu-options.hx
+index ab23f14d21..ad747eb154 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -28,7 +28,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "-machine [type=]name[,prop[=value][,...]]\n"
+     "                selects emulated machine ('-machine help' for list)\n"
+     "                property accel=accel1[:accel2[:...]] selects accelerator\n"
+-    "                supported accelerators are kvm, xen, hvf, nvmm, whpx or tcg (default: tcg)\n"
++    "                supported accelerators are kvm, xen, hvf, nvmm, whpx, mshv or tcg (default: tcg)\n"
+     "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
+     "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
+     "                mem-merge=on|off controls memory merge support (default: on)\n"
+@@ -66,10 +66,10 @@ SRST
+ 
+     ``accel=accels1[:accels2[:...]]``
+         This is used to enable an accelerator. Depending on the target
+-        architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available.
+-        By default, tcg is used. If there is more than one accelerator
+-        specified, the next one is used if the previous one fails to
+-        initialize.
++        architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be
++        available. By default, tcg is used. If there is more than one
++        accelerator specified, the next one is used if the previous one
++        fails to initialize.
+ 
+     ``vmport=on|off|auto``
+         Enables emulation of VMWare IO port, for vmmouse etc. auto says
+@@ -226,7 +226,7 @@ ERST
+ 
+ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+     "-accel [accel=]accelerator[,prop[=value][,...]]\n"
+-    "                select accelerator (kvm, xen, hvf, nvmm, whpx or tcg; use 'help' for a list)\n"
++    "                select accelerator (kvm, xen, hvf, nvmm, whpx, mshv or tcg; use 'help' for a list)\n"
+     "                igd-passthru=on|off (enable Xen integrated Intel graphics passthrough, default=off)\n"
+     "                kernel-irqchip=on|off|split controls accelerated irqchip support (default=on)\n"
+     "                kvm-shadow-mem=size of KVM shadow MMU in bytes\n"
+@@ -241,8 +241,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+ SRST
+ ``-accel name[,prop=value[,...]]``
+     This is used to enable an accelerator. Depending on the target
+-    architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available. By
+-    default, tcg is used. If there is more than one accelerator
++    architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be available.
++    By default, tcg is used. If there is more than one accelerator
+     specified, the next one is used if the previous one fails to
+     initialize.
+ 
+-- 
+2.34.1
+
 
