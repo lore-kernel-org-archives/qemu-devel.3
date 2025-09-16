@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12A1CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44290CAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:54:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyZr5-00026J-FK; Tue, 16 Sep 2025 13:52:40 -0400
+	id 1uyZq5-0007uP-Hz; Tue, 16 Sep 2025 13:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uyZqp-0001nQ-HC
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:52:25 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uyZps-0007K2-1A
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:51:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uyZqn-0008NS-3k
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:52:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=AxEONyLJUtMV6IUJSjcYKhCgJlW/7HPy8XfBmsePm0g=; b=gNLT0xIu+2qAyKmS
- z/iBp2sunDEkFYVAbNY7Bg/IGtxsNL/EeYXgLOmHbrZ6zbQVt9FYGwgZHXVBKOLa4NAiepuWKJQBF
- wP3VA2WkVEfRdmB7ZMcoUG8MAT4PoGNXB3cfvmBr4w6KPuvvOxlwmioC6F0V6zFce1Sc3P6ve/2Q2
- K+xgwJK7d+IN3gHQG3ksl0MA1zHo0VWZDOySRrAy9y7hdFcsx6hv2jr9KVTd+zNQBcya42fooG7Ib
- mJg06xV2IFTdLopEIHzbAETukD0w8Vr3Gd1vjhYO+MQ9sb1x3Pv9ZPrpOd2trmJGcuub6QooJQoXf
- fRpMcCnI1S616rEfUw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uyZqj-00BQf3-2v;
- Tue, 16 Sep 2025 17:52:17 +0000
-Date: Tue, 16 Sep 2025 17:52:17 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 24/27] qapi/accel: Allow to query mshv capabilities
-Message-ID: <aMmj0T6Bv2g7InkK@gallifrey>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uyZpo-0008Er-9s
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:51:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758045075;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Wnm2c70/sInb5Kln1tljKEQJTxHEu5y+56S6FKsuwvw=;
+ b=iL7KnGZA1wWDQFiwygxLLxFX2wZ/pnv5ekIP5fpNEHQE3SnJModm4742xWecFJ0IJec1pB
+ gff9n84FNNGfTnWuMS/J5SSGe7SqjrdZ6YKS5iQLd+r1i/UXW80QY00M1rjfaZkd2g+3Td
+ hgBPePNIznfOelrUK0GbO/MVpl44LU4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-C3Wg-JLLMdWSoDm71oYKoQ-1; Tue,
+ 16 Sep 2025 13:51:12 -0400
+X-MC-Unique: C3Wg-JLLMdWSoDm71oYKoQ-1
+X-Mimecast-MFC-AGG-ID: C3Wg-JLLMdWSoDm71oYKoQ_1758045070
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF9FE1956087; Tue, 16 Sep 2025 17:51:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.12])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C5D39195608E; Tue, 16 Sep 2025 17:51:09 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <rth@twiddle.net>
+Subject: [PULL v2 0/8] Tracing patches
+Date: Tue, 16 Sep 2025 13:51:00 -0400
+Message-ID: <20250916175108.139627-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20250916164847.77883-25-magnuskulke@linux.microsoft.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 17:51:50 up 142 days,  2:05,  1 user,  load average: 0.05, 0.01, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,168 +87,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Magnus Kulke (magnuskulke@linux.microsoft.com) wrote:
-> From: Praveen K Paladugu <prapal@microsoft.com>
-> 
-> Allow to query mshv capabilities via query-mshv QMP and info mshv HMP commands.
-> 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->  hmp-commands-info.hx       | 13 +++++++++++++
->  hw/core/machine-hmp-cmds.c | 15 +++++++++++++++
->  hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
->  include/monitor/hmp.h      |  1 +
->  include/system/hw_accel.h  |  1 +
->  qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
->  6 files changed, 73 insertions(+)
-> 
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 6142f60e7b..eaaa880c1b 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -307,6 +307,19 @@ SRST
->      Show KVM information.
->  ERST
->  
-> +    {
-> +        .name       = "mshv",
-> +        .args_type  = "",
-> +        .params     = "",
-> +        .help       = "show MSHV information",
-> +        .cmd        = hmp_info_mshv,
-> +    },
-> +
-> +SRST
-> +  ``info mshv``
-> +    Show MSHV information.
-> +ERST
-> +
->      {
->          .name       = "numa",
->          .args_type  = "",
-> diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-> index 3a612e2232..682ed9f49b 100644
-> --- a/hw/core/machine-hmp-cmds.c
-> +++ b/hw/core/machine-hmp-cmds.c
-> @@ -163,6 +163,21 @@ void hmp_info_kvm(Monitor *mon, const QDict *qdict)
->      qapi_free_KvmInfo(info);
->  }
->  
-> +void hmp_info_mshv(Monitor *mon, const QDict *qdict)
-> +{
-> +    MshvInfo *info;
-> +
-> +    info = qmp_query_mshv(NULL);
-> +    monitor_printf(mon, "mshv support: ");
-> +    if (info->present) {
-> +        monitor_printf(mon, "%s\n", info->enabled ? "enabled" : "disabled");
-> +    } else {
-> +        monitor_printf(mon, "not compiled\n");
-> +    }
-> +
-> +    qapi_free_MshvInfo(info);
-> +}
-> +
+The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
 
-Looks the same as info kvm, so just for HMP
+  Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
 
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+are available in the Git repository at:
 
->  void hmp_info_uuid(Monitor *mon, const QDict *qdict)
->  {
->      UuidInfo *info;
-> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> index 6aca1a626e..e24bf0d97b 100644
-> --- a/hw/core/machine-qmp-cmds.c
-> +++ b/hw/core/machine-qmp-cmds.c
-> @@ -28,6 +28,20 @@
->  #include "system/runstate.h"
->  #include "system/system.h"
->  #include "hw/s390x/storage-keys.h"
-> +#include <sys/stat.h>
-> +
-> +/*
-> + * QMP query for MSHV
-> + */
-> +MshvInfo *qmp_query_mshv(Error **errp)
-> +{
-> +    MshvInfo *info = g_malloc0(sizeof(*info));
-> +
-> +    info->enabled = mshv_enabled();
-> +    info->present = accel_find("mshv");
-> +
-> +    return info;
-> +}
->  
->  /*
->   * fast means: we NEVER interrupt vCPU threads to retrieve
-> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-> index ae116d9804..31bd812e5f 100644
-> --- a/include/monitor/hmp.h
-> +++ b/include/monitor/hmp.h
-> @@ -24,6 +24,7 @@ strList *hmp_split_at_comma(const char *str);
->  void hmp_info_name(Monitor *mon, const QDict *qdict);
->  void hmp_info_version(Monitor *mon, const QDict *qdict);
->  void hmp_info_kvm(Monitor *mon, const QDict *qdict);
-> +void hmp_info_mshv(Monitor *mon, const QDict *qdict);
->  void hmp_info_status(Monitor *mon, const QDict *qdict);
->  void hmp_info_uuid(Monitor *mon, const QDict *qdict);
->  void hmp_info_chardev(Monitor *mon, const QDict *qdict);
-> diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-> index fa9228d5d2..55497edc29 100644
-> --- a/include/system/hw_accel.h
-> +++ b/include/system/hw_accel.h
-> @@ -14,6 +14,7 @@
->  #include "hw/core/cpu.h"
->  #include "system/kvm.h"
->  #include "system/hvf.h"
-> +#include "system/mshv.h"
->  #include "system/whpx.h"
->  #include "system/nvmm.h"
->  
-> diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-> index fb28c8d920..c2bfbc507f 100644
-> --- a/qapi/accelerator.json
-> +++ b/qapi/accelerator.json
-> @@ -54,3 +54,32 @@
->  { 'command': 'x-accel-stats',
->    'returns': 'HumanReadableText',
->    'features': [ 'unstable' ] }
-> +
-> +##
-> +# @MshvInfo:
-> +#
-> +# Information about support for MSHV acceleration
-> +#
-> +# @enabled: true if MSHV acceleration is active
-> +#
-> +# @present: true if MSHV acceleration is built into this executable
-> +#
-> +# Since: 10.0.92
-> +##
-> +{ 'struct': 'MshvInfo', 'data': {'enabled': 'bool', 'present': 'bool'} }
-> +
-> +##
-> +# @query-mshv:
-> +#
-> +# Return information about MSHV acceleration
-> +#
-> +# Returns: @MshvInfo
-> +#
-> +# Since: 10.0.92
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "query-mshv" }
-> +#     <- { "return": { "enabled": true, "present": true } }
-> +##
-> +{ 'command': 'query-mshv', 'returns': 'MshvInfo' }
-> -- 
-> 2.34.1
-> 
+  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+
+for you to fetch changes up to 2c27d8523927b0965b7b3d265eee3baf9a15c9c8:
+
+  tracetool-test: allow to run in parallel (2025-09-16 13:31:40 -0400)
+
+----------------------------------------------------------------
+Pull request
+
+Daniel's updated tracetool test suite that doesn't break Windows CI.
+
+----------------------------------------------------------------
+
+Daniel P. Berrangé (7):
+  checkpatch: cull trailing '*/' in SPDX check
+  tracetool: eliminate trailing whitespace in C format
+  tracetool: avoid space after "*" in arg types
+  tracetool: include SPDX-License-Identifier in generated files
+  tracetool: add test suite for tracetool with reference output
+  tracetool: drop the probe "__nocheck__" wrapping
+  qapi: switch to use QEMU_TEST_REGENERATE env var
+
+Marc-André Lureau (1):
+  tracetool-test: allow to run in parallel
+
+ MAINTAINERS                                  |   1 +
+ docs/devel/testing/main.rst                  |  40 +++++++
+ tests/Makefile.include                       |   1 +
+ tests/tracetool/dtrace.h                     |  45 ++++++++
+ tests/tracetool/ftrace.h                     |  59 ++++++++++
+ tests/tracetool/log.h                        |  43 ++++++++
+ tests/tracetool/simple.h                     |  40 +++++++
+ tests/tracetool/syslog.h                     |  43 ++++++++
+ tests/tracetool/ust.h                        |  41 +++++++
+ tests/tracetool/dtrace.c                     |  32 ++++++
+ tests/tracetool/ftrace.c                     |  32 ++++++
+ tests/tracetool/log.c                        |  32 ++++++
+ tests/tracetool/simple.c                     |  61 +++++++++++
+ tests/tracetool/syslog.c                     |  32 ++++++
+ tests/tracetool/ust.c                        |  32 ++++++
+ scripts/checkpatch.pl                        |   3 +
+ scripts/tracetool/__init__.py                |   9 +-
+ scripts/tracetool/format/c.py                |   3 +-
+ scripts/tracetool/format/d.py                |   3 +-
+ scripts/tracetool/format/h.py                |  17 +--
+ scripts/tracetool/format/log_stap.py         |   1 +
+ scripts/tracetool/format/simpletrace_stap.py |   1 +
+ scripts/tracetool/format/stap.py             |   1 +
+ scripts/tracetool/format/ust_events_c.py     |   1 +
+ scripts/tracetool/format/ust_events_h.py     |   1 +
+ tests/meson.build                            |   1 +
+ tests/qapi-schema/test-qapi.py               |   7 +-
+ tests/tracetool/dtrace.d                     |  10 ++
+ tests/tracetool/dtrace.log-stap              |  15 +++
+ tests/tracetool/dtrace.simpletrace-stap      |  16 +++
+ tests/tracetool/dtrace.stap                  |  14 +++
+ tests/tracetool/meson.build                  |  28 +++++
+ tests/tracetool/trace-events                 |   5 +
+ tests/tracetool/tracetool-test.py            | 107 +++++++++++++++++++
+ tests/tracetool/ust.ust-events-c             |  14 +++
+ tests/tracetool/ust.ust-events-h             |  56 ++++++++++
+ 36 files changed, 826 insertions(+), 21 deletions(-)
+ create mode 100644 tests/tracetool/dtrace.h
+ create mode 100644 tests/tracetool/ftrace.h
+ create mode 100644 tests/tracetool/log.h
+ create mode 100644 tests/tracetool/simple.h
+ create mode 100644 tests/tracetool/syslog.h
+ create mode 100644 tests/tracetool/ust.h
+ create mode 100644 tests/tracetool/dtrace.c
+ create mode 100644 tests/tracetool/ftrace.c
+ create mode 100644 tests/tracetool/log.c
+ create mode 100644 tests/tracetool/simple.c
+ create mode 100644 tests/tracetool/syslog.c
+ create mode 100644 tests/tracetool/ust.c
+ create mode 100644 tests/tracetool/dtrace.d
+ create mode 100644 tests/tracetool/dtrace.log-stap
+ create mode 100644 tests/tracetool/dtrace.simpletrace-stap
+ create mode 100644 tests/tracetool/dtrace.stap
+ create mode 100644 tests/tracetool/meson.build
+ create mode 100644 tests/tracetool/trace-events
+ create mode 100755 tests/tracetool/tracetool-test.py
+ create mode 100644 tests/tracetool/ust.ust-events-c
+ create mode 100644 tests/tracetool/ust.ust-events-h
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.51.0
+
 
