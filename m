@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98E2CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2C4CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uya5V-0003q7-JL; Tue, 16 Sep 2025 14:07:35 -0400
+	id 1uya4Y-00035v-HF; Tue, 16 Sep 2025 14:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4s-00039w-7v
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:57 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1uya4T-00033C-1Z
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:29 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4g-0001d1-Go
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:48 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-46130fc5326so1145495e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:39 -0700 (PDT)
+ id 1uya4R-0001aR-F8
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:28 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-45f2fa8a1adso1012815e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758045998; x=1758650798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758045986; x=1758650786; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MRFSvzFCChYzJp3NpcD51YiWf88/DwCTl/TXq4h9hsM=;
- b=hLV422k2kanQ1YWc0ioCmjZhBK2tK+Z5b4WOkWwb+2NbR1djer8Xn+1ECHzcjiZPED
- HMB678jTn8u7WWdyQJDFhDdARloToLD24mSauOqx7D8ZFLXBzv+V7BC0bnKlGGIAorfH
- q9eCNtEPR9OVmBRJoIiZNOf05N6i4+wII5alLCBTXthVkClIUcIZnfcRnWr0iXPljn2P
- 6Y6Id1sJt1G87yBCGGT7cxR/MB+ByC5/U1UzxCnCVN5d53ooXTdcJu37ppVNiXDPRdnE
- tbaF18WcIENx9x9EHF39q//p2sxSpLYBh9BWzDiZX8nSOr945UA1U1GE8rrg8M8xA4od
- JRyw==
+ :reply-to; bh=d1YOtX8BVonSDnFz/8OmLW8ozY+GsiqJe/aKd0r4lgo=;
+ b=x7/YZjPlL55MXy3A4ZwyuNX5CMW1jR8AxkLNclQfg3a+GwbvkUoCoWzrEeK0u3dweI
+ jiWNyT9WEEyQHP1rnx8Egd1gd4Aefml51DGdBuaWwSnYui1JSVUYNGD+fKncjf3D+T3a
+ hWIWpFw6KJToAgGjKzj9FznZAWOYsvlt54yaVGH5gDZmK+lk5ECgqwMs3rJipNxujOra
+ uqiuU1UJKdPEhAGChKYF8HKNUXTvKlg1Huzj6uftLq53irsPBODF/adVa1gUlaWiB6jw
+ GIjzO7acYE4+k9MCzICU0rpSAShN/QWr3km2X/bk6XfYTHiq5jatzu6ceipysSh0NVYn
+ CM6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758045998; x=1758650798;
+ d=1e100.net; s=20230601; t=1758045986; x=1758650786;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MRFSvzFCChYzJp3NpcD51YiWf88/DwCTl/TXq4h9hsM=;
- b=sRxeS+Z1EtyINIQKlz7jhw7eMFuWGIcB7vzm9lghu4CR5wPuhzHmj3YqwtxdDAfk+z
- 4dA5YAiCtrKv+DwzpxGTlS/gTNUiN+P7TNIU5hhAwrRZ2C2RMvXsu6DL9vPLcjZS0HSY
- Eya3pf5KtewIc+wV4FPsf7zMFoQZh0cIjDAOK3lgFwxwdDnO9fCP3gmGg4NLK/XkJBbk
- C1TJMKudBde1XRHWjWrK0/ypsl9JIEljBsBpZkNVPY9r41wRLHzmvUmvqJs5i5l1VtgO
- yLF5PnORL41LqWk4kIniLXF3yKYNkseKxgjXjS+sA4K84v8X8RHis5Nr7J8mJ24oKWQq
- CyYw==
-X-Gm-Message-State: AOJu0Yzf1AZTYkwZb0HE8kzfyJqQCfjct3s2XRWm4/yDv9lcanNFyt4P
- OAuP3we0OBwBr6/SpSErgLVr+h3JQzljSSgbDRmWi5SZsHwSRpaxJPX8/85jpKpeiyWswjUpEA+
- x7tro
-X-Gm-Gg: ASbGnctPZJrSkEuF9xZURM+O7SagQOLv5EDXzCfedACZ+/p1tBWoSIY/xxcWKy4EIp6
- YZHOnLrjixP7na0EuFIUC5Ciy6zLisAoLLREn19WqbdHzBGWU37yslnOWTis2OaK33ABQxtUibQ
- IKTC4ZoqYYtJrOFOAtozR1S7owyXGIWtNJy5K+n4c5WyTMx6A01KX7J2K+9wdnLTwjjjjtVCwlr
- rPCRMogb/CtAz7f42nooutZmokzqP8VLe50nVmN1dqRcxZIY93mChsnPZEqGNRn8oyGJLrHA413
- bIDQ+9GER1IU0Dv/kMwn+ISCitQuTbuX6HLU6LTLuHWDk9ygzzbAeapFngGbmQoIKNmUdZHzP05
- xCd7Sgvw+FLCfNajYEetvmFJckh40
-X-Google-Smtp-Source: AGHT+IFvuNkxlE3S11PG4LBPLfMGBCKSJ08y7vOWVR/+Y3rZ45tcOf1kXiE4Btish2XwEgk7zJjmqg==
-X-Received: by 2002:a5d:5d0a:0:b0:3e5:50:e070 with SMTP id
- ffacd0b85a97d-3e765a19cbbmr14632391f8f.50.1758045998114; 
- Tue, 16 Sep 2025 11:06:38 -0700 (PDT)
+ bh=d1YOtX8BVonSDnFz/8OmLW8ozY+GsiqJe/aKd0r4lgo=;
+ b=p+0hYgzt01VuNsAVcZ2w6VY6ni8Xpgv9GbKy6EUWIAA5vc6aSs9RnZ5iT4Vfg3pLdE
+ eGfEESpMRWCCx6oWIQwMgBeeg3lTv09sPO7YOnoqS04CsR8PHz5OVPvBMFn2lv0Fpr7G
+ 5kAE1LbiqikZelq25MqtzpsJzdEM0U6eXqZf/oqwy0E2p+gSiGT4Nr1YAgvAeUrOMY7F
+ Ul9Ff/bzEapzxMU+qSYGaSdN+ls4gh0OzSoStvutgQIixVpyOhiTNJb8NhGojhOf5cK6
+ Wk47T6iIikaaIvc6jMBnTdg0XfZrcFRjXAdZVtpbzvBXwVfO/OeYrxrNwNHZXC/TmXgQ
+ DW7A==
+X-Gm-Message-State: AOJu0Yx+ywsRVpivH2dyftwEEi6pyjY4sjcK/Xr9p+HOZEmikDJEzWwA
+ B+sj8hogYNtukxjpF7Tqst91D4ti6QxAHcpzhrhjcmAYKq0Y+M6ZN9W86z3dNdjPFxTF/DBVXvf
+ rabRv
+X-Gm-Gg: ASbGnctAno1pN842Cc2sMgzys1RhtOIMIV0xYVYXtotntkB/SX6D6wUbttWxRxV7y2q
+ CRSV42fcxnyd4GOdWYslALGW0SpqhTIymU19ZBH+aqzBpg442DDZEgTC3vC6Z4WwTEHmP8NxjcP
+ j4EorFXvT95lawfTbVRqO+EZL+UQMYItlbgfKKQlmTSgyb9ZNPWSdE5dRwJs4UZQEw+hd8Oleow
+ YbzWUhow0J8jSaPP5ZTlAy6dtTo/KsEr9TG5MG1wJCjjVgenz+PFf62K4vNaerDBTqLFadFS9bU
+ LyGhF7qbTuj8uwkIjQJF56nvjK/F8d/SveQDgOA8zqrgw/xNf28VgQfbYXpTLkL75XuhRSLW0IP
+ SPxAow48L9AsmNQvIWjuHX63sz1JM
+X-Google-Smtp-Source: AGHT+IF1fi3mmM0AQE7XU+b9bNI+eikHNGKr+qetIYt+ByhJZ+ArZzYCMZqtGrdO/xbFb4KugWio6A==
+X-Received: by 2002:a05:6000:2888:b0:3e8:6b2b:25e0 with SMTP id
+ ffacd0b85a97d-3ec9ffa425emr3004068f8f.25.1758045985797; 
+ Tue, 16 Sep 2025 11:06:25 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.37
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 11:06:37 -0700 (PDT)
+ Tue, 16 Sep 2025 11:06:25 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/36] target/arm: Increase MAX_PACKET_LENGTH for SME ZA remote
- gdb debugging
-Date: Tue, 16 Sep 2025 19:05:56 +0100
-Message-ID: <20250916180611.1481266-23-peter.maydell@linaro.org>
+Subject: [PULL 12/36] target/arm: Remove outdated comment for ZCR_EL12
+Date: Tue, 16 Sep 2025 19:05:46 +0100
+Message-ID: <20250916180611.1481266-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
 References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This patch increases the value of the MAX_PACKET_LEGNTH to
-131104 from 4096 to allow the GDBState.line_buf to be large enough
-to accommodate the full contents of the SME ZA storage when the
-vector length is maximal. This is in preparation for a related
-patch that allows SME register visibility through remote GDB
-debugging.
+The comment about not being included in the summary table
+has been out of date for quite a while.
 
-Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250909161012.2561593-2-vacha.bhavsar@oss.qualcomm.com
-[PMM: fixed up comment formatting]
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250830054128.448363-12-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- gdbstub/internals.h | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ target/arm/helper.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index bf5a5c63029..92466b28c18 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -11,7 +11,27 @@
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 19637e7301b..b641229ba0c 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4563,11 +4563,6 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
+         { K(3, 0, 14, 1, 0), K(3, 4, 14, 1, 0), K(3, 5, 14, 1, 0),
+           "CNTKCTL", "CNTHCTL_EL2", "CNTKCTL_EL12" },
  
- #include "exec/cpu-common.h"
- 
--#define MAX_PACKET_LENGTH 4096
-+/*
-+ * Most "large" transfers (e.g. memory reads, feature XML
-+ * transfer) have mechanisms in the gdb protocol for splitting
-+ * them. However, register values in particular cannot currently
-+ * be split. This packet size must therefore be at least big enough
-+ * for the worst-case register size. Currently that is Arm SME
-+ * ZA storage with a 256x256 byte value. We also must account
-+ * for the conversion from raw data to hex in gdb_memtohex(),
-+ * which writes 2 * size bytes, and for other protocol overhead
-+ * including command, register number and checksum which add
-+ * another 4 bytes of overhead. However, to be consistent with
-+ * the changes made in gdbserver to address this same requirement,
-+ * we add a total of 32 bytes to account for protocol overhead
-+ * (unclear why specifically 32 bytes), bringing the value of
-+ * MAX_PACKET_LENGTH to 2 * 256 * 256 + 32 = 131104.
-+ *
-+ * The commit making this change for gdbserver can be found here:
-+ * https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=
-+ * b816042e88583f280ad186ff124ab84d31fb592b
-+ */
-+#define MAX_PACKET_LENGTH 131104
- 
- /*
-  * Shared structures and definitions
+-        /*
+-         * Note that redirection of ZCR is mentioned in the description
+-         * of ZCR_EL2, and aliasing in the description of ZCR_EL1, but
+-         * not in the summary table.
+-         */
+         { K(3, 0,  1, 2, 0), K(3, 4,  1, 2, 0), K(3, 5, 1, 2, 0),
+           "ZCR_EL1", "ZCR_EL2", "ZCR_EL12", isar_feature_aa64_sve },
+         { K(3, 0,  1, 2, 6), K(3, 4,  1, 2, 6), K(3, 5, 1, 2, 6),
 -- 
 2.43.0
 
