@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE0CCAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C9CCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 15:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyX3l-0002bk-ED; Tue, 16 Sep 2025 10:53:33 -0400
+	id 1uyXDa-0006c3-DO; Tue, 16 Sep 2025 11:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uyX3h-0002az-TZ
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:53:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyXDM-0006Wb-TW
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 11:03:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uyX3d-0004XE-Sg
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:53:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyXDK-0006RX-3h
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 11:03:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758034400;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iquDqYMJDVequs2yGGug36vnCjQzOwTxW6ZHlCaMBPw=;
- b=gvbKeWZ3LD1b3tQI5sBtnmqZpkQ+y01PXQTuvQujYce4J9tc9qXt8SGHedmxwpgpZngaEu
- YQkZt9D/F8ifk+nWf0lNv1Av4U6pMY0Asj6fDo+yGsqCtdL5K5AikFVTTgDa39CoOBbfT1
- EKNfKxz/4aV4ZegG8ppZOvP9okF2pvc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-580-l9nzPLKtOSuwOcq6o22AOQ-1; Tue, 16 Sep 2025 10:53:18 -0400
-X-MC-Unique: l9nzPLKtOSuwOcq6o22AOQ-1
-X-Mimecast-MFC-AGG-ID: l9nzPLKtOSuwOcq6o22AOQ_1758034397
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3e997eb7232so1370051f8f.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:53:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758034397; x=1758639197;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iquDqYMJDVequs2yGGug36vnCjQzOwTxW6ZHlCaMBPw=;
- b=Aza3zB8662chrmgBFoNEwLURdRQc/+fiPGExsJeBfRZ5hWTarG4PQPhVloSRB909f3
- 1VnvyX94wyffYHYtFMoxbpzWlPpfQ/YS4/k+3q6MZeRXvkZXGqTNsp0P9HwiNBh1SzXZ
- 8UacV/vTAZ3QRqqtw2c0SBYyxRPiFgH30C5G/mU6Xy8g5PxRMuzyrSPZ574g3sUqvRE4
- VPcDgksGPLGutDQsI+C/qSo0EmnF482fGEYWLWASVDhoFcpROh8tD8etL2OnjKSNzkVr
- 630uDOoE9fn5JxqrpPWmsqXP9/6RscPqomk/zMCw6V0uKmZEHl2Q/nmrgGPj80cEJdkQ
- PIsA==
-X-Gm-Message-State: AOJu0YyUKG2rkAoZKHKpn0PJLbPNLcfhGhiAoT+EU9IytHop48ar6BrL
- gMxCcY3tx5UnG5yTcQIuIoZKj5r5kpHXxB5Dpo8aKd3MbOO+CPXwcHIfRs5AL/CyBC3Td2lPiFw
- 1d5Rlq3b+WYgltgnysZB1uinY1GUf8upl4Opo+2IHOzMBcicB/DC/s6BAOhfdG8M8F8dcbhBPal
- o9/jc7qmyPqXchfkVTUY2Zc466YwSOKwI=
-X-Gm-Gg: ASbGnct6AHtogjPA022e0wVACqZYfSGYcA9n7pj5JsQqfDZsNhEdz3q4wygEYdhB+XU
- SBozDZv4Mh/tpHTkMtj/CaUYcuGRmxxUeNR269l7Jke2p3EdmQRl2OysTqlUCM5JWLgjp7sgqVR
- p4b35zdUqokatm+su9mS7aWyCj+lN6HwRJSnPXnGZqTTvTNqaFHOsrLDO31+SbprOWnG3/OT48m
- QXc6bZlGcj+KXwBmKeoIGJC
-X-Received: by 2002:a05:6000:4014:b0:3eb:d906:e553 with SMTP id
- ffacd0b85a97d-3ebd906e5eamr4987504f8f.55.1758034396640; 
- Tue, 16 Sep 2025 07:53:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVBSJ7Onk8U6ksJej6NNxhfFuAedzN54HJvPfpAb+VMwv3x8AOZK6IDltl61c/lsbfNb4nIy4e3jdyxOAmXUQ=
-X-Received: by 2002:a05:6000:4014:b0:3eb:d906:e553 with SMTP id
- ffacd0b85a97d-3ebd906e5eamr4987472f8f.55.1758034396112; Tue, 16 Sep 2025
- 07:53:16 -0700 (PDT)
+ s=mimecast20190719; t=1758034995;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=mz4q4r7x8FVp7T3wM1kV8XwhENOApW+a+HoqsplWyoU=;
+ b=cQKt3fVDU/EcSdDvLO8xXQgNUc81OBwwjFPt4lDDmrMN6UjUhlwPmbr3XRo8GyaR82ud4O
+ aE6FIQX+CVtVRhSHdLK8YD7FNXMK0EhEWfSn1eAp0xTMZEVFbzDSiq/Rd0QrHavUcM9mOM
+ Nl8c4yqf8jhYHAGGoc3JUUqZr9k80VA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-9DU3rbQlOaCjfqxPuMXTFw-1; Tue,
+ 16 Sep 2025 11:03:12 -0400
+X-MC-Unique: 9DU3rbQlOaCjfqxPuMXTFw-1
+X-Mimecast-MFC-AGG-ID: 9DU3rbQlOaCjfqxPuMXTFw_1758034990
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC0E91955D6E; Tue, 16 Sep 2025 15:03:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.153])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A4D1B180057B; Tue, 16 Sep 2025 15:03:05 +0000 (UTC)
+Date: Tue, 16 Sep 2025 16:03:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Naveen N Rao <naveen@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sean Christopherson <seanjc@google.com>,
+ qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Nikunj A Dadhania <nikunj@amd.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Neeraj Upadhyay <neeraj.upadhyay@amd.com>,
+ Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: Re: [RFC PATCH 3/7] target/i386: SEV: Add support for enabling
+ debug-swap SEV feature
+Message-ID: <aMl8JsHtO0Cmbb1p@redhat.com>
+References: <cover.1757589490.git.naveen@kernel.org>
+ <0a77cf472bc36fee7c1be78fc7d6d514d22bca9a.1757589490.git.naveen@kernel.org>
+ <87jz239at0.fsf@pond.sub.org>
+ <m5fnfafkzxqamg4iyc6xjun7jlxulcuufgugtrweap6myvmgov@5cmxu5n3pl2p>
+ <87plbqo998.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20250913080943.11710-1-pbonzini@redhat.com>
- <CAFEAcA8nFU1fRFMQ_jLcDzKPoPKeV789L5iTgq-kqoa0zULmaQ@mail.gmail.com>
- <CAFEAcA_+6hXCO3ruA+P_pYVGjtdCA-Li27D13McTf17GX4S94g@mail.gmail.com>
-In-Reply-To: <CAFEAcA_+6hXCO3ruA+P_pYVGjtdCA-Li27D13McTf17GX4S94g@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 16 Sep 2025 16:53:03 +0200
-X-Gm-Features: AS18NWDtk54-71T0yfKnnU0_ZL7XWS23QnsrY03Vs8QA78qUoGc1bKIoAiXPIAA
-Message-ID: <CABgObfbxTszgA3v2MUs_mLz-0nDENijFhWWuEWWFwTTXN8V9+g@mail.gmail.com>
-Subject: Re: [PULL 00/61] CPU, Rust, x86 changes for 2025-09-13
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87plbqo998.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,42 +95,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 4:38=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
-> So if I understood the outcome of today's call correctly,
-> we should hold off on the 1.83.0 bump until that version
-> has landed in the relevant ubuntu LTS distros (work in
-> progress on their side), but after that it's available
-> in all our target distro versions and we can take it as
-> our minimum supported version ?
+On Tue, Sep 16, 2025 at 02:46:27PM +0200, Markus Armbruster wrote:
+> Naveen N Rao <naveen@kernel.org> writes:
+> 
+> > Hi Markus,
+> >
+> > On Fri, Sep 12, 2025 at 01:20:43PM +0200, Markus Armbruster wrote:
+> >> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
+> >> 
+> >> > Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+> >> > SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+> >> > objects. Though the boolean property is available for plain SEV guests,
+> >> > check_sev_features() will reject setting this for plain SEV guests.
+> >> 
+> >> Let's see whether I understand...
+> >> 
+> >> It's a property of sev-guest and sev-snp-guest objects.  These are the
+> >> "SEV guest objects".
+> >> 
+> >> I guess a sev-snp-guest object implies it's a SEV-SNP guest, and setting
+> >> @debug-swap on such an object just works.
+> >> 
+> >> With a sev-guest object, it's either a "plain SEV guest" or a "SEV-ES"
+> >> guest.
+> >> 
+> >> If it's the latter, setting @debug-swap just works.
+> >> 
+> >> If it's the former, and you set @debug-swap to true, then KVM
+> >> accelerator initialization will fail later on.  This might trigger
+> >> fallback to TCG.
+> >> 
+> >> Am I confused?
+> >
+> > You're spot on, except that in the last case above (plain old SEV 
+> > guest), qemu throws an error:
+> > 	qemu-system-x86_64: check_sev_features: SEV features require either SEV-ES or SEV-SNP to be enabled
+> 
+> Okay.
+> 
+> Can you (or anyone) explain to me why SEV-SNP gets its own object type,
+> but SEV-ES does not?
 
-The missing pieces before Rust can be enabled are:
-- tracing (posted, needs rebase)
-- CI (needs Meson bugfixes)
-- dtrace support (stap)
-- lock-free MMIO and required support for Migratable<Mutex<...>>
+SEV-ES is a minor incremental enhancement over SEV, with the user provided
+configuration in QEMU largely common between the two.
 
-Since Rust 1.83 is a requirement for most of the changes that are in
-this pull request, holding off on it would basically mean that any
-further Rust changes have to be developed out of tree. Since the above
-list is not short, won't even be completed in 10.2 in all likelihood,
-and doesn't include other things that people may like to work on, I'd
-like this development to happen in tree.
+SEV-SNP is a significant improvement that requires new/different user
+config data to be provided to QEMU. It also changes the way attestation
+is driven, moving out of host/QEMU, into the guest.
 
-We do have to hold off on enabling Rust until 1.83 has landed in
-Ubuntu but, as I mentioned
-https://lore.kernel.org/qemu-devel/0c35eccb-890a-47d1-8c54-9945519f6164@red=
-hat.com/,
-it's really unlikely that this update will end up on the critical
-path. Work is already in progress at
-https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318.
+It made more sense to separate the configuration for SEV-SNP from that
+used for SEV/SEV-ES. It also helps reinforce the message that SEV-SNP
+is where the long term focus should be, with SEV/SEV-ES (ideally) only
+used on old platforms that predate SNP, or running OS that lack the
+more recent software support for SNP.
 
-In the meantime, while Rust will be enabled progressively in more CI
-jobs, Ubuntu can remain the one which tests the Rust-disabled case.
-
-Paolo
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
