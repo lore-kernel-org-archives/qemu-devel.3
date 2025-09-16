@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AEACAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 21:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F099DCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 22:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uydZm-0003nu-LH; Tue, 16 Sep 2025 17:51:02 -0400
+	id 1uyeHf-0007xt-4Z; Tue, 16 Sep 2025 18:36:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydZm-0003ni-1t
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:51:02 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyeHd-0007xP-HS
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:36:21 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydZk-0006J7-Eb
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:51:01 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyeHA-0003kC-6m
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:36:20 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C9FC61F455;
- Tue, 16 Sep 2025 21:50:57 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 174E61F387;
+ Tue, 16 Sep 2025 22:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758059458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758062149; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lhMtFdCapVBBfexQzli9hh5fFdUl4EDQNiw+jv3SvWw=;
- b=YYSmAODjBWP7Cwd+nLUZ1wuQSEeMT7HT1rrMuOSMQWoITx5tXSz6LYTSwa9pEWk93Q3gJW
- 6l5swNulWD7kdUvENto6OLxCpJGiDZWytso1iaaPiNREnKz55Fi61kEzDptA2c7cwYdxeQ
- v4VwlBYrA/VaY6fsxk/Hl2sVf3WlAlE=
+ bh=Y+jpeYJY9rzph24f0SkFQROltuYqD3ltuYX9aCBRffE=;
+ b=zoF2PAkUm3W045CLq/0gJ4FItXHY3woUH+ph5JFa7bWWSb8UiFrAroncMSC+kitgt5GHgA
+ x7sKpoDR7LmmrB2kxc/S9as2LQF20GXuPKoETLXFRLhbCRI6CJSRPtyr1hysgQGzN0EqTy
+ Pbcen9MTWVgKgJw3jNH5FKAWMGxwPYg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758059458;
+ s=susede2_ed25519; t=1758062149;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lhMtFdCapVBBfexQzli9hh5fFdUl4EDQNiw+jv3SvWw=;
- b=4Vz83B/I4soPHyYPKbfv4VNq20Qbrcl6ZWUue/k22tgyeS3RTVT8qYp5rqIVQV3u9RdT8Y
- 19yz65kLiebW/YDw==
+ bh=Y+jpeYJY9rzph24f0SkFQROltuYqD3ltuYX9aCBRffE=;
+ b=a937muGBzwae4E4TQXYZ1o+PHMt3WRz7Z4KdMc1kPkTbvjktjYRNKVhGlDi0QRcMCvUG5f
+ SbdMnsra2L5/sdCA==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=otjUL0dY;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=dY5Y6gIj
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zoF2PAkU;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=a937muGB
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758059457; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758062149; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lhMtFdCapVBBfexQzli9hh5fFdUl4EDQNiw+jv3SvWw=;
- b=otjUL0dY+OYspYfPf7FlD/HbNAC10LyEGObfAeS6IXCjLyXnm7OcTNtsvQRxE44nR+qTO/
- /e13xKmasI1x5B04bj6HMM6AuHQpyfoZFvqZuSZK0cHuZom/o+oDSg6Xbh0QMNNVdop6p2
- /WBLEz9p9Ftzghc3JBmU3MMSwL35qng=
+ bh=Y+jpeYJY9rzph24f0SkFQROltuYqD3ltuYX9aCBRffE=;
+ b=zoF2PAkUm3W045CLq/0gJ4FItXHY3woUH+ph5JFa7bWWSb8UiFrAroncMSC+kitgt5GHgA
+ x7sKpoDR7LmmrB2kxc/S9as2LQF20GXuPKoETLXFRLhbCRI6CJSRPtyr1hysgQGzN0EqTy
+ Pbcen9MTWVgKgJw3jNH5FKAWMGxwPYg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758059457;
+ s=susede2_ed25519; t=1758062149;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=lhMtFdCapVBBfexQzli9hh5fFdUl4EDQNiw+jv3SvWw=;
- b=dY5Y6gIjfhZX7eCRpxLMlloGMf4env0zPpG/ATnFD3DQ5l8f6ME7S6MUPmcm+tQ2gRrrKh
- CN7DfNkOT1eyD+Aw==
+ bh=Y+jpeYJY9rzph24f0SkFQROltuYqD3ltuYX9aCBRffE=;
+ b=a937muGBzwae4E4TQXYZ1o+PHMt3WRz7Z4KdMc1kPkTbvjktjYRNKVhGlDi0QRcMCvUG5f
+ SbdMnsra2L5/sdCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 31A32139CB;
- Tue, 16 Sep 2025 21:50:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7D95713A63;
+ Tue, 16 Sep 2025 22:35:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lNXdN8DbyWgKVAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 16 Sep 2025 21:50:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yJBiDkTmyWg3YAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 16 Sep 2025 22:35:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Kevin
@@ -78,34 +78,35 @@ Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Kevin
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Prasad Pandit
  <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Li Zhijian
  <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 3/9] migration/rdma: Allow
- qemu_rdma_wait_comp_channel work with thread
-In-Reply-To: <20250827205949.364606-4-peterx@redhat.com>
+Subject: Re: [PATCH RFC 4/9] migration/rdma: Change io_create_watch() to
+ return immediately
+In-Reply-To: <20250827205949.364606-5-peterx@redhat.com>
 References: <20250827205949.364606-1-peterx@redhat.com>
- <20250827205949.364606-4-peterx@redhat.com>
-Date: Tue, 16 Sep 2025 18:50:54 -0300
-Message-ID: <87qzw6vzgh.fsf@suse.de>
+ <20250827205949.364606-5-peterx@redhat.com>
+Date: Tue, 16 Sep 2025 19:35:45 -0300
+Message-ID: <87ms6uvxdq.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Rspamd-Queue-Id: 174E61F387
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[14]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[14]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; MID_RHS_MATCH_FROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  FREEMAIL_CC(0.00)[treblig.org,redhat.com,xfusion.com,yandex-team.ru,gmail.com,fujitsu.com];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid];
  DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: C9FC61F455
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -131,30 +132,126 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> It's almost there, except that currently it relies on a global flag showing
-> that it's in incoming migration.
+> The old RDMA's io_create_watch() isn't really doing much work anyway.  For
+> G_IO_OUT, it already does return immediately.  For G_IO_IN, it will try to
+> detect some RDMA context length however normally nobody will be able to set
+> it at all.
 >
-> Change it to detect coroutine instead.
+> Simplify the code so that RDMA iochannels simply always rely on synchronous
+> reads and writes.  It is highly likely what 6ddd2d76ca6f86f was talking
+> about, that the async model isn't really working well.
 >
+> This helps because this is almost the only dependency that the migration
+> core would need a coroutine for rdma channels.
+>
+
+I don't understand this. How does this code require a coroutine? Isn't
+the io_watch exactly the strategy used when there is no coroutine?
+
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/rdma.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  migration/rdma.c | 69 +++---------------------------------------------
+>  1 file changed, 3 insertions(+), 66 deletions(-)
 >
 > diff --git a/migration/rdma.c b/migration/rdma.c
-> index e6837184c8..ed4e20b988 100644
+> index ed4e20b988..bcd7aae2f2 100644
 > --- a/migration/rdma.c
 > +++ b/migration/rdma.c
-> @@ -1357,7 +1357,8 @@ static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
->       * so don't yield unless we know we're running inside of a coroutine.
->       */
->      if (rdma->migration_started_on_destination &&
-> -        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
-> +        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE &&
-> +        qemu_in_coroutine()) {
->          yield_until_fd_readable(comp_channel->fd);
->      } else {
->          /* This is the source side, we're in a separate thread
+> @@ -2789,56 +2789,14 @@ static gboolean
+>  qio_channel_rdma_source_prepare(GSource *source,
+>                                  gint *timeout)
+>  {
+> -    QIOChannelRDMASource *rsource = (QIOChannelRDMASource *)source;
+> -    RDMAContext *rdma;
+> -    GIOCondition cond = 0;
+>      *timeout = -1;
+> -
+> -    RCU_READ_LOCK_GUARD();
+> -    if (rsource->condition == G_IO_IN) {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmain);
+> -    } else {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmaout);
+> -    }
+> -
+> -    if (!rdma) {
+> -        error_report("RDMAContext is NULL when prepare Gsource");
+> -        return FALSE;
+> -    }
+> -
+> -    if (rdma->wr_data[0].control_len) {
+> -        cond |= G_IO_IN;
+> -    }
+> -    cond |= G_IO_OUT;
+> -
+> -    return cond & rsource->condition;
+> +    return TRUE;
+>  }
+>  
+>  static gboolean
+>  qio_channel_rdma_source_check(GSource *source)
+>  {
+> -    QIOChannelRDMASource *rsource = (QIOChannelRDMASource *)source;
+> -    RDMAContext *rdma;
+> -    GIOCondition cond = 0;
+> -
+> -    RCU_READ_LOCK_GUARD();
+> -    if (rsource->condition == G_IO_IN) {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmain);
+> -    } else {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmaout);
+> -    }
+> -
+> -    if (!rdma) {
+> -        error_report("RDMAContext is NULL when check Gsource");
+> -        return FALSE;
+> -    }
+> -
+> -    if (rdma->wr_data[0].control_len) {
+> -        cond |= G_IO_IN;
+> -    }
+> -    cond |= G_IO_OUT;
+> -
+> -    return cond & rsource->condition;
+> +    return TRUE;
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+These are fine if we want the source to run as soon as possible, I
+think. But then...
+
+>  }
+>  
+>  static gboolean
+> @@ -2848,29 +2806,8 @@ qio_channel_rdma_source_dispatch(GSource *source,
+>  {
+>      QIOChannelFunc func = (QIOChannelFunc)callback;
+>      QIOChannelRDMASource *rsource = (QIOChannelRDMASource *)source;
+> -    RDMAContext *rdma;
+> -    GIOCondition cond = 0;
+> -
+> -    RCU_READ_LOCK_GUARD();
+> -    if (rsource->condition == G_IO_IN) {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmain);
+> -    } else {
+> -        rdma = qatomic_rcu_read(&rsource->rioc->rdmaout);
+> -    }
+> -
+> -    if (!rdma) {
+> -        error_report("RDMAContext is NULL when dispatch Gsource");
+> -        return FALSE;
+> -    }
+> -
+> -    if (rdma->wr_data[0].control_len) {
+> -        cond |= G_IO_IN;
+> -    }
+> -    cond |= G_IO_OUT;
+>  
+> -    return (*func)(QIO_CHANNEL(rsource->rioc),
+> -                   (cond & rsource->condition),
+> -                   user_data);
+> +    return (*func)(QIO_CHANNEL(rsource->rioc), rsource->condition, user_data);
+
+No idea who even calls g_source_set_callback() in this case. What is func?
+
+>  }
+>  
+>  static void
 
