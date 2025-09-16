@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE78CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFB6CAC59B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uya5i-0004MD-0Y; Tue, 16 Sep 2025 14:07:46 -0400
+	id 1uya4v-00039F-NC; Tue, 16 Sep 2025 14:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4w-0003Ac-4X
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:59 -0400
+ id 1uya4a-00037H-NF
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:36 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4k-0001dK-Mh
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:51 -0400
+ id 1uya4Y-0001c5-Ll
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:36 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45ed646b656so49695745e9.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:43 -0700 (PDT)
+ 5b1f17b1804b1-45f2313dd86so39834285e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758046002; x=1758650802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758045993; x=1758650793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=seP0xrEvNCnKjpsBJ955vCqpOKXP9VKXeAgomjXz8Bg=;
- b=p2xpZQ72YqwobVuaWPdSCkH8slU2Pj5g5cmq1Rj1yjCWuYuuwz5ui9LcW3aNuWDogl
- rj3PTrZZl4nQqJbtzhhQTE6fXPn8HHcXiR75Iz0/fciZCzVadOL3dxBg/n5TR8J21AYa
- iPYD3YjOS0oz3RIQSB5ZBuJSKPMIndOnHya41mdkb+ilPZ3Iq3zZ1+sGsV0g1M5vtaRz
- QnRO3Q+rffk5HWknuIo/VVPik0TCrMRqRsu6MQSEJ2N3yrlhMY1eBBja0mLoQnn4DNEj
- 3tSRq3THOETRXjHo6Z5nfeBhLxSDWQHqOw7m7YjryiAJ6w8M74fU0KsEshcdQLw4J+bU
- 0T1A==
+ :reply-to; bh=aFlwhTu+WV4Da4c9Ts1Xd5fh6JlTMno61ShmjJipyoQ=;
+ b=h+OYDVposlNtv2cp2hb+qGbqGv+G05AJ1e5MZKIjbC5TBwKuJPjeDfuRuhh8GJRJo6
+ eLWNz6CXoSii7DKCLwbB/lUY9llQOZ94K2u4c/i25Yen7VkcJDuXG1b++3NLf8vUCtTC
+ 0lsUZ8ilyLddqTOnM74HkWGjxiO9SXlmSqMzDsOqbqCdHaGkzKPRhc6a/S1qNNL804m2
+ OuFvXboqq6VQNIU43X+iHcwX264H3PbOwry7P/8Ce/IT5Qe5jNof60wTEb2I2kpLwPxP
+ qEgrkTiaJgJZCo42PBcx8HaLjhLpWRPevvnvtrlUdJqlLcE5NLl5niQK+ilHvvq3Zjkr
+ Em4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758046002; x=1758650802;
+ d=1e100.net; s=20230601; t=1758045993; x=1758650793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=seP0xrEvNCnKjpsBJ955vCqpOKXP9VKXeAgomjXz8Bg=;
- b=i+k3FG7cMyvEl8BQuY5zJDjoBkqqSW4A8f/jBCxhQqszNfwSAG6w/zzoU23dhIy+Q4
- 9dLDyiYA8yytSwKyV6loK+DJSlgQ8oJUIMI/WYDSCBbgwp5ejGo0U0uyRn8O0+7o+MRx
- stlxuzwWlbZgONBsnSEWlNqrs/VFDXoL5ZnP8ZGvtN1dAKWOJKadr8eBE/jg2R+Kc3gL
- J6AfIZXQWHd/JtnWCWJSwC6GkYt+ZnfZmIAeFdmW+918+MyOOUk+AofBgAxkyeDOrjh7
- k+jWackTEa/JNgjNMUrSqubu3k0DVkNeOWeveSKEZ/8xVzOl0iLJbIM0M9jp/4uuPgWL
- e0Ig==
-X-Gm-Message-State: AOJu0Yybnto1S4lerDyvohoASbbz1Jnp3mr1Jx8pZ/OOF6PvcMdoABqR
- q2OoOX6l/6wlxMQbW0SWTysk75dcwsZSEXOKo3AJ64Eri39WMl/fyx8p/LXnBmlUqxYHuimluSh
- xbDPb
-X-Gm-Gg: ASbGnctG4ZVzBycXe+XuCYng2pMdHj0Akk13y0EWRhohrZikAB4jwbwZ+scycHOSBQu
- bsL1XGUcWSGB4cXO46iH4DrJ3ft+vvExUgT1jbGGbt5VePJRyrgpdJ1y6/wML87tAh56nJcey41
- Ff50XPkLAwDtd0M+sbLlgm45raU5BtIBS7YRzsXboxSEDatM9kr3TUZ2XpG98QwhWeyYzkxqtwo
- tzHJyzGIyAJXDX0Y2RNYaxfkGqqM9swXb0bE2Ve3UaE7hPuVJJ5C+0REwGbc2nZ46wSPVOVu5dE
- WJcXyU75X71K615qNcq5L54WntRI/1KICUlCr4XurWSyNJEtQMa2q8PWNjZ/WbNTAXSMD+DnLE9
- r6dIe9PIYnxwWzs2YNoJNVw92UL6S
-X-Google-Smtp-Source: AGHT+IFdBk1x/+6Goql+jZuEF7SparSqo6EV6b+3ga04pRrN0C0ZqqPkjreu4Wzihf5wTbUvK6tSbw==
-X-Received: by 2002:adf:ee46:0:b0:3ec:4e41:fd86 with SMTP id
- ffacd0b85a97d-3ec4e41ff5fmr3147507f8f.50.1758046002136; 
- Tue, 16 Sep 2025 11:06:42 -0700 (PDT)
+ bh=aFlwhTu+WV4Da4c9Ts1Xd5fh6JlTMno61ShmjJipyoQ=;
+ b=RdM9LLrstGEU1bRStR6Nu6fT1jGsNdAuvgbNLvwAEdCyOJDJ9ZXxWnLKKHjx4seMTJ
+ mM8BlkOEyyuMc/2/ONzir7A7BhXOfjALQsobIYwcSatVgMmC6y1bnCleQTS4epQHraHy
+ whjA/zOHedJl+SESClfUqiRBZWUcMbNM/+VQFhwdcfpOr/79dYzxXoSkBGU+WIPquyKP
+ Mc14CKMhYh+TjtAlg+64o9MgbS+nCvhZoYNt4musylkHhVugcx/ZqCmRiKqWtDWogWa1
+ Lm7Ge8fLOF509p7iUz62BO8robpJZrAs0kjx99TsP7WRICyI0xBx9VNVSip5N/mhVg27
+ 9aFw==
+X-Gm-Message-State: AOJu0YxHzJpbjoiezHMSc+JSFLop4/Y8C6zeK0n++AdS7C4LGo3kwwIR
+ qX4mRpq1Svzx4hvLJg6W/RBx25XVlGs47gakIGfR5CliU3sPbGm5GaGJGo1rfdrF8WylhRyw5aJ
+ 0tdQj
+X-Gm-Gg: ASbGncueXiPmD7PSAhQFwMLqYKbtYSfevCXjTi/mJkJE9kKAUfjHykCjxOAKa5UOAHx
+ 3AYvptmjMtUPutl28TVGN2rdyjBzh/b7G7dt+GLgZKsULlt6a3iX7ybio/XkBKZoLbEbCl+5yTa
+ 5zQZK+2+t82v3/SonI8GlEy4tjOQ8VWsSLkpvkAmqpyOBaWyXVbJiOQ5ppWC2HfNx2xtCzunTBr
+ cIHgnX8jB7ZiPK3opinPJD1SeFlnGOhlAnOekA9RRcVJlpbqtsoMIgRQKFZuphbvJsFanoPb+ug
+ VBgkvgOfPPk7R0OCVQYbeGGgDEodnmflBhMunW7fV6BZLltRMo3uZ9BHFMOHhujUjCdbEqGtjbK
+ BR5VI5RViem5AfPAxR9iZrcZfCUx4Xi4Pgmp0ouM=
+X-Google-Smtp-Source: AGHT+IHOWsltYzx1lUTIYdfLU50A6gHqAmdVVR6zCWJ9DYXtd7JfST6SZsn9WF5xE0fyYp7l4bG9yA==
+X-Received: by 2002:a05:600c:19c9:b0:45d:d50d:c0db with SMTP id
+ 5b1f17b1804b1-45f211dac1emr152370385e9.15.1758045993116; 
+ Tue, 16 Sep 2025 11:06:33 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.41
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 11:06:41 -0700 (PDT)
+ Tue, 16 Sep 2025 11:06:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/36] hw/arm/smmu-common: Check SMMU has PCIe Root Complex
- association
-Date: Tue, 16 Sep 2025 19:05:59 +0100
-Message-ID: <20250916180611.1481266-26-peter.maydell@linaro.org>
+Subject: [PULL 18/36] target/arm: Drop ARM_FEATURE_XSCALE handling
+Date: Tue, 16 Sep 2025 19:05:52 +0100
+Message-ID: <20250916180611.1481266-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
 References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::329;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
@@ -100,119 +100,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+We have now removed all the CPU types which had the Intel XScale
+extensions indicated via ARM_FEATURE_XSCALE, so this feature bit
+is never set. Remove all the code that can only be reached when
+using this flag.
 
-We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
-root complexes to be associated with SMMU.
-
-Although this change does not affect functionality at present, it is
-required when we add support for user-creatable SMMUv3 devices in
-future patches.
-
-Note: Added a specific check to identify pxb-pcie to avoid matching
-pxb-cxl host bridges, which are also of type PCI_HOST_BRIDGE. This
-restriction can be relaxed once support for CXL devices on arm/virt
-is added and validated with SMMUv3.
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Nathan Chen <nathanc@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Donald Dutile <ddutile@redhat.com>
-Message-id: 20250829082543.7680-2-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250828140422.3271703-5-peter.maydell@linaro.org
 ---
- include/hw/pci/pci_bridge.h         |  1 +
- hw/arm/smmu-common.c                | 31 ++++++++++++++++++++++++++---
- hw/pci-bridge/pci_expander_bridge.c |  1 -
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ target/arm/cpu.h           |  3 ---
+ target/arm/cpu.c           | 13 ---------
+ target/arm/helper.c        | 54 --------------------------------------
+ target/arm/ptw.c           |  7 +++--
+ target/arm/tcg/op_helper.c |  6 -----
+ 5 files changed, 3 insertions(+), 80 deletions(-)
 
-diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-index 8cdacbc4e16..a055fd8d321 100644
---- a/include/hw/pci/pci_bridge.h
-+++ b/include/hw/pci/pci_bridge.h
-@@ -104,6 +104,7 @@ typedef struct PXBPCIEDev {
-     PXBDev parent_obj;
- } PXBPCIEDev;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index f56fa6df8dd..92fcb96671e 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -341,7 +341,6 @@ typedef struct CPUArchState {
+         uint64_t vsctlr; /* Virtualization System control register. */
+         uint64_t cpacr_el1; /* Architectural feature access control register */
+         uint64_t cptr_el[4];  /* ARMv8 feature trap registers */
+-        uint32_t c1_xscaleauxcr; /* XScale auxiliary control register.  */
+         uint64_t sder; /* Secure debug enable register. */
+         uint32_t nsacr; /* Non-secure access control register. */
+         union { /* MMU translation table base 0. */
+@@ -513,7 +512,6 @@ typedef struct CPUArchState {
+         uint64_t cntvoff_el2; /* Counter Virtual Offset register */
+         uint64_t cntpoff_el2; /* Counter Physical Offset register */
+         ARMGenericTimer c14_timer[NUM_GTIMERS];
+-        uint32_t c15_cpar; /* XScale Coprocessor Access Register */
+         uint32_t c15_ticonfig; /* TI925T configuration byte.  */
+         uint32_t c15_i_max; /* Maximum D-cache dirty line index.  */
+         uint32_t c15_i_min; /* Minimum D-cache dirty line index.  */
+@@ -2444,7 +2442,6 @@ QEMU_BUILD_BUG_ON(ARRAY_SIZE(((ARMCPU *)0)->ccsidr) <= R_V7M_CSSELR_INDEX_MASK);
+  */
+ enum arm_features {
+     ARM_FEATURE_AUXCR,  /* ARM1026 Auxiliary control register.  */
+-    ARM_FEATURE_XSCALE, /* Intel XScale extensions.  */
+     ARM_FEATURE_IWMMXT, /* Intel iwMMXt extension.  */
+     ARM_FEATURE_V6,
+     ARM_FEATURE_V6K,
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index d0f6fcdfcea..9781055bdc1 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -349,11 +349,6 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+     env->uncached_cpsr = ARM_CPU_MODE_USR;
+     /* For user mode we must enable access to coprocessors */
+     env->vfp.xregs[ARM_VFP_FPEXC] = 1 << 30;
+-    if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
+-        env->cp15.c15_cpar = 3;
+-    } else if (arm_feature(env, ARM_FEATURE_XSCALE)) {
+-        env->cp15.c15_cpar = 1;
+-    }
+ #else
  
-+#define TYPE_PXB_PCIE_BUS "pxb-pcie-bus"
- #define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
- #define TYPE_PXB_DEV "pxb"
- OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 0dcaf2f5897..7f64ea48d03 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -20,6 +20,7 @@
- #include "trace.h"
- #include "exec/target_page.h"
- #include "hw/core/cpu.h"
-+#include "hw/pci/pci_bridge.h"
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qemu/jhash.h"
-@@ -925,6 +926,7 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
- {
-     SMMUState *s = ARM_SMMU(dev);
-     SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(dev);
-+    PCIBus *pci_bus = s->primary_bus;
-     Error *local_err = NULL;
- 
-     sbc->parent_realize(dev, &local_err);
-@@ -937,11 +939,34 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-                                      g_free, g_free);
-     s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
- 
--    if (s->primary_bus) {
--        pci_setup_iommu(s->primary_bus, &smmu_ops, s);
--    } else {
-+    if (!pci_bus) {
-         error_setg(errp, "SMMU is not attached to any PCI bus!");
-+        return;
+     /*
+@@ -2259,14 +2254,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
      }
-+
-+    /*
-+     * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
-+     * root complexes to be associated with SMMU.
-+     */
-+    if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
-+        object_dynamic_cast(OBJECT(pci_bus)->parent, TYPE_PCI_HOST_BRIDGE)) {
-+        /*
-+         * This condition matches either the default pcie.0, pxb-pcie, or
-+         * pxb-cxl. For both pxb-pcie and pxb-cxl, parent_dev will be set.
-+         * Currently, we don't allow pxb-cxl as it requires further
-+         * verification. Therefore, make sure this is indeed pxb-pcie.
-+         */
-+        if (pci_bus->parent_dev) {
-+            if (!object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_PCIE_BUS)) {
-+                goto out_err;
-+            }
-+        }
-+        pci_setup_iommu(pci_bus, &smmu_ops, s);
-+        return;
-+    }
-+out_err:
-+    error_setg(errp, "SMMU should be attached to a default PCIe root complex"
-+               "(pcie.0) or a pxb-pcie based root complex");
+ 
+ 
+-    /*
+-     * We rely on no XScale CPU having VFP so we can use the same bits in the
+-     * TB flags field for VECSTRIDE and XSCALE_CPAR.
+-     */
+-    assert(arm_feature(env, ARM_FEATURE_AARCH64) ||
+-           !cpu_isar_feature(aa32_vfp_simd, cpu) ||
+-           !arm_feature(env, ARM_FEATURE_XSCALE));
+-
+ #ifndef CONFIG_USER_ONLY
+     {
+         int pagebits;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index b641229ba0c..fa8dfac2998 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2923,39 +2923,6 @@ static const ARMCPRegInfo omap_cp_reginfo[] = {
+       .type = ARM_CP_CONST | ARM_CP_OVERRIDE, .resetvalue = 0 },
+ };
+ 
+-static void xscale_cpar_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                              uint64_t value)
+-{
+-    env->cp15.c15_cpar = value & 0x3fff;
+-}
+-
+-static const ARMCPRegInfo xscale_cp_reginfo[] = {
+-    { .name = "XSCALE_CPAR",
+-      .cp = 15, .crn = 15, .crm = 1, .opc1 = 0, .opc2 = 0, .access = PL1_RW,
+-      .fieldoffset = offsetof(CPUARMState, cp15.c15_cpar), .resetvalue = 0,
+-      .writefn = xscale_cpar_write, },
+-    { .name = "XSCALE_AUXCR",
+-      .cp = 15, .crn = 1, .crm = 0, .opc1 = 0, .opc2 = 1, .access = PL1_RW,
+-      .fieldoffset = offsetof(CPUARMState, cp15.c1_xscaleauxcr),
+-      .resetvalue = 0, },
+-    /*
+-     * XScale specific cache-lockdown: since we have no cache we NOP these
+-     * and hope the guest does not really rely on cache behaviour.
+-     */
+-    { .name = "XSCALE_LOCK_ICACHE_LINE",
+-      .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 0,
+-      .access = PL1_W, .type = ARM_CP_NOP },
+-    { .name = "XSCALE_UNLOCK_ICACHE",
+-      .cp = 15, .opc1 = 0, .crn = 9, .crm = 1, .opc2 = 1,
+-      .access = PL1_W, .type = ARM_CP_NOP },
+-    { .name = "XSCALE_DCACHE_LOCK",
+-      .cp = 15, .opc1 = 0, .crn = 9, .crm = 2, .opc2 = 0,
+-      .access = PL1_RW, .type = ARM_CP_NOP },
+-    { .name = "XSCALE_UNLOCK_DCACHE",
+-      .cp = 15, .opc1 = 0, .crn = 9, .crm = 2, .opc2 = 1,
+-      .access = PL1_W, .type = ARM_CP_NOP },
+-};
+-
+ static const ARMCPRegInfo dummy_c15_cp_reginfo[] = {
+     /*
+      * RAZ/WI the whole crn=15 space, when we don't have a more specific
+@@ -3346,16 +3313,6 @@ static void sctlr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+ 
+     /* This may enable/disable the MMU, so do a TLB flush.  */
+     tlb_flush(CPU(cpu));
+-
+-    if (tcg_enabled() && ri->type & ARM_CP_SUPPRESS_TB_END) {
+-        /*
+-         * Normally we would always end the TB on an SCTLR write; see the
+-         * comment in ARMCPRegInfo sctlr initialization below for why Xscale
+-         * is special.  Setting ARM_CP_SUPPRESS_TB_END also stops the rebuild
+-         * of hflags from the translator, so do it here.
+-         */
+-        arm_rebuild_hflags(env);
+-    }
  }
  
- /*
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 3a29dfefc2c..1bcceddbc4d 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -34,7 +34,6 @@ typedef struct PXBBus PXBBus;
- DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
-                          TYPE_PXB_BUS)
+ static void mdcr_el3_write(CPUARMState *env, const ARMCPRegInfo *ri,
+@@ -6894,9 +6851,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+     if (arm_feature(env, ARM_FEATURE_STRONGARM)) {
+         define_arm_cp_regs(cpu, strongarm_cp_reginfo);
+     }
+-    if (arm_feature(env, ARM_FEATURE_XSCALE)) {
+-        define_arm_cp_regs(cpu, xscale_cp_reginfo);
+-    }
+     if (arm_feature(env, ARM_FEATURE_DUMMY_C15_REGS)) {
+         define_arm_cp_regs(cpu, dummy_c15_cp_reginfo);
+     }
+@@ -7245,14 +7199,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             .writefn = sctlr_write, .resetvalue = cpu->reset_sctlr,
+             .raw_writefn = raw_write,
+         };
+-        if (arm_feature(env, ARM_FEATURE_XSCALE)) {
+-            /*
+-             * Normally we would always end the TB on an SCTLR write, but Linux
+-             * arch/arm/mach-pxa/sleep.S expects two instructions following
+-             * an MMU enable to execute from cache.  Imitate this behaviour.
+-             */
+-            sctlr.type |= ARM_CP_SUPPRESS_TB_END;
+-        }
+         define_one_arm_cp_reg(cpu, &sctlr);
  
--#define TYPE_PXB_PCIE_BUS "pxb-pcie-bus"
- DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
-                          TYPE_PXB_PCIE_BUS)
+         if (arm_feature(env, ARM_FEATURE_PMSA) &&
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 089eeff845c..6344971fa64 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1074,11 +1074,10 @@ static bool get_phys_addr_v5(CPUARMState *env, S1Translate *ptw,
+             ap = (desc >> (4 + ((address >> 9) & 6))) & 3;
+             result->f.lg_page_size = 12;
+             break;
+-        case 3: /* 1k page, or ARMv6/XScale "extended small (4k) page" */
++        case 3: /* 1k page, or ARMv6 "extended small (4k) page" */
+             if (type == 1) {
+-                /* ARMv6/XScale extended small page format */
+-                if (arm_feature(env, ARM_FEATURE_XSCALE)
+-                    || arm_feature(env, ARM_FEATURE_V6)) {
++                /* ARMv6 extended small page format */
++                if (arm_feature(env, ARM_FEATURE_V6)) {
+                     phys_addr = (desc & 0xfffff000) | (address & 0xfff);
+                     result->f.lg_page_size = 12;
+                 } else {
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 575e566280b..5373e0e998c 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -768,12 +768,6 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
  
+     assert(ri != NULL);
+ 
+-    if (arm_feature(env, ARM_FEATURE_XSCALE) && ri->cp < 14
+-        && extract32(env->cp15.c15_cpar, ri->cp, 1) == 0) {
+-        res = CP_ACCESS_UNDEFINED;
+-        goto fail;
+-    }
+-
+     if (ri->accessfn) {
+         res = ri->accessfn(env, ri, isread);
+     }
 -- 
 2.43.0
 
