@@ -4,67 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A416CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61805CAC599
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyR9A-0006qk-JC; Tue, 16 Sep 2025 04:34:44 -0400
+	id 1uyRDc-0004rj-Mc; Tue, 16 Sep 2025 04:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uyR93-0006eC-Gn; Tue, 16 Sep 2025 04:34:38 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uyR8z-0005zx-GW; Tue, 16 Sep 2025 04:34:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758011674; x=1789547674;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=5dOlQu9/LWVuyBR+Q9SafLwxJOv00jbSW+EcvT80qeI=;
- b=IzIiNn2Hu6kwT7jBTwTPUq7pHAu4IF3d/QF5FWUvjG4dZ07MZl2M4pe2
- vdC3XPXHUEfyoWomLJL9uJ5WKp9LtsUqi94HwzrsWuzCLCXt6osI2vBj8
- LBCKLAGrktpA3daTyUKwWua3Mi0/r88Z9mhojzDQWXJ45NmdqiHtzJvZd
- FpDVSNUp3ALEubhBA5+gtjtAJYUelAiLf37zIDyAiwY1Yz2OBcNSdfMxk
- DAoK0DsEPlZrkeJ6+F6RKiNDUgziFmPyzAuKVSqW5E+jNMtLB3qNPXk2m
- +zZkvcd7VFzozKpXAOnfDhBTux1oFvZUgQRY39IyAhSVH5TqrpuUhkArm A==;
-X-CSE-ConnectionGUID: Pj/6j6k6Rny/J8r8B5xcwA==
-X-CSE-MsgGUID: T9vLZnyLRWKSJ7y+6knONA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11554"; a="77725172"
-X-IronPort-AV: E=Sophos;i="6.18,268,1751266800"; d="scan'208";a="77725172"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2025 01:34:20 -0700
-X-CSE-ConnectionGUID: bcrpCV3OSjuK9oUIyX0WZQ==
-X-CSE-MsgGUID: Jxg/NQnSQ3WgQwsTUo0XSQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,268,1751266800"; d="scan'208";a="174691062"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 16 Sep 2025 01:34:18 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 06/12] rust/qdev: Refine the documentation for QDevProp trait
-Date: Tue, 16 Sep 2025 16:55:51 +0800
-Message-Id: <20250916085557.2008344-7-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250916085557.2008344-1-zhao1.liu@intel.com>
-References: <20250916085557.2008344-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uyRDR-0004Pb-9b
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:39:12 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uyRCz-0006Qo-9t
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:38:52 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-72267c05111so39251187b3.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 01:38:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758011910; x=1758616710; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nXUYlnpSXxiJOL7NcgpwOHUm4vgvpdIMYxgPw3z+RY0=;
+ b=XFHPsMj8mOsOo5GJEGF4+FnlhlydQU633ZTXoxQfs6jtfl33rkvqoEQ4CmIZ85b6L8
+ SeqKp9TdRt8tMtLfyIu4AfB0rCeKfouiM6GEvxQI8UiZeT11Xmc/QRypEkG2RoFDQ+ZV
+ U1ue6QbZ/DW8TrXzaxIznNL1mcpYLVrXoD/ZTO9/dLj2WCbALW/IttO1Bi3HbIz6a8nS
+ zFTRqRwn/ST950ZxRikEYb0ptnj4d4oJXYg0jd8W5Viti1a/krEi9n1DHZhbSNUEOtAb
+ UmqFLbGtTJprsFr8wq5/dpdDqkNe8317S1KlW2qUqxBu5cQJuu8bZEK/JdYhsgkoMu41
+ cMIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758011910; x=1758616710;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nXUYlnpSXxiJOL7NcgpwOHUm4vgvpdIMYxgPw3z+RY0=;
+ b=wpSPfazT+fQlCUVzVhW2BtqrexV/r1e2QjuKhsz2/3vgHiuNep8LRP2WPmpzKpR+OA
+ 1F2hUnVe3Bg8WFzEmClN5AuPgmvp0Ec5tjQVw2e/yswqkmd+dxydy5puvX1zxmtx8RAn
+ ZkB3PpOCxSGGEe4Vu2qbiGNEZNy9KfmH6aicyp80HqMAad6KIyCsvv+r8yjkBmFR2f45
+ q/BmB7vP7pzZp/MRzPQm/RhiiyIGmreUNaK6sRqJrKCF3J5Y9lBBGISuVI9NjJyDExwQ
+ MvIGn1WuZnr016tPexgEn3ndK4CjBk9sVCgrgicJl6SthSA1MJay0NAQKJpqzDN2R/KV
+ 2BWw==
+X-Gm-Message-State: AOJu0YyTWhKctB0gfPZQn4T+kqjDEr8MpMZezz5HL8aaQF29rnHLvgcF
+ MAkJABX4POMTennvCJh1hq2i07+j84BuPq+/DIXj7t8KEG2Vm0goiklHj7Tn4FZApLf5u+in0mO
+ oTBO9CkS7Vwt1lY0A00NDyEqyceLZLClmGhfBp9/PDQ==
+X-Gm-Gg: ASbGncvbfRTY35zc8sozITDmE6UsZjYnj8wNLUoB5A88PZyHPNY1ItCpEOSoO17foyH
+ K3lJblPV8Eqcjh1pRlBNUm7+vVZh/ubmQ1DnSq/SmtwFCWx4DS2QDFR+0cB4bZSTz75k0mcXFZ+
+ kcXU46Mqy3KwA0vD3rOzIbcg4d/Bu5VHxSBjviL9m7eWrBMn3vqxSfLvVZSH9ZEbDn+Jhp/oJHq
+ NPRJh9m
+X-Google-Smtp-Source: AGHT+IHrBQlz7/Fdxv06eMmctttpp9NkMGIylulGPWLl6YvkOf7/ysjU3/ZWlDOCJ2OdN64Z+dKPnexj4It/HzCeo2g=
+X-Received: by 2002:a05:690c:a012:b0:730:c83b:e9f8 with SMTP id
+ 00721157ae682-730c83c15d1mr114639477b3.37.1758011910099; Tue, 16 Sep 2025
+ 01:38:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.035,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250826205532.1500639-1-nabihestefan@google.com>
+In-Reply-To: <20250826205532.1500639-1-nabihestefan@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Sep 2025 09:38:18 +0100
+X-Gm-Features: Ac12FXzHJ_6Xu5ABADwYfQUkLL5s31ax-cHt6ck1N7iPzUzOF147hVcsH1W1DE0
+Message-ID: <CAFEAcA8zGzfh_b1UWAeTDpMi=z-KFVUgS2By6CgpONNMVjMP5A@mail.gmail.com>
+Subject: Re: [PATCH 0/2] hw/pci-bridge: Create PLX Virtual Switch Device
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, venture@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,53 +93,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+On Tue, 26 Aug 2025 at 21:56, Nabih Estefan <nabihestefan@google.com> wrote:
+>
+> Create a PLX PEX PCIe Virtual Switch implementation that can be used
+> for modeling trays. This is a generalized version of the xio3130 switch where
+> we can set the PCI information on creation, allowing us to model different
+> trays without creating specific devices for all of them. It is used the same
+> way the xio3130 switch is used + the PCI Signature information.
+>
+> The idea is to minimize the difficulty of creating different trays whose
+> only difference is recognition by some daemon through PCI signatures.
+> Instead of having to create 8 different versions of xio3130 that have
+> the same functionality but different PCI Signatures, we create one
+> general version where you can declare the PCI Signature information,
+> while keeping the same base functionality. This is not meant to fully
+> replace xio3130 since that is easier to use without knowledge of the PCI
+> Signature, this is meant to decrease the difficulty of creating switch
+> trays that require certain PCI information for recognition without any
+> significant change from a normal PLX Virtual Switch functionality.
 
-Refine the documentation to clarify:
- * `unsfae` requires that `VALUE` must be valid.
- * using `*const` instead of `&` because the latter will cause compiler
-   error.
+Could we implement this as optional config properties on
+the xio3130 rather than as an entirely new device ?
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- rust/hw/core/src/qdev.rs | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+> Changes from v1&2: Updating different formatting and API changes that
+> ocurred QEMU-wide since these patches were first staged in 8.1.
+>
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> Signed-off-by: Patrick Venture <venture@google.com>
+>
+> Nabih Estefan (2):
+>   hw/pci-bridge: Create Initial revision for PLX Virtual Switch
+>   MAINTAINERS: Add entry for PLX VSwitches
+>
+>  MAINTAINERS                            |   6 +
+>  hw/pci-bridge/Kconfig                  |   5 +
+>  hw/pci-bridge/meson.build              |   1 +
+>  hw/pci-bridge/plx_vswitch_downstream.c | 188 +++++++++++++++++++++++++
+>  hw/pci-bridge/plx_vswitch_upstream.c   | 178 +++++++++++++++++++++++
+>  include/hw/pci-bridge/plx_vswitch.h    |  43 ++++++
 
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index 3ee5b242622d..2735e2b2c109 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -109,9 +109,16 @@ pub trait ResettablePhasesImpl {
- ///
- /// # Safety
- ///
--/// This trait is marked as `unsafe` because currently having a `const` refer to
--/// an `extern static` as a reference instead of a raw pointer results in this
--/// compiler error:
-+/// This trait is marked as `unsafe` because `VALUE` must be a valid raw
-+/// reference to a [`bindings::PropertyInfo`].
-+///
-+/// Note we could not use a regular reference:
-+///
-+/// ```text
-+/// const VALUE: &bindings::PropertyInfo = ...
-+/// ```
-+///
-+/// because this results in the following compiler error:
- ///
- /// ```text
- /// constructing invalid value: encountered reference to `extern` static in `const`
-@@ -119,7 +126,7 @@ pub trait ResettablePhasesImpl {
- ///
- /// This is because the compiler generally might dereference a normal reference
- /// during const evaluation, but not in this case (if it did, it'd need to
--/// dereference the raw pointer so this would fail to compile).
-+/// dereference the raw pointer so using a `*const` would also fail to compile).
- ///
- /// It is the implementer's responsibility to provide a valid
- /// [`bindings::PropertyInfo`] pointer for the trait implementation to be safe.
--- 
-2.34.1
+I note from the diffstat that you have provided no
+documentation and no tests...
 
+thanks
+-- PMM
 
