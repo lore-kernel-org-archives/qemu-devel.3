@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADE8CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7EF3CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyV3y-0003Ql-V2; Tue, 16 Sep 2025 08:45:39 -0400
+	id 1uyV5e-0005Dl-4o; Tue, 16 Sep 2025 08:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uyV3V-0003ES-DN
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:12 -0400
+ id 1uyV55-00052W-Qf
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:49 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uyV3H-0002J4-22
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:04 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uyV52-0002it-SV
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:47 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxudG7W8lotPMKAA--.23938S3;
- Tue, 16 Sep 2025 20:44:43 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxSNG+W8loz_MKAA--.23776S3;
+ Tue, 16 Sep 2025 20:44:46 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxbMG4W8loS1uZAA--.42126S3;
- Tue, 16 Sep 2025 20:44:43 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxbMG4W8loS1uZAA--.42126S12;
+ Tue, 16 Sep 2025 20:44:45 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH v8 01/11] target/loongarch: move some machine define to virt.h
-Date: Tue, 16 Sep 2025 20:20:59 +0800
-Message-Id: <20250916122109.749813-2-gaosong@loongson.cn>
+Subject: [PATCH v8 10/11] target/loongarch:Implement csrrd CSR_MSGIR register
+Date: Tue, 16 Sep 2025 20:21:08 +0800
+Message-Id: <20250916122109.749813-11-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250916122109.749813-1-gaosong@loongson.cn>
 References: <20250916122109.749813-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxbMG4W8loS1uZAA--.42126S3
+X-CM-TRANSID: qMiowJDxbMG4W8loS1uZAA--.42126S12
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,77 +66,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-move some machine define to virt.h
+implement the read-clear feature for CSR_MSGIR register.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/loongarch/virt.h | 19 +++++++++++++++++++
- target/loongarch/cpu.h      | 21 ---------------------
- 2 files changed, 19 insertions(+), 21 deletions(-)
+ target/loongarch/csr.c                        |  5 +++++
+ target/loongarch/tcg/csr_helper.c             | 21 +++++++++++++++++++
+ target/loongarch/tcg/helper.h                 |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |  1 +
+ 4 files changed, 28 insertions(+)
 
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 602feab0f0..7120b46714 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -13,6 +13,25 @@
- #include "hw/block/flash.h"
- #include "hw/loongarch/boot.h"
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 7ea0a30450..f973780bba 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -97,6 +97,11 @@ static CSRInfo csr_info[] = {
+     CSR_OFF(DBG),
+     CSR_OFF(DERA),
+     CSR_OFF(DSAVE),
++    CSR_OFF_ARRAY(MSGIS, 0),
++    CSR_OFF_ARRAY(MSGIS, 1),
++    CSR_OFF_ARRAY(MSGIS, 2),
++    CSR_OFF_ARRAY(MSGIS, 3),
++    CSR_OFF(MSGIR),
+ };
  
-+#define IOCSRF_TEMP             0
-+#define IOCSRF_NODECNT          1
-+#define IOCSRF_MSI              2
-+#define IOCSRF_EXTIOI           3
-+#define IOCSRF_CSRIPI           4
-+#define IOCSRF_FREQCSR          5
-+#define IOCSRF_FREQSCALE        6
-+#define IOCSRF_DVFSV1           7
-+#define IOCSRF_GMOD             9
-+#define IOCSRF_VM               11
+ CSRInfo *get_csr(unsigned int csr_num)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 0d99e2c92b..ae0046f42c 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -73,6 +73,27 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+     return cpu_loongarch_get_constant_timer_ticks(cpu);
+ }
+ 
++target_ulong helper_csrrd_msgir(CPULoongArchState *env)
++{
++    int irq, new;
 +
-+#define VERSION_REG             0x0
-+#define FEATURE_REG             0x8
-+#define VENDOR_REG              0x10
-+#define CPUNAME_REG             0x20
-+#define MISC_FUNC_REG           0x420
-+#define IOCSRM_EXTIOI_EN        48
-+#define IOCSRM_EXTIOI_INT_ENCODE 49
++    irq = find_first_bit(env->CSR_MSGIS, 256);
++    if (irq < 256) {
++        clear_bit(irq, env->CSR_MSGIS);
++        new = find_first_bit(env->CSR_MSGIS, 256);
++        if (new < 256) {
++            return irq;
++        }
 +
- #define LOONGARCH_MAX_CPUS      256
++        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++    } else {
++        /* bit 31 set 1 for no invalid irq */
++        irq = BIT(31);
++    }
++
++    return irq;
++}
++
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+     int64_t old_v = env->CSR_ESTAT;
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 1d5cb0198c..db57dbfc16 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -100,6 +100,7 @@ DEF_HELPER_1(rdtime_d, i64, env)
+ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
++DEF_HELPER_1(csrrd_msgir, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 34cfab8879..a407ab51b7 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -83,6 +83,7 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
++    SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
+ }
+ #undef SET_CSR_FUNC
  
- #define VIRT_FWCFG_BASE         0x1e020000UL
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 7731f6acdc..fd3d94b55a 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -21,27 +21,6 @@
- #include "cpu-csr.h"
- #include "cpu-qom.h"
- 
--#define IOCSRF_TEMP             0
--#define IOCSRF_NODECNT          1
--#define IOCSRF_MSI              2
--#define IOCSRF_EXTIOI           3
--#define IOCSRF_CSRIPI           4
--#define IOCSRF_FREQCSR          5
--#define IOCSRF_FREQSCALE        6
--#define IOCSRF_DVFSV1           7
--#define IOCSRF_GMOD             9
--#define IOCSRF_VM               11
--
--#define VERSION_REG             0x0
--#define FEATURE_REG             0x8
--#define VENDOR_REG              0x10
--#define CPUNAME_REG             0x20
--#define MISC_FUNC_REG           0x420
--#define IOCSRM_EXTIOI_EN        48
--#define IOCSRM_EXTIOI_INT_ENCODE 49
--
--#define IOCSR_MEM_SIZE          0x428
--
- #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
- #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
- #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
 -- 
 2.41.0
 
