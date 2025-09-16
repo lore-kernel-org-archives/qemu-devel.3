@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC80CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 13:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900E0CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyWC2-00045w-L7; Tue, 16 Sep 2025 09:58:02 -0400
+	id 1uyWGI-00060y-Go; Tue, 16 Sep 2025 10:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyWC0-000459-Ed
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 09:58:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyWGF-00060E-Si
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:02:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyWBy-0003mt-1q
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 09:58:00 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uyWGD-0004gS-Mb
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:02:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758031077;
+ s=mimecast20190719; t=1758031338;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZyyhLOkTb5kKS2McMp5qgSCM5rMRPvJA6pq9WuO5Gqo=;
- b=R/MjeR3uep3gxmkl+MqhhAFEMsgKgXglpAXcStVPKXsdN7pXMv9SZXlERfIYFC5UOvz+F2
- FgCQiT5tPt1XCCKRMFZbbAx7u7cNx9EzEFqEpq3BbTquB2C7MYIqWeIBHb6s1ZWcSR1nz/
- XBQvZduJJnop5M6Fh8PIpCd6yGklBb8=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vjqJU4syondXw0YbzhTPMQpZ7rAn7AS5G0ElTiycx7k=;
+ b=EAGj01hjqJONXJ+h8XWii8rGiKSbGB1QGP3j5IpR3PQVeMuUyP6m+RL/KEwkqnzWjgfEXp
+ mf/DRhPCkMfEr+0xo5W4RitEe/11eFkYSjBKkfHXuxubxbTyBCFHPhAdKK9t5x8/JwlWIl
+ C7YA4pK8TMKhLWtOoED1yKG+vFxKFUo=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-676-7ZAC-B00PW2dqF-rwmhiqA-1; Tue, 16 Sep 2025 09:57:53 -0400
-X-MC-Unique: 7ZAC-B00PW2dqF-rwmhiqA-1
-X-Mimecast-MFC-AGG-ID: 7ZAC-B00PW2dqF-rwmhiqA_1758031073
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8286b42f46bso671199785a.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 06:57:53 -0700 (PDT)
+ us-mta-433-WiIZLemSM1Oa7XOmZmPKIw-1; Tue, 16 Sep 2025 10:02:16 -0400
+X-MC-Unique: WiIZLemSM1Oa7XOmZmPKIw-1
+X-Mimecast-MFC-AGG-ID: WiIZLemSM1Oa7XOmZmPKIw_1758031336
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-82ea379874cso29011185a.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:02:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758031073; x=1758635873;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZyyhLOkTb5kKS2McMp5qgSCM5rMRPvJA6pq9WuO5Gqo=;
- b=oyAV25Affd7F4UB7nGFoI7g8bqfpWlhUDhT8DOzYtXmCCYdUOxoGGgab0oaJe+K3yP
- 9wNHM9xdXZzLeBc8D/wJOJ4vMhtWNN7kgJPvoNhbW1+Yem4Q+Iun2UN2DiX2KqWK2sA8
- TSN/8sFicVxJaTnM/Hlflol/EOy+oZP/nHMk3JsWMvCAQ2Wp7SfohqxJ4W1WVLzjLavs
- XDSiKM50e8CwgceO7r1+4cU94H810Xh/esVeJ3Qk1f9bYAUyUVwnUf4xF9Z1dVZw+w1S
- SoXpmVWqJmhALuoojKdUqT1823RuzjAaF/9YIo/PxI8we/WNfdOMVlXZoTOI3mxkvQiK
- +aGA==
+ d=1e100.net; s=20230601; t=1758031336; x=1758636136;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vjqJU4syondXw0YbzhTPMQpZ7rAn7AS5G0ElTiycx7k=;
+ b=MejUsieg3Pp35mTbaiGoL93gTznLbTQGIMWg2WMV90tBK3FUOyiCdCUZotZFcuJxaq
+ F+oZIX+b7hbx1kXm8b/+I30Zj6mZgdrJwEAdyVSO2MUnJu8mNwZrTdQ+uWRiCt6RkaSX
+ 05Z6JmQFHoGhs6HH3eUFtE5dwOItWDvGEPanUbYeoaaaSvCOgGmasV3gBEj2N2DuX5Nx
+ yUTgFkFLCPIJdJIJgGH8e64Q+H9UIMHX3ddng0JNa1W5/m+JohFGaqEyLpE+K/l8yREL
+ WhHowwV2hl1a1XBE0W5mksVltX2cquNUR3n16eogOsKD54FkIedMUBRvqP4p73n92pIz
+ v6rg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcrCIRIxXVMfq+NF7hxPsFTdFWB7oIAZjo7w/7gDG8DJ1nnTDO9dATVBw2A6j3JhKMfdBXlOD5PBg0@nongnu.org
-X-Gm-Message-State: AOJu0YxJvmoRdoXF8nt5Qa9avANttOO0H6V/35Dliy7dsVI+0Jh4w1tD
- kJc5RLIMXd58NkuT1JQzqOrRXDdr9ztbtzM8HrnT+n4KSdAcqVbEuSkTok+3/OGXE6ZooUG/W65
- 0J8BA0axOaeTuf521yNAegHTH3I3yOFR3bdEIUcn+LJi5wJFbGe04GiSj
-X-Gm-Gg: ASbGncu5ts7nGYn/mt2Yybup2Y0h4dlIFzoE99cj++xb5y6NB18TF6c35HWAdlQ9biB
- 9J3uIm8VIUbDagNsdBSuWkIRhhVT4ff5o5eGBYzNLsLnxd59zOp5YYnOkNDnMPYV85QtYQelO9X
- gcTlNUJ40WD6eCGNAI3pK1XV0x18rp+/wWFZvxcyNqv9IDmkpfs1U6d2yxWrxGgMf7HPcFeB7B3
- EidC+TbXPW4K6U2i3gfnWhEp37TOVMo4PwxBcpzJKQLa7ry/ZT+mmSrPnAUJtFBNQEosirANRdv
- P2AO3XUixasKMklcnvjRez7Pt9rv1vvM
-X-Received: by 2002:a05:620a:40c2:b0:829:2036:23e9 with SMTP id
- af79cd13be357-829203624f9mr893006685a.52.1758031072997; 
- Tue, 16 Sep 2025 06:57:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbSNaLt8psTnHo9geRmqzRZTd6FuTRQcr5ZzQGpDsXiQ8BtFZXJkJlXdHmj4Lvun8xAanqcQ==
-X-Received: by 2002:a05:620a:40c2:b0:829:2036:23e9 with SMTP id
- af79cd13be357-829203624f9mr893001785a.52.1758031072189; 
- Tue, 16 Sep 2025 06:57:52 -0700 (PDT)
+ AJvYcCUPyafZaYM3O9TubVc+LbNbqyux2Es2DB5XTgpG/0vyTM5Dcg10eBOFteGk/+TTOZ0KVMqLFWYZTA/V@nongnu.org
+X-Gm-Message-State: AOJu0YwmNvMjY5RMVMlNyj6+tbz5vgW6bPcQ06nAjTuPKijTTzDA/qgN
+ Gmjya+kxjmd9PxpcTyz46vMPWkTwRBX2NgPv79iLy/YapkuQsutmU6Asoe/4CwCkm5gfRhMHmbS
+ AzJEAJtkAlKgG27oTfTtcrrodmaIYSBZ3Vqvh8bfUAut7g+Y9/S2681hz
+X-Gm-Gg: ASbGncvBqCJgs8sy16heVYuQPfgKFO/DJ9W9geWFgWUqvSpcXchqntHHProORA/TzLC
+ rWCKgdp9RXTNO3C12+uBNWr4c7cf8IP2LQpbmBD2ivz8ypvYfBHYck/lF0Iqe5L1WmhNe138RHm
+ xgFPHy/0G8roY2Vie9uWbBacAvzLv1HP6UvU0PDQogp9B6ZyO4685/sqgR4uXSounJKCAUqG0b9
+ yezrLSjtPE1p8+3Afv4cyzNpX0gdeuc/EqR2w5d/zTfQWofOwEKpDoSRQ1iaKnR3EdvbaOZnB7Q
+ mhEaRm40X2PUyojGDRRQgLUHC2qFu12M
+X-Received: by 2002:a05:620a:690e:b0:806:b3c1:b85e with SMTP id
+ af79cd13be357-823ff3f19f1mr1826256085a.29.1758031335837; 
+ Tue, 16 Sep 2025 07:02:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4SDYmZPNeEpAXGu0Ga0ZyZcas9xltE4RUF3I7OAoPaSyDUTSX5gy3af5Ql8RHhNXjYp1kng==
+X-Received: by 2002:a05:620a:690e:b0:806:b3c1:b85e with SMTP id
+ af79cd13be357-823ff3f19f1mr1826249385a.29.1758031335147; 
+ Tue, 16 Sep 2025 07:02:15 -0700 (PDT)
 Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b639cb2562sm81729631cf.13.2025.09.16.06.57.50
+ d75a77b69052e-4b639dd11d8sm84555911cf.45.2025.09.16.07.02.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 06:57:51 -0700 (PDT)
-Date: Tue, 16 Sep 2025 09:57:40 -0400
+ Tue, 16 Sep 2025 07:02:14 -0700 (PDT)
+Date: Tue, 16 Sep 2025 10:02:02 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
  leiyang@redhat.com, marcandre.lureau@redhat.com,
- Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fam Zheng <fam@euphon.net>, Zhao Liu <zhao1.liu@intel.com>,
- Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH v5 04/13] handle result of qio_channel_set_blocking()
-Message-ID: <aMls1F7VyCzE9-jg@x1.local>
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v5 05/13] migration: qemu_file_set_blocking(): add errp
+ parameter
+Message-ID: <aMlt2nEGLt84pHQd@x1.local>
 References: <20250916131403.368343-1-vsementsov@yandex-team.ru>
- <20250916131403.368343-5-vsementsov@yandex-team.ru>
+ <20250916131403.368343-6-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250916131403.368343-5-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250916131403.368343-6-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,7 +93,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,47 +109,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 04:13:53PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Currently, we just always pass NULL as errp argument. That doesn't
-> look good.
+On Tue, Sep 16, 2025 at 04:13:54PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> qemu_file_set_blocking() is a wrapper on qio_channel_set_blocking(),
+> so let's passthrough the errp.
 > 
-> Some realizations of interface may actually report errors.
-> Channel-socket realization actually either ignore or crash on
-> errors, but we are going to straighten it out to always reporting
-> an errp in further commits.
-> 
-> So, convert all callers to either handle the error (where environment
-> allows) or explicitly use &error_abort.
-> 
-> Take also a chance to change the return value to more convenient
-> bool (keeping also in mind, that underlying realizations may
-> return -1 on failure, not -errno).
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+Dan, please still have a look at my reply, and if possible it'll be great
+to touch up the commit message if you agree.
+
+https://lore.kernel.org/all/aMlrVHYxhuj1TYYL@x1.local/
+
+Not a big issue even without that, it's OK to me. I confess I do not expect
+the assertions to trigger..
+
+Acked-by: Peter Xu <peterx@redhat.com>
+
 > ---
->  block/nbd.c                      |  4 +++-
->  chardev/char-socket.c            | 20 ++++++++++++++++----
->  hw/remote/proxy.c                |  6 +++++-
->  hw/remote/remote-obj.c           |  6 +++++-
->  hw/vfio-user/proxy.c             | 11 ++++++++---
->  include/io/channel.h             |  6 +++---
->  io/channel.c                     |  4 ++--
->  nbd/server.c                     |  4 +++-
->  scsi/qemu-pr-helper.c            |  9 ++++++---
->  tests/unit/io-channel-helpers.c  |  5 +++--
->  tests/unit/test-io-channel-tls.c |  4 ++--
->  tools/i386/qemu-vmsr-helper.c    |  6 ++++--
->  ui/vnc.c                         |  2 +-
->  util/vhost-user-server.c         |  7 ++++++-
->  14 files changed, 67 insertions(+), 27 deletions(-)
-
-No need to repost, but just to mention (if possible to be touched up when
-Dan queues this..).. it's still good to always have a prefix for subject.
-
-IMHO we can use "treewide:"; qemu started using it in a few commits.  Linux
-kernel used it much more.  We can keep the trend, IMHO.
+>  migration/colo.c         | 5 ++++-
+>  migration/migration.c    | 8 +++++---
+>  migration/postcopy-ram.c | 2 +-
+>  migration/qemu-file.c    | 4 ++--
+>  migration/qemu-file.h    | 2 +-
+>  migration/savevm.c       | 4 ++--
+>  6 files changed, 15 insertions(+), 10 deletions(-)
+> 
+> diff --git a/migration/colo.c b/migration/colo.c
+> index e0f713c837..cf4d71d9ed 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -859,7 +859,10 @@ static void *colo_process_incoming_thread(void *opaque)
+>       * coroutine, and here we are in the COLO incoming thread, so it is ok to
+>       * set the fd back to blocked.
+>       */
+> -    qemu_file_set_blocking(mis->from_src_file, true);
+> +    if (!qemu_file_set_blocking(mis->from_src_file, true, &local_err)) {
+> +        error_report_err(local_err);
+> +        goto out;
+> +    }
+>  
+>      colo_incoming_start_dirty_log();
+>  
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 10c216d25d..e1ac4d73c2 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -951,7 +951,7 @@ static void migration_incoming_setup(QEMUFile *f)
+>  
+>      assert(!mis->from_src_file);
+>      mis->from_src_file = f;
+> -    qemu_file_set_blocking(f, false);
+> +    qemu_file_set_blocking(f, false, &error_abort);
+>  }
+>  
+>  void migration_incoming_process(void)
+> @@ -971,7 +971,7 @@ static bool postcopy_try_recover(void)
+>          /* This should be set already in migration_incoming_setup() */
+>          assert(mis->from_src_file);
+>          /* Postcopy has standalone thread to do vm load */
+> -        qemu_file_set_blocking(mis->from_src_file, true);
+> +        qemu_file_set_blocking(mis->from_src_file, true, &error_abort);
+>  
+>          /* Re-configure the return path */
+>          mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
+> @@ -4002,7 +4002,9 @@ void migration_connect(MigrationState *s, Error *error_in)
+>      }
+>  
+>      migration_rate_set(rate_limit);
+> -    qemu_file_set_blocking(s->to_dst_file, true);
+> +    if (!qemu_file_set_blocking(s->to_dst_file, true, &local_err)) {
+> +        goto fail;
+> +    }
+>  
+>      /*
+>       * Open the return path. For postcopy, it is used exclusively. For
+> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> index 45af9a361e..0172172343 100644
+> --- a/migration/postcopy-ram.c
+> +++ b/migration/postcopy-ram.c
+> @@ -1909,7 +1909,7 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file)
+>       * The new loading channel has its own threads, so it needs to be
+>       * blocked too.  It's by default true, just be explicit.
+>       */
+> -    qemu_file_set_blocking(file, true);
+> +    qemu_file_set_blocking(file, true, &error_abort);
+>      mis->postcopy_qemufile_dst = file;
+>      qemu_sem_post(&mis->postcopy_qemufile_dst_done);
+>      trace_postcopy_preempt_new_channel();
+> diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> index d5c6e7ec61..0f4280df21 100644
+> --- a/migration/qemu-file.c
+> +++ b/migration/qemu-file.c
+> @@ -888,9 +888,9 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
+>   *       both directions, and thus changing the blocking on the main
+>   *       QEMUFile can also affect the return path.
+>   */
+> -void qemu_file_set_blocking(QEMUFile *f, bool block)
+> +bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp)
+>  {
+> -    qio_channel_set_blocking(f->ioc, block, NULL);
+> +    return qio_channel_set_blocking(f->ioc, block, errp);
+>  }
+>  
+>  /*
+> diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+> index f5b9f430e0..c13c967167 100644
+> --- a/migration/qemu-file.h
+> +++ b/migration/qemu-file.h
+> @@ -71,7 +71,7 @@ void qemu_file_set_error(QEMUFile *f, int ret);
+>  int qemu_file_shutdown(QEMUFile *f);
+>  QEMUFile *qemu_file_get_return_path(QEMUFile *f);
+>  int qemu_fflush(QEMUFile *f);
+> -void qemu_file_set_blocking(QEMUFile *f, bool block);
+> +bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp);
+>  int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size);
+>  void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+>  off_t qemu_get_offset(QEMUFile *f);
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index fabbeb296a..abe0547f9b 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2095,7 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>       * Because we're a thread and not a coroutine we can't yield
+>       * in qemu_file, and thus we must be blocking now.
+>       */
+> -    qemu_file_set_blocking(f, true);
+> +    qemu_file_set_blocking(f, true, &error_fatal);
+>  
+>      /* TODO: sanity check that only postcopiable data will be loaded here */
+>      load_res = qemu_loadvm_state_main(f, mis);
+> @@ -2108,7 +2108,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>      f = mis->from_src_file;
+>  
+>      /* And non-blocking again so we don't block in any cleanup */
+> -    qemu_file_set_blocking(f, false);
+> +    qemu_file_set_blocking(f, false, &error_fatal);
+>  
+>      trace_postcopy_ram_listen_thread_exit();
+>      if (load_res < 0) {
+> -- 
+> 2.48.1
+> 
 
 -- 
 Peter Xu
