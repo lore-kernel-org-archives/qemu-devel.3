@@ -4,134 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5E3CAC59B
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B97CAC59B
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 19:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyaay-0007pI-4p; Tue, 16 Sep 2025 14:40:04 -0400
+	id 1uyb2n-00021o-An; Tue, 16 Sep 2025 15:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uyaav-0007nd-AS
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:40:01 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uyb2l-00021I-HX
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 15:08:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uyaat-0005zR-Ar
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:40:01 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uyb2h-0001gt-Tu
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 15:08:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758047995;
+ s=mimecast20190719; t=1758049721;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cXfIdys3lphGw4K/13BaPVw1yfiAPP2uG8GiLofMl/I=;
- b=iMfOEwkVgVjE8SVcmJ2YOfuL6w6Vv4yAVhVEral0y9emCzr0lBnB1yuhJ8GiBB/qJl7Zs7
- 2qApv/7+dUk8H+Z+q+hqXADKBt4SHO9zyi3hx12i4CQaFzPGedHzF/+BHNhKcrMQb4g6nD
- uwQvouUj6gfkGKNbsvX6mnHRHuXWK+M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-8-5IBdIONx64ZG6eCcHLWw-1; Tue, 16 Sep 2025 14:39:54 -0400
-X-MC-Unique: 8-5IBdIONx64ZG6eCcHLWw-1
-X-Mimecast-MFC-AGG-ID: 8-5IBdIONx64ZG6eCcHLWw_1758047993
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45de13167aaso52530585e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:39:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758047993; x=1758652793;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cXfIdys3lphGw4K/13BaPVw1yfiAPP2uG8GiLofMl/I=;
- b=KUmgPGN0leoi6aenS+LUzcBcIQ81fSTd41ahVabRHTvDaS3ym1/6ayUpEdU6ipfPtn
- dCNwI3IAdK+rVsE3FbIoxizstOFSSrZeXc4wpie6oxuEknHDDeoOhWhm4oX1RwS2BWuA
- sn0kEMwLtQzbN62cwnKlFkWOd1GhhdPR88FCIMjh6ggoi/BZJEW+rpZiI1SOL/ZN29O1
- Lu5FnpN4MYCMLNgFZqwlh5wiZeMOo74mVa7d3tBm8QRulkyXujU7OkhJMbqOUfvqNhPa
- DDqMHwVBBkTJJ3i0pfF9BQ8uc9hwJn3ZcyBcFFxFGKoQBdoDdVjtjwfAMYCZAiB9cSF6
- ReNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWn3VEgP1Buo8E9pT3pAl3LhohM1vprfljZq9xxgQiqjJrDjIErTUCCONUMM3h6qSBMqCP0tF80Ra6l@nongnu.org
-X-Gm-Message-State: AOJu0YwW0lkNFabpYWehu3dNJlcPagrC9xjWvTvxca+fojGIsOTR2qFv
- Ofuop77HF506DwyCFkges+gEwzK8fAJsGc0N5v3sbOfSBmTyrl38dVRj6zAtC77XTfSIShr5h7F
- r5622mpsqbFehfHFnbVetG43h1mi3OZct0A9OVjaZcbG3ui/MK8SRqifE
-X-Gm-Gg: ASbGncvXbLV9/1oJM7oNP/Sqm0aCOGGledKwwoLptr/vY+mVAWZo3hY0QP16wkyd118
- t1XI1ovuO7UQj9cbopLhZs1qtHJ3oPBM60mOIefykMcWudinBIVZ5Bb+DjVnGZCrsDAHGkO4EIE
- aDDXRonI0PySh3lkNTq1uk/bSgoH3GohPwgiIyD7WvZY/QLy75+sdDva/pPiDhQQ07Fqr9X9elw
- O9XTPVkqZjcxudn+w8ZP9bE/6r6oUqZMBTRvndpswLi/ScZfGLX9ee4hKuIKDW2Lfn71GuE8J8d
- potsNjAhYkOjF7CMhf4rnPdiCTgzP64mLSLAlfyZ+vicNCvFHyYQudhlGfXhrmfzHTy3KHHnoSx
- PuSmu2g==
-X-Received: by 2002:a05:600c:c178:b0:45d:e54b:fa29 with SMTP id
- 5b1f17b1804b1-45f211c8cd3mr164711665e9.14.1758047992867; 
- Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHu8tz9+Z4aUrNZa1GjVloA2UnVgOMBvAkB4qqLcWIl+X1tWyquNVwhZISkG3jyWXGVzkkTTA==
-X-Received: by 2002:a05:600c:c178:b0:45d:e54b:fa29 with SMTP id
- 5b1f17b1804b1-45f211c8cd3mr164711535e9.14.1758047992482; 
- Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-113-218.pools.arcor-ip.net.
- [47.64.113.218]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46136daf992sm5547925e9.1.2025.09.16.11.39.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Sep 2025 11:39:52 -0700 (PDT)
-Message-ID: <855b4ed1-556e-41e7-84b2-9233e9823128@redhat.com>
-Date: Tue, 16 Sep 2025 20:39:50 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=vu+ZlQ0O/L0CT9Xua/VUpWbb26LRAV+bE/FxqWDyNfU=;
+ b=Ypv8b/8UIEGEa1yao0ZeT90QQfOJO8MEDepCKyUW3fou6gaxRa6gig8AM0CkQy/FH1Hecn
+ SMAdKkjMY0ivCJMtx6aoks7niVTF+JO8WIsijf2MfzCXpnijt+XHUMCJB7fN2u0CIkoUrw
+ b7pmAI2f/vuXdy/N343mwzRBkCUxr/s=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-P9m1zXzfOryXeKoS5lxE6Q-1; Tue,
+ 16 Sep 2025 15:08:38 -0400
+X-MC-Unique: P9m1zXzfOryXeKoS5lxE6Q-1
+X-Mimecast-MFC-AGG-ID: P9m1zXzfOryXeKoS5lxE6Q_1758049717
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77D1C180048E; Tue, 16 Sep 2025 19:08:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.124])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CF141800451; Tue, 16 Sep 2025 19:08:31 +0000 (UTC)
+Date: Tue, 16 Sep 2025 21:08:25 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Brian Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, stefanha@redhat.com
+Subject: Re: [PATCH 1/4] export/fuse: add opt to enable FUSE-over-io_uring
+Message-ID: <aMm1qc-JEa0FwkX3@redhat.com>
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-2-hibriansong@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/x86_64: Accept a few locked pages in
- test_memlock.py
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250915185509.340022-1-richard.henderson@linaro.org>
- <a6108491-9e0e-45df-9448-45de99e373a0@linaro.org>
- <8865c3ad-341a-446e-ba29-e4c9f6bab514@redhat.com>
- <8ebea8ef-42b9-4e8a-b0dd-9e0bb3bccdef@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <8ebea8ef-42b9-4e8a-b0dd-9e0bb3bccdef@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250830025025.3610-2-hibriansong@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -140,7 +67,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,43 +83,677 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/09/2025 18.55, Richard Henderson wrote:
-> On 9/15/25 22:18, Thomas Huth wrote:
->> On 16/09/2025 03.38, Richard Henderson wrote:
->>> On 9/15/25 11:55, Richard Henderson wrote:
->>>> Startup of libgcrypt locks a small pool of pages -- by default 16k.
->>>> Testing for zero locked pages is isn't correct, while testing for
->>>> 32k is a decent compromise.
->>>>
->>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>>> ---
->>>>   tests/functional/x86_64/test_memlock.py | 3 ++-
->>>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/ 
->>>> x86_64/ test_memlock.py
->>>> index 2b515ff979..81bce80b0c 100755
->>>> --- a/tests/functional/x86_64/test_memlock.py
->>>> +++ b/tests/functional/x86_64/test_memlock.py
->>>> @@ -37,7 +37,8 @@ def test_memlock_off(self):
->>>>           status = self.get_process_status_values(self.vm.get_pid())
->>>> -        self.assertTrue(status['VmLck'] == 0)
->>>> +        # libgcrypt may mlock a few pages
->>>> +        self.assertTrue(status['VmLck'] < 32)
->>>>       def test_memlock_on(self):
->>>>           self.common_vm_setup_with_memlock('on')
->>>
->>> I wonder if I should have chosen 64k, which might be one 64k page...
->>
->> It's a x86 test, so we should not have to worry about 64k pages there, I 
->> hope?
+Am 30.08.2025 um 04:50 hat Brian Song geschrieben:
+> This patch adds a new export option for storage-export-daemon to enable
+> FUSE-over-io_uring via the switch io-uring=on|off (disableby default).
+> It also implements the protocol handshake with the Linux kernel
+> during the FUSE-over-io_uring initialization phase.
 > 
-> Fair enough, though it does beg the question of why it's an x86-specific 
-> test.  Don't all host architectures support memory locking?
+> See: https://docs.kernel.org/filesystems/fuse-io-uring.html
+> 
+> The kernel documentation describes in detail how FUSE-over-io_uring
+> works. This patch implements the Initial SQE stage shown in thediagram:
+> it initializes one queue per IOThread, each currently supporting a
+> single submission queue entry (SQE). When the FUSE driver sends the
+> first FUSE request (FUSE_INIT), storage-export-daemon calls
+> fuse_uring_start() to complete initialization, ultimately submitting
+> the SQE with the FUSE_IO_URING_CMD_REGISTER command to confirm
+> successful initialization with the kernel.
+> 
+> We also added support for multiple IOThreads. The current Linux kernel
+> requires registering $(nproc) queues when setting up FUSE-over-io_uring
+> To let users customize the number of FUSE Queues (i.e., IOThreads),
+> we first create nproc Ring Queues as required by the kernel, then
+> distribute them in a round-robin manner to the FUSE Queues for
+> registration. In addition, to support multiple in-flight requests,
+> we configure each Ring Queue with FUSE_DEFAULT_RING_QUEUE_DEPTH
+> entries/requests.
+> 
+> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Brian Song <hibriansong@gmail.com>
+> ---
+>  block/export/fuse.c                  | 310 +++++++++++++++++++++++++--
+>  docs/tools/qemu-storage-daemon.rst   |  11 +-
+>  qapi/block-export.json               |   5 +-
+>  storage-daemon/qemu-storage-daemon.c |   1 +
+>  util/fdmon-io_uring.c                |   5 +-
+>  5 files changed, 309 insertions(+), 23 deletions(-)
+> 
+> diff --git a/block/export/fuse.c b/block/export/fuse.c
+> index c0ad4696ce..19bf9e5f74 100644
+> --- a/block/export/fuse.c
+> +++ b/block/export/fuse.c
+> @@ -48,6 +48,9 @@
+>  #include <linux/fs.h>
+>  #endif
+>  
+> +/* room needed in buffer to accommodate header */
+> +#define FUSE_BUFFER_HEADER_SIZE 0x1000
+> +
+>  /* Prevent overly long bounce buffer allocations */
+>  #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+>  /*
+> @@ -63,12 +66,59 @@
+>      (FUSE_MAX_WRITE_BYTES - FUSE_IN_PLACE_WRITE_BYTES)
+>  
+>  typedef struct FuseExport FuseExport;
+> +typedef struct FuseQueue FuseQueue;
+> +
+> +#ifdef CONFIG_LINUX_IO_URING
+> +#define FUSE_DEFAULT_RING_QUEUE_DEPTH 64
+> +#define FUSE_DEFAULT_MAX_PAGES_PER_REQ 32
 
-I guess you need at least a target machine that runs a firmware by default, 
-since this test does not download any assets...?
+Maybe it would be a little clearer if the next few types has URing in
+their name instead of just Ring.
 
-  Thomas
+> +typedef struct FuseRingQueue FuseRingQueue;
+> +typedef struct FuseRingEnt {
+> +    /* back pointer */
+> +    FuseRingQueue *rq;
+> +
+> +    /* commit id of a fuse request */
+> +    uint64_t req_commit_id;
+> +
+> +    /* fuse request header and payload */
+> +    struct fuse_uring_req_header req_header;
+> +    void *op_payload;
+> +    size_t req_payload_sz;
+> +
+> +    /* The vector passed to the kernel */
+> +    struct iovec iov[2];
+> +
+> +    CqeHandler fuse_cqe_handler;
+> +} FuseRingEnt;
+> +
+> +struct FuseRingQueue {
+
+It would be good to have a comment here that explains the difference
+between FuseQueue and FuseRingQueue.
+
+Is this a distinction that should remain in the long run or would we
+always have a 1:1 mapping between FuseQueue and FuseRingQueue once the
+pending kernel changes are merged that allow a number of uring queues
+different from the number of CPUs?
+
+> +    int rqid;
+> +
+> +    /* back pointer */
+> +    FuseQueue *q;
+> +    FuseRingEnt *ent;
+> +
+> +    /* List entry for ring_queues */
+> +    QLIST_ENTRY(FuseRingQueue) next;
+> +};
+> +
+> +/*
+> + * Round-robin distribution of ring queues across FUSE queues.
+> + * This structure manages the mapping between kernel ring queues and user
+> + * FUSE queues.
+> + */
+> +typedef struct FuseRingQueueManager {
+> +    FuseRingQueue *ring_queues;
+> +    int num_ring_queues;
+> +    int num_fuse_queues;
+> +} FuseRingQueueManager;
+
+This isn't a manager, it's just the set of queues the export uses.
+
+num_fuse_queues duplicates exp->num_queues, there is no reason for it to
+exist. All users also have access to the FuseExport itself.
+
+The other two fields can just be merged directly into FuseExport,
+preferably renamed to uring_queues and num_uring_queues.
+
+> +#endif
+>  
+>  /*
+>   * One FUSE "queue", representing one FUSE FD from which requests are fetched
+>   * and processed.  Each queue is tied to an AioContext.
+>   */
+> -typedef struct FuseQueue {
+> +struct FuseQueue {
+>      FuseExport *exp;
+>  
+>      AioContext *ctx;
+> @@ -109,15 +159,11 @@ typedef struct FuseQueue {
+>       * Free this buffer with qemu_vfree().
+>       */
+>      void *spillover_buf;
+> -} FuseQueue;
+>  
+> -/*
+> - * Verify that FuseQueue.request_buf plus the spill-over buffer together
+> - * are big enough to be accepted by the FUSE kernel driver.
+> - */
+> -QEMU_BUILD_BUG_ON(sizeof(((FuseQueue *)0)->request_buf) +
+> -                  FUSE_SPILLOVER_BUF_SIZE <
+> -                  FUSE_MIN_READ_BUFFER);
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    QLIST_HEAD(, FuseRingQueue) ring_queue_list;
+> +#endif
+> +};
+>  
+>  struct FuseExport {
+>      BlockExport common;
+> @@ -133,7 +179,7 @@ struct FuseExport {
+>       */
+>      bool halted;
+>  
+> -    int num_queues;
+> +    size_t num_queues;
+
+I'm not sure why this change is needed. If it is, can it be a separate
+patch before this one, with a commit message describing the reason?
+
+>      FuseQueue *queues;
+>      /*
+>       * True if this export should follow the generic export's AioContext.
+> @@ -149,6 +195,12 @@ struct FuseExport {
+>      /* Whether allow_other was used as a mount option or not */
+>      bool allow_other;
+>  
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    bool is_uring;
+> +    size_t ring_queue_depth;
+> +    FuseRingQueueManager *ring_queue_manager;
+> +#endif
+> +
+>      mode_t st_mode;
+>      uid_t st_uid;
+>      gid_t st_gid;
+> @@ -205,7 +257,7 @@ static void fuse_attach_handlers(FuseExport *exp)
+>          return;
+>      }
+>  
+> -    for (int i = 0; i < exp->num_queues; i++) {
+> +    for (size_t i = 0; i < exp->num_queues; i++) {
+>          aio_set_fd_handler(exp->queues[i].ctx, exp->queues[i].fuse_fd,
+>                             read_from_fuse_fd, NULL, NULL, NULL,
+>                             &exp->queues[i]);
+> @@ -257,6 +309,189 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+>      .drained_poll  = fuse_export_drained_poll,
+>  };
+>  
+> +#ifdef CONFIG_LINUX_IO_URING
+> +static void fuse_uring_sqe_set_req_data(struct fuse_uring_cmd_req *req,
+> +                    const unsigned int rqid,
+> +                    const unsigned int commit_id)
+
+Indentation is off here. There are two accepted styles for indentation
+after breaking a long line in QEMU (see docs/devel/style.rst):
+
+1. Indent the next line by exactly four spaces:
+
+    do_something(x, y,
+        z);
+
+2. Align the next line with the first character after the opening
+   parenthesis:
+
+    do_something(x, y,
+                 z);
+
+The second one is the preferred one. The first one is generally only
+used when the parenthesis is already too far right and we can't do much
+about it.
+
+> +{
+> +    req->qid = rqid;
+> +    req->commit_id = commit_id;
+> +    req->flags = 0;
+> +}
+> +
+> +static void fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseQueue *q,
+> +               __u32 cmd_op)
+
+Indentation.
+
+Another option here is to keep everything before the function name on a
+separate line, like this:
+
+static void
+fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseQueue *q, __u32 cmd_op)
+
+This would allow the second line to stay under 80 characters.
+
+> +{
+> +    sqe->opcode = IORING_OP_URING_CMD;
+> +
+> +    sqe->fd = q->fuse_fd;
+> +    sqe->rw_flags = 0;
+> +    sqe->ioprio = 0;
+> +    sqe->off = 0;
+> +
+> +    sqe->cmd_op = cmd_op;
+> +    sqe->__pad1 = 0;
+> +}
+> +
+> +static void fuse_uring_prep_sqe_register(struct io_uring_sqe *sqe, void *opaque)
+> +{
+> +    FuseRingEnt *ent = opaque;
+> +    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
+> +
+> +    fuse_uring_sqe_prepare(sqe, ent->rq->q, FUSE_IO_URING_CMD_REGISTER);
+> +
+> +    sqe->addr = (uint64_t)(ent->iov);
+> +    sqe->len = 2;
+> +
+> +    fuse_uring_sqe_set_req_data(req, ent->rq->rqid, 0);
+> +}
+> +
+> +static void fuse_uring_submit_register(void *opaque)
+> +{
+> +    FuseRingEnt *ent = opaque;
+> +    FuseExport *exp = ent->rq->q->exp;
+> +
+> +
+
+Extra empty line.
+
+> +    aio_add_sqe(fuse_uring_prep_sqe_register, ent, &(ent->fuse_cqe_handler));
+
+The parentheses around ent->fuse_cqe_handler are unnecessary.
+
+> +}
+> +
+> +/**
+> + * Distribute ring queues across FUSE queues using round-robin algorithm.
+
+Hm, if this function distributes (u)ring queues, then what is
+fuse_distribute_ring_queues() doing? Is the term overloaded with two
+meanings?
+
+> + * This ensures even distribution of kernel ring queues across user-specified
+> + * FUSE queues.
+> + */
+> +static
+> +FuseRingQueueManager *fuse_ring_queue_manager_create(int num_fuse_queues,
+> +                                                    size_t ring_queue_depth,
+> +                                                    size_t bufsize)
+
+The right style here would be something like:
+
+static FuseRingQueueManager *
+fuse_ring_queue_manager_create(int num_fuse_queues,
+                               size_t ring_queue_depth,
+                               size_t bufsize)
+
+Given that I said that there is no reason to call the set of all queues
+a manager, or to even have it separate from FuseExport, this probably
+becomes fuse_uring_setup_queues() or something.
+
+> +{
+> +    int num_ring_queues = get_nprocs();
+
+This could use a comment saying that this is a kernel requirement at the
+moment.
+
+> +    FuseRingQueueManager *manager = g_new(FuseRingQueueManager, 1);
+> +
+> +    if (!manager) {
+> +        return NULL;
+> +    }
+
+g_new() never returns NULL, it aborts on error instead, so no reason to
+have a NULL check here.
+
+> +
+> +    manager->ring_queues = g_new(FuseRingQueue, num_ring_queues);
+> +    manager->num_ring_queues = num_ring_queues;
+> +    manager->num_fuse_queues = num_fuse_queues;
+> +
+> +    if (!manager->ring_queues) {
+> +        g_free(manager);
+> +        return NULL;
+> +    }
+
+This check is unnecessary for the same reason.
+
+> +
+> +    for (int i = 0; i < num_ring_queues; i++) {
+> +        FuseRingQueue *rq = &manager->ring_queues[i];
+> +        rq->rqid = i;
+> +        rq->ent = g_new(FuseRingEnt, ring_queue_depth);
+> +
+> +        if (!rq->ent) {
+> +            for (int j = 0; j < i; j++) {
+> +                g_free(manager->ring_queues[j].ent);
+> +            }
+> +            g_free(manager->ring_queues);
+> +            g_free(manager);
+> +            return NULL;
+> +        }
+
+This one, too.
+
+> +
+> +        for (size_t j = 0; j < ring_queue_depth; j++) {
+> +            FuseRingEnt *ent = &rq->ent[j];
+> +            ent->rq = rq;
+> +            ent->req_payload_sz = bufsize - FUSE_BUFFER_HEADER_SIZE;
+> +            ent->op_payload = g_malloc0(ent->req_payload_sz);
+> +
+> +            if (!ent->op_payload) {
+> +                for (size_t k = 0; k < j; k++) {
+> +                    g_free(rq->ent[k].op_payload);
+> +                }
+> +                g_free(rq->ent);
+> +                for (int k = 0; k < i; k++) {
+> +                    g_free(manager->ring_queues[k].ent);
+> +                }
+> +                g_free(manager->ring_queues);
+> +                g_free(manager);
+> +                return NULL;
+> +            }
+
+And this one.
+
+Removing all of them will make the function a lot more readable.
+
+> +
+> +            ent->iov[0] = (struct iovec) {
+> +                &(ent->req_header),
+
+Unnecessary parentheses.
+
+> +                sizeof(struct fuse_uring_req_header)
+> +            };
+> +            ent->iov[1] = (struct iovec) {
+> +                ent->op_payload,
+> +                ent->req_payload_sz
+> +            };
+> +
+> +            ent->fuse_cqe_handler.cb = fuse_uring_cqe_handler;
+> +        }
+> +    }
+> +
+> +    return manager;
+> +}
+> +
+> +static
+> +void fuse_distribute_ring_queues(FuseExport *exp, FuseRingQueueManager *manager)
+> +{
+> +    int queue_index = 0;
+> +
+> +    for (int i = 0; i < manager->num_ring_queues; i++) {
+> +        FuseRingQueue *rq = &manager->ring_queues[i];
+> +
+> +        rq->q = &exp->queues[queue_index];
+> +        QLIST_INSERT_HEAD(&(rq->q->ring_queue_list), rq, next);
+> +
+> +        queue_index = (queue_index + 1) % manager->num_fuse_queues;
+> +    }
+> +}
+
+Ok, no overloaded meaning of distributing queues, but this function
+should probably be merged with the one above. It's part of setting up
+the queues.
+
+You don't need a separate queue_index counter, you can just directly use
+exp->queues[i % manager->num_fuse_queues].
+
+> +static
+> +void fuse_schedule_ring_queue_registrations(FuseExport *exp,
+> +                                            FuseRingQueueManager *manager)
+
+Again the formatting. If you split the line before the function name, it
+should be "static void" on the first line.
+
+> +{
+> +    for (int i = 0; i < manager->num_fuse_queues; i++) {
+> +        FuseQueue *q = &exp->queues[i];
+> +        FuseRingQueue *rq;
+> +
+> +        QLIST_FOREACH(rq, &q->ring_queue_list, next) {
+> +            for (int j = 0; j < exp->ring_queue_depth; j++) {
+> +                aio_bh_schedule_oneshot(q->ctx, fuse_uring_submit_register,
+> +                                        &(rq->ent[j]));
+> +            }
+> +        }
+> +    }
+> +}
+
+Why one BH per queue entry? This adds up quickly. All entries of the
+same queue need to be processed in the same AioContext, so wouldn't it
+make more sense to have a BH per (FUSE) queue and handle all of its
+uring queues and their entries in a single BH?
+
+> +static void fuse_uring_start(FuseExport *exp, struct fuse_init_out *out)
+> +{
+> +    /*
+> +     * Since we didn't enable the FUSE_MAX_PAGES feature, the value of
+> +     * fc->max_pages should be FUSE_DEFAULT_MAX_PAGES_PER_REQ, which is set by
+> +     * the kernel by default. Also, max_write should not exceed
+> +     * FUSE_DEFAULT_MAX_PAGES_PER_REQ * PAGE_SIZE.
+> +     */
+> +    size_t bufsize = out->max_write + FUSE_BUFFER_HEADER_SIZE;
+> +
+> +    if (!(out->flags & FUSE_MAX_PAGES)) {
+> +        bufsize = FUSE_DEFAULT_MAX_PAGES_PER_REQ * qemu_real_host_page_size()
+> +                         + FUSE_BUFFER_HEADER_SIZE;
+> +    }
+> +
+> +    exp->ring_queue_manager = fuse_ring_queue_manager_create(
+> +        exp->num_queues, exp->ring_queue_depth, bufsize);
+> +
+> +    if (!exp->ring_queue_manager) {
+> +        error_report("Failed to create ring queue manager");
+> +        return;
+> +    }
+> +
+> +    /* Distribute ring queues across FUSE queues using round-robin */
+> +    fuse_distribute_ring_queues(exp, exp->ring_queue_manager);
+> +
+> +    fuse_schedule_ring_queue_registrations(exp, exp->ring_queue_manager);
+> +}
+> +#endif
+> +
+>  static int fuse_export_create(BlockExport *blk_exp,
+>                                BlockExportOptions *blk_exp_args,
+>                                AioContext *const *multithread,
+> @@ -270,6 +505,11 @@ static int fuse_export_create(BlockExport *blk_exp,
+>  
+>      assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
+>  
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    exp->is_uring = args->io_uring;
+> +    exp->ring_queue_depth = FUSE_DEFAULT_RING_QUEUE_DEPTH;
+> +#endif
+> +
+>      if (multithread) {
+>          /* Guaranteed by common export code */
+>          assert(mt_count >= 1);
+> @@ -283,6 +523,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+>                  .exp = exp,
+>                  .ctx = multithread[i],
+>                  .fuse_fd = -1,
+> +#ifdef CONFIG_LINUX_IO_URING
+> +                .ring_queue_list =
+> +                    QLIST_HEAD_INITIALIZER(exp->queues[i].ring_queue_list),
+> +#endif
+>              };
+>          }
+>      } else {
+> @@ -296,6 +540,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+>              .exp = exp,
+>              .ctx = exp->common.ctx,
+>              .fuse_fd = -1,
+> +#ifdef CONFIG_LINUX_IO_URING
+> +            .ring_queue_list =
+> +                QLIST_HEAD_INITIALIZER(exp->queues[0].ring_queue_list),
+> +#endif
+>          };
+>      }
+>  
+> @@ -685,17 +933,39 @@ static bool is_regular_file(const char *path, Error **errp)
+>   */
+>  static ssize_t coroutine_fn
+>  fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+> -             uint32_t max_readahead, uint32_t flags)
+> +             uint32_t max_readahead, const struct fuse_init_in *in)
+>  {
+> -    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
+> +    uint64_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO
+> +                                     | FUSE_INIT_EXT;
+> +    uint64_t outargflags = 0;
+> +    uint64_t inargflags = in->flags;
+> +
+> +    ssize_t ret = 0;
+> +
+> +    if (inargflags & FUSE_INIT_EXT) {
+> +        inargflags = inargflags | (uint64_t) in->flags2 << 32;
+> +    }
+> +
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    if (exp->is_uring) {
+> +        if (inargflags & FUSE_OVER_IO_URING) {
+> +            supported_flags |= FUSE_OVER_IO_URING;
+> +        } else {
+> +            exp->is_uring = false;
+> +            ret = -ENODEV;
+
+Add a 'goto out' here...
+
+> +        }
+> +    }
+> +#endif
+> +
+> +    outargflags = inargflags & supported_flags;
+>  
+>      *out = (struct fuse_init_out) {
+>          .major = FUSE_KERNEL_VERSION,
+>          .minor = FUSE_KERNEL_MINOR_VERSION,
+>          .max_readahead = max_readahead,
+>          .max_write = FUSE_MAX_WRITE_BYTES,
+> -        .flags = flags & supported_flags,
+> -        .flags2 = 0,
+> +        .flags = outargflags,
+> +        .flags2 = outargflags >> 32,
+>  
+>          /* libfuse maximum: 2^16 - 1 */
+>          .max_background = UINT16_MAX,
+> @@ -717,7 +987,7 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+>          .map_alignment = 0,
+>      };
+> -    return sizeof(*out);
+> +    return ret < 0 ? ret : sizeof(*out);
+
+...and make this:
+
+    ret = sizeof(*out);
+out:
+    return ret;
+
+>  }
+>  
+>  /**
+> @@ -1506,6 +1776,14 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+>          fuse_write_buf_response(q->fuse_fd, req_id, out_hdr,
+>                                  out_data_buffer, ret);
+>          qemu_vfree(out_data_buffer);
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    /* Handle FUSE-over-io_uring initialization */
+> +    if (unlikely(opcode == FUSE_INIT && exp->is_uring)) {
+> +        struct fuse_init_out *out =
+> +            (struct fuse_init_out *)FUSE_OUT_OP_STRUCT(out_buf);
+> +        fuse_uring_start(exp, out);
+> +    }
+> +#endif
+
+A level of indentation was lost here.
+
+>      } else {
+>          fuse_write_response(q->fuse_fd, req_id, out_hdr,
+>                              ret < 0 ? ret : 0,
+> diff --git a/docs/tools/qemu-storage-daemon.rst b/docs/tools/qemu-storage-daemon.rst
+> index 35ab2d7807..c5076101e0 100644
+> --- a/docs/tools/qemu-storage-daemon.rst
+> +++ b/docs/tools/qemu-storage-daemon.rst
+> @@ -78,7 +78,7 @@ Standard options:
+>  .. option:: --export [type=]nbd,id=<id>,node-name=<node-name>[,name=<export-name>][,writable=on|off][,bitmap=<name>]
+>    --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=unix,addr.path=<socket-path>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+>    --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=fd,addr.str=<fd>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+> -  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto]
+> +  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto][,io-uring=on|off]
+>    --export [type=]vduse-blk,id=<id>,node-name=<node-name>,name=<vduse-name>[,writable=on|off][,num-queues=<num-queues>][,queue-size=<queue-size>][,logical-block-size=<block-size>][,serial=<serial-number>]
+>  
+>    is a block export definition. ``node-name`` is the block node that should be
+> @@ -111,10 +111,11 @@ Standard options:
+>    that enabling this option as a non-root user requires enabling the
+>    user_allow_other option in the global fuse.conf configuration file.  Setting
+>    ``allow-other`` to auto (the default) will try enabling this option, and on
+> -  error fall back to disabling it.
+> -
+> -  The ``vduse-blk`` export type takes a ``name`` (must be unique across the host)
+> -  to create the VDUSE device.
+> +  error fall back to disabling it. Once ``io-uring`` is enabled (off by default),
+> +  the FUSE-over-io_uring-related settings will be initialized to bypass the
+> +  traditional /dev/fuse communication mechanism and instead use io_uring to
+> +  handle FUSE operations. The ``vduse-blk`` export type takes a ``name``
+> +  (must be unique across the host) to create the VDUSE device.
+>    ``num-queues`` sets the number of virtqueues (the default is 1).
+>    ``queue-size`` sets the virtqueue descriptor table size (the default is 256).
+>  
+> diff --git a/qapi/block-export.json b/qapi/block-export.json
+> index 9ae703ad01..37f2fc47e2 100644
+> --- a/qapi/block-export.json
+> +++ b/qapi/block-export.json
+> @@ -184,12 +184,15 @@
+>  #     mount the export with allow_other, and if that fails, try again
+>  #     without.  (since 6.1; default: auto)
+>  #
+> +# @io-uring: Use FUSE-over-io-uring.  (since 10.2; default: false)
+> +#
+>  # Since: 6.0
+>  ##
+>  { 'struct': 'BlockExportOptionsFuse',
+>    'data': { 'mountpoint': 'str',
+>              '*growable': 'bool',
+> -            '*allow-other': 'FuseExportAllowOther' },
+> +            '*allow-other': 'FuseExportAllowOther',
+> +            '*io-uring': 'bool' },
+>    'if': 'CONFIG_FUSE' }
+>  
+>  ##
+> diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+> index eb72561358..0cd4cd2b58 100644
+> --- a/storage-daemon/qemu-storage-daemon.c
+> +++ b/storage-daemon/qemu-storage-daemon.c
+> @@ -107,6 +107,7 @@ static void help(void)
+>  #ifdef CONFIG_FUSE
+>  "  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>\n"
+>  "           [,growable=on|off][,writable=on|off][,allow-other=on|off|auto]\n"
+> +"           [,io-uring=on|off]"
+>  "                         export the specified block node over FUSE\n"
+>  "\n"
+>  #endif /* CONFIG_FUSE */
+> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> index d2433d1d99..68d3fe8e01 100644
+> --- a/util/fdmon-io_uring.c
+> +++ b/util/fdmon-io_uring.c
+> @@ -452,10 +452,13 @@ static const FDMonOps fdmon_io_uring_ops = {
+>  void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+>  {
+>      int ret;
+> +    int flags;
+>  
+>      ctx->io_uring_fd_tag = NULL;
+> +    flags = IORING_SETUP_SQE128;
+>  
+> -    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+> +    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES,
+> +                            &ctx->fdmon_io_uring, flags);
+
+The indentation is off here.
+
+>      if (ret != 0) {
+>          error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+>          return;
+
+The change to fdmon-io_uring.c should be a separate patch. It's a
+prerequisite for, but not directly part of io_uring support in FUSE.
+
+Kevin
 
 
