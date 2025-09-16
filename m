@@ -4,53 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68A3CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CB9CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:47:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyV3l-0003IT-LB; Tue, 16 Sep 2025 08:45:26 -0400
+	id 1uyV5C-00052l-TI; Tue, 16 Sep 2025 08:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uyV3T-0003EO-Pt
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:10 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uyV3J-0002Jj-Bc
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:06 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxE9C9W8loyfMKAA--.23001S3;
- Tue, 16 Sep 2025 20:44:45 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxbMG4W8loS1uZAA--.42126S10;
- Tue, 16 Sep 2025 20:44:45 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH v8 08/11] hw/loongarch: Implement dintc set irq
-Date: Tue, 16 Sep 2025 20:21:06 +0800
-Message-Id: <20250916122109.749813-9-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250916122109.749813-1-gaosong@loongson.cn>
-References: <20250916122109.749813-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyV4z-0004yv-Jk
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyV4w-0002iB-O5
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758026794;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aG4W3mmDglu4lEoQcUF+7rzQ4DSjx/M0FEtfZHT5Tcg=;
+ b=VcrFRUS6VLzRDcPMAczDyCQdLfJ0wA5nTSrBGcVAHpIb9iggvRqQeYhhI3vINubvWgvQP6
+ h/MbwFd4dCT1aQ4QWco2NEjCw1rzmo1T7CCuYCvwwnbNN8HaMaHSZPqvdml90zvfLbRVYB
+ a1KlMViJnOH3N7i/BbeWvOLw2+oarLU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-Hgj-_z-kOoaqxwHRQ_RUwQ-1; Tue,
+ 16 Sep 2025 08:46:33 -0400
+X-MC-Unique: Hgj-_z-kOoaqxwHRQ_RUwQ-1
+X-Mimecast-MFC-AGG-ID: Hgj-_z-kOoaqxwHRQ_RUwQ_1758026791
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D5F519560B4; Tue, 16 Sep 2025 12:46:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E911180044F; Tue, 16 Sep 2025 12:46:30 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 05C1F21E6A27; Tue, 16 Sep 2025 14:46:28 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Naveen N Rao <naveen@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Sean Christopherson
+ <seanjc@google.com>,  qemu-devel <qemu-devel@nongnu.org>,
+ kvm@vger.kernel.org,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ Nikunj A Dadhania <nikunj@amd.com>,  Tom Lendacky
+ <thomas.lendacky@amd.com>,  Michael Roth <michael.roth@amd.com>,  Neeraj
+ Upadhyay <neeraj.upadhyay@amd.com>,  Roy Hopkins
+ <roy.hopkins@randomman.co.uk>
+Subject: Re: [RFC PATCH 3/7] target/i386: SEV: Add support for enabling
+ debug-swap SEV feature
+In-Reply-To: <m5fnfafkzxqamg4iyc6xjun7jlxulcuufgugtrweap6myvmgov@5cmxu5n3pl2p>
+ (Naveen N. Rao's message of "Mon, 15 Sep 2025 19:55:02 +0530")
+References: <cover.1757589490.git.naveen@kernel.org>
+ <0a77cf472bc36fee7c1be78fc7d6d514d22bca9a.1757589490.git.naveen@kernel.org>
+ <87jz239at0.fsf@pond.sub.org>
+ <m5fnfafkzxqamg4iyc6xjun7jlxulcuufgugtrweap6myvmgov@5cmxu5n3pl2p>
+Date: Tue, 16 Sep 2025 14:46:27 +0200
+Message-ID: <87plbqo998.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxbMG4W8loS1uZAA--.42126S10
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,70 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement dintc set irq and update CSR_MSGIS.
+Naveen N Rao <naveen@kernel.org> writes:
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_dintc.c | 32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+> Hi Markus,
+>
+> On Fri, Sep 12, 2025 at 01:20:43PM +0200, Markus Armbruster wrote:
+>> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
+>> 
+>> > Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+>> > SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+>> > objects. Though the boolean property is available for plain SEV guests,
+>> > check_sev_features() will reject setting this for plain SEV guests.
+>> 
+>> Let's see whether I understand...
+>> 
+>> It's a property of sev-guest and sev-snp-guest objects.  These are the
+>> "SEV guest objects".
+>> 
+>> I guess a sev-snp-guest object implies it's a SEV-SNP guest, and setting
+>> @debug-swap on such an object just works.
+>> 
+>> With a sev-guest object, it's either a "plain SEV guest" or a "SEV-ES"
+>> guest.
+>> 
+>> If it's the latter, setting @debug-swap just works.
+>> 
+>> If it's the former, and you set @debug-swap to true, then KVM
+>> accelerator initialization will fail later on.  This might trigger
+>> fallback to TCG.
+>> 
+>> Am I confused?
+>
+> You're spot on, except that in the last case above (plain old SEV 
+> guest), qemu throws an error:
+> 	qemu-system-x86_64: check_sev_features: SEV features require either SEV-ES or SEV-SNP to be enabled
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index 598c666ec6..08e70a0a0a 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -16,6 +16,14 @@
- #include "migration/vmstate.h"
- #include "trace.h"
- #include "hw/qdev-properties.h"
-+#include "target/loongarch/cpu.h"
-+#include "qemu/error-report.h"
-+#include "system/hw_accel.h"
-+
-+/* msg addr field */
-+FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-+FIELD(MSG_ADDR, CPU_NUM, 12, 8)
-+FIELD(MSG_ADDR, FIX, 28, 12)
- 
- static uint64_t loongarch_dintc_mem_read(void *opaque,
-                                         hwaddr addr, unsigned size)
-@@ -23,13 +31,33 @@ static uint64_t loongarch_dintc_mem_read(void *opaque,
-     return 0;
- }
- 
-+static void do_set_vcpu_dintc_irq(CPUState *cs, run_on_cpu_data data)
-+{
-+    int irq = data.host_int;
-+    CPULoongArchState *env;
-+
-+    env = &LOONGARCH_CPU(cs)->env;
-+    cpu_synchronize_state(cs);
-+    set_bit(irq, &env->CSR_MSGIS[0]);
-+}
-+
- static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-                                      uint64_t val, unsigned size)
- {
--    return;
-+    int irq_num, cpu_num = 0;
-+    LoongArchDINTCState *s = LOONGARCH_DINTC(opaque);
-+    uint64_t msg_addr = addr + VIRT_DINTC_BASE;
-+    CPUState *cs;
-+
-+    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-+    cs = cpu_by_arch_id(cpu_num);
-+    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
-+
-+    async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
-+                         RUN_ON_CPU_HOST_INT(irq_num));
-+    qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
- }
- 
--
- static const MemoryRegionOps loongarch_dintc_ops = {
-     .read = loongarch_dintc_mem_read,
-     .write = loongarch_dintc_mem_write,
--- 
-2.41.0
+Okay.
+
+Can you (or anyone) explain to me why SEV-SNP gets its own object type,
+but SEV-ES does not?
+
+[...]
 
 
