@@ -4,90 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34447CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 11:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF85DCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 11:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyU49-0008Iu-GI; Tue, 16 Sep 2025 07:41:45 -0400
+	id 1uyU5E-0000ZK-HC; Tue, 16 Sep 2025 07:42:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyU46-0008I3-D0
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 07:41:43 -0400
-Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1uyU56-0000U3-Fo
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 07:42:45 -0400
+Received: from sg-1-12.ptr.blmpb.com ([118.26.132.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyU43-0003N5-4D
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 07:41:42 -0400
-Received: by mail-yb1-xb29.google.com with SMTP id
- 3f1490d57ef6-e951dfcbc5bso5010575276.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 04:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758022896; x=1758627696; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r1vRkHG3XPxQYR5TC9t05+Hh0Ojf9SICD0yuubEt+7k=;
- b=v8BtyWPDVFtqXLGbXqf5etzZk13jK+vpNh8J1dI4nGS32JvU0mQvPpNYAu63D39EcA
- SlnT825vPGqyi6bJYXeaE3Yt6r350aMCIXSFIcbMl98SlVqqC1JZMb7S4ljRCWdRB78P
- zyFG1yc2fQZbVFpdQZX/CEfoVruOK1vrbpmrqRaellECb2n7rf+JkTc/3yTccY+BbaR5
- KOSV2ZwmK+te2V/ttK93OyRCkzEWikgJFFrnbwOlVGKDOGeGYPyBLoPrtqNvoRVpaCx0
- /rE5k3f8FLbN8wFRWv4+9l7dabYilySJCix2RF/Qlye8pjC7RYfzL8/KSsgXHjZhHo5j
- 1tDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758022896; x=1758627696;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r1vRkHG3XPxQYR5TC9t05+Hh0Ojf9SICD0yuubEt+7k=;
- b=hfw0d3KUUzyip0sxfTpArN1FrpaocqtVDXeFRVJET/oCFaTQrboPFXUCEt8+5p4MEV
- Co9rhlvkCbhhGNCOJ7FCjVbC7eltvSXGJIeSkfzbkZHwPH/VyA5a4Bz540C2eygo5bBK
- 1mQLB2zHxAMSdBnQ2WF3yrtGO8xLkSV4q5JkT6K/S63tXtrCrEm1ueprYu7lhLDH5WX0
- 2Q+Z0RGWPtEzbr6UJ1tr2ERZbsFiCo9P0y+Ff0EVn1zwxkKNvA3CxaxrGFNbxxNXeqq7
- Z68aVGiHK2RuSCuh3Go85gKmLVsm39OuQRo9IfrFd1oIpWTyVZNcWD6kVVcxqhsEoPV2
- 8qyg==
-X-Gm-Message-State: AOJu0YxMZg1pSBAP+1iu2kDN2Hhg+uwQZAy4fzUFSdz0IB9p+MLlbpdN
- v+dyuSxw+Ln3UDM975FoeklMn9ZOpqrtin/dXvWsSjdcC70a4MjxIajgaBjHSrgI2ax46fCZR7F
- CBGHUNuASylvpYufV8skCOhr6t9eXbaWo1SzqZbJzqA==
-X-Gm-Gg: ASbGnct5V7GtQCipifWrhCISnwBhuxsGtsgpSgHP26e6mk7Wa68rn7+oQpqER0uuGCq
- ojPEB6SJH28kgHbmO8b/UlXc2pY/Te8Qollmn6ov3lPTiiv1Z5RLYP8NgSmLpxYtsqlaIRDdMKt
- kasqKHn4QsnjyFb0dsPhDdGipFX4VVyw6M27Jo9XMdjhx6ipmlw2k4fWbzo0bYdjBidICBKCAy4
- bTVds7i
-X-Google-Smtp-Source: AGHT+IFkijY+U0whVyTBmw6irnpS1KNJtzTmIXCWTH5ZkrPg50cqCtb5XjiXA44OTS6b7ANd3vR5WUzcErFLasZXrLo=
-X-Received: by 2002:a53:b987:0:b0:633:a090:c0a8 with SMTP id
- 956f58d0204a3-633a090c493mr1727968d50.22.1758022896042; Tue, 16 Sep 2025
- 04:41:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250225163031.1409078-1-kraxel@redhat.com>
- <20250225163031.1409078-25-kraxel@redhat.com>
-In-Reply-To: <20250225163031.1409078-25-kraxel@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Sep 2025 12:41:24 +0100
-X-Gm-Features: Ac12FXwhFnCrg2PfmE6Sm48wCtS0lCqDCZzT4EjB2TI9Uezn-yNTkxm76WjNCsM
-Message-ID: <CAFEAcA_MUnTbQNiCLv_HjucNZxC3NyS_0_1VQBcz5RRdtqoS9Q@mail.gmail.com>
-Subject: Re: [PATCH v5 24/24] docs: add uefi variable service documentation
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-arm@nongnu.org, Ard Biesheuvel <ardb@kernel.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, graf@amazon.com, 
- Eric Blake <eblake@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1uyU4t-0003PK-2l
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 07:42:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1758022927;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=zAIkPCtH5/gSXDqa9mtSDLXkEaENTX70VnPZtF+PJjQ=;
+ b=Hv/ezAbHkwR6Te0IelU8DhmdPWKybkyZ7VNOWu8NCeSc/fwqHUHj2BgrbciZ3cwn0I+VAl
+ fEPYLuYgQRDDL1zfavexbrDMXGpJsz2cyEywULdExtUZkt3k+oaTwC763B+mqWjH3o2TlS
+ f19u1ZVAo4Nkm/FtiH2YnPKW6F6QXqLK08Gytevw5TBsRBQ4WU3+AXbEVWoLZNzZ3kiMjV
+ wMDePorETHc5+/WGaC0pJd8Fi1nRYgosCd8YfnzcvWQ0+he1SNlrcagUCYmO3fI9TMVdKU
+ gmCMSWalKFg71u21BkaBeOJNBucCIvapnvpkCN7ExFfBB1gSXvMzrG+byKIapw==
+Cc: <qemu-riscv@nongnu.org>, <zhiwei_liu@linux.alibaba.com>, 
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, 
+ <alistair.francis@wdc.com>, <palmer@dabbelt.com>
+Date: Tue, 16 Sep 2025 19:42:03 +0800
+Content-Language: en-US
+X-Original-From: BillXiang <xiangwencheng@lanxincomputing.com>
+Subject: Re: [PATCH] target/riscv/kvm: Sync vCPU mp_state for migration
+References: <20250916104843.1953-1-xiangwencheng@lanxincomputing.com>
+Received: from [127.0.0.1] ([222.128.9.250]) by smtp.feishu.cn with ESMTPS;
+ Tue, 16 Sep 2025 19:42:04 +0800
+X-Lms-Return-Path: <lba+268c94d0d+2e9ccc+nongnu.org+xiangwencheng@lanxincomputing.com>
+To: <qemu-devel@nongnu.org>
+From: "BillXiang" <xiangwencheng@lanxincomputing.com>
+Message-Id: <5716dba7-eba3-4e25-8479-3b7218c66ea5@lanxincomputing.com>
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+User-Agent: Mozilla Thunderbird
+In-Reply-To: <20250916104843.1953-1-xiangwencheng@lanxincomputing.com>
+Content-Type: text/plain; charset=UTF-8
+Received-SPF: pass client-ip=118.26.132.12;
+ envelope-from=xiangwencheng@lanxincomputing.com; helo=sg-1-12.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +73,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Feb 2025 at 16:31, Gerd Hoffmann <kraxel@redhat.com> wrote:
->
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Hi all, sorry for bothering. I just noticed that
+Xie Bo <xb@ultrarisc.com> is already working on this.
+
+On 9/16/2025 6:48 PM, BillXiang wrote:
+> Fix secondary vCPUs(id > 0) stall after migration.
+> 
+> Signed-off-by: BillXiang <xiangwencheng@lanxincomputing.com>
 > ---
->  docs/devel/index-internals.rst |  1 +
->  docs/devel/uefi-vars.rst       | 68 ++++++++++++++++++++++++++++++++++
->  hw/uefi/LIMITATIONS.md         |  7 ++++
->  3 files changed, 76 insertions(+)
->  create mode 100644 docs/devel/uefi-vars.rst
->  create mode 100644 hw/uefi/LIMITATIONS.md
-
-> +The ``uefi-vars`` device implements the UEFI virtual device.  It comes
-> +in ``uefi-vars-x86`` and ``uefi-vars-sysbus`` flavours.
-
-Hi; a bug reporter points out that this documentation says
-the device name is uefi-vars-x86, but the code does
-
-#define TYPE_UEFI_VARS_X64       "uefi-vars-x64"
-
-https://gitlab.com/qemu-project/qemu/-/issues/3106
-
-I guess we need to update the docs?
-
-> +The advantage of the approach is that we do not need a special
-> +privilege level for the firmware to protect itself, i.e. it does not
-> +depend on SMM emulation on x64
-
-Our name for the 64-bit intel architecture is "x86_64"; we
-should use that consistently, not "x64". (Ideally we would
-also have been consistent in the device name, but it's been
-released now...)
-
-thanks
--- PMM
+>   target/riscv/cpu.h           |  3 +++
+>   target/riscv/kvm/kvm-cpu.c   | 34 ++++++++++++++++++++++++++--------
+>   target/riscv/kvm/kvm_riscv.h |  3 ++-
+>   target/riscv/machine.c       | 30 ++++++++++++++++++++++++++++++
+>   4 files changed, 61 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 4a862da615..4290229c56 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -20,6 +20,7 @@
+>   #ifndef RISCV_CPU_H
+>   #define RISCV_CPU_H
+>   
+> +#include <linux/kvm.h>
+>   #include "hw/core/cpu.h"
+>   #include "hw/registerfields.h"
+>   #include "hw/qdev-properties.h"
+> @@ -546,6 +547,8 @@ struct ArchCPU {
+>       RISCVCPUConfig cfg;
+>       RISCVSATPModes satp_modes;
+>   
+> +    struct kvm_mp_state mp_state;
+> +
+>       QEMUTimer *pmu_timer;
+>       /* A bitmask of Available programmable counters */
+>       uint32_t pmu_avail_ctrs;
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 5c19062c19..f0a97293f9 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1348,17 +1348,16 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+>           return ret;
+>       }
+>   
+> +    RISCVCPU *cpu = RISCV_CPU(cs);
+> +    ret = kvm_riscv_sync_mpstate_to_qemu(cpu);
+> +
+>       return ret;
+>   }
+>   
+> -int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+> +int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu)
+>   {
+>       if (cap_has_mp_state) {
+> -        struct kvm_mp_state mp_state = {
+> -            .mp_state = state
+> -        };
+> -
+> -        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
+> +        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &cpu->mp_state);
+>           if (ret) {
+>               fprintf(stderr, "%s: failed to sync MP_STATE %d/%s\n",
+>                       __func__, ret, strerror(-ret));
+> @@ -1369,6 +1368,17 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+>       return 0;
+>   }
+>   
+> +int kvm_riscv_sync_mpstate_to_qemu(RISCVCPU *cpu)
+> +{
+> +    if (cap_has_mp_state) {
+> +        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MP_STATE, &cpu->mp_state);
+> +        if (ret) {
+> +            return ret;
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
+>   int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+>   {
+>       int ret = 0;
+> @@ -1396,13 +1406,21 @@ int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+>       if (KVM_PUT_RESET_STATE == level) {
+>           RISCVCPU *cpu = RISCV_CPU(cs);
+>           if (cs->cpu_index == 0) {
+> -            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
+> +            cpu->mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
+> +            ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
+>           } else {
+> -            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
+> +            cpu->mp_state.mp_state = KVM_MP_STATE_STOPPED;
+> +            ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
+>           }
+>           if (ret) {
+>               return ret;
+>           }
+> +    } else if (KVM_PUT_FULL_STATE == level) {
+> +        RISCVCPU *cpu = RISCV_CPU(cs);
+> +        ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
+> +        if (ret) {
+> +            return ret;
+> +        }
+>       }
+>   
+>       return ret;
+> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+> index b2bcd1041f..770f58bf0a 100644
+> --- a/target/riscv/kvm/kvm_riscv.h
+> +++ b/target/riscv/kvm/kvm_riscv.h
+> @@ -28,7 +28,8 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+>                             uint64_t aplic_base, uint64_t imsic_base,
+>                             uint64_t guest_num);
+>   void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+> -int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
+> +int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu);
+> +int kvm_riscv_sync_mpstate_to_qemu(RISCVCPU *cpu);
+>   void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+>   uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
+>   
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 1600ec44f0..178ae6a3a0 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -251,6 +251,28 @@ static const VMStateDescription vmstate_debug = {
+>       }
+>   };
+>   
+> +static int get_mp_state(QEMUFile *f, void *opaque, size_t size,
+> +                    const VMStateField *field)
+> +{
+> +    RISCVCPU *cpu = opaque;
+> +    cpu->mp_state.mp_state = qemu_get_be32(f);
+> +    return 0;
+> +}
+> +
+> +static int put_mp_state(QEMUFile *f, void *opaque, size_t size,
+> +                    const VMStateField *field, JSONWriter *vmdesc)
+> +{
+> +    RISCVCPU *cpu = opaque;
+> +    qemu_put_be32(f, cpu->mp_state.mp_state);
+> +    return 0;
+> +}
+> +
+> +static const VMStateInfo vmstate_mp_state = {
+> +    .name = "mp_state",
+> +    .get = get_mp_state,
+> +    .put = put_mp_state,
+> +};
+> +
+>   static int riscv_cpu_post_load(void *opaque, int version_id)
+>   {
+>       RISCVCPU *cpu = opaque;
+> @@ -457,6 +479,14 @@ const VMStateDescription vmstate_riscv_cpu = {
+>           VMSTATE_UINTTL(env.sscratch, RISCVCPU),
+>           VMSTATE_UINTTL(env.mscratch, RISCVCPU),
+>           VMSTATE_UINT64(env.stimecmp, RISCVCPU),
+> +        {
+> +            .name = "mp_state",
+> +            .version_id = 0,
+> +            .size = sizeof(bool),
+> +            .info = &vmstate_mp_state,
+> +            .flags = VMS_SINGLE,
+> +            .offset = 0,
+> +        },
+>   
+>           VMSTATE_END_OF_LIST()
+>       },
 
