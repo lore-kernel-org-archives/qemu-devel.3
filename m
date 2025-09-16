@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6C4CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE0CCAC599
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyWos-000651-9t; Tue, 16 Sep 2025 10:38:10 -0400
+	id 1uyX3l-0002bk-ED; Tue, 16 Sep 2025 10:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyWoq-00063h-5h
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:38:08 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyWoo-0002Oi-5o
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:38:07 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-71d60504788so39673287b3.2
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758033483; x=1758638283; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qX0GuAamKBTfw0frA2HFTZ5/tUgwMIal8NRgrJpGVa8=;
- b=YCW6xiWmdeemPgvob2fuQeYP5FiPq1dZfLXX9YDWGD+CmDEwJvIjef0TiMx4li7O4m
- MHCZZPdpt+2JVwxCyC6+OfYfGAw0o6IacxPEO06oTaOU1mCx5R/Jv4JhQMKz4G8sQayt
- LblG1UD+WXsbrpNNwEmlN5XnFvCWCbHQ0JKm2bWitAvE7zDNAxV6PJj3AmEOePw6harz
- 9n9KX4bRFrnJS/1MdznHoQlIlTgclf/djorV/zqcLFBIliNggBryJCexF4DRwXngsuKd
- hpTc1bE2jvwAMJrbyB4FjHSBtuiLE8AvMYNgPVO4HmlTy3YBIR7ipv1OKa/2MqVMHzMS
- 4a6g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyX3h-0002az-TZ
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:53:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyX3d-0004XE-Sg
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:53:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758034400;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iquDqYMJDVequs2yGGug36vnCjQzOwTxW6ZHlCaMBPw=;
+ b=gvbKeWZ3LD1b3tQI5sBtnmqZpkQ+y01PXQTuvQujYce4J9tc9qXt8SGHedmxwpgpZngaEu
+ YQkZt9D/F8ifk+nWf0lNv1Av4U6pMY0Asj6fDo+yGsqCtdL5K5AikFVTTgDa39CoOBbfT1
+ EKNfKxz/4aV4ZegG8ppZOvP9okF2pvc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-580-l9nzPLKtOSuwOcq6o22AOQ-1; Tue, 16 Sep 2025 10:53:18 -0400
+X-MC-Unique: l9nzPLKtOSuwOcq6o22AOQ-1
+X-Mimecast-MFC-AGG-ID: l9nzPLKtOSuwOcq6o22AOQ_1758034397
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3e997eb7232so1370051f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:53:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758033483; x=1758638283;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qX0GuAamKBTfw0frA2HFTZ5/tUgwMIal8NRgrJpGVa8=;
- b=UsKWaZkG+1NxVO3DN3adIorMnlJUq1USaHqzjMIWbVS3kXoSXGSm9Cy1mwg/lMFssd
- 07ZXu16xXO/hASwqrVjUsbph7ce3qm2U3R3uAqG3wSTTL0k1a6Q33Asjbqvo+IqdsenU
- 9R/grUz+Sdv4EJks6vBeC+D30j3KkA835qLMG+otVM/j+PdVNZmjTQ+d3pfq4vhruxkJ
- dsco0a99jWzJKHZsd31VfexxJ9n86PplXWoQBzaaBNLQfvgfFpGMv2Zwv2VQN31STbNv
- NDv419ECQSLPHhB34QNWVkngdbOOx2jATBb0Fo+Fo7geos3sYcN4JKFD+HWBuGIH8owq
- tCNQ==
-X-Gm-Message-State: AOJu0YzSXMY3iXnvAk6NuMz28SPBX3nK5dJkaupuG4EpVnMwzOlzNW3F
- p60xTmaR55GmZtBc7KBdP845WTKU0yJ8zCJoAIavgxAOFshqgN+ujWU6hfQu+DOTBII5UZe+w0H
- OBKjOxaD935CVAJrOJlby5z8qr96y1Ymt8JJNms+iS5iWyX+a5FUA
-X-Gm-Gg: ASbGncsd2psTJ61kKoRpiSIh+/Pe1/7ZRqhRSN94TEm9VV6lopBTD9kjvVycuu2yPCt
- DAG14MXSAQAtIRPsXZnDc9aMhxrb3KBAX8Bauv6T/Se734uDNkXwTTlOc2UnbjPbLpsuu3k4FIk
- qmNyavxrKXWxQAy4WlRNoNy2sf8ba/yw39VDYqnaEdtMSIBk6EMKl61t1aSq+Cvfl0VwQFes3ab
- aYA/A1Jc1RgEN3jmGQ=
-X-Google-Smtp-Source: AGHT+IGNNZs50oB77iHUmCEPCMZOwNHTR9xEy17OTSjLDn9zduGycbvuiPwUpl3truRDbi2XcztSyb4U2XU2urV5hJ8=
-X-Received: by 2002:a05:690c:304:b0:721:28ef:a9b0 with SMTP id
- 00721157ae682-730623e2afbmr125908077b3.9.1758033482421; Tue, 16 Sep 2025
- 07:38:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758034397; x=1758639197;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iquDqYMJDVequs2yGGug36vnCjQzOwTxW6ZHlCaMBPw=;
+ b=Aza3zB8662chrmgBFoNEwLURdRQc/+fiPGExsJeBfRZ5hWTarG4PQPhVloSRB909f3
+ 1VnvyX94wyffYHYtFMoxbpzWlPpfQ/YS4/k+3q6MZeRXvkZXGqTNsp0P9HwiNBh1SzXZ
+ 8UacV/vTAZ3QRqqtw2c0SBYyxRPiFgH30C5G/mU6Xy8g5PxRMuzyrSPZ574g3sUqvRE4
+ VPcDgksGPLGutDQsI+C/qSo0EmnF482fGEYWLWASVDhoFcpROh8tD8etL2OnjKSNzkVr
+ 630uDOoE9fn5JxqrpPWmsqXP9/6RscPqomk/zMCw6V0uKmZEHl2Q/nmrgGPj80cEJdkQ
+ PIsA==
+X-Gm-Message-State: AOJu0YyUKG2rkAoZKHKpn0PJLbPNLcfhGhiAoT+EU9IytHop48ar6BrL
+ gMxCcY3tx5UnG5yTcQIuIoZKj5r5kpHXxB5Dpo8aKd3MbOO+CPXwcHIfRs5AL/CyBC3Td2lPiFw
+ 1d5Rlq3b+WYgltgnysZB1uinY1GUf8upl4Opo+2IHOzMBcicB/DC/s6BAOhfdG8M8F8dcbhBPal
+ o9/jc7qmyPqXchfkVTUY2Zc466YwSOKwI=
+X-Gm-Gg: ASbGnct6AHtogjPA022e0wVACqZYfSGYcA9n7pj5JsQqfDZsNhEdz3q4wygEYdhB+XU
+ SBozDZv4Mh/tpHTkMtj/CaUYcuGRmxxUeNR269l7Jke2p3EdmQRl2OysTqlUCM5JWLgjp7sgqVR
+ p4b35zdUqokatm+su9mS7aWyCj+lN6HwRJSnPXnGZqTTvTNqaFHOsrLDO31+SbprOWnG3/OT48m
+ QXc6bZlGcj+KXwBmKeoIGJC
+X-Received: by 2002:a05:6000:4014:b0:3eb:d906:e553 with SMTP id
+ ffacd0b85a97d-3ebd906e5eamr4987504f8f.55.1758034396640; 
+ Tue, 16 Sep 2025 07:53:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVBSJ7Onk8U6ksJej6NNxhfFuAedzN54HJvPfpAb+VMwv3x8AOZK6IDltl61c/lsbfNb4nIy4e3jdyxOAmXUQ=
+X-Received: by 2002:a05:6000:4014:b0:3eb:d906:e553 with SMTP id
+ ffacd0b85a97d-3ebd906e5eamr4987472f8f.55.1758034396112; Tue, 16 Sep 2025
+ 07:53:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250913080943.11710-1-pbonzini@redhat.com>
  <CAFEAcA8nFU1fRFMQ_jLcDzKPoPKeV789L5iTgq-kqoa0zULmaQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA8nFU1fRFMQ_jLcDzKPoPKeV789L5iTgq-kqoa0zULmaQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Sep 2025 15:37:51 +0100
-X-Gm-Features: Ac12FXy0-HQu6hEqC2MSVEvI4rjLguf0vkfkzJ27q1YAPrXFqs5p9_y1UqjLjww
-Message-ID: <CAFEAcA_+6hXCO3ruA+P_pYVGjtdCA-Li27D13McTf17GX4S94g@mail.gmail.com>
+ <CAFEAcA_+6hXCO3ruA+P_pYVGjtdCA-Li27D13McTf17GX4S94g@mail.gmail.com>
+In-Reply-To: <CAFEAcA_+6hXCO3ruA+P_pYVGjtdCA-Li27D13McTf17GX4S94g@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 16 Sep 2025 16:53:03 +0200
+X-Gm-Features: AS18NWDtk54-71T0yfKnnU0_ZL7XWS23QnsrY03Vs8QA78qUoGc1bKIoAiXPIAA
+Message-ID: <CABgObfbxTszgA3v2MUs_mLz-0nDENijFhWWuEWWFwTTXN8V9+g@mail.gmail.com>
 Subject: Re: [PULL 00/61] CPU, Rust, x86 changes for 2025-09-13
-To: Paolo Bonzini <pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,38 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 13 Sept 2025 at 10:37, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Sat, 13 Sept 2025 at 09:12, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
-> >
-> >   Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> >
-> > for you to fetch changes up to 8733ddc08165d901eb2c87f364f814f58ab9fd19:
-> >
-> >   accel/kvm: Set guest_memfd_offset to non-zero value only when guest_memfd is valid (2025-09-13 07:52:55 +0200)
-> >
-> > ----------------------------------------------------------------
-> > * cpu-exec: more cleanups to CPU loop exits
-> > * python: bump bundled Meson to 1.9.0
-> > * rust: require Rust 1.83.0
->
-> I still have an unanswered question about moving our Rust
-> minimum version forwards which I'd like to get clarity
-> on before we commit to this, please.
+On Tue, Sep 16, 2025 at 4:38=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+> So if I understood the outcome of today's call correctly,
+> we should hold off on the 1.83.0 bump until that version
+> has landed in the relevant ubuntu LTS distros (work in
+> progress on their side), but after that it's available
+> in all our target distro versions and we can take it as
+> our minimum supported version ?
 
-So if I understood the outcome of today's call correctly,
-we should hold off on the 1.83.0 bump until that version
-has landed in the relevant ubuntu LTS distros (work in
-progress on their side), but after that it's available
-in all our target distro versions and we can take it as
-our minimum supported version ?
+The missing pieces before Rust can be enabled are:
+- tracing (posted, needs rebase)
+- CI (needs Meson bugfixes)
+- dtrace support (stap)
+- lock-free MMIO and required support for Migratable<Mutex<...>>
 
-thanks
--- PMM
+Since Rust 1.83 is a requirement for most of the changes that are in
+this pull request, holding off on it would basically mean that any
+further Rust changes have to be developed out of tree. Since the above
+list is not short, won't even be completed in 10.2 in all likelihood,
+and doesn't include other things that people may like to work on, I'd
+like this development to happen in tree.
+
+We do have to hold off on enabling Rust until 1.83 has landed in
+Ubuntu but, as I mentioned
+https://lore.kernel.org/qemu-devel/0c35eccb-890a-47d1-8c54-9945519f6164@red=
+hat.com/,
+it's really unlikely that this update will end up on the critical
+path. Work is already in progress at
+https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318.
+
+In the meantime, while Rust will be enabled progressively in more CI
+jobs, Ubuntu can remain the one which tests the Rust-disabled case.
+
+Paolo
+
 
