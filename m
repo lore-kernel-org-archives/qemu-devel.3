@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E20CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B29CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 08:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyQsI-0003oD-Qt; Tue, 16 Sep 2025 04:17:18 -0400
+	id 1uyQsU-0003tY-Jm; Tue, 16 Sep 2025 04:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyQsB-0003mD-RJ
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:17:15 -0400
+ id 1uyQsK-0003oQ-Jz
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:17:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyQs5-00043t-Np
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:17:11 -0400
+ id 1uyQsG-00045F-M9
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 04:17:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758010623;
+ s=mimecast20190719; t=1758010634;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p5QW9NyOyvY0GZ/gRCIFR/rRrcCDF1s6CCBqvdd5CZM=;
- b=ThC47MnBDArvTzuFQFaspr2Xvbf/jkERllrZsmvCdxLbyLZS53+tdqADbJblYf9/yNyoIR
- fmspOgd0gxcBz0ri4wHpyuVlE8nckC9fWen8halTH+WSfoKe+J2BaGRId/sbdALj9CP3vf
- 7G7Gn8BvG78R8P1Kg74LIAduy4j+6NI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=rda7XEQ3kq6g7pa3RFVVTTxi9DGLqiz9rOu/7eOSSWY=;
+ b=XjbIhNFGJrgJMgWLpfUaiNv5cEnp9V0FP4jfBBR1Iaz2sIRnBFSqz8WP3RuAlbDv35mScl
+ ud2FT/yNujzZQT7pgV7Ac/B3jbpm8LrHSQLza1nvJkLhgIR+uIaStggO/iHF2PmL6F8w7l
+ Fro0qPeHOaZDxdTl6DHoxzcRbhGAXhw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-KkTVLN2IOSCVFDFLhqpTFg-1; Tue,
- 16 Sep 2025 04:16:59 -0400
-X-MC-Unique: KkTVLN2IOSCVFDFLhqpTFg-1
-X-Mimecast-MFC-AGG-ID: KkTVLN2IOSCVFDFLhqpTFg_1758010618
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-ooV5XtoFMr6-Qj3ZwUl4xg-1; Tue,
+ 16 Sep 2025 04:17:11 -0400
+X-MC-Unique: ooV5XtoFMr6-Qj3ZwUl4xg-1
+X-Mimecast-MFC-AGG-ID: ooV5XtoFMr6-Qj3ZwUl4xg_1758010630
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C8E6195608E; Tue, 16 Sep 2025 08:16:58 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6165F1800577; Tue, 16 Sep 2025 08:17:10 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.153])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2FFA618003FC; Tue, 16 Sep 2025 08:16:54 +0000 (UTC)
+ id 311461800446; Tue, 16 Sep 2025 08:17:06 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
@@ -56,10 +56,9 @@ Cc: Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v5 4/8] tracetool: include SPDX-License-Identifier in
- generated files
-Date: Tue, 16 Sep 2025 09:16:34 +0100
-Message-ID: <20250916081638.764020-5-berrange@redhat.com>
+Subject: [PATCH v5 7/8] qapi: switch to use QEMU_TEST_REGENERATE env var
+Date: Tue, 16 Sep 2025 09:16:37 +0100
+Message-ID: <20250916081638.764020-8-berrange@redhat.com>
 In-Reply-To: <20250916081638.764020-1-berrange@redhat.com>
 References: <20250916081638.764020-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,123 +90,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While these files are auto-generated, a later commit will add
-reference output to git, so having SPDX-License-Identifier is
-desirable.
+The QAPI_TEST_UPDATE env var can be set when running the QAPI
+schema tests to regenerate the reference output. For consistent
+naming with the tracetool test, change the env var name to
+QEMU_TEST_REGENERATE.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Thomas Huth <thuth@redhat.com>
+The test is modified to provide a hint about use of the new
+env var and it is also added to the developer documentation.document its usage.
+
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/tracetool/format/c.py                | 1 +
- scripts/tracetool/format/d.py                | 3 ++-
- scripts/tracetool/format/h.py                | 1 +
- scripts/tracetool/format/log_stap.py         | 1 +
- scripts/tracetool/format/simpletrace_stap.py | 1 +
- scripts/tracetool/format/stap.py             | 1 +
- scripts/tracetool/format/ust_events_c.py     | 1 +
- scripts/tracetool/format/ust_events_h.py     | 1 +
- 8 files changed, 9 insertions(+), 1 deletion(-)
+ docs/devel/testing/main.rst    | 12 ++++++++++++
+ tests/qapi-schema/test-qapi.py |  7 +++++--
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
-index 7aa51cd41a..e473fb6c6e 100644
---- a/scripts/tracetool/format/c.py
-+++ b/scripts/tracetool/format/c.py
-@@ -22,6 +22,7 @@ def generate(events, backend, group):
-     header = "trace-" + group + ".h"
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index 11f05c0006..0662766b5c 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -178,6 +178,18 @@ parser (either fixing a bug or extending/modifying the syntax). To do this:
  
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '',
-         '#include "qemu/osdep.h"',
-         '#include "qemu/module.h"',
-diff --git a/scripts/tracetool/format/d.py b/scripts/tracetool/format/d.py
-index ebfb714200..a5e096e214 100644
---- a/scripts/tracetool/format/d.py
-+++ b/scripts/tracetool/format/d.py
-@@ -39,7 +39,8 @@ def generate(events, backend, group):
-     if not events and platform != "darwin":
-         return
+   ``qapi-schema += foo.json``
  
--    out('/* This file is autogenerated by tracetool, do not edit. */'
-+    out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '',
-         'provider qemu {')
++The reference output can be automatically updated to match the latest QAPI
++code generator by running the tests with the QEMU_TEST_REGENERATE environment
++variable set.
++
++.. code::
++
++   QEMU_TEST_REGENERATE=1 make check-qapi-schema
++
++The resulting changes must be reviewed by the author to ensure they match
++the intended results before adding the updated reference output to the
++same commit that alters the generator code.
++
+ .. _tracetool-tests:
  
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index ea126b07ea..a00ae475f7 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -19,6 +19,7 @@ def generate(events, backend, group):
-     header = "trace/control.h"
+ Tracetool tests
+diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
+index 4be930228c..cf7fb8a6df 100755
+--- a/tests/qapi-schema/test-qapi.py
++++ b/tests/qapi-schema/test-qapi.py
+@@ -165,7 +165,7 @@ def test_and_diff(test_name, dir_name, update):
+     if actual_out == expected_out and actual_err == expected_err:
+         return 0
  
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '',
-         '#ifndef TRACE_%s_GENERATED_TRACERS_H' % group.upper(),
-         '#define TRACE_%s_GENERATED_TRACERS_H' % group.upper(),
-diff --git a/scripts/tracetool/format/log_stap.py b/scripts/tracetool/format/log_stap.py
-index b49afababd..710d62bffe 100644
---- a/scripts/tracetool/format/log_stap.py
-+++ b/scripts/tracetool/format/log_stap.py
-@@ -88,6 +88,7 @@ def c_fmt_to_stap(fmt):
+-    print("%s %s" % (test_name, 'UPDATE' if update else 'FAIL'),
++    print("%s: %s" % (test_name, 'UPDATE' if update else 'FAIL'),
+           file=sys.stderr)
+     out_diff = difflib.unified_diff(expected_out, actual_out, outfp.name)
+     err_diff = difflib.unified_diff(expected_err, actual_err, errfp.name)
+@@ -173,6 +173,9 @@ def test_and_diff(test_name, dir_name, update):
+     sys.stdout.writelines(err_diff)
  
- def generate(events, backend, group):
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '')
+     if not update:
++        print(("\n%s: set QEMU_TEST_REGENERATE=1 to recreate reference output" +
++               "if the QAPI schema generator was intentionally changed") % test_name,
++              file=sys.stderr)
+         return 1
  
-     for event_id, e in enumerate(events):
-diff --git a/scripts/tracetool/format/simpletrace_stap.py b/scripts/tracetool/format/simpletrace_stap.py
-index 4f4633b4e6..72971133bf 100644
---- a/scripts/tracetool/format/simpletrace_stap.py
-+++ b/scripts/tracetool/format/simpletrace_stap.py
-@@ -22,6 +22,7 @@ def global_var_name(name):
- 
- def generate(events, backend, group):
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '')
- 
-     for event_id, e in enumerate(events):
-diff --git a/scripts/tracetool/format/stap.py b/scripts/tracetool/format/stap.py
-index a218b0445c..4d77fbc11a 100644
---- a/scripts/tracetool/format/stap.py
-+++ b/scripts/tracetool/format/stap.py
-@@ -38,6 +38,7 @@ def generate(events, backend, group):
-               if "disable" not in e.properties]
- 
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '')
- 
-     for e in events:
-diff --git a/scripts/tracetool/format/ust_events_c.py b/scripts/tracetool/format/ust_events_c.py
-index deced9533d..569754a304 100644
---- a/scripts/tracetool/format/ust_events_c.py
-+++ b/scripts/tracetool/format/ust_events_c.py
-@@ -20,6 +20,7 @@ def generate(events, backend, group):
-               if "disabled" not in e.properties]
- 
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '',
-         '#include "qemu/osdep.h"',
-         '',
-diff --git a/scripts/tracetool/format/ust_events_h.py b/scripts/tracetool/format/ust_events_h.py
-index b99fe6896b..2a31fefeca 100644
---- a/scripts/tracetool/format/ust_events_h.py
-+++ b/scripts/tracetool/format/ust_events_h.py
-@@ -25,6 +25,7 @@ def generate(events, backend, group):
-         include = "trace-ust.h"
- 
-     out('/* This file is autogenerated by tracetool, do not edit. */',
-+        '/* SPDX-License-Identifier: GPL-2.0-or-later */',
-         '',
-         '#undef TRACEPOINT_PROVIDER',
-         '#define TRACEPOINT_PROVIDER qemu',
+     try:
+@@ -197,7 +200,7 @@ def main(argv):
+     parser.add_argument('-d', '--dir', action='store', default='',
+                         help="directory containing tests")
+     parser.add_argument('-u', '--update', action='store_true',
+-                        default='QAPI_TEST_UPDATE' in os.environ,
++                        default='QEMU_TEST_REGENERATE' in os.environ,
+                         help="update expected test results")
+     parser.add_argument('tests', nargs='*', metavar='TEST', action='store')
+     args = parser.parse_args()
 -- 
 2.50.1
 
