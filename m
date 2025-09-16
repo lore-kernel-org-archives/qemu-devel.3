@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F2E9CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 15:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D895ECAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 15:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyY3w-00058U-Oj; Tue, 16 Sep 2025 11:57:49 -0400
+	id 1uyY48-0005LD-PW; Tue, 16 Sep 2025 11:58:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=MCvy=33=kaod.org=clg@ozlabs.org>)
- id 1uyY3o-0004zQ-Kr; Tue, 16 Sep 2025 11:57:42 -0400
+ id 1uyY45-0005GE-Oh; Tue, 16 Sep 2025 11:57:58 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=MCvy=33=kaod.org=clg@ozlabs.org>)
- id 1uyY3i-0006P4-CU; Tue, 16 Sep 2025 11:57:40 -0400
+ id 1uyY42-0006Vc-1C; Tue, 16 Sep 2025 11:57:57 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cR63s64dGz4wC4;
- Wed, 17 Sep 2025 01:57:29 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cR64D709bz4wC4;
+ Wed, 17 Sep 2025 01:57:48 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cR63p1HKcz4wC1;
- Wed, 17 Sep 2025 01:57:25 +1000 (AEST)
-Message-ID: <19184551-f767-4841-a3e2-9b369ce015ca@kaod.org>
-Date: Tue, 16 Sep 2025 17:57:23 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cR6492wf1z4w9l;
+ Wed, 17 Sep 2025 01:57:45 +1000 (AEST)
+Message-ID: <682bfb92-d046-48ce-beb6-55b3f455c850@kaod.org>
+Date: Tue, 16 Sep 2025 17:57:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 2/3] tests/functional/arm: Add AST1030 boot test
+Subject: Re: [SPAM] [PATCH v1 3/3] tests/functional/arm: Add AST2600 boot test
  with generated OTP image
 To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -42,7 +42,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, thuth@redhat.com
 References: <20250916080406.2430111-1-kane_chen@aspeedtech.com>
- <20250916080406.2430111-3-kane_chen@aspeedtech.com>
+ <20250916080406.2430111-4-kane_chen@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,7 +87,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250916080406.2430111-3-kane_chen@aspeedtech.com>
+In-Reply-To: <20250916080406.2430111-4-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -117,41 +117,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 9/16/25 10:04, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> Add a functional test that boots an AST1030 machine with a generated
+> Add a functional test that boots an AST2600 machine with a generated
 > OTP image. The test verifies that OTP contents are read during early
 > boot and that the system reaches the expected console prompt.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
->   tests/functional/arm/test_aspeed_ast1030.py | 20 ++++++++++++++++++--
->   1 file changed, 18 insertions(+), 2 deletions(-)
+>   tests/functional/arm/test_aspeed_ast2600.py | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
 > 
-> diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional/arm/test_aspeed_ast1030.py
-> index 42126b514f..2cad85c196 100755
-> --- a/tests/functional/arm/test_aspeed_ast1030.py
-> +++ b/tests/functional/arm/test_aspeed_ast1030.py
-> @@ -7,10 +7,11 @@
->   # SPDX-License-Identifier: GPL-2.0-or-later
+> diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
+> index 129695ca4e..1813601fcb 100755
+> --- a/tests/functional/arm/test_aspeed_ast2600.py
+> +++ b/tests/functional/arm/test_aspeed_ast2600.py
+> @@ -136,5 +136,19 @@ def test_arm_ast2600_evb_sdk(self):
+>           exec_command_and_wait_for_pattern(self,
+>                '/sbin/hwclock -f /dev/rtc1', year)
 >   
->   from qemu_test import LinuxKernelTest, Asset
-> +from aspeed import AspeedTest
->   from qemu_test import exec_command_and_wait_for_pattern
->   
->   
-> -class AST1030Machine(LinuxKernelTest):
-> +class AST1030Machine(AspeedTest):
->   
->       ASSET_ZEPHYR_3_02 = Asset(
->           ('https://github.com/AspeedTech-BMC'
-> @@ -68,6 +69,21 @@ def test_ast1030_zephyros_1_07(self):
->                   'kernel uptime',
->           ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
->   
-> +    def test_ast1030_otp_blockdev_device(self):
+> +    def test_ast2600_otp_blockdev_device(self):
 
-
-To have a consistent name with the other tests, please use a
-test_arm_ prefix.
+please use a test_arm_ prefix.
 
 
 Thanks,
@@ -160,23 +145,20 @@ C.
 
 
 
-> +        self.vm.set_machine("ast1030-evb")
+> +        self.vm.set_machine("ast2600-evb")
 > +
-> +        kernel_name = "ast1030-evb-demo-3/zephyr.elf"
-> +        kernel_file = self.archive_extract(self.ASSET_ZEPHYR_3_02, member=kernel_name)
+> +        image_path = self.archive_extract(self.ASSET_SDK_V907_AST2600)
 > +        otp_img = self.generate_otpmem_image()
 > +
 > +        self.vm.set_console()
 > +        self.vm.add_args(
-> +            "-kernel", kernel_file,
 > +            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
 > +            "-global", "aspeed-otp.drive=otp",
 > +        )
-> +        self.vm.launch()
-> +        self.wait_for_console_pattern("Booting Zephyr OS")
->   
+> +        self.do_test_arm_aspeed_sdk_start(self.scratch_file("ast2600-default", "image-bmc"))
+> +        self.wait_for_console_pattern("ast2600-default login:")
+> +
 >   if __name__ == '__main__':
-> -    LinuxKernelTest.main()
-> +    AspeedTest.main()
+>       AspeedTest.main()
 
 
