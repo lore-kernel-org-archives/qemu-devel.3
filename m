@@ -4,72 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7CDCAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 09:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67551CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 09:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyS3v-0005vy-Or; Tue, 16 Sep 2025 05:33:25 -0400
+	id 1uySSe-00035H-Ce; Tue, 16 Sep 2025 05:58:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyS3r-0005vl-JT
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:33:19 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyS3l-00045d-AX
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:33:19 -0400
-Received: from example.com (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 83BCD2015505;
- Tue, 16 Sep 2025 02:33:04 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 83BCD2015505
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758015188;
- bh=Ni4zhHvUhyIBGzEHotqfaeOtkYpJCAQ8X3x85Wn3s/w=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=GE3AUdDO0FbPDIfL8+h+IiFg7O6J9StMcgAayOlKB4nI0hQRAbBMhsn9HqFBDqYjs
- YUqaf9TTNLz9usmGMYtLpt9sBcz7KLaCVrSmfOL0QT+fBbER5Xfk/9Hd6GuUoX2vgn
- tgxNvY2eTMhdfef3s6HLPMN+MMj8JfPrHe9fRohY=
-Date: Tue, 16 Sep 2025 11:33:01 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 10/26] accel/mshv: Add vCPU creation and execution loop
-Message-ID: <aMkuzbCrzx0ftpGY@example.com>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250807143951.1154713-11-magnuskulke@linux.microsoft.com>
- <aK7q91-sjFp8nVIG@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uySSd-000355-7O
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:58:55 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uySSb-0006je-CI
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:58:54 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b046fc9f359so797701866b.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 02:58:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758016730; x=1758621530; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5GDkCc8k9k8NvhxDKxnlZQ3BFcIIh0HOlG5+a9C5M4U=;
+ b=IGuuwws41QW+VUPXq6VuJAP8SDmEOIvx8eXPJDhTn6YZ/Wv6fRZvu3riwCbwrLyCVE
+ N4e4Xab3jMEOKzNOqi9+nAfNrnsdWgVgmERQOfloXJcQ+cQdDvtp2Ay/yuwsS4mw6gf0
+ zhjy09wfKUyhglFePjP7PosHVRGrBAsWYyRRm7v8dbvhD2QK0CRd+2SdSy9AllDekLha
+ Z7EBdsU/cZlNT/gaw7wRC7dMVk8tvwYe+fI6luG/wDTQi8lM7AZjrpGSMOJJawfyRIBm
+ ju0/IW5S6rkSOkbsO+Xs39+lCNIp3fXIcFnUwymwefaoUxAB7NnYoDopBo/B7rOkTub4
+ e3rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758016730; x=1758621530;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5GDkCc8k9k8NvhxDKxnlZQ3BFcIIh0HOlG5+a9C5M4U=;
+ b=n199/Df0ivU77MM8FGp/qHnD7odlWIQ7tkvE979dV5uck84pbxYw9OA+akcdz9O6dY
+ zI5xF0hzgC79LxIQHHbL+mnSqdILPBYb2OD/Y3uRkbjmqckjSAARG+gRnCbfFSl3UJQM
+ BiUidvfGBansJ2f0RLQUXmDEJbHEBUObZx2J2a7HIFUuNf3lembIaOs0pHtRyxJBAoTW
+ aLH8ucx7VYf/ZGaqjRcPK+7+04HOWv7NnRg7yy4iP9UZGcgYWY+9mCrXV7RZyDsyqzOo
+ ZymkB7QnIbvdcnd86mMJPeKoONgCgoQvww+UnMzVaadyk7y+x3BNh65CsMFbY3O15hRT
+ u36w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLBlqIyi2WyGrmGPSozg9QIUGD1/KjUfChIAzzlP3xs4HEsKZ8dsLUCEMxqfiUzy0h51ZR3i0HP3yy@nongnu.org
+X-Gm-Message-State: AOJu0YxTHA/6LfjTG+RYy7YGVhDtrXKSCXm2ZS2JBRrm0tncVC+0QjRq
+ DNO7IDUSb1/6REr4HsKNWnpBuDI3qyUkcVvQi/svuoNUYE3d1bOyKB0wLCcAQ3oQNGWgANLrUH3
+ f1s58AyMm2kCEhJZhVUxsIG6P2ldhxElCxc4+JWNJ4w==
+X-Gm-Gg: ASbGnctiNLBMox3v+1lcDJfa4vLvsmAAp0e9+iaQ0U98H/s/QbnQoLqZcy/B/Kbrd4o
+ RxyOAf5xk4oMk3/QfGvDiqaU1JQ7H/4lY1kW1p5T+E5ii3fotidFCpPx5zhgq165rxwGZpgK23X
+ FElC96iqzzofGEesAuLyCkiAYltLyyWvEwCnQs/EzDtDl5ucAy/Yl1ktoiVQph3T0a7sf0Zc8GT
+ upVtmQ9
+X-Google-Smtp-Source: AGHT+IFX/ZsZkHs8lk8Q1qDqAsE1sFXK/zM+wXxC1inQzbcsyPLZ4K3a5hFSCu2yNI5oGzcVB2HuS97lr15u6CRa9ns=
+X-Received: by 2002:a17:907:8689:b0:b04:1edf:a42b with SMTP id
+ a640c23a62f3a-b07c3547602mr1669266966b.11.1758016729944; Tue, 16 Sep 2025
+ 02:58:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aK7q91-sjFp8nVIG@redhat.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20250916085557.2008344-1-zhao1.liu@intel.com>
+ <20250916085557.2008344-2-zhao1.liu@intel.com>
+In-Reply-To: <20250916085557.2008344-2-zhao1.liu@intel.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 16 Sep 2025 12:58:24 +0300
+X-Gm-Features: AS18NWCNHuNDQnKhCbIgHEo1BBKmYfCOZUrnzeN10t1afUnCXFE2AgCl0HRaxh0
+Message-ID: <CAAjaMXaLvSV=nfd8m4Q-RPTx4jpWisDpeH6J6rgTke4Mox=8pw@mail.gmail.com>
+Subject: Re: [PATCH 01/12] subprojects: Update .gitignore for proc-macro2 and
+ syn
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,29 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 12:24:39PM +0100, Daniel P. Berrangé wrote:
-> So every MSHV  vCPU has a corresponding Linux thread, similar
-> to the model with KVM.  In libvirt we rely on the vCPU thread
-> being controllable with all the normal Linux process related
-> APIs. For example, setting thread CPU affinity, setting NUMA
-> memory policy, setting scheduler priorities, putting threads
-> into cgroups and applying a wide variety of cgroup controls.
-> 
-> Will there be any significant "gotchas" with the threads for
-> MSHV vCPUs, that would mean the above libvirt controls would
-> either raise errors, or silently not have any effect ?
-> 
+On Tue, Sep 16, 2025 at 11:34=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
+te:
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  subprojects/.gitignore | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+> index f4281934ce11..9d579f72d121 100644
+> --- a/subprojects/.gitignore
+> +++ b/subprojects/.gitignore
+> @@ -16,7 +16,7 @@
+>  /libc-0.2.162
+>  /proc-macro-error-1.0.4
+>  /proc-macro-error-attr-1.0.4
+> -/proc-macro2-1.0.84
+> +/proc-macro2-1.0.95
+>  /quote-1.0.36
+> -/syn-2.0.66
+> +/syn-2.0.104
+>  /unicode-ident-1.0.12
+> --
+> 2.34.1
+>
 
-Hi Daniel,
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-I am not aware of any such gotchas. The MSHV vCPU threads should
-be regular threads that spend most of their time blocked in
-ioctl(MSHV_RUN) calls, and as such they should be controllable by
-the facilities you mentioned. I know that that folks who tested this
-code have been using numactl for reliable performance assessments
-without running into issues.
+Maybe we could change the entries to match any directory with a version, e.=
+g.
 
-best,
-
-magnus
+/proc-macro2-[0-9.]*/
 
