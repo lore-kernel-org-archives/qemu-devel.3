@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802B3CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B85CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 14:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyWN6-0000bA-7B; Tue, 16 Sep 2025 10:09:28 -0400
+	id 1uyWWP-0003e3-Q1; Tue, 16 Sep 2025 10:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyWN4-0000Zg-4y
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:09:26 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uyWN2-0005ns-0u
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 10:09:25 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-72ce9790aceso36776967b3.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 07:09:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758031762; x=1758636562; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rBnw5wHMf5QAkmfvITJZI8gIrqDUotC+chL8JdKkWZY=;
- b=HRNY6pM3OgL4Y/S5i9imiyTt0MILjXrEjF8nUzs1zhs6x2kcDu6jMQrwpCPdWctOA3
- gob0JhmI7G764lGmL0pU7LYF6kDb5BqK5FZroMXe7MIqOly0n6PKMhUkef21bipMzWd2
- 62uMI1x/3X3tdDpHpPqC2yY2xfEbflFcu0AakELjH8GqU531pJbPjaPgIdlJpVlRDmbe
- KV88X56KEgh0gMzwB6XOz2b/O+xquTKCCNPjlocWVjIhZb9FCjm+0CJUwR4NydtvmvwF
- zoV9u6fcALKLfth8GV399DfKX4byy903paywTikPbiCHZB6EjPzqzC28GP81lTl8CvJZ
- E6IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758031762; x=1758636562;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rBnw5wHMf5QAkmfvITJZI8gIrqDUotC+chL8JdKkWZY=;
- b=qKwMmacQnyILU19Tls57nMyLS/W/6Gwvvzd8iXrx9nfbXkF/fQJnStm0MZMbdYruj0
- SijTUC4tgKhoteVHm5fgoXmuh21gQsdUcI7jat1o6BElTuwoXamTpn/h4OMgWxXPn/v/
- VA6RFcGBzlJKRvyf4ipBGkFetlwhC326g4nZY7+DD4gkdgNHJlhPebrYcBcgpUDqK0/C
- 3ig5Hiflp/TADDBkquyMgowB/+01q42oFXE+oR1koGH+XP7kS+nwHRj61BDda8g5t2c3
- XOJ2UinuBSC52ECPlBnbafNPqkMNZHaVduXMahRINpKlWaGobydT7RO6XpmiEcAPcQYy
- NbHg==
-X-Gm-Message-State: AOJu0YwbXFAkVQHNC5ZK3SkVoMER7fWGqy8jDiB48uUlRHkKAYYDWdy+
- Vq2FgB/JGcfHJyChlIvwX7chYBnAESnNPVbUTfiUUP84ZwMmgpWTEenfOv2X5dJlrPPy1mi69oD
- mUoVWAMucK2m6AtiywGI4YcAw2QTUWr9sQ4ecYtNpYA==
-X-Gm-Gg: ASbGnctRaMOGuN9Mrh2bX0EEn1cz6g+SrH7bKu93MyjTtyECCLPL/2biduxEMOS++8C
- 6zg7XVAjnvQf/nKVtBzKRLkth3uBph5ufrYhmIm7XE8VhXwetzOO9ucq6eah4CpYthxFL6BFmi3
- KfX24wxGmrxbkwuDqJnrJ94NWWCMVCx/uoUZWmjYCzEz18yfzk9nzoDOMmsSZXPbeeIwY8FD8kF
- RomcXmD
-X-Google-Smtp-Source: AGHT+IEMYTYJMW0I8kkNnXpHiEwJEJFK+/XPzHCXI738j3mIhI5whmvrBSrl+Iwlq6PZuoyCnCFE/NTGjv6MOPEA2W0=
-X-Received: by 2002:a05:690c:6105:b0:721:69f6:d403 with SMTP id
- 00721157ae682-730623e2b12mr147747457b3.11.1758031761934; Tue, 16 Sep 2025
- 07:09:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uyWWE-0003bn-3f; Tue, 16 Sep 2025 10:18:58 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uyWWA-0007bf-Mn; Tue, 16 Sep 2025 10:18:52 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9987F809E1;
+ Tue, 16 Sep 2025 17:18:43 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:16c::1:b] (unknown [2a02:6bf:8080:16c::1:b])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id fIR0wZ2GhuQ0-kcG4Qhq8; Tue, 16 Sep 2025 17:18:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758032323;
+ bh=DVPDpQUvUjvulC9m3MYG7SulMPbHD6xvJxutJPlQfn0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=1BoMgwCBlbbgoSPBcF8j+LjcsAjekZIb4wHWwVaN0tmeAaJvu5zkBM8C6LFfDU0vU
+ oAXCjKgRX0blAPRf7oz8osCIKOLq2miVeP6w5IsPxzIIMqE5FoZwP9JrmjIim9OKYB
+ ZUGvfXQ84nrNaC+JFwrEA2/xGF1QIdh0qVi8YlHE=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e90ec57a-cf96-4318-b7f6-611725522994@yandex-team.ru>
+Date: Tue, 16 Sep 2025 17:18:41 +0300
 MIME-Version: 1.0
-References: <tencent_E89CB2B19584679F7D6FF370ADEEC2992707@qq.com>
-In-Reply-To: <tencent_E89CB2B19584679F7D6FF370ADEEC2992707@qq.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Sep 2025 15:09:10 +0100
-X-Gm-Features: Ac12FXyP6M_7DabWncJukQVfTySqsBMW-w4jhHCDwGu0PVS-sRa9jsx2XVGsKj4
-Message-ID: <CAFEAcA9s1fCej4rpsKAgb61w1_hoUoptDa9uNQncpx0TjbX_hQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/can: Remove redundant status bit setting in
- can_sja1000
-To: SillyZ <1357816113@qq.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/13] handle result of qio_channel_set_blocking()
+To: Peter Xu <peterx@redhat.com>
+Cc: berrange@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com,
+ Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, John Levon
+ <john.levon@nutanix.com>, Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20250916131403.368343-1-vsementsov@yandex-team.ru>
+ <20250916131403.368343-5-vsementsov@yandex-team.ru>
+ <aMls1F7VyCzE9-jg@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aMls1F7VyCzE9-jg@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,40 +85,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Sept 2025 at 14:50, SillyZ <1357816113@qq.com> wrote:
->
-> In PeliCAN mode reception, the RBS (Receive Buffer Status) bit
-> is set twice at line 842 and 845 with identical operations:
->   s->status_pel |= 0x01;
->   s->status_pel |= (1 << 0);
->
-> Between these two operations, only interrupt_pel is modified and
-> status_pel bit 4 is cleared, neither affecting bit 0. The second
-> operation is redundant.
->
-> This cleanup aligns PeliCAN mode with BasicCAN mode, which correctly
-> sets this bit only once (line 883).
->
-> Signed-off-by: SillyZ <1357816113@qq.com>
-> ---
->  hw/net/can/can_sja1000.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/hw/net/can/can_sja1000.c b/hw/net/can/can_sja1000.c
-> index 5b6ba9df6c..6b08e977a1 100644
-> --- a/hw/net/can/can_sja1000.c
-> +++ b/hw/net/can/can_sja1000.c
-> @@ -842,7 +842,6 @@ ssize_t can_sja_receive(CanBusClientState *client, const qemu_can_frame *frames,
->          s->status_pel |= 0x01; /* Set the Receive Buffer Status. DS-p23 */
->          s->interrupt_pel |= 0x01;
->          s->status_pel &= ~(1 << 4);
-> -        s->status_pel |= (1 << 0);
->          can_sja_update_pel_irq(s);
->      } else { /* BasicCAN mode */
->
+On 16.09.25 16:57, Peter Xu wrote:
+> On Tue, Sep 16, 2025 at 04:13:53PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Currently, we just always pass NULL as errp argument. That doesn't
+>> look good.
+>>
+>> Some realizations of interface may actually report errors.
+>> Channel-socket realization actually either ignore or crash on
+>> errors, but we are going to straighten it out to always reporting
+>> an errp in further commits.
+>>
+>> So, convert all callers to either handle the error (where environment
+>> allows) or explicitly use &error_abort.
+>>
+>> Take also a chance to change the return value to more convenient
+>> bool (keeping also in mind, that underlying realizations may
+>> return -1 on failure, not -errno).
+>>
+>> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>> ---
+>>   block/nbd.c                      |  4 +++-
+>>   chardev/char-socket.c            | 20 ++++++++++++++++----
+>>   hw/remote/proxy.c                |  6 +++++-
+>>   hw/remote/remote-obj.c           |  6 +++++-
+>>   hw/vfio-user/proxy.c             | 11 ++++++++---
+>>   include/io/channel.h             |  6 +++---
+>>   io/channel.c                     |  4 ++--
+>>   nbd/server.c                     |  4 +++-
+>>   scsi/qemu-pr-helper.c            |  9 ++++++---
+>>   tests/unit/io-channel-helpers.c  |  5 +++--
+>>   tests/unit/test-io-channel-tls.c |  4 ++--
+>>   tools/i386/qemu-vmsr-helper.c    |  6 ++++--
+>>   ui/vnc.c                         |  2 +-
+>>   util/vhost-user-server.c         |  7 ++++++-
+>>   14 files changed, 67 insertions(+), 27 deletions(-)
+> 
+> No need to repost, but just to mention (if possible to be touched up when
+> Dan queues this..).. it's still good to always have a prefix for subject.
+> 
+> IMHO we can use "treewide:"; qemu started using it in a few commits.  Linux
+> kernel used it much more.  We can keep the trend, IMHO.
+> 
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Agree, sounds good.
 
-thanks
--- PMM
+-- 
+Best regards,
+Vladimir
 
