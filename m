@@ -4,83 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CB9CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 077B5CAC599
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 12:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyV5C-00052l-TI; Tue, 16 Sep 2025 08:46:55 -0400
+	id 1uyV3h-0003HX-Bn; Tue, 16 Sep 2025 08:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyV4z-0004yv-Jk
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyV4w-0002iB-O5
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:46:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758026794;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aG4W3mmDglu4lEoQcUF+7rzQ4DSjx/M0FEtfZHT5Tcg=;
- b=VcrFRUS6VLzRDcPMAczDyCQdLfJ0wA5nTSrBGcVAHpIb9iggvRqQeYhhI3vINubvWgvQP6
- h/MbwFd4dCT1aQ4QWco2NEjCw1rzmo1T7CCuYCvwwnbNN8HaMaHSZPqvdml90zvfLbRVYB
- a1KlMViJnOH3N7i/BbeWvOLw2+oarLU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-Hgj-_z-kOoaqxwHRQ_RUwQ-1; Tue,
- 16 Sep 2025 08:46:33 -0400
-X-MC-Unique: Hgj-_z-kOoaqxwHRQ_RUwQ-1
-X-Mimecast-MFC-AGG-ID: Hgj-_z-kOoaqxwHRQ_RUwQ_1758026791
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D5F519560B4; Tue, 16 Sep 2025 12:46:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9E911180044F; Tue, 16 Sep 2025 12:46:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 05C1F21E6A27; Tue, 16 Sep 2025 14:46:28 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Naveen N Rao <naveen@kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Sean Christopherson
- <seanjc@google.com>,  qemu-devel <qemu-devel@nongnu.org>,
- kvm@vger.kernel.org,  "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>,  Tom Lendacky
- <thomas.lendacky@amd.com>,  Michael Roth <michael.roth@amd.com>,  Neeraj
- Upadhyay <neeraj.upadhyay@amd.com>,  Roy Hopkins
- <roy.hopkins@randomman.co.uk>
-Subject: Re: [RFC PATCH 3/7] target/i386: SEV: Add support for enabling
- debug-swap SEV feature
-In-Reply-To: <m5fnfafkzxqamg4iyc6xjun7jlxulcuufgugtrweap6myvmgov@5cmxu5n3pl2p>
- (Naveen N. Rao's message of "Mon, 15 Sep 2025 19:55:02 +0530")
-References: <cover.1757589490.git.naveen@kernel.org>
- <0a77cf472bc36fee7c1be78fc7d6d514d22bca9a.1757589490.git.naveen@kernel.org>
- <87jz239at0.fsf@pond.sub.org>
- <m5fnfafkzxqamg4iyc6xjun7jlxulcuufgugtrweap6myvmgov@5cmxu5n3pl2p>
-Date: Tue, 16 Sep 2025 14:46:27 +0200
-Message-ID: <87plbqo998.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uyV3R-0003E4-RC
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:09 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uyV3I-0002J2-0e
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 08:45:01 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxXNK6W8losPMKAA--.23632S3;
+ Tue, 16 Sep 2025 20:44:42 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJDxbMG4W8loS1uZAA--.42126S2;
+ Tue, 16 Sep 2025 20:44:40 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH v8 00/11] hw/loongarch: add the direct interrupt
+ controller(DINTC) support
+Date: Tue, 16 Sep 2025 20:20:58 +0800
+Message-Id: <20250916122109.749813-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxbMG4W8loS1uZAA--.42126S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,46 +65,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Naveen N Rao <naveen@kernel.org> writes:
+Hi,
 
-> Hi Markus,
->
-> On Fri, Sep 12, 2025 at 01:20:43PM +0200, Markus Armbruster wrote:
->> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
->> 
->> > Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
->> > SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
->> > objects. Though the boolean property is available for plain SEV guests,
->> > check_sev_features() will reject setting this for plain SEV guests.
->> 
->> Let's see whether I understand...
->> 
->> It's a property of sev-guest and sev-snp-guest objects.  These are the
->> "SEV guest objects".
->> 
->> I guess a sev-snp-guest object implies it's a SEV-SNP guest, and setting
->> @debug-swap on such an object just works.
->> 
->> With a sev-guest object, it's either a "plain SEV guest" or a "SEV-ES"
->> guest.
->> 
->> If it's the latter, setting @debug-swap just works.
->> 
->> If it's the former, and you set @debug-swap to true, then KVM
->> accelerator initialization will fail later on.  This might trigger
->> fallback to TCG.
->> 
->> Am I confused?
->
-> You're spot on, except that in the last case above (plain old SEV 
-> guest), qemu throws an error:
-> 	qemu-system-x86_64: check_sev_features: SEV features require either SEV-ES or SEV-SNP to be enabled
+This series introduces the direct interrupt controller(DINTC). This
+controller will allow each core to have 256 independent interrupt vectors
+and MSI interrupts can be independently routed to any vector on any CPU.
 
-Okay.
+The whole topology of irqchips in LoongArch machines looks like this if
+DINTC is supported:
+      +-----+     +---------------------------------+     +-------+
+      | IPI | --> |        CPUINTC                  | <-- | Timer |
+      +-----+     +---------------------------------+     +-------+
+                          ^            ^          ^
+                          |            |          |
+                 +-------------+ +----------+ +---------+     +-------+
+                 |   EIOINTC   | |   DINTC  | | LIOINTC | <-- | UARTs |
+                 +-------------+ +----------+ +---------+     +-------+
+                 ^            ^       ^
+                 |            |       |
+            +---------+  +---------+  |
+            | PCH-PIC |  | PCH-MSI |  |
+            +---------+  +---------+  |
+              ^     ^           ^     |
+              |     |           |     |
+      +---------+ +---------+ +---------+
+      | Devices | | PCH-LPC | | Devices |
+      +---------+ +---------+ +---------+
+                      ^
+                      |
+                 +---------+
+                 | Devices |
+                 +---------+
+We can see more about DINTC on linux driver code[1]
+and loongarch Message interrupts on volI 6.2 Message-Interrupts
 
-Can you (or anyone) explain to me why SEV-SNP gets its own object type,
-but SEV-ES does not?
+Tested the code using the virion-net NIC the start scripts is kernel.sh at[3] and then
+run 'ifconfig eth0 192.168.122.12' or
+test avec plug and unplug interfaces
+1 run kernel.sh[3]
+2 telnet localhost 4418;
+3 run QOM 'device_add la464-loongarch-cpu,socket-id=2,core-id=0,thread-id=0,id=cpu-2'
+4 run vm 'ifconfig eth0 192.168.122.12';
+5 run QOM 'device_de cpu-2'
+6 run vm 'ifconfig eth0 192.168.122.11';
 
-[...]
+[1]: https://github.com/torvalds/linux/blob/master/drivers/irqchip/irq-loongarch-avec.c
+[2]: https://github.com/loongson/LoongArch-Documentation/releases/download/2023.04.20/LoongArch-Vol1-v1.10-EN.pdf
+[3]: https://github.com/gaosong715/qemu/releases/download/pull-loongarch-20250514/kernel.sh
+
+v8:
+  1. rename avec to dmsi, avecintc to dintc;
+  2. fix some typo issue;
+  3. R_b and rebase.
+  4, patch7 need review.
+
+V7:
+  1. Add cpu feature 'msgint' on patch2.
+  2. Remove som useless code on patch8.
+  3. R_b and rebase.
+
+v6:
+  1: Change some code to support KVM mode, and will add a patch in late.
+  2: Use async_run_on_cpu() to update CSR_MSGIS;
+  3: Rebase.
+
+v5:
+  1: rebase and R_b;
+  2; change patch2 and patch3 commit message;
+  3, change virt_is_avecintc_enabled() to virt_has_avecintc();
+  4: remove set and clean CSR_ECFG.bit15;
+  5; patch11 add some check lvms->avec, beacuse someone my set avecintc=off.
+
+v4:
+  1: Implemetnt the AVEC plug/unplug interface. test with devcice-add
+cpu and device-add and then setup the virtio-net nic. new patch11;
+  2: add a new patch1 move some machine define to virt.h;
+  3; add a new patch3 to implemet write/raad misc' avec feature and
+status bit.
+  4: Simplification of patch8 and patch10 as per bibo's suggestion.
+
+v3:
+  1: Implement the read-clear feature for CSR_MSGIR register
+  2: Fix some code style;
+  3: Merge patch8 and patch9 into one patch8;
+  4: Fix patch7 get wrong cpu_num and irq_num;
+  5: Add vmstate_msg for messag-interrupt registers migrate;
+  6: Update test scripts use  '-bios', because kernel use avec need acpi
+support. the bios is qemu/pc_bios/edk2-loongarch64-code.fd.bz2.
+
+
+Thanks.
+Song Gao
+
+Song Gao (11):
+  target/loongarch: move some machine define to virt.h
+  hw/loongarch: add virt feature dmsi support
+  hw/loongarch: add misc register support dmsi
+  loongarch: add a direct interrupt controller device
+  target/loongarch: add msg interrupt CSR registers
+  hw/loongarch: DINTC add a MemoryRegion
+  hw/loongarch: Implement dintc realize and unrealize
+  hw/loongarch: Implement dintc set irq
+  target/loongarch: Add CSR_ESTAT.bit15 and CSR_ECFG.bit15 for msg
+    interrupts.
+  target/loongarch:Implement csrrd CSR_MSGIR register
+  hw/loongarch: Implement DINTC plug/unplug interfaces
+
+ hw/intc/Kconfig                               |   3 +
+ hw/intc/loongarch_dintc.c                     | 211 ++++++++++++++++++
+ hw/intc/meson.build                           |   1 +
+ hw/loongarch/Kconfig                          |   1 +
+ hw/loongarch/virt.c                           | 103 ++++++++-
+ include/hw/intc/loongarch_dintc.h             |  36 +++
+ include/hw/loongarch/virt.h                   |  34 +++
+ include/hw/pci-host/ls7a.h                    |   2 +
+ target/loongarch/cpu-csr.h                    |   9 +-
+ target/loongarch/cpu.c                        |  26 +++
+ target/loongarch/cpu.h                        |  36 ++-
+ target/loongarch/csr.c                        |   5 +
+ target/loongarch/machine.c                    |  25 ++-
+ target/loongarch/tcg/csr_helper.c             |  21 ++
+ target/loongarch/tcg/helper.h                 |   1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     |   1 +
+ 16 files changed, 488 insertions(+), 27 deletions(-)
+ create mode 100644 hw/intc/loongarch_dintc.c
+ create mode 100644 include/hw/intc/loongarch_dintc.h
+
+-- 
+2.41.0
 
 
