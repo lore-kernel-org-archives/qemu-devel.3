@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2F5CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326AACAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uySkE-0000VS-Hp; Tue, 16 Sep 2025 06:17:06 -0400
+	id 1uySmg-0001ef-No; Tue, 16 Sep 2025 06:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySk9-0000UV-BI
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:17:01 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1uySme-0001eL-G6
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:19:36 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uySk5-0000N7-NJ
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:17:00 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b0787fa12e2so738921766b.2
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 03:16:53 -0700 (PDT)
+ id 1uySmc-0000Wb-90
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:19:36 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b03fa5c5a89so851479766b.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 03:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758017811; x=1758622611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758017972; x=1758622772; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Oz1gTSwCWUHluXj89nmBU2Wc1azpybh/B68oOT8qYr0=;
- b=y0ch9FHgKYOlVQ4ODKY6RKyR1a2N3cbBxC6mmhiwzbgM1RYnT8up+rlbbtU8eo/XBs
- 5mexh6QAUZ3i6YkJivdPN/E9TMpm7iPGpk8mUP6OIRV238NAOsFgyChHIq98BpOsbGGF
- yFQTncKKvRhIZF2lnMv35PPVHk+YXxn87pz1wiCjMolTrNiMCKlooWEwD+/bl5sq+m+i
- t1Pz8FwwO7PtavDSwwG8eAGSP4PWn6Mrc5XxcrwnTEHHSLFDzEplVaYwL+dK0Hz9S2I0
- fwZiS3Ks1W+qxeYO0jhDY7BSOf/ocsHnOxz/WQI/KqfIXIS8fpKWtke1cOxq3VuSkXpE
- F9EQ==
+ bh=4C0pIBwXPE4OSv6CL6PNCcBEbAm42mhhAimOPkpCbRk=;
+ b=tnRVzdbYQWs5JuBZiJX7NpmpCWLvmBqVGOATHtMjIGlw/nW/9btS4QPqaONrnKyOhI
+ DMOnsRJDvsW41Nakhc59FPMnvZ5xu4k5NEKtGIxCJftA3SwbT43xUZDkl05XqWTuf1Ck
+ uwc+2Rm7NmKp1DNP33ZKmLdhT6MqMt8THQCTuxYA3C8+nU8Y5StMp5aB5oOy3CZ3ewIW
+ RLp4GT3h146w5ILVoDjrz3k5yfkDWfIkjIKBMptBW3uUySxXDia1O8/Ny+Ktm/zQGt2v
+ 5CjLYYallNj0Nv4fGxIs/GavrMTIxlgqWlUq+hmxRWT8MVdeVYNe437ZYVAfuOmHrlyf
+ yXBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758017811; x=1758622611;
+ d=1e100.net; s=20230601; t=1758017972; x=1758622772;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Oz1gTSwCWUHluXj89nmBU2Wc1azpybh/B68oOT8qYr0=;
- b=LUjlVuw/paNrzJXykCc3G6mD/B0tJ7SZWwf9migr2rExT23Q8yEBJ4mwvUbQbQdwGT
- 2xuR2pKW8D9zGsAsSqi6sBDXEw3iwiTM5rq6rKHyBHc9WXbfEAs53AkT/g5O0hcnItBW
- EJVsqROcDftUFiv3iqm8m8olAWAJPv+e6GOiW0amfteR7SDENqkiiM9QGz5AWNptqRBC
- rq4W5SOP7fFuxdegp++KgcqFp1JsPiOIl7Wsqylcx//pmoigV91LEcV4h6bVLFm+YmGo
- EON441zmAXMz6bQubGkzQpedPC4xH60IPO8qTQq7Zroiy8cpV6kGok/jbSYuqnhTxSnm
- GG+g==
+ bh=4C0pIBwXPE4OSv6CL6PNCcBEbAm42mhhAimOPkpCbRk=;
+ b=QUvp4fkT013XS1TsgqCYLF1xcmUsHTS7TnYRnDgQFDId64Q4L/rVnbIhvyVmmF1kMg
+ PhlnSFXQWllo1OE0lsy+QPRyoy2YABbOf7/nDdzT9t2A+6D+c88LoKmahq3tdoXD2pNp
+ n+6/aWDDdBbW2CUgPhxI7c3RRuKrg58e//ou+Az3f0p7XB59vKAmyFbdrQssCzhulGPN
+ 2KDANFqmYdOjLQSRl3cbVlsZe+lG5NuLZXB8Hxvwm+TcqqpGFpYBS8+aY+G+9MJ0uVud
+ pA/mrsAqgot/KTvNa086i5Dj1Ti17Mt5JlkIVuTBiRO+pe6wVXSvuDiZic+fuz1Ilg2q
+ 5TIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVL4cZ+UXg5KBr1XhcUkLyyhPnbPIzf3p91d4j1URzboiaJDuJD8wgIeZJe4p751M1CQkM3AiKYJKg+@nongnu.org
-X-Gm-Message-State: AOJu0YxYIlWPhyU8DWqrq2IvLGxWMR+luBJ11kvP5hiARuA6LdyFMSA5
- sjJvR0X6PVFWtTVrZm8/3Oy00hVNrBj7jo0Mng8owDQY9uQGskEiYnXKmG5gb5iOjgkY4fYi1Xm
- T5HI5Ec9MKh19GLMPmp9d9wQV7kfING66NR8nPq+jcA==
-X-Gm-Gg: ASbGncsZer0c/Lkm+79eVlqNHUT1H2+OD7jlyKGurdcFh7AQL32m83XCAlyfEo36+96
- Z8unNRP1BfZl+IpENYTjjDVSbnAJHipxXZSfRRT3T66QQEmx9yKGQteEZiObD2w1NLbGYtY/uJ4
- ZukpwJubvKRg75YdXPMG19eAd+XzJ/KSZoBH3cbsx18LoKqMzL/xtoCZuXyDh/AuKZ202iqTO7M
- IBt9YhSdK/JQO7+tRo=
-X-Google-Smtp-Source: AGHT+IFFGqnteKyC9/JT6sME2I3shwUMt0ZrHUvwLPNdkrjoyO+hUSZSH8fwgOGHtkQ8jEH+J9NoBe5C97sVq7qE6sU=
-X-Received: by 2002:a17:907:846:b0:b04:85f2:d272 with SMTP id
- a640c23a62f3a-b07c384ab4amr1339808166b.49.1758017811240; Tue, 16 Sep 2025
- 03:16:51 -0700 (PDT)
+ AJvYcCVo2ukcMlpRRodjvflafu17n94vAM+F/tSKCIgGzw3lIAC5yAtVeLapvyrqFNgK5dgTteebNMkiH5UA@nongnu.org
+X-Gm-Message-State: AOJu0YyGgtCxXt4lS7m69gjjx7WQjQeHHVFwSKYu+Kxi5P2+ZaHiNUeD
+ CjmYCI4nIIKjARp1HdoaJx2tQDHBsXmchMCJIhJ8/71FnWsbzunakj/0UXL5HLk3f+P4NpgLGll
+ D1NEAWRYmf7P3pizVYEI+t3IhiDf/0yTMfHuP4o7UsWM8gILTB2JaWgBqvg==
+X-Gm-Gg: ASbGncuVNDruLUFDOcC9dH2Tx9/wZwgzzS02NsI/f1Al2KkkSS0AvNOr0tNwzz4ETMO
+ g9i0/Apn1V9mrIp9Vh4pW8vN1WEoanJvj/WG4JYfHSkHlQ8J6T31eq1NwJ5DEqUTKG+UMle5G/U
+ 4zK4Uk3I0hm8FlZcOtyEAQVQM8DUF54CvTycvITeLniE8Nlsz2J/j9p23/bPEg5AUSn0rQJlMWN
+ N8p3LCKdxhxm9auGLw=
+X-Google-Smtp-Source: AGHT+IH5kVaNVPkepeAUIKJFbSrXKUE5S+5itYNN3OLm3BGmynxm85FCw93/p71DoDnx1TcnYkNDd3VRcRVkKAJsuts=
+X-Received: by 2002:a17:906:d555:b0:b03:bc9c:ee9b with SMTP id
+ a640c23a62f3a-b07c3570cbamr1739824366b.26.1758017972065; Tue, 16 Sep 2025
+ 03:19:32 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250916085557.2008344-1-zhao1.liu@intel.com>
- <20250916085557.2008344-10-zhao1.liu@intel.com>
-In-Reply-To: <20250916085557.2008344-10-zhao1.liu@intel.com>
+ <20250916085557.2008344-12-zhao1.liu@intel.com>
+In-Reply-To: <20250916085557.2008344-12-zhao1.liu@intel.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 16 Sep 2025 13:16:25 +0300
-X-Gm-Features: AS18NWDysFaJ4r_LN0_6EZ3d8P0KKU8Jx6JJVWNHFQyE_Meff6-zLO542FhMY90
-Message-ID: <CAAjaMXYkJno=nAcAGPWQJMCjcSkePJwjmZgFkPAkX2N3tQoSCQ@mail.gmail.com>
-Subject: Re: [PATCH 09/12] rust/qdev: Support bit property in #property macro
+Date: Tue, 16 Sep 2025 13:19:05 +0300
+X-Gm-Features: AS18NWBhsrV2mctBiDKAjRDWZnLbBQWVf7PXybfZ2ZcBsLIVq5_u-Lc61Z9BRFc
+Message-ID: <CAAjaMXYSjbN-0b0jHVHqbBjsTEmTzWCOT2Tr7C_D4CdWHH8OfQ@mail.gmail.com>
+Subject: Re: [PATCH 11/12] rust/hpet: Convert qdev properties to #property
+ macro
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,218 +102,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Sep 16, 2025 at 11:34=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wro=
 te:
 >
-> Add BIT_INFO to QDevProp trait, so that bit related property info could
-> be bound to u32 & u64.
->
-> Then add "bit=3D*" field in #property attributes macro to allow device to
-> configure bit property.
->
-> In addtion, convert the #property field parsing from `if-else` pattern
-> to `match` pattern, to help readability. And note, the `bitnr` member of
-> `Property` struct is generated by manual TokenStream construction,
-> instead of conditional repetition (like #(bitnr: #bitnr,)?) since
-> `quote` doesn't support this.
+> Convert HPET's properties to #property macro:
+>  * num_timers: usize property.
+>  * flags: u32 bit property.
+>  * int_route_cap: u32 property.
+>  * hpet_offset_saved: bool property.
 >
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  rust/hw/core/src/qdev.rs    | 15 +++++---
->  rust/qemu-macros/src/lib.rs | 77 +++++++++++++++++++++++++------------
->  2 files changed, 62 insertions(+), 30 deletions(-)
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+>  rust/hw/timer/hpet/src/device.rs | 55 ++++----------------------------
+>  1 file changed, 7 insertions(+), 48 deletions(-)
 >
-> diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-> index b57dc05ebb0e..a8cd9e3c2fd5 100644
-> --- a/rust/hw/core/src/qdev.rs
-> +++ b/rust/hw/core/src/qdev.rs
-> @@ -109,8 +109,8 @@ pub trait ResettablePhasesImpl {
->  ///
->  /// # Safety
->  ///
-> -/// This trait is marked as `unsafe` because `BASE_INFO` must be a valid=
- raw
-> -/// reference to a [`bindings::PropertyInfo`].
-> +/// This trait is marked as `unsafe` because `BASE_INFO` and `BIT_INFO` =
-must be
-> +/// the valid raw references to [`bindings::PropertyInfo`].
-
-s/the //
-
->  ///
->  /// Note we could not use a regular reference:
->  ///
-> @@ -132,13 +132,18 @@ pub trait ResettablePhasesImpl {
->  /// [`bindings::PropertyInfo`] pointer for the trait implementation to b=
-e safe.
->  pub unsafe trait QDevProp {
->      const BASE_INFO: *const bindings::PropertyInfo;
-> +    const BIT_INFO: *const bindings::PropertyInfo =3D {
-> +        panic!("invalid type for bit property");
-> +    };
-
-Why is this needed?
-
-
+> diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/de=
+vice.rs
+> index fce75415579d..86638c076666 100644
+> --- a/rust/hw/timer/hpet/src/device.rs
+> +++ b/rust/hw/timer/hpet/src/device.rs
+> @@ -13,9 +13,8 @@
+>  use bql::{BqlCell, BqlRefCell};
+>  use common::{bitops::IntegerExt, uninit_field_mut};
+>  use hwcore::{
+> -    bindings::{qdev_prop_bit, qdev_prop_bool, qdev_prop_uint32, qdev_pro=
+p_usize},
+> -    declare_properties, define_property, DeviceImpl, DeviceMethods, Devi=
+ceState, InterruptSource,
+> -    Property, ResetType, ResettablePhasesImpl, SysBusDevice, SysBusDevic=
+eImpl, SysBusDeviceMethods,
+> +    DeviceImpl, DeviceMethods, DeviceState, InterruptSource, ResetType, =
+ResettablePhasesImpl,
+> +    SysBusDevice, SysBusDeviceImpl, SysBusDeviceMethods,
+>  };
+>  use migration::{
+>      self, impl_vmstate_struct, vmstate_fields, vmstate_of, vmstate_subse=
+ctions, vmstate_validate,
+> @@ -520,7 +519,7 @@ fn write(&mut self, reg: TimerRegister, value: u64, s=
+hift: u32, len: u32) {
+>
+>  /// HPET Event Timer Block Abstraction
+>  #[repr(C)]
+> -#[derive(qom::Object)]
+> +#[derive(qom::Object, hwcore::Device)]
+>  pub struct HPETState {
+>      parent_obj: ParentField<SysBusDevice>,
+>      iomem: MemoryRegion,
+> @@ -540,10 +539,12 @@ pub struct HPETState {
+>      // Internal state
+>      /// Capabilities that QEMU HPET supports.
+>      /// bit 0: MSI (or FSB) support.
+> +    #[property(rename =3D "msi", bit =3D HPET_FLAG_MSI_SUPPORT_SHIFT as =
+u8, default =3D false)]
+>      flags: u32,
+>
+>      /// Offset of main counter relative to qemu clock.
+>      hpet_offset: BqlCell<u64>,
+> +    #[property(rename =3D "hpet-offset-saved", default =3D true)]
+>      hpet_offset_saved: bool,
+>
+>      irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
+> @@ -555,11 +556,13 @@ pub struct HPETState {
+>      /// the timers' interrupt can be routed, and is encoded in the
+>      /// bits 32:64 of timer N's config register:
+>      #[doc(alias =3D "intcap")]
+> +    #[property(rename =3D "hpet-intcap", default =3D 0)]
+>      int_route_cap: u32,
+>
+>      /// HPET timer array managed by this timer block.
+>      #[doc(alias =3D "timer")]
+>      timers: [BqlRefCell<HPETTimer>; HPET_MAX_TIMERS],
+> +    #[property(rename =3D "timers", default =3D HPET_MIN_TIMERS)]
+>      num_timers: usize,
+>      num_timers_save: BqlCell<u8>,
+>
+> @@ -901,44 +904,6 @@ impl ObjectImpl for HPETState {
+>      const CLASS_INIT: fn(&mut Self::Class) =3D Self::Class::class_init::=
+<Self>;
 >  }
 >
->  macro_rules! impl_qdev_prop {
-> -    ($type:ty,$info:ident) =3D> {
-> +    ($type:ty,$info:ident$(, $bit_info:ident)?) =3D> {
->          unsafe impl $crate::qdev::QDevProp for $type {
->              const BASE_INFO: *const $crate::bindings::PropertyInfo =3D
->                  addr_of!($crate::bindings::$info);
-> +            $(const BIT_INFO: *const $crate::bindings::PropertyInfo =3D
-> +                addr_of!($crate::bindings::$bit_info);)?
->          }
->      };
->  }
-> @@ -146,8 +151,8 @@ unsafe impl $crate::qdev::QDevProp for $type {
->  impl_qdev_prop!(bool, qdev_prop_bool);
->  impl_qdev_prop!(u8, qdev_prop_uint8);
->  impl_qdev_prop!(u16, qdev_prop_uint16);
-> -impl_qdev_prop!(u32, qdev_prop_uint32);
-> -impl_qdev_prop!(u64, qdev_prop_uint64);
-> +impl_qdev_prop!(u32, qdev_prop_uint32, qdev_prop_bit);
-> +impl_qdev_prop!(u64, qdev_prop_uint64, qdev_prop_bit64);
->  impl_qdev_prop!(usize, qdev_prop_usize);
->  impl_qdev_prop!(i32, qdev_prop_int32);
->  impl_qdev_prop!(i64, qdev_prop_int64);
-> diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
-> index b43ca31bae30..8109ff239227 100644
-> --- a/rust/qemu-macros/src/lib.rs
-> +++ b/rust/qemu-macros/src/lib.rs
-> @@ -162,6 +162,7 @@ enum DevicePropertyName {
->  #[derive(Debug)]
->  struct DeviceProperty {
->      rename: Option<DevicePropertyName>,
-> +    bitnr: Option<syn::Expr>,
->      defval: Option<syn::Expr>,
->  }
+> -// TODO: Make these properties user-configurable!
+> -declare_properties! {
+> -    HPET_PROPERTIES,
+> -    define_property!(
+> -        c"timers",
+> -        HPETState,
+> -        num_timers,
+> -        unsafe { &qdev_prop_usize },
+> -        usize,
+> -        default =3D HPET_MIN_TIMERS
+> -    ),
+> -    define_property!(
+> -        c"msi",
+> -        HPETState,
+> -        flags,
+> -        unsafe { &qdev_prop_bit },
+> -        u32,
+> -        bit =3D HPET_FLAG_MSI_SUPPORT_SHIFT as u8,
+> -        default =3D false,
+> -    ),
+> -    define_property!(
+> -        c"hpet-intcap",
+> -        HPETState,
+> -        int_route_cap,
+> -        unsafe { &qdev_prop_uint32 },
+> -        u32,
+> -        default =3D 0
+> -    ),
+> -    define_property!(
+> -        c"hpet-offset-saved",
+> -        HPETState,
+> -        hpet_offset_saved,
+> -        unsafe { &qdev_prop_bool },
+> -        bool,
+> -        default =3D true
+> -    ),
+> -}
+> -
+>  static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription<HPETState> =3D
+>      VMStateDescriptionBuilder::<HPETState>::new()
+>          .name(c"hpet/rtc_irq_level")
+> @@ -1001,12 +966,6 @@ impl ObjectImpl for HPETState {
+>          ))
+>          .build();
 >
-> @@ -174,40 +175,56 @@ fn parse(input: syn::parse::ParseStream) -> syn::Re=
-sult<Self> {
->          debug_assert_eq!(&attribute.to_string(), "property");
->          let mut retval =3D Self {
->              rename: None,
-> +            bitnr: None,
->              defval: None,
->          };
->          let content;
->          _ =3D syn::parenthesized!(content in bracketed);
->          while !content.is_empty() {
->              let value: syn::Ident =3D content.parse()?;
-> -            if value =3D=3D "rename" {
-> -                let _: syn::Token![=3D] =3D content.parse()?;
-> -                if retval.rename.is_some() {
-> -                    return Err(syn::Error::new(
-> -                        value.span(),
-> -                        "`rename` can only be used at most once",
-> -                    ));
-> +            match value {
-> +                ref v if v =3D=3D "rename" =3D> {
-> +                    let _: syn::Token![=3D] =3D content.parse()?;
-> +                    if retval.rename.is_some() {
-> +                        return Err(syn::Error::new(
-> +                            value.span(),
-> +                            "`rename` can only be used at most once",
-> +                        ));
-> +                    }
-> +                    if content.peek(syn::LitStr) {
-> +                        retval.rename =3D
-> +                            Some(DevicePropertyName::Str(content.parse::=
-<syn::LitStr>()?));
-> +                    } else {
-> +                        retval.rename =3D
-> +                            Some(DevicePropertyName::CStr(content.parse:=
-:<syn::LitCStr>()?));
-> +                    }
->                  }
-> -                if content.peek(syn::LitStr) {
-> -                    retval.rename =3D Some(DevicePropertyName::Str(conte=
-nt.parse::<syn::LitStr>()?));
-> -                } else {
-> -                    retval.rename =3D
-> -                        Some(DevicePropertyName::CStr(content.parse::<sy=
-n::LitCStr>()?));
-> +                ref v if v =3D=3D "bit" =3D> {
-> +                    let _: syn::Token![=3D] =3D content.parse()?;
-> +                    if retval.bitnr.is_some() {
-> +                        return Err(syn::Error::new(
-> +                            value.span(),
-> +                            "`bit` can only be used at most once",
-> +                        ));
-> +                    }
-> +                    retval.bitnr =3D Some(content.parse()?);
-> +                }
-> +                ref v if v =3D=3D "default" =3D> {
-> +                    let _: syn::Token![=3D] =3D content.parse()?;
-> +                    if retval.defval.is_some() {
-> +                        return Err(syn::Error::new(
-> +                            value.span(),
-> +                            "`default` can only be used at most once",
-> +                        ));
-> +                    }
-> +                    retval.defval =3D Some(content.parse()?);
->                  }
-> -            } else if value =3D=3D "default" {
-> -                let _: syn::Token![=3D] =3D content.parse()?;
-> -                if retval.defval.is_some() {
-> +                _ =3D> {
->                      return Err(syn::Error::new(
->                          value.span(),
-> -                        "`default` can only be used at most once",
-> +                        format!("unrecognized field `{value}`"),
->                      ));
->                  }
-> -                retval.defval =3D Some(content.parse()?);
-> -            } else {
-> -                return Err(syn::Error::new(
-> -                    value.span(),
-> -                    format!("unrecognized field `{value}`"),
-> -                ));
->              }
->
->              if !content.is_empty() {
-> @@ -242,7 +259,11 @@ fn derive_device_or_error(input: DeriveInput) -> Res=
-ult<proc_macro2::TokenStream
->      let mut properties_expanded =3D vec![];
->
->      for (field, prop) in properties {
-> -        let DeviceProperty { rename, defval } =3D prop;
-> +        let DeviceProperty {
-> +            rename,
-> +            bitnr,
-> +            defval,
-> +        } =3D prop;
->          let field_name =3D field.ident.unwrap();
->          macro_rules! str_to_c_str {
->              ($value:expr, $span:expr) =3D> {{
-> @@ -272,14 +293,20 @@ macro_rules! str_to_c_str {
->              },
->          )?;
->          let field_ty =3D field.ty.clone();
-> -        let qdev_prop =3D quote! { <#field_ty as ::hwcore::QDevProp>::BA=
-SE_INFO };
-> +        let qdev_prop =3D if bitnr.is_none() {
-> +            quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO }
-> +        } else {
-> +            quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO }
-> +        };
-> +        let bitnr =3D bitnr.unwrap_or(syn::Expr::Verbatim(quote! { 0 }))=
-;
->          let set_default =3D defval.is_some();
->          let defval =3D defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }=
-));
->          properties_expanded.push(quote! {
->              ::hwcore::bindings::Property {
->                  name: ::std::ffi::CStr::as_ptr(#prop_name),
-> -                info: #qdev_prop ,
-> +                info: #qdev_prop,
->                  offset: ::core::mem::offset_of!(#name, #field_name) as i=
-size,
-> +                bitnr: #bitnr,
->                  set_default: #set_default,
->                  defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: =
-#defval as u64 },
->                  ..::common::Zeroable::ZERO
+> -// SAFETY: HPET_PROPERTIES is a valid Property array constructed with th=
+e
+> -// hwcore::declare_properties macro.
+> -unsafe impl hwcore::DevicePropertiesImpl for HPETState {
+> -    const PROPERTIES: &'static [Property] =3D &HPET_PROPERTIES;
+> -}
+> -
+>  impl DeviceImpl for HPETState {
+>      const VMSTATE: Option<VMStateDescription<Self>> =3D Some(VMSTATE_HPE=
+T);
+>      const REALIZE: Option<fn(&Self) -> util::Result<()>> =3D Some(Self::=
+realize);
 > --
 > 2.34.1
 >
