@@ -4,79 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF1E4CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F04CAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyZ1t-0001Rc-86; Tue, 16 Sep 2025 12:59:45 -0400
+	id 1uyZ4S-0003FX-Qh; Tue, 16 Sep 2025 13:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3e5fJaAwKCh4H45CB8MN894HAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--nabihestefan.bounces.google.com>)
- id 1uyZ1r-0001RM-K6
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:59:43 -0400
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyZ45-0003Ae-P6
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:02:01 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3e5fJaAwKCh4H45CB8MN894HAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--nabihestefan.bounces.google.com>)
- id 1uyZ1q-0007uQ-2a
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 12:59:43 -0400
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-32e3c3e742eso2046725a91.3
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 09:59:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyZ42-00007r-Ft
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:02:01 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b0787fdb137so858476166b.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 10:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1758041980; x=1758646780; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ d=gmail.com; s=20230601; t=1758042117; x=1758646917; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
  :date:message-id:reply-to;
- bh=Uo0jnLsh0CTY23ZcYpeRBDnkRUdvhcZDFacymbbQOK8=;
- b=xCcqSK8A+++K3/qba3gB0Ex1NpU9w1jah87H2vxttZ64o0jyZJVFAtRZMPaxSa2hGq
- pJtrmpbqj3ugEx5O0qZhbxjCH26hBhJs6YD9vV13ATV91jwk74lOcaum+xlcpFIkm6oj
- 2Dtp7/DyKPhmE9s2z+qBsw6qqF4Ao4y3gLqa3zPEECra2E1MzXmdeUwTJ6X+m6IPLUbd
- txyqIQtVuRNQBR0ddO0zPyhDQh1C6cMKStOX0qEsc1QTZlUsqHGnj1xRaAC3vw/joqha
- BJ/waqNMkzcshCRdya2JqMnxKHxV5vDFdrAlWvZlIsQCBZvmQgCzvDpl39I/RoYXCA1C
- M3vQ==
+ bh=CBdZ5dcwSr4f9iSI8wtAG7XmCGx/aKThA4DFkRPOZ/A=;
+ b=Yadjn3Xj//RFhgo7SHH5wU9HF2jNbCaabZPEoEl0hm/v39LcJdnKBk/9U0Uzv/euB3
+ 4jnV5tqZGPyC69BR4BqFmGvcrVyaEoJ+i6WFxsvqr+GtYvy5d9R6JW2hR3Bow2bz4fRM
+ LjxPtet4AZRR/3aQw5Op0tTdo+Gw5g53CBKKPmozvrabUrJkhSbSPMuXCHsnrrv+hmTn
+ 7d281BCElh46Rd8FDYenQxGsjtXkpXqmDRBTaHiMAAcHao4dt9750HDRd0HARSlcEnJl
+ M1DS9Sun+RtvAvVjrtzp+3zN+e7v4pQgpo5E//0+fS8moec2eVrTe6JOxuPZ0FHcF1Am
+ KlrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758041980; x=1758646780;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=1e100.net; s=20230601; t=1758042117; x=1758646917;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Uo0jnLsh0CTY23ZcYpeRBDnkRUdvhcZDFacymbbQOK8=;
- b=EfU/yCO7Ex9f7IAfMKQLP1FPUV9WFZPXtki24678LxxTkIStmtFZBwh9jZjl8TmObu
- 5ElFMJqRy4bjxbC7eunJ1v7bRY8+zghN4Sl79jmP/nmNjEvrT3mchZyyYnI0P2NHx1ZE
- 4RNoPhNF+Yr7uhTHpkNb/l5hCa0PXWJLKjuop9qgyBMI2+Xx+THXkmVHuIa24RcIGExX
- 4zmV8uGrhZvssh279zWDA5uy23DGUX+Eo0Vhi993sp+O/vNAx+dnDPa+xoMKYCCfopas
- GkEsINT9NBfv4lNseT/Zh1S51aXk3DyRMoND2JgzumSFpGGu/jtj3Eta5nMuETqGZmwT
- yC/w==
-X-Gm-Message-State: AOJu0YzRvODvXCRG7J0VDSHcvNIVBf2l41EyyjEoXb8uWOyVDIr/jxm3
- TgWEibEEs+Uj6cGnGAt/+UT2pvvzCj8L8gxjTPJGzF+hj1Qva+wLxBXbiX8/nfAJTdXki0BNC5Q
- lA6Pmc724zLVC+3H+9fLAsYFvXWWEy3nafTgC8e/CiatPHf9lIrOA6z/058e0OS5iRxus8alL8e
- lJckjQbIAxW+xqHx6BbBoUfSnGn/bM6I7ZxnDna3Ujk3V1wcaictkvbk7iZFHXjRoYN/Q=
-X-Google-Smtp-Source: AGHT+IH0LDz97ySoJM56e7/ZhtjWDG4FspFSjfBz5DopiFqIRb+8Xp88OcbLcNmtAU9po54QwG2yF6gxdU9MaQa0RVA=
-X-Received: from pjll16.prod.google.com ([2002:a17:90a:710:b0:32e:aa46:d9ab])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:2d8e:b0:32e:64ca:e84e with SMTP id
- 98e67ed59e1d1-32e64caea02mr10935223a91.15.1758041979927; 
- Tue, 16 Sep 2025 09:59:39 -0700 (PDT)
-Date: Tue, 16 Sep 2025 16:59:28 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.51.0.384.g4c02a37b29-goog
-Message-ID: <20250916165928.10048-1-nabihestefan@google.com>
-Subject: [PATCH] checkpatch: Ignore removed lines in license check
-From: Nabih Estefan <nabihestefan@google.com>
-To: qemu-devel@nongnu.org, --save@google.com
-Cc: peter.maydell@linaro.org, berrange@redhat.com, 
- Nabih Estefan <nabihestefan@google.com>
+ bh=CBdZ5dcwSr4f9iSI8wtAG7XmCGx/aKThA4DFkRPOZ/A=;
+ b=ujmx/cHVBn+/3uRE187XDv8f33KW2esI7ijoO/ProV5BHjk5aWbi6vjvcO3XCuEuqz
+ 5m3ljhc/PVM9DlxaPTpeE5p3IduluYb/82wyX6hA3j3Hp0hDEeG80zOBAHjshThsREF8
+ c8sf4utqRSUWx4erbBF8mF30uKmRHrp6sS6ZHwIi0wgkAKW1dGD1e9Gm/Zzjsys0rbhh
+ eZ0tDVr9+N7sRQd2FRnuUpo//b0ySHeIuQEpg6aHJLlRCQNlrd7gVKVkA2TbrpqPulxL
+ f2IZa3QY1ewdnP5VoWGtYsS4W2yHnnGUJDplZPCF8SuR6iJdp2stnCH0GDaxHuKMmSXU
+ U55g==
+X-Gm-Message-State: AOJu0YwHPX7uPpfzi2FowpAS5NDxmYHO0jW4fnEg9e3uKnLuyPbbH8/n
+ 0iYF3f7nv7wrXiHqUuq01IyNkUdUupQ9Q9poDOcp3P0ixjT9nuvgHfhU
+X-Gm-Gg: ASbGnctB3go778Hkmeal5oeuTU9n4weU57zdTAGkFAW0XvBF2Ni5s4G1JCYEyXNUbBk
+ 2MM5/jLXV/+lB3lT4DBdgHNtjQJwiJTK/cM0xbdn3Mmo32SodL4xOwA8rEWIP/BDS8Y4qhhRfXO
+ qfXOpVZEMdEVEX+3ahy6iP/YkuuErNBLLHwl5COJsOZkkIeJK+j1AvH4F3BWS7VM70segDkACl6
+ KyEVeY4+ZwuHTIda7LDNGeWqqoV14pBebgAqkwfkjMgqae9buSdohkVZl1XeNPedgsA8NL2TSFA
+ glVNjapEKvpsfu54GwQ1VrCPoVjOOr7rKMRHIFz70cQZvNCDs92gT6KvwYwFZOP53uoJb8a5gwn
+ CEwmOCcegL6cZ1TRYiPTnNBmGFnyvwHa6MxJbDsfRox/0jkK2lw==
+X-Google-Smtp-Source: AGHT+IFFYITYlYgWedAgsGkK7hUGbCzt0lAVimiJq3U6kWX5cF4EX6rm73WJBl83vENC1vqQcYN2Aw==
+X-Received: by 2002:a17:907:ca21:b0:b04:470b:64a5 with SMTP id
+ a640c23a62f3a-b07c37e18e0mr1122241666b.36.1758042116367; 
+ Tue, 16 Sep 2025 10:01:56 -0700 (PDT)
+Received: from [10.192.92.112] (cgnat129.sys-data.com. [79.98.72.129])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b07b32dd47bsm1201321866b.58.2025.09.16.10.01.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Sep 2025 10:01:55 -0700 (PDT)
+Message-ID: <53a9b16a229930a3caa80af9541f16b4a8b6094c.camel@gmail.com>
+Subject: Re: [PATCH v4 07/10] qmp: add chardev-resize command
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, Eric Blake	 <eblake@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum	
+ <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu	
+ <zhao1.liu@intel.com>, Szymon Lukasz <noh4hss@gmail.com>, Daniel
+ =?ISO-8859-1?Q?P=2EBerrang=E9?=	 <berrange@redhat.com>,
+ devel@lists.libvirt.org
+Date: Tue, 16 Sep 2025 19:01:49 +0200
+In-Reply-To: <87bjnao8ae.fsf@pond.sub.org>
+References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
+ <20250912-console-resize-v4-7-7925e444afc4@gmail.com>
+ <871pob7ot7.fsf@pond.sub.org>
+ <64d6252959750b8da6f3bc4ac7c738b10463bf6d.camel@gmail.com>
+ <87cy7s1auw.fsf@pond.sub.org>
+ <ffa90309f0ce8c81836e5e7074d67ae76033b67f.camel@gmail.com>
+ <87bjnao8ae.fsf@pond.sub.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3e5fJaAwKCh4H45CB8MN894HAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--nabihestefan.bounces.google.com;
- helo=mail-pj1-x1049.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,34 +115,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running the license check, if we are updating a license it is
-possible for the checkpatch script to test against old license lines
-instead of newer ones, since the removal lines appear before the
-addition lines in a .patch file.
+On Tue, 2025-09-16 at 15:07 +0200, Markus Armbruster wrote:
+> Filip Hejsek <filip.hejsek@gmail.com> writes:
+>=20
+> > On Mon, 2025-09-15 at 08:35 +0200, Markus Armbruster wrote:
+> > > Filip Hejsek <filip.hejsek@gmail.com> writes:
+> > >=20
+> > > > On Fri, 2025-09-12 at 16:01 +0200, Markus Armbruster wrote:
+> > > > > Cc: libvirt
+> > > > >=20
+> > > > > Filip Hejsek <filip.hejsek@gmail.com> writes:
+> > > > >=20
+> > > > > > From: Szymon Lukasz <noh4hss@gmail.com>
+> > > > > >=20
+> > > > > > [...]
+> > > > > > =20
+> > > > > > +##
+> > > > > > +# @chardev-resize:
+> > > > >=20
+> > > > > This name doesn't tell me what is being resized.  PATCH 04 uses
+> > > > > "winsize", which is better.  The (losely) related SIGWINCH sugges=
+ts
+> > > > > "window change" or "window size change".  Below, you use "termina=
+l
+> > > > > size".
+> > > >=20
+> > > > How about chardev-console-resize? That would match the name of the
+> > > > virtio event (VIRTIO_CONSOLE_RESIZE).
+> > >=20
+> > > Not bad.  It could become slightly bad if we make devices other than
+> > > "consoles" make us of it.  Would that be possible?
+> >=20
+> > I don't think the size has any meaning for devices that are not
+> > connected to a console, although the code does not care whether it
+> > actually is a console and simply has a size for every chardev.
+>=20
+> Double-checking: the command works for any ChardevBackendKind, doesn't
+> it?
 
-Fix this by skipping over lines that start with "-" in the checkpatch
-script.
+Yes. For some (e.g. stdio) it will clash with builtin resize detection,
+but it can still be used (last update wins).
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- scripts/checkpatch.pl | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Maybe using the command should be prohibited for some device types?
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 833f20f555..c57a423f9f 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1813,7 +1813,8 @@ sub process {
- 		}
- 
- # Check SPDX-License-Identifier references a permitted license
--		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
-+		if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
-+			$rawline !~ /^-/) {
- 			$fileinfo->{facts}->{sawspdx} = 1;
- 			&checkspdx($realfile, $1);
- 		}
--- 
-2.51.0.384.g4c02a37b29-goog
+> > I guess I could also rename it to chardev-window-resize
+> > or chardev-set-window-size. Let me know if you prefer one of these.
+>=20
+> I think I'd prefer "window" or "terminal".
+>=20
+> "resize" and "set size" suggest that the command initiates a size
+> change.  Not true, it notifies of a size change.  Maybe
+> "chardev-window-size-changed", "chardev-terminal-size-changed",
+> "chardev-window-resized", or "chardev-terminal-resized".
 
+OK, then I'll use "chardev-window-size-changed".
+
+> > > > >=20
+> > > >=20
+> [...]
+> Another question...  'vc' chardevs accept optional @rows, @cols (see
+> ChardevVC).  Is this the same size or something else?
+
+Well, yes and no. @cols + @rows control the actual size of the console
+screen buffer, while the chardev size is only used to inform the guest
+about the size. @cols and @rows can also be unset, in which case the
+size will be determined automatically from display and font size.
+
+This patch series does not yet implement size propagation for the 'vc'
+device. I have WIP patches for that, but there is something I'm not
+sure how to do, so I will likely send an RFC first.
+
+> > > A clearly invalid size.  I guess it effectively means "unknown size".
+> > > Should we document that?
+> >=20
+> > Probably. 0x0 is I think also the default size in the Linux kernel, but
+> > I don't think the Linux kernel documents this.
+>=20
+> How does 0 x 0 behave compared to a valid size like 80 x 24?
+
+In these patches it is not treated specially (apart from being the
+default). I think the Linux kernel doesn't treat it specially either.
+Terminal programs generally interpret it as unknown size and use other
+methods to obtain the size like environment variables, the terminfo
+database, or defaulting to 80x24. Example:
+
+   $ python -c 'import termios; termios.tcsetwinsize(0, (0,0))'
+   $ tput cols
+   80
+
+>=20
+> [...]
+> > > > > Do we need a way to query the size?
+> > > >=20
+> > > > I don't think it is necessary. What would be the usecase for that?
+> > >=20
+> > > I don't know, but it's my standard question when I see an interface t=
+o
+> > > set something without an interface to get it.  Its purpose is to make=
+ us
+> > > think, not to make us at the get blindly.
+> >=20
+> > I guess it might be useful for debugging. If the size is not propagated
+> > correctly, one might query it to find out on which side the problem is.
+>=20
+> We have query-chardev.  It doesn't return much.
+
+I'm not sure what you're implying. Shall I add the size there?
+> > > > >=20
 
