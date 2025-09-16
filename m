@@ -4,80 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBA6CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 13:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50505CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 13:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyVlP-0001gW-38; Tue, 16 Sep 2025 09:30:31 -0400
+	id 1uyVx0-0005KV-FU; Tue, 16 Sep 2025 09:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyVlI-0001fi-Ir
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 09:30:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
+ id 1uyVwx-0005Jd-13; Tue, 16 Sep 2025 09:42:27 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyVlD-0008Ux-Ja
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 09:30:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758029412;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W56OVayfjtw3+UpoJKq7dLcaG+IStwODUGMsVrNF4vQ=;
- b=N8agZIrHIJWAB5qCMglQnQp19hmoVl3/hyV/iyaRE50DbtQPx5QmMWzvDLOD5KukHcAz+w
- 0CMmnIZZnzzBFPJIS9Qa0bgcJq+TJGisiv7Y+IXoMw2jydyP44HPMHdF0B54oX4+UT+44C
- cAA0ZXS6FMRlFDwVzLTWq+vjm4Qy7p8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-Tfhk-GdMOJuXiItHHQydFg-1; Tue,
- 16 Sep 2025 09:30:10 -0400
-X-MC-Unique: Tfhk-GdMOJuXiItHHQydFg-1
-X-Mimecast-MFC-AGG-ID: Tfhk-GdMOJuXiItHHQydFg_1758029409
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D3631955EA1; Tue, 16 Sep 2025 13:30:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F294A19560BA; Tue, 16 Sep 2025 13:30:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6E57221E6A27; Tue, 16 Sep 2025 15:30:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH v5 7/8] qapi: switch to use QEMU_TEST_REGENERATE env var
-In-Reply-To: <20250916081638.764020-8-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 16 Sep 2025 09:16:37
- +0100")
-References: <20250916081638.764020-1-berrange@redhat.com>
- <20250916081638.764020-8-berrange@redhat.com>
-Date: Tue, 16 Sep 2025 15:30:06 +0200
-Message-ID: <87ikhimso1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zoudongjie@huawei.com>)
+ id 1uyVwp-0001Na-Gg; Tue, 16 Sep 2025 09:42:26 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4cR34s6623z27jQy;
+ Tue, 16 Sep 2025 21:43:09 +0800 (CST)
+Received: from kwepemf200001.china.huawei.com (unknown [7.202.181.227])
+ by mail.maildlp.com (Postfix) with ESMTPS id A943A1A0188;
+ Tue, 16 Sep 2025 21:41:59 +0800 (CST)
+Received: from huawei.com (10.175.101.6) by kwepemf200001.china.huawei.com
+ (7.202.181.227) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 16 Sep
+ 2025 21:41:58 +0800
+To: <qemu-devel@nongnu.org>
+CC: <marcandre.lureau@redhat.com>, <berrange@redhat.com>,
+ <alex.chen@huawei.com>, <chenjianfei3@huawei.com>, <eric.fangyi@huawei.com>,
+ <luolongmin@huawei.com>, <mujinsheng@huawei.com>, <qemu-block@nongnu.org>,
+ <qemu-stable@nongnu.org>, <renxuming@huawei.com>, <suxiaodong1@huawei.com>,
+ <wangjian161@huawei.com>, <wangyan122@huawei.com>, <yebiaoxiang@huawei.com>,
+ <yangming73@huawei.com>, <zhuyangyang14@huawei.com>, <zoudongjie@huawei.com>
+Subject: [PATCH] vnc: Fix memory leak during VNC tls authentication
+Date: Tue, 16 Sep 2025 21:41:53 +0800
+Message-ID: <20250916134153.974692-1-zoudongjie@huawei.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.175.101.6]
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemf200001.china.huawei.com (7.202.181.227)
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=zoudongjie@huawei.com;
+ helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,99 +66,233 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  zoudongjie <zoudongjie@huawei.com>
+From:  zoudongjie via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+When qemu is performing a TLS handshake for VNC, it will monitor vs->sioc
+in the qio_channel_tls_handshake_task. If the number of concurrent VNC
+connections exceeds the maximum number allowed by qemu, vnc_connect will
+traverse all connection requests in share mode VNC_SHARE_MODE_CONNECTING
+and disconnect the first one.
 
-> The QAPI_TEST_UPDATE env var can be set when running the QAPI
-> schema tests to regenerate the reference output. For consistent
-> naming with the tracetool test, change the env var name to
-> QEMU_TEST_REGENERATE.
->
-> The test is modified to provide a hint about use of the new
-> env var and it is also added to the developer documentation.document its =
-usage.
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  docs/devel/testing/main.rst    | 12 ++++++++++++
->  tests/qapi-schema/test-qapi.py |  7 +++++--
->  2 files changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-> index 11f05c0006..0662766b5c 100644
-> --- a/docs/devel/testing/main.rst
-> +++ b/docs/devel/testing/main.rst
-> @@ -178,6 +178,18 @@ parser (either fixing a bug or extending/modifying t=
-he syntax). To do this:
->=20=20
->    ``qapi-schema +=3D foo.json``
->=20=20
-> +The reference output can be automatically updated to match the latest QA=
-PI
-> +code generator by running the tests with the QEMU_TEST_REGENERATE enviro=
-nment
-> +variable set.
-> +
-> +.. code::
-> +
-> +   QEMU_TEST_REGENERATE=3D1 make check-qapi-schema
-> +
-> +The resulting changes must be reviewed by the author to ensure they match
-> +the intended results before adding the updated reference output to the
-> +same commit that alters the generator code.
-> +
->  .. _tracetool-tests:
->=20=20
->  Tracetool tests
+If the disconnected request has not yet entered qio_channel_tls_handshake_io,
+it will cause the data pointer allocated in qio_channel_tls_handshake_task
+to leak directly, leading to an indirect leak of the task and its associated
+pointers.
 
-Appreciated, thanks!
+The connection count verification and disconnection logic in vnc_connect
+comes from this commit:
+https://github.com/qemu/qemu/commit/e5f34cdd2da54f28d90889a3afd15fad2d6105ff
 
-> diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi=
-.py
-> index 4be930228c..cf7fb8a6df 100755
-> --- a/tests/qapi-schema/test-qapi.py
-> +++ b/tests/qapi-schema/test-qapi.py
-> @@ -165,7 +165,7 @@ def test_and_diff(test_name, dir_name, update):
->      if actual_out =3D=3D expected_out and actual_err =3D=3D expected_err:
->          return 0
->=20=20
-> -    print("%s %s" % (test_name, 'UPDATE' if update else 'FAIL'),
-> +    print("%s: %s" % (test_name, 'UPDATE' if update else 'FAIL'),
+Its description states that the purpose of this modification is to prohibit
+new connections when the number of concurrent connections reaches the limit,
+but the code actually disconnects other connections, which indirectly led
+to this memory leak.
 
-I would've left this out just to keep the patch focused.  Definitely not
-worth a respin now.
+I tried removing the QTAILQ_FOREACH, disconnecting only the current connection
+when the connection limit is reached. It seems that memory leaks will no longer
+be triggered, but this introduces a new problem: if a VNC_SHARE_MODE_CONNECTING
+state client disconnects abnormally, it will lead to a persistent residual
+invalid connection. QEMU will no longer have the opportunity to release that
+invalid connection afterwards. If such connections continue to accumulate, it
+will prevent normal VNC clients from connecting to the QEMU virtual machine.
 
->            file=3Dsys.stderr)
->      out_diff =3D difflib.unified_diff(expected_out, actual_out, outfp.na=
-me)
->      err_diff =3D difflib.unified_diff(expected_err, actual_err, errfp.na=
-me)
-> @@ -173,6 +173,9 @@ def test_and_diff(test_name, dir_name, update):
->      sys.stdout.writelines(err_diff)
->=20=20
->      if not update:
-> +        print(("\n%s: set QEMU_TEST_REGENERATE=3D1 to recreate reference=
- output" +
-> +               "if the QAPI schema generator was intentionally changed")=
- % test_name,
-> +              file=3Dsys.stderr)
->          return 1
->=20=20
->      try:
-> @@ -197,7 +200,7 @@ def main(argv):
->      parser.add_argument('-d', '--dir', action=3D'store', default=3D'',
->                          help=3D"directory containing tests")
->      parser.add_argument('-u', '--update', action=3D'store_true',
-> -                        default=3D'QAPI_TEST_UPDATE' in os.environ,
-> +                        default=3D'QEMU_TEST_REGENERATE' in os.environ,
->                          help=3D"update expected test results")
->      parser.add_argument('tests', nargs=3D'*', metavar=3D'TEST', action=
-=3D'store')
->      args =3D parser.parse_args()
+I attempted to extend QIOChannelTLS by saving the task and context directly into
+the ioc, and processing them in qio_channel_tls_close to avoid leaks caused by
+requesting new pointers. However, I am concerned that the related interfaces are
+quite general and may introduce new issues. Therefore, I only implemented special
+handling for the VNC TLS connection scenario, but I'm not sure if it will introduce
+any hidden problems. Is there a more reasonable modification plan for this type
+of problem scenario?
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reported by: jiangyegen@h-partners.com
+
+Signed-off-by: zoudongjie <zoudongjie@huawei.com>
+---
+ include/io/channel-tls.h |  3 ++
+ include/io/task.h        |  8 ++++
+ io/channel-tls.c         | 83 +++++++++++++++++++++++++++++++++++-----
+ io/task.c                |  2 +-
+ 4 files changed, 85 insertions(+), 11 deletions(-)
+
+diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
+index 7e9023570d..fae7cd9a98 100644
+--- a/include/io/channel-tls.h
++++ b/include/io/channel-tls.h
+@@ -50,6 +50,9 @@ struct QIOChannelTLS {
+     QIOChannelShutdown shutdown;
+     guint hs_ioc_tag;
+     guint bye_ioc_tag;
++
++    QIOTask *hs_task;
++    GMainContext *hs_context;
+ };
+ 
+ /**
+diff --git a/include/io/task.h b/include/io/task.h
+index 0b5342ee84..213b69e60e 100644
+--- a/include/io/task.h
++++ b/include/io/task.h
+@@ -218,6 +218,14 @@ QIOTask *qio_task_new(Object *source,
+                       gpointer opaque,
+                       GDestroyNotify destroy);
+ 
++/**
++ * qio_task_free:
++ * @task: the task struct
++ *
++ * free the memory of the task.
++ */
++void qio_task_free(QIOTask *task);
++
+ /**
+  * qio_task_run_in_thread:
+  * @task: the task struct
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index a8248a9216..76d77299b7 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -157,12 +157,25 @@ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+                                              GIOCondition condition,
+                                              gpointer user_data);
+ 
++static gboolean qio_channel_tls_handshake_io_vnc(QIOChannel *ioc,
++                                                 GIOCondition condition,
++                                                 gpointer user_data);
++
++static bool qio_channel_tls_for_vnc(QIOChannelTLS *ioc)
++{
++    if (!QIO_CHANNEL(ioc)->name) {
++        return false;
++    }
++    return (!strcmp(QIO_CHANNEL(ioc)->name, "vnc-server-tls"));
++}
++
+ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+                                            QIOTask *task,
+                                            GMainContext *context)
+ {
+     Error *err = NULL;
+     int status;
++    QIOChannelTLSData *data = NULL;
+ 
+     status = qcrypto_tls_session_handshake(ioc->session, &err);
+ 
+@@ -185,10 +198,15 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+         qio_task_complete(task);
+     } else {
+         GIOCondition condition;
+-        QIOChannelTLSData *data = g_new0(typeof(*data), 1);
+ 
+-        data->task = task;
+-        data->context = context;
++        if (qio_channel_tls_for_vnc(ioc)) {
++            ioc->hs_task = task;
++            ioc->hs_context = context;
++        } else {
++            data = g_new0(typeof(*data), 1);
++            data->task = task;
++            data->context = context;
++        }
+ 
+         if (context) {
+             g_main_context_ref(context);
+@@ -201,13 +219,23 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+         }
+ 
+         trace_qio_channel_tls_handshake_pending(ioc, status);
+-        ioc->hs_ioc_tag =
+-            qio_channel_add_watch_full(ioc->master,
+-                                       condition,
+-                                       qio_channel_tls_handshake_io,
+-                                       data,
+-                                       NULL,
+-                                       context);
++        if (data) {
++            ioc->hs_ioc_tag =
++                qio_channel_add_watch_full(ioc->master,
++                    condition,
++                    qio_channel_tls_handshake_io,
++                    data,
++                    NULL,
++                    context);
++        } else {
++            ioc->hs_ioc_tag =
++                qio_channel_add_watch_full(ioc->master,
++                    condition,
++                    qio_channel_tls_handshake_io_vnc,
++                    ioc,
++                    NULL,
++                    context);
++        }
+     }
+ }
+ 
+@@ -233,6 +261,31 @@ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+     return FALSE;
+ }
+ 
++static gboolean qio_channel_tls_handshake_io_vnc(QIOChannel *ioc,
++                                                 GIOCondition condition,
++                                                 gpointer user_data)
++{
++    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(user_data);
++
++    if (!tioc || tioc->hs_task == NULL) {
++        return FALSE;
++    }
++
++    QIOTask *task = tioc->hs_task;
++    GMainContext *context = tioc->hs_context;
++
++    tioc->hs_ioc_tag = 0;
++    tioc->hs_task = NULL;
++    tioc->hs_context = NULL;
++    qio_channel_tls_handshake_task(tioc, task, context);
++
++    if (context) {
++        g_main_context_unref(context);
++    }
++
++    return FALSE;
++}
++
+ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+                                QIOTaskFunc func,
+                                gpointer opaque,
+@@ -470,6 +523,16 @@ static int qio_channel_tls_close(QIOChannel *ioc,
+         g_clear_handle_id(&tioc->bye_ioc_tag, g_source_remove);
+     }
+ 
++    if (tioc->hs_context) {
++        g_main_context_unref(tioc->hs_context);
++        tioc->hs_context = NULL;
++    }
++
++    if (tioc->hs_task) {
++        qio_task_free(tioc->hs_task);
++        tioc->hs_task = NULL;
++    }
++
+     return qio_channel_close(tioc->master, errp);
+ }
+ 
+diff --git a/io/task.c b/io/task.c
+index 451f26f8b4..561a373590 100644
+--- a/io/task.c
++++ b/io/task.c
+@@ -70,7 +70,7 @@ QIOTask *qio_task_new(Object *source,
+     return task;
+ }
+ 
+-static void qio_task_free(QIOTask *task)
++void qio_task_free(QIOTask *task)
+ {
+     qemu_mutex_lock(&task->thread_lock);
+     if (task->thread) {
+-- 
+2.33.0
 
 
