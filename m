@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F027CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 22:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063EECAC592
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 23:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyeTz-00033D-Rj; Tue, 16 Sep 2025 18:49:07 -0400
+	id 1uyfOF-0001bR-EZ; Tue, 16 Sep 2025 19:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uyeTw-000310-Sg
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:49:05 -0400
-Received: from p-east3-cluster7-host12-snip4-5.eps.apple.com ([57.103.84.246]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uyfOD-0001at-Q1
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 19:47:14 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uyeTv-0004rN-2T
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 18:49:04 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPS id
- 717CD1800129; Tue, 16 Sep 2025 22:48:56 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=mDbLg3wYfQ7NV1O3oBi8gVjmH0TooxeneM6zmpMd7cA=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=O7b8NGoAiw2mH581MqejkRkl0GtghjFEkgkr9hOnQpLDt89rolPd31azK5SJ38uNaB7CHpiCKP/sU6CDkl2a69e0OLvaBGvFkc898jnw+rVDzpNaTT0Rl7qHvcQl1d20lQeL5TaWP1FLbObFy0OtcsKYIWgqjZ7aaQKO/IKUdTf3q8hnJZtjXdfGZdAgw220itUutUhPrF38bEkFdlyKVhniGz8fHdyJtIUWcFnVIwyDesC1kzWBeVVJDxJ3n83Z/VYAbnWaR8Ol7TKn+GUP6mTyv1cBLf8BPY+PfUHZEvuIjLWQAJ/8JIcdVhbwTjwI+NtvH3b69miVQ8UNdUfLtA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-9 (Postfix) with ESMTPSA id
- 4D65E1800115; Tue, 16 Sep 2025 22:48:53 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [PATCH v4 03/27] target/i386/mshv: Add x86 decoder/emu
- implementation
-Date: Wed, 17 Sep 2025 00:48:41 +0200
-In-Reply-To: <aMmg_K8N1fKGUV4o@gallifrey>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uyfOB-000378-Nh
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 19:47:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=cFpqqjmyTjkLDa8ig/q/LF4psNpJt77xkFLf9d/EJ9s=; b=hEr2z5Qmuq9VpfP6
+ k3o6oME0OIUGGpe0L3yoauS4x4sy3fRUF/27Cj/ElPVR3WxJq4KlLv1CRi+gJBSag42EPalRmhGpy
+ qRsnClLGsTGTFRxKrMoK+PFsWUGnIYHwOlhQ9+NTa1V/7ijYK20/plrR34AtZvXNajNcc36V9jzEO
+ V2oUljmIgSsk0XN9V8wGMfK7acecAh237F40b8np5DLrJ8JySIlkWBVFV4aeyOG6qXqXv7cemNQr5
+ 3Ip/htFOXKxwNS/T32A06bhAOB/wdurV8rd0NKRdsPMIeIsNMHLbg/9uB2VGmCqv83y7IA8GpUp1u
+ RRPKzcAP6DyHO/Rl+Q==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uyfO2-00BTvT-0m;
+ Tue, 16 Sep 2025 23:47:02 +0000
+Date: Tue, 16 Sep 2025 23:47:02 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
  Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ =?iso-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [CRM114spam]: Re: [PATCH v4 03/27] target/i386/mshv: Add x86
+ decoder/emu implementation
+Message-ID: <aMn29rg2b7yC7Iu7@gallifrey>
 References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
  <20250916164847.77883-4-magnuskulke@linux.microsoft.com>
  <aMmg_K8N1fKGUV4o@gallifrey>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-ORIG-GUID: A2bviv6Fn1cclaOWZkpAkuiIMsmiT9iU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIxNCBTYWx0ZWRfX//UdMfRCd51f
- WYu8gSk+0W9dv7hQtAAkDSdjfOTj9XSLZ+ZfwziLNAX7nP+URr/IzCDTVTnysTZSLmZRsr9iLRb
- c5zLAE4IbfolElc3iE5U2wH9LgeCBhi9hHRxWLV3Hs2VF0bqwp2GgUY2wj1vjVCDhmpJv+SUdSy
- YmYxnpmPEB6J4+uje835Lkf9FRtJ9o31ZF5GjmyRSJ77vsjlBC6SZ+fde4sSnFhXp+wbEK2u5in
- hAHOupbXBAQvyPXlKpUSMTxA/ubgGlqPFLR4frzqhVULqwJam4ajIVUOOX4TACffdips0gBA8=
-X-Proofpoint-GUID: A2bviv6Fn1cclaOWZkpAkuiIMsmiT9iU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-16_02,2025-09-16_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 mlxscore=0 adultscore=0
- suspectscore=0
- clxscore=1030 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2509160214
-X-JNJ: AAAAAAABNhi7O3dzlkCfLC60iuN/Pxt0Uvh/ff+qSrnALJRA/tr6Pr7icjmBSxLrGUY4wBIdyj8pdKgatNmK2+BodqBZznI1b2AYk3IR6HrGsaQb4K5K97m9FNP4GovV/9Lkh0cjhyQakQqWgqt8C1ywb6V/Vf8vc+lTGJcLQqGHzRa4lcuaM5+3O+51m/tB/UQnnZo8QOUU2wckoDsG2fOGXd+HSrmm6eQghjit/yWDFMXHuJ+o4HEDl5wg6Fmf4+jSB9SRH8W3DxSsFVo4E6O5ZPVK/VgRZtDaupe1AXhIjVVwYjubnamcu4CNlgKfy7U9eda0f+pq4/4cQlps4brOvdInkGmYp1RkuJbNip1pomeoZOFO0S3yJyKHV5Xy4vPEAW9/ipumU4AQJZwmBYF7L5ZmicHP9e0ZKJ3rtlACVlRSimGgz4t7VUSgMRkU+8THKECMD7CQCB5K6Nk3re9Ji7KfSqeFFxq07R5wcQ5ZiZWWT4nZ2KR5V3JRuC713ZcfCelX61ctv+7a1CR1EcSEEPRTxOajxEwgPhqkNDfPLhrffT7k4twA+OXmGOsmVhCunb+ft5G9mrC6PN7n76vuftKqQ4aRiIctMMe8a3HUXWTtYvevV6UEUi0GF/c6V5CpRo8dFzr9vh1WtOPv6+L4MVi+MzqbtTqhdMuTW1BdFspPekEIeetlO+voPe5swVr1u8MpPwl/1E5RH8ljcyILRg+pIWJroRF2yWrJ7TVNP8lYpagR6sUTQ+J1ahSr0SSIYoZ/4I0333cxsqjYR7nRdgDqWHtojnq80+2B2H4HHbcSOvgl49N6WhiOwefH3sQgql36LfrwbT5jxbzNFEVHCARexYTn0onf7rNiUycw0+tUPbE0yRDMmudqg1xYrubI
-Received-SPF: pass client-ip=57.103.84.246;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 23:37:17 up 142 days,  7:50,  1 user,  load average: 0.06, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,102 +90,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+* Mohamed Mediouni (mohamed@unpredictable.fr) wrote:
+> 
+> 
+> > On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+> > 
+> > For example 'x86_is_real' is declared in target/i386/emulate/x86.h
+> > and defined in target/i386/hvf/x86.c  (hmm that's a bit weird).
+> > So it's probably best to check if what you want already exists,
+> > move it into target/i386 somewhere I guess, and everyone shares it.
 
---Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+> Currently there isn’t a backend-agnostic interface for this. 
+> It was part of the import of HVF support to qemu from downstream.
 
+Hmm.
 
+> Notably means that the emulate infrastructure isn’t usable by multiple
+> backends in the same build. It might be possible to get away without that
+> however as HVF is macOS specific, MSHV is Linux-specific and WHPX
+> (which is currently using winhvemulator instead of this) is Windows-specific...
 
-> On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert <dave@treblig.org> =
-wrote:
->=20
-> For example 'x86_is_real' is declared in target/i386/emulate/x86.h
-> and defined in target/i386/hvf/x86.c  (hmm that's a bit weird).
-> So it's probably best to check if what you want already exists,
-> move it into target/i386 somewhere I guess, and everyone shares it.
-Currently there isn=E2=80=99t a backend-agnostic interface for this.=20
-It was part of the import of HVF support to qemu from downstream.
+It does scare me a bit having 2 different functions with the same name like that;
+but hmm OK...
 
-Notably means that the emulate infrastructure isn=E2=80=99t usable by =
-multiple
-backends in the same build. It might be possible to get away without =
-that
-however as HVF is macOS specific, MSHV is Linux-specific and WHPX
-(which is currently using winhvemulator instead of this) is =
-Windows-specific...
-=20
+But - x86_is_real() is identical in these cases - the x86_is_protected() is the
+implementation dependent bit.
+The only bit that seems different is the reading of the register, eg. CR0, so there
+could be a:
 
+   x86_read_CR0(CPUState *cpu)
+and the x86_is_real and x86_is_paging_mode all be shared (as inline's ???).
 
---Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+But this does all get messy - I mean, even if MSHV is Linux specific, and HVF
+is macos specific; it's a shame that the logic behind x86_is_* is open coded
+in all of tcg, kvm and copied twice in hvf and mshv.
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert =
-&lt;dave@treblig.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">For example 'x86_is_real' is declared in =
-target/i386/emulate/x86.h</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">and =
-defined in target/i386/hvf/x86.c &nbsp;(hmm that's a bit =
-weird).</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">So it's probably best to =
-check if what you want already exists,</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">move it =
-into target/i386 somewhere I guess, and everyone shares it.</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: =
-none;"></div></blockquote></div>Currently there isn=E2=80=99t a =
-backend-agnostic interface for this.&nbsp;<div>It was part of the import =
-of HVF support to qemu from downstream.<div><br></div><div>Notably means =
-that the emulate infrastructure isn=E2=80=99t usable by =
-multiple</div></div><div>backends in the same build. It might be =
-possible to get away without that</div><div>however as HVF is macOS =
-specific, MSHV is Linux-specific and WHPX</div><div>(which is currently =
-using winhvemulator instead of this) is =
-Windows-specific...</div><div>&nbsp;</div><div><br></div></body></html>=
+(I don't understand the structure as to why some stuff needs backend specific
+reads and some are in env).
 
---Apple-Mail=_1D16EF85-9730-4AE1-B498-9C04480066BD--
+Dave
+
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
