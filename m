@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0C1CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B542ECAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:13:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uya5i-0004Ub-Td; Tue, 16 Sep 2025 14:07:47 -0400
+	id 1uya7J-0006aY-GV; Tue, 16 Sep 2025 14:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4z-0003DJ-Al
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:03 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1uya58-0003Tx-TY
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:18 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4v-0001dt-Tl
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:00 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3e9ca387425so2284407f8f.0
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:46 -0700 (PDT)
+ id 1uya4v-0001e4-Tx
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:04 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45dfb8e986aso57691195e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758046006; x=1758650806; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758046008; x=1758650808; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WKrPXfhV0yZcHSRkAd9uqCS4QKSHcYCg0rne8WnkpnI=;
- b=ER8lvKoSqFqzfCfLj1NDCd6bmPyc/Q08usr2BgC1z3TuRPWwZ+wjJgHOKxxYmfTAc6
- nfLbQsrVR1fCB0rfRLfQIjGEUdvEPmXxW8wQqNPVu6pB3pFbeMvi74Gciyj8bqFOjQET
- uZouIxUC0oEZ9vqW8p0pxhTrUQMH27LmSOcOx9aqQj3CzujWDYwPezFSe0JoBKAYbWta
- DC8PRhFNDGElxNOcrKhGwnNTHQuWIXlFszJ15B33/vq+Kt/dKb156opDnPtoaZPG2rU5
- Cu51uTHyWrMoNYPX9n67tekQq2PHu1EGvLkKAOxjjgWtXzxoaXTtsNRwtY40sA/M9U2M
- Ah/A==
+ :reply-to; bh=ubfc2PZj+oS1m5/ITApUfm2bX3aVbus3n9rVpILRrWE=;
+ b=jvB/OlytC3Cd0Ypu3HNq+FQ7FvQjfIvSeBDqPl9tgfMxoxlKlCJhYzbK7kjCqZKNRz
+ 5Ndq+ZjFwYQWchjswDlKkefv/nU3gnF6k0HI0TrAl36lLVkM49Q6tTs5PrqjScD4TPK4
+ i7QVA7/Pb8+JiENZFs6Bi/scgAnqYlyItIaYxys/2DMu6bbwYWaJs/wRydQxbrLrthSS
+ +PVdaoiCyCCHcl6S+Ek+y6QNLmUqdmY0hC7Cg8n4IEvPRs8ccS57wM8n1QBdY2Sl/oYj
+ 0aTLPdxEssaj5pZZ2mRgGzDPhAQpeYB31rt9Wz0LoZO79mYMIJJjfm79X4DJfo9aRnH3
+ nUjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758046006; x=1758650806;
+ d=1e100.net; s=20230601; t=1758046008; x=1758650808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WKrPXfhV0yZcHSRkAd9uqCS4QKSHcYCg0rne8WnkpnI=;
- b=q6U3nZCcC+tCArTNmX0GnCyORQ1e5ZgYughiFqeLoGwzz+rYWa1x9+J2KbV5SvJcvq
- oC32DokkI6JHBu//R1q+P5ZjqsSOpUtxmEUCr0/qjk0bFXTIO+rNbXNmYu18VldPADMi
- yemJS0tsCviTVAq1CwlcOrULzDj26JUeazUeZ9UvBWBQRYtNO83f9QOLCRXX5CIRZ+uP
- OTvUNJK/Jkk84Jg21TJkL09nZjTDBAXWFztNf1h2mG5MtVEIJFUKI8vcBHX4D4Y/u0RY
- ZDb2uRZSdFe5MJY3pV7JP8QwONwXYtOMBgq47TU5JclAF2cnwdjBIuiwgfSXP8REIbfX
- cTiQ==
-X-Gm-Message-State: AOJu0YwOha+PcQu9U6sIM4+DdIKW9j4Qx094Gnem/GvUTp6/rbyGqkfl
- 8kXUB4rNzQN9XLGIC8GKNtE+IXIQYrBHuVMzzeRCVcbzGDBtkadPBHCMH7H90xzahjfKecrGtAS
- d5YOQ
-X-Gm-Gg: ASbGncuBdHQPGvJXApiDCuO9mDqOrVqW+5aO9T575nKO0FvX9ssr9HzBO/1+SGVz599
- IzEP7/bKYmRhWAckAmbqwMyh3q4XDlBPzizky3j5Dc5W9QMeSoyLE1RB+B21s6ADDQGdUmUUE8Z
- esTTKluYb6oq/hWieHsWP87YOegydOjraaYJOQ+moQPGMTY4U33RH4kWnBuOk8LlVt1X05ppMmx
- wuha4mGImdQmAzRXXHoHQV5Urz8FwE1BBvBJcUQ1219wHbeY+1/EpT6p8fMOOs8ivQnZLC/AgdS
- 8Uuufr+BEs16jugEplZIj8xQ3eskWMa8a7O/T2VdA1hRjmkHLV2M5WvxhnZqGbivh7jUr45r4Qs
- POrNOTEBXqFEpWePRbzxiRucLWXfG
-X-Google-Smtp-Source: AGHT+IGG/xL9OT5ukmdFF6iyS38WHQqljS5zhtvsweQV6Si2QyaUwWa1ZhbRurwpdy4mMpFX8+JCmQ==
-X-Received: by 2002:a05:6000:40de:b0:3e9:978e:48fd with SMTP id
- ffacd0b85a97d-3e9978e8e25mr10239585f8f.23.1758046005711; 
- Tue, 16 Sep 2025 11:06:45 -0700 (PDT)
+ bh=ubfc2PZj+oS1m5/ITApUfm2bX3aVbus3n9rVpILRrWE=;
+ b=Q0hn5IYU7qrYZJlzZHVFKzf1NgLtWHgt1DQKgZQ3bGJ2QLAXpomLYmoXIMVXBxKoFj
+ Mjs8YKaqHP1Xhc962g/+ajpj/cUCOYavMYInGEqrQWZrZy3n8xo6VUFP2GrnvMY66w9j
+ lL9SqZ568h8X3/OFN5xMwkoIaDjSrnfzZbfSfaHy9NHZptTP0KsOh1SuQbc+Gapv9qDL
+ A0si5sEtYK8zruhiJD7Q//hADBbfsWj0EnzNUTZNOZX5Ha7whrH9Fapi9Z3V9CxAlmPw
+ rOKHJi4hz1WMQwb8AGLDT8+cq7t26c4dwaEyTW/KTFTD4nqRX5vl0FanoCwQSpMr/bpf
+ CZqw==
+X-Gm-Message-State: AOJu0YyHsW11nHbCgOpeWZYADi/ytZjP45KhVMlH1Ua9CbNPylFmoFI/
+ YHpnSeJURFNqYg9GfzHxsrX3KRPYPEvsHkCS4tO+aPQfGOAv16tUtZ0T+6JFu3/4csaGTZhId0g
+ TQVDJ
+X-Gm-Gg: ASbGncvNIrEOOjFoTIUL9qAzl7BrZSpP72qcrgyHpAvjCkBkwEMxWAUlY2CQun/CQoV
+ JIXcB9PEiyYyqJfO/W84D7PhBiaxHylfnXIpwo6SnERHhQ8LOkeBu5CeRMu+sBedXs0tLUsvey6
+ nDrxJMqBmh7k4q7pMe1HxXBmH4G3XI7Mt7rj0l5+zoI8JL6bO4uyXcs0R47PsKpYsLSobQxpqqN
+ sOTGC5F3DfzO/8K7CkLK7cVGUULQpOPrUghqQPSulNg9hjlMg8sK9QfC2f7DnJgbwl5DDCBKnzJ
+ YvW16M+CQk7nbUKAb3j0qiYhJZd4X6NAZWroI8Pvphcx4C1sPUNoLil6IC8uoZ7m72vFzstIy2U
+ u9HawrS7owjf9Itz9YwtbB7tKv+6IZLGsKuf+ACY=
+X-Google-Smtp-Source: AGHT+IFApf8ohbI8uwk+/MEsz8A+1IubEnMXSZzTRs4tUjzWR4e0k0InydV3hI/MH4a9X+zVisgRuQ==
+X-Received: by 2002:a05:600c:1909:b0:45f:2c89:a873 with SMTP id
+ 5b1f17b1804b1-45f2cbafa55mr63564115e9.35.1758046007948; 
+ Tue, 16 Sep 2025 11:06:47 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.44
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 11:06:44 -0700 (PDT)
+ Tue, 16 Sep 2025 11:06:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/36] hw/arm/virt: Factor out common SMMUV3 dt bindings code
-Date: Tue, 16 Sep 2025 19:06:02 +0100
-Message-ID: <20250916180611.1481266-29-peter.maydell@linaro.org>
+Subject: [PULL 30/36] hw/pci: Introduce pci_setup_iommu_per_bus() for per-bus
+ IOMMU ops retrieval
+Date: Tue, 16 Sep 2025 19:06:04 +0100
+Message-ID: <20250916180611.1481266-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
 References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,105 +103,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-No functional changes intended. This will be useful when we
-add support for user-creatable smmuv3 device.
+Currently, pci_setup_iommu() registers IOMMU ops for a given PCIBus.
+However, when retrieving IOMMU ops for a device using
+pci_device_get_iommu_bus_devfn(), the function checks the parent_dev
+and fetches IOMMU ops from the parent device, even if the current
+bus does not have any associated IOMMU ops.
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+This behavior works for now because QEMU's IOMMU implementations are
+globally scoped, and host bridges rely on the bypass_iommu property
+to skip IOMMU translation when needed.
+
+However, this model will break with the soon to be introduced
+arm-smmuv3 device, which allows users to associate the IOMMU
+with a specific PCIe root complex (e.g., the default pcie.0
+or a pxb-pcie root complex).
+
+For example, consider the following setup with multiple root
+complexes:
+
+-device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0 \
+...
+-device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
+-device pcie-root-port,id=pcie.port1,bus=pcie.1 \
+-device virtio-net-pci,bus=pcie.port1
+
+In Qemu, pxb-pcie acts as a special root complex whose parent is
+effectively the default root complex(pcie.0). Hence, though pcie.1
+has no associated SMMUv3 as per above, pci_device_get_iommu_bus_devfn()
+will incorrectly return the IOMMU ops from pcie.0 due to the fallback
+via parent_dev.
+
+To fix this, introduce a new helper pci_setup_iommu_per_bus() that
+explicitly sets the new iommu_per_bus field in the PCIBus structure.
+This helper will be used in a subsequent patch that adds support for
+the new arm-smmuv3 device.
+
+Update pci_device_get_iommu_bus_devfn() to use iommu_per_bus when
+determining the correct IOMMU ops, ensuring accurate behavior for
+per-bus IOMMUs.
+
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Nathan Chen <nathanc@nvidia.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Donald Dutile <ddutile@redhat.com>
-Message-id: 20250829082543.7680-5-skolothumtho@nvidia.com
+Message-id: 20250829082543.7680-7-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 54 +++++++++++++++++++++++++++------------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
+ include/hw/pci/pci.h     |  2 ++
+ include/hw/pci/pci_bus.h |  1 +
+ hw/pci/pci.c             | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 16a1ac3c2d9..bebe2d8cea9 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1444,19 +1444,43 @@ static void create_pcie_irq_map(const MachineState *ms,
-                            0x7           /* PCI irq */);
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 6b7d3ac8a36..6bccb25ac2f 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -773,6 +773,8 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
+  */
+ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
+ 
++void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
++
+ pcibus_t pci_bar_address(PCIDevice *d,
+                          int reg, uint8_t type, pcibus_t size);
+ 
+diff --git a/include/hw/pci/pci_bus.h b/include/hw/pci/pci_bus.h
+index 22613125462..c7384467888 100644
+--- a/include/hw/pci/pci_bus.h
++++ b/include/hw/pci/pci_bus.h
+@@ -35,6 +35,7 @@ struct PCIBus {
+     enum PCIBusFlags flags;
+     const PCIIOMMUOps *iommu_ops;
+     void *iommu_opaque;
++    bool iommu_per_bus;
+     uint8_t devfn_min;
+     uint32_t slot_reserved_mask;
+     pci_set_irq_fn set_irq;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 297196b2421..c3df9d6656b 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2912,6 +2912,19 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+             }
+         }
+ 
++        /*
++         * When multiple PCI Express Root Buses are defined using pxb-pcie,
++         * the IOMMU configuration may be specific to each root bus. However,
++         * pxb-pcie acts as a special root complex whose parent is effectively
++         * the default root complex(pcie.0). Ensure that we retrieve the
++         * correct IOMMU ops(if any) in such cases.
++         */
++        if (pci_bus_is_express(iommu_bus) && pci_bus_is_root(iommu_bus)) {
++            if (parent_bus->iommu_per_bus) {
++                break;
++            }
++        }
++
+         iommu_bus = parent_bus;
+     }
+ 
+@@ -3172,6 +3185,24 @@ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+     bus->iommu_opaque = opaque;
  }
  
-+static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
-+                                      hwaddr size, int irq)
++/*
++ * Similar to pci_setup_iommu(), but sets iommu_per_bus to true,
++ * indicating that the IOMMU is specific to this bus. This is used by
++ * IOMMU implementations that are tied to a specific PCIe root complex.
++ *
++ * In QEMU, pxb-pcie behaves as a special root complex whose parent is
++ * effectively the default root complex (pcie.0). The iommu_per_bus
++ * is checked in pci_device_get_iommu_bus_devfn() to ensure the correct
++ * IOMMU ops are returned, avoiding the use of the parent’s IOMMU when
++ * it's not appropriate.
++ */
++void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
++                             void *opaque)
 +{
-+    char *node;
-+    const char compat[] = "arm,smmu-v3";
-+    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
-+    MachineState *ms = MACHINE(vms);
-+
-+    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
-+    qemu_fdt_add_subnode(ms->fdt, node);
-+    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
-+    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
-+
-+    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
-+            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
-+
-+    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
-+                     sizeof(irq_names));
-+
-+    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
-+    g_free(node);
++    pci_setup_iommu(bus, ops, opaque);
++    bus->iommu_per_bus = true;
 +}
 +
- static void create_smmu(const VirtMachineState *vms,
-                         PCIBus *bus)
+ static void pci_dev_get_w64(PCIBus *b, PCIDevice *dev, void *opaque)
  {
-     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
--    char *node;
--    const char compat[] = "arm,smmu-v3";
-     int irq =  vms->irqmap[VIRT_SMMU];
-     int i;
-     hwaddr base = vms->memmap[VIRT_SMMU].base;
-     hwaddr size = vms->memmap[VIRT_SMMU].size;
--    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
-     DeviceState *dev;
--    MachineState *ms = MACHINE(vms);
- 
-     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
-         return;
-@@ -1475,27 +1499,7 @@ static void create_smmu(const VirtMachineState *vms,
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-                            qdev_get_gpio_in(vms->gic, irq + i));
-     }
--
--    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
--    qemu_fdt_add_subnode(ms->fdt, node);
--    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
--    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
--
--    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
--            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
--
--    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
--                     sizeof(irq_names));
--
--    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
--
--    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
--
--    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
--    g_free(node);
-+    create_smmuv3_dt_bindings(vms, base, size, irq);
- }
- 
- static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+     Range *range = opaque;
 -- 
 2.43.0
 
