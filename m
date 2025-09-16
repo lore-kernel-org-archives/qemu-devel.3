@@ -4,73 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AA0CAC599
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EBBCAC599
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 10:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyTGA-0002C3-8F; Tue, 16 Sep 2025 06:50:06 -0400
+	id 1uyTH3-0002GF-QL; Tue, 16 Sep 2025 06:51:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyTG7-0002BD-Qp
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:50:03 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyTG4-00047i-0V
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:50:02 -0400
-Received: from example.com (unknown [167.220.208.43])
- by linux.microsoft.com (Postfix) with ESMTPSA id 15E652015502;
- Tue, 16 Sep 2025 03:49:52 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 15E652015502
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758019797;
- bh=HCbRPKcprKJcjSOATe91AM595DaV6R6vHq8N3l6VuBk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=qbxLrE/yrli9F07if14u/EraMfkLE9b182+f4l5sqkYoFvocIX+n5bms3mhms0IBK
- ck06VLrwplrZuD7PjXMsPR6hCU7un9I1m60ecsfX20FVW1HDVW9x/s8qJyR+3KEcMj
- vn0NjmdH8l0jsJ6k9ZeRObYFuhv7PU6V88XKzyMA=
-Date: Tue, 16 Sep 2025 12:49:49 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 18/26] target/i386/mshv: Register CPUID entries with
- MSHV
-Message-ID: <aMlAzTJ7fhj3xal9@example.com>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250807143951.1154713-19-magnuskulke@linux.microsoft.com>
- <aK7sFds3tf5fMToM@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aK7sFds3tf5fMToM@redhat.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1uyTH1-0002Fd-D9
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:50:59 -0400
+Received: from sg-1-31.ptr.blmpb.com ([118.26.132.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1uyTGt-000464-Cd
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 06:50:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1758019742;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=+9vn+SKpf2HMKD44yBoekBv/fHaycbLcBaJxlmib6/w=;
+ b=CrfG6Rw1sscFsut1IElxYXaQSRCLu5x9k8nf2ECSpBj4gsevYiWEzvnSbang3mfLURl/Wy
+ JuQPenZ4bLrg/0aUkzMoigFbVL/s33xgAY60bOm/BWbcGstK77LeRdVRBNvfJN+vjE7fuk
+ d6uwmtzv1SsIVt1UzSHFZ2gdu8ml+7ruv+GBqCsn27x7NF5nhf50etmXZtl1DgGqbwMF3y
+ 6a3P+GyncXr9eJPBDz3Qnop6wMLtO6ej2vzDza0PbeTmkqBu0C/29ALvF8/EfXI/BprFtJ
+ B/CCOTHd/7QDKGbzmSxmaJiTRCmElbsDCwIyE1z3iH6nTOsvKRRd/EeEYxz6sg==
+Content-Type: text/plain; charset=UTF-8
+X-Mailer: git-send-email 2.46.2.windows.1
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250916104843.1953-1-xiangwencheng@lanxincomputing.com>
+Received: from localhost.localdomain ([222.128.9.250]) by smtp.feishu.cn with
+ ESMTP; Tue, 16 Sep 2025 18:48:59 +0800
+X-Original-From: BillXiang <xiangwencheng@lanxincomputing.com>
+Subject: [PATCH] target/riscv/kvm: Sync vCPU mp_state for migration
+Date: Tue, 16 Sep 2025 18:48:42 +0800
+From: "BillXiang" <xiangwencheng@lanxincomputing.com>
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+268c9409c+113086+nongnu.org+xiangwencheng@lanxincomputing.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-riscv@nongnu.org>, <zhiwei_liu@linux.alibaba.com>, 
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, 
+ <alistair.francis@wdc.com>, <palmer@dabbelt.com>, 
+ "BillXiang" <xiangwencheng@lanxincomputing.com>
+Received-SPF: pass client-ip=118.26.132.31;
+ envelope-from=xiangwencheng@lanxincomputing.com; helo=sg-1-31.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,37 +71,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 12:29:25PM +0100, Daniel P. Berrangé wrote:
-> QEMU supports a variety of CPU models. '-cpu host' is intended to
-> expose every possible feature that the underlying hypervisor can
-> support, while '-cpu $NAME' exposes certain named CPU models.
-> 
-> Also KVM will force enable certain features that it can either
-> unconditionally emulate, or requires to always be present.
-> 
-> Are you aware if there any noteworthy differences /  restrictions
-> in the use of CPU models for MSHV that would not be present for
-> KVM, or vica-verca ?  I'm particularly wondering if there is
-> anything special libvirt needs to be aware of - most of what
-> libvirt does it gets via the QMP query-cpu-XXXX commands.
-> 
+Fix secondary vCPUs(id > 0) stall after migration.
 
-The current cpuid impl is rather simple/unopionated at this point. We
-will probably iterate on it in the future (e.g. include synthetic
-responses). In principle it should behave similar to the KVM accel:
+Signed-off-by: BillXiang <xiangwencheng@lanxincomputing.com>
+---
+ target/riscv/cpu.h           |  3 +++
+ target/riscv/kvm/kvm-cpu.c   | 34 ++++++++++++++++++++++++++--------
+ target/riscv/kvm/kvm_riscv.h |  3 ++-
+ target/riscv/machine.c       | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 61 insertions(+), 9 deletions(-)
 
--cpu host is reflecting the cpuid of the host CPU (i.e. dom0/root
- partition running on Hyper‑V). We are gathering those values from
- QEMU and register them with the hypervisor.
-
--cpu $MODEL should works similar. The QEMU-supplied model definitions
- CPUID/MSR values are registered with HyperV. In case of an unsupported
- feature the registration would fail.
-
-What the MSHV driver currently doesn't provide is something similar to
-KVM's KVM_GET_SUPPORTED_CPUID ioctl, so we do not currently force-enable
-or silently mask cpuid bits beyond what the CPU model requests.
-
-I'm not aware of any implications for libvirt and QMP that we would need
-to take into account wrt cpuid.
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 4a862da615..4290229c56 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -20,6 +20,7 @@
+ #ifndef RISCV_CPU_H
+ #define RISCV_CPU_H
+ 
++#include <linux/kvm.h>
+ #include "hw/core/cpu.h"
+ #include "hw/registerfields.h"
+ #include "hw/qdev-properties.h"
+@@ -546,6 +547,8 @@ struct ArchCPU {
+     RISCVCPUConfig cfg;
+     RISCVSATPModes satp_modes;
+ 
++    struct kvm_mp_state mp_state;
++
+     QEMUTimer *pmu_timer;
+     /* A bitmask of Available programmable counters */
+     uint32_t pmu_avail_ctrs;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 5c19062c19..f0a97293f9 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1348,17 +1348,16 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+         return ret;
+     }
+ 
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    ret = kvm_riscv_sync_mpstate_to_qemu(cpu);
++
+     return ret;
+ }
+ 
+-int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
++int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu)
+ {
+     if (cap_has_mp_state) {
+-        struct kvm_mp_state mp_state = {
+-            .mp_state = state
+-        };
+-
+-        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
++        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &cpu->mp_state);
+         if (ret) {
+             fprintf(stderr, "%s: failed to sync MP_STATE %d/%s\n",
+                     __func__, ret, strerror(-ret));
+@@ -1369,6 +1368,17 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+     return 0;
+ }
+ 
++int kvm_riscv_sync_mpstate_to_qemu(RISCVCPU *cpu)
++{
++    if (cap_has_mp_state) {
++        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MP_STATE, &cpu->mp_state);
++        if (ret) {
++            return ret;
++        }
++    }
++    return 0;
++}
++
+ int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+ {
+     int ret = 0;
+@@ -1396,13 +1406,21 @@ int kvm_arch_put_registers(CPUState *cs, int level, Error **errp)
+     if (KVM_PUT_RESET_STATE == level) {
+         RISCVCPU *cpu = RISCV_CPU(cs);
+         if (cs->cpu_index == 0) {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
++            cpu->mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
++            ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
+         } else {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
++            cpu->mp_state.mp_state = KVM_MP_STATE_STOPPED;
++            ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
+         }
+         if (ret) {
+             return ret;
+         }
++    } else if (KVM_PUT_FULL_STATE == level) {
++        RISCVCPU *cpu = RISCV_CPU(cs);
++        ret = kvm_riscv_sync_mpstate_to_kvm(cpu);
++        if (ret) {
++            return ret;
++        }
+     }
+ 
+     return ret;
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index b2bcd1041f..770f58bf0a 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -28,7 +28,8 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+                           uint64_t aplic_base, uint64_t imsic_base,
+                           uint64_t guest_num);
+ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+-int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
++int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu);
++int kvm_riscv_sync_mpstate_to_qemu(RISCVCPU *cpu);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 1600ec44f0..178ae6a3a0 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -251,6 +251,28 @@ static const VMStateDescription vmstate_debug = {
+     }
+ };
+ 
++static int get_mp_state(QEMUFile *f, void *opaque, size_t size,
++                    const VMStateField *field)
++{
++    RISCVCPU *cpu = opaque;
++    cpu->mp_state.mp_state = qemu_get_be32(f);
++    return 0;
++}
++
++static int put_mp_state(QEMUFile *f, void *opaque, size_t size,
++                    const VMStateField *field, JSONWriter *vmdesc)
++{
++    RISCVCPU *cpu = opaque;
++    qemu_put_be32(f, cpu->mp_state.mp_state);
++    return 0;
++}
++
++static const VMStateInfo vmstate_mp_state = {
++    .name = "mp_state",
++    .get = get_mp_state,
++    .put = put_mp_state,
++};
++
+ static int riscv_cpu_post_load(void *opaque, int version_id)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -457,6 +479,14 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINTTL(env.sscratch, RISCVCPU),
+         VMSTATE_UINTTL(env.mscratch, RISCVCPU),
+         VMSTATE_UINT64(env.stimecmp, RISCVCPU),
++        {
++            .name = "mp_state",
++            .version_id = 0,
++            .size = sizeof(bool),
++            .info = &vmstate_mp_state,
++            .flags = VMS_SINGLE,
++            .offset = 0,
++        },
+ 
+         VMSTATE_END_OF_LIST()
+     },
+-- 
+2.46.2.windows.1
 
