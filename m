@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44290CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 17:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC8ECAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyZq5-0007uP-Hz; Tue, 16 Sep 2025 13:51:37 -0400
+	id 1uya4P-0002mX-TR; Tue, 16 Sep 2025 14:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uyZps-0007K2-1A
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:51:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uyZpo-0008Er-9s
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 13:51:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758045075;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Wnm2c70/sInb5Kln1tljKEQJTxHEu5y+56S6FKsuwvw=;
- b=iL7KnGZA1wWDQFiwygxLLxFX2wZ/pnv5ekIP5fpNEHQE3SnJModm4742xWecFJ0IJec1pB
- gff9n84FNNGfTnWuMS/J5SSGe7SqjrdZ6YKS5iQLd+r1i/UXW80QY00M1rjfaZkd2g+3Td
- hgBPePNIznfOelrUK0GbO/MVpl44LU4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-C3Wg-JLLMdWSoDm71oYKoQ-1; Tue,
- 16 Sep 2025 13:51:12 -0400
-X-MC-Unique: C3Wg-JLLMdWSoDm71oYKoQ-1
-X-Mimecast-MFC-AGG-ID: C3Wg-JLLMdWSoDm71oYKoQ_1758045070
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF9FE1956087; Tue, 16 Sep 2025 17:51:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.12])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5D39195608E; Tue, 16 Sep 2025 17:51:09 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uya4L-0002fU-JR
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:21 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uya4J-0001Yp-N0
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45f29dd8490so28411115e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758045978; x=1758650778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=iJXgjCpBilcdbaSRNWIXr2Xsvv7vQk5GhQFN3jN+8R8=;
+ b=LNdMK0U8MQvq+Sw5C0SnazuV36uYgBcwuIxGm0e96PK1lwyYBlLdd8TzFEa9iC5kLJ
+ x6t+XRfDKOhGMnE9x2Rwi/lVms5nMGCN0jiSq/GarPs4IKzqw3RmKTdviUGg0mIn2WB2
+ F3ri2to431GcO+TYops0Ifj+TI91zLqrhIKd2gfhGMysBYO8ha+7KCZVZEOD9EzCUXAj
+ MwIz5Wg4JDNgwE/3pFm1B8/YboLn6MM6y30NBT4QkKohfES1B0HNS9rYWd4SRT3NzuB7
+ dkB5Xj/Mfcl6R9jC+rSPdrQtLjCIUvRs/IKBzi7s1//wq5b3Iu9xQRkopouPRjHSYvbo
+ WhMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758045978; x=1758650778;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iJXgjCpBilcdbaSRNWIXr2Xsvv7vQk5GhQFN3jN+8R8=;
+ b=Xdaqwc4cEsN80cGambsx8sVDV9UXmAiTwQhTEf8xCQgUOJVPBCAhMQ54731QhGvueQ
+ BWYJ97FOclmDoss9OqXQh3I3PWTsjGfAASnyCZIZUQwvasaFdd6QNgVSgOt5c4eBYlE5
+ qRhGVNWS7/m21RJy3nw4i13JGqZB0+UhpG5BM4PtfyZyHtK7Jo6iiAfTeFxUZGnuaiFp
+ fUy9udJqK4+zcV6/T3xIvs1x4m9ou7VZ7AtsqwGqq0NXpw9Y33cz2djNkPdxQTWad3Se
+ zCuCrrizo4Nxw+htIJqeaQoDPXJm+MT2l1ehcETmqSTA3O2ASQZRnMNp1mi3uBIQ45PZ
+ e9Tg==
+X-Gm-Message-State: AOJu0YwJIQe9MYOp3k127MbKkiBAYyt1+6752+h7CcLiow09m5PXxs8j
+ VWk0Ruvo5pGHu7H0fWdrkarX0hNFBG8OrvXr/VJhJfekZD7gz4VhlFxbwCHeCLc8HHJRr0GDJUb
+ nzI9X
+X-Gm-Gg: ASbGnctxO1UvjB6604L3qu9O7uxD4iram445n0AFmoNMB1pgnEX/ID2FvZFF515mYvW
+ dhG2IgNkUr8a+RJ7Z/J1dWG6ehuArWog2y/ucoXmnjyfre0rDZYvHKGmPY/mKzeIhj48O5fwFgt
+ JvnsMMi97IEPVKx6UeBki3CD9jZ2x//kANU9KWuMyeQBDYuBnLGHlcDOkJWJZPOKViqCPkJGKdL
+ bLOWRw+3BFPJSoH6b53bv9dKqQzx/sHDr7TRLw1bgxSuPc38AqCQRcPxayGib6L4jLBV7j/3z83
+ JfZTC4xvfi6aj3FzM1FNp4TK4EemWW15p5aNZpsmtWgDstZjVRVOJ05FEDMD22imq9X6sN02qco
+ tMxK88VAT2f0aYnBFrC8D+78VWQiOfqjPN4xwDgM=
+X-Google-Smtp-Source: AGHT+IE6cMcRK+maLGIOIJxs3AAuAsMqRQv+aK2vCDveh4GdVgTjeUEzO9gwPVw2w5j7gRu0Z3+a4A==
+X-Received: by 2002:a05:600c:6d41:b0:45b:47e1:ef68 with SMTP id
+ 5b1f17b1804b1-45f21208123mr113111675e9.35.1758045977884; 
+ Tue, 16 Sep 2025 11:06:17 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Sep 2025 11:06:17 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <rth@twiddle.net>
-Subject: [PULL v2 0/8] Tracing patches
-Date: Tue, 16 Sep 2025 13:51:00 -0400
-Message-ID: <20250916175108.139627-1-stefanha@redhat.com>
+Subject: [PULL 04/36] linux-user/aarch64: Generate ESR signal records
+Date: Tue, 16 Sep 2025 19:05:38 +0100
+Message-ID: <20250916180611.1481266-5-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
+References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,97 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-  Merge tag 'pull-request-2025-09-09' of https://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250830054128.448363-4-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ linux-user/aarch64/cpu_loop.c |  3 +++
+ linux-user/aarch64/signal.c   | 34 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
-
-for you to fetch changes up to 2c27d8523927b0965b7b3d265eee3baf9a15c9c8:
-
-  tracetool-test: allow to run in parallel (2025-09-16 13:31:40 -0400)
-
-----------------------------------------------------------------
-Pull request
-
-Daniel's updated tracetool test suite that doesn't break Windows CI.
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (7):
-  checkpatch: cull trailing '*/' in SPDX check
-  tracetool: eliminate trailing whitespace in C format
-  tracetool: avoid space after "*" in arg types
-  tracetool: include SPDX-License-Identifier in generated files
-  tracetool: add test suite for tracetool with reference output
-  tracetool: drop the probe "__nocheck__" wrapping
-  qapi: switch to use QEMU_TEST_REGENERATE env var
-
-Marc-André Lureau (1):
-  tracetool-test: allow to run in parallel
-
- MAINTAINERS                                  |   1 +
- docs/devel/testing/main.rst                  |  40 +++++++
- tests/Makefile.include                       |   1 +
- tests/tracetool/dtrace.h                     |  45 ++++++++
- tests/tracetool/ftrace.h                     |  59 ++++++++++
- tests/tracetool/log.h                        |  43 ++++++++
- tests/tracetool/simple.h                     |  40 +++++++
- tests/tracetool/syslog.h                     |  43 ++++++++
- tests/tracetool/ust.h                        |  41 +++++++
- tests/tracetool/dtrace.c                     |  32 ++++++
- tests/tracetool/ftrace.c                     |  32 ++++++
- tests/tracetool/log.c                        |  32 ++++++
- tests/tracetool/simple.c                     |  61 +++++++++++
- tests/tracetool/syslog.c                     |  32 ++++++
- tests/tracetool/ust.c                        |  32 ++++++
- scripts/checkpatch.pl                        |   3 +
- scripts/tracetool/__init__.py                |   9 +-
- scripts/tracetool/format/c.py                |   3 +-
- scripts/tracetool/format/d.py                |   3 +-
- scripts/tracetool/format/h.py                |  17 +--
- scripts/tracetool/format/log_stap.py         |   1 +
- scripts/tracetool/format/simpletrace_stap.py |   1 +
- scripts/tracetool/format/stap.py             |   1 +
- scripts/tracetool/format/ust_events_c.py     |   1 +
- scripts/tracetool/format/ust_events_h.py     |   1 +
- tests/meson.build                            |   1 +
- tests/qapi-schema/test-qapi.py               |   7 +-
- tests/tracetool/dtrace.d                     |  10 ++
- tests/tracetool/dtrace.log-stap              |  15 +++
- tests/tracetool/dtrace.simpletrace-stap      |  16 +++
- tests/tracetool/dtrace.stap                  |  14 +++
- tests/tracetool/meson.build                  |  28 +++++
- tests/tracetool/trace-events                 |   5 +
- tests/tracetool/tracetool-test.py            | 107 +++++++++++++++++++
- tests/tracetool/ust.ust-events-c             |  14 +++
- tests/tracetool/ust.ust-events-h             |  56 ++++++++++
- 36 files changed, 826 insertions(+), 21 deletions(-)
- create mode 100644 tests/tracetool/dtrace.h
- create mode 100644 tests/tracetool/ftrace.h
- create mode 100644 tests/tracetool/log.h
- create mode 100644 tests/tracetool/simple.h
- create mode 100644 tests/tracetool/syslog.h
- create mode 100644 tests/tracetool/ust.h
- create mode 100644 tests/tracetool/dtrace.c
- create mode 100644 tests/tracetool/ftrace.c
- create mode 100644 tests/tracetool/log.c
- create mode 100644 tests/tracetool/simple.c
- create mode 100644 tests/tracetool/syslog.c
- create mode 100644 tests/tracetool/ust.c
- create mode 100644 tests/tracetool/dtrace.d
- create mode 100644 tests/tracetool/dtrace.log-stap
- create mode 100644 tests/tracetool/dtrace.simpletrace-stap
- create mode 100644 tests/tracetool/dtrace.stap
- create mode 100644 tests/tracetool/meson.build
- create mode 100644 tests/tracetool/trace-events
- create mode 100755 tests/tracetool/tracetool-test.py
- create mode 100644 tests/tracetool/ust.ust-events-c
- create mode 100644 tests/tracetool/ust.ust-events-h
-
+diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
+index 7ad26316dea..6060572eed3 100644
+--- a/linux-user/aarch64/cpu_loop.c
++++ b/linux-user/aarch64/cpu_loop.c
+@@ -33,6 +33,9 @@ static void signal_for_exception(CPUARMState *env, vaddr addr)
+     uint32_t syn = env->exception.syndrome;
+     int si_code, si_signo;
+ 
++    /* Let signal delivery see that ESR is live. */
++    env->cp15.esr_el[1] = syn;
++
+     switch (syn_get_ec(syn)) {
+     case EC_DATAABORT:
+     case EC_INSNABORT:
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index 668353bbda4..ef97be3ac7b 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -65,6 +65,13 @@ struct target_fpsimd_context {
+     uint64_t vregs[32 * 2]; /* really uint128_t vregs[32] */
+ };
+ 
++#define TARGET_ESR_MAGIC    0x45535201
++
++struct target_esr_context {
++    struct target_aarch64_ctx head;
++    uint64_t esr;
++};
++
+ #define TARGET_EXTRA_MAGIC  0x45585401
+ 
+ struct target_extra_context {
+@@ -201,6 +208,14 @@ static void target_setup_fpsimd_record(struct target_fpsimd_context *fpsimd,
+     }
+ }
+ 
++static void target_setup_esr_record(struct target_esr_context *ctx,
++                                    CPUARMState *env)
++{
++    __put_user(TARGET_ESR_MAGIC, &ctx->head.magic);
++    __put_user(sizeof(*ctx), &ctx->head.size);
++    __put_user(env->cp15.esr_el[1], &ctx->esr);
++}
++
+ static void target_setup_extra_record(struct target_extra_context *extra,
+                                       uint64_t datap, uint32_t extra_size)
+ {
+@@ -531,6 +546,9 @@ static int target_restore_sigframe(CPUARMState *env,
+             fpsimd = (struct target_fpsimd_context *)ctx;
+             break;
+ 
++        case TARGET_ESR_MAGIC:
++            break; /* ignore */
++
+         case TARGET_SVE_MAGIC:
+             if (sve || size < sizeof(struct target_sve_context)) {
+                 goto err;
+@@ -683,7 +701,7 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+                                uc.tuc_mcontext.__reserved),
+     };
+     int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
+-    int zt_ofs = 0;
++    int zt_ofs = 0, esr_ofs = 0;
+     int sve_size = 0, za_size = 0, tpidr2_size = 0, zt_size = 0;
+     struct target_rt_sigframe *frame;
+     struct target_rt_frame_record *fr;
+@@ -693,6 +711,15 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+     fpsimd_ofs = alloc_sigframe_space(sizeof(struct target_fpsimd_context),
+                                       &layout);
+ 
++    /*
++     * In user mode, ESR_EL1 is only set by cpu_loop while queueing the
++     * signal, and it's only valid for the one sync insn.
++     */
++    if (env->cp15.esr_el[1]) {
++        esr_ofs = alloc_sigframe_space(sizeof(struct target_esr_context),
++                                       &layout);
++    }
++
+     /* SVE state needs saving only if it exists.  */
+     if (cpu_isar_feature(aa64_sve, env_archcpu(env)) ||
+         cpu_isar_feature(aa64_sme, env_archcpu(env))) {
+@@ -754,6 +781,11 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+ 
+     target_setup_general_frame(frame, env, set);
+     target_setup_fpsimd_record((void *)frame + fpsimd_ofs, env);
++    if (esr_ofs) {
++        target_setup_esr_record((void *)frame + esr_ofs, env);
++        /* Leave ESR_EL1 clear while it's not relevant. */
++        env->cp15.esr_el[1] = 0;
++    }
+     target_setup_end_record((void *)frame + layout.std_end_ofs);
+     if (layout.extra_ofs) {
+         target_setup_extra_record((void *)frame + layout.extra_ofs,
 -- 
-2.51.0
+2.43.0
 
 
