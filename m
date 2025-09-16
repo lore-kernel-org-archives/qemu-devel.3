@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA4A1CAC592
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 21:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658E8CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 21:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uydJq-00070T-OB; Tue, 16 Sep 2025 17:34:34 -0400
+	id 1uydQb-0001Ac-Je; Tue, 16 Sep 2025 17:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydJo-0006vO-7S
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:34:32 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydQX-00019x-NR
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:41:29 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydJm-0003tW-JA
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:34:31 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uydQV-0004sl-Rr
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 17:41:29 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C4E3E21B0F;
- Tue, 16 Sep 2025 21:34:27 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B964422613;
+ Tue, 16 Sep 2025 21:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758058469; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758058885; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOUv4+E6b40H4Sc+AWBh8+q3R5YyfMPkJ8TgRPyUA8g=;
- b=IWUimZ1FIhgXT9hcjO6dz6L79KEbNxP5QcMMvdUabvx8QE/bshif7/OLSxuU7hDH0hmncd
- ybgz2oHbm+uOcTIaZbKBIhHANEP7l7HvIHPUXB8WoXMfRb4oFrf/djRZcAlmSzOTiZO9Ah
- bTg6W1KPYpnJbohPdlD1c8N6ZLbigBA=
+ bh=oGvlNjFcKQmbKeqXFm9dM5KNuNfCvA53fpfgx+6c4Bs=;
+ b=jQOjhXIoMdNipgvLBl6yCBcDopbqjx0KN4l0ccrq3LcGXPU5EJ0cWDt8MuogJGlQ4DQsRL
+ Qou6CPpvoM6rbUj1cYXcVuR+ZMX3ksFt6WDkdF9aMkd14+AahOkHwUlqAmukJjJgHWCp9Q
+ QFNCOMF7nsUgABg1+QvjFUi+K2ccAYI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758058469;
+ s=susede2_ed25519; t=1758058885;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOUv4+E6b40H4Sc+AWBh8+q3R5YyfMPkJ8TgRPyUA8g=;
- b=muYc4RzN+CI8Q3N6Mpj+AORkEY9D8a8gDd0iLwVUIFGi6NJmyrFqqep/ifXeRhkJVHiJ77
- v+VfDNRzMWk9EjDg==
+ bh=oGvlNjFcKQmbKeqXFm9dM5KNuNfCvA53fpfgx+6c4Bs=;
+ b=CiOOfPbdpy6UqAY4ICVpnVBfQtgc4G5vk5+wLXrOqx3lbjpqhw7yX4EBfK6k3hpmZ1SYPg
+ H0uPhObSCuLLkHAw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WEMvPHnI;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=LxYb0ATj
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jQOjhXIo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CiOOfPbd
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758058467; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758058885; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOUv4+E6b40H4Sc+AWBh8+q3R5YyfMPkJ8TgRPyUA8g=;
- b=WEMvPHnIZzmcPMyM1P3FGpYqNExSyANgO/unFMJv13EDFihawyfc6PH77VPhospSvSp5MX
- nNoBg11iLakTsgjV/tYltsIwKzggs389mQ+7Y9vgKmQmWUmsh+w/J+Fra70NpZXlCm7QKI
- A1m93tUpOMUEwLbcPODSjT+0WZnh6ws=
+ bh=oGvlNjFcKQmbKeqXFm9dM5KNuNfCvA53fpfgx+6c4Bs=;
+ b=jQOjhXIoMdNipgvLBl6yCBcDopbqjx0KN4l0ccrq3LcGXPU5EJ0cWDt8MuogJGlQ4DQsRL
+ Qou6CPpvoM6rbUj1cYXcVuR+ZMX3ksFt6WDkdF9aMkd14+AahOkHwUlqAmukJjJgHWCp9Q
+ QFNCOMF7nsUgABg1+QvjFUi+K2ccAYI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758058467;
+ s=susede2_ed25519; t=1758058885;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MOUv4+E6b40H4Sc+AWBh8+q3R5YyfMPkJ8TgRPyUA8g=;
- b=LxYb0ATj6QolxKoGCkEWnyKpgk6k+T4L2ySEC4D5GP3wMYlllDdF13AOJ6TLJPobuYn35/
- tfjc2qnxTnPLqMAw==
+ bh=oGvlNjFcKQmbKeqXFm9dM5KNuNfCvA53fpfgx+6c4Bs=;
+ b=CiOOfPbdpy6UqAY4ICVpnVBfQtgc4G5vk5+wLXrOqx3lbjpqhw7yX4EBfK6k3hpmZ1SYPg
+ H0uPhObSCuLLkHAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3A851139CB;
- Tue, 16 Sep 2025 21:34:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 20827139CB;
+ Tue, 16 Sep 2025 21:41:24 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uajDOeLXyWhkTwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 16 Sep 2025 21:34:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8lVBM4TZyWhWUQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 16 Sep 2025 21:41:24 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Kevin
@@ -81,24 +77,22 @@ Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Kevin
  <zhanghailiang@xfusion.com>, Yury Kotov <yury-kotov@yandex-team.ru>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Prasad Pandit
  <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Li Zhijian
- <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>, "Maciej S. Szmigiero"
- <mail@maciej.szmigiero.name>
-Subject: Re: [PATCH RFC 1/9] migration/vfio: Remove BQL implication in
- vfio_multifd_switchover_start()
-In-Reply-To: <20250827205949.364606-2-peterx@redhat.com>
+ <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>, Lidong Chen
+ <jemmy858585@gmail.com>
+Subject: Re: [PATCH RFC 2/9] migration/rdma: Fix wrong context in
+ qio_channel_rdma_shutdown()
+In-Reply-To: <20250827205949.364606-3-peterx@redhat.com>
 References: <20250827205949.364606-1-peterx@redhat.com>
- <20250827205949.364606-2-peterx@redhat.com>
-Date: Tue, 16 Sep 2025 18:34:24 -0300
-Message-ID: <87wm5yw07z.fsf@suse.de>
+ <20250827205949.364606-3-peterx@redhat.com>
+Date: Tue, 16 Sep 2025 18:41:22 -0300
+Message-ID: <87tt12vzwd.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCPT_COUNT_TWELVE(0.00)[16]; ARC_NA(0.00)[];
+ MX_GOOD(-0.01)[]; RCPT_COUNT_TWELVE(0.00)[15]; ARC_NA(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
@@ -107,13 +101,13 @@ X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  TO_DN_SOME(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[treblig.org,redhat.com,xfusion.com,yandex-team.ru,gmail.com,fujitsu.com,maciej.szmigiero.name];
+ FREEMAIL_CC(0.00)[treblig.org,redhat.com,xfusion.com,yandex-team.ru,gmail.com,fujitsu.com];
  RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
  MISSING_XM_UA(0.00)[];
  DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
  imap1.dmz-prg2.suse.org:rdns, suse.de:mid, suse.de:dkim, suse.de:email]
-X-Rspamd-Queue-Id: C4E3E21B0F
+X-Rspamd-Queue-Id: B964422613
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
@@ -143,44 +137,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> We may switch to a BQL-free loadvm model.  Be prepared with it.
+> The rdmaout should be a cache of rioc->rdmaout, not rioc->rdmain.
 >
-> Cc: C=C3=A9dric Le Goater <clg@redhat.com>
-> Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+> Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> Cc: Lidong Chen <jemmy858585@gmail.com>
+> Fixes: 54db882f07 ("migration: implement the shutdown for RDMA QIOChannel")
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  hw/vfio/migration-multifd.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+>  migration/rdma.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> index e4785031a7..8dc8444f0d 100644
-> --- a/hw/vfio/migration-multifd.c
-> +++ b/hw/vfio/migration-multifd.c
-> @@ -763,16 +763,21 @@ int vfio_multifd_switchover_start(VFIODevice *vbase=
-dev)
->  {
->      VFIOMigration *migration =3D vbasedev->migration;
->      VFIOMultifd *multifd =3D migration->multifd;
-> +    bool bql_is_locked =3D bql_locked();
->=20=20
->      assert(multifd);
->=20=20
->      /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first=
- */
-> -    bql_unlock();
-> +    if (bql_is_locked) {
-> +        bql_unlock();
-> +    }
->      WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
->          assert(!multifd->load_bufs_thread_running);
->          multifd->load_bufs_thread_running =3D true;
->      }
-> -    bql_lock();
-> +    if (bql_is_locked) {
-> +        bql_lock();
-> +    }
->=20=20
->      qemu_loadvm_start_load_thread(vfio_load_bufs_thread, vbasedev);
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 2d839fce6c..e6837184c8 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -2986,7 +2986,7 @@ qio_channel_rdma_shutdown(QIOChannel *ioc,
+>      RCU_READ_LOCK_GUARD();
+>  
+>      rdmain = qatomic_rcu_read(&rioc->rdmain);
+> -    rdmaout = qatomic_rcu_read(&rioc->rdmain);
+> +    rdmaout = qatomic_rcu_read(&rioc->rdmaout);
+>  
+>      switch (how) {
+>      case QIO_CHANNEL_SHUTDOWN_READ:
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
