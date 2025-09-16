@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B984CAC59B
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 19:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE7CCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 20:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uybFu-0006yf-Ux; Tue, 16 Sep 2025 15:22:24 -0400
+	id 1uycPw-0005p5-9p; Tue, 16 Sep 2025 16:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uybFl-0006u9-Uk
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 15:22:17 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <steviea@google.com>)
+ id 1uycPs-0005oU-88
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 16:36:44 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uybFk-0003u0-9G
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 15:22:13 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2570bf6058aso75899585ad.0
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 12:22:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steviea@google.com>)
+ id 1uycPq-0004vJ-JJ
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 16:36:44 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-265f460ae7bso47465ad.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 13:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758050530; x=1758655330; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=z6dSvWjtLk3+vLbrAWn1SkFpp6dw5SSL6pHHH+imY/E=;
- b=OrzDTDv4vf6OHNSDudCvrAAdVC8uIHyfJMYtuXN3r15yROhAe9FWdw14PtbV5ovy60
- uLT+yv1IKTm4iO7F64kTQK6UazUfOdoKcTaJ5XZ2Bbs0xiifFuIE9JFzNI6aNaDh5QSf
- 0hmZmJiPZ8A77HxvakcS3ZIZDlCyIUC8TYauU5X6F6CEB0/MjAYol7mw1IoouqVNN41i
- 2xrU4hOd9rECsOI9ANwwpolxEjnY7F0UDLIJPVJSLP+Gq0XixjHmIzRHKrks9ZoY86WV
- 5b8blO6/ICwzC9Yb9BKXbbWFWG2YAdHkB2ajmg1IdgmnEhtxY2xJccqg6a7kadXhzFMv
- 1Irg==
+ d=google.com; s=20230601; t=1758054999; x=1758659799; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yf1ZDzwXdB2A2eNZdnLqHYk2R3XFN3FkaKolUJPzAs0=;
+ b=CQxzAMQ3qvZ6xUNatAItcQLBp64rmWATqAZ+FgZR3ywgB9sl+mb5Wyz9eIvthRIWUS
+ BLhm6uoKIy7cMqxIeh0B7MNHBuJMwBrPpX7oizELoN7HUX67F8q+sDnGfAO9s+2mAywR
+ SHgMmvNEUhpnfDmXfAnBbRKQeoMyUydYG+gisSAA3uAhrtPYO3PE9gNhszETucTf++os
+ 27gmYw3QrXgKOqEtiEASQ9xu7tA5veZQl946P1ouWszrU9GGnvgw+APbNiRGEHDIgyBa
+ UbuFRj+H7v/rb78xg6c/Q8G+idxEoycHd3HOWh2f+32P7NUhx1nbSd3B1aWbdYKBR70C
+ OOFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758050530; x=1758655330;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z6dSvWjtLk3+vLbrAWn1SkFpp6dw5SSL6pHHH+imY/E=;
- b=UwEh/PEjSdGHtVZ/oqEoBjSI3R3W1UxOBnFaktPbQTnWKkQLNVR/aM4jk4fv8Enmxv
- XeSKsAFr8DiDD+13wW02oFyEwHoMmHvJFyc4HyWSwDhlYrS2CWIfueYE0Q1GUAiouq45
- wgRT52MPUjomJv+5zgArEaPpjzm0996+JD2AXtW9W/nrBrCOW4X2qcagWFqFHvQ8NTLt
- mNoEHAFEes2F86aNyMQS3nJjBXdU5SJHos9XogTU2TjLicabbUZPELlOKo4CXFbI1AUF
- yK/gt1WXSbJIEz8+d1sBjFAneRs5YxEeWh4fZHmjGeyZHs41J3+LKclOgOBQvPhbv7ok
- XimQ==
-X-Gm-Message-State: AOJu0Yxxl2RNuuYa/avvcar/A6n/6noCq1juitx7Xmlg8WEVeT6SZZz2
- 4iBsEDraQty6UISoPr3d8n+xAtX+gz2x/MG0swPvtQGqkc8OewxAvvnyFqUiR1Vfz6OcCwul7kI
- bK2hu
-X-Gm-Gg: ASbGnct8BsIKTJnMtYroUKHPcIOhQUf6Nv0mfl6SeTygFpNnJs3fr4R6eOxyNrk/dWh
- wbLq1NOj0n6/73yaf8JIA1R3XDcFS11R32U+kyV6DKtRj72ta7JDpSbL3CdlXCsTVyGIR9eAmrE
- 1LUEpzmBRBshdwk9X6jaDBmpGOpTsN/umyw/uuXqwyVOguRjFhAnzPCk5t14O6SYpVorZVWbxFm
- w1hvfHrMA9BgljO09jDKmUoT1lFdkrBnYCifKvV/8vPN3V30mZS08vYBDh2k6G6mk6YK+2ghF0c
- 0+Y1sl8mvhZPPlt2CtA5VOOtq7jsf8YRONc9KceJlSDBfyk2I8kZNjGOm9sokhfFX23ipZRS/wA
- uALC5XiK4x2I0uOBneSesmSmAWMqEDmTvdCom
-X-Google-Smtp-Source: AGHT+IGpujGjJUd3VucUt+sCi57vTgHh1GeyUl0i/ghcdYFExDBHbbgmLVCd8aVvpjjs9I5coUCryg==
-X-Received: by 2002:a17:903:910:b0:264:ad67:d594 with SMTP id
- d9443c01a7336-264ad67d904mr133389715ad.0.1758050530493; 
- Tue, 16 Sep 2025 12:22:10 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-25c36cc6abcsm169617375ad.16.2025.09.16.12.22.10
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Sep 2025 12:22:10 -0700 (PDT)
-Message-ID: <0220e70f-25a2-4152-aa05-d3960485aceb@linaro.org>
-Date: Tue, 16 Sep 2025 12:22:08 -0700
+ d=1e100.net; s=20230601; t=1758054999; x=1758659799;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yf1ZDzwXdB2A2eNZdnLqHYk2R3XFN3FkaKolUJPzAs0=;
+ b=tqdFavAUWnD7LeqKWO8xnRMuZADIyUFDXXr5XYtFHgYkR/XpyDSc2zhi6ROB8Z9Bme
+ e0ME7mW6YI3/Zbxsg7VkeYBv5FdBSMfRn6+ko/pgT3TMtfvPFEiaPvxE/A68e8DVCr+y
+ sr46aKgIhRSSC9bXM91v6DRg0r1RCPaSWfhg2oJJ1VJarxXK1VfEn3hg2AJ7YgqolO+0
+ fHQddWE0y7reaMOv1eM+be3OLbN8u73/zNjoOqxFEmKKwMnr5dJV/dpprjP7BzkEfE5z
+ EnUyLjnmNhfti7yVPW81E79iNBZvEWRZsQNASMy89r10dB/UjP9xteTysEBUXUlhnJGF
+ 0QKg==
+X-Gm-Message-State: AOJu0YyZscK71FKcVep3c+xQ6SLiQwT2wwJy5VytY/Q2iDOBVWNjfMsp
+ O4BOe5gMfYc+oPvJzNlfGb8JGjF7Ea1rJsgRb2cgpakHT36V2SbB0faBqLerJTMyYJbubKw0Bmm
+ RD3mUeXz8L8Suj26HMByPln7hnUGWAhcZ3PWyXSabPkU47ObxD77C8pDhwTg=
+X-Gm-Gg: ASbGnctfM1Qtn/wgP7Y7f0K1KVMSxemLfC8jhIbPULtsd03gErVK9T95+znoGrPQb5+
+ xon0IAF493bxLVsTTbJYRcRwrt7AIehzmF5M1GC99oOd+8IQd4weBrEwLa82y9xZF/TtM8F2qS8
+ I8aF5cPLkA8TuDIzkMg4FFesiLy2wSRzZJrO2vs8FGlDgoizgbMErs0tSadcprvIEY48sJOF02E
+ PuBb9Dy+VsDYezigk0sP0xWqDYf26slIyrybRH/oeoka3QKTeTW6v0Iom7LAxaQ5A==
+X-Google-Smtp-Source: AGHT+IGJ/qM1jgPOlJ83hAcqd4LJmOZxA+vP+3o5lDEMWsO6mAT4G9PxUAy/IFs6i1RbeDO5kZ7Eoh2UCDRKchkmi0U=
+X-Received: by 2002:a17:902:da8b:b0:24b:1b9d:58f1 with SMTP id
+ d9443c01a7336-26808af2256mr184225ad.17.1758054999111; Tue, 16 Sep 2025
+ 13:36:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] Python patches
+References: <20250916165859.1718787-1-steviea@google.com>
+In-Reply-To: <20250916165859.1718787-1-steviea@google.com>
+From: Stevie Alvarez <steviea@google.com>
+Date: Tue, 16 Sep 2025 13:36:27 -0700
+X-Gm-Features: AS18NWAaYUA9bXuMJJbd-WxMPLviaxaCW8kmjDiuq-5RxwTPwqyrOubLE8Hapac
+Message-ID: <CALeaR2rPWGPjxVHihWCRyD8RY0GU6QZez78ki3XaetLQBRw2mg@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c: pca954x: enable vmstate
 To: qemu-devel@nongnu.org
-References: <20250916162404.9195-1-jsnow@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250916162404.9195-1-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: venture@google.com, cminyard@mvista.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=steviea@google.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,26 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/25 09:23, John Snow wrote:
-> The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
-> 
->    Merge tag 'pull-request-2025-09-09' ofhttps://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/jsnow/qemu.git tags/python-pull-request
-> 
-> for you to fetch changes up to 9a494d83538680651197651031375c2b6fa2490b:
-> 
->    iotests/check: always enable all python warnings (2025-09-15 14:36:02 -0400)
-> 
-> ----------------------------------------------------------------
-> Python Pull Request
-> 
-> Python 3.14 support & synchronize with python-qemu-qmp repo
-
-
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
-
-r~
+On Tue, Sep 16, 2025 at 9:59=E2=80=AFAM Stevie Alvarez <steviea@google.com>=
+ wrote:
++ CC Corey Minyard for I2C maintainers.
+>
+> From: Patrick Venture <venture@google.com>
+>
+> Add missing vmstate support.
+>
+> Signed-off-by: Patrick Venture <venture@google.com>
+> ---
+>  hw/i2c/i2c_mux_pca954x.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
+> index a8ef640cd2..78828acafb 100644
+> --- a/hw/i2c/i2c_mux_pca954x.c
+> +++ b/hw/i2c/i2c_mux_pca954x.c
+> @@ -22,6 +22,7 @@
+>  #include "hw/qdev-core.h"
+>  #include "hw/qdev-properties.h"
+>  #include "hw/sysbus.h"
+> +#include "migration/vmstate.h"
+>  #include "qemu/log.h"
+>  #include "qemu/module.h"
+>  #include "qemu/queue.h"
+> @@ -211,6 +212,18 @@ static void pca954x_init(Object *obj)
+>      }
+>  }
+>
+> +static const VMStateDescription pca954x_vmstate =3D {
+> +    .name =3D TYPE_PCA954X,
+> +    .version_id =3D 0,
+> +    .minimum_version_id =3D 0,
+> +    .fields =3D (VMStateField[]) {
+> +        VMSTATE_SMBUS_DEVICE(parent, Pca954xState),
+> +        VMSTATE_UINT8(control, Pca954xState),
+> +        VMSTATE_BOOL_ARRAY(enabled, Pca954xState, PCA9548_CHANNEL_COUNT)=
+,
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  static const Property pca954x_props[] =3D {
+>      DEFINE_PROP_STRING("name", Pca954xState, name),
+>  };
+> @@ -228,6 +241,7 @@ static void pca954x_class_init(ObjectClass *klass, co=
+nst void *data)
+>
+>      dc->desc =3D "Pca954x i2c-mux";
+>      dc->realize =3D pca954x_realize;
+> +    dc->vmsd =3D &pca954x_vmstate;
+>
+>      k->write_data =3D pca954x_write_data;
+>      k->receive_byte =3D pca954x_read_byte;
+> --
+> 2.51.0.384.g4c02a37b29-goog
+>
 
