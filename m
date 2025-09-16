@@ -4,45 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7332CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 09:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7CDCAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 09:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyS16-000485-C5; Tue, 16 Sep 2025 05:30:28 -0400
+	id 1uyS3v-0005vy-Or; Tue, 16 Sep 2025 05:33:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uyS10-00047Y-FG; Tue, 16 Sep 2025 05:30:22 -0400
-Received: from [115.124.28.65] (helo=out28-65.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uyS0u-0003Lr-5C; Tue, 16 Sep 2025 05:30:22 -0400
-Received: from ZEVORN-PC(mailfrom:chao.liu@zevorn.cn
- fp:SMTPD_---.egLKg5x_1758014504 cluster:ay29) by smtp.aliyun-inc.com;
- Tue, 16 Sep 2025 17:21:45 +0800
-From: Chao Liu <chao.liu@zevorn.cn>
-To: richard.henderson@linaro.org, paolo.savini@embecosm.com, npiggin@gmail.com,
- ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@zevorn.cn>
-Subject: [PATCH v9 0/2] Generate strided vector loads/stores with tcg nodes
-Date: Tue, 16 Sep 2025 17:21:36 +0800
-Message-ID: <cover.1758006834.git.chao.liu@zevorn.cn>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uyS3r-0005vl-JT
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:33:19 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyS3l-00045d-AX
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 05:33:19 -0400
+Received: from example.com (unknown [167.220.208.43])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 83BCD2015505;
+ Tue, 16 Sep 2025 02:33:04 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 83BCD2015505
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1758015188;
+ bh=Ni4zhHvUhyIBGzEHotqfaeOtkYpJCAQ8X3x85Wn3s/w=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=GE3AUdDO0FbPDIfL8+h+IiFg7O6J9StMcgAayOlKB4nI0hQRAbBMhsn9HqFBDqYjs
+ YUqaf9TTNLz9usmGMYtLpt9sBcz7KLaCVrSmfOL0QT+fBbER5Xfk/9Hd6GuUoX2vgn
+ tgxNvY2eTMhdfef3s6HLPMN+MMj8JfPrHe9fRohY=
+Date: Tue, 16 Sep 2025 11:33:01 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Magnus Kulke <magnus.kulke@microsoft.com>,
+ Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
+ Wei Liu <liuwe@microsoft.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 10/26] accel/mshv: Add vCPU creation and execution loop
+Message-ID: <aMkuzbCrzx0ftpGY@example.com>
+References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+ <20250807143951.1154713-11-magnuskulke@linux.microsoft.com>
+ <aK7q91-sjFp8nVIG@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.65 (deferred)
-Received-SPF: pass client-ip=115.124.28.65; envelope-from=chao.liu@zevorn.cn;
- helo=out28-65.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+In-Reply-To: <aK7q91-sjFp8nVIG@redhat.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,82 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+On Wed, Aug 27, 2025 at 12:24:39PM +0100, Daniel P. Berrang� wrote:
+> So every MSHV  vCPU has a corresponding Linux thread, similar
+> to the model with KVM.  In libvirt we rely on the vCPU thread
+> being controllable with all the normal Linux process related
+> APIs. For example, setting thread CPU affinity, setting NUMA
+> memory policy, setting scheduler priorities, putting threads
+> into cgroups and applying a wide variety of cgroup controls.
+> 
+> Will there be any significant "gotchas" with the threads for
+> MSHV vCPUs, that would mean the above libvirt controls would
+> either raise errors, or silently not have any effect ?
+> 
 
-Thanks Richard for the review. In patch v9:
+Hi Daniel,
 
-- Simplify the implementation of gen_check_vext_elem_mask():
-  remove the `mask` argument, compute the mask directly inside the function,
-  and eliminate redundant code.
+I am not aware of any such gotchas. The MSHV vCPU threads should
+be regular threads that spend most of their time blocked in
+ioctl(MSHV_RUN) calls, and as such they should be controllable by
+the facilities you mentioned. I know that that folks who tested this
+code have been using numactl for reliable performance assessments
+without running into issues.
 
-- Limit the bit width to 8 bits when loading the mask from memory.
+best,
 
-- Remove the `vreg` argument in gen_ldst_vreg().
-
-History of changes:
-
-patch v8:
-- Use the right TCGv type for each variable — for example, make mask_elem
-  type TCGv_i64.
-- Use tcg_gen_trunc_i64_ptr() to change TCGv types — don't use C-style
-  casting.
-- Use TCG_COND_TSTNE, not TCG_COND_NE in tcg_gen_brcond_i64() to represent:
-  if (vext_elem_mask(v0, i) != 0)
-  https://lore.kernel.org/qemu-devel/cover.1757690407.git.chao.liu@zevorn.cn/
-
-patch v7:
-- Standardize the subject line of patch 1 and remove the trailing period.
-- Split into sub-functions to improve the patch's code readability and
-  facilitate review.
-- Use more faster TCG ops, use tcg_gen_andi_tl() instead of tcg_gen_rem_tl().
-- Add a tested-by signature for patch 2, as Eric has already tested it.
-  https://lore.kernel.org/qemu-devel/cover.1756975571.git.chao.liu@zevorn.cn/
-
-patch v6:
-- If a strided vector memory access instruction has non-zero vstart, 
-  check it through vlse/vsse helpers function.
-- Adjust the tcg test Makefile.
-  https://lore.kernel.org/qemu-devel/cover.1756906528.git.chao.liu@zevorn.cn/
-
-Patch v5:
-- Removed the redundant call to mark_vs_dirty(s) within the
-  gen_ldst_stride_main_loop() function.
-  https://lore.kernel.org/qemu-riscv/cover.1755609029.git.chao.liu@zevorn.cn/
-
-Patch v4:
-- Use ctz32() replace to for-loop
-  https://lore.kernel.org/qemu-devel/cover.1755333616.git.chao.liu@yeah.net/
-
-Patch v3:
-- Fix the get_log2() function:
-  https://lore.kernel.org/qemu-riscv/cover.1755287531.git.chao.liu@yeah.net/T/#t
-- Add test for vlsseg8e32 instruction.
-- Rebase on top of the latest master.
-
-Patch v2:
-- Split the TCG node emulation of the complex strided load/store operation into
-  two separate functions to simplify the implementation:
-  https://lore.kernel.org/qemu-riscv/20250312155547.289642-1-paolo.savini@embecosm.com/
-
-Patch v1:
-- Paolo submitted the initial version of the patch.
-  https://lore.kernel.org/qemu-devel/20250211182056.412867-1-paolo.savini@embecosm.com/
-
-
-Thanks,
-Chao
-
-Chao Liu (2):
-  target/riscv: Use tcg nodes for strided vector ld/st generation
-  tests/tcg/riscv64: Add test for vlsseg8e32 instruction
-
- target/riscv/insn_trans/trans_rvv.c.inc   | 354 ++++++++++++++++++++--
- tests/tcg/riscv64/Makefile.softmmu-target |   7 +-
- tests/tcg/riscv64/test-vlsseg8e32.S       | 107 +++++++
- 3 files changed, 450 insertions(+), 18 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-vlsseg8e32.S
-
--- 
-2.51.0
-
+magnus
 
