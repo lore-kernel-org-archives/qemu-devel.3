@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2C4CAC598
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7E5CAC598
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Sep 2025 18:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uya4Y-00035v-HF; Tue, 16 Sep 2025 14:06:34 -0400
+	id 1uya5n-0004k8-CF; Tue, 16 Sep 2025 14:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4T-00033C-1Z
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1uya51-0003ET-ER
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:06 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uya4R-0001aR-F8
- for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:06:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45f2fa8a1adso1012815e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:27 -0700 (PDT)
+ id 1uya4w-0001eN-0u
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 14:07:02 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45f29d2357aso22259015e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 11:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758045986; x=1758650786; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758046011; x=1758650811; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d1YOtX8BVonSDnFz/8OmLW8ozY+GsiqJe/aKd0r4lgo=;
- b=x7/YZjPlL55MXy3A4ZwyuNX5CMW1jR8AxkLNclQfg3a+GwbvkUoCoWzrEeK0u3dweI
- jiWNyT9WEEyQHP1rnx8Egd1gd4Aefml51DGdBuaWwSnYui1JSVUYNGD+fKncjf3D+T3a
- hWIWpFw6KJToAgGjKzj9FznZAWOYsvlt54yaVGH5gDZmK+lk5ECgqwMs3rJipNxujOra
- uqiuU1UJKdPEhAGChKYF8HKNUXTvKlg1Huzj6uftLq53irsPBODF/adVa1gUlaWiB6jw
- GIjzO7acYE4+k9MCzICU0rpSAShN/QWr3km2X/bk6XfYTHiq5jatzu6ceipysSh0NVYn
- CM6g==
+ :reply-to; bh=g04gXkzqDwaTf/HMFL3z5yBF259ksFa2ePPUMCg8ocI=;
+ b=LFv7UTbKt6+1geUJ2E2opgb84nAHpBuKYT+a8+eX3Ua+/sewJuNjWcpZJVSwlA2FW8
+ 7vMekg/7CSL033cvI66TQAyJHYCJPVezfeW/IurwjzlJuIP4Z0ZpsJDyWjdAoqKPULxe
+ VNUjFtfPiC+AUaYm2vSE1s6pqs6yiL93x8cn6gouj19bH0Qk/Wwcgt27D9Fk/iBEoh2N
+ xdZlaUPGhITC72cugoK4/l9FoIv1dnda7imvjTulsJ0npcXuhTxmuIPZf6rrcaocvjf5
+ XofNTWuP7DKQ0kxJ+UVyAPKcQprpRchSJMr/JaKFCimpt391HTbdc7KElEcMFlbtUL19
+ gMcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758045986; x=1758650786;
+ d=1e100.net; s=20230601; t=1758046011; x=1758650811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d1YOtX8BVonSDnFz/8OmLW8ozY+GsiqJe/aKd0r4lgo=;
- b=p+0hYgzt01VuNsAVcZ2w6VY6ni8Xpgv9GbKy6EUWIAA5vc6aSs9RnZ5iT4Vfg3pLdE
- eGfEESpMRWCCx6oWIQwMgBeeg3lTv09sPO7YOnoqS04CsR8PHz5OVPvBMFn2lv0Fpr7G
- 5kAE1LbiqikZelq25MqtzpsJzdEM0U6eXqZf/oqwy0E2p+gSiGT4Nr1YAgvAeUrOMY7F
- Ul9Ff/bzEapzxMU+qSYGaSdN+ls4gh0OzSoStvutgQIixVpyOhiTNJb8NhGojhOf5cK6
- Wk47T6iIikaaIvc6jMBnTdg0XfZrcFRjXAdZVtpbzvBXwVfO/OeYrxrNwNHZXC/TmXgQ
- DW7A==
-X-Gm-Message-State: AOJu0Yx+ywsRVpivH2dyftwEEi6pyjY4sjcK/Xr9p+HOZEmikDJEzWwA
- B+sj8hogYNtukxjpF7Tqst91D4ti6QxAHcpzhrhjcmAYKq0Y+M6ZN9W86z3dNdjPFxTF/DBVXvf
- rabRv
-X-Gm-Gg: ASbGnctAno1pN842Cc2sMgzys1RhtOIMIV0xYVYXtotntkB/SX6D6wUbttWxRxV7y2q
- CRSV42fcxnyd4GOdWYslALGW0SpqhTIymU19ZBH+aqzBpg442DDZEgTC3vC6Z4WwTEHmP8NxjcP
- j4EorFXvT95lawfTbVRqO+EZL+UQMYItlbgfKKQlmTSgyb9ZNPWSdE5dRwJs4UZQEw+hd8Oleow
- YbzWUhow0J8jSaPP5ZTlAy6dtTo/KsEr9TG5MG1wJCjjVgenz+PFf62K4vNaerDBTqLFadFS9bU
- LyGhF7qbTuj8uwkIjQJF56nvjK/F8d/SveQDgOA8zqrgw/xNf28VgQfbYXpTLkL75XuhRSLW0IP
- SPxAow48L9AsmNQvIWjuHX63sz1JM
-X-Google-Smtp-Source: AGHT+IF1fi3mmM0AQE7XU+b9bNI+eikHNGKr+qetIYt+ByhJZ+ArZzYCMZqtGrdO/xbFb4KugWio6A==
-X-Received: by 2002:a05:6000:2888:b0:3e8:6b2b:25e0 with SMTP id
- ffacd0b85a97d-3ec9ffa425emr3004068f8f.25.1758045985797; 
- Tue, 16 Sep 2025 11:06:25 -0700 (PDT)
+ bh=g04gXkzqDwaTf/HMFL3z5yBF259ksFa2ePPUMCg8ocI=;
+ b=nNobDsm6/sk+iaMtD+cJOwjIMzua0aW2h74jrYk2I4o5R3ophjZTtU4dIJMw6vo/sM
+ /CeLXEGdr4jbFRuMUkY3ri3yXz8v16z3A2WmmBjcxvewCj8e22w5MoHt/o9Kc34SP0eY
+ IRmgpiNIORoaAskTAYoNZNHI/3fQzuLunPocvsgKN2q/yyy0P2JgED2NCpB/MlxjNKsF
+ //u3/h0rcMwGL0Z21tYlpU93fNREte8m4y17JjHCm22Tr/L3obF0R3PxkoD1ci5PsoV+
+ B1u69hw0a9Vy7annSon/Fcrxgf2iilvvS6nRifv0xQopfvaarUIUDxigrwwTgd4JQb8J
+ GK/A==
+X-Gm-Message-State: AOJu0Yy1E708vf9fRy37ELcUPce9dc46OOzk8spwrWKekSX0cbwytLNp
+ xCfvjRzvAuxqVxQ69GgX1kYg/XFwhAviFRdu1TYpCDuxeezHHET6lpu/wmVQGAJywvGy1Nk7Nq1
+ Yj1we
+X-Gm-Gg: ASbGncuX5cVmYDcdIJSbTplvf2IPvjk8kSVqIpxzX3eIGZBgQ9Boby0tqcmfqr7ABz+
+ Aj9Jrt/jC9xH8Ljt2HSzz1w9+a6Ah1eZnIIvhG5SQAZSIUazxswwL7ZL2Vy9+CtpfjHl1mjsatw
+ 27PgSXClAnoDPAZNXJpEDSQvUhhbeRiai0cw9Xapc3MIChvxniCtaOERAmKEWkxxyGbmgyr5v2A
+ zGtdzqeY6wZhqbbLl75aetFfaEz+VM8iMx1W0fS5X/Ft2X9OpbTyUAKngnWDXEMZ8qrX+R7165r
+ o9Exe0bf4Njy3N5vPdnTM9O2GyfNAZoJCE4I8OxNT2Qg8W+K+wBbG4h/5Zdwp1YHjoM4DN5a6+1
+ aj9wuKtRzsGMU62s7oDDg6xIyAd3N
+X-Google-Smtp-Source: AGHT+IFfqxlrCXqOuWFAW5+8yS0nIQ3nrosZhM7H/7dTtDigUVzdaaNYcmjBjEvf3zahSrtOMyVXIg==
+X-Received: by 2002:a05:600c:c1c8:10b0:45b:43cc:e557 with SMTP id
+ 5b1f17b1804b1-45f212067efmr125240225e9.34.1758046010864; 
+ Tue, 16 Sep 2025 11:06:50 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.25
+ ffacd0b85a97d-3e760775880sm23033286f8f.2.2025.09.16.11.06.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Sep 2025 11:06:25 -0700 (PDT)
+ Tue, 16 Sep 2025 11:06:50 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/36] target/arm: Remove outdated comment for ZCR_EL12
-Date: Tue, 16 Sep 2025 19:05:46 +0100
-Message-ID: <20250916180611.1481266-13-peter.maydell@linaro.org>
+Subject: [PULL 33/36] bios-tables-test: Allow for smmuv3 test data.
+Date: Tue, 16 Sep 2025 19:06:07 +0100
+Message-ID: <20250916180611.1481266-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
 References: <20250916180611.1481266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-The comment about not being included in the summary table
-has been out of date for quite a while.
+The tests to be added exercise both legacy(iommu=smmuv3) and new
+-device arm-smmuv3,.. cases.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250830054128.448363-12-richard.henderson@linaro.org
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Message-id: 20250829082543.7680-10-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 5 -----
- 1 file changed, 5 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h     | 4 ++++
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev    | 0
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy | 0
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | 0
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | 0
+ 5 files changed, 4 insertions(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
+ create mode 100644 tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 19637e7301b..b641229ba0c 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4563,11 +4563,6 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
-         { K(3, 0, 14, 1, 0), K(3, 4, 14, 1, 0), K(3, 5, 14, 1, 0),
-           "CNTKCTL", "CNTHCTL_EL2", "CNTKCTL_EL12" },
- 
--        /*
--         * Note that redirection of ZCR is mentioned in the description
--         * of ZCR_EL2, and aliasing in the description of ZCR_EL1, but
--         * not in the summary table.
--         */
-         { K(3, 0,  1, 2, 0), K(3, 4,  1, 2, 0), K(3, 5, 1, 2, 0),
-           "ZCR_EL1", "ZCR_EL2", "ZCR_EL12", isar_feature_aa64_sve },
-         { K(3, 0,  1, 2, 6), K(3, 4,  1, 2, 6), K(3, 5, 1, 2, 6),
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8bf..2e3e3ccdcec 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,5 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
++"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
++"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
++"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
+new file mode 100644
+index 00000000000..e69de29bb2d
 -- 
 2.43.0
 
