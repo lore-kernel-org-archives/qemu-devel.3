@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413C5CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C56FCAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uysZg-0001Z5-Ii; Wed, 17 Sep 2025 09:51:56 -0400
+	id 1uysc6-0002mG-UB; Wed, 17 Sep 2025 09:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uysZf-0001Yj-FV
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:51:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uysbv-0002iT-Ng
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:54:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uysZc-0005Hw-QW
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:51:55 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uysbt-0005gI-K4
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:54:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758117108;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cvROPxFzU5xuQgS3BZPqtW0MKo3iLf5nbftd50VRhqI=;
- b=E3z1qlVJX6o2i64448s7sOjEXCxyskAu8kR43rbMAz8UTYlP4HPuIWP+DZ71MsO3jWtPOM
- lWLpasy+gFPuYzdx792KCHyGrzGXLeV8SyjCZGTzVE5CMxUvDeB5luj9cRFd2+vOXMy0+O
- Nrrc8hQGVtqkX1psvJE+xI4iGNsUc4w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1758117252;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=l35+6X0jYU0AhCSpL3cOHinYsiJ/cHpJo85JeoBiKr4=;
+ b=Kvvanhlslx8VeGn439XZ7nFgIYLm6ayg9cfvhPZ8OHT4OyOwQxBtNWTVr0sCJSmMqtFxbl
+ aMi+/SiJTUg8kXvYm9VqvLvoAN0l3mEficTHeh3EPY+HhFi9bsxf6IagcCRNi0HuhKNOSv
+ 9Pzc7TtDYrGEbgidHsxxuJMR0ZYI/6s=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-6SuqBo8sOKOeMeFSgxgAmA-1; Wed,
- 17 Sep 2025 09:51:44 -0400
-X-MC-Unique: 6SuqBo8sOKOeMeFSgxgAmA-1
-X-Mimecast-MFC-AGG-ID: 6SuqBo8sOKOeMeFSgxgAmA_1758117101
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-DDKVbFUWM5W6iltcaVjQ6w-1; Wed,
+ 17 Sep 2025 09:54:05 -0400
+X-MC-Unique: DDKVbFUWM5W6iltcaVjQ6w-1
+X-Mimecast-MFC-AGG-ID: DDKVbFUWM5W6iltcaVjQ6w_1758117239
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3D61180057A; Wed, 17 Sep 2025 13:51:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11296180044F; Wed, 17 Sep 2025 13:51:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6090721E6A27; Wed, 17 Sep 2025 15:51:37 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Peter Xu
- <peterx@redhat.com>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org,
- leiyang@redhat.com,  marcandre.lureau@redhat.com,  Michael Roth
- <michael.roth@amd.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v3 04/13] util/error: add &error_reporter
-In-Reply-To: <aMhbFcvItNMBtQhN@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 15 Sep 2025 19:29:41 +0100")
-References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
- <20250915132211.135095-5-vsementsov@yandex-team.ru>
- <aMg0l0xgq3hdiDnh@x1.local>
- <c1907e57-d279-40fa-b181-3b54441c49d7@yandex-team.ru>
- <aMhbFcvItNMBtQhN@redhat.com>
-Date: Wed, 17 Sep 2025 15:51:37 +0200
-Message-ID: <87jz1x426u.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4F5D1800378; Wed, 17 Sep 2025 13:53:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.195])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 262BC300018D; Wed, 17 Sep 2025 13:53:51 +0000 (UTC)
+Date: Wed, 17 Sep 2025 14:53:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Joel Stanley <joel@jms.id.au>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ Chao Liu <chao.liu@zevorn.cn>, Nicholas Joaquin <njoaquin@tenstorrent.com>,
+ Ganesh Valliappan <gvalliappan@tenstorrent.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 2/3] target/risvc: Fix vector whole ldst vstart check
+Message-ID: <aMq9axr_wINfBpxP@redhat.com>
+References: <20250903030114.274535-1-npiggin@gmail.com>
+ <20250903030114.274535-3-npiggin@gmail.com>
+ <6bff4c9d-1da4-40b3-901a-789923d8ef7e@ventanamicro.com>
+ <qyikdqxxiewb7tqykt74gpx5oereckbepyptd3vr4flptmrvoc@midnt5c7agnc>
+ <3dd9888f-be16-48f8-a858-f58a5b57825d@ventanamicro.com>
+ <188f0525-154e-4d08-a155-68e8800e302d@linaro.org>
+ <CACPK8Xd183vLgSyNfjzN5caUeJGRrjM1J8ugTVRd2k0Ea5LpfQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+In-Reply-To: <CACPK8Xd183vLgSyNfjzN5caUeJGRrjM1J8ugTVRd2k0Ea5LpfQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,86 +96,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Wed, Sep 17, 2025 at 11:14:41PM +0930, Joel Stanley wrote:
+> On Fri, 5 Sept 2025 at 16:50, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> >
+> > On 9/4/25 13:06, Daniel Henrique Barboza wrote:
+> > > How hard it is to update the GCC version we're running in the docker images for
+> > > "check-tcg"? We would like to use a RISC-V vector header that isn't supported
+> > > ATM.
+> > If debian packages the gcc version, then it's easy: change
+> >
+> >    gcc-riscv-linux-gnu
+> >
+> > to
+> >
+> >    gcc-NN-riscv-linux-gnu
+> 
+> The test that was failing uses debian-all-test-cross. This is based on
+> Debian 12 which maxes out at GCC 12.
+> 
+> If we move to Debian 13, we get GCC 14. Something like this would do it:
 
-> On Mon, Sep 15, 2025 at 09:14:18PM +0300, Vladimir Sementsov-Ogievskiy wr=
-ote:
->> On 15.09.25 18:45, Peter Xu wrote:
->> > On Mon, Sep 15, 2025 at 04:22:01PM +0300, Vladimir Sementsov-Ogievskiy=
- wrote:
->> > > Add a pair to &error_warn helper, to reduce the pattern like
->> > >=20
->> > >      Error *local_err =3D NULL;
->> > >=20
->> > >      ...
->> > >=20
->> > >      if (!foo(..., &local_err)) {
->> > >          error_report_err(local_err);
->> > >          return false;
->> > >      }
->> > >=20
->> > > to simply
->> > >=20
->> > >      if (!foo(..., &error_reporter)) {
->> > >          return false;
->> > >      }
->> > >=20
->> > > Of course, for new interfaces, it's better to always support and han=
-dle
->> > > errp argument. But when have to rework the old ones, it's not always
->> > > feasible to convert everything to support/handle errp.
->> > >=20
->> > > The new helper is used in following commits.
->> >=20
->> > Could we add some explanation of why we need this if we already have
->> > error_warn?
->> >=20
->> > I don't see much difference except error_warn will prepend it with
->> > "warning: ", but that doesn't sound like a real problem..
->>=20
->> Yes, seems it's the only difference.
->>=20
->> For me it seems strange to call it "warning", when we actually go to fai=
-lure branch of the code logic.
->> Finally, we do have error_report() and warn_report(). Seems not a proble=
-m to have corresponding "magic" variables.
->>=20
->> If have only one special error variable to simply report the error, I'd =
-prefer it not have "warning: " prefix.
->> I.e. drop error_warn, and keep only error_reporter (or some better name?=
-).
->
-> FWIW, this whole debate is liable to be a bit of a can of worms that
-> will delay your series from getting merged.
->
-> Can I suggest you repost this without &error_reporter usage, and then
-> have a separate standalone series that proposes error_report, and
-> converts a handful of files to demonstrate its usage.
+Debian 12 is a supported platform for QEMU, so we should generally
+expect our tests to work on that. That said IIUC riscv didn't become
+officially supported in Debian until 13, so we can use that as a
+justification for an exception to the normal platform rule.
 
-Seconded.
+> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+> @@ -6,7 +6,7 @@
+>  # basic compilers for as many targets as possible. We shall use this
+>  # to build and run linux-user tests on GitLab
+>  #
+> -FROM docker.io/library/debian:12-slim
+> +FROM docker.io/library/debian:13-slim
+> 
+> Is updating the distro something we would consider for this development cycle?
+> 
+> Cheers,
+> 
+> Joel
+> 
 
-Please note the killing of &error_warn is in progress:
-
-    Subject: [PATCH v2 00/12] Error reporting cleanup, a fix, and &error_wa=
-rn removal
-    Date: Wed, 17 Sep 2025 13:51:55 +0200
-    Message-ID: <20250917115207.1730186-1-armbru@redhat.com>
-    https://lore.kernel.org/qemu-devel/20250917115207.1730186-1-armbru@redh=
-at.com/
-
-Rationale in PATCH 12.
-
-I doubt additional special error destinations are a good idea.
-&error_abort definitely is a good idea.  &error_fatal is problematic,
-but widely used.
-
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> suggested to add one that
-at a glance looks just like yours.  Please see my reply at
-
-    Message-ID: <87a548sgjl.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/87a548sgjl.fsf@pond.sub.org/
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
