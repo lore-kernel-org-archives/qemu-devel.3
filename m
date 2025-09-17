@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1601CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0304DCA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyoPE-0006tI-KX; Wed, 17 Sep 2025 05:24:52 -0400
+	id 1uyoaq-0003KX-5g; Wed, 17 Sep 2025 05:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyoPD-0006t6-PB
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:24:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyoPB-0003vH-VF
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:24:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758101086;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Z5MhU3co+svOBhmwxAJZjbXyelYHdzlId7kYNUDHg/k=;
- b=PDe+YWGxRqRJw9rDCH+fVqayLnZOyaweH42mTrJByYSji13qt7VT3QEp8OjsBpUQOiKIj1
- rbHKCfwOAYmKSj0sboDeiotNZR0vSrz8SE+G1IFlMxV52aka2PqXt5qd4fvXoP0jzk9nNm
- XOXYvGDSZZuyMxdJJilSZ63GYmVYTI4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-tsSTHdC3PrOZGk-ZH78h_g-1; Wed,
- 17 Sep 2025 05:24:36 -0400
-X-MC-Unique: tsSTHdC3PrOZGk-ZH78h_g-1
-X-Mimecast-MFC-AGG-ID: tsSTHdC3PrOZGk-ZH78h_g_1758101075
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EEA2195608E; Wed, 17 Sep 2025 09:24:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F2B17300018D; Wed, 17 Sep 2025 09:24:31 +0000 (UTC)
-Date: Wed, 17 Sep 2025 10:24:27 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Subject: Re: [PATCH] checkpatch: Ignore removed lines in license check
-Message-ID: <aMp-MzBE19NORy4Y@redhat.com>
-References: <20250916165928.10048-1-nabihestefan@google.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1uyoag-0003E0-Mj
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:36:43 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyoaZ-0005tI-3f
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:36:42 -0400
+Received: from example.com (unknown [167.220.208.74])
+ by linux.microsoft.com (Postfix) with ESMTPSA id D7C9B2018E64;
+ Wed, 17 Sep 2025 02:36:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D7C9B2018E64
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1758101792;
+ bh=sEsOXGFGPeCM2fwA04Xk9hcqvXTmRTfKENeBYG814Ys=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=YV/fUbDOhzm4cEsbgd6EOIKTLVLU/R5FiY5MNdF/qjcVUBfzpIOfJ0kalLR0XP1oy
+ xDX+Hi3W2EbyEw6+LrGtDQcfDKexR69m4+haD4n01hC0s2dz9Iy9I/b8hS8ch9BG2q
+ 1kWZfsruWUIx9ACGxn2zOdiiVYhpstcQSyZFmOEU=
+Date: Wed, 17 Sep 2025 11:36:24 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?iso-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [CRM114spam]: Re: [PATCH v4 03/27] target/i386/mshv: Add x86
+ decoder/emu implementation
+Message-ID: <aMqBGL4iCOr3Sszp@example.com>
+References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
+ <20250916164847.77883-4-magnuskulke@linux.microsoft.com>
+ <aMmg_K8N1fKGUV4o@gallifrey>
+ <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
+ <aMn29rg2b7yC7Iu7@gallifrey>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250916165928.10048-1-nabihestefan@google.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <aMn29rg2b7yC7Iu7@gallifrey>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,65 +84,14 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 04:59:28PM +0000, Nabih Estefan wrote:
-> When running the license check, if we are updating a license it is
-> possible for the checkpatch script to test against old license lines
-> instead of newer ones, since the removal lines appear before the
-> addition lines in a .patch file.
+On Tue, Sep 16, 2025 at 11:47:02PM +0000, Dr. David Alan Gilbert wrote:
+> (I don't understand the structure as to why some stuff needs backend specific
+> reads and some are in env).
 
-While we match the "SPDX-License-Identifier" text in any context,
-the "file must have SDPX" validation is only performed against
-files that are entirely new: 
-
-  # Called at the end of processing a diff hunk for a file
-  sub process_end_of_file {
-        my $fileinfo = shift;
-
-        if ($fileinfo->{action} eq "new" &&
-            !exists $fileinfo->{facts}->{sawspdx}) {
-             ...raise error ....
-
-> Fix this by skipping over lines that start with "-" in the checkpatch
-> script.
-
-A new file cannot have any "-" lines present, so there isn't any
-bug that needs fixing AFAICT.  Can you show any patch or commit
-where this would have made a difference to what checkpatch.pl
-reports ?
-
-> 
-> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-> ---
->  scripts/checkpatch.pl | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 833f20f555..c57a423f9f 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1813,7 +1813,8 @@ sub process {
->  		}
->  
->  # Check SPDX-License-Identifier references a permitted license
-> -		if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
-> +		if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
-> +			$rawline !~ /^-/) {
->  			$fileinfo->{facts}->{sawspdx} = 1;
->  			&checkspdx($realfile, $1);
->  		}
-> -- 
-> 2.51.0.384.g4c02a37b29-goog
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Ah, that's because HVF is working on a slightly different level of
+abstraction I suppose: the HVF impl will read/write values to VMCS via
+VMREAD/VMWRITE, which would be Intel VMX specific.
 
