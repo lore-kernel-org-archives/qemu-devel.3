@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B47CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 499CFCAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsD-0000Up-V3; Wed, 17 Sep 2025 09:07:03 -0400
+	id 1uyrsV-0001k2-3z; Wed, 17 Sep 2025 09:07:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroe-0004z0-Iu; Wed, 17 Sep 2025 09:03:23 -0400
+ id 1uyroi-000529-To; Wed, 17 Sep 2025 09:03:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroa-0005tJ-GY; Wed, 17 Sep 2025 09:03:20 -0400
+ id 1uyrof-0005ub-LQ; Wed, 17 Sep 2025 09:03:24 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6j008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN71008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:35 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:48 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=SN54eqMpyxZn5t52ldVheDzKEoBDUBkvg/chu4l0yTs=; 
+DKIM-Signature: a=rsa-sha256; bh=GOQKVqefPAJmBrPvNMsFbTKEyGldKAyJfG+hCf+5Ixc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113796; v=1;
- b=DUSefoHX+5AQ41jKoyMQZ/520KnWRg3PTuzflX+/GPXZq3riyQSurxvuJq6Y+xeA
- sc0QE5yEaHKX31nXhL9x1HMWA8aCw1Kd//xPmJ1dS9TuYPRYEBUV3wIEZhunNBJy
- KSkDKTovU4HxAGab/4PCRKGMY+wWz4sLV/SxfhbPFp4A9F+HbrufBwEu6zktI+9n
- 37l8Va3KoDIqMDlZsWOzKy4/48ABx7OARe8Nt0FjkxJ7uloAMGpNVwmyed0owEJw
- 5AyPLLiP+X0+9IMBiwGrNzhPbldNRxURcOfovreIznCLAPrtI/DRx+W457D9g07k
- PFKYTh6R/xZXDBSuQAmfDQ==
+ s=rs20250326; t=1758113809; v=1;
+ b=e1Ob/piSj7cxEtTEojTvIjLvvXI1f4M9y8dhT54XWq2NNAJK9e2AYRl2yqkukXIJ
+ WNBaTiUjkp5ztkR7CHz3BNA978TDmZeQy5pc3yl62Vzt/0Js1cT0LcXU4FGcwqRg
+ dRxW9VdL6bphyt4odv6HmfTX2+QpMhY89N+CyVoZn2mvzcV3M/keLZcktZ+IdaHU
+ MJwsw33Awyb1v5g3OtTceF/ilc4az8tU3oVjdJYtf3Yige5Yi+G9ohT4ViEiNIUW
+ Fal/pEC7t79R1ra38eeCEkawlu+TqatE52yndj1zYLalrJPWSKG6MimIXorWBWTv
+ T6W+nb8n8IZMLJpu20ftXg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:17 +0900
-Subject: [PATCH 05/35] hw/arm: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:33 +0900
+Subject: [PATCH 21/35] hw/riscv: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-5-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-21-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,60 +136,44 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/arm/armv7m.c         | 2 +-
- hw/arm/aspeed_ast27x0.c | 2 +-
- hw/arm/smmu-common.c    | 5 +++--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ hw/riscv/riscv-iommu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index 7fa854bc14df..54d0d9f78207 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -117,7 +117,7 @@ static void bitband_realize(DeviceState *dev, Error **errp)
-         return;
-     }
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index aed84d87a823..6e2962f8331b 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1221,8 +1221,8 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+         memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+             TYPE_RISCV_IOMMU_MEMORY_REGION,
+             OBJECT(as), "riscv_iommu", UINT64_MAX);
+-        address_space_init(&as->iova_as, NULL, MEMORY_REGION(&as->iova_mr),
+-                           name);
++        address_space_init(&as->iova_as, OBJECT(s), MEMORY_REGION(&as->iova_mr),
++                           "iova-as");
  
--    address_space_init(&s->source_as, NULL, s->source_memory, "bitband-source");
-+    address_space_init(&s->source_as, OBJECT(s), s->source_memory, "as");
- }
+         QLIST_INSERT_HEAD(&s->spaces, as, list);
  
- /* Board init.  */
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index f8c0ac5f87df..7fe097ad3f11 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -387,7 +387,7 @@ static bool aspeed_soc_ast2700_dram_init(DeviceState *dev, Error **errp)
-     memory_region_init(&s->dram_container, OBJECT(s), "ram-container",
-                        ram_size);
-     memory_region_add_subregion(&s->dram_container, 0, s->dram_mr);
--    address_space_init(&s->dram_as, NULL, s->dram_mr, "dram");
-+    address_space_init(&s->dram_as, OBJECT(s), s->dram_mr, "dram-as");
+@@ -2427,8 +2427,8 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+     /* Memory region for downstream access, if specified. */
+     if (s->target_mr) {
+         s->target_as = g_new0(AddressSpace, 1);
+-        address_space_init(s->target_as, NULL, s->target_mr,
+-            "riscv-iommu-downstream");
++        address_space_init(s->target_as, OBJECT(s), s->target_mr,
++                           "downstream-as");
+     } else {
+         /* Fallback to global system memory. */
+         s->target_as = &address_space_memory;
+@@ -2437,7 +2437,7 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+     /* Memory region for untranslated MRIF/MSI writes */
+     memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
+             "riscv-iommu-trap", ~0ULL);
+-    address_space_init(&s->trap_as, NULL, &s->trap_mr, "riscv-iommu-trap-as");
++    address_space_init(&s->trap_as, OBJECT(s), &s->trap_mr, "trap-as");
  
-     /*
-      * Add a memory region beyond the RAM region to emulate
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 081c50750947..7c1648165b9f 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -863,6 +863,7 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
-     sdev = sbus->pbdev[devfn];
-     if (!sdev) {
-         char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn, index++);
-+        g_autofree char *as_name = g_strconcat(name, "-as", NULL);
- 
-         sdev = sbus->pbdev[devfn] = g_new0(SMMUDevice, 1);
- 
-@@ -873,8 +874,8 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
-         memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
-                                  s->mrtypename,
-                                  OBJECT(s), name, UINT64_MAX);
--        address_space_init(&sdev->as, NULL,
--                           MEMORY_REGION(&sdev->iommu), name);
-+        address_space_init(&sdev->as, OBJECT(s),
-+                           MEMORY_REGION(&sdev->iommu), as_name);
-         trace_smmu_add_mr(name);
-         g_free(name);
-     }
+     if (s->cap & RISCV_IOMMU_CAP_HPM) {
+         s->hpm_timer =
 
 -- 
 2.51.0
