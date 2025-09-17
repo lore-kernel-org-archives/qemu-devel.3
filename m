@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50793CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD993CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqQE-0002rQ-6i; Wed, 17 Sep 2025 07:34:02 -0400
+	id 1uyqT8-0004DQ-Bi; Wed, 17 Sep 2025 07:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqQ9-0002qj-Ol
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:33:58 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1uyqT4-0004Cm-Fo
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:36:58 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqQ5-0007Au-Qp
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:33:56 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6296f6ce5ddso2199623d50.3
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 04:33:53 -0700 (PDT)
+ id 1uyqT2-00084c-2e
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:36:58 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-71d603a269cso43716487b3.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 04:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1758108832; x=1758713632; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1758109015; x=1758713815; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZCLycGSctS9nUiQ2ptFxl7W8ZiF6zfMkmnFkuhYOYoM=;
- b=WNlO9L9Ys+QdAOAsk07IJ+PS3Dg7cRxrP/wpB6m5rsdvWiDUID4cC+VxlHukn7D5+9
- +2OCmczcEbXTa0BH5NUFLR3hhcNH69tSiJbdGsniJJJgI/TsYgH+/Mhwu5PXradY+/6G
- guZEGg7SLa53JZHjC6jswKjfsfvpySTEeMJHywe4apQPfjpQIOHwybpzHQqnKcxonJ21
- RMKPyUhVAGIosyCOF8r2mX7pOpoV2QypiHC791HqIm8wa0oH+jdCyM2s7NzJUIoz8lA8
- o5oh/SPtnrGHz2sgo9xT/+asacVED+wx8c+TsXkTG6eT9PTjfUtXE5XrBjPodwQ9ehAA
- wIjw==
+ bh=+0fIO5QYep8ESCFZccAhR1SrpA2963VFE92xZX3msdY=;
+ b=B2Ggz1SAlBMHY9TCpqCqU7RXx+OA9s9DIwjKsoS9RWKpNORKrZ8gtdCx5S7OG7WhpW
+ 4BtLB+V6eorUYtVJmCVny2TrF+/d7y4oi9PgESp7QO44ZmBoiYdLM1zvbjpwfxUAYdww
+ EE7CLD5f3ZEzWOjUQvZrcdxODdTB2mEiBDbNMJux7T7doXJhHk9GU+iCWqTfeWqVg8bK
+ Qz/3KK014oi2QNN6OgPt9ibNShVCdxB6bL6beDRvn7norozI3evEQKxJ/rbfZS1XlSod
+ ihTpa/LHOiO+7tH+seqoWN8nT3qzenDoUks64KHKbBNGrYU0loHGAQaQu5U7I6CKv+lY
+ tFsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758108832; x=1758713632;
+ d=1e100.net; s=20230601; t=1758109015; x=1758713815;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZCLycGSctS9nUiQ2ptFxl7W8ZiF6zfMkmnFkuhYOYoM=;
- b=sDNdwILoYjW1rIN1F5KYg8g9B4166dy/JigskdxMy22CqutH3G8jmMtBD8Fzraw5mt
- gKAYx6zfmhUe7rG2EKlkisFBhfjsqzhiSLmvuv+VchS2nCA8gnQsTVqCrgdyYFnPchG0
- vgboDakPJnqQH48a6PDRJ797WzAXH2ae4ssrlqz1LJGRhkKDvfkZ/c6+tq4U5GKKPm6A
- cCff3xwmhPrJkAT19LV0BXTk4v6mK2m8RON8/Yz+iSSnGUpG/w+gLrbRfMpaRTlToXdl
- eetI4SmpB4Ze8GwWSeX/NoMAoQNLrPlzD9vL2RjCDBlITsUpKvAKABaVqFSu5jrkIaFA
- 3+8g==
+ bh=+0fIO5QYep8ESCFZccAhR1SrpA2963VFE92xZX3msdY=;
+ b=rTPyRd/4Khgleup1WzqlHC4OrVJouMpSHg5vYrmheeaycgFIKL2vovdeQOSl+7F6jF
+ snAka7pyHusX9gL9VlWxHwjtg/paQj83fm0eEBPrLZrFmZ6xDN6F0Wq4M/ABXj76YHUd
+ f/NdRttlug09D8LEdqF5CV85IG8zKpgArnsKhMV8Y4KEWkGdY7v9H3+tSif7mGlqZ2jc
+ SMyIol6imZQ+r5UtPzU9xktBIrG2LHqgbVKPPKmV6fNld4Zq+wns5dJNmyZCQf5BFDI+
+ EPneB2W2cny4K8WV+j8ww9vNNYnQ6CkTNLVcu5uEcna77mLzJTyF7TnDWXVr96yck/0a
+ /PBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9T0FreAIQDJiPmFt/7qAfkpC+6ZAYLLfuhemiddGs4jWXOf1kihxkRQRjd2M4bpyAofNhPLHBxkTp@nongnu.org
-X-Gm-Message-State: AOJu0YyhNf1Tw5zpwYxXDM8exM0G4Sq8ZEL5xWU9VBNFTTfDFfx/DpcP
- BNF80oH6S1cejsJIkwJ7R2up3hITDIILhn1FTKVtrEemDe2cL4/Y6F+roRVnsf75pts=
-X-Gm-Gg: ASbGncsrSkGZWyFT6vevp2+EWFaKxL2WDS1L0g+SteTvW55rD4uT52sBvNt8DW5+8tZ
- xMndCYOdY4VHRCcuhyA0nkQjgODqJAwNrRb4KuveyqyMdceFvOVZS5EMeIeS9rlFeoEFWH/S2YN
- 1Rd96ZI3fFGGsz8A1wfB7KDKpsmN/OJUjO2XZks3O+sGX3w3cvyFP+ghLSmYxbzkYMsB0YlHAN6
- O59Kk6X4NRuetCUddTqkgUIW+fho2aGf/4Z5IKX7vLo3ouKGjtxLrxtfFO+a8Akiel1+cR/Glst
- xe+vex+gfXMf/05i1ABWZXawTWXABPq2pUZSZLzlMJA0Yifx7LmQcLd9H+aRjN77Ibso51Qm0xv
- uTObND/eXxz0D9DLxp5aG4IbDSokCB00A8Ue2+Zb3yddK436rbYJYgVpDfs/GrKjZ2d/MYt6noI
- W/
-X-Google-Smtp-Source: AGHT+IEhM/NjdYcSA7GNgp9MWAmEVDgpU7WUpEWAIpl6HYmd0lmmGXsyYkCVRmolgQ9iv9Dt83ZwiQ==
-X-Received: by 2002:a53:cd8a:0:b0:628:9b45:5e29 with SMTP id
- 956f58d0204a3-633b05f11eamr1084041d50.15.1758108831238; 
- Wed, 17 Sep 2025 04:33:51 -0700 (PDT)
+ AJvYcCVP5wbnhEumtw+8L4EBAbJYVIQKvbKTatcjGe9yBcQtafV8CG3uneHKV9FqsYFHFX7JB6C8sLMts+YK@nongnu.org
+X-Gm-Message-State: AOJu0YyflZ8tV5xrN966p7RILC/qLWoBZJfH0qSx3rbWKau4OhTvSP5j
+ BJ5G6neXxq/Ngi6kJ0RVrfoJBwNpH+MC3JjtkkC8PF+R+eK1NYisgTamLDaIhVsjIAc=
+X-Gm-Gg: ASbGncu5FxuFJ2/D/Zttw1JFBZ3IOecitSUG/Ptf7KCBO1/mZFV0UnOcj7MATalRK1Y
+ ZVPB3tVQRL6g2srUEI69ibO2j8q9fbYcCOjaJEKqJadzPy+K6qZm/gfjRDuOTikohy7LLREwj3i
+ K/22lmGi3DKmRfEAJvisjfy+glz3LTP4x+66kyKIycKMYY5T5pRoPhbtk0dx2cmlYLjJ24scTir
+ 9jWyg9wpglRFXG4ZkcRD+Yayu9BanyyIWNZBG69b1XK0kTXDV2pLvo14iannmMbQjncd/s+c8HZ
+ Lf15/nLy34piX1m8CfcL2J3nlKRrlxfGqoSxASbilsD+DSKYwaJ4oiAKINTZlLpn5EpaWXxIKb0
+ 8Z6k049aydmt6shw+femudQ01MDDvWu87PjDYW+vpmJJ6OeXvgm4nagG3CM1eknGrFsl2iI3Gwv
+ 7i
+X-Google-Smtp-Source: AGHT+IEptVo9o6olaU9LNWCyaCw8yx4uyh+s1YUENrc1kTTpOXdJcWbPvSzbEcgjO/Fz5TLDnq62rw==
+X-Received: by 2002:a05:690c:f03:b0:732:f9d3:53b5 with SMTP id
+ 00721157ae682-73892f4a5e0mr11929337b3.38.1758109014540; 
+ Wed, 17 Sep 2025 04:36:54 -0700 (PDT)
 Received: from ?IPV6:2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea?
  ([2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-633b8c8442bsm118972d50.5.2025.09.17.04.33.49
+ 00721157ae682-72f7632ed5csm47699057b3.6.2025.09.17.04.36.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 04:33:50 -0700 (PDT)
-Message-ID: <9f9a3c62-de35-4290-a046-e0928bf67831@ventanamicro.com>
-Date: Wed, 17 Sep 2025 08:33:48 -0300
+ Wed, 17 Sep 2025 04:36:53 -0700 (PDT)
+Message-ID: <f7ffd3ff-ed18-4c92-8fba-690ca1c59aeb@ventanamicro.com>
+Date: Wed, 17 Sep 2025 08:36:51 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/5] target/riscv: Integrate SMMPT checks into MMU and
- TLB fill
+Subject: Re: [RFC PATCH 4/5] target/riscv: Implement SMMPT fence instructions
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
  TANG Tiancheng <lyndra@linux.alibaba.com>
 References: <20250909132533.32205-1-zhiwei_liu@linux.alibaba.com>
- <20250909132533.32205-4-zhiwei_liu@linux.alibaba.com>
+ <20250909132533.32205-5-zhiwei_liu@linux.alibaba.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20250909132533.32205-4-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20250909132533.32205-5-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,160 +111,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/9/25 10:25 AM, LIU Zhiwei wrote:
-> With the core MPT lookup logic in place, this patch integrates the
-> permission checks into QEMU's main MMU processing functions.
+> This patch completes the SMMPT implementation by adding support for the
+> new fence instructions: `mfence.spa` and `minval.spa`.
 > 
-> A new helper, `get_physical_address_mpt`, is introduced to check the
-> permissions for a given physical address against the MPT. This helper
-> is then called at two critical points:
+> According to the specification, these instructions act as memory ordering
+> fences for MPT updates. In QEMU's TCG model, this is conservatively
+> implemented by flushing the entire TLB, which ensures that any subsequent
+> memory accesses will re-evaluate permissions and see the effects of any prior
+> MPT modifications.
 > 
-> 1. During page table walks (`get_physical_address`): The physical
->     address of the Page Table Entry (PTE) itself is checked to ensure
->     the supervisor has permission to read it.
-> 
-> 2. After successful address translation (`riscv_cpu_tlb_fill`): The final
->     guest-physical address is checked against the MPT before the access
->     is allowed to proceed.
-> 
-> This ensures that SMMPT protection is enforced for both the translation
-> process and the final memory access, as required by the specification.
+> The instructions are privileged and will cause an illegal instruction
+> exception if executed outside of M-mode.
 > 
 > Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
 > Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 > ---
+
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-
->   target/riscv/cpu_helper.c | 81 +++++++++++++++++++++++++++++++++++++--
->   1 file changed, 77 insertions(+), 4 deletions(-)
+>   target/riscv/insn32.decode                    |  2 ++
+>   .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
+>   2 files changed, 32 insertions(+)
 > 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 3479a62cc7..f8ca74ef61 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1089,9 +1089,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
->    * @access_type: The type of MMU access
->    * @mode: Indicates current privilege level.
->    */
-> -static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> -                                    int size, MMUAccessType access_type,
-> -                                    int mode)
-> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> +                             int size, MMUAccessType access_type, int mode)
->   {
->       pmp_priv_t pmp_priv;
->       bool pmp_has_privs;
-> @@ -1162,6 +1161,60 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
->       return !high_bit;
->   }
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index cd23b1f3a9..cf58f1beee 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+>   mret        0011000    00010 00000 000 00000 1110011
+>   wfi         0001000    00101 00000 000 00000 1110011
+>   sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+> +mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
+> +minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
 >   
-> +/*
-> + * get_physical_address_mpt - check mpt permission for this physical address
-> + *
-> + * Lookup the Memory Protection Table and check permission for this
-> + * physical address. Returns 0 if the permission checking was successful
-> + *
-> + * @env: CPURISCVState
-> + * @prot: The returned protection attributes
-> + * @addr: The physical address to be checked permission
-> + * @access_type: The type of MMU access
-> + * @mode: Indicates current privilege level.
-> + */
-> +static int get_physical_address_mpt(CPURISCVState *env, int *prot, hwaddr addr,
-> +                                    MMUAccessType access_type, int mode)
+>   # *** NMI ***
+>   mnret       0111000    00010 00000 000 00000 1110011
+> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+> index 8a62b4cfcd..5ec6bf5991 100644
+> --- a/target/riscv/insn_trans/trans_privileged.c.inc
+> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
+> @@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+>   #endif
+>       return false;
+>   }
+> +
+> +#define REQUIRE_SMSDID(ctx) do {          \
+> +    if (!ctx->cfg_ptr->ext_smsdid) {      \
+> +        return false;                     \
+> +    }                                     \
+> +} while (0)
+> +
+> +static bool do_mfence_spa(DisasContext *ctx)
 > +{
-> +    mpt_access_t mpt_access;
-> +    bool mpt_has_access;
-> +
-> +    /*
-> +     * If the extension is not supported or the mmpt.mode is Bare,
-> +     * there is no protection, return success.
-> +     */
-> +    if (!riscv_cpu_cfg(env)->ext_smmpt || env->mptmode == 0) {
-> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +        return TRANSLATE_SUCCESS;
+> +#ifndef CONFIG_USER_ONLY
+> +    REQUIRE_SMSDID(ctx);
+> +    if (ctx->priv != PRV_M) {
+> +        return false;
 > +    }
-> +
-> +    /*
-> +     * MPT is checked for all accesses to physical memory, unless the
-> +     * effective privilege mode is M.
-> +     *
-> +     * Data accesses in M-mode when the MPRV bit in mstatus is set and
-> +     * the MPP field in mstatus contains S or U are subject to MPT checks.
-> +     *
-> +     * In riscv_env_mmu_index, The MPRV and MPP bits are already checked and
-> +     * encoded to mmu_idx, So we do not need to check it here.
-> +     */
-> +    if (mode == PRV_M) {
-> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +        return TRANSLATE_SUCCESS;
-> +    }
-> +
-> +    mpt_has_access = smmpt_check_access(env, addr,
-> +                                      &mpt_access, access_type);
-> +    if (!mpt_has_access) {
-> +        *prot = 0;
-> +        return TRANSLATE_MPT_FAIL;
-> +    }
-> +
-> +    *prot = smmpt_access_to_page_prot(mpt_access);
-> +
-> +    return TRANSLATE_SUCCESS;
+> +    decode_save_opc(ctx, 0);
+> +    gen_helper_tlb_flush_all(tcg_env);
+> +    return true;
+> +#endif
+> +    return false;
 > +}
 > +
->   /*
->    * get_physical_address - get the physical address for this virtual address
->    *
-> @@ -1356,6 +1409,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->               pte_addr = base + idx * ptesize;
->           }
->   
-> +        int mpt_prot;
-> +        int mpt_ret = get_physical_address_mpt(env, &mpt_prot, pte_addr,
-> +                                               MMU_DATA_LOAD, PRV_S);
-> +        if (mpt_ret != TRANSLATE_SUCCESS) {
-> +            return TRANSLATE_MPT_FAIL;
-> +        }
+> +static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
+> +{
+> +    return do_mfence_spa(ctx);
+> +}
 > +
->           int pmp_prot;
->           int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
->                                                  sxlen_bytes,
-> @@ -1766,7 +1826,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->       CPURISCVState *env = &cpu->env;
->       vaddr im_address;
->       hwaddr pa = 0;
-> -    int prot, prot2, prot_pmp;
-> +    int prot, prot2, prot_pmp, mpt_prot;
->       bool pmp_violation = false;
->       bool first_stage_error = true;
->       bool two_stage_lookup = mmuidx_2stage(mmu_idx);
-> @@ -1820,6 +1880,13 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->               prot &= prot2;
->   
->               if (ret == TRANSLATE_SUCCESS) {
-> +                ret = get_physical_address_mpt(env, &mpt_prot, pa,
-> +                                               access_type, mode);
-> +                qemu_log_mask(CPU_LOG_MMU,
-> +                              "%s MPT address=" HWADDR_FMT_plx " ret %d prot"
-> +                              " %d\n",
-> +                              __func__, pa, ret, mpt_prot);
-> +                prot &= mpt_prot;
->                   ret = get_physical_address_pmp(env, &prot_pmp, pa,
->                                                  size, access_type, mode);
->                   tlb_size = pmp_get_tlb_size(env, pa);
-> @@ -1855,6 +1922,12 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->                         __func__, address, ret, pa, prot);
->   
->           if (ret == TRANSLATE_SUCCESS) {
-> +            ret = get_physical_address_mpt(env, &mpt_prot, pa,
-> +                                           access_type, mode);
-> +            qemu_log_mask(CPU_LOG_MMU,
-> +                          "%s MPT address=" HWADDR_FMT_plx " ret %d prot %d\n",
-> +                          __func__, pa, ret, mpt_prot);
-> +            prot &= mpt_prot;
->               ret = get_physical_address_pmp(env, &prot_pmp, pa,
->                                              size, access_type, mode);
->               tlb_size = pmp_get_tlb_size(env, pa);
+> +static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
+> +{
+> +    return do_mfence_spa(ctx);
+> +}
 
 
