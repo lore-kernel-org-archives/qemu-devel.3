@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AADA6CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27442CAC5A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqjL-0005Vr-40; Wed, 17 Sep 2025 07:53:47 -0400
+	id 1uyqiV-0003gQ-KL; Wed, 17 Sep 2025 07:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqi0-00035M-4y
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqi1-00035Y-PX
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhw-0003l1-BP
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhw-0003ki-BH
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1758109938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0lKeyYDORbgkwU7V+d4cuRE8p5y0As4etfhiXVq51fo=;
- b=WGK/X4y3jpYabrHDu9pz/KVIT5hpIkwmC1h2exWvL2wglRaoxcINymztzrhZzhv9DRtwAo
- DFDZzaipbqNO3QeGijf9HxAFVkwesoo7lW5Lr562dn7KTjIKXvpxBywRBmkPbDkkzJ4Ho9
- kXL4ATcz3rwXUfOJlIoThdhI3AvTha8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ri5RghWLVXRz9tcDloYR8x0uesVdTFc/iLex6qYjpT4=;
+ b=BLOzno7EGikzd1ULTjqSN8Tx4l4nf/ygjmhZJwqeNhdRi+A3hrshT+4xD1wOnuN6+RfYna
+ sKIWS6ohP7hdtEEzKd7qhHn9AB8VXDvZd7pC080ZLqHVFB8qDn1hHSy7DrJk1jU7MJXyYN
+ VI+GnNQOcdOOv8DleunD8m3oc34uxd0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-SDNw0BS4O_iWpLfjSpyaLg-1; Wed,
- 17 Sep 2025 07:52:15 -0400
-X-MC-Unique: SDNw0BS4O_iWpLfjSpyaLg-1
-X-Mimecast-MFC-AGG-ID: SDNw0BS4O_iWpLfjSpyaLg_1758109934
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-PT1b_-4oP4yswLPBixSJcQ-1; Wed,
+ 17 Sep 2025 07:52:14 -0400
+X-MC-Unique: PT1b_-4oP4yswLPBixSJcQ-1
+X-Mimecast-MFC-AGG-ID: PT1b_-4oP4yswLPBixSJcQ_1758109933
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA75F195609E; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB1481956046; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81DB0300018D; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F1231800577; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 601D321E66D3; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
+ id 5418321E677A; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v2 11/12] ui/dbus: Consistent handling of texture mutex failure
-Date: Wed, 17 Sep 2025 13:52:06 +0200
-Message-ID: <20250917115207.1730186-12-armbru@redhat.com>
+Subject: [PATCH v2 08/12] util/oslib-win32: Do not treat null @errp as
+ &error_warn
+Date: Wed, 17 Sep 2025 13:52:03 +0200
+Message-ID: <20250917115207.1730186-9-armbru@redhat.com>
 In-Reply-To: <20250917115207.1730186-1-armbru@redhat.com>
 References: <20250917115207.1730186-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,59 +86,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We report d3d_texture2d_acquire0() and d3d_texture2d_release0()
-failure as error, except in dbus_update_gl_cb(), where we report it as
-warning.  Report it as error there as well.
+qemu_socket_select() and its wrapper qemu_socket_unselect() treat a
+null @errp as &error_warn.  This is wildly inappropriate.  A caller
+passing null @errp specifies that errors are to be ignored.  If
+warnings are wanted, the caller must pass &error_warn.
+
+Change callers to do that, and drop the inappropriate treatment of
+null @errp.
+
+This assumes that warnings are wanted.  I'm not familiar with the
+calling code, so I can't say whether it will work when the socket is
+invalid, or WSAEventSelect() fails.  If it doesn't, then this should
+be an error instead of a warning.  Invalid socket might even be a
+programming error.
+
+These warnings were introduced in commit f5fd677ae7cf (win32/socket:
+introduce qemu_socket_select() helper).  I considered reverting to
+silence, but Daniel Berrangé asked for the warnings to be preserved.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus-listener.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ io/channel-socket.c | 4 ++--
+ io/channel-watch.c  | 2 +-
+ util/aio-win32.c    | 2 +-
+ util/oslib-win32.c  | 7 ++-----
+ 4 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 09d7a319b1..b82e7c7115 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -214,26 +214,31 @@ static void dbus_update_gl_cb(GObject *source_object,
-                               GAsyncResult *res,
-                               gpointer user_data)
- {
--    g_autoptr(GError) err = NULL;
-+    g_autoptr(GError) gerr = NULL;
-+#ifdef WIN32
-+    Error **err = NULL;
-+#endif
-     DBusDisplayListener *ddl = user_data;
-     bool success;
- 
- #ifdef CONFIG_GBM
-     success = qemu_dbus_display1_listener_call_update_dmabuf_finish(
--        ddl->proxy, res, &err);
-+        ddl->proxy, res, &gerr);
-     if (!success) {
--        error_report("Failed to call update: %s", err->message);
-+        error_report("Failed to call update: %s", gerr->message);
-     }
- #endif
- 
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 3b7ca924ff..56ef353cd3 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -454,7 +454,7 @@ static void qio_channel_socket_finalize(Object *obj)
+             }
+         }
  #ifdef WIN32
-     success = qemu_dbus_display1_listener_win32_d3d11_call_update_texture2d_finish(
--        ddl->d3d11_proxy, res, &err);
-+        ddl->d3d11_proxy, res, &gerr);
-     if (!success) {
--        error_report("Failed to call update: %s", err->message);
-+        error_report("Failed to call update: %s", gerr->message);
-     }
- 
--    d3d_texture2d_acquire0(ddl->d3d_texture, &error_warn);
-+    if (!d3d_texture2d_acquire0(ddl->d3d_texture, &err)) {
-+        error_report_err(err);
-+    }
+-        qemu_socket_unselect(ioc->fd, NULL);
++        qemu_socket_unselect(ioc->fd, &error_warn);
  #endif
+         close(ioc->fd);
+         ioc->fd = -1;
+@@ -890,7 +890,7 @@ qio_channel_socket_close(QIOChannel *ioc,
  
-     graphic_hw_gl_block(ddl->dcl.con, false);
+     if (sioc->fd != -1) {
+ #ifdef WIN32
+-        qemu_socket_unselect(sioc->fd, NULL);
++        qemu_socket_unselect(sioc->fd, &error_warn);
+ #endif
+         if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_LISTEN)) {
+             socket_listen_cleanup(sioc->fd, errp);
+diff --git a/io/channel-watch.c b/io/channel-watch.c
+index 64b486e378..ec76bd1ec6 100644
+--- a/io/channel-watch.c
++++ b/io/channel-watch.c
+@@ -283,7 +283,7 @@ GSource *qio_channel_create_socket_watch(QIOChannel *ioc,
+ 
+     qemu_socket_select(sockfd, ioc->event,
+                        FD_READ | FD_ACCEPT | FD_CLOSE |
+-                       FD_CONNECT | FD_WRITE | FD_OOB, NULL);
++                       FD_CONNECT | FD_WRITE | FD_OOB, &error_warn);
+ 
+     source = g_source_new(&qio_channel_socket_source_funcs,
+                           sizeof(QIOChannelSocketSource));
+diff --git a/util/aio-win32.c b/util/aio-win32.c
+index 6583d5c5f3..b125924433 100644
+--- a/util/aio-win32.c
++++ b/util/aio-win32.c
+@@ -121,7 +121,7 @@ void aio_set_fd_handler(AioContext *ctx,
+ 
+         QLIST_INSERT_HEAD_RCU(&ctx->aio_handlers, node, node);
+         event = event_notifier_get_handle(&ctx->notifier);
+-        qemu_socket_select(fd, event, bitmask, NULL);
++        qemu_socket_select(fd, event, bitmask, &error_warn);
+     }
+     if (old_node) {
+         aio_remove_fd_handler(ctx, old_node);
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index b7351634ec..df118b164e 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -180,7 +180,8 @@ static int socket_error(void)
+ void qemu_socket_set_block(int fd)
+ {
+     unsigned long opt = 0;
+-    qemu_socket_unselect(fd, NULL);
++
++    qemu_socket_unselect(fd, &error_warn);
+     ioctlsocket(fd, FIONBIO, &opt);
+ }
+ 
+@@ -296,10 +297,6 @@ bool qemu_socket_select(int sockfd, WSAEVENT hEventObject,
+ {
+     SOCKET s = _get_osfhandle(sockfd);
+ 
+-    if (errp == NULL) {
+-        errp = &error_warn;
+-    }
+-
+     if (s == INVALID_SOCKET) {
+         error_setg(errp, "invalid socket fd=%d", sockfd);
+         return false;
 -- 
 2.49.0
 
