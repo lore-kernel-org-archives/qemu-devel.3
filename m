@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F349CAC5A9
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 23:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EE7CAC59F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 23:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz1Tj-0005kN-79; Wed, 17 Sep 2025 19:22:23 -0400
+	id 1uz1TU-0005Zy-4S; Wed, 17 Sep 2025 19:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uz1TG-0005Ut-BI; Wed, 17 Sep 2025 19:21:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1uz1TC-0005TE-31; Wed, 17 Sep 2025 19:21:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uz1TE-0002Pw-CL; Wed, 17 Sep 2025 19:21:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HI3gTY031219;
- Wed, 17 Sep 2025 23:21:50 GMT
+ id 1uz1TA-0002Ol-60; Wed, 17 Sep 2025 19:21:49 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HIT4US013993;
+ Wed, 17 Sep 2025 23:21:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ZxVRbYGmX0o5rI08/
- lndRJA+3ci50sAotVUaZsLjni4=; b=J0JgWyBMzRFumM79ck73DsJfqHAjvnzV3
- XIPqfGIAvvPfhiktsG/dh/yRqWNYNzS2+5RDLujSZifKAjrk+KIVorNkF88cOcYU
- /zDbjxGO5TnUvq7+611OXQHi75aHD5TJIIms8zp6+CCgDRQ1p8jWjNE9ihwFRxuS
- xtKr1PR7oZqEfexY0jEsacTbwIKgI44uiXv8/W9arFBE9hD+GRbVjfofwR17606H
- A03zEujGhICsKBqP29poNt+1NwcctoPQ4Fzx4Fs95SiIySV5a/nRCftMokXwOIWT
- 9ou5YOezgOmGrHYPkKN08LyVsvwemFQTzKRrmvkQ8X4VeTD/5RZaw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4hpuvb-1
+ :mime-version:references:subject:to; s=pp1; bh=PpHeXPGl7wTIuZEHZ
+ f1IIiNwiFU7B+2okPWdCch/37k=; b=YAa95xkBlw8nNKWMTTqQNrQdiwCO7wX0U
+ TofonI7FpdQ0LHhNmF49/P6B8Nr1fWxzfSAVUFIYO4PIMteZX20mCuJe/ioyH1gE
+ tXKDvZ+lJSkxhCqB1dF9wa9wB3THONLrinhOQRaI/iH7bSaBxvJCpZMiZepO2zye
+ otUHm1XcRA8ffbHI68v+iX+VNjgMhmImkfUEMpBF8OJujOiJ9vGChQhHBZdeoaPf
+ qawcJZIkMFA4dZHo5g1/waHU33YHCmvUp5LoLJmweafKpLONg3IGDWR63TqxUWoC
+ 8t8oPDdxj7LVLnRYZzEaIS/IEVyqw3xUv63ameCyWTkynuLMmrS1g==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4neg5p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 23:21:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58HKZ7j6022300;
- Wed, 17 Sep 2025 23:21:48 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495kxpuu7a-1
+ Wed, 17 Sep 2025 23:21:46 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58HMcvYR009486;
+ Wed, 17 Sep 2025 23:21:45 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 495nn3kghr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 23:21:48 +0000
+ Wed, 17 Sep 2025 23:21:45 +0000
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58HNLk5d34931054
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58HNLiJV33358550
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Sep 2025 23:21:47 GMT
+ Wed, 17 Sep 2025 23:21:44 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF8015805C;
- Wed, 17 Sep 2025 23:21:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 434605805C;
+ Wed, 17 Sep 2025 23:21:44 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A82AA5805A;
- Wed, 17 Sep 2025 23:21:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3763F5805A;
+ Wed, 17 Sep 2025 23:21:43 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.34.172])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Sep 2025 23:21:45 +0000 (GMT)
+ Wed, 17 Sep 2025 23:21:43 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
@@ -65,38 +65,38 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com
-Subject: [PATCH v6 12/28] s390x/diag: Implement DIAG 508 subcode 1 for
- signature verification
-Date: Wed, 17 Sep 2025 19:21:14 -0400
-Message-ID: <20250917232131.495848-13-zycai@linux.ibm.com>
+Subject: [PATCH v6 10/28] s390x/diag: Introduce DIAG 508 for secure IPL
+ operations
+Date: Wed, 17 Sep 2025 19:21:12 -0400
+Message-ID: <20250917232131.495848-11-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250917232131.495848-1-zycai@linux.ibm.com>
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9gYxKBXAzKiyxbAzCsPisVbKJfLSQFYQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX9N/b6DWjA0F4
- 5fiaAyfP2AkZ6O6wvXUfX7kyrccJ6y4I+dqdBDZNHZUxYQqM5IaW6dNTgxtNK31MB3OIiAwTgYG
- G15VSJjUB6V3O4WscFaqOSOKfc+EqzDUNyCOWQ6ERezlBGzlEapM6x7BA0Jc8Qvn/fOLZCIud10
- yxY+aOg6PEkbPslBkglYd6tBd5uXKjVrxRD1pYrfWQg2gM/B8Y7nvJnjsCiBDlynaJT5H59VLBE
- Iu2rakVeuB6mHkL+G3N02flHawtcQsoPU6XE264baqar4eh3sMhQZnVausiT9U/tzL+KK7xVMCW
- tFvEk28+CqYP7DEAnrprCKuVLtclEZHSVKLrOFzNFkgwsLC+vo6MqAt+b1UYvnV8mICW+Gbb0yA
- nhDJ9HLw
-X-Proofpoint-GUID: 9gYxKBXAzKiyxbAzCsPisVbKJfLSQFYQ
-X-Authority-Analysis: v=2.4 cv=co2bk04i c=1 sm=1 tr=0 ts=68cb428d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=QUeH2xgz5R9ERI6wYg0A:9
+X-Authority-Analysis: v=2.4 cv=MN5gmNZl c=1 sm=1 tr=0 ts=68cb428a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=hXQcL9AfcS-IPDpH2m0A:9
+X-Proofpoint-GUID: 4fvumvxmPxsE4Xwv2RY1TcOzYR6pXUnl
+X-Proofpoint-ORIG-GUID: 4fvumvxmPxsE4Xwv2RY1TcOzYR6pXUnl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX/O7owMNIyZXG
+ hnvgPBFgFSA2LttcLgpQBtM2whG+Sksx6HIvjpO7q/zyhE5pcKX0dws2iIBls7MfXk7OMyY7t3G
+ rhX65SXeTjGXajn5hNQz52hDfDasA+fO0kMa+SQt/SKWuopDAVqhVvCaVCT1WEHFNuwZZdCQAjo
+ wimRVVhWnzUHpsTyVIdZFk5aps06QhqA2cHwopIJhvt6R9tpq0QapC29QE9SnBsbzS3LHKQ0VjI
+ xtOdoCD8t2ufxkC/IPo9WeBFdrefh4Mr5Az1LCeLSVaucL+WSKKjpNtIcQtjbKyqR7RSMAINA3m
+ xLQY9f1/pNgdUdkcejfqyAcLn72aPgA/jhBphYdmWqq+dl8aTbLEQzuO5EWRa6bZibwI9uMBN7X
+ 4jPyPgzp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- phishscore=0 malwarescore=0 spamscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -122,225 +122,184 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Collin Walling <walling@linux.ibm.com>
 
-DIAG 508 subcode 1 performs signature-verification on signed components.
-A signed component may be a Linux kernel image, or any other signed
-binary. **Verification of initrd is not supported.**
+In order to support secure IPL (aka secure boot) for the s390-ccw BIOS,
+a new s390 DIAGNOSE instruction is introduced to leverage QEMU for
+handling operations such as signature verification and certificate
+retrieval.
 
-The instruction call expects two item-pairs: an address of a device
-component, an address of the analogous signature file (in PKCS#7 DER format),
-and their respective lengths. All of this data should be encapsulated
-within a Diag508SigVerifBlock.
-
-The DIAG handler will read from the provided addresses
-to retrieve the necessary data, parse the signature file, then
-perform the signature-verification. Because there is no way to
-correlate a specific certificate to a component, each certificate
-in the store is tried until either verification succeeds, or all
-certs have been exhausted.
-
-The subcode value is denoted by setting the second-to-left-most bit of
-a 2-byte field.
-
-A return code of 1 indicates success, and the index and length of the
-corresponding certificate will be set in the Diag508SigVerifBlock.
-The following values indicate failure:
-
-	0x0102: certificate not available
-	0x0202: component data is invalid
-	0x0302: signature is not in PKCS#7 format
-	0x0402: signature-verification failed
-	0x0502: length of Diag508SigVerifBlock is invalid
+Currently, only subcode 0 is supported with this patch, which is used to
+query a bitmap of which subcodes are supported.
 
 Signed-off-by: Collin Walling <walling@linux.ibm.com>
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- docs/specs/s390x-secure-ipl.rst |   5 ++
- include/hw/s390x/ipl/diag508.h  |  23 +++++++
- target/s390x/diag.c             | 115 +++++++++++++++++++++++++++++++-
- 3 files changed, 142 insertions(+), 1 deletion(-)
+ docs/specs/s390x-secure-ipl.rst | 18 ++++++++++++++++++
+ include/hw/s390x/ipl/diag508.h  | 15 +++++++++++++++
+ target/s390x/diag.c             | 27 +++++++++++++++++++++++++++
+ target/s390x/kvm/kvm.c          | 14 ++++++++++++++
+ target/s390x/s390x-internal.h   |  2 ++
+ target/s390x/tcg/misc_helper.c  |  7 +++++++
+ 6 files changed, 83 insertions(+)
+ create mode 100644 include/hw/s390x/ipl/diag508.h
 
 diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-index 0919425e9a..eec368d17b 100644
+index e28f0b40d7..0919425e9a 100644
 --- a/docs/specs/s390x-secure-ipl.rst
 +++ b/docs/specs/s390x-secure-ipl.rst
-@@ -66,3 +66,8 @@ that requires assistance from QEMU.
+@@ -48,3 +48,21 @@ Subcode 2 - store verification certificates
+     storage specified in the VCB input length field.
  
- Subcode 0 - query installed subcodes
-     Returns a 64-bit mask indicating which subcodes are supported.
+     VCE contains various information of a VC from the CS.
 +
-+Subcode 1 - perform signature verification
-+    Perform signature-verification on a signed component, using certificates
-+    from the certificate store and leveraging qcrypto libraries to perform
-+    this operation.
++
++Secure IPL Data Structures, Facilities, and Functions
++=====================================================
++
++DIAGNOSE function code 'X'508' - KVM IPL extensions
++---------------------------------------------------
++
++DIAGNOSE 'X'508' is reserved for KVM guest use in order to facilitate
++communication of additional IPL operations that cannot be handled by userspace,
++such as signature verification for secure IPL.
++
++If the function code specifies 0x508, KVM IPL extension functions are performed.
++These functions are meant to provide extended functionality for s390 guest boot
++that requires assistance from QEMU.
++
++Subcode 0 - query installed subcodes
++    Returns a 64-bit mask indicating which subcodes are supported.
 diff --git a/include/hw/s390x/ipl/diag508.h b/include/hw/s390x/ipl/diag508.h
-index 6281ad8299..ad401cc867 100644
---- a/include/hw/s390x/ipl/diag508.h
+new file mode 100644
+index 0000000000..6281ad8299
+--- /dev/null
 +++ b/include/hw/s390x/ipl/diag508.h
-@@ -11,5 +11,28 @@
- #define S390X_DIAG508_H
- 
- #define DIAG_508_SUBC_QUERY_SUBC    0x0000
-+#define DIAG_508_SUBC_SIG_VERIF     0x8000
+@@ -0,0 +1,15 @@
++/*
++ * S/390 DIAGNOSE 508 definitions and structures
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Collin Walling <walling@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+#define DIAG_508_RC_OK              0x0001
-+#define DIAG_508_RC_NO_CERTS        0x0102
-+#define DIAG_508_RC_INVAL_COMP_DATA 0x0202
-+#define DIAG_508_RC_INVAL_PKCS7_SIG 0x0302
-+#define DIAG_508_RC_FAIL_VERIF      0x0402
-+#define DIAG_508_RC_INVAL_LEN       0x0502
++#ifndef S390X_DIAG508_H
++#define S390X_DIAG508_H
 +
-+struct Diag508SigVerifBlock {
-+    uint32_t length;
-+    uint8_t reserved0[3];
-+    uint8_t version;
-+    uint32_t reserved[2];
-+    uint8_t cert_store_index;
-+    uint8_t reserved1[7];
-+    uint64_t cert_len;
-+    uint64_t comp_len;
-+    uint64_t comp_addr;
-+    uint64_t sig_len;
-+    uint64_t sig_addr;
-+};
-+typedef struct Diag508SigVerifBlock Diag508SigVerifBlock;
- 
- #endif
++#define DIAG_508_SUBC_QUERY_SUBC    0x0000
++
++#endif
 diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index ee64257dbc..379fb8f2b4 100644
+index d5f6c54df3..ee64257dbc 100644
 --- a/target/s390x/diag.c
 +++ b/target/s390x/diag.c
-@@ -602,9 +602,112 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+@@ -20,6 +20,7 @@
+ #include "hw/s390x/cert-store.h"
+ #include "hw/s390x/ipl.h"
+ #include "hw/s390x/ipl/diag320.h"
++#include "hw/s390x/ipl/diag508.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "system/kvm.h"
+ #include "kvm/kvm_s390x.h"
+@@ -600,3 +601,29 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+         break;
      }
  }
- 
-+static int diag_508_verify_sig(uint8_t *cert, size_t cert_size,
-+                              uint8_t *comp, size_t comp_size,
-+                              uint8_t *sig, size_t sig_size)
++
++void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
 +{
-+    g_autofree uint8_t *sig_pem = NULL;
-+    size_t sig_size_pem;
++    uint64_t subcode = env->regs[r3];
 +    int rc;
 +
-+    /*
-+     * PKCS#7 signature with DER format
-+     * Convert to PEM format for signature verification
-+     */
-+    rc = qcrypto_pkcs7_convert_sig_pem(sig, sig_size, &sig_pem, &sig_size_pem, NULL);
-+    if (rc < 0) {
-+        return -1;
++    if (env->psw.mask & PSW_MASK_PSTATE) {
++        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
++        return;
 +    }
 +
-+    rc = qcrypto_x509_verify_sig(cert, cert_size,
-+                                 comp, comp_size,
-+                                 sig_pem, sig_size_pem, NULL);
-+    if (rc < 0) {
-+        return -1;
++    if ((subcode & ~0x0ffffULL) || (r1 & 1)) {
++        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++        return;
 +    }
 +
-+    return 0;
-+}
-+
-+static int handle_diag508_sig_verif(uint64_t addr, size_t svb_size,
-+                                    S390IPLCertificateStore *qcs)
-+{
-+    int rc;
-+    int verified;
-+    uint32_t svb_len;
-+    uint64_t comp_len, comp_addr;
-+    uint64_t sig_len, sig_addr;
-+    g_autofree uint8_t *svb_comp = NULL;
-+    g_autofree uint8_t *svb_sig = NULL;
-+    g_autofree Diag508SigVerifBlock *svb = NULL;
-+
-+    if (!qcs || !qcs->count) {
-+        return DIAG_508_RC_NO_CERTS;
-+    }
-+
-+    svb = g_new0(Diag508SigVerifBlock, 1);
-+    cpu_physical_memory_read(addr, svb, svb_size);
-+
-+    svb_len = be32_to_cpu(svb->length);
-+    if (svb_len != svb_size) {
-+        return DIAG_508_RC_INVAL_LEN;
-+    }
-+
-+    comp_len = be64_to_cpu(svb->comp_len);
-+    comp_addr = be64_to_cpu(svb->comp_addr);
-+    sig_len = be64_to_cpu(svb->sig_len);
-+    sig_addr = be64_to_cpu(svb->sig_addr);
-+
-+    if (!comp_len || !comp_addr) {
-+        return DIAG_508_RC_INVAL_COMP_DATA;
-+    }
-+
-+    if (!sig_len || !sig_addr) {
-+        return DIAG_508_RC_INVAL_PKCS7_SIG;
-+    }
-+
-+    svb_comp = g_malloc0(comp_len);
-+    cpu_physical_memory_read(comp_addr, svb_comp, comp_len);
-+
-+    svb_sig = g_malloc0(sig_len);
-+    cpu_physical_memory_read(sig_addr, svb_sig, sig_len);
-+
-+    rc = DIAG_508_RC_FAIL_VERIF;
-+    /*
-+     * It is uncertain which certificate contains
-+     * the analogous key to verify the signed data
-+     *
-+     * Ignore errors from signature format convertion and verification,
-+     * because currently in the certificate lookup process.
-+     *
-+     * Any error is treated as a verification failure,
-+     * and the final result (verified or not) will be reported later.
-+     */
-+    for (int i = 0; i < qcs->count; i++) {
-+        verified = diag_508_verify_sig(qcs->certs[i].raw,
-+                                       qcs->certs[i].size,
-+                                       svb_comp, comp_len,
-+                                       svb_sig, sig_len);
-+        if (verified == 0) {
-+            svb->cert_store_index = i;
-+            svb->cert_len = cpu_to_be64(qcs->certs[i].der_size);
-+            cpu_physical_memory_write(addr, svb, be32_to_cpu(svb_size));
-+            rc = DIAG_508_RC_OK;
-+            break;
-+       }
-+    }
-+
-+    return rc;
-+}
-+
-+QEMU_BUILD_BUG_MSG(sizeof(Diag508SigVerifBlock) != 64,
-+                   "size of Diag508SigVerifBlock is wrong");
-+
- void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
- {
-+    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
-     uint64_t subcode = env->regs[r3];
-+    uint64_t addr = env->regs[r1];
-     int rc;
- 
-     if (env->psw.mask & PSW_MASK_PSTATE) {
-@@ -619,7 +722,17 @@ void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
- 
-     switch (subcode) {
-     case DIAG_508_SUBC_QUERY_SUBC:
--        rc = 0;
-+        rc = DIAG_508_SUBC_SIG_VERIF;
++    switch (subcode) {
++    case DIAG_508_SUBC_QUERY_SUBC:
++        rc = 0;
 +        break;
-+    case DIAG_508_SUBC_SIG_VERIF:
-+        size_t svb_size = sizeof(Diag508SigVerifBlock);
++    default:
++        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++        return;
++    }
++    env->regs[r1 + 1] = rc;
++}
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 5510fc2fc5..ae6cd3d506 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -101,6 +101,7 @@
+ #define DIAG_CERT_STORE                 0x320
+ #define DIAG_KVM_HYPERCALL              0x500
+ #define DIAG_KVM_BREAKPOINT             0x501
++#define DIAG_SECURE_IPL                 0x508
+ 
+ #define ICPT_INSTRUCTION                0x04
+ #define ICPT_PROGRAM                    0x08
+@@ -1571,6 +1572,16 @@ static void kvm_handle_diag_320(S390CPU *cpu, struct kvm_run *run)
+     handle_diag_320(&cpu->env, r1, r3, RA_IGNORED);
+ }
+ 
++static void kvm_handle_diag_508(S390CPU *cpu, struct kvm_run *run)
++{
++    uint64_t r1, r3;
 +
-+        if (!diag_parm_addr_valid(addr, svb_size, true)) {
-+            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-+            return;
-+        }
++    r1 = (run->s390_sieic.ipa & 0x00f0) >> 4;
++    r3 = run->s390_sieic.ipa & 0x000f;
 +
-+        rc = handle_diag508_sig_verif(addr, svb_size, qcs);
++    handle_diag_508(&cpu->env, r1, r3, RA_IGNORED);
++}
++
+ #define DIAG_KVM_CODE_MASK 0x000000000000ffff
+ 
+ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+@@ -1604,6 +1615,9 @@ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+     case DIAG_CERT_STORE:
+         kvm_handle_diag_320(cpu, run);
          break;
++    case DIAG_SECURE_IPL:
++        kvm_handle_diag_508(cpu, run);
++        break;
      default:
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+         trace_kvm_insn_diag(func_code);
+         kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index ecff2d07a1..7cca8a67de 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -393,6 +393,8 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
+                      uintptr_t ra);
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3,
+                      uintptr_t ra);
++void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3,
++                     uintptr_t ra);
+ 
+ 
+ /* translate.c */
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 412c34ed93..ddbf495118 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -149,6 +149,13 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
+         bql_unlock();
+         r = 0;
+         break;
++    case 0x508:
++        /* secure ipl operations */
++        bql_lock();
++        handle_diag_508(env, r1, r3, GETPC());
++        bql_unlock();
++        r = 0;
++        break;
+     default:
+         r = -1;
+         break;
 -- 
 2.50.1
 
