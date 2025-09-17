@@ -4,75 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD78CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E176DCAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyoCc-0002uS-2k; Wed, 17 Sep 2025 05:11:50 -0400
+	id 1uyoFR-0004BY-Kt; Wed, 17 Sep 2025 05:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uyoCU-0002pV-Hq
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:11:43 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uyoCN-0002EM-FD
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:11:38 -0400
-Received: from example.com (unknown [167.220.208.74])
- by linux.microsoft.com (Postfix) with ESMTPSA id 4DA642018E76;
- Wed, 17 Sep 2025 02:11:28 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4DA642018E76
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1758100292;
- bh=DELkqFa+WUEmIjXhdSKy5BFZ62q5Bdfx7UueSqND+i4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=kG9RlUbCFWRfkfg8FbR9X187sz9Ac8fQo6gOp05j4Apzy+FsO6O1RfG4PgGUDf7U1
- VaR3HLvKfg8X0V1JMgnIIwJgEj3+/ZOxcXdhNJTMLr8WnryZzw2TQR3XBUjnqSXqBl
- YmIMcQ2PwHqrz82pbsJar/k9DXlTRNOgUHZvxBhM=
-Date: Wed, 17 Sep 2025 11:11:24 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Wei Liu <liuwe@microsoft.com>, Cornelia Huck <cohuck@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?iso-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Eric Blake <eblake@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [CRM114spam]: Re: [PATCH v4 03/27] target/i386/mshv: Add x86
- decoder/emu implementation
-Message-ID: <aMp7PL3R+kEUfZH3@example.com>
-References: <20250916164847.77883-1-magnuskulke@linux.microsoft.com>
- <20250916164847.77883-4-magnuskulke@linux.microsoft.com>
- <aMmg_K8N1fKGUV4o@gallifrey>
- <DF061F5C-9807-4948-BD62-EC42425C5B9E@unpredictable.fr>
- <aMn29rg2b7yC7Iu7@gallifrey>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyoFK-0004AX-0f
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:14:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyoFI-0002P4-7N
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:14:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758100474;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ZrV3wSJFLsh+0/8ERTRnMqxczJeijdh7Sto693JBM3g=;
+ b=I3H1/ELStZtxvqgwuRvw5P30/iPIJKvXYpMNzATuKO3wnKXg1SVtqddEqf31uaITmyNgng
+ o4NN7dA3FTTbxY6k9spHWazQNcnnD5OpRyUm/mepsbG679oiM046aK6+DG6ArXCwaLEaqv
+ fINS+lUc4Qx2fREKULSWo9M0NrziCl8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-3dAuxPbKMn-pkjJduALK0g-1; Wed, 17 Sep 2025 05:14:32 -0400
+X-MC-Unique: 3dAuxPbKMn-pkjJduALK0g-1
+X-Mimecast-MFC-AGG-ID: 3dAuxPbKMn-pkjJduALK0g_1758100471
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45f2b9b958aso23958195e9.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 02:14:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758100471; x=1758705271;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:subject:from:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZrV3wSJFLsh+0/8ERTRnMqxczJeijdh7Sto693JBM3g=;
+ b=awiLMsP4St532axQ1taFLBoNHCxmfYguykyoD1EXHNU2cQPJBkCW25H8zsPWxUmjvJ
+ QjaQ9vWto6EeSM+lWLl0yiJMfhgxvskXPDHI2otxrsJebTMhuzLA6B1ekNCSNPeCwnQi
+ drxydH6sa3wjKdyJe2fkBrgAY+04Dn1MzSFi9PyHhYSgEmOQ6ShXKVS8+NoVd6xzGEb7
+ BezEi51xWXVM1zrVZKHyqI/00eaSJpk+sViAc0T6QoFW7tdgmuuKleckHhqjIbyo7ny6
+ 8ebPbPoKa3w/ZrH+gbQzt5jUoO94WtNE1ckCVyshAvGuSgXg1ZuoxDCJCwW1fHCEzU77
+ 6T6Q==
+X-Gm-Message-State: AOJu0YyMAAo644Vrs2+/hHHxLgxgFIS/X304f4b1Y0ecae/egmP57VZ/
+ JWKfk2bo0myzyZsqBhGJYAnEfeSMuIeGFPHUFzeJiw2pz5TBLM+JeIcRvz3RTgC0/ub0XSlG+g+
+ CXh4nQ4vixsN9UJaurhvSrCvcScC3G5G7GpLED10NSlgYihv0oJxQKacg
+X-Gm-Gg: ASbGncspofcyoO9vgoQnzUXh8eJbLChl8ZeSk1daQdO6twd/YhdP+LgnJ6k1Z1wee9F
+ +o4i3PYjh9QR5XqHZ7E9q7099rEireuA9jHHynaJQy3PnWWFiKGA1SceRiRgzMlwEBlDfJxB3vs
+ lHkeJiYnLPL8JvbbAfD1/SnBOM4SvPkXDXjfvCMs5XitfDbnS/iADhSaAAiDME2FmqYZDwVRk1l
+ E2TI26a5PTUPH9ShI8Gk9nn92R5+qtih7Hi+Rng+D9gp8/MtuOBWLArkv1sVKv6/pvdb+5/WgVf
+ fEH4JdDpn5CSD+76y+Ih7UrYTjb6asW0pUbmYD/bnTthZ7GWyDLM+1HA/E5GcCnImU/0K2CZ5B5
+ zohFROnt0VrolPH3nQMpDqqSW9LtkZcWlm8UTJYKSilo=
+X-Received: by 2002:a05:600c:138f:b0:45b:9291:320d with SMTP id
+ 5b1f17b1804b1-462074c5377mr12405395e9.31.1758100471259; 
+ Wed, 17 Sep 2025 02:14:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFEmxgu92EHP20rPVmzfYTufMiNW7NMmNylEmR/yhYY3ewoC23dJ0cEaag0bo2PWF1PTFKjzg==
+X-Received: by 2002:a05:600c:138f:b0:45b:9291:320d with SMTP id
+ 5b1f17b1804b1-462074c5377mr12405135e9.31.1758100470760; 
+ Wed, 17 Sep 2025 02:14:30 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-45f3260a1ddsm35852495e9.5.2025.09.17.02.14.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 02:14:30 -0700 (PDT)
+Message-ID: <637d028b-2bbb-405c-804b-eb921b344b3a@redhat.com>
+Date: Wed, 17 Sep 2025 11:14:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aMn29rg2b7yC7Iu7@gallifrey>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 09/12] rust/qdev: Support bit property in #property macro
+To: Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250916085557.2008344-1-zhao1.liu@intel.com>
+ <20250916085557.2008344-10-zhao1.liu@intel.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <20250916085557.2008344-10-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,61 +148,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 11:47:02PM +0000, Dr. David Alan Gilbert wrote:
-> * Mohamed Mediouni (mohamed@unpredictable.fr) wrote:
-> > 
-> > 
-> > > On 16. Sep 2025, at 19:40, Dr. David Alan Gilbert <dave@treblig.org> wrote:
-> > > 
-> > > For example 'x86_is_real' is declared in target/i386/emulate/x86.h
-> > > and defined in target/i386/hvf/x86.c  (hmm that's a bit weird).
-> > > So it's probably best to check if what you want already exists,
-> > > move it into target/i386 somewhere I guess, and everyone shares it.
+On 9/16/25 10:55, Zhao Liu wrote:
+> Add BIT_INFO to QDevProp trait, so that bit related property info could
+> be bound to u32 & u64.
 > 
-> > Currently there isn’t a backend-agnostic interface for this. 
-> > It was part of the import of HVF support to qemu from downstream.
+> Then add "bit=*" field in #property attributes macro to allow device to
+> configure bit property.
 > 
-> Hmm.
-> 
-> > Notably means that the emulate infrastructure isn’t usable by multiple
-> > backends in the same build. It might be possible to get away without that
-> > however as HVF is macOS specific, MSHV is Linux-specific and WHPX
-> > (which is currently using winhvemulator instead of this) is Windows-specific...
-> 
-> It does scare me a bit having 2 different functions with the same name like that;
-> but hmm OK...
-> 
-> But - x86_is_real() is identical in these cases - the x86_is_protected() is the
-> implementation dependent bit.
-> The only bit that seems different is the reading of the register, eg. CR0, so there
-> could be a:
-> 
->    x86_read_CR0(CPUState *cpu)
-> and the x86_is_real and x86_is_paging_mode all be shared (as inline's ???).
-> 
-> But this does all get messy - I mean, even if MSHV is Linux specific, and HVF
-> is macos specific; it's a shame that the logic behind x86_is_* is open coded
-> in all of tcg, kvm and copied twice in hvf and mshv.
-> 
-> (I don't understand the structure as to why some stuff needs backend specific
-> reads and some are in env).
-> 
-> Dave
+> In addtion, convert the #property field parsing from `if-else` pattern
+> to `match` pattern, to help readability. And note, the `bitnr` member of
+> `Property` struct is generated by manual TokenStream construction,
+> instead of conditional repetition (like #(bitnr: #bitnr,)?) since
+> `quote` doesn't support this.
 
-Hey Dave,
+We're almost certainly going to have more attribute parsing for 
+ToMigrationState, therefore IMO it's time to drop the handwritten parser 
+in favor of 
+https://lore.kernel.org/qemu-devel/20250717062727.305466-1-pbonzini@redhat.com/. 
+   Then the extra parsing would be just one line:
 
-in preperation for the MSHV patches Wei Liu did rework the HVF x86
-emulator code and abstracted it into target/i386/emulate, so we could
-use prior art as much as possible. Since HVF had to perform similar
-userland decoding/emulation of instruction on MMIO exits that was a
-good fit. However, the requirements are not exactly the same.
++        parser.once("bitnr", with::eq(set::parse(&mut self.bitnr)));
 
-Thus, in the current approach there is some duplication, like
-`x86_is_real()` (which is sort of trivial and arguably could indeed
-be inlined), but e.g. `x86_is_paging_mode()` would have different
-implementations per accelerator target.
+No other complaint!
 
-best,
+Paolo
 
-magnus
 
