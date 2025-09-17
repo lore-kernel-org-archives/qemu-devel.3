@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AEECA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E73CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypYv-0000Re-KY; Wed, 17 Sep 2025 06:38:57 -0400
+	id 1uypYu-0000QU-Tw; Wed, 17 Sep 2025 06:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypYr-0000MY-Hq; Wed, 17 Sep 2025 06:38:53 -0400
+ id 1uypYr-0000MZ-I0; Wed, 17 Sep 2025 06:38:53 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypYp-000741-AX; Wed, 17 Sep 2025 06:38:53 -0400
+ id 1uypYp-000745-6s; Wed, 17 Sep 2025 06:38:53 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAm099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAc099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:33:02 +0900 (JST)
+ Wed, 17 Sep 2025 19:32:57 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=POdHoCg5/LDRfXqqwG2wxEKm9Lch4GRRuKLv3lF9UqQ=; 
+DKIM-Signature: a=rsa-sha256; bh=eeuVsJCDwKbW8icJDfICufxGLQvTBPTzkETbuI6aCMQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105183; v=1;
- b=hDEKL5Fg82+eD5D2TnjNAuAtLQ0/3HkFMUCoDxUSCQ21l34OGEkgmykD7hJtPGyL
- sZhC65i24ourRRFfYMhW46aSgTDxAmlqsBK7vpr2uVYtuuFOxaf/qKQPJlj5b8tf
- IWdLnrm4oUKfulFctn6pjO/RpjUtj/5pP8dQbHE+XPVDvHtOTGK7pdBKe9vduyzU
- kLjQ+z0I7KYEVxoRG38K34sJKz1uy0qsPOpq/LvMwWmveygcs0ZeZAZXY+6YijS0
- vrny7M4p3sDfPX3uiVWUNdlCQrvdMKFzd9P+BppVjZ7OPEsij+TDBwpdQYwG6A2x
- XX4p2DCxBFeDRSQKfQeHeA==
+ s=rs20250326; t=1758105178; v=1;
+ b=gGMLB0+BIw2Kv/bqUTlcsGa4i1idjt+iTjbPDudd9T0r5QJ4PRTr6l95rjenSUOf
+ zCkyYSnzNrKsfzVjB62Jg1g3ikAcvIPo/RCBWnQdXAf/UINc0bf8WBZhRy9E7KIF
+ WbZwHZe4QxeS7DgHJSo0tiIQtqU8ya0mGTATKO0txkICkkLyu0P83GkM2H303qZK
+ Vd5+SD1e8UAb50ikisq75hJTk7w1heGQaqVXwbD0B3D630RpYizGXwigrEIiliKq
+ k8iOM0BK27MQCiAQPh9SJPm1S5h5VO4vEDx3FBBc0Dzkw1mtY/Zzp7p/dwUGkXFB
+ S7xtFZS93xU5C3K+KoSl9Q==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:33:00 +0900
-Subject: [PATCH 14/14] hw/usb/hcd-xhci: Do not delete the subregions
+Date: Wed, 17 Sep 2025 19:32:50 +0900
+Subject: [PATCH 04/14] hw/char/diva-gsp: Do not delete the subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-14-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-subregion-v1-4-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,30 +107,21 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-xhci.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ hw/char/diva-gsp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 292c378bfc98..b68a2aec3171 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -3454,16 +3454,6 @@ static void usb_xhci_unrealize(DeviceState *dev)
-         xhci->mfwrap_timer = NULL;
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index e1f0713cb794..1ae472e879b5 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -63,7 +63,6 @@ static void diva_pci_exit(PCIDevice *dev)
+     for (i = 0; i < pci->ports; i++) {
+         s = pci->state + i;
+         qdev_unrealize(DEVICE(s));
+-        memory_region_del_subregion(&pci->membar, &s->io);
+         g_free(pci->name[i]);
      }
- 
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_cap);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_oper);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_runtime);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_doorbell);
--
--    for (i = 0; i < xhci->numports; i++) {
--        XHCIPort *port = &xhci->ports[i];
--        memory_region_del_subregion(&xhci->mem, &port->mem);
--    }
--
-     usb_bus_release(&xhci->bus);
- }
- 
+     qemu_free_irqs(pci->irqs, pci->ports);
 
 -- 
 2.51.0
