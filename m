@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C56FCAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7C2CAC59D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uysc6-0002mG-UB; Wed, 17 Sep 2025 09:54:27 -0400
+	id 1uysfR-0004wI-O1; Wed, 17 Sep 2025 09:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uysbv-0002iT-Ng
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:54:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uysbt-0005gI-K4
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:54:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758117252;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=l35+6X0jYU0AhCSpL3cOHinYsiJ/cHpJo85JeoBiKr4=;
- b=Kvvanhlslx8VeGn439XZ7nFgIYLm6ayg9cfvhPZ8OHT4OyOwQxBtNWTVr0sCJSmMqtFxbl
- aMi+/SiJTUg8kXvYm9VqvLvoAN0l3mEficTHeh3EPY+HhFi9bsxf6IagcCRNi0HuhKNOSv
- 9Pzc7TtDYrGEbgidHsxxuJMR0ZYI/6s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-DDKVbFUWM5W6iltcaVjQ6w-1; Wed,
- 17 Sep 2025 09:54:05 -0400
-X-MC-Unique: DDKVbFUWM5W6iltcaVjQ6w-1
-X-Mimecast-MFC-AGG-ID: DDKVbFUWM5W6iltcaVjQ6w_1758117239
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4F5D1800378; Wed, 17 Sep 2025 13:53:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 262BC300018D; Wed, 17 Sep 2025 13:53:51 +0000 (UTC)
-Date: Wed, 17 Sep 2025 14:53:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Joel Stanley <joel@jms.id.au>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- Chao Liu <chao.liu@zevorn.cn>, Nicholas Joaquin <njoaquin@tenstorrent.com>,
- Ganesh Valliappan <gvalliappan@tenstorrent.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 2/3] target/risvc: Fix vector whole ldst vstart check
-Message-ID: <aMq9axr_wINfBpxP@redhat.com>
-References: <20250903030114.274535-1-npiggin@gmail.com>
- <20250903030114.274535-3-npiggin@gmail.com>
- <6bff4c9d-1da4-40b3-901a-789923d8ef7e@ventanamicro.com>
- <qyikdqxxiewb7tqykt74gpx5oereckbepyptd3vr4flptmrvoc@midnt5c7agnc>
- <3dd9888f-be16-48f8-a858-f58a5b57825d@ventanamicro.com>
- <188f0525-154e-4d08-a155-68e8800e302d@linaro.org>
- <CACPK8Xd183vLgSyNfjzN5caUeJGRrjM1J8ugTVRd2k0Ea5LpfQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uysfG-0004tT-MV
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:57:43 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uysfC-00068n-Fw
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:57:40 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-71d605c6501so45857737b3.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 06:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1758117457; x=1758722257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9Wtzys6E04MDe8S8vjMWstZzH+NBfycX1L3shG/1gMQ=;
+ b=a9eroP0dduUp8AbK9+VzGVhYKPrpnivs1KNZG7dLvuUWHeiXig1n2BnQ0w3MooxP2I
+ nXFgBcNwLCEbkgH1Uj8QN/lE0e3bNdwlXcp6bxGVtYmGsHGu1sPV5oHjrJa7UcKi8vH2
+ tdPGHQQZeRXfEr03HrgOev8fCPDwnNLtoKpC33LvSLAXuUHRgQMGs+SBD+Tx1hMiX4SY
+ sda7WMeyos5PlkeRstJPE6c3T7PSSv5fO3UwoqUIEL/gCDiNcdXSvpjUQp+FKlzof031
+ EMiKKdak2LOJmisGVVX3Y7yQ6gx007kDAgklJ+nMVzm16CHRT0eI06hdsHSZRsMw4MV5
+ BTvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758117457; x=1758722257;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9Wtzys6E04MDe8S8vjMWstZzH+NBfycX1L3shG/1gMQ=;
+ b=Qj8MpwWUwCJTC6HqH/DYPUO1DEIAZOCDwq7VitxHal3F2QkMopSbiinAZPKnf921zm
+ R6+d+jee9KQMD0MMaCQ2mABebSEDvQUS27Zs2udCrbpFdZYzda4FEXL0CVtfZuPiAfhI
+ tuFZFrf/soywmK9CdJ+0Fi6OPIYxvLCA5K8zrFe8UznnSuSdu3Dfs73uwv6aXvROIwMZ
+ T0vc7BL6Dds04xody8h7iG7q2KmD94fV+rpS+aJYcs0DwG2J0lKweg4hh1YrlZByJI5f
+ gej/bgt8QbQBIB6SWKipospcPxEka+BsQaEd4n07b6iwLlGYjflFJuMryld8DrAJ9DSN
+ lH0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7k/X/8K8xet9U+Vk5cVBU39lnuL7JIJwx74zoZ+EeGdpUXKoaYPn8PzN8nH+S70zX1g7YhfLBahFU@nongnu.org
+X-Gm-Message-State: AOJu0YyRWgta996P4q5jQqIV1KBREFng/mA8ezSas2WaxL/Fq7WgkELx
+ O0pOZ3wHHRiN8sCgA0m3J/Gg09lfGCff3U/bHUAssrqrBS2ddVoZMn1ArbTWz9jhkEI=
+X-Gm-Gg: ASbGncu8e4itOsv43CBgzNH9A8c4Mp9+6EHJWrQCNVRVWbBuOWhz9Pp+MAcWJhgKSl1
+ SZcRycGyXramj6aaq4B0LPZyOo8P8Lv53CfvLKDYM8TKB/WlwrtYNoH/M1Qqcjm8Usn0PR5U6Rb
+ JLd9eB8LBp1C+XKXf8jjB4Von8qxxmkA8oS3iEBz5Dxbhh50o3q1CV+TXknJvQA5mmvur7ASsrt
+ 1zGgMHuRRjjGRcjiZ/1blhpi4YxH+kMXqUz7gPR0U8wbOB+OmHJ4uFvcyisSyE+17IY6Qa/QoeV
+ CcKM6V4C1r8saUii3I9WQXk3w7f+S3HH+DSHqmXL/vh+o6/kqpkW1D3XsUKivqksBYhw2foopX0
+ duAAd07VE/3Dj5AS6i2zekhyMhZIv4lEhP2MGWA==
+X-Google-Smtp-Source: AGHT+IEbjE2GmAbmBW0+oAYJIWZJJd7lkcwlgw1Jjlq+r3MPydcTQJzZIT5U+AfKgPmDxZ0IDdoflQ==
+X-Received: by 2002:a05:690c:6706:b0:71f:b419:8f73 with SMTP id
+ 00721157ae682-738905c7e54mr18230817b3.20.1758117456735; 
+ Wed, 17 Sep 2025 06:57:36 -0700 (PDT)
+Received: from [192.168.68.110] ([179.225.245.173])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-72f7969c495sm47448437b3.59.2025.09.17.06.57.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 06:57:36 -0700 (PDT)
+Message-ID: <26d72d8e-5e58-4a04-865c-34f6094e74e9@ventanamicro.com>
+Date: Wed, 17 Sep 2025 10:57:33 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACPK8Xd183vLgSyNfjzN5caUeJGRrjM1J8ugTVRd2k0Ea5LpfQ@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 3/8] target/riscv: rvv: Add new VTYPE CSR field -
+ altfmt
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20250915084037.1816893-1-max.chou@sifive.com>
+ <20250915084037.1816893-4-max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <20250915084037.1816893-4-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,57 +105,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 11:14:41PM +0930, Joel Stanley wrote:
-> On Fri, 5 Sept 2025 at 16:50, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > On 9/4/25 13:06, Daniel Henrique Barboza wrote:
-> > > How hard it is to update the GCC version we're running in the docker images for
-> > > "check-tcg"? We would like to use a RISC-V vector header that isn't supported
-> > > ATM.
-> > If debian packages the gcc version, then it's easy: change
-> >
-> >    gcc-riscv-linux-gnu
-> >
-> > to
-> >
-> >    gcc-NN-riscv-linux-gnu
-> 
-> The test that was failing uses debian-all-test-cross. This is based on
-> Debian 12 which maxes out at GCC 12.
-> 
-> If we move to Debian 13, we get GCC 14. Something like this would do it:
 
-Debian 12 is a supported platform for QEMU, so we should generally
-expect our tests to work on that. That said IIUC riscv didn't become
-officially supported in Debian until 13, so we can use that as a
-justification for an exception to the normal platform rule.
 
-> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-> @@ -6,7 +6,7 @@
->  # basic compilers for as many targets as possible. We shall use this
->  # to build and run linux-user tests on GitLab
->  #
-> -FROM docker.io/library/debian:12-slim
-> +FROM docker.io/library/debian:13-slim
+On 9/15/25 5:40 AM, Max Chou wrote:
+> According to the Zvfbfa ISA spec v0.1, the vtype CSR adds a new field:
+> altfmt for BF16 support.
+> This update changes the layout of the vtype CSR fields.
 > 
-> Is updating the distro something we would consider for this development cycle?
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>   target/riscv/cpu.h           |  4 ++--
+>   target/riscv/vector_helper.c | 29 ++++++++++++++++++++++++-----
+>   2 files changed, 26 insertions(+), 7 deletions(-)
 > 
-> Cheers,
-> 
-> Joel
-> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 738e68fa6e2..532386000af 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -190,8 +190,8 @@ FIELD(VTYPE, VLMUL, 0, 3)
+>   FIELD(VTYPE, VSEW, 3, 3)
+>   FIELD(VTYPE, VTA, 6, 1)
+>   FIELD(VTYPE, VMA, 7, 1)
+> -FIELD(VTYPE, VEDIV, 8, 2)
+> -FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
+> +FIELD(VTYPE, ALTFMT, 8, 1)
+> +FIELD(VTYPE, RESERVED, 9, sizeof(target_ulong) * 8 - 10)
+>   
+>   typedef struct PMUCTRState {
+>       /* Current value of a counter */
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 7c67d67a13f..603d0731ae1 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -33,6 +33,22 @@
+>   #include "vector_internals.h"
+>   #include <math.h>
+>   
+> +static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
+> +{
+> +    int xlen = riscv_cpu_xlen(env);
+> +    target_ulong reserved = 0;
+> +
+> +    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
+> +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+> +                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+> +    } else {
+> +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_ALTFMT_SHIFT,
+> +                                           xlen - 1 - R_VTYPE_ALTFMT_SHIFT);
+> +    }
 
-With regards,
+Is this correct? The 'reserved' value you're returning when the new extension is enabled
+is the original  value from vsetvl:
+
+> +    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
+> +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+> +                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+
+The original val you removed:
+
+> -    target_ulong reserved = s2 &
+> -                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+> -                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+
+
+To preserve the existing behavior I believe you want to negate the conditional:
+
+> +    if (!riscv_cpu_cfg(env)->ext_zvfbfa) {
+> +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+> +                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+> +    } else {
+> +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_ALTFMT_SHIFT,
+> +                                           xlen - 1 - R_VTYPE_ALTFMT_SHIFT);
+> +    }
+
+
+i.e. return the existing 'reserved' val if the new extension is absent, otherwise return
+the new val.
+
+
+Thanks,
+
 Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
+
+> +
+> +    return reserved;
+> +}
+> +
+>   target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>                               target_ulong s2, target_ulong x0)
+>   {
+> @@ -41,12 +57,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>       uint64_t vlmul = FIELD_EX64(s2, VTYPE, VLMUL);
+>       uint8_t vsew = FIELD_EX64(s2, VTYPE, VSEW);
+>       uint16_t sew = 8 << vsew;
+> -    uint8_t ediv = FIELD_EX64(s2, VTYPE, VEDIV);
+> +    uint8_t altfmt = FIELD_EX64(s2, VTYPE, ALTFMT);
+>       int xlen = riscv_cpu_xlen(env);
+>       bool vill = (s2 >> (xlen - 1)) & 0x1;
+> -    target_ulong reserved = s2 &
+> -                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+> -                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+>       uint16_t vlen = cpu->cfg.vlenb << 3;
+>       int8_t lmul;
+>   
+> @@ -63,7 +76,13 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>           }
+>       }
+>   
+> -    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
+> +    if (cpu->cfg.ext_zvfbfa) {
+> +        if (altfmt == 1 && vsew >= MO_32) {
+> +            vill = true;
+> +        }
+> +    }
+> +
+> +    if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) != 0)) {
+>           /* only set vill bit. */
+>           env->vill = 1;
+>           env->vtype = 0;
 
 
