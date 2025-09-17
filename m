@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162EECAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C38ECAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyz9D-0000cp-Hn; Wed, 17 Sep 2025 16:53:03 -0400
+	id 1uyzCr-0001uA-4S; Wed, 17 Sep 2025 16:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyz9C-0000ca-6g
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:53:02 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyzCp-0001tg-Pk
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:56:47 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyz9A-0007Qo-Dy
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:53:01 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyzCn-0007qa-RP
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:56:47 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5F4F51FB99;
- Wed, 17 Sep 2025 20:52:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7A96D202E1;
+ Wed, 17 Sep 2025 20:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758142378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758142604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+TL7t0zK4ikN54XVfZJVpcKiw55lLeF4FgzIVn14gEM=;
- b=Pipc6XDHXlgNS9nfb0gVo74iN0+RVYeEDvD50e56RwG/OTpYXUMdS50RByGLTDoM7PcS4a
- 4X4eVvjKKelmya3IhV9LcmQJBtUXbah86HLIH7V/DYALZMAfUYiBIPcOsVjL1OzjxpvgQe
- tK95Yv/7PgUyjO7eeHz31YyJiaUNfF0=
+ bh=H03nvG6g1zlrdaFrTU4zcr0FMERafy8pbqxxeieWAJY=;
+ b=nN6DnSVu9nHk0rKU0GdXW/3mljjPs3STe0iGUUV26r+FSbG8ZHvIvRgSwAc4Mtfv35q/2+
+ Hg2HlAddQ3JIqCFhGVgsP6l2c3pFOEIDUBqbsfns6L6uHUCJgeuT4NOIYoyweqaXIHXr1u
+ tcNu64y3C/z5AvfqmGxEh5dPWGqc/UA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758142378;
+ s=susede2_ed25519; t=1758142604;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+TL7t0zK4ikN54XVfZJVpcKiw55lLeF4FgzIVn14gEM=;
- b=5H4FwWKxuq7OYuca0m95f8R8HVmgvnau76hkkUu7D1/rpcu21mjd7XfeNrKoTOgPZwx6/S
- 4/ELd/3qA5fCyoAQ==
+ bh=H03nvG6g1zlrdaFrTU4zcr0FMERafy8pbqxxeieWAJY=;
+ b=Ofwuxrk9EPtBazpvtYHshY/Qrzkt+s385J1tQqMTPl8BuiL4uoCEI6wHhbnYE7iZ8lCHGJ
+ riDTKVOzmOHWvlDw==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758142378; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1758142604; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+TL7t0zK4ikN54XVfZJVpcKiw55lLeF4FgzIVn14gEM=;
- b=Pipc6XDHXlgNS9nfb0gVo74iN0+RVYeEDvD50e56RwG/OTpYXUMdS50RByGLTDoM7PcS4a
- 4X4eVvjKKelmya3IhV9LcmQJBtUXbah86HLIH7V/DYALZMAfUYiBIPcOsVjL1OzjxpvgQe
- tK95Yv/7PgUyjO7eeHz31YyJiaUNfF0=
+ bh=H03nvG6g1zlrdaFrTU4zcr0FMERafy8pbqxxeieWAJY=;
+ b=nN6DnSVu9nHk0rKU0GdXW/3mljjPs3STe0iGUUV26r+FSbG8ZHvIvRgSwAc4Mtfv35q/2+
+ Hg2HlAddQ3JIqCFhGVgsP6l2c3pFOEIDUBqbsfns6L6uHUCJgeuT4NOIYoyweqaXIHXr1u
+ tcNu64y3C/z5AvfqmGxEh5dPWGqc/UA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758142378;
+ s=susede2_ed25519; t=1758142604;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+TL7t0zK4ikN54XVfZJVpcKiw55lLeF4FgzIVn14gEM=;
- b=5H4FwWKxuq7OYuca0m95f8R8HVmgvnau76hkkUu7D1/rpcu21mjd7XfeNrKoTOgPZwx6/S
- 4/ELd/3qA5fCyoAQ==
+ bh=H03nvG6g1zlrdaFrTU4zcr0FMERafy8pbqxxeieWAJY=;
+ b=Ofwuxrk9EPtBazpvtYHshY/Qrzkt+s385J1tQqMTPl8BuiL4uoCEI6wHhbnYE7iZ8lCHGJ
+ riDTKVOzmOHWvlDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C84101368D;
- Wed, 17 Sep 2025 20:52:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E74E51368D;
+ Wed, 17 Sep 2025 20:56:43 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ynfdIKkfy2gafQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Sep 2025 20:52:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id U/SwKIsgy2gTfgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 17 Sep 2025 20:56:43 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?Daniel?=
- =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 2/3] migration: Make migration_has_failed() work even
- for CANCELLING
-In-Reply-To: <20250910160144.1762894-3-peterx@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang?=
+ =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/3] migration/tls: Graceful shutdowns for main and
+ postcopy channels
+In-Reply-To: <aMLK5nT4CVPrcZCB@x1.local>
 References: <20250910160144.1762894-1-peterx@redhat.com>
- <20250910160144.1762894-3-peterx@redhat.com>
-Date: Wed, 17 Sep 2025 17:52:54 -0300
-Message-ID: <87wm5wvm1l.fsf@suse.de>
+ <aMLK5nT4CVPrcZCB@x1.local>
+Date: Wed, 17 Sep 2025 17:56:40 -0300
+Message-ID: <87tt10vlvb.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -88,10 +88,10 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  MID_RHS_MATCH_FROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -119,50 +119,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> We set CANCELLED very late, it means migration_has_failed() may not work
-> correctly if it's invoked before updating CANCELLING to CANCELLED.
+> On Wed, Sep 10, 2025 at 12:01:41PM -0400, Peter Xu wrote:
+>> Fabiano fixed graceful shutdowns for multifd channels previously:
+>> 
+>> https://lore.kernel.org/qemu-devel/20250206175824.22664-1-farosas@suse.de/
+>> 
+>> However we likely forgot the rest channels.  Do it the same for the main
+>> and postcopy channels.  This fixes a warning message when running unit test
+>> /ARCH/migration/postcopy/preempt/tls/psk.
+>> 
+>> Thanks,
+>> 
+>> Peter Xu (3):
+>>   migration/tls: Gracefully shutdown main and preempt channels
+>>   migration: Make migration_has_failed() work even for CANCELLING
+>>   migration/multifd: Use the new graceful termination helper
 >
+> Please hold off the review on this one.  Juraj reported the issue wasn't
+> resolved by the changes, and I can also reproduce.  I'll have a look and
+> repost..
 
-The prophecy is fulfilled.
-
-https://wiki.qemu.org/ToDo/LiveMigration#Migration_cancel_concurrency
-
-I'm not sure I'm convinced, for instance, CANCELLING is part of
-migration_is_running(), while FAILED is not. This doesn't seem
-right. Another point is that CANCELLING is not a final state, so we're
-prone to later need a migration_has_finished_failing_now() helper. =)
-
-My mental model is that CANCELLING is a transitional, ongoing state
-where we shouldn't really be making assumptions. Once FAILED is reached,
-then we're sure in which general state everything is.
-
-How did you catch this? It was one of the cancel tests that failed? I
-just noticed that multifd_send_shutdown() is called from
-migration_cleanup() before it changes the state to CANCELLED. So current
-code also has whatever issue you detected here.
-
-> Allow that state will make migration_has_failed() working as expected even
-> if it's invoked slightly earlier.
->
-> One current user is the multifd code for the TLS graceful termination,
-> where it's before updating to CANCELLED.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 7015c2b5e0..397917b1b3 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1723,7 +1723,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
->  
->  bool migration_has_failed(MigrationState *s)
->  {
-> -    return (s->state == MIGRATION_STATUS_CANCELLED ||
-> +    return (s->state == MIGRATION_STATUS_CANCELLING ||
-> +            s->state == MIGRATION_STATUS_CANCELLED ||
->              s->state == MIGRATION_STATUS_FAILED);
->  }
+I'm wondering if the assumption that only succeeded migrations should
+gracefully exit is correct. My understanding is that we need to always
+exit gracefully, but after failure, the channel might not be there, so
+we ignore failures. But that does not seem to mean a failed migration
+can simply not exit gracefully.
 
