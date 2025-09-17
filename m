@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DA5CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52495CAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypDV-00017P-J0; Wed, 17 Sep 2025 06:16:49 -0400
+	id 1uypEN-0001nO-7H; Wed, 17 Sep 2025 06:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCu-0000bF-Cq; Wed, 17 Sep 2025 06:16:12 -0400
+ id 1uypD3-0000pK-0U; Wed, 17 Sep 2025 06:16:28 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCk-0003Hm-PW; Wed, 17 Sep 2025 06:16:09 -0400
+ id 1uypD0-0003Lx-Q3; Wed, 17 Sep 2025 06:16:20 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sF093528
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8s8093528
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:14:25 +0900 (JST)
+ Wed, 17 Sep 2025 19:14:21 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=v+Xb+1QVJw0wOnTS9Jio3e/jbQ2BZQtVgu226l6UV38=; 
+DKIM-Signature: a=rsa-sha256; bh=lJRKJLkUtQVuwFEISLl+dhYLnOkVsl4daLaMLN8WUus=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758104066; v=1;
- b=qEQfSTKEA4U78rKYzbed5g3KZSs3bTwJOaCeJ0jPTsX31Ok70JSdTMTDcNjaYAEK
- Nfsgl2Dk7WOqvjUUENqOPvbH6iVwIn4nzFaJ0CGqkwCyumf4XFQ3dQppxlr20jUb
- hcL+CvT2eXiYoMXuG+wpRdCW2AdceSZ0KuYI7j7Nk/QFY5kiql35cWMEt/PTX/t6
- HSPUn0+O4YgMOCUfQc9KhgV/fKpdSK2ijVaiB21ZrNjIZ9RGrzApRNV+guTZWjUw
- S0IT30OulcQ/p2axRplunesPLlsNUN8r96/kgDZQOuZ1AfqYRaBUQLDCAAIZ84hH
- DMwHkZqV4rdHT966UikOww==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1758104062; v=1;
+ b=oSwItlPy6eUaF3lh0yljm0+YCQBLTh6nG41CDwERnyNvvOnjQMl7mGXP+YZv2tHG
+ cQ85oqb0YLQ+StopBgfveBRpVYJohzqiHNNR2JdhLymCdpqUr6t6VXy8GRFHTT9R
+ cIb8YmgQYR6vHa7S+mPZP9ORB5wu0etavueW/B/ziXBrRzZpESHRoKJwd8fWH5HF
+ PtOMtXTi0fLWCW7X5lvU9RjXpf6e6h0rF+AGzgDO4rbZEcArb5JDrw9/xuhAQlbz
+ ITpfxxz0BxXfnbauuAqKB2w9aQQgYlR/uCg4Xs6+Tl+oAD9GziK/hKFkTcd2l0eL
+ SCbnL+KlTAWECgXyrOaWzQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:13:32 +0900
-Subject: [PATCH v3 7/7] hw/xen: Do not unparent in instance_finalize()
+Subject: [PATCH v3 0/7] Do not unparent in instance_finalize()
+Date: Wed, 17 Sep 2025 19:13:25 +0900
+Message-Id: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-use-v3-7-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAMWJymgC/3XMTQ6CMBCG4auQrm3TH5HUlfcwLsowhdFESAuNh
+ HB3C2504fKdzPcsLGIgjOxcLCxgokj9M4c5FAw692yRU5ObaalLaeWJTxG5qRDASuMsSpY/h4C
+ eXrtyveXuKI59mHc0qe36u0+KSw6lAud8o7CuLiG2AkiQmPjYP+ZeOBD3gW1Y0l+AKj+AzoA/Q
+ uW9MrVH+xdY1/UN5gLO0eQAAAA=
+X-Change-ID: 20250906-use-37ecc903a9e0
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -109,6 +112,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Based-on: <cover.1751493467.git.balaton@eik.bme.hu>
+("[PATCH v2 00/14] hw/pci-host/raven clean ups")
+
+Supersedes: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+("[PATCH] docs/devel: Prohibit calling object_unparent() for memory region")
+
 Children are automatically unparented so manually unparenting is
 unnecessary.
 
@@ -119,31 +128,56 @@ is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/xen/xen_pt_msi.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+Changes in v3:
+- Added patches to remove other object_unparent() calls in
+  instance_finalize().
+- Dropped patch "qdev: Automatically delete memory subregions" and the
+  succeeding patches to avoid Ccing many.
+- Link to v2: https://lore.kernel.org/qemu-devel/20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp
 
-diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-index 09cca4eecb1c..e9ba17317aba 100644
---- a/hw/xen/xen_pt_msi.c
-+++ b/hw/xen/xen_pt_msi.c
-@@ -637,14 +637,5 @@ void xen_pt_msix_unmap(XenPCIPassthroughState *s)
- 
- void xen_pt_msix_delete(XenPCIPassthroughState *s)
- {
--    XenPTMSIX *msix = s->msix;
--
--    if (!msix) {
--        return;
--    }
--
--    object_unparent(OBJECT(&msix->mmio));
--
--    g_free(s->msix);
--    s->msix = NULL;
-+    g_clear_pointer(&s->msix, g_free);
- }
+Changes in v2:
+- Added a reference to "[PATCH] docs/devel: Prohibit calling
+  object_unparent() for memory region", which does something similar to
+  patch "docs/devel: Do not unparent in instance_finalize()" but I
+  forgot I sent it in the past.
+- Fixed a typo in patch
+  "docs/devel: Do not unparent in instance_finalize()" and
+  "[PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()".
+- Dropped patches to move address_space_init() calls; I intend to
+  QOM-ify to fix memory leaks automatically as discussed in the
+  following thread:
+  https://lore.kernel.org/qemu-devel/cd21698f-db77-eb75-6966-d559fdcab835@eik.bme.hu/
+  But the QOM-ification will be big so I'll send it as a separate
+  series.
+- Rebased on top of "[PATCH v2 00/14] hw/pci-host/raven clean ups".
+  https://lore.kernel.org/qemu-devel/cover.1751493467.git.balaton@eik.bme.hu/
+- Link to v1: https://lore.kernel.org/qemu-devel/20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp
 
--- 
-2.51.0
+---
+Akihiko Odaki (7):
+      docs/devel: Do not unparent in instance_finalize()
+      vfio/pci: Do not unparent in instance_finalize()
+      hw/core/register: Do not unparent in instance_finalize()
+      hv-balloon: hw/core/register: Do not unparent in instance_finalize()
+      hw/sd/sdhci: Do not unparent in instance_finalize()
+      vfio: Do not unparent in instance_finalize()
+      hw/xen: Do not unparent in instance_finalize()
+
+ docs/devel/memory.rst  | 19 ++++++-------------
+ hw/core/register.c     |  1 -
+ hw/hyperv/hv-balloon.c | 12 +-----------
+ hw/sd/sdhci.c          |  4 ----
+ hw/vfio/pci-quirks.c   |  9 +--------
+ hw/vfio/pci.c          |  4 ----
+ hw/vfio/region.c       |  3 ---
+ hw/xen/xen_pt_msi.c    | 11 +----------
+ 8 files changed, 9 insertions(+), 54 deletions(-)
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250906-use-37ecc903a9e0
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
