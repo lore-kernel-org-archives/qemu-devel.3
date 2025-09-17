@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E32CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 18:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1346FCAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 18:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uywTH-0007t1-UJ; Wed, 17 Sep 2025 14:01:36 -0400
+	id 1uywbH-0001v1-4Y; Wed, 17 Sep 2025 14:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uywTF-0007sX-Dg
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 14:01:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uywTA-0001D0-2B
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 14:01:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758132083;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Y7b+9rZN2Ihdft/r1GTe1V7xdsjUwXySBVnRBKZYsNA=;
- b=f6Do7Wi5eM9Semx/QMYLuKCaIY9oDqNLMPYFZW5JWrB+kbGvDx19s+GXQuAcDKZ1LTOR47
- QV3oiy1g5DaORI3oLuxt3HyddE4ovGL+nzxJ6abmCZ7kWDhcRupzr9miSF61OUedct7bFo
- tRIhzzESg3CNXD/WNHr6m5Y2j6X8ONQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-k7LXAldEPYOOsIP7eivjTg-1; Wed,
- 17 Sep 2025 14:01:17 -0400
-X-MC-Unique: k7LXAldEPYOOsIP7eivjTg-1
-X-Mimecast-MFC-AGG-ID: k7LXAldEPYOOsIP7eivjTg_1758132077
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEB461800350; Wed, 17 Sep 2025 18:01:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BA10300018D; Wed, 17 Sep 2025 18:01:15 +0000 (UTC)
-Date: Wed, 17 Sep 2025 19:01:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: More check-functional asset download issues
-Message-ID: <aMr3aNpHz1ySnBEg@redhat.com>
-References: <d6b2f2c8-809d-4a94-a18b-2accf10fc5f9@linaro.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uywbA-0001u8-5N
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 14:09:45 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uywb8-0001n7-Bw
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 14:09:43 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-32e372c413aso190297a91.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 11:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758132580; x=1758737380; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+CHHqy1q2Np6y8kC1B803/GokQnv2ZjPTd5z1TDLId8=;
+ b=iNwzzMoL5jR+z2JmvWIiEyjS1i+Zykzmw13dTjEuBMIsa2nY0oi/cky6i474YX1VkU
+ tMgoalxwclZCcpw4LnS/nwjsh1iNWg+nVM/fPDq2fDQkP89wYrBxo+pqpHHS3wJoPquQ
+ z66GmI25DtL6nC49LT9hEvk3FxTsZfikL0hZprsuwsRM2ID4xdiHC5C56I11MZFifna2
+ ou4ROtBZ389rt/NsBVuVxjyp3ruTUk7oUBuQjRg7bv9l8GxVPYEcYi2SqMq6aY2EpHm7
+ KzQ49pV6ksO2KPRKeTA30yCY/1CEKIGBLtjBG/+uRv+8t7NhnMjyuRumKoMARFA61Vxs
+ DZ+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758132580; x=1758737380;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+CHHqy1q2Np6y8kC1B803/GokQnv2ZjPTd5z1TDLId8=;
+ b=Z1RYVSH1Jl0FQxfAPEd98qINNlMAhXG51PO3xCKOc3p/3PmHec6IzfjQyOn0W9I9vl
+ 77K5/UB6sZb1EBZpWu2bnwGa6278loNSd9PDvAexnlH6MNdkCZeVRYYfU6fgxo+oVSgr
+ rSc40pcdbvzytYQR14uTI2MRegIaZVmqFp3Do6mRsgjqyb9MnfwQtbBMpnkXN6OuAOk/
+ 0IbxeD0JtnzuquoHAQHbj1CDBELrz9Yth+J98NpNnOqUgP1CyNX8hdjTvknzjOKk22Wp
+ NGyq9fqCac3LlkATgjJKcgReI5LUJ2lyqDIEFdfp5NlujdSV/tL/PGjWYGpuW+R4XuUo
+ m9TQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8ISsPd+xWp8ebTz24lLByA3Iyphu2MT4hmbpBjP4GaIE4Wx1HtXkCXk2max1IGhWNP/GyYI2kg7iy@nongnu.org
+X-Gm-Message-State: AOJu0YwV+Y4YPMlNqrdjaV8y1wvBnokZVfZ5sQWt89pLHPSlWVFH56Jq
+ eVmX4ObmOV2TAyPypM5r74KUvf2pA6SQld1Ki0Ce2Q8eWS06JME/S0fZcYyWECoa30s=
+X-Gm-Gg: ASbGnctIo3TfazY8/6Fc8xjzPVrPdXJT1Lk4Uu3T5v1mfa5eC6RCxuMeCF4LK2yPkHR
+ RjX1NdZto7iEKIh0ytQ1yS5PeOuPXkF19acCmn4QdO/kkaIRci8zjTB1D981n2oxtuu/3/RBkKz
+ cAKSqgHVLO6wLkVpsjArY0UHDWgrAEGAwHalm5D36VhJ6qt1Qwv6P9VzbxsKGMYMEp7HoJh4i08
+ ciDF7E4uwZ1BcuwnB3Mj+bigjA6SlmT0Cu8eWznAHYXg+3bGHdUSy8M4NMF/SrwGwIIeYd4bTzh
+ 6qKlmaJNMsvWKBfU1I7xw7x8fh106yjANAm+KGOfhgIzrrHsfnIVRJNJa+t7AgvVIy0iUCiCSli
+ AMYPveC8tWafU2fteOvUA2FW+Vg7osg/ZT9vH
+X-Google-Smtp-Source: AGHT+IGe6n0R/c8vj1aZqIeMbVARfhIxaRvLAcHcuj5TJ/ZTpYL29pRtAmIFo/TFS/TISv7vOqSjIA==
+X-Received: by 2002:a17:90b:2d8c:b0:32e:1ff5:5af4 with SMTP id
+ 98e67ed59e1d1-32ee3fa63bbmr3546851a91.35.1758132580488; 
+ Wed, 17 Sep 2025 11:09:40 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-32ed26876ffsm3106713a91.3.2025.09.17.11.09.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 11:09:40 -0700 (PDT)
+Message-ID: <9ec1f289-58f8-4537-90e1-89eeb9bd72e6@linaro.org>
+Date: Wed, 17 Sep 2025 11:09:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d6b2f2c8-809d-4a94-a18b-2accf10fc5f9@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 0/8] Tracing patches
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Richard Henderson <rth@twiddle.net>
+References: <20250916175108.139627-1-stefanha@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250916175108.139627-1-stefanha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,60 +104,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 10:49:56AM -0700, Richard Henderson wrote:
-> Hi,
+On 9/16/25 10:51, Stefan Hajnoczi wrote:
+> The following changes since commit 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d:
 > 
-> We have
+>    Merge tag 'pull-request-2025-09-09' ofhttps://gitlab.com/thuth/qemu into staging (2025-09-11 12:41:01 +0100)
 > 
->   https://patchew.org/QEMU/20250829142616.2633254-1-berrange@redhat.com/
+> are available in the Git repository at:
 > 
-> in master already, but are still seeing up front failures:
+>    https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
 > 
->   https://gitlab.com/qemu-project/qemu/-/jobs/11391070330
->   https://gitlab.com/qemu-project/qemu/-/jobs/11391070366
+> for you to fetch changes up to 2c27d8523927b0965b7b3d265eee3baf9a15c9c8:
 > 
-> 2025-09-17 17:26:56,222 - qemu-test - INFO - Downloading https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/uImage
-> to /builds/qemu-project/qemu/functional-cache/download/2478187c455d6cca3984e9dfde9c635d824ea16236b85fd6b4809f744706deda...
-> Traceback (most recent call last):
->   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 135, in fetch
->     with urllib.request.urlopen(self.url) as resp:
->   File "/usr/lib64/python3.9/urllib/request.py", line 214, in urlopen
->     return opener.open(url, data, timeout)
->   File "/usr/lib64/python3.9/urllib/request.py", line 517, in open
->     response = self._open(req, data)
->   File "/usr/lib64/python3.9/urllib/request.py", line 534, in _open
->     result = self._call_chain(self.handle_open, protocol, protocol +
->   File "/usr/lib64/python3.9/urllib/request.py", line 494, in _call_chain
->     result = func(*args)
->   File "/usr/lib64/python3.9/urllib/request.py", line 1389, in https_open
->     return self.do_open(http.client.HTTPSConnection, req,
->   File "/usr/lib64/python3.9/urllib/request.py", line 1350, in do_open
->     r = h.getresponse()
->   File "/usr/lib64/python3.9/http/client.py", line 1377, in getresponse
->     response.begin()
->   File "/usr/lib64/python3.9/http/client.py", line 320, in begin
->     version, status, reason = self._read_status()
->   File "/usr/lib64/python3.9/http/client.py", line 289, in _read_status
->     raise RemoteDisconnected("Remote end closed connection without"
+>    tracetool-test: allow to run in parallel (2025-09-16 13:31:40 -0400)
+> 
+> ----------------------------------------------------------------
+> Pull request
+> 
+> Daniel's updated tracetool test suite that doesn't break Windows CI.
 
-Sigh, yet another type of exception that urlopen may raise.... this is
-why apps end up wanting to catch Exception rather than try to match
-all possible specialized subclasses.
 
-We already catch Exception but treat it as a fatal error. I'm inclined
-to switch it to be a transient error, so that we don't abort the CI
-jobs, just skip tests with msising assets, as we do for HTTP error
-codes and for DNS resolution errors.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
