@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA3F2CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B109ECAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:12:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsk-0002T2-6a; Wed, 17 Sep 2025 09:07:34 -0400
+	id 1uyrvb-0006q4-JB; Wed, 17 Sep 2025 09:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpn-0005wU-AB; Wed, 17 Sep 2025 09:04:36 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpk-0005xw-AR; Wed, 17 Sep 2025 09:04:31 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6w008967
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:46 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=5Zk0Ocd+QwOh+s35lDkbenDI0KEEnwyHPaEenyfugGE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113806; v=1;
- b=wEKO9sNxGPBX8w4kyKsEykeTFzHjov4MPkIsIUG+KOHhBAyrzgfFwYHAPOu7U1Cv
- 2Dgx0JTk3yFxQ3KaPQDheJ13tPZUF30uml5QbOlwSEYBqiXXy5JbJf5ldcewt+gJ
- IDVoHgHf46gpPx5ljbUvIaQFqITzsSFJYXrnRh0EzlANvUFX8Zx54KQAycMG0c7d
- G4cVcmDIQoYIuvSSd2zbaI+0ALgVK0AMVk22SC0laW9jQ51s7WZ0RVMrnqHMzWvs
- c+FometxxqeREWqQdNxlHHQvNWJg2wDbPap/ggFBwRwh1YLAky7uY4/TMmL23BUO
- yAwStcwFUKmjixKxuNJqUg==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:30 +0900
-Subject: [PATCH 18/35] hw/pci-host: QOM-ify AddressSpace
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyrv5-0006ZE-78
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:10:05 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uyrv3-0007Bh-1a
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:09:58 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3ec4d6ba12eso1428276f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 06:09:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758114594; x=1758719394; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Nhi0UR3jj1fb8FsfaXvRrhc7WCF6DG+4ikdmpLzz8J0=;
+ b=GIBZVnzq2DUF1UrafNRPxGhqvcGdtjxFn0iz7XzkFSowuY2K7xovvoU+2bQb9L7Gso
+ 2EZqAGoMWHlMB4nQ2GAC1RkFQfWYYxjReyoAMSnVu3vb/Xvk/rIfISwplXvYKr0nLboN
+ edatwpnM8/a72DMmliF9wAl2VFNCY+8RpVsgV5L5sWFKaNeckhZHQvrpxd2WN/IFdQG/
+ D/pdEB41UzzeHb/NAHR85+0SD7wGIXMMkL7evucCGJxMpemzWcQFCrQ+J0IXRUl8C8//
+ jYoCn7C0OIKZ2Hub2h9SpSVRb4t6hWSp6FfbW26u6M7wniwO3gluz3FIXZTNHGD01qLU
+ Zn4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758114594; x=1758719394;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Nhi0UR3jj1fb8FsfaXvRrhc7WCF6DG+4ikdmpLzz8J0=;
+ b=fI8aVVhakt5+rsJpotPmhNyf2wK7s3fKWIX6uxD+Agnn5sDBfzUaf1zd4vD1ewxAR3
+ Eyiy0hmHwbb5vZulmC0400Sru+xxqrxTAhOpA+UA0Oox0dgD9aSAbVHKJVtqtWLS9PR9
+ xQm1QPv2MFGRkcEKhPwEwK5//exdyty4HxOPdizxvE0Gy2s0KZkePwivrwc8NMb1Zwci
+ a4jjStJhn6zkcjxcuoSmIxVZTydxmxiFexqnEzOYwfAp/zCWhYSo4cTTpDqA7+rx7nfn
+ I0yZjgCAoMQ4+XFkk0fAxBxT0DPaabuNz9pWzWr2xfjBPGIC/fPEC55LlveAd3wnm1NU
+ 2RKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHk3lYiu8RZ87PkPfVlL5Wm2GTF2hVpwRPNMhf1VjU6NREC8PopHUwQJJ1Fu9EdT/oyKma9icVslFh@nongnu.org
+X-Gm-Message-State: AOJu0YwV57X4e51uGzmSd1hT57S5OKnnVRIV3lbl4YH6rI6sxSDtby/T
+ xedlQLxXZ7GrtcEozGLc+9nsCUYu9DXA/6TgdsnEP9uA3Cq5moSM2WNN
+X-Gm-Gg: ASbGnctQL4/yzlj3IcJc9bPxYFfV/Uo8iBqG+1v37Btbv3LIBjSJCRXuZo3uBM33JPA
+ HiY+dNiEKrygKe/VluMKsskdCKaz3nsOjjVz7EChK+XLKWRX1FaU0b7rTX7ZyK52zEqoDdQsI3R
+ xF4IFM5RmwyoBy8c/b9HZHEvg5XcXXDSo2Esi8VEtlmaWWwaMqAz8BQIjAh30n17FkFg8pk719/
+ ZmYi0dLXODKJV/z+jpMnfD+Wacv+2wtZpEmtpA+DtRH4sOIvdnZ2ZTkrv1d86XXHijKmdYBMto2
+ CeAwc+3nI0av+ejnEloFo5C3qKRAbtapDGwpXgW0CvDJXcwgwu10SdR7W2mroYHtQVqeWQU1ClZ
+ Uwv8WPtM4TSMZJ6qDcd6x1l4j776WZRNqeBptMmwHn0+HPimD+f73MX3pE6CbJg==
+X-Google-Smtp-Source: AGHT+IH3+xZJsR3L/m9YPjacaTpPZE3hU41v4ZSnQ5Rru/txInn4N/wBOcvWZ6aj8CCjTp6XDPAyyA==
+X-Received: by 2002:a5d:5f56:0:b0:3e7:63c5:9a9d with SMTP id
+ ffacd0b85a97d-3ecdf9b97c0mr1984254f8f.6.1758114594320; 
+ Wed, 17 Sep 2025 06:09:54 -0700 (PDT)
+Received: from ehlo.thunderbird.net (37-48-56-34.nat.epc.tmcz.cz.
+ [37.48.56.34]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ece199ad24sm1152511f8f.50.2025.09.17.06.09.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 06:09:53 -0700 (PDT)
+Date: Wed, 17 Sep 2025 15:09:50 +0200
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+CC: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
+ eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, nsg@linux.ibm.com
+Subject: Re: [PATCH v2] char-pty: add support for the terminal size
+User-Agent: Thunderbird for Android
+In-Reply-To: <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
+References: <20250915162535.147642-1-maxbr@linux.ibm.com>
+ <20250915163415.149190-1-maxbr@linux.ibm.com>
+ <4c8e1ae5dd16d6ee4bcb42ed25d2987bc2c4a3cc.camel@gmail.com>
+ <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
+Message-ID: <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-18-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Eric Auger <eric.auger@redhat.com>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Ninad Palsule <ninad@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>, Song Gao <gaosong@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Jan Kiszka <jan.kiszka@web.de>, Laurent Vivier <laurent@vivier.eu>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>,
- Bernhard Beschow <shentey@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fam Zheng <fam@euphon.net>,
- Bin Meng <bmeng.cn@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Peter Xu <peterx@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- qemu-block@nongnu.org, kvm@vger.kernel.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,163 +110,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make AddressSpaces QOM objects to ensure that they are destroyed when
-their owners are finalized and also to get a unique path for debugging
-output.
 
-The name arguments were used to distinguish AddresSpaces in debugging
-output, but they will represent property names after QOM-ification and
-debugging output will show QOM paths. So change them to make them more
-concise and also avoid conflicts with other properties.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- hw/pci-host/astro.c       | 3 +--
- hw/pci-host/designware.c  | 5 ++---
- hw/pci-host/dino.c        | 4 ++--
- hw/pci-host/gt64120.c     | 2 +-
- hw/pci-host/pnv_phb3.c    | 4 ++--
- hw/pci-host/pnv_phb4.c    | 4 ++--
- hw/pci-host/ppc440_pcix.c | 2 +-
- hw/pci-host/ppce500.c     | 2 +-
- hw/pci-host/raven.c       | 2 +-
- 9 files changed, 13 insertions(+), 15 deletions(-)
+On September 17, 2025 11:39:55 AM GMT+02:00, Maximilian Immanuel Brandtner=
+ <maxbr@linux=2Eibm=2Ecom> wrote:
+> On Tue, 2025-09-16 at 00:02 +0200, Filip Hejsek wrote:
+> > On Mon, 2025-09-15 at 18:34 +0200, Maximilian Immanuel Brandtner
+> > wrote:
+> > > Update the terminal size upon SIGWINCH delivery=2E
+> > >=20
+> > > Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux=2Eibm=2Eco=
+m>
+> >=20
+> > I don't think this will work, because SIGWINCH is only delivered for
+> > the process' controling terminal=2E Unfortunately I don't think there
+> > is
+> > any way to get size notifications for arbitrary terminal=2E
+>=20
+> In that case there are two solutions:
+> 1=2E make qemu the controlling process of the pty (this has the
+> disadvantage of QEMU being quit when the pty is closed)
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index bb6b7d05582f..19f6a7ac88f4 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -835,8 +835,7 @@ static void astro_realize(DeviceState *obj, Error **errp)
-     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
-                              TYPE_ASTRO_IOMMU_MEMORY_REGION, OBJECT(s),
-                              "iommu-astro", UINT64_MAX);
--    address_space_init(&s->iommu_as, NULL, MEMORY_REGION(&s->iommu),
--                       "bm-pci");
-+    address_space_init(&s->iommu_as, OBJECT(s), MEMORY_REGION(&s->iommu), "as");
- 
-     /* Create Elroys (PCI host bus chips).  */
-     for (i = 0; i < ELROY_NUM; i++) {
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index d67211c9bc74..a542f6e9b1b1 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -706,9 +706,8 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
-                        UINT64_MAX);
-     memory_region_add_subregion(&s->pci.address_space_root,
-                                 0x0, &s->pci.memory);
--    address_space_init(&s->pci.address_space, NULL,
--                       &s->pci.address_space_root,
--                       "pcie-bus-address-space");
-+    address_space_init(&s->pci.address_space, OBJECT(s),
-+                       &s->pci.address_space_root, "as");
-     pci_setup_iommu(pci->bus, &designware_iommu_ops, s);
- 
-     qdev_realize(DEVICE(&s->root), BUS(pci->bus), &error_fatal);
-diff --git a/hw/pci-host/dino.c b/hw/pci-host/dino.c
-index b78167fd2fcd..d213478c86ce 100644
---- a/hw/pci-host/dino.c
-+++ b/hw/pci-host/dino.c
-@@ -434,14 +434,14 @@ static void dino_pcihost_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(&s->bm, 0xfff00000,
-                                 &s->bm_cpu_alias);
- 
--    address_space_init(&s->bm_as, NULL, &s->bm, "pci-bm");
-+    address_space_init(&s->bm_as, OBJECT(s), &s->bm, "as");
- }
- 
- static void dino_pcihost_unrealize(DeviceState *dev)
- {
-     DinoState *s = DINO_PCI_HOST_BRIDGE(dev);
- 
--    address_space_destroy(&s->bm_as);
-+    object_unparent(OBJECT(&s->bm_as));
- }
- 
- static void dino_pcihost_init(Object *obj)
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index 68ad885edbe4..89c4cf0bd5f8 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1198,7 +1198,7 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->ISD_mem, OBJECT(dev), &isd_mem_ops, s,
-                           "gt64120-isd", 0x1000);
-     memory_region_init(&s->pci0_mem, OBJECT(dev), "pci0-mem", 4 * GiB);
--    address_space_init(&s->pci0_mem_as, NULL, &s->pci0_mem, "pci0-mem");
-+    address_space_init(&s->pci0_mem_as, OBJECT(s), &s->pci0_mem, "as");
-     phb->bus = pci_root_bus_new(dev, "pci",
-                                 &s->pci0_mem,
-                                 get_system_io(),
-diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
-index 73592c9cbd3d..554ad034b6f4 100644
---- a/hw/pci-host/pnv_phb3.c
-+++ b/hw/pci-host/pnv_phb3.c
-@@ -956,8 +956,8 @@ static AddressSpace *pnv_phb3_dma_iommu(PCIBus *bus, void *opaque, int devfn)
-         memory_region_init_iommu(&ds->dma_mr, sizeof(ds->dma_mr),
-                                  TYPE_PNV_PHB3_IOMMU_MEMORY_REGION,
-                                  OBJECT(phb), "phb3_iommu", UINT64_MAX);
--        address_space_init(&ds->dma_as, NULL, MEMORY_REGION(&ds->dma_mr),
--                           "phb3_iommu");
-+        address_space_init(&ds->dma_as, OBJECT(phb), MEMORY_REGION(&ds->dma_mr),
-+                           "as");
-         memory_region_init_io(&ds->msi32_mr, OBJECT(phb), &pnv_phb3_msi_ops,
-                               ds, "msi32", 0x10000);
-         memory_region_init_io(&ds->msi64_mr, OBJECT(phb), &pnv_phb3_msi_ops,
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 9db9268358d1..0d7643e36036 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -1469,8 +1469,8 @@ static AddressSpace *pnv_phb4_dma_iommu(PCIBus *bus, void *opaque, int devfn)
-         memory_region_init_iommu(&ds->dma_mr, sizeof(ds->dma_mr),
-                                  TYPE_PNV_PHB4_IOMMU_MEMORY_REGION,
-                                  OBJECT(phb), name, UINT64_MAX);
--        address_space_init(&ds->dma_as, NULL, MEMORY_REGION(&ds->dma_mr),
--                           name);
-+        address_space_init(&ds->dma_as, OBJECT(phb), MEMORY_REGION(&ds->dma_mr),
-+                           "as");
-         memory_region_init_io(&ds->msi32_mr, OBJECT(phb), &pnv_phb4_msi_ops,
-                               ds, "msi32", 0x10000);
-         memory_region_init_io(&ds->msi64_mr, OBJECT(phb), &pnv_phb4_msi_ops,
-diff --git a/hw/pci-host/ppc440_pcix.c b/hw/pci-host/ppc440_pcix.c
-index 3fe24d70ac30..6500871f48ae 100644
---- a/hw/pci-host/ppc440_pcix.c
-+++ b/hw/pci-host/ppc440_pcix.c
-@@ -502,7 +502,7 @@ static void ppc440_pcix_realize(DeviceState *dev, Error **errp)
- 
-     memory_region_init(&s->bm, OBJECT(s), "bm-ppc440-pcix", UINT64_MAX);
-     memory_region_add_subregion(&s->bm, 0x0, &s->busmem);
--    address_space_init(&s->bm_as, NULL, &s->bm, "pci-bm");
-+    address_space_init(&s->bm_as, OBJECT(s), &s->bm, "as");
-     pci_setup_iommu(h->bus, &ppc440_iommu_ops, s);
- 
-     memory_region_init(&s->container, OBJECT(s), "pci-container", PCI_ALL_SIZE);
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index eda168fb5955..94d5c53f328a 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -470,7 +470,7 @@ static void e500_pcihost_realize(DeviceState *dev, Error **errp)
-     /* Set up PCI view of memory */
-     memory_region_init(&s->bm, OBJECT(s), "bm-e500", UINT64_MAX);
-     memory_region_add_subregion(&s->bm, 0x0, &s->busmem);
--    address_space_init(&s->bm_as, NULL, &s->bm, "pci-bm");
-+    address_space_init(&s->bm_as, OBJECT(s), &s->bm, "as");
-     pci_setup_iommu(b, &ppce500_iommu_ops, s);
- 
-     pci_create_simple(b, 0, TYPE_PPC_E500_PCI_BRIDGE);
-diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 5564b51d6755..5bf87bdffa26 100644
---- a/hw/pci-host/raven.c
-+++ b/hw/pci-host/raven.c
-@@ -214,7 +214,7 @@ static void raven_pcihost_realize(DeviceState *d, Error **errp)
-     memory_region_init_alias(mr, o, "bm-system", get_system_memory(),
-                              0, 0x80000000);
-     memory_region_add_subregion(bm, 0x80000000, mr);
--    address_space_init(&s->bm_as, NULL, bm, "raven-bm-as");
-+    address_space_init(&s->bm_as, o, bm, "as");
-     pci_setup_iommu(h->bus, &raven_iommu_ops, s);
- }
- 
+A bigger disadvantage is that a process can only have one controlling term=
+inal, and a terminal can only be the controlling terminal for a single sess=
+ion (and only sends signals to the foreground process group of that session=
+)=2E It would require forking a process for each pty, and I don't even know=
+ if the master end can have its own session=2E
 
--- 
-2.51.0
+> 2=2E create a timer polling every eg 100ms to check if the winsize has
+> changed
+>=20
+> I would go with the second approach then
 
+Me too, the timer is a bit unfortunate, but it's probably the less bad opt=
+ion=2E
 
