@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2472CCAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82AE3CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypUi-0002S2-Fi; Wed, 17 Sep 2025 06:34:36 -0400
+	id 1uypUh-0002Rk-Kz; Wed, 17 Sep 2025 06:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUQ-0002Hk-EZ; Wed, 17 Sep 2025 06:34:20 -0400
+ id 1uypUQ-0002Hi-Dn; Wed, 17 Sep 2025 06:34:20 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUJ-0005ub-HX; Wed, 17 Sep 2025 06:34:15 -0400
+ id 1uypU9-0005uT-I8; Wed, 17 Sep 2025 06:34:14 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAl099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAb099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:33:02 +0900 (JST)
+ Wed, 17 Sep 2025 19:32:57 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=F0AyM/lua4p28w0QtF6/Ku3cctKLYXgOBYs6U3KWbds=; 
+DKIM-Signature: a=rsa-sha256; bh=3cGH6b5E85/I0U4om6lK9pPVs4VMPnqongUbGQsfkaQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105182; v=1;
- b=RBRMgmOSFmK/66iyeCtzp07J+8+R8m3cMUo/vLJXjS0KiUv9wHQXFstPh76Hk2VL
- kA5QM3A8YwraJRtO5CmZX2BEjQLny2+NLsfw7Vru4Ybl+RFfIsfsPt/L4kA1pWDe
- VfafwmbYs8CQZFLRmWLi7rPTYY1hglGWJRVMADLC87ppxT/2fQT2Bdto8m1TH5ct
- VW7Mr5i77yQMh8l3No1BVSplDCMrzmm6PwLpE7o+7xK/DRXtPn2IQiU+zCJbHsbN
- Ck09PqoAaw15El2Xt0ap2lp8CyNesSpCTdGzBhtUDoSuhiWHIRW8JmeCtYIDMFI1
- a+Tmv4i9CftX3F4lqJgDpQ==
+ s=rs20250326; t=1758105177; v=1;
+ b=u0Lh+6q7BWlB/CsS/jfNs3jm+V1w+T7P3mvjZfu/wqUfBzpcD1Fkw0YsbjghR594
+ tQh+sIookvrhlebSbkdEBhjQctfbQza6ey9YUCtiIr617x8sxklh2rFVIt0jQy/2
+ Bq7X+loIp1wbxBjZHHuycZOrNUNMC7ahU9sjN9nQIa4nXG3WSGLBUCoimaOGNqB6
+ Am5XXaBh7WAY1XyeIfTF0G+wfRYrqFuieyucvUaLY1GHtCFqKLOVEBN6Zk+iIXsJ
+ tPmGLl1s3E+7TUS4ZkaAYNNpXxb3UPD6HEd4P77feCqwoDdW0UpFj1G7Esjl0jd9
+ 6vcAIvutpnVNZwtikbQi8w==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:32:59 +0900
-Subject: [PATCH 13/14] hw/usb/hcd-ehci: Do not delete the subregions
+Date: Wed, 17 Sep 2025 19:32:49 +0900
+Subject: [PATCH 03/14] vfio-user: Do not delete the subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-13-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-subregion-v1-3-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,24 +107,26 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-ehci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/vfio-user/pci.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-index b090f253656b..21c3501455b5 100644
---- a/hw/usb/hcd-ehci.c
-+++ b/hw/usb/hcd-ehci.c
-@@ -2557,10 +2557,6 @@ void usb_ehci_unrealize(EHCIState *s, DeviceState *dev)
-     ehci_queues_rip_all(s, 0);
-     ehci_queues_rip_all(s, 1);
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index be71c777291f..0b6c6a1c5ed3 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -73,12 +73,6 @@ static void vfio_user_msix_setup(VFIOPCIDevice *vdev)
  
--    memory_region_del_subregion(&s->mem, &s->mem_caps);
--    memory_region_del_subregion(&s->mem, &s->mem_opreg);
--    memory_region_del_subregion(&s->mem, &s->mem_ports);
+ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
+ {
+-    MemoryRegion *mr, *sub;
 -
-     usb_bus_release(&s->bus);
- 
-     if (s->vmstate) {
+-    mr = vdev->bars[vdev->msix->pba_bar].mr;
+-    sub = vdev->msix->pba_region;
+-    memory_region_del_subregion(mr, sub);
+-
+     g_free(vdev->msix->pba_region);
+     vdev->msix->pba_region = NULL;
+ }
 
 -- 
 2.51.0
