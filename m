@@ -4,102 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044CECAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76235CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrPG-00015s-PC; Wed, 17 Sep 2025 08:37:06 -0400
+	id 1uyrkF-0008Eu-Nj; Wed, 17 Sep 2025 08:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyrPA-00011j-Oj
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:37:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrk2-00080g-P5; Wed, 17 Sep 2025 08:58:34 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyrP2-0002Ri-Vn
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:36:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758112611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XqmwpfuwOivPYH8HgJUTArMnILYXVCfSNYCIDtYZKZ8=;
- b=dIFWiS+43JP/ow2uke7cSt3YAUozPXx6B5mHdDIajq5w8qexHmsLbEIwzWznS6q7SLvVCi
- MZPwnJ7M7q70zXtGwNEP6yPEbGm6+R4NkLmCMVu048sqrL4e4yIV7j+NZt6hao/N6zLSUo
- ozFzlNhHqFp7UnZVnkuXTEGPe0pXzzw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-3kS_p3IUNNy2AMzWEDlseA-1; Wed, 17 Sep 2025 08:36:50 -0400
-X-MC-Unique: 3kS_p3IUNNy2AMzWEDlseA-1
-X-Mimecast-MFC-AGG-ID: 3kS_p3IUNNy2AMzWEDlseA_1758112609
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de18e7eccso35230375e9.0
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 05:36:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758112609; x=1758717409;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XqmwpfuwOivPYH8HgJUTArMnILYXVCfSNYCIDtYZKZ8=;
- b=du4XPeMA7DVMxE3FiGFil7y79nMQJ7BauDMssquftKkBoggRVoDiGYg5NDHLGFCN1b
- pwch1uk1bxkHXE3+u0oD0s50Cu2y+PokDGpq8LxNg90wccxLT3C04KgCkRsIv/R3mxm7
- JL8x7KTDhd1JAqlKpfHsVSqCYBCitDSotPAWXticTVrj91dKUQVT2EgKnMHKc2sN+bzU
- sbPuyRY9lGbtR9hqmthp/+yXmPsmq3dXsSZB0rBEIFnsknJcDw29DYGOEP0hGgwTS2/X
- XsH1rTvIEUnBCP18tRypRvueFNW4bRXyDxiID3ymeMd9tcH3QjqcquJPr81vj3jyoR5v
- QtzQ==
-X-Gm-Message-State: AOJu0YwNmIhpPrqVegY+EW69lmoRwQSL5i3coAArCaM7R4aTF+v40/Nb
- 7ZQ203rmjNwgVnK/QzuoGLeWzsJQLfMkrLtmn1cpShfxf8V/ZBBO0mdAWQH+pNI8/MQroup94Cu
- MspypeLAIn35TRf27T9Pnlaog4MkcDLrAmWddCoR10am6jVK/Yti+yplS
-X-Gm-Gg: ASbGncskvctHhxi4AmyFdODigkdsBtya+DisNIazwc70TWgP4FYx+watzUOFcaI4k95
- hPi3dh6AeMyCbPLASJ4iKAYLUxLFzd9S1Hte+MSQWUmk44Lz8s3jef9W1mKTP1VjJNg/W+usAUy
- YOYlO13jNe+mICiKR+Ufc7CSOGb60qvSUrjbt9LEEnuE0phElA/du43xvpvNkenKj+AEu+vLCnS
- sMc+7IumsWNZEvc9pr2R4DdGsAGC9rD7ZjdVM9q5xfNNAjbI67kQjsi4pbk795V35TsyH1wCsEQ
- qx4pZBPF8Zo+Aa+KRIdd98cShpqQhZrq0D2j5fpLvJ7g
-X-Received: by 2002:a05:6000:610:b0:3e7:610b:85f6 with SMTP id
- ffacd0b85a97d-3ecdfa1d735mr1666552f8f.39.1758112609011; 
- Wed, 17 Sep 2025 05:36:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPgUd7HcFs7g6wp2C9DPSQJZ6gh9EnfdjMPtCqm+y2MBeT6gZRG+hSyknWDMeDsDsoVLtLJQ==
-X-Received: by 2002:a05:6000:610:b0:3e7:610b:85f6 with SMTP id
- ffacd0b85a97d-3ecdfa1d735mr1666527f8f.39.1758112608539; 
- Wed, 17 Sep 2025 05:36:48 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.183.148])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ecde3d6fe0sm2880848f8f.30.2025.09.17.05.36.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Sep 2025 05:36:47 -0700 (PDT)
-Date: Wed, 17 Sep 2025 14:36:41 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v6 13/14] net: implement tunnel probing
-Message-ID: <fpulb7rhwna5dky4ta6hr6sledmyicc6wqwvkuvand6koosiqn@gvf6hjc5gzik>
-References: <cover.1757676218.git.pabeni@redhat.com>
- <5593bacc611b3e9e95cccf6ede12f41731b4e53e.1757676218.git.pabeni@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrjy-00052I-0J; Wed, 17 Sep 2025 08:58:34 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN74008967
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 17 Sep 2025 21:56:50 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=IObcSxb1mEGR5pVanbHlUpUo799Y/B2tp5AzAzydRGA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1758113811; v=1;
+ b=tFZy7oa+nP+PtLJI2EIl6sGY+GMaHR/7ptxbf+ii5lc3dKpFVZ+4S2QOVk12hOme
+ 8FwO8O11BILpR094dmNm9daOQeTFpooTEiW4hoobEhu2S0jwte5AsLLc8nz8LFMa
+ Cm96KElGwqbrlq1HZoI7iWC9SQW+OmSQsJHXuTpWLf4uThpEzfZbB3LBL+uLw+UR
+ b4hErl+1sD+yjb/gYVMbmzvLUCHQa3/QTIqg3f6H0a+l2MlMkitW9hMmmMIL4wxj
+ wSBGrblbGHzZXGUL8OEXNJn5GCjX9oO9BRS1KjL5f5zP8nq1OS1v/00XYWLPONkQ
+ 5k3CkYTpwPFwX04fT2TAlg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 17 Sep 2025 21:56:36 +0900
+Subject: [PATCH 24/35] hw/sd: QOM-ify AddressSpace
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5593bacc611b3e9e95cccf6ede12f41731b4e53e.1757676218.git.pabeni@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250917-qom-v1-24-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Eric Auger <eric.auger@redhat.com>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Ninad Palsule <ninad@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?utf-8?q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Laurent Vivier <laurent@vivier.eu>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fam Zheng <fam@euphon.net>,
+ Bin Meng <bmeng.cn@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-block@nongnu.org, kvm@vger.kernel.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,328 +125,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 03:07:04PM +0200, Paolo Abeni wrote:
->Tap devices support GSO over UDP tunnel offload. Probe for such
->feature in a similar manner to other offloads.
->
->GSO over UDP tunnel needs to be enabled in addition to a "plain"
->offload (TSO or USO).
->
->No need to check separately for the outer header checksum offload:
->ithe kernel is going to support both of them or none.
+Make AddressSpaces QOM objects to ensure that they are destroyed when
+their owners are finalized and also to get a unique path for debugging
+output.
 
-s/ithe/the
+The name arguments were used to distinguish AddresSpaces in debugging
+output, but they will represent property names after QOM-ification and
+debugging output will show QOM paths. So change them to make them more
+concise and also avoid conflicts with other properties.
 
-but again no need to repost on my side, up to you.
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/sd/allwinner-sdhost.c | 2 +-
+ hw/sd/sdhci.c            | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks,
-Stefano
+diff --git a/hw/sd/allwinner-sdhost.c b/hw/sd/allwinner-sdhost.c
+index 158d434e7fde..c001dfd60203 100644
+--- a/hw/sd/allwinner-sdhost.c
++++ b/hw/sd/allwinner-sdhost.c
+@@ -832,7 +832,7 @@ static void allwinner_sdhost_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "sdhost-dma");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+ }
+ 
+ static void allwinner_sdhost_reset(DeviceState *dev)
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c6a203744463..1a6b6e1198f2 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1594,7 +1594,7 @@ static void sdhci_sysbus_realize(DeviceState *dev, Error **errp)
+ 
+     if (s->dma_mr) {
+         s->dma_as = &s->sysbus_dma_as;
+-        address_space_init(s->dma_as, NULL, s->dma_mr, "sdhci-dma");
++        address_space_init(s->dma_as, OBJECT(s), s->dma_mr, "as");
+     } else {
+         /* use system_memory() if property "dma" not set */
+         s->dma_as = &address_space_memory;
+@@ -1612,7 +1612,7 @@ static void sdhci_sysbus_unrealize(DeviceState *dev)
+     sdhci_common_unrealize(s);
+ 
+      if (s->dma_mr) {
+-        address_space_destroy(s->dma_as);
++        object_unparent(OBJECT(s->dma_as));
+     }
+ }
+ 
 
->
->The new features are disabled by default to avoid compat issues,
->and could be enabled, after that hw_compat_10_1 will be added,
->together with the related compat entries.
->
->Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->Acked-by: Jason Wang <jasowang@redhat.com>
->Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->--
->v4 -> v5:
->  - disable features by default
->  - DEFINE_PROP_FEATURE -> VIRTIO_DEFINE_PROP_FEATURE
->  - reformatted props definitions
->
->v3 -> v4:
->  - move DEFINE_PROP_FEATURE() in patch 4
->
->v2 -> v3:
->  - use bool type for tap_probe_has_tunnel()
->  - rebased on top of 2deec9ab7d ("virtio-net: Move
->        virtio_net_get_features() down")
->  - _array -> _ex
->
->v1 -> v2:
->  - peer_has_tunnel return a bool
->  - move TUN_F definition in net/tun-linux.h
->---
-> hw/net/virtio-net.c | 41 +++++++++++++++++++++++++++++++++++++++++
-> include/net/net.h   |  3 +++
-> net/net.c           |  9 +++++++++
-> net/tap-bsd.c       |  5 +++++
-> net/tap-linux.c     | 11 +++++++++++
-> net/tap-linux.h     |  9 +++++++++
-> net/tap-solaris.c   |  5 +++++
-> net/tap-stub.c      |  5 +++++
-> net/tap.c           | 11 +++++++++++
-> net/tap_int.h       |  1 +
-> 10 files changed, 100 insertions(+)
->
->diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
->index 89cf008401..0abb8c8a62 100644
->--- a/hw/net/virtio-net.c
->+++ b/hw/net/virtio-net.c
->@@ -649,6 +649,15 @@ static int peer_has_uso(VirtIONet *n)
->     return qemu_has_uso(qemu_get_queue(n->nic)->peer);
-> }
->
->+static bool peer_has_tunnel(VirtIONet *n)
->+{
->+    if (!peer_has_vnet_hdr(n)) {
->+        return false;
->+    }
->+
->+    return qemu_has_tunnel(qemu_get_queue(n->nic)->peer);
->+}
->+
-> static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
->                                        int version_1, int hash_report)
-> {
->@@ -3073,6 +3082,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO4);
->         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
->
->+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
->+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
->+        virtio_clear_feature_ex(features,
->+                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
->+        virtio_clear_feature_ex(features,
->+                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
->+
->         virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
->     }
->
->@@ -3086,6 +3102,15 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
->         virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_USO6);
->     }
->
->+    if (!peer_has_tunnel(n)) {
->+        virtio_clear_feature_ex(features, VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO);
->+        virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO);
->+        virtio_clear_feature_ex(features,
->+                                VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM);
->+        virtio_clear_feature_ex(features,
->+                                VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM);
->+    }
->+
->     if (!get_vhost_net(nc->peer)) {
->         if (!use_own_hash) {
->             virtio_clear_feature_ex(features, VIRTIO_NET_F_HASH_REPORT);
->@@ -4248,6 +4273,22 @@ static const Property virtio_net_properties[] = {
->                                   rss_data.specified_hash_types,
->                                   VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
->                                   ON_OFF_AUTO_AUTO),
->+    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
->+                               host_features_ex,
->+                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
->+                               false),
->+    VIRTIO_DEFINE_PROP_FEATURE("host_tunnel_csum", VirtIONet,
->+                               host_features_ex,
->+                               VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM,
->+                               false),
->+    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel", VirtIONet,
->+                               host_features_ex,
->+                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
->+                               false),
->+    VIRTIO_DEFINE_PROP_FEATURE("guest_tunnel_csum", VirtIONet,
->+                               host_features_ex,
->+                               VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM,
->+                               false),
-> };
->
-> static void virtio_net_class_init(ObjectClass *klass, const void *data)
->diff --git a/include/net/net.h b/include/net/net.h
->index 48ba333d02..9a9084690d 100644
->--- a/include/net/net.h
->+++ b/include/net/net.h
->@@ -65,6 +65,7 @@ typedef void (NetClientDestructor)(NetClientState *);
-> typedef RxFilterInfo *(QueryRxFilter)(NetClientState *);
-> typedef bool (HasUfo)(NetClientState *);
-> typedef bool (HasUso)(NetClientState *);
->+typedef bool (HasTunnel)(NetClientState *);
-> typedef bool (HasVnetHdr)(NetClientState *);
-> typedef bool (HasVnetHdrLen)(NetClientState *, int);
-> typedef void (SetOffload)(NetClientState *, const NetOffloads *);
->@@ -95,6 +96,7 @@ typedef struct NetClientInfo {
->     NetPoll *poll;
->     HasUfo *has_ufo;
->     HasUso *has_uso;
->+    HasTunnel *has_tunnel;
->     HasVnetHdr *has_vnet_hdr;
->     HasVnetHdrLen *has_vnet_hdr_len;
->     SetOffload *set_offload;
->@@ -197,6 +199,7 @@ void qemu_set_info_str(NetClientState *nc,
-> void qemu_format_nic_info_str(NetClientState *nc, uint8_t macaddr[6]);
-> bool qemu_has_ufo(NetClientState *nc);
-> bool qemu_has_uso(NetClientState *nc);
->+bool qemu_has_tunnel(NetClientState *nc);
-> bool qemu_has_vnet_hdr(NetClientState *nc);
-> bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
-> void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
->diff --git a/net/net.c b/net/net.c
->index 63872b6855..9536184a0c 100644
->--- a/net/net.c
->+++ b/net/net.c
->@@ -522,6 +522,15 @@ bool qemu_has_uso(NetClientState *nc)
->     return nc->info->has_uso(nc);
-> }
->
->+bool qemu_has_tunnel(NetClientState *nc)
->+{
->+    if (!nc || !nc->info->has_tunnel) {
->+        return false;
->+    }
->+
->+    return nc->info->has_tunnel(nc);
->+}
->+
-> bool qemu_has_vnet_hdr(NetClientState *nc)
-> {
->     if (!nc || !nc->info->has_vnet_hdr) {
->diff --git a/net/tap-bsd.c b/net/tap-bsd.c
->index 86b6edee94..751d4c819c 100644
->--- a/net/tap-bsd.c
->+++ b/net/tap-bsd.c
->@@ -217,6 +217,11 @@ int tap_probe_has_uso(int fd)
->     return 0;
-> }
->
->+bool tap_probe_has_tunnel(int fd)
->+{
->+    return false;
->+}
->+
-> void tap_fd_set_vnet_hdr_len(int fd, int len)
-> {
-> }
->diff --git a/net/tap-linux.c b/net/tap-linux.c
->index a1c58f74f5..e2628be798 100644
->--- a/net/tap-linux.c
->+++ b/net/tap-linux.c
->@@ -196,6 +196,17 @@ int tap_probe_has_uso(int fd)
->     return 1;
-> }
->
->+bool tap_probe_has_tunnel(int fd)
->+{
->+    unsigned offload;
->+
->+    offload = TUN_F_CSUM | TUN_F_TSO4 | TUN_F_UDP_TUNNEL_GSO;
->+    if (ioctl(fd, TUNSETOFFLOAD, offload) < 0) {
->+        return false;
->+    }
->+    return true;
->+}
->+
-> void tap_fd_set_vnet_hdr_len(int fd, int len)
-> {
->     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
->diff --git a/net/tap-linux.h b/net/tap-linux.h
->index 9a58cecb7f..8cd6b5874b 100644
->--- a/net/tap-linux.h
->+++ b/net/tap-linux.h
->@@ -53,4 +53,13 @@
-> #define TUN_F_USO4    0x20    /* I can handle USO for IPv4 packets */
-> #define TUN_F_USO6    0x40    /* I can handle USO for IPv6 packets */
->
->+/* I can handle TSO/USO for UDP tunneled packets */
->+#define TUN_F_UDP_TUNNEL_GSO       0x080
->+
->+/*
->+ * I can handle TSO/USO for UDP tunneled packets requiring csum offload for
->+ * the outer header
->+ */
->+#define TUN_F_UDP_TUNNEL_GSO_CSUM  0x100
->+
-> #endif /* QEMU_TAP_LINUX_H */
->diff --git a/net/tap-solaris.c b/net/tap-solaris.c
->index 833c066bee..ac1ae25761 100644
->--- a/net/tap-solaris.c
->+++ b/net/tap-solaris.c
->@@ -222,6 +222,11 @@ int tap_probe_has_uso(int fd)
->     return 0;
-> }
->
->+bool tap_probe_has_tunnel(int fd)
->+{
->+    return false;
->+}
->+
-> void tap_fd_set_vnet_hdr_len(int fd, int len)
-> {
-> }
->diff --git a/net/tap-stub.c b/net/tap-stub.c
->index 67d14ad4d5..f7a5e0c163 100644
->--- a/net/tap-stub.c
->+++ b/net/tap-stub.c
->@@ -52,6 +52,11 @@ int tap_probe_has_uso(int fd)
->     return 0;
-> }
->
->+bool tap_probe_has_tunnel(int fd)
->+{
->+    return false;
->+}
->+
-> void tap_fd_set_vnet_hdr_len(int fd, int len)
-> {
-> }
->diff --git a/net/tap.c b/net/tap.c
->index 72046a43aa..9f65e3fb3d 100644
->--- a/net/tap.c
->+++ b/net/tap.c
->@@ -76,6 +76,7 @@ typedef struct TAPState {
->     bool using_vnet_hdr;
->     bool has_ufo;
->     bool has_uso;
->+    bool has_tunnel;
->     bool enabled;
->     VHostNetState *vhost_net;
->     unsigned host_vnet_hdr_len;
->@@ -246,6 +247,14 @@ static bool tap_has_uso(NetClientState *nc)
->     return s->has_uso;
-> }
->
->+static bool tap_has_tunnel(NetClientState *nc)
->+{
->+    TAPState *s = DO_UPCAST(TAPState, nc, nc);
->+
->+    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
->+    return s->has_tunnel;
->+}
->+
-> static bool tap_has_vnet_hdr(NetClientState *nc)
-> {
->     TAPState *s = DO_UPCAST(TAPState, nc, nc);
->@@ -374,6 +383,7 @@ static NetClientInfo net_tap_info = {
->     .cleanup = tap_cleanup,
->     .has_ufo = tap_has_ufo,
->     .has_uso = tap_has_uso,
->+    .has_tunnel = tap_has_tunnel,
->     .has_vnet_hdr = tap_has_vnet_hdr,
->     .has_vnet_hdr_len = tap_has_vnet_hdr_len,
->     .set_offload = tap_set_offload,
->@@ -403,6 +413,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
->     s->using_vnet_hdr = false;
->     s->has_ufo = tap_probe_has_ufo(s->fd);
->     s->has_uso = tap_probe_has_uso(s->fd);
->+    s->has_tunnel = tap_probe_has_tunnel(s->fd);
->     s->enabled = true;
->     tap_set_offload(&s->nc, &ol);
->     /*
->diff --git a/net/tap_int.h b/net/tap_int.h
->index f8bbe1cb0c..b76a05044b 100644
->--- a/net/tap_int.h
->+++ b/net/tap_int.h
->@@ -38,6 +38,7 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
-> int tap_probe_vnet_hdr(int fd, Error **errp);
-> int tap_probe_has_ufo(int fd);
-> int tap_probe_has_uso(int fd);
->+bool tap_probe_has_tunnel(int fd);
-> void tap_fd_set_offload(int fd, const NetOffloads *ol);
-> void tap_fd_set_vnet_hdr_len(int fd, int len);
-> int tap_fd_set_vnet_le(int fd, int vnet_is_le);
->-- 
->2.51.0
->
+-- 
+2.51.0
 
 
