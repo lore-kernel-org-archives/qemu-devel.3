@@ -4,46 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA260CAC59D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCACACAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqlw-0001SH-LS; Wed, 17 Sep 2025 07:56:29 -0400
+	id 1uyqiv-0004gl-39; Wed, 17 Sep 2025 07:53:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uyqky-0007hm-D3; Wed, 17 Sep 2025 07:55:28 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhy-000359-PO
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uyqkv-0004bv-GD; Wed, 17 Sep 2025 07:55:28 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7FB204DC09;
- Wed, 17 Sep 2025 13:55:20 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhv-0003kA-Nt
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758109935;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y3HMLCacnb+v7Wzq9HTZD6Gukh/9NburV3fnXhNL514=;
+ b=Tj/zfSMb2KX69y+FrSJ7ezI6wo6eehcDu4/3Oi9rxYaWOy0mRo0UrqNvO1vrSq+IsHwFPj
+ DX+hSfub0I2RHJIq2t3epzlRh/hpQtC5ljEdL1zR81myKsojuX//w+do5ZHelA8cGVfuSK
+ KysZ9TLtjuscXwRu6cuK5t8Uw+Q+how=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-DQxYahe1O1awA9yEU4tlXw-1; Wed,
+ 17 Sep 2025 07:52:11 -0400
+X-MC-Unique: DQxYahe1O1awA9yEU4tlXw-1
+X-Mimecast-MFC-AGG-ID: DQxYahe1O1awA9yEU4tlXw_1758109931
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB706180057D; Wed, 17 Sep 2025 11:52:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 013181800447; Wed, 17 Sep 2025 11:52:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3774E21E6924; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, fam@euphon.net, stefanha@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com
-Subject: [PATCH v2 3/5] block: implement 'resize' callback for child_of_bds
- class
-Date: Wed, 17 Sep 2025 13:54:50 +0200
-Message-ID: <20250917115509.401015-4-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250917115509.401015-1-f.ebner@proxmox.com>
-References: <20250917115509.401015-1-f.ebner@proxmox.com>
+Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
+ berrange@redhat.com,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 01/12] monitor: Clean up HMP gdbserver error reporting
+Date: Wed, 17 Sep 2025 13:51:56 +0200
+Message-ID: <20250917115207.1730186-2-armbru@redhat.com>
+In-Reply-To: <20250917115207.1730186-1-armbru@redhat.com>
+References: <20250917115207.1730186-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1758110111502
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,91 +86,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a filtered child is resized, the size of the parent node is now
-also refreshed (recursively for chains of filtered children).
+HMP command gdbserver used to emit two error messages for certain
+errors.  For instance, with -M none:
 
-For filter block drivers that do not implement .bdrv_co_getlength(),
-this commit does not change the current behavior, because
-bdrv_co_refresh_total_sectors() will used the current size via the
-passed-in hint. This is the case for block drivers for (some) block
-jobs, as well as copy-before-write.
+    (qemu) gdbserver
+    gdbstub: meaningless to attach gdb to a machine without any CPU.
+    Could not open gdbserver on device 'tcp::1234'
 
-Block jobs already set up a blocker preventing a QMP block_resize
-operation while the job is running. That does not directly cover an
-associated 'file' node of a 'raw' node, but resizing such a 'file'
-node is already prevented too (backup, commit, mirror and stream were
-checked).
+The first message is the specific error, and the second one a generic
+additional message that feels superfluous to me.
 
-The other case is copy-before-write. This commit does not change the
-fact that the copy-before-write node still has the same size after its
-filtered child is resized.
+Commit c0e6b8b798b (system: propagate Error to gdbserver_start (and
+other device setups)) turned the first message into a warning:
 
-Block drivers that do implement .bdrv_co_getlength() and where
-.is_filter is true, already returned the length of the file child, so
-there is no change before and after this commit, with two exceptions:
-1. preallocate can return an early data_end and otherwise queries the
-   file child, but that special casing is not changed.
-2. blkverify returns the length of the test file. This commit does not
-   affect that behavior.
+    warning: gdbstub: meaningless to attach gdb to a machine without any CPU.
+    Could not open gdbserver on device 'tcp::1234'
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+This is arguably worse.
+
+hmp_gdbserver() passes &error_warn to gdbserver_start(), so that
+failure gets reported as warning, and then additionally emits the
+generic error on failure.  This is a misuse of &error_warn.
+
+Instead, receive the error in &err and report it, as usual.  With
+this, gdbserver reports just the error:
+
+    gdbstub: meaningless to attach gdb to a machine without any CPU.
+
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
+ include/exec/gdbstub.h | 3 ---
+ monitor/hmp-cmds.c     | 7 ++++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-Changes in v2:
-* Check for BDRV_CHILD_FILTERED rather than bs->drv->is_filter which
-  is more generic and for example, also covers the case when the
-  child of a 'raw' node is resized.
-* Expand commit message.
-
- block.c                          | 12 ++++++++++++
- include/block/block_int-common.h |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/block.c b/block.c
-index 8848e9a7ed..cf08e64add 100644
---- a/block.c
-+++ b/block.c
-@@ -1497,6 +1497,17 @@ static void GRAPH_WRLOCK bdrv_child_cb_detach(BdrvChild *child)
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index a16c0051ce..bd7182c4d3 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -55,9 +55,6 @@ void gdb_unregister_coprocessor_all(CPUState *cpu);
+  * system emulation you can use a full chardev spec for your gdbserver
+  * port.
+  *
+- * The error handle should be either &error_fatal (for start-up) or
+- * &error_warn (for QMP/HMP initiated sessions).
+- *
+  * Returns true when server successfully started.
+  */
+ bool gdbserver_start(const char *port_or_device, Error **errp);
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 74a0f56566..33a88ce205 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -280,14 +280,15 @@ void hmp_log(Monitor *mon, const QDict *qdict)
+ 
+ void hmp_gdbserver(Monitor *mon, const QDict *qdict)
+ {
++    Error *err = NULL;
+     const char *device = qdict_get_try_str(qdict, "device");
++
+     if (!device) {
+         device = "tcp::" DEFAULT_GDBSTUB_PORT;
      }
- }
  
-+static void coroutine_fn GRAPH_RDLOCK bdrv_child_cb_resize(BdrvChild *child)
-+{
-+    BlockDriverState *bs = child->opaque;
-+
-+    if (child->role & BDRV_CHILD_FILTERED) {
-+        /* Best effort, ignore errors. */
-+        bdrv_co_refresh_total_sectors(bs, bs->total_sectors);
-+        bdrv_co_parent_cb_resize(bs);
-+    }
-+}
-+
- static int bdrv_child_cb_update_filename(BdrvChild *c, BlockDriverState *base,
-                                          const char *filename,
-                                          bool backing_mask_protocol,
-@@ -1529,6 +1540,7 @@ const BdrvChildClass child_of_bds = {
-     .detach          = bdrv_child_cb_detach,
-     .inactivate      = bdrv_child_cb_inactivate,
-     .change_aio_ctx  = bdrv_child_cb_change_aio_ctx,
-+    .resize          = bdrv_child_cb_resize,
-     .update_filename = bdrv_child_cb_update_filename,
-     .get_parent_aio_context = child_of_bds_get_parent_aio_context,
- };
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 8a3d427356..c55b35da8e 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -1023,7 +1023,7 @@ struct BdrvChildClass {
-     /*
-      * Notifies the parent that the child was resized.
-      */
--    void (*resize)(BdrvChild *child);
-+    void GRAPH_RDLOCK_PTR (*resize)(BdrvChild *child);
- 
-     /*
-      * Returns a name that is supposedly more useful for human users than the
+-    if (!gdbserver_start(device, &error_warn)) {
+-        monitor_printf(mon, "Could not open gdbserver on device '%s'\n",
+-                       device);
++    if (!gdbserver_start(device, &err)) {
++        error_report_err(err);
+     } else if (strcmp(device, "none") == 0) {
+         monitor_printf(mon, "Disabled gdbserver\n");
+     } else {
 -- 
-2.47.2
-
+2.49.0
 
 
