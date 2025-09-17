@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF03ECAC59D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6151CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrk5-00084B-4d; Wed, 17 Sep 2025 08:58:37 -0400
+	id 1uyrsr-0002kV-E3; Wed, 17 Sep 2025 09:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrk1-0007zZ-Nw; Wed, 17 Sep 2025 08:58:33 -0400
+ id 1uyroi-00052A-Ub; Wed, 17 Sep 2025 09:03:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrjw-00051r-Ok; Wed, 17 Sep 2025 08:58:33 -0400
+ id 1uyrog-0005ud-VX; Wed, 17 Sep 2025 09:03:24 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6n008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN75008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:38 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:51 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=rWb4z4CPURkyznHmuzsh+cyMRQ6rj+WtDBcDWVfL1Fg=; 
+DKIM-Signature: a=rsa-sha256; bh=apJU/xEOhl+u20xNh0DgmznSGgywxoUvUFTbMIW9Ze8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113799; v=1;
- b=s2GROUIgd9BllbZt6A3B/JXj8BqN/Oh5UD2af4TVlfJ8VPzMcaCzhsu02Pm69WJs
- Dh4FWzkvx95xkHyjO67nGKwF+OIfZ+B/KOQAAd9W8TSAHY2ti60BV5smaOhDlVy/
- ixlrO3c0Pakjl6vkOzBW56e1d0I4fqjxR4CQblHl9+CezRtAg8D3S1ISppYmBI98
- tB4KZZ9HKjolHZo2nNovu0lCairUd2x1JlnSECi99K5djxaxySeUCbKsG57czM6L
- 0WHZiwMObW3+syeXI0sNWWAh9v/Etypk2cw3+3zqnNpmrSjNgS37OggF6gaat+Xb
- T3cIRdYljETCSJSAJ0LjVA==
+ s=rs20250326; t=1758113812; v=1;
+ b=awFy0Dt7+ut7jGmxNZbyxz0TK7jmFiME4eor1MaNNhpa7g/8SOhmzMVM7L8aeMxP
+ Gq3uCxvYJrDWJywV/ZFwlGgATLB1lTkSglO2o3HQpUcvYxJTd6eXjrArZXYL+2J5
+ GQdON7vnVAZGEblgZ3LHio9IJiljkJ20Js46DJj+Y5C0HRawGmu7AQnSRCxe/ZUL
+ U9RcWeSkSuRSjdQjDRfTNcmLPTExlSQNPE8pJJEbgy5Hk13I7mxFgHwiMUUtUDpg
+ iq3wiEIKX+kiCPfZoNfF+NUUQp3+YO9Xxh8+2GNzuW4YuPbOFsmtldO0kCP2rbj9
+ eZ8I2JCFqVXpGzCDqQ5lVg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:21 +0900
-Subject: [PATCH 09/35] hw/i2c: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:37 +0900
+Subject: [PATCH 25/35] hw/sparc: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-9-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-25-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,22 +136,22 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/i2c/aspeed_i2c.c | 3 +--
+ hw/sparc/sun4m_iommu.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 9d216b3f0ea3..d1d980a8961f 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1253,8 +1253,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-             return;
-         }
+diff --git a/hw/sparc/sun4m_iommu.c b/hw/sparc/sun4m_iommu.c
+index 7b8d78273b97..d1c18f800170 100644
+--- a/hw/sparc/sun4m_iommu.c
++++ b/hw/sparc/sun4m_iommu.c
+@@ -359,8 +359,7 @@ static void iommu_init(Object *obj)
+     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+                              TYPE_SUN4M_IOMMU_MEMORY_REGION, OBJECT(dev),
+                              "iommu-sun4m", UINT64_MAX);
+-    address_space_init(&s->iommu_as, NULL, MEMORY_REGION(&s->iommu),
+-                       "iommu-as");
++    address_space_init(&s->iommu_as, OBJECT(s), MEMORY_REGION(&s->iommu), "as");
  
--        address_space_init(&s->dram_as, NULL, s->dram_mr,
--                           TYPE_ASPEED_I2C "-dma-dram");
-+        address_space_init(&s->dram_as, OBJECT(s), s->dram_mr, "as");
-     }
- }
+     sysbus_init_irq(dev, &s->irq);
  
 
 -- 
