@@ -4,50 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CEECA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 05:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F187CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyl6o-0002no-HP; Wed, 17 Sep 2025 01:53:38 -0400
+	id 1uylKc-0007El-2S; Wed, 17 Sep 2025 02:07:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uyl6n-0002nY-94; Wed, 17 Sep 2025 01:53:37 -0400
+ id 1uylKa-0007Di-83; Wed, 17 Sep 2025 02:07:52 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uyl6j-00039U-Hl; Wed, 17 Sep 2025 01:53:36 -0400
+ id 1uylKX-00051i-O5; Wed, 17 Sep 2025 02:07:51 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cRScN13DGz4wCS;
- Wed, 17 Sep 2025 15:53:24 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cRSwt2ZMRz4wCX;
+ Wed, 17 Sep 2025 16:07:42 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cRScG0PpFz4wCR;
- Wed, 17 Sep 2025 15:53:16 +1000 (AEST)
-Message-ID: <e992011b-ac3f-4770-97e8-3c0321410e72@kaod.org>
-Date: Wed, 17 Sep 2025 07:53:13 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cRSwp6Prtz4wCK;
+ Wed, 17 Sep 2025 16:07:38 +1000 (AEST)
+Message-ID: <08b6e571-bf4f-4e51-8a70-8c2c5c675277@kaod.org>
+Date: Wed, 17 Sep 2025 08:07:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh
- <imp@bsdimp.com>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Alexander Bulekov
- <alxndr@bu.edu>, 'Jamin Lin' <jamin_lin@aspeedtech.com>
-References: <cover.1757854006.git.jan.kiszka@siemens.com>
- <48930c1092424d22dc2171140378de19e0814ef3.1757854006.git.jan.kiszka@siemens.com>
- <c144202b-0d99-4507-8a57-35df1ece3cc0@siemens.com>
- <2070f7bb-cd1a-448f-ba87-50d75e24f4c0@kaod.org>
- <b09cd869-39e7-4a62-b452-4ea39ccf4df0@siemens.com>
+Subject: Re: [PATCH 2/2] hw/arm: enable eeproms for quanta-q71l
+To: Yubin Zou <yubinz@google.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Patrick Venture <venture@google.com>
+References: <20250916-quanta-q71l-eeproms-v1-0-3648692cc441@google.com>
+ <20250916-quanta-q71l-eeproms-v1-2-3648692cc441@google.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -92,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b09cd869-39e7-4a62-b452-4ea39ccf4df0@siemens.com>
+In-Reply-To: <20250916-quanta-q71l-eeproms-v1-2-3648692cc441@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=uXDK=34=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -119,182 +111,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/25 19:17, Jan Kiszka wrote:
-> On 16.09.25 18:14, Cédric Le Goater wrote:
->> + Jamin
->>
->> On 9/16/25 13:39, Jan Kiszka wrote:
->>> On 14.09.25 14:46, Jan Kiszka wrote:
->>>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>>
->>>> Alignment rules apply the the individual partitions (user, boot, later
->>>> on also RPMB) and depend both on the size of the image and the type of
->>>> the device. Up to and including 2GB, the power-of-2 rule applies to the
->>>> user data area. For larger images, multiples of 512 sectors must be used
->>>> for eMMC and multiples of 512K for SD-cards. Fix the check accordingly
->>>> and also detect if the image is too small to even hold the boot
->>>> partitions.
->>>>
->>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>>> Reviewed-by: Warner Losh <imp@bsdimp.com>
->>>> ---
->>>> CC: Warner Losh <imp@bsdimp.com>
->>>> CC: Cédric Le Goater <clg@kaod.org>
->>>> CC: Joel Stanley <joel@jms.id.au>
->>>> CC: Alistair Francis <alistair@alistair23.me>
->>>> CC: Alexander Bulekov <alxndr@bu.edu>
->>>> ---
->>>>    hw/sd/sd.c | 61 +++++++++++++++++++++++++++++++++++++-----------------
->>>>    1 file changed, 42 insertions(+), 19 deletions(-)
->>>>
->>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>>> index d7a496d77c..b42cd01d1f 100644
->>>> --- a/hw/sd/sd.c
->>>> +++ b/hw/sd/sd.c
->>>> @@ -2759,6 +2759,28 @@ static void sd_instance_finalize(Object *obj)
->>>>        timer_free(sd->ocr_power_timer);
->>>>    }
->>>>    +static void sd_blk_size_error(SDState *sd, int64_t blk_size,
->>>> +                              int64_t blk_size_aligned, const char
->>>> *rule,
->>>> +                              Error **errp)
->>>> +{
->>>> +    const char *dev_type = sd_is_emmc(sd) ? "eMMC" : "SD card";
->>>> +    char *blk_size_str;
->>>> +
->>>> +    blk_size_str = size_to_str(blk_size);
->>>> +    error_setg(errp, "Invalid %s size: %s", dev_type, blk_size_str);
->>>> +    g_free(blk_size_str);
->>>> +
->>>> +    blk_size_str = size_to_str(blk_size_aligned);
->>>> +    error_append_hint(errp,
->>>> +                      "%s size has to be %s, e.g. %s.\n"
->>>> +                      "You can resize disk images with"
->>>> +                      " 'qemu-img resize <imagefile> <new-size>'\n"
->>>> +                      "(note that this will lose data if you make the"
->>>> +                      " image smaller than it currently is).\n",
->>>> +                      dev_type, rule, blk_size_str);
->>>> +    g_free(blk_size_str);
->>>> +}
->>>> +
->>>>    static void sd_realize(DeviceState *dev, Error **errp)
->>>>    {
->>>>        SDState *sd = SDMMC_COMMON(dev);
->>>> @@ -2781,25 +2803,26 @@ static void sd_realize(DeviceState *dev,
->>>> Error **errp)
->>>>                return;
->>>>            }
->>>>    -        blk_size = blk_getlength(sd->blk);
->>>> -        if (blk_size > 0 && !is_power_of_2(blk_size)) {
->>>> -            int64_t blk_size_aligned = pow2ceil(blk_size);
->>>> -            char *blk_size_str;
->>>> -
->>>> -            blk_size_str = size_to_str(blk_size);
->>>> -            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
->>>> -            g_free(blk_size_str);
->>>> -
->>>> -            blk_size_str = size_to_str(blk_size_aligned);
->>>> -            error_append_hint(errp,
->>>> -                              "SD card size has to be a power of 2,
->>>> e.g. %s.\n"
->>>> -                              "You can resize disk images with"
->>>> -                              " 'qemu-img resize <imagefile> <new-
->>>> size>'\n"
->>>> -                              "(note that this will lose data if you
->>>> make the"
->>>> -                              " image smaller than it currently is).
->>>> \n",
->>>> -                              blk_size_str);
->>>> -            g_free(blk_size_str);
->>>> -
->>>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
->>>> +        if (blk_size > SDSC_MAX_CAPACITY) {
->>>> +            if (sd_is_emmc(sd) && blk_size % (1 << HWBLOCK_SHIFT) !=
->>>> 0) {
->>>> +                int64_t blk_size_aligned =
->>>> +                    ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
->>>> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
->>>> +                                  "multiples of 512", errp);
->>>> +                return;
->>>> +            } else if (!sd_is_emmc(sd) && blk_size % (512 * KiB)) {
->>>> +                int64_t blk_size_aligned = ((blk_size >> 19) + 1) <<
->>>> 19;
->>>> +                sd_blk_size_error(sd, blk_size, blk_size_aligned,
->>>> +                                  "multiples of 512K", errp);
->>>> +                return;
->>>> +            }
->>>> +        } else if (blk_size > 0 && !is_power_of_2(blk_size)) {
->>>> +            sd_blk_size_error(sd, blk_size, pow2ceil(blk_size), "a
->>>> power of 2",
->>>> +                              errp);
->>>> +            return;
->>>> +        } else if (blk_size < 0) {
->>>> +            error_setg(errp, "eMMC image smaller than boot
->>>> partitions");
->>>
->>> Cedric, I just played with some ast* machines and noticed that they now
->>> trigger that error above when no eMMC disk image is specified
->>> ("qemu-system-aarch64 -M ast2700a1-evb"). Is that a valid error, i.e. we
->>> shouldn't have tried to boot without an eMMC at all so far, or would
->>> this be a regression?
->>
->> Only the ast2600-evb and the rainier-bmc have eMMC support.
->> I don't think the ast2700a1-evb has eMMC support. Jamin ?
->>
->>
->>
->> The rainier-bmc boots by default from eMMC. Nothing really
->> special about the image, the first boot partition includes
->> the u-boot-spl.bin and u-boot.bin images at expected offset.
->> The machine model loads the u-boot-spl.bin contents as a ROM.
->>
->> The ast2600-evb machine boots from flash. To add an eMMC drive
->> (needs to be the 3rd 'sd' drive), use this command line  :
->>
->>      $ qemu-system-arm -M ast2600-evb -net nic,netdev=net0 -netdev
->> user,id=net0 \
->>        -drive file=./v09.07/ast2600-default/image-bmc,format=raw,if=mtd -
->> serial mon:stdio \
->>        -drive file=mmc-ast2600-evb-
->> noboot.qcow2,format=qcow2,if=sd,id=sd2,index=2
->>        ....
->>      U-Boot 2019.04-v00.04.22 (Jun 17 2025 - 08:57:39 +0000)
->>          SOC: AST2600-A3
->>      eSPI Mode: SIO:Enable : SuperIO-2e
->>      Eth: MAC0: RGMII, MAC1: RGMII, MAC2: RGMII, MAC3: RGMII
->>      Model: AST2600 EVB
->>      DRAM:  already initialized, 1008 MiB (capacity:1024 MiB, VGA:64 MiB,
->> ECC:off)
->>      RC Bridge phy@1e6ed200 : Link up
->>      MMC:   sdhci_slot0@100: 1, sdhci_slot1@200: 2, emmc_slot0@100: 0
->>          ....
->>      [    4.209117] mmc0: new high speed MMC card at address 0001
->>      [    4.211765] mmcblk0: mmc0:0001 QEMU!! 16.0 GiB
->>      [    4.233637] GPT:Primary header thinks Alt. header is not at the
->> end of the disk.
->>      [    4.233995] GPT:29624393 != 33554431
->>      [    4.234161] GPT:Alternate GPT header not at the end of the disk.
->>      [    4.234399] GPT:29624393 != 33554431
->>      [    4.234549] GPT: Use GNU Parted to correct GPT errors.
->>      [    4.235223]  mmcblk0: p1 p2 p3 p4 p5 p6 p7
->>     
+Hi,
+
+On 9/16/25 19:50, Yubin Zou wrote:
+> From: Patrick Venture <venture@google.com>
 > 
-> $ ./qemu-system-arm -M ast2600-evb
-> qemu-system-arm: eMMC image smaller than boot partitions
-> $ ./qemu-system-arm -M ast2600-evb -drive file=disk.image,if=sd
-> <works if disk.image is large enough>
+> Tested: Quanta-q71l firmware booted to login and was populated via the
+> -drives for the corresponding eeproms.
+> Signed-off-by: Patrick Venture <venture@google.com>
+> ---
+>   hw/arm/aspeed.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> Is that ok?
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index bae59ae7394882e3fc93863049a37ff5a8737ff8..8cef387a0b431576a873553704920886222cca86 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -562,16 +562,16 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+>   
+>       /* Baseboard FRU */
+> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x54, 8192);
+> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 1), 1, 0x54, 8192, 0);
 
-No. This is wrong.
+Where is at24c_eeprom_init_one() implementation ?
 
-An sd card device is auto created at init time and a 'DriveInfo *'
-is always available for index 0. 'mc->auto_create_sdcard' should
-be set to false IMO.
 
-commit cdc8d7cadaac ("hw/boards: Rename no_sdcard ->
-auto_create_sdcard") seems to have changed the behavior of
-several machines.  See 'make check'.
+Thanks,
 
 C.
+
+
+>       /* Frontpanel FRU */
+> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x57, 8192);
+> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 1), 1, 0x57, 8192, 1);
+>       /* TODO: Add Memory Riser i2c mux and eeproms. */
+>   
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
+>   
+>       /* Add BIOS FRU */
+> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 3), 0x56, 8192);
+> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 3), 3, 0x56, 8192, 2);
+>   
+>       /* i2c-7 */
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
+> @@ -581,9 +581,9 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+>       /*        - i2c@3: pmbus@59 */
+>   
+>       /* PDB FRU */
+> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x52, 8192);
+> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 7), 7, 0x52, 8192, 3);
+>       /* BMC FRU */
+> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 8), 0x50, 8192);
+> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 8, 0x50, 8192, 4);
+>   }
+>   
+>   static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
+> 
+
 
