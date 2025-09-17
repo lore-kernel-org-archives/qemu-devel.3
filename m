@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D47CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2472CCAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypUj-0002SC-Sv; Wed, 17 Sep 2025 06:34:38 -0400
+	id 1uypUi-0002S2-Fi; Wed, 17 Sep 2025 06:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUS-0002Il-Bk; Wed, 17 Sep 2025 06:34:21 -0400
+ id 1uypUQ-0002Hk-EZ; Wed, 17 Sep 2025 06:34:20 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUJ-0005uW-HV; Wed, 17 Sep 2025 06:34:16 -0400
+ id 1uypUJ-0005ub-HX; Wed, 17 Sep 2025 06:34:15 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAi099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAl099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:33:00 +0900 (JST)
+ Wed, 17 Sep 2025 19:33:02 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ndYF867z6EElCDxaTC1J1gUsmSgX+BoU/xzKU8ItqzM=; 
+DKIM-Signature: a=rsa-sha256; bh=F0AyM/lua4p28w0QtF6/Ku3cctKLYXgOBYs6U3KWbds=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105181; v=1;
- b=nMQOuqy2/xgBsfJ7t8t5kqXh/vyD5MtS0AHvvCoykFTa1eMu3Mbwk5XZlyo5Og8r
- isBt/9kF22Mhv/OUTMJukC0tzZyxZuwoYTWsfFBOy8MPrFkF/pdaMWIGmUaI59Aq
- I7xPhGK4koXe5vGxo2alO3EgEWGaD+PerN9vD8DSGP0ccCPEeRypEAHLT/sgv0EP
- eziE8I6GeVh7JPTg04RF7XvpNBDeONSIRbl/8KqLQXaBSNfH2CICtyrmdRzHJCh2
- FZS45V8lQ6BAWSHmYdA9NOYEyWx5iNqAHOHe1bwAUe+DX37UvvrzgVGJzmbNd02t
- B8mPMFVTwAc/j8gdNQ63JQ==
+ s=rs20250326; t=1758105182; v=1;
+ b=RBRMgmOSFmK/66iyeCtzp07J+8+R8m3cMUo/vLJXjS0KiUv9wHQXFstPh76Hk2VL
+ kA5QM3A8YwraJRtO5CmZX2BEjQLny2+NLsfw7Vru4Ybl+RFfIsfsPt/L4kA1pWDe
+ VfafwmbYs8CQZFLRmWLi7rPTYY1hglGWJRVMADLC87ppxT/2fQT2Bdto8m1TH5ct
+ VW7Mr5i77yQMh8l3No1BVSplDCMrzmm6PwLpE7o+7xK/DRXtPn2IQiU+zCJbHsbN
+ Ck09PqoAaw15El2Xt0ap2lp8CyNesSpCTdGzBhtUDoSuhiWHIRW8JmeCtYIDMFI1
+ a+Tmv4i9CftX3F4lqJgDpQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:32:56 +0900
-Subject: [PATCH 10/14] hw/nvme: Do not delete the subregion
+Date: Wed, 17 Sep 2025 19:32:59 +0900
+Subject: [PATCH 13/14] hw/usb/hcd-ehci: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-10-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-subregion-v1-13-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,22 +107,24 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/nvme/ctrl.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/usb/hcd-ehci.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f5ee6bf260f1..eebce1f787f4 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9058,8 +9058,6 @@ static void nvme_exit(PCIDevice *pci_dev)
-     } else {
-         msix_uninit(pci_dev, &n->bar0, &n->bar0);
-     }
--
--    memory_region_del_subregion(&n->bar0, &n->iomem);
- }
+diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+index b090f253656b..21c3501455b5 100644
+--- a/hw/usb/hcd-ehci.c
++++ b/hw/usb/hcd-ehci.c
+@@ -2557,10 +2557,6 @@ void usb_ehci_unrealize(EHCIState *s, DeviceState *dev)
+     ehci_queues_rip_all(s, 0);
+     ehci_queues_rip_all(s, 1);
  
- static const Property nvme_props[] = {
+-    memory_region_del_subregion(&s->mem, &s->mem_caps);
+-    memory_region_del_subregion(&s->mem, &s->mem_opreg);
+-    memory_region_del_subregion(&s->mem, &s->mem_ports);
+-
+     usb_bus_release(&s->bus);
+ 
+     if (s->vmstate) {
 
 -- 
 2.51.0
