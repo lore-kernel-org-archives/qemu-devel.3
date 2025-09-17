@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 974D1CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7284CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrkB-0008BY-Oh; Wed, 17 Sep 2025 08:58:43 -0400
+	id 1uyrk9-000896-9J; Wed, 17 Sep 2025 08:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrk4-00082B-2R; Wed, 17 Sep 2025 08:58:36 -0400
+ id 1uyrk1-0007zY-Nj; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrk0-00053K-64; Wed, 17 Sep 2025 08:58:35 -0400
+ id 1uyrjw-000522-RI; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6m008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN73008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:37 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:50 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=AJDWmN4L41yfypclNPa9nkE7NslZs1RqVWFRg0YxSyg=; 
+DKIM-Signature: a=rsa-sha256; bh=+indtpSimGXjSyGA1ZwrYrcaNl1E43SnA4RqaC0WcIE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113798; v=1;
- b=dGm/igvl0OzEWgpIft4X52yFO4DicZ/wHsTMsqmCrecZkl288EJNuCdc6YR7aLFl
- cD6x2SXhP9dwkXAZTmkozz9IiFMmGNWh5TAWN3MeDf4BDhlcd7iIyKyz91aBrHX6
- IC3CFZiA6L6CJNGf1ky42YxSm7oLbnWL95cWIxRaUFKGNDJg3x6D0EEHuwXbzJp0
- wbxJzp1aoWwvtkr8OJj//oGWy2/qsyIaaPfOSzuZvaCmpURg+ts848JlMWZ/pQI/
- ZzznLyojiU8ZDbTJZafavjV0m3AlDG1PI1loXSKUhfeAmGjUan7v7LAJ3tQYSvJj
- wIy+Cn8ACUUSUDHvhv5llw==
+ s=rs20250326; t=1758113810; v=1;
+ b=q3/5EIvZDEGpGLvWUkHGEi1Hx6CGIAWDn7m64ZrZURQ0m4ILX/PaeYoT89nX9seo
+ 4IV6gVYk0SNPdVDSsx8nFkL+T/T90q13WlK04/f8GRDEc+JXHmNSyUiAmCU4mI8e
+ jlqID+1gyw2Jd+mRSXm5DdNCDnE4uabpk49A7iw1LFRfMSdw3WBksgE2fd4neh+6
+ RaGX1BBLg8Ow7WBE3BjXKqfUY46i6xjgbKWAimuyX//fjsq4XlzElaVVMsl2tnXK
+ IwWrKTNuj9hmh5l/+cNgYpXZ8YEWh3kNsCAepaHfD7qTv/cQwGD3V1HOR4Zadc+6
+ OofzAkxh8r9MjJYtyoY/gQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:20 +0900
-Subject: [PATCH 08/35] hw/fsi: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:35 +0900
+Subject: [PATCH 23/35] hw/scsi: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-8-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-23-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,22 +136,33 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/fsi/aspeed_apb2opb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/lsi53c895a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
-index 8eda6f67cfd9..d337f567c6f5 100644
---- a/hw/fsi/aspeed_apb2opb.c
-+++ b/hw/fsi/aspeed_apb2opb.c
-@@ -349,7 +349,7 @@ static void fsi_opb_init(Object *o)
-     OPBus *opb = OP_BUS(o);
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index ee21b3c0d08a..b577f5ba2282 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -2356,8 +2356,8 @@ static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
+     s->ram_io.disable_reentrancy_guard = true;
+     s->mmio_io.disable_reentrancy_guard = true;
  
-     memory_region_init(&opb->mr, 0, TYPE_FSI_OPB, UINT32_MAX);
--    address_space_init(&opb->as, NULL, &opb->mr, TYPE_FSI_OPB);
-+    address_space_init(&opb->as, OBJECT(opb), &opb->mr, "as");
+-    address_space_init(&s->pci_io_as, NULL, pci_address_space_io(dev),
+-                       "lsi-pci-io");
++    address_space_init(&s->pci_io_as, OBJECT(s), pci_address_space_io(dev),
++                       "io-as");
+     qdev_init_gpio_out(d, &s->ext_irq, 1);
+ 
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &s->io_io);
+@@ -2372,7 +2372,7 @@ static void lsi_scsi_exit(PCIDevice *dev)
+ {
+     LSIState *s = LSI53C895A(dev);
+ 
+-    address_space_destroy(&s->pci_io_as);
++    object_unparent(OBJECT(&s->pci_io_as));
+     timer_free(s->scripts_timer);
  }
  
- static const TypeInfo opb_info = {
 
 -- 
 2.51.0
