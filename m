@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CA7CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373D2CAC59D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrk5-00084E-5N; Wed, 17 Sep 2025 08:58:37 -0400
+	id 1uyrkj-0008Vk-7x; Wed, 17 Sep 2025 08:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrk1-0007za-OH; Wed, 17 Sep 2025 08:58:33 -0400
+ id 1uyrkX-0008Pm-3w; Wed, 17 Sep 2025 08:59:06 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrjx-00052E-VC; Wed, 17 Sep 2025 08:58:33 -0400
+ id 1uyrkU-00059w-I4; Wed, 17 Sep 2025 08:59:04 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6l008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6e008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:37 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:31 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=I0NMvF5OGZVy1ri6cDaaDK+4nakFScwWAWwMOrizyQw=; 
+DKIM-Signature: a=rsa-sha256; bh=qUgDNts/pLAXfiQGYCf+Xi0EaL/7Ac8bseo+NFP/PSc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113797; v=1;
- b=bberKOrO6J7tY0L7zJPCCBce2lzuLyNtHl2vnIJUXIZZMwbfrJwuttLnlc9sonPs
- 14JtvF6GMhefXFETjBqtOUjw14A2IcAg4+INF921qr21btTZ10oeoS6eqXhEYTpc
- d2+qDuD7DVPiUYKJcmYxuegzPPIPRVujjO8SrPvhayhKHi+7JNbbJ8+F88JzRNdg
- tZdN/NDdvDo+XlEfojYYM41UVanxTLjA+D/SRzZw2zeqJAQ8nsVebcxYrGGVVMh0
- 7LIYrh0+uNGOWQXR1XPZA8cO1V4zTuMbGIifi4NtgOtyxInjjcjlxVpfI1G5DRRW
- TFV4JVQb0q8Jp6z3Ra2GfQ==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1758113792; v=1;
+ b=qNpm7Ef0U7klFkwYiNP1zPEvVVcxKtxzCfA9mWNff7hVl7gkKQk6u15xwrz6zo39
+ eLzbz+GcW4HpImOtDvQT/Nnz7BgUBdk2tJkJLHL5TmHPYyp48+ivXFX/5LAYxP7B
+ 5Vq4/k4lQrZys11cFTlX3cNJUJ1s7i7zwPWv48QD5LN456omn9h2MAua/U1KTKv7
+ hIZ5oaMakj2MHUKOKhGlWPxOsqYFpk4DfGPhpZf7+YdF02ZVeD82nu48L3R2oRmN
+ FiXHpNSI8zYr1M4zE0ABNoVuSveO9axxTUh8G0vu/Tyk5ycCNvhmQX8BSMhiShvY
+ 1MyA7TYRrp7XCIPztgcDfg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:19 +0900
-Subject: [PATCH 07/35] hw/dma: QOM-ify AddressSpace
+Subject: [PATCH 00/35] memory: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:12 +0900
+Message-Id: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-7-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAOyvymgC/0XMy27DIBCF4VexWBfE1QSrivIeVRZchgQ1mAZsq
+ 1KUdy+pK3X5j858D9SgJmhoGh6owpZaKnMP9jYgf7XzBXAKvRGnXFHDFL6XjEFH7y3XQQaH+vK
+ rQkzfv8rHee8K97Vjy378t6Zhl+iI1wZYaPDeUGEN0GnjLyxDa/Zv++7LBpUwrZg0Qo6aXNJCn
+ L3ZpcwnSJ/EZSDX9fh6dLaDvuSclmkARlkQQhuuBKVGREsdtSOoKAXIcPARpDowQOfn8wd/8d0
+ CBQEAAA==
+X-Change-ID: 20250915-qom-e7fcca27d4db
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -125,133 +129,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Based-on: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+("[PATCH 00/14] Fix memory region use-after-finalization")
+
 Make AddressSpaces QOM objects to ensure that they are destroyed when
 their owners are finalized and also to get a unique path for debugging
 output.
 
-The name arguments were used to distinguish AddresSpaces in debugging
-output, but they will represent property names after QOM-ification and
-debugging output will show QOM paths. So change them to make them more
-concise and also avoid conflicts with other properties.
+Suggested by BALATON Zoltan:
+https://lore.kernel.org/qemu-devel/cd21698f-db77-eb75-6966-d559fdcab835@eik.bme.hu/
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/dma/bcm2835_dma.c   | 2 +-
- hw/dma/pl080.c         | 3 +--
- hw/dma/pl330.c         | 3 +--
- hw/dma/rc4030.c        | 5 ++---
- hw/dma/xilinx_axidma.c | 4 ++--
- hw/dma/xlnx-zdma.c     | 2 +-
- hw/dma/xlnx_csu_dma.c  | 2 +-
- 7 files changed, 9 insertions(+), 12 deletions(-)
+Akihiko Odaki (35):
+      memory: QOM-ify AddressSpace
+      hw/core/loader: Use address_space_get_path()
+      vfio: Use address_space_get_path()
+      hw/alpha: QOM-ify AddressSpace
+      hw/arm: QOM-ify AddressSpace
+      hw/display: QOM-ify AddressSpace
+      hw/dma: QOM-ify AddressSpace
+      hw/fsi: QOM-ify AddressSpace
+      hw/i2c: QOM-ify AddressSpace
+      hw/i386: QOM-ify AddressSpace
+      hw/intc: QOM-ify AddressSpace
+      hw/loongarch: QOM-ify AddressSpace
+      hw/mem: QOM-ify AddressSpace
+      hw/misc: QOM-ify AddressSpace
+      hw/net: QOM-ify AddressSpace
+      hw/nubus: QOM-ify AddressSpace
+      hw/pci: QOM-ify AddressSpace
+      hw/pci-host: QOM-ify AddressSpace
+      hw/ppc: QOM-ify AddressSpace
+      hw/remote: QOM-ify AddressSpace
+      hw/riscv: QOM-ify AddressSpace
+      hw/s390x: QOM-ify AddressSpace
+      hw/scsi: QOM-ify AddressSpace
+      hw/sd: QOM-ify AddressSpace
+      hw/sparc: QOM-ify AddressSpace
+      hw/sparc64: QOM-ify AddressSpace
+      hw/ssi: QOM-ify AddressSpace
+      hw/usb: QOM-ify AddressSpace
+      hw/usb: QOM-ify AddressSpace
+      hw/virtio: QOM-ify AddressSpace
+      system/physmem: QOM-ify AddressSpace
+      target/i386: QOM-ify AddressSpace
+      target/mips: QOM-ify AddressSpace
+      target/xtensa: QOM-ify AddressSpace
+      memory: Drop non-QOM AddressSpace support
 
-diff --git a/hw/dma/bcm2835_dma.c b/hw/dma/bcm2835_dma.c
-index ebef56d8d613..8ff266c48882 100644
---- a/hw/dma/bcm2835_dma.c
-+++ b/hw/dma/bcm2835_dma.c
-@@ -380,7 +380,7 @@ static void bcm2835_dma_realize(DeviceState *dev, Error **errp)
- 
-     obj = object_property_get_link(OBJECT(dev), "dma-mr", &error_abort);
-     s->dma_mr = MEMORY_REGION(obj);
--    address_space_init(&s->dma_as, NULL, s->dma_mr, TYPE_BCM2835_DMA "-memory");
-+    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr,  "as");
- 
-     bcm2835_dma_reset(dev);
- }
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index cf02a484d6a6..1b6e9f741330 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -398,8 +398,7 @@ static void pl080_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    address_space_init(&s->downstream_as, NULL, s->downstream,
--                       "pl080-downstream");
-+    address_space_init(&s->downstream_as, OBJECT(s), s->downstream, "as");
- }
- 
- static void pl081_init(Object *obj)
-diff --git a/hw/dma/pl330.c b/hw/dma/pl330.c
-index 4733799f4045..e9bf8f86ee5a 100644
---- a/hw/dma/pl330.c
-+++ b/hw/dma/pl330.c
-@@ -1569,8 +1569,7 @@ static void pl330_realize(DeviceState *dev, Error **errp)
-         s->mem_as = &address_space_memory;
-     } else {
-         s->mem_as = g_new0(AddressSpace, 1);
--        address_space_init(s->mem_as, NULL, s->mem_mr,
--                           memory_region_name(s->mem_mr));
-+        address_space_init(s->mem_as, OBJECT(s), s->mem_mr, "as");
-     }
- 
-     s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, pl330_exec_cycle_timer, s);
-diff --git a/hw/dma/rc4030.c b/hw/dma/rc4030.c
-index cf76f90f4d3b..65f2c7f1bd19 100644
---- a/hw/dma/rc4030.c
-+++ b/hw/dma/rc4030.c
-@@ -688,8 +688,7 @@ static void rc4030_realize(DeviceState *dev, Error **errp)
-     memory_region_init_iommu(&s->dma_mr, sizeof(s->dma_mr),
-                              TYPE_RC4030_IOMMU_MEMORY_REGION,
-                              o, "rc4030.dma", 4 * GiB);
--    address_space_init(&s->dma_as, NULL, MEMORY_REGION(&s->dma_mr),
--                       "rc4030-dma");
-+    address_space_init(&s->dma_as, o, MEMORY_REGION(&s->dma_mr), "as");
- }
- 
- static void rc4030_unrealize(DeviceState *dev)
-@@ -698,7 +697,7 @@ static void rc4030_unrealize(DeviceState *dev)
- 
-     timer_free(s->periodic_timer);
- 
--    address_space_destroy(&s->dma_as);
-+    object_unparent(OBJECT(&s->dma_as));
-     object_unparent(OBJECT(&s->dma_mr));
- }
- 
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index 0f340abc2c6f..5f85b686fd18 100644
---- a/hw/dma/xilinx_axidma.c
-+++ b/hw/dma/xilinx_axidma.c
-@@ -588,8 +588,8 @@ static void xilinx_axidma_realize(DeviceState *dev, Error **errp)
-         ptimer_transaction_commit(st->ptimer);
-     }
- 
--    address_space_init(&s->as, NULL,
--                       s->dma_mr ? s->dma_mr : get_system_memory(), "dma");
-+    address_space_init(&s->as, OBJECT(s),
-+                       s->dma_mr ? s->dma_mr : get_system_memory(), "as");
- }
- 
- static void xilinx_axidma_init(Object *obj)
-diff --git a/hw/dma/xlnx-zdma.c b/hw/dma/xlnx-zdma.c
-index 9b9ccd1e3c08..ad93bab5d4fa 100644
---- a/hw/dma/xlnx-zdma.c
-+++ b/hw/dma/xlnx-zdma.c
-@@ -769,7 +769,7 @@ static void zdma_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, TYPE_XLNX_ZDMA " 'dma' link not set");
-         return;
-     }
--    address_space_init(&s->dma_as, NULL, s->dma_mr, "zdma-dma");
-+    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
- 
-     for (i = 0; i < ARRAY_SIZE(zdma_regs_info); ++i) {
-         RegisterInfo *r = &s->regs_info[zdma_regs_info[i].addr / 4];
-diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
-index 8b88392bb92b..8a0ec5bc5b94 100644
---- a/hw/dma/xlnx_csu_dma.c
-+++ b/hw/dma/xlnx_csu_dma.c
-@@ -653,7 +653,7 @@ static void xlnx_csu_dma_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, TYPE_XLNX_CSU_DMA " 'dma' link not set");
-         return;
-     }
--    address_space_init(&s->dma_as, NULL, s->dma_mr, "csu-dma");
-+    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
- 
-     reg_array =
-         register_init_block32(dev, xlnx_csu_dma_regs_info[!!s->is_dst],
+ include/exec/cpu-common.h     |  4 +--
+ include/system/memory.h       | 20 +++++++++------
+ hw/alpha/typhoon.c            |  4 +--
+ hw/arm/armv7m.c               |  2 +-
+ hw/arm/aspeed_ast27x0.c       |  2 +-
+ hw/arm/smmu-common.c          |  5 ++--
+ hw/core/loader.c              |  8 +++---
+ hw/display/artist.c           |  2 +-
+ hw/display/bcm2835_fb.c       |  2 +-
+ hw/dma/bcm2835_dma.c          |  2 +-
+ hw/dma/pl080.c                |  2 +-
+ hw/dma/pl330.c                |  3 +--
+ hw/dma/rc4030.c               |  4 +--
+ hw/dma/xilinx_axidma.c        |  4 +--
+ hw/dma/xlnx-zdma.c            |  2 +-
+ hw/dma/xlnx_csu_dma.c         |  2 +-
+ hw/fsi/aspeed_apb2opb.c       |  2 +-
+ hw/i2c/aspeed_i2c.c           |  3 +--
+ hw/i386/amd_iommu.c           |  5 ++--
+ hw/i386/intel_iommu.c         |  5 +++-
+ hw/intc/arm_gicv3_common.c    |  3 +--
+ hw/intc/pnv_xive.c            |  4 +--
+ hw/loongarch/virt.c           |  3 ++-
+ hw/mem/cxl_type3.c            | 44 +++++++++------------------------
+ hw/mem/memory-device.c        |  4 +--
+ hw/misc/aspeed_hace.c         |  2 +-
+ hw/misc/auxbus.c              |  2 +-
+ hw/misc/bcm2835_mbox.c        |  2 +-
+ hw/misc/bcm2835_property.c    |  2 +-
+ hw/misc/max78000_gcr.c        |  2 +-
+ hw/misc/tz-mpc.c              |  6 ++---
+ hw/misc/tz-msc.c              |  2 +-
+ hw/misc/tz-ppc.c              |  5 +++-
+ hw/net/allwinner-sun8i-emac.c |  2 +-
+ hw/net/cadence_gem.c          |  4 +--
+ hw/net/dp8393x.c              |  2 +-
+ hw/net/msf2-emac.c            |  2 +-
+ hw/net/mv88w8618_eth.c        |  2 +-
+ hw/nubus/nubus-bus.c          |  4 +--
+ hw/pci-host/astro.c           |  3 +--
+ hw/pci-host/designware.c      |  5 ++--
+ hw/pci-host/dino.c            |  4 +--
+ hw/pci-host/gt64120.c         |  2 +-
+ hw/pci-host/pnv_phb3.c        |  4 +--
+ hw/pci-host/pnv_phb4.c        |  4 +--
+ hw/pci-host/ppc440_pcix.c     |  2 +-
+ hw/pci-host/ppce500.c         |  2 +-
+ hw/pci-host/raven.c           |  2 +-
+ hw/pci/pci.c                  |  6 ++---
+ hw/pci/pci_bridge.c           | 10 ++++----
+ hw/ppc/pnv_lpc.c              |  2 +-
+ hw/ppc/pnv_xscom.c            |  2 +-
+ hw/ppc/spapr_pci.c            |  5 ++--
+ hw/ppc/spapr_vio.c            |  2 +-
+ hw/remote/iommu.c             |  4 +--
+ hw/riscv/riscv-iommu.c        |  9 ++++---
+ hw/s390x/s390-pci-bus.c       |  9 ++-----
+ hw/scsi/lsi53c895a.c          |  5 ++--
+ hw/sd/allwinner-sdhost.c      |  2 +-
+ hw/sd/sdhci.c                 |  4 +--
+ hw/sparc/sun4m_iommu.c        |  2 +-
+ hw/sparc64/sun4u_iommu.c      |  2 +-
+ hw/ssi/aspeed_smc.c           |  6 ++---
+ hw/usb/hcd-dwc2.c             |  2 +-
+ hw/usb/hcd-xhci-sysbus.c      |  2 +-
+ hw/vfio/listener.c            |  8 ++++--
+ hw/virtio/vhost-vdpa.c        |  4 ++-
+ hw/virtio/virtio-iommu.c      |  3 ++-
+ hw/virtio/virtio-pci.c        | 12 ++++-----
+ system/memory.c               | 57 ++++++++++++++++++++++++++++---------------
+ system/physmem.c              | 24 ++++++++++--------
+ target/i386/kvm/kvm.c         |  3 ++-
+ target/mips/cpu.c             |  4 +--
+ target/xtensa/cpu.c           |  2 +-
+ 74 files changed, 204 insertions(+), 195 deletions(-)
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250915-qom-e7fcca27d4db
+prerequisite-change-id: 20250906-use-37ecc903a9e0:v2
+prerequisite-patch-id: d464fda86a3c79ff8e6d7a2e623d979b2a47019b
+prerequisite-patch-id: 17b153237f69c898b9c5b93aad0d5116d0bfe49f
+prerequisite-patch-id: a323f67e01c672ab2958a237ea54b77f1443e2d1
+prerequisite-patch-id: 822094864ad7a6a702fee098e4835621bd8092fe
+prerequisite-patch-id: 5757efd81557b060257b5db6dec6fd189076ee77
+prerequisite-patch-id: bd912830a326f13186bf38e916655ec980e11af8
+prerequisite-patch-id: fe6b92112288829e60f10c305742a544f45e8984
+prerequisite-patch-id: ac4ff0c11dcc1fc5d08b4fc480c14721fde574ad
+prerequisite-patch-id: ff398fa97b5f2feee85372fdf108d82d8d5526b0
+prerequisite-patch-id: 7ac446ae76e05dd267a63889ff775ac609712c31
+prerequisite-patch-id: b49a74cd5f31348c3dc13dcfd1dad629e6b30387
+prerequisite-patch-id: 8f61fe1b81cf3ec906ebbf61776573edd96c1e8c
+prerequisite-patch-id: 01fb8ccbe7326021a94a8d7531189568d2e311a7
+prerequisite-patch-id: 974b0fc6d7c8d6d56b8f44597260647e1a53cf38
+prerequisite-patch-id: 55c4711a2a4e6b02b8b512e0283f8feaf7d3bfa3
+prerequisite-message-id: <cover.1751493467.git.balaton@eik.bme.hu>
+prerequisite-patch-id: f9c7e666c59cdc8a561d6d122e7937648da490e1
+prerequisite-patch-id: 9b52629b6d9d32e71e5c416aead9aadb0e3c7ae2
+prerequisite-patch-id: 16467219e7dd93204cec6ceb6d69577e3e86c03a
+prerequisite-patch-id: 37a3ee3288d2cda8303c9c9e3d5ec9d813b05ef6
+prerequisite-patch-id: b707ebf05289b55e8458b6b3515aa0fc559c7c88
+prerequisite-patch-id: 721e733f06ce38375881520725177c9da9c22633
+prerequisite-patch-id: 3cd399b599a9ff57066d820b1e6504b335be4f79
+prerequisite-patch-id: 8a607cc6e52a6a6958a73cd1a1b824b52a4f4582
+prerequisite-patch-id: af3976b1c4c3ef4859f2371a318214af5418e97d
+prerequisite-patch-id: 76c6e115f8771f31c99f454fd3188ca49e283025
+prerequisite-patch-id: 488b5dd5a90070331daae2e22f7c1f6419a7e428
+prerequisite-patch-id: 53b85575018fecb94e208bdb5d3047b8d66fb4dd
+prerequisite-patch-id: 0426e04bb68376f2d4fad6ade4ac641202172396
+prerequisite-patch-id: 6ba40a4bf6e2b0ba3d4ecf9a1c4fed7f46e5730c
 
--- 
-2.51.0
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
