@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E620ECAC59F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 23:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A1A4CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 23:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz1Tc-0005dG-3R; Wed, 17 Sep 2025 19:22:16 -0400
+	id 1uz1Tn-0005pf-NJ; Wed, 17 Sep 2025 19:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uz1T5-0005Pp-Dm; Wed, 17 Sep 2025 19:21:43 -0400
+ id 1uz1Tj-0005ks-GS; Wed, 17 Sep 2025 19:22:23 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uz1T2-0002MH-4f; Wed, 17 Sep 2025 19:21:43 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HJxC9I020554;
- Wed, 17 Sep 2025 23:21:38 GMT
+ id 1uz1Tg-0002S6-HC; Wed, 17 Sep 2025 19:22:23 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HIal30011054;
+ Wed, 17 Sep 2025 23:21:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Dp/3enbQ/YjwTtks4
- JSzb6RB48Ag6reVY/kSPMbmTGk=; b=cNQxC5dEKV+oGNF8B/3pk+GlZ1Nbo+XOt
- fZcQu6lsSAQmJ/ybmxZ9hG/2kVoE8xHcsCKPM9kXF7z8B/HovzZTiYfiwnoSrwys
- 3B/8jZIR1SzQrIFX6ZHirDTQqjcTN/30Cm/xCDzR7QfGAvVcVXpho0z6mqlfSyH+
- vrt2Jnd8J8zDqAZXkZHYkafyrNaXyj0tLMSQa4IbuanGyrYFCh+u9+EuTaZ8JHKn
- 6QGSa6rBfKwkfxMVQxFolALNuvzpcHhpyuLIc0mUM7+XhfhjdNvwDf1WJSRhgQ+C
- wc+JjXniw/Zxi8hB0Dpz0JhRLj1t4Q0ArEskwvc3jQKQEROVG8FCw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4m6fbd-1
+ :mime-version:references:subject:to; s=pp1; bh=Zdj2u+CTiNUhvSAdK
+ 8jn5XBSqi+D7YQyvOPVavTWbsw=; b=oRST/oi75RZW8/nbBmqDjOgG18neTFdZo
+ Eee4T5J6k9QdvwbIDnZBU7kL3kowMjowTauEHlKEpjGAGVmiPne2azC+k0r1NVOI
+ fcJq4eG0HVE+eZfv/uUcO6BVuqyu56EUlV2bDn7sRXVOthh/XUNFcDmLHI6AFB+e
+ wnC/GiKnOvMMkUFsz6xbrZxlh7IiYXadg2gtC/KSmxLr7kHNSSvkZRGZGaAwJ6Bt
+ 5JlLuoUJSashkGGtPPsE4BH/SuFp6zNAqcZvpYowiEpfLvTfLHPik7MGBzu9Nusn
+ imo8muhTYXURzJWIl677qH2fd20QsaawH9zca+5NI0mqUL6+fdkww==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4neg6y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 23:21:37 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58HKwM57022384;
- Wed, 17 Sep 2025 23:21:37 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495kxpuu6x-1
+ Wed, 17 Sep 2025 23:21:58 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58HLVSMv027276;
+ Wed, 17 Sep 2025 23:21:58 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495menbqxy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 23:21:37 +0000
+ Wed, 17 Sep 2025 23:21:58 +0000
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58HNLaji33423920
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58HNLud416122464
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Sep 2025 23:21:36 GMT
+ Wed, 17 Sep 2025 23:21:56 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 00D5958065;
- Wed, 17 Sep 2025 23:21:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 783755805A;
+ Wed, 17 Sep 2025 23:21:56 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D85E75805E;
- Wed, 17 Sep 2025 23:21:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6F6CC58062;
+ Wed, 17 Sep 2025 23:21:55 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.34.172])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Sep 2025 23:21:34 +0000 (GMT)
+ Wed, 17 Sep 2025 23:21:55 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
@@ -65,34 +65,34 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com
-Subject: [PATCH v6 03/28] crypto/x509-utils: Add helper functions for
- certificate store
-Date: Wed, 17 Sep 2025 19:21:05 -0400
-Message-ID: <20250917232131.495848-4-zycai@linux.ibm.com>
+Subject: [PATCH v6 20/28] s390x: Guest support for Secure-IPL Code Loading
+ Attributes Facility (SCLAF)
+Date: Wed, 17 Sep 2025 19:21:22 -0400
+Message-ID: <20250917232131.495848-21-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250917232131.495848-1-zycai@linux.ibm.com>
 References: <20250917232131.495848-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AOJ3_EbA4FZCXnTDoYAln0FhuuCV3SQ2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX18cMGywjZzEA
- aU8fuJ2mdqXJ5BmfZH22Raybr4Ik8celRqkoKSJrFifx+8Dvb2Li4jYkadiAt69TqhIPVriinn6
- QsrtJb4Ra9TMEhptrH3pTILUzjSDClA7NiVyp+kQfPB9fTAIAffev7bocMxj9LdOR6e3OL6CoxY
- ZXckIiDv7oTt6DfzFPR4h2gKGkguZtDe3lVzVzzKQ1PEPtLesKjL5rGFn6gGdcVnm6TZ5PJAV+l
- Kh9l94Mgsi0vHch9olJxEFPPubodsZ5jDeROoMYXrA43jHlrxkdVTaQR3ZaxsB8wXLkqa/MrCmm
- AqlaoqU+v2xVQerC6Q8k2od6de3OdU4d2JpkDPD4h9rpOph74AL7web5LGWaxuqC8VFaiOK+fi/
- dDyuQBek
-X-Proofpoint-ORIG-GUID: AOJ3_EbA4FZCXnTDoYAln0FhuuCV3SQ2
-X-Authority-Analysis: v=2.4 cv=QrNe3Uyd c=1 sm=1 tr=0 ts=68cb4281 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=rS3Z-B4KkOQ9K9HQ9W4A:9
+X-Authority-Analysis: v=2.4 cv=MN5gmNZl c=1 sm=1 tr=0 ts=68cb4296 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=70PmlEAx-evh_fzWiGkA:9
+X-Proofpoint-GUID: CQep38XuOri7rqJ9L6FeLwabAfNQgGAd
+X-Proofpoint-ORIG-GUID: CQep38XuOri7rqJ9L6FeLwabAfNQgGAd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX/giMRivrF1dr
+ S7QrJxpzIkmdzTlmTIZs1NWp6P9ALP2P7Bg1RRKG6I7hLq5S+mWAEGnw5NFxugw98MokRjyi+WH
+ Xm09p99BzAYBpruy9bMU0jlB9CY4IgTNvt83PBpO2oaLInAKpoiToPv1hjWZhVmw1aly3hP+DUr
+ INQV7oP3AyvbRjuq3D/V2VLTnZOelddYwakbfPrIzG5qSwnEyP/DjOwGMMDBVpXubEqrocZsT2e
+ cycgAEdiVW+26NiyxaroQdtf5BWTfdrzV1qf1MoNaO9UQjVw0krUnJUKzH2PeoGqIjhxbn24l8i
+ pXYo+oRu7KIjeHFIw5p1RdP+36Gv5RwNGKq4tmrjTBSuC9LizLIqmz2k7mZWwgPd2cYYnWs4hH7
+ xV0CdUc9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
@@ -120,114 +120,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce new helper functions for x509 certificate, which will be used
-by the certificate store:
+The secure-IPL-code-loading-attributes facility (SCLAF)
+provides additional security during secure IPL.
 
-qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+Availability of SCLAF is determined by byte 136 bit 3 of the
+SCLP Read Info block.
 
-These functions provide support for certificate format conversion.
+This feature is available starting with the gen16 CPU model.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 ---
- crypto/x509-utils.c         | 50 +++++++++++++++++++++++++++++++++++++
- include/crypto/x509-utils.h | 20 +++++++++++++++
- 2 files changed, 70 insertions(+)
+ docs/specs/s390x-secure-ipl.rst     | 25 +++++++++++++++++++++++++
+ target/s390x/cpu_features.c         |  2 ++
+ target/s390x/cpu_features_def.h.inc |  1 +
+ target/s390x/cpu_models.c           |  3 +++
+ target/s390x/gen-features.c         |  2 ++
+ target/s390x/kvm/kvm.c              |  1 +
+ 6 files changed, 34 insertions(+)
 
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index 6176a88653..5d43b0ec96 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -81,6 +81,47 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-     return ret;
- }
+diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+index 760a066084..a19b976e25 100644
+--- a/docs/specs/s390x-secure-ipl.rst
++++ b/docs/specs/s390x-secure-ipl.rst
+@@ -85,3 +85,28 @@ operations such as:
+ * certificate data
  
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result, size_t *resultlen,
-+                                  Error **errp)
-+{
-+    int ret = -1;
-+    int rc;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    gnutls_datum_t datum_der = {.data = NULL, .size = 0};
+ The guest kernel will inspect the IIRB and build the keyring.
 +
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
 +
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
++Secure Code Loading Attributes Facility
++---------------------------------
 +
-+    rc = gnutls_x509_crt_export2(crt, GNUTLS_X509_FMT_DER, &datum_der);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to convert certificate to DER format: %s",
-+                   gnutls_strerror(rc));
-+        goto cleanup;
-+    }
++The Secure Code Loading Attributes Facility (SCLAF) enhances system security during the
++IPL by enforcing additional verification rules.
 +
-+    *result = g_new0(uint8_t, datum_der.size);
-+    *resultlen = datum_der.size;
-+    memcpy(*result, datum_der.data, datum_der.size);
++When SCLAF is available, its behavior depends on the IPL mode. It introduces verification
++of both signed and unsigned components to help ensure that only authorized code is loaded
++during the IPL process. Any errors detected by SCLAF are reported in the IIRB.
 +
-+    ret = 0;
++Unsigned components are restricted to load addresses at or above absolute storage address
++``0x2000``.
 +
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    gnutls_free(datum_der.data);
-+    return ret;
-+}
++Signed components must include a Secure Code Loading Attribute Block (SCLAB), which is
++appended at the very end of the component. The SCLAB defines security attributes for
++handling the signed code. Specifically, it may:
 +
- #else /* ! CONFIG_GNUTLS */
++* Provide direction on how to process the rest of the component.
++
++* Provide further validation of information on where to load the signed binary code
++  from the load device.
++
++* Specify where to start the execution of the loaded OS code.
+diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+index 200bd8c15b..29ea3bfec2 100644
+--- a/target/s390x/cpu_features.c
++++ b/target/s390x/cpu_features.c
+@@ -120,6 +120,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
+      * - All SIE facilities because SIE is not available
+      * - DIAG318
+      * - Secure IPL Facility
++     * - Secure IPL Code Loading Attributes Facility
+      *
+      * As VMs can move in and out of protected mode the CPU model
+      * doesn't protect us from that problem because it is only
+@@ -152,6 +153,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
+         break;
+     case S390_FEAT_TYPE_SCLP_FAC_IPL:
+         clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
++        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
+         break;
+     default:
+         return;
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index 55eef618b8..ecfca0faef 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -142,6 +142,7 @@ DEF_FEAT(CERT_STORE, "cstore", SCLP_FAC134, 5, "Provide Certificate Store functi
  
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-@@ -93,4 +134,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-     return -1;
- }
+ /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
+ DEF_FEAT(SIPL, "sipl", SCLP_FAC_IPL, 1, "Secure-IPL facility")
++DEF_FEAT(SCLAF, "sclaf", SCLP_FAC_IPL, 3, "Secure-IPL-code-loading-attributes facility")
  
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result,
-+                                  size_t *resultlen,
-+                                  Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to export X.509 certificate");
-+    return -1;
-+}
-+
- #endif /* ! CONFIG_GNUTLS */
-diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
-index 1e99661a71..4239e3e55a 100644
---- a/include/crypto/x509-utils.h
-+++ b/include/crypto/x509-utils.h
-@@ -19,4 +19,24 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-                                       size_t *resultlen,
-                                       Error **errp);
+ /* Features exposed via SCLP CPU info. */
+ DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index f99536ef9a..7d214b5f72 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
+         case S390_FEAT_SIE_PFMFI:
+         case S390_FEAT_SIE_IBS:
+         case S390_FEAT_SIPL:
++        case S390_FEAT_SCLAF:
+         case S390_FEAT_CONFIGURATION_TOPOLOGY:
+             return false;
+             break;
+@@ -509,6 +510,8 @@ static void check_consistency(const S390CPUModel *model)
+         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
++        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
++        { S390_FEAT_SCLAF, S390_FEAT_SIPL },
+         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
+         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
+         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index bd2060ab93..c3e0c6ceff 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -722,6 +722,7 @@ static uint16_t full_GEN16_GA1[] = {
+     S390_FEAT_UV_FEAT_AP_INTR,
+     S390_FEAT_CERT_STORE,
+     S390_FEAT_SIPL,
++    S390_FEAT_SCLAF,
+ };
  
-+/**
-+ * qcrypto_x509_convert_cert_der
-+ * @cert: pointer to the raw certificate data in PEM format
-+ * @size: size of the certificate
-+ * @result: output location for the allocated buffer for the certificate in DER format
-+            (the function allocates memory which must be freed by the caller)
-+ * @resultlen: pointer to the size of the buffer
-+               (will be updated with the actual size of the DER-encoded certificate)
-+ * @errp: error pointer
-+ *
-+ * Convert the given @cert from PEM to DER format.
-+ *
-+ * Returns: 0 on success,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-+                                  uint8_t **result,
-+                                  size_t *resultlen,
-+                                  Error **errp);
-+
- #endif
+ static uint16_t full_GEN17_GA1[] = {
+@@ -924,6 +925,7 @@ static uint16_t qemu_MAX[] = {
+     S390_FEAT_EXTENDED_LENGTH_SCCB,
+     S390_FEAT_CERT_STORE,
+     S390_FEAT_SIPL,
++    S390_FEAT_SCLAF,
+ };
+ 
+ /****** END FEATURE DEFS ******/
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 31bd574dec..2ed11fab52 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -2522,6 +2522,7 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
+ 
+     /* Some Secure IPL facilities are emulated by QEMU */
+     set_bit(S390_FEAT_SIPL, model->features);
++    set_bit(S390_FEAT_SCLAF, model->features);
+ 
+     /* Test for Ultravisor features that influence secure guest behavior */
+     query_uv_feat_guest(model->features);
 -- 
 2.50.1
 
