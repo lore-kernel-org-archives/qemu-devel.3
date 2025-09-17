@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A52BCA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 086F5CAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 07:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uym1T-000070-CZ; Wed, 17 Sep 2025 02:52:11 -0400
+	id 1uymCo-0003UH-O2; Wed, 17 Sep 2025 03:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uym1R-00006b-FZ; Wed, 17 Sep 2025 02:52:09 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ id 1uymCm-0003Tx-Rz; Wed, 17 Sep 2025 03:03:53 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uym1P-0002KT-RD; Wed, 17 Sep 2025 02:52:09 -0400
+ id 1uymCk-0003lF-EY; Wed, 17 Sep 2025 03:03:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758091928; x=1789627928;
+ t=1758092631; x=1789628631;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=ObfKbsDxmaNSjBL1MUOnF6C1AbsnVQYIZd53wwnhIDw=;
- b=edt7mrsdifX8vmtFqT5eVOVyR08wbbGbkwgQxyWqwE1hu7MbcdUUjpGK
- Ph6WXQiphbgXSPsV3qhi6KZAVi2sF43+Ag37122k8GAIVzevGNrobObwN
- yrqcK3WQmLU0/2tZ/N9/R4ccXCu8zpFIcOisOpIBhZ3tzM01SLLa5vEaI
- 1ovIcGa5l6Bmg4w3LH9D4FZZJANyQ+bSc+TBm2FpLD4sE1guvWt2Ewv04
- gPCFyAEBt6xp7148NkE4XCPik9tAUu2oq1CU0e7FYkj/QzcvBqAwF8/yL
- Io1LEGsvaLNsXgAl50aEfvQMTISknDooJ8MD0N9HA85f0P+/4ZBhBnMIb A==;
-X-CSE-ConnectionGUID: 4y5kFv/cQ66bCKz7kt1ljg==
-X-CSE-MsgGUID: 4xTHB1c5QEe9uOjL3R+vUQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11555"; a="64205854"
-X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="64205854"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Sep 2025 23:52:04 -0700
-X-CSE-ConnectionGUID: nWdxAy/oRPSICiUSZXrpbg==
-X-CSE-MsgGUID: kGHS4K15R1albMUj9qO1vA==
+ bh=0q28p77Qq5v1KDJWMsr+duTDqBpEjMz1jM2vdaMPLA0=;
+ b=T9GH2wKeVMU8QVmfquYSLlP0etng6O1bcNry2iziCiplDv+wTAPMuJC6
+ NTokNt8loWziVP2bZzvY+bE9/lj8EFziNacT/db9wjjAs3QxFbPMCZpIx
+ POJ1W/yupqG5FWntD0NU3dhdh6wc1ThMkExnCP5dcaCGOEQ0aAEhhW/U4
+ xa/P5rwZoKFSzDfA7le4ACjnqlDmDEVBYkg8Yo+R572x9nsXDz9iJeiIe
+ R6Ec/bAK+diIEyKgUvsKy0D/kpuUkvJYPzkrysLT0fai3sLR4GCsuJoIi
+ q61jzuhnQOSYyZF+6yhkm0V3+P0K96iRWOWIh/psgJdfIY8dSCkcUXeEP Q==;
+X-CSE-ConnectionGUID: daLGsJgETzapR+igWRJjvA==
+X-CSE-MsgGUID: fAqUQkfwSpGljUQ27InrrA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11555"; a="71754147"
+X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="71754147"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Sep 2025 00:03:46 -0700
+X-CSE-ConnectionGUID: ToE+U/3qQROuk17Sa1nB/Q==
+X-CSE-MsgGUID: ljXmjpbMSZyGHaTKp7tlwg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="179166137"
+X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="180304309"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 16 Sep 2025 23:52:03 -0700
-Date: Wed, 17 Sep 2025 15:13:57 +0800
+ by orviesa005.jf.intel.com with ESMTP; 17 Sep 2025 00:03:44 -0700
+Date: Wed, 17 Sep 2025 15:25:38 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
-Subject: Re: [PATCH 08/12] rust/qdev: Support property info for more common
- types
-Message-ID: <aMpftVa00OfVc1Cw@intel.com>
+Subject: Re: [PATCH 09/12] rust/qdev: Support bit property in #property macro
+Message-ID: <aMpicpXtVu/4lK63@intel.com>
 References: <20250916085557.2008344-1-zhao1.liu@intel.com>
- <20250916085557.2008344-9-zhao1.liu@intel.com>
- <CAAjaMXaVavbhgF49iCy-kgXB3uk06d=mShK_WrVJu9Bd3HUz0g@mail.gmail.com>
+ <20250916085557.2008344-10-zhao1.liu@intel.com>
+ <CAAjaMXYkJno=nAcAGPWQJMCjcSkePJwjmZgFkPAkX2N3tQoSCQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAjaMXaVavbhgF49iCy-kgXB3uk06d=mShK_WrVJu9Bd3HUz0g@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <CAAjaMXYkJno=nAcAGPWQJMCjcSkePJwjmZgFkPAkX2N3tQoSCQ@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -85,46 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 16, 2025 at 01:13:28PM +0300, Manos Pitsidianakis wrote:
-> Date: Tue, 16 Sep 2025 13:13:28 +0300
+On Tue, Sep 16, 2025 at 01:16:25PM +0300, Manos Pitsidianakis wrote:
+> Date: Tue, 16 Sep 2025 13:16:25 +0300
 > From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Subject: Re: [PATCH 08/12] rust/qdev: Support property info for more common
->  types
+> Subject: Re: [PATCH 09/12] rust/qdev: Support bit property in #property
+>  macro
 > 
 > On Tue, Sep 16, 2025 at 11:34 AM Zhao Liu <zhao1.liu@intel.com> wrote:
 > >
-> > Add a helper macro to implement QDevProp trait for u8/u16/u32/usize/i32
-> > /i64.
+> > Add BIT_INFO to QDevProp trait, so that bit related property info could
+> > be bound to u32 & u64.
+> >
+> > Then add "bit=*" field in #property attributes macro to allow device to
+> > configure bit property.
+> >
+> > In addtion, convert the #property field parsing from `if-else` pattern
+> > to `match` pattern, to help readability. And note, the `bitnr` member of
+> > `Property` struct is generated by manual TokenStream construction,
+> > instead of conditional repetition (like #(bitnr: #bitnr,)?) since
+> > `quote` doesn't support this.
 > >
 > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > > ---
+> >  rust/hw/core/src/qdev.rs    | 15 +++++---
+> >  rust/qemu-macros/src/lib.rs | 77 +++++++++++++++++++++++++------------
+> >  2 files changed, 62 insertions(+), 30 deletions(-)
+> >
+> > diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+> > index b57dc05ebb0e..a8cd9e3c2fd5 100644
+> > --- a/rust/hw/core/src/qdev.rs
+> > +++ b/rust/hw/core/src/qdev.rs
+> > @@ -109,8 +109,8 @@ pub trait ResettablePhasesImpl {
+> >  ///
+> >  /// # Safety
+> >  ///
+> > -/// This trait is marked as `unsafe` because `BASE_INFO` must be a valid raw
+> > -/// reference to a [`bindings::PropertyInfo`].
+> > +/// This trait is marked as `unsafe` because `BASE_INFO` and `BIT_INFO` must be
+> > +/// the valid raw references to [`bindings::PropertyInfo`].
 > 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> s/the //
 
-Thanks!
+Okay.
 
-> You can do something like this btw:
+> >  ///
+> >  /// Note we could not use a regular reference:
+> >  ///
+> > @@ -132,13 +132,18 @@ pub trait ResettablePhasesImpl {
+> >  /// [`bindings::PropertyInfo`] pointer for the trait implementation to be safe.
+> >  pub unsafe trait QDevProp {
+> >      const BASE_INFO: *const bindings::PropertyInfo;
+> > +    const BIT_INFO: *const bindings::PropertyInfo = {
+> > +        panic!("invalid type for bit property");
+> > +    };
 > 
-> macro_rules! impl_qdev_prop {
->     ($($type:ty => $info:ident),*$(,)?) => {
->         $(unsafe impl $crate::qdev::QDevProp for $type {
->             const BASE_INFO: *const $crate::bindings::PropertyInfo =
->                 addr_of!($crate::bindings::$info);
->         })*
->     };
->  }
-> 
-> impl_qdev_prop!(
->     bool => qdev_prop_bool,
->     u8 => qdev_prop_uint8,
->     ...
-> );
-> 
+> Why is this needed?
 
-Yes, this can work! But a benefit of non-repetitive macro is that it
-can also be exposed for use by other crates if necessary.
+Only 3 types supports bit:
 
-Regards,
+u32: qdev_prop_bit
+u64: qdev_prop_bit64
+OnOffAuto: qdev_prop_on_off_auto_bit64 (not support yet)
+
+So for other types don't support bit, they need default BIT_INFO item,
+otherwise, we will meet the error:
+
+ not all trait items implemented, missing: `BIT_INFO`
+
+
+And this panic can provide richer info about why a type can't support
+bit property. (I just refer the implementation of `trait VMState`).
+
+Thanks,
 Zhao
 
 
