@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BCACAC5A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4A0CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyuav-00041l-DQ; Wed, 17 Sep 2025 12:01:22 -0400
+	id 1uyubc-0004tp-DU; Wed, 17 Sep 2025 12:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
- id 1uyraK-0005YW-8c
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:48:33 -0400
-Received: from smtpbguseast3.qq.com ([54.243.244.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
- id 1uyraD-0003Ul-0u
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:48:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kubuds.cn;
- s=reyb2403; t=1758113264;
- bh=x6PenYb2OYO7DzPSgQ8aaHOUIRmM43ePGDREyY/1fVo=;
- h=From:To:Subject:Date:Message-ID:MIME-Version;
- b=lzmeFv0dyOLa/tsBguW7baCxJN3bWRO8kvnZ5bxXOfjYDdLytDnPTS3dcegW6R6cg
- Vk30RctssPoFvq+lS56KPjwb1SZM0TyNWC4ij5rleFrS9uGhMVpxRJCnEU8wx5TtBY
- DFb/BIAmssijzhpv51bYdJnrQGcS90ws+X2KVUhI=
-X-QQ-mid: zesmtpip2t1758113258t8ce094d3
-X-QQ-Originating-IP: wRUuIu67yMSbAyqUUXkUFVaVcPuyWx9rRsCr3WtmfFI=
-Received: from liww-ubuntu.. ( [localhost]) by bizesmtp.qq.com (ESMTP) with 
- id ; Wed, 17 Sep 2025 20:47:36 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 403894999039657497
-EX-QQ-RecipientCnt: 8
-From: liweiwei@kubuds.cn
-To: richard.henderson@linaro.org, pbonzini@redhat.com, qemu-devel@nongnu.org
-Cc: kasperl@rivosinc.com, wangjunqiang@kubuds.cn, lazyparser@gmail.com,
- liwei1518@gmail.com, Weiwei Li <liweiwei@kubuds.cn>
-Subject: [PATCH] accel/tcg: fix self-modify-code problem when modify code in a
- single tb loop
-Date: Wed, 17 Sep 2025 20:47:06 +0800
-Message-ID: <6F6BF0F431B23852+20250917124734.443966-1-liweiwei@kubuds.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyuba-0004rr-Fy
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:02:02 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uyubY-0007XF-NZ
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:02:02 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b4e84a61055so4562069a12.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 09:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758124918; x=1758729718; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZZDmunlvUXfYoPx+TjhOyIN7WODU3fkgILedlMP8VxY=;
+ b=NsTNUuiwEnCY9i62Q+7NjUz4WVVELLZK8ToEFKBO2BjUibbM1lQm391vNB4YsnXn9z
+ QFHespZVqnkqQB5JJPIfXcekVLc9bSY7WaD76J2czWc4ABUfZ4w3L/HpEJ9uOoiReht1
+ TRfan0nmHecg9oCnrYG1H+boRp9xoMwIUw+Cy0Tdzanyn655wYHUnhtxFjl5gF8Mk1I8
+ wiE78aO0cNt4RjnYFpF8PVc+d2UEjH7nQDdLpJdt/+PKGjn8u0zu8CRNhMK6cyagNwjl
+ +zflCKpaAsuoMjbGTVH0OBlTk8VvBdR3r6+0DWKJgO33eqwb2V8hz0aGYHftiNMnzbD0
+ 6Gew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758124918; x=1758729718;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZZDmunlvUXfYoPx+TjhOyIN7WODU3fkgILedlMP8VxY=;
+ b=F98OvHGTy8AeFq1YYhDbbZsW1yQq1vo8PXa4sxWWCZLK61CuYMIMBdgty/kGAmKi9/
+ 0UP9FYEycyKMKuaqWqkkppBQPHHFxz87Y34JRMRlRWCXnU8JJfNfZCUGRvTNstEWhNRU
+ edyiZID9HjvFNYTXmOgInCRN3Zrnhd/pcWS1KHbNSEF66zf6FQ6NA1wW+fCch4EiToWr
+ g7buFlQQhxaxC5XIN/2qtzyKdvwnw5QTZ0yxb6qoT0Rc443TESdVKrA9b1xaMsuGRusE
+ Q2WxaGDhFaaO7U5Me+cNqM8PTXgEHHzdhdWqLdOcYq5/HmX+xSqNo04njDtV6lar45Yl
+ +tYw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSH3ES2UQO/b8DNAr3TicLdvNlDiXeDrDBJuqJ2fCz8EnbrL0CCL8BqMKDiV2QoMqPghyUuBBo0/6z@nongnu.org
+X-Gm-Message-State: AOJu0YwxhJYwakYeP7NP16WEhgxfd3P8JZN2yVghFLaes08buWfxVJYC
+ C7WqCysPadXnbO/iNnhe72/Uv6dfXApJGQP9UVvfadDeJ6pLl4UXrJTl2gQCrIgVmK4CSxfa3Ly
+ v/trW
+X-Gm-Gg: ASbGncs4D3PgRPGXnKNdLQRb8deQpgJLtBEi/rYDqgvI0Y7hrrmM5SWC6DzgmvAbfoz
+ w77ae9p3tP6IryiZ7+KI+LABKDrWKlBPYVFd2gHh4emOWGJzW2uvmjhA7cJ0CgpyIHwzk15aGjX
+ EupiRmKDrhIXdqwW7ZgxPg/pJ/u5v2A0pXzNYKuIH5ix6rQpH+SxKAZClV2lGyVRTQbIqJPZD/x
+ Ezj/LprJcEN5H7zWx5AVhzDp8sHtIuEpQLKN2h2Bcd3rQSt4jxMS9YCpAa6lr8SdZsf8QnyBnDl
+ JL1IIAIQmWxyLHUogdLhVccePfVTy/zQz1cuDYT7W2CxwKSH/MA5pbYIXWBDsz2Hov5Zfd+mxgZ
+ XKEkhPdBh2ahibY9Em1SNrjoutlldHPglJ1D3
+X-Google-Smtp-Source: AGHT+IG7jopirO7rwPJh5cEbcYQlzbmcgc/qd7VLJ0+e7BM0GzXLZ9jRLzsLYfErWQd4JhybuMEIgQ==
+X-Received: by 2002:a17:903:1b25:b0:266:d648:bf53 with SMTP id
+ d9443c01a7336-268119b832bmr35331995ad.7.1758124918232; 
+ Wed, 17 Sep 2025 09:01:58 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-269800541adsm62735ad.4.2025.09.17.09.01.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 09:01:57 -0700 (PDT)
+Message-ID: <a392927d-74cb-4005-95f6-6e7fa1eaae1b@linaro.org>
+Date: Wed, 17 Sep 2025 09:01:56 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:kubuds.cn:qybglogicsvrgz:qybglogicsvrgz7a-0
-X-QQ-XMAILINFO: N1R4WepIe4yL2Z78mJWGifio32eI50/k8Jg74jeqmQ8Ig9E5vGHEEuVa
- dFsRsJivnioDtniGTUlZllsTO9oIjOBUVFd18NjjFG2IIZWHncDDYtbrrih9x4a4lkof9tz
- wcdH7LDj1Fm7i+1eMn4bzh/IjSaqIxY8ZsoTBZE3wXRzxngyXPJsuyjgaNqULpnpqIb2dHl
- gTj1N2d4jiKcabNrLBQEEMcwFi76g1tYw+DRqSjDGecGZ5VTMSCh3Psrv8iakx42/Sjfijb
- ABIc3sTJVjEZVec066UXg0Y6Pzh+eBAJCmbU3+VlshqGHBM105mDF1dXZmlxftNWZF5fI0a
- QFA2GM1Ul8gdfqjS8slPyNdK2JW7dCGJ6SRefOYf0EEOygmiBqc86cPmdHpimiMLATNApy+
- A67/BDF1PWfvRJNd23u2G+ArhEfoq8NV8RVjetL5q8MqoVFgRjE4Uc5mEjcGBLx6x6XNlwL
- tnBfrbpldr3VM3GYQY8y/mnC7rlTH4U8KTUbM+oFHIabFvLqJhBuCQfTDJXCghcuP7iMsx8
- 1ONzUyhlbr5HTI6qmbp8SrWJIiqnAH8ByN8JdVVurHluM45lppsoVcyvEB2xrjyPen+T7Sf
- K2K0+3wGhMLl9iZe3WSC8LkvwbmIUcH3o0DO+fAAglQ+8Bq/qF3XiO2edB8TR9By3AEO9j2
- fyazShBMUF/mHwPYBQ27xxbBM1afT/X1rpyX/T9UpoKrAcAqq7cnlApgk3epIDCMpVjPY2P
- jG7FVKvGdZHXiS2fDlaONJ97IRnQR8sKIEtu7JNWd+WEhXvXGQirj53PO8eQPO5+fmi0wsJ
- /ICZz6Mi4e90L+rTCVg+HyqbNECpWceE+6l68maPehPN4c/8iNQFNQoJIPX2DkcTFWBfc50
- zhe/hO+IkgNAGw7aDAhjMIi2xhB91KnSoDjhxx5QHudEdOLDEjG6pxd24Ry5umGb8T9Co5O
- C86PZaquOwbSbgf2H0fnI20Gt2Xw3QjnxSTM3rBHkJQqxtGaQbGgecKE4iLUolYmgyj0z6w
- n+5ezgSlbSUop9Qke/pCuPWAqtIwrqBfM8tAW024KKykYcdZdX9S76hcDjdSVDr7et45Cw/
- zghotskeeT0wVpZCKhoNAw=
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.243.244.52; envelope-from=liweiwei@kubuds.cn;
- helo=smtpbguseast3.qq.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 35/35] memory: Drop non-QOM AddressSpace support
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-qom-v1-35-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250917-qom-v1-35-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 17 Sep 2025 12:01:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,43 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weiwei Li <liweiwei@kubuds.cn>
+On 9/17/25 05:56, Akihiko Odaki wrote:
+> Now all AddressSpace instances are converted to QOM so drop
+> non-QOM AddressSpace support.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>   include/system/memory.h | 13 -------------
+>   system/memory.c         | 26 +++++---------------------
+>   2 files changed, 5 insertions(+), 34 deletions(-)
 
-The problem is triggered in following conditions:
-- thread 1:
-    run spin loop(ended with a direct jump) like "0x0000006f, // jal zero, #0"
-- thread 2:
-    do something, and then modify the loop code of thread 1 to nop isntruction,
-    finally wait thread 1 exit.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The loop tb which is patched to jump to itself, will not be updated in this case
-and will never exit.
 
-Signed-off-by: Weiwei Li <liweiwei@kubuds.cn>
----
- accel/tcg/cpu-exec.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 8491e5badd..6919d068c8 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -973,8 +973,12 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-                 last_tb = NULL;
-             }
- #endif
--            /* See if we can patch the calling TB. */
--            if (last_tb) {
-+            /*
-+             * See if we can patch the calling TB.
-+             * To make self-modifying code work, we prevent patching the single
-+             * tb loop.
-+             */
-+            if (last_tb && last_tb != tb) {
-                 tb_add_jump(last_tb, tb_exit, tb);
-             }
- 
--- 
-2.43.0
-
+r~
 
