@@ -4,61 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE467CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9B8CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uysyK-0001bd-6e; Wed, 17 Sep 2025 10:17:24 -0400
+	id 1uyt0n-0004nO-Lj; Wed, 17 Sep 2025 10:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uysxr-00015D-BN
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:17:02 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt0j-0004fH-Dn
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:19:53 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uysxf-0000X5-BC
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:16:49 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cRggh0DStz6L5G3;
- Wed, 17 Sep 2025 22:12:00 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 886871400D4;
- Wed, 17 Sep 2025 22:16:32 +0800 (CST)
-Received: from SecurePC-101-06.huawei.com (10.122.19.247) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 17 Sep 2025 16:16:32 +0200
-To: Michael Tsirkin <mst@redhat.com>, <qemu-devel@nongnu.org>,
- <shiju.jose@huawei.com>
-CC: <armbru@redhat.com>, Fan Ni <fan.ni@samsung.com>,
- <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>, Ravi Shankar
- <venkataravis@micron.com>
-Subject: [PATCH qemu for 10.2 5/5] hw/cxl/events: Updates for rev3.2 memory
- module event record
-Date: Wed, 17 Sep 2025 15:13:55 +0100
-Message-ID: <20250917141355.293217-6-Jonathan.Cameron@huawei.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250917141355.293217-1-Jonathan.Cameron@huawei.com>
-References: <20250917141355.293217-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt0a-0001Go-2q
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:19:52 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 30D54154F68;
+ Wed, 17 Sep 2025 17:19:33 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 424E1283168;
+ Wed, 17 Sep 2025 17:19:40 +0300 (MSK)
+Message-ID: <28d4d70d-9571-45eb-a4e7-f79ea1454c2c@tls.msk.ru>
+Date: Wed, 17 Sep 2025 17:19:40 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "tests/qtest: use qos_printf instead of
+ g_test_message"
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, pbonzini@redhat.com
+References: <20250728145747.3165315-1-armbru@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250728145747.3165315-1-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,152 +101,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+On 28.07.2025 17:57, Markus Armbruster wrote:
+> This reverts commit 30ea13e9d97dcbd4ea541ddf9e8857fa1d5cb30f.
+> 
+> "make check" prints many lines like
+> 
+>      stdout: 138: UNKNOWN:     # # qos_test running single test in subprocess
+>      stdout: 139: UNKNOWN:     # # set_protocol_features: 0x42
+>      stdout: 140: UNKNOWN:     # # set_owner: start of session
+>      stdout: 141: UNKNOWN:     # # vhost-user: un-handled message: 14
+>      stdout: 142: UNKNOWN:     # # vhost-user: un-handled message: 14
+>      stdout: 143: UNKNOWN:     # # set_vring(0)=enabled
+>      stdout: 144: UNKNOWN:     # # set_vring(1)=enabled
+>      stdout: 145: UNKNOWN:     # # set_vring(0)=enabled
+>      stdout: 146: UNKNOWN:     # # set_vring(1)=enabled
+>      stdout: 147: UNKNOWN:     # # set_vring(0)=enabled
+>      stdout: 148: UNKNOWN:     # # set_vring(1)=enabled
+>      stdout: 149: UNKNOWN:     # # set_vring(0)=enabled
+>      stdout: 150: UNKNOWN:     # # set_vring(1)=enabled
+>      stdout: 151: UNKNOWN:     # # set_vring(0)=enabled
+>      stdout: 152: UNKNOWN:     # # set_vring(1)=enabled
+>      stdout: 153: UNKNOWN:     # # set_vring_num: 0/256
+>      stdout: 154: UNKNOWN:     # # set_vring_addr: 0x7f9060000000/0x7f905ffff000/0x7f9060001000
+> 
+> Turns out this is qos-test, and the culprit is a commit meant to ease
+> debugging.  Revert it until a better solution is found.
+..
+> @@ -393,7 +392,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+>            * We don't need to do anything here, the remote is just
+>            * letting us know it is in charge. Just log it.
+>            */
+> -        qos_printf("set_owner: start of session\n");
+> +        g_test_message("set_owner: start of session\n");
 
-CXL spec rev3.2 section 8.2.10.2.1.3 Table 8-50, memory module
-event record has updated with following new fields.
-1. Validity Flags
-2. Component Identifier
-3. Device Event Sub-Type
+Here, and elsewhere - checkpatch complains:
 
-Add updates for the above spec changes in the CXL memory module
-event reporting and QMP command to inject memory module event.
+ERROR: Error messages should not contain newlines
+#93: FILE: tests/qtest/vhost-user-test.c:395:
++        g_test_message("set_owner: start of session\n");
 
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- qapi/cxl.json               | 12 +++++++++++-
- include/hw/cxl/cxl_events.h |  7 +++++--
- hw/mem/cxl_type3.c          | 20 ++++++++++++++++++++
- hw/mem/cxl_type3_stubs.c    |  4 ++++
- 4 files changed, 40 insertions(+), 3 deletions(-)
+(while some g_test_message calls in the same patch does not contain
+the newline).  This is apparently the only place where g_test_message
+is used with newlines.
 
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index fc22e26ecb..b8165b0e32 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -242,6 +242,14 @@
- # @corrected-persistent-error-count: Total number of correctable
- #     errors in persistent memory
- #
-+# @component-id: Device specific component identifier for the event.
-+#     May describe a field replaceable sub-component of the device.
-+#
-+# @is-comp-id-pldm: This flag specifies whether the device-specific
-+#     component identifier format follows PLDM.
-+#
-+# @sub-type: Device event sub-type.
-+#
- # Since: 8.1
- ##
- { 'struct': 'CXLMemModuleEvent',
-@@ -251,7 +259,9 @@
-             'life-used': 'uint8', 'temperature' : 'int16',
-             'dirty-shutdown-count': 'uint32',
-             'corrected-volatile-error-count': 'uint32',
--            'corrected-persistent-error-count': 'uint32'
-+            'corrected-persistent-error-count': 'uint32',
-+            '*component-id': 'str', '*is-comp-id-pldm':'bool',
-+            'sub-type':'uint8'
-             }}
- 
- ##
-diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-index a3c5f2ec20..4a7836ad72 100644
---- a/include/hw/cxl/cxl_events.h
-+++ b/include/hw/cxl/cxl_events.h
-@@ -166,7 +166,7 @@ typedef struct CXLEventDram {
- 
- /*
-  * Memory Module Event Record
-- * CXL r3.1 Section 8.2.9.2.1.3: Table 8-47
-+ * CXL r3.2 Section 8.2.10.2.1.3: Table 8-59
-  * All fields little endian.
-  */
- typedef struct CXLEventMemoryModule {
-@@ -180,7 +180,10 @@ typedef struct CXLEventMemoryModule {
-     uint32_t dirty_shutdown_count;
-     uint32_t corrected_volatile_error_count;
-     uint32_t corrected_persistent_error_count;
--    uint8_t reserved[0x3d];
-+    uint16_t validity_flags;
-+    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
-+    uint8_t sub_type;
-+    uint8_t reserved[0x2a];
- } QEMU_PACKED CXLEventMemoryModule;
- 
- /*
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 96c78b7222..14efaef9ad 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1937,6 +1937,9 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log,
-     }
- }
- 
-+#define CXL_MMER_VALID_COMPONENT                        BIT(0)
-+#define CXL_MMER_VALID_COMPONENT_ID_FORMAT              BIT(1)
-+
- void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-                                         uint32_t flags, bool has_maint_op_class,
-                                         uint8_t maint_op_class,
-@@ -1953,11 +1956,16 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-                                         uint32_t dirty_shutdown_count,
-                                         uint32_t corrected_volatile_error_count,
-                                         uint32_t corrected_persist_error_count,
-+                                        const char *component_id,
-+                                        bool has_comp_id_pldm,
-+                                        bool is_comp_id_pldm,
-+                                        uint8_t sub_type,
-                                         Error **errp)
- {
-     Object *obj = object_resolve_path(path, NULL);
-     CXLEventMemoryModule module;
-     CXLEventRecordHdr *hdr = &module.hdr;
-+    uint16_t valid_flags = 0;
-     CXLDeviceState *cxlds;
-     CXLType3Dev *ct3d;
-     uint8_t enc_log;
-@@ -2000,6 +2008,18 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-     stl_le_p(&module.corrected_persistent_error_count,
-              corrected_persist_error_count);
- 
-+    if (component_id) {
-+        strncpy((char *)module.component_id, component_id,
-+                sizeof(module.component_id) - 1);
-+        valid_flags |= CXL_MMER_VALID_COMPONENT;
-+        if (has_comp_id_pldm && is_comp_id_pldm) {
-+            valid_flags |= CXL_MMER_VALID_COMPONENT_ID_FORMAT;
-+        }
-+    }
-+    module.sub_type = sub_type;
-+
-+    stw_le_p(&module.validity_flags, valid_flags);
-+
-     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&module)) {
-         cxl_event_irq_assert(ct3d);
-     }
-diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
-index 231dda263f..98292a931c 100644
---- a/hw/mem/cxl_type3_stubs.c
-+++ b/hw/mem/cxl_type3_stubs.c
-@@ -78,6 +78,10 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-                                         uint32_t dirty_shutdown_count,
-                                         uint32_t corrected_volatile_error_count,
-                                         uint32_t corrected_persist_error_count,
-+                                        const char *component_id,
-+                                        bool has_comp_id_pldm,
-+                                        bool is_comp_id_pldm,
-+                                        uint8_t sub_type,
-                                         Error **errp) {}
- 
- void qmp_cxl_inject_poison(const char *path, uint64_t start, uint64_t length,
--- 
-2.48.1
+I wonder if we should clean this up?  Something like this:
 
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 56472ca709..e8c3613560 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -394,3 +394,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+           */
+-        g_test_message("set_owner: start of session\n");
++        g_test_message("set_owner: start of session");
+          break;
+@@ -420,3 +420,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+           */
+-        g_test_message("set_protocol_features: 0x%"PRIx64 "\n", 
+msg.payload.u64);
++        g_test_message("set_protocol_features: 0x%"PRIx64, 
+msg.payload.u64);
+          break;
+@@ -428,3 +428,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+      case VHOST_USER_SET_VRING_NUM:
+-        g_test_message("set_vring_num: %d/%d\n",
++        g_test_message("set_vring_num: %d/%d",
+                     msg.payload.state.index, msg.payload.state.num);
+@@ -432,3 +432,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+      case VHOST_USER_SET_VRING_ADDR:
+-        g_test_message("set_vring_addr: 
+0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64"\n",
++        g_test_message("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64,
+                     msg.payload.addr.avail_user_addr,
+@@ -465,3 +465,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+          if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
+-            g_test_message("call fd: %d, do not set non-blocking\n", fd);
++            g_test_message("call fd: %d, do not set non-blocking", fd);
+              break;
+@@ -511,3 +511,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+           */
+-        g_test_message("set_vring(%d)=%s\n", msg.payload.state.index,
++        g_test_message("set_vring(%d)=%s", msg.payload.state.index,
+                     msg.payload.state.num ? "enabled" : "disabled");
+@@ -516,3 +516,3 @@ static void chr_read(void *opaque, const uint8_t 
+*buf, int size)
+      default:
+-        g_test_message("vhost-user: un-handled message: %d\n", 
+msg.request);
++        g_test_message("vhost-user: un-handled message: %d", msg.request);
+          break;
+
+
+Thanks,
+
+/mjt
 
