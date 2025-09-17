@@ -4,111 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DF3CAC59F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 19:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7450ACAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 19:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyxqz-0005wv-1m; Wed, 17 Sep 2025 15:30:09 -0400
+	id 1uyy83-0005Wb-VL; Wed, 17 Sep 2025 15:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyxqt-0005vc-Ei
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 15:30:03 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uyy7z-0005WB-1W
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 15:47:43 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyxqo-0004PS-MX
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 15:30:01 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E43D05C59F;
- Wed, 17 Sep 2025 19:29:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758137397; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dzmcHjJvSTCRUpRebOkPIRw1Q5jS1fSPJkK0JUXnVBk=;
- b=d72YcRMcFc3jlPLiuY3cFRpq9Awvrx1ocSrob5JPvvUa4CrnKdnQTkQAK4kUaQW5+Tz6Sd
- bnGrixp9pLBOwP0baJz0QJ7KofJVl/r2uesiMyo05zOuyKaWDY8kZf6ws50NH/g2oYCb9a
- JV9Uy3Ad3dl+6UkeV/oW0gtCsL3a/7I=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758137397;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dzmcHjJvSTCRUpRebOkPIRw1Q5jS1fSPJkK0JUXnVBk=;
- b=zK+OghCgju2cr8dpYS9S06RQQaNXylK40OPbSb+ni+YvhwIN28bGvSRR7FTjDJGZo5lMZu
- rX+l46KU93q6AHBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tX8SitvI;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DRl9RK2O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758137396; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dzmcHjJvSTCRUpRebOkPIRw1Q5jS1fSPJkK0JUXnVBk=;
- b=tX8SitvIZARnB8Zas/RawjffVJGmh0uLIUEXNU9BVV9N0dAbhX1V/fJ5HMg75xB7wCM+MM
- dWUivwdt5OkjqXsXzExBTBxz28eRzMwpf71b0UAI1HQ2l7/DwynMdqt6vRbmKePK5WQnPu
- XYOzl1Sk1ZroSXn4mgdIQkflm19oJRo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758137396;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dzmcHjJvSTCRUpRebOkPIRw1Q5jS1fSPJkK0JUXnVBk=;
- b=DRl9RK2ObT+gBS2GfgOKCT8GoCeC6AMpR0NunqZJ16SV4b6pX855+Ov8swOrDwLMi5cTbI
- QXLOAD2O2mKK05Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 55D20137C3;
- Wed, 17 Sep 2025 19:29:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YOIjBTQMy2hUZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Sep 2025 19:29:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nabih Estefan <nabihestefan@google.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org, philmd@linaro.org,
- lvivier@redhat.com, qemu-arm@nongnu.org, Shengtan Mao <stmao@google.com>,
- Titus Rwantare <titusr@google.com>, Nabih Estefan <nabihestefan@google.com>
-Subject: Re: [PATCH v3] hw/sensor: added MAX16600 device model
-In-Reply-To: <20250903155410.1910145-1-nabihestefan@google.com>
-References: <20250903155410.1910145-1-nabihestefan@google.com>
-Date: Wed, 17 Sep 2025 16:29:53 -0300
-Message-ID: <874it0x4ge.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uyy7u-0006v9-Vx
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 15:47:42 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-80bdff6d1e4so20853585a.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 12:47:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758138458; x=1758743258; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=l/eGvl0pvTjiPhWrl5PQpnxDkJr3FkoGWuBgTGIqbss=;
+ b=j3JQQx0K6wIRkgfY4XTXivrPe5wEpaGcFR/TLAFlnu+5OCTzEXBOnc2VXjX6r8nsHq
+ YmAzwNyutVQTfievM7awxBLaE5/RTGQRsOxy7TftGoXDxRNZsaEY5CO8nzwtuapT8Tts
+ Tq7wdwsyzSAU0j4cxt/1BaOHOYtRRXhemGMWw5gl061D3Du1bo+XlRamouWJh1cqZnsD
+ usxMRcfGa/4YZgoVq8+RDkjMRbAYKvduF17M45zPzleC5lqto4pRUKsNiOhGvJk97mT8
+ U6htBCIdf2y0x2p3wWhbYqOUJ3Nh51xm1vb+GR4Eolv0xVwpH7jIvBS79keC/il1SFls
+ 5M7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758138458; x=1758743258;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l/eGvl0pvTjiPhWrl5PQpnxDkJr3FkoGWuBgTGIqbss=;
+ b=R0aDGZ2klrh8KPhwm6DP4eE8O4lIZZ1QYMVgTXL8we7XVraycrTJeMEuQl3rqIJhHS
+ 0gDH9ICct3Lo9jcK0r59FoBuMwsLb6EWXFGOe/JW37T8DT6ChoMT3Shq7nf7IbwdTCA2
+ 3sas33vz5nW4aVjW5fAUQUZ/6xWeYabnuaYT8edycaVuZTX/EfVSFvwDHsaGLAY61sby
+ 6RLrnS0j+pR+BonPLDRdaOAXxYvfvTbfDxlTKcRd+sTL+tkummwmXG+Ga8pbH7rf+Z96
+ PvEx+UJqh3jc2bT1yuWzjLgSOAWH9MmU8KrLpbvOhhfY/utUhH3qlzCL/JBFXV/WHkjB
+ fleg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIZPJ3fm9SjOdXcWAw6oiiluqOa7zei3LfeRTmJhSpzGnhtxZdZaLvzftcbO+DFI2p/NHQUmz2eUSh@nongnu.org
+X-Gm-Message-State: AOJu0YwUvpxjfMtRgYP4fZZ2WeBgPp1mw0qUBdHWpeJp19FcJi3l7wzv
+ iWh9UjJTGeLIRKop8BVyScSN//Mfw6SSxunqh9mvV0FGuOQWx3kG//BN
+X-Gm-Gg: ASbGncvnmmG+0Ey0s4toEKG5sewYZ6JCorZT+SJiDVSUf+kSF24EVsJffNKJMAhwk3x
+ pKNH+dg8P7OGb63nghAFd47umnBibx9fUgNYUUtuXi6fgAp990Mi4ayVBl/wB4JxaZdO0R/+R2U
+ T/Ms6xky+HxR0pJZYx8lYDokvFsra8lSpKYsgw02DaAomA6QO2KKAuSuUDO7m1uuKr3dZbeRApD
+ B5ZE4B6YkhkRWlsrChTmqd9iE9k9b+cYcQcWWseXp3jWo+Ci2+hJKVt7C2ZyABZ5eu+/iFJ7EDU
+ oWBs6ZvmvbL+oVpI05hZh19qwpsXSabP0TgjuirQXf77XW5BRiWEX7g5O5rqXaHcr9sogTWyafB
+ 60VeI9xmhpFrE+dvGFopY
+X-Google-Smtp-Source: AGHT+IG900UsV8+VA6sgGwprqhDeju8TSqVj5Znsvs1nVsPdgEoG6FRIvHnSB5PLdSUnGHeM/WFLlA==
+X-Received: by 2002:a05:620a:f11:b0:82e:6ec8:98ad with SMTP id
+ af79cd13be357-8310ef378d7mr370685285a.41.1758138457395; 
+ Wed, 17 Sep 2025 12:47:37 -0700 (PDT)
+Received: from [10.5.0.2] ([86.48.15.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8363345313bsm34329085a.62.2025.09.17.12.47.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Sep 2025 12:47:37 -0700 (PDT)
+Message-ID: <f36a42af-4194-4563-a1a5-0c403e678d0c@gmail.com>
+Date: Wed, 17 Sep 2025 15:47:36 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: E43D05C59F
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[10]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FUZZY_MILLION=0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] export/fuse: add opt to enable FUSE-over-io_uring
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, stefanha@redhat.com
+References: <20250830025025.3610-1-hibriansong@gmail.com>
+ <20250830025025.3610-2-hibriansong@gmail.com> <aMm1qc-JEa0FwkX3@redhat.com>
+Content-Language: en-US
+From: Brian Song <hibriansong@gmail.com>
+In-Reply-To: <aMm1qc-JEa0FwkX3@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=hibriansong@gmail.com; helo=mail-qk1-x733.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,575 +104,717 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nabih Estefan <nabihestefan@google.com> writes:
 
-> From: Shengtan Mao <stmao@google.com>
->
-> Signed-off-by: Shengtan Mao <stmao@google.com>
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-> ---
->  hw/arm/Kconfig               |   1 +
->  hw/sensor/Kconfig            |   4 +
->  hw/sensor/max16600.c         | 197 ++++++++++++++++++++++++++++
->  hw/sensor/meson.build        |   1 +
->  include/hw/sensor/max16600.h |  46 +++++++
->  tests/qtest/max16600-test.c  | 241 +++++++++++++++++++++++++++++++++++
->  tests/qtest/meson.build      |   1 +
->  7 files changed, 491 insertions(+)
->  create mode 100644 hw/sensor/max16600.c
->  create mode 100644 include/hw/sensor/max16600.h
->  create mode 100644 tests/qtest/max16600-test.c
->
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 2aa4b5d778..4ab0a93ba6 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -480,6 +480,7 @@ config NPCM7XX
->      select AT24C  # EEPROM
->      select MAX34451
->      select ISL_PMBUS_VR
-> +    select MAX_16600
->      select PL310  # cache controller
->      select PMBUS
->      select SERIAL_MM
-> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-> index bc6331b4ab..ef7b3262a8 100644
-> --- a/hw/sensor/Kconfig
-> +++ b/hw/sensor/Kconfig
-> @@ -43,3 +43,7 @@ config ISL_PMBUS_VR
->  config MAX31785
->      bool
->      depends on PMBUS
-> +
-> +config MAX_16600
-> +    bool
-> +    depends on I2C
-> diff --git a/hw/sensor/max16600.c b/hw/sensor/max16600.c
-> new file mode 100644
-> index 0000000000..1941391dab
-> --- /dev/null
-> +++ b/hw/sensor/max16600.c
-> @@ -0,0 +1,197 @@
-> +/*
-> + * MAX16600 VR13.HC Dual-Output Voltage Regulator Chipset
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright 2025 Google LLC
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/i2c/pmbus_device.h"
-> +#include "qapi/visitor.h"
-> +#include "qemu/log.h"
-> +#include "hw/sensor/max16600.h"
-> +
-> +static uint8_t max16600_read_byte(PMBusDevice *pmdev)
-> +{
-> +    MAX16600State *s = MAX16600(pmdev);
-> +
-> +    switch (pmdev->code) {
-> +    case PMBUS_IC_DEVICE_ID:
-> +        pmbus_send_string(pmdev, s->ic_device_id);
-> +        break;
-> +
-> +    case MAX16600_PHASE_ID:
-> +        pmbus_send8(pmdev, s->phase_id);
-> +        break;
-> +
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: reading from unsupported register: 0x%02x\n",
-> +                      __func__, pmdev->code);
-> +        break;
-> +    }
-> +    return 0xFF;
-> +}
-> +
-> +static int max16600_write_data(PMBusDevice *pmdev, const uint8_t *buf,
-> +                               uint8_t len)
-> +{
-> +    qemu_log_mask(LOG_GUEST_ERROR,
-> +                  "%s: write to unsupported register: 0x%02x\n", __func__,
-> +                  pmdev->code);
-> +    return 0xFF;
-> +}
-> +
-> +static void max16600_exit_reset(Object *obj, ResetType type)
-> +{
-> +    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
-> +    MAX16600State *s = MAX16600(obj);
-> +
-> +    pmdev->capability = MAX16600_CAPABILITY_DEFAULT;
-> +    pmdev->page = 0;
-> +
-> +    pmdev->pages[0].operation = MAX16600_OPERATION_DEFAULT;
-> +    pmdev->pages[0].on_off_config = MAX16600_ON_OFF_CONFIG_DEFAULT;
-> +    pmdev->pages[0].vout_mode = MAX16600_VOUT_MODE_DEFAULT;
-> +
-> +    pmdev->pages[0].read_vin =
-> +        pmbus_data2linear_mode(MAX16600_READ_VIN_DEFAULT, max16600_exp.vin);
-> +    pmdev->pages[0].read_iin =
-> +        pmbus_data2linear_mode(MAX16600_READ_IIN_DEFAULT, max16600_exp.iin);
-> +    pmdev->pages[0].read_pin =
-> +        pmbus_data2linear_mode(MAX16600_READ_PIN_DEFAULT, max16600_exp.pin);
-> +    pmdev->pages[0].read_vout = MAX16600_READ_VOUT_DEFAULT;
-> +    pmdev->pages[0].read_iout =
-> +        pmbus_data2linear_mode(MAX16600_READ_IOUT_DEFAULT, max16600_exp.iout);
-> +    pmdev->pages[0].read_pout =
-> +        pmbus_data2linear_mode(MAX16600_READ_PIN_DEFAULT, max16600_exp.pout);
-> +    pmdev->pages[0].read_temperature_1 =
-> +        pmbus_data2linear_mode(MAX16600_READ_TEMP_DEFAULT, max16600_exp.temp);
-> +
-> +    s->ic_device_id = "MAX16601";
-> +    s->phase_id = MAX16600_PHASE_ID_DEFAULT;
-> +}
-> +
-> +static void max16600_get(Object *obj, Visitor *v, const char *name,
-> +                         void *opaque, Error **errp)
-> +{
-> +    uint16_t value;
-> +
-> +    if (strcmp(name, "vin") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.vin);
-> +    } else if (strcmp(name, "iin") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.iin);
-> +    } else if (strcmp(name, "pin") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.pin);
-> +    } else if (strcmp(name, "iout") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.iout);
-> +    } else if (strcmp(name, "pout") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.pout);
-> +    } else if (strcmp(name, "temperature") == 0) {
-> +        value = pmbus_linear_mode2data(*(uint16_t *)opaque, max16600_exp.temp);
-> +    } else {
-> +        value = *(uint16_t *)opaque;
-> +    }
-> +
-> +    /* scale to milli-units */
-> +    if (strcmp(name, "pout") != 0 && strcmp(name, "pin") != 0) {
-> +        value *= 1000;
-> +    }
-> +
-> +    visit_type_uint16(v, name, &value, errp);
-> +}
-> +
-> +static void max16600_set(Object *obj, Visitor *v, const char *name,
-> +                         void *opaque, Error **errp)
-> +{
-> +    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
-> +    uint16_t *internal = opaque;
-> +    uint16_t value;
-> +    if (!visit_type_uint16(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    /* inputs match kernel driver which scales to milliunits except power */
-> +    if (strcmp(name, "pout") != 0 && strcmp(name, "pin") != 0) {
-> +        value /= 1000;
-> +    }
-> +
-> +    if (strcmp(name, "vin") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.vin);
-> +    } else if (strcmp(name, "iin") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.iin);
-> +    } else if (strcmp(name, "pin") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.pin);
-> +    } else if (strcmp(name, "iout") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.iout);
-> +    } else if (strcmp(name, "pout") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.pout);
-> +    } else if (strcmp(name, "temperature") == 0) {
-> +        *internal = pmbus_data2linear_mode(value, max16600_exp.temp);
-> +    } else {
-> +        *internal = value;
-> +    }
-> +
-> +    pmbus_check_limits(pmdev);
-> +}
-> +
-> +static void max16600_init(Object *obj)
-> +{
-> +    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
-> +    uint64_t flags = PB_HAS_VOUT_MODE | PB_HAS_VIN | PB_HAS_IIN | PB_HAS_PIN |
-> +                     PB_HAS_IOUT | PB_HAS_POUT | PB_HAS_VOUT |
-> +                     PB_HAS_TEMPERATURE | PB_HAS_MFR_INFO;
-> +    pmbus_page_config(pmdev, 0, flags);
-> +
-> +    object_property_add(obj, "vin", "uint16", max16600_get, max16600_set, NULL,
-> +                        &pmdev->pages[0].read_vin);
-> +
-> +    object_property_add(obj, "iin", "uint16", max16600_get, max16600_set, NULL,
-> +                        &pmdev->pages[0].read_iin);
-> +
-> +    object_property_add(obj, "pin", "uint16", max16600_get, max16600_set, NULL,
-> +                        &pmdev->pages[0].read_pin);
-> +
-> +    object_property_add(obj, "vout", "uint16", max16600_get, max16600_set,
-> +                        NULL, &pmdev->pages[0].read_vout);
-> +
-> +    object_property_add(obj, "iout", "uint16", max16600_get, max16600_set,
-> +                        NULL, &pmdev->pages[0].read_iout);
-> +
-> +    object_property_add(obj, "pout", "uint16", max16600_get, max16600_set,
-> +                        NULL, &pmdev->pages[0].read_pout);
-> +
-> +    object_property_add(obj, "temperature", "uint16",
-> +                        max16600_get, max16600_set,
-> +                        NULL, &pmdev->pages[0].read_temperature_1);
-> +}
-> +
-> +static void max16600_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    PMBusDeviceClass *k = PMBUS_DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "MAX16600 Dual-Output Voltage Regulator";
-> +    k->write_data = max16600_write_data;
-> +    k->receive_byte = max16600_read_byte;
-> +    k->device_num_pages = 1;
-> +
-> +    rc->phases.exit = max16600_exit_reset;
-> +}
-> +
-> +static const TypeInfo max16600_info = {
-> +    .name = TYPE_MAX16600,
-> +    .parent = TYPE_PMBUS_DEVICE,
-> +    .instance_size = sizeof(MAX16600State),
-> +    .instance_init = max16600_init,
-> +    .class_init = max16600_class_init,
-> +};
-> +
-> +static void max16600_register_types(void)
-> +{
-> +    type_register_static(&max16600_info);
-> +}
-> +
-> +type_init(max16600_register_types)
-> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-> index 420fdc3359..85c2c73c99 100644
-> --- a/hw/sensor/meson.build
-> +++ b/hw/sensor/meson.build
-> @@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
->  system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
->  system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
->  system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
-> +system_ss.add(when: 'CONFIG_MAX_16600', if_true: files('max16600.c'))
-> diff --git a/include/hw/sensor/max16600.h b/include/hw/sensor/max16600.h
-> new file mode 100644
-> index 0000000000..a8cd0a5d4b
-> --- /dev/null
-> +++ b/include/hw/sensor/max16600.h
-> @@ -0,0 +1,46 @@
-> +/*
-> + * MAX16600 VR13.HC Dual-Output Voltage Regulator Chipset
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright 2025 Google LLC
-> + */
-> +
-> +#include "hw/i2c/pmbus_device.h"
-> +
-> +#define TYPE_MAX16600 "max16600"
-> +#define MAX16600(obj) OBJECT_CHECK(MAX16600State, (obj), TYPE_MAX16600)
-> +
-> +#define MAX16600_PHASE_ID       0xF3
-> +/*
-> + * Packet error checking capability is disabled.
-> + * Pending QEMU support
-> + */
-> +#define MAX16600_CAPABILITY_DEFAULT 0x30
-> +#define MAX16600_OPERATION_DEFAULT 0x88
-> +#define MAX16600_ON_OFF_CONFIG_DEFAULT 0x17
-> +#define MAX16600_VOUT_MODE_DEFAULT 0x22
-> +#define MAX16600_PHASE_ID_DEFAULT 0x80
-> +
-> +#define MAX16600_READ_VIN_DEFAULT 5    /* Volts */
-> +#define MAX16600_READ_IIN_DEFAULT 3    /* Amps */
-> +#define MAX16600_READ_PIN_DEFAULT 100  /* Watts */
-> +#define MAX16600_READ_VOUT_DEFAULT 5   /* Volts */
-> +#define MAX16600_READ_IOUT_DEFAULT 3   /* Amps */
-> +#define MAX16600_READ_POUT_DEFAULT 100 /* Watts */
-> +#define MAX16600_READ_TEMP_DEFAULT 40  /* Celsius */
-> +
-> +typedef struct MAX16600State {
-> +    PMBusDevice parent;
-> +    const char *ic_device_id;
-> +    uint8_t phase_id;
-> +} MAX16600State;
-> +
-> +/*
-> + * determines the exponents used in linear conversion for CORE
-> + * (iin, pin) may be (-4, 0) or (-3, 1)
-> + * iout may be -2, -1, 0, 1
-> + */
-> +static const struct {
-> +    int vin, iin, pin, iout, pout, temp;
-> +} max16600_exp = {-6, -4, 0, -2, -1, 0};
-> diff --git a/tests/qtest/max16600-test.c b/tests/qtest/max16600-test.c
-> new file mode 100644
-> index 0000000000..bad5da7989
-> --- /dev/null
-> +++ b/tests/qtest/max16600-test.c
-> @@ -0,0 +1,241 @@
-> +/*
-> + * QTest for the MAX16600 VR13.HC Dual-Output Voltage Regulator Chipset
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright 2025 Google LLC
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/i2c/pmbus_device.h"
-> +#include "hw/sensor/max16600.h"
-> +#include "libqtest-single.h"
-> +#include "libqos/qgraph.h"
-> +#include "libqos/i2c.h"
-> +#include "qobject/qdict.h"
-> +#include "qobject/qnum.h"
-> +#include "qemu/bitops.h"
-> +
-> +#define TEST_ID "max16600-test"
-> +#define TEST_ADDR (0x61)
-> +
-> +uint16_t pmbus_linear_mode2data(uint16_t value, int exp)
-> +{
-> +    /* D = L * 2^e */
-> +    if (exp < 0) {
-> +        return value >> (-exp);
-> +    }
-> +    return value << exp;
-> +}
-> +
-> +static uint16_t qmp_max16600_get(const char *id, const char *property)
-> +{
-> +    QDict *response;
-> +    uint64_t ret;
-> +
-> +    response = qmp("{ 'execute': 'qom-get', 'arguments': { 'path': %s, "
-> +                   "'property': %s } }",
-> +                   id, property);
-> +    g_assert(qdict_haskey(response, "return"));
-> +    ret = qnum_get_uint(qobject_to(QNum, qdict_get(response, "return")));
-> +    qobject_unref(response);
-> +    return ret;
-> +}
-> +
-> +static void qmp_max16600_set(const char *id, const char *property,
-> +                             uint16_t value)
-> +{
-> +    QDict *response;
-> +
-> +    response = qmp("{ 'execute': 'qom-set', 'arguments': { 'path': %s, "
-> +                   "'property': %s, 'value': %u } }",
-> +                   id, property, value);
-> +    g_assert(qdict_haskey(response, "return"));
-> +    qobject_unref(response);
-> +}
-> +
-> +static uint16_t max16600_i2c_get16(QI2CDevice *i2cdev, uint8_t reg)
-> +{
-> +    uint8_t resp[2];
-> +    i2c_read_block(i2cdev, reg, resp, sizeof(resp));
-> +    return (resp[1] << 8) | resp[0];
-> +}
-> +
-> +static void max16600_i2c_set16(QI2CDevice *i2cdev, uint8_t reg, uint16_t value)
-> +{
-> +    uint8_t data[2];
-> +
-> +    data[0] = value & 255;
-> +    data[1] = value >> 8;
-> +    i2c_write_block(i2cdev, reg, data, sizeof(data));
-> +}
-> +
-> +/* test default values */
-> +static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    uint16_t i2c_value, value;
-> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-> +
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_CAPABILITY);
-> +    g_assert_cmphex(i2c_value, ==, MAX16600_CAPABILITY_DEFAULT);
-> +
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_OPERATION);
-> +    g_assert_cmphex(i2c_value, ==, MAX16600_OPERATION_DEFAULT);
-> +
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_ON_OFF_CONFIG);
-> +    g_assert_cmphex(i2c_value, ==, MAX16600_ON_OFF_CONFIG_DEFAULT);
-> +
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_VOUT_MODE);
-> +    g_assert_cmphex(i2c_value, ==, MAX16600_VOUT_MODE_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "vin") / 1000;
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_VIN_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "iin") / 1000;
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_IIN_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "pin");
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_PIN_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "vout") / 1000;
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_VOUT_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "iout") / 1000;
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_IOUT_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "pout");
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_POUT_DEFAULT);
-> +
-> +    value = qmp_max16600_get(TEST_ID, "temperature") / 1000;
-> +    g_assert_cmpuint(value, ==, MAX16600_READ_TEMP_DEFAULT);
-> +}
-> +
-> +/* test qmp access */
-> +static void test_tx_rx(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    uint16_t value, i2c_value;
-> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-> +
-> +    qmp_max16600_set(TEST_ID, "vin", 2000);
-> +    value = qmp_max16600_get(TEST_ID, "vin") / 1000;
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VIN);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.vin);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "iin", 3000);
-> +    value = qmp_max16600_get(TEST_ID, "iin") / 1000;
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IIN);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.iin);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "pin", 4);
-> +    value = qmp_max16600_get(TEST_ID, "pin");
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_PIN);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.pin);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "vout", 5000);
-> +    value = qmp_max16600_get(TEST_ID, "vout") / 1000;
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VOUT);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "iout", 6000);
-> +    value = qmp_max16600_get(TEST_ID, "iout") / 1000;
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IOUT);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.iout);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "pout", 7);
-> +    value = qmp_max16600_get(TEST_ID, "pout");
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_POUT);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.pout);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +
-> +    qmp_max16600_set(TEST_ID, "temperature", 8000);
-> +    value = qmp_max16600_get(TEST_ID, "temperature") / 1000;
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_TEMPERATURE_1);
-> +    i2c_value = pmbus_linear_mode2data(i2c_value, max16600_exp.temp);
-> +    g_assert_cmpuint(value, ==, i2c_value);
-> +}
-> +
-> +/* test r/w registers */
-> +static void test_rw_regs(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    uint16_t i2c_value;
-> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-> +
-> +    max16600_i2c_set16(i2cdev, PMBUS_OPERATION, 0xA);
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_OPERATION);
-> +    g_assert_cmphex(i2c_value, ==, 0xA);
-> +
-> +    max16600_i2c_set16(i2cdev, PMBUS_ON_OFF_CONFIG, 0xB);
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_ON_OFF_CONFIG);
-> +    g_assert_cmphex(i2c_value, ==, 0xB);
-> +
-> +    max16600_i2c_set16(i2cdev, PMBUS_VOUT_MODE, 0xC);
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_VOUT_MODE);
-> +    g_assert_cmphex(i2c_value, ==, 0xC);
-> +}
-> +
-> +/* test read-only registers */
-> +static void test_ro_regs(void *obj, void *data, QGuestAllocator *alloc)
-> +{
-> +    uint16_t i2c_init_value, i2c_value;
-> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
-> +
-> +    i2c_init_value = i2c_get8(i2cdev, PMBUS_CAPABILITY);
-> +    max16600_i2c_set16(i2cdev, PMBUS_CAPABILITY, 0xD);
-> +    i2c_value = i2c_get8(i2cdev, PMBUS_CAPABILITY);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VIN);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_VIN, 0x1234);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VIN);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IIN);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_IIN, 0x2234);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IIN);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_PIN);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_PIN, 0x3234);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_PIN);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VOUT);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_VOUT, 0x4234);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_VOUT);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IOUT);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_IOUT, 0x5235);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_IOUT);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_POUT);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_POUT, 0x6234);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_POUT);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +
-> +    i2c_init_value = max16600_i2c_get16(i2cdev, PMBUS_READ_TEMPERATURE_1);
-> +    max16600_i2c_set16(i2cdev, PMBUS_READ_TEMPERATURE_1, 0x7236);
-> +    i2c_value = max16600_i2c_get16(i2cdev, PMBUS_READ_TEMPERATURE_1);
-> +    g_assert_cmphex(i2c_init_value, ==, i2c_value);
-> +}
-> +
-> +static void max16600_register_nodes(void)
-> +{
-> +    QOSGraphEdgeOptions opts = {.extra_device_opts =
-> +                                    "id=" TEST_ID ",address=0x61"};
-> +    add_qi2c_address(&opts, &(QI2CAddress){TEST_ADDR});
-> +
-> +    qos_node_create_driver("max16600", i2c_device_create);
-> +    qos_node_consumes("max16600", "i2c-bus", &opts);
-> +
-> +    qos_add_test("test_defaults", "max16600", test_defaults, NULL);
-> +    qos_add_test("test_tx_rx", "max16600", test_tx_rx, NULL);
-> +    qos_add_test("test_rw_regs", "max16600", test_rw_regs, NULL);
-> +    qos_add_test("test_ro_regs", "max16600", test_ro_regs, NULL);
-> +}
-> +libqos_init(max16600_register_nodes);
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 669d07c06b..459cf41985 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -295,6 +295,7 @@ qos_test_ss.add(
->    'es1370-test.c',
->    'lsm303dlhc-mag-test.c',
->    'isl_pmbus_vr-test.c',
-> +  'max16600-test.c',
->    'max34451-test.c',
->    'megasas-test.c',
->    'ne2000-test.c',
 
-For qtest:
+On 9/16/25 3:08 PM, Kevin Wolf wrote:
+> Am 30.08.2025 um 04:50 hat Brian Song geschrieben:
+>> This patch adds a new export option for storage-export-daemon to enable
+>> FUSE-over-io_uring via the switch io-uring=on|off (disableby default).
+>> It also implements the protocol handshake with the Linux kernel
+>> during the FUSE-over-io_uring initialization phase.
+>>
+>> See: https://docs.kernel.org/filesystems/fuse-io-uring.html
+>>
+>> The kernel documentation describes in detail how FUSE-over-io_uring
+>> works. This patch implements the Initial SQE stage shown in thediagram:
+>> it initializes one queue per IOThread, each currently supporting a
+>> single submission queue entry (SQE). When the FUSE driver sends the
+>> first FUSE request (FUSE_INIT), storage-export-daemon calls
+>> fuse_uring_start() to complete initialization, ultimately submitting
+>> the SQE with the FUSE_IO_URING_CMD_REGISTER command to confirm
+>> successful initialization with the kernel.
+>>
+>> We also added support for multiple IOThreads. The current Linux kernel
+>> requires registering $(nproc) queues when setting up FUSE-over-io_uring
+>> To let users customize the number of FUSE Queues (i.e., IOThreads),
+>> we first create nproc Ring Queues as required by the kernel, then
+>> distribute them in a round-robin manner to the FUSE Queues for
+>> registration. In addition, to support multiple in-flight requests,
+>> we configure each Ring Queue with FUSE_DEFAULT_RING_QUEUE_DEPTH
+>> entries/requests.
+>>
+>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> Signed-off-by: Brian Song <hibriansong@gmail.com>
+>> ---
+>>   block/export/fuse.c                  | 310 +++++++++++++++++++++++++--
+>>   docs/tools/qemu-storage-daemon.rst   |  11 +-
+>>   qapi/block-export.json               |   5 +-
+>>   storage-daemon/qemu-storage-daemon.c |   1 +
+>>   util/fdmon-io_uring.c                |   5 +-
+>>   5 files changed, 309 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/block/export/fuse.c b/block/export/fuse.c
+>> index c0ad4696ce..19bf9e5f74 100644
+>> --- a/block/export/fuse.c
+>> +++ b/block/export/fuse.c
+>> @@ -48,6 +48,9 @@
+>>   #include <linux/fs.h>
+>>   #endif
+>>   
+>> +/* room needed in buffer to accommodate header */
+>> +#define FUSE_BUFFER_HEADER_SIZE 0x1000
+>> +
+>>   /* Prevent overly long bounce buffer allocations */
+>>   #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+>>   /*
+>> @@ -63,12 +66,59 @@
+>>       (FUSE_MAX_WRITE_BYTES - FUSE_IN_PLACE_WRITE_BYTES)
+>>   
+>>   typedef struct FuseExport FuseExport;
+>> +typedef struct FuseQueue FuseQueue;
+>> +
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +#define FUSE_DEFAULT_RING_QUEUE_DEPTH 64
+>> +#define FUSE_DEFAULT_MAX_PAGES_PER_REQ 32
+> 
+> Maybe it would be a little clearer if the next few types has URing in
+> their name instead of just Ring.
+> 
+>> +typedef struct FuseRingQueue FuseRingQueue;
+>> +typedef struct FuseRingEnt {
+>> +    /* back pointer */
+>> +    FuseRingQueue *rq;
+>> +
+>> +    /* commit id of a fuse request */
+>> +    uint64_t req_commit_id;
+>> +
+>> +    /* fuse request header and payload */
+>> +    struct fuse_uring_req_header req_header;
+>> +    void *op_payload;
+>> +    size_t req_payload_sz;
+>> +
+>> +    /* The vector passed to the kernel */
+>> +    struct iovec iov[2];
+>> +
+>> +    CqeHandler fuse_cqe_handler;
+>> +} FuseRingEnt;
+>> +
+>> +struct FuseRingQueue {
+> 
+> It would be good to have a comment here that explains the difference
+> between FuseQueue and FuseRingQueue.
+> 
+> Is this a distinction that should remain in the long run or would we
+> always have a 1:1 mapping between FuseQueue and FuseRingQueue once the
+> pending kernel changes are merged that allow a number of uring queues
+> different from the number of CPUs?
+> 
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Stefan mentioned the issue, and I added some comments here. One thing to 
+note is that FuseRingQueueManager and the distribution between FuseQueue 
+and FuseRingQueue are just temporary measures until the kernel allows 
+user-defined queues. Therefore, I don't think it's a good idea to remove 
+FuseRingQueueManager at this stage.
+
+If you look back at the v2 patch, we put the ring entries inside the 
+FuseQueue. The result was that we had to define nproc IOThreads 
+(FuseQueue) in order to make it work. That's why here I separated the 
+numbers of the two types of queues and RingQueue into independent 
+abstractions: allocate nproc RingQueues and initialize the entries, then 
+distribute them to FuseQueues in a round-robin manner. Once the kernel 
+supports a user-defined number of queues, we can remove 
+FuseRingQueueManager and the RR distribution.
+
+Also, to keep the variable names consistent with those in the kernel and 
+libfuse, I use Ring here instead of URing.
+
+>> +    int rqid;
+>> +
+>> +    /* back pointer */
+>> +    FuseQueue *q;
+>> +    FuseRingEnt *ent;
+>> +
+>> +    /* List entry for ring_queues */
+>> +    QLIST_ENTRY(FuseRingQueue) next;
+>> +};
+>> +
+>> +/*
+>> + * Round-robin distribution of ring queues across FUSE queues.
+>> + * This structure manages the mapping between kernel ring queues and user
+>> + * FUSE queues.
+>> + */
+>> +typedef struct FuseRingQueueManager {
+>> +    FuseRingQueue *ring_queues;
+>> +    int num_ring_queues;
+>> +    int num_fuse_queues;
+>> +} FuseRingQueueManager;
+> 
+> This isn't a manager, it's just the set of queues the export uses.
+> 
+> num_fuse_queues duplicates exp->num_queues, there is no reason for it to
+> exist. All users also have access to the FuseExport itself.
+> 
+> The other two fields can just be merged directly into FuseExport,
+> preferably renamed to uring_queues and num_uring_queues.
+> >> +#endif
+>>   
+>>   /*
+>>    * One FUSE "queue", representing one FUSE FD from which requests are fetched
+>>    * and processed.  Each queue is tied to an AioContext.
+>>    */
+>> -typedef struct FuseQueue {
+>> +struct FuseQueue {
+>>       FuseExport *exp;
+>>   
+>>       AioContext *ctx;
+>> @@ -109,15 +159,11 @@ typedef struct FuseQueue {
+>>        * Free this buffer with qemu_vfree().
+>>        */
+>>       void *spillover_buf;
+>> -} FuseQueue;
+>>   
+>> -/*
+>> - * Verify that FuseQueue.request_buf plus the spill-over buffer together
+>> - * are big enough to be accepted by the FUSE kernel driver.
+>> - */
+>> -QEMU_BUILD_BUG_ON(sizeof(((FuseQueue *)0)->request_buf) +
+>> -                  FUSE_SPILLOVER_BUF_SIZE <
+>> -                  FUSE_MIN_READ_BUFFER);
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +    QLIST_HEAD(, FuseRingQueue) ring_queue_list;
+>> +#endif
+>> +};
+>>   
+>>   struct FuseExport {
+>>       BlockExport common;
+>> @@ -133,7 +179,7 @@ struct FuseExport {
+>>        */
+>>       bool halted;
+>>   
+>> -    int num_queues;
+>> +    size_t num_queues;
+> 
+> I'm not sure why this change is needed. If it is, can it be a separate
+> patch before this one, with a commit message describing the reason?
+> 
+
+I feel there's no reason to use a signed int here, since the number of 
+queues cannot be negative.
+
+>>       FuseQueue *queues;
+>>       /*
+>>        * True if this export should follow the generic export's AioContext.
+>> @@ -149,6 +195,12 @@ struct FuseExport {
+>>       /* Whether allow_other was used as a mount option or not */
+>>       bool allow_other;
+>>   
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +    bool is_uring;
+>> +    size_t ring_queue_depth;
+>> +    FuseRingQueueManager *ring_queue_manager;
+>> +#endif
+>> +
+>>       mode_t st_mode;
+>>       uid_t st_uid;
+>>       gid_t st_gid;
+>> @@ -205,7 +257,7 @@ static void fuse_attach_handlers(FuseExport *exp)
+>>           return;
+>>       }
+>>   
+>> -    for (int i = 0; i < exp->num_queues; i++) {
+>> +    for (size_t i = 0; i < exp->num_queues; i++) {
+>>           aio_set_fd_handler(exp->queues[i].ctx, exp->queues[i].fuse_fd,
+>>                              read_from_fuse_fd, NULL, NULL, NULL,
+>>                              &exp->queues[i]);
+>> @@ -257,6 +309,189 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+>>       .drained_poll  = fuse_export_drained_poll,
+>>   };
+>>   
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +static void fuse_uring_sqe_set_req_data(struct fuse_uring_cmd_req *req,
+>> +                    const unsigned int rqid,
+>> +                    const unsigned int commit_id)
+> 
+> Indentation is off here. There are two accepted styles for indentation
+> after breaking a long line in QEMU (see docs/devel/style.rst):
+> 
+> 1. Indent the next line by exactly four spaces:
+> 
+>      do_something(x, y,
+>          z);
+> 
+> 2. Align the next line with the first character after the opening
+>     parenthesis:
+> 
+>      do_something(x, y,
+>                   z);
+> 
+> The second one is the preferred one. The first one is generally only
+> used when the parenthesis is already too far right and we can't do much
+> about it.
+> 
+>> +{
+>> +    req->qid = rqid;
+>> +    req->commit_id = commit_id;
+>> +    req->flags = 0;
+>> +}
+>> +
+>> +static void fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseQueue *q,
+>> +               __u32 cmd_op)
+> 
+> Indentation.
+> 
+> Another option here is to keep everything before the function name on a
+> separate line, like this:
+> 
+> static void
+> fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseQueue *q, __u32 cmd_op)
+> 
+> This would allow the second line to stay under 80 characters.
+> 
+>> +{
+>> +    sqe->opcode = IORING_OP_URING_CMD;
+>> +
+>> +    sqe->fd = q->fuse_fd;
+>> +    sqe->rw_flags = 0;
+>> +    sqe->ioprio = 0;
+>> +    sqe->off = 0;
+>> +
+>> +    sqe->cmd_op = cmd_op;
+>> +    sqe->__pad1 = 0;
+>> +}
+>> +
+>> +static void fuse_uring_prep_sqe_register(struct io_uring_sqe *sqe, void *opaque)
+>> +{
+>> +    FuseRingEnt *ent = opaque;
+>> +    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
+>> +
+>> +    fuse_uring_sqe_prepare(sqe, ent->rq->q, FUSE_IO_URING_CMD_REGISTER);
+>> +
+>> +    sqe->addr = (uint64_t)(ent->iov);
+>> +    sqe->len = 2;
+>> +
+>> +    fuse_uring_sqe_set_req_data(req, ent->rq->rqid, 0);
+>> +}
+>> +
+>> +static void fuse_uring_submit_register(void *opaque)
+>> +{
+>> +    FuseRingEnt *ent = opaque;
+>> +    FuseExport *exp = ent->rq->q->exp;
+>> +
+>> +
+> 
+> Extra empty line.
+> 
+>> +    aio_add_sqe(fuse_uring_prep_sqe_register, ent, &(ent->fuse_cqe_handler));
+> 
+> The parentheses around ent->fuse_cqe_handler are unnecessary.
+> 
+>> +}
+>> +
+>> +/**
+>> + * Distribute ring queues across FUSE queues using round-robin algorithm.
+> 
+> Hm, if this function distributes (u)ring queues, then what is
+> fuse_distribute_ring_queues() doing? Is the term overloaded with two
+> meanings?
+> 
+>> + * This ensures even distribution of kernel ring queues across user-specified
+>> + * FUSE queues.
+>> + */
+>> +static
+>> +FuseRingQueueManager *fuse_ring_queue_manager_create(int num_fuse_queues,
+>> +                                                    size_t ring_queue_depth,
+>> +                                                    size_t bufsize)
+> 
+> The right style here would be something like:
+> 
+> static FuseRingQueueManager *
+> fuse_ring_queue_manager_create(int num_fuse_queues,
+>                                 size_t ring_queue_depth,
+>                                 size_t bufsize)
+> 
+> Given that I said that there is no reason to call the set of all queues
+> a manager, or to even have it separate from FuseExport, this probably
+> becomes fuse_uring_setup_queues() or something.
+> 
+>> +{
+>> +    int num_ring_queues = get_nprocs();
+> 
+> This could use a comment saying that this is a kernel requirement at the
+> moment.
+> 
+>> +    FuseRingQueueManager *manager = g_new(FuseRingQueueManager, 1);
+>> +
+>> +    if (!manager) {
+>> +        return NULL;
+>> +    }
+> 
+> g_new() never returns NULL, it aborts on error instead, so no reason to
+> have a NULL check here.
+> 
+>> +
+>> +    manager->ring_queues = g_new(FuseRingQueue, num_ring_queues);
+>> +    manager->num_ring_queues = num_ring_queues;
+>> +    manager->num_fuse_queues = num_fuse_queues;
+>> +
+>> +    if (!manager->ring_queues) {
+>> +        g_free(manager);
+>> +        return NULL;
+>> +    }
+> 
+> This check is unnecessary for the same reason.
+> 
+>> +
+>> +    for (int i = 0; i < num_ring_queues; i++) {
+>> +        FuseRingQueue *rq = &manager->ring_queues[i];
+>> +        rq->rqid = i;
+>> +        rq->ent = g_new(FuseRingEnt, ring_queue_depth);
+>> +
+>> +        if (!rq->ent) {
+>> +            for (int j = 0; j < i; j++) {
+>> +                g_free(manager->ring_queues[j].ent);
+>> +            }
+>> +            g_free(manager->ring_queues);
+>> +            g_free(manager);
+>> +            return NULL;
+>> +        }
+> 
+> This one, too.
+> 
+>> +
+>> +        for (size_t j = 0; j < ring_queue_depth; j++) {
+>> +            FuseRingEnt *ent = &rq->ent[j];
+>> +            ent->rq = rq;
+>> +            ent->req_payload_sz = bufsize - FUSE_BUFFER_HEADER_SIZE;
+>> +            ent->op_payload = g_malloc0(ent->req_payload_sz);
+>> +
+>> +            if (!ent->op_payload) {
+>> +                for (size_t k = 0; k < j; k++) {
+>> +                    g_free(rq->ent[k].op_payload);
+>> +                }
+>> +                g_free(rq->ent);
+>> +                for (int k = 0; k < i; k++) {
+>> +                    g_free(manager->ring_queues[k].ent);
+>> +                }
+>> +                g_free(manager->ring_queues);
+>> +                g_free(manager);
+>> +                return NULL;
+>> +            }
+> 
+> And this one.
+> 
+> Removing all of them will make the function a lot more readable.
+> 
+>> +
+>> +            ent->iov[0] = (struct iovec) {
+>> +                &(ent->req_header),
+> 
+> Unnecessary parentheses.
+> 
+>> +                sizeof(struct fuse_uring_req_header)
+>> +            };
+>> +            ent->iov[1] = (struct iovec) {
+>> +                ent->op_payload,
+>> +                ent->req_payload_sz
+>> +            };
+>> +
+>> +            ent->fuse_cqe_handler.cb = fuse_uring_cqe_handler;
+>> +        }
+>> +    }
+>> +
+>> +    return manager;
+>> +}
+>> +
+>> +static
+>> +void fuse_distribute_ring_queues(FuseExport *exp, FuseRingQueueManager *manager)
+>> +{
+>> +    int queue_index = 0;
+>> +
+>> +    for (int i = 0; i < manager->num_ring_queues; i++) {
+>> +        FuseRingQueue *rq = &manager->ring_queues[i];
+>> +
+>> +        rq->q = &exp->queues[queue_index];
+>> +        QLIST_INSERT_HEAD(&(rq->q->ring_queue_list), rq, next);
+>> +
+>> +        queue_index = (queue_index + 1) % manager->num_fuse_queues;
+>> +    }
+>> +}
+> 
+> Ok, no overloaded meaning of distributing queues, but this function
+> should probably be merged with the one above. It's part of setting up
+> the queues.
+> 
+> You don't need a separate queue_index counter, you can just directly use
+> exp->queues[i % manager->num_fuse_queues].
+> 
+
+There are two steps:
+
+1. Create uring queues and allocate buffers for each entry's payload.
+
+2. Distribute these uring queues to FUSE queues using a round-robin 
+algorithm.
+
+Given that this is only a temporary measure to allow users to define 
+their own IOThreads/FUSE queues, we might later replace the second part 
+of the logic. I believe it's better to separate these two pieces of 
+logic rather than combining them.
+
+
+>> +static
+>> +void fuse_schedule_ring_queue_registrations(FuseExport *exp,
+>> +                                            FuseRingQueueManager *manager)
+> 
+> Again the formatting. If you split the line before the function name, it
+> should be "static void" on the first line.
+> 
+>> +{
+>> +    for (int i = 0; i < manager->num_fuse_queues; i++) {
+>> +        FuseQueue *q = &exp->queues[i];
+>> +        FuseRingQueue *rq;
+>> +
+>> +        QLIST_FOREACH(rq, &q->ring_queue_list, next) {
+>> +            for (int j = 0; j < exp->ring_queue_depth; j++) {
+>> +                aio_bh_schedule_oneshot(q->ctx, fuse_uring_submit_register,
+>> +                                        &(rq->ent[j]));
+>> +            }
+>> +        }
+>> +    }
+>> +}
+> 
+> Why one BH per queue entry? This adds up quickly. All entries of the
+> same queue need to be processed in the same AioContext, so wouldn't it
+> make more sense to have a BH per (FUSE) queue and handle all of its
+> uring queues and their entries in a single BH?
+> 
+>> +static void fuse_uring_start(FuseExport *exp, struct fuse_init_out *out)
+>> +{
+>> +    /*
+>> +     * Since we didn't enable the FUSE_MAX_PAGES feature, the value of
+>> +     * fc->max_pages should be FUSE_DEFAULT_MAX_PAGES_PER_REQ, which is set by
+>> +     * the kernel by default. Also, max_write should not exceed
+>> +     * FUSE_DEFAULT_MAX_PAGES_PER_REQ * PAGE_SIZE.
+>> +     */
+>> +    size_t bufsize = out->max_write + FUSE_BUFFER_HEADER_SIZE;
+>> +
+>> +    if (!(out->flags & FUSE_MAX_PAGES)) {
+>> +        bufsize = FUSE_DEFAULT_MAX_PAGES_PER_REQ * qemu_real_host_page_size()
+>> +                         + FUSE_BUFFER_HEADER_SIZE;
+>> +    }
+>> +
+>> +    exp->ring_queue_manager = fuse_ring_queue_manager_create(
+>> +        exp->num_queues, exp->ring_queue_depth, bufsize);
+>> +
+>> +    if (!exp->ring_queue_manager) {
+>> +        error_report("Failed to create ring queue manager");
+>> +        return;
+>> +    }
+>> +
+>> +    /* Distribute ring queues across FUSE queues using round-robin */
+>> +    fuse_distribute_ring_queues(exp, exp->ring_queue_manager);
+>> +
+>> +    fuse_schedule_ring_queue_registrations(exp, exp->ring_queue_manager);
+>> +}
+>> +#endif
+>> +
+>>   static int fuse_export_create(BlockExport *blk_exp,
+>>                                 BlockExportOptions *blk_exp_args,
+>>                                 AioContext *const *multithread,
+>> @@ -270,6 +505,11 @@ static int fuse_export_create(BlockExport *blk_exp,
+>>   
+>>       assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
+>>   
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +    exp->is_uring = args->io_uring;
+>> +    exp->ring_queue_depth = FUSE_DEFAULT_RING_QUEUE_DEPTH;
+>> +#endif
+>> +
+>>       if (multithread) {
+>>           /* Guaranteed by common export code */
+>>           assert(mt_count >= 1);
+>> @@ -283,6 +523,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+>>                   .exp = exp,
+>>                   .ctx = multithread[i],
+>>                   .fuse_fd = -1,
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +                .ring_queue_list =
+>> +                    QLIST_HEAD_INITIALIZER(exp->queues[i].ring_queue_list),
+>> +#endif
+>>               };
+>>           }
+>>       } else {
+>> @@ -296,6 +540,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+>>               .exp = exp,
+>>               .ctx = exp->common.ctx,
+>>               .fuse_fd = -1,
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +            .ring_queue_list =
+>> +                QLIST_HEAD_INITIALIZER(exp->queues[0].ring_queue_list),
+>> +#endif
+>>           };
+>>       }
+>>   
+>> @@ -685,17 +933,39 @@ static bool is_regular_file(const char *path, Error **errp)
+>>    */
+>>   static ssize_t coroutine_fn
+>>   fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+>> -             uint32_t max_readahead, uint32_t flags)
+>> +             uint32_t max_readahead, const struct fuse_init_in *in)
+>>   {
+>> -    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
+>> +    uint64_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO
+>> +                                     | FUSE_INIT_EXT;
+>> +    uint64_t outargflags = 0;
+>> +    uint64_t inargflags = in->flags;
+>> +
+>> +    ssize_t ret = 0;
+>> +
+>> +    if (inargflags & FUSE_INIT_EXT) {
+>> +        inargflags = inargflags | (uint64_t) in->flags2 << 32;
+>> +    }
+>> +
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +    if (exp->is_uring) {
+>> +        if (inargflags & FUSE_OVER_IO_URING) {
+>> +            supported_flags |= FUSE_OVER_IO_URING;
+>> +        } else {
+>> +            exp->is_uring = false;
+>> +            ret = -ENODEV;
+> 
+> Add a 'goto out' here...
+> 
+>> +        }
+>> +    }
+>> +#endif
+>> +
+>> +    outargflags = inargflags & supported_flags;
+>>   
+>>       *out = (struct fuse_init_out) {
+>>           .major = FUSE_KERNEL_VERSION,
+>>           .minor = FUSE_KERNEL_MINOR_VERSION,
+>>           .max_readahead = max_readahead,
+>>           .max_write = FUSE_MAX_WRITE_BYTES,
+>> -        .flags = flags & supported_flags,
+>> -        .flags2 = 0,
+>> +        .flags = outargflags,
+>> +        .flags2 = outargflags >> 32,
+>>   
+>>           /* libfuse maximum: 2^16 - 1 */
+>>           .max_background = UINT16_MAX,
+>> @@ -717,7 +987,7 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+>>           .map_alignment = 0,
+>>       };
+>> -    return sizeof(*out);
+>> +    return ret < 0 ? ret : sizeof(*out);
+> 
+> ...and make this:
+> 
+>      ret = sizeof(*out);
+> out:
+>      return ret;
+> 
+>>   }
+>>   
+>>   /**
+>> @@ -1506,6 +1776,14 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+>>           fuse_write_buf_response(q->fuse_fd, req_id, out_hdr,
+>>                                   out_data_buffer, ret);
+>>           qemu_vfree(out_data_buffer);
+>> +#ifdef CONFIG_LINUX_IO_URING
+>> +    /* Handle FUSE-over-io_uring initialization */
+>> +    if (unlikely(opcode == FUSE_INIT && exp->is_uring)) {
+>> +        struct fuse_init_out *out =
+>> +            (struct fuse_init_out *)FUSE_OUT_OP_STRUCT(out_buf);
+>> +        fuse_uring_start(exp, out);
+>> +    }
+>> +#endif
+> 
+> A level of indentation was lost here.
+> 
+>>       } else {
+>>           fuse_write_response(q->fuse_fd, req_id, out_hdr,
+>>                               ret < 0 ? ret : 0,
+>> diff --git a/docs/tools/qemu-storage-daemon.rst b/docs/tools/qemu-storage-daemon.rst
+>> index 35ab2d7807..c5076101e0 100644
+>> --- a/docs/tools/qemu-storage-daemon.rst
+>> +++ b/docs/tools/qemu-storage-daemon.rst
+>> @@ -78,7 +78,7 @@ Standard options:
+>>   .. option:: --export [type=]nbd,id=<id>,node-name=<node-name>[,name=<export-name>][,writable=on|off][,bitmap=<name>]
+>>     --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=unix,addr.path=<socket-path>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+>>     --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=fd,addr.str=<fd>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+>> -  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto]
+>> +  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto][,io-uring=on|off]
+>>     --export [type=]vduse-blk,id=<id>,node-name=<node-name>,name=<vduse-name>[,writable=on|off][,num-queues=<num-queues>][,queue-size=<queue-size>][,logical-block-size=<block-size>][,serial=<serial-number>]
+>>   
+>>     is a block export definition. ``node-name`` is the block node that should be
+>> @@ -111,10 +111,11 @@ Standard options:
+>>     that enabling this option as a non-root user requires enabling the
+>>     user_allow_other option in the global fuse.conf configuration file.  Setting
+>>     ``allow-other`` to auto (the default) will try enabling this option, and on
+>> -  error fall back to disabling it.
+>> -
+>> -  The ``vduse-blk`` export type takes a ``name`` (must be unique across the host)
+>> -  to create the VDUSE device.
+>> +  error fall back to disabling it. Once ``io-uring`` is enabled (off by default),
+>> +  the FUSE-over-io_uring-related settings will be initialized to bypass the
+>> +  traditional /dev/fuse communication mechanism and instead use io_uring to
+>> +  handle FUSE operations. The ``vduse-blk`` export type takes a ``name``
+>> +  (must be unique across the host) to create the VDUSE device.
+>>     ``num-queues`` sets the number of virtqueues (the default is 1).
+>>     ``queue-size`` sets the virtqueue descriptor table size (the default is 256).
+>>   
+>> diff --git a/qapi/block-export.json b/qapi/block-export.json
+>> index 9ae703ad01..37f2fc47e2 100644
+>> --- a/qapi/block-export.json
+>> +++ b/qapi/block-export.json
+>> @@ -184,12 +184,15 @@
+>>   #     mount the export with allow_other, and if that fails, try again
+>>   #     without.  (since 6.1; default: auto)
+>>   #
+>> +# @io-uring: Use FUSE-over-io-uring.  (since 10.2; default: false)
+>> +#
+>>   # Since: 6.0
+>>   ##
+>>   { 'struct': 'BlockExportOptionsFuse',
+>>     'data': { 'mountpoint': 'str',
+>>               '*growable': 'bool',
+>> -            '*allow-other': 'FuseExportAllowOther' },
+>> +            '*allow-other': 'FuseExportAllowOther',
+>> +            '*io-uring': 'bool' },
+>>     'if': 'CONFIG_FUSE' }
+>>   
+>>   ##
+>> diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+>> index eb72561358..0cd4cd2b58 100644
+>> --- a/storage-daemon/qemu-storage-daemon.c
+>> +++ b/storage-daemon/qemu-storage-daemon.c
+>> @@ -107,6 +107,7 @@ static void help(void)
+>>   #ifdef CONFIG_FUSE
+>>   "  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>\n"
+>>   "           [,growable=on|off][,writable=on|off][,allow-other=on|off|auto]\n"
+>> +"           [,io-uring=on|off]"
+>>   "                         export the specified block node over FUSE\n"
+>>   "\n"
+>>   #endif /* CONFIG_FUSE */
+>> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+>> index d2433d1d99..68d3fe8e01 100644
+>> --- a/util/fdmon-io_uring.c
+>> +++ b/util/fdmon-io_uring.c
+>> @@ -452,10 +452,13 @@ static const FDMonOps fdmon_io_uring_ops = {
+>>   void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+>>   {
+>>       int ret;
+>> +    int flags;
+>>   
+>>       ctx->io_uring_fd_tag = NULL;
+>> +    flags = IORING_SETUP_SQE128;
+>>   
+>> -    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+>> +    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES,
+>> +                            &ctx->fdmon_io_uring, flags);
+> 
+> The indentation is off here.
+> 
+>>       if (ret != 0) {
+>>           error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+>>           return;
+> 
+> The change to fdmon-io_uring.c should be a separate patch. It's a
+> prerequisite for, but not directly part of io_uring support in FUSE.
+> 
+> Kevin
+> 
+
 
