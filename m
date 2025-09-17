@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D777ACAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35AACAC5A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyuzb-0003tM-Qw; Wed, 17 Sep 2025 12:26:51 -0400
+	id 1uyv0U-0004Xg-MA; Wed, 17 Sep 2025 12:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyuzX-0003s9-3F
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:26:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uyv0R-0004X6-Vb
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:27:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyuzV-0002FO-5n
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:26:46 -0400
+ id 1uyv0Q-0002HC-Ax
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:27:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758126404;
+ s=mimecast20190719; t=1758126461;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EqhuwGi6H3Q2byL0tqEwD6JYj4RMpDrC49lpCY7PLmg=;
- b=DpnV8g0TPVCHwnJNVGTGKeZDaXdtMMnySpA9+FE+zvinR5yx450O3w1AdipzK2s+vjPqp0
- K+xC4boLo8DQJVlnEi3gw7dBAZxbLG3d8gQowOvekYeqVEY28b4jAVViExSPNpRTEe9SqZ
- aRVPn6wm1MVFrEuJronDc1QTZp2iaO8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IXOx+jvVJd3lNAzICcdpQlTQ2913UvUrv5ED+R6MTL0=;
+ b=EMD78PBVAGexFD6ErS6dro535hkkU9+x20MruK9zHhSeXVHJ0a5XMcqNb+WfDiDt5jl7+J
+ UDDJLnTY1vz8tNhuiRweW1T13yU913kkky3yJo/nx2tnqJ5dY4p9rfmz3Y/3aDIyZzPETI
+ 0qaDBg1Cm6pOxbbcXGxoON4163Y8eaM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-hapfZl48PW2hRo36aERNxg-1; Wed,
- 17 Sep 2025 12:26:40 -0400
-X-MC-Unique: hapfZl48PW2hRo36aERNxg-1
-X-Mimecast-MFC-AGG-ID: hapfZl48PW2hRo36aERNxg_1758126395
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-SZbV2YjlNuOnI3UjfZyBFQ-1; Wed,
+ 17 Sep 2025 12:27:39 -0400
+X-MC-Unique: SZbV2YjlNuOnI3UjfZyBFQ-1
+X-Mimecast-MFC-AGG-ID: SZbV2YjlNuOnI3UjfZyBFQ_1758126455
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D764318002C5; Wed, 17 Sep 2025 16:26:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D16311800284; Wed, 17 Sep 2025 16:27:33 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 787DA180035E; Wed, 17 Sep 2025 16:26:08 +0000 (UTC)
-Date: Wed, 17 Sep 2025 17:26:01 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1FFA51800446; Wed, 17 Sep 2025 16:27:04 +0000 (UTC)
+Date: Wed, 17 Sep 2025 17:26:59 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
@@ -89,18 +89,19 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
  Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v3 2/7] vfio/pci: Do not unparent in instance_finalize()
-Message-ID: <aMrhGZrMhzUPWmGf@redhat.com>
+Subject: Re: [PATCH v3 3/7] hw/core/register: Do not unparent in
+ instance_finalize()
+Message-ID: <aMrhU7-Z-mKUUVe3@redhat.com>
 References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
- <20250917-use-v3-2-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-use-v3-3-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250917-use-v3-2-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250917-use-v3-3-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,7 +110,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,19 +127,20 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 07:13:27PM +0900, Akihiko Odaki wrote:
+On Wed, Sep 17, 2025 at 07:13:28PM +0900, Akihiko Odaki wrote:
 > Children are automatically unparented so manually unparenting is
 > unnecessary.
 > 
-> Worse, automatic unparenting happens before the insntance_finalize()
+> Worse, automatic unparenting happens before the instance_finalize()
 > callback of the parent gets called, so object_unparent() calls in
 > the callback will refer to objects that are already unparented, which
 > is semantically incorrect.
 > 
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->  hw/vfio/pci.c | 4 ----
->  1 file changed, 4 deletions(-)
+>  hw/core/register.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
