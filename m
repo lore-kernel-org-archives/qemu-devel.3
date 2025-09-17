@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D5ECAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9D52CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrEm-0004Ut-6E; Wed, 17 Sep 2025 08:26:16 -0400
+	id 1uyrF2-0004uc-27; Wed, 17 Sep 2025 08:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyrEb-0004QI-6s
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:26:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrEw-0004sc-BT; Wed, 17 Sep 2025 08:26:26 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyrEY-00019O-LV
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:26:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758111958;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VnVXQSRE3XnlbwBZhW8DnCp4bP9gVf0+88xqUVmtMuY=;
- b=TdZB+5VCM0A4iGRul0tx5/T0fCbE4dmbgV7ogbwnLu0p0nx7YgHJevt8lyg3UCeCg26mpZ
- LMZapNeZpx/lTEzFcGaZzV4pgpzjcrXXb+GywtXgXc2JalqCUwY/3qsRonJ//YE3e3OqSW
- JcfWNQLtmdMWOMA8k/gdMnVShrfsS60=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-nxij16wsN2CotcJZ07VUrQ-1; Wed, 17 Sep 2025 08:25:56 -0400
-X-MC-Unique: nxij16wsN2CotcJZ07VUrQ-1
-X-Mimecast-MFC-AGG-ID: nxij16wsN2CotcJZ07VUrQ_1758111955
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3df07c967e9so1223335f8f.2
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 05:25:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758111955; x=1758716755;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VnVXQSRE3XnlbwBZhW8DnCp4bP9gVf0+88xqUVmtMuY=;
- b=Qn3Mt5pCK34LGOhw84ew7xVRnvSpvAS6BNJUkV0tPyFisnJACQTkk2xoQOJnVgHbIj
- HwwtTuJui/tQwsHj20yqXqJ/8c4HmcrgITHaWCfE/KHLwCkRghhNB6I2ZM5wYJnWKyfV
- VOdj+948yAXOUrheBvkuSgn6bDTvc9gc1VoPwi9d7gIJn9MqQUJKZgBU3Oi4zI4dswfu
- 4olyx/K4ffUNq5DvTfdmnWoQdWkQ5YxkYCVjQ4TCmln7qhDS7jHH1AaK0IKyQfldg9Uw
- HggGe+fC+OOnoUMXkcHTsiL8EYHy48maMijyUBS4WZm/nsgugzC/nwl7RdgFJh5rZwlX
- EFmQ==
-X-Gm-Message-State: AOJu0YwLi8ORB742UVVkXi7GO82rTTK9mvTv2pEMxAH8ub+mBVZ5mUis
- 1JulrkjEPgPE3Hdq+WZQ7scvKKa+AGBRhT7hf//39zW3M57bJ0SMvJE7M7IHwpICinS0ZKDXsRo
- wXlvvtBL0JvPtSMuySBgg4I8JVaz60zsJgMhNeQkn/m2E5IWa+P1o9rQc
-X-Gm-Gg: ASbGnctKHow3e95DAeuvMv3P4A1Uqw8Ttr+dbjjhw46VtgDbceAawMdF+rvLNF3CYYX
- +r40qXn4Q0a8nARLmZQKFcqiF+/dYpyTezwA98LDMB9O9vel1EZcq4C01mU48aJac0xcPATPJnl
- qEFaZeFSV19QKPtdnhTPZIG3PFj91RoUBW1+qMaenvCbWiwv/4qDmI1yT5WXqVkp3LIfxattEnR
- 2mbxeyiqFgQHVHqkn7AfWh2n6gGFYDb3OkmzF1UJIsxMfMroSNI5YLpldvWqoWlykhrH/uAx63m
- 9nYZAaSQw7MP6zlIVxvfnntTwC6fe6f3usMjUzZA/pM9
-X-Received: by 2002:a05:6000:2881:b0:3ec:2529:b4e5 with SMTP id
- ffacd0b85a97d-3ecdfa0d552mr1903253f8f.38.1758111955426; 
- Wed, 17 Sep 2025 05:25:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcMvD01Gs3ifBkoBFodoxF1xqThz/2gk6MrQ6vCEzQkICanKHUNyP2WphZQRGNxoLYGKjmKQ==
-X-Received: by 2002:a05:6000:2881:b0:3ec:2529:b4e5 with SMTP id
- ffacd0b85a97d-3ecdfa0d552mr1903220f8f.38.1758111954920; 
- Wed, 17 Sep 2025 05:25:54 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.183.148])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e7607870cfsm26752810f8f.19.2025.09.17.05.25.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Sep 2025 05:25:54 -0700 (PDT)
-Date: Wed, 17 Sep 2025 14:25:48 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v6 07/14] virtio-pci: implement support for extended
- features
-Message-ID: <noxeu2gkgenvy744hopuwlvkanauo3vlga4jgc6whl4tygorcz@afwpr5z26pfu>
-References: <cover.1757676218.git.pabeni@redhat.com>
- <921883b5ff7bc8b99e35a36381658685c12ba49d.1757676218.git.pabeni@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrEs-0001Aj-U0; Wed, 17 Sep 2025 08:26:26 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCO5JM035551
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 17 Sep 2025 21:24:05 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=7Wlnz80tbhY7qRbZWs6EVByRB96OxlH4d0GlP1+LXn4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1758111846; v=1;
+ b=pcA8k4lRgBS+t8ieEiJwckoiL6SVDotMvZ+SV6ab51ZpRmSZyNHvPc1tsm2O60Z3
+ Vabanu3VGyMcDlvcTQMXwUgSGM/R4Jnh/R3IDNzM5e1R3HgJDb2e5mIzVFRbiwUM
+ KsXbDp5IK3b97+7+r5cI8qagpx1WBNngXicMKex9/qHpeXUVy0rpDmZsO0PEx0Rb
+ EF9uZa7bjHuJF/0Q6D7LZBneKBPEqtgTamSWtX+vQPcVa14v1PSzh6qbcvRLSAet
+ AyZ4qOdB0eryLyrNWxaSLxlFUUWtkZN8b1o+cuCe9TTBTJ/abyzONpk9IcMp0uUH
+ /kM7345Karx0jA73rC5T1Q==
+Message-ID: <a1ad2a8f-8a69-4d25-bffd-482aec2fe9db@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 17 Sep 2025 21:24:04 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <921883b5ff7bc8b99e35a36381658685c12ba49d.1757676218.git.pabeni@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] Do not unparent in instance_finalize()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <aMqiK5SaeBJlSa_h@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aMqiK5SaeBJlSa_h@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,208 +108,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 03:06:58PM +0200, Paolo Abeni wrote:
->Extend the features configuration space to 128 bits. If the virtio
->device supports any extended features, allow the common read/write
->operation to access all of it, otherwise keep exposing only the
->lower 64 bits.
->
->On migration, save the 128 bit version of the features only if the
->upper bits are non zero. Relay on reset to clear all the feature
->space before load.
->
->Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->Acked-by: Jason Wang <jasowang@redhat.com>
->Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->---
->v5 -> v6:
->  - fixed checkpatch error (missing brackets on a single line statement)
->
->v4 -> v5:
->  - add blank line after QEMU_BUILD_BUG_ON()
->  - make virtio_pci_select_max() robust vs future feature space increase
->
->v3 -> v4:
->  - use new virtio_features macro names
->  - move the build bug before vmstate_virtio_pci_modern_state_sub
->
->v2 -> v3:
->  - drop the pre_load/post_load trickery and relay on reset zeroing
->    the features instead.
->  - avoid union usage, just increase guest_features size and use
->    SUB_ARRAY.
->  - drop unneeded '!!'
->  - _array -> _ex
->
->v1 -> v2:
->  - use separate VMStateDescription and pre/post load to avoid breaking
->    migration
->  - clear proxy features on device reset
->---
-> hw/virtio/virtio-pci.c         | 76 ++++++++++++++++++++++++++++++----
-> include/hw/virtio/virtio-pci.h |  2 +-
-> 2 files changed, 68 insertions(+), 10 deletions(-)
+On 2025/09/17 20:57, Daniel P. Berrangé wrote:
+> On Wed, Sep 17, 2025 at 07:13:25PM +0900, Akihiko Odaki wrote:
+>> Based-on: <cover.1751493467.git.balaton@eik.bme.hu>
+>> ("[PATCH v2 00/14] hw/pci-host/raven clean ups")
+>>
+>> Supersedes: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
+>> ("[PATCH] docs/devel: Prohibit calling object_unparent() for memory region")
+>>
+>> Children are automatically unparented so manually unparenting is
+>> unnecessary.
+> 
+> Where is automatic unparenting you're referring to being done ?
+> 
+>> Worse, automatic unparenting happens before the instance_finalize()
+>> callback of the parent gets called, so object_unparent() calls in
+>> the callback will refer to objects that are already unparented, which
+>> is semantically incorrect.
+> 
+> IIUC, object_property_add_child will acquire a reference on
+> the child, and object_property_del_child (and thus
+> object_unparent) will release that reference.
+> 
+> The 'object_finalize' method, and thus 'instance_finalize'
+> callback, won't be invoked until the last reference is
+> dropped on the object in question.
+> 
+> IOW, it should be impossible for 'object_finalize' to ever
+> run, as long as the child has a parent set.
+> 
+> So if we're in the 'finalize' then 'object_unparent' must
+> be a no-op as the child must already have no references
+> held and thus no parent.
+> 
+> IOW, the reason to remove 'object_unparent' calls from
+> finalize is surely because they do nothing at all,
+> rather than this talk about callbacks being run at the
+> wrong time ?
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+This patch series deals with the situation where the parent calls 
+object_unparent() in its instance_finalize() callback. The process of 
+finalization looks like as follows:
 
->
->diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->index 767216d795..01e4fecaf4 100644
->--- a/hw/virtio/virtio-pci.c
->+++ b/hw/virtio/virtio-pci.c
->@@ -109,6 +109,29 @@ static const VMStateDescription vmstate_virtio_pci_modern_queue_state = {
->     }
-> };
->
->+static bool virtio_pci_modern_state_features128_needed(void *opaque)
->+{
->+    VirtIOPCIProxy *proxy = opaque;
->+    uint32_t features = 0;
->+    int i;
->+
->+    for (i = 2; i < ARRAY_SIZE(proxy->guest_features); ++i) {
->+        features |= proxy->guest_features[i];
->+    }
->+    return features;
->+}
->+
->+static const VMStateDescription vmstate_virtio_pci_modern_state_features128 = {
->+    .name = "virtio_pci/modern_state/features128",
->+    .version_id = 1,
->+    .minimum_version_id = 1,
->+    .needed = &virtio_pci_modern_state_features128_needed,
->+    .fields = (const VMStateField[]) {
->+        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 2, 2),
->+        VMSTATE_END_OF_LIST()
->+    }
->+};
->+
-> static bool virtio_pci_modern_state_needed(void *opaque)
-> {
->     VirtIOPCIProxy *proxy = opaque;
->@@ -116,6 +139,12 @@ static bool virtio_pci_modern_state_needed(void *opaque)
->     return virtio_pci_modern(proxy);
-> }
->
->+/*
->+ * Avoid silently breaking migration should the feature space increase
->+ * even more in the (far away) future
->+ */
->+QEMU_BUILD_BUG_ON(VIRTIO_FEATURES_NU32S != 4);
->+
-> static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
->     .name = "virtio_pci/modern_state",
->     .version_id = 1,
->@@ -124,11 +153,15 @@ static const VMStateDescription vmstate_virtio_pci_modern_state_sub = {
->     .fields = (const VMStateField[]) {
->         VMSTATE_UINT32(dfselect, VirtIOPCIProxy),
->         VMSTATE_UINT32(gfselect, VirtIOPCIProxy),
->-        VMSTATE_UINT32_ARRAY(guest_features, VirtIOPCIProxy, 2),
->+        VMSTATE_UINT32_SUB_ARRAY(guest_features, VirtIOPCIProxy, 0, 2),
->         VMSTATE_STRUCT_ARRAY(vqs, VirtIOPCIProxy, VIRTIO_QUEUE_MAX, 0,
->                              vmstate_virtio_pci_modern_queue_state,
->                              VirtIOPCIQueue),
->         VMSTATE_END_OF_LIST()
->+    },
->+    .subsections = (const VMStateDescription * const []) {
->+        &vmstate_virtio_pci_modern_state_features128,
->+        NULL
->     }
-> };
->
->@@ -1477,6 +1510,19 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
->     return virtio_pci_add_mem_cap(proxy, &cap.cap);
-> }
->
->+static int virtio_pci_select_max(const VirtIODevice *vdev)
->+{
->+    int i;
->+
->+    for (i = VIRTIO_FEATURES_NU64S - 1; i > 0; i--) {
->+        if (vdev->host_features_ex[i]) {
->+            return (i + 1) * 2;
->+        }
->+    }
->+
->+    return 2;
->+}
->+
-> static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
->                                        unsigned size)
-> {
->@@ -1494,18 +1540,21 @@ static uint64_t virtio_pci_common_read(void *opaque, hwaddr addr,
->         val = proxy->dfselect;
->         break;
->     case VIRTIO_PCI_COMMON_DF:
->-        if (proxy->dfselect <= 1) {
->+        if (proxy->dfselect < virtio_pci_select_max(vdev)) {
->             VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
->
->-            val = (vdev->host_features & ~vdc->legacy_features) >>
->-                (32 * proxy->dfselect);
->+            val = vdev->host_features_ex[proxy->dfselect >> 1] >>
->+                  (32 * (proxy->dfselect & 1));
->+            if (proxy->dfselect <= 1) {
->+                val &= (~vdc->legacy_features) >> (32 * proxy->dfselect);
->+            }
->         }
->         break;
->     case VIRTIO_PCI_COMMON_GFSELECT:
->         val = proxy->gfselect;
->         break;
->     case VIRTIO_PCI_COMMON_GF:
->-        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
->+        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
->             val = proxy->guest_features[proxy->gfselect];
->         }
->         break;
->@@ -1588,11 +1637,18 @@ static void virtio_pci_common_write(void *opaque, hwaddr addr,
->         proxy->gfselect = val;
->         break;
->     case VIRTIO_PCI_COMMON_GF:
->-        if (proxy->gfselect < ARRAY_SIZE(proxy->guest_features)) {
->+        if (proxy->gfselect < virtio_pci_select_max(vdev)) {
->+            uint64_t features[VIRTIO_FEATURES_NU64S];
->+            int i;
->+
->             proxy->guest_features[proxy->gfselect] = val;
->-            virtio_set_features(vdev,
->-                                (((uint64_t)proxy->guest_features[1]) << 32) |
->-                                proxy->guest_features[0]);
->+            virtio_features_clear(features);
->+            for (i = 0; i < ARRAY_SIZE(proxy->guest_features); ++i) {
->+                uint64_t cur = proxy->guest_features[i];
->+
->+                features[i >> 1] |= cur << ((i & 1) * 32);
->+            }
->+            virtio_set_features_ex(vdev, features);
->         }
->         break;
->     case VIRTIO_PCI_COMMON_MSIX:
->@@ -2311,6 +2367,8 @@ static void virtio_pci_reset(DeviceState *qdev)
->     virtio_bus_reset(bus);
->     msix_unuse_all_vectors(&proxy->pci_dev);
->
->+    memset(proxy->guest_features, 0, sizeof(proxy->guest_features));
->+
->     for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->         proxy->vqs[i].enabled = 0;
->         proxy->vqs[i].reset = 0;
->diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
->index eab5394898..639752977e 100644
->--- a/include/hw/virtio/virtio-pci.h
->+++ b/include/hw/virtio/virtio-pci.h
->@@ -158,7 +158,7 @@ struct VirtIOPCIProxy {
->     uint32_t nvectors;
->     uint32_t dfselect;
->     uint32_t gfselect;
->-    uint32_t guest_features[2];
->+    uint32_t guest_features[VIRTIO_FEATURES_NU32S];
->     VirtIOPCIQueue vqs[VIRTIO_QUEUE_MAX];
->
->     VirtIOIRQFD *vector_irqfd;
->-- 
->2.51.0
->
+1. The parent's reference count reaches to zero. Please note that there 
+can be remaining children that are referenced by the parent at this point.
 
+2. object_finalize() is called.
+
+2a. object_property_del_all() is called and the parent releases 
+references to its children. This is what I referred as "automatic 
+unparenting". The children without any other references will be 
+finalized here.
+
+2b. instance_finalize() is called. Past children may be already 
+finalized, and calling object_unparent() here will cause dereferencing 
+finalized objects in that case, which should be avoided.
+
+Regards,
+Akihiko Odaki
 
