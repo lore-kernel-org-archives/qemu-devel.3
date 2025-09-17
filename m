@@ -4,95 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A17CCA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C13ACA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqLs-0000tZ-O5; Wed, 17 Sep 2025 07:29:32 -0400
+	id 1uyqNw-0001wr-1j; Wed, 17 Sep 2025 07:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqLr-0000tE-JG
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:29:31 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqLp-0006Ta-9O
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:29:31 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-633a2be31daso1214676d50.1
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 04:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1758108568; x=1758713368; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yKkudT8Py2aIpneMv3ad60UnbSZ9i4tGvoq5OWXup+I=;
- b=hF3cgAF1kFG1M7sDFx+m85mImD8mBxeOfBn17CeG6Y3nLKFwFUFJEf56pVp16FpXIW
- w67EkGzH3lEUpfX7gqUbrJyWEOxGhBGvcJvivxUm+wsvWSGHxtW/M1eCQCBLYKTn4isz
- Z9G/UbKal/z0lMl4UT1E10kbemvXVMz+/IqrsfuikY7qzH12ZX5wGjbP9NPGdB9BOu1X
- bC0B+5tsdAzIOJuZuas63OroFAGnJXNYI0BsjPo0zh6+Wdje1EAFCOnhn/jdXCyMXZhh
- QzBLEYfKJXZkYDZUQkZ2lDah2EhWHvgdYida0358oIYVyvXj9uijOb/BDb67w6cRgybD
- EU7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758108568; x=1758713368;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKkudT8Py2aIpneMv3ad60UnbSZ9i4tGvoq5OWXup+I=;
- b=armtz6Xh5ckTwSv3FzktS8O7AwC57v9893P58KGocl7XkCnNTHScD90a1MsgCM7x3R
- 7yW8heLaDUoMqQOVzeGGSJxUO3UTEZKHZtDSq/gH5eH3t1CD9aycHO/iW+gZZ+5gqHhQ
- c3X1O+vSCN0PMFyVr6mnFZjfmiQqF+jkXCvqbUbrCVZYXMKVCfSWWjMnHlzFx/PR1cU6
- JcJbZJAonRMSvfzK5mCqZF3zE2g93NM6urWaDBFgSlDLQlGB7wuX0JsHLo2PcsV/SR6/
- h4+IM8UEVL8vdX/1ZDZco+K2MnCvo44F38IXSdujQymHEsOyxOeClftTCzsh2eZNLnXl
- WuvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5QYbu8GfMXzgL6GJ61xtNW5+T/6MlXU4lsc4tg32ytp3KjRinv5ZxGY4JUCxGdl/xpBwt+fIXUNde@nongnu.org
-X-Gm-Message-State: AOJu0YwmfmoYNCN1Ax0ekPNIpYCgvajlmpb1QBGzyHymXK9vBtvE9NoA
- MQ2l6LqVtD3S/vud8F/55tRaK8iDT883ViZGQdzKTN8woYzFM4HyNiucVmr5J5KF8L4=
-X-Gm-Gg: ASbGncv7dIqmsdspea/j+s4BLpJSxrWbcMIoe689roUOe2k99NuaRa6uBkZOzS+ZTeG
- kz0eCT7NzJb0MeO5XVB4AGWEM+o1iYSFYVlOMDnuXHswj/qiX2uHDegFekK96WLdCe+xZVK8u4d
- GXhusmXuKm7UyBcEBbImy0aonVcu7m7c1upohvnUCBV/MqwNEmLAhIoJBJi++BxGAMuGk1CGUbI
- cU8/Hy/wkMA1Ven4MsrQxPsDRQ5fFAue0zfqQR6S1zZcGGh0+c007OE6C196xGa223uKTKp94qN
- TYCLcwYP1CegsG0+6Y41ASEKYsciL80jCZ74MpXATVfCpJ6Ubzd1X+OyFKnFioBKll3Xq4oovmO
- z+7RG8P6nvn2NfhKbwlYDAxBUcV283HNeoymE33Py6c6IqjwsyyI1p+kroaQA4Z9BO3TGUeuW8p
- V8
-X-Google-Smtp-Source: AGHT+IFk4bVq7ft4WoCTQAgzoo7JgbBUimrfwSJWZlSXNgvOIOloHAlHNj7U1tcu5yLs9Wi2EpQXyg==
-X-Received: by 2002:a05:690c:62c3:b0:722:74d3:3e98 with SMTP id
- 00721157ae682-73893246594mr14589927b3.45.1758108567565; 
- Wed, 17 Sep 2025 04:29:27 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea?
- ([2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-732e77812fdsm29691557b3.19.2025.09.17.04.29.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 04:29:26 -0700 (PDT)
-Message-ID: <0bbf45d1-b83b-4ca4-8ce5-da146f3fa578@ventanamicro.com>
-Date: Wed, 17 Sep 2025 08:29:24 -0300
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uyqNl-0001t3-Jz; Wed, 17 Sep 2025 07:31:29 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1uyqNf-0006pX-DL; Wed, 17 Sep 2025 07:31:26 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3B91C4DBAB;
+ Wed, 17 Sep 2025 13:31:18 +0200 (CEST)
+Message-ID: <c1624212-85c6-416a-b751-53ce3c3dea3d@proxmox.com>
+Date: Wed, 17 Sep 2025 13:31:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/5] target/riscv: Implement core SMMPT lookup logic
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>
-References: <20250909132533.32205-1-zhiwei_liu@linux.alibaba.com>
- <20250909132533.32205-3-zhiwei_liu@linux.alibaba.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
+Subject: Re: [PATCH 3/4] block: implement 'resize' callback for child_of_bds
+ class
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com,
+ fam@euphon.net
+References: <20250630113035.820557-1-f.ebner@proxmox.com>
+ <20250630113035.820557-4-f.ebner@proxmox.com>
+ <18f6275a-dee0-4df4-85e3-efaf81a7724d@redhat.com>
+ <aGQboEwTVS5sYxa_@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20250909132533.32205-3-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aGQboEwTVS5sYxa_@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1758108669229
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,399 +64,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/9/25 10:25 AM, LIU Zhiwei wrote:
-> This patch introduces the core implementation for the Memory Protection Table
-> (MPT) walk, which is the central mechanism of the SMMPT extension.
+Am 01.07.25 um 7:32 PM schrieb Kevin Wolf:
+> Am 01.07.2025 um 16:46 hat Hanna Czenczek geschrieben:
+>> On 30.06.25 13:27, Fiona Ebner wrote:
+>>> If a node below a filter node is resized, the size of the filter node
+>>> is now also refreshed (recursively for filter parents).
+>>>
+>>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+>>> ---
+>>>   block.c                          | 12 ++++++++++++
+>>>   include/block/block_int-common.h |  2 +-
+>>>   2 files changed, 13 insertions(+), 1 deletion(-)
+>>
+>> What does this do for block job filter nodes, like mirror?  If they changed
+>> their length, we might have to consider whether the job also needs to be
+>> amended somehow.
 > 
-> A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
-> implements the `smmpt_lookup()` function, which performs a multi-level
-> page table-like walk starting from the physical address specified in the
-> `mptppn` CSR field. This walk determines the access permissions (read,
-> write, execute) for a given physical address.
+> mirror doesn't share BLK_PERM_RESIZE in its block_job_create() call, so
+> can this even happen? (If yes, that sounds bad.)
+
+Yes, for mirror, it cannot happen. There is a blocker that prevents
+block_resize: "block device is in use by block job: mirror".
+
+>> However, I assume it’s a safe (conservative) change for them because such
+>> drivers don’t implement bdrv_co_getlength(), so
+>> bdrv_co_refresh_total_sectors() will not change anything.  Is that right and
+>> intended?
+
+I can see block_job_add_bdrv() uses bdrv_op_block_all(), so resize for
+the nodes used directly by the job cannot happen via QMP block_resize
+while a job is running.
+
+However, if we go with checking for BDRV_CHILD_FILTERED like you brought
+up, there also is the possibility that a 'raw' node gets resized,
+because its filtered 'file' node is resized (via QMP block_resize).
+
+But it seems like resizing the 'file' node already is prohibited too
+(tested mirror, backup, commit and stream):  "Permission conflict on
+node 'file0': permissions 'resize' are both required by an unnamed block
+device (uses node 'file0' as 'root' child) and unshared by node 'node0'
+(uses node 'file0' as 'file' child)."
+
+The only other case where .bdrv_co_getlength() is not implemented, but
+.is_filter = true, is copy-before-write. There, the patch does not
+change the behavior.
+
+I'll this to the commit message in v2.
+
+>>
+>> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+>>
+>> (Babbling below.)
+>>
+>>> diff --git a/block.c b/block.c
+>>> index bfd4340b24..449f814ebe 100644
+>>> --- a/block.c
+>>> +++ b/block.c
+>>> @@ -1497,6 +1497,17 @@ static void GRAPH_WRLOCK bdrv_child_cb_detach(BdrvChild *child)
+>>>       }
+>>>   }
+>>> +static void coroutine_fn GRAPH_RDLOCK bdrv_child_cb_resize(BdrvChild *child)
+>>> +{
+>>> +    BlockDriverState *bs = child->opaque;
+>>> +
+>>> +    if (bs->drv && bs->drv->is_filter) {
+>>
+>> Checking the role for BDRV_CHILD_FILTERED would be more generic; but it
+>> would cause 'raw' nodes to be updated, too.  But I don’t know whether we
+>> want that or not, and excluding raw (i.e. not changing behavior there) is
+>> certainly the safe option.
 > 
-> The implementation supports various SMMPT modes (SMMTT34, SMMTT43, etc.) and
-> correctly handles leaf and non-leaf entries, including reserved bit
-> checks. Helper functions for parsing MPT entries and converting access
-> permissions are also included in the new `riscv_smmpt.h` header.
+> If the size is not explicitly overridden in the node configuration, I
+> would certainly expect that a raw node reflects the size of its file
+> node.
 > 
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
->   target/riscv/meson.build   |   1 +
->   target/riscv/pmp.h         |   3 +
->   target/riscv/riscv_smmpt.c | 273 +++++++++++++++++++++++++++++++++++++
->   target/riscv/riscv_smmpt.h |  38 ++++++
->   4 files changed, 315 insertions(+)
->   create mode 100644 target/riscv/riscv_smmpt.c
->   create mode 100644 target/riscv/riscv_smmpt.h
+> Seems this is exactly the condition that makes it use
+> BDRV_CHILD_FILTERED, so it would probably be a good change?
+
+I agree that updating the size in the 'raw' parent node seems good. I'll
+go with this in v2 and add a test for it too :)
+
+>>> +        /* Best effort, ignore errors. */
+>>> +        bdrv_co_refresh_total_sectors(bs, bs->total_sectors);
+>>> +        bdrv_co_parent_cb_resize(bs);
+>>
+>> This makes me wonder whether bdrv_co_refresh_total_sectors() should itself
+>> call bdrv_co_parent_cb_resize().  Still not quite sure; if the underlying
+>> image file is resized by an external party (and we notice this by accident,
+>> more or less), maybe the guest device should be informed.
+>>
+>> (One thing to consider, maybe, are nodes that unshare the resize permission
+>> for a child.  It’s probably not clever to call the resize CB if that
+>> permission is unshared, so maybe just from that perspective, we should keep
+>> that CB strictly inside of that explicit truncate path that checks that
+>> permission (at least when growing images...).)
+>>
+>> Anyway, again, this is the safe option.
 > 
-> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> index a4bd61e52a..e85b534a64 100644
-> --- a/target/riscv/meson.build
-> +++ b/target/riscv/meson.build
-> @@ -29,6 +29,7 @@ riscv_system_ss = ss.source_set()
->   riscv_system_ss.add(files(
->     'arch_dump.c',
->     'pmp.c',
-> +  'riscv_smmpt.c',
->     'debug.c',
->     'monitor.c',
->     'machine.c',
-> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-> index 271cf24169..d9c5e74345 100644
-> --- a/target/riscv/pmp.h
-> +++ b/target/riscv/pmp.h
-> @@ -85,6 +85,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
->   uint32_t pmp_get_num_rules(CPURISCVState *env);
->   int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
->   void pmp_unlock_entries(CPURISCVState *env);
-> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> +                             int size, MMUAccessType access_type,
-> +                             int mode);
->   
->   #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
->   #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
-> diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
-> new file mode 100644
-> index 0000000000..09e3c66c7f
-> --- /dev/null
-> +++ b/target/riscv/riscv_smmpt.c
-> @@ -0,0 +1,273 @@
-> +/*
-> + * QEMU RISC-V Smmpt (Memory Protection Table)
-> + *
-> + * Copyright (c) 2024 Alibaba Group. All rights reserved.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "riscv_smmpt.h"
-> +#include "pmp.h"
-> +#include "system/memory.h"
-> +
-> +typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
-> +                               MemTxAttrs, MemTxResult *);
-> +
-> +static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
-> +                              MemTxAttrs attrs, MemTxResult *result)
-> +{
-> +    return address_space_ldl(as, addr, attrs, result);
-> +}
-> +
-> +static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
-> +                              MemTxAttrs attrs, MemTxResult *result)
-> +{
-> +    return address_space_ldq(as, addr, attrs, result);
-> +}
-> +
-> +typedef union {
-> +    uint64_t raw;
-> +    struct {
-> +        uint32_t v:1;
-> +        uint32_t l:1;
-> +        uint32_t rsv1:5;
-> +        uint32_t perms:24;
-> +        uint32_t n:1;
-> +    } leaf32;
-> +    struct {
-> +        uint32_t v:1;
-> +        uint32_t l:1;
-> +        uint32_t rsv1:8;
-> +        uint32_t ppn:22;
-> +    } nonleaf32;
-> +    struct {
-> +        uint64_t v:1;
-> +        uint64_t l:1;
-> +        uint64_t rsv1:8;
-> +        uint64_t perms:48;
-> +        uint64_t rsv2:5;
-> +        uint64_t n:1;
-> +    } leaf64;
-> +    struct {
-> +        uint64_t v:1;
-> +        uint64_t l:1;
-> +        uint64_t rsv1:8;
-> +        uint64_t ppn:52;
-> +        uint64_t rsv2:1;
-> +        uint64_t n:1;
-> +    } nonleaf64;
-> +} mpte_union_t;
-> +
-> +static inline bool mpte_is_leaf(uint64_t mpte)
-> +{
-> +   return mpte & 0x2;
-> +}
-> +
-> +static inline bool mpte_is_valid(uint64_t mpte)
-> +{
-> +    return mpte & 0x1;
-> +}
-> +
-> +static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    bool leaf = mpte_is_leaf(mpte);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    return (mxl == MXL_RV32)
-> +        ? (leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1)
-> +        : (leaf ? (u->leaf64.rsv1 << 5) | u->leaf64.rsv2
-> +                : (u->nonleaf64.rsv1 << 1) | u->nonleaf64.rsv2);
-> +}
+> The traditional solution for nodes that unshare resize, but get resized
+> in the background anyway would be bs->drv = NULL, and we probably still
+> aren't certain what happens after that. :-)
+> 
+> Kevin
 
-I suggest going a little easier on the ternary nesting:
-
-if (mxl == MXL_RV32) {
-     return leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1;
-}
-
-return leaf ? (u->leaf64.rsv1 << 5) | u->leaf64.rsv2
-             : (u->nonleaf64.rsv1 << 1) | u->nonleaf64.rsv2);
-
-
-Everything else LGTM.  Thanks,
-
-
-Daniel
-
-> +
-> +static uint64_t mpte_get_perms(CPURISCVState *env, uint64_t mpte)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    return (mxl == MXL_RV32) ? u->leaf32.perms : u->leaf64.perms;
-> +}
-> +
-> +static bool mpte_check_nlnapot(CPURISCVState *env, uint64_t mpte, bool *nlnapot)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +    if (mxl == MXL_RV32) {
-> +        *nlnapot = false;
-> +        return true;
-> +    }
-> +    *nlnapot = u->nonleaf64.n;
-> +    return u->nonleaf64.n ? (u->nonleaf64.ppn & 0x1ff) == 0x100 : true;
-> +}
-> +
-> +static uint64_t mpte_get_ppn(CPURISCVState *env, uint64_t mpte, int pn,
-> +                             bool nlnapot)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    if (nlnapot) {
-> +        return deposit64(u->nonleaf64.ppn, 0, 9, pn & 0x1ff);
-> +    }
-> +    return (mxl == MXL_RV32) ? u->nonleaf32.ppn : u->nonleaf64.ppn;
-> +}
-> +
-> +/* Caller should assert i before call this interface */
-> +static int mpt_get_pn(hwaddr addr, int i, mpt_mode_t mode)
-> +{
-> +    if (mode == SMMTT34) {
-> +        return i == 0
-> +            ? extract64(addr, 15, 10)
-> +            : extract64(addr, 25, 9);
-> +    } else {
-> +        int offset = 16 + i * 9;
-> +        if ((mode == SMMTT64) && (i == 4)) {
-> +            return extract64(addr, offset, 12);
-> +        } else {
-> +            return extract64(addr, offset, 9);
-> +        }
-> +    }
-> +}
-> +
-> +/* Caller should assert i before call this interface */
-> +static int mpt_get_pi(hwaddr addr, int i, mpt_mode_t mode)
-> +{
-> +    if (mode == SMMTT34) {
-> +        return i == 0
-> +            ? extract64(addr, 12, 3)
-> +            : extract64(addr, 22, 3);
-> +    } else {
-> +        int offset = 16 + i * 9;
-> +        return extract64(addr, offset - 4, 4);
-> +    }
-> +}
-> +
-> +static bool smmpt_lookup(CPURISCVState *env, hwaddr addr, mpt_mode_t mode,
-> +                         mpt_access_t *allowed_access,
-> +                         MMUAccessType access_type)
-> +{
-> +    MemTxResult res;
-> +    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-> +    CPUState *cs = env_cpu(env);
-> +    hwaddr mpte_addr, base = (hwaddr)env->mptppn << PGSHIFT;
-> +    load_entry_fn *load_entry;
-> +    uint32_t mptesize, levels, xwr;
-> +    int pn, pi, pmp_prot, pmp_ret;
-> +    uint64_t mpte, perms;
-> +
-> +    switch (mode) {
-> +    case SMMTT34:
-> +        load_entry = &load_entry_32; levels = 2; mptesize = 4; break;
-> +    case SMMTT43:
-> +        load_entry = &load_entry_64; levels = 3; mptesize = 8; break;
-> +        break;
-> +    case SMMTT52:
-> +        load_entry = &load_entry_64; levels = 4; mptesize = 8; break;
-> +    case SMMTT64:
-> +        load_entry = &load_entry_64; levels = 5; mptesize = 8; break;
-> +    case SMMTTBARE:
-> +        *allowed_access = ACCESS_ALLOW_RWX;
-> +        return true;
-> +    default:
-> +        g_assert_not_reached();
-> +        break;
-> +    }
-> +    for (int i = levels - 1; i >= 0 ; i--) {
-> +        /* 1. Get pn[i] as the mpt index */
-> +        pn = mpt_get_pn(addr, i, mode);
-> +        /* 2. Get mpte address and get mpte */
-> +        mpte_addr = base + pn * mptesize;
-> +        pmp_ret = get_physical_address_pmp(env, &pmp_prot, mpte_addr,
-> +                                           mptesize, MMU_DATA_LOAD, PRV_M);
-> +        if (pmp_ret != TRANSLATE_SUCCESS) {
-> +            return false;
-> +        }
-> +        mpte = load_entry(cs->as, mpte_addr, attrs, &res);
-> +        /* 3. Check valid bit and reserve bits of mpte */
-> +        if (!mpte_is_valid(mpte) || mpte_get_rsv(env, mpte)) {
-> +            return false;
-> +        }
-> +
-> +        /* 4. Process non-leaf node */
-> +        if (!mpte_is_leaf(mpte)) {
-> +            bool nlnapot = false;
-> +            if (i == 0) {
-> +                return false;
-> +            }
-> +            if (!mpte_check_nlnapot(env, mpte, &nlnapot)) {
-> +                return false;
-> +            }
-> +            base = mpte_get_ppn(env, mpte, pn, nlnapot) << PGSHIFT;
-> +            continue;
-> +        }
-> +
-> +        /* 5. Process leaf node */
-> +        pi = mpt_get_pi(addr, i, mode);
-> +        perms = mpte_get_perms(env, mpte);
-> +        xwr = (perms >> (pi * 3)) & 0x7;
-> +        switch (xwr) {
-> +        case ACCESS_ALLOW_R:
-> +            *allowed_access = ACCESS_ALLOW_R;
-> +            return access_type == MMU_DATA_LOAD;
-> +        case ACCESS_ALLOW_X:
-> +            *allowed_access = ACCESS_ALLOW_X;
-> +            return access_type == MMU_INST_FETCH;
-> +        case ACCESS_ALLOW_RX:
-> +            *allowed_access = ACCESS_ALLOW_R;
-> +            return (access_type == MMU_DATA_LOAD ||
-> +                    access_type == MMU_INST_FETCH);
-> +        case ACCESS_ALLOW_RW:
-> +            *allowed_access = ACCESS_ALLOW_RW;
-> +            return (access_type == MMU_DATA_LOAD ||
-> +                    access_type == MMU_DATA_STORE);
-> +        case ACCESS_ALLOW_RWX:
-> +            *allowed_access = ACCESS_ALLOW_RWX;
-> +            return true;
-> +        default:
-> +            return false;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
-> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
-> +                        mpt_access_t *allowed_access, MMUAccessType access_type)
-> +{
-> +    bool mpt_has_access;
-> +    mpt_mode_t mode = env->mptmode;
-> +
-> +    mpt_has_access = smmpt_lookup(env, addr, mode,
-> +                                  allowed_access, access_type);
-> +    return mpt_has_access;
-> +}
-> +
-> +/*
-> + * Convert MPT access to TLB page privilege.
-> + */
-> +int smmpt_access_to_page_prot(mpt_access_t mpt_access)
-> +{
-> +    int prot;
-> +    switch (mpt_access) {
-> +    case ACCESS_ALLOW_R:
-> +        prot = PAGE_READ;
-> +        break;
-> +    case ACCESS_ALLOW_X:
-> +        prot = PAGE_EXEC;
-> +        break;
-> +    case ACCESS_ALLOW_RX:
-> +        prot = PAGE_READ | PAGE_EXEC;
-> +        break;
-> +    case ACCESS_ALLOW_RW:
-> +        prot = PAGE_READ | PAGE_WRITE;
-> +        break;
-> +    case ACCESS_ALLOW_RWX:
-> +        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +        break;
-> +    default:
-> +        prot = 0;
-> +        break;
-> +    }
-> +
-> +    return prot;
-> +}
-> diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
-> new file mode 100644
-> index 0000000000..d5797c6168
-> --- /dev/null
-> +++ b/target/riscv/riscv_smmpt.h
-> @@ -0,0 +1,38 @@
-> +/*
-> + * QEMU RISC-V Smmpt (Memory Protection Table)
-> + *
-> + * Copyright (c) 2024 Alibaba Group. All rights reserved.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef RISCV_SMPT_H
-> +#define RISCV_SMPT_H
-> +
-> +#include "cpu.h"
-> +#include "exec/mmu-access-type.h"
-> +
-> +typedef enum {
-> +    SMMTTBARE = 0,
-> +    SMMTT34   = 1,
-> +    SMMTT43   = 2,
-> +    SMMTT52   = 3,
-> +    SMMTT64   = 4,
-> +    SMMTTMAX
-> +} mpt_mode_t;
-> +
-> +typedef enum {
-> +    ACCESS_ALLOW_R = 0b001,
-> +    ACCESS_ALLOW_X = 0b100,
-> +    ACCESS_ALLOW_RX = 0b101 ,
-> +    ACCESS_ALLOW_RW = 0b011,
-> +    ACCESS_ALLOW_RWX = 0b111,
-> +} mpt_access_t;
-> +
-> +
-> +int smmpt_access_to_page_prot(mpt_access_t mpt_access);
-> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
-> +                        mpt_access_t *allowed_access,
-> +                        MMUAccessType access_type);
-> +
-> +#endif
+Best Regards,
+Fiona
 
 
