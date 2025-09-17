@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 873BACAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF99ECAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uysGm-00083K-UY; Wed, 17 Sep 2025 09:32:24 -0400
+	id 1uysSz-0004Tn-8U; Wed, 17 Sep 2025 09:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uysGi-00082R-KR
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:32:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uysGf-0002Nj-Mh
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:32:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758115934;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Nm9JHXX+cF1mL0tpmj5jv3MrE6LAhAhVmv2LEuFznPM=;
- b=S5nm4DL+pMMhLYskXe5JqzVilj+KAa1uqaiCYYJpIp8YQJf8LwsE46rCB03fDYgKltk2HI
- vhGcqwJWKsu/lANL0ArpNICxd4k+bU4Ud1RPyPbX6IIf/4Iq41CYvclcDbdRFi4+7K8bMc
- YffE2wK1Vcu+UAK1sRBMdcfx5FxQg7w=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-sY3mVj0eNJ-CAO6EEDiFjQ-1; Wed,
- 17 Sep 2025 09:32:10 -0400
-X-MC-Unique: sY3mVj0eNJ-CAO6EEDiFjQ-1
-X-Mimecast-MFC-AGG-ID: sY3mVj0eNJ-CAO6EEDiFjQ_1758115928
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 177621956094; Wed, 17 Sep 2025 13:32:08 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78912300018D; Wed, 17 Sep 2025 13:32:01 +0000 (UTC)
-Date: Wed, 17 Sep 2025 14:31:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, amit@kernel.org,
- armbru@redhat.com, eblake@redhat.com, eduardo@habkost.net,
- lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, nsg@linux.ibm.com
-Subject: Re: [PATCH v2] char-pty: add support for the terminal size
-Message-ID: <aMq4Ta4aPwRgDrxR@redhat.com>
-References: <20250915162535.147642-1-maxbr@linux.ibm.com>
- <20250915163415.149190-1-maxbr@linux.ibm.com>
- <4c8e1ae5dd16d6ee4bcb42ed25d2987bc2c4a3cc.camel@gmail.com>
- <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
- <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1uysSx-0004TD-Ep
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:44:59 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1uysSt-00048k-WC
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:44:58 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-ea5bc345eddso829599276.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 06:44:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1758116693; x=1758721493; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DnAo/2DPNzNJlRCruVcjhGpDofdhOKJsOj0CkRAW0IA=;
+ b=W90MhyGYuXGydLIG+rKt3TVC0EU71Hi+qM7uhMSxpmARFPvFRfgdlZXTOO9yYT7p8U
+ BSniosN1bQC8i60K4YKG9JWi9XB0NXXD9Wbu6OY2G0vjnL9hWiyb6FJ+fctx+yrmkmM/
+ HBvSaOL2fYHlb9MLh6VB8PapHVzwkjRPI5Nbk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758116693; x=1758721493;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DnAo/2DPNzNJlRCruVcjhGpDofdhOKJsOj0CkRAW0IA=;
+ b=SfAqADjh3y2hlx3peLpN56sadft5rySI+cAKb4SaBF7CqpGZAmls1JQm8Ea7Z39tym
+ P6s5FyYufM1j20BJXemf4dnVywEbfPwDmJk6syjlpRznME3O2yi2BJITyaskyjONLujh
+ mYWMExY5VFm7Lsbov3BGveSoLTk5IDa9fefcoUM+mkxP34WvxU7OyTWXw2xLuuPSMrw+
+ tehIGeQRn0r8XXCRDDtTNEP+BiJVwWaQUTVnGiXye5sNeYoP5wwfmb0Fj6LjBsLlS9ZW
+ 0yo5gShFY0HnAg1c/mMYZw8qykHOg3X9FcBx0P+40IyxC5R+XzcXgFLTbjrGFVsrdGXW
+ 4D0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3r5/CaVtMSbbCO7VrVY7zL+DLbCeuS8nVi5fxQCvKH7cRKahx1d4hiWLMMt4TT/3mlLd2xqgpAdRm@nongnu.org
+X-Gm-Message-State: AOJu0Ywqq/U0RQ3JQs2oclgm22ron7SQpSaNpuXW+BA8Nr5bcU5WuyAk
+ c1VnbciyfGaci64MElWRI2KuP1HuFadNwtz17Zyao/sNhfRV8bN6yg+sSvmQDAaaeBAFxHSgrN1
+ AxOTK+/oeql1QyOlf8ehXPn64lJFmU1U=
+X-Gm-Gg: ASbGncsW5ic+VJ12vq4IbvEIUI/HLuIYY7MLIn1bpcmB0qkQaw1pms+mlOmZH8oJA2M
+ uhXqA5CYhOwd1cTZ+4fypcM0UC1RJDAqTpAzVhrc00yll2VAxnewqvt1T9UxKgc5RcaGzmq+Swb
+ 26hT8Rr/JQHttWhthtTEarx+W8o0c532KihQsUDTMyf7wXuUSH+WJcB/O0Sz/InLFuca0RwlugT
+ zzfI+8=
+X-Google-Smtp-Source: AGHT+IHgmMs5+X+sQEWEMHFWE610CrlbWgH9A1Rc6LlrOXPzIxlnt/SDMG6N3YwrHeDPmFn7nRAks5AfBQvM/zPEkLU=
+X-Received: by 2002:a05:6902:6283:b0:ea3:be0a:ccdb with SMTP id
+ 3f1490d57ef6-ea5c06ca785mr1698131276.49.1758116692811; Wed, 17 Sep 2025
+ 06:44:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250903030114.274535-1-npiggin@gmail.com>
+ <20250903030114.274535-3-npiggin@gmail.com>
+ <6bff4c9d-1da4-40b3-901a-789923d8ef7e@ventanamicro.com>
+ <qyikdqxxiewb7tqykt74gpx5oereckbepyptd3vr4flptmrvoc@midnt5c7agnc>
+ <3dd9888f-be16-48f8-a858-f58a5b57825d@ventanamicro.com>
+ <188f0525-154e-4d08-a155-68e8800e302d@linaro.org>
+In-Reply-To: <188f0525-154e-4d08-a155-68e8800e302d@linaro.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 17 Sep 2025 23:14:41 +0930
+X-Gm-Features: AS18NWCeGWFuyoGez7_HVxFGxkW8bU2PFEbxZV1W3p48u8b7E3YyLpPT6h8kHMY
+Message-ID: <CACPK8Xd183vLgSyNfjzN5caUeJGRrjM1J8ugTVRd2k0Ea5LpfQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/risvc: Fix vector whole ldst vstart check
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-devel@nongnu.org, Chao Liu <chao.liu@zevorn.cn>, 
+ Nicholas Joaquin <njoaquin@tenstorrent.com>,
+ Ganesh Valliappan <gvalliappan@tenstorrent.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=joel.stan@gmail.com; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,48 +102,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 03:09:50PM +0200, Filip Hejsek wrote:
-> 
-> 
-> On September 17, 2025 11:39:55 AM GMT+02:00, Maximilian Immanuel Brandtner <maxbr@linux.ibm.com> wrote:
-> > On Tue, 2025-09-16 at 00:02 +0200, Filip Hejsek wrote:
-> > > On Mon, 2025-09-15 at 18:34 +0200, Maximilian Immanuel Brandtner
-> > > wrote:
-> > > > Update the terminal size upon SIGWINCH delivery.
-> > > > 
-> > > > Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-> > > 
-> > > I don't think this will work, because SIGWINCH is only delivered for
-> > > the process' controling terminal. Unfortunately I don't think there
-> > > is
-> > > any way to get size notifications for arbitrary terminal.
-> > 
-> > In that case there are two solutions:
-> > 1. make qemu the controlling process of the pty (this has the
-> > disadvantage of QEMU being quit when the pty is closed)
-> 
-> A bigger disadvantage is that a process can only have one controlling terminal, and a terminal can only be the controlling terminal for a single session (and only sends signals to the foreground process group of that session). It would require forking a process for each pty, and I don't even know if the master end can have its own session.
-> 
-> > 2. create a timer polling every eg 100ms to check if the winsize has
-> > changed
-> > 
-> > I would go with the second approach then
-> 
-> Me too, the timer is a bit unfortunate, but it's probably the less bad option.
+On Fri, 5 Sept 2025 at 16:50, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 9/4/25 13:06, Daniel Henrique Barboza wrote:
+> > How hard it is to update the GCC version we're running in the docker images for
+> > "check-tcg"? We would like to use a RISC-V vector header that isn't supported
+> > ATM.
+> If debian packages the gcc version, then it's easy: change
+>
+>    gcc-riscv-linux-gnu
+>
+> to
+>
+>    gcc-NN-riscv-linux-gnu
 
-I don't think we want a timer polling for an situation that will very
-rarely arise.  We already add the 'chardev_resize' QMP command, which is
-a good enough way to kick QEMU to re-read the size.
+The test that was failing uses debian-all-test-cross. This is based on
+Debian 12 which maxes out at GCC 12.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+If we move to Debian 13, we get GCC 14. Something like this would do it:
 
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -6,7 +6,7 @@
+ # basic compilers for as many targets as possible. We shall use this
+ # to build and run linux-user tests on GitLab
+ #
+-FROM docker.io/library/debian:12-slim
++FROM docker.io/library/debian:13-slim
+
+Is updating the distro something we would consider for this development cycle?
+
+Cheers,
+
+Joel
 
