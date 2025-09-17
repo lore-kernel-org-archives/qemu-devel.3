@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93BAECAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE2FCAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypDb-00019j-TP; Wed, 17 Sep 2025 06:16:58 -0400
+	id 1uypE9-0001RX-Ai; Wed, 17 Sep 2025 06:17:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCu-0000bb-Nl; Wed, 17 Sep 2025 06:16:15 -0400
+ id 1uypCu-0000bc-Ow; Wed, 17 Sep 2025 06:16:15 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCk-0003I7-Qc; Wed, 17 Sep 2025 06:16:12 -0400
+ id 1uypCk-0003IL-PZ; Wed, 17 Sep 2025 06:16:12 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sD093528
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8s9093528
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:14:24 +0900 (JST)
+ Wed, 17 Sep 2025 19:14:22 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=hrFeIYsdveoSw39gLf38PDAGKQ7lahlpxgxSM3Eq+7Y=; 
+DKIM-Signature: a=rsa-sha256; bh=tbKbnY2EjTKUHaLtZsZLQXCBZoyFNJpVfMbynsbGNqo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758104065; v=1;
- b=DdLzysLdoItNX02agwRNTGyUnTrzx20tFWGfsRm6Kj1Bcgto7jzT6NanLKz/sw54
- c+SFhhHxg7ZxwyzOUB5Y41jcQzG0ftXjCYbd7tD7stmwz9Yec0hIiAHCjVEYefqo
- Me1eK3UKWbYxbezILi9fy2VOf4+KEZ0NQ+rdsHcRn5ADw2w01gtn/7p1u4GAwcZp
- WUKHC47iY8/4AYK3RupRXpz8oDrep/DTUEkGUxzHWz4bCKSw+EvzspWajKbxAsT6
- HwzYNR5qw2df5gfWZ1Rbu4esPyUm1QZ7oE2EIWvch8aXE6l+SM2RfSA9WQWmc+1c
- RTagV4R6EmSTMQMcY55uCQ==
+ s=rs20250326; t=1758104062; v=1;
+ b=L8qA32CUCpnM5wR9hyBKh3E3/yVIENsagGU1hOnAgvAMMqlfFWNsMEt2aZTPndT1
+ 789WFVfvIMnTmjILQ2a/n6nU42rVSG1NwIR23FhPpG2CBeMmrKgzeI5p6qgROC5L
+ NBrIr4Xb9ur7ofaNTCvw3IZHWSwJ8n3ReSrCn6YIv/vGP86RhHKGK7ito8oLS6xv
+ mhfGB0exEQKh1wFHt2ToijtgXVJRDHSE6hyg1tz+Q4MEV404KUYgN5PZa5xhUt7y
+ CDWjSftHQBO/8M3Teael6SsSbVBhBDSPHvF0ko20sHKelxLfwsz7aXE/sqDR1kt9
+ 3UY9vvUiMSInhL8GYh3TQA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:13:30 +0900
-Subject: [PATCH v3 5/7] hw/sd/sdhci: Do not unparent in instance_finalize()
+Date: Wed, 17 Sep 2025 19:13:26 +0900
+Subject: [PATCH v3 1/7] docs/devel: Do not unparent in instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-use-v3-5-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-use-v3-1-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -117,26 +117,53 @@ callback of the parent gets called, so object_unparent() calls in
 the callback will refer to objects that are already unparented, which
 is semantically incorrect.
 
+Remove the instruction to call object_unparent(), and the exception
+of the "do not call object_unparent()" rule for instance_finalize().
+
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/sd/sdhci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ docs/devel/memory.rst | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 3c897e54b721..89b595ce4a5a 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1578,10 +1578,6 @@ static void sdhci_sysbus_finalize(Object *obj)
- {
-     SDHCIState *s = SYSBUS_SDHCI(obj);
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 57fb2aec76e0..749f11d8a4dd 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -161,18 +161,11 @@ or never.
+ Destruction of a memory region happens automatically when the owner
+ object dies.
  
--    if (s->dma_mr) {
--        object_unparent(OBJECT(s->dma_mr));
--    }
+-If however the memory region is part of a dynamically allocated data
+-structure, you should call object_unparent() to destroy the memory region
+-before the data structure is freed.  For an example see VFIOMSIXInfo
+-and VFIOQuirk in hw/vfio/pci.c.
 -
-     sdhci_uninitfn(s);
- }
+ You must not destroy a memory region as long as it may be in use by a
+ device or CPU.  In order to do this, as a general rule do not create or
+-destroy memory regions dynamically during a device's lifetime, and only
+-call object_unparent() in the memory region owner's instance_finalize
+-callback.  The dynamically allocated data structure that contains the
+-memory region then should obviously be freed in the instance_finalize
+-callback as well.
++destroy memory regions dynamically during a device's lifetime.
++The dynamically allocated data structure that contains the
++memory region should be freed in the instance_finalize callback.
  
+ If you break this rule, the following situation can happen:
+ 
+@@ -198,9 +191,9 @@ this exception is rarely necessary, and therefore it is discouraged,
+ but nevertheless it is used in a few places.
+ 
+ For regions that "have no owner" (NULL is passed at creation time), the
+-machine object is actually used as the owner.  Since instance_finalize is
+-never called for the machine object, you must never call object_unparent
+-on regions that have no owner, unless they are aliases or containers.
++machine object is actually used as the owner.  You must never call
++object_unparent on regions that have no owner, unless they are aliases
++or containers.
+ 
+ 
+ Overlapping regions and priority
 
 -- 
 2.51.0
