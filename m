@@ -4,89 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21314CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1606CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyyTJ-0002eS-8U; Wed, 17 Sep 2025 16:09:45 -0400
+	id 1uyyg3-00061E-HA; Wed, 17 Sep 2025 16:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyyTG-0002e8-PZ
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:09:42 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyyg2-00060y-9u
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:22:54 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyyTE-0001ez-K8
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:09:42 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7761bca481dso227522b3a.1
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 13:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758139779; x=1758744579; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tfV7JN+msozm4pVuYVOjGQCmHWF9O7TRkc+Saamin68=;
- b=v/GlrD2iSLGbJwN41DZU6NUIubjk6hebAGHxTb0dcOzS8Ad1FHDfCQKxaC5tq3KOaS
- MVzOeCHoA2AvYUDqy3GeIH4OmMGMT7YBeCU+NWyHAXwkBa3GL8qJAb/6ezePItkg5P1Q
- x4CqRcog8si80tT0ZSL1GK6av7bdrQbBFVDwf+eP3BW00jMR0wFDpc2zLmv0snm/2E52
- CSpKNldw0PAufx2jkHE8F6TCmT8xHKtkg8qLr9/qp0bqzr5lbxOL/8z+BGfQ3WD3sllz
- qF4YQ92Ltf7b0Wcx1+nXT5/Vq7+7JCJG7uRSl8CLatPK8frp/xMEoV7iCO12xggH8vJ+
- ArnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758139779; x=1758744579;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tfV7JN+msozm4pVuYVOjGQCmHWF9O7TRkc+Saamin68=;
- b=LBCLCuBnxtt/vvbPMXGLtWwDzMthm51ZBJLlxNLFEPipmBr8DnCr4grAxYpLMw4acM
- NsITmG6HorGxF9f0f1aZrcUF70CHOvVn3Y3ME6S268IFjWs3ZaOzW5n7LiuIfIYBOlix
- rOAm4mvNCdyXZj6Wn/1sRT4v1jqACpbQgAB3LTx1vHkvD5bo2cMA84CxYdJjWZZcIvi8
- IV2IAM2BplofwV/wRY8XY9I5u83vA+waS4X+yXzHOWyRHU3sqN64C/fKLVNKXTVWfQK8
- 4lY/6u79m7FAmiqQFSw9HKyGGxEMVg2jyD7CCTPjElaxB/+Bpky8rlz+C//mySk/er5G
- 4vYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWgS9t5lR3/mp2IUoH5/IdmnJk2+yPBelYm2LDDykBGaM2zgFh7lYE6uqpb8O93jV2k0Eaa4DNE3U1T@nongnu.org
-X-Gm-Message-State: AOJu0YwWAKTY55sHH/uBrLgT4CFlnUIZt3VInmDYMdTd9hAu6QAB6WDu
- GWM7jnrsSIovL+HI96RS6v34UmttrBNOQR5gBMdyKioePCouHJAeunbUlWQ0uoFI1BUFXN3+s9k
- 3WEkW
-X-Gm-Gg: ASbGncuPC5A0LUgA3MEvSWSwSZNPgPc5JZHLmSaPYTZHHYqy3B7QAq/JMqgmRYCiudN
- IHpig+E7vt1E+do86cI415GmHzlbhpflBZv3dZntRqZjWhNSH2s2zltQ15OHOHPcBQrOUFmR1Uu
- hNZYvEvOMfxc/UCjEGJ9UnlTmexQa0mUumi5B8anlalxv/TgIeX1DEaSK0UafAE5rYZTxAgVMrz
- lzFWVSUMiNdYK3BRUSu8/hYevk1YhOCJPwg+2IRK6EJlk9K2hQ/eTEzciNHEnTjiyTa4aQbhMLr
- 6nDrsAee+HdvB7W0lLvZso5TjTCA8hGdWho8310HAerOpUCguhqrBo1YOOLqs/4zmbibVMlhhVt
- CpcN7J6eWrAURHaIIf26y01i4XzeFx4/Z7tYLe0yoYJL034A0Qe7IlJY=
-X-Google-Smtp-Source: AGHT+IHhQQFXSSWpQoR+pxGATxlth5Tbeq47lgniZWLbt9MsvJiGd2D7LF6oRuiH758N4dzAh5lrPQ==
-X-Received: by 2002:a05:6a00:2e16:b0:772:40ba:61c0 with SMTP id
- d2e1a72fcca58-77bf6dce9ddmr3463952b3a.5.1758139778702; 
- Wed, 17 Sep 2025 13:09:38 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77cfbb79b6fsm252437b3a.17.2025.09.17.13.09.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 13:09:37 -0700 (PDT)
-Message-ID: <87455ffc-8b2b-486b-96ed-09be7a66482f@linaro.org>
-Date: Wed, 17 Sep 2025 13:09:36 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uyyg0-0003Mt-8T
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:22:54 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id ACEB134880;
+ Wed, 17 Sep 2025 20:22:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758140569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=so+FyYFYr2xshx+OnL3X4EnkbPl1BnJAUSj4c+svqC0=;
+ b=sFkNbt6xeXz00WryaPTBoVsCbzw1KG+ky1TcHuepj+W2GP/JZ4oV9nohsJdQYXdrfgYtNq
+ h3mwZLdc8azo2TWLu3uaI9KPEO4IFntzjfoeqvnurI6Gs5E6ArcsIgAoh9ka/RmBC022nz
+ QI7PEOpKXyf7m2ar0Hu8tMuKr7g/XM4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758140569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=so+FyYFYr2xshx+OnL3X4EnkbPl1BnJAUSj4c+svqC0=;
+ b=mfqbqrRqE33ikQpNjT3d4Qf42dqnjM+GNG8icCZyy5TPTsG4BSHb1RJP4veMVhvAvHYtv4
+ +0bJD4j5YtYzujBQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758140569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=so+FyYFYr2xshx+OnL3X4EnkbPl1BnJAUSj4c+svqC0=;
+ b=sFkNbt6xeXz00WryaPTBoVsCbzw1KG+ky1TcHuepj+W2GP/JZ4oV9nohsJdQYXdrfgYtNq
+ h3mwZLdc8azo2TWLu3uaI9KPEO4IFntzjfoeqvnurI6Gs5E6ArcsIgAoh9ka/RmBC022nz
+ QI7PEOpKXyf7m2ar0Hu8tMuKr7g/XM4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758140569;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=so+FyYFYr2xshx+OnL3X4EnkbPl1BnJAUSj4c+svqC0=;
+ b=mfqbqrRqE33ikQpNjT3d4Qf42dqnjM+GNG8icCZyy5TPTsG4BSHb1RJP4veMVhvAvHYtv4
+ +0bJD4j5YtYzujBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 22E4E1368D;
+ Wed, 17 Sep 2025 20:22:48 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2N1zNJgYy2hRdAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 17 Sep 2025 20:22:48 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?Daniel?=
+ =?utf-8?Q?_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Xiaohui Li
+ <xiaohli@redhat.com>
+Subject: Re: [PATCH 1/3] migration/tls: Gracefully shutdown main and preempt
+ channels
+In-Reply-To: <20250910160144.1762894-2-peterx@redhat.com>
+References: <20250910160144.1762894-1-peterx@redhat.com>
+ <20250910160144.1762894-2-peterx@redhat.com>
+Date: Wed, 17 Sep 2025 17:22:46 -0300
+Message-ID: <871po4x209.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/36] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20250916180611.1481266-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250916180611.1481266-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,39 +118,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/16/25 11:05, Peter Maydell wrote:
-> Hi; here's an arm pullreq; various miscellaneous new features
-> and bug fixes.
-> 
-> thanks
-> -- PMM
-> 
-> The following changes since commit 6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8:
-> 
->    Merge tag 'pull-tcg-20250905' ofhttps://gitlab.com/rth7680/qemu into staging (2025-09-05 09:51:27 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250916
-> 
-> for you to fetch changes up to aaf042299acf83919862c7d7dd5fc36acf4e0671:
-> 
->    hw/usb/network: Remove hardcoded 0x40 prefix in STRING_ETHADDR response (2025-09-16 17:32:06 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * tests, scripts: Don't import print_function from __future__
->   * Implement FEAT_ATS1A
->   * Remove deprecated pxa CPU family
->   * arm/kvm: report registers we failed to set
->   * Expose SME registers to GDB via gdbstub
->   * linux-user/aarch64: Generate ESR signal records
->   * hw/arm/raspi4b: remove redundant check in raspi_add_memory_node
->   * hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation
->   * system: drop the -old-param option
+Peter Xu <peterx@redhat.com> writes:
 
+> QEMU supported graceful shutdowns for multifd channels starting from commit
+> 48796f6b44 ("migration/multifd: Terminate the TLS connection").  Then error
+> check was enabled for premature TLS terminations.
+>
+> Now if we run the preempt TLS unit test, the test would pass, but there
+> will be a warning reported:
+>
+> qemu-system-x86_64: Cannot read from TLS channel: The TLS connection was non-properly terminated.
+> ok 1 /x86_64/migration/postcopy/preempt/tls/psk
+>
+> To fix it, make the rest channels to be gracefully terminated too when it's
+> a TLS channel.
+>
+> One note is that the qemufile helper needs to be in migration.c not
+> qemu-file.c, because qemu-file.c will be linked in unit tests, which will
+> not link channel.c unfortunately.
+>
+> Reported-by: Xiaohui Li <xiaohli@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/channel.h   |  3 +++
+>  migration/migration.h |  2 ++
+>  migration/channel.c   | 13 +++++++++++++
+>  migration/migration.c | 24 +++++++++++++++++++++++-
+>  4 files changed, 41 insertions(+), 1 deletion(-)
+>
+> diff --git a/migration/channel.h b/migration/channel.h
+> index 5bdb8208a7..0b25dd7c5b 100644
+> --- a/migration/channel.h
+> +++ b/migration/channel.h
+> @@ -29,4 +29,7 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>                                  const char *buf,
+>                                  const size_t buflen,
+>                                  Error **errp);
+> +
+> +bool migration_channel_shutdown_gracefully(QIOChannel *c, Error **errp);
+> +
+>  #endif
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 01329bf824..b5763af057 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -594,4 +594,6 @@ void migration_bitmap_sync_precopy(bool last_stage);
+>  void dirty_bitmap_mig_init(void);
+>  bool should_send_vmdesc(void);
+>  
+> +bool qemu_file_shutdown_gracefully(QEMUFile *f, Error **errp);
+> +
+>  #endif
+> diff --git a/migration/channel.c b/migration/channel.c
+> index a547b1fbfe..1ae839e5fe 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -145,3 +145,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+>  
+>      return 0;
+>  }
+> +
+> +/*
+> + * This is only needed for a successful migration, no-op for non-TLS
+> + * channels.  For unexpected interruptions, use qio_channel_shutdown().
+> + */
+> +bool migration_channel_shutdown_gracefully(QIOChannel *c, Error **errp)
+> +{
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+    ERRP_GUARD();
 
-r~
+due to dereferencing errp below
+
+> +    if (object_dynamic_cast((Object *)c, TYPE_QIO_CHANNEL_TLS)) {
+> +        qio_channel_tls_bye(QIO_CHANNEL_TLS(c), errp);
+> +    }
+> +
+> +    return *errp == NULL;
+> +}
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 10c216d25d..7015c2b5e0 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -113,6 +113,27 @@ static bool close_return_path_on_source(MigrationState *s);
+>  static void migration_completion_end(MigrationState *s);
+>  static void migrate_hup_delete(MigrationState *s);
+>  
+> +/*
+> + * See migration_channel_shutdown_gracefully().  The "graceful" versions
+> + * are only needed if migration succeeded.
+> + */
+> +bool qemu_file_shutdown_gracefully(QEMUFile *f, Error **errp)
+> +{
+> +    int ret;
+> +
+> +    if (!migration_channel_shutdown_gracefully(qemu_file_get_ioc(f), errp)) {
+> +        return false;
+> +    }
+> +
+> +    ret = qemu_file_shutdown(f);
+> +    if (ret) {
+> +        error_setg_errno(errp, -ret, "qemu_file_shutdown() failed");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  static void migration_downtime_start(MigrationState *s)
+>  {
+>      trace_vmstate_downtime_checkpoint("src-downtime-start");
+> @@ -2473,11 +2494,12 @@ static void migration_release_dst_files(MigrationState *ms)
+>       */
+>      if (ms->postcopy_qemufile_src) {
+>          migration_ioc_unregister_yank_from_file(ms->postcopy_qemufile_src);
+> -        qemu_file_shutdown(ms->postcopy_qemufile_src);
+> +        qemu_file_shutdown_gracefully(ms->postcopy_qemufile_src, &error_warn);
+>          qemu_fclose(ms->postcopy_qemufile_src);
+>          ms->postcopy_qemufile_src = NULL;
+>      }
+>  
+> +    qemu_file_shutdown_gracefully(file, &error_warn);
+>      qemu_fclose(file);
+>  }
 
