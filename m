@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9D6CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A81CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypE1-0001Ji-0j; Wed, 17 Sep 2025 06:17:21 -0400
+	id 1uypHW-0005ce-W4; Wed, 17 Sep 2025 06:20:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCu-0000bD-AY; Wed, 17 Sep 2025 06:16:12 -0400
+ id 1uypHQ-0005au-MF; Wed, 17 Sep 2025 06:20:52 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypCk-0003Hn-Q3; Wed, 17 Sep 2025 06:16:11 -0400
+ id 1uypHO-0003zc-MI; Wed, 17 Sep 2025 06:20:52 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sA093528
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sB093528
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:14:22 +0900 (JST)
+ Wed, 17 Sep 2025 19:14:23 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=feDbk9J/yWdV06ehpX8rW3/wvLj8rzMauO12ghjmdGI=; 
+DKIM-Signature: a=rsa-sha256; bh=Nb2IXk8Wd06JvJLljjYiPCsN3a3uINbunrK794JTiso=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1758104063; v=1;
- b=lK4jroglAeXdT8FGOvw97ekqlK6fKLYxyxeyuadhi9q7col6rF4pdBsdhaFzZNTY
- 3h0H0sctUoxgojDBKvuiDt1AR4/GsNyAnceAlgUPo8uNXm+ZEoRqTv3bHyHBTYWC
- gVGoNGn5VyyBTGuN1/FoivEOtIWURfHGw6f615Qp48pzMMcdwhCDFcYSPw1sPL6h
- rcNxvucJRYybjOE104+B4033Zpl2MsP7qvBHUXgqad2nkJu2yRwQ54lqbWb3+O9W
- 3zoe7dP/ozhNgpc93IefFxgFYjQ6K0S9K024DbgYpu1NhTd1E2iyI2SpUUduT9NW
- 4IZWPcKBp3sYVux+zGxD0w==
+ b=Oo5GWWtwzsWYxzsGXA+JY0CJMcCICiVhaS9y1lRGW6PO5yUYUtN7uDfQqIA+lXRU
+ Mo+ydn8Pe1RE5VeibUxfmj5y5G6MG0wUf+OtIDjTsYV9r5RXrrMAjWDMp8dKz3yj
+ ht41kegl/A3FFKssuK+aJknlqAd3KHu7LRAYDxciSex2hne/1KdIqOXAeuVX1Caj
+ Edp+fiXbGzHVqbrHbuqVUH+WZlV97MmCbLcuPv1auKXr0wlmF9c0GsAy+ueVvcIO
+ rO3wR19/WdYoURQwly6sr4aZMC4Oj5OmcBHc+GKDta9yK+7chuS/LRxIONFhkHEz
+ mhj736rzwMlM6d3TKkXjzw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:13:27 +0900
-Subject: [PATCH v3 2/7] vfio/pci: Do not unparent in instance_finalize()
+Date: Wed, 17 Sep 2025 19:13:28 +0900
+Subject: [PATCH v3 3/7] hw/core/register: Do not unparent in
+ instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-use-v3-2-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-use-v3-3-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -112,37 +113,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Children are automatically unparented so manually unparenting is
 unnecessary.
 
-Worse, automatic unparenting happens before the insntance_finalize()
+Worse, automatic unparenting happens before the instance_finalize()
 callback of the parent gets called, so object_unparent() calls in
 the callback will refer to objects that are already unparented, which
 is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/vfio/pci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/core/register.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 07257d0fa049..2e909c190f86 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
-         vfio_region_finalize(&bar->region);
-         if (bar->mr) {
-             assert(bar->size);
--            object_unparent(OBJECT(bar->mr));
-             g_free(bar->mr);
-             bar->mr = NULL;
-         }
-@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+diff --git a/hw/core/register.c b/hw/core/register.c
+index 8f63d9f227c4..3340df70b06e 100644
+--- a/hw/core/register.c
++++ b/hw/core/register.c
+@@ -314,7 +314,6 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
  
-     if (vdev->vga) {
-         vfio_vga_quirk_finalize(vdev);
--        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
--            object_unparent(OBJECT(&vdev->vga->region[i].mem));
--        }
-         g_free(vdev->vga);
-     }
+ void register_finalize_block(RegisterInfoArray *r_array)
+ {
+-    object_unparent(OBJECT(&r_array->mem));
+     g_free(r_array->r);
+     g_free(r_array);
  }
 
 -- 
