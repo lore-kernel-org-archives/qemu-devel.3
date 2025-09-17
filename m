@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7F5CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B10CAC5A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsv-00032u-Rt; Wed, 17 Sep 2025 09:07:46 -0400
+	id 1uyrsP-0001Jq-Bl; Wed, 17 Sep 2025 09:07:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroj-00052E-LG; Wed, 17 Sep 2025 09:03:30 -0400
+ id 1uyroh-000519-7v; Wed, 17 Sep 2025 09:03:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroh-0005vP-Jd; Wed, 17 Sep 2025 09:03:25 -0400
+ id 1uyroe-0005uZ-Od; Wed, 17 Sep 2025 09:03:22 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN70008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN78008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:47 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:54 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=IeYVbNa9ewH8X0AMzPHwbB1bovCCW1XINUrS833KFLU=; 
+DKIM-Signature: a=rsa-sha256; bh=4T6cua/ceJXKjoKjlSdgfNfccmS9PxWepKSnlV1jo2Q=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113808; v=1;
- b=RaCvs2pC4/oFYc/lwHEOZmzgDc8bmeoHZZOSvm4cn4lA7ojwDk6bZGqre9/Sk8p9
- 9Yx79ItQGLJwc6hNE3Iy88Gr/Js2OAkqcafa6FPKGzaHCWUbzhDjliw9QU9P1wio
- OyvpFayXqX9th2ut3T54cvwQNbpXusK7b4RNYpjZ02vM2/PP1H4jLqx6vISedT8k
- QOW3pS/INVZUcLck6cZ30TO3AaQIi9GGa8LYlB6kxAtsSNKlmUF1an/wtFjeVpBa
- 8iRmUJUoUxg0CLdGTiJILaNd7W8l0tlwCwuZYAnPgsabs+O2Ze12VHrBRtaNYfS/
- qrZ1xfTkg8Fz9asUWZ3Cpw==
+ s=rs20250326; t=1758113814; v=1;
+ b=NxB92lqlM7UlYIZnp2CZQ14z/01KsSvCZWaHPX26Ve+FM9zsSX6WpwiBM8kwCpyI
+ QdahEdz6xFWxufXHPQ4wrFEpzsMQVV6/wfxfypAxoeEGdP9kQQpPdKkRqsQoEmIf
+ ReJnT8BeSl3xmcrb5l+UTgeRv9tJW6pigOwG1RF20SUv/xz/YbM0ZKnPjlJeach1
+ ND9O5B+U6BgSL85TkxDc1kcPN0eC0H8zwAxeI4RrDtXGH1WjGp5MqsMsmSEuKfEc
+ 7e3zqYdnRU51XLfeLQII3lDFy2bTa+SMl82kz4R7X7OYsyYBHo8OCyEV7IojfJdG
+ lsg+aKiszZ3aquOYkE/sMg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:32 +0900
-Subject: [PATCH 20/35] hw/remote: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:40 +0900
+Subject: [PATCH 28/35] hw/usb: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-20-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-28-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,31 +136,22 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/remote/iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/usb/hcd-dwc2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/remote/iommu.c b/hw/remote/iommu.c
-index aac5c178ec81..89d79e9480da 100644
---- a/hw/remote/iommu.c
-+++ b/hw/remote/iommu.c
-@@ -54,7 +54,7 @@ static AddressSpace *remote_iommu_find_add_as(PCIBus *pci_bus,
-     if (!elem->mr) {
-         elem->mr = MEMORY_REGION(object_new(TYPE_MEMORY_REGION));
-         memory_region_set_size(elem->mr, UINT64_MAX);
--        address_space_init(&elem->as, NULL, elem->mr, NULL);
-+        address_space_init(&elem->as, OBJECT(iommu), elem->mr, "as");
-     }
+diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
+index 8aaa696dd4de..156cfb4263e3 100644
+--- a/hw/usb/hcd-dwc2.c
++++ b/hw/usb/hcd-dwc2.c
+@@ -1351,7 +1351,7 @@ static void dwc2_realize(DeviceState *dev, Error **errp)
+     obj = object_property_get_link(OBJECT(dev), "dma-mr", &error_abort);
  
-     qemu_mutex_unlock(&iommu->lock);
-@@ -73,7 +73,7 @@ void remote_iommu_unplug_dev(PCIDevice *pci_dev)
+     s->dma_mr = MEMORY_REGION(obj);
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "dwc2");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
  
-     elem = container_of(as, RemoteIommuElem, as);
- 
--    address_space_destroy(&elem->as);
-+    object_unparent(OBJECT(&elem->as));
- 
-     object_unref(elem->mr);
- 
+     usb_bus_new(&s->bus, sizeof(s->bus), &dwc2_bus_ops, dev);
+     usb_register_port(&s->bus, &s->uport, s, 0, &dwc2_port_ops,
 
 -- 
 2.51.0
