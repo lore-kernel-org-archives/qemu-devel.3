@@ -4,136 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B72CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11783CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqh7-0001yV-Us; Wed, 17 Sep 2025 07:51:30 -0400
+	id 1uyqgP-0000pu-Fm; Wed, 17 Sep 2025 07:50:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uyqbN-0002ll-LP; Wed, 17 Sep 2025 07:45:38 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ id 1uyqb6-0002h3-D3; Wed, 17 Sep 2025 07:45:33 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uyqbK-0001qi-CI; Wed, 17 Sep 2025 07:45:33 -0400
+ id 1uyqb2-0001oY-Mg; Wed, 17 Sep 2025 07:45:15 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b0jHB3GHyD7Ay1AUliJREH8fmC+kdhTZCpSWRpFtVCI0RARDChO1TxjYmlETjrucKG0/bjxeFMhAafRPREIOGGn1ydeLvrmxWq0qBb2alV8hj+b7LjuNQtpRJY26dr740iTSNnwxJfNsWoC5mKWlWIE9Pocef9M/gc0dpaXn1YrD2oYcNEcINvMvkxPDTkHUy5ywWcWO1lZtU9Q1hGvvhn85i5fJX/W19dr+3Ol//R8cSPJLx/F6Oy7mqK4UTyEM7jLHFWIfBmZXFNrlLiP62l5jVqLzAoIA57tElu6hZncv1AIHxbCz5m/vUer5bSkbuaVTGYye7NahMk/qvSi5dw==
+ b=MMttAjlCOih0MooXKoVOaGz1NRQzq8TG4oKWZU1UDE9brhYbFcrmXydD7vnqcQmcuSHWcCgCYXg3rrdT5vxDTMvz/il24UEDojLwpDUPn1dCF+qIn9PdPYiy7DXC0mgXpV7jWMTO/Sxw04SU8VrKsvvtdCOgAaYqINmh53+lCciI6JGUfagAmT0LPK8qh+4QpU6tWGO/6OnBTP+WAlBJy77lCHZHf7O+fZWsOE01/wJXeGxHHtX/SJWYnGdFwCWV6MKyiNPrdYRhJ76CeR3XiCzFHV17VxaYWueAjewaRAEj9DqEusyEiH7YUFcZomgmo6Rwz8foqi4l2y5gkcVKQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jHLqCSh80f+pJzfPw5wqXSO6whRkVPN9ypm0TIK6AU0=;
- b=DbVP0VIAO01CYQPaZpSrneisnRrhBH/bjpfGwgu5g+ZzuAWUvhIaR7oFL1IGIbPmWi7b15HjKozeJjMT08J9ehJoEK+BTRl/YDxOloGcmOF8oCUBj3uyBpTg6vF/s2ZGNR+UkdlIadam4jHDskqGJBNWnQ0hnmtBMr54QPLqqp4Z7apXvvNz4q6HmH4Z95+olarZgsLc9h2AegCnh/+rKboYVvMw9LsJjef1Xnyq+KbSIzkKOEJPpRwND62vHgcq+UErEfclgKuwsqaumfJuuUOrCTSGdR4RFQPeKhyqZ3F/q37board5npGMHB11GqcYmwnARZ45TZN4VxUtlgEqw==
+ bh=+ZkQZlMCSrtalZnMLTWodkMBy2kNwprk7L1GCuCdUGI=;
+ b=lkS1QR6ejeFYPg4CtVg4gu6y2LFIYB97dOFUBmzj7CWYzlfQnIkXci7qT3Mjj3L2IF1Xylty/y0G8XhGX771rM1V+WvLx2GMf29BPmFFldWjT5SpZwCk/kpolJQwGXpSLvs2LB7Q9xVj4mkII6TIBh2UnX8KEAaf4Ih+/1v94d4AeqiMm9aJOK4QgMTitY441mGNyJSCmuQ6DbTqSuS+wdqr9UM0A1PDTKNj7E/CiCMziL3grIOMmGoHcALmVfZOYZbn0GgL0se1YjJikfsWI4ruWiYj2pEoM+A9c0znqoOQ7MqAxQCmqYN//Eev+6fxUaFsO17zgzs9JnwRKs93TQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jHLqCSh80f+pJzfPw5wqXSO6whRkVPN9ypm0TIK6AU0=;
- b=UhkT3g3WkPTHnN+SIkEkQJJYp5NV8SBOEcGiVeAVnLqjEXQKMPym8q830nHpY1P5mJWtMRKHFJy0GrP6hq15//5XICH5wJeXFbUl/oNgHRdTK/x7G5QYgRYUEeK9VM1pUjgj3iT9B9mzvgfWyYwjO1LhWWxSF9vagehttHXkaDw=
-Received: from SA1P222CA0106.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:3c5::11)
- by SA1PR12MB6798.namprd12.prod.outlook.com (2603:10b6:806:25a::22)
+ bh=+ZkQZlMCSrtalZnMLTWodkMBy2kNwprk7L1GCuCdUGI=;
+ b=Szwtdq7FWr8W2bkk7ObHnfwivoVzi7ln2fJNTds5XDm394Ug362f2du6jabpkX02fnGTQ+9z+KQyeRTZYx8mQIWYDqpsajfvSIOx/hxTzmVC3mOWQMv0PDWjEpSLZmzMtwojztxuTmNPhIBl251AX7ZwyX+EXzVaKu+bSAq8aZM=
+Received: from BY3PR05CA0047.namprd05.prod.outlook.com (2603:10b6:a03:39b::22)
+ by MN2PR12MB4343.namprd12.prod.outlook.com (2603:10b6:208:26f::9)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 17 Sep
- 2025 11:45:25 +0000
-Received: from SN1PEPF00036F3E.namprd05.prod.outlook.com
- (2603:10b6:806:3c5:cafe::82) by SA1P222CA0106.outlook.office365.com
- (2603:10b6:806:3c5::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.14 via Frontend Transport; Wed,
- 17 Sep 2025 11:45:25 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.18; Wed, 17 Sep
+ 2025 11:45:04 +0000
+Received: from CO1PEPF000066EA.namprd05.prod.outlook.com
+ (2603:10b6:a03:39b:cafe::c5) by BY3PR05CA0047.outlook.office365.com
+ (2603:10b6:a03:39b::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.13 via Frontend Transport; Wed,
+ 17 Sep 2025 11:45:03 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
 Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF00036F3E.mail.protection.outlook.com (10.167.248.22) with Microsoft
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ CO1PEPF000066EA.mail.protection.outlook.com (10.167.249.5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.12 via Frontend Transport; Wed, 17 Sep 2025 11:45:25 +0000
-Received: from SATLEXMB03.amd.com (10.181.40.144) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9137.12 via Frontend Transport; Wed, 17 Sep 2025 11:45:03 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Wed, 17 Sep
- 2025 04:45:10 -0700
-Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ 2025 04:45:01 -0700
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 17 Sep
- 2025 06:45:10 -0500
+ 2025 06:45:01 -0500
 Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
  satlexmb08.amd.com (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17
- via Frontend Transport; Wed, 17 Sep 2025 04:45:09 -0700
+ via Frontend Transport; Wed, 17 Sep 2025 04:44:59 -0700
 From: Luc Michel <luc.michel@amd.com>
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>, 
  Francisco Iglesias <francisco.iglesias@amd.com>, "Edgar E . Iglesias"
  <edgar.iglesias@amd.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH 6/7] hw/net/can/xlnx-versal-canfd: refactor the banked
- registers logic
-Date: Wed, 17 Sep 2025 13:44:47 +0200
-Message-ID: <20250917114450.175892-7-luc.michel@amd.com>
+ <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>, "Vikram
+ Garhwal" <vikram.garhwal@bytedance.com>
+Subject: [PATCH 0/7] Register API leaks fixes
+Date: Wed, 17 Sep 2025 13:44:41 +0200
+Message-ID: <20250917114450.175892-1-luc.michel@amd.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250917114450.175892-1-luc.michel@amd.com>
-References: <20250917114450.175892-1-luc.michel@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: None (SATLEXMB03.amd.com: luc.michel@amd.com does not designate
+Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
  permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3E:EE_|SA1PR12MB6798:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2054cdb9-667d-4614-1cae-08ddf5dfb117
+X-MS-TrafficTypeDiagnostic: CO1PEPF000066EA:EE_|MN2PR12MB4343:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc147924-8308-46d9-99ae-08ddf5dfa402
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/+oydm2vi30jO1sIvOjt0Ch5kByr7t8DmaDU0faRg5muajkIimvhuN3XWSYC?=
- =?us-ascii?Q?tLhsFWS1hpYWUY9cjbtKbDrpAkm7DtNb1omOTUoVHi8c6CVpzkJNbjnxLSvZ?=
- =?us-ascii?Q?7RIPu8LIooh7RqVJbDLeeF9wtrmyWu7eBa7vm8INDBg3Cr19SjmzPTmZR8ro?=
- =?us-ascii?Q?u9SdcfSQ90l2NOBA+E9dB/YwsYx/EImHu64vY+8IyLpigstxyBnax2/rsp0O?=
- =?us-ascii?Q?eKTNmZKqbsrGsQJ1flEFRRyV8CQxfzXLuwVpXcdo+ZHzRMjHTY+oqvl1/Upc?=
- =?us-ascii?Q?aD6ixPDd/02m9aJ1l9LL41ZKz3B8EnlniY/h3iuVrEjQ0h3LbuQsE5yjPGQl?=
- =?us-ascii?Q?LzjafNqPZ4g8BMhfZsKEbTgNmVEHSsOfAOtPPsiq8+qSjuckOtzsyrz2ydET?=
- =?us-ascii?Q?asXFqA11IjtpzFA4swtQAks2ZsXfhI+pljKvCKWXmp2JjTQjcANHg/OoU4Fj?=
- =?us-ascii?Q?tNarrU/uC8XQ9XjSpVQaZ1LFoFmjQkLe2q8drT66CbXwKy9QEtI2HoAaRhDZ?=
- =?us-ascii?Q?Q6jw51baOwRorIEu5h/LOMjXpNuLCoVwtpidXHKC9NRvNr551g7ttbgFcSn+?=
- =?us-ascii?Q?oNgLyfJcNgwSxev+nDlTGsbxq6pg5/tPjrB5fCTWgxgaQ6WEO8H9mTdEFXbH?=
- =?us-ascii?Q?dTL5ZZdUiWbciv6hMJrpVfHi3PW932X/B4z8lFIwqoXK5BFNQ+mFCaSjDvD3?=
- =?us-ascii?Q?WRia4aAT9TBJa7UJc2SkdVk4tdCFzYeeYBKro+S/FwFWGgT10DqENsLpnEGK?=
- =?us-ascii?Q?LKtaE/pUehG/Cx4HCkbh+bG2AHl0QLk/gRB1TihMtmvRk7LhYYqpDxaPfyMv?=
- =?us-ascii?Q?5FJsEJFwCUj04HbnGCZywmH9dZWAVbZ2nCxQf89f+Q2AuzcxQP3YS+qWpxOS?=
- =?us-ascii?Q?fP3HqkaJAQ1vW/wt7im9TcYLYodfGFKohxTYRrl88WcGxWT3h0D8Qzh+9KLO?=
- =?us-ascii?Q?7Q0iTFRyiTtPbu1GMAG/5x4Nw1PsKvVEqB+WVuEnBTzh1KaBc5SVv1TQu+U3?=
- =?us-ascii?Q?LwRl3zA8SCEkAFijBI10kkabUdbUoo/J8KnU50laJX2Nl/LZTql7CMwJe19W?=
- =?us-ascii?Q?PWgaZ1EW68+c4Y5UWSBfjeJwiyvb3H3mEeSdWIZebD9hsLDUnFNRjZhLcrH6?=
- =?us-ascii?Q?0gEi4mpThnvzATnCQVwlJEO3Hyh1FAdaEUTkfwTGr9wvndlOd65VSRn/EeD6?=
- =?us-ascii?Q?+SB8vzWV3gckm20flvh5HLLAlK1Fl79MfYuzqYizNgvh62b8zh/UpMhXblOy?=
- =?us-ascii?Q?ADQ5QlOXGz0pZ4yDFvKZvlxqN8UjoJVuSTLDrLif/7hPA2lxOiAfEOXc/zF3?=
- =?us-ascii?Q?3t1FtBQohqtdlLkSRQ4cDzouxYx6mfOkrD4JAHbre+Rk8/EC8/nlRNs6xRB4?=
- =?us-ascii?Q?8A3tGnb8ZqOq1+kC2wt85+DkxdW8vMSF9csp4k99BqHNVScIFZKBQuMSM8N2?=
- =?us-ascii?Q?uMHW51aZVtuEzlBw27hr1jZZPvY6+TJalxWGnMJMjgqbG4NqZpEgpXODQiBB?=
- =?us-ascii?Q?9EDk9+IxSMJfF594YZNVliN2fHZp0AflGAB3?=
+ ARA:13230040|82310400026|376014|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?bJY2wibL3Lhw3CFs2QHn36rD7xNpJAzDferM9El3mT0l+Mr0zWIo7mC2ucTG?=
+ =?us-ascii?Q?wFqLTiS5XP2tjCoZdvazzxbtX/90EQXNSTMSCQCwSRLWfTgj00ZuP0oW7zjN?=
+ =?us-ascii?Q?azCmuuMbASXdgx6+aF/oBhqsuNnw2ZMjNJSh1F5e6pafWlKxLHrwC3kZLcZJ?=
+ =?us-ascii?Q?PMKo07vvUaxLr+A2YwrqQjn7/L0+FeuKHupMGJ2xTk9QnJG+HhxEWx6gKLe0?=
+ =?us-ascii?Q?HyIT604nAHCzEPMjwdDyAqmJo+Io9UcyFnVAe1zRoIsBH49OY8ck5mXfg9LA?=
+ =?us-ascii?Q?SNQ70GZia4w8V9rEV89FZ0jEQo6oX1OTwxKJf/Q/4deWD26fGPQqXC+JnL+R?=
+ =?us-ascii?Q?tQMx9guEnJqFKr5TnmONqaRApbr3/1HXcyn0n6ZkYAmAsAKjqqB5lzxP6HIM?=
+ =?us-ascii?Q?I4ICvk1mK0OpPLgbS0DlPpGZpwfj+z9dUaiSVJVZgJzhwRLk455DdpnPf5j5?=
+ =?us-ascii?Q?Adtwge5sMtZyimS+fAGsM4NGFa4N8pXkw5XIAgGTHjheUgA9a9ikrqCezSbZ?=
+ =?us-ascii?Q?BNYb6DdW6BntbK5G8nFZtTMm4A5LiLNQQKqzy9h9644n7QLEBQcaBHKv5Ycr?=
+ =?us-ascii?Q?6D+2ALF0dCnJCQIIM9XQmM7wuAXlXz1gcQsE6L7geYlDZxB6LF3KrhJGd3/H?=
+ =?us-ascii?Q?VyCUnIXFXSzbXuiuj+5rgHJv3v+TVK2Ap0ah2leDj9HeyQ1dEkq3L13GWmzL?=
+ =?us-ascii?Q?hNmiB9aVLzINRmLMeOwJvYDKKmRu4Vr7h6Wri09y/TfeZuwb3RqbRonLpAaK?=
+ =?us-ascii?Q?q3phRr2gIiSH697PIcpzJkTSecIhAPJgcih/c7NQkv23ePeeJ26tjhPm6M5H?=
+ =?us-ascii?Q?4kil80JIksjdAwKrrnrdhsiYQKSRxrNHBVJ59f6MXNnmSxKtDObvXdfN120N?=
+ =?us-ascii?Q?wYikCeizefWnvKgo+Y63bjxI0CnLqIaGNi86e0seHUB66Nbrwir3gRtSBYby?=
+ =?us-ascii?Q?1xaa/qB+35AjWnDm+kgRSLAvSfRw2bOr/V0TdP40lQ/1w93BN064kiBnA1kx?=
+ =?us-ascii?Q?Gr2M+UtRwwYJ11tnFTFjJuKPUcBpy2cWvqJ7qtgUaew5UBOikP6yJxsVr8FZ?=
+ =?us-ascii?Q?0KswvoKg1AnX88i09j58DJq+AxHzDIjbrVmvVEY1wwLF8cwKsXWIRvN9+Fhx?=
+ =?us-ascii?Q?jk+Bqbp+2ay7Ebk/QlLIopto0h4Hwc1jJbpOwPtZOXeQml64CHUCyY4ar4AM?=
+ =?us-ascii?Q?WnD4Voh7rggubaT9YETFfLbE/8K3iItvKgOZcMFL8o4tar54I/60RPYLEkeH?=
+ =?us-ascii?Q?GBFwToaS3W8vGaqXqzyWme5ONDu4HYBAJnsT/KvZSXNCXlkspo/pl7V//Fir?=
+ =?us-ascii?Q?YQR8w8VDeOw6s64K0kUXmuH57f1dOcLZXVAipxk7Gz7idXSk9gqmip2zIKOI?=
+ =?us-ascii?Q?uQyGMfcJIC7bsDls/wJvzRp/BWco/UySuu0cN6g9BIHcljHKI6oM7ovM6L5o?=
+ =?us-ascii?Q?p8kFzZbMRDn9T727p2WRMf+h8rQ6rMwkvx/osGh4jnIcTEvfYA3RqzWzaUeO?=
+ =?us-ascii?Q?STapa19cZUdOo0itx1y0IIWpJ+2vNSqKPn64?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
+ IPV:CAL; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2025 11:45:25.3698 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2054cdb9-667d-4614-1cae-08ddf5dfb117
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2025 11:45:03.3282 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc147924-8308-46d9-99ae-08ddf5dfa402
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F3E.namprd05.prod.outlook.com
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000066EA.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6798
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4343
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
  envelope-from=Luc.Michel@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+ helo=CH1PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,231 +153,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CANFD device has several groups of registers:
-  - the main control registers from 0x0 to 0xec
-  - several banks of multiple registers. The number of banks is either
-    hardcoded, or configurable using QOM properties:
-      - Tx registers
-      - Filter registers
-      - Tx events registers
-      - Rx0 registers
-      - Rx1 registers
+Based-on: 20250912100059.103997-1-luc.michel@amd.com ([PATCH v5 00/47] AMD Versal Gen 2 support)
 
-As of now, all the registers are handled using the register API. The
-banked register logic results in a convoluted code to correctly allocate
-the register descriptors for the register API. This code bypasses the
-standard register API creation function (register_init_block). The
-resulting code leaks memory when the device is finalized.
+Hello,
 
-This commit introduces decoding logic for the banked registers. Those
-registers are quite simple in practice. Accessing them triggers no
-side-effect (only the filter registers need a check to catch guest
-invalid behaviour). Starting from the Tx events registers, they are all
-read-only.
+This series addresses the memory leaks caused by the register API. The
+first patches fix the API itself while the last ones take care of the
+CANFD model.
 
-The main device memory region is changed to an I/O one, calling the
-new decoding logic when accessed. The register API memory region still
-overlaps all of it so for now the introduced code has no effect. The
-next commit will remove the register API usage for banked registers.
+The leaks in the register API were caused by:
+   - the REGISTER device being initialized without being realized nor
+     finalized. Those devices were not parented to anything and were
+     not using the qdev API. So in the end I chose to drop the REGISTER
+     object completely (patch 1).
+   - Register API users not calling `register_finalize_block' on the
+     RegisterInfoArray returned by `register_init_block'. Instead of
+     fixing all the users, I chose to simplify the API by removing the
+     need for this call. I turned the RegisterInfoArray struct into a QOM
+     object and parented it to the device in `register_init_block'. This
+     way it has its own finalize function that gets called when the
+     parent device is finalized. This implies a small API change: the
+     `register_finalize_block' function is removed (patch 2, 3, 4).
 
-Signed-off-by: Luc Michel <luc.michel@amd.com>
----
- hw/net/can/xlnx-versal-canfd.c | 155 ++++++++++++++++++++++++++++++++-
- 1 file changed, 153 insertions(+), 2 deletions(-)
+The CANFD model needed special care. It was rolling out its own version
+of `register_init_block', including the discrepancies leading to the
+memory leaks. This is because the register map of this device is
+composed of main registers (from 0x0 to 0xec), followed by several banks
+of multiple registers (Tx banks, filter banks, Txe banks, ...). The
+register API is not suited for this kind of layout and the resulting
+code to handle that is convoluted. However a simple decoding logic is
+easily written for this, those registers having basically no side effect
+upon access.
 
-diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-index 343348660b5..81615bc52a6 100644
---- a/hw/net/can/xlnx-versal-canfd.c
-+++ b/hw/net/can/xlnx-versal-canfd.c
-@@ -1408,10 +1408,27 @@ static uint64_t canfd_srr_pre_write(RegisterInfo *reg, uint64_t val64)
-     }
- 
-     return s->regs[R_SOFTWARE_RESET_REGISTER];
- }
- 
-+static void filter_reg_write(XlnxVersalCANFDState *s, hwaddr addr,
-+                             size_t bank_idx, uint32_t val)
-+{
-+    size_t reg_idx = addr / sizeof(uint32_t);
-+
-+    if (!(s->regs[R_ACCEPTANCE_FILTER_CONTROL_REGISTER] &
-+        (1 << bank_idx))) {
-+        s->regs[reg_idx] = val;
-+    } else {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-+
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Acceptance filter register 0x%"
-+                      HWADDR_PRIx " changed while filter %zu enabled\n",
-+                      path, addr, bank_idx + 1);
-+    }
-+}
-+
- static uint64_t filter_mask(RegisterInfo *reg, uint64_t val64)
- {
-     XlnxVersalCANFDState *s = XILINX_CANFD(reg->opaque);
-     uint32_t reg_idx = (reg->access->addr) / 4;
-     uint32_t val = val64;
-@@ -1761,11 +1778,145 @@ static const RegisterAccessInfo canfd_regs_info[] = {
- static void xlnx_versal_canfd_ptimer_cb(void *opaque)
- {
-     /* No action required on the timer rollover. */
- }
- 
-+static bool canfd_decode_reg_bank(XlnxVersalCANFDState *s, hwaddr addr,
-+                                  hwaddr first_reg, hwaddr last_reg,
-+                                  size_t num_banks, size_t *idx, size_t *offset)
-+{
-+    hwaddr base = addr - first_reg;
-+    hwaddr span = last_reg - first_reg + sizeof(uint32_t);
-+
-+    *idx = base / span;
-+
-+    if (*idx >= num_banks) {
-+        return false;
-+    }
-+
-+    *offset = base % span;
-+    *offset += first_reg;
-+
-+    return true;
-+}
-+
-+/*
-+ * Decode the given addr into a (idx, offset) pair:
-+ *   - idx is the bank index of the register at addr,
-+ *   - offset is the register offset relative to bank 0
-+ *
-+ * @return true is the decoding succeded, false otherwise
-+ */
-+static bool canfd_decode_addr(XlnxVersalCANFDState *s, hwaddr addr,
-+                              size_t *idx, size_t *offset)
-+{
-+    if (addr <= A_RX_FIFO_WATERMARK_REGISTER) {
-+        /* from 0x0 to 0xec. Handled by the register API */
-+        g_assert_not_reached();
-+    } else if (addr < A_TB_ID_REGISTER) {
-+        /* no register in this gap */
-+        return false;
-+    } else if (addr < A_AFMR_REGISTER) {
-+        /* TX registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_TB_ID_REGISTER, A_TB_DW15_REGISTER,
-+                                     s->cfg.tx_fifo, idx, offset);
-+    } else if (addr < A_TXE_FIFO_TB_ID_REGISTER) {
-+        /* Filter registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_AFMR_REGISTER, A_AFIR_REGISTER,
-+                                     32, idx, offset);
-+    } else if (addr < A_RB_ID_REGISTER) {
-+        /* TX event registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_TXE_FIFO_TB_ID_REGISTER,
-+                                     A_TXE_FIFO_TB_DLC_REGISTER,
-+                                     32, idx, offset);
-+    } else if (addr < A_RB_ID_REGISTER_1) {
-+        /* RX0 registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_RB_ID_REGISTER,
-+                                     A_RB_DW15_REGISTER,
-+                                     s->cfg.rx0_fifo, idx, offset);
-+    } else if (addr <= A_RB_DW15_REGISTER_1) {
-+        /* RX1 registers */
-+        return canfd_decode_reg_bank(s, addr,
-+                                     A_RB_ID_REGISTER_1,
-+                                     A_RB_DW15_REGISTER_1,
-+                                     s->cfg.rx1_fifo, idx, offset);
-+    }
-+
-+    /* decode error */
-+    return false;
-+}
-+
-+static uint64_t canfd_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    XlnxVersalCANFDState *s = XILINX_CANFD(opaque);
-+    size_t bank_idx;
-+    hwaddr reg_offset;
-+    uint64_t ret;
-+
-+    if (!canfd_decode_addr(s, addr, &bank_idx, &reg_offset)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": read to unknown register at address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        return 0;
-+    }
-+
-+    switch (reg_offset) {
-+    default:
-+        ret = s->regs[addr / sizeof(uint32_t)];
-+    }
-+
-+    return ret;
-+}
-+
-+static void canfd_write(void *opaque, hwaddr addr, uint64_t value,
-+                        unsigned size)
-+{
-+    XlnxVersalCANFDState *s = XILINX_CANFD(opaque);
-+    size_t bank_idx;
-+    hwaddr reg_offset;
-+
-+    if (!canfd_decode_addr(s, addr, &bank_idx, &reg_offset)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": write to unknown register at address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        return;
-+    }
-+
-+    if (addr >= A_TXE_FIFO_TB_ID_REGISTER) {
-+        /* All registers from TX event regs to the end are read-only */
-+        qemu_log_mask(LOG_GUEST_ERROR, TYPE_XILINX_CANFD
-+                      ": write to read-only register at 0x%" HWADDR_PRIx "\n",
-+                      addr);
-+        return;
-+    }
-+
-+    switch (reg_offset) {
-+    case A_AFMR_REGISTER:
-+    case A_AFIR_REGISTER:
-+        filter_reg_write(s, addr, bank_idx, value);
-+        break;
-+
-+    default:
-+        s->regs[addr / sizeof(uint32_t)] = value;
-+    }
-+}
-+
- static const MemoryRegionOps canfd_ops = {
-+    .read = canfd_read,
-+    .write = canfd_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static const MemoryRegionOps canfd_regs_ops = {
-     .read = register_read_memory,
-     .write = register_write_memory,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid = {
-         .min_access_size = 4,
-@@ -2018,12 +2169,12 @@ static void canfd_realize(DeviceState *dev, Error **errp)
- 
- static void canfd_init(Object *obj)
- {
-     XlnxVersalCANFDState *s = XILINX_CANFD(obj);
- 
--    memory_region_init(&s->iomem, obj, TYPE_XILINX_CANFD,
--                       XLNX_VERSAL_CANFD_R_MAX * 4);
-+    memory_region_init_io(&s->iomem, obj, &canfd_ops, s, TYPE_XILINX_CANFD,
-+                          XLNX_VERSAL_CANFD_R_MAX * 4);
- }
- 
- static const VMStateDescription vmstate_canfd = {
-     .name = TYPE_XILINX_CANFD,
-     .version_id = 1,
+Patch 6 introduces this decoding logic for the banked registers, patch 7
+removes the register API bits for those, keeping the one for the base
+registers.
+
+Note: this series is based on my Versal 2 series. It modifies the CRL
+device during the register API refactoring. It can easily be rebased on
+master if needed.
+
+Thanks
+
+Luc
+
+
+Luc Michel (7):
+  hw/core/register: remove the REGISTER device type
+  hw/core/register: add the REGISTER_ARRAY type
+  hw/core/register: remove the calls to `register_finalize_block'
+  hw/core/register: remove the `register_finalize_block' function
+  hw/net/can/xlnx-versal-canfd: remove unused include directives
+  hw/net/can/xlnx-versal-canfd: refactor the banked registers logic
+  hw/net/can/xlnx-versal-canfd: remove register API usage for banked
+    regs
+
+ include/hw/misc/xlnx-versal-crl.h      |   1 -
+ include/hw/misc/xlnx-versal-xramc.h    |   1 -
+ include/hw/misc/xlnx-zynqmp-apu-ctrl.h |   1 -
+ include/hw/misc/xlnx-zynqmp-crf.h      |   1 -
+ include/hw/net/xlnx-versal-canfd.h     |   8 -
+ include/hw/nvram/xlnx-bbram.h          |   1 -
+ include/hw/register.h                  |  25 +-
+ hw/core/register.c                     |  36 +-
+ hw/misc/xlnx-versal-crl.c              |  38 +--
+ hw/misc/xlnx-versal-trng.c             |   1 -
+ hw/misc/xlnx-versal-xramc.c            |  12 +-
+ hw/misc/xlnx-zynqmp-apu-ctrl.c         |  12 +-
+ hw/misc/xlnx-zynqmp-crf.c              |  12 +-
+ hw/net/can/xlnx-versal-canfd.c         | 434 +++++++++----------------
+ hw/nvram/xlnx-bbram.c                  |  13 +-
+ hw/nvram/xlnx-versal-efuse-ctrl.c      |   1 -
+ hw/nvram/xlnx-zynqmp-efuse.c           |   8 -
+ 17 files changed, 196 insertions(+), 409 deletions(-)
+
 -- 
 2.50.1
 
