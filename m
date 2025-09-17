@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB19CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CA7CAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsx-00035o-J0; Wed, 17 Sep 2025 09:07:47 -0400
+	id 1uyrk5-00084E-5N; Wed, 17 Sep 2025 08:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpm-0005wO-KZ; Wed, 17 Sep 2025 09:04:36 -0400
+ id 1uyrk1-0007za-OH; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpk-0005xn-8N; Wed, 17 Sep 2025 09:04:30 -0400
+ id 1uyrjx-00052E-VC; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6x008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6l008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:46 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:37 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2k1RXsuysZJUUbooF4SQHx4mO+9R1oof00yibd4tPt8=; 
+DKIM-Signature: a=rsa-sha256; bh=I0NMvF5OGZVy1ri6cDaaDK+4nakFScwWAWwMOrizyQw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113807; v=1;
- b=FvaXOvL0NzIYuie5l9DQdrEVrjLdBmVmO2Z5k3XIcvMFwZzDcBEwIZaN2DUwCRf9
- TmpX9robixIPy+LNyaFa60g9E1eZrfW/ygqhDOD+6e5VOk1+j+FCwAsKGqGFZpYg
- RTMTEikUoYBvo6ihFgFS4J1f/lE0L65s0MRSZANMhV+vHphVLaypaKAkFOW+7t3B
- +g45JKUixe7q7xlyuh2MH3yPwty6t3xOsLG2tTrTemCQrVtsgXUMjLa9jVTK3ITv
- opFWLFKv3yRuB/V/6TgY/MKGRni25HSzwYN5CWeU3aFp3S3jU1B4cl2RN5yehiod
- kR4HtnZxXPba6n+ID0vytg==
+ s=rs20250326; t=1758113797; v=1;
+ b=bberKOrO6J7tY0L7zJPCCBce2lzuLyNtHl2vnIJUXIZZMwbfrJwuttLnlc9sonPs
+ 14JtvF6GMhefXFETjBqtOUjw14A2IcAg4+INF921qr21btTZ10oeoS6eqXhEYTpc
+ d2+qDuD7DVPiUYKJcmYxuegzPPIPRVujjO8SrPvhayhKHi+7JNbbJ8+F88JzRNdg
+ tZdN/NDdvDo+XlEfojYYM41UVanxTLjA+D/SRzZw2zeqJAQ8nsVebcxYrGGVVMh0
+ 7LIYrh0+uNGOWQXR1XPZA8cO1V4zTuMbGIifi4NtgOtyxInjjcjlxVpfI1G5DRRW
+ TFV4JVQb0q8Jp6z3Ra2GfQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:31 +0900
-Subject: [PATCH 19/35] hw/ppc: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:19 +0900
+Subject: [PATCH 07/35] hw/dma: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-19-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-7-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,74 +136,120 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ppc/pnv_lpc.c   | 2 +-
- hw/ppc/pnv_xscom.c | 2 +-
- hw/ppc/spapr_pci.c | 5 ++---
- hw/ppc/spapr_vio.c | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ hw/dma/bcm2835_dma.c   | 2 +-
+ hw/dma/pl080.c         | 3 +--
+ hw/dma/pl330.c         | 3 +--
+ hw/dma/rc4030.c        | 5 ++---
+ hw/dma/xilinx_axidma.c | 4 ++--
+ hw/dma/xlnx-zdma.c     | 2 +-
+ hw/dma/xlnx_csu_dma.c  | 2 +-
+ 7 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index 373b5a8be573..304f01e240db 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -799,7 +799,7 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/dma/bcm2835_dma.c b/hw/dma/bcm2835_dma.c
+index ebef56d8d613..8ff266c48882 100644
+--- a/hw/dma/bcm2835_dma.c
++++ b/hw/dma/bcm2835_dma.c
+@@ -380,7 +380,7 @@ static void bcm2835_dma_realize(DeviceState *dev, Error **errp)
  
-     /* Create address space and backing MR for the OPB bus */
-     memory_region_init(&lpc->opb_mr, OBJECT(dev), "lpc-opb", 0x100000000ull);
--    address_space_init(&lpc->opb_as, NULL, &lpc->opb_mr, "lpc-opb");
-+    address_space_init(&lpc->opb_as, OBJECT(dev), &lpc->opb_mr, "as");
+     obj = object_property_get_link(OBJECT(dev), "dma-mr", &error_abort);
+     s->dma_mr = MEMORY_REGION(obj);
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, TYPE_BCM2835_DMA "-memory");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr,  "as");
  
-     /*
-      * Create ISA IO, Mem, and FW space regions which are the root of
-diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
-index 58f86bcbd2a6..353eb9b14e29 100644
---- a/hw/ppc/pnv_xscom.c
-+++ b/hw/ppc/pnv_xscom.c
-@@ -219,7 +219,7 @@ void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr)
-     memory_region_add_subregion(get_system_memory(), addr, &chip->xscom_mmio);
+     bcm2835_dma_reset(dev);
+ }
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index cf02a484d6a6..1b6e9f741330 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -398,8 +398,7 @@ static void pl080_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
-     memory_region_init(&chip->xscom, OBJECT(chip), name, size);
--    address_space_init(&chip->xscom_as, NULL, &chip->xscom, name);
-+    address_space_init(&chip->xscom_as, OBJECT(chip), &chip->xscom, "as");
-     g_free(name);
+-    address_space_init(&s->downstream_as, NULL, s->downstream,
+-                       "pl080-downstream");
++    address_space_init(&s->downstream_as, OBJECT(s), s->downstream, "as");
  }
  
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 13fc5c9aa8f2..41bf65b291de 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1759,7 +1759,7 @@ static void spapr_phb_unrealize(DeviceState *dev)
-      * address space.
-      */
-     address_space_remove_listeners(&sphb->iommu_as);
--    address_space_destroy(&sphb->iommu_as);
-+    object_unparent(OBJECT(&sphb->iommu_as));
+ static void pl081_init(Object *obj)
+diff --git a/hw/dma/pl330.c b/hw/dma/pl330.c
+index 4733799f4045..e9bf8f86ee5a 100644
+--- a/hw/dma/pl330.c
++++ b/hw/dma/pl330.c
+@@ -1569,8 +1569,7 @@ static void pl330_realize(DeviceState *dev, Error **errp)
+         s->mem_as = &address_space_memory;
+     } else {
+         s->mem_as = g_new0(AddressSpace, 1);
+-        address_space_init(s->mem_as, NULL, s->mem_mr,
+-                           memory_region_name(s->mem_mr));
++        address_space_init(s->mem_as, OBJECT(s), s->mem_mr, "as");
+     }
  
-     qbus_set_hotplug_handler(BUS(phb->bus), NULL);
-     pci_unregister_root_bus(phb->bus);
-@@ -1902,8 +1902,7 @@ static void spapr_phb_realize(DeviceState *dev, Error **errp)
-     memory_region_init(&sphb->iommu_root, OBJECT(sphb),
-                        namebuf, UINT64_MAX);
-     g_free(namebuf);
--    address_space_init(&sphb->iommu_as, NULL, &sphb->iommu_root,
--                       sphb->dtbusname);
-+    address_space_init(&sphb->iommu_as, OBJECT(sphb), &sphb->iommu_root, "as");
+     s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, pl330_exec_cycle_timer, s);
+diff --git a/hw/dma/rc4030.c b/hw/dma/rc4030.c
+index cf76f90f4d3b..65f2c7f1bd19 100644
+--- a/hw/dma/rc4030.c
++++ b/hw/dma/rc4030.c
+@@ -688,8 +688,7 @@ static void rc4030_realize(DeviceState *dev, Error **errp)
+     memory_region_init_iommu(&s->dma_mr, sizeof(s->dma_mr),
+                              TYPE_RC4030_IOMMU_MEMORY_REGION,
+                              o, "rc4030.dma", 4 * GiB);
+-    address_space_init(&s->dma_as, NULL, MEMORY_REGION(&s->dma_mr),
+-                       "rc4030-dma");
++    address_space_init(&s->dma_as, o, MEMORY_REGION(&s->dma_mr), "as");
+ }
  
-     /*
-      * As MSI/MSIX interrupts trigger by writing at MSI/MSIX vectors,
-diff --git a/hw/ppc/spapr_vio.c b/hw/ppc/spapr_vio.c
-index ebe4bad23668..5f8dd153dedf 100644
---- a/hw/ppc/spapr_vio.c
-+++ b/hw/ppc/spapr_vio.c
-@@ -529,7 +529,7 @@ static void spapr_vio_busdev_realize(DeviceState *qdev, Error **errp)
-                                  "iommu-spapr-bypass", get_system_memory(),
-                                  0, MACHINE(spapr)->ram_size);
-         memory_region_add_subregion_overlap(&dev->mrroot, 0, &dev->mrbypass, 1);
--        address_space_init(&dev->as, NULL, &dev->mrroot, qdev->id);
-+        address_space_init(&dev->as, OBJECT(dev), &dev->mrroot, "as");
+ static void rc4030_unrealize(DeviceState *dev)
+@@ -698,7 +697,7 @@ static void rc4030_unrealize(DeviceState *dev)
  
-         dev->tcet = spapr_tce_new_table(qdev, liobn);
-         spapr_tce_table_enable(dev->tcet, SPAPR_TCE_PAGE_SHIFT, 0,
+     timer_free(s->periodic_timer);
+ 
+-    address_space_destroy(&s->dma_as);
++    object_unparent(OBJECT(&s->dma_as));
+     object_unparent(OBJECT(&s->dma_mr));
+ }
+ 
+diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
+index 0f340abc2c6f..5f85b686fd18 100644
+--- a/hw/dma/xilinx_axidma.c
++++ b/hw/dma/xilinx_axidma.c
+@@ -588,8 +588,8 @@ static void xilinx_axidma_realize(DeviceState *dev, Error **errp)
+         ptimer_transaction_commit(st->ptimer);
+     }
+ 
+-    address_space_init(&s->as, NULL,
+-                       s->dma_mr ? s->dma_mr : get_system_memory(), "dma");
++    address_space_init(&s->as, OBJECT(s),
++                       s->dma_mr ? s->dma_mr : get_system_memory(), "as");
+ }
+ 
+ static void xilinx_axidma_init(Object *obj)
+diff --git a/hw/dma/xlnx-zdma.c b/hw/dma/xlnx-zdma.c
+index 9b9ccd1e3c08..ad93bab5d4fa 100644
+--- a/hw/dma/xlnx-zdma.c
++++ b/hw/dma/xlnx-zdma.c
+@@ -769,7 +769,7 @@ static void zdma_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, TYPE_XLNX_ZDMA " 'dma' link not set");
+         return;
+     }
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "zdma-dma");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+ 
+     for (i = 0; i < ARRAY_SIZE(zdma_regs_info); ++i) {
+         RegisterInfo *r = &s->regs_info[zdma_regs_info[i].addr / 4];
+diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
+index 8b88392bb92b..8a0ec5bc5b94 100644
+--- a/hw/dma/xlnx_csu_dma.c
++++ b/hw/dma/xlnx_csu_dma.c
+@@ -653,7 +653,7 @@ static void xlnx_csu_dma_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, TYPE_XLNX_CSU_DMA " 'dma' link not set");
+         return;
+     }
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "csu-dma");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+ 
+     reg_array =
+         register_init_block32(dev, xlnx_csu_dma_regs_info[!!s->is_dst],
 
 -- 
 2.51.0
