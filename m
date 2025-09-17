@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1D6CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 08:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A53BACAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uynfu-0000UY-IA; Wed, 17 Sep 2025 04:38:02 -0400
+	id 1uyo1a-0006ke-9D; Wed, 17 Sep 2025 05:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uynfs-0000Te-9Z; Wed, 17 Sep 2025 04:38:00 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uynfq-0006PU-2L; Wed, 17 Sep 2025 04:38:00 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cRXGB1Mspz4wDT;
- Wed, 17 Sep 2025 18:37:54 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cRXG66B3sz4wD0;
- Wed, 17 Sep 2025 18:37:50 +1000 (AEST)
-Message-ID: <55dd8c87-dcb1-4859-9b5c-2e69ce78bdc4@kaod.org>
-Date: Wed, 17 Sep 2025 10:37:48 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uyo1Z-0006kB-44
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:00:25 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uyo1X-000159-ET
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:00:24 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3e9a9298764so2565535f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 02:00:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758099620; x=1758704420; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pgDhOyRLnZwAFn2B2OZc45OsJHZyQdANA0ZrYo5q5cU=;
+ b=DYdHV58ApDc17oI6McEFFFEdK9RsKH265VdHc2IuEz4f+6/fU5uK1z6aPzMuG0m2j8
+ glBkeaiJD5dajCus/7RQAu/igJ9eO0jTZ7053RDJwMj0keIoPUT+vwRePHULo3t/JMam
+ JKzCnAuSkA5p7kWiNzc+Tg94yI60Qm0rJm5y9S49q20QMenWFRJZLiof51NfWHJh7xzw
+ Sxjl7FnzNPWoHMaHi5MHrDVYgNMOvctX++IMD6qhmQc5RJlCiGQB+b3PDpl8ZZ19HPkb
+ YagHe+7vpHhtDnLZb5ienL6qcBGBE52r01cscLb/wdlBIcc/i2PtRoXrOaSctxFEGnCn
+ XaMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758099620; x=1758704420;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pgDhOyRLnZwAFn2B2OZc45OsJHZyQdANA0ZrYo5q5cU=;
+ b=NKs+6McdHK1SI+sJvozh/I3fZOHFsW0ThXV/leaHP0UQ2/QV1Ka6mUkIFV3p9UeaqH
+ 8hsdka91zuRANiiFmgg3RvCfOk5m/cU7ciIoaO9zkoW5+BnIl+Dv0PrqCJvTuh3EDll3
+ M2Jy+8d8VFLQkN6Lq64jotPxJigfwUnpbrJOffFAaFeEhimLZ8F04S4BEii988zMIkYo
+ ov7ylwkc77MzXa9Jv58TqHW840Uh2fhfTVTyry5B/zj7tlIGjJF7Y8rV7Ov1ZD2xpG0O
+ iRUtwfhn4PbzsOlFZNZbctqSJZ1DHgaXeZNU2F6zNIUZezxHSwFSy5rY5l+ZtbQ57YtZ
+ A+Fw==
+X-Gm-Message-State: AOJu0YyYK32MhqSRUF2izVZrLZATD9BDmb/rag6fIREt2iVl6xUEQ03z
+ 9NyowzXWpgUZwd4MipG1l9Lgl5lcqv916NgSgs3hRThlmyyKR+BilFKlKZ8Cupsf9a4=
+X-Gm-Gg: ASbGncsbSHfyQG46g2s8pxTuyQQium960kuP/Cw/KcTASXsGSS1LXnvqRdGZzvULzh+
+ pm4r4r6iPES2l37+w1Uf5QR5MTPEOgQhoXhxKxW9XEJf5yAxlh96t2+JJXrcNZ7CLZYWMSfEvFQ
+ LFuW+G4OdNIEEWpRApzruQ0xv0SwfBrPPyVfAJS++EdB5+ijubSH5W5zMah4PS/0lhjHdQLYYb3
+ TodHf4znuNBcfVSPVJDwx0vaOe5ROfL6b0UJkKbqODaNxCrYharjHSaPJY/oSbutaNBEQCM2gSH
+ IvDWfAHI7he1WnvGvtYq3Ipk7vq0ujgk9oRnsECoxl5Sky7n/6PKb0dBO7lGhegN5K97Wu08dae
+ OwBZ4Qq9AUQ6y1jgaq67VaAI=
+X-Google-Smtp-Source: AGHT+IHzmzPUkQmWTr58Bkb6pxmCWm0leNpestqNXgBydDiLBFrDhLv5Wj8hf4QHomQglMBhKYRHyg==
+X-Received: by 2002:a05:6000:220c:b0:3ec:dd33:d0e with SMTP id
+ ffacd0b85a97d-3ecdf9b491bmr811128f8f.4.1758099620490; 
+ Wed, 17 Sep 2025 02:00:20 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ea6805001dsm12909204f8f.6.2025.09.17.02.00.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Sep 2025 02:00:19 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B395B5F834;
+ Wed, 17 Sep 2025 10:00:18 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, berrange@redhat.com
+Subject: Re: [PATCH] checkpatch: Ignore removed lines in license check
+In-Reply-To: <20250916165928.10048-1-nabihestefan@google.com> (Nabih Estefan's
+ message of "Tue, 16 Sep 2025 16:59:28 +0000")
+References: <20250916165928.10048-1-nabihestefan@google.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Wed, 17 Sep 2025 10:00:18 +0100
+Message-ID: <871po5o3ml.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 0/6] hw/arm/aspeed: AST1700 IO expander support
- for AST27x0 (LTPI, UART, IRQ, I2C)
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250917013143.1600377-1-kane_chen@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250917013143.1600377-1-kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=uXDK=34=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,96 +103,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Nabih Estefan <nabihestefan@google.com> writes:
 
-On 9/17/25 03:31, Kane Chen wrote:
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> 
-> Hi all,
-> 
-> This series adds support for AST1700-based IO expander boards on the
-> ASPEED AST27x0 family and wires them into the machine models. It
-> introduces an LTPI controller, adds a machine property to select how
-> many expanders are present, and connects the expander-provided UART,
-> interrupt controller, and I2C blocks.
-> 
-> What this series does
-> 
-> - Add a new `ioexps-num` machine property (range 0-2; default 0) so
->    boards can declare how many expanders are attached without changing
->    defaults.
-> - Add an LTPI controller device used by the expander/board glue.
-> - Add the AST1700 IO expander device model.
+> When running the license check, if we are updating a license it is
+> possible for the checkpatch script to test against old license lines
+> instead of newer ones, since the removal lines appear before the
+> addition lines in a .patch file.
+>
+> Fix this by skipping over lines that start with "-" in the checkpatch
+> script.
+>
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
 
-Please resend in 2 distinct series : LTPI and AST1700 IO expander
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-
-Thanks,
-
-C.
-
-
-> - Wire up the expander UART, interrupt controllers, and I2C on AST27x0
->    machines.
-> > Example usage:
->    ./qemu-system-aarch64 -M ast2700a1-evb,ioexps-num=2 \
->      -drive file=image-bmc,format=raw,if=mtd \
->      ...
-> 
-> 
-> Verification:
-> 
-> U-Boot:
-> => ltpi
-> LTPI0:
->      link partner    : ast1700
->      link mode       : DDR
->      link bandwidth  : 25Mbps
-> LTPI1:
->      link partner    : ast1700
->      link mode       : DDR
->      link bandwidth  : 25Mbps
-> =>
-> 
-> Linux (BMC):
-> root@ast2700-default:~# i2cdetect -y 16
->       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-> 00:                         -- -- -- -- -- -- -- --
-> 10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-> 70: -- -- -- -- -- -- -- --
-> 
-> With `ioexps-num` left at 0, existing behavior is unchanged.
-> 
-> Any feedback or suggestions are appreciated.
-> 
-> Best Regards,
-> Kane
-> ---
-> Kane-Chen-AS (6):
->    hw/arm/aspeed: Add 'ioexps-num' property for AST27x0
->    hw/arm/aspeed: Add LTPI controller
->    hw/arm/aspeed: Add AST1700 IO expander
->    hw/arm/aspeed: Model AST1700 IO expander UART on AST27x0
->    hw/arm/aspeed: Model AST1700 IO expander interrupt controllers on
->      AST27x0
->    hw/arm/aspeed: Model AST1700 IO expander I2C on AST27x0
-> 
->   include/hw/arm/aspeed_soc.h   |  32 +++++-
->   include/hw/intc/aspeed_intc.h |   2 +
->   include/hw/misc/aspeed_ltpi.h |  25 +++++
->   hw/arm/aspeed.c               |  49 +++++++++
->   hw/arm/aspeed_ast27x0.c       | 184 ++++++++++++++++++++++++++++++++--
->   hw/intc/aspeed_intc.c         |  60 +++++++++++
->   hw/misc/aspeed_ltpi.c         | 111 ++++++++++++++++++++
->   hw/misc/meson.build           |   1 +
->   8 files changed, 452 insertions(+), 12 deletions(-)
->   create mode 100644 include/hw/misc/aspeed_ltpi.h
->   create mode 100644 hw/misc/aspeed_ltpi.c
-> 
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
