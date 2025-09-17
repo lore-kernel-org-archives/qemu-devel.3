@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FBAACAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B112CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyyjQ-0007tJ-RB; Wed, 17 Sep 2025 16:26:24 -0400
+	id 1uyylV-0000Sd-8v; Wed, 17 Sep 2025 16:28:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyyjO-0007t0-V1
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:26:23 -0400
+ id 1uyylJ-0000Qq-7b
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:28:23 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyyjN-0003uy-93
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:26:22 -0400
+ id 1uyylH-00046z-Jv
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:28:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=2+kq3Eq4UP3InnlakAuwNiofbxXHE/tI9tY1Tkj6K4k=; b=ksCOH04C89p/DNyEl2ycUso17N
- E5vcsPZ1Mo4HD5TT9tYg5VXrDfzbzBBY4n+Dvdj+UQk7kVXZC7s5xBauMGEQM2jO1+rE6/JP57ZjK
- KU4Gxw/uozyxTNgTpc3wByDQZYlycmbOiq0V+P2SF2c9Q8HV12qdwvOPAlR9x2E84qjd2msvQnjtS
- LalM95H4WyucTYxWJ4SD5LJJB30apFqk284j0Z2hkPnm5m54zEe2iZMOsEp+8oBbbtI4H1z/JgbBJ
- Nc9uyw+R2LAOzSPSBNvUtY7NzWxwxLrVWYf54nYxfQVzVfS6srN/FtMoOAFkdLq0xTm97hQtn7zLv
- dhBwLO/3drhrqAlTQNe05n3tqYml/kLSn1Sq3dYSn87DR8LVxO2G7ZqsBjSDBNMafn4YV8/a7dBl+
- fWje2Cyvs+X89PweqQEVwze5LblRpMjJecyaE2CTwir6Vdu4bIeakAJ9qRXQo5K7iwpDWkDROYecI
- xqdgY4XBy9SIkJLELVPrPSgSBZAarDUzfO13gkB28Yst4OLpTgFokctNKdv1kzsPStKWFP1X6lvPy
- mkegS8x5LDeugCQFeNfGCuFbc/NoGnY5HDcqvVnhJyJgfI59W42r0iWk6MYJFJuRfr9AXejO9nl7J
- A9zFWpqZAzrcU/54qkytHe3Ltrp2hFaZ317MOa5R8=;
+ bh=SyESfQ3RPp8eYi1P8pxNtA8MDcnQRhuremuAHp4zGW0=; b=hQYlxL5cs2Lbn4wQcRnGQEZwP0
+ ssxy9zT/V6bdzs/V3cjkoCAtp/prONPDwsMH9KGYY5wf7V7vCLOyF/5IqkzLjcpu+Zk10f/Thv8Hb
+ /aqm3TApi8+UjvFX0ru0LhcsA/EQFO3U7ANEb3JtrC50cc/vfD1SdVFbFdRgG0VzjuJhSuQBj2FhQ
+ dQFg/R7uYZjjE87pxEWkOBZVOux2LZcFxSksIVOhUsDPlaLcITdPmidqiq+D0+dEKXqrrdGn6vVOr
+ XI+rkAJpJ4KgrN+N46Xj7bDbJpyz4TPLne7tV5+d4/NoaeTSBezhWIId8bKF8UyCPVqmQE8gAv1U7
+ 5+yzSoQbiAbYRP0sR6r5VYeJhmmP1Pp+q3RM7tLzysJoCH6ZlHrGlTa6ui+Ow+pTeuQDdS3D51i3e
+ ryWX0pmOAlaGczMRVp0KmwVVXfGmdfHZWbQuQnzje+aCe5UypyxsHL12FUNHmHttkDUKFwcWKvGJQ
+ N4YkiNmBOVqyqWKtEW1Juc1O4SwmS6GAg4PCb2muggWWv7kuUFYn3gK3vBp18afm6vcQm9lIukrjx
+ r8EoCuuMLREUocR6/yYthwzF203kf8EvtLocav0aVZ3MYe5bIXz7YfMOba78nkQDnd1KcIQ8laGEF
+ yj259tXQiWh+6br+moCtxAiqCvoo2BqxIOCAhC2d0=;
 Received: from [2a02:8012:2f01:0:ff11:26c7:ce3f:b269]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyyhK-000AMM-2Y; Wed, 17 Sep 2025 21:24:18 +0100
-Message-ID: <a0b6d92e-6cb7-4d78-b327-0120d9264749@ilande.co.uk>
-Date: Wed, 17 Sep 2025 21:26:14 +0100
+ id 1uyyjG-000ANK-Rr; Wed, 17 Sep 2025 21:26:15 +0100
+Message-ID: <a571b7dc-c42b-42b0-b5e9-fe7b766594a6@ilande.co.uk>
+Date: Wed, 17 Sep 2025 21:28:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: atar4qemu@gmail.com
 References: <20250905115128.376295-1-richard.henderson@linaro.org>
- <20250905115128.376295-5-richard.henderson@linaro.org>
+ <20250905115128.376295-6-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,12 +73,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20250905115128.376295-5-richard.henderson@linaro.org>
+In-Reply-To: <20250905115128.376295-6-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:ff11:26c7:ce3f:b269
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 4/7] target/sparc: Loosen decode of RDPSR for v7
+Subject: Re: [PATCH v2 5/7] target/sparc: Loosen decode of RDWIM for v7
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,42 +109,64 @@ On 05/09/2025 12:51, Richard Henderson wrote:
 > For v7, bits [18:0] are ignored.
 > For v8, bits [18:14] are reserved and bits [13:0] are ignored.
 > 
-> Fixes: 668bb9b755e ("target/sparc: Move RDPSR, RDHPR to decodetree")
+> Fixes: 5d617bfba07 ("target/sparc: Move RDWIM, RDPR to decodetree")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sparc/insns.decode | 16 +++++++++-------
->   1 file changed, 9 insertions(+), 7 deletions(-)
+>   target/sparc/insns.decode | 40 ++++++++++++++++++++-------------------
+>   1 file changed, 21 insertions(+), 19 deletions(-)
 > 
 > diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-> index 74848996ae..1c6403ad8a 100644
+> index 1c6403ad8a..77b2f54fdf 100644
 > --- a/target/sparc/insns.decode
 > +++ b/target/sparc/insns.decode
-> @@ -158,14 +158,16 @@ CALL    01 i:s30
->   }
+> @@ -180,26 +180,28 @@ RESTORED            10 00001 110001 00000 0 0000000000000
+>   # UA2005 INVALW
 >   
 >   {
-> -  RDPSR             10 rd:5  101001 00000 0 0000000000000
-> -  RDHPR_hpstate     10 rd:5  101001 00000 0 0000000000000
+> -  RDWIM             10 rd:5  101010 00000 0 0000000000000
+> -  RDPR_tpc          10 rd:5  101010 00000 0 0000000000000
 > +  [
-> +    RDHPR_hpstate       10 rd:5  101001 00000 0 0000000000000
-> +    RDHPR_htstate       10 rd:5  101001 00001 0 0000000000000
-> +    RDHPR_hintp         10 rd:5  101001 00011 0 0000000000000
-> +    RDHPR_htba          10 rd:5  101001 00101 0 0000000000000
-> +    RDHPR_hver          10 rd:5  101001 00110 0 0000000000000
-> +    RDHPR_hstick_cmpr   10 rd:5  101001 11111 0 0000000000000
+> +    RDPR_tpc            10 rd:5  101010 00000 0 0000000000000
+> +    RDPR_tnpc           10 rd:5  101010 00001 0 0000000000000
+> +    RDPR_tstate         10 rd:5  101010 00010 0 0000000000000
+> +    RDPR_tt             10 rd:5  101010 00011 0 0000000000000
+> +    RDPR_tick           10 rd:5  101010 00100 0 0000000000000
+> +    RDPR_tba            10 rd:5  101010 00101 0 0000000000000
+> +    RDPR_pstate         10 rd:5  101010 00110 0 0000000000000
+> +    RDPR_tl             10 rd:5  101010 00111 0 0000000000000
+> +    RDPR_pil            10 rd:5  101010 01000 0 0000000000000
+> +    RDPR_cwp            10 rd:5  101010 01001 0 0000000000000
+> +    RDPR_cansave        10 rd:5  101010 01010 0 0000000000000
+> +    RDPR_canrestore     10 rd:5  101010 01011 0 0000000000000
+> +    RDPR_cleanwin       10 rd:5  101010 01100 0 0000000000000
+> +    RDPR_otherwin       10 rd:5  101010 01101 0 0000000000000
+> +    RDPR_wstate         10 rd:5  101010 01110 0 0000000000000
+> +    RDPR_gl             10 rd:5  101010 10000 0 0000000000000
+> +    RDPR_strand_status  10 rd:5  101010 11010 0 0000000000000
+> +    RDPR_ver            10 rd:5  101010 11111 0 0000000000000
 > +  ]
-> +  RDPSR                 10 rd:5  101001 ----- - -------------
+> +  RDWIM                 10 rd:5  101010 ----- - -------------
 >   }
-> -RDHPR_htstate       10 rd:5  101001 00001 0 0000000000000
-> -RDHPR_hintp         10 rd:5  101001 00011 0 0000000000000
-> -RDHPR_htba          10 rd:5  101001 00101 0 0000000000000
-> -RDHPR_hver          10 rd:5  101001 00110 0 0000000000000
-> -RDHPR_hstick_cmpr   10 rd:5  101001 11111 0 0000000000000
+> -RDPR_tnpc           10 rd:5  101010 00001 0 0000000000000
+> -RDPR_tstate         10 rd:5  101010 00010 0 0000000000000
+> -RDPR_tt             10 rd:5  101010 00011 0 0000000000000
+> -RDPR_tick           10 rd:5  101010 00100 0 0000000000000
+> -RDPR_tba            10 rd:5  101010 00101 0 0000000000000
+> -RDPR_pstate         10 rd:5  101010 00110 0 0000000000000
+> -RDPR_tl             10 rd:5  101010 00111 0 0000000000000
+> -RDPR_pil            10 rd:5  101010 01000 0 0000000000000
+> -RDPR_cwp            10 rd:5  101010 01001 0 0000000000000
+> -RDPR_cansave        10 rd:5  101010 01010 0 0000000000000
+> -RDPR_canrestore     10 rd:5  101010 01011 0 0000000000000
+> -RDPR_cleanwin       10 rd:5  101010 01100 0 0000000000000
+> -RDPR_otherwin       10 rd:5  101010 01101 0 0000000000000
+> -RDPR_wstate         10 rd:5  101010 01110 0 0000000000000
+> -RDPR_gl             10 rd:5  101010 10000 0 0000000000000
+> -RDPR_strand_status  10 rd:5  101010 11010 0 0000000000000
+> -RDPR_ver            10 rd:5  101010 11111 0 0000000000000
 >   
 >   {
->     WRPSR             10 00000 110001 ..... . .............  @n_r_ri
-
-This looks like it matches the behaviour of the old decoder.
+>     WRWIM             10 00000 110010 ..... . .............  @n_r_ri
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
