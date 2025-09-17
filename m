@@ -4,178 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00903CAC592
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 01:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10059CAC592
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 02:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyhL5-0001U1-AS; Tue, 16 Sep 2025 21:52:07 -0400
+	id 1uyhgK-0006fQ-PB; Tue, 16 Sep 2025 22:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uyhL3-0001Th-W6; Tue, 16 Sep 2025 21:52:06 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uyhKx-00011G-HD; Tue, 16 Sep 2025 21:52:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gh++oKzkVddMNRJELIz6DcIvhC00PpH6/cNlY8f9luwTjjca3t4/k4uRIvcj8FSpbHLYZIV1z2RDkpXN73oaHhpNGqXBxrcVu/64eKqxfr86aDgd6IZEp7jlt8nYplVHX2B+5YC0XRL+AvXQhkZ4lgaFkKHYbsxCFvPOP/KAMSyHAGOluPo0eVU2Xbi8kh56fcPotsspjnoUl+qTtF7QyeT+WXmHfM3tEHauCtPuJkB4uWQYoELqsTKojpmGMql+Yna4O+5YskES/D8a0Bk+dQI3CTKUZmj588LegL07g1dJQF96Pu6bvFuolgCRl9C+3iA1Kl4hGkh7Xkm7WgQUUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WQSWzEuYQXJxcocdlUEdRHZGLfSXGwpmxeG8EB3coFc=;
- b=BeU6mD8826GXvnwLXIpOIDbIjItGw+TFRaqi04AHVz2sb8sSzE27Sfm+LhQpK4ffIyNI9FhWxEveLEYk85N4Qcy9AjSu22OwYiUpxY/p2wa6fO2kXbyKaoWPU8TCpp0MFtIx8MkIcVPEYzsyWMJeAuyyF91qe5Velg0RxWWFAwmZqk9s9MeLjXZxiakZokgjbgM+eMmfz48r8ahvMsX+jct+8Xo45eQ99Ka2MpbxDRkhPVkfvWZCihifWRc/INFKtpdxs2RKjS8F6FJKn+wkDpg2l5Y6t+TT5L4RZRzOjI1vft5PSiuvoH/7i9fCKF/Ebqgm3pw/xD0IkgN9zTTReA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WQSWzEuYQXJxcocdlUEdRHZGLfSXGwpmxeG8EB3coFc=;
- b=aUM+UaHyH6e0y726WXYSSOev66o1lQ8abVJlqDKvcCmMaxT7T14fwr3Z9cDnGiialQUYGZgO3DnDqoUpo7WK+aUUxVTFS8eabi1Y/A0AZkovY7XZxCHgMEc/3tvbFN/sIjNDS4nmFCQlWGiptQvxy858tfNFJvrhOJtGda3fPiAm7buCMlJCqDMw+e8arPtOXP5ULxs7AwXgzynVOPAu6/HwAWQ4ovxi1s0uoobIS+D2WGW/YEFdsLYx5FuB9JdRnqjBz6IqhzjA14v0Avn00IlbFtegrpOGU/D0mZDDlkftXak63Ry5n4gb7hyLT1QW5KMCW96KDR4TE1bFeba8dA==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- SEZPR06MB5320.apcprd06.prod.outlook.com (2603:1096:101:7f::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.13; Wed, 17 Sep 2025 01:51:50 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%3]) with mapi id 15.20.9115.018; Wed, 17 Sep 2025
- 01:51:50 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Jan Kiszka
- <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
-CC: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- Ilias
- Apalodimas <ilias.apalodimas@linaro.org>, =?utf-8?B?QWxleCBCZW5uw6ll?=
- <alex.bennee@linaro.org>, =?utf-8?B?SmFuIEzDvGJiZQ==?= <jlu@pengutronix.de>,
- Jerome Forissier <jerome.forissier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
- Alexander Bulekov <alxndr@bu.edu>
-Subject: RE: [PATCH v4 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-Thread-Topic: [PATCH v4 1/6] hw/sd/sdcard: Fix size check for backing block
- image
-Thread-Index: AQHcJyUFLWsLp5hCKkGgrHFhcPxYFbSWnItQ
-Date: Wed, 17 Sep 2025 01:51:50 +0000
-Message-ID: <SI2PR06MB504121F7EB05BC5CF5A64A59FC17A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <cover.1757854006.git.jan.kiszka@siemens.com>
- <48930c1092424d22dc2171140378de19e0814ef3.1757854006.git.jan.kiszka@siemens.com>
- <c144202b-0d99-4507-8a57-35df1ece3cc0@siemens.com>
- <2070f7bb-cd1a-448f-ba87-50d75e24f4c0@kaod.org>
-In-Reply-To: <2070f7bb-cd1a-448f-ba87-50d75e24f4c0@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEZPR06MB5320:EE_
-x-ms-office365-filtering-correlation-id: 6866174a-b722-4046-f6b9-08ddf58cc51c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?Q2JZMHN3QWp0bkN4VjJxbmNZaDRGRDE1UGdxQkF5dzZ3RnJ6MkxYTTVRRUFv?=
- =?utf-8?B?SU9rejlZbmxONTRqL09TbExNRlFFak8vNDRVM1FHektYaHR3SXNwamhJMjVF?=
- =?utf-8?B?UXE3SzdGRmptZkV3QS96dkkwOCtsQi9QSjUyNlFoYUc2VmlQQlFvWENNUExE?=
- =?utf-8?B?ZVV0Vk5LUWxVZ3dmWmhrdWh5ZldzN0c2VENIbXVCRHRGNndSRktqY29BUzhJ?=
- =?utf-8?B?bWZSQ0hHWTZtZkx6TFNYd2lCOW9UeTRLNldCWU1XcldOaythUDN5bXN1ZWxZ?=
- =?utf-8?B?d3A3bjdBV1dQeGtNL2lSTG9zVmZpMnFacWFyK3krc3g5aUZnOUtRVVBmdCtG?=
- =?utf-8?B?c1d5YzI4cUxyb2E1YnNmSFRSaXFxN3V5NzBzUUl4cDcwNGswbzF2c2kvSzhL?=
- =?utf-8?B?c0k1dG8xY0s1bThiU2ZCM08vRUo1eVBLcHQ4RC9ESk1OWDF0L2pxaEJTaHFB?=
- =?utf-8?B?UnhEYndCNi9GN2JqcStsWVh6TWIvZzI4Q01mQlFmU016VFhXL2F2cEdLRGcv?=
- =?utf-8?B?VEd3Y0JGYjRwYk40ODF5dFBqc25GZVp6Ly9CQW0zbjI3dGNGVnVTZm04Z0s5?=
- =?utf-8?B?QmRhWVBBSDRvMks3WGZDOVFsY2VsQytXLzd6RUJEaGdyZE94T2wrSzVZT2dD?=
- =?utf-8?B?V1BnT1FtUjhzeGRSM0R1cFZFb0xSS3U3ckdUMFV0bllyeUgvTE5aZTVnRWNw?=
- =?utf-8?B?WmpHNlpwQmJmenlDdS9ZVjBzNEljenFSTnhvNXNEVlFDclZpVzJzd3RJUjlQ?=
- =?utf-8?B?RURRd2hHWDJvUi8xWUhvenJyb2Z5eGk1NzNtRk5FZythYlJsZzJLNHVpL0Q3?=
- =?utf-8?B?ZDA1dm1yamdMNHY3T1FFcitvMlBKd204YVFsSkNvS3NrbW0rdEsra2JacU9p?=
- =?utf-8?B?T095dTZ4akhMVkJTbUZ3NGkvOWpZMVhGL1FwT3ZxRXMxdC9TdDdZWGRrTkhk?=
- =?utf-8?B?eDUrUEx0R2l4MVF5aitxQWpmYmZYeVI2T1NNWE15VlM4ZS9Jb1pwd1g2OXNw?=
- =?utf-8?B?ZU1CcSttN3hCZTJMa2wrNnM1WEU1QUFmaFdIUmhZbzhoOXQ3YWFYSWtnY1ov?=
- =?utf-8?B?MGpySkkxVU9uNGluUnBsQVp0TGtEd1BxVjVQY3BmUzFHbkRWMVNIL0xPS0NX?=
- =?utf-8?B?MjMvUmJwTWtjbkJsdE9wdEE5TkJReDRBQjY1M2x6SExybkdqQk15bkVCNXdN?=
- =?utf-8?B?NjhwZzJORTBCN1JqWW42dzAvVllrNGhzeTkrQmpRRWJ5Mnp1QU1Pc25sWnhr?=
- =?utf-8?B?dWcxM1dSbUhvQkhqbGRDUWIwTTlxVkFmdW56dUJuM3AyK21oWEpYTlZtdVhs?=
- =?utf-8?B?QW5zWU1QTHp4LzllU0ZUNVFXYlFFOVduZG9pQURiUWNlaXU2anQrUGpYdkx3?=
- =?utf-8?B?djc3V0ltR3BoUTI3M0NrQ21KOUJMRzF2dEx0WFNYM1NHUHVOUythZ0g1L1ky?=
- =?utf-8?B?c0ZoLytJdkk0QmE4UjBLOGp1ZktTaVNBd0ErcnYwaHVJL3pCVzJCM2pMZ1pJ?=
- =?utf-8?B?Qm81RUxHOC9GbW0ycTJvRzhSZ3owQlFhTWdVd1JNVUtVNzc3YTRUdlRzRWJz?=
- =?utf-8?B?aXFtQ2N5bjNzU2RxNHFSYkhnM0NMMFF6Z0VWMjB3dlREK3NKbnBrSm9vYkk0?=
- =?utf-8?B?WjVUKzN2UEM5a0ZkZlhtdFpKTXNNdXd0czRkaFhUc2hLZVVlS3ZCRnYvSENn?=
- =?utf-8?B?MjhsZWF6NDUwaWtsKzF0TmVBRHJIZXdxbndsZGtsU3BVZUJYVFdheWxvczN4?=
- =?utf-8?B?R1VlYUJkbGdzL2tvU2R5YXRaSmc5Tlk5RXA4MGMrWFo5b0ZrMUNydTFhWXdC?=
- =?utf-8?B?MjNxcER2aHJmbDVieVhIYkFGOG1MU3Vqc0diYWRpR1VtNjRkWWZtSm8vcFdC?=
- =?utf-8?B?ckpLMUZxKzUrRktNNFBLRnBISlpMcERmditubU9Ca0Zha3ZPWHllNlNZSEVW?=
- =?utf-8?B?K2JkL2tSWkIzL0cxb2hHMXlDelBRK1RsUXpHQXJQM25adTVmY2JlUUlyYzJp?=
- =?utf-8?B?eHJ2aXhPUElnPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Q3VMSCt5cUFsUkxwZlVIVUhvS0lkTWNjRmVtd1lGSWpKcnJJVVNSbFRiRk5S?=
- =?utf-8?B?WHgrZmR5UU9ic254dmU3MEFuZ2EwbTNCbG5KYWZzb2RVNEh6OUw5STJjQXND?=
- =?utf-8?B?aDRrbG1rcFU3bjU0STBmQjVyOEZVK1Z3VDRWb2lvVnNoWE8wVFZKVm9ZdGF5?=
- =?utf-8?B?SmpER29ERmg5OUtrNEN5QlhYZnZwblJyZ1FzejloQTBUWFBsQTJ5cGNmK3hM?=
- =?utf-8?B?WDM0a1psblFtTFBTejZ3cjFhNC8zc3JKM3owUTB1OVBvYWZDUkpUS2Jjd0p0?=
- =?utf-8?B?VFNqa3ZiZUNWR29XaVR2enhTNlZrb0dtQkljYUNkMWg0ZTZNT2h3VXhoYUtn?=
- =?utf-8?B?eGJudTNXVGoybmkveUJIaXdDZ2tMRGpWMTVYQWE0N256cERDd0VYYzFNL2VR?=
- =?utf-8?B?VzQyL1hycy9EdTZ6b1dQMTQ4cGlkcUVyTXBvZ0FRVlRaSENFQWsrRlpvakZl?=
- =?utf-8?B?eW5RYlJ5OU52VjV3MWlPRDZBM2xrWlRYaTc0bkl6eTQ3NDVqdXdSQW5SZFlO?=
- =?utf-8?B?aXhyY2d2MElsVXBIRlNrTk9JcDlXTXBQS0VhaW1vNWVTTmx1Q2lWVlN1eDlr?=
- =?utf-8?B?MUwycXVCSkdFK2NsSnZFN3M0Wm1abEdtWmxuVUNEQTNna1Blakg1eit3ZmJX?=
- =?utf-8?B?bGJkN0hmNTd5Y1NDZXM5UFNvM3l6L3M1ZUx4NDFrTTVuVXRKQzVraFdHUVVy?=
- =?utf-8?B?anNKOWxkdGVGSU9XbVlPQ0F1VHVJRGZFOHJaYmY1am1TL3Y2UGZHb1Vqdy9R?=
- =?utf-8?B?TFlKNllmRmNJTGFXNi9BQVI3eWt5WVNQakRFUm1LYURDVzhzaXUzbkljNUZF?=
- =?utf-8?B?U04xR0NTOFZmVnQ2NTMvMFh3dStkUVUwYURIRmhqK3J0cVlFQ0hHRERMNFJi?=
- =?utf-8?B?S0VwdlhyQWhDRDZERmpneEJjbTVnNm9mS0x0d2xqaW4rb0JldjA3VVRYL2xq?=
- =?utf-8?B?TitCWU1iUEE3QmhFbDNVc1hWMHhpUitFUCt2LzJhaUVPTVpmYUlQYXFwWFZL?=
- =?utf-8?B?UE5uWG1kaFQ3RWNpQ0EwQ2xhWW4vV1haQVdyVDg0R25GcmVRaFpmL2JDZXo4?=
- =?utf-8?B?eUtwelMweGVKeXFOMk50SXEvdU1qQ3g4UnhsTXRCMlZpZjVoNHZtTG5XZTha?=
- =?utf-8?B?R29LVC85TmVXR2R5YXZaYW11cU9JeFFOaVNCakpLbGZuZ0laRkZyS04rQndt?=
- =?utf-8?B?ZjIrRVNNejlSdU5GRVBXYW42SXVISWhqUmEvdVBrclpNM1NXbFBGWTJnZzRV?=
- =?utf-8?B?YTB4NzVxRytFNzdzLzh4NzJlQVczRWlNdU9BYlBoTFhwdHZBb29uNG1TSFJK?=
- =?utf-8?B?TVZTRmpiNytTbDRCZGl3UkkvWGZaL1FRTDhoazdRWUN5TFVKdFZ5bU5NV3Np?=
- =?utf-8?B?Q1h6aSszQ1luNXJhZEJvd1Irbysyb2graSthcXZzdjlia1lXTXBtR1dGTVEr?=
- =?utf-8?B?YlA4eFhVTnVNd0doUEp6a0xZWlRmU05uZjBpTE01UUlBWXVsb1EycTl0bXV1?=
- =?utf-8?B?d284NVdVOTdiakdJMHk2S0tmbUhyUHViRTVRVHl5cGlvMVdvK0M0MWpHTVE2?=
- =?utf-8?B?TFJUZ3FnMlEzRzFuOHVYZkVlaUpHdFc4Q1p4eGNFeEs3WWhjUFR2V09MS2di?=
- =?utf-8?B?OTc3MFJVTTZtZ1VqeHhQeE5TSkNZUkFrUlc4aFU2dWlpQlBwcVNPNmxrNk9q?=
- =?utf-8?B?Q0dHaDk1TDVac21EOWl6eVVVSjFsRUdYR0t0WHFCWFpicU9QY0lFb0JqMW5q?=
- =?utf-8?B?aFcxUHBNMGxHNHZQQ0w5ajBSNkowVnh6Z3lkczk1bjNFQUwvWTc5ckdGZVFH?=
- =?utf-8?B?eTk5Vno2bjlSbTN5L1IvdXRsMVhwT0h2RFNYUlFMQW4wdTRleVJubWZQV0FC?=
- =?utf-8?B?TmJSeXUyUVUrTG9IRVpkSktHUk5DYkF1R1doWGh4cXptZWFURzBRQVgvTVdJ?=
- =?utf-8?B?K05saWxVRURObDlZZmRMbVcyNUU2WjdMOFdHb0ZGVitENHBlRnpqWEpLK1BG?=
- =?utf-8?B?VXN6aWpMd0wyQW85cGJzaTF3bG1UcHFFcEk4RVR3OTcyeXl4UmFoRTFnV1Zz?=
- =?utf-8?B?UExtNUVYbG1ibDlNWE9Tc1UxZE10UVUvMEZlVFVHOW9IYk9KWHI1MGp6ZGl2?=
- =?utf-8?Q?SwjT9zsJLrNgWzFJN2/7/nNug?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uyhgH-0006ez-Rt
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 22:14:01 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uyhgE-0002sR-OW
+ for qemu-devel@nongnu.org; Tue, 16 Sep 2025 22:14:01 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxVNBXGcpoiTMLAA--.23802S3;
+ Wed, 17 Sep 2025 10:13:43 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxH8JUGcpobnuaAA--.45945S3;
+ Wed, 17 Sep 2025 10:13:42 +0800 (CST)
+Subject: Re: [PATCH v8 07/11] hw/loongarch: Implement dintc realize and
+ unrealize
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250916122109.749813-1-gaosong@loongson.cn>
+ <20250916122109.749813-8-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <e8c8626e-24f4-02cc-c18f-b69e6a710801@loongson.cn>
+Date: Wed, 17 Sep 2025 10:11:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6866174a-b722-4046-f6b9-08ddf58cc51c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Sep 2025 01:51:50.7481 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3V3cacq++7Pyy2nZt42jdgP55emrpwBdeoXSN6jtpldnyelkBG2bGtcgnhdEv3U6794Y9MOCyDT+Y1FMXMeZUDjAcUfBmMW2ppyNVoHtKok=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5320
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250916122109.749813-8-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxH8JUGcpobnuaAA--.45945S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tr1rZw15XF1DKr4xKr4UGFX_yoW8KFWrpr
+ ZruFy5Kr1UXrsrJan2ga45WFsxurn3Wr1293WfKFZ2yFs8u34rXw48tr15uF9ruw1rWr1j
+ qrn5A3W5ZF47JFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.599,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,37 +83,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiBPbmx5IHRoZSBhc3QyNjAwLWV2YiBhbmQgdGhlIHJhaW5pZXItYm1jIGhhdmUgZU1NQyBzdXBw
-b3J0Lg0KPiBJIGRvbid0IHRoaW5rIHRoZSBhc3QyNzAwYTEtZXZiIGhhcyBlTU1DIHN1cHBvcnQu
-IEphbWluID8NCj4NClllcywgdGhlIEFTVDI3MDAgZG9lcyBub3Qgc3VwcG9ydCBib290aW5nIGZy
-b20gZU1NQyB5ZXQuDQpKYW1pbg0KPiANCj4gDQo+IFRoZSByYWluaWVyLWJtYyBib290cyBieSBk
-ZWZhdWx0IGZyb20gZU1NQy4gTm90aGluZyByZWFsbHkgc3BlY2lhbCBhYm91dCB0aGUNCj4gaW1h
-Z2UsIHRoZSBmaXJzdCBib290IHBhcnRpdGlvbiBpbmNsdWRlcyB0aGUgdS1ib290LXNwbC5iaW4g
-YW5kIHUtYm9vdC5iaW4NCj4gaW1hZ2VzIGF0IGV4cGVjdGVkIG9mZnNldC4NCj4gVGhlIG1hY2hp
-bmUgbW9kZWwgbG9hZHMgdGhlIHUtYm9vdC1zcGwuYmluIGNvbnRlbnRzIGFzIGEgUk9NLg0KPiAN
-Cj4gVGhlIGFzdDI2MDAtZXZiIG1hY2hpbmUgYm9vdHMgZnJvbSBmbGFzaC4gVG8gYWRkIGFuIGVN
-TUMgZHJpdmUgKG5lZWRzIHRvDQo+IGJlIHRoZSAzcmQgJ3NkJyBkcml2ZSksIHVzZSB0aGlzIGNv
-bW1hbmQgbGluZSAgOg0KPiANCj4gICAgICAkIHFlbXUtc3lzdGVtLWFybSAtTSBhc3QyNjAwLWV2
-YiAtbmV0IG5pYyxuZXRkZXY9bmV0MCAtbmV0ZGV2DQo+IHVzZXIsaWQ9bmV0MCBcDQo+ICAgICAg
-ICAtZHJpdmUgZmlsZT0uL3YwOS4wNy9hc3QyNjAwLWRlZmF1bHQvaW1hZ2UtYm1jLGZvcm1hdD1y
-YXcsaWY9bXRkDQo+IC1zZXJpYWwgbW9uOnN0ZGlvIFwNCj4gICAgICAgIC1kcml2ZQ0KPiBmaWxl
-PW1tYy1hc3QyNjAwLWV2Yi1ub2Jvb3QucWNvdzIsZm9ybWF0PXFjb3cyLGlmPXNkLGlkPXNkMixp
-bmRleD0yDQo+IA0KPiAgICAgIC4uLi4NCj4gICAgICBVLUJvb3QgMjAxOS4wNC12MDAuMDQuMjIg
-KEp1biAxNyAyMDI1IC0gMDg6NTc6MzkgKzAwMDApDQo+IA0KPiAgICAgIFNPQzogQVNUMjYwMC1B
-Mw0KPiAgICAgIGVTUEkgTW9kZTogU0lPOkVuYWJsZSA6IFN1cGVySU8tMmUNCj4gICAgICBFdGg6
-IE1BQzA6IFJHTUlJLCBNQUMxOiBSR01JSSwgTUFDMjogUkdNSUksIE1BQzM6IFJHTUlJDQo+ICAg
-ICAgTW9kZWw6IEFTVDI2MDAgRVZCDQo+ICAgICAgRFJBTTogIGFscmVhZHkgaW5pdGlhbGl6ZWQs
-IDEwMDggTWlCIChjYXBhY2l0eToxMDI0IE1pQiwgVkdBOjY0IE1pQiwNCj4gRUNDOm9mZikNCj4g
-ICAgICBSQyBCcmlkZ2UgcGh5QDFlNmVkMjAwIDogTGluayB1cA0KPiAgICAgIE1NQzogICBzZGhj
-aV9zbG90MEAxMDA6IDEsIHNkaGNpX3Nsb3QxQDIwMDogMiwgZW1tY19zbG90MEAxMDA6IDANCj4g
-DQo+ICAgICAgLi4uLg0KPiAgICAgIFsgICAgNC4yMDkxMTddIG1tYzA6IG5ldyBoaWdoIHNwZWVk
-IE1NQyBjYXJkIGF0IGFkZHJlc3MgMDAwMQ0KPiAgICAgIFsgICAgNC4yMTE3NjVdIG1tY2JsazA6
-IG1tYzA6MDAwMSBRRU1VISEgMTYuMCBHaUINCj4gICAgICBbICAgIDQuMjMzNjM3XSBHUFQ6UHJp
-bWFyeSBoZWFkZXIgdGhpbmtzIEFsdC4gaGVhZGVyIGlzIG5vdCBhdCB0aGUgZW5kDQo+IG9mIHRo
-ZSBkaXNrLg0KPiAgICAgIFsgICAgNC4yMzM5OTVdIEdQVDoyOTYyNDM5MyAhPSAzMzU1NDQzMQ0K
-PiAgICAgIFsgICAgNC4yMzQxNjFdIEdQVDpBbHRlcm5hdGUgR1BUIGhlYWRlciBub3QgYXQgdGhl
-IGVuZCBvZiB0aGUgZGlzay4NCj4gICAgICBbICAgIDQuMjM0Mzk5XSBHUFQ6Mjk2MjQzOTMgIT0g
-MzM1NTQ0MzENCj4gICAgICBbICAgIDQuMjM0NTQ5XSBHUFQ6IFVzZSBHTlUgUGFydGVkIHRvIGNv
-cnJlY3QgR1BUIGVycm9ycy4NCj4gICAgICBbICAgIDQuMjM1MjIzXSAgbW1jYmxrMDogcDEgcDIg
-cDMgcDQgcDUgcDYgcDcNCj4gDQo+IA0KPiBUaGFua3MsDQo+IA0KPiBDLg0KPiANCg0K
+
+
+On 2025/9/16 下午8:21, Song Gao wrote:
+> Implement th DINTC realize and unrealize.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/intc/loongarch_dintc.c | 23 ++++++++++++++++++++++-
+>   target/loongarch/cpu.h    |  3 ++-
+>   2 files changed, 24 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+> index 7173a6aa29..598c666ec6 100644
+> --- a/hw/intc/loongarch_dintc.c
+> +++ b/hw/intc/loongarch_dintc.c
+> @@ -38,7 +38,12 @@ static const MemoryRegionOps loongarch_dintc_ops = {
+>   
+>   static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
+>   {
+> +    LoongArchDINTCState *s = LOONGARCH_DINTC(dev);
+>       LoongArchDINTCClass *lac = LOONGARCH_DINTC_GET_CLASS(dev);
+> +    MachineState *machine = MACHINE(qdev_get_machine());
+> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
+> +    const CPUArchIdList  *id_list;
+> +    int i;
+>   
+>       Error *local_err = NULL;
+>       lac->parent_realize(dev, &local_err);
+> @@ -47,12 +52,28 @@ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    assert(mc->possible_cpu_arch_ids);
+> +    id_list = mc->possible_cpu_arch_ids(machine);
+> +    s->num_cpu = id_list->len;
+> +    s->cpu = g_new(DINTCCore, s->num_cpu);
+> +    if (s->cpu == NULL) {
+> +        error_setg(errp, "Memory allocation for DINTCCore fail");
+> +        return;
+> +    }
+> +
+> +    for (i = 0; i < s->num_cpu; i++) {
+> +        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
+> +        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
+> +        qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
+> +    }
+> +
+>       return;
+>   }
+>   
+>   static void loongarch_dintc_unrealize(DeviceState *dev)
+>   {
+> -    return;
+> +    LoongArchDINTCState *s = LOONGARCH_DINTC(dev);
+> +    g_free(s->cpu);
+>   }
+>   
+>   static void loongarch_dintc_init(Object *obj)
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index 807a710810..237c93cdd6 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -217,9 +217,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
+>   extern const char * const regnames[32];
+>   extern const char * const fregnames[32];
+>   
+> -#define N_IRQS      13
+> +#define N_IRQS      15
+>   #define IRQ_TIMER   11
+>   #define IRQ_IPI     12
+> +#define INT_DMSI    14
+>   
+>   #define LOONGARCH_STLB         2048 /* 2048 STLB */
+>   #define LOONGARCH_MTLB         64   /* 64 MTLB */
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
 
