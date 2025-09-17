@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F9CCAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8A1CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqjG-0005Cp-85; Wed, 17 Sep 2025 07:53:42 -0400
+	id 1uyqjQ-0005tt-B8; Wed, 17 Sep 2025 07:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqi2-00035e-JI
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:31 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqi0-00035Q-JX
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhy-0003l9-9m
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhw-0003kc-BW
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758109940;
+ s=mimecast20190719; t=1758109938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xC9LOczZKUqz4OC+j5hH68ZHE+u4axLUlzty3xnb2z4=;
- b=dQZkcF7ptMJyvsTT94vrgaeyFv1c2PfvG6o0HVenHFLbkAHWyym3NDzLrbJ6ZXCpDHW143
- fyTFdt6o5NReCLFWPva6Lx1v+2Q0mXq6qiqls+NVobqFCdvDrcccgXDeoRoGmmETuixZt4
- 84pKJfX0q7RLrHGGXWel7Piu3DvwAdQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=t0RTR14tGDCK7KLNx1SfxdzthJ+BwqbXRuDzYoEM00k=;
+ b=BshVWX/WH4CW9b8ZDnape9mJUHo20SesQvq5xtToTfXV2dazN80c/JxOHv27lxUyjshkIY
+ fYduqIW6bsBWIIFy/OlxPR40Gns55OB9oL504GHEg7HkSXal2NsSWuIzNa9UE89tJWiGtb
+ 74FJHaNPaIEc+i/ogNdK23Y8AvU770U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-z5zkgVX_Mg-FByJJ1tFjNQ-1; Wed,
- 17 Sep 2025 07:52:16 -0400
-X-MC-Unique: z5zkgVX_Mg-FByJJ1tFjNQ-1
-X-Mimecast-MFC-AGG-ID: z5zkgVX_Mg-FByJJ1tFjNQ_1758109933
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-U4cgBnetOu-qflRA18NaXg-1; Wed,
+ 17 Sep 2025 07:52:15 -0400
+X-MC-Unique: U4cgBnetOu-qflRA18NaXg-1
+X-Mimecast-MFC-AGG-ID: U4cgBnetOu-qflRA18NaXg_1758109933
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B721919560AE; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2F261956058; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65E7F1955F19; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
+ id 87A001955F21; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 504C921E6779; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
+ id 580C621E66C4; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v2 07/12] ui/spice-core: Clean up error reporting
-Date: Wed, 17 Sep 2025 13:52:02 +0200
-Message-ID: <20250917115207.1730186-8-armbru@redhat.com>
+Subject: [PATCH v2 09/12] ui/pixman: Consistent error handling in
+ qemu_pixman_shareable_free()
+Date: Wed, 17 Sep 2025 13:52:04 +0200
+Message-ID: <20250917115207.1730186-10-armbru@redhat.com>
 In-Reply-To: <20250917115207.1730186-1-armbru@redhat.com>
 References: <20250917115207.1730186-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -85,37 +86,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-watch_add() reports _open_osfhandle() failure with
-error_setg(&error_warn, ...).  error_setg_win32(&error_warn, ...) is
-undesirable just like error_setg(&error_fatal, ...) and
-error_setg(&error_abort, ...) are.  Replace by warn_report().
+qemu_pixman_shareable_free() wraps around either qemu_memfd_free() or
+qemu_win32_map_free().  The former reports trouble as error, with
+error_report(), then succeeds.  The latter reports it as warning (we
+pass it &error_warn), then succeeds.
 
-The failure should probably be an error, but this function implements
-a callback that doesn't take Error **.  I believe the failure will
-make spice_server_init() fail in qemu_spice_init(), which is treated
-as a fatal error.  The warning here provides more detail than the
-error message there.
+Change the latter to report as error, too.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/spice-core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ ui/qemu-pixman.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 5992f9daec..97bdd171cd 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -132,7 +132,8 @@ static SpiceWatch *watch_add(int fd, int event_mask, SpiceWatchFunc func, void *
+diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
+index ef4e71da11..e46c6232cf 100644
+--- a/ui/qemu-pixman.c
++++ b/ui/qemu-pixman.c
+@@ -288,7 +288,10 @@ qemu_pixman_shareable_free(qemu_pixman_shareable handle,
+                            void *ptr, size_t size)
+ {
  #ifdef WIN32
-     fd = _open_osfhandle(fd, _O_BINARY);
-     if (fd < 0) {
--        error_setg_win32(&error_warn, WSAGetLastError(), "Couldn't associate a FD with the SOCKET");
-+        warn_report("Couldn't associate a FD with the SOCKET: %s"
-+                    g_win32_error_message(WSAGetLastError()));
-         return NULL;
-     }
+-    qemu_win32_map_free(ptr, handle, &error_warn);
++    Error *err = NULL;
++
++    qemu_win32_map_free(ptr, handle, &err);
++    error_report_err(err);
+ #else
+     qemu_memfd_free(ptr, size, handle);
  #endif
 -- 
 2.49.0
