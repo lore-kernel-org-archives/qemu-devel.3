@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DB0CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85AFCCAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsj-0002R5-DV; Wed, 17 Sep 2025 09:07:33 -0400
+	id 1uyrsu-0002vJ-5N; Wed, 17 Sep 2025 09:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpp-0005yl-SU; Wed, 17 Sep 2025 09:04:36 -0400
+ id 1uyroj-00052D-ID; Wed, 17 Sep 2025 09:03:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpn-0005yS-VF; Wed, 17 Sep 2025 09:04:33 -0400
+ id 1uyroh-0005vT-J1; Wed, 17 Sep 2025 09:03:25 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6v008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6t008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:45 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:43 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=yCjTOSOzxNJD5tmMZUwxklHNpokb7XYrU7eEhj5X1Iw=; 
+DKIM-Signature: a=rsa-sha256; bh=sWk4ldwEm81hImY15fAdNE8225OgpgDTf9M1ok3ksHE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113805; v=1;
- b=goSPsWuW9Jj92+Df4/yOaL+2mBbccLanyC5vTRtnIUxTOrzpx7c2JKj3BDVgBxnW
- xMUACCiXN6RtiFkxp3kel2Dw9mb+UOs8qbI9DIx0f7bN49eXmTkZHHILSUJ5UpeL
- fislhEzAdtQ9BljxNbp181vYL7ouDdHy+KNin8gOvSch1nlREyHc/eanNkaPD1i4
- tKNaBHfLTG0MINVZLpOw7EJDitJt4dJorhJ+WLMiDLYjAkp/NprL7sl+Hu9SC+s9
- RdxSj4+ywrD25EoQDA+iSura1pyexWC31pVOzrr/lrJgTB/FzXEpMaOaGV9SE59+
- lT98kkQS3fqxLFGj4/NHOQ==
+ s=rs20250326; t=1758113804; v=1;
+ b=VXF6Tg0S7zBBkDE/CiYfRzkWeTlFr+6ZEh0S38cyqbWHfQ9qiAMFVpkAJOLAEXEK
+ lBdi5qNC3MVDlpeOnLWSjWB+Sj3UnThMpV4VLl/lYhvlrNvrqatOjYFv8re7wyyh
+ +MskVKrweSLjtAJ0sBeEb3J8gy2SwTmMOLv0XiAERONyRyReQrrgJMGhp41Cv4ir
+ n3itFG2r9Wml+iaqaEHfe43afKfRnZ1fFmgB4ApFBg3BlZ+hGElOqdDZW2OyeWk3
+ P7f3YvvV3FBCo3vFmz2aOuPkPHx0i9PaavbQetA5oLiGDdtbwgq7DW8UjOOnWHtW
+ ORd6gPdXrw9LTarykihkSg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:29 +0900
-Subject: [PATCH 17/35] hw/pci: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:27 +0900
+Subject: [PATCH 15/35] hw/net: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-17-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-15-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,66 +136,80 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/pci/pci.c        |  6 +++---
- hw/pci/pci_bridge.c | 11 +++++------
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ hw/net/allwinner-sun8i-emac.c | 2 +-
+ hw/net/cadence_gem.c          | 4 ++--
+ hw/net/dp8393x.c              | 2 +-
+ hw/net/msf2-emac.c            | 2 +-
+ hw/net/mv88w8618_eth.c        | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 340384a8876a..7ab93df2969d 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1188,7 +1188,7 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
-     if (xen_mode == XEN_EMULATE) {
-         xen_evtchn_remove_pci_device(pci_dev);
+diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
+index 27160c5ff2a4..4127fb55c817 100644
+--- a/hw/net/allwinner-sun8i-emac.c
++++ b/hw/net/allwinner-sun8i-emac.c
+@@ -820,7 +820,7 @@ static void allwinner_sun8i_emac_realize(DeviceState *dev, Error **errp)
+         return;
      }
--    address_space_destroy(&pci_dev->bus_master_as);
-+    object_unparent(OBJECT(&pci_dev->bus_master_as));
- }
  
- /* Extract PCIReqIDCache into BDF format */
-@@ -1359,8 +1359,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "emac-dma");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
  
-     memory_region_init(&pci_dev->bus_master_container_region, OBJECT(pci_dev),
-                        "bus master container", UINT64_MAX);
--    address_space_init(&pci_dev->bus_master_as, NULL,
--                       &pci_dev->bus_master_container_region, pci_dev->name);
-+    address_space_init(&pci_dev->bus_master_as, OBJECT(pci_dev),
-+                       &pci_dev->bus_master_container_region, "bus-master-as");
-     pci_dev->bus_master_as.max_bounce_buffer_size =
-         pci_dev->max_bounce_buffer_size;
+     qemu_macaddr_default_if_unset(&s->conf.macaddr);
+     s->nic = qemu_new_nic(&net_allwinner_sun8i_emac_info, &s->conf,
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+index 3ba8ce017194..e1ff610b48da 100644
+--- a/hw/net/cadence_gem.c
++++ b/hw/net/cadence_gem.c
+@@ -1734,8 +1734,8 @@ static void gem_realize(DeviceState *dev, Error **errp)
+     CadenceGEMState *s = CADENCE_GEM(dev);
+     int i;
  
-diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
-index 94b61b907ea2..fd74622edb9f 100644
---- a/hw/pci/pci_bridge.c
-+++ b/hw/pci/pci_bridge.c
-@@ -388,13 +388,12 @@ void pci_bridge_initfn(PCIDevice *dev, const char *typename)
-     sec_bus->map_irq = br->map_irq ? br->map_irq : pci_swizzle_map_irq_fn;
-     sec_bus->address_space_mem = &br->address_space_mem;
-     memory_region_init(&br->address_space_mem, OBJECT(br), "pci_bridge_pci", UINT64_MAX);
--    address_space_init(&br->as_mem, NULL, &br->address_space_mem,
--                       "pci_bridge_pci_mem");
-+    address_space_init(&br->as_mem, OBJECT(br), &br->address_space_mem,
-+                       "mem-as");
-     sec_bus->address_space_io = &br->address_space_io;
-     memory_region_init(&br->address_space_io, OBJECT(br), "pci_bridge_io",
-                        4 * GiB);
--    address_space_init(&br->as_io, NULL, &br->address_space_io,
--                       "pci_bridge_pci_io");
-+    address_space_init(&br->as_io, OBJECT(br), &br->address_space_io, "io-as");
-     pci_bridge_region_update(br, true);
-     QLIST_INIT(&sec_bus->child);
-     QLIST_INSERT_HEAD(&parent->child, sec_bus, sibling);
-@@ -411,8 +410,8 @@ void pci_bridge_exitfn(PCIDevice *pci_dev)
-     PCIBridge *s = PCI_BRIDGE(pci_dev);
-     assert(QLIST_EMPTY(&s->sec_bus.child));
-     QLIST_REMOVE(&s->sec_bus, sibling);
--    address_space_destroy(&s->as_mem);
--    address_space_destroy(&s->as_io);
-+    object_unparent(OBJECT(&s->as_mem));
-+    object_unparent(OBJECT(&s->as_io));
-     pci_bridge_region_del(s, &s->windows);
-     pci_bridge_region_cleanup(s, &s->windows);
-     /* object_unparent() is called automatically during device deletion */
+-    address_space_init(&s->dma_as, NULL,
+-                       s->dma_mr ? s->dma_mr : get_system_memory(), "dma");
++    address_space_init(&s->dma_as, OBJECT(s),
++                       s->dma_mr ? s->dma_mr : get_system_memory(), "as");
+ 
+     if (s->num_priority_queues == 0 ||
+         s->num_priority_queues > MAX_PRIORITY_QUEUES) {
+diff --git a/hw/net/dp8393x.c b/hw/net/dp8393x.c
+index f65d8ef4dd45..9b9125954db8 100644
+--- a/hw/net/dp8393x.c
++++ b/hw/net/dp8393x.c
+@@ -908,7 +908,7 @@ static void dp8393x_realize(DeviceState *dev, Error **errp)
+ {
+     dp8393xState *s = DP8393X(dev);
+ 
+-    address_space_init(&s->as, NULL, s->dma_mr, "dp8393x");
++    address_space_init(&s->as, OBJECT(s), s->dma_mr, "as");
+     memory_region_init_io(&s->mmio, OBJECT(dev), &dp8393x_ops, s,
+                           "dp8393x-regs", SONIC_REG_COUNT << s->it_shift);
+ 
+diff --git a/hw/net/msf2-emac.c b/hw/net/msf2-emac.c
+index 59c380db30dc..22a79d38403b 100644
+--- a/hw/net/msf2-emac.c
++++ b/hw/net/msf2-emac.c
+@@ -526,7 +526,7 @@ static void msf2_emac_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "emac-ahb");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+ 
+     qemu_macaddr_default_if_unset(&s->conf.macaddr);
+     s->nic = qemu_new_nic(&net_msf2_emac_info, &s->conf,
+diff --git a/hw/net/mv88w8618_eth.c b/hw/net/mv88w8618_eth.c
+index 1ea294bcced5..a02e7e60d562 100644
+--- a/hw/net/mv88w8618_eth.c
++++ b/hw/net/mv88w8618_eth.c
+@@ -348,7 +348,7 @@ static void mv88w8618_eth_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, "emac-dma");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+     s->nic = qemu_new_nic(&net_mv88w8618_info, &s->conf,
+                           object_get_typename(OBJECT(dev)), dev->id,
+                           &dev->mem_reentrancy_guard, s);
 
 -- 
 2.51.0
