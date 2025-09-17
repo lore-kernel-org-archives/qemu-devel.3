@@ -4,117 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92ADACA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 09:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAB1CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyoeB-00063L-JU; Wed, 17 Sep 2025 05:40:20 -0400
+	id 1uypAF-0007j3-OW; Wed, 17 Sep 2025 06:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1uyoe8-0005zs-Fd
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:40:16 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uypAB-0007i1-TE; Wed, 17 Sep 2025 06:13:23 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1uyoe6-0006MD-BV
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 05:40:16 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58GLmVmS023783;
- Wed, 17 Sep 2025 09:40:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=mrAes2
- W0HUububBniJikgstQMoKyOmjoM7OLbrAJY+8=; b=KxXvHLP9qU7q6ValGCFYI4
- 6FqBvA3P5pRqXHDlARgWTp/+9DPK+ZIWGcqMR5CBOo+yZVVDjvqi4I+3v8QMXtP7
- FwPUZa7kcQO1x8J75SReOmrOg8DZIB1TC9aGlVmFwc0t4r71QiJfX4fSOtd4v9lj
- 8U7k5nHhZ/8++LfaTR4J7jYynzVtHU0RUhPqsgadgATHmdzgnpCz4nJhfVpa1Epi
- sGPYRNYGP1Mcgk/Z44poiEpwaTnkYzKQ7OcA6THrbMr9NelraPlGnMN6pDH4PT0P
- Q6zZpXlHZiKK8bNbmS8nsl/kmqo6aLE3ohboud7t4vLd59Hv4GsAEY0/Wee4Cpdg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4qjksw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 09:40:03 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58H9WkBb002476;
- Wed, 17 Sep 2025 09:40:02 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4qjksg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 09:40:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58H7n2Wf018620;
- Wed, 17 Sep 2025 09:40:00 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 495n5mgbmx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Sep 2025 09:40:00 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58H9dwCL49021268
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Sep 2025 09:39:58 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CE7E20043;
- Wed, 17 Sep 2025 09:39:58 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 48C4F20040;
- Wed, 17 Sep 2025 09:39:57 +0000 (GMT)
-Received: from li-9b52914c-2c8b-11b2-a85c-a36f6d484b4a.ibm.com (unknown
- [9.111.5.195]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Sep 2025 09:39:57 +0000 (GMT)
-Message-ID: <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] char-pty: add support for the terminal size
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, nsg@linux.ibm.com
-Date: Wed, 17 Sep 2025 11:39:55 +0200
-In-Reply-To: <4c8e1ae5dd16d6ee4bcb42ed25d2987bc2c4a3cc.camel@gmail.com>
-References: <20250915162535.147642-1-maxbr@linux.ibm.com>
- <20250915163415.149190-1-maxbr@linux.ibm.com>
- <4c8e1ae5dd16d6ee4bcb42ed25d2987bc2c4a3cc.camel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uypA9-0002rv-Ew; Wed, 17 Sep 2025 06:13:23 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E2E728062F;
+ Wed, 17 Sep 2025 13:13:15 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b2a::1:6] (unknown [2a02:6bf:8080:b2a::1:6])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id FDONDH0FpeA0-7VsqWdbc; Wed, 17 Sep 2025 13:13:15 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758103995;
+ bh=JxQcXc6mP+YnbJxWzxhNF51ObZBVDrdWt80DfbXrnGg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=odOFeHDY4CsVHCm2ggxeTAE2g9KYQZhAjfLy+dyYPkhR4AS/Xh6iJyNFTBQkQTrzj
+ lLg14WhipYxUcaAxBC11zrHGH2o24ajNq1dtHmdIQRnzJRBzbvWYIqDy3ETstjk8oE
+ TL6fW3pvNVc7ZGSXDWcWQp1hwAmbLFaMO3+Y+12k=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <ea5f1352-e1f8-409e-a0cb-9568585628f1@yandex-team.ru>
+Date: Wed, 17 Sep 2025 13:13:15 +0300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 6hsHuiATo5Pc_LGW5WyHvxzFynS4zuPx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX0MYIvNDHrN/e
- 7nl82MHGfVbsHDgYEAKRaIvbgQ6VGZmEgGBGcd5fRrPP9MwdgUGzWIQmbiqaLgzMf3qrAcBswgK
- YOi4YlEa1FuMvV23SdsOl59O/1xylxtruBfmw9g6CHWivv6QliRts/Z/BXYlekgrmf41WUJUB8T
- 9qXYp9tPimvo7ZNi9sJ7mm9MBoglnKmOUXpiVGDmb7muOoF6FdAtpZkZDbjWpV82ZQSQD0xCgSK
- 4FXDOfNjEfDLCGEhw7niIFE3gHFL/OOMWRZVu/evISfY2Ur562h5rrAWVyNCrM94AYQCVMmR/xY
- ocuK/7jYpMhRLylPY0J0Y0vRWn5Kw9uos686C1mGsLIextLDibPtUe4FYJni+mZxUnyS4HgMpBD
- 5Qros1wN
-X-Authority-Analysis: v=2.4 cv=R8oDGcRX c=1 sm=1 tr=0 ts=68ca81f3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=SAufGHXYw6QyTyq76rcA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WKAvVvkKdxKAOchh1HWc4YErm4hu7f5K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=maxbr@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 13/13] util/vhost-user-server: vu_message_read():
+ improve error handling
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
+ leiyang@redhat.com, marcandre.lureau@redhat.com,
+ Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20250916131403.368343-1-vsementsov@yandex-team.ru>
+ <20250916131403.368343-14-vsementsov@yandex-team.ru>
+ <aMmHUW5nqZf1RxTb@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aMmHUW5nqZf1RxTb@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -132,24 +79,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2025-09-16 at 00:02 +0200, Filip Hejsek wrote:
-> On Mon, 2025-09-15 at 18:34 +0200, Maximilian Immanuel Brandtner
-> wrote:
-> > Update the terminal size upon SIGWINCH delivery.
-> >=20
-> > Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
->=20
-> I don't think this will work, because SIGWINCH is only delivered for
-> the process' controling terminal. Unfortunately I don't think there
-> is
-> any way to get size notifications for arbitrary terminal.
+On 16.09.25 18:50, Daniel P. Berrangé wrote:
+> On Tue, Sep 16, 2025 at 04:14:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> 1. Drop extra error_report_err(NULL), it will just crash, if we get
+>> here.
+>>
+>> 2. Get and report error of qemu_set_blocking(), instead of aborting.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>   util/vhost-user-server.c | 17 +++++++++++------
+>>   1 file changed, 11 insertions(+), 6 deletions(-)
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
 
-In that case there are two solutions:
-1. make qemu the controlling process of the pty (this has the
-disadvantage of QEMU being quit when the pty is closed)
-2. create a timer polling every eg 100ms to check if the winsize has
-changed
+Thanks a lot!
 
-I would go with the second approach then and implement the timer as a
-g_source. Or are there other timer mechanisms I should use instead?
+Now the whole series is reviewed. Will you queue it
+(together with base "[PATCH v4 0/2] save qemu-file incoming non-blocking fds")?
+Or we should wait for ACCs from other maintainers?
+
+-- 
+Best regards,
+Vladimir
 
