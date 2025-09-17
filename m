@@ -4,144 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F98FCA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5019CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uylWz-0004jw-Gf; Wed, 17 Sep 2025 02:20:41 -0400
+	id 1uylYF-0005bL-Jk; Wed, 17 Sep 2025 02:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uylWv-0004iz-JX
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 02:20:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uylYB-0005Wj-Gf; Wed, 17 Sep 2025 02:21:57 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uylWt-0006Nv-C8
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 02:20:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758090032;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+5Xjm0d3DCXRRNN0WbtIhjFPOyDJklpN5gFbIGudPag=;
- b=TxB+9mm5QDxWaIkAi3LH/JxRPwnT56shsgpVR6UZoIMGEiLgDNMM29BFQN7oJhQWqVKSfS
- tuVrbXCdRKnOw679ggd1VoWF2xq+2K+O9GqH8mx7KeVOkIXtHQGkFnwcG68w/ikS3f23na
- GBPoTCBuYwMD0Y0Q07Zwm9fJ4klqXhY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-t7dtDdvDOfCi6CZYHyxM1g-1; Wed, 17 Sep 2025 02:20:30 -0400
-X-MC-Unique: t7dtDdvDOfCi6CZYHyxM1g-1
-X-Mimecast-MFC-AGG-ID: t7dtDdvDOfCi6CZYHyxM1g_1758090029
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3ccd58af2bbso176159f8f.0
- for <qemu-devel@nongnu.org>; Tue, 16 Sep 2025 23:20:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758090029; x=1758694829;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+5Xjm0d3DCXRRNN0WbtIhjFPOyDJklpN5gFbIGudPag=;
- b=P9J9FuwAqzh8qNST9ZDu/Ub56nDN4uxA2hQbvr8vLyBcIgKxA6GSf/JBkwZ33EcyFF
- WtxIzR+QjcziGOMIKuzb4CbmWX/J9FcnMnofCaXYK4IV7DK70vAOentV+vYfN0X4mWRP
- bffqfHnua19yWD2DFOt4wK0ndnonXCiXhjT7xmjf9DXs/pIR441OkNXnOMQ2TPunDbpC
- V2zthhoTbBZ+3QW1w5hIRs11J3vSY/BkicK2LXosjmHTnnGMd3UKGWhCyxMSnvfuJt0B
- qi7bgTTWhuv1MSg/oZwVmyHDgq4VeMXCfyH6RcnDuzRkTel5zxXJfI1EJnWT8w5k729Y
- yZgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXo7fwR7eq93UtaT/ZxBp1KdcGTkqlJGDetTk+3tgN0FjRokQkMkuxyei5svjTXeNwH82BHu9MOHVMs@nongnu.org
-X-Gm-Message-State: AOJu0YwSmqwC9crIrPqXp5J8OgTeESqmtRMMP0x0h+aL39CrazxbDV8J
- 9PeHQZOq8o22FJNrnezuDlICrmHMEToX7jTzl94G/QuFbmnhmIimhoqjkrqgxbl5+VCwKpcpsqN
- Jj7Uf0cMgzRQMTLUd1Wc1aGAv9UqgZbxm+lfQ4opooZMoYbyaxFS+IdPf
-X-Gm-Gg: ASbGnctlciSXE9/BlCTCkUl44jfgpr7KTlGz79NImqcAgBYzGleIUPlIN2iM81PjQdn
- BtooaFuE9CnuH0veslGQwukbOS/rI5np+HjBlNyCaz7sXNFBPRb/hUtckCpy0ejakUgCXHQgDHp
- kABLQ3YRQGG7oCxArMjXb02brhK5OZoxrTfNME0cCqtqa9jw7+FZN68I5pZdoAsbe2Q3v+0Vp5Q
- EFNhVA7dcjLnbLHnw12zzuSeI/wTZC9ShTbbWLeo+APaIb+4L0VPS7I/lQ0rR5TwEn25j6XiKCp
- 4F7diBgEX/v1sd04CR1A0KR5H9qI6qlZQ+fGNxWaO+WMO7sZE/AZ5HsPdF8Lu2YY0oboMj+Vxp6
- r5WTnRQ==
-X-Received: by 2002:a05:6000:178e:b0:3d3:b30:4cf2 with SMTP id
- ffacd0b85a97d-3ecdfa9ad85mr658851f8f.19.1758090029301; 
- Tue, 16 Sep 2025 23:20:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFvhJTRAFqHGdTT+HFCFIFcdvg/0CKGk4PMg0lsSpqSvOHp4SqWw5YAK6kyGRzBAu9H+zdfg==
-X-Received: by 2002:a05:6000:178e:b0:3d3:b30:4cf2 with SMTP id
- ffacd0b85a97d-3ecdfa9ad85mr658822f8f.19.1758090028740; 
- Tue, 16 Sep 2025 23:20:28 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-113-218.pools.arcor-ip.net.
- [47.64.113.218]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3e95b111b68sm14662371f8f.32.2025.09.16.23.20.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Sep 2025 23:20:28 -0700 (PDT)
-Message-ID: <db99b84a-4d7c-49af-8185-97db09843006@redhat.com>
-Date: Wed, 17 Sep 2025 08:20:26 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uylY8-0006ik-Q2; Wed, 17 Sep 2025 02:21:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1758090113; x=1789626113;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=rkk9BsNXl5Rvdut7FbzSncKbNWxRPvemZchr5iug/J0=;
+ b=N1AWA8g1MdebW6iGnVEv6VnVQP8WJ/iGEjJ9BgeDhHiaRMi1l4BI8lop
+ us1+lPrWfB6Ijr/O67KawlVa31JoH4FoPGGrVGggNfKLMUJlehzXPlQqN
+ hfr/hBf/CDETZbo7rmOQ5/ueTEf15mMfIp8tjbmmJX2BUTNawsMO6LiwB
+ asSsvc9+SI7BZQ32Q0zMfxpNLsv0YVgLU8OA9P0hSCv+jp553Q2e4X+m5
+ wYFMccpO4dbfCFaKy7olmUkNLArmewgXsTfEQYStuWbhWn8VIA9ri95Yk
+ BfXe08HomuLzRBxMHu0no77RerYuGoGdDbwCk6cJW45DiOCqdMiu7TLBe w==;
+X-CSE-ConnectionGUID: XrHGQBZZRr2yREIj2DRhRg==
+X-CSE-MsgGUID: 6QGt+HS3RReCwTBbFlMbEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11555"; a="77825697"
+X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="77825697"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Sep 2025 23:21:49 -0700
+X-CSE-ConnectionGUID: iBujJ8ACSoCoJ36aY/BOOA==
+X-CSE-MsgGUID: UQh5KPfTRpm8zrOj2vUrGA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,271,1751266800"; d="scan'208";a="212310402"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 16 Sep 2025 23:21:48 -0700
+Date: Wed, 17 Sep 2025 14:43:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [PATCH 01/12] subprojects: Update .gitignore for proc-macro2 and
+ syn
+Message-ID: <aMpYnncKrxrkiBys@intel.com>
+References: <20250916085557.2008344-1-zhao1.liu@intel.com>
+ <20250916085557.2008344-2-zhao1.liu@intel.com>
+ <CAAjaMXaLvSV=nfd8m4Q-RPTx4jpWisDpeH6J6rgTke4Mox=8pw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/9] target/ppc: Add IBM PPE42 special instructions
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com,
- rathc@linux.ibm.com, richard.henderson@linaro.org
-References: <20250912164808.371944-1-milesg@linux.ibm.com>
- <20250912164808.371944-7-milesg@linux.ibm.com>
- <a419ef55-d0d5-4d88-8302-ebcc9a8c4bab@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a419ef55-d0d5-4d88-8302-ebcc9a8c4bab@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
+In-Reply-To: <CAAjaMXaLvSV=nfd8m4Q-RPTx4jpWisDpeH6J6rgTke4Mox=8pw@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.009,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,126 +85,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/09/2025 06.57, Harsh Prateek Bora wrote:
+On Tue, Sep 16, 2025 at 12:58:24PM +0300, Manos Pitsidianakis wrote:
+> Date: Tue, 16 Sep 2025 12:58:24 +0300
+> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Subject: Re: [PATCH 01/12] subprojects: Update .gitignore for proc-macro2
+>  and syn
 > 
+> On Tue, Sep 16, 2025 at 11:34 AM Zhao Liu <zhao1.liu@intel.com> wrote:
+> >
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >  subprojects/.gitignore | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+> > index f4281934ce11..9d579f72d121 100644
+> > --- a/subprojects/.gitignore
+> > +++ b/subprojects/.gitignore
+> > @@ -16,7 +16,7 @@
+> >  /libc-0.2.162
+> >  /proc-macro-error-1.0.4
+> >  /proc-macro-error-attr-1.0.4
+> > -/proc-macro2-1.0.84
+> > +/proc-macro2-1.0.95
+> >  /quote-1.0.36
+> > -/syn-2.0.66
+> > +/syn-2.0.104
+> >  /unicode-ident-1.0.12
+> > --
+> > 2.34.1
+> >
 > 
-> On 9/12/25 22:17, Glenn Miles wrote:
->> Adds the following instructions exclusively for
->> IBM PPE42 processors:
->>
->>    LSKU
->>    LCXU
->>    STSKU
->>    STCXU
->>    LVD
->>    LVDU
->>    LVDX
->>    STVD
->>    STVDU
->>    STVDX
->>    SLVD
->>    SRVD
->>    CMPWBC
->>    CMPLWBC
->>    CMPWIBC
->>    BNBWI
->>    BNBW
->>    CLRBWIBC
->>    CLRWBC
->>    DCBQ
->>    RLDICL
->>    RLDICR
->>    RLDIMI
->>
->> A PPE42 GCC compiler is available here:
->> https://github.com/open-power/ppe42-gcc
->>
->> For more information on the PPE42 processors please visit:
->> https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
->>
->> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
->> ---
->> Changes from v3:
->>    - Removed copy of CHECK_VDR
->>    - Refactored ld/st instructions
->>
->>   target/ppc/insn32.decode            |  66 ++-
->>   target/ppc/translate.c              |  29 +-
->>   target/ppc/translate/ppe-impl.c.inc | 665 ++++++++++++++++++++++++++++
->>   3 files changed, 750 insertions(+), 10 deletions(-)
->>   create mode 100644 target/ppc/translate/ppe-impl.c.inc
->>
-> 
-> <snip>
-> 
->> diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ 
->> ppe-impl.c.inc
->> new file mode 100644
->> index 0000000000..792103d7c2
->> --- /dev/null
->> +++ b/target/ppc/translate/ppe-impl.c.inc
->> @@ -0,0 +1,665 @@
->> +/*
->> + * IBM PPE Instructions
->> + *
->> + * Copyright (c) 2025, IBM Corporation.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +
->> +#if !defined(TARGET_PPC64)
->> +static bool vdr_is_valid(uint32_t vdr)
->> +{
->> +    const uint32_t valid_bitmap = 0xf00003ff;
->> +    return !!((1ul << (vdr & 0x1f)) & valid_bitmap);
->> +}
->> +
->> +static bool ppe_gpr_is_valid(uint32_t reg)
->> +{
->> +    const uint32_t valid_bitmap = 0xf00027ff;
->> +    return !!((1ul << (reg & 0x1f)) & valid_bitmap);
->> +}
->> +#endif
->> +
->> +#define CHECK_VDR(CTX, VDR)                             \
->> +    do {                                                \
->> +        if (unlikely(!vdr_is_valid(VDR))) {             \
->> +            gen_invalid(CTX);                           \
->> +            return true;                                \
->> +        }                                               \
->> +    } while (0)
->> +
->> +#define CHECK_PPE_GPR(CTX, REG)                         \
->> +    do {                                                \
->> +        if (unlikely(!ppe_gpr_is_valid(REG))) {         \
->> +            gen_invalid(CTX);                           \
->> +            return true;                                \
->> +        }                                               \
->> +    } while (0)
->> +
->> +#define VDR_PAIR_REG(VDR) (((VDR) + 1) & 0x1f)
->> +
->> +#define CHECK_PPE_LEVEL(CTX, LVL)                       \
->> +    do {                                                \
->> +        if (unlikely(!((CTX)->insns_flags2 & (LVL)))) { \
->> +            gen_invalid(CTX);                           \
->> +            return true;                                \
->> +        }                                               \
->> +    } while (0)
->> +
->> +static bool trans_LCXU(DisasContext *ctx, arg_LCXU *a)
->> +{
->> +#if defined(TARGET_PPC64)
->> +    return false;
->> +#else
-> 
-> If we are building the PPE42 instructions only for !TARGET_PPC64, does
-> it still make it usable with qemu-system-ppc64?
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-As explained in an earlier thread already, qemu-system-ppc64 is a superset 
-of qemu-system-ppc. Thus the ppe42 stuff should work in qemu-system-ppc64, too.
+Thanks!
 
-  Thomas
+> Maybe we could change the entries to match any directory with a version, e.g.
+> 
+> /proc-macro2-[0-9.]*/
+
+Here I prefer exact matching, as it allows for timely cleanup of outdated
+subprojects.
+
+Regards,
+Zhao
 
 
