@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226A3CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D2DCAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 12:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyr8u-0001dF-BX; Wed, 17 Sep 2025 08:20:12 -0400
+	id 1uyrD1-0003dv-9p; Wed, 17 Sep 2025 08:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyr8r-0001cO-5f
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:20:09 -0400
+ id 1uyrCz-0003d3-8O
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:24:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uyr8o-0008Pi-Nc
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:20:08 -0400
+ id 1uyrCu-0000YY-7V
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 08:24:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758111604;
+ s=mimecast20190719; t=1758111857;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Vuu8b8Kza+pFJVzlVBAMWaF4heF4L6Hxwkyvsz1d+P8=;
- b=HnPUXve3uspCUXNHlBMs4L7qROX1IswGKbzxXYbgP0bXrcEB+CPv7bMvx2TMEzre1UqhX+
- GKrIhvauDTbusnRdhgrH2qi0LFIedxLLiX4U1ZnLuCjK0E5fNOqhXuMT13xU+0CmuUkdBd
- b8IervBqSs2BeJ1XOPAsSw4vIA/056c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=haxZoqz/zkzVD7l+IyhbLI7e9qR5iMmXcYkvaKooFmU=;
+ b=D7ZRNp2HUJRQ+dJXkBj3h7Pbl2gd9VSPHKK8K9yfeEYYZDFK2LiWJ9ugWh2X9WLxoNCFHv
+ g8qdVLidPdOF/Yjiv52NY7JybIjsqTO99ePuzSVcOfBQTAqXjPFEfgDkquHmCJ7ixRyEPY
+ b7IDxSX0lMyQAJzNSZj6YjSZmrn08MY=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-KAOZjUSFMvWUc5a0J6gaag-1; Wed, 17 Sep 2025 08:20:03 -0400
-X-MC-Unique: KAOZjUSFMvWUc5a0J6gaag-1
-X-Mimecast-MFC-AGG-ID: KAOZjUSFMvWUc5a0J6gaag_1758111602
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de18e7eccso35141635e9.0
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 05:20:03 -0700 (PDT)
+ us-mta-628-CWRyjdEeOzyxhwlkiuJmkQ-1; Wed, 17 Sep 2025 08:24:16 -0400
+X-MC-Unique: CWRyjdEeOzyxhwlkiuJmkQ-1
+X-Mimecast-MFC-AGG-ID: CWRyjdEeOzyxhwlkiuJmkQ_1758111855
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-25d7c72e163so106240045ad.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 05:24:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758111602; x=1758716402;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vuu8b8Kza+pFJVzlVBAMWaF4heF4L6Hxwkyvsz1d+P8=;
- b=SZtbk7sTt/EkLd1yHmTmbrICbTvLvd08K/c2BVTgVROEcdrLtLLEQ+lDuHhWNtsZvT
- mBg6bnRShl9oNvFUx1w/Gg6LHkEHZ6klb0t/hjnK5nCphqneEzgZ3hUvaht2Pg0zx7+2
- HgDbGa9Cxfbsxc4TrMv6DP4BkjVM4fFhtT17RLUech50Ef9NVnDzSRWlqh8bb8hP0CdD
- ueMAwOBSA3sZs+hqP3v0shMVT7/E/1CHpAmXZZ7VoXROu2NJ1Is8F4utbRJHNn4ojwZG
- H7U+P3+2pOabJ16XJsWmBuETjx8lOv9t/yCRXO2Kix1pD5gEnUgrXW1arbXf/4bFV27W
- sAmQ==
-X-Gm-Message-State: AOJu0YyWV1XZH7+bqE2DGZlg5LmCPEJBzROxuYFrUocuE9SohE+nz3/G
- FYEVfiwFjyXV3fyngGWwCRwecQ8MDcpm8DHWNHQ4+aLMGNL3/gZILNkqs8r9KmQRXTAjb8jvhpd
- FobIB1MpoDkKhvEsIQvOw49xRcOwd1gxQun1DoQ+36ZHVYL5UgMGrgUkc
-X-Gm-Gg: ASbGncvE3N4G5bHFUifdG+Mnug/tTBDMSV42lCtPYt/1eS70YP7as4Tv/JjZJ97wRHH
- dYwNqtdwwWkHz0IzXvA+hT/NsDdbGMN6BAhC0yHkkznrkYzzjhI3R9k5dA0ei0QuuEkILI3z7kL
- H9+suRbA1ysmdaClSBym9J6Zp1j38ETUlcv6tdc6eMtUU7DpkEu8w81w0MwhQGZ/xkVkUvGekgV
- N388hhrbDd57zIsDL/oAJ/k86lXEXuZlZ1ETXRqtSMg8kmTARPEcfi3Nkk2ixKxOpFxuNe5tdAh
- govYClUqu2zpsrQb7n1RzMDnEp4LdzB78lRRnX12l9/W
-X-Received: by 2002:a05:600c:1c9b:b0:45d:d9ab:b85a with SMTP id
- 5b1f17b1804b1-46201f8b09fmr17706715e9.7.1758111602348; 
- Wed, 17 Sep 2025 05:20:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwZnipNtRPedPzgLlRA2Bb0Fwb2vjeXkEz3pBzvXcG6EOlQq+8HRmI/5KWYeLreO1Ec5Ngsg==
-X-Received: by 2002:a05:600c:1c9b:b0:45d:d9ab:b85a with SMTP id
- 5b1f17b1804b1-46201f8b09fmr17706315e9.7.1758111601803; 
- Wed, 17 Sep 2025 05:20:01 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.183.148])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-462d525fdb2sm12852305e9.13.2025.09.17.05.20.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Sep 2025 05:20:01 -0700 (PDT)
-Date: Wed, 17 Sep 2025 14:19:51 +0200
+ d=1e100.net; s=20230601; t=1758111855; x=1758716655;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=haxZoqz/zkzVD7l+IyhbLI7e9qR5iMmXcYkvaKooFmU=;
+ b=ldY5MS5VXTPFb7QXhNk05HQzm1U9a+NgmhxWGqoB5edDK3YhrGvCAVkDtVMZFCGeY6
+ zWKVo+IgvdnKCq/BQLkSvZkqTXT6LHl0sxZNy/IuLlHomQYHCVFdTdLhbUPZBAivJ6We
+ ClCDpcSp4PsiBxwqYpAb+3F08XqLtj3DZMXfKdPmvETik3yV++n1j0GcT34OEZz8qluc
+ gYQ9oJBzLlSPV1iZg+4KyUMdbQPcY/JF02J2zSO75uqhAg8W6lfoouM3B6PsNWxEwI8+
+ Yi0neRWUo2hyb+txH66Iaf29ycUa0/+4sb/zFXUv+yCI4Blj2L1mM6sdKo/GSz1a1mLb
+ 9R2Q==
+X-Gm-Message-State: AOJu0YwPWsR88++sIWdzuxgYpq9m/OTl+YivoCJ8M7OY5IPDvEijGD28
+ uWQgVCHzeGIdm+XuSJk0Dy2Vz18z7xOmKCiTT0T6Khhb6MDEbc51GP3Qto+E/Ck1/cPkxFKeX3J
+ cS5PkCEP/Iu59akYdgYFI6FoFe9pnk6OvaVO7yFyp2OoJfu8XY1XVHLxI33KQtCrNetAFd18Z5h
+ wGxsIaAr2Rd5+xqmK6Ie8/JcJFAsXwEUE=
+X-Gm-Gg: ASbGncuJSBHAPiaTBrs2kMLrNCXQ5dKZpezktkwSDfXCy1Q1bL9+WRk551bv1i8kfm0
+ wo6oJic6asr4XBTwKUSUt4sylXnshbnmMIA9qRGaYiBjhozN/RQYbI1zQUhEwJZi0gOmfYAfuS4
+ N38i3YYuhDRDiQWghnWbi/
+X-Received: by 2002:a17:903:11cc:b0:246:2b29:71c7 with SMTP id
+ d9443c01a7336-26812476bb9mr21856395ad.25.1758111855355; 
+ Wed, 17 Sep 2025 05:24:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyyEYdxVM5xLFlF+w1B0N+adq3AHNgLz0+BCgBCkXbuvIzfMYnhAOKMOOjJV7DuPMdXE/NPPppJ0/20L89XC0=
+X-Received: by 2002:a17:903:11cc:b0:246:2b29:71c7 with SMTP id
+ d9443c01a7336-26812476bb9mr21856135ad.25.1758111854922; Wed, 17 Sep 2025
+ 05:24:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1757676218.git.pabeni@redhat.com>
+ <8a041a8fac5b5ea175d3daebfd395c1916332695.1757676218.git.pabeni@redhat.com>
+ <z6ntpzp6ykey5hh65ia3kaka5j7anhxolcizgtq7lqbrokeb2h@r66hv2dtxjsv>
+In-Reply-To: <z6ntpzp6ykey5hh65ia3kaka5j7anhxolcizgtq7lqbrokeb2h@r66hv2dtxjsv>
 From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Wed, 17 Sep 2025 14:24:03 +0200
+X-Gm-Features: AS18NWBw7770yYmaU1BRyk9GPi2rm7kpeS_FCBgH0XGoz7Jl3TZ1w5rLuPdm2SQ
+Message-ID: <CAGxU2F6aLxtLvk9G1knJxiK+OXd8zfjoMAcZYxPduk-GSzT=Zw@mail.gmail.com>
+Subject: Re: [PATCH v6 04/14] virtio: introduce extended features type
 To: Paolo Abeni <pabeni@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Jason Wang <jasowang@redhat.com>,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v6 06/14] virtio: add support for negotiating extended
- features
-Message-ID: <nszuwj7p6zgfhbaz5yyc2kid4noqoi2egetah52lix4kxjmhly@echi6d4st6b7>
-References: <cover.1757676218.git.pabeni@redhat.com>
- <ff35cd27b9af410ca1175e97ef4b9c073c93b907.1757676218.git.pabeni@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ff35cd27b9af410ca1175e97ef4b9c073c93b907.1757676218.git.pabeni@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Luigi Rizzo <lrizzo@google.com>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -116,145 +111,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 12, 2025 at 03:06:57PM +0200, Paolo Abeni wrote:
->The virtio specifications allows for up to 128 bits for the
+On Wed, 17 Sept 2025 at 14:12, Stefano Garzarella <sgarzare@redhat.com> wrote:
+>
+> On Fri, Sep 12, 2025 at 03:06:55PM +0200, Paolo Abeni wrote:
+> >The virtio specifications allows for up to 128 bits for the
+> >device features. Soon we are going to use some of the 'extended'
+> >bits features (bit 64 and above) for the virtio net driver.
+> >
+> >Represent the virtio features bitmask with a fixes size array, and
 
-I'm not really sure about this, IIUC the spec doesn't set any upper 
-limit. From 
-https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html#x1-140002
+s/fixes/fixed
 
-     2.2 Feature Bits
-     ...
-     42 to 49, and 128 and above
-         Feature bits reserved for future extensions.
+But again, my A-b remains, we can fix only if there will be a v7.
 
-BTW I don't think that's a valid reason to re-post this series. Let's 
-only fix it if we have to re-send it for other reason.
+Stefano
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-
->device features. Soon we are going to use some of the 'extended'
->bits features for the virtio net driver.
+> >introduce a few helpers to help manipulate them.
+> >
+> >Most drivers will keep using only 64 bits features space: use union
+> >to allow them access the lower part of the extended space without any
+> >per driver change.
+> >
+> >Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >Acked-by: Jason Wang <jasowang@redhat.com>
+> >Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> >---
+> >v5 -> v6:
+> >  - removed trailing EoL
+> >
+> >v4 -> v5:
+> >  - DEFINE_PROP_FEATURE -> VIRTIO_DEFINE_PROP_FEATURE
+> >
+> >v3 -> v4:
+> >  - VIRTIO_FEATURES_DWORDS -> VIRTIO_FEATURES_NU64S
+> >  - VIRTIO_FEATURES_WORDS -> VIRTIO_FEATURES_NU32S
+> >  - VIRTIO_DWORD ->  VIRTIO_FEATURES_U64
+> >  - VIRTIO_BIT -> VIRTIO_FEATURES_BIT
+> >  - virtio_features_use_extended -> virtio_features_use_ex
+> >  - move DEFINE_PROP_FEATURE definition here
+> >
+> >v2 -> v3:
+> >  - fix preprocessor guard name
+> >  - use BIT_ULL
+> >  - add missing parentheses
+> >  - use memcmp()
+> >  - _is_empty() -> _empty()
+> >  - _andnot() returns a bool, true if dst has any non zero bits
+> >  - _array -> _ex
+> >
+> >v1 -> v2:
+> >  - use a fixed size array for features instead of uint128
+> >  - use union with u64 to reduce the needed code churn
+> >---
+> > include/hw/virtio/virtio-features.h | 126 ++++++++++++++++++++++++++++
+> > include/hw/virtio/virtio.h          |   7 +-
+> > 2 files changed, 130 insertions(+), 3 deletions(-)
+> > create mode 100644 include/hw/virtio/virtio-features.h
 >
->Add support to allow extended features negotiation on a per
->devices basis. Devices willing to negotiated extended features
->need to implemented a new pair of features getter/setter, the
->core will conditionally use them instead of the basic one.
+> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 >
->Note that 'bad_features' don't need to be extended, as they are
->bound to the 64 bits limit.
->
->Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->Acked-by: Jason Wang <jasowang@redhat.com>
->Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->---
->v4 -> v5:
->  - reordered virtio_set_features{_ex}() definitions
->
->v3 -> v4:
->  - use new virtio_features macro names
->
->v2 -> v3:
->  - _array -> _ex
->
->v1 -> v2:
->  - uint128_t -> uint64_t[]
->---
-> hw/virtio/virtio-bus.c     | 11 ++++++++---
-> hw/virtio/virtio.c         | 14 +++++++++++---
-> include/hw/virtio/virtio.h |  4 ++++
-> 3 files changed, 23 insertions(+), 6 deletions(-)
->
->diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
->index 11adfbf3ab..cef944e015 100644
->--- a/hw/virtio/virtio-bus.c
->+++ b/hw/virtio/virtio-bus.c
->@@ -62,9 +62,14 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
->     }
->
->     /* Get the features of the plugged device. */
->-    assert(vdc->get_features != NULL);
->-    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
->-                                            &local_err);
->+    if (vdc->get_features_ex) {
->+        vdc->get_features_ex(vdev, vdev->host_features_ex, &local_err);
->+    } else {
->+        assert(vdc->get_features != NULL);
->+        virtio_features_from_u64(vdev->host_features_ex,
->+                                 vdc->get_features(vdev, vdev->host_features,
->+                                                   &local_err));
->+    }
->     if (local_err) {
->         error_propagate(errp, local_err);
->         return;
->diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
->index bf53c211e5..34f977a3c9 100644
->--- a/hw/virtio/virtio.c
->+++ b/hw/virtio/virtio.c
->@@ -3103,7 +3103,9 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
->     bad = virtio_features_andnot(tmp, val, vdev->host_features_ex);
->     virtio_features_and(tmp, val, vdev->host_features_ex);
->
->-    if (k->set_features) {
->+    if (k->set_features_ex) {
->+        k->set_features_ex(vdev, val);
->+    } else if (k->set_features) {
->         bad = bad || virtio_features_use_ex(tmp);
->         k->set_features(vdev, tmp[0]);
->     }
->@@ -3149,6 +3151,13 @@ virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev,
-> int virtio_set_features(VirtIODevice *vdev, uint64_t val)
-> {
->     uint64_t features[VIRTIO_FEATURES_NU64S];
->+
->+    virtio_features_from_u64(features, val);
->+    return virtio_set_features_ex(vdev, features);
->+}
->+
->+int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
->+{
->     int ret;
->     /*
->      * The driver must not attempt to set features after feature negotiation
->@@ -3158,13 +3167,12 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
->         return -EINVAL;
->     }
->
->-    if (val & (1ull << VIRTIO_F_BAD_FEATURE)) {
->+    if (features[0] & (1ull << VIRTIO_F_BAD_FEATURE)) {
->         qemu_log_mask(LOG_GUEST_ERROR,
->                       "%s: guest driver for %s has enabled UNUSED(30) feature bit!\n",
->                       __func__, vdev->name);
->     }
->
->-    virtio_features_from_u64(features, val);
->     ret = virtio_set_features_nocheck(vdev, features);
->     if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
->         /* VIRTIO_RING_F_EVENT_IDX changes the size of the caches.  */
->diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->index 39e4059a66..2aeb021fb3 100644
->--- a/include/hw/virtio/virtio.h
->+++ b/include/hw/virtio/virtio.h
->@@ -178,6 +178,9 @@ struct VirtioDeviceClass {
->     /* This is what a VirtioDevice must implement */
->     DeviceRealize realize;
->     DeviceUnrealize unrealize;
->+    void (*get_features_ex)(VirtIODevice *vdev, uint64_t *requested_features,
->+                            Error **errp);
->+    void (*set_features_ex)(VirtIODevice *vdev, const uint64_t *val);
->     uint64_t (*get_features)(VirtIODevice *vdev,
->                              uint64_t requested_features,
->                              Error **errp);
->@@ -373,6 +376,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32_t queue_index);
-> void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
-> void virtio_update_irq(VirtIODevice *vdev);
-> int virtio_set_features(VirtIODevice *vdev, uint64_t val);
->+int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *val);
->
-> /* Base devices.  */
-> typedef struct VirtIOBlkConf VirtIOBlkConf;
->-- 
->2.51.0
->
+> >
+> >diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
+> >new file mode 100644
+> >index 0000000000..e29b7fe48f
+> >--- /dev/null
+> >+++ b/include/hw/virtio/virtio-features.h
+> >@@ -0,0 +1,126 @@
+> >+/*
+> >+ * Virtio features helpers
+> >+ *
+> >+ * Copyright 2025 Red Hat, Inc.
+> >+ *
+> >+ * SPDX-License-Identifier: GPL-2.0-or-later
+> >+ */
+> >+
+> >+#ifndef QEMU_VIRTIO_FEATURES_H
+> >+#define QEMU_VIRTIO_FEATURES_H
+> >+
+> >+#include "qemu/bitops.h"
+> >+
+> >+#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
+> >+#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
+> >+
+> >+#define VIRTIO_FEATURES_MAX        128
+> >+#define VIRTIO_FEATURES_BIT(b)     BIT_ULL((b) % 64)
+> >+#define VIRTIO_FEATURES_U64(b)     ((b) / 64)
+> >+#define VIRTIO_FEATURES_NU32S      (VIRTIO_FEATURES_MAX / 32)
+> >+#define VIRTIO_FEATURES_NU64S      (VIRTIO_FEATURES_MAX / 64)
+> >+
+> >+#define VIRTIO_DECLARE_FEATURES(name)                        \
+> >+    union {                                                  \
+> >+        uint64_t name;                                       \
+> >+        uint64_t name##_ex[VIRTIO_FEATURES_NU64S];           \
+> >+    }
+> >+
+> >+#define VIRTIO_DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
+> >+    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_FEATURES_U64(_bit)],    \
+> >+                      (_bit) % 64, _defval)
+> >+
+> >+static inline void virtio_features_clear(uint64_t *features)
+> >+{
+> >+    memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_NU64S);
+> >+}
+> >+
+> >+static inline void virtio_features_from_u64(uint64_t *features, uint64_t from)
+> >+{
+> >+    virtio_features_clear(features);
+> >+    features[0] = from;
+> >+}
+> >+
+> >+static inline bool virtio_has_feature_ex(const uint64_t *features,
+> >+                                         unsigned int fbit)
+> >+{
+> >+    assert(fbit < VIRTIO_FEATURES_MAX);
+> >+    return features[VIRTIO_FEATURES_U64(fbit)] & VIRTIO_FEATURES_BIT(fbit);
+> >+}
+> >+
+> >+static inline void virtio_add_feature_ex(uint64_t *features,
+> >+                                         unsigned int fbit)
+> >+{
+> >+    assert(fbit < VIRTIO_FEATURES_MAX);
+> >+    features[VIRTIO_FEATURES_U64(fbit)] |= VIRTIO_FEATURES_BIT(fbit);
+> >+}
+> >+
+> >+static inline void virtio_clear_feature_ex(uint64_t *features,
+> >+                                           unsigned int fbit)
+> >+{
+> >+    assert(fbit < VIRTIO_FEATURES_MAX);
+> >+    features[VIRTIO_FEATURES_U64(fbit)] &= ~VIRTIO_FEATURES_BIT(fbit);
+> >+}
+> >+
+> >+static inline bool virtio_features_equal(const uint64_t *f1,
+> >+                                         const uint64_t *f2)
+> >+{
+> >+    return !memcmp(f1, f2, sizeof(uint64_t) * VIRTIO_FEATURES_NU64S);
+> >+}
+> >+
+> >+static inline bool virtio_features_use_ex(const uint64_t *features)
+> >+{
+> >+    int i;
+> >+
+> >+    for (i = 1; i < VIRTIO_FEATURES_NU64S; ++i) {
+> >+        if (features[i]) {
+> >+            return true;
+> >+        }
+> >+    }
+> >+    return false;
+> >+}
+> >+
+> >+static inline bool virtio_features_empty(const uint64_t *features)
+> >+{
+> >+    return !virtio_features_use_ex(features) && !features[0];
+> >+}
+> >+
+> >+static inline void virtio_features_copy(uint64_t *to, const uint64_t *from)
+> >+{
+> >+    memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_NU64S);
+> >+}
+> >+
+> >+static inline bool virtio_features_andnot(uint64_t *to, const uint64_t *f1,
+> >+                                           const uint64_t *f2)
+> >+{
+> >+    uint64_t diff = 0;
+> >+    int i;
+> >+
+> >+    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> >+        to[i] = f1[i] & ~f2[i];
+> >+        diff |= to[i];
+> >+    }
+> >+    return diff;
+> >+}
+> >+
+> >+static inline void virtio_features_and(uint64_t *to, const uint64_t *f1,
+> >+                                       const uint64_t *f2)
+> >+{
+> >+    int i;
+> >+
+> >+    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> >+        to[i] = f1[i] & f2[i];
+> >+    }
+> >+}
+> >+
+> >+static inline void virtio_features_or(uint64_t *to, const uint64_t *f1,
+> >+                                       const uint64_t *f2)
+> >+{
+> >+    int i;
+> >+
+> >+    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
+> >+        to[i] = f1[i] | f2[i];
+> >+    }
+> >+}
+> >+
+> >+#endif
+> >diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> >index c594764f23..39e4059a66 100644
+> >--- a/include/hw/virtio/virtio.h
+> >+++ b/include/hw/virtio/virtio.h
+> >@@ -16,6 +16,7 @@
+> >
+> > #include "system/memory.h"
+> > #include "hw/qdev-core.h"
+> >+#include "hw/virtio/virtio-features.h"
+> > #include "net/net.h"
+> > #include "migration/vmstate.h"
+> > #include "qemu/event_notifier.h"
+> >@@ -121,9 +122,9 @@ struct VirtIODevice
+> >      * backend (e.g. vhost) and could potentially be a subset of the
+> >      * total feature set offered by QEMU.
+> >      */
+> >-    uint64_t host_features;
+> >-    uint64_t guest_features;
+> >-    uint64_t backend_features;
+> >+    VIRTIO_DECLARE_FEATURES(host_features);
+> >+    VIRTIO_DECLARE_FEATURES(guest_features);
+> >+    VIRTIO_DECLARE_FEATURES(backend_features);
+> >
+> >     size_t config_len;
+> >     void *config;
+> >--
+> >2.51.0
+> >
 
 
