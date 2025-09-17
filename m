@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B10CAC5A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02133CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsP-0001Jq-Bl; Wed, 17 Sep 2025 09:07:13 -0400
+	id 1uyrsk-0002U4-Rh; Wed, 17 Sep 2025 09:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroh-000519-7v; Wed, 17 Sep 2025 09:03:30 -0400
+ id 1uyrpr-00060O-Dk; Wed, 17 Sep 2025 09:04:36 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyroe-0005uZ-Od; Wed, 17 Sep 2025 09:03:22 -0400
+ id 1uyrpo-0005yq-IL; Wed, 17 Sep 2025 09:04:34 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN78008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN77008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:54 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:53 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4T6cua/ceJXKjoKjlSdgfNfccmS9PxWepKSnlV1jo2Q=; 
+DKIM-Signature: a=rsa-sha256; bh=Witqg4euz72gJVNcE3mUvK5CJdr7+JNxJuLdasfgINU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1758113814; v=1;
- b=NxB92lqlM7UlYIZnp2CZQ14z/01KsSvCZWaHPX26Ve+FM9zsSX6WpwiBM8kwCpyI
- QdahEdz6xFWxufXHPQ4wrFEpzsMQVV6/wfxfypAxoeEGdP9kQQpPdKkRqsQoEmIf
- ReJnT8BeSl3xmcrb5l+UTgeRv9tJW6pigOwG1RF20SUv/xz/YbM0ZKnPjlJeach1
- ND9O5B+U6BgSL85TkxDc1kcPN0eC0H8zwAxeI4RrDtXGH1WjGp5MqsMsmSEuKfEc
- 7e3zqYdnRU51XLfeLQII3lDFy2bTa+SMl82kz4R7X7OYsyYBHo8OCyEV7IojfJdG
- lsg+aKiszZ3aquOYkE/sMg==
+ b=SCh8XN/nCLxU5fHXTVagu9E0pX58n1PCt1W7DPI7Z+3pZZaKe47wPuLr4+FhMPxT
+ VvcHaLgLgAwf5XYNa0sZW5RnegAPdNarwgAImdwJ7e5xrzgJO4b2KoiRVbB2QS2B
+ 49l+l66EdLzLynWTuycrRtZh6R3joTlDhwjZl44PlV0bmHHAK/ms0kYQz1XF7dBI
+ DCRMmJ+NpbQMPH/eaIDMtT1c5t5E6f9rPBugyxzh5Dc722veBxj+kn9xRqo67LwF
+ Q5svqJuQCrzjGdjKhDxNHLcVqaSXGB1HCAnK4TJFoTystRqFLTMBpetD8Pocp2EK
+ bWaCd/kop+GFmKK2xx2W+g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:40 +0900
-Subject: [PATCH 28/35] hw/usb: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:39 +0900
+Subject: [PATCH 27/35] hw/ssi: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-28-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-27-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,22 +136,26 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-dwc2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ssi/aspeed_smc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
-index 8aaa696dd4de..156cfb4263e3 100644
---- a/hw/usb/hcd-dwc2.c
-+++ b/hw/usb/hcd-dwc2.c
-@@ -1351,7 +1351,7 @@ static void dwc2_realize(DeviceState *dev, Error **errp)
-     obj = object_property_get_link(OBJECT(dev), "dma-mr", &error_abort);
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index 7e41d4210330..73b8f0e81ff0 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -1191,10 +1191,8 @@ static void aspeed_smc_dma_setup(AspeedSMCState *s, Error **errp)
+         return;
+     }
  
-     s->dma_mr = MEMORY_REGION(obj);
--    address_space_init(&s->dma_as, NULL, s->dma_mr, "dwc2");
-+    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+-    address_space_init(&s->flash_as, NULL, &s->mmio_flash,
+-                       TYPE_ASPEED_SMC ".dma-flash");
+-    address_space_init(&s->dram_as, NULL, s->dram_mr,
+-                       TYPE_ASPEED_SMC ".dma-dram");
++    address_space_init(&s->flash_as, OBJECT(s), &s->mmio_flash, "flash-as");
++    address_space_init(&s->dram_as, OBJECT(s), s->dram_mr, "dram-as");
+ }
  
-     usb_bus_new(&s->bus, sizeof(s->bus), &dwc2_bus_ops, dev);
-     usb_register_port(&s->bus, &s->uport, s, 0, &dwc2_port_ops,
+ static void aspeed_smc_realize(DeviceState *dev, Error **errp)
 
 -- 
 2.51.0
