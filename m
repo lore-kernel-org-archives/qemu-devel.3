@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BA1CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CFACAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqit-0004b8-Cw; Wed, 17 Sep 2025 07:53:19 -0400
+	id 1uyqjG-0005HV-EA; Wed, 17 Sep 2025 07:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqi2-00035g-PA
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqht-0003jj-G1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhz-00035H-BG
  for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uyqhw-0003ka-BS
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:52:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758109933;
+ s=mimecast20190719; t=1758109937;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=CKlffNnKcnVtITFogyToj1SNgcC8+HgQy+s6SZ654FU=;
- b=QY6ufKDy+iXhCZCehXic7JWJWuiXjLKuLpvQWJzMxOvmbpBe769aq2huKyh0nuj105diHf
- HUfogQkxaRg8iFVcaCxn10g89CNAsQ4v8f/xGIai3zYKWTd22AbxZ+R/3v2aAAU0B+t7op
- lDsf9YBGYDcsWHbKB6Idwqo+ccNrKBI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ArHtKM5ju1YLvAQu8dySMzQGDN2LsSt1pwvYRr2h5ss=;
+ b=hN4t+fAegUYuiMItGbItpLPvG7cTz+7RJ0kpYtqpLNOpf3qnMFV2yhsVF486nf5zoggMZ6
+ yRJjZ44GxEzAXM8O8buF5DS5RHs0j7sLKNhsSR0RdXL247nhqNTVyXzzdlVhPzocEpdntY
+ /Q+h/O5Nugs/uhLvjc2Nt64qB7kHWWo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-BvaQoch_M_Swhk1v0JdOoQ-1; Wed,
- 17 Sep 2025 07:52:11 -0400
-X-MC-Unique: BvaQoch_M_Swhk1v0JdOoQ-1
-X-Mimecast-MFC-AGG-ID: BvaQoch_M_Swhk1v0JdOoQ_1758109931
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-o5UrNfTzPey9BSGQbfXHeQ-1; Wed,
+ 17 Sep 2025 07:52:14 -0400
+X-MC-Unique: o5UrNfTzPey9BSGQbfXHeQ-1
+X-Mimecast-MFC-AGG-ID: o5UrNfTzPey9BSGQbfXHeQ_1758109934
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACC311800291; Wed, 17 Sep 2025 11:52:10 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8D0D19560B2; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28CCE195608E; Wed, 17 Sep 2025 11:52:10 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F42930001B5; Wed, 17 Sep 2025 11:52:13 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 356CB21E6A27; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
+ id 4BF2121E6775; Wed, 17 Sep 2025 13:52:07 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v2 00/12] Error reporting cleanup, a fix,
- and &error_warn removal
-Date: Wed, 17 Sep 2025 13:51:55 +0200
-Message-ID: <20250917115207.1730186-1-armbru@redhat.com>
+Subject: [PATCH v2 06/12] net/slirp: Clean up error reporting
+Date: Wed, 17 Sep 2025 13:52:01 +0200
+Message-ID: <20250917115207.1730186-7-armbru@redhat.com>
+In-Reply-To: <20250917115207.1730186-1-armbru@redhat.com>
+References: <20250917115207.1730186-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,81 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From qapi/error.h:
+net_slirp_register_poll_sock() and net_slirp_unregister_poll_sock()
+report WSAEventSelect() failure with error_setg(&error_warn, ...).
+error_setg_win32(&error_warn, ...) is undesirable just like
+error_setg(&error_fatal, ...) and error_setg(&error_abort, ...)  are.
+Replace by warn_report().
 
- * Please don't error_setg(&error_fatal, ...), use error_report() and
- * exit(), because that's more obvious.
- * Likewise, don't error_setg(&error_abort, ...), use assert().
+The failures should probably be errors, but these functions implement
+callbacks that cannot fail, exit(1) would be too harsh, and silent
+failure we don't want.  Thus, warnings.
 
-Not mentioned, but just as undesirable: error_setg(&error_warn, ...).
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ net/slirp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-This series eliminates such uses, and gets rid of &error_warn.
-&error_warn has multiple issues and little use.  PATCH 12 has full
-rationale.
-
-A note on warnings: we don't use warnings much, and when we use them,
-they're often pretty bad.  See my memo "Abuse of warnings for
-unhandled errors and programming errors"
-Message-ID: <87h5yijh3b.fsf@pond.sub.org>
-https://lore.kernel.org/qemu-devel/87h5yijh3b.fsf@pond.sub.org/
-
-v2:
-* PATCH 03: Mention change of cxl_fmws_link() return value in commit
-  message [Jonathan]
-* PATCH 04: Change exit(1) to g_assert_not_reached(), because it's a
-  programming error.
-* PATCH 06+07: Replace questions in commit message by answers from
-  review.
-* PATCH 06: Fix a format string
-* PATCH 08: Keep warnings instead of reverting to silence [Daniel]
-* PATCH 12: Adjusted for replaced PATCH 08
-
-Issues raised in review I decided not to address in this series:
-* PATCH 03: messages could be improved further, in particular the
-  "gdbstub: " prefix could be dropped
-* ebpf_rss_load() can return false without setting an error
-* Capture the discussion on how to deal with undhandled errors in
-  cover letter and/or commit messages.
-
-The first two could be done on top.
-
-Markus Armbruster (12):
-  monitor: Clean up HMP gdbserver error reporting
-  tcg: Fix error reporting on mprotect() failure in  tcg_region_init()
-  hw/cxl: Convert cxl_fmws_link() to Error
-  migration/cpr: Clean up error reporting in cpr_resave_fd()
-  hw/remote/vfio-user: Clean up error reporting
-  net/slirp: Clean up error reporting
-  ui/spice-core: Clean up error reporting
-  util/oslib-win32: Do not treat null @errp as &error_warn
-  ui/pixman: Consistent error handling in qemu_pixman_shareable_free()
-  ui/dbus: Clean up dbus_update_gl_cb() error checking
-  ui/dbus: Consistent handling of texture mutex failure
-  error: Kill @error_warn
-
- include/exec/gdbstub.h         |  3 ---
- include/qapi/error.h           |  6 ------
- include/system/os-win32.h      |  5 ++++-
- hw/cxl/cxl-host.c              |  7 ++++---
- hw/display/virtio-gpu.c        |  8 ++++++--
- hw/net/virtio-net.c            |  8 +++++++-
- hw/remote/vfio-user-obj.c      |  9 +++------
- io/channel-socket.c            |  4 ++--
- io/channel-watch.c             |  6 +++---
- migration/cpr.c                |  9 +++++----
- monitor/hmp-cmds.c             |  7 ++++---
- net/slirp.c                    |  6 ++++--
- tcg/region.c                   |  8 ++++++--
- tests/unit/test-error-report.c | 17 -----------------
- ui/dbus-listener.c             | 22 +++++++++++++++-------
- ui/gtk.c                       |  6 +++++-
- ui/qemu-pixman.c               |  5 ++++-
- ui/spice-core.c                |  3 ++-
- util/aio-win32.c               |  2 +-
- util/error.c                   |  5 +----
- util/oslib-win32.c             | 26 +++++++++++++++++++++-----
- 21 files changed, 97 insertions(+), 75 deletions(-)
-
+diff --git a/net/slirp.c b/net/slirp.c
+index 9657e86a84..62f2684609 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -262,7 +262,8 @@ static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
+     if (WSAEventSelect(fd, event_notifier_get_handle(&ctxt->notifier),
+                        FD_READ | FD_ACCEPT | FD_CLOSE |
+                        FD_CONNECT | FD_WRITE | FD_OOB) != 0) {
+-        error_setg_win32(&error_warn, WSAGetLastError(), "failed to WSAEventSelect()");
++        warn_report("failed to WSAEventSelect(): %s",
++                    g_win32_error_message(WSAGetLastError()));
+     }
+ #endif
+ }
+@@ -271,7 +272,8 @@ static void net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
+ {
+ #ifdef WIN32
+     if (WSAEventSelect(fd, NULL, 0) != 0) {
+-        error_setg_win32(&error_warn, WSAGetLastError(), "failed to WSAEventSelect()");
++        warn_report("failed to WSAEventSelect(): %s",
++                    g_win32_error_message(WSAGetLastError()));
+     }
+ #endif
+ }
 -- 
 2.49.0
 
