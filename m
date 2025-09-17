@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14281CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FBAACAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 20:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyygZ-00065E-1F; Wed, 17 Sep 2025 16:23:27 -0400
+	id 1uyyjQ-0007tJ-RB; Wed, 17 Sep 2025 16:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyygU-00064k-Q1
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:23:22 -0400
+ id 1uyyjO-0007t0-V1
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:26:23 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyygS-0003OE-Ps
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:23:22 -0400
+ id 1uyyjN-0003uy-93
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 16:26:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=3sHti7UyX5c4XKoAfe7NaFYZkCqUB07TiWxsXi3kuis=; b=dLAoqHwTBfPcb7UNp0Ar3vN6G9
- V3nIHicSoFzeHG9j4g9pMt1Yx1zxRawxWG2GxEYtohU2gveJJbfNExsHVdxul7TSfW3cJS+M7gL/z
- a7XVoCD/S23Ch+RwtVJaIztbz4lXfkawVqfeG1bEd8B+F7gQ8BGolMEg8DJDmtJ3e/9eWYwZk+Oxe
- me9ToV9yKMX3yYtYb9jrvitmmluFoRy8uUukjz/XqyRKy8gUx5amDfFg5B8sJdzrK83XEYwaJOPQG
- Uc2SgahEiBQ+Vv7vFbLcM8ujVmRRPhohC0EH+WCwhHXOz6jztP7s5PXrViMPjfriRzWvs2qT25R1x
- dbd8yOeUwYMEAec5mvGKsITXxjlPrMgFDpcpm0T4DQAWal17GQ241ZW9jGWWkbFAIVboSibD9XcXN
- q+zm5YdKijWlY3riBQIavSQbENOcEKSmp9QjqCDUzAPfhRxdK6Fg/LnNo0q938HIzmEGbgCeZkYEJ
- j7I5RFwpzBdeO9dNCQoU3J04dtxUu5g3B7Qy+s1RhTfqXX5wg7rCYW/HdsnWyR5JTbhR89Y66LbHH
- dRJTiDHEDO4gPOnUH97azwlGeVnoZkqleVwxcgsxlU1VXEfovxDpCx73IDgTa28/7zflFMTsV82X1
- 32UL3iYPB0EMeNHCtMMCUZ4e44f3FEez5DmTTJU1w=;
+ bh=2+kq3Eq4UP3InnlakAuwNiofbxXHE/tI9tY1Tkj6K4k=; b=ksCOH04C89p/DNyEl2ycUso17N
+ E5vcsPZ1Mo4HD5TT9tYg5VXrDfzbzBBY4n+Dvdj+UQk7kVXZC7s5xBauMGEQM2jO1+rE6/JP57ZjK
+ KU4Gxw/uozyxTNgTpc3wByDQZYlycmbOiq0V+P2SF2c9Q8HV12qdwvOPAlR9x2E84qjd2msvQnjtS
+ LalM95H4WyucTYxWJ4SD5LJJB30apFqk284j0Z2hkPnm5m54zEe2iZMOsEp+8oBbbtI4H1z/JgbBJ
+ Nc9uyw+R2LAOzSPSBNvUtY7NzWxwxLrVWYf54nYxfQVzVfS6srN/FtMoOAFkdLq0xTm97hQtn7zLv
+ dhBwLO/3drhrqAlTQNe05n3tqYml/kLSn1Sq3dYSn87DR8LVxO2G7ZqsBjSDBNMafn4YV8/a7dBl+
+ fWje2Cyvs+X89PweqQEVwze5LblRpMjJecyaE2CTwir6Vdu4bIeakAJ9qRXQo5K7iwpDWkDROYecI
+ xqdgY4XBy9SIkJLELVPrPSgSBZAarDUzfO13gkB28Yst4OLpTgFokctNKdv1kzsPStKWFP1X6lvPy
+ mkegS8x5LDeugCQFeNfGCuFbc/NoGnY5HDcqvVnhJyJgfI59W42r0iWk6MYJFJuRfr9AXejO9nl7J
+ A9zFWpqZAzrcU/54qkytHe3Ltrp2hFaZ317MOa5R8=;
 Received: from [2a02:8012:2f01:0:ff11:26c7:ce3f:b269]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uyyeM-000AKy-MO; Wed, 17 Sep 2025 21:21:14 +0100
-Message-ID: <afda6b74-f081-4622-a6ca-ce1f0567daad@ilande.co.uk>
-Date: Wed, 17 Sep 2025 21:23:09 +0100
+ id 1uyyhK-000AMM-2Y; Wed, 17 Sep 2025 21:24:18 +0100
+Message-ID: <a0b6d92e-6cb7-4d78-b327-0120d9264749@ilande.co.uk>
+Date: Wed, 17 Sep 2025 21:26:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: atar4qemu@gmail.com
 References: <20250905115128.376295-1-richard.henderson@linaro.org>
- <20250905115128.376295-2-richard.henderson@linaro.org>
+ <20250905115128.376295-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +73,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20250905115128.376295-2-richard.henderson@linaro.org>
+In-Reply-To: <20250905115128.376295-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:ff11:26c7:ce3f:b269
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 1/7] target/sparc: Allow TRANS macro with no extra
- arguments
+Subject: Re: [PATCH v2 4/7] target/sparc: Loosen decode of RDPSR for v7
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,26 +106,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 05/09/2025 12:51, Richard Henderson wrote:
 
-> Use ## to drop the preceding comma if __VA_ARGS__ is empty.
+> For v7, bits [18:0] are ignored.
+> For v8, bits [18:14] are reserved and bits [13:0] are ignored.
 > 
+> Fixes: 668bb9b755e ("target/sparc: Move RDPSR, RDHPR to decodetree")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/sparc/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/sparc/insns.decode | 16 +++++++++-------
+>   1 file changed, 9 insertions(+), 7 deletions(-)
 > 
-> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> index b922e53bf1..336583beab 100644
-> --- a/target/sparc/translate.c
-> +++ b/target/sparc/translate.c
-> @@ -2487,7 +2487,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+> index 74848996ae..1c6403ad8a 100644
+> --- a/target/sparc/insns.decode
+> +++ b/target/sparc/insns.decode
+> @@ -158,14 +158,16 @@ CALL    01 i:s30
+>   }
 >   
->   #define TRANS(NAME, AVAIL, FUNC, ...) \
->       static bool trans_##NAME(DisasContext *dc, arg_##NAME *a) \
-> -    { return avail_##AVAIL(dc) && FUNC(dc, __VA_ARGS__); }
-> +    { return avail_##AVAIL(dc) && FUNC(dc, ## __VA_ARGS__); }
+>   {
+> -  RDPSR             10 rd:5  101001 00000 0 0000000000000
+> -  RDHPR_hpstate     10 rd:5  101001 00000 0 0000000000000
+> +  [
+> +    RDHPR_hpstate       10 rd:5  101001 00000 0 0000000000000
+> +    RDHPR_htstate       10 rd:5  101001 00001 0 0000000000000
+> +    RDHPR_hintp         10 rd:5  101001 00011 0 0000000000000
+> +    RDHPR_htba          10 rd:5  101001 00101 0 0000000000000
+> +    RDHPR_hver          10 rd:5  101001 00110 0 0000000000000
+> +    RDHPR_hstick_cmpr   10 rd:5  101001 11111 0 0000000000000
+> +  ]
+> +  RDPSR                 10 rd:5  101001 ----- - -------------
+>   }
+> -RDHPR_htstate       10 rd:5  101001 00001 0 0000000000000
+> -RDHPR_hintp         10 rd:5  101001 00011 0 0000000000000
+> -RDHPR_htba          10 rd:5  101001 00101 0 0000000000000
+> -RDHPR_hver          10 rd:5  101001 00110 0 0000000000000
+> -RDHPR_hstick_cmpr   10 rd:5  101001 11111 0 0000000000000
 >   
->   #define avail_ALL(C)      true
->   #ifdef TARGET_SPARC64
+>   {
+>     WRPSR             10 00000 110001 ..... . .............  @n_r_ri
+
+This looks like it matches the behaviour of the old decoder.
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
