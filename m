@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96701CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 04:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346D1CAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 04:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyjKW-00051q-VI; Tue, 16 Sep 2025 23:59:42 -0400
+	id 1uyjKP-0004zB-3X; Tue, 16 Sep 2025 23:59:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyjKS-00050T-SD; Tue, 16 Sep 2025 23:59:38 -0400
+ id 1uyjKM-0004yE-GL; Tue, 16 Sep 2025 23:59:30 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyjKR-0006g6-1l; Tue, 16 Sep 2025 23:59:36 -0400
+ id 1uyjKK-0006g6-UE; Tue, 16 Sep 2025 23:59:30 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 17 Sep
@@ -33,10 +33,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <thuth@redhat.com>, Kane-Chen-AS
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 3/3] tests/functional/arm: Add AST2600 boot test with
- generated OTP image
-Date: Wed, 17 Sep 2025 11:59:17 +0800
-Message-ID: <20250917035917.4141723-4-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 1/3] tests/functional/arm: Add helper to generate OTP images
+Date: Wed, 17 Sep 2025 11:59:15 +0800
+Message-ID: <20250917035917.4141723-2-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250917035917.4141723-1-kane_chen@aspeedtech.com>
 References: <20250917035917.4141723-1-kane_chen@aspeedtech.com>
@@ -70,39 +69,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Add a functional test that boots an AST2600 machine with a generated
-OTP image. The test verifies that OTP contents are read during early
-boot and that the system reaches the expected console prompt.
+Add a small helper that generates OTP images at test time. This lets
+multiple test cases create default OTP contents without shipping prebuilt
+fixtures and keeps the tests self-contained.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- tests/functional/arm/test_aspeed_ast2600.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ tests/functional/aspeed.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
-index 129695ca4e..87e3595584 100755
---- a/tests/functional/arm/test_aspeed_ast2600.py
-+++ b/tests/functional/arm/test_aspeed_ast2600.py
-@@ -136,5 +136,19 @@ def test_arm_ast2600_evb_sdk(self):
-         exec_command_and_wait_for_pattern(self,
-              '/sbin/hwclock -f /dev/rtc1', year)
- 
-+    def test_arm_ast2600_otp_blockdev_device(self):
-+        self.vm.set_machine("ast2600-evb")
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index b131703c52..47e84e035b 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -61,3 +61,11 @@ def do_test_arm_aspeed_sdk_start(self, image):
+         self.wait_for_console_pattern('U-Boot 2019.04')
+         self.wait_for_console_pattern('## Loading kernel from FIT Image')
+         self.wait_for_console_pattern('Starting kernel ...')
 +
-+        image_path = self.archive_extract(self.ASSET_SDK_V907_AST2600)
-+        otp_img = self.generate_otpmem_image()
++    def generate_otpmem_image(self):
++        path = self.scratch_file("otpmem.img")
++        pattern = b'\x00\x00\x00\x00\xff\xff\xff\xff' * (16 * 1024 // 8)
++        with open(path, "wb") as f:
++            f.write(pattern)
++        return path
 +
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
-+            "-global", "aspeed-otp.drive=otp",
-+        )
-+        self.do_test_arm_aspeed_sdk_start(self.scratch_file("ast2600-default", "image-bmc"))
-+        self.wait_for_console_pattern("ast2600-default login:")
-+
- if __name__ == '__main__':
-     AspeedTest.main()
 -- 
 2.43.0
 
