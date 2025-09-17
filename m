@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2455CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918D1CAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypUh-0002RN-9o; Wed, 17 Sep 2025 06:34:35 -0400
+	id 1uypUh-0002Rb-Fk; Wed, 17 Sep 2025 06:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUQ-0002Hj-Dt; Wed, 17 Sep 2025 06:34:20 -0400
+ id 1uypUP-0002HP-0G; Wed, 17 Sep 2025 06:34:17 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUC-0005uX-0Q; Wed, 17 Sep 2025 06:34:15 -0400
+ id 1uypU4-0005ur-MF; Wed, 17 Sep 2025 06:34:09 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAa099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAY099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Wed, 17 Sep 2025 19:32:56 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=z5aIFWflp7k8WS0CLunYLNy2ZUWd6d/N8M5iSX1wzX4=; 
+DKIM-Signature: a=rsa-sha256; bh=VRGEF2ly3qK0gu1IVUttjA0buRSsAPYB0GDOnSXM14c=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105177; v=1;
- b=JlKWNHSxe8u/hAcybElW0iVXcXr6GRj4NDqgUKRQ8yurKVlfJ6FJDhfBnHwK7mSb
- Galv9ZoO8d7Knq257MVhjY1RZvZCdB1vD/8fQpMngOLbcxGh5Hq4GPhmIhZZ+HGm
- Sd0mdeDw0nsBp0iZHnrrYKWW4JleEoCFYd4EnutWYnMOOZhr4N8A39VnK3WrDq1s
- m/Bkw6fhM9TjK4u2I/P7oUp7FWUOtKI6wugintp0mluIUUbFM4JwJtV/4bVmfB4q
- xZsPQoJi5Bh6Wxz8/Mm/Bop/RXTIve9qWMNr8GlkjCvG937S7Mlqw2gJOQphwtwU
- XrgAV2BaWFuiH1G+ic1tmg==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1758105176; v=1;
+ b=inSk6TudEMcsxo/y16lKSlJgCAnG1CVS4QrvLCCch9MaYYvtKKxtbLMJQWq+8nuP
+ tA5E+vVCWW0/QDK9y3n3zMUZiZY3i9smh+J9ZcxOAVW9eQR52GpoKXk7wxQQXP9f
+ DiKgtTCWKB9XRdt95QTx6HYmvVB/Gn6n5yopMZCWGpR58dzi+gxVvr93Shq0UCQ7
+ XiXewgVdylOc2dClvDDd40pVLWoczUqklQvV8Yr/UYkCqZDdOqzmFnbLrgoWLndh
+ eX9hYDLZHr4grN580FL52I3AUzZKAWaiEac1vRUavOVEQddF2L+0fa7E4dXuY8ck
+ Lu75o9Xwos699qS+qJS7cg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:32:48 +0900
-Subject: [PATCH 02/14] qdev: Automatically delete memory subregions
+Subject: [PATCH 00/14] Fix memory region use-after-finalization
+Date: Wed, 17 Sep 2025 19:32:46 +0900
+Message-Id: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-2-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAE+OymgC/0XMQQ6DIBSE4asY1iV5iIh4lcYFwmhZqC2oaWK8e
+ 2lddPlPJt/BEmJAYm1xsIg9pLDMOcStYO5h5xE8+NyspFKREZqnrY8Y84sb0g5eeyvgWf4/I4b
+ w/ln37uqI15bJ9Rr/YltcHtV8S+BSwzlD0hpQu8sv1tu8u2WawtoWECS8lNqUShIZOVjqydZQQ
+ yVR+cYNqFQjwLrz/ABqluqP0gAAAA==
+X-Change-ID: 20250917-subregion-907ced7da1ed
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -103,113 +106,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is a common requirement of qdev to delete memory subregions to hide
-them from address spaces during unrealization. pci automatically
-deletes the IO subregions, but this process is manually implemented
-in other places, which is tedious and error-prone.
+Based-on: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+("[PATCH v3 0/7] Do not unparent in instance_finalize()")
 
-Implement the logic to delete subregions in qdev to cover all devices.
+This patch series was spun off from "[PATCH v2 00/15] Fix memory region
+leaks and use-after-finalization":
+https://lore.kernel.org/qemu-devel/20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp/
+
+When developing the next version of "[PATCH 00/16] memory: Stop
+piggybacking on memory region owners*", I faced multiple memory region
+leaks and use-after-finalization. This series extracts their fixes so
+that the number of Cc: won't explode.
+
+Patch "qdev: Automatically delete memory subregions" and the succeeding
+patches are for refactoring, but patch "vfio-user: Do not delete the
+subregion" does fix use-after-finalization.
+
+* https://lore.kernel.org/qemu-devel/20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp/
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- MAINTAINERS            |  1 +
- include/hw/qdev-core.h |  1 +
- hw/core/qdev.c         | 14 ++++++++++++++
- stubs/memory.c         |  9 +++++++++
- stubs/meson.build      |  1 +
- 5 files changed, 26 insertions(+)
+Akihiko Odaki (14):
+      hw/pci-bridge: Do not assume immediate MemoryRegion finalization
+      qdev: Automatically delete memory subregions
+      vfio-user: Do not delete the subregion
+      hw/char/diva-gsp: Do not delete the subregion
+      hw/char/serial-pci-multi: Do not delete the subregion
+      secondary-vga: Do not delete the subregions
+      cmd646: Do not delete the subregions
+      hw/ide/piix: Do not delete the subregions
+      hw/ide/via: Do not delete the subregions
+      hw/nvme: Do not delete the subregion
+      pci: Do not delete the subregions
+      hw/ppc/spapr_pci: Do not delete the subregions
+      hw/usb/hcd-ehci: Do not delete the subregions
+      hw/usb/hcd-xhci: Do not delete the subregions
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8147fff3523e..4665f0a4b7a5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3212,6 +3212,7 @@ F: include/system/memory.h
- F: include/system/ram_addr.h
- F: include/system/ramblock.h
- F: include/system/memory_mapping.h
-+F: stubs/memory.c
- F: system/dma-helpers.c
- F: system/ioport.c
- F: system/memory.c
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 530f3da70218..8f443d5f8ea5 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -526,6 +526,7 @@ bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp);
-  *  - unrealize any child buses by calling qbus_unrealize()
-  *    (this will recursively unrealize any devices on those buses)
-  *  - call the unrealize method of @dev
-+ *  - remove @dev from memory
-  *
-  * The device can then be freed by causing its reference count to go
-  * to zero.
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f60022617687..8fdf6774f87e 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -451,6 +451,17 @@ static bool check_only_migratable(Object *obj, Error **errp)
-     return true;
- }
- 
-+static int del_memory_region(Object *child, void *opaque)
-+{
-+    MemoryRegion *mr = (MemoryRegion *)object_dynamic_cast(child, TYPE_MEMORY_REGION);
-+
-+    if (mr && mr->container) {
-+        memory_region_del_subregion(mr->container, mr);
-+    }
-+
-+    return 0;
-+}
-+
- static void device_set_realized(Object *obj, bool value, Error **errp)
- {
-     DeviceState *dev = DEVICE(obj);
-@@ -582,6 +593,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-         if (dc->unrealize) {
-             dc->unrealize(dev);
-         }
-+        object_child_foreach(OBJECT(dev), del_memory_region, NULL);
-         dev->pending_deleted_event = true;
-         DEVICE_LISTENER_CALL(unrealize, Reverse, dev);
-     }
-@@ -606,6 +618,8 @@ post_realize_fail:
-     }
- 
- fail:
-+    object_child_foreach(OBJECT(dev), del_memory_region, NULL);
-+
-     error_propagate(errp, local_err);
-     if (unattached_parent) {
-         /*
-diff --git a/stubs/memory.c b/stubs/memory.c
-new file mode 100644
-index 000000000000..9c36531ae542
---- /dev/null
-+++ b/stubs/memory.c
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "system/memory.h"
-+
-+void memory_region_del_subregion(MemoryRegion *mr,
-+                                 MemoryRegion *subregion)
-+{
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index cef046e6854d..b4df4e60a1af 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -95,5 +95,6 @@ if have_system or have_user
- 
-   # Also included in have_system for tests/unit/test-qdev-global-props
-   stub_ss.add(files('hotplug-stubs.c'))
-+  stub_ss.add(files('memory.c'))
-   stub_ss.add(files('sysbus.c'))
- endif
+ MAINTAINERS                |  1 +
+ include/hw/pci/pci.h       |  1 +
+ include/hw/qdev-core.h     |  1 +
+ hw/char/diva-gsp.c         |  1 -
+ hw/char/serial-pci-multi.c |  1 -
+ hw/core/qdev.c             | 14 +++++++
+ hw/display/vga-pci.c       |  8 ----
+ hw/ide/cmd646.c            | 12 ------
+ hw/ide/piix.c              | 13 -------
+ hw/ide/via.c               | 12 ------
+ hw/nvme/ctrl.c             |  2 -
+ hw/pci/pci.c               | 22 +----------
+ hw/pci/pci_bridge.c        | 96 +++++++++++++++++++++++++---------------------
+ hw/ppc/spapr_pci.c         | 22 -----------
+ hw/usb/hcd-ehci.c          |  4 --
+ hw/usb/hcd-xhci.c          | 10 -----
+ hw/vfio-user/pci.c         |  6 ---
+ stubs/memory.c             |  9 +++++
+ stubs/meson.build          |  1 +
+ 19 files changed, 80 insertions(+), 156 deletions(-)
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250917-subregion-907ced7da1ed
+prerequisite-change-id: 20250906-use-37ecc903a9e0:v3
+prerequisite-patch-id: d464fda86a3c79ff8e6d7a2e623d979b2a47019b
+prerequisite-patch-id: 17b153237f69c898b9c5b93aad0d5116d0bfe49f
+prerequisite-patch-id: ac51d9c4ac483054ee91cecbb5575def67dbb602
+prerequisite-patch-id: 205aa86c0ef087c97dbcf736062661a45c287bf3
+prerequisite-patch-id: 26e18a249afaf9cd1b72961f9e2e3ebf97966a3c
+prerequisite-patch-id: d3e0b87f84a216e05bd4aa3dee8ae77cf9df062a
+prerequisite-patch-id: 510a59304274e1bc35f8fbe77c91fc2f32a2f087
 
--- 
-2.51.0
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
