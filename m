@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A88CAC592
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 01:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EADCAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 01:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyh1h-00069N-2a; Tue, 16 Sep 2025 21:32:05 -0400
+	id 1uyh1t-0006Dq-BO; Tue, 16 Sep 2025 21:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyh1b-00067z-VT; Tue, 16 Sep 2025 21:32:01 -0400
+ id 1uyh1n-0006Bl-3F; Tue, 16 Sep 2025 21:32:11 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyh1U-0006vf-2B; Tue, 16 Sep 2025 21:31:59 -0400
+ id 1uyh1l-0006vf-1U; Tue, 16 Sep 2025 21:32:10 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 17 Sep
- 2025 09:31:43 +0800
+ 2025 09:31:44 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 17 Sep 2025 09:31:43 +0800
+ Transport; Wed, 17 Sep 2025 09:31:44 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,11 +32,12 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 0/6] hw/arm/aspeed: AST1700 IO expander support for AST27x0
- (LTPI, UART, IRQ, I2C)
-Date: Wed, 17 Sep 2025 09:31:35 +0800
-Message-ID: <20250917013143.1600377-1-kane_chen@aspeedtech.com>
+Subject: [PATCH v1 3/6] hw/arm/aspeed: Add AST1700 IO expander
+Date: Wed, 17 Sep 2025 09:31:38 +0800
+Message-ID: <20250917013143.1600377-4-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250917013143.1600377-1-kane_chen@aspeedtech.com>
+References: <20250917013143.1600377-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -67,84 +68,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Hi all,
+AST27x0 machines can carry up to two AST1700-based IO expander boards.
+This change introduces a lightweight AST1700 SoC container and maps two
+separate LTPI IO windows for those expanders.
 
-This series adds support for AST1700-based IO expander boards on the
-ASPEED AST27x0 family and wires them into the machine models. It
-introduces an LTPI controller, adds a machine property to select how
-many expanders are present, and connects the expander-provided UART,
-interrupt controller, and I2C blocks.
-
-What this series does
-
-- Add a new `ioexps-num` machine property (range 0-2; default 0) so
-  boards can declare how many expanders are attached without changing
-  defaults.
-- Add an LTPI controller device used by the expander/board glue.
-- Add the AST1700 IO expander device model.
-- Wire up the expander UART, interrupt controllers, and I2C on AST27x0
-  machines.
-
-Example usage:
-  ./qemu-system-aarch64 -M ast2700a1-evb,ioexps-num=2 \
-    -drive file=image-bmc,format=raw,if=mtd \
-    ...
-
-
-Verification:
-
-U-Boot:
-=> ltpi
-LTPI0:
-    link partner    : ast1700
-    link mode       : DDR
-    link bandwidth  : 25Mbps
-LTPI1:
-    link partner    : ast1700
-    link mode       : DDR
-    link bandwidth  : 25Mbps
-=>
-
-Linux (BMC):
-root@ast2700-default:~# i2cdetect -y 16
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:                         -- -- -- -- -- -- -- --
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- --
-
-With `ioexps-num` left at 0, existing behavior is unchanged.
-
-Any feedback or suggestions are appreciated.
-
-Best Regards,
-Kane
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
-Kane-Chen-AS (6):
-  hw/arm/aspeed: Add 'ioexps-num' property for AST27x0
-  hw/arm/aspeed: Add LTPI controller
-  hw/arm/aspeed: Add AST1700 IO expander
-  hw/arm/aspeed: Model AST1700 IO expander UART on AST27x0
-  hw/arm/aspeed: Model AST1700 IO expander interrupt controllers on
-    AST27x0
-  hw/arm/aspeed: Model AST1700 IO expander I2C on AST27x0
+ include/hw/arm/aspeed_soc.h | 20 ++++++++++++++++++--
+ hw/arm/aspeed_ast27x0.c     | 17 ++++++++++++-----
+ 2 files changed, 30 insertions(+), 7 deletions(-)
 
- include/hw/arm/aspeed_soc.h   |  32 +++++-
- include/hw/intc/aspeed_intc.h |   2 +
- include/hw/misc/aspeed_ltpi.h |  25 +++++
- hw/arm/aspeed.c               |  49 +++++++++
- hw/arm/aspeed_ast27x0.c       | 184 ++++++++++++++++++++++++++++++++--
- hw/intc/aspeed_intc.c         |  60 +++++++++++
- hw/misc/aspeed_ltpi.c         | 111 ++++++++++++++++++++
- hw/misc/meson.build           |   1 +
- 8 files changed, 452 insertions(+), 12 deletions(-)
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 hw/misc/aspeed_ltpi.c
-
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 72eefb0327..648c8d5c00 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -52,6 +52,21 @@
+ #define ASPEED_JTAG_NUM  2
+ #define ASPEED_IOEXP_NUM 2
+ 
++typedef struct {
++    MemoryRegion *memory;
++    MemoryRegion container;
++    AddressSpace dram_as;
++
++    AspeedSMCState spi;
++    AspeedADCState adc;
++    AspeedSCUState scu;
++    AspeedGPIOState gpio;
++    AspeedI2CState i2c;
++    AspeedI3CState i3c;
++    SerialMM uart;
++    AspeedWDTState wdt[ASPEED_WDTS_NUM];
++} AspeedAST1700SoCState;
++
+ struct AspeedSoCState {
+     DeviceState parent;
+ 
+@@ -102,10 +117,10 @@ struct AspeedSoCState {
+     UnimplementedDeviceState espi;
+     UnimplementedDeviceState udc;
+     UnimplementedDeviceState sgpiom;
+-    UnimplementedDeviceState ltpi;
+     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+     AspeedAPB2OPBState fsi[2];
+     AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
++    AspeedAST1700SoCState ioexp[ASPEED_IOEXP_NUM];
+     uint8_t ioexp_num;
+ };
+ 
+@@ -206,7 +221,8 @@ enum {
+     ASPEED_DEV_IOMEM,
+     ASPEED_DEV_IOMEM0,
+     ASPEED_DEV_IOMEM1,
+-    ASPEED_DEV_LTPI,
++    ASPEED_DEV_LTPI_IO0,
++    ASPEED_DEV_LTPI_IO1,
+     ASPEED_DEV_UART0,
+     ASPEED_DEV_UART1,
+     ASPEED_DEV_UART2,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 3f93554027..2e180c8cc5 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -83,8 +83,9 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_LTPI_CTRL1] =  0x14C34000,
+     [ASPEED_DEV_LTPI_CTRL2] =  0x14C35000,
+     [ASPEED_DEV_WDT]       =  0x14C37000,
++    [ASPEED_DEV_LTPI_IO0]  =  0x30000000,
++    [ASPEED_DEV_LTPI_IO1]  =  0x50000000,
+     [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+-    [ASPEED_DEV_LTPI]      =  0x300000000,
+     [ASPEED_DEV_SDRAM]     =  0x400000000,
+ };
+ 
+@@ -523,7 +524,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+     object_initialize_child(obj, "hace", &s->hace, typename);
+     object_initialize_child(obj, "dpmcu", &s->dpmcu,
+                             TYPE_UNIMPLEMENTED_DEVICE);
+-    object_initialize_child(obj, "ltpi", &s->ltpi,
++    object_initialize_child(obj, "ltpi0", &s->ioexp[0],
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "ltpi1", &s->ioexp[1],
+                             TYPE_UNIMPLEMENTED_DEVICE);
+     object_initialize_child(obj, "iomem", &s->iomem,
+                             TYPE_UNIMPLEMENTED_DEVICE);
+@@ -968,9 +971,13 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                                   "aspeed.dpmcu",
+                                   sc->memmap[ASPEED_DEV_DPMCU],
+                                   AST2700_SOC_DPMCU_SIZE);
+-    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
+-                                  "aspeed.ltpi",
+-                                  sc->memmap[ASPEED_DEV_LTPI],
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ioexp[0]),
++                                  "aspeed.ltpi.0",
++                                  sc->memmap[ASPEED_DEV_LTPI_IO0],
++                                  AST2700_SOC_LTPI_SIZE);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ioexp[1]),
++                                  "aspeed.ltpi.1",
++                                  sc->memmap[ASPEED_DEV_LTPI_IO1],
+                                   AST2700_SOC_LTPI_SIZE);
+     aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
+                                   "aspeed.io",
 -- 
 2.43.0
 
