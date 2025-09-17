@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89805CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2B7CAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypYw-0000Ru-92; Wed, 17 Sep 2025 06:38:58 -0400
+	id 1uypYx-0000SF-Re; Wed, 17 Sep 2025 06:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypYr-0000Mx-Ub; Wed, 17 Sep 2025 06:38:54 -0400
+ id 1uypYu-0000Pe-FG; Wed, 17 Sep 2025 06:38:56 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypYp-00074B-7S; Wed, 17 Sep 2025 06:38:53 -0400
+ id 1uypYr-00074r-Is; Wed, 17 Sep 2025 06:38:56 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAZ099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAj099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:32:56 +0900 (JST)
+ Wed, 17 Sep 2025 19:33:01 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jD8xXCxKpQezlTUVEU/kFhHTu8Hn9yOq/MDXRMgQpcc=; 
+DKIM-Signature: a=rsa-sha256; bh=9xkJspHpPQNQBoWKZvm2Uj1/DqAf0CZcwgKhdBrA1QA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105176; v=1;
- b=o1VexklQyWKJ2rNsvAOh3/KSWkheh8m1g1/WMhy88XinniJDifD194rHWkONKMN4
- lbSM8iBx+M4mYKFhLnRrJ854S1uO62PsMeoHgZOLdXGwpUUBk0LvKLA5MpPqOiwd
- GUh7ueayJLdCVr38FH9XyCVTJdmSgZ8RDKJIAZKDSzF1/TRYeeVgbW4/boyEyffH
- ImuKc5hQ19/Hj/DJMRxnRh1sOfehGuBNA4DKqo1c+jOZix1UIsVGfI8oRpOePEni
- 5rYWUuj+7zajfPwOHKOADaZ2oC1gI8SvRguqqz9UElyATev5WFRfAZwsSZDT2gHI
- f9LrdC7gARGYK44/UjCgkw==
+ s=rs20250326; t=1758105181; v=1;
+ b=d/0glsTJ/odLJp0tdqAsjgCfDMzbWgIZpEnQuGFc+EEQR29QOPElE6ktsu5enPlO
+ rEyvOW8z2jO2aed5ADNAtfJAJRpWxUE++6daYji/YJ+GGCdJbrWUZzVrkpdVjmWg
+ 2vwaD00UTJrPKsoSK1k1Sfvq2sh3JNsTEHVEcXTa04azL0v1JbShCQ73d0xoWhHO
+ a41CH7AqKBZ0HP7JqjDP75LV4rglP8iJtLACSpr+8inCVgyGRj35HjuN5xLq2zNQ
+ g/1Z22DpbyHjAO4MlELo5czYqdxGrU4GlPXrORr96/HTz5o8ihTUH6QJamsan/XT
+ LPDYVQbqLIYSzsBKL73sLw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:32:47 +0900
-Subject: [PATCH 01/14] hw/pci-bridge: Do not assume immediate MemoryRegion
- finalization
+Date: Wed, 17 Sep 2025 19:32:57 +0900
+Subject: [PATCH 11/14] pci: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-1-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-subregion-v1-11-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -104,200 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When updating memory mappings, pci_bridge_update_mappings() performed
-the following operations:
-1. Start a transaction
-2. Delete the subregions from the container
-3. Unparent the subregions
-4. Initialize the subregions
-5. End the transaction
-
-This assumes the old subregion instances are finalized immediately after
-3, but it is not true; the finalization is delayed until 5. Remove the
-assumption by using functions to dynamically update MemoryRegions.
+It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/pci/pci.h |  1 +
- hw/pci/pci.c         |  2 +-
- hw/pci/pci_bridge.c  | 96 ++++++++++++++++++++++++++++------------------------
- 3 files changed, 54 insertions(+), 45 deletions(-)
+ hw/pci/pci.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 6b7d3ac8a361..d0bd214b4e11 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -256,6 +256,7 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,
-                       uint8_t attr, MemoryRegion *memory);
- void pci_register_vga(PCIDevice *pci_dev, MemoryRegion *mem,
-                       MemoryRegion *io_lo, MemoryRegion *io_hi);
-+void pci_update_vga(PCIDevice *pci_dev);
- void pci_unregister_vga(PCIDevice *pci_dev);
- pcibus_t pci_get_bar_addr(PCIDevice *pci_dev, int region_num);
- 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c70b5ceebaf1..516029f66cda 100644
+index 516029f66cda..2b408c7ec336 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
-@@ -1521,7 +1521,7 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,
+@@ -1188,10 +1188,6 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
+     if (xen_mode == XEN_EMULATE) {
+         xen_evtchn_remove_pci_device(pci_dev);
      }
+-    if (memory_region_is_mapped(&pci_dev->bus_master_enable_region)) {
+-        memory_region_del_subregion(&pci_dev->bus_master_container_region,
+-                                    &pci_dev->bus_master_enable_region);
+-    }
+     address_space_destroy(&pci_dev->bus_master_as);
  }
  
--static void pci_update_vga(PCIDevice *pci_dev)
-+void pci_update_vga(PCIDevice *pci_dev)
- {
-     uint16_t cmd;
- 
-diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
-index 76255c4cd892..240d0f904de9 100644
---- a/hw/pci/pci_bridge.c
-+++ b/hw/pci/pci_bridge.c
-@@ -145,11 +145,10 @@ pcibus_t pci_bridge_get_limit(const PCIDevice *bridge, uint8_t type)
-     return limit;
+@@ -1417,27 +1413,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+     return pci_dev;
  }
  
--static void pci_bridge_init_alias(PCIBridge *bridge, MemoryRegion *alias,
--                                  uint8_t type, const char *name,
--                                  MemoryRegion *space,
--                                  MemoryRegion *parent_space,
--                                  bool enabled)
-+static void pci_bridge_update_alias(PCIBridge *bridge, bool init,
-+                                    MemoryRegion *alias, uint8_t type,
-+                                    const char *name, MemoryRegion *space,
-+                                    MemoryRegion *parent_space, bool enabled)
- {
-     PCIDevice *bridge_dev = PCI_DEVICE(bridge);
-     pcibus_t base = pci_bridge_get_base(bridge_dev, type);
-@@ -158,25 +157,37 @@ static void pci_bridge_init_alias(PCIBridge *bridge, MemoryRegion *alias,
-      * Apparently no way to do this with existing memory APIs. */
-     pcibus_t size = enabled && limit >= base ? limit + 1 - base : 0;
- 
--    memory_region_init_alias(alias, OBJECT(bridge), name, space, base, size);
-+    if (init) {
-+        memory_region_init_alias(alias, OBJECT(bridge), name, space, base, size);
-+    } else {
-+        memory_region_set_size(alias, size);
-+        memory_region_set_alias_offset(alias, base);
-+    }
-+
-     memory_region_add_subregion_overlap(parent_space, base, alias, 1);
- }
- 
--static void pci_bridge_init_vga_aliases(PCIBridge *br, PCIBus *parent,
--                                        MemoryRegion *alias_vga)
-+static void pci_bridge_update_vga_aliases(PCIBridge *br, bool init,
-+                                          PCIBus *parent,
-+                                          MemoryRegion *alias_vga)
- {
-     PCIDevice *pd = PCI_DEVICE(br);
-     uint16_t brctl = pci_get_word(pd->config + PCI_BRIDGE_CONTROL);
- 
--    memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_IO_LO], OBJECT(br),
--                             "pci_bridge_vga_io_lo", &br->address_space_io,
--                             QEMU_PCI_VGA_IO_LO_BASE, QEMU_PCI_VGA_IO_LO_SIZE);
--    memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_IO_HI], OBJECT(br),
--                             "pci_bridge_vga_io_hi", &br->address_space_io,
--                             QEMU_PCI_VGA_IO_HI_BASE, QEMU_PCI_VGA_IO_HI_SIZE);
--    memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_MEM], OBJECT(br),
--                             "pci_bridge_vga_mem", &br->address_space_mem,
--                             QEMU_PCI_VGA_MEM_BASE, QEMU_PCI_VGA_MEM_SIZE);
-+    if (init) {
-+        memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_IO_LO], OBJECT(br),
-+                                 "pci_bridge_vga_io_lo", &br->address_space_io,
-+                                 QEMU_PCI_VGA_IO_LO_BASE,
-+                                 QEMU_PCI_VGA_IO_LO_SIZE);
-+        memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_IO_HI], OBJECT(br),
-+                                 "pci_bridge_vga_io_hi", &br->address_space_io,
-+                                 QEMU_PCI_VGA_IO_HI_BASE,
-+                                 QEMU_PCI_VGA_IO_HI_SIZE);
-+        memory_region_init_alias(&alias_vga[QEMU_PCI_VGA_MEM], OBJECT(br),
-+                                 "pci_bridge_vga_mem", &br->address_space_mem,
-+                                 QEMU_PCI_VGA_MEM_BASE,
-+                                 QEMU_PCI_VGA_MEM_SIZE);
-+    }
- 
-     if (brctl & PCI_BRIDGE_CTL_VGA) {
-         pci_register_vga(pd, &alias_vga[QEMU_PCI_VGA_MEM],
-@@ -185,33 +196,33 @@ static void pci_bridge_init_vga_aliases(PCIBridge *br, PCIBus *parent,
-     }
- }
- 
--static void pci_bridge_region_init(PCIBridge *br)
-+static void pci_bridge_region_update(PCIBridge *br, bool init)
- {
-     PCIDevice *pd = PCI_DEVICE(br);
-     PCIBus *parent = pci_get_bus(pd);
-     PCIBridgeWindows *w = &br->windows;
-     uint16_t cmd = pci_get_word(pd->config + PCI_COMMAND);
- 
--    pci_bridge_init_alias(br, &w->alias_pref_mem,
--                          PCI_BASE_ADDRESS_MEM_PREFETCH,
--                          "pci_bridge_pref_mem",
--                          &br->address_space_mem,
--                          parent->address_space_mem,
--                          cmd & PCI_COMMAND_MEMORY);
--    pci_bridge_init_alias(br, &w->alias_mem,
--                          PCI_BASE_ADDRESS_SPACE_MEMORY,
--                          "pci_bridge_mem",
--                          &br->address_space_mem,
--                          parent->address_space_mem,
--                          cmd & PCI_COMMAND_MEMORY);
--    pci_bridge_init_alias(br, &w->alias_io,
--                          PCI_BASE_ADDRESS_SPACE_IO,
--                          "pci_bridge_io",
--                          &br->address_space_io,
--                          parent->address_space_io,
--                          cmd & PCI_COMMAND_IO);
+-static void pci_unregister_io_regions(PCIDevice *pci_dev)
+-{
+-    PCIIORegion *r;
+-    int i;
 -
--    pci_bridge_init_vga_aliases(br, parent, w->alias_vga);
-+    pci_bridge_update_alias(br, init, &w->alias_pref_mem,
-+                            PCI_BASE_ADDRESS_MEM_PREFETCH,
-+                            "pci_bridge_pref_mem",
-+                            &br->address_space_mem,
-+                            parent->address_space_mem,
-+                            cmd & PCI_COMMAND_MEMORY);
-+    pci_bridge_update_alias(br, init, &w->alias_mem,
-+                            PCI_BASE_ADDRESS_SPACE_MEMORY,
-+                            "pci_bridge_mem",
-+                            &br->address_space_mem,
-+                            parent->address_space_mem,
-+                            cmd & PCI_COMMAND_MEMORY);
-+    pci_bridge_update_alias(br, init, &w->alias_io,
-+                            PCI_BASE_ADDRESS_SPACE_IO,
-+                            "pci_bridge_io",
-+                            &br->address_space_io,
-+                            parent->address_space_io,
-+                            cmd & PCI_COMMAND_IO);
-+
-+    pci_bridge_update_vga_aliases(br, init, parent, w->alias_vga);
- }
- 
- static void pci_bridge_region_del(PCIBridge *br, PCIBridgeWindows *w)
-@@ -237,14 +248,11 @@ static void pci_bridge_region_cleanup(PCIBridge *br, PCIBridgeWindows *w)
- 
- void pci_bridge_update_mappings(PCIBridge *br)
- {
--    PCIBridgeWindows *w = &br->windows;
+-    for(i = 0; i < PCI_NUM_REGIONS; i++) {
+-        r = &pci_dev->io_regions[i];
+-        if (!r->size || r->addr == PCI_BAR_UNMAPPED)
+-            continue;
+-        memory_region_del_subregion(r->address_space, r->memory);
+-    }
 -
-     /* Make updates atomic to: handle the case of one VCPU updating the bridge
-      * while another accesses an unaffected region. */
-     memory_region_transaction_begin();
--    pci_bridge_region_del(br, w);
--    pci_bridge_region_cleanup(br, w);
--    pci_bridge_region_init(br);
-+    pci_bridge_region_del(br, &br->windows);
-+    pci_bridge_region_update(br, false);
-     memory_region_transaction_commit();
- }
+-    pci_unregister_vga(pci_dev);
+-}
+-
+ static void pci_qdev_unrealize(DeviceState *dev)
+ {
+     PCIDevice *pci_dev = PCI_DEVICE(dev);
+     PCIDeviceClass *pc = PCI_DEVICE_GET_CLASS(pci_dev);
  
-@@ -386,7 +394,7 @@ void pci_bridge_initfn(PCIDevice *dev, const char *typename)
-     memory_region_init(&br->address_space_io, OBJECT(br), "pci_bridge_io",
-                        4 * GiB);
-     address_space_init(&br->as_io, &br->address_space_io, "pci_bridge_pci_io");
--    pci_bridge_region_init(br);
-+    pci_bridge_region_update(br, true);
-     QLIST_INIT(&sec_bus->child);
-     QLIST_INSERT_HEAD(&parent->child, sec_bus, sibling);
+-    pci_unregister_io_regions(pci_dev);
+     pci_del_option_rom(pci_dev);
+     pcie_sriov_unregister_device(pci_dev);
  
 
 -- 
