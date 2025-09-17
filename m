@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2648CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413C5CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uysVV-0006D2-Si; Wed, 17 Sep 2025 09:47:37 -0400
+	id 1uysZg-0001Z5-Ii; Wed, 17 Sep 2025 09:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uysVU-0006CX-Nl
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:47:36 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uysVT-0004gM-8s
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:47:36 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-72ce9790aceso44693167b3.3
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 06:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1758116854; x=1758721654; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=afCx/S2P9wlux9GcmAOzVrv0lndeyLcncX80adPZPP4=;
- b=Ag3rwL83FlDiF0I5oaRrh75P3K/VoPbCOAVcJ0XmeZIxQXCboPs+r2fMuMykMxFhFp
- kZkhSXtUk9G/DzDtswp2N+n1criF0JlgSGsVKtHmGTzDzJ++g1Z4DUFGyEEwydQHSstx
- tQuVeG64E92BQi39TLlKhli7Qfy6BJ/CFS/oaxKafTYc4vR9w4mCm9hwnQb2uI+aZYyT
- MicWjuSoxslU9NeIO+nYxWlXHNWaj6okAIU1ULNACzUrf3TAlJaaj1mDODV15XP6GG1m
- ouP4yCSyYoqc3CVDYkaZ+BqBz9P6jDoUxlrvAezrokRezTJDtRKCB/d5Srmev23fd/p4
- 9Lag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758116854; x=1758721654;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=afCx/S2P9wlux9GcmAOzVrv0lndeyLcncX80adPZPP4=;
- b=eDP1FkRwjcMt4+H53gPRdj0YTSIyGyVJ4/Uqa3rLUhxvfgHg7s7UXSuZtP57A/JunU
- ArfVQw9FuP2cW4BhVWHBB+8bZrWWw3bbUz3k3nHu+EsdfkEjA3+3BsHHDx8vT89dvDom
- w1yyxCKk1f3+EXFQsAqWokztgXmwXL2fxUP+wExxnLKJOL7uO6bdgmRUXsvaEDoN0kLq
- 5bHLMgB6rfe72arWLm95jaVHTi0WO+hzbP3sujhf5ksXU0jf/3vBMmJfYpAIdKTNU28c
- Zlrr5DEHj77FFl7gg4ZOf5+p6VeZK/sd3T8XXEwXIvf1tOUFxCH683ZVmkTZVHLZGq9v
- KYow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoUsD0sgP+CjO2lHECyLe6r82Lx0188ytdK+7pXQUGStoYm/L0ygY4i0KU/U92SDDRRFHfoP6/pJbW@nongnu.org
-X-Gm-Message-State: AOJu0YzgacJIbz/MdOBCeOqylACqvpBKIlNsLX48xb4cR8gSh3hf6kbL
- nilI/K8gVZstgzYfMsXv+RzJnDoP1sGVA7lrC+vlOgYt6OMn85CscKrdt6wX6O1RX1Q=
-X-Gm-Gg: ASbGncvmDvaA34i9gnB5x2y9EGNYLHV+mav8NKgVLqeqAytO3m40r0tzzwgZpThxnP4
- /VNpvNFEEviZHQZ1+RCJ4EYGxyux7lvnGa1W9naiBl5KMsQd0QE3GXexJRZ1aDcYwSxNEVS30Si
- NO9eHdeSU022RRl3MMxcCnKAPFNN6WqA7MRr8RF93G4T53US9obB58Dm6H/Ptp+0jUmWPRpvtWU
- AYHLTMh4J7AB59qwvI4DlY8XKqtNDeQAIzWk//ehD1Ro8iOID4MxW5yeVKz2nX8EYgUnJTJaHRO
- XkX+pt9tPdLty40Y+ba2dr+fWzlqga8GGJyYKNOkraBtykZx048hMdURpEcIYp6vAQR5BsSiCXO
- Ts5UCu3oqjqRrIJnGaD+T0+ixLrsnGq5HXIVf8g==
-X-Google-Smtp-Source: AGHT+IFmvjBoz4UYH2sQEAMF0BhzF53RQuAgaSFFyxHJnq0Fn6g+j76K3ZL7KZLCUXlGEfWP+1kCEg==
-X-Received: by 2002:a05:690c:6e11:b0:721:6b2e:a08a with SMTP id
- 00721157ae682-73892c58df9mr18143037b3.37.1758116853573; 
- Wed, 17 Sep 2025 06:47:33 -0700 (PDT)
-Received: from [192.168.68.110] ([179.225.245.173])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-73887885289sm4533147b3.63.2025.09.17.06.47.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 06:47:32 -0700 (PDT)
-Message-ID: <1e38dd76-f94a-4b2b-bdb5-329448c7dd1b@ventanamicro.com>
-Date: Wed, 17 Sep 2025 10:47:29 -0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uysZf-0001Yj-FV
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:51:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uysZc-0005Hw-QW
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:51:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758117108;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cvROPxFzU5xuQgS3BZPqtW0MKo3iLf5nbftd50VRhqI=;
+ b=E3z1qlVJX6o2i64448s7sOjEXCxyskAu8kR43rbMAz8UTYlP4HPuIWP+DZ71MsO3jWtPOM
+ lWLpasy+gFPuYzdx792KCHyGrzGXLeV8SyjCZGTzVE5CMxUvDeB5luj9cRFd2+vOXMy0+O
+ Nrrc8hQGVtqkX1psvJE+xI4iGNsUc4w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-6SuqBo8sOKOeMeFSgxgAmA-1; Wed,
+ 17 Sep 2025 09:51:44 -0400
+X-MC-Unique: 6SuqBo8sOKOeMeFSgxgAmA-1
+X-Mimecast-MFC-AGG-ID: 6SuqBo8sOKOeMeFSgxgAmA_1758117101
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3D61180057A; Wed, 17 Sep 2025 13:51:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11296180044F; Wed, 17 Sep 2025 13:51:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6090721E6A27; Wed, 17 Sep 2025 15:51:37 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Peter Xu
+ <peterx@redhat.com>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org,
+ leiyang@redhat.com,  marcandre.lureau@redhat.com,  Michael Roth
+ <michael.roth@amd.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v3 04/13] util/error: add &error_reporter
+In-Reply-To: <aMhbFcvItNMBtQhN@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 15 Sep 2025 19:29:41 +0100")
+References: <20250915132211.135095-1-vsementsov@yandex-team.ru>
+ <20250915132211.135095-5-vsementsov@yandex-team.ru>
+ <aMg0l0xgq3hdiDnh@x1.local>
+ <c1907e57-d279-40fa-b181-3b54441c49d7@yandex-team.ru>
+ <aMhbFcvItNMBtQhN@redhat.com>
+Date: Wed, 17 Sep 2025 15:51:37 +0200
+Message-ID: <87jz1x426u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/8] target/riscv: Add the Zvfbfa extension implied
- rule
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250915084037.1816893-1-max.chou@sifive.com>
- <20250915084037.1816893-3-max.chou@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250915084037.1816893-3-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x1129.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,47 +94,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
+> On Mon, Sep 15, 2025 at 09:14:18PM +0300, Vladimir Sementsov-Ogievskiy wr=
+ote:
+>> On 15.09.25 18:45, Peter Xu wrote:
+>> > On Mon, Sep 15, 2025 at 04:22:01PM +0300, Vladimir Sementsov-Ogievskiy=
+ wrote:
+>> > > Add a pair to &error_warn helper, to reduce the pattern like
+>> > >=20
+>> > >      Error *local_err =3D NULL;
+>> > >=20
+>> > >      ...
+>> > >=20
+>> > >      if (!foo(..., &local_err)) {
+>> > >          error_report_err(local_err);
+>> > >          return false;
+>> > >      }
+>> > >=20
+>> > > to simply
+>> > >=20
+>> > >      if (!foo(..., &error_reporter)) {
+>> > >          return false;
+>> > >      }
+>> > >=20
+>> > > Of course, for new interfaces, it's better to always support and han=
+dle
+>> > > errp argument. But when have to rework the old ones, it's not always
+>> > > feasible to convert everything to support/handle errp.
+>> > >=20
+>> > > The new helper is used in following commits.
+>> >=20
+>> > Could we add some explanation of why we need this if we already have
+>> > error_warn?
+>> >=20
+>> > I don't see much difference except error_warn will prepend it with
+>> > "warning: ", but that doesn't sound like a real problem..
+>>=20
+>> Yes, seems it's the only difference.
+>>=20
+>> For me it seems strange to call it "warning", when we actually go to fai=
+lure branch of the code logic.
+>> Finally, we do have error_report() and warn_report(). Seems not a proble=
+m to have corresponding "magic" variables.
+>>=20
+>> If have only one special error variable to simply report the error, I'd =
+prefer it not have "warning: " prefix.
+>> I.e. drop error_warn, and keep only error_reporter (or some better name?=
+).
+>
+> FWIW, this whole debate is liable to be a bit of a can of worms that
+> will delay your series from getting merged.
+>
+> Can I suggest you repost this without &error_reporter usage, and then
+> have a separate standalone series that proposes error_report, and
+> converts a handful of files to demonstrate its usage.
 
-On 9/15/25 5:40 AM, Max Chou wrote:
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
+Seconded.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Please note the killing of &error_warn is in progress:
 
->   target/riscv/cpu.c | 13 +++++++++++--
->   1 file changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index fc0614dadba..b5c9f9ac586 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2576,6 +2576,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
->       },
->   };
->   
-> +static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
-> +    .ext = CPU_CFG_OFFSET(ext_zvfbfa),
-> +    .implied_multi_exts = {
-> +        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zfbfmin),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->   RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
->       &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
->       &RVM_IMPLIED, &RVV_IMPLIED, NULL
-> @@ -2589,8 +2598,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->       &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
->       &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
->       &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
-> -    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
-> -    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-> +    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
-> +    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
->       &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
->       &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
->       &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+    Subject: [PATCH v2 00/12] Error reporting cleanup, a fix, and &error_wa=
+rn removal
+    Date: Wed, 17 Sep 2025 13:51:55 +0200
+    Message-ID: <20250917115207.1730186-1-armbru@redhat.com>
+    https://lore.kernel.org/qemu-devel/20250917115207.1730186-1-armbru@redh=
+at.com/
+
+Rationale in PATCH 12.
+
+I doubt additional special error destinations are a good idea.
+&error_abort definitely is a good idea.  &error_fatal is problematic,
+but widely used.
+
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> suggested to add one that
+at a glance looks just like yours.  Please see my reply at
+
+    Message-ID: <87a548sgjl.fsf@pond.sub.org>
+    https://lore.kernel.org/qemu-devel/87a548sgjl.fsf@pond.sub.org/
 
 
