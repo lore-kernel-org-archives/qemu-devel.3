@@ -4,95 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D609CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43870CAC599
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyt4l-0000xw-25; Wed, 17 Sep 2025 10:24:03 -0400
+	id 1uyt8C-0003Um-Ih; Wed, 17 Sep 2025 10:27:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt4i-0000xM-Lr
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:24:00 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1uyt87-0003TO-WE
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:27:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt4g-0002J9-Oj
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:24:00 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DD3E2154F6A;
- Wed, 17 Sep 2025 17:23:48 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EC0DF28316D;
- Wed, 17 Sep 2025 17:23:55 +0300 (MSK)
-Message-ID: <28a17da6-8cde-4248-9302-2a55b3125938@tls.msk.ru>
-Date: Wed, 17 Sep 2025 17:23:55 +0300
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1uyt83-00035A-Ta
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:27:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758119247;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nKv1gvCLpXa9vAyUDDB+j4HAI3cU8CEdjWRui78DoDY=;
+ b=iJFbEeg7Hx9xfiXcqFjT7Q6eI6j9Zr/t718LffmIXZBfZgk2YXUXuzOXLDbsYM6xEiT6N6
+ WQxuxRhcFWIWfxneJuPBpSFrPv1lRwGxjwp5888Fa/DzlgYFLDE+OcD39Qb+WHtk8hcoh5
+ qpJdY383SGfBWbrHGnSkEzguut1X+nM=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-398-G2xE5BR7PCWJ6mAeXPF5ug-1; Wed, 17 Sep 2025 10:27:24 -0400
+X-MC-Unique: G2xE5BR7PCWJ6mAeXPF5ug-1
+X-Mimecast-MFC-AGG-ID: G2xE5BR7PCWJ6mAeXPF5ug_1758119243
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-772537d9f4aso5694533b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 07:27:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758119243; x=1758724043;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nKv1gvCLpXa9vAyUDDB+j4HAI3cU8CEdjWRui78DoDY=;
+ b=kDyijzojrIr2M1uE8o0uh79W/LsNcNdHbSyavzrFzBblRkHto9Y+VS9xg5RuxtcBJl
+ iF5oS0XFUt/2fEcykakSU/1kAFA0mW9Iy3JyIy3usT9Nfz9musgVluoxBAmLQseBCbst
+ faiEPv5bGvGxS6drvUGgKUyzBNZp47bqIF4rwL6QRimz+l3Czw2Vb579lEFu9dqcDQMZ
+ S72xlp96yMJZ8Q0b5Yzhf8drB4oekFKxDQVrhKHbavtmzuEybwVu7D9ibHJrGRPmVqx9
+ Y5hscfRCeKcCqnMyq+5xfZSQoiFW6AnoZLToU9h6wfdn1Q2rUufU49/Rz2OTuZbkt0oA
+ JaTg==
+X-Gm-Message-State: AOJu0YzqRIArAW55BrtnboVmCz8BzQLwTmt4b0H/K1iAIjW/SEwPEYXJ
+ H+VEiZhebjYumILdqqqM6V1gn23Aiz6iFx8M719xm2qfuigiTSnYr6F7CguwvbTuadbSYIHrVFj
+ xd5sWSMSSl3vrOclERqp8bX+0RaXkyqBD1zyex8nDqX+b0TId9vYhAjZS
+X-Gm-Gg: ASbGncvJS9hizWKZAmv2UIBt7jSTUwAOiz6Lv+G4jrWdtG753vhfAFr9y5oEQEABYxD
+ z+onamDwROxD5eA2cLIXb4hXYl9Yn5g4Dt019Xg9BbNKb93FxjgtyyOmi5i2UH9C4Cl5wsbnRtb
+ kupMqj1QEBy5eH/axtqwklRzyzmrLPvqwmf7LL9K09BhuYKUASuZqthcksQ4cPKGPxkQWPA5iCF
+ ebWxHN2CCdJt/4K/Vxzl2Kj6Jxtuts2A14GpFX4S/7QDtewzXahk1RT7mAQNub7s1aZ46P/sJu4
+ ZiJ5qm6oXI/MiEqRt5MKa650vupKHe0sO7lkrqQJea/0Opq6IcPdAA==
+X-Received: by 2002:a05:6a00:10ce:b0:776:1c4c:8d54 with SMTP id
+ d2e1a72fcca58-77bf71cac93mr2605179b3a.3.1758119242178; 
+ Wed, 17 Sep 2025 07:27:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqq8zwbz8Ga+CW0zfH2NTRZXnoAf7tRv2Bd05ZYradtaGbpxxHJERKkkZWTcIBmOonX9zeBg==
+X-Received: by 2002:a05:6a00:10ce:b0:776:1c4c:8d54 with SMTP id
+ d2e1a72fcca58-77bf71cac93mr2605129b3a.3.1758119241443; 
+ Wed, 17 Sep 2025 07:27:21 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.106.174])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-77607a4731bsm18800486b3a.26.2025.09.17.07.27.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Sep 2025 07:27:21 -0700 (PDT)
+Date: Wed, 17 Sep 2025 19:57:09 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: Re: [PATCH v13 07/27] migration: push Error **errp into
+ qemu_loadvm_state()
+Message-ID: <aMrFPbbbC3gIcvJu@armenon-kvm.bengluru.csb>
+References: <20250830-propagate_tpm_error-v13-7-a4e777b7eb2c@redhat.com>
+ <078e2ef1-fbfa-450a-a2ab-d1e77cc8e850@rsg.ci.i.u-tokyo.ac.jp>
+ <aLRt_G-pOH1rwJbb@armenon-kvm.bengluru.csb>
+ <017c40a6-3347-43e7-b7b7-9e2e2130d19e@rsg.ci.i.u-tokyo.ac.jp>
+ <aLR6mKJyVPZ4bqnZ@armenon-kvm.bengluru.csb>
+ <6bee20a5-6f12-4b12-aab3-1a2019418611@rsg.ci.i.u-tokyo.ac.jp>
+ <aLfklAy0qqetX8_K@armenon-kvm.bengluru.csb>
+ <201bb795-57af-4614-8ef1-e5218108c13f@rsg.ci.i.u-tokyo.ac.jp>
+ <aMoCIwzS7NWmTedG@armenon-kvm.bengluru.csb>
+ <1cfcf036-0cdf-44a9-8c39-5219285a1dfa@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20240423150951.41600-1-pbonzini@redhat.com>
- <20240423150951.41600-31-pbonzini@redhat.com>
- <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+In-Reply-To: <1cfcf036-0cdf-44a9-8c39-5219285a1dfa@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,96 +138,275 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: armenon@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping, also adding kraxel@.
+Hi Akihiko,
 
-Should I send formal patch moving one line of code up?
+On Wed, Sep 17, 2025 at 04:54:11PM +0900, Akihiko Odaki wrote:
+> On 2025/09/17 9:34, Arun Menon wrote:
+> > Hi Akihiko,
+> > 
+> > On Sat, Sep 06, 2025 at 05:22:31AM +0200, Akihiko Odaki wrote:
+> > > On 2025/09/03 8:47, Arun Menon wrote:
+> > > > Hi Akihiko,
+> > > > 
+> > > > It took some time to set up the machines; apologies for the delay in response.
+> > > > 
+> > > > On Mon, Sep 01, 2025 at 02:12:54AM +0900, Akihiko Odaki wrote:
+> > > > > On 2025/09/01 1:38, Arun Menon wrote:
+> > > > > > Hi,
+> > > > > > 
+> > > > > > On Mon, Sep 01, 2025 at 01:04:40AM +0900, Akihiko Odaki wrote:
+> > > > > > > On 2025/09/01 0:45, Arun Menon wrote:
+> > > > > > > > Hi Akihiko,
+> > > > > > > > Thanks for the review.
+> > > > > > > > 
+> > > > > > > > On Sat, Aug 30, 2025 at 02:58:05PM +0900, Akihiko Odaki wrote:
+> > > > > > > > > On 2025/08/30 5:01, Arun Menon wrote:
+> > > > > > > > > > This is an incremental step in converting vmstate loading
+> > > > > > > > > > code to report error via Error objects instead of directly
+> > > > > > > > > > printing it to console/monitor.
+> > > > > > > > > > It is ensured that qemu_loadvm_state() must report an error
+> > > > > > > > > > in errp, in case of failure.
+> > > > > > > > > > 
+> > > > > > > > > > When postcopy live migration runs, the device states are loaded by
+> > > > > > > > > > both the qemu coroutine process_incoming_migration_co() and the
+> > > > > > > > > > postcopy_ram_listen_thread(). Therefore, it is important that the
+> > > > > > > > > > coroutine also reports the error in case of failure, with
+> > > > > > > > > > error_report_err(). Otherwise, the source qemu will not display
+> > > > > > > > > > any errors before going into the postcopy pause state.
+> > > > > > > > > > 
+> > > > > > > > > > Reviewed-by: Marc-Andr� Lureau <marcandre.lureau@redhat.com>
+> > > > > > > > > > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > > > > > > > > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > > > > > > > > ---
+> > > > > > > > > >       migration/migration.c |  9 +++++----
+> > > > > > > > > >       migration/savevm.c    | 30 ++++++++++++++++++------------
+> > > > > > > > > >       migration/savevm.h    |  2 +-
+> > > > > > > > > >       3 files changed, 24 insertions(+), 17 deletions(-)
+> > > > > > > > > > 
+> > > > > > > > > > diff --git a/migration/migration.c b/migration/migration.c
+> > > > > > > > > > index 10c216d25dec01f206eacad2edd24d21f00e614c..c6768d88f45c870c7fad9b9957300766ff69effc 100644
+> > > > > > > > > > --- a/migration/migration.c
+> > > > > > > > > > +++ b/migration/migration.c
+> > > > > > > > > > @@ -881,7 +881,7 @@ process_incoming_migration_co(void *opaque)
+> > > > > > > > > >                             MIGRATION_STATUS_ACTIVE);
+> > > > > > > > > >           mis->loadvm_co = qemu_coroutine_self();
+> > > > > > > > > > -    ret = qemu_loadvm_state(mis->from_src_file);
+> > > > > > > > > > +    ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+> > > > > > > > > >           mis->loadvm_co = NULL;
+> > > > > > > > > >           trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
+> > > > > > > > > > @@ -908,7 +908,8 @@ process_incoming_migration_co(void *opaque)
+> > > > > > > > > >           }
+> > > > > > > > > >           if (ret < 0) {
+> > > > > > > > > > -        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
+> > > > > > > > > > +        error_prepend(&local_err, "load of migration failed: %s: ",
+> > > > > > > > > > +                      strerror(-ret));
+> > > > > > > > > >               goto fail;
+> > > > > > > > > >           }
+> > > > > > > > > > @@ -924,13 +925,13 @@ fail:
+> > > > > > > > > >           migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+> > > > > > > > > >                             MIGRATION_STATUS_FAILED);
+> > > > > > > > > >           migrate_set_error(s, local_err);
+> > > > > > > > > > -    error_free(local_err);
+> > > > > > > > > > +    error_report_err(local_err);
+> > > > > > > > > 
+> > > > > > > > > This is problematic because it results in duplicate error reports when
+> > > > > > > > > !mis->exit_on_error; in that case the query-migrate QMP command reports the
+> > > > > > > > > error and this error reporting is redundant.
+> > > > > > > > 
+> > > > > > > > If I comment this change, then all of the errors propagated up to now, using
+> > > > > > > > error_setg() will not be reported. This is the place where it is finally reported,
+> > > > > > > > when qemu_loadvm_state() fails. In other words, all the error_reports() we removed
+> > > > > > > > from all the files, replacing them with error_setg(), will finally be reported here
+> > > > > > > > using error_report_err().
+> > > > > > > 
+> > > > > > > My understanding of the code without these two changes is:
+> > > > > > > - If the migrate-incoming QMP command is used with false as
+> > > > > > >      exit-on-error, this function will not report the error but
+> > > > > > >      the query-migrate QMP command will report the error.
+> > > > > > > - Otherwise, this function reports the error.
+> > > > > > 
+> > > > > > With my limited experience in testing, I have a question,
+> > > > > > So there are 2 scenarios,
+> > > > > > 1. running the virsh migrate command on the source host. Something like the following,
+> > > > > >      virsh -c 'qemu:///system' migrate --live --verbose --domain guest-vm --desturi qemu+ssh://10.6.120.20/system
+> > > > > >      OR for postcopy-ram,
+> > > > > >      virsh migrate guest-vm --live qemu+ssh://10.6.120.20/system --verbose --postcopy --timeout 10 --timeout-postcopy
+> > > > > > 
+> > > > > > 2. Using QMP commands, performing a migration from source to destination.
+> > > > > >      Running something like the following on the destination:
+> > > > > >      {
+> > > > > >        "execute": "migrate-incoming",
+> > > > > >        "arguments": {
+> > > > > >          "uri": "tcp:127.0.0.1:7777",
+> > > > > >          "exit-on-error": false
+> > > > > >        }
+> > > > > >      }
+> > > > > >      {
+> > > > > >        "execute": "migrate-incoming",
+> > > > > >        "arguments": {
+> > > > > >          "uri": "tcp:127.0.0.1:7777",
+> > > > > >          "exit-on-error": false
+> > > > > >        }
+> > > > > >      }
+> > > > > >      and the somthing like the following on source:
+> > > > > >      {
+> > > > > >        "execute": "migrate",
+> > > > > >        "arguments": {
+> > > > > >          "uri": "tcp:127.0.0.1:7777"
+> > > > > >        }
+> > > > > >      }
+> > > > > >      {"execute" : "query-migrate"}
+> > > > > > 
+> > > > > > In 1, previously, the user used to get an error message on migration failure.
+> > > > > > This was because there were error_report() calls in all of the files.
+> > > > > > Now that they are replaced with error_setg() and the error is stored in errp,
+> > > > > > we need to display that using error_report_err(). Hence I introduced an error_report_err()
+> > > > > > call in the fail section.
+> > > > > > 
+> > > > > > In 2, we have 2 QMP sessions, one for the source and another for the destination.
+> > > > > > The QMP command migrate will be issued on the source, and the errp will be set.
+> > > > > > I did not understand the part where the message will be displayed because of the
+> > > > > > error_report_err() call. I did not see such a message on failure scenario on both
+> > > > > > the sessions.
+> > > > > > If the user wants to check for errors, then the destination qemu will not exit
+> > > > > > (exit-on-error = false ) and we can retrieve it using {"execute" : "query-migrate"}
+> > > > > > 
+> > > > > > Aren't the 2 scenarios different by nature?
+> > > > > 
+> > > > > In 1, doesn't libvirt query the error with query-migrate and print it?
+> > > > 
+> > > > Ideally it should find the the error, and print the whole thing. It does work
+> > > > in the normal scenario. However, the postcopy scenario does not show the same result,
+> > > > which is mentioned in the commit message.
+> > > > 
+> > > > > 
+> > > > > In any case, it would be nice if you describe how libvirt interacts with
+> > > > > QEMU in 1.
+> > > > 
+> > > > Please find below the difference in the command output at source, when we run a live migration
+> > > > with postcopy enabled.
+> > > > 
+> > > > =========
+> > > > With the current changes:
+> > > > [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
+> > > > 
+> > > > [root@dell-per750-42 build]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
+> > > > root@10.6.120.9's password:
+> > > > Migration: [ 1.26 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:19:15.076547Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+> > > > 2025-09-03T06:19:15.076586Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+> > > > 2025-09-03T06:19:27.776715Z qemu-system-x86_64: load of migration failed: Input/output error: error while loading state for instance 0x0 of device 'tpm-emulator': post load hook failed for: tpm-emulator, version_id: 0, minimum_version: 0, ret: -5: tpm-emulator: Setting the stateblob (type 1) failed with a TPM error 0x21 decryption error
+> > > > 
+> > > > [root@dell-per750-42 build]#
+> > > > 
+> > > > =========
+> > > > 
+> > > > Without the current changes:
+> > > > [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
+> > > > 
+> > > > [root@dell-per750-42 qemu-priv]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
+> > > > root@10.6.120.9's password:
+> > > > Migration: [ 1.28 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:26:17.733786Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+> > > > 2025-09-03T06:26:17.733830Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+> > > > 
+> > > > [root@dell-per750-42 qemu-priv]#
+> > > > 
+> > > > =========
+> > > > The original behavior was to print the error to the console regardless of whether the migration is normal or postcopy.
+> > > 
+> > > This was true for messages in qemu_loadvm_state(), but the message "load of
+> > > migration failed" was printed or queried with query-migrate, not both. We
+> > > should think of which behavior is more appropriate, and I think we should
+> > > avoid duplicate reports.
+> > > 
+> > > > The source machine goes in to a paused state after this.
+> > > 
+> > > The output is informative. It implies the destination machine exited, and it
+> > > makes sense to print error messages as it is done for
+> > > mis->exit_on_error. I wonder if it is possible to detect the condition and
+> > > treat it identically to mis->exit_on_error.
+> > 
+> > I see that we want to catch a specific scenario in postcopy ram migration
+> > where the destination abruptly exits without a graceful shutdown,
+> > thus failing to inform the source the reason for its failure through a
+> > 'query-migrate' even though 'exit-on-error' was set to false on the destination.
+> > 
+> > However, I am not sure how to reliably detect the specific error condition of
+> > such a connection close that you have described. Given that this is a large
+> > patch series already, could we keep the current change as is for now?
+> >  From what I can tell, the additional log message "load of migration failed"
+> > is not a breaking change and will not cause a crash. We can develop a more
+> > elegant solution to handle the issue of duplication in a separate patch.
+> There are two regressions:
+> 1) Duplicate error reports when exit-on-error is false and postcopy is
+> disabled.
 
-Thanks,
+Thank you for your detailed response.
+I am trying to fully understand the logic here, so please correct me if I'm wrong.
+My understanding of the patch is that all errors are chained together
+in local_err by propagating them through the call stack and prepending them with
+"load of migration failed."
+This creates a single, comprehensive error message, which is then passed to 
+  migrate_set_error(s, local_err) in the fail section.
+This line already existed. So in effect we are setting the error here.
 
-/mjt
+Regarding the second regression you mentioned:
 
-On 12.08.2025 18:27, Michael Tokarev wrote:
-> On 23.04.2024 18:09, Paolo Bonzini wrote:
->> From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
->>
->> Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
->> etc... exist for the target platform.  TDX doesn't support SMM and 
->> doesn't
->> play nice with QEMU modifying related guest memory ranges.
+> 2) Errors reported code else qemu_loadvm_state() are ignored when
+> exit-on-error is true.
+
+Doesn't the error_prepend() function ensure that errors set higher up the call stack
+are preserved and only "load of migration failed" is prepended to it?
+When the fail section is reached, local_err will have the complete error message.
+
 > 
-> So, as I wrote in another email, this broke video (screen is blank) for
+> 1) is trivial yet difficult to fix and I agree that it can be handled later.
+> Ideally there should be a comment to note that.
 > 
->   qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+> However, there is also 2), which is more serious and easier to fix so I
+> suggest fixing it now. More concretely, the code will look like as follows:
 > 
-> before this commit, there are usual seabios messages (and even messages
-> from qemu before it loads seabios), and after this commit, the screen
-> stays blank.
+>     migrate_set_error(s, local_err);
+>     if (mis->exit_on_error) {
+>         error_free(local_err);
+>     } else {
+>         /*
+>          * Report the error here in case that QEMU abruptly exits when
+>          * postcopy is enabled.
+>          */
+>         error_report_err(s->error);
+>     }
 > 
+>     migration_incoming_state_destroy();
 > 
->> @@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
->>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
->>       }
->> +    if (!mch->has_smm_ranges) {
->> +        return;
->> +    }
->> +
->>       /* if *disabled* show SMRAM to all CPUs */
->>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), 
->> "smram-region",
->>                                mch->pci_address_space, 
->> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>     if (mis->exit_on_error) {
+>         WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>             error_report_err(s->error);
 > 
-> Moving this if..return block right below this smram-region init fixes
-> the problem with the video:
+> This ensures errors set by anyone will be reported while duplicate error
+> reports are avoided when exit-on-error is true.
+
+yes, this part (set by anyone), I fail to follow. Do you mean that there can be
+chances of a race condition between migrate_set_error() and error_report_err()?
+
+My analysis of your proposed code shows that whether mis->exit_on_error is true (in the final if block)
+or false (in the else block), error_report_err() is called. 
+This seems to result in the error being reported regardless, which is similar to my original patch.
+Yes in both the cases, s->error is being reported. However in my view, in the fail section, both
+local_err and s->error will be the same.
+
+I appreciate your patience as I try to understand this better.
+
+
 > 
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index 0b6cbaed7e..aa8c4a273a 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -589,20 +589,20 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                    mch->system_memory, mch->pci_address_space,
->                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
->       }
+> Regards,
+> Akihiko Odaki
 > 
-> -    if (!mch->has_smm_ranges) {
-> -        return;
-> -    }
-> -
->       /* if *disabled* show SMRAM to all CPUs */
->       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram- 
-> region",
->                                mch->pci_address_space, 
-> MCH_HOST_BRIDGE_SMRAM_C_BASE,
->                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
->       memory_region_add_subregion_overlap(mch->system_memory, 
-> MCH_HOST_BRIDGE_SMRAM_C_BASE,
->                                           &mch->smram_region, 1);
->       memory_region_set_enabled(&mch->smram_region, true);
-> 
-> +    if (!mch->has_smm_ranges) {
-> +        return;
-> +    }
-> +
->       memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), 
-> "smram-open-high",
->                                mch->ram_memory, 
-> MCH_HOST_BRIDGE_SMRAM_C_BASE,
->                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
->       memory_region_add_subregion_overlap(mch->system_memory, 0xfeda0000,
-> 
-> 
-> I've no idea what else might be missing here.
-> 
-> Overall, adding an early return this way is a recipe for disaster
-> to happen - if not now then later.  Here, and in mch_write_config().
-> 
-> Thanks,
-> 
-> /mjt
-> 
-> 
+
+Regards,
+Arun Menon
 
 
