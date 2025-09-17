@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6EFCAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AD5CAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypUj-0002S7-43; Wed, 17 Sep 2025 06:34:37 -0400
+	id 1uypUj-0002S9-AL; Wed, 17 Sep 2025 06:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUS-0002Ir-MG; Wed, 17 Sep 2025 06:34:21 -0400
+ id 1uypUQ-0002Hr-GK; Wed, 17 Sep 2025 06:34:20 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypUJ-0005vo-SI; Wed, 17 Sep 2025 06:34:17 -0400
+ id 1uypUC-0005uc-0T; Wed, 17 Sep 2025 06:34:15 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAg099616
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAWmAd099616
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:32:59 +0900 (JST)
+ Wed, 17 Sep 2025 19:32:58 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=iiyInnSiBdFW+yfPCMju2JfXG3ua48WG78dciSW5cd4=; 
+DKIM-Signature: a=rsa-sha256; bh=z/x+oUtoEfRpX+IwyYPhXBXqVyl2wVT8koXCpnykol8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758105180; v=1;
- b=v9dhW7QLdBBweNxXOtWsioFjH2uCC5/SSnoLJiBWQbWPqaWCL/CbG1vmBwDjdIDW
- 0idTjsXtCqJeMqiFa1hWJjuyrY5RVy2BSRwjm7OdxaFlREo+xS9hcs/kbd3+yv0i
- 4Z1vm+z5kEdHgd4+g9panmBrkcI4jzGZDr0AcyEx6ptGw5qTNPdkXszB9SfeEaUl
- hKKFjasXbMIbfeT4NNC71PhqaaYCPMIFRmsbI79t2i4HooqmISmV8FtdioIJhtOp
- o6EbgKAlLZ2Hhyu71c4L0HDlmk6iqCeRGbJCQ2DcqBj1e/bLsxSWholPNAmz0vLu
- DKVRovnMUzg7kXDNata5aQ==
+ s=rs20250326; t=1758105178; v=1;
+ b=lmOQlNxCVJSnfYRKuK1iGuhSgTmgoSeUm2IFjI5rhPQ+S148+W2wMVG8feW5Eba/
+ 8a4u4/5sbD7OOd7jGInp2HBYVTcvf2ejKXD++vG41Z4/JImEggRnBn3hMoL1CrjO
+ wze75fqNSgPGW6z2T/EskQAb5ksb1ZeefzVxs3aKdR+Q81RH5Rdd9t6EvLhmUmh1
+ m+xwbSs4JJ6cvWFvNz5PxixoXdQwWYZ7USWbtnSVKA/vGJgr31YO59F1/PE28poO
+ sBRH3H3pEYRI70EszQI7Br0GWFTp37QY36tOiGMzOAk/47r1FTpOivxRw5ySOakg
+ nDUFyi+95e+eXKc4TyfqNQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:32:54 +0900
-Subject: [PATCH 08/14] hw/ide/piix: Do not delete the subregions
+Date: Wed, 17 Sep 2025 19:32:51 +0900
+Subject: [PATCH 05/14] hw/char/serial-pci-multi: Do not delete the
+ subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-subregion-v1-8-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-subregion-v1-5-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-subregion-v1-0-bef37d9b4f73@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -107,47 +108,21 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ide/piix.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ hw/char/serial-pci-multi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/ide/piix.c b/hw/ide/piix.c
-index a0f2709c6973..138f8e1936b4 100644
---- a/hw/ide/piix.c
-+++ b/hw/ide/piix.c
-@@ -166,17 +166,6 @@ static void pci_piix_ide_realize(PCIDevice *dev, Error **errp)
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index 13df272691a6..3132ca90cebf 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -57,7 +57,6 @@ static void multi_serial_pci_exit(PCIDevice *dev)
+     for (i = 0; i < pci->ports; i++) {
+         s = pci->state + i;
+         qdev_unrealize(DEVICE(s));
+-        memory_region_del_subregion(&pci->iobar, &s->io);
+         g_free(pci->name[i]);
      }
  }
- 
--static void pci_piix_ide_exitfn(PCIDevice *dev)
--{
--    PCIIDEState *d = PCI_IDE(dev);
--    unsigned i;
--
--    for (i = 0; i < 2; ++i) {
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
--    }
--}
--
- /* NOTE: for the PIIX3, the IRQs and IOports are hardcoded */
- static void piix3_ide_class_init(ObjectClass *klass, const void *data)
- {
-@@ -186,7 +175,6 @@ static void piix3_ide_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, piix_ide_reset);
-     dc->vmsd = &vmstate_ide_pci;
-     k->realize = pci_piix_ide_realize;
--    k->exit = pci_piix_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_INTEL;
-     k->device_id = PCI_DEVICE_ID_INTEL_82371SB_1;
-     k->class_id = PCI_CLASS_STORAGE_IDE;
-@@ -209,7 +197,6 @@ static void piix4_ide_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, piix_ide_reset);
-     dc->vmsd = &vmstate_ide_pci;
-     k->realize = pci_piix_ide_realize;
--    k->exit = pci_piix_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_INTEL;
-     k->device_id = PCI_DEVICE_ID_INTEL_82371AB;
-     k->class_id = PCI_CLASS_STORAGE_IDE;
 
 -- 
 2.51.0
