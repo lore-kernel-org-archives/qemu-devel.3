@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9B8CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D609CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 14:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyt0n-0004nO-Lj; Wed, 17 Sep 2025 10:19:57 -0400
+	id 1uyt4l-0000xw-25; Wed, 17 Sep 2025 10:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt0j-0004fH-Dn
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:19:53 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt4i-0000xM-Lr
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:24:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt0a-0001Go-2q
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:19:52 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uyt4g-0002J9-Oj
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 10:24:00 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30D54154F68;
- Wed, 17 Sep 2025 17:19:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DD3E2154F6A;
+ Wed, 17 Sep 2025 17:23:48 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 424E1283168;
- Wed, 17 Sep 2025 17:19:40 +0300 (MSK)
-Message-ID: <28d4d70d-9571-45eb-a4e7-f79ea1454c2c@tls.msk.ru>
-Date: Wed, 17 Sep 2025 17:19:40 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id EC0DF28316D;
+ Wed, 17 Sep 2025 17:23:55 +0300 (MSK)
+Message-ID: <28a17da6-8cde-4248-9302-2a55b3125938@tls.msk.ru>
+Date: Wed, 17 Sep 2025 17:23:55 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "tests/qtest: use qos_printf instead of
- g_test_message"
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, pbonzini@redhat.com
-References: <20250728145747.3165315-1-armbru@redhat.com>
-Content-Language: en-US, ru-RU
+Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20240423150951.41600-1-pbonzini@redhat.com>
+ <20240423150951.41600-31-pbonzini@redhat.com>
+ <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -78,9 +82,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250728145747.3165315-1-armbru@redhat.com>
+In-Reply-To: <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -104,104 +108,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.07.2025 17:57, Markus Armbruster wrote:
-> This reverts commit 30ea13e9d97dcbd4ea541ddf9e8857fa1d5cb30f.
-> 
-> "make check" prints many lines like
-> 
->      stdout: 138: UNKNOWN:     # # qos_test running single test in subprocess
->      stdout: 139: UNKNOWN:     # # set_protocol_features: 0x42
->      stdout: 140: UNKNOWN:     # # set_owner: start of session
->      stdout: 141: UNKNOWN:     # # vhost-user: un-handled message: 14
->      stdout: 142: UNKNOWN:     # # vhost-user: un-handled message: 14
->      stdout: 143: UNKNOWN:     # # set_vring(0)=enabled
->      stdout: 144: UNKNOWN:     # # set_vring(1)=enabled
->      stdout: 145: UNKNOWN:     # # set_vring(0)=enabled
->      stdout: 146: UNKNOWN:     # # set_vring(1)=enabled
->      stdout: 147: UNKNOWN:     # # set_vring(0)=enabled
->      stdout: 148: UNKNOWN:     # # set_vring(1)=enabled
->      stdout: 149: UNKNOWN:     # # set_vring(0)=enabled
->      stdout: 150: UNKNOWN:     # # set_vring(1)=enabled
->      stdout: 151: UNKNOWN:     # # set_vring(0)=enabled
->      stdout: 152: UNKNOWN:     # # set_vring(1)=enabled
->      stdout: 153: UNKNOWN:     # # set_vring_num: 0/256
->      stdout: 154: UNKNOWN:     # # set_vring_addr: 0x7f9060000000/0x7f905ffff000/0x7f9060001000
-> 
-> Turns out this is qos-test, and the culprit is a commit meant to ease
-> debugging.  Revert it until a better solution is found.
-..
-> @@ -393,7 +392,7 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
->            * We don't need to do anything here, the remote is just
->            * letting us know it is in charge. Just log it.
->            */
-> -        qos_printf("set_owner: start of session\n");
-> +        g_test_message("set_owner: start of session\n");
+Ping, also adding kraxel@.
 
-Here, and elsewhere - checkpatch complains:
-
-ERROR: Error messages should not contain newlines
-#93: FILE: tests/qtest/vhost-user-test.c:395:
-+        g_test_message("set_owner: start of session\n");
-
-(while some g_test_message calls in the same patch does not contain
-the newline).  This is apparently the only place where g_test_message
-is used with newlines.
-
-I wonder if we should clean this up?  Something like this:
-
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 56472ca709..e8c3613560 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -394,3 +394,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-           */
--        g_test_message("set_owner: start of session\n");
-+        g_test_message("set_owner: start of session");
-          break;
-@@ -420,3 +420,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-           */
--        g_test_message("set_protocol_features: 0x%"PRIx64 "\n", 
-msg.payload.u64);
-+        g_test_message("set_protocol_features: 0x%"PRIx64, 
-msg.payload.u64);
-          break;
-@@ -428,3 +428,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-      case VHOST_USER_SET_VRING_NUM:
--        g_test_message("set_vring_num: %d/%d\n",
-+        g_test_message("set_vring_num: %d/%d",
-                     msg.payload.state.index, msg.payload.state.num);
-@@ -432,3 +432,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-      case VHOST_USER_SET_VRING_ADDR:
--        g_test_message("set_vring_addr: 
-0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64"\n",
-+        g_test_message("set_vring_addr: 0x%"PRIx64"/0x%"PRIx64"/0x%"PRIx64,
-                     msg.payload.addr.avail_user_addr,
-@@ -465,3 +465,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-          if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
--            g_test_message("call fd: %d, do not set non-blocking\n", fd);
-+            g_test_message("call fd: %d, do not set non-blocking", fd);
-              break;
-@@ -511,3 +511,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-           */
--        g_test_message("set_vring(%d)=%s\n", msg.payload.state.index,
-+        g_test_message("set_vring(%d)=%s", msg.payload.state.index,
-                     msg.payload.state.num ? "enabled" : "disabled");
-@@ -516,3 +516,3 @@ static void chr_read(void *opaque, const uint8_t 
-*buf, int size)
-      default:
--        g_test_message("vhost-user: un-handled message: %d\n", 
-msg.request);
-+        g_test_message("vhost-user: un-handled message: %d", msg.request);
-          break;
-
+Should I send formal patch moving one line of code up?
 
 Thanks,
 
 /mjt
+
+On 12.08.2025 18:27, Michael Tokarev wrote:
+> On 23.04.2024 18:09, Paolo Bonzini wrote:
+>> From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
+>>
+>> Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
+>> etc... exist for the target platform.  TDX doesn't support SMM and 
+>> doesn't
+>> play nice with QEMU modifying related guest memory ranges.
+> 
+> So, as I wrote in another email, this broke video (screen is blank) for
+> 
+>   qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+> 
+> before this commit, there are usual seabios messages (and even messages
+> from qemu before it loads seabios), and after this commit, the screen
+> stays blank.
+> 
+> 
+>> @@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+>>       }
+>> +    if (!mch->has_smm_ranges) {
+>> +        return;
+>> +    }
+>> +
+>>       /* if *disabled* show SMRAM to all CPUs */
+>>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), 
+>> "smram-region",
+>>                                mch->pci_address_space, 
+>> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+> 
+> Moving this if..return block right below this smram-region init fixes
+> the problem with the video:
+> 
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index 0b6cbaed7e..aa8c4a273a 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -589,20 +589,20 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>                    mch->system_memory, mch->pci_address_space,
+>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+>       }
+> 
+> -    if (!mch->has_smm_ranges) {
+> -        return;
+> -    }
+> -
+>       /* if *disabled* show SMRAM to all CPUs */
+>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram- 
+> region",
+>                                mch->pci_address_space, 
+> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+>       memory_region_add_subregion_overlap(mch->system_memory, 
+> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>                                           &mch->smram_region, 1);
+>       memory_region_set_enabled(&mch->smram_region, true);
+> 
+> +    if (!mch->has_smm_ranges) {
+> +        return;
+> +    }
+> +
+>       memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), 
+> "smram-open-high",
+>                                mch->ram_memory, 
+> MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+>       memory_region_add_subregion_overlap(mch->system_memory, 0xfeda0000,
+> 
+> 
+> I've no idea what else might be missing here.
+> 
+> Overall, adding an early return this way is a recipe for disaster
+> to happen - if not now then later.  Here, and in mch_write_config().
+> 
+> Thanks,
+> 
+> /mjt
+> 
+> 
+
 
