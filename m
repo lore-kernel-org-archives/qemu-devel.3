@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B647CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 21:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7798CAC59F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 22:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz030-0004dr-W6; Wed, 17 Sep 2025 17:50:43 -0400
+	id 1uz0Cu-00075r-4K; Wed, 17 Sep 2025 18:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uz02y-0004ck-9F
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 17:50:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uz0Cq-00075T-Gs
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 18:00:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uz02v-0006Ez-D2
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 17:50:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uz0Cn-0007ua-KE
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 18:00:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758145834;
+ s=mimecast20190719; t=1758146447;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vaHImPwyLdDGA3ngxd7ArVmKE9Z51PtIB2IgoqJP26E=;
- b=LIQ34B1CPl+lBmu6waqasaWZ3eh+VqAAWl41nzVXU1wv25CMVhS8GA7joErW0RgPrVsafC
- G3PF7D1QxF0PhTWxe0S9SvQe2Sfk8Fcw7FsRVgjTbakSP1bNh8IRT8Unab7CiZKmO15X1T
- tFc5MHgNqHtVhUfuBhUAsIs1132o/B8=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DLo0rzb+dJKCDFRyYv+riUgX2y/rgevETSxpRS/05vk=;
+ b=Pe2rlVJi3TWstkuSps3MdHxlH8rn8pQ2Gq6umLfC8SDRr+LTtjZPzyJP1QgNxJwhokkKsh
+ 1JbnWt19z88aYQmmf+rKRj/NnwxxMG6EK8JUClYvBKN3BsTjIayIzaHpzKL4Ya6XppT7PK
+ slec0EyVkJCBdnewQp5ATdNo44Iw4y8=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-LzgMnjA_PA-VuKsXTmBkhw-1; Wed, 17 Sep 2025 17:50:32 -0400
-X-MC-Unique: LzgMnjA_PA-VuKsXTmBkhw-1
-X-Mimecast-MFC-AGG-ID: LzgMnjA_PA-VuKsXTmBkhw_1758145832
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-78efb3e2738so4645976d6.3
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 14:50:32 -0700 (PDT)
+ us-mta-619-e_QqIDEBMrqFeimuGSPmRw-1; Wed, 17 Sep 2025 18:00:46 -0400
+X-MC-Unique: e_QqIDEBMrqFeimuGSPmRw-1
+X-Mimecast-MFC-AGG-ID: e_QqIDEBMrqFeimuGSPmRw_1758146445
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b5e303fe1cso4899241cf.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 15:00:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758145832; x=1758750632;
+ d=1e100.net; s=20230601; t=1758146445; x=1758751245;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vaHImPwyLdDGA3ngxd7ArVmKE9Z51PtIB2IgoqJP26E=;
- b=XoXvWhmyHTm3SOskp5htfjX3bu35o+P10gMi+ypPacNWAtfVXgZX1JSLJsjIrw4d0X
- GmRFnD4yWgnQwf1ZceMGnJIexIll7dy1J/SX5y0gQvbI7IFfbBx8H3s+jguXFjhE2OWC
- 1XZYNGdwngWoiguYat41pbGTMtI11cyzR6s8b07yGCJfO7EgnIiWwtKVLc/iLKUtKk+8
- FRkj85zLuXwz8b97/X6MDjXHwIkMWiNNsBw5H9gjiqWztF9WvXn2H1bxg6Y94p6gM1Qe
- YYjq7JdT+xpFPE8XEzqQhHPwoSWUwU+MDXrtPC1Fx3wZr2PRo02Pvx4muE6aaWucKDyI
- YvNw==
-X-Gm-Message-State: AOJu0YxxOFoQ4EKxQyhPOBFq8rgy4Li6hqJMKAjxiL1kQqFyoIJ0MTzi
- XPJ9qcLEohqa9rpC4JGeny58qEt/3OR0JY29Bor7X1qu/ty+ojyixpGD5NE7YFsPEWs9ab9Umlw
- zmIutEv9Lb1XOcoqTC8LgEpKI8NVwtLJzJIAL+4xcjVYlwFr2oN7gRCvu
-X-Gm-Gg: ASbGncvieBtfOP3+StQcyK9fLqnmtyTc5sJun2XcahSbsPic6Tvf3SgQyP1gafA4v9C
- 8KcGwkK02HnQlTefrpfzdNQmitOhYgvpdIQHNgXlTYGLJdXG+xcDo4uxsEU0WOmlBlUfdhZtOKc
- wn9YCur4kRLvF8LtU+ZLHSYhEALSv+rrNtqNtknnEePZq5YdRfMG3wb531AG0o0Pkgt2Vs2mLEz
- +6Lxd3lVGfbwzXA90x2Bhfdw3fE8aq39RhWvuOi/fRJwcdgxrbnIoLq8UG5jPPAaY5+s9zk61hi
- zSVXQrJgHs0KtT3aNhTgQ/BrsoIpQ2XlAiB7QOuAkacXqhfGlbrPXpDrPrvcUkqx3Mt109c5y2f
- 5mSIwyQHAGlU7zJUBQn32Tw==
-X-Received: by 2002:ad4:4e30:0:b0:78f:6005:35ba with SMTP id
- 6a1803df08f44-78f60053751mr24446216d6.34.1758145831923; 
- Wed, 17 Sep 2025 14:50:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHks5dZzHyKeedzT+lY7lH6YLlUcqyI+OBeJ2tonYAvWLfbJ0MviJgw05wkpipShJAHdelNuw==
-X-Received: by 2002:ad4:4e30:0:b0:78f:6005:35ba with SMTP id
- 6a1803df08f44-78f60053751mr24445946d6.34.1758145831515; 
- Wed, 17 Sep 2025 14:50:31 -0700 (PDT)
+ bh=DLo0rzb+dJKCDFRyYv+riUgX2y/rgevETSxpRS/05vk=;
+ b=Ldr9gtK0FWYW65WKrXpIQ4MAMjMNO690mQx6zhGjynJZ7HCGM8qdhrUlpO+9vkH2V9
+ zPdyDOLdmEzq8+by6Uy8iLWnmyJvvMc5Q53ynAdc7/luQL9/cmhnKr88ygj/rupGt6bu
+ KDb4QQvYcd7hW38JMiUwkfMhV2Zy/SlVkaAPZHowYGPoYaIasM9JznHEJOrrIxOwQwmV
+ eqbGwE1ZQnUrr3sy11iU1KpnyKSlZ6NEa2ks/8vZ22CFiycjQzucXfdGChQFQzitEAQm
+ eyQRGghb9kQ6wyWGkSSuhuubOUzu/D9ZK9MpUV98rAL0gXnXtb1JVbRTLRJHhXgDKoYQ
+ WuTg==
+X-Gm-Message-State: AOJu0Ywbrz79NsInhV6qySDZoS8adL3xLSmX5+IfnUs0LYjN3eaZZ+fK
+ 4vfAdcgju4N6JqQ3z8zot2Oz2sFM0+0OrTbaWawQTieOlhCsPn0sexxdv8huo/Ngt4wvkMxb9Uj
+ hFZpF2JvTT7I6Zt6IYfzZhZVFii9WXqE1ktiprqJFLIvc0RAq/APhLp8D
+X-Gm-Gg: ASbGncskuO2IT9+igyD8gzNOaH+d4vWm9pIdzeZd2oZSUaJ+7TOtSsPA1I+iA8z2yyf
+ gg6hWpv3Vs2fjkqkEiW09dkWjOuzntky90FN3wzI1eyH1IjH6FCNSF6pkQhbSsVc21/5QRmSTRk
+ ex7hTcBkiZJY2j2h0opnD2HK13T8bFS2xGq1j0vdoMzVyYaGoDzU5l72vz/ZnqqMfP/AbUlin8Q
+ PWJLBxjDbiZtC2dXdjuLXvhFMFpwDZ0A4E4P2eHSgr6x5mz65zx6Kk2SDYq7Ixk7Ll6zNKhCrlv
+ iVSwNCG68IBGQmUu9ZVEWcW1yF2TyY0zgoY6ytYbaPbJ700pP59xZgMpQjDGuyzMTLDtljPZ8QK
+ /bXWhpafAr1f68pqmzh6/WQ==
+X-Received: by 2002:ac8:5a42:0:b0:4b5:d932:15d8 with SMTP id
+ d75a77b69052e-4ba66750b07mr41918451cf.14.1758146445244; 
+ Wed, 17 Sep 2025 15:00:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOAELiHnDB9Xlmv3TSdngM+U3D6Q5yEBp6vGqAuKBCtHIEpqUYZR4h1EmnV/PUoa6ZQcfmhA==
+X-Received: by 2002:ac8:5a42:0:b0:4b5:d932:15d8 with SMTP id
+ d75a77b69052e-4ba66750b07mr41917781cf.14.1758146444587; 
+ Wed, 17 Sep 2025 15:00:44 -0700 (PDT)
 Received: from x1.local
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-79351b9e6e6sm2359216d6.34.2025.09.17.14.50.30
+ af79cd13be357-83627d7d9c5sm52595885a.20.2025.09.17.15.00.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Sep 2025 14:50:30 -0700 (PDT)
-Date: Wed, 17 Sep 2025 17:50:29 -0400
+ Wed, 17 Sep 2025 15:00:44 -0700 (PDT)
+Date: Wed, 17 Sep 2025 18:00:42 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 0/3] migration/tls: Graceful shutdowns for main and
- postcopy channels
-Message-ID: <aMstJdBDMR8S2S9-@x1.local>
+Subject: Re: [PATCH 2/3] migration: Make migration_has_failed() work even for
+ CANCELLING
+Message-ID: <aMsvitYEzHao0i83@x1.local>
 References: <20250910160144.1762894-1-peterx@redhat.com>
- <aMLK5nT4CVPrcZCB@x1.local> <87tt10vlvb.fsf@suse.de>
+ <20250910160144.1762894-3-peterx@redhat.com>
+ <87wm5wvm1l.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87tt10vlvb.fsf@suse.de>
+In-Reply-To: <87wm5wvm1l.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -109,47 +110,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 05:56:40PM -0300, Fabiano Rosas wrote:
+On Wed, Sep 17, 2025 at 05:52:54PM -0300, Fabiano Rosas wrote:
 > Peter Xu <peterx@redhat.com> writes:
 > 
-> > On Wed, Sep 10, 2025 at 12:01:41PM -0400, Peter Xu wrote:
-> >> Fabiano fixed graceful shutdowns for multifd channels previously:
-> >> 
-> >> https://lore.kernel.org/qemu-devel/20250206175824.22664-1-farosas@suse.de/
-> >> 
-> >> However we likely forgot the rest channels.  Do it the same for the main
-> >> and postcopy channels.  This fixes a warning message when running unit test
-> >> /ARCH/migration/postcopy/preempt/tls/psk.
-> >> 
-> >> Thanks,
-> >> 
-> >> Peter Xu (3):
-> >>   migration/tls: Gracefully shutdown main and preempt channels
-> >>   migration: Make migration_has_failed() work even for CANCELLING
-> >>   migration/multifd: Use the new graceful termination helper
+> > We set CANCELLED very late, it means migration_has_failed() may not work
+> > correctly if it's invoked before updating CANCELLING to CANCELLED.
 > >
-> > Please hold off the review on this one.  Juraj reported the issue wasn't
-> > resolved by the changes, and I can also reproduce.  I'll have a look and
-> > repost..
 > 
-> I'm wondering if the assumption that only succeeded migrations should
-> gracefully exit is correct. My understanding is that we need to always
-> exit gracefully, but after failure, the channel might not be there, so
-> we ignore failures. But that does not seem to mean a failed migration
-> can simply not exit gracefully.
+> The prophecy is fulfilled.
+> 
+> https://wiki.qemu.org/ToDo/LiveMigration#Migration_cancel_concurrency
+> 
+> I'm not sure I'm convinced, for instance, CANCELLING is part of
+> migration_is_running(), while FAILED is not. This doesn't seem
+> right. Another point is that CANCELLING is not a final state, so we're
+> prone to later need a migration_has_finished_failing_now() helper. =)
 
-Currently tls channels will ignore premature terminations whenever there's
-a shutdown() on READ.  So when failed / cancelled and whenever there's a
-shutdown(), iochannel already does the bypass no matter what migration does.
+Considering we only have two users so far, and the other user doesn't care
+about CANCELLING (while the multifd shutdown cares?), then I assume it's ok
+to treat CANCELLING to be "has failed"? :)  I didn't try to interpret "has
+failed" in English, but only for the sake of an universal helper that works
+for both places.
 
-Or do you mean we should remove that, and still try to do graceful
-shutdowns even if the channel was shutdown()?
+Or maybe it can be is_failing() too?  I don't have a strong feeling.
 
-Feel free to have a look at v2 of this series, especially patch 1. v3 will
-come soon, but just to say, v2 is hugely different from v1, and should be
-fairly close to upcoming v3, at least on patch 1 which is the real fix.
+> 
+> My mental model is that CANCELLING is a transitional, ongoing state
+> where we shouldn't really be making assumptions. Once FAILED is reached,
+> then we're sure in which general state everything is.
+> 
+> How did you catch this? It was one of the cancel tests that failed? I
+> just noticed that multifd_send_shutdown() is called from
+> migration_cleanup() before it changes the state to CANCELLED. So current
+> code also has whatever issue you detected here.
 
-I should have mentioned that earlier.. :(
+No test failed, it was only by code observation, mentioned below [1],
+exactly as you said.
+
+I just think when cancelling the tls sessions, we shouldn't dump the error
+messages anymore even if the bye failed.  Or maybe we simply do not need to
+invoke migration_tls_channel_end() when CANCELLING / FAILED?  That's
+relevant to your ask on the cover letter, we can discuss there.
+
+This is very trivial.  Let me know how you thinks.  I can also drop this
+patch when repost v3 but fix the postcopy warning first, which reliably
+reproduce now with qtest.
+
+> 
+> > Allow that state will make migration_has_failed() working as expected even
+> > if it's invoked slightly earlier.
+> >
+> > One current user is the multifd code for the TLS graceful termination,
+> > where it's before updating to CANCELLED.
+
+[1]
+
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/migration.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 7015c2b5e0..397917b1b3 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -1723,7 +1723,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+> >  
+> >  bool migration_has_failed(MigrationState *s)
+> >  {
+> > -    return (s->state == MIGRATION_STATUS_CANCELLED ||
+> > +    return (s->state == MIGRATION_STATUS_CANCELLING ||
+> > +            s->state == MIGRATION_STATUS_CANCELLED ||
+> >              s->state == MIGRATION_STATUS_FAILED);
+> >  }
+> 
 
 -- 
 Peter Xu
