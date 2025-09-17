@@ -4,90 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D260ECAC5A0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 15:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6741CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 15:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyuVQ-0000ZM-EQ; Wed, 17 Sep 2025 11:55:40 -0400
+	id 1uyuVa-0000cK-QQ; Wed, 17 Sep 2025 11:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyuVO-0000Z9-6Q
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 11:55:38 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyuVM-0006VQ-F9
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 11:55:37 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3304dd2f119so373220a91.2
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 08:55:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758124535; x=1758729335; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YYmlIMZUb0oenUC541erRlHRn4hfBb2y10xyhSFXYVY=;
- b=iEiG00Rrbr6jkdnmxh3s+zBIqTfAD65GyucuRn3iGAxPuvcceh/hogpERav6/65uxA
- 4fYi3Myw+r0thqZeocgvHNkGD2FAzUtvgOVYmYZjCKH/aBdCqdP38hDxTXVl3Gu9oCcx
- r3Nb4lPiOfHjXKeM6vXtmpV6mAmRGdZgy9YVQQIgwaN4+amm0ntn1/3blE6o/kQZzBtt
- kYJz/YUKXiish4rVkqcyOZq1wYuXsnZMFBkG3wqP0DxW8+NGOHg0a8a0/2nDsS8DVwtQ
- 8Y3bgkmwUq8KVke+UQiCmngOTuwjlUzwGNqNs5daBL30R/UecGrQZEoAg3bgJTfTQLst
- sk/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758124535; x=1758729335;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YYmlIMZUb0oenUC541erRlHRn4hfBb2y10xyhSFXYVY=;
- b=QqUOtITsy/KLmGWs7De00FbbWcGaBt6dRr0J4LH7mzJiLmQ8TnxzkJpTY/b+NJaUAE
- OTzBwETjPOo3EeTULveGOWtmTup+frpKcJkvCofqP9pmmN/8kbuSEz6Kz5BoiK/v5uaw
- zeb7R6k0axFCNedHnJyy6QJB+bSa3xNHWOiqNqnPQumAJ2g5FdVAjQrvdswVJtQ7jfUo
- BcLjAALAOQSUP0wW39SrD1a8jED97QmkD5yV2Uwp6w+JY8wxl+uXKH/cz+lHTOv3C77j
- RvoBR/SzPj17Qp1cv5evb+kDXpJK1uBzcEdRcXGQGC6/r5Nqxhm95QjFmCgIt4PTLK1E
- dNVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiUeLARA3lLS0VsWlfLovhf1sinfoD069XMVTBTMq2AmK4f8stmhvNpr+mCOVI4SgA7DVTZ5t1B/zo@nongnu.org
-X-Gm-Message-State: AOJu0Yx7bKOP36Bnrpd8jtMjc4+04B0zMVqSf69QmPbxASp3KS/fpZ5K
- H0tUe0EYxKFi0YlEEQb8qgNfrxNeQvd3zTamioJ0U6zP4tu09shzp1u27C1lH/TTJEA=
-X-Gm-Gg: ASbGncvAfmi8sUayjauhc+hsZq81iSnjJBF9hDFHxkJC/GzzJx3GEtLV+j/GVRr7pDY
- kQ4b4dG5kXX0FK+hSziDRpMo3CTBMzm17AOmneFWfOdWeSopCUTi1qV2oBekX2wo9UmYn2vJ+oN
- 9SjNToxpW+4xcjm8XfZZ4DIc45M76lOy4KfRQA9Nvpmred++K+s9R8hGfeQvSS/3tPmyzHF8gLG
- Gg7VouEaR88i9sHahXvgZe1eQZpEMX1BdU9wwszCHb/vCDOTyX9YjJY/D/mZ3i/bkDt/mCXkKyt
- N3cenjnFAQwnFGDIhk0jE9oF/V5gpASWSxBo5aPbkgKDaCrheGyVE3tzFOhRO1J1kwJMTA2PQvS
- tEZQcUJ3hAcUaKqxnnV/Gn7688YCgeTJ7vOx8jF4eNiFiQpU=
-X-Google-Smtp-Source: AGHT+IG63XM2gnqeK+AKiuUacKb59ROQqwQUM5XLFBb96eVZApO/6UgCEM9mSDmMBFMH6gvwt+/bdw==
-X-Received: by 2002:a17:90b:3bcb:b0:32e:9a24:2dd9 with SMTP id
- 98e67ed59e1d1-32ee3ed2409mr3256981a91.1.1758124534907; 
- Wed, 17 Sep 2025 08:55:34 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32ed26de6a8sm2846186a91.23.2025.09.17.08.55.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 08:55:34 -0700 (PDT)
-Message-ID: <546a6886-6812-4abe-affd-70ff59f85a04@linaro.org>
-Date: Wed, 17 Sep 2025 08:55:33 -0700
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uyuVZ-0000aZ-Gp
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 11:55:49 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uyuVV-0006WU-Ki
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 11:55:48 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cRjt10Ptzz6L621;
+ Wed, 17 Sep 2025 23:51:05 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id C415A1400D4;
+ Wed, 17 Sep 2025 23:55:37 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 17 Sep
+ 2025 17:55:37 +0200
+Date: Wed, 17 Sep 2025 16:55:35 +0100
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v4 1/2] hw/cxl: Refactored Identify Switch Device & Get
+ Physical Port State
+Message-ID: <20250917165535.000021b1@huawei.com>
+In-Reply-To: <20250916080736.1266083-2-arpit1.kumar@samsung.com>
+References: <20250916080736.1266083-1-arpit1.kumar@samsung.com>
+ <CGME20250916080803epcas5p1cd11689108b259f21908d9779993cc0f@epcas5p1.samsung.com>
+ <20250916080736.1266083-2-arpit1.kumar@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/35] hw/core/loader: Use address_space_get_path()
-From: Richard Henderson <richard.henderson@linaro.org>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
- <20250917-qom-v1-2-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
- <73f3ad14-e9cd-4477-afdb-76fb65f5617e@linaro.org>
-Content-Language: en-US
-In-Reply-To: <73f3ad14-e9cd-4477-afdb-76fb65f5617e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,44 +73,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/25 08:18, Richard Henderson wrote:
-> On 9/17/25 05:56, Akihiko Odaki wrote:
->> The name field of an QOM-ified AddressSpace represents a property name,
->> which may not be sufficient to identify the AddressSpace. Use
->> address_space_get_path() instead.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   hw/core/loader.c | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/core/loader.c b/hw/core/loader.c
->> index 524af6f14a09..1ee603f19c90 100644
->> --- a/hw/core/loader.c
->> +++ b/hw/core/loader.c
->> @@ -1258,10 +1258,10 @@ static bool roms_overlap(Rom *last_rom, Rom *this_rom)
->>           last_rom->addr + last_rom->romsize > this_rom->addr;
->>   }
->> -static const char *rom_as_name(Rom *rom)
->> +static const char *rom_as_path(Rom *rom)
->>   {
->> -    const char *name = rom->as ? rom->as->name : NULL;
->> -    return name ?: "anonymous";
->> +    const char *path = rom->as ? address_space_get_path(rom->as) : NULL;
->> +    return path ?: "anonymous";
->>   }
+On Tue, 16 Sep 2025 13:37:35 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+
+> -Storing physical ports info during enumeration.
+> -Refactored changes using physical ports info for
+>  Identify Switch Device (Opcode 5100h) & Get Physical Port State
+>  (Opcode 5101h) physical switch FM-API command set.
 > 
-> You're not freeing the result of address_space_get_path.
+> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
 
-In addition, I think the result of address_space_get_path cannot be null, so,
+Hi Arpit.  One question inline, and one comment on code I've moved
+around whilst queue this up.  I'll push out a tree to gitlab
+(probably tomorrow) and when I do please check I didn't mess that up!
 
-   if (rom->as) {
-     return address_space_get_path(rom->as);
-   }
-   return g_strdup("anonymous");
+Jonathan
 
-r~
+
+> +static CXLRetCode cxl_set_port_type(CXLUpstreamPort *ports, int pnum,
+> +                                    CXLCCI *cci)
+> +{
+> +    uint8_t current_port_config_state;
+> +    uint8_t connected_device_type;
+> +    uint8_t supported_ld_count;
+> +    uint16_t lnkcap, lnkcap2, lnksta;
+> +    PCIBus *bus;
+> +    PCIDevice *port_dev;
+> +    PCIEPort *usp = PCIE_PORT(cci->d);
+> +
+> +    if (usp->port == pnum) {
+> +        port_dev = PCI_DEVICE(usp);
+> +        current_port_config_state = CXL_PORT_CONFIG_STATE_USP;
+> +        connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+> +        supported_ld_count = 0;
+> +    } else {
+> +        bus = &PCI_BRIDGE(cci->d)->sec_bus;
+> +        port_dev = pcie_find_port_by_pn(bus, pnum);
+> +        if (port_dev) { /* DSP */
+> +            PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
+> +                ->devices[0];
+> +            current_port_config_state = CXL_PORT_CONFIG_STATE_DSP;
+> +            if (ds_dev) {
+> +                if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
+> +                    /* To-do: controllable */
+
+In what sense controllable?  It should always match what the downstream device
+is presenting as.  Do you ultimately mean if we mess with the alternate modes
+and reset the port to have it come up as a PCI only device?
+This will need to be more complex as we add different CXL type 3 device support
+of course, but I'd still expect to auto detect it rather that control it directly.
+
+> +                    connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_3_SLD;
+> +                } else {
+> +                    connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
+> +                }
+> +            } else {
+> +                connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+> +            }
+> +            supported_ld_count = 3;
+> +        } else {
+> +            return CXL_MBOX_INVALID_INPUT;
+> +        }
+> +    }
+
+>  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>                                    DeviceState *d, size_t payload_max)
+>  {
+> @@ -4691,6 +4706,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>      cci->d = d;
+>      cci->intf = intf;
+>      cxl_init_cci(cci, payload_max);
+> +    cxl_set_phy_port_info(cci);
+>  }
+>  
+>  void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+> @@ -4777,4 +4793,5 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+>      cci->d = d;
+>      cci->intf = intf;
+>      cxl_init_cci(cci, payload_max);
+> +    cxl_set_phy_port_info(cci);
+
+I'll shift this to a later patch whilst picking this up for my staging tree.
+I want this ahead of where we introduce cxl_initialize_usp_mctpcci.
+ 
+>  }
 
