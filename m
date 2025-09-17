@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC11CAC599
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2F1CAC59D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrko-0000Gw-A4; Wed, 17 Sep 2025 08:59:22 -0400
+	id 1uyrk7-000887-Sr; Wed, 17 Sep 2025 08:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrkm-0000CO-0A; Wed, 17 Sep 2025 08:59:20 -0400
+ id 1uyrk1-0007zX-My; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrkk-0005B2-4j; Wed, 17 Sep 2025 08:59:19 -0400
+ id 1uyrjw-00051p-Ji; Wed, 17 Sep 2025 08:58:33 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6g008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6k008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:32 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:36 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=M6LAc6U0KEnsPQIm1uqYTu4quBLF6gytOLllDVEiXFY=; 
+DKIM-Signature: a=rsa-sha256; bh=t7gZYZry7+AY7F/ztLeWkPizR8T5wkzF6no/b+Jg/94=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113793; v=1;
- b=it1Wa/2xaJ/D22ACAY3YGagNmi6Cj09qQ9BBpysoQlV7xutW/Iba/HfirTS5Bdrc
- 6xpvkoKR7tL3Ix8gUIaV7Uj2ECaDuXdJHBdsJldbz26a+wc9yOC7P42ThoB7BO1V
- Tz9VO1LMvwt7pnNeNJLIFJdx3Oom/efXsVKWUFogCSsHO4BRge0HBV7VWXFioZ58
- cG8etRZekU6fP3wJ/nCZ3/Pm1fDDw8UwN0UxDwjCb1FxRyhTMr4Oa3yH2AR9pZnT
- Knv+E1SCU1cXUZzstgAMz/GdiaF9qZ80YUV9lFa5vEkeifk2YZfK3Pae+FhyQ12Q
- kaa+IT7QThCh6fPbeYTexA==
+ s=rs20250326; t=1758113797; v=1;
+ b=MuGDuLxI/Nk2Quxviz5Ui5dtxnTGbK8mjPe2jODrn4AsztRYEvQj1jJLdTuUg03f
+ HTJSt00FKZ7lY3Lo9hOfvxbXCr46OLfp6LkI9N8LTlxkSaKru3qI7wVC08JaXZNR
+ EZ+gTuihaQZVohfX41xVaits6xxS/VoncImwZkDTqvxg82wtLangPnWLXVK4hxzM
+ wJUKHr0ygxllEtOusH0TbikQNDdlJ1oOpQaxMqthDk9jpfiZCradiiHS2qbl+6EJ
+ HLwA/vNRVzKK3hQ3kv4Uxmfx4vUy3+yUoGpNjgaeJ9X4WUfHuilOyAd6VhAPplj0
+ NS6jwsLpje/k5RyMWH9KjQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:14 +0900
-Subject: [PATCH 02/35] hw/core/loader: Use address_space_get_path()
+Date: Wed, 17 Sep 2025 21:56:18 +0900
+Subject: [PATCH 06/35] hw/display: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-2-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-6-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -125,42 +125,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The name field of an QOM-ified AddressSpace represents a property name,
-which may not be sufficient to identify the AddressSpace. Use
-address_space_get_path() instead.
+Make AddressSpaces QOM objects to ensure that they are destroyed when
+their owners are finalized and also to get a unique path for debugging
+output.
+
+The name arguments were used to distinguish AddresSpaces in debugging
+output, but they will represent property names after QOM-ification and
+debugging output will show QOM paths. So change them to make them more
+concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/core/loader.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/display/artist.c     | 2 +-
+ hw/display/bcm2835_fb.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index 524af6f14a09..1ee603f19c90 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -1258,10 +1258,10 @@ static bool roms_overlap(Rom *last_rom, Rom *this_rom)
-         last_rom->addr + last_rom->romsize > this_rom->addr;
- }
+diff --git a/hw/display/artist.c b/hw/display/artist.c
+index 42905563ad49..b47ca875f93a 100644
+--- a/hw/display/artist.c
++++ b/hw/display/artist.c
+@@ -1391,7 +1391,7 @@ static void artist_realizefn(DeviceState *dev, Error **errp)
+     }
  
--static const char *rom_as_name(Rom *rom)
-+static const char *rom_as_path(Rom *rom)
- {
--    const char *name = rom->as ? rom->as->name : NULL;
--    return name ?: "anonymous";
-+    const char *path = rom->as ? address_space_get_path(rom->as) : NULL;
-+    return path ?: "anonymous";
- }
+     memory_region_init(&s->mem_as_root, OBJECT(dev), "artist", ~0ull);
+-    address_space_init(&s->as, NULL, &s->mem_as_root, "artist");
++    address_space_init(&s->as, OBJECT(s), &s->mem_as_root, "as");
  
- static void rom_print_overlap_error_header(void)
-@@ -1280,7 +1280,7 @@ static void rom_print_one_overlap_error(Rom *last_rom, Rom *rom)
- {
-     error_printf(
-         "\nThe following two regions overlap (in the %s address space):\n",
--        rom_as_name(rom));
-+        rom_as_path(rom));
-     error_printf(
-         "  %s (addresses 0x" HWADDR_FMT_plx " - 0x" HWADDR_FMT_plx ")\n",
-         last_rom->name, last_rom->addr, last_rom->addr + last_rom->romsize);
+     artist_create_buffer(s, "cmap", &offset, ARTIST_BUFFER_CMAP, 2048, 4);
+     artist_create_buffer(s, "ap", &offset, ARTIST_BUFFER_AP,
+diff --git a/hw/display/bcm2835_fb.c b/hw/display/bcm2835_fb.c
+index c6710bdc0700..cc1567895522 100644
+--- a/hw/display/bcm2835_fb.c
++++ b/hw/display/bcm2835_fb.c
+@@ -421,7 +421,7 @@ static void bcm2835_fb_realize(DeviceState *dev, Error **errp)
+     s->initial_config.base = s->vcram_base + BCM2835_FB_OFFSET;
+ 
+     s->dma_mr = MEMORY_REGION(obj);
+-    address_space_init(&s->dma_as, NULL, s->dma_mr, TYPE_BCM2835_FB "-memory");
++    address_space_init(&s->dma_as, OBJECT(s), s->dma_mr, "as");
+ 
+     bcm2835_fb_reset(dev);
+ 
 
 -- 
 2.51.0
