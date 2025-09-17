@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3E0CAC59D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497F8CAC5A0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyrsr-0002kY-Fa; Wed, 17 Sep 2025 09:07:41 -0400
+	id 1uyrnu-0003JX-Vz; Wed, 17 Sep 2025 09:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpk-0005wB-Au; Wed, 17 Sep 2025 09:04:36 -0400
+ id 1uyrl3-0000Yk-S2; Wed, 17 Sep 2025 08:59:38 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uyrpg-0005wC-Vk; Wed, 17 Sep 2025 09:04:27 -0400
+ id 1uyrl1-00054i-TW; Wed, 17 Sep 2025 08:59:37 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN79008967
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN7E008967
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 21:56:55 +0900 (JST)
+ Wed, 17 Sep 2025 21:56:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=HLe7pvlXLzUEMbjcEoVHTcQq1sGyjMOPV2Jd4nQBR28=; 
+DKIM-Signature: a=rsa-sha256; bh=PNMnLRjPBvJf9zcddoKVhh8oLqzzqK++XKLEpivd92g=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758113815; v=1;
- b=YUl26O9sN95D4FLlZBogOnlopmCljnZ1xDZ1c0b8MltFYLgUupQPEgTlgcBwEJsR
- fmatzo2AaDh6vw4DOgNUqN+rTwXvzjEriYq3NqND14tpJX2lhRp5EirQN6N0HRGi
- HY7Vo7dDq3vnXhnU5VF5+6s/K477/QK+0o2LCayg5mSz0kSiRT5BTsG7TSEIBcSF
- 4xkclhwiUFP917BLzbPt5IhRMsANO/wtH2fyS46bzO04Y4My7nkCYnTMDlLw7WxG
- CaYktq0pnmtUvLW/cLv65Y1WG4LusxVyFrY7pEWWLQyD9+7XHfJmfGGo5+HWBT/I
- 8AEOI60+py1DtcoYghKkSA==
+ s=rs20250326; t=1758113819; v=1;
+ b=NnHkjpoW1qu2A9ISqhFHI/sEjcpFLHlq7XeOdagISksFg/K6gT7AWSeADEGw+jb4
+ /jTUp3/6jw2bu6fLc6lokGgrHc+4+73QpMshfwovf+hai/Si50325YwQ6AUrGXPn
+ L0OonZkXl7Tw/2pRfxXP4mDxxH3bb/BWrIa7ELbzlAfgPN1zMO5K0kNwAqvEHpjk
+ GXXaClbIfU0su6HPiOUlAxpxnZnbb7eTdfWcrMsswVgKwdkB+omtHWH/7yrwQ6/s
+ 4iVM0/TSccAb6c5jq4br+ALAoE+uepSCHAQSSh9qJTkQqxjeFjOaYqQuPB+xItjX
+ kZFt01frt8baCk4VqiV63A==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 21:56:41 +0900
-Subject: [PATCH 29/35] hw/usb: QOM-ify AddressSpace
+Date: Wed, 17 Sep 2025 21:56:46 +0900
+Subject: [PATCH 34/35] target/xtensa: QOM-ify AddressSpace
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qom-v1-29-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-qom-v1-34-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -136,22 +136,22 @@ concise and also avoid conflicts with other properties.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-xhci-sysbus.c | 2 +-
+ target/xtensa/cpu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-xhci-sysbus.c b/hw/usb/hcd-xhci-sysbus.c
-index 6d060062ab86..a078ab489c54 100644
---- a/hw/usb/hcd-xhci-sysbus.c
-+++ b/hw/usb/hcd-xhci-sysbus.c
-@@ -45,7 +45,7 @@ static void xhci_sysbus_realize(DeviceState *dev, Error **errp)
-                              s->xhci.numintrs);
-     if (s->xhci.dma_mr) {
-         s->xhci.as =  g_malloc0(sizeof(AddressSpace));
--        address_space_init(s->xhci.as, NULL, s->xhci.dma_mr, NULL);
-+        address_space_init(s->xhci.as, OBJECT(s), s->xhci.dma_mr, "as");
-     } else {
-         s->xhci.as = &address_space_memory;
-     }
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 26a1c87a7856..de68a36bc36f 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -272,7 +272,7 @@ static void xtensa_cpu_initfn(Object *obj)
+     env->system_er = g_malloc(sizeof(*env->system_er));
+     memory_region_init_io(env->system_er, obj, NULL, env, "er",
+                           UINT64_C(0x100000000));
+-    address_space_init(env->address_space_er, NULL, env->system_er, "ER");
++    address_space_init(env->address_space_er, obj, env->system_er, "er-as");
+ 
+     cpu->clock = qdev_init_clock_in(DEVICE(obj), "clk-in", NULL, cpu, 0);
+     clock_set_hz(cpu->clock, env->config->clock_freq_khz * 1000);
 
 -- 
 2.51.0
