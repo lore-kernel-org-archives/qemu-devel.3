@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44108CAC5A0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4210CCAC59A
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 04:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyjKS-000503-0s; Tue, 16 Sep 2025 23:59:36 -0400
+	id 1uyjKM-0004y3-0b; Tue, 16 Sep 2025 23:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyjKQ-0004zP-5J; Tue, 16 Sep 2025 23:59:34 -0400
+ id 1uyjKK-0004x9-1C; Tue, 16 Sep 2025 23:59:28 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1uyjKN-0006g6-EG; Tue, 16 Sep 2025 23:59:33 -0400
+ id 1uyjKH-0006g6-Ly; Tue, 16 Sep 2025 23:59:27 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 17 Sep
  2025 11:59:18 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 17 Sep 2025 11:59:18 +0800
+ Transport; Wed, 17 Sep 2025 11:59:17 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -33,13 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <thuth@redhat.com>, Kane-Chen-AS
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 2/3] tests/functional/arm: Add AST1030 boot test with
- generated OTP image
-Date: Wed, 17 Sep 2025 11:59:16 +0800
-Message-ID: <20250917035917.4141723-3-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 0/3] tests/functional/arm: Add OTP functional test
+Date: Wed, 17 Sep 2025 11:59:14 +0800
+Message-ID: <20250917035917.4141723-1-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250917035917.4141723-1-kane_chen@aspeedtech.com>
-References: <20250917035917.4141723-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -70,72 +67,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Add a functional test that boots an AST1030 machine with a generated
-OTP image. The test verifies that OTP contents are read during early
-boot and that the system reaches the expected console prompt.
+Hi all,
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+During early boot, SoC firmware reads from the OTP region to obtain the
+chip ID and default configuration. This series adds functional tests that
+boot with a generated OTP image and verify that the firmware reads these
+contents correctly during initialization.
+
+Any feedback or suggestions are appreciated.
+
+Best Regards,
+Kane
 ---
- tests/functional/arm/test_aspeed_ast1030.py | 24 +++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+Change log:
+v2: Fine-tune test scripts
 
-diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional/arm/test_aspeed_ast1030.py
-index 42126b514f..e47b597d0b 100755
---- a/tests/functional/arm/test_aspeed_ast1030.py
-+++ b/tests/functional/arm/test_aspeed_ast1030.py
-@@ -7,17 +7,18 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
-+from aspeed import AspeedTest
- from qemu_test import exec_command_and_wait_for_pattern
- 
- 
--class AST1030Machine(LinuxKernelTest):
-+class AST1030Machine(AspeedTest):
- 
-     ASSET_ZEPHYR_3_02 = Asset(
-         ('https://github.com/AspeedTech-BMC'
-          '/zephyr/releases/download/v00.03.02/ast1030-evb-demo.zip'),
-         '1ec83caab3ddd5d09481772801be7210e222cb015ce22ec6fffb8a76956dcd4f')
- 
--    def test_ast1030_zephyros_3_02(self):
-+    def test_arm_ast1030_zephyros_3_02(self):
-         self.set_machine('ast1030-evb')
- 
-         kernel_name = "ast1030-evb-demo-3/zephyr.elf"
-@@ -36,7 +37,7 @@ def test_ast1030_zephyros_3_02(self):
-          '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip'),
-         'ad52e27959746988afaed8429bf4e12ab988c05c4d07c9d90e13ec6f7be4574c')
- 
--    def test_ast1030_zephyros_1_07(self):
-+    def test_arm_ast1030_zephyros_1_07(self):
-         self.set_machine('ast1030-evb')
- 
-         kernel_name = "ast1030-evb-demo/zephyr.bin"
-@@ -68,6 +69,21 @@ def test_ast1030_zephyros_1_07(self):
-                 'kernel uptime',
-         ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")
- 
-+    def test_arm_ast1030_otp_blockdev_device(self):
-+        self.vm.set_machine("ast1030-evb")
-+
-+        kernel_name = "ast1030-evb-demo-3/zephyr.elf"
-+        kernel_file = self.archive_extract(self.ASSET_ZEPHYR_3_02, member=kernel_name)
-+        otp_img = self.generate_otpmem_image()
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            "-kernel", kernel_file,
-+            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
-+            "-global", "aspeed-otp.drive=otp",
-+        )
-+        self.vm.launch()
-+        self.wait_for_console_pattern("Booting Zephyr OS")
- 
- if __name__ == '__main__':
--    LinuxKernelTest.main()
-+    AspeedTest.main()
+v1: Initial version
+---
+Kane-Chen-AS (3):
+  tests/functional/arm: Add helper to generate OTP images
+  tests/functional/arm: Add AST1030 boot test with generated OTP image
+  tests/functional/arm: Add AST2600 boot test with generated OTP image
+
+ tests/functional/arm/test_aspeed_ast1030.py | 24 +++++++++++++++++----
+ tests/functional/arm/test_aspeed_ast2600.py | 14 ++++++++++++
+ tests/functional/aspeed.py                  |  8 +++++++
+ 3 files changed, 42 insertions(+), 4 deletions(-)
+
 -- 
 2.43.0
 
