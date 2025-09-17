@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 999E1CAC598
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 17:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88541CAC598
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 17:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uywI8-00038v-QZ; Wed, 17 Sep 2025 13:50:04 -0400
+	id 1uywK3-0004D8-FK; Wed, 17 Sep 2025 13:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uywI6-00037i-Fo
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 13:50:02 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1uywK0-0004Cd-LW
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 13:52:01 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uywI4-000813-CF
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 13:50:02 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-32e34f4735eso7771a91.3
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 10:49:59 -0700 (PDT)
+ id 1uywJy-0008Nk-Ta
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 13:52:00 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-77c6516af79so123580b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 10:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758131398; x=1758736198; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NfF6FJF7aVw4fyP+XEqDkMslqqLUzT1P73t3TxfoN20=;
- b=YnlxqZZwUZ4dzr6nl3R/8ANRCFlwBzIVyIq+OBKWDA0OYnC869dh6F7XqJyEpYeZ4d
- Z23POZmThkqHCrHx/KoRlwsPiKD3AVw875PWHX0ccheWeVFzyGRQucRs48Fhl1/4pnYJ
- b8LgtnCwB29N9BCm9iTrp7a1YRxLWYD5wmfnpgzPQED/ax7141m4VzXc3yYLomVEVq/o
- CTfaNWYyD6ndMRS1IRPhyYxXSFL9rbl+v/CcR7ZvPmgaFoneAw4FC2TWHP+lHhUcCWOn
- xp6Hzgcsm5RM4SgrCAJ0wctYZ/5qQY5txk4W8sRnoWpDEbqX77myFBPbhyvMCMef7hkV
- WdLw==
+ d=linaro.org; s=google; t=1758131517; x=1758736317; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BtOmtS5+CGon2hRJLmoisHn0h2sUrjHXBoXqsWL5poU=;
+ b=KIVzjFrce9+ee0EfNMHwIyO11DFZ3/5v0yHE8jGh2L53beVdcfIcsrBdxEw5AaDX3L
+ Hl6zQvAyb/5jZX42vO2FnNpEIuwdlIM1tGRSVQy8zd36UPbKTtC1z2iFTXnHvXHB/Pd+
+ Nu0dDp7kjzLfO0gXapVMmsYzsKE38m5THw36ihMtWfPAsbP5LdhmbHgmV+UK2OzMB3OZ
+ Q7Oz8jj7B/wH86u5W45v0Avu+/2jgqRBbOnPmJvGEGfzCWMmMdue0l3GScVzrs4vYWlj
+ uIJrb22vcc+GS/B1NkKNn0o63/vSpXXQSJC1H5kETCRW6wZN5j0H4nC4lVyw+7ryYEHF
+ UBpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758131398; x=1758736198;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NfF6FJF7aVw4fyP+XEqDkMslqqLUzT1P73t3TxfoN20=;
- b=jbDh0qMeFD2gZDSmTlFsJF/vudx2ICGHJrURP+kzv1blKjLFU8BSgBsQ2OiXKvHjRq
- UH1Hl9Oe0w1lR1jkhg9DZwQTw6LyRT3Cq/1db48/DoXpMik9WnXPzABYnROBlyeS99RY
- yf7tkGoAVzCUTHmLTA1qDam17ClGbeMhbFyJZjHYZCf9KBck04Tnwgupj0DskOpKlKRz
- Cf/1dmn9jOK0RGtcJyhIGaMMkGrRBuuLbCWlDnpiTsi99MBp1YzwukTFAlRSFCSyxfMe
- vEUEAxHUZuLztLw4zNjthyzi7kteDxrPWUXX2xMh0pR83+emWrTR/qUSvaT36/TOR192
- mQJg==
-X-Gm-Message-State: AOJu0Yy8U1fiLhG6t8wvOUKV3TU+Q/agdNT/u/dKe0RhfvmhPSlfbkNp
- 9DZLOs3XDRyMmwX8JMVkDQ0HJe9tBS8Bej9klkd6s80Iq5/Br01b9x/jUkgW3uecR/Q=
-X-Gm-Gg: ASbGncu+0f1lk4CDtyVkb9u9vOkS8SxRYTqTa3nckcUJZyoKs0Rd2ChVUL9RAWENfi2
- u58vS5yH7G0VnJ0HkB5aQqfdcSoTjiKh6Tt+5ePNbglEExjvkif7Nc7/sX8syJgvPTw7Sw3mEkA
- EoxZf0Ykb6me05L1cGg3jm1l4F+kicGnmL7REEq9qPD0qsXylmFGDDqrKo8I8G4ZnE5+FqZytTB
- hmmO6UVu6WtFM0OxqBseiodKzd/LdOWPj9HjJBruVRS0Oyuo99slawxxJpYiZjDYrtflL1kDrtz
- Erz7HpGpdEM+8dKu4DQrlnFXK3KrcmnniUqAM2w+UoFhX9HnkLOzXAySpI7gg7wGO6k/aI+S5hj
- m70xdsXNCP2Y4TtQf/VZW5Lq208C+2hSd9lP+
-X-Google-Smtp-Source: AGHT+IFUKfQaEXjR3gol1skMnFDyJQs4Alj8FvAgFL8e19KZ2TDvSsfmvag2IyBdicVs3+MVgyfVXw==
-X-Received: by 2002:a17:90b:1d44:b0:32e:a59f:b25d with SMTP id
- 98e67ed59e1d1-32ee3f79017mr3835690a91.30.1758131398386; 
- Wed, 17 Sep 2025 10:49:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758131517; x=1758736317;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BtOmtS5+CGon2hRJLmoisHn0h2sUrjHXBoXqsWL5poU=;
+ b=BDI8lzzONQgVLWcQXuuHvs/TRimqyrNyLxwPdLz72diF52546oGMsZw2gkKDq55Id+
+ 9h4Z0KAACMnl64LwHqabzpLML32ZF2nOG4BS7TVgNOc2HZebaP/k9uU70NYod3Pf0ofS
+ yC3W9X/UvbPLAEulgASYN3BOd90b2u+/GttuWHydk5xfLJPQFbq13NaSswLait6xOcVl
+ 964NhPtCp3nrcddCTcT8JEhYnLDuygfHYJ0Cf0RZY6DBnURK3b/WFaRUf5nPAetfa0qI
+ dz1qj0qzH6j1O2gnc2uYmN6XZkWY8FJpx9QAuogF014eVHmlIHwsdBmfvGw2EHBnOLDX
+ IAYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHuQsrMAFPQlaLPSzksPxg0qnEOLd+BtSuS+091Envr4NVbJXx7MYrDuP75VR0Ep3rKiHA0yXUBNTD@nongnu.org
+X-Gm-Message-State: AOJu0YxDaHWq51aqIzOOAYWcE/Aa3yfGSdJuhw69mi9o8nuCjStlLSKL
+ TqqiHjj/fKBhthXl8dNpfoOaypFL9hM6wljXtWqxcuD3oPI35K1V51K+7TpwBeTUG/1BvfIzAZ5
+ pWePO
+X-Gm-Gg: ASbGncuWZBtAjFChpqyUXoCo1pVRrYL+dDK0c79+KTtR1MVQ9xOyTQvgLfLW4GwzkzR
+ QWPNLHiyiBtAjEby150LJM2QD2KbqOLSY6+6QRF7qP5sepAyt3tkulfXvvDz7uprPsKHXdMLc0f
+ 0b72WCc2JBI4FX9DDOEF3xRnlK9T3QEBU1ViGKr1k0ZhJmwf6vg2uSqx1aljtrXhhwo9yYai3so
+ V0zZdOQ5BtA81JZzjBhtvNiW09Pf3Kk4Opf1Jr9fdssGZ27svfLdeY/MtQgsEYbnyGoEQaQ27Uh
+ iUAGOvn4w2kvsvqn8ol4nhx8LNVwkhnbF/a8jWET17nNExxn9SURBmUHIFJyGcY9r7qSKfmW/GU
+ k8ZHv3kntaYgtCg6oy9HNRM8aPlyuB7eZG69b
+X-Google-Smtp-Source: AGHT+IFSeitSDAh0XIcQsPsJK6aPfOUTd9VFS926JjCNU8dSX1BI307uUHcs2JqdqgWh/pCnbTTYkw==
+X-Received: by 2002:a05:6a00:22d3:b0:772:4759:e45d with SMTP id
+ d2e1a72fcca58-77bf907762emr3558955b3a.22.1758131517224; 
+ Wed, 17 Sep 2025 10:51:57 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32edd97fe58sm2738931a91.13.2025.09.17.10.49.57
+ d2e1a72fcca58-77cfe7607c8sm32285b3a.58.2025.09.17.10.51.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 10:49:58 -0700 (PDT)
-Message-ID: <d6b2f2c8-809d-4a94-a18b-2accf10fc5f9@linaro.org>
-Date: Wed, 17 Sep 2025 10:49:56 -0700
+ Wed, 17 Sep 2025 10:51:56 -0700 (PDT)
+Message-ID: <e3f9275a-999e-4114-9950-68e3925aab7a@linaro.org>
+Date: Wed, 17 Sep 2025 10:51:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/36] target-arm queue
 From: Richard Henderson <richard.henderson@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20250916180611.1481266-1-peter.maydell@linaro.org>
+ <ae07bd23-724a-4925-801c-d1f2b6d9abee@linaro.org>
 Content-Language: en-US
-To: "Daniel P. Berrange" <berrange@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: More check-functional asset download issues
+In-Reply-To: <ae07bd23-724a-4925-801c-d1f2b6d9abee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +104,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 9/16/25 18:43, Richard Henderson wrote:
+> On 9/16/25 11:05, Peter Maydell wrote:
+>> Hi; here's an arm pullreq; various miscellaneous new features
+>> and bug fixes.
+>>
+>> thanks
+>> -- PMM
+>>
+>> The following changes since commit 6a9fa5ef3230a7d51e0d953a59ee9ef10af705b8:
+>>
+>>    Merge tag 'pull-tcg-20250905' of https://gitlab.com/rth7680/qemu into staging 
+>> (2025-09-05 09:51:27 +0200)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250916
+>>
+>> for you to fetch changes up to aaf042299acf83919862c7d7dd5fc36acf4e0671:
+>>
+>>    hw/usb/network: Remove hardcoded 0x40 prefix in STRING_ETHADDR response (2025-09-16 
+>> 17:32:06 +0100)
+>>
+>> ----------------------------------------------------------------
+>> target-arm queue:
+>>   * tests, scripts: Don't import print_function from __future__
+>>   * Implement FEAT_ATS1A
+>>   * Remove deprecated pxa CPU family
+>>   * arm/kvm: report registers we failed to set
+>>   * Expose SME registers to GDB via gdbstub
+>>   * linux-user/aarch64: Generate ESR signal records
+>>   * hw/arm/raspi4b: remove redundant check in raspi_add_memory_node
+>>   * hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation
+>>   * system: drop the -old-param option
+> 
+> I don't understand why, but this causes failure on s390x host for hppa guest:
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/11379271029
+> 
+> ...
+> # Testing device 'elroy-pcihost'
+> Broken pipe
+> ../alt/tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signal 11 
+> (Segmentation fault) (core dumped)
+> Aborted (core dumped)
+> 
+> Even more bizzarely, the failure bisects to
+> 
+> Author: Nicolin Chen <nicolinc@nvidia.com>
+> Date:   Fri Aug 29 09:25:27 2025 +0100
+> 
+>      hw/arm/virt: Add an SMMU_IO_LEN macro
+> 
+>      This is useful as the subsequent support for new SMMUv3 dev will also
+>      use the same.
+> 
+> which makes no sense at all.  But it's repeatable, so...
 
-We have
+Ho hum.  It appears to be flaky.  I now see it without this patch set at all:
 
-   https://patchew.org/QEMU/20250829142616.2633254-1-berrange@redhat.com/
-
-in master already, but are still seeing up front failures:
-
-   https://gitlab.com/qemu-project/qemu/-/jobs/11391070330
-   https://gitlab.com/qemu-project/qemu/-/jobs/11391070366
-
-2025-09-17 17:26:56,222 - qemu-test - INFO - Downloading 
-https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/uImage 
-to 
-/builds/qemu-project/qemu/functional-cache/download/2478187c455d6cca3984e9dfde9c635d824ea16236b85fd6b4809f744706deda...
-Traceback (most recent call last):
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 135, in fetch
-     with urllib.request.urlopen(self.url) as resp:
-   File "/usr/lib64/python3.9/urllib/request.py", line 214, in urlopen
-     return opener.open(url, data, timeout)
-   File "/usr/lib64/python3.9/urllib/request.py", line 517, in open
-     response = self._open(req, data)
-   File "/usr/lib64/python3.9/urllib/request.py", line 534, in _open
-     result = self._call_chain(self.handle_open, protocol, protocol +
-   File "/usr/lib64/python3.9/urllib/request.py", line 494, in _call_chain
-     result = func(*args)
-   File "/usr/lib64/python3.9/urllib/request.py", line 1389, in https_open
-     return self.do_open(http.client.HTTPSConnection, req,
-   File "/usr/lib64/python3.9/urllib/request.py", line 1350, in do_open
-     r = h.getresponse()
-   File "/usr/lib64/python3.9/http/client.py", line 1377, in getresponse
-     response.begin()
-   File "/usr/lib64/python3.9/http/client.py", line 320, in begin
-     version, status, reason = self._read_status()
-   File "/usr/lib64/python3.9/http/client.py", line 289, in _read_status
-     raise RemoteDisconnected("Remote end closed connection without"
-http.client.RemoteDisconnected: Remote end closed connection without response
-During handling of the above exception, another exception occurred:
-Traceback (most recent call last):
-   File "/builds/qemu-project/qemu/tests/functional/ppc64/test_e500.py", line 44, in <module>
-     LinuxKernelTest.main()
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/testcase.py", line 251, in main
-     Asset.precache_suites(path, cache)
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 242, in 
-precache_suites
-     Asset.precache_suite(tests)
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 233, in 
-precache_suite
-     Asset.precache_suite(test)
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 233, in 
-precache_suite
-     Asset.precache_suite(test)
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 235, in 
-precache_suite
-     Asset.precache_test(test)
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 222, in 
-precache_test
-     asset.fetch()
-   File "/builds/qemu-project/qemu/tests/functional/qemu_test/asset.py", line 184, in fetch
-     raise AssetError(self, "Unable to download: %s" % e)
-qemu_test.asset.AssetError: 
-https://github.com/legoater/qemu-ppc-boot/raw/refs/heads/main/buildroot/qemu_ppc64_e5500-2023.11-8-gdcd9f0f6eb-20240104/uImage: 
-Unable to download: Remote end closed connection without response
-ninja: build stopped: subcommand failed.
-make: *** [Makefile:168: run-ninja] Error 1
+https://gitlab.com/qemu-project/qemu/-/jobs/11391070227
 
 
 r~
