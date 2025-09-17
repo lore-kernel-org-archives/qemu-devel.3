@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26A7CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EBDCA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 10:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uypEC-0001XL-D6; Wed, 17 Sep 2025 06:17:32 -0400
+	id 1uypDs-0001Dn-DV; Wed, 17 Sep 2025 06:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypD2-0000m4-H8; Wed, 17 Sep 2025 06:16:28 -0400
+ id 1uypCu-0000bE-Al; Wed, 17 Sep 2025 06:16:12 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uypD0-0003Lu-CQ; Wed, 17 Sep 2025 06:16:20 -0400
+ id 1uypCm-0003IX-CG; Wed, 17 Sep 2025 06:16:10 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sC093528
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HAE8sE093528
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Sep 2025 19:14:23 +0900 (JST)
+ Wed, 17 Sep 2025 19:14:25 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=iR0pDnfR/s67erqtJ5ANa4aW2wGgB9XJZzw7HSfqAKs=; 
+DKIM-Signature: a=rsa-sha256; bh=Uu80FK/yXlnI37NFgIYNtl95VwZCqRjIMZXhhdmhF1M=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758104064; v=1;
- b=MxBH9GHNOqphNoMQVv2olt8dlKdOl9TJMNu7YMMgr89UjH08Y9n0qPtjUWRc7iYq
- lo7wdEMxdC51APmdrm9UPh8CfZxb3bk+jspaOXoFRl5jsFlh6Iz5JA9w2KafJbjm
- 7G2zQ9gkzbjamjM1dqhH0/0nsPahh7J4IDgAed9rbI3oyhk7UzkHTWGxuXpedIms
- eqX+B0rhLWWiY57QUZbZwVnPuXe+RMKAPemNLSI17uEjFA6zuOduO6K8J8pmjS1W
- venp0dEs+bSLGpYzaBiPhnMbLZv4JIJq1cQxmf71sy3DiC4pu5Z+JvHlF0C65El5
- KJfzqTlQGN/u7Qqj1H6bhQ==
+ s=rs20250326; t=1758104065; v=1;
+ b=QyJv3vZ248Y7SoZ7rWNS++L+0DfaUm9g8fSVALB9v7pLAf6X4hVbSWM39ZMC9y+o
+ nOzP1T/LsuuGh8RtkTQzS3ljsikW0nElI4Yo2D9rD3eVoBHS1Fdf58ScQ53giRdt
+ GyV3UUD/8nwtM0mYcYMSexmWNGunMYLNOPx8WmKqf0NGjoFzA+gGCyXcWSSDZOKi
+ foJw4RAQDbQSw0zLGGJFN1cJ3mryRFuAJWcbDEPv8cvKl2bSK/wxto7+8UgfK8ik
+ KyA0vPyq94V9GlrknshqaUrPH5yuJ2W01fFM//XxlJtr8gNFDrwEIYGq0O3B4HlB
+ iryWMp26qm5r6DWLySwslA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Sep 2025 19:13:29 +0900
-Subject: [PATCH v3 4/7] hv-balloon: hw/core/register: Do not unparent in
- instance_finalize()
+Date: Wed, 17 Sep 2025 19:13:31 +0900
+Subject: [PATCH v3 6/7] vfio: Do not unparent in instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-use-v3-4-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250917-use-v3-6-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -120,39 +119,63 @@ is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/hyperv/hv-balloon.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ hw/vfio/pci-quirks.c | 9 +--------
+ hw/vfio/region.c     | 3 ---
+ 2 files changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 6dbcb2d9a29d..2d6d7db4ee0e 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -1475,16 +1475,6 @@ static void hv_balloon_ensure_mr(HvBalloon *balloon)
-     balloon->mr->align = memory_region_get_alignment(hostmem_mr);
- }
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 3f002252acfb..83419b1ab58d 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -1150,15 +1150,12 @@ void vfio_vga_quirk_exit(VFIOPCIDevice *vdev)
  
--static void hv_balloon_free_mr(HvBalloon *balloon)
--{
--    if (!balloon->mr) {
--        return;
--    }
--
--    object_unparent(OBJECT(balloon->mr));
--    g_clear_pointer(&balloon->mr, g_free);
--}
--
- static void hv_balloon_vmdev_realize(VMBusDevice *vdev, Error **errp)
+ void vfio_vga_quirk_finalize(VFIOPCIDevice *vdev)
  {
-     ERRP_GUARD();
-@@ -1580,7 +1570,7 @@ static void hv_balloon_vmdev_reset(VMBusDevice *vdev)
-  */
- static void hv_balloon_unrealize_finalize_common(HvBalloon *balloon)
- {
--    hv_balloon_free_mr(balloon);
-+    g_clear_pointer(&balloon->mr, g_free);
-     balloon->addr = 0;
+-    int i, j;
++    int i;
  
-     balloon->memslot_count = 0;
+     for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+         while (!QLIST_EMPTY(&vdev->vga->region[i].quirks)) {
+             VFIOQuirk *quirk = QLIST_FIRST(&vdev->vga->region[i].quirks);
+             QLIST_REMOVE(quirk, next);
+-            for (j = 0; j < quirk->nr_mem; j++) {
+-                object_unparent(OBJECT(&quirk->mem[j]));
+-            }
+             g_free(quirk->mem);
+             g_free(quirk->data);
+             g_free(quirk);
+@@ -1198,14 +1195,10 @@ void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
+ void vfio_bar_quirk_finalize(VFIOPCIDevice *vdev, int nr)
+ {
+     VFIOBAR *bar = &vdev->bars[nr];
+-    int i;
+ 
+     while (!QLIST_EMPTY(&bar->quirks)) {
+         VFIOQuirk *quirk = QLIST_FIRST(&bar->quirks);
+         QLIST_REMOVE(quirk, next);
+-        for (i = 0; i < quirk->nr_mem; i++) {
+-            object_unparent(OBJECT(&quirk->mem[i]));
+-        }
+         g_free(quirk->mem);
+         g_free(quirk->data);
+         g_free(quirk);
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index d04c57db630f..b165ab0b9378 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -365,12 +365,9 @@ void vfio_region_finalize(VFIORegion *region)
+     for (i = 0; i < region->nr_mmaps; i++) {
+         if (region->mmaps[i].mmap) {
+             munmap(region->mmaps[i].mmap, region->mmaps[i].size);
+-            object_unparent(OBJECT(&region->mmaps[i].mem));
+         }
+     }
+ 
+-    object_unparent(OBJECT(region->mem));
+-
+     g_free(region->mem);
+     g_free(region->mmaps);
+ 
 
 -- 
 2.51.0
