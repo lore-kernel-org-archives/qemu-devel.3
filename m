@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F187CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB33CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 06:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uylKc-0007El-2S; Wed, 17 Sep 2025 02:07:54 -0400
+	id 1uylND-00086H-AY; Wed, 17 Sep 2025 02:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uylKa-0007Di-83; Wed, 17 Sep 2025 02:07:52 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1uylN9-00085U-DL; Wed, 17 Sep 2025 02:10:31 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=uXDK=34=kaod.org=clg@ozlabs.org>)
- id 1uylKX-00051i-O5; Wed, 17 Sep 2025 02:07:51 -0400
+ id 1uylN7-0005L9-B1; Wed, 17 Sep 2025 02:10:31 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cRSwt2ZMRz4wCX;
- Wed, 17 Sep 2025 16:07:42 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cRT003GDTz4wCY;
+ Wed, 17 Sep 2025 16:10:24 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cRSwp6Prtz4wCK;
- Wed, 17 Sep 2025 16:07:38 +1000 (AEST)
-Message-ID: <08b6e571-bf4f-4e51-8a70-8c2c5c675277@kaod.org>
-Date: Wed, 17 Sep 2025 08:07:36 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cRSzx1Ym0z4wCT;
+ Wed, 17 Sep 2025 16:10:20 +1000 (AEST)
+Message-ID: <37f60533-8e6b-496c-850b-16aff7fb7be3@kaod.org>
+Date: Wed, 17 Sep 2025 08:10:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/arm: enable eeproms for quanta-q71l
+Subject: Re: [PATCH 1/2] hw/arm: add eeproms to quanta-q7l1 board
 To: Yubin Zou <yubinz@google.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -39,7 +39,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  qemu-arm@nongnu.org, Patrick Venture <venture@google.com>
 References: <20250916-quanta-q71l-eeproms-v1-0-3648692cc441@google.com>
- <20250916-quanta-q71l-eeproms-v1-2-3648692cc441@google.com>
+ <20250916-quanta-q71l-eeproms-v1-1-3648692cc441@google.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,17 +84,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250916-quanta-q71l-eeproms-v1-2-3648692cc441@google.com>
+In-Reply-To: <20250916-quanta-q71l-eeproms-v1-1-3648692cc441@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=uXDK=34=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,55 +115,59 @@ Hi,
 On 9/16/25 19:50, Yubin Zou wrote:
 > From: Patrick Venture <venture@google.com>
 > 
-> Tested: Quanta-q71l firmware booted to login and was populated via the
-> -drives for the corresponding eeproms.
-> Signed-off-by: Patrick Venture <venture@google.com>
-> ---
->   hw/arm/aspeed.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+> Adds eeprom init for aspeed helper method and adds 24c64 eeproms to the
+> quanta-q71l bmc board.
 > 
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index bae59ae7394882e3fc93863049a37ff5a8737ff8..8cef387a0b431576a873553704920886222cca86 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -562,16 +562,16 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
->   
->       /* Baseboard FRU */
-> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x54, 8192);
-> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 1), 1, 0x54, 8192, 0);
+> Tested: Booted quanta-q71l bmc firmware to userspace.
 
-Where is at24c_eeprom_init_one() implementation ?
-
+Could you please provide a FW image and functional test for the
+quanta-q7l1 board ?
 
 Thanks,
 
 C.
 
-
->       /* Frontpanel FRU */
-> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x57, 8192);
-> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 1), 1, 0x57, 8192, 1);
+  
+> Signed-off-by: Patrick Venture <venture@google.com>
+> ---
+>   hw/arm/aspeed.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index c31bbe7701381f6980e874f9fca51805ff9fb9b4..bae59ae7394882e3fc93863049a37ff5a8737ff8 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -561,14 +561,17 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
+>       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+>   
+> -    /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
+> -    /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
+> +    /* Baseboard FRU */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x54, 8192);
+> +    /* Frontpanel FRU */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x57, 8192);
 >       /* TODO: Add Memory Riser i2c mux and eeproms. */
 >   
 >       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
 >       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
 >   
->       /* Add BIOS FRU */
-> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 3), 0x56, 8192);
-> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 3), 3, 0x56, 8192, 2);
+> -    /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
+> +    /* Add BIOS FRU */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 3), 0x56, 8192);
 >   
 >       /* i2c-7 */
 >       i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
-> @@ -581,9 +581,9 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+> @@ -577,8 +580,10 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+>       /*        - i2c@2: pmbus@58 */
 >       /*        - i2c@3: pmbus@59 */
 >   
->       /* PDB FRU */
-> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x52, 8192);
-> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 7), 7, 0x52, 8192, 3);
->       /* BMC FRU */
-> -    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 8), 0x50, 8192);
-> +    at24c_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 8), 8, 0x50, 8192, 4);
+> -    /* TODO: i2c-7: Add PDB FRU eeprom@52 */
+> -    /* TODO: i2c-8: Add BMC FRU eeprom@50 */
+> +    /* PDB FRU */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x52, 8192);
+> +    /* BMC FRU */
+> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 8), 0x50, 8192);
 >   }
 >   
 >   static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
