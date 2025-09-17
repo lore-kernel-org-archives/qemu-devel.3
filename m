@@ -4,95 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD993CA0EE8
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1131DCA0EE8
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 11:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyqT8-0004DQ-Bi; Wed, 17 Sep 2025 07:37:02 -0400
+	id 1uyqWh-0006NA-4V; Wed, 17 Sep 2025 07:40:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqT4-0004Cm-Fo
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:36:58 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uyqT2-00084c-2e
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:36:58 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-71d603a269cso43716487b3.1
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 04:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1758109015; x=1758713815; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+0fIO5QYep8ESCFZccAhR1SrpA2963VFE92xZX3msdY=;
- b=B2Ggz1SAlBMHY9TCpqCqU7RXx+OA9s9DIwjKsoS9RWKpNORKrZ8gtdCx5S7OG7WhpW
- 4BtLB+V6eorUYtVJmCVny2TrF+/d7y4oi9PgESp7QO44ZmBoiYdLM1zvbjpwfxUAYdww
- EE7CLD5f3ZEzWOjUQvZrcdxODdTB2mEiBDbNMJux7T7doXJhHk9GU+iCWqTfeWqVg8bK
- Qz/3KK014oi2QNN6OgPt9ibNShVCdxB6bL6beDRvn7norozI3evEQKxJ/rbfZS1XlSod
- ihTpa/LHOiO+7tH+seqoWN8nT3qzenDoUks64KHKbBNGrYU0loHGAQaQu5U7I6CKv+lY
- tFsQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyqWX-0006B5-7G
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:40:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uyqWU-00007S-Bd
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 07:40:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758109228;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fwVgncdj/Sqp7PFyxUTP95A9TG+s+P37rcpvxjB9Jz8=;
+ b=OpJmZ8fPJO2rafO8ccwIejLl31O/vJPmVucmAsKMRzmcadOftE1dI8XLBW8WYDbKZToXnK
+ 1gU4raAfdGcZSjJO3HtPzM9uXClPfMIsYStWtQjGdZdM5WBJyedXsexI0SdP57aF8hCIk+
+ A1zpWHcalYiKfMR3gZH/R0vY1kObmsw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-s1v4u9qXP26NFiuT2ahejA-1; Wed, 17 Sep 2025 07:40:27 -0400
+X-MC-Unique: s1v4u9qXP26NFiuT2ahejA-1
+X-Mimecast-MFC-AGG-ID: s1v4u9qXP26NFiuT2ahejA_1758109226
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45f2b9b99f0so5795285e9.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 04:40:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758109015; x=1758713815;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+0fIO5QYep8ESCFZccAhR1SrpA2963VFE92xZX3msdY=;
- b=rTPyRd/4Khgleup1WzqlHC4OrVJouMpSHg5vYrmheeaycgFIKL2vovdeQOSl+7F6jF
- snAka7pyHusX9gL9VlWxHwjtg/paQj83fm0eEBPrLZrFmZ6xDN6F0Wq4M/ABXj76YHUd
- f/NdRttlug09D8LEdqF5CV85IG8zKpgArnsKhMV8Y4KEWkGdY7v9H3+tSif7mGlqZ2jc
- SMyIol6imZQ+r5UtPzU9xktBIrG2LHqgbVKPPKmV6fNld4Zq+wns5dJNmyZCQf5BFDI+
- EPneB2W2cny4K8WV+j8ww9vNNYnQ6CkTNLVcu5uEcna77mLzJTyF7TnDWXVr96yck/0a
- /PBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVP5wbnhEumtw+8L4EBAbJYVIQKvbKTatcjGe9yBcQtafV8CG3uneHKV9FqsYFHFX7JB6C8sLMts+YK@nongnu.org
-X-Gm-Message-State: AOJu0YyflZ8tV5xrN966p7RILC/qLWoBZJfH0qSx3rbWKau4OhTvSP5j
- BJ5G6neXxq/Ngi6kJ0RVrfoJBwNpH+MC3JjtkkC8PF+R+eK1NYisgTamLDaIhVsjIAc=
-X-Gm-Gg: ASbGncu5FxuFJ2/D/Zttw1JFBZ3IOecitSUG/Ptf7KCBO1/mZFV0UnOcj7MATalRK1Y
- ZVPB3tVQRL6g2srUEI69ibO2j8q9fbYcCOjaJEKqJadzPy+K6qZm/gfjRDuOTikohy7LLREwj3i
- K/22lmGi3DKmRfEAJvisjfy+glz3LTP4x+66kyKIycKMYY5T5pRoPhbtk0dx2cmlYLjJ24scTir
- 9jWyg9wpglRFXG4ZkcRD+Yayu9BanyyIWNZBG69b1XK0kTXDV2pLvo14iannmMbQjncd/s+c8HZ
- Lf15/nLy34piX1m8CfcL2J3nlKRrlxfGqoSxASbilsD+DSKYwaJ4oiAKINTZlLpn5EpaWXxIKb0
- 8Z6k049aydmt6shw+femudQ01MDDvWu87PjDYW+vpmJJ6OeXvgm4nagG3CM1eknGrFsl2iI3Gwv
- 7i
-X-Google-Smtp-Source: AGHT+IEptVo9o6olaU9LNWCyaCw8yx4uyh+s1YUENrc1kTTpOXdJcWbPvSzbEcgjO/Fz5TLDnq62rw==
-X-Received: by 2002:a05:690c:f03:b0:732:f9d3:53b5 with SMTP id
- 00721157ae682-73892f4a5e0mr11929337b3.38.1758109014540; 
- Wed, 17 Sep 2025 04:36:54 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea?
- ([2804:7f0:bcc0:ba1a:8719:7c4c:526a:fdea])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-72f7632ed5csm47699057b3.6.2025.09.17.04.36.52
+ d=1e100.net; s=20230601; t=1758109226; x=1758714026;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fwVgncdj/Sqp7PFyxUTP95A9TG+s+P37rcpvxjB9Jz8=;
+ b=ddq1hALLmHy6IT5NtcGj8ip3UI1n5yKTWAfp4Yyn685sPp6G1xn3ABptxRrE8wyI0T
+ shazHiSLeDeyDxLrs1iXLfakKQkDbwMR8zPTQ0qjnAEXKryCyWJFfxGkYIovgGCM0YRS
+ AaDf0V4VRpTiCYyprmq2PQs7D93CrFC0zy8ZCR/n/VeMb7v+aLWcm8weWQKAxE+gg25M
+ fYGQtRO970uSBH3CsReE5dgYenGdI8l8/ftDrPzYO7i+gAZhPDX/qFWJtYKR7aRKdUF9
+ QUfhlAvJVlUgD8FPO1+VfaCvqlVyC4DkenqLsegByZB1vDOInWpu8mXbSvr2To7akiRr
+ Qzcw==
+X-Gm-Message-State: AOJu0YzrZDsWWwn/L96eKEnoTOdgQgrwGHw7krKLw+OOBu/BeXRlKFoK
+ vLDD7ChEckEzGw7x9lyikoecAGs0L2kFVJj/ojKq/Y5JiP4TQ/MSUTY3aUreRLw/t4N2WdjbAXp
+ 5ihQ3f+Lzygz3eEr7Rt5LZfzRbocoXQR5BgQngjrks7Ew77k34AR2tJmg
+X-Gm-Gg: ASbGncsUnhaVynI8B5vjgf9glPhA1bKNaygZOVuQ8JcUrS6xpsFz9HLANQ5QSNe5fBS
+ KbJGxB1ZUOFmmb3J57gbzBK1GpiWRilG5Uf3jJCnqaB/BZR02mJa4h4s9R9z+Jkg+gRVsAM/Xg+
+ vZcMKYBPZKNhbVqfAmvFWpFqWxLuLz0/bv9yNQmNr8RbA4dUC6D72/mcc7z5QrIfwzPEgRrI+Hc
+ +T6F1BEEHzswr4ZzY95xbMUyR5+2WozA/KIuTeBCl3yml6cXqOhwk52rs11ZEHJ/grYIPIyJ7Yv
+ Ez+tT9K/f4L5PmSktKmSegKLY2OGYgRGRFXx40vrZEkJhKWJcuy1xm2q5ZOSRiFvSKx2BoqEix/
+ q7bqsbuY9uqjKs+799V1VUwCKT1jE0vloAqX9rIl4mfg=
+X-Received: by 2002:a05:600c:46c6:b0:45d:dc10:a5ee with SMTP id
+ 5b1f17b1804b1-461f94aebebmr17108725e9.15.1758109226313; 
+ Wed, 17 Sep 2025 04:40:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJYsUg5Jvx8FAD0w0tCwDk/n0wKWeDwUalFTocQeblTOfBMfMs83QARTlgiMe8F3aim222YQ==
+X-Received: by 2002:a05:600c:46c6:b0:45d:dc10:a5ee with SMTP id
+ 5b1f17b1804b1-461f94aebebmr17108445e9.15.1758109225852; 
+ Wed, 17 Sep 2025 04:40:25 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-46139ab391bsm34470325e9.21.2025.09.17.04.40.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 04:36:53 -0700 (PDT)
-Message-ID: <f7ffd3ff-ed18-4c92-8fba-690ca1c59aeb@ventanamicro.com>
-Date: Wed, 17 Sep 2025 08:36:51 -0300
+ Wed, 17 Sep 2025 04:40:25 -0700 (PDT)
+Message-ID: <30f278e0-b55d-4a25-9123-7e7735ad8b8c@redhat.com>
+Date: Wed, 17 Sep 2025 13:40:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/5] target/riscv: Implement SMMPT fence instructions
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>
-References: <20250909132533.32205-1-zhiwei_liu@linux.alibaba.com>
- <20250909132533.32205-5-zhiwei_liu@linux.alibaba.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH 09/12] rust/qdev: Support bit property in #property macro
+To: Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250916085557.2008344-1-zhao1.liu@intel.com>
+ <20250916085557.2008344-10-zhao1.liu@intel.com>
+ <CAAjaMXYkJno=nAcAGPWQJMCjcSkePJwjmZgFkPAkX2N3tQoSCQ@mail.gmail.com>
+ <aMpicpXtVu/4lK63@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20250909132533.32205-5-zhiwei_liu@linux.alibaba.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <aMpicpXtVu/4lK63@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,82 +150,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/9/25 10:25 AM, LIU Zhiwei wrote:
-> This patch completes the SMMPT implementation by adding support for the
-> new fence instructions: `mfence.spa` and `minval.spa`.
+On 9/17/25 09:25, Zhao Liu wrote:
+> Only 3 types supports bit:
 > 
-> According to the specification, these instructions act as memory ordering
-> fences for MPT updates. In QEMU's TCG model, this is conservatively
-> implemented by flushing the entire TLB, which ensures that any subsequent
-> memory accesses will re-evaluate permissions and see the effects of any prior
-> MPT modifications.
-> 
-> The instructions are privileged and will cause an illegal instruction
-> exception if executed outside of M-mode.
-> 
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
+> u32: qdev_prop_bit
+> u64: qdev_prop_bit64
+> OnOffAuto: qdev_prop_on_off_auto_bit64 (not support yet)
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Yes, this one needs to wait for QAPI (unless we move OnOffAuto to core 
+code).
 
->   target/riscv/insn32.decode                    |  2 ++
->   .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
->   2 files changed, 32 insertions(+)
+> So for other types don't support bit, they need default BIT_INFO item,
+> otherwise, we will meet the error:
 > 
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index cd23b1f3a9..cf58f1beee 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
->   mret        0011000    00010 00000 000 00000 1110011
->   wfi         0001000    00101 00000 000 00000 1110011
->   sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-> +mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
-> +minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
->   
->   # *** NMI ***
->   mnret       0111000    00010 00000 000 00000 1110011
-> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-> index 8a62b4cfcd..5ec6bf5991 100644
-> --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> @@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
->   #endif
->       return false;
->   }
-> +
-> +#define REQUIRE_SMSDID(ctx) do {          \
-> +    if (!ctx->cfg_ptr->ext_smsdid) {      \
-> +        return false;                     \
-> +    }                                     \
-> +} while (0)
-> +
-> +static bool do_mfence_spa(DisasContext *ctx)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    REQUIRE_SMSDID(ctx);
-> +    if (ctx->priv != PRV_M) {
-> +        return false;
-> +    }
-> +    decode_save_opc(ctx, 0);
-> +    gen_helper_tlb_flush_all(tcg_env);
-> +    return true;
-> +#endif
-> +    return false;
-> +}
-> +
-> +static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
-> +{
-> +    return do_mfence_spa(ctx);
-> +}
-> +
-> +static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
-> +{
-> +    return do_mfence_spa(ctx);
-> +}
+>   not all trait items implemented, missing: `BIT_INFO`
+> 
+> And this panic can provide richer info about why a type can't support
+> bit property. (I just refer the implementation of `trait VMState`).
+
+Yep, looks good. I added to rust-next a couple patches that you can 
+rebase on, to use the attrs crate.
+
+Also please add a testcase.
+
+Paolo
 
 
