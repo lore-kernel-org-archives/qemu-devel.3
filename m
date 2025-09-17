@@ -4,60 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22722CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB19CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 13:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uys1Y-0003Gu-4A; Wed, 17 Sep 2025 09:16:42 -0400
+	id 1uyrsx-00035o-J0; Wed, 17 Sep 2025 09:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uys18-0002yv-8h
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:16:25 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrpm-0005wO-KZ; Wed, 17 Sep 2025 09:04:36 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uys13-0000Rc-2N
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 09:16:13 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cRfPH4Zs1z6GDKq;
- Wed, 17 Sep 2025 21:14:27 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 92A0D1400D4;
- Wed, 17 Sep 2025 21:16:00 +0800 (CST)
-Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 17 Sep
- 2025 15:16:00 +0200
-Date: Wed, 17 Sep 2025 14:15:58 +0100
-To: Markus Armbruster <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- <marcandre.lureau@redhat.com>, <berrange@redhat.com>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 03/12] hw/cxl: Convert cxl_fmws_link() to Error
-Message-ID: <20250917141558.00007ae1@huawei.com>
-In-Reply-To: <20250917115207.1730186-4-armbru@redhat.com>
-References: <20250917115207.1730186-1-armbru@redhat.com>
- <20250917115207.1730186-4-armbru@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uyrpk-0005xn-8N; Wed, 17 Sep 2025 09:04:30 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58HCuN6x008967
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 17 Sep 2025 21:56:46 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=2k1RXsuysZJUUbooF4SQHx4mO+9R1oof00yibd4tPt8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1758113807; v=1;
+ b=FvaXOvL0NzIYuie5l9DQdrEVrjLdBmVmO2Z5k3XIcvMFwZzDcBEwIZaN2DUwCRf9
+ TmpX9robixIPy+LNyaFa60g9E1eZrfW/ygqhDOD+6e5VOk1+j+FCwAsKGqGFZpYg
+ RTMTEikUoYBvo6ihFgFS4J1f/lE0L65s0MRSZANMhV+vHphVLaypaKAkFOW+7t3B
+ +g45JKUixe7q7xlyuh2MH3yPwty6t3xOsLG2tTrTemCQrVtsgXUMjLa9jVTK3ITv
+ opFWLFKv3yRuB/V/6TgY/MKGRni25HSzwYN5CWeU3aFp3S3jU1B4cl2RN5yehiod
+ kR4HtnZxXPba6n+ID0vytg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 17 Sep 2025 21:56:31 +0900
+Subject: [PATCH 19/35] hw/ppc: QOM-ify AddressSpace
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250917-qom-v1-19-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Eric Auger <eric.auger@redhat.com>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Ninad Palsule <ninad@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?utf-8?q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Laurent Vivier <laurent@vivier.eu>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fam Zheng <fam@euphon.net>,
+ Bin Meng <bmeng.cn@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-block@nongnu.org, kvm@vger.kernel.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,36 +122,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Sep 2025 13:51:58 +0200
-Markus Armbruster <armbru@redhat.com> wrote:
+Make AddressSpaces QOM objects to ensure that they are destroyed when
+their owners are finalized and also to get a unique path for debugging
+output.
 
-> Functions that use an Error **errp parameter to return errors should
-> not also report them to the user, because reporting is the caller's
-> job.  When the caller does, the error is reported twice.  When it
-> doesn't (because it recovered from the error), there is no error to
-> report, i.e. the report is bogus.
->=20
-> cxl_fmws_link_targets() violates this principle: it calls
-> error_setg(&error_fatal, ...) via cxl_fmws_link().  Goes back to
-> commit 584f722eb3ab (hw/cxl: Make the CXL fixed memory windows
-> devices.)  Currently harmless, because cxl_fmws_link_targets()'s
-> callers always pass &error_fatal.  Clean this up by converting
-> cxl_fmws_link() to Error.
->=20
-> Also change its return value on error from 1 to -1 to conform to the
-> rules laid in qapi/error.h.  It's call chain cxl_fmws_link_targets()
-> via object_child_foreach_recursive() is fine with that.
->=20
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
-LGTM with the updated commit message.  Thanks!
+The name arguments were used to distinguish AddresSpaces in debugging
+output, but they will represent property names after QOM-ification and
+debugging output will show QOM paths. So change them to make them more
+concise and also avoid conflicts with other properties.
 
-Jonathan
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/ppc/pnv_lpc.c   | 2 +-
+ hw/ppc/pnv_xscom.c | 2 +-
+ hw/ppc/spapr_pci.c | 5 ++---
+ hw/ppc/spapr_vio.c | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+index 373b5a8be573..304f01e240db 100644
+--- a/hw/ppc/pnv_lpc.c
++++ b/hw/ppc/pnv_lpc.c
+@@ -799,7 +799,7 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
+ 
+     /* Create address space and backing MR for the OPB bus */
+     memory_region_init(&lpc->opb_mr, OBJECT(dev), "lpc-opb", 0x100000000ull);
+-    address_space_init(&lpc->opb_as, NULL, &lpc->opb_mr, "lpc-opb");
++    address_space_init(&lpc->opb_as, OBJECT(dev), &lpc->opb_mr, "as");
+ 
+     /*
+      * Create ISA IO, Mem, and FW space regions which are the root of
+diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
+index 58f86bcbd2a6..353eb9b14e29 100644
+--- a/hw/ppc/pnv_xscom.c
++++ b/hw/ppc/pnv_xscom.c
+@@ -219,7 +219,7 @@ void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr)
+     memory_region_add_subregion(get_system_memory(), addr, &chip->xscom_mmio);
+ 
+     memory_region_init(&chip->xscom, OBJECT(chip), name, size);
+-    address_space_init(&chip->xscom_as, NULL, &chip->xscom, name);
++    address_space_init(&chip->xscom_as, OBJECT(chip), &chip->xscom, "as");
+     g_free(name);
+ }
+ 
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 13fc5c9aa8f2..41bf65b291de 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1759,7 +1759,7 @@ static void spapr_phb_unrealize(DeviceState *dev)
+      * address space.
+      */
+     address_space_remove_listeners(&sphb->iommu_as);
+-    address_space_destroy(&sphb->iommu_as);
++    object_unparent(OBJECT(&sphb->iommu_as));
+ 
+     qbus_set_hotplug_handler(BUS(phb->bus), NULL);
+     pci_unregister_root_bus(phb->bus);
+@@ -1902,8 +1902,7 @@ static void spapr_phb_realize(DeviceState *dev, Error **errp)
+     memory_region_init(&sphb->iommu_root, OBJECT(sphb),
+                        namebuf, UINT64_MAX);
+     g_free(namebuf);
+-    address_space_init(&sphb->iommu_as, NULL, &sphb->iommu_root,
+-                       sphb->dtbusname);
++    address_space_init(&sphb->iommu_as, OBJECT(sphb), &sphb->iommu_root, "as");
+ 
+     /*
+      * As MSI/MSIX interrupts trigger by writing at MSI/MSIX vectors,
+diff --git a/hw/ppc/spapr_vio.c b/hw/ppc/spapr_vio.c
+index ebe4bad23668..5f8dd153dedf 100644
+--- a/hw/ppc/spapr_vio.c
++++ b/hw/ppc/spapr_vio.c
+@@ -529,7 +529,7 @@ static void spapr_vio_busdev_realize(DeviceState *qdev, Error **errp)
+                                  "iommu-spapr-bypass", get_system_memory(),
+                                  0, MACHINE(spapr)->ram_size);
+         memory_region_add_subregion_overlap(&dev->mrroot, 0, &dev->mrbypass, 1);
+-        address_space_init(&dev->as, NULL, &dev->mrroot, qdev->id);
++        address_space_init(&dev->as, OBJECT(dev), &dev->mrroot, "as");
+ 
+         dev->tcet = spapr_tce_new_table(qdev, liobn);
+         spapr_tce_table_enable(dev->tcet, SPAPR_TCE_PAGE_SHIFT, 0,
+
+-- 
+2.51.0
+
 
