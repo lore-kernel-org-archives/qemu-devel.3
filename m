@@ -4,113 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B497CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D249CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyv1a-0005Eb-LZ; Wed, 17 Sep 2025 12:28:54 -0400
+	id 1uyv2E-0005bN-8x; Wed, 17 Sep 2025 12:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyv1X-0005Dw-AJ
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:28:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uyv28-0005Z3-OI
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:29:28 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uyv1V-0002M4-9W
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:28:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758126528;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZDezycxulpvqbuXIFVRvukz4G+S7KwYiBf/Z4wmzbGY=;
- b=h8S0G0kW/zljDBAwgfYF9a+mkZL5R/OJNCZRfpCSslztyMtgzelcjcYmhQLqxjuBS/tXd3
- 2fbKsnCtlzMeiE4pslOvDKAYaA1p39k85jJ6aX2KqUqJzgGB4PPH6wtJlwynXjFoIcrIZQ
- Nh0yZfbi50xNJSvNk5Ml+nDnkHX7iqo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-oHHjpyQePCWNg5nvpOTFhA-1; Wed,
- 17 Sep 2025 12:28:46 -0400
-X-MC-Unique: oHHjpyQePCWNg5nvpOTFhA-1
-X-Mimecast-MFC-AGG-ID: oHHjpyQePCWNg5nvpOTFhA_1758126521
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E449D1800578; Wed, 17 Sep 2025 16:28:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.195])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CCE819560B1; Wed, 17 Sep 2025 16:28:14 +0000 (UTC)
-Date: Wed, 17 Sep 2025 17:28:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v3 4/7] hv-balloon: hw/core/register: Do not unparent in
- instance_finalize()
-Message-ID: <aMrhmYmZvRapJREE@redhat.com>
-References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
- <20250917-use-v3-4-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uyv25-0002NT-DD
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:29:28 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cRkff1b2Mz6M5JB;
+ Thu, 18 Sep 2025 00:26:18 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1010F14033F;
+ Thu, 18 Sep 2025 00:29:07 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 17 Sep
+ 2025 18:29:06 +0200
+Date: Wed, 17 Sep 2025 17:29:05 +0100
+To: Arpit Kumar <arpit1.kumar@samsung.com>
+CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <dave@stgolabs.net>, <vishak.g@samsung.com>,
+ <krish.reddy@samsung.com>, <a.manzanares@samsung.com>,
+ <alok.rathore@samsung.com>, <cpgs@samsung.com>
+Subject: Re: [PATCH v4 2/2] hw/cxl: Add Physical Port Control (Opcode 5102h)
+Message-ID: <20250917172905.00005fa3@huawei.com>
+In-Reply-To: <20250916080736.1266083-3-arpit1.kumar@samsung.com>
+References: <20250916080736.1266083-1-arpit1.kumar@samsung.com>
+ <CGME20250916080808epcas5p23113551a9a0719d68a8c3efff15209cc@epcas5p2.samsung.com>
+ <20250916080736.1266083-3-arpit1.kumar@samsung.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250917-use-v3-4-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,32 +72,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 07:13:29PM +0900, Akihiko Odaki wrote:
-> Children are automatically unparented so manually unparenting is
-> unnecessary.
+On Tue, 16 Sep 2025 13:37:36 +0530
+Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+
+> -added assert-deassert PERST implementation
+>  for physical ports (both USP and DSP's).
+> -assert PERST involves bg operation for holding 100ms.
+> -reset PPB implementation for physical ports.
 > 
-> Worse, automatic unparenting happens before the instance_finalize()
-> callback of the parent gets called, so object_unparent() calls in
-> the callback will refer to objects that are already unparented, which
-> is semantically incorrect.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  hw/hyperv/hv-balloon.c | 12 +-----------
->  1 file changed, 1 insertion(+), 11 deletions(-)
+> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> @@ -4702,11 +4818,34 @@ static CXLRetCode cxl_set_phy_port_info(CXLCCI *cci)
+>  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>                                    DeviceState *d, size_t payload_max)
+>  {
+> +    CXLUpstreamPort *pp;
+> +    uint8_t pn = 0;
+> +
+>      cxl_copy_cci_commands(cci, cxl_cmd_set_sw);
+>      cci->d = d;
+>      cci->intf = intf;
+>      cxl_init_cci(cci, payload_max);
+>      cxl_set_phy_port_info(cci);
+> +    /* physical port control */
+> +    pp = CXL_USP(cci->d);
+This bit feels like it is wrongly located.  I ran into this whilst
+trying to add back the mctp variant as part of shuffling my cxl staging tree.
 
+Whilst this only gets used for the CCI commands, it is a USP thing not
+a mailbox thing as we only want this called once per USP, not once per CCI on the
+USP.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Could we move this to a call from cxl_usp_realize?
 
+If something like that works would you mind sending me a patch on top of this
+series to do so? I'm not yet set up to test this series so better you do it.
+
+We don't need that upstream until the first MCTP support on USP so this doesn't
+block us on that front.
+
+ 
+Thanks,
+Jonathan
+
+> +    for (int byte_index = 0; byte_index < (CXL_MAX_PHY_PORTS / BITS_PER_BYTE);
+> +         byte_index++) {
+> +        unsigned char byte = pp->pports.active_port_bitmask[byte_index];
+> +
+> +        for (int bit_index = 0; bit_index < 8; bit_index++, pn++) {
+> +            if (((byte) & (1 << bit_index)) != 0) {
+> +                qemu_mutex_init(&pp->pports.perst[pn].lock);
+> +                pp->pports.perst[pn].issued_assert_perst = false;
+> +                /*
+> +                 * Assert PERST involves physical port to be in
+> +                 * hold reset phase for minimum 100ms. No other
+> +                 * physical port control requests are entertained
+> +                 * until Deassert PERST command.
+> +                 */
+> +                pp->pports.perst[pn].asrt_time = ASSERT_WAIT_TIME_MS;
+> +            }
+> +        }
+> +    }
+>  }
+>  
 
