@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4A0CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71BEDCAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Sep 2025 16:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uyubc-0004tp-DU; Wed, 17 Sep 2025 12:02:04 -0400
+	id 1uyufK-00006S-CW; Wed, 17 Sep 2025 12:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyuba-0004rr-Fy
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:02:02 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uyubY-0007XF-NZ
- for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:02:02 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b4e84a61055so4562069a12.0
- for <qemu-devel@nongnu.org>; Wed, 17 Sep 2025 09:02:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758124918; x=1758729718; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZZDmunlvUXfYoPx+TjhOyIN7WODU3fkgILedlMP8VxY=;
- b=NsTNUuiwEnCY9i62Q+7NjUz4WVVELLZK8ToEFKBO2BjUibbM1lQm391vNB4YsnXn9z
- QFHespZVqnkqQB5JJPIfXcekVLc9bSY7WaD76J2czWc4ABUfZ4w3L/HpEJ9uOoiReht1
- TRfan0nmHecg9oCnrYG1H+boRp9xoMwIUw+Cy0Tdzanyn655wYHUnhtxFjl5gF8Mk1I8
- wiE78aO0cNt4RjnYFpF8PVc+d2UEjH7nQDdLpJdt/+PKGjn8u0zu8CRNhMK6cyagNwjl
- +zflCKpaAsuoMjbGTVH0OBlTk8VvBdR3r6+0DWKJgO33eqwb2V8hz0aGYHftiNMnzbD0
- 6Gew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758124918; x=1758729718;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZZDmunlvUXfYoPx+TjhOyIN7WODU3fkgILedlMP8VxY=;
- b=F98OvHGTy8AeFq1YYhDbbZsW1yQq1vo8PXa4sxWWCZLK61CuYMIMBdgty/kGAmKi9/
- 0UP9FYEycyKMKuaqWqkkppBQPHHFxz87Y34JRMRlRWCXnU8JJfNfZCUGRvTNstEWhNRU
- edyiZID9HjvFNYTXmOgInCRN3Zrnhd/pcWS1KHbNSEF66zf6FQ6NA1wW+fCch4EiToWr
- g7buFlQQhxaxC5XIN/2qtzyKdvwnw5QTZ0yxb6qoT0Rc443TESdVKrA9b1xaMsuGRusE
- Q2WxaGDhFaaO7U5Me+cNqM8PTXgEHHzdhdWqLdOcYq5/HmX+xSqNo04njDtV6lar45Yl
- +tYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSH3ES2UQO/b8DNAr3TicLdvNlDiXeDrDBJuqJ2fCz8EnbrL0CCL8BqMKDiV2QoMqPghyUuBBo0/6z@nongnu.org
-X-Gm-Message-State: AOJu0YwxhJYwakYeP7NP16WEhgxfd3P8JZN2yVghFLaes08buWfxVJYC
- C7WqCysPadXnbO/iNnhe72/Uv6dfXApJGQP9UVvfadDeJ6pLl4UXrJTl2gQCrIgVmK4CSxfa3Ly
- v/trW
-X-Gm-Gg: ASbGncs4D3PgRPGXnKNdLQRb8deQpgJLtBEi/rYDqgvI0Y7hrrmM5SWC6DzgmvAbfoz
- w77ae9p3tP6IryiZ7+KI+LABKDrWKlBPYVFd2gHh4emOWGJzW2uvmjhA7cJ0CgpyIHwzk15aGjX
- EupiRmKDrhIXdqwW7ZgxPg/pJ/u5v2A0pXzNYKuIH5ix6rQpH+SxKAZClV2lGyVRTQbIqJPZD/x
- Ezj/LprJcEN5H7zWx5AVhzDp8sHtIuEpQLKN2h2Bcd3rQSt4jxMS9YCpAa6lr8SdZsf8QnyBnDl
- JL1IIAIQmWxyLHUogdLhVccePfVTy/zQz1cuDYT7W2CxwKSH/MA5pbYIXWBDsz2Hov5Zfd+mxgZ
- XKEkhPdBh2ahibY9Em1SNrjoutlldHPglJ1D3
-X-Google-Smtp-Source: AGHT+IG7jopirO7rwPJh5cEbcYQlzbmcgc/qd7VLJ0+e7BM0GzXLZ9jRLzsLYfErWQd4JhybuMEIgQ==
-X-Received: by 2002:a17:903:1b25:b0:266:d648:bf53 with SMTP id
- d9443c01a7336-268119b832bmr35331995ad.7.1758124918232; 
- Wed, 17 Sep 2025 09:01:58 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-269800541adsm62735ad.4.2025.09.17.09.01.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Sep 2025 09:01:57 -0700 (PDT)
-Message-ID: <a392927d-74cb-4005-95f6-6e7fa1eaae1b@linaro.org>
-Date: Wed, 17 Sep 2025 09:01:56 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyufI-00005v-7g
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:05:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uyufE-00088u-60
+ for qemu-devel@nongnu.org; Wed, 17 Sep 2025 12:05:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758125146;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mVx54heixKAevDXgK5bWe8sOChhtBRuCUuvsHB3jWoc=;
+ b=G08/lcktSQbRQMDnkItbNAmzbwIi6n0KP8WhPWqKjRW/Yw3tSTJ/fhNybQ0PG49rb/bFBm
+ l8QZsZBz+204+oxNOB0Y+2zu17LLYXNjF/upsHPrmqofE1qXe7EfjKNKogpCBnQIAtmhjR
+ C2z3QjT3gbxS9v5JQik+xei5jAA7Yx4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-KkPy_VRvPuWScDWSmrwCWw-1; Wed,
+ 17 Sep 2025 12:05:42 -0400
+X-MC-Unique: KkPy_VRvPuWScDWSmrwCWw-1
+X-Mimecast-MFC-AGG-ID: KkPy_VRvPuWScDWSmrwCWw_1758125141
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB68F19560AA; Wed, 17 Sep 2025 16:05:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.195])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98B6B19560B8; Wed, 17 Sep 2025 16:05:39 +0000 (UTC)
+Date: Wed, 17 Sep 2025 17:05:34 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+Subject: Re: [PATCH] checkpatch: Ignore removed lines in license check
+Message-ID: <aMrcTg0J-dQuPkhI@redhat.com>
+References: <20250916165928.10048-1-nabihestefan@google.com>
+ <aMp-MzBE19NORy4Y@redhat.com>
+ <CA+QoejWaM+K895k=WcRndq=BNe1kNfJ4L5APKyk4+GHhmQLD0g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 35/35] memory: Drop non-QOM AddressSpace support
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-References: <20250917-qom-v1-0-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
- <20250917-qom-v1-35-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250917-qom-v1-35-7262db7b0a84@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+QoejWaM+K895k=WcRndq=BNe1kNfJ4L5APKyk4+GHhmQLD0g@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,21 +86,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/25 05:56, Akihiko Odaki wrote:
-> Now all AddressSpace instances are converted to QOM so drop
-> non-QOM AddressSpace support.
+On Wed, Sep 17, 2025 at 08:16:53AM -0700, Nabih Estefan wrote:
+> We ran it against an internal patch that we were updating, so I can't
+> show you the patch.
+
+If you can't share that private patch, perhaps you can create a
+dummy patch with the same type of diff structure that shows the
+problem ?
+
+> However, the difference on it being affected might be in how we're
+> running it? To check
+> against just the changes being done in the specific patch, instead of
+> the whole file, we
+> trigger it by running `./scripts/checkpatch.pl --branch HEAD...HEAD^`.
+> Could that be
+> why it's triggering against existing files?
+
+I don't think that's a problem. It is just a different way ot getting
+a list of git commit hashes to analyse - it'll still operate against
+a patch diff IIUC.
+
+FWIW, I use   'checkpatch.pl master..' and/or 'git show| checkpatch.pl -'
+
 > 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->   include/system/memory.h | 13 -------------
->   system/memory.c         | 26 +++++---------------------
->   2 files changed, 5 insertions(+), 34 deletions(-)
+> Thanks,
+> Nabih
+> 
+> On Wed, Sep 17, 2025 at 2:24 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Tue, Sep 16, 2025 at 04:59:28PM +0000, Nabih Estefan wrote:
+> > > When running the license check, if we are updating a license it is
+> > > possible for the checkpatch script to test against old license lines
+> > > instead of newer ones, since the removal lines appear before the
+> > > addition lines in a .patch file.
+> >
+> > While we match the "SPDX-License-Identifier" text in any context,
+> > the "file must have SDPX" validation is only performed against
+> > files that are entirely new:
+> >
+> >   # Called at the end of processing a diff hunk for a file
+> >   sub process_end_of_file {
+> >         my $fileinfo = shift;
+> >
+> >         if ($fileinfo->{action} eq "new" &&
+> >             !exists $fileinfo->{facts}->{sawspdx}) {
+> >              ...raise error ....
+> >
+> > > Fix this by skipping over lines that start with "-" in the checkpatch
+> > > script.
+> >
+> > A new file cannot have any "-" lines present, so there isn't any
+> > bug that needs fixing AFAICT.  Can you show any patch or commit
+> > where this would have made a difference to what checkpatch.pl
+> > reports ?
+> >
+> > >
+> > > Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> > > ---
+> > >  scripts/checkpatch.pl | 3 ++-
+> > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> > > index 833f20f555..c57a423f9f 100755
+> > > --- a/scripts/checkpatch.pl
+> > > +++ b/scripts/checkpatch.pl
+> > > @@ -1813,7 +1813,8 @@ sub process {
+> > >               }
+> > >
+> > >  # Check SPDX-License-Identifier references a permitted license
+> > > -             if ($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) {
+> > > +             if (($rawline =~ m,SPDX-License-Identifier: (.*?)(\*/)?\s*$,) &&
+> > > +                     $rawline !~ /^-/) {
+> > >                       $fileinfo->{facts}->{sawspdx} = 1;
+> > >                       &checkspdx($realfile, $1);
+> > >               }
+> > > --
+> > > 2.51.0.384.g4c02a37b29-goog
+> > >
+> >
+> > With regards,
+> > Daniel
+> > --
+> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> >
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-
-r~
 
