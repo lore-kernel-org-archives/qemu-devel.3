@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A06CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88506CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzH1a-00029f-Ta; Thu, 18 Sep 2025 11:58:22 -0400
+	id 1uzH2E-0002Yh-9d; Thu, 18 Sep 2025 11:59:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uzH1U-00025G-Uk
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:20 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1uzH2A-0002W8-10
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:58 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uzH1R-0007Ow-DC
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:15 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7761b392d50so1508083b3a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:58:12 -0700 (PDT)
+ id 1uzH28-0007Ru-9l
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:57 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7761578340dso1628289b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:58:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758211091; x=1758815891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758211135; x=1758815935; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QjoL3B7/Q4Dr3v+93XUH8Ll/ZtmdI1oPJVmow4urwIc=;
- b=URZ0rwwCzdvfIHt/eMkwVhj9hs1fxKryHGRDeP1kN1W2BB9TneZFM7wubvzWLauKd5
- A1bjnvBepP5UmK+fEenIoaUBsqelG4HNrnp+zNmp5IXZfDl40VwSKDO8Jheb4pYlY/r0
- u8SrQ5Bqp/GoL/LVqlJj5QTLW5wLzV6mKCNeINLhizfgT9QWPxhEa4Cj3ire14eycl2b
- wHWtr04GS+uLzZquXuNN7FUKVnXTn4AkpxvfxeTaGeA63IV1rp2mwFSdu8izvGI/5Uey
- 0U7m3tL4RxExeWCKtjAtpFamQKyJ2p/of0blptq6ebNBOl/dr+PNfvGRaKsqVZL3VM26
- KHbg==
+ bh=xO7r/UkjJOpBdepZgahQXwA4UPtG8pwa1VMzQM5PCVo=;
+ b=QIC+EgUX5qrkamxx8GF2nS5z84b6xfJp4sfNH1yxcMK/BF/mzzwAIBLyL7Co2L/S3D
+ jP7D65Vt1EeYnRxJ2BfsJPlunhoi8n2O7M8T9CgPgZ/6fJfK+XaHwbOX25zt9869a3gb
+ shlavRvhBNQnqJrb8dxc09EC7RUpfa/ZC3j3iIF9r0p1FIpACxn3KPEQ5mpOOMcU45Bf
+ /x2xp0t4AKhpnHiFIV+Ers8RCLoL75o3i8P4zHc4fExEB8k8xI/SwlDMsQZPEEp7J3Ea
+ 6HhnPaW5kbf3sFGvEaLpKEq+furfNtnz9VQrSc+PDW/WdA+LFYOZTNnUXiqQDAaBwpNC
+ 9IrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758211091; x=1758815891;
+ d=1e100.net; s=20230601; t=1758211135; x=1758815935;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QjoL3B7/Q4Dr3v+93XUH8Ll/ZtmdI1oPJVmow4urwIc=;
- b=p/eYSeWzjOtjwWhzO383VOO8B/idNUKe01uN5GJ/QnIy4/m9qioO2gdjKFe7V+ZUlS
- scHWlTWJnVKHGOV5U/QZHTgE+Tc5yx5qszYHo2pERSqVTMzq3Y4CGlhzCWcYuOPxwowB
- ILcWlwsZZGEWYy1MAhbUij6o/A79WrhcM9fuJjvJCuI1t7zfLEKrggkW2QPywB4IbR2J
- VRFNlIIZylVYieUbBrCmSMR6gt0mu7BuV4/BiL5pq5TXafb/043REFZGA5138E2L3Iyb
- JW5bvrD6YIWlyuwgGRwoi1tzl3QxunLQ1eI4ql9B9FvMOlJ3t5HU1X8cN1KnX+NHIysy
- jMdA==
-X-Gm-Message-State: AOJu0YyE+6Uo1Ctf49dlxjh6UpgW6F3pwrGufFE5JptJ87nBiz+CwFQi
- BIB8iGfU4MAIySj0BOH5946664eq8v80M04m51Z7huabudi9GEjeWBZ6N3UtktY6yScdYltBxrL
- y/Ms+
-X-Gm-Gg: ASbGncuA8e5mJUxs0nyfbRCP5zFSp5R37mZEQxXEXz1/pZIDvvzVMc7k8WUHgGdE/EQ
- vrRlJBKssC6tPdxFpNO+v3i0Cd5ysK/S2LYoFgxCZG6AjtRDTfS54nRwBH2pLwNVawLOzzYAKVV
- FJO9h/AJUqJULPsSk7rGyhoghhWf9QTgrXiDPpC/1i2YyTY7sLYpU6i1fi12woKvg1OwgsAlZLy
- 7gtK4VNvsH+ZEtx+vT0PLqOTZ/2/6qQSFFFuKTRVywtXU3crEJpAz5pjQ2k3ZLuFfGJ+X3CT1z2
- 7H5a6eqrZXfXUEsqmOBSFBaoyo5PT0MPc7agefm9Rn2SqzYMfW1Snf1DqO7hFwrlTyHpTbMqoPy
- 7SIyz/w7UNVJN6Ju46wYjuMTiq70xMUHXvTbHKxy47Tuz4hHhqPst+Uc=
-X-Google-Smtp-Source: AGHT+IF1rfXDg4V1CRdLBdt3acH0kdu1B56ExAda4E6NzlqHNccLVb37YKRfmX3kWTeW+WO5HJb6bg==
-X-Received: by 2002:a05:6a00:993:b0:772:5a3f:7cb3 with SMTP id
- d2e1a72fcca58-77bf6dceaebmr8287316b3a.1.1758211091272; 
- Thu, 18 Sep 2025 08:58:11 -0700 (PDT)
+ bh=xO7r/UkjJOpBdepZgahQXwA4UPtG8pwa1VMzQM5PCVo=;
+ b=JlzT4fTTwnb2JTLmzRweVxF7y8nY90nVp5/gnQ7N+HiqTWaPAGCEMQQcMqgJMPQ6f2
+ OixT8jirxvPgUgFUyABRRP8nmhG86Je94mLM3MyWbQku1PRzNg+9CO4epJAUpYwbRNGE
+ yFpO0mMy18Es+AEJwbOezoX2ukb84pw8FxD/0SqriQGLrHpheymR/HT8WjqlcPkdIrve
+ I72Zeby1eT4Ule5Of/7t+puR60gSwemRzGlkjTxJkOwQw5RA2jhNhENIAOVL1zn1t9y3
+ guXn6YKjEBg2k4j5f60HTawxnzVUIchK+jROEiZ2igJM0sKEm6pcanG/T2Pice3Fgu0v
+ cBgA==
+X-Gm-Message-State: AOJu0YytZ3Gi2332R+Ha/Kh5VkxRYCjqe/oYjhWM6e4wuklhS6YArZcV
+ z1UCKZtBGmimrHb5ep2Y7mrrCLK7YQndneoL95X86cKFpjdaheELGRNGfWVFrfl8IB2gb998oh2
+ noMSq
+X-Gm-Gg: ASbGnctXekkkY+NBgg+/SSgEwy8XOZLEMeXebR7RWBHCUBfcgVcoZK916KyKtRoBNoi
+ 0tqvwOEkr02Ycw6FUVDtw/0eRs8tIMKEd1LsdPQeJGgFjwXccAN1cfGshY9LKiJoSJo+9Z1pjde
+ 0nuFzt2y+vrqpjFXcxtcDji8VPymXgk1uMLXoFO5wUheP6rcLU5yF5mhacwFq51xu2nZqWKy3H5
+ XqA9m2H1N/YWAdTUMETESRfWnd6j38iZlLXg0WlNfsXqyWHKIxnNbv+zmKG8u3sg81s6VtKj2Ga
+ +9xqWDjsSJBBvtIcULiOBegaE7dyke/+wfbchkciDEn/sedXXfocbJyLHU8QDUqVzbSFDK2MZBI
+ /9UYZ43WlOiBUKOih6vKNnfZPhyUvFSPD1iat5n+wQDfNnyISfl5Vs0Y=
+X-Google-Smtp-Source: AGHT+IFPdZfehmTFNFMOPZ2dpfXLYHUJxLLrBVq4h9M+YRTq4CeFYSIHswRwtPZCeVqW0HnwfocXug==
+X-Received: by 2002:a05:6a00:c93:b0:772:25f6:caee with SMTP id
+ d2e1a72fcca58-77bfa648609mr6819451b3a.30.1758211134761; 
+ Thu, 18 Sep 2025 08:58:54 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77cfec3f84fsm2727600b3a.79.2025.09.18.08.58.10
+ d2e1a72fcca58-77cfbb7c127sm2723972b3a.21.2025.09.18.08.58.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Sep 2025 08:58:10 -0700 (PDT)
-Message-ID: <d73d1d7c-2957-45ac-9b04-c1cb4e36226a@linaro.org>
-Date: Thu, 18 Sep 2025 08:58:09 -0700
+ Thu, 18 Sep 2025 08:58:54 -0700 (PDT)
+Message-ID: <5d52ba49-df38-4006-a900-b285093813fd@linaro.org>
+Date: Thu, 18 Sep 2025 08:58:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] loongarch-to-apply queue
+Subject: Re: [PULL v2 00/60] CPU, Rust, x86 changes for 2025-09-13
 To: qemu-devel@nongnu.org
-References: <20250918092047.785269-1-gaosong@loongson.cn>
+References: <20250918104624.441820-1-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250918092047.785269-1-gaosong@loongson.cn>
+In-Reply-To: <20250918104624.441820-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 02:20, Song Gao wrote:
-> The following changes since commit f0007b7f03e2d7fc33e71c3a582f2364c51a226b:
+On 9/18/25 03:46, Paolo Bonzini wrote:
+> The following changes since commit 2e66fb24a0ca9750df0d1d5b35197ff89c4bbd46:
 > 
->    Merge tag 'pull-target-arm-20250916' of https://gitlab.com/pm215/qemu into staging (2025-09-17 11:10:55 -0700)
+>    Merge tag 'pull-misc-20250916' ofhttps://gitlab.com/rth7680/qemu into staging (2025-09-16 10:10:51 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250918
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
 > 
-> for you to fetch changes up to cb5ee0017fc9909916383634a3f13eae05e6fe5c:
+> for you to fetch changes up to 00c0911c68e5bd664de1a261b74c390f4c0be83d:
 > 
->    hw/loongarch/virt: Register reset interface with cpu plug callback (2025-09-18 17:39:57 +0800)
-> 
-> ----------------------------------------------------------------
-> pull-loongarch-20250918
+>    accel/kvm: Set guest_memfd_offset to non-zero value only when guest_memfd is valid (2025-09-17 19:01:57 +0200)
 > 
 > ----------------------------------------------------------------
-> Bibo Mao (3):
->        hw/loongarch/virt: Add BSP support with aux boot code
->        hw/loongarch/virt: Remove unnecessay pre-boot setting with BSP
->        hw/loongarch/virt: Register reset interface with cpu plug callback
+> * cpu-exec: more cleanups to CPU loop exits
+> * python: bump bundled Meson to 1.9.0
+> * rust: require Rust 1.83.0
+> * rust: temporarily remove from Ubuntu CI
+> * rust: vmstate: convert to use builder pattern
+> * rust: split "qemu-api" crate
+> * rust: rename qemu_api_macros -> qemu_macros
+> * rust: re-export qemu macros from other crates
+> * x86: fix functional test failure for Xen emulation
+> * x86: cleanups
+> ----------------------------------------------------------------
 > 
->   hw/loongarch/boot.c    | 71 ++++++++++++++++++++++++--------------------------
->   hw/loongarch/virt.c    |  2 ++
->   target/loongarch/cpu.h |  4 ---
->   3 files changed, 36 insertions(+), 41 deletions(-)
-> 
-> 
+> v1->v2: dropped "i386/kvm: Get X86MachineState in kvm_arch_init() without the cast check"
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
