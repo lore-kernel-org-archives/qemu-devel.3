@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08D3CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 10:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ADACAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 10:31:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzBuX-00071G-O4; Thu, 18 Sep 2025 06:30:45 -0400
+	id 1uzBua-00074O-Om; Thu, 18 Sep 2025 06:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuK-0006wa-JA
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:40 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuX-00071V-Sa
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:45 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuI-0001L7-GH
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:32 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuV-0001Nx-Ng
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:45 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 6FE3941880;
- Thu, 18 Sep 2025 10:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A21C4CEEB;
- Thu, 18 Sep 2025 10:30:18 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id D099C60214;
+ Thu, 18 Sep 2025 10:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCC2C4CEFE;
+ Thu, 18 Sep 2025 10:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1758191419;
- bh=dP5IVGjmx5XftVX1vvgwnPL2aJr8KldT3GTZjykn2Yk=;
+ s=k20201202; t=1758191442;
+ bh=WQk9MBDv7nge73LxcacIBKkMtT+aMc7tLLXhrGU/S2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FxETtJFNX+jmX13mn+mvbN73JIqE8L+LWqtqxPRi+hcnfiNCAIgtQIQi03hpsMleg
- JekZvLZLPomHv0Wfk7jSHFbkFjZkUoiyMnDqRFf5kfH67tErPgpE1RUAfOWXU8yy+0
- rrspUlJbzZKUGMdzy5B9SZ+qNL9fVATB8H2/fmQZku/ZOuU5fVF++g+GzLvw4QK4l+
- 94Tbgvqx1ULaLWhhONyFzKIWP/wrg9BFhZZqrxmltbYaQPExgo4TW96JuNqKbTlqqR
- A1oGzWW0QUyumi8qOTrz2IiN6niHLWC4j9vHnCsNNwjx0PC9u3ctd9t6pKFvJyxLy9
- uCl512O8rmmQg==
+ b=WRivwrlFpEdBE9zknDmPdHKbYcPZ0PDWvVe9w4+L62Fx9C1AnE9cuyOppiXwteHKc
+ 3zq46P/m1t0vXAUMUqRH0BsokBHBTvWqEJ92tbV4s1xrYu2zesOwqa1pAUm5KFmR7R
+ 3lw+yG5n7bb09WXGGcJOTFHGyLfBXiwnsAgG/g5Z7Ol2pyxmHNfVwisELciCxMOt51
+ HQySSWhCw31+MFqMgydqFOvd51CGiyx6/5OWX1iYkjV+Rfat6flCLF3OfZm3wlioDt
+ 6/fkG8/FnqQm22VOoCs0TL6piRKvNl0oRFSP50khi2Nb6eUremK+GjuFkgrnMvDHQq
+ B3Hd3W2YClWaw==
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -43,22 +43,23 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
  Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
  Michael Roth <michael.roth@amd.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>
-Subject: [PATCH 2/8] target/i386: SEV: Ensure SEV features are only set
- through qemu cli or IGVM
-Date: Thu, 18 Sep 2025 15:57:00 +0530
-Message-ID: <f9b23c74b04177f0dc088a246bdacf1cb158c35e.1758189463.git.naveen@kernel.org>
+Subject: [PATCH 7/8] target/i386: SEV: Add support for enabling Secure TSC SEV
+ feature
+Date: Thu, 18 Sep 2025 15:57:05 +0530
+Message-ID: <9ef2a9ef63f4737efe7a926703222b6bf51b7bad.1758189463.git.naveen@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758189463.git.naveen@kernel.org>
 References: <cover.1758189463.git.naveen@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=naveen@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,31 +76,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for qemu being able to set SEV features through the cli,
-add a check to ensure that SEV features are not also set if using IGVM
-files.
+Add support for enabling Secure TSC VMSA SEV feature in SEV-SNP guests
+through a new "secure-tsc" boolean property on SEV-SNP guest objects. By
+default, KVM uses the host TSC frequency for Secure TSC.
 
+Sample command-line:
+  -machine q35,confidential-guest-support=sev0 \
+  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on
+
+Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
 ---
- target/i386/sev.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/sev.h |  1 +
+ target/i386/sev.c | 13 +++++++++++++
+ qapi/qom.json     |  6 +++++-
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 8e09b2ce1976..87e73034ad15 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -46,6 +46,7 @@ bool sev_snp_enabled(void);
+ 
+ #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+ #define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
++#define SVM_SEV_FEAT_SECURE_TSC     BIT(9)
+ 
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 2fb1268ed788..c4011a6f2ef7 100644
+index 6b11359f06dd..679bedb63c3a 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -1901,6 +1901,11 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-          * as SEV_STATE_UNINIT.
-          */
-         if (x86machine->igvm) {
-+            if (sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE) {
-+                error_setg(errp, "%s: SEV features can't be specified when using IGVM files",
-+                           __func__);
-+                return -1;
-+            }
-             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-                     ->process(x86machine->igvm, machine->cgs, true, errp) ==
-                 -1) {
+@@ -3117,6 +3117,16 @@ sev_snp_guest_set_host_data(Object *obj, const char *value, Error **errp)
+     memcpy(finish->host_data, blob, len);
+ }
+ 
++static bool sev_snp_guest_get_secure_tsc(Object *obj, Error **errp)
++{
++    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC);
++}
++
++static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
++{
++    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
++}
++
+ static void
+ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -3152,6 +3162,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_str(oc, "host-data",
+                                   sev_snp_guest_get_host_data,
+                                   sev_snp_guest_set_host_data);
++    object_class_property_add_bool(oc, "secure-tsc",
++                                  sev_snp_guest_get_secure_tsc,
++                                  sev_snp_guest_set_secure_tsc);
+ }
+ 
+ static void
+diff --git a/qapi/qom.json b/qapi/qom.json
+index df962d4a5215..52c23e85e349 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1100,6 +1100,9 @@
+ #     firmware.  Set this to true to disable the use of VCEK.
+ #     (default: false) (since: 9.1)
+ #
++# @secure-tsc: enable Secure TSC
++#     (default: false) (since 10.2)
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevSnpGuestProperties',
+@@ -1111,7 +1114,8 @@
+             '*id-auth': 'str',
+             '*author-key-enabled': 'bool',
+             '*host-data': 'str',
+-            '*vcek-disabled': 'bool' } }
++            '*vcek-disabled': 'bool',
++            '*secure-tsc': 'bool' } }
+ 
+ ##
+ # @TdxGuestProperties:
 -- 
 2.51.0
 
