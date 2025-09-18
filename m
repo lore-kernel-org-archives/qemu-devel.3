@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9BFACAC5A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B99CAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzDjs-0003mp-BW; Thu, 18 Sep 2025 08:27:52 -0400
+	id 1uzDla-0004m7-4V; Thu, 18 Sep 2025 08:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uzDjr-0003mg-Bl
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:27:51 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uzDjp-0000Xv-9d
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:27:51 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3e8123c07d7so897396f8f.0
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 05:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758198467; x=1758803267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3j0ZSAUAM5waAmLbuPHwrLZQfvbNTQqgU9WV4FSoiO0=;
- b=oa+O3F2opws0E5uXcZt/E4nlJKgtKj534vxQgwFDojIxFzcSb/hIJ2gpIhygrIRhoc
- T2WoZPhawjcLKfHY3dkJ5y/ofM+ifXFlwRvUH9wwcvHvGPIUTMFKou5xNYva0+q4Ltbq
- ovrG0rlA8GoCPUt7YJA9srLoPnHNfGGXe3V2VYq3RBzZGgl/1rGpxfzoXKc3RbV8AJyR
- KOQ+IzMGc1JYIoCYWZkvOF9bHwylb3IJgxrdF48USOo8KdSV2MshG50itdAA4lqmUC2B
- NFILK0nphkxLGO5H5lPUhMPVfbXMT9nyxAKkPgL6BLkeEQqPab0LoWJfd0SBu20u6C0R
- iCOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758198467; x=1758803267;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3j0ZSAUAM5waAmLbuPHwrLZQfvbNTQqgU9WV4FSoiO0=;
- b=NhG+onp4kXIJiMYwQb0WTdptG+mSYuxBz3C+3aWih6Yxbjvak2+dILAL4zyYD/feCB
- vjfPrl6oSqeAlXnBvxYAW8HakdduN180yI2WP1C6M7CPualZWd+LnnlEUo49ymtpsp+0
- pHlXWPDg5OCojtEg0hrpKQOFRIOiIO7RrSzutvgcD4eModNKG94/l1mN1NGmBP+IDSns
- QSlY3lGVnuUv1inGMdQ1zFIBwySBGKjWIxCH/30trLtvi6CHN1Y0ClfiBGj4+YMl5MHl
- b2CvayXq+l0wFiva0uBQhIVz2o7l1K9uRH8RlJEIE5PdxN/oY5aqjOOaKyJb5o7/FQ1a
- j5rg==
-X-Gm-Message-State: AOJu0Yyx2Jy4RNO2Nyohcjv4hoO+K2kmxGLEBCe+MWrRScJHVevIntpn
- TLvh43mKYmsKsLjgI/Ljxo5sxnEhQmqmYyHaop4H41FjFJOrbgc4HPYIFs+IODQK/KU=
-X-Gm-Gg: ASbGnculVDP3u9yT3bLh6hKyzMLV6kavuPIfDyPg6kUMVeYkR18m/34S03OyiAOfrnn
- Vr62CS5K491cKbVBDYGekV537CWB1Q0RJYZL1V3b8jzGlOdsEqLRqebj8kd0TuM4uRr63F3Rer4
- CjPeqsIaFZP6d+K1nwTfPk7oZT5iNpvQsKOOFZEV2pK518pnY436o9tcyFV18HctqL/zPYikX3r
- 29DqlUUru8I7fSKGnrWtV9+NJqZxGA/V+u40qjlkWd3bb5s4y17k8Ask76tR8a+1eNHuz4p3kIk
- O3RNgZGNp7RBugrmZR6WCWtkEyQWKQjjBEF/wEOtKApUqLPLmGKAUR38vun1NxB6ClQ1ExfxigN
- JM8NBvqW5KjmpI+TO9kJfXORhpxCgtgo0AKTvugm+zw==
-X-Google-Smtp-Source: AGHT+IFkGrkIq5K7FcpjgBmvlGDjC+Qt1zEhrsPcGy5tHMJPQ+hD7vJQWDI6ZX1W5F/rw6CsilI2pA==
-X-Received: by 2002:a05:6000:184b:b0:3e9:d9bd:504f with SMTP id
- ffacd0b85a97d-3edd43e5242mr3539530f8f.21.1758198466811; 
- Thu, 18 Sep 2025 05:27:46 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee073f5392sm3466833f8f.13.2025.09.18.05.27.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 05:27:45 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0D4145F8AC;
- Thu, 18 Sep 2025 13:27:45 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Ma?=
- =?utf-8?Q?thieu-Daud=C3=A9?= <philmd@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  rowan Hart <rowanbhart@gmail.com>
-Subject: Re: [PATCH v7 0/9] contrib/plugins: uftrace
-In-Reply-To: <20250902075042.223990-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Tue, 2 Sep 2025 00:50:33 -0700")
-References: <20250902075042.223990-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Thu, 18 Sep 2025 13:27:44 +0100
-Message-ID: <87h5x0lzcv.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzDlY-0004ly-F3
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:29:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzDlW-0000fZ-86
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:29:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758198572;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gImWZOr8Kh1w7ErQKtvQn0O3z5fnVCWrGqIatE/OETE=;
+ b=MLqMx48HDAhvZ9e5iOm3mmNDt1CFGYLuz2j0HWuAt9I4rRogqGPo8CSL1vp4Sj8ofEe4gh
+ x6SGd8JE8atln2YicDURTRjk0mBsIe7HLdcq4kIWiRBEVxRHY+yld6X2Zi8VNbHIxaVUQw
+ Xt09wKgfBxlhbf3C/m+dvKcPS9VbMQY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-DHjhwDk3N6K8rGWgMqVqwg-1; Thu,
+ 18 Sep 2025 08:29:30 -0400
+X-MC-Unique: DHjhwDk3N6K8rGWgMqVqwg-1
+X-Mimecast-MFC-AGG-ID: DHjhwDk3N6K8rGWgMqVqwg_1758198570
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D79DB19560B0; Thu, 18 Sep 2025 12:29:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.161])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45AB21955F19; Thu, 18 Sep 2025 12:29:27 +0000 (UTC)
+Date: Thu, 18 Sep 2025 13:29:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH <RFC> 00/15] Encode object type security status in code
+Message-ID: <aMv7JMkeCo6QGVRV@redhat.com>
+References: <20250909165726.3814465-1-berrange@redhat.com>
+ <87jz1wat7n.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jz1wat7n.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +88,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Thu, Sep 18, 2025 at 01:35:56PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 
-> This plugin generates a binary trace compatible with the excellent uftrac=
-e:
-> https://github.com/namhyung/uftrace
+> > It starts with QOM, adding "bool secure" and "bool insecure"
+> > properties to the TypeInfo struct, which get turned into flags
+> > on the Type struct. This enables querying any ObjectClass to
+> > ask whether or not it is declared secure or insecure.
+> 
+> We should clearly document what "declared secure" actually means.
+> Here's my attempt at it: supported for use cases that require certain
+> security boundaries.
 
-Queued to plugins/next, thanks.
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+
+> 
+> > By default no statement will be made about whether a class is
+> > secure or insecure, reflecting our historical defaults. Over
+> > time we should annotate as many classes as possible with an
+> > explicit statement.
+> >
+> > The "-machine" argument gains two new parameters
+> >
+> >   * prohibit-insecure=yes|no  - a weak security boundary, only
+> >     excluding stuff that is explicitly declared insecure,
+> >     permiting stuff that is secure & anything without a stetement
+> 
+> This isn't what users need.
+> 
+> >   * require-secure=yes|no - a strong security boundary, only
+> >     permitting stuff that is explicitly declared secure,
+> >     excluding insecure stuff & anything without a statement
+> 
+> This would be, if it covered everything accessible at the security
+> boundaries.  It doesn't for now: only QOM.
+> 
+> It might still be better than nothing.
+> 
+> However, it may well be unusable until enough of QOM is declared secure.
+
+Right, the problem is that for a while we'll have 3 buckets of
+stuff (insecure, secure and "not sure yet"), when ideally we would
+only have two buckets (insecure, secure).
+
+I agree that for people running VMs, ideally require-secure=yes is
+what they should be using.
+
+The "not sure yet" bucket is a bit like schrodinger's cat in a box.
+
+If we only had require-secure=yes, and that was insufficient for
+the user, they'd be left with no way to exclude stuff that is
+/definitely/ insecure. The prohibit-insecure=yes is at least
+telling them they're not using something that is a terribly
+bad idea.
+
+In practice most of the stuff in the 'not sure yet' bucket will
+be stuff that you'll only want to use in combniation with TCG,
+and thus your VM will be in the 'insecure' bucket anyway.
+
+There is a 2nd less critical use case for prohibit-insecure=yes
+in relation to security report triage.
+
+If someone submits a security report and it relies on a config
+that is blocked by prohibit-insecure=yes, then we can categorically
+declare it out of scope for CVE handling.
+
+Similarly the require-secure=yes is categorically in-scope.
+
+The 'do not bucket' is where we have to do case-by-case
+analysis of the reoprt to decide whether it is in scope or
+not.
+
+> What would our advice to users be?  I'm afraid something complicated and
+> impermanent like "try require-secure=yes, and if you can't make it work
+> because parts of QOM you can't do without are still undeclared, fall
+> back to prohibit-insecure=yes, and be aware this avoids only some, but
+> not all security boundary death traps in either case."
+> 
+> This is an awful user interface.  But it's also a step towards the user
+> interface we want: a single, unchanging switch that ensures you're
+> running something that's fully supported for use cases that require
+> certain security boundaries.
+> 
+> A next step could be getting enough of QOM declared so we can move to a
+> single switch, with the (hopefully temporary) caveat about "only QOM".
+
+Maybe the right answer is to just declare everything insecure
+by default and focus on just annotating stuff for the secure
+bucket as quickly as possible.
+
+The lazy option would be to take everything that is built in
+a RHEL distro build and label it as secure. We know Red Hat
+is already on the hook for fixing CVEs in any such component
+and sending fixes upstream. So by following the RHEL allow
+list initially we should be implying any new burden for the
+upstream. 
+
+That would enable require-secure=yes for a useful amount of
+code needed for secure KVM guests on x86, s390x, aarch64,
+ppc64 and perhaps riscv. 
+
+
+> > Some questions....
+> >
+> >   * Is using '-machine' the right place to express the policy ?
+> 
+> Not sure.  The guest boundary is just one of several security boundaries
+> listed in docs/system/security.rst.  Some of them aren't really about
+> the guest / the machine.
+> 
+> Maybe -compat?  It lets you exclude unstable or deprecated bits from the
+> user interface.  Feels similar to excluding insecure bits.
+
+Oh I forgot about -compat entirely. That does indeed feel like
+a better place.
+
+> >   * Can we change '-accel help' to report 'secure' / 'insecure'
+> >     as we did for '-machine help' and '-device help'.
+> 
+> No idea, guess it's at worst a matter of shaving the yak?
+> 
+> >   * Should we have 'query-devices' for QMP to allow the 'secure'
+> >     or 'insecure' status to be queried for every device.
+> >
+> >   * Should we have 'query-accel' for QMP to allow the 'secure'
+> >     or 'insecure' status to be queried for every accelerator.
+> 
+> I recommend qom-list-types.  Covers all of QOM, not just devices and
+> accelerators.
+
+Yep that works, and is already reporting the 'abstract' property
+so putting a'secure' property alongside fits nicely.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
