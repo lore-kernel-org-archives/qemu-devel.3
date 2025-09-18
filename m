@@ -4,97 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B177CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9DACA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzGXN-0001VC-Vt; Thu, 18 Sep 2025 11:27:10 -0400
+	id 1uzGwC-0006s3-Is; Thu, 18 Sep 2025 11:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uzGXF-0001M6-RK
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:27:01 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzGw9-0006rV-R3
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:52:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uzGXD-0003GF-P8
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:27:01 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzGw7-0006mi-Kk
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:52:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758209217;
+ s=mimecast20190719; t=1758210762;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KL5XphfGve3/sGWIcFqGeYJJAdQnhKsRbINuS8YWb0o=;
- b=YKhSNddklVKpPBRhHO7cF05z0XMpZcAQ+Bj2vdAhsl+x2dEtE5M7KX3ToJk2bCwvE6OKAH
- 48oTmvyUWrBWcmUTz1KxzR/4jFNDcTCEv/At5TCeMBOUon5rTjUkEhk8snd+FH9KXXSHTc
- JxWsDAvoeTHApRxsEVQIVXQYbLDaHko=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-_zIABCdiMhSP7wyqpIkyXQ-1; Thu, 18 Sep 2025 11:26:55 -0400
-X-MC-Unique: _zIABCdiMhSP7wyqpIkyXQ-1
-X-Mimecast-MFC-AGG-ID: _zIABCdiMhSP7wyqpIkyXQ_1758209214
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45de5fdda1aso6260305e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:26:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758209214; x=1758814014;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KL5XphfGve3/sGWIcFqGeYJJAdQnhKsRbINuS8YWb0o=;
- b=HuTfltUhz2Mzonj7THuMnITGpzyRst/UoYYsG0XqZq0FwwURyTbdtrJnCmMOSOX9Kr
- lCmZyA9a1I2TXR5nXVCtp/HeU4GHl2uAFf8pj7+liKjI0Gk4FQ/N/woxDEhh2/Tgl0Ez
- KK9zd0MITp0NR1VgZcNgsW62h6+3q2BmvxJzoQicvoZKVnvAps2NhDo00SnWaOK+JahH
- VyFBXs7SoiXeMgDRpaXhKibHUmM68pAN7Weep4IiAGH7OuPT6cMTM1YLOPl4jPKxBnba
- dd1vsyV4tdtbPSUd4WPu9gAgmybdJrXTkRJtUv9Ksw2lls+anK8jsoOQXYS3e2i5oABV
- cfaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVn2SpasqOGLKo2dYPhrxJ48PxQMZMaAjN8aI6RCe5DgsRc+aoOJB402OetnjpwEnLLT/ifhqvZCV63@nongnu.org
-X-Gm-Message-State: AOJu0YySc4AZxcDHCIWXtKNrlmeOsAn2+MZtJ+9M9WtoQ2xpDRAhbm8w
- u6fRDsW38/pwVwhLNXqvLsTOVTg2iUUu0qoWVHS9pyoI3knnB7sR5IyMV1wQ9GyCUWwd7V5CrKk
- RZnvsDS4AdBMzxZgVQEbD2V0/q80rHs0fy5LW87ImdjaF/flOEgFl5yFs
-X-Gm-Gg: ASbGncsmQ9/RFEjYsS6iYr61d4MWuel0Y5l4WlMVqO3JgL04z2V84buDeLRbgvFKGn9
- OIhcpIM6m1lUL0OTueonobrtmc4blQop0xQqENojjvqRxgMUHavdhT8uBqrfTLTPYSjpKgCaJXL
- Sxxn5CJWqgUQg7SSqhh9nIkddbwmeI+Egq+w8bk5tPjuXnf5KgQtR7sypzZ4kCTRVQUdluwXzZm
- RosyOmzSzTIF6QviG/WwbYFa98G10WNS1GRazAXwBmtL+kca8p1h1IJ4ZHO/GpByKnmVnx5BaDQ
- +yzIq+IyCxmM5SGNXDOI4RfXKI8By4woAcPuLr7NcPp4dxNMJQaZhqx5lHbYSgqhX/5Usof7xzQ
- gvVazTlhSwgc=
-X-Received: by 2002:a05:600c:19d4:b0:45b:8f5e:529a with SMTP id
- 5b1f17b1804b1-462031b1dfdmr63298635e9.14.1758209213821; 
- Thu, 18 Sep 2025 08:26:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAFdhxqAFtJ5xKzXqH5L+rh3q+f9wj0clvTRsPw0BM11XcNBfnHbnLBJBzjrN/jbBhLHWSaw==
-X-Received: by 2002:a05:600c:19d4:b0:45b:8f5e:529a with SMTP id
- 5b1f17b1804b1-462031b1dfdmr63298295e9.14.1758209213397; 
- Thu, 18 Sep 2025 08:26:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee073f3d68sm4154041f8f.10.2025.09.18.08.26.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Sep 2025 08:26:52 -0700 (PDT)
-Message-ID: <6a4651a8-d6ea-4bcd-9f73-3e852f9904dc@redhat.com>
-Date: Thu, 18 Sep 2025 17:26:52 +0200
+ bh=J2SF7btJxVeohr0vewYvPCSWQbbVw+SiGQo4tYA5B6I=;
+ b=EctAOWk+9e5iKmS7bnECaMzw9I8FcrzRhMuuSmuIufEtnveLz2dUK16bJcn+6hF8vsijHw
+ DdTlKiop3XoZwmr8+vSmUyKXMZKI4oYWakFCHIFVni3PkKz10K9u39MCkjI59nqUqJt2+t
+ xmcK7jejwvJjItHhw4viIMBgssLhG18=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-nH6pB2EkOIO8JDGCZt0tFQ-1; Thu,
+ 18 Sep 2025 11:52:35 -0400
+X-MC-Unique: nH6pB2EkOIO8JDGCZt0tFQ-1
+X-Mimecast-MFC-AGG-ID: nH6pB2EkOIO8JDGCZt0tFQ_1758210754
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1908918002C1; Thu, 18 Sep 2025 15:52:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.161])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85C3319560BB; Thu, 18 Sep 2025 15:52:32 +0000 (UTC)
+Date: Thu, 18 Sep 2025 16:52:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Jiri Denemark <jdenemar@redhat.com>
+Subject: Re: [PATCH] migration: Apply migration specific keep-alive defaults
+ to inet socket
+Message-ID: <aMwqvbFzGlsX23C7@redhat.com>
+References: <aMBDIwKDxTVrBJBQ@redhat.com> <aMCjGVUiM3MY-RM3@x1.local>
+ <aMEkY3N9ITwH_Y8Z@redhat.com> <aMGpHBGth05JY2hl@x1.local>
+ <aMPz0WFmstNmKBQc@redhat.com> <aMQ19NmgFkLs8jkA@x1.local>
+ <aMhZn-fbq67WQX8u@redhat.com>
+ <r2tnbymosv7kxj7h4x6mnrczy7jdn66voiodlakivovu7lhwv4@eudkicvqwefc>
+ <aMwbAdKQLzLaf4Hd@redhat.com> <aMwg-ROjbDL_z_EM@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm/kvm: add constants for new PSCI versions
-Content-Language: en-US
-To: Sebastian Ott <sebott@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev
-References: <20250911144923.24259-1-sebott@redhat.com>
- <20250911144923.24259-2-sebott@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250911144923.24259-2-sebott@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aMwg-ROjbDL_z_EM@x1.local>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,7 +78,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,37 +91,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Sep 18, 2025 at 11:10:49AM -0400, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 03:45:21PM +0100, Daniel P. Berrangé wrote:
+> > There needs to be a way to initiate post-copy recovery regardless
+> > of whether we've hit a keepalive timeout. Especially if we can
+> > see one QEMU in postcopy-paused, but not the other side, it
+> > doesn't appear to make sense to block the recovery process.
+> > 
+> > The virDomainJobCancel command can do a migrate-cancel on the
+> > src, but it didn't look like we could do the same on the dst.
+> > Unless I've overlooked something, Libvirt needs to gain a way
+> > to explicitly force both sides into the postcopy-paused state,
+> > and thus be able to immediately initiate recovery.
+> 
+> Right, if libvirt can do that then problem should have been solved too.
+> 
+> > I'm fine with turning on keepalives on the socket, but IMHO the
+> > out of the box behaviour should be to honour the kernel default
+> > tunables unless the admin decides they want different behaviour.
+> > I'm not seeing a rational for why the kernel defaults should be
+> > forceably overridden in QEMU out of the box.
+> 
+> IMHO the rational here is that the socket here is in a special state and
+> for special purpose. So we're not trying to change anything globally for
+> qemu (without knowing what the socket is), but only this specific type of
+> socket that is used for either precopy or postcopy live migrations.
+> 
+> It's special because it's always safe to have a more aggresive
+> disconnection, and might be preferred versus very lengthy hangs (if
+> assuming libvirt doesn't yet have way to stop the hang), especially for a
+> postcopy phase.
 
+I've already described up-thread that it is not guaranteed safe to
+have aggressive disconnection. It is often safe, but there is
+definitely non-negligible risk in prematurely terminating a migration
+connection.
 
-On 9/11/25 4:49 PM, Sebastian Ott wrote:
-> Add constants for PSCI version 1_2 and 1_3.
->
-> Signed-off-by: Sebastian Ott <sebott@redhat.com>
-> ---
->  target/arm/kvm-consts.h | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
-> index c44d23dbe7..239a8801df 100644
-> --- a/target/arm/kvm-consts.h
-> +++ b/target/arm/kvm-consts.h
-> @@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
->  #define QEMU_PSCI_VERSION_0_2                     0x00002
->  #define QEMU_PSCI_VERSION_1_0                     0x10000
->  #define QEMU_PSCI_VERSION_1_1                     0x10001
-> +#define QEMU_PSCI_VERSION_1_2                     0x10002
-> +#define QEMU_PSCI_VERSION_1_3                     0x10003
->  
->  MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
->  /* We don't bother to check every possible version value */
-I would simply squash this in next patch
-
-Thanks
-
-Eric
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
