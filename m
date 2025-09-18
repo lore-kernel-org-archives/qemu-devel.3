@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F55CAC59F
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5428CAC59F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzAJg-0003zd-BB; Thu, 18 Sep 2025 04:48:36 -0400
+	id 1uzAN3-0005Pl-TN; Thu, 18 Sep 2025 04:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzAJe-0003z6-4c
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:48:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzAN2-0005Oz-6C
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:52:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzAJZ-0003PU-Vn
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:48:33 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzAMw-0003rC-Q1
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:52:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758185305;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1758185514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3C0wxY+SOI8SbQ4JoLJErdE83oPuLxa/s9oZU6QBom0=;
- b=S+M6maHM8n8sOwTl964VJUSXlj1FJ3qW9f4ss8aeIMzE3dFuH/n00xiyNSIj6yPZ+ZmcjW
- bXsunQa3GaWm2ysDoY+NhyHTT4smHRDh6hY3jbDtPp1veH0tp1rQ+0ij6urzpztwO2G2Hq
- IEdwhk0k1h3EfSsYhymOd5RuN1NkdUo=
+ bh=2rSWvD8UOSbYbZZXpnLSTIINitGpVBjfFdT5jFT5gqE=;
+ b=Pdf2m3Nqp6Oeu2qXndoTuSEdNBODbsrAtT13J+/9eXtmSVbXS41FMprtFuwyhPv+wmoqPS
+ 4EgLLxsIiATddZQKSjkaCMJJ3JYifaUaon7Bxqp4HSVzOYPAOISXduX79/HbXnUfRGZ6mF
+ Rh/R5CK7bWEs6uiDvjwzNa68uT3ghEk=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-599--Br-DY42PP-iDwaYnTHUYQ-1; Thu,
- 18 Sep 2025 04:48:22 -0400
-X-MC-Unique: -Br-DY42PP-iDwaYnTHUYQ-1
-X-Mimecast-MFC-AGG-ID: -Br-DY42PP-iDwaYnTHUYQ_1758185300
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-vlxC20j8M72aE8VeXpa4Bg-1; Thu,
+ 18 Sep 2025 04:51:49 -0400
+X-MC-Unique: vlxC20j8M72aE8VeXpa4Bg-1
+X-Mimecast-MFC-AGG-ID: vlxC20j8M72aE8VeXpa4Bg_1758185508
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82EB41956086; Thu, 18 Sep 2025 08:48:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.161])
+ id DC56C19560AE; Thu, 18 Sep 2025 08:51:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.9])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 861071955F21; Thu, 18 Sep 2025 08:48:13 +0000 (UTC)
-Date: Thu, 18 Sep 2025 09:48:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Cc: Filip Hejsek <filip.hejsek@gmail.com>, amit@kernel.org,
- armbru@redhat.com, eblake@redhat.com, eduardo@habkost.net,
- lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, nsg@linux.ibm.com
-Subject: Re: [PATCH v2] char-pty: add support for the terminal size
-Message-ID: <aMvHScAtr3E_H2KB@redhat.com>
-References: <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
- <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
- <aMq4Ta4aPwRgDrxR@redhat.com>
- <0A6C8C3D-68E7-4E88-BEBE-D653135915DF@gmail.com>
- <aMrfGUfCSWnvkXzT@redhat.com>
- <e2f80c7ad10b8b6376144ba5d959a2ad4739f81c.camel@gmail.com>
- <aMr1sn-LU2f-w49o@redhat.com>
- <15cc6bcd675f2e20efe4fbd6332018a693122b9c.camel@gmail.com>
- <aMvETd_dlUed-nlN@redhat.com>
- <8979fb7f27b9dbe48f6419d515c4d33a77cefe0a.camel@linux.ibm.com>
+ id 4CA3F1955F21; Thu, 18 Sep 2025 08:51:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4B97E21E6A27; Thu, 18 Sep 2025 10:51:44 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Zhuoying Cai <zycai@linux.ibm.com>,  thuth@redhat.com,
+ richard.henderson@linaro.org,  david@redhat.com,  jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  walling@linux.ibm.com,
+ jjherne@linux.ibm.com,  pasic@linux.ibm.com,  borntraeger@linux.ibm.com,
+ farman@linux.ibm.com,  mjrosato@linux.ibm.com,  iii@linux.ibm.com,
+ eblake@redhat.com,  alifm@linux.ibm.com
+Subject: Re: [PATCH v6 01/28] Add boot-certs to s390-ccw-virtio machine type
+ option
+In-Reply-To: <aMvE7Phd7sLvgj-J@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 18 Sep 2025 09:38:04 +0100")
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-2-zycai@linux.ibm.com>
+ <87ldmcz1so.fsf@pond.sub.org> <aMvE7Phd7sLvgj-J@redhat.com>
+Date: Thu, 18 Sep 2025 10:51:44 +0200
+Message-ID: <87348kywgv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8979fb7f27b9dbe48f6419d515c4d33a77cefe0a.camel@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,7 +79,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,50 +92,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 10:39:28AM +0200, Maximilian Immanuel Brandtner wrote:
-> On Thu, 2025-09-18 at 09:35 +0100, Daniel P. Berrangé wrote:
-> > On Wed, Sep 17, 2025 at 08:29:39PM +0200, Filip Hejsek wrote:
-> > > On Wed, 2025-09-17 at 18:53 +0100, Daniel P. Berrangé wrote:
-> > > > On Wed, Sep 17, 2025 at 07:11:03PM +0200, Filip Hejsek wrote:
-> > > > > On Wed, 2025-09-17 at 17:17 +0100, Daniel P. Berrangé wrote:
-> > > > > 
-> > > > > > We shouldn't send any size info to the guest if the hsot
-> > > > > > backend
-> > > > > > does not have it available.
-> > > > > 
-> > > > > Does that mean sending 0x0, or not sending anything at all? The
-> > > > > later
-> > > > > is tricky, because for non-multiport devices it's only really
-> > > > > possible
-> > > > > by not offering the feature bit, but we don't know upfront
-> > > > > whether the
-> > > > > size command will be used.
-> > 
-> > What are the semantics in the guest if we sent 0x0 as the size ?
-> > AFAICT the virtio spec is silent on what '0x0' means.
-> > 
-> > It seems like it could conceivably have any behaviour, whether
-> > a zero-size console, or a console clamped to 1x1 as a min size,
-> > or a console reset to an arbitrary guest default like 80x24.
-> 
-> During testing the kernel resized the tty to 0x0 if VirtIO instructed
-> the kernel to resize the tty to 0x0.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-If the chardev backends are defaulting to 0x0 for everything except
-the 'stdio' backend, then this series is surely going to break all
-existing usage of virtio-console for non-stdio backends ?
+> On Thu, Sep 18, 2025 at 08:56:39AM +0200, Markus Armbruster wrote:
+>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>>=20
+>> > Introduce a new `boot-certs` machine type option for the s390-ccw-virt=
+io
+>> > machine. This allows users to specify one or more certificate file pat=
+hs
+>> > or directories to be used during secure boot.
+>> >
+>> > Each entry is specified using the syntax:
+>> > 	boot-certs.<index>.path=3D/path/to/cert.pem
+>> >
+>> > Multiple paths can be specify using array properties:
+>> > 	boot-certs.0.path=3D/path/to/cert.pem,
+>> > 	boot-certs.1.path=3D/path/to/cert-dir,
+>> > 	boot-certs.2.path=3D/path/to/another-dir...
+>>=20
+>> Given we can specifiy a directory containing any number of certificate
+>> files, is the ability to specify multiple paths worth the additional
+>> complexity?
+>
+> The typical scenario would be point to somewhere in /etc/pki
+> for some globally provided certs, and then also point to
+> somewhere local ($HOME) for custom extra certs. So IMHO it
+> is reasonable to want multiple paths, to avoid copying around
+> certs from different locations.
 
-What am I missing here ?
+Thanks.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Preferably with BootCertificate renamed to BootCertificates
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
