@@ -4,116 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16942CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 14:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED88CAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 14:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzFui-0003zN-O0; Thu, 18 Sep 2025 10:47:12 -0400
+	id 1uzFyf-0006eu-Q0; Thu, 18 Sep 2025 10:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzFue-0003sx-81
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:47:08 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzFuc-0005Hl-1l
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:47:07 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzFye-0006eH-8b
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:51:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzFya-0005sB-7Q
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:51:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758207069;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=50qU2rtrKCPrHetfZSGaw9UJoLJY4EvnOHx2YOLU4NM=;
+ b=gxW8pfwvxw3aLVkQArZ2+LYWXXx/QQFaqPdfmo+5KIIv7EyOnlfBbMrmgiWHk8iDBLNmck
+ y/4y6mLkA6lh4/uh6RnCPxaaK5J5NMM7/rc125LHzWnF/TBA8kOjO9+awoGtcdxJQSAdUz
+ ncgaxbv061Xa0P870+JJIqhZPrp5Dw4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-4IRZqO0mM3qRMqkiTQ4P0w-1; Thu,
+ 18 Sep 2025 10:51:08 -0400
+X-MC-Unique: 4IRZqO0mM3qRMqkiTQ4P0w-1
+X-Mimecast-MFC-AGG-ID: 4IRZqO0mM3qRMqkiTQ4P0w_1758207067
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B162C3368A;
- Thu, 18 Sep 2025 14:47:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758206823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
- b=NiwifVR/pDJqmEKbr/x6M0fVOjsI3SBIRN77cr+i71F1MXNnk6NxWSunkWSEGPcdse4/m4
- 4fuiTZBC4HmfD1vq7lyUEL4uoN0jaNATGXyJMuzR6ljSYCXmwomCW43ewPag87kVndZN21
- LMy8vaFApUV3Un0fWeu24dlKiN1qlNU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758206823;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
- b=qZvhkbBWv2yPRIGjRE/M3Hxd4sng4aL1RP7d62eyD4h7csvhbxZdHDkXyFqT6CsAy0Ea6F
- bNc+5DC4JUJDRgDw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="NiwifVR/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=qZvhkbBW
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758206823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
- b=NiwifVR/pDJqmEKbr/x6M0fVOjsI3SBIRN77cr+i71F1MXNnk6NxWSunkWSEGPcdse4/m4
- 4fuiTZBC4HmfD1vq7lyUEL4uoN0jaNATGXyJMuzR6ljSYCXmwomCW43ewPag87kVndZN21
- LMy8vaFApUV3Un0fWeu24dlKiN1qlNU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758206823;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
- b=qZvhkbBWv2yPRIGjRE/M3Hxd4sng4aL1RP7d62eyD4h7csvhbxZdHDkXyFqT6CsAy0Ea6F
- bNc+5DC4JUJDRgDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 286F613A39;
- Thu, 18 Sep 2025 14:47:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Q3A1NWYbzGiWTQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 18 Sep 2025 14:47:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang?=
- =?utf-8?Q?=C3=A9?= <berrange@redhat.com>, peterx@redhat.com
-Subject: Re: [PATCH v2 2/3] io/tls: Make qio_channel_tls_bye() always
- synchronous
-In-Reply-To: <20250911212355.1943494-3-peterx@redhat.com>
-References: <20250911212355.1943494-1-peterx@redhat.com>
- <20250911212355.1943494-3-peterx@redhat.com>
-Date: Thu, 18 Sep 2025 11:47:00 -0300
-Message-ID: <87bjn7vmvv.fsf@suse.de>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BD2919560B2; Thu, 18 Sep 2025 14:51:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.161])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEE9530002C5; Thu, 18 Sep 2025 14:51:04 +0000 (UTC)
+Date: Thu, 18 Sep 2025 15:51:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH <RFC> 00/15] Encode object type security status in code
+Message-ID: <aMwcVUbEioa2Q2WT@redhat.com>
+References: <20250909165726.3814465-1-berrange@redhat.com>
+ <87jz1wat7n.fsf@pond.sub.org> <aMv7JMkeCo6QGVRV@redhat.com>
+ <87y0qb95ww.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: B162C3368A
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y0qb95ww.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,201 +89,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Thu, Sep 18, 2025 at 04:44:31PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Thu, Sep 18, 2025 at 01:35:56PM +0200, Markus Armbruster wrote:
+> >> Daniel P. Berrangé <berrange@redhat.com> writes:
+> >
+> >> > It starts with QOM, adding "bool secure" and "bool insecure"
+> >> > properties to the TypeInfo struct, which get turned into flags
+> >> > on the Type struct. This enables querying any ObjectClass to
+> >> > ask whether or not it is declared secure or insecure.
+> >> 
+> >> We should clearly document what "declared secure" actually means.
+> >> Here's my attempt at it: supported for use cases that require certain
+> >> security boundaries.
+> >
+> >
+> >
+> >> 
+> >> > By default no statement will be made about whether a class is
+> >> > secure or insecure, reflecting our historical defaults. Over
+> >> > time we should annotate as many classes as possible with an
+> >> > explicit statement.
+> >> >
+> >> > The "-machine" argument gains two new parameters
+> >> >
+> >> >   * prohibit-insecure=yes|no  - a weak security boundary, only
+> >> >     excluding stuff that is explicitly declared insecure,
+> >> >     permiting stuff that is secure & anything without a stetement
+> >> 
+> >> This isn't what users need.
+> >> 
+> >> >   * require-secure=yes|no - a strong security boundary, only
+> >> >     permitting stuff that is explicitly declared secure,
+> >> >     excluding insecure stuff & anything without a statement
 
-> No issue I hit, the change is only from code observation when I am looking
-> at a TLS premature termination issue.
->
-> qio_channel_tls_bye() API needs to be synchronous.  When it's not, the
-> previous impl will attach an asynchronous task retrying but only until when
-> the channel gets the relevant GIO event. It may be problematic, because the
-> caller of qio_channel_tls_bye() may have invoked channel close() before
-> that, leading to premature termination of the TLS session.
->
 
-I'm not super versed on socket APIs, so bear with me: Wouldn't the
-subsequent shutdown() before close() ensure that the io watch gets
-triggered? Assuming we're atomically installing the watch before the
-shutdown() (at the moment, we're not).
+> 
+> By the way, two booleans is a rather awkward encoding of three states.
+> What about require-secure=yes/no/feeling-lucky?  We may want something
+> better than feeling-lucky, it's merely the first one that crossed my
+> mind :)
 
-> Remove the asynchronous handling, instead retry it immediately.  Currently,
-> the only two possible cases that may lead to async task is either INTERRUPT
-> or EAGAIN.  It should be suffice to spin retry as of now, until a solid
-> proof showing that a more complicated retry logic is needed.
->
-> With that, we can remove the whole async model for the bye task.
->
+Yeah, this is mostly me being lazy - by the time I realized that
+an enum would have been better, I didn't want to rewrite it, so I
+just sent this RFC as is.
 
-With the bye() being synchronous, do we still have the issue when
-migration fails? I guess it depends on what the answer to my question
-above is...
+> >> What would our advice to users be?  I'm afraid something complicated and
+> >> impermanent like "try require-secure=yes, and if you can't make it work
+> >> because parts of QOM you can't do without are still undeclared, fall
+> >> back to prohibit-insecure=yes, and be aware this avoids only some, but
+> >> not all security boundary death traps in either case."
+> >> 
+> >> This is an awful user interface.  But it's also a step towards the user
+> >> interface we want: a single, unchanging switch that ensures you're
+> >> running something that's fully supported for use cases that require
+> >> certain security boundaries.
+> >> 
+> >> A next step could be getting enough of QOM declared so we can move to a
+> >> single switch, with the (hopefully temporary) caveat about "only QOM".
+> >
+> > Maybe the right answer is to just declare everything insecure
+> > by default and focus on just annotating stuff for the secure
+> > bucket as quickly as possible.
+> 
+> Annotating something as known insecure has value, but we can do that
+> even with just one flag:
+> 
+>     .secure = true;
+> 
+> means "declared secure",
+> 
+>     .secure = false;
+> 
+> means "declared insecure", and nothing means "undecided".
+> 
+> Initializing .secure = false doesn't *do* anything (false is the
+> default), but it would still be a fine way to annotate.
 
-> When at it, making the function return bool, which looks like a common
-> pattern in QEMU when errp is used.
->
-> Side note on the tracepoints: previously the tracepoint bye_complete()
-> isn't used.  Start to use it in this patch.  bye_pending() and bye_cancel()
-> can be dropped now.  Adding bye_retry() instead.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/io/channel-tls.h |  5 ++-
->  io/channel-tls.c         | 86 +++++-----------------------------------
->  io/trace-events          |  3 +-
->  3 files changed, 15 insertions(+), 79 deletions(-)
->
-> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-> index 7e9023570d..bcd14ffbd6 100644
-> --- a/include/io/channel-tls.h
-> +++ b/include/io/channel-tls.h
-> @@ -49,7 +49,6 @@ struct QIOChannelTLS {
->      QCryptoTLSSession *session;
->      QIOChannelShutdown shutdown;
->      guint hs_ioc_tag;
-> -    guint bye_ioc_tag;
->  };
->  
->  /**
-> @@ -60,8 +59,10 @@ struct QIOChannelTLS {
->   * Perform the TLS session termination. This method will return
->   * immediately and the termination will continue in the background,
->   * provided the main loop is running.
-> + *
-> + * Returns: true on success, false on error (with errp set)
->   */
-> -void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
-> +bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
->  
->  /**
->   * qio_channel_tls_new_server:
-> diff --git a/io/channel-tls.c b/io/channel-tls.c
-> index 5a2c8188ce..8510a187a8 100644
-> --- a/io/channel-tls.c
-> +++ b/io/channel-tls.c
-> @@ -253,84 +253,25 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
->      qio_channel_tls_handshake_task(ioc, task, context);
->  }
->  
-> -static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-> -                                       gpointer user_data);
-> -
-> -static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-> -                                     GMainContext *context)
-> +bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
->  {
-> -    GIOCondition condition;
-> -    QIOChannelTLSData *data;
->      int status;
-> -    Error *err = NULL;
->  
-> -    status = qcrypto_tls_session_bye(ioc->session, &err);
-> +    trace_qio_channel_tls_bye_start(ioc);
-> +retry:
-> +    status = qcrypto_tls_session_bye(ioc->session, errp);
->  
->      if (status < 0) {
->          trace_qio_channel_tls_bye_fail(ioc);
-> -        qio_task_set_error(task, err);
-> -        qio_task_complete(task);
-> -        return;
-> -    }
-> -
-> -    if (status == QCRYPTO_TLS_BYE_COMPLETE) {
-> -        qio_task_complete(task);
-> -        return;
-> -    }
-> -
-> -    data = g_new0(typeof(*data), 1);
-> -    data->task = task;
-> -    data->context = context;
-> -
-> -    if (context) {
-> -        g_main_context_ref(context);
-> -    }
-> -
-> -    if (status == QCRYPTO_TLS_BYE_SENDING) {
-> -        condition = G_IO_OUT;
-> -    } else {
-> -        condition = G_IO_IN;
-> -    }
-> -
-> -    trace_qio_channel_tls_bye_pending(ioc, status);
-> -    ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
-> -                                                  qio_channel_tls_bye_io,
-> -                                                  data, NULL, context);
-> -}
-> -
-> -
-> -static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-> -                                       gpointer user_data)
-> -{
-> -    QIOChannelTLSData *data = user_data;
-> -    QIOTask *task = data->task;
-> -    GMainContext *context = data->context;
-> -    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
-> -
-> -    tioc->bye_ioc_tag = 0;
-> -    g_free(data);
-> -    qio_channel_tls_bye_task(tioc, task, context);
-> -
-> -    if (context) {
-> -        g_main_context_unref(context);
-> +        return false;
-> +    } else if (status != QCRYPTO_TLS_BYE_COMPLETE) {
-> +        /* BYE event must be synchronous, retry immediately */
-> +        trace_qio_channel_tls_bye_retry(ioc, status);
-> +        goto retry;
->      }
->  
-> -    return FALSE;
-> -}
-> -
-> -static void propagate_error(QIOTask *task, gpointer opaque)
-> -{
-> -    qio_task_propagate_error(task, opaque);
-> -}
-> -
-> -void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
-> -{
-> -    QIOTask *task;
-> -
-> -    task = qio_task_new(OBJECT(ioc), propagate_error, errp, NULL);
-> -
-> -    trace_qio_channel_tls_bye_start(ioc);
-> -    qio_channel_tls_bye_task(ioc, task, NULL);
-> +    trace_qio_channel_tls_bye_complete(ioc);
-> +    return true;
->  }
->  
->  static void qio_channel_tls_init(Object *obj G_GNUC_UNUSED)
-> @@ -482,11 +423,6 @@ static int qio_channel_tls_close(QIOChannel *ioc,
->          g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
->      }
->  
-> -    if (tioc->bye_ioc_tag) {
-> -        trace_qio_channel_tls_bye_cancel(ioc);
-> -        g_clear_handle_id(&tioc->bye_ioc_tag, g_source_remove);
-> -    }
-> -
->      return qio_channel_close(tioc->master, errp);
->  }
->  
-> diff --git a/io/trace-events b/io/trace-events
-> index dc3a63ba1f..67b3814192 100644
-> --- a/io/trace-events
-> +++ b/io/trace-events
-> @@ -45,10 +45,9 @@ qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
->  qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
->  qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
->  qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
-> -qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
-> +qio_channel_tls_bye_retry(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
->  qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
->  qio_channel_tls_bye_complete(void *ioc) "TLS termination complete ioc=%p"
-> -qio_channel_tls_bye_cancel(void *ioc) "TLS termination cancel ioc=%p"
->  qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
->  qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
+I'm fine with that, as long as we don't need to be able to
+programmatically query that distinction. From an external
+view, '= false' and <unset> would be undistinguishable
+and both be considered 'insecure'.
+
+It would mean we, as maintainers, would know what files
+are yet to be evaluated for their security status which
+is still useful.
+
+> 
+> > The lazy option would be to take everything that is built in
+> > a RHEL distro build and label it as secure. We know Red Hat
+> > is already on the hook for fixing CVEs in any such component
+> > and sending fixes upstream. So by following the RHEL allow
+> > list initially we should be implying any new burden for the
+> > upstream.
+> 
+> Do you mean no new burden?
+
+Sigh, yes. No new burden.
+
+> 
+> > That would enable require-secure=yes for a useful amount of
+> > code needed for secure KVM guests on x86, s390x, aarch64,
+> > ppc64 and perhaps riscv. 
+> 
+> [...]
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
