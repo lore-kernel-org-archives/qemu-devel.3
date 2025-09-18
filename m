@@ -4,81 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94906CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7680CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzB9i-0003aU-FD; Thu, 18 Sep 2025 05:42:22 -0400
+	id 1uzBBq-0004Pr-MJ; Thu, 18 Sep 2025 05:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzB9d-0003a7-Qa
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:42:18 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzB9Y-0003IM-Cf
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:42:17 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-62adfdda606so452759d50.2
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 02:42:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758188529; x=1758793329; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sxP8LYMFqSAbtbWkGWrdaiOVoIBRqWIBOEuRswWJkEk=;
- b=yiBUPlX+tfunLqYOLGtj+9CLtrkjbLVvQg3KzQKNrvDcKEYiqhZhd+ZQXQNyv62vxF
- oWRnwoaTh2NhaUK74LLLVKrZ5+XXpU/TTUaYmb/+osnj+Tx5Ut9VbSwIqO+1olA8Kmma
- qj5ZRopV2cvE0vgVmik+F1JrDuwSdrAYcOSImnmxnO3TeoY3MunSq5IMNs3tKk5a1XzR
- g7k7NewYOduDgGNKdtVSQSGodmyzvfodRYhL57Ql4IgXMSeCsv+k7kBOX980xZ54EZQe
- GT144bdiunlpxMfTiK7a0T071TSrbmALKWLCPJAspXTof6pxuM9HpmL/3FFVEOJ4bNkM
- DI5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758188529; x=1758793329;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sxP8LYMFqSAbtbWkGWrdaiOVoIBRqWIBOEuRswWJkEk=;
- b=inJjIUne1M6xgMhzAM66dK4/tZqExn/2CR/EznK31cLGIVm6c4OqDulPxLjJXmeffK
- tiuxUsOlR9fktjNBiGRL90oLewjTKiE55EKd6QWLwCHZ6PtBgpmzy6AjEbuT0VKa1oA4
- Ewkcu8j6xkWzBfG9PgrRyAEaBJYVZrbxjkw2b5+tpn/iKLweI3tiiu7QLjO/4G5k901A
- RmsFYCoWvHLAR2iTzLR60GLEheDhzqKYfCvSZ0lniF8QRNsy6IvYlD+57aXrolm/B4NR
- qTKrqQJg2YtPcnUlHjohCFrfqoUYytnJGfCIdNdmCI4uaQJx4hVr7f3bxZyjsZ1wAS+j
- yj4g==
-X-Gm-Message-State: AOJu0YzX/8nlTT9Ap/g3HAGzl52WvV2fJVtgxCK7ita1v9dvy6pl8SQu
- QSi/RcKRCTjAdBSMWr01pcZV7MeBgxoIPtv4myOjono3dNAI2+dLdaQNzHk0NazONLUeX3oEiUd
- ZmbW4pndXbFv9LHZSL8AG596edVR7/Da17HbAC61oXA==
-X-Gm-Gg: ASbGncu8XNBE2tCvHNtsgRqiiivZYAC5JO90vuXLffkFBQKKYWH7uHvkP9VVYA29vgg
- qbTF0zWJGh5sdm1818u0Q7Yzw/7kG/XS8rTXvibYLa0u81r8cAuvEfo6zM95not9tvOUtbKtGJc
- ArQG8VDZX8G4wSWuUsJZmL8rJG4zGrd/RPEZ8RTLRFXDwSAJikKQ5G6UBqt7dQsIVIB1RHQ7SDN
- R9fvcGavC8cy2VTzQkQl2reJKg=
-X-Google-Smtp-Source: AGHT+IFX2qnC9oNlIjXaxDgbEzXnFVoWA9GyskxdVRyt6HweyqJOSeP8YQKo4N2aY3yB6EjBHqZfOF9Qx7zRRI9cjOI=
-X-Received: by 2002:a05:690c:b89:b0:724:fc2c:769 with SMTP id
- 00721157ae682-738909bcc85mr43570857b3.24.1758188529287; Thu, 18 Sep 2025
- 02:42:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uzBBn-0004Nr-Ms
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:44:31 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uzBBk-0003YL-0v
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:44:31 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxHvB11MtovsALAA--.25444S3;
+ Thu, 18 Sep 2025 17:44:21 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJDxQ+Ry1Mto4ladAA--.45902S4;
+ Thu, 18 Sep 2025 17:44:21 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 2/3] hw/loongarch/virt: Remove unnecessay pre-boot setting with
+ BSP
+Date: Thu, 18 Sep 2025 17:20:46 +0800
+Message-Id: <20250918092047.785269-3-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250918092047.785269-1-gaosong@loongson.cn>
+References: <20250918092047.785269-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-References: <20250916180611.1481266-1-peter.maydell@linaro.org>
- <ae07bd23-724a-4925-801c-d1f2b6d9abee@linaro.org>
- <e3f9275a-999e-4114-9950-68e3925aab7a@linaro.org>
-In-Reply-To: <e3f9275a-999e-4114-9950-68e3925aab7a@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Sep 2025 10:41:57 +0100
-X-Gm-Features: AS18NWDMxAbZnd5fBLNOLhfLqgQyFZEyzbtH6k_1R-WfB3ZtCQHeT0QpgkixfgI
-Message-ID: <CAFEAcA9ZP01pX56GCATOTmmy=uorJ3jaHRq6rx9OAeF-B3rU3g@mail.gmail.com>
-Subject: Re: [PULL 00/36] target-arm queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxQ+Ry1Mto4ladAA--.45902S4
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,60 +65,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Sept 2025 at 18:51, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 9/16/25 18:43, Richard Henderson wrote:
-> > I don't understand why, but this causes failure on s390x host for hppa guest:
-> >
-> > https://gitlab.com/qemu-project/qemu/-/jobs/11379271029
-> >
-> > ...
-> > # Testing device 'elroy-pcihost'
-> > Broken pipe
-> > ../alt/tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signal 11
-> > (Segmentation fault) (core dumped)
-> > Aborted (core dumped)
-> >
-> > Even more bizzarely, the failure bisects to
-> >
-> > Author: Nicolin Chen <nicolinc@nvidia.com>
-> > Date:   Fri Aug 29 09:25:27 2025 +0100
-> >
-> >      hw/arm/virt: Add an SMMU_IO_LEN macro
-> >
-> >      This is useful as the subsequent support for new SMMUv3 dev will also
-> >      use the same.
-> >
-> > which makes no sense at all.  But it's repeatable, so...
->
-> Ho hum.  It appears to be flaky.  I now see it without this patch set at all:
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/11391070227
+From: Bibo Mao <maobibo@loongson.cn>
 
-asan reports a heap-use-after-free in the dino PCI controller
-when running the device-introspect-test, which may be relevant.
-The subtest the segfault happens on is half a dozen or so
-devices after the dino-pci one, so it's plausible that heap
-corruption leads to the subsequent crash.
+With BSP core, it boots from aux boot code and loads data into register
+A0-A2 and PC. Pre-boot setting is not unnecessary and can be removed.
 
-I'll investigate the use-after-free...
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20250906070200.3749326-3-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/loongarch/boot.c    | 22 ----------------------
+ target/loongarch/cpu.h |  4 ----
+ 2 files changed, 26 deletions(-)
 
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 4962668e5a..5799b4c75c 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -353,17 +353,8 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+ static void reset_load_elf(void *opaque)
+ {
+     LoongArchCPU *cpu = opaque;
+-    CPULoongArchState *env = &cpu->env;
+ 
+     cpu_reset(CPU(cpu));
+-    if (env->load_elf) {
+-        if (cpu == LOONGARCH_CPU(first_cpu)) {
+-            env->gpr[4] = env->boot_info->a0;
+-            env->gpr[5] = env->boot_info->a1;
+-            env->gpr[6] = env->boot_info->a2;
+-        }
+-        cpu_set_pc(CPU(cpu), env->elf_address);
+-    }
+ }
+ 
+ static void fw_cfg_add_kernel_info(struct loongarch_boot_info *info,
+@@ -415,8 +406,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+ {
+     void *p, *bp;
+     int64_t kernel_addr = VIRT_FLASH0_BASE;
+-    LoongArchCPU *lacpu;
+-    CPUState *cs;
+     uint64_t *data;
+ 
+     if (info->kernel_filename) {
+@@ -443,17 +432,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+     *(data - 1) = cpu_to_le64(kernel_addr);
+     rom_add_blob_fixed("boot_code", boot_code, VIRT_FLASH0_SIZE, VIRT_FLASH0_BASE);
+ 
+-    CPU_FOREACH(cs) {
+-        lacpu = LOONGARCH_CPU(cs);
+-        lacpu->env.load_elf = true;
+-        if (cs == first_cpu) {
+-            lacpu->env.elf_address = kernel_addr;
+-        } else {
+-            lacpu->env.elf_address = VIRT_FLASH0_BASE;
+-        }
+-        lacpu->env.boot_info = info;
+-    }
+-
+     g_free(boot_code);
+     g_free(bp);
+ }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 7731f6acdc..c8b96f74dc 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -387,11 +387,7 @@ typedef struct CPUArchState {
+ #endif
+ 
+     AddressSpace *address_space_iocsr;
+-    bool load_elf;
+-    uint64_t elf_address;
+     uint32_t mp_state;
+-
+-    struct loongarch_boot_info *boot_info;
+ #endif
+ } CPULoongArchState;
+ 
+-- 
+2.47.0
 
-==1771223==ERROR: AddressSanitizer: heap-use-after-free on address
-0x527000018f80 at pc 0x5b4b9d3369b5 bp 0x7ffd01929980 sp
-0x7ffd01929978
-WRITE of size 8 at 0x527000018f80 thread T0
-    #0 0x5b4b9d3369b4 in pci_host_bus_register
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:608:5
-    #1 0x5b4b9d321566 in pci_root_bus_internal_init
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:677:5
-    #2 0x5b4b9d3215e0 in pci_root_bus_new
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:706:5
-    #3 0x5b4b9d321fe5 in pci_register_root_bus
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:751:11
-    #4 0x5b4b9d390521 in dino_pcihost_init
-/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci-host/dino.c:473:16
-
--- PMM
 
