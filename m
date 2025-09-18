@@ -4,90 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DBFCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6B2CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzLsP-0003ES-Vr; Thu, 18 Sep 2025 17:09:14 -0400
+	id 1uzLut-0004TW-IX; Thu, 18 Sep 2025 17:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLsN-0003CK-37; Thu, 18 Sep 2025 17:09:11 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uzLur-0004TF-EX; Thu, 18 Sep 2025 17:11:45 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLsK-0001jP-AU; Thu, 18 Sep 2025 17:09:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=LhWN4GakC5t8EOZd54ULHPw2fMtGJr0dzevkrc10VNk=; b=JYoSdxS/B3j4YSklT094IwEl5C
- 2sWMCJYekL3rsV1sNwJBpCKLK3cIbl6R63w364pazmVPlGm7JmuoI3KC/yuqMP57cNHibNCYwy7yr
- Tvpydbx6y2MzPleLgaF/u6u4ZxnccDPWc2OAmhvv+V5SVTwj0UOIyyoqxKFi7IGUBR0AwildhiFdl
- YcMAmH7InfJ6vs7zcF29NPOGVeWcTllGJM9gQlz6ku6XrYMteVuopx6W3UxgwgDO42OTxWL5U3be9
- uudNEbN2+FijcdYIB0b261tRHwSqmWvubqosEi9mAA3f8rJvLgvwUzR4wqvqVwpSWpcu9XNe2P2Vj
- uuLZ8weJcnvUKA/hzbJzRq7ULwIg12jFqx6JRzQfzT2IAraGcugiyzyziHCrIzLLYvGzO4z+I1D85
- Tt5plPpxyn8xef9KCnPQklkWh9gfCKZoNqi45wJxjB9fcJMeWzxkxrOYM2HdQFjl7oyrCoTxffm4K
- 7BbvDw0IKk1/+rR2rAHPVTgYU64rVnbnKrzG6Rnsq6JHiphpH8MdEZPbXX1p0JEMqfuqOS5tigxG9
- 73OpGGugPmRYE+kX+NkzEavk91FTV3++fwIzQ3by17PzHOp3xdMXoHbWcF/Zu7zJybFSrdwWUFJRE
- vpuRt7Xx37Vzp8GBiAcnetGgf01jFXVJWzd0moAso=;
-Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLqH-00073c-My; Thu, 18 Sep 2025 22:07:02 +0100
-Message-ID: <f61fbc4b-596c-4325-88ac-8c800794f92b@ilande.co.uk>
-Date: Thu, 18 Sep 2025 22:09:03 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uzLup-0002Xu-4s; Thu, 18 Sep 2025 17:11:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C5F6156F30C;
+ Thu, 18 Sep 2025 23:11:39 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id PLkW9dzAviTB; Thu, 18 Sep 2025 23:11:37 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AF29A56F2AE; Thu, 18 Sep 2025 23:11:37 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AD61456F295;
+ Thu, 18 Sep 2025 23:11:37 +0200 (CEST)
+Date: Thu, 18 Sep 2025 23:11:37 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v3 11/14] hw/pci-host/raven: Simpify discontiguous IO
+ access
+In-Reply-To: <c20c8e3c-dd4f-4331-a2aa-0faa01eb2b6c@ilande.co.uk>
+Message-ID: <38dd0469-cbf3-128c-a631-ca37c73a34bc@eik.bme.hu>
 References: <cover.1758219840.git.balaton@eik.bme.hu>
- <9a9564915bf57a6c7e5dae2cfcf147081525e900.1758219840.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <9a9564915bf57a6c7e5dae2cfcf147081525e900.1758219840.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 14/14] hw/ppc/prep: Fix non-contiguous IO control bit
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ <1ce9e69c55653d66dd2ead1a19ee779937847caa.1758219840.git.balaton@eik.bme.hu>
+ <c20c8e3c-dd4f-4331-a2aa-0faa01eb2b6c@ilande.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,127 +68,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 19:50, BALATON Zoltan wrote:
+On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>> PREP allows remapping of the 64k ISA IO addresses from the normal
+>> contiguous IO space into a discontiguous 8MB region and can switch
+>> between the two modes. We can implement this in a simpler way than is
+>> done currently using an io region that forwards access to the
+>> contiguous pci_io region and enabling/disabling the discontiguous
+>> region as needed.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/pci-host/raven.c | 88 ++++++++++++---------------------------------
+>>   1 file changed, 22 insertions(+), 66 deletions(-)
+>> 
+>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>> index bb0be40eb4..bf4f4b7f71 100644
+>> --- a/hw/pci-host/raven.c
+>> +++ b/hw/pci-host/raven.c
+>> @@ -42,17 +42,14 @@ struct PREPPCIState {
+>>       PCIHostState parent_obj;
+>>         qemu_irq irq;
+>> -    AddressSpace pci_io_as;
+>>       MemoryRegion pci_io;
+>> -    MemoryRegion pci_io_non_contiguous;
+>> +    MemoryRegion pci_discontiguous_io;
+>>       MemoryRegion pci_memory;
+>>       MemoryRegion pci_intack;
+>>       MemoryRegion bm;
+>>       MemoryRegion bm_ram_alias;
+>>       MemoryRegion bm_pci_memory_alias;
+>>       AddressSpace bm_as;
+>> -
+>> -    int contiguous_map;
+>>   };
+>>     #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus 
+>> */
+>> @@ -103,63 +100,28 @@ static const MemoryRegionOps raven_intack_ops = {
+>>       },
+>>   };
+>>   -static inline hwaddr raven_io_address(PREPPCIState *s,
+>> -                                      hwaddr addr)
+>> +/* Convert 8 MB non-contiguous address to 64k ISA IO address */
+>> +static inline hwaddr raven_io_addr(hwaddr addr)
+>>   {
+>> -    if (s->contiguous_map == 0) {
+>> -        /* 64 KB contiguous space for IOs */
+>> -        addr &= 0xFFFF;
+>> -    } else {
+>> -        /* 8 MB non-contiguous space for IOs */
+>> -        addr = (addr & 0x1F) | ((addr & 0x007FFF000) >> 7);
+>> -    }
+>> -
+>> -    /* FIXME: handle endianness switch */
+>> -
+>> -    return addr;
+>> +    return ((addr & 0x007FFF000) >> 7) | (addr & 0x1F);
+>>   }
+>>   -static uint64_t raven_io_read(void *opaque, hwaddr addr,
+>> -                              unsigned int size)
+>> +static uint64_t raven_io_read(void *opaque, hwaddr addr, unsigned int 
+>> size)
+>>   {
+>> -    PREPPCIState *s = opaque;
+>> -    uint8_t buf[4];
+>> -
+>> -    addr = raven_io_address(s, addr);
+>> -    address_space_read(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+>> -                       MEMTXATTRS_UNSPECIFIED, buf, size);
+>> -
+>> -    if (size == 1) {
+>> -        return buf[0];
+>> -    } else if (size == 2) {
+>> -        return lduw_le_p(buf);
+>> -    } else if (size == 4) {
+>> -        return ldl_le_p(buf);
+>> -    } else {
+>> -        g_assert_not_reached();
+>> -    }
+>> +    uint64_t val = 0xffffffffULL;
+>> +
+>> +    memory_region_dispatch_read(opaque, raven_io_addr(addr), &val,
+>> +                                size_memop(size) | MO_LE,
+>> +                                MEMTXATTRS_UNSPECIFIED);
+>> +    return val;
+>>   }
+>
+> I'm guessing the dispatch target is guaranteed not to be a RAM-backed memory 
+> region?
 
-> The bit that is supposed to control if ISA IO ports are accessed with
-> discontiguous addresses was not connected so it did nothing. We can
-> now directly enable or disable the discontiguous region so allow the
-> bit to function. This did not cause a problem so far as nothing seems
-> to use this bit or discontiguous IO addresses.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/pci-host/raven.c    |  9 ---------
->   hw/ppc/prep.c          |  3 +++
->   hw/ppc/prep_systemio.c | 17 +++++++++++------
->   3 files changed, 14 insertions(+), 15 deletions(-)
-> 
-> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 0c4eca04bb..fd45acb7eb 100644
-> --- a/hw/pci-host/raven.c
-> +++ b/hw/pci-host/raven.c
-> @@ -161,13 +161,6 @@ static const PCIIOMMUOps raven_iommu_ops = {
->       .get_address_space = raven_pcihost_set_iommu,
->   };
->   
-> -static void raven_change_gpio(void *opaque, int n, int level)
-> -{
-> -    PREPPCIState *s = opaque;
-> -
-> -    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
-> -}
-> -
->   static void raven_pcihost_realize(DeviceState *d, Error **errp)
->   {
->       SysBusDevice *dev = SYS_BUS_DEVICE(d);
-> @@ -176,8 +169,6 @@ static void raven_pcihost_realize(DeviceState *d, Error **errp)
->       Object *o = OBJECT(d);
->       MemoryRegion *mr, *bm, *address_space_mem = get_system_memory();
->   
-> -    qdev_init_gpio_in(d, raven_change_gpio, 1);
-> -
->       memory_region_init(&s->pci_io, o, "pci-io", 0x3f800000);
->       memory_region_init_io(&s->pci_discontiguous_io, o,
->                             &raven_io_ops, &s->pci_io,
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index 23d0e1eeaa..678682fdd2 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -358,6 +358,9 @@ static void ibm_40p_init(MachineState *machine)
->           dev = DEVICE(isa_dev);
->           qdev_prop_set_uint32(dev, "ibm-planar-id", 0xfc);
->           qdev_prop_set_uint32(dev, "equipment", 0xc0);
-> +        object_property_set_link(OBJECT(dev), "discontiguous-io",
-> +                                 OBJECT(sysbus_mmio_get_region(pcihost, 1)),
-> +                                 &error_fatal);
->           isa_realize_and_unref(isa_dev, isa_bus, &error_fatal);
->   
->           dev = DEVICE(pci_create_simple(pci_bus, PCI_DEVFN(1, 0),
-> diff --git a/hw/ppc/prep_systemio.c b/hw/ppc/prep_systemio.c
-> index 41cd923b94..6ef9b91317 100644
-> --- a/hw/ppc/prep_systemio.c
-> +++ b/hw/ppc/prep_systemio.c
-> @@ -44,9 +44,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(PrepSystemIoState, PREP_SYSTEMIO)
->   
->   struct PrepSystemIoState {
->       ISADevice parent_obj;
-> +
->       MemoryRegion ppc_parity_mem;
-> +    MemoryRegion *discontiguous_io;
->   
-> -    qemu_irq non_contiguous_io_map_irq;
->       uint8_t sreset; /* 0x0092 */
->       uint8_t equipment; /* 0x080c */
->       uint8_t system_control; /* 0x081c */
-> @@ -206,8 +207,8 @@ static void prep_port0850_write(void *opaque, uint32_t addr, uint32_t val)
->       PrepSystemIoState *s = opaque;
->   
->       trace_prep_systemio_write(addr, val);
-> -    qemu_set_irq(s->non_contiguous_io_map_irq,
-> -                 val & PORT0850_IOMAP_NONCONTIGUOUS);
-> +    memory_region_set_enabled(s->discontiguous_io,
-> +                              !(val & PORT0850_IOMAP_NONCONTIGUOUS));
->       s->iomap_type = val & PORT0850_IOMAP_NONCONTIGUOUS;
->   }
->   
-> @@ -257,10 +258,10 @@ static void prep_systemio_realize(DeviceState *dev, Error **errp)
->       PrepSystemIoState *s = PREP_SYSTEMIO(dev);
->       PowerPCCPU *cpu;
->   
-> -    qdev_init_gpio_out(dev, &s->non_contiguous_io_map_irq, 1);
-> +    assert(s->discontiguous_io);
->       s->iomap_type = PORT0850_IOMAP_NONCONTIGUOUS;
-> -    qemu_set_irq(s->non_contiguous_io_map_irq,
-> -                 s->iomap_type & PORT0850_IOMAP_NONCONTIGUOUS);
-> +    memory_region_set_enabled(s->discontiguous_io,
-> +                              !(s->iomap_type & PORT0850_IOMAP_NONCONTIGUOUS));
->       cpu = POWERPC_CPU(first_cpu);
->       s->softreset_irq = qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_HRESET);
->   
-> @@ -288,6 +289,8 @@ static const VMStateDescription vmstate_prep_systemio = {
->   static const Property prep_systemio_properties[] = {
->       DEFINE_PROP_UINT8("ibm-planar-id", PrepSystemIoState, ibm_planar_id, 0),
->       DEFINE_PROP_UINT8("equipment", PrepSystemIoState, equipment, 0),
-> +    DEFINE_PROP_LINK("discontiguous-io", PrepSystemIoState, discontiguous_io,
-> +                     TYPE_MEMORY_REGION, MemoryRegion *),
->   };
->   
->   static void prep_systemio_class_initfn(ObjectClass *klass, const void *data)
-> @@ -296,6 +299,8 @@ static void prep_systemio_class_initfn(ObjectClass *klass, const void *data)
->   
->       dc->realize = prep_systemio_realize;
->       dc->vmsd = &vmstate_prep_systemio;
-> +    /* Reason: PReP specific device, needs to be wired via properties */
-> +    dc->user_creatable = false;
->       device_class_set_props(dc, prep_systemio_properties);
->   }
+I think so because these are callbacks for the ISA io region so that 
+cannot be RAM. But memory_region_dispatch_* should handle it anyway, no?
 
-Making a device non-user-creatable seems to be a step backwards: why not keep the 
-gpio for signalling the non-contiguous IO configuration?
+>> -static void raven_io_write(void *opaque, hwaddr addr,
+>> -                           uint64_t val, unsigned int size)
+>> +static void raven_io_write(void *opaque, hwaddr addr, uint64_t val,
+>> +                           unsigned int size)
+>>   {
+>> -    PREPPCIState *s = opaque;
+>> -    uint8_t buf[4];
+>> -
+>> -    addr = raven_io_address(s, addr);
+>> -
+>> -    if (size == 1) {
+>> -        buf[0] = val;
+>> -    } else if (size == 2) {
+>> -        stw_le_p(buf, val);
+>> -    } else if (size == 4) {
+>> -        stl_le_p(buf, val);
+>> -    } else {
+>> -        g_assert_not_reached();
+>> -    }
+>> -
+>> -    address_space_write(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+>> -                        MEMTXATTRS_UNSPECIFIED, buf, size);
+>> +    memory_region_dispatch_write(opaque, raven_io_addr(addr), val,
+>> +                                 size_memop(size) | MO_LE,
+>> +                                 MEMTXATTRS_UNSPECIFIED);
+>>   }
+>>     static const MemoryRegionOps raven_io_ops = {
+>> @@ -208,7 +170,7 @@ static void raven_change_gpio(void *opaque, int n, int 
+>> level)
+>>   {
+>>       PREPPCIState *s = opaque;
+>>   -    s->contiguous_map = level;
+>> +    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
+>>   }
+>>     static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>> @@ -254,23 +216,17 @@ static void raven_pcihost_initfn(Object *obj)
+>>       MemoryRegion *address_space_mem = get_system_memory();
+>>         memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+>> -    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, 
+>> s,
+>> -                          "pci-io-non-contiguous", 0x00800000);
+>> +    memory_region_init_io(&s->pci_discontiguous_io, obj,
+>> +                          &raven_io_ops, &s->pci_io,
+>> +                          "pci-discontiguous-io", 8 * MiB);
+>
+> Again I think passing the device as the opaque is easier to understand.
 
+I disagree here, passing the memory region to memory region callbacks is 
+more straight forward than fishing it out from a device state. The 
+callback only needs the memory region so that's what I pass it to in 
+opaque.
 
-ATB,
+>>       memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+>> -    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+>> -
+>> -    /*
+>> -     * Raven's raven_io_ops use the address-space API to access 
+>> pci-conf-idx
+>> -     * (which is also owned by the raven device). As such, mark the
+>> -     * pci_io_non_contiguous as re-entrancy safe.
+>> -     */
+>> -    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+>>         /* CPU address space */
+>>       memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+>>                                   &s->pci_io);
+>>       memory_region_add_subregion_overlap(address_space_mem, 
+>> PCI_IO_BASE_ADDR,
+>> -                                        &s->pci_io_non_contiguous, 1);
+>> +                                        &s->pci_discontiguous_io, 1);
+>> +    memory_region_set_enabled(&s->pci_discontiguous_io, false);
+>>       memory_region_add_subregion(address_space_mem, 0xc0000000, 
+>> &s->pci_memory);
+>>         /* Bus master address space */
+>
+> Out of curiosity do you have an image or firmware that tests this?
 
-Mark.
+I've tried with a firmware image and the test cases and an AIX CD which 
+work as before but I don't think any of them use the discontigous io 
+setting so I could only verify it does not break the current setting.
 
+Regards,
+BALATON Zoltan
 
