@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53F8CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 533CBCAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzKXm-0006Ts-GJ; Thu, 18 Sep 2025 15:43:50 -0400
+	id 1uzKYn-00071t-A8; Thu, 18 Sep 2025 15:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKXl-0006Te-K3; Thu, 18 Sep 2025 15:43:49 -0400
+ id 1uzKYj-00070j-Gk; Thu, 18 Sep 2025 15:44:50 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKXj-0005Wx-P1; Thu, 18 Sep 2025 15:43:49 -0400
+ id 1uzKYh-0005cA-L9; Thu, 18 Sep 2025 15:44:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=T08usq3jL6lv8gdOD8m6fY4Q7JuUtg13cFGSH3vLfAI=; b=fKqBUNdGeN9Pf41jtnGPV5bwar
- nYx8gwULDUZ72MZZCipylj9bmx046Hh3jgxTsY6iUjFxXmrkCq0ikXqsWTZPxDcg0f1FSxZR8I14X
- 3tgPhKTH+T2y1zLSPY0nnMNIV1QLSPRnOsBszWU/8I0yXMWpOSSuVSBxWW/f/qsWjKXMcexCRS74h
- UN8H2IZJ2uZM5Lt6OhdjTzDPBxOPA1QWltTT+AMXFkqDsDLjeDGjqio0OVCN/ffkdRn+m/0RvOtwt
- uavB5elb27N7cYY7SEUYJn/RLdsD3MANOl9kHbrljpCpTGfbVvtpGofr1/RRoc/JL6mBr9LTpVvX1
- YLh7EYk16QxtdgxVJQDpdiMvXR83x+neOq4YGMRdPd9NoYl/xcw2Zv9gGkFxUX1cPKJOe++hQdWEr
- pXpvarzhv3CTiEjJTlbO1zqqDVX+u0323Xryl6nJRBHT7jAcDzplsFtzlsNOo87mb7lpSQexYFVH4
- t5FkTxu0bTG0HbFFVgEiQNmY0Vr1Rct7QjWIZtmtoGFZgRUrOLh2gMan9QzdNbx/yaz1ktl+XZL/7
- yGa8SgDHuFEVZdYJnJQj3otZf6D+gNRBG5BZvNAhzX7NdCD/mzcKrFF7/Kquor8Pgj1DfPsf1QRYX
- ZlFohofG5jMH3GY4hKseBmvoUfxjRDsdzdGIUiwPk=;
+ bh=CmGms4tFDncgCt6dDzPCY3VL81IIsvZmUlOzYIgpriY=; b=Rjzh+Hz7tCxug/0rLYGHRfjtog
+ SHTu2QJDp3S6ar+6tKFyDZe4sKGuVBWDfewsohgh000xbomxIoJNt+SwsqG7WOOZvoe9dtbSKJEDl
+ +Q6p7SqIMwjWUSmJqRvat4tw4Xl77QxuAtgFB1dBxICvhwIIVTG5S2trRidMgFLBAm6HH6Og3TZ9A
+ BLHSTbAoJeNTiRQo/G6Q7zDI4P04+0NjII81LI3b02D8vi5ohfQwmQlVILtpEEfkRSgTrRG7h3Gte
+ j3xXYDq/nAv0PDZ+kFioXq9JmTQh4nQ354Jo7PSk533Ag1wjwqNeYI0rBZrGspfa9EBdtvl7ddJUH
+ ufa4A+hoxBeqmC/aFPDJLSDFwd7JOzcMRa0+CXrxyHSynJtox6NfMaABAAs64LrqAEt8L1c2XrRqO
+ JXourPtoulKwQaH36cbcF99mWu3X+dxWnIgRvDwlkJrirXyCYCJRAejhs4GoDdouZcbeckcpqg8L9
+ 4k+QyOonImOIqLqQ5isPivP84uLtLsyLJQXk2b9z4/Ll0pxMajwGyXQ1wBi1gEnU/qqeF0sd3cfx9
+ k/7VIA6sv9MmoODVLH8FwW36Yt/MasxaLJRRFp2+qT3UoQoPCKR/1cLs+MzWmParuPK4A6KE8yx8A
+ E38W9ibqteVz3Bsr9bKCoUSNhcTu0D60A7zCqZo5Q=;
 Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKVf-0006Px-3s; Thu, 18 Sep 2025 20:41:43 +0100
-Message-ID: <b2dbac9c-60a0-41f8-8359-426557e87cff@ilande.co.uk>
-Date: Thu, 18 Sep 2025 20:43:40 +0100
+ id 1uzKWh-0006Qi-KT; Thu, 18 Sep 2025 20:42:43 +0100
+Message-ID: <0046fad8-9136-40bf-bd65-3500e73ba3e1@ilande.co.uk>
+Date: Thu, 18 Sep 2025 20:44:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -46,7 +46,7 @@ To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1758219840.git.balaton@eik.bme.hu>
- <2d0d90d16bb02cb9c0606ca8690cf22d296f982c.1758219840.git.balaton@eik.bme.hu>
+ <07eaef3ca91a8d7c9a4c71fe144ded6e9c4f9211.1758219840.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <2d0d90d16bb02cb9c0606ca8690cf22d296f982c.1758219840.git.balaton@eik.bme.hu>
+In-Reply-To: <07eaef3ca91a8d7c9a4c71fe144ded6e9c4f9211.1758219840.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 06/14] hw/pci-host/raven: Simplify direct config access
- address decoding
+Subject: Re: [PATCH v3 07/14] hw/pci-host/raven: Rename direct config access
+ ops
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,60 +107,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-> Use ctz instead of an open coded version and rename function to better
-> show what it does.
+> Rename memory io ops implementing PCI configuration direct access to
+> mmcfg which describes better what these are for.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 15 ++++-----------
->   1 file changed, 4 insertions(+), 11 deletions(-)
+>   hw/pci-host/raven.c | 17 ++++++++---------
+>   1 file changed, 8 insertions(+), 9 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index a400a22df3..66dab28a29 100644
+> index 66dab28a29..d7a0bde382 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -57,16 +57,9 @@ struct PREPPCIState {
->   
->   #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
->   
-> -static inline uint32_t raven_pci_io_config(hwaddr addr)
-> +static inline uint32_t raven_idsel_to_addr(hwaddr addr)
->   {
-> -    int i;
-> -
-> -    for (i = 0; i < 11; i++) {
-> -        if ((addr & (1 << (11 + i))) != 0) {
-> -            break;
-> -        }
-> -    }
-> -    return (addr & 0x7ff) |  (i << 11);
-> +    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+> @@ -62,25 +62,24 @@ static inline uint32_t raven_idsel_to_addr(hwaddr addr)
+>       return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
 >   }
-
-This looks like a good rework of the logic.
-
->   static void raven_pci_io_write(void *opaque, hwaddr addr,
-> @@ -74,7 +67,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
+>   
+> -static void raven_pci_io_write(void *opaque, hwaddr addr,
+> -                               uint64_t val, unsigned int size)
+> +static void raven_mmcfg_write(void *opaque, hwaddr addr, uint64_t val,
+> +                              unsigned int size)
 >   {
 >       PREPPCIState *s = opaque;
 >       PCIHostState *phb = PCI_HOST_BRIDGE(s);
-> -    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
-> +    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
+>       pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
 >   }
 >   
->   static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
-> @@ -82,7 +75,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+> -static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+> -                                  unsigned int size)
+> +static uint64_t raven_mmcfg_read(void *opaque, hwaddr addr, unsigned int size)
 >   {
 >       PREPPCIState *s = opaque;
 >       PCIHostState *phb = PCI_HOST_BRIDGE(s);
-> -    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
-> +    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
+>       return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
 >   }
 >   
->   static const MemoryRegionOps raven_pci_io_ops = {
-
-It's a bit confusing during review that pci_data_read()/pci_data_write() access 
-config space, but that's unrelated to this patch.
+> -static const MemoryRegionOps raven_pci_io_ops = {
+> -    .read = raven_pci_io_read,
+> -    .write = raven_pci_io_write,
+> +static const MemoryRegionOps raven_mmcfg_ops = {
+> +    .read = raven_mmcfg_read,
+> +    .write = raven_mmcfg_write,
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>   };
+>   
+> @@ -234,8 +233,8 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>                             "pci-conf-data", 4);
+>       memory_region_add_subregion(&s->pci_io, 0xcfc, &h->data_mem);
+>   
+> -    memory_region_init_io(&h->mmcfg, OBJECT(s), &raven_pci_io_ops, s,
+> -                          "pciio", 0x00400000);
+> +    memory_region_init_io(&h->mmcfg, OBJECT(s), &raven_mmcfg_ops, s,
+> +                          "pci-mmcfg", 0x00400000);
+>       memory_region_add_subregion(address_space_mem, 0x80800000, &h->mmcfg);
+>   
+>       memory_region_init_io(&s->pci_intack, OBJECT(s), &raven_intack_ops, s,
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
