@@ -4,132 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5466CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 16:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B180ACA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 16:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzHNk-0006PD-15; Thu, 18 Sep 2025 12:21:16 -0400
+	id 1uzHRH-0008RV-3S; Thu, 18 Sep 2025 12:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHNh-0006DE-Gl
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:21:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uzHRD-0008Qt-Ea; Thu, 18 Sep 2025 12:24:52 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHNe-0002gd-L6
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:21:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758212468;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2pPot1YgRDZE6hCh7mQ2pocPU2SLwI5BRF837EyaCck=;
- b=ERsDXc+qh4uLQ5tLZzl1D2ZEIYX6w/zv2ZmWleD5eqx6AjE3kQLF6fIY9/GTl++Pljif0+
- lsNolM4iPC2mneLedyre9jjIivrF5SThRAfsOjvzsgtytfNS9rQF6tuYoCvUxTLdTLyMKf
- nmaFzIx9veQCqADD+L7BNSjsUFNFi0E=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-Nae_xjwSPnqL7YLXbOyTMA-1; Thu, 18 Sep 2025 12:21:07 -0400
-X-MC-Unique: Nae_xjwSPnqL7YLXbOyTMA-1
-X-Mimecast-MFC-AGG-ID: Nae_xjwSPnqL7YLXbOyTMA_1758212467
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70d7c7e972eso19035456d6.3
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 09:21:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758212467; x=1758817267;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2pPot1YgRDZE6hCh7mQ2pocPU2SLwI5BRF837EyaCck=;
- b=ZT7VCBgorxCGJPchvGrRB/SBWnu82nUGbRnWYHxoY15FItSY4wEpZAh49qMGyBjkq8
- NERH0NOKFGIl8GZp08h1OgJiw9w5LYWrIxaH+nnqSaQrOgMO5YjONJ2gVLLxlcP5sVps
- PnQDB+FxwCRiie8khX0pXm1FRvy++V1UIhlq7RTT8MyfM1C62KItUYDhGuuahvyjuAcB
- 1r1oevBrsExgMNndXm2phEofGwKr285TuEOQ3s33TL9eGbu73J/8T5kjt9Qus1rSd/35
- ISb7K/F87A7O12tFcvZe5/Qn64nm9FHqU0SoMxs/dP0H60jq+rWvTlVUqLuL6J2uwJ4T
- HH1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5csQ18Eo6J9f/NjpbBhGX312Rv5omCZ4KDO+LCoAT9qBJi2mF0nZrQNueJMXXy7lJupqDr1UTEUd5@nongnu.org
-X-Gm-Message-State: AOJu0Ywh+bvE7gCQm3XOuNmbNX8yfB18SEfWDNUZQx22y1xF1rPRJjMs
- UhhChRUbu5Yt+3iNatvA8Hju9y94+KQjjWTZFaNYnZNHAXSQlQZnumhqz1u4x8ZTx51TQ2Z+xqI
- b+BHfYMv+TIBYNpwxX6fmrGTEH/ac2MxYledgKIqh8Qhx+TK43ov7bi6E
-X-Gm-Gg: ASbGncuaG32LF2BIw8sTAAgeVF4YHnZar8eR4tOphdzh+CCmANPzIhogvMZ/QF0RzBu
- iEXFAiY1c9Pf+cayyuVdJoW//2DRRC7ceYOwDm0wMCqT/NSILiwepgMlLkxVD0XCXdVARZFw+4l
- it2KQVugetcN3RTWpIOfAVyl3J4H/BwvTfMMCT0GMWm/RbuEOaZ3ELiB5Suqq9gHxzjNA/r84em
- 5zVsJpSulg0O0enqPWTmg1Vf3pTrxoYskNLtycIExH2yhxHSLfNLVG/ibwHbIspO8H0/Ny965L1
- F/LLa6WK42tTCGTj5FE+a5CiQw9odfA8
-X-Received: by 2002:a05:6214:5010:b0:722:970:3af1 with SMTP id
- 6a1803df08f44-79912981a94mr326436d6.22.1758212466497; 
- Thu, 18 Sep 2025 09:21:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5SggIi+tiry2DFo3y6iLI5iQBDlENMAhmnoVxB3dUWtLTqu/Fo+l7vs/qxtYyCGU32KLXQg==
-X-Received: by 2002:a05:6214:5010:b0:722:970:3af1 with SMTP id
- 6a1803df08f44-79912981a94mr325736d6.22.1758212465766; 
- Thu, 18 Sep 2025 09:21:05 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-793472c35c4sm15248966d6.24.2025.09.18.09.21.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 09:21:05 -0700 (PDT)
-Date: Thu, 18 Sep 2025 12:20:49 -0400
-From: Peter Xu <peterx@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v3 0/7] Do not unparent in instance_finalize()
-Message-ID: <aMwxYY9E3QghD10K@x1.local>
-References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
- <aMwRSpezxmIwIHrU@x1.local>
- <f536fc18-73ab-676c-bdec-59e94a3e5408@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uzHRB-0002wK-FR; Thu, 18 Sep 2025 12:24:51 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5F1BD155583;
+ Thu, 18 Sep 2025 19:24:35 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 911A2284DDA;
+ Thu, 18 Sep 2025 19:24:36 +0300 (MSK)
+Message-ID: <d871768c-ebf3-4b63-be81-ed1418373e92@tls.msk.ru>
+Date: Thu, 18 Sep 2025 19:24:36 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f536fc18-73ab-676c-bdec-59e94a3e5408@eik.bme.hu>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 54/61] i386/cpu: Enable SMM cpu address space under KVM
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ Kirill Martynov <stdcalllevi@yandex-team.ru>, Zhao Liu
+ <zhao1.liu@intel.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250913080943.11710-1-pbonzini@redhat.com>
+ <20250913080943.11710-55-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250913080943.11710-55-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,28 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 05:29:34PM +0200, BALATON Zoltan wrote:
-> On Thu, 18 Sep 2025, Peter Xu wrote:
-> > On Wed, Sep 17, 2025 at 07:13:25PM +0900, Akihiko Odaki wrote:
-> > > Based-on: <cover.1751493467.git.balaton@eik.bme.hu>
-> > > ("[PATCH v2 00/14] hw/pci-host/raven clean ups")
-> > 
-> > Could I ask why this is a dependency?
+On 13.09.2025 11:09, Paolo Bonzini wrote:
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> It removes an address_space usage from raven so this series does not have to
-> change that and I don't have to rebase that series. Otherwise these are not
-> related. I'll check the problem reported about my series and send an updated
-> one.
+> Kirill Martynov reported assertation in cpu_asidx_from_attrs() being hit
+> when x86_cpu_dump_state() is called to dump the CPU state[*]. It happens
+> when the CPU is in SMM and KVM emulation failure due to misbehaving
+> guest.
+> 
+> The root cause is that QEMU i386 never enables the SMM address space for
+> cpu since KVM SMM support has been added.
+> 
+> Enable the SMM cpu address space under KVM when the SMM is enabled for
+> the x86machine.
+> 
+> [*] https://lore.kernel.org/qemu-devel/20250523154431.506993-1-stdcalllevi@yandex-team.ru/
 
-This series should be a split of a previous mixed up series that may
-contain address space changes while this one doesn't.  It also doesn't
-touch raven.c and ppc/.
+Hi!
 
-Can I then understand it as the dependency is simply not needed?
+Should this one be fixed for stable qemu releases too?
+
+Also, what are the possible implications for migration
+of guests between qemu versions with and without this change?
 
 Thanks,
 
--- 
-Peter Xu
-
+/mjt
 
