@@ -4,102 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DFFCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 07:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A49ACAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 07:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz8fQ-0007Xn-9E; Thu, 18 Sep 2025 03:02:56 -0400
+	id 1uz8yw-0005Ij-54; Thu, 18 Sep 2025 03:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uz8fL-0007XA-B6; Thu, 18 Sep 2025 03:02:51 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uz8yq-0005HG-BY; Thu, 18 Sep 2025 03:23:00 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uz8fB-000593-CC; Thu, 18 Sep 2025 03:02:49 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cS65k54b8z4wCB;
- Thu, 18 Sep 2025 17:02:34 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cS65d3qXHz4wC3;
- Thu, 18 Sep 2025 17:02:29 +1000 (AEST)
-Message-ID: <3b42af6e-8054-4a0d-b2a1-7e2f2122e17d@kaod.org>
-Date: Thu, 18 Sep 2025 09:02:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 03/14] hw/pci-host/aspeed: Add AST2600 PCIe
- config space and host bridge
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
- titusr@google.com
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uz8yf-00088Y-DT; Thu, 18 Sep 2025 03:22:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=V8RQ/C26aggX/u2TGNHCduFGeujpXBofvtwGIZgXyKn29eSJ4+XIl5vp7KtpkpHHuFVFR4QIOF6T7dGmwNeBe2iGA9Ggq7YIepavJP1O5MACgcW7jn8wfqW9hITbLdGuFZPE9ZRPqLEQeQepW2iATI3354gEF9ZeyIFhM4oxzW+nrFG/Hf7Qsf+4zdNbSqw4pmnqrWQjeniBxV+WQsxxaIYbJP2wHGyahMl5UeFE66xbWOWeandmh7x6N5DNFoJlueQJ+HYMIdMbfc9WctxcjsRQ/jdZKessTQm4U5WRD3YpNIHoVZsqPrc9GMmBHP5/xBXnP6HDsYRCrTvJ+ds2jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w8gDgsrcRhEDHlIqwk1YdFRUkfBE4L6XMYv8HrMkLWs=;
+ b=MYiY5kslGHPZVQ5ah321OMOltCEFQ39fYlifGXx32diqIlqKyuldkznHBj3DcvBIblvHIxpWFZPU3QD31UvR10igkccyB42fwYXWmZ60fVdq7EWAjMrCHxYvZ0fSvG6SOUXdtjBFh27E+8VLOomK73YHA1+G1z+acBaUsF++JYgGVzHurrcdoLoalJOmm/qRXBVgofP8o4HaTE2YUYgple51iExFSYsPOEYsDn6SEeux2VOOtDlHS0zNu/RDr88ns7Dqk81QhNPIIgY6nm61vV7TGLw71cwIgvZ6iIw9YfCkahDA1xT/5mYhOF9oS5wsiFV8PUeVX9tgrsHeb8rAug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w8gDgsrcRhEDHlIqwk1YdFRUkfBE4L6XMYv8HrMkLWs=;
+ b=Ed2p01vdQ19OfVTM+PCLyiqVvKUMBIV/83WI8GH6z9V5ZuQSa8PrJFXKfY2vZTvpo9TaGwgw+9tCRdV/8KUqZ4Ej5sljSGw+08gRVPoalzLOW28UYn8lvWbOZs5YZS19AQp6C7XJJA4XneBqwmJ8U8LyDvTE/vWdTJ12sBO+LIPbDmQ3NGbCecLygXSnQY/sd74EyXU7TW8iigQDlkisgNwGd/87IdPqlmfpXnZJ3PcWJaAavyRVHj207qLENBCAgvYc46AFZO0RqFHe3z4RrBtxT1PD4F6swHCRWQOOCCROyjGLZIhoLjW9PlQDw6/MNr53dnHHojv/Nr//iDS1Ag==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ JH0PR06MB6320.apcprd06.prod.outlook.com (2603:1096:990:13::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9137.13; Thu, 18 Sep 2025 07:22:37 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%3]) with mapi id 15.20.9115.018; Thu, 18 Sep 2025
+ 07:22:36 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, "nabihestefan@google.com"
+ <nabihestefan@google.com>, "wuhaotsh@google.com" <wuhaotsh@google.com>,
+ "titusr@google.com" <titusr@google.com>
+Subject: RE: [SPAM] [PATCH v3 02/14] hw/pci-host/aspeed: Add AST2600 PCIe PHY
+ model
+Thread-Topic: [SPAM] [PATCH v3 02/14] hw/pci-host/aspeed: Add AST2600 PCIe PHY
+ model
+Thread-Index: AQHcKEpG+peqgTPlGk2QM8+Ng/5y/rSYfgMAgAALI7A=
+Date: Thu, 18 Sep 2025 07:22:36 +0000
+Message-ID: <SI2PR06MB50410C768306ADE10B31A012FC16A@SI2PR06MB5041.apcprd06.prod.outlook.com>
 References: <20250918031348.3991681-1-jamin_lin@aspeedtech.com>
- <20250918031348.3991681-4-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250918031348.3991681-4-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=jpNI=35=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20250918031348.3991681-3-jamin_lin@aspeedtech.com>
+ <9c28bf82-e451-48fd-8a95-169ff862ed03@kaod.org>
+In-Reply-To: <9c28bf82-e451-48fd-8a95-169ff862ed03@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|JH0PR06MB6320:EE_
+x-ms-office365-filtering-correlation-id: 636d0d1b-5d7f-4f30-2456-08ddf68424ab
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|7416014|366016|921020|38070700021|217643003; 
+x-microsoft-antispam-message-info: =?utf-8?B?YnRFUmR4SFJWVnNrb2RCeHVYampjazJodVZidEwzOVJrc2E2T0VqeTFpNDM1?=
+ =?utf-8?B?RFFSN1JYeFBldGxaNHVMWXFtQ2pJOTdtZytSSXVMSGpYZGVwUW5iM2lzL2Z6?=
+ =?utf-8?B?TUsxUnowVTZJeHFKSW1tT0QwanVtR1dSUlpkdHBYTDhaelZLNWc0VGNvVFdX?=
+ =?utf-8?B?RE1oMExoWnRhUUlJdG0rTlJtS2tybm5JclQxaHVDZjRESXNOOWJQenVyaVk4?=
+ =?utf-8?B?ekxGdUVrZkxpREd2b3F6YS8xUmxUck9oMENpbExSSzBjc1dpWkdEb2JmSFl4?=
+ =?utf-8?B?dzFIdGhWNTA5QnhRQ2pSUGluZWRJVXpFWVZxRGZXSytQbU9vYXoxTU1LK1Vo?=
+ =?utf-8?B?R05nWGZJS0w2Zklmdm5xbUlmZXFCQVBPMkczTVRHTGw3NHBiUWRQd3BQY0ls?=
+ =?utf-8?B?eElxNHpDcUNkN2dvaEI3cEpNUTJ6eitIZE9YcnI1SFZiNUZ1YU0wcXp1Q0x1?=
+ =?utf-8?B?dEhrV1hMQzdzenRyTFZpdmwzdmxTSUVNTGF3UDRCbS9QMTdkTVU0WFJEMzhT?=
+ =?utf-8?B?eDVNTVkxTmxyNTRnVVRwSXBzOTY3djFwV2p3VzgvWGl5VGx5QnIwcFNmV2xX?=
+ =?utf-8?B?WnpnMEpFUUhZZlNvUXcxbmVCOUZ4QVA5NDR4RTVUWFNSeGVuTDBMOU1xSS95?=
+ =?utf-8?B?OFZTQzBvdU1FOHo0RWI3WUkwWjlHRytxK2EvcGorUkpCSlluWmp3Zlh6OWdM?=
+ =?utf-8?B?dERxcndkMm5ZRjc3aU1TYm9vL1JOYzd1Uy9yK0Q1dTd3RXZwcmd1VXJkV3gw?=
+ =?utf-8?B?Nk51NElVREJRVWRWUzF6S1RjNDBmWlNxMUJnOWxzazR5UmN3UmlOR2NUSi95?=
+ =?utf-8?B?a1FTRkNsMDlhYVNUTTFzalZkOUxsUTdkVm9BWFBlSkRxdmlWa1BEejI5cmJR?=
+ =?utf-8?B?WkpZWjUwbzY2UWlKeVp3aXpENWFwWHhldnIzZUNuSEhKNVl2VDczNjNKNUhJ?=
+ =?utf-8?B?bTJDNHEzekt3Q2xEZDB0VHdoM1NGQWQ1SWRtaG04ODVDT2RoQ21pOGRRbkxv?=
+ =?utf-8?B?TjR4RWZyVFZqZVNyckhvU05FWTNsakk5d0FYTkhBdmtldzg5NTM5Z1E0dURz?=
+ =?utf-8?B?MGN0dGllWG9UUHVhOEh5aXFNN2FpSDdqUk1sRlo1WS9UOHJUeG9nRVZvdmtx?=
+ =?utf-8?B?QytiY1RNbUJWbUJlSVpYK2pSRlVXVnhRdGkwUWU2aGtjOW1DdCtLTDdTNExx?=
+ =?utf-8?B?S3Q3UTJKZTN3Y29TSVJ4VXdUYWZRQmpIbGk5Rk04T3VHNmwxREdQbVQ3Ymxu?=
+ =?utf-8?B?RUNFTTM5TUF6dGxsbmNaY1NzRVA3QjNBTlJUemU2ZzAvVWFVYlg5dUcxNHFV?=
+ =?utf-8?B?QWFGRzdXeDFyRUFteVVlMUQ0VHh1TEpwZ044ZXFEMzczeW80bDJ5Yk5VK2la?=
+ =?utf-8?B?YXlUNVlRVWtTM2tadWtWSWpLa2JHNzBCL1dJaW9COHRWMGpUT2pKNFhzZS9v?=
+ =?utf-8?B?RklvNHY0QVJxK0E4elRweHlZSG1xckdhWHMwTEZnU0RRQjY1ZVBRWUVYNjlp?=
+ =?utf-8?B?eUdTNm5zV2VpQVN3Zjd1UDl0QWVwYnZSWGt6MWJERkV6TEhwWkFiN2VSK0tH?=
+ =?utf-8?B?V1F1UGtFdGxRSnB3QVEvNFJjR1FrWUlaSG5HR2NlanFPcC9sUlVlSzBuT1B5?=
+ =?utf-8?B?YmMyL0NWV2pOaHdwc0NIUldDQ3I5SEc3RURtVzJrbkI2SExDc2liU08rWS9B?=
+ =?utf-8?B?YjN1SXhiZmJWeW1UVUVhSE1GQ2V0UitDcHJsM1V1TEV1Z2liWmZMMkZqbGlF?=
+ =?utf-8?B?R1VDOXZOOGFrQU02MUhiTWV6ZnFmMmYrbERNbW5LNVplSTNJdmU5cVdPRHk0?=
+ =?utf-8?B?MG5tc0ZpSnJ2VGZnaytPUG10WWkxVlRLajg1L3ZrbnZBRXVqZlI0S20vZmoz?=
+ =?utf-8?B?VnRYTXk1dWdrR2gySW5Jc1h5Q2RPRVYrODMvbjhFbCs3SXFNemhBdm56bDg5?=
+ =?utf-8?B?NFBqL1ZGVHZKV2Y3bmUxdVVTeFNvSmtRU09GbDJTajNPNUdOK0ZCNmdiQnJ0?=
+ =?utf-8?B?eFBJTm9Jbk5LcGpzMTRRNHVDVmVQVjh6WWU5RStOVkY2U1VnU3NVOGFyTkZP?=
+ =?utf-8?B?cUFwOVpYdFZMU3kwSDdXTFJzMllmS3hmV3NKUT09?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(7416014)(366016)(921020)(38070700021)(217643003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dkZrNVhpNTVGeEd6Q1J0L0JTY3RraVcrTW9pMnNqb3orV0FxeDYza1BpK1VC?=
+ =?utf-8?B?ejhTZWxhQi80dXVSTzZJMm9SYjZJZXI0alFYTy9kS1M5aHpmUnpQb2MrQnJ0?=
+ =?utf-8?B?SWNwOHFJN0FnTklvWXhTYmczbEZwWkhQNXFwbjU5RGh6MXZDUk5ES1RZS1Mv?=
+ =?utf-8?B?cVA4eFJzdGRHM0xzNnpyRGtvdUtMVGlxN2JWRDZaOFhpUWFMdXh5Ym43L09F?=
+ =?utf-8?B?dDZkekhRbVdGVFJSdkw0MHBtUG1oc2ZZYUVYRkg1N2ZKUGtpd01ESmVFTFJO?=
+ =?utf-8?B?MTJ6RExPcmlVTVMxNi9OblovbVpmcnBEaGV0UUZ1ckJyaldaMVNJd0lQZkJG?=
+ =?utf-8?B?ckJpMmFjb0l3ZkJjTjZzdTM3T3BYdzlzOUdwZnFHRmdyekRrdWw2U283aUNo?=
+ =?utf-8?B?RTV2UmVnejU2T0lVTEZFWHc5ZU4zWldHQ0lYWGFLb0NqQ3VJa1I4dUV1OFZ3?=
+ =?utf-8?B?RlZsb0Rkak1XNExHQjJuOFlnVzM1MWRqdllKdkJyRXoyVElJbUxCdCsrMUNv?=
+ =?utf-8?B?azZNWitwaHNZMW02TTdNQU5qa2ZoclZTYW5HeUg0YmVON054bml5SG5Bbmd0?=
+ =?utf-8?B?TkpaVzhYa1JPV1BHY3RyTW1CSkl0VlM0RnhNSThzQSttUWdtMGFkVnlMUVFD?=
+ =?utf-8?B?Rm9RTmpLbTd4b2lOODRwV3dzakhMMWc4NjJ6MUx6TlhkRlA4TzQ1dmZGQ0Qy?=
+ =?utf-8?B?ZVlmOWxCRDg2VXVVRVg0dy9Pb2oxZFY0Y2tlMTBORHpucVhpSElaRnYvZVFq?=
+ =?utf-8?B?ZjVsWHRpamRHeVA4Ky9PVW1nbWtXZzFEdDVrdnJ4bVFzUk55UFpYN2R0c1dP?=
+ =?utf-8?B?UENQNW1jTStib0J0ejRUbGNxWlltZjl1djFpQmlFOWxaeVNDSGtGdFVnSWsy?=
+ =?utf-8?B?T2xtRDMyOWVFR21EYWJubmRieEt0eGRFQUdQanhabDM1L3ZkRXl3TjZZdGtu?=
+ =?utf-8?B?enB1Ri9yT3VzQ2VsSTBLaHBCWHJoNnlDKzRURkpJVGhrcWJiUjhCeWFKemI0?=
+ =?utf-8?B?Y3JsdFhTNTducmc2b0NVZ1A2YWF2Q0h3MzIwTHJvSDljQ1lUNVlhRS9KVlps?=
+ =?utf-8?B?UENGNkZqT2Q2Y0FaTzdqdlJpWjlTUXhOMk5XUVBNSFJocXZYTWlzZDZ6UVN3?=
+ =?utf-8?B?dVA4ZnhrZkZxQmwwdDBMMTYzRXR6MzRLdHNMRHVpZEVSZDlVMitQZ2F2U1dL?=
+ =?utf-8?B?cnM4TmxOSlAxUGZ1VDdtNm5jYVkxQXZzVWNTY1pCVWpYVXRsRzBSMWdlcVhT?=
+ =?utf-8?B?bHh2aDk1b2M3ZVpmcTQ3NWJXNklkazlDdTVEMFdqQ1B6T2NCMlRQdGxFY08w?=
+ =?utf-8?B?QXA4WGR5bHRzbGFJdW00TDVVc0JkbVluTE1IZ2tHQVdYOE5aejBnQkw2aktL?=
+ =?utf-8?B?V3lXUVFZUGZDa1lDRnV4MEJGMXVlVy93OG8yc1NRVlVQcFJtTGJndnNEN2c0?=
+ =?utf-8?B?aTNxUlRzQzZGU3VPQWxBWVF1RGhEbk5WcC9BL1JpOFpsRTBKdlE4djhJTGtI?=
+ =?utf-8?B?WGtESnZ6QW9aY2kyano1eXdUSTkxM0pkYWJpc3lQS21OZ29sREh3SXpLSmIy?=
+ =?utf-8?B?K2dUSVRCYXlwaTZobVFzQzJYNU92TVRwaDg2SWcvOWFleDZXQTVEK2RmOW9k?=
+ =?utf-8?B?bXNUcm1EZ1drVWEwaWZCc3Z2TTZsdU1xcUwyY1ZwVW1nL1YvYm9KZXQvVE1F?=
+ =?utf-8?B?dmNGMlVWbjRlbjdnTC9HQnFjUjg2TDEyRE55NytZNkN6ejRlM2lhQlVVc0tR?=
+ =?utf-8?B?VG5pdjBYV3N0cXpFQlNvOXBFZ2lwcm9Wa1hVcDlUWDdmNWYxTVBSQkRkejVQ?=
+ =?utf-8?B?S2RXOG9sbjhCWS80ZitrMThtQ1FNc1ZiV1M3K0hBMjdPN05tVVd0eTZTS0Ra?=
+ =?utf-8?B?RFNVL2VsRkxEcTJ2K3BKWm4zK1FGNEhlalhaL2pNeFJIbTFLMENBaDM2M0RC?=
+ =?utf-8?B?MGhWQWlKbXV6aDA1ajQwR0FVKzEwNkJLZVhpZjc0RmxBT2NYZWM2WGwva1ls?=
+ =?utf-8?B?a1JMSG12L3lGR1dFSjZ2U0RFU2RWTFIxbzhRODA2eDg0c3dycGxBQlI0bVBH?=
+ =?utf-8?B?TlBOd1RGUkFPL2E4Rk5QcllvOHpKQXE3cWJUd1lYTHM0ZW9TRExOSjc4WFR2?=
+ =?utf-8?Q?y1n4Ra9jlPvHss0A3kcHy2Fia?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 636d0d1b-5d7f-4f30-2456-08ddf68424ab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Sep 2025 07:22:36.7169 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: bkYr1gXssX/HYnzA/JoxJyRZ0R1cEUkv76ZfjtDzEUsqWR/D9+o1Xl5wA0zFejtdrSV99Qrd1eVS4p4LpDxS9LjlalKf8WWWJXgqYOzlbzk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6320
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,576 +192,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 05:13, Jamin Lin wrote:
-> Introduce PCIe config and host bridge model for the AST2600 platform.
-> 
-> This patch adds support for the H2X (AHB to PCIe Bus Bridge) controller
-> with a 0x100 byte register space. The register layout is shared between
-> two root complexes: 0x00–0x7f is common, 0x80–0xbf for RC_L, and 0xc0–0xff
-> for RC_H. Only RC_H is modeled in this implementation.
-> 
-> The RC_H bus uses bus numbers in the 0x80–0xff range instead of the
-> standard root bus 0x00. To allow the PCI subsystem to discover devices,
-> the host bridge logic remaps the root bus number back to 0x00 whenever the
-> configured bus number matches the "bus-nr" property.
-> 
-> New MMIO callbacks are added for the H2X config space:
-> - aspeed_pcie_cfg_read() and aspeed_pcie_cfg_write() handle register
->    accesses.
-> - aspeed_pcie_cfg_readwrite() provides configuration read/write support.
-> - aspeed_pcie_cfg_translate_write() handles PCIe byte-enable semantics for
->    write operations.
-> 
-> The reset handler initializes the H2X register block with default values
-> as defined in the AST2600 datasheet.
-> 
-> Additional changes:
-> - Implement ASPEED PCIe root complex (TYPE_ASPEED_PCIE_RC).
-> - Wire up interrupt propagation via aspeed_pcie_rc_set_irq().
-> - Add tracepoints for config read/write and INTx handling.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   include/hw/pci-host/aspeed_pcie.h |  59 +++++
->   hw/pci-host/aspeed_pcie.c         | 418 ++++++++++++++++++++++++++++++
->   hw/pci-host/trace-events          |   4 +
->   3 files changed, 481 insertions(+)
-> 
-> diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-> index d9fb829048..850d579189 100644
-> --- a/include/hw/pci-host/aspeed_pcie.h
-> +++ b/include/hw/pci-host/aspeed_pcie.h
-> @@ -22,6 +22,65 @@
->   #include "hw/pci/pcie_host.h"
->   #include "qom/object.h"
->   
-> +typedef struct AspeedPCIECfgTxDesc {
-> +    uint32_t desc0;
-> +    uint32_t desc1;
-> +    uint32_t desc2;
-> +    uint32_t desc3;
-> +    uint32_t wdata;
-> +    uint32_t rdata_reg;
-> +} AspeedPCIECfgTxDesc;
-> +
-> +typedef struct AspeedPCIERcRegs {
-> +    uint32_t int_en_reg;
-> +    uint32_t int_sts_reg;
-> +} AspeedPCIERcRegs;
-> +
-> +typedef struct AspeedPCIERegMap {
-> +    AspeedPCIERcRegs rc;
-> +} AspeedPCIERegMap;
-> +
-> +#define TYPE_ASPEED_PCIE_RC "aspeed.pcie-rc"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERcState, ASPEED_PCIE_RC);
-> +
-> +struct AspeedPCIERcState {
-> +    PCIExpressHost parent_obj;
-> +
-> +    MemoryRegion mmio_window;
-> +    MemoryRegion io_window;
-> +    MemoryRegion mmio;
-> +    MemoryRegion io;
-> +
-> +    uint32_t bus_nr;
-> +    char name[16];
-> +    qemu_irq irq;> +};
-> +
-> +/* Bridge between AHB bus and PCIe RC. */
-> +#define TYPE_ASPEED_PCIE_CFG "aspeed.pcie-cfg"
-> +OBJECT_DECLARE_TYPE(AspeedPCIECfgState, AspeedPCIECfgClass, ASPEED_PCIE_CFG);
-> +
-> +struct AspeedPCIECfgState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion mmio;
-> +    uint32_t *regs;
-> +    uint32_t id;
-> +
-> +    const AspeedPCIERcRegs *rc_regs;
-> +    AspeedPCIERcState rc;
-> +};
-> +
-> +struct AspeedPCIECfgClass {
-> +    SysBusDeviceClass parent_class;
-> +
-> +    const AspeedPCIERegMap *reg_map;
-> +    const MemoryRegionOps *reg_ops;
-> +
-> +    uint64_t rc_bus_nr;
-> +    uint64_t nr_regs;
-> +};
-> +
->   #define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
->   OBJECT_DECLARE_TYPE(AspeedPCIEPhyState, AspeedPCIEPhyClass, ASPEED_PCIE_PHY);
->   
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index 110c963779..08d717381b 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -25,6 +25,422 @@
->   #include "hw/pci/msi.h"
->   #include "trace.h"
->   
-> +/*
-> + * PCIe Root Complex (RC)
-> + */
-> +
-> +static void aspeed_pcie_rc_set_irq(void *opaque, int irq, int level)
-> +{
-> +    AspeedPCIERcState *rc = (AspeedPCIERcState *) opaque;
-> +    AspeedPCIECfgState *cfg =
-> +        container_of(rc, AspeedPCIECfgState, rc);
-> +    bool intx;
-> +
-> +    assert(irq < PCI_NUM_PINS);
-> +
-> +    if (level) {
-> +        cfg->regs[cfg->rc_regs->int_sts_reg] |= BIT(irq);
-> +    } else {
-> +        cfg->regs[cfg->rc_regs->int_sts_reg] &= ~BIT(irq);
-> +    }
-> +
-> +    intx = !!(cfg->regs[cfg->rc_regs->int_sts_reg] &
-> +              cfg->regs[cfg->rc_regs->int_en_reg]);
-> +    trace_aspeed_pcie_rc_intx_set_irq(cfg->id, irq, intx);
-> +    qemu_set_irq(rc->irq, intx);
-> +}
-> +
-> +static int aspeed_pcie_rc_map_irq(PCIDevice *pci_dev, int irq_num)
-> +{
-> +    return irq_num % PCI_NUM_PINS;
-> +}
-> +
-> +static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
-> +    AspeedPCIERcState *rc = ASPEED_PCIE_RC(dev);
-> +    AspeedPCIECfgState *cfg =
-> +           container_of(rc, AspeedPCIECfgState, rc);
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    g_autofree char *name;
-
-g_autofree variables should be assigned when declared.
-
-> +
-> +    /* PCI configuration space */
-> +    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
-> +    sysbus_init_mmio(sbd, &pex->mmio);
-> +
-> +    /* MMIO and IO region */
-> +    memory_region_init(&rc->mmio, OBJECT(rc), "mmio", UINT64_MAX);
-> +    memory_region_init(&rc->io, OBJECT(rc), "io", 0x10000);
-> +
-> +    name = g_strdup_printf("pcie.%d.mmio_window", cfg->id);
-> +    memory_region_init_io(&rc->mmio_window, OBJECT(rc), &unassigned_io_ops,
-> +                          OBJECT(rc), name, UINT64_MAX);
-> +    name = g_strdup_printf("pcie.%d.ioport_window", cfg->id);
-
-This is going to leak memory .
-
-> +    memory_region_init_io(&rc->io_window, OBJECT(rc), &unassigned_io_ops,
-> +                          OBJECT(rc), name, 0x10000);
-> +
-> +    memory_region_add_subregion(&rc->mmio_window, 0, &rc->mmio);
-> +    memory_region_add_subregion(&rc->io_window, 0, &rc->io);
-> +    sysbus_init_mmio(sbd, &rc->mmio_window);
-> +    sysbus_init_mmio(sbd, &rc->io_window);
-> +
-> +    sysbus_init_irq(sbd, &rc->irq);
-> +    name = g_strdup_printf("pcie.rc%d", cfg->id);
-> +    pci->bus = pci_register_root_bus(dev, name, aspeed_pcie_rc_set_irq,
-> +                                     aspeed_pcie_rc_map_irq, rc, &rc->mmio,
-> +                                     &rc->io, 0, 4, TYPE_PCIE_BUS);
-> +    pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
-> +}
-> +
-> +static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
-> +                                                PCIBus *rootbus)
-> +{
-> +    AspeedPCIERcState *rc = ASPEED_PCIE_RC(host_bridge);
-> +    AspeedPCIECfgState *cfg =
-> +           container_of(rc, AspeedPCIECfgState, rc);
-> +
-> +    snprintf(rc->name, sizeof(rc->name), "%04x:%02x", cfg->id, rc->bus_nr);
-> +
-> +    return rc->name;
-> +}
-> +
-> +static const Property aspeed_pcie_rc_props[] = {
-> +    DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
-> +};
-> +
-> +static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED PCIe RC";
-> +    dc->realize = aspeed_pcie_rc_realize;
-> +    dc->fw_name = "pci";
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +
-> +    hc->root_bus_path = aspeed_pcie_rc_root_bus_path;
-> +    device_class_set_props(dc, aspeed_pcie_rc_props);
-> +
-> +    msi_nonbroken = true;
-> +}
-> +
-> +static const TypeInfo aspeed_pcie_rc_info = {
-> +    .name = TYPE_ASPEED_PCIE_RC,
-> +    .parent = TYPE_PCIE_HOST_BRIDGE,
-> +    .instance_size = sizeof(AspeedPCIERcState),
-> +    .class_init = aspeed_pcie_rc_class_init,
-> +};
-> +
-> +/*
-> + * PCIe Config
-> + *
-> + * AHB to PCIe Bus Bridge (H2X)
-> + *
-> + * On the AST2600:
-> + * NOTE: rc_l is not supported by this model.
-> + * - Registers 0x00 - 0x7F are shared by both PCIe0 (rc_l) and PCIe1 (rc_h).
-> + * - Registers 0x80 - 0xBF are specific to PCIe0.
-> + * - Registers 0xC0 - 0xFF are specific to PCIe1.
-> + */
-> +
-> +/* AST2600 */
-> +REG32(H2X_CTRL,             0x00)
-> +    FIELD(H2X_CTRL, CLEAR_RX, 4, 1)
-> +REG32(H2X_TX_CLEAR,         0x08)
-> +    FIELD(H2X_TX_CLEAR, IDLE, 0, 1)
-> +REG32(H2X_RDATA,            0x0C)
-> +REG32(H2X_TX_DESC0,         0x10)
-> +REG32(H2X_TX_DESC1,         0x14)
-> +REG32(H2X_TX_DESC2,         0x18)
-> +REG32(H2X_TX_DESC3,         0x1C)
-> +REG32(H2X_TX_DATA,          0x20)
-> +REG32(H2X_TX_STS,           0x24)
-> +    FIELD(H2X_TX_STS, IDLE, 31, 1)
-> +    FIELD(H2X_TX_STS, RC_L_TX_COMP, 24, 1)
-> +    FIELD(H2X_TX_STS, RC_H_TX_COMP, 25, 1)
-> +    FIELD(H2X_TX_STS, TRIG, 0, 1)
-> +REG32(H2X_RC_H_CTRL,        0xC0)
-> +REG32(H2X_RC_H_INT_EN,      0xC4)
-> +REG32(H2X_RC_H_INT_STS,     0xC8)
-> +    SHARED_FIELD(H2X_RC_INT_INTDONE, 4, 1)
-> +    SHARED_FIELD(H2X_RC_INT_INTX, 0, 4)
-> +REG32(H2X_RC_H_RDATA,       0xCC)
-> +
-> +#define TLP_FMTTYPE_CFGRD0  0x04 /* Configuration Read  Type 0 */
-> +#define TLP_FMTTYPE_CFGWR0  0x44 /* Configuration Write Type 0 */
-> +#define TLP_FMTTYPE_CFGRD1  0x05 /* Configuration Read  Type 1 */
-> +#define TLP_FMTTYPE_CFGWR1  0x45 /* Configuration Write Type 1 */
-> +
-> +#define PCIE_CFG_FMTTYPE_MASK(x) (((x) >> 24) & 0xff)
-> +#define PCIE_CFG_BYTE_EN(x) ((x) & 0xf)
-> +
-> +static const AspeedPCIERegMap aspeed_regmap = {
-> +    .rc = {
-> +        .int_en_reg     = R_H2X_RC_H_INT_EN,
-> +        .int_sts_reg    = R_H2X_RC_H_INT_STS,
-> +    },
-> +};
-> +
-> +static uint64_t aspeed_pcie_cfg_read(void *opaque, hwaddr addr,
-> +                                     unsigned int size)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
-> +    uint32_t reg = addr >> 2;
-> +    uint32_t value = 0;
-> +
-> +    value = s->regs[reg];
-> +
-> +    trace_aspeed_pcie_cfg_read(s->id, addr, value);
-> +
-> +    return value;
-> +}
-> +
-> +static void aspeed_pcie_cfg_translate_write(uint8_t byte_en, uint32_t *addr,
-> +                                            uint64_t *val, int *len)
-> +{
-> +    uint64_t packed_val = 0;
-> +    int first_bit = -1;
-> +    int index = 0;
-> +    int i;
-> +
-> +    *len = ctpop8(byte_en);
-> +
-> +    if (*len == 0 || *len > 4) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid byte enable: 0x%x\n",
-> +                      __func__, byte_en);
-> +        return;
-> +    }
-> +
-> +    /* Special case: full 4-byte write must be 4-byte aligned */
-> +    if (byte_en == 0x0f) {
-> +        if ((*addr & 0x3) != 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: 4-byte write not 4-byte aligned: addr=0x%x\n",
-> +                          __func__, *addr);
-> +            return;
-> +        }
-> +        *val &= 0xffffffffULL;
-> +        return;
-> +    }
-> +
-> +    for (i = 0; i < 4; i++) {
-> +        if (byte_en & (1 << i)) {
-> +            if (first_bit < 0) {
-> +                first_bit = i;
-> +            }
-> +            packed_val |= ((*val >> (i * 8)) & 0xff) << (index * 8);
-> +            index++;
-> +        }
-> +    }
-> +
-> +    *addr += first_bit;
-> +    *val = packed_val;
-> +}
-> +
-> +static void aspeed_pcie_cfg_readwrite(AspeedPCIECfgState *s,
-> +                                      const AspeedPCIECfgTxDesc *desc)
-> +{
-> +    AspeedPCIERcState *rc = &s->rc;
-> +    PCIHostState *pci;
-> +    uint32_t cfg_addr;
-> +    PCIDevice *pdev;
-> +    uint32_t offset;
-> +    uint8_t byte_en;
-> +    bool is_write;
-> +    uint8_t devfn;
-> +    uint64_t val;
-> +    uint8_t bus;
-> +    int len;
-> +
-> +    val = ~0;
-> +    is_write = !!(desc->desc0 & BIT(30));
-> +    cfg_addr = desc->desc2;
-> +
-> +    bus = (cfg_addr >> 24) & 0xff;
-> +    devfn  = (cfg_addr >> 16) & 0xff;
-> +    offset = cfg_addr & 0xffc;
-> +
-> +    pci = PCI_HOST_BRIDGE(rc);
-> +
-> +    /*
-> +     * On the AST2600, the RC_H bus number range from 0x80 to 0xFF, with the
-> +     * root device and root port assigned to bus 0x80 instead of the standard
-> +     * 0x00. To allow the PCI subsystem to correctly discover devices on the
-> +     * root bus, bus 0x80 is remapped to 0x00.
-> +     */
-> +    if (bus == rc->bus_nr) {
-> +        bus = 0;
-> +    }
-> +
-> +    pdev = pci_find_device(pci->bus, bus, devfn);
-> +    if (!pdev) {
-> +        s->regs[desc->rdata_reg] = ~0;
-> +        goto out;
-> +    }
-> +
-> +    switch (PCIE_CFG_FMTTYPE_MASK(desc->desc0)) {
-> +    case TLP_FMTTYPE_CFGWR0:
-> +    case TLP_FMTTYPE_CFGWR1:
-> +        byte_en = PCIE_CFG_BYTE_EN(desc->desc1);
-> +        val = desc->wdata;
-> +        aspeed_pcie_cfg_translate_write(byte_en, &offset, &val, &len);
-> +        pci_host_config_write_common(pdev, offset, pci_config_size(pdev),
-> +                                     val, len);
-> +        break;
-> +    case TLP_FMTTYPE_CFGRD0:
-> +    case TLP_FMTTYPE_CFGRD1:
-> +        val = pci_host_config_read_common(pdev, offset,
-> +                                          pci_config_size(pdev), 4);
-> +        s->regs[desc->rdata_reg] = val;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid CFG type. DESC0=0x%x\n",
-> +                      __func__, desc->desc0);
-> +    }
-> +
-> +out:
-> +    trace_aspeed_pcie_cfg_rw(s->id, is_write ?  "write" : "read", bus, devfn,
-> +                             cfg_addr, val);
-> +}
-> +
-> +static void aspeed_pcie_cfg_write(void *opaque, hwaddr addr, uint64_t data,
-> +                                  unsigned int size)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
-> +    AspeedPCIECfgTxDesc desc;
-> +    uint32_t reg = addr >> 2;
-> +    uint32_t rc_reg;
-> +
-> +    trace_aspeed_pcie_cfg_write(s->id, addr, data);
-> +
-> +    switch (reg) {
-> +    case R_H2X_CTRL:
-> +        if (data & R_H2X_CTRL_CLEAR_RX_MASK) {
-> +            s->regs[R_H2X_RDATA] = ~0;
-> +        }
-> +        break;
-> +    case R_H2X_TX_CLEAR:
-> +        if (data & R_H2X_TX_CLEAR_IDLE_MASK) {
-> +            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_IDLE_MASK;
-> +        }
-> +        break;
-> +    case R_H2X_TX_STS:
-> +        if (data & R_H2X_TX_STS_TRIG_MASK) {
-> +            desc.desc0 = s->regs[R_H2X_TX_DESC0];
-> +            desc.desc1 = s->regs[R_H2X_TX_DESC1];
-> +            desc.desc2 = s->regs[R_H2X_TX_DESC2];
-> +            desc.desc3 = s->regs[R_H2X_TX_DESC3];
-> +            desc.wdata = s->regs[R_H2X_TX_DATA];
-> +            desc.rdata_reg = R_H2X_RC_H_RDATA;
-> +            aspeed_pcie_cfg_readwrite(s, &desc);
-> +            rc_reg = s->rc_regs->int_sts_reg;
-> +            s->regs[rc_reg] |= H2X_RC_INT_INTDONE_MASK;
-> +            s->regs[R_H2X_TX_STS] |=
-> +                BIT(R_H2X_TX_STS_RC_H_TX_COMP_SHIFT);
-> +            s->regs[R_H2X_TX_STS] |= R_H2X_TX_STS_IDLE_MASK;
-> +        }
-> +        break;
-> +    /* preserve INTx status */
-> +    case R_H2X_RC_H_INT_STS:
-> +        if (data & H2X_RC_INT_INTDONE_MASK) {
-> +            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_RC_H_TX_COMP_MASK;
-> +        }
-> +        s->regs[reg] &= ~data | H2X_RC_INT_INTX_MASK;
-> +        break;
-> +    default:
-> +        s->regs[reg] = data;
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps aspeed_pcie_cfg_ops = {
-> +    .read = aspeed_pcie_cfg_read,
-> +    .write = aspeed_pcie_cfg_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 1,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void aspeed_pcie_cfg_instance_init(Object *obj)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(obj);
-> +
-> +    object_initialize_child(obj, "rc", &s->rc, TYPE_ASPEED_PCIE_RC);
-> +
-> +    return;
-> +}
-> +
-> +static void aspeed_pcie_cfg_reset(DeviceState *dev)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
-> +
-> +    memset(s->regs, 0, apc->nr_regs << 2);
-> +}
-> +
-> +static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
-> +    g_autofree char *name;
-
-name should be assigned.
-
-
-Thanks,
-
-C.
-
-
-
-> +
-> +    s->rc_regs = &apc->reg_map->rc;
-> +    s->regs = g_new(uint32_t, apc->nr_regs);
-> +    name = g_strdup_printf(TYPE_ASPEED_PCIE_CFG ".regs.%d", s->id);
-> +    memory_region_init_io(&s->mmio, OBJECT(s), apc->reg_ops, s, name,
-> +                          apc->nr_regs << 2);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +
-> +    object_property_set_int(OBJECT(&s->rc), "bus-nr",
-> +                            apc->rc_bus_nr,
-> +                            &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rc), errp)) {
-> +        return;
-> +    }
-> +}
-> +
-> +static void aspeed_pcie_cfg_unrealize(DeviceState *dev)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +
-> +    g_free(s->regs);
-> +    s->regs = NULL;
-> +}
-> +
-> +static const Property aspeed_pcie_cfg_props[] = {
-> +    DEFINE_PROP_UINT32("id", AspeedPCIECfgState, id, 0),
-> +};
-> +
-> +static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED PCIe Config";
-> +    dc->realize = aspeed_pcie_cfg_realize;
-> +    dc->unrealize = aspeed_pcie_cfg_unrealize;
-> +    device_class_set_legacy_reset(dc, aspeed_pcie_cfg_reset);
-> +    device_class_set_props(dc, aspeed_pcie_cfg_props);
-> +
-> +    apc->reg_ops = &aspeed_pcie_cfg_ops;
-> +    apc->reg_map = &aspeed_regmap;
-> +    apc->nr_regs = 0x100 >> 2;
-> +    apc->rc_bus_nr = 0x80;
-> +}
-> +
-> +static const TypeInfo aspeed_pcie_cfg_info = {
-> +    .name       = TYPE_ASPEED_PCIE_CFG,
-> +    .parent     = TYPE_SYS_BUS_DEVICE,
-> +    .instance_init = aspeed_pcie_cfg_instance_init,
-> +    .instance_size = sizeof(AspeedPCIECfgState),
-> +    .class_init = aspeed_pcie_cfg_class_init,
-> +    .class_size = sizeof(AspeedPCIECfgClass),
-> +};
-> +
->   /*
->    * PCIe PHY
->    *
-> @@ -150,6 +566,8 @@ static const TypeInfo aspeed_pcie_phy_info = {
->   
->   static void aspeed_pcie_register_types(void)
->   {
-> +    type_register_static(&aspeed_pcie_rc_info);
-> +    type_register_static(&aspeed_pcie_cfg_info);
->       type_register_static(&aspeed_pcie_phy_info);
->   }
->   
-> diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-> index 3438516756..2584ea56e2 100644
-> --- a/hw/pci-host/trace-events
-> +++ b/hw/pci-host/trace-events
-> @@ -1,6 +1,10 @@
->   # See docs/devel/tracing.rst for syntax documentation.
->   
->   # aspeed_pcie.c
-> +aspeed_pcie_rc_intx_set_irq(uint32_t id, int num, int level) "%d: num %d set IRQ leve %d"
-> +aspeed_pcie_cfg_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-> +aspeed_pcie_cfg_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-> +aspeed_pcie_cfg_rw(uint32_t id, const char *dir, uint8_t bus, uint8_t devfn, uint64_t addr, uint64_t data) "%d: %s bus:0x%x devfn:0x%x addr 0x%" PRIx64 " data 0x%" PRIx64
->   aspeed_pcie_phy_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
->   aspeed_pcie_phy_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
->   
-
+SGkgQ8OpZHJpYw0KDQo+IFN1YmplY3Q6IFJlOiBbU1BBTV0gW1BBVENIIHYzIDAyLzE0XSBody9w
+Y2ktaG9zdC9hc3BlZWQ6IEFkZCBBU1QyNjAwIFBDSWUNCj4gUEhZIG1vZGVsDQo+IA0KPiBPbiA5
+LzE4LzI1IDA1OjEzLCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4gVGhpcyBwYXRjaCBpbnRyb2R1Y2Vz
+IGFuIGluaXRpYWwgQVNQRUVEIFBDSWUgUEhZL2hvc3QgY29udHJvbGxlciBtb2RlbA0KPiA+IHRv
+IHN1cHBvcnQgdGhlIEFTVDI2MDAgU29DLiBJdCBwcm92aWRlcyBhIHNpbXBsZSByZWdpc3RlciBi
+bG9jayB3aXRoDQo+ID4gTU1JTyByZWFkL3dyaXRlIGNhbGxiYWNrcywgaW50ZWdyYXRpb24gaW50
+byB0aGUgYnVpbGQgc3lzdGVtLCBhbmQNCj4gPiB0cmFjZSBldmVudHMgZm9yIGRlYnVnZ2luZy4N
+Cj4gPg0KPiA+IEtleSBjaGFuZ2VzOg0KPiA+DQo+ID4gMS4gUENJZSBQSFkgTU1JTyByZWFkL3dy
+aXRlIGNhbGxiYWNrcw0KPiA+ICAgICBJbXBsZW1lbnRlZCBhc3BlZWRfcGNpZV9waHlfcmVhZCgp
+IGFuZCBhc3BlZWRfcGNpZV9waHlfd3JpdGUoKSB0bw0KPiA+ICAgICBoYW5kbGUgMzItYml0IHJl
+Z2lzdGVyIGFjY2Vzc2VzLg0KPiA+DQo+ID4gMi4gQnVpbGQgc3lzdGVtIGFuZCBLY29uZmlnIGlu
+dGVncmF0aW9uDQo+ID4gICAgIEFkZGVkIENPTkZJR19QQ0lfRVhQUkVTU19BU1BFRUQgaW4gaHcv
+cGNpLWhvc3QvS2NvbmZpZyBhbmQNCj4gbWVzb24NCj4gPiAgICAgcnVsZXMuDQo+ID4gICAgIFVw
+ZGF0ZWQgQVNQRUVEX1NPQyBpbiBody9hcm0vS2NvbmZpZyB0byBpbXBseSBQQ0lfREVWSUNFUyBh
+bmQNCj4gc2VsZWN0DQo+ID4gICAgIFBDSV9FWFBSRVNTX0FTUEVFRC4NCj4gPg0KPiA+IDMuIFRy
+YWNlIGV2ZW50cyBmb3IgZGVidWcNCj4gPiAgICAgTmV3IHRyYWNlcG9pbnRzIGFzcGVlZF9wY2ll
+X3BoeV9yZWFkIGFuZCBhc3BlZWRfcGNpZV9waHlfd3JpdGUNCj4gYWxsb3cNCj4gPiAgICAgbW9u
+aXRvcmluZyBNTUlPIGFjY2Vzc2VzLg0KPiA+DQo+ID4gNC4gUmVnaXN0ZXIgc3BhY2UgYW5kIGRl
+ZmF1bHRzIChBU1QyNjAwIHJlZmVyZW5jZSkNCj4gPiAgICAgRXhwb3NlIGEgMHgxMDAgcmVnaXN0
+ZXIgc3BhY2UsIGFzIGRvY3VtZW50ZWQgaW4gdGhlIEFTVDI2MDANCj4gZGF0YXNoZWV0Lg0KPiA+
+ICAgICBPbiByZXNldCwgc2V0IGRlZmF1bHQgdmFsdWVzOg0KPiA+ICAgICBQRUhSX0lEOiBWZW5k
+b3IgSUQgPSBBU1BFRUQsIERldmljZSBJRCA9IDB4MTE1MA0KPiA+ICAgICBQRUhSX0NMQVNTX0NP
+REUgPSAweDA2MDQwMDA2DQo+ID4gICAgIFBFSFJfREFUQUxJTksgPSAweEQ3MDQwMDIyDQo+ID4g
+ICAgIFBFSFJfTElOSzogYml0WzVdIHNldCB0byAxIHRvIGluZGljYXRlIGxpbmsgdXAuDQo+ID4N
+Cj4gPiBUaGlzIHByb3ZpZGVzIGEgc2tlbGV0b24gZGV2aWNlIGZvciB0aGUgQVNUMjYwMCBwbGF0
+Zm9ybS4gSXQgZW5hYmxlcw0KPiA+IGZpcm13YXJlIHRvIGRldGVjdCB0aGUgUENJZSBsaW5rIGFz
+IHVwIGJ5IGRlZmF1bHQgYW5kIGFsbG93cyBmdXR1cmUNCj4gPiBleHRlbnNpb24uDQo+ID4NCj4g
+PiBUaGlzIGNvbW1pdCBpcyB0aGUgc3RhcnRpbmcgcG9pbnQgb2YgdGhlIHNlcmllcyB0byBpbnRy
+b2R1Y2UgQVNQRUVEDQo+ID4gUENJZSBSb290IENvbXBsZXggKFJDKSBzdXBwb3J0LiBCYXNlZCBv
+biBwcmV2aW91cyB3b3JrIGZyb20gQ8OpZHJpYyBMZQ0KPiA+IEdvYXRlciwgdGhlIGZvbGxvd2lu
+ZyBjb21taXRzIGluIHRoaXMgc2VyaWVzIGV4dGVuZCBhbmQgcmVmaW5lIHRoZQ0KPiBpbXBsZW1l
+bnRhdGlvbjoNCj4gPg0KPiA+IC0gQWRkIGEgUENJZSBSb290IFBvcnQgc28gdGhhdCBkZXZpY2Vz
+IGNhbiBiZSBhdHRhY2hlZCB3aXRob3V0DQo+ID4gcmVxdWlyaW5nIGFuIGV4dHJhIGJyaWRnZS4N
+Cj4gPiAtIFJlc3RyaWN0IHRoZSBSb290IFBvcnQgZGV2aWNlIGluc3RhbnRpYXRpb24gdG8gdGhl
+IEFTVDI2MDAgcGxhdGZvcm0uDQo+ID4gLSBJbnRlZ3JhdGUgYXNwZWVkX2NmZ190cmFuc2xhdGVf
+d3JpdGUoKSB0byBzdXBwb3J0IGJvdGggQVNUMjYwMCBhbmQNCj4gQVNUMjcwMC4NCj4gPiAtIEFk
+ZCBNU0kgc3VwcG9ydCBhbmQgYSBwcmVsaW1pbmFyeSBSQyBJT01NVSBhZGRyZXNzIHNwYWNlLg0K
+PiA+IC0gRml4IGlzc3VlcyB3aXRoIE1TSSBpbnRlcnJ1cHQgY2xlYXJpbmcuDQo+ID4gLSBFeHRl
+bmQgc3VwcG9ydCB0byB0aGUgQVNUMjcwMCBTb0MuDQo+ID4gLSBEcm9wIHRoZSBBU1QyNjAwIFJD
+X0wgc3VwcG9ydC4NCj4gPiAtIEludHJvZHVjZSBQQ0llIFJDIGZ1bmN0aW9uYWwgdGVzdHMgY292
+ZXJpbmcgYm90aCBBU1QyNjAwIGFuZCBBU1QyNzAwLg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTog
+SmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+ID4gLS0tDQo+ID4gICBpbmNs
+dWRlL2h3L3BjaS1ob3N0L2FzcGVlZF9wY2llLmggfCAgNDIgKysrKysrKysNCj4gPiAgIGh3L3Bj
+aS1ob3N0L2FzcGVlZF9wY2llLmMgICAgICAgICB8IDE1Nw0KPiArKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysNCj4gPiAgIGh3L2FybS9LY29uZmlnICAgICAgICAgICAgICAgICAgICB8ICAg
+MyArDQo+ID4gICBody9wY2ktaG9zdC9LY29uZmlnICAgICAgICAgICAgICAgfCAgIDQgKw0KPiA+
+ICAgaHcvcGNpLWhvc3QvbWVzb24uYnVpbGQgICAgICAgICAgIHwgICAxICsNCj4gPiAgIGh3L3Bj
+aS1ob3N0L3RyYWNlLWV2ZW50cyAgICAgICAgICB8ICAgNCArDQo+ID4gICA2IGZpbGVzIGNoYW5n
+ZWQsIDIxMSBpbnNlcnRpb25zKCspDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVkZS9o
+dy9wY2ktaG9zdC9hc3BlZWRfcGNpZS5oDQo+ID4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvcGNp
+LWhvc3QvYXNwZWVkX3BjaWUuYw0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvcGNp
+LWhvc3QvYXNwZWVkX3BjaWUuaA0KPiA+IGIvaW5jbHVkZS9ody9wY2ktaG9zdC9hc3BlZWRfcGNp
+ZS5oDQo+ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQNCj4gPiBpbmRleCAwMDAwMDAwMDAwLi5kOWZi
+ODI5MDQ4DQo+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ICsrKyBiL2luY2x1ZGUvaHcvcGNpLWhvc3Qv
+YXNwZWVkX3BjaWUuaA0KPiA+IEBAIC0wLDAgKzEsNDIgQEANCj4gPiArLyoNCj4gPiArICogQVNQ
+RUVEIFBDSWUgSG9zdCBDb250cm9sbGVyDQo+ID4gKyAqDQo+ID4gKyAqIENvcHlyaWdodCAoQykg
+MjAyNSBBU1BFRUQgVGVjaG5vbG9neSBJbmMuDQo+ID4gKyAqIENvcHlyaWdodCAoYykgMjAyMiBD
+w6lkcmljIExlIEdvYXRlciA8Y2xnQGthb2Qub3JnPg0KPiA+ICsgKg0KPiA+ICsgKiBBdXRob3Jz
+Og0KPiA+ICsgKiAgIEPDqWRyaWMgTGUgR29hdGVyIDxjbGdAa2FvZC5vcmc+DQo+ID4gKyAqICAg
+SmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+ID4gKyAqDQo+ID4gKyAqIFNQ
+RFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyDQo+ID4gKyAqDQo+ID4gKyAq
+IEJhc2VkIG9uIHByZXZpb3VzIHdvcmsgZnJvbSBDw6lkcmljIExlIEdvYXRlci4NCj4gPiArICog
+TW9kaWZpY2F0aW9ucyBleHRlbmQgc3VwcG9ydCBmb3IgdGhlIEFTUEVFRCBBU1QyNjAwIGFuZCBB
+U1QyNzAwDQo+IHBsYXRmb3Jtcy4NCj4gPiArICovDQo+ID4gKw0KPiA+ICsjaWZuZGVmIEFTUEVF
+RF9QQ0lFX0gNCj4gPiArI2RlZmluZSBBU1BFRURfUENJRV9IDQo+ID4gKw0KPiA+ICsjaW5jbHVk
+ZSAiaHcvc3lzYnVzLmgiDQo+ID4gKyNpbmNsdWRlICJody9wY2kvcGNpX2JyaWRnZS5oIg0KPiA+
+ICsjaW5jbHVkZSAiaHcvcGNpL3BjaWVfaG9zdC5oIg0KPiA+ICsjaW5jbHVkZSAicW9tL29iamVj
+dC5oIg0KPiA+ICsNCj4gPiArI2RlZmluZSBUWVBFX0FTUEVFRF9QQ0lFX1BIWSAiYXNwZWVkLnBj
+aWUtcGh5Ig0KPiA+ICtPQkpFQ1RfREVDTEFSRV9UWVBFKEFzcGVlZFBDSUVQaHlTdGF0ZSwgQXNw
+ZWVkUENJRVBoeUNsYXNzLA0KPiA+ICtBU1BFRURfUENJRV9QSFkpOw0KPiA+ICsNCj4gPiArc3Ry
+dWN0IEFzcGVlZFBDSUVQaHlTdGF0ZSB7DQo+ID4gKyAgICBTeXNCdXNEZXZpY2UgcGFyZW50X29i
+ajsNCj4gPiArDQo+ID4gKyAgICBNZW1vcnlSZWdpb24gbW1pbzsNCj4gPiArICAgIHVpbnQzMl90
+ICpyZWdzOw0KPiA+ICsgICAgdWludDMyX3QgaWQ7DQo+ID4gK307DQo+ID4gKw0KPiA+ICtzdHJ1
+Y3QgQXNwZWVkUENJRVBoeUNsYXNzIHsNCj4gPiArICAgIFN5c0J1c0RldmljZUNsYXNzIHBhcmVu
+dF9jbGFzczsNCj4gPiArDQo+ID4gKyAgICB1aW50NjRfdCBucl9yZWdzOw0KPiA+ICt9Ow0KPiA+
+ICsNCj4gPiArI2VuZGlmIC8qIEFTUEVFRF9QQ0lFX0ggKi8NCj4gPiBkaWZmIC0tZ2l0IGEvaHcv
+cGNpLWhvc3QvYXNwZWVkX3BjaWUuYyBiL2h3L3BjaS1ob3N0L2FzcGVlZF9wY2llLmMgbmV3DQo+
+ID4gZmlsZSBtb2RlIDEwMDY0NCBpbmRleCAwMDAwMDAwMDAwLi4xMTBjOTYzNzc5DQo+ID4gLS0t
+IC9kZXYvbnVsbA0KPiA+ICsrKyBiL2h3L3BjaS1ob3N0L2FzcGVlZF9wY2llLmMNCj4gPiBAQCAt
+MCwwICsxLDE1NyBAQA0KPiA+ICsvKg0KPiA+ICsgKiBBU1BFRUQgUENJZSBIb3N0IENvbnRyb2xs
+ZXINCj4gPiArICoNCj4gPiArICogQ29weXJpZ2h0IChDKSAyMDI1IEFTUEVFRCBUZWNobm9sb2d5
+IEluYy4NCj4gPiArICogQ29weXJpZ2h0IChjKSAyMDIyIEPDqWRyaWMgTGUgR29hdGVyIDxjbGdA
+a2FvZC5vcmc+DQo+ID4gKyAqDQo+ID4gKyAqIEF1dGhvcnM6DQo+ID4gKyAqICAgQ8OpZHJpYyBM
+ZSBHb2F0ZXIgPGNsZ0BrYW9kLm9yZz4NCj4gPiArICogICBKYW1pbiBMaW4gPGphbWluX2xpbkBh
+c3BlZWR0ZWNoLmNvbT4NCj4gPiArICoNCj4gPiArICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6
+IEdQTC0yLjAtb3ItbGF0ZXINCj4gPiArICoNCj4gPiArICogQmFzZWQgb24gcHJldmlvdXMgd29y
+ayBmcm9tIEPDqWRyaWMgTGUgR29hdGVyLg0KPiA+ICsgKiBNb2RpZmljYXRpb25zIGV4dGVuZCBz
+dXBwb3J0IGZvciB0aGUgQVNQRUVEIEFTVDI2MDAgYW5kIEFTVDI3MDANCj4gcGxhdGZvcm1zLg0K
+PiA+ICsgKi8NCj4gPiArDQo+ID4gKyNpbmNsdWRlICJxZW11L29zZGVwLmgiDQo+ID4gKyNpbmNs
+dWRlICJxZW11L2xvZy5oIg0KPiA+ICsjaW5jbHVkZSAicWFwaS9lcnJvci5oIg0KPiA+ICsjaW5j
+bHVkZSAiaHcvcWRldi1wcm9wZXJ0aWVzLmgiDQo+ID4gKyNpbmNsdWRlICJody9yZWdpc3RlcmZp
+ZWxkcy5oIg0KPiA+ICsjaW5jbHVkZSAiaHcvaXJxLmgiDQo+ID4gKyNpbmNsdWRlICJody9wY2kv
+cGNpX2hvc3QuaCINCj4gPiArI2luY2x1ZGUgImh3L3BjaS1ob3N0L2FzcGVlZF9wY2llLmgiDQo+
+ID4gKyNpbmNsdWRlICJody9wY2kvbXNpLmgiDQo+ID4gKyNpbmNsdWRlICJ0cmFjZS5oIg0KPiA+
+ICsNCj4gPiArLyoNCj4gPiArICogUENJZSBQSFkNCj4gPiArICoNCj4gPiArICogUENJZSBIb3N0
+IENvbnRyb2xsZXIgKFBDSUVIKQ0KPiA+ICsgKi8NCj4gPiArDQo+ID4gKy8qIEFTVDI2MDAgKi8N
+Cj4gPiArUkVHMzIoUEVIUl9JRCwgICAgIDB4MDApDQo+ID4gKyAgICBGSUVMRChQRUhSX0lELCBE
+RVYsIDE2LCAxNikNCj4gPiArUkVHMzIoUEVIUl9DTEFTU19DT0RFLCAgMHgwNCkNCj4gPiArUkVH
+MzIoUEVIUl9EQVRBTElOSywgICAgMHgxMCkNCj4gPiArUkVHMzIoUEVIUl9QUk9URUNULCAgICAg
+MHg3QykNCj4gPiArICAgIEZJRUxEKFBFSFJfUFJPVEVDVCwgTE9DSywgMCwgOCkNCj4gPiArUkVH
+MzIoUEVIUl9MSU5LLCAgICAgICAgMHhDMCkNCj4gPiArICAgIEZJRUxEKFBFSFJfTElOSywgU1RT
+LCA1LCAxKQ0KPiA+ICsNCj4gPiArI2RlZmluZSBBU1BFRURfUENJRV9QSFlfVU5MT0NLICAweEE4
+DQo+ID4gKw0KPiA+ICtzdGF0aWMgdWludDY0X3QgYXNwZWVkX3BjaWVfcGh5X3JlYWQodm9pZCAq
+b3BhcXVlLCBod2FkZHIgYWRkciwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHVuc2lnbmVkIGludCBzaXplKSB7DQo+ID4gKyAgICBBc3BlZWRQQ0lFUGh5U3RhdGUg
+KnMgPSBBU1BFRURfUENJRV9QSFkob3BhcXVlKTsNCj4gPiArICAgIHVpbnQzMl90IHJlZyA9IGFk
+ZHIgPj4gMjsNCj4gPiArICAgIHVpbnQzMl90IHZhbHVlID0gMDsNCj4gPiArDQo+ID4gKyAgICB2
+YWx1ZSA9IHMtPnJlZ3NbcmVnXTsNCj4gPiArDQo+ID4gKyAgICB0cmFjZV9hc3BlZWRfcGNpZV9w
+aHlfcmVhZChzLT5pZCwgYWRkciwgdmFsdWUpOw0KPiA+ICsNCj4gPiArICAgIHJldHVybiB2YWx1
+ZTsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIHZvaWQgYXNwZWVkX3BjaWVfcGh5X3dyaXRl
+KHZvaWQgKm9wYXF1ZSwgaHdhZGRyIGFkZHIsIHVpbnQ2NF90DQo+IGRhdGEsDQo+ID4gKyAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1bnNpZ25lZCBpbnQgc2l6ZSkgew0KPiA+ICsg
+ICAgQXNwZWVkUENJRVBoeVN0YXRlICpzID0gQVNQRUVEX1BDSUVfUEhZKG9wYXF1ZSk7DQo+ID4g
+KyAgICB1aW50MzJfdCByZWcgPSBhZGRyID4+IDI7DQo+ID4gKw0KPiA+ICsgICAgdHJhY2VfYXNw
+ZWVkX3BjaWVfcGh5X3dyaXRlKHMtPmlkLCBhZGRyLCBkYXRhKTsNCj4gPiArDQo+ID4gKyAgICBz
+d2l0Y2ggKHJlZykgew0KPiA+ICsgICAgY2FzZSBSX1BFSFJfUFJPVEVDVDoNCj4gPiArICAgICAg
+ICBkYXRhICY9IFJfUEVIUl9QUk9URUNUX0xPQ0tfTUFTSzsNCj4gPiArICAgICAgICBzLT5yZWdz
+W3JlZ10gPSAhIShkYXRhID09IEFTUEVFRF9QQ0lFX1BIWV9VTkxPQ0spOw0KPiA+ICsgICAgICAg
+IGJyZWFrOw0KPiA+ICsgICAgZGVmYXVsdDoNCj4gPiArICAgICAgICBzLT5yZWdzW3JlZ10gPSBk
+YXRhOw0KPiA+ICsgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgfQ0KPiA+ICt9DQo+ID4gKw0KPiA+
+ICtzdGF0aWMgY29uc3QgTWVtb3J5UmVnaW9uT3BzIGFzcGVlZF9wY2llX3BoeV9vcHMgPSB7DQo+
+ID4gKyAgICAucmVhZCA9IGFzcGVlZF9wY2llX3BoeV9yZWFkLA0KPiA+ICsgICAgLndyaXRlID0g
+YXNwZWVkX3BjaWVfcGh5X3dyaXRlLA0KPiA+ICsgICAgLmVuZGlhbm5lc3MgPSBERVZJQ0VfTElU
+VExFX0VORElBTiwNCj4gPiArICAgIC52YWxpZCA9IHsNCj4gPiArICAgICAgICAubWluX2FjY2Vz
+c19zaXplID0gMSwNCj4gPiArICAgICAgICAubWF4X2FjY2Vzc19zaXplID0gNCwNCj4gPiArICAg
+IH0sDQo+ID4gK307DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfcGNpZV9waHlfcmVz
+ZXQoRGV2aWNlU3RhdGUgKmRldikgew0KPiA+ICsgICAgQXNwZWVkUENJRVBoeVN0YXRlICpzID0g
+QVNQRUVEX1BDSUVfUEhZKGRldik7DQo+ID4gKyAgICBBc3BlZWRQQ0lFUGh5Q2xhc3MgKmFwYyA9
+IEFTUEVFRF9QQ0lFX1BIWV9HRVRfQ0xBU1Mocyk7DQo+ID4gKw0KPiA+ICsgICAgbWVtc2V0KHMt
+PnJlZ3MsIDAsIGFwYy0+bnJfcmVncyA8PCAyKTsNCj4gPiArDQo+ID4gKyAgICBzLT5yZWdzW1Jf
+UEVIUl9JRF0gPQ0KPiA+ICsgICAgICAgICgweDExNTAgPDwgUl9QRUhSX0lEX0RFVl9TSElGVCkg
+fCBQQ0lfVkVORE9SX0lEX0FTUEVFRDsNCj4gPiArICAgIHMtPnJlZ3NbUl9QRUhSX0NMQVNTX0NP
+REVdID0gMHgwNjA0MDAwNjsNCj4gPiArICAgIHMtPnJlZ3NbUl9QRUhSX0RBVEFMSU5LXSA9IDB4
+RDcwNDAwMjI7DQo+ID4gKyAgICBzLT5yZWdzW1JfUEVIUl9MSU5LXSA9IFJfUEVIUl9MSU5LX1NU
+U19NQVNLOyB9DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfcGNpZV9waHlfcmVhbGl6
+ZShEZXZpY2VTdGF0ZSAqZGV2LCBFcnJvciAqKmVycnApIHsNCj4gPiArICAgIEFzcGVlZFBDSUVQ
+aHlTdGF0ZSAqcyA9IEFTUEVFRF9QQ0lFX1BIWShkZXYpOw0KPiA+ICsgICAgQXNwZWVkUENJRVBo
+eUNsYXNzICphcGMgPSBBU1BFRURfUENJRV9QSFlfR0VUX0NMQVNTKHMpOw0KPiA+ICsgICAgU3lz
+QnVzRGV2aWNlICpzYmQgPSBTWVNfQlVTX0RFVklDRShkZXYpOw0KPiA+ICsgICAgZ19hdXRvZnJl
+ZSBjaGFyICpuYW1lOw0KPiANCj4gZ19hdXRvZnJlZSB2YXJpYWJsZXMgc2hvdWxkIGRlZmluZWQg
+d2hlbiBkZWNsYXJlZC4gU28sDQo+IA0KPiAgICAgIGdfYXV0b2ZyZWUgY2hhciAqbmFtZSA9IGdf
+c3RyZHVwX3ByaW50ZihUWVBFX0FTUEVFRF9QQ0lFX1BIWQ0KPiAiLnJlZ3MuJWQiLCBzLT5pZCk7
+DQo+IA0KVGhhbmtzIGZvciB5b3VyIHJldmlldyBhbmQgc3VnZ2VzdGlvbi4NCldpbGwgZml4IGl0
+Lg0KSmFtaW4NCj4gSSBjYW4gZG8gdGhhdCBpZiB0aGVyZSBhcmUgbm8gbWFqb3IgaXNzdWVzIGlu
+IHRoZSBzZXJpZXMuDQo+IA0KPiANCj4gVGhhbmtzLA0KPiANCj4gQy4NCj4gDQo+IA0KPiA+ICsN
+Cj4gPiArICAgIHMtPnJlZ3MgPSBnX25ldyh1aW50MzJfdCwgYXBjLT5ucl9yZWdzKTsNCj4gPiAr
+ICAgIG5hbWUgPSBnX3N0cmR1cF9wcmludGYoVFlQRV9BU1BFRURfUENJRV9QSFkgIi5yZWdzLiVk
+Iiwgcy0+aWQpOw0KPiA+ICsgICAgbWVtb3J5X3JlZ2lvbl9pbml0X2lvKCZzLT5tbWlvLCBPQkpF
+Q1QocyksICZhc3BlZWRfcGNpZV9waHlfb3BzLA0KPiBzLCBuYW1lLA0KPiA+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgIGFwYy0+bnJfcmVncyA8PCAyKTsNCj4gPiArICAgIHN5c2J1c19pbml0
+X21taW8oc2JkLCAmcy0+bW1pbyk7DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIGFz
+cGVlZF9wY2llX3BoeV91bnJlYWxpemUoRGV2aWNlU3RhdGUgKmRldikgew0KPiA+ICsgICAgQXNw
+ZWVkUENJRVBoeVN0YXRlICpzID0gQVNQRUVEX1BDSUVfUEhZKGRldik7DQo+ID4gKw0KPiA+ICsg
+ICAgZ19mcmVlKHMtPnJlZ3MpOw0KPiA+ICsgICAgcy0+cmVncyA9IE5VTEw7DQo+ID4gK30NCj4g
+PiArDQo+ID4gK3N0YXRpYyBjb25zdCBQcm9wZXJ0eSBhc3BlZWRfcGNpZV9waHlfcHJvcHNbXSA9
+IHsNCj4gPiArICAgIERFRklORV9QUk9QX1VJTlQzMigiaWQiLCBBc3BlZWRQQ0lFUGh5U3RhdGUs
+IGlkLCAwKSwgfTsNCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIGFzcGVlZF9wY2llX3BoeV9jbGFz
+c19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZA0KPiA+ICsqZGF0YSkgew0KPiA+
+ICsgICAgRGV2aWNlQ2xhc3MgKmRjID0gREVWSUNFX0NMQVNTKGtsYXNzKTsNCj4gPiArICAgIEFz
+cGVlZFBDSUVQaHlDbGFzcyAqYXBjID0gQVNQRUVEX1BDSUVfUEhZX0NMQVNTKGtsYXNzKTsNCj4g
+PiArDQo+ID4gKyAgICBkYy0+ZGVzYyA9ICJBU1BFRUQgUENJZSBQaHkiOw0KPiA+ICsgICAgZGMt
+PnJlYWxpemUgPSBhc3BlZWRfcGNpZV9waHlfcmVhbGl6ZTsNCj4gPiArICAgIGRjLT51bnJlYWxp
+emUgPSBhc3BlZWRfcGNpZV9waHlfdW5yZWFsaXplOw0KPiA+ICsgICAgZGV2aWNlX2NsYXNzX3Nl
+dF9sZWdhY3lfcmVzZXQoZGMsIGFzcGVlZF9wY2llX3BoeV9yZXNldCk7DQo+ID4gKyAgICBkZXZp
+Y2VfY2xhc3Nfc2V0X3Byb3BzKGRjLCBhc3BlZWRfcGNpZV9waHlfcHJvcHMpOw0KPiA+ICsNCj4g
+PiArICAgIGFwYy0+bnJfcmVncyA9IDB4MTAwID4+IDI7DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0
+YXRpYyBjb25zdCBUeXBlSW5mbyBhc3BlZWRfcGNpZV9waHlfaW5mbyA9IHsNCj4gPiArICAgIC5u
+YW1lICAgICAgID0gVFlQRV9BU1BFRURfUENJRV9QSFksDQo+ID4gKyAgICAucGFyZW50ICAgICA9
+IFRZUEVfU1lTX0JVU19ERVZJQ0UsDQo+ID4gKyAgICAuaW5zdGFuY2Vfc2l6ZSA9IHNpemVvZihB
+c3BlZWRQQ0lFUGh5U3RhdGUpLA0KPiA+ICsgICAgLmNsYXNzX2luaXQgPSBhc3BlZWRfcGNpZV9w
+aHlfY2xhc3NfaW5pdCwNCj4gPiArICAgIC5jbGFzc19zaXplID0gc2l6ZW9mKEFzcGVlZFBDSUVQ
+aHlDbGFzcyksIH07DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfcGNpZV9yZWdpc3Rl
+cl90eXBlcyh2b2lkKSB7DQo+ID4gKyAgICB0eXBlX3JlZ2lzdGVyX3N0YXRpYygmYXNwZWVkX3Bj
+aWVfcGh5X2luZm8pOw0KPiA+ICt9DQo+ID4gKw0KPiA+ICt0eXBlX2luaXQoYXNwZWVkX3BjaWVf
+cmVnaXN0ZXJfdHlwZXMpOw0KPiA+ICsNCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL0tjb25maWcg
+Yi9ody9hcm0vS2NvbmZpZyBpbmRleA0KPiA+IDNiYWE2YzZjNzQuLmI0NGI4NWY0MzYgMTAwNjQ0
+DQo+ID4gLS0tIGEvaHcvYXJtL0tjb25maWcNCj4gPiArKysgYi9ody9hcm0vS2NvbmZpZw0KPiA+
+IEBAIC01NDEsNiArNTQxLDcgQEAgY29uZmlnIEFTUEVFRF9TT0MNCj4gPiAgICAgICBib29sDQo+
+ID4gICAgICAgZGVmYXVsdCB5DQo+ID4gICAgICAgZGVwZW5kcyBvbiBUQ0cgJiYgQVJNDQo+ID4g
+KyAgICBpbXBseSBQQ0lfREVWSUNFUw0KPiA+ICAgICAgIHNlbGVjdCBEUzEzMzgNCj4gPiAgICAg
+ICBzZWxlY3QgRlRHTUFDMTAwDQo+ID4gICAgICAgc2VsZWN0IEkyQw0KPiA+IEBAIC01NjEsNiAr
+NTYyLDggQEAgY29uZmlnIEFTUEVFRF9TT0MNCj4gPiAgICAgICBzZWxlY3QgTUFYMzE3ODUNCj4g
+PiAgICAgICBzZWxlY3QgRlNJX0FQQjJPUEJfQVNQRUVEDQo+ID4gICAgICAgc2VsZWN0IEFUMjRD
+DQo+ID4gKyAgICBzZWxlY3QgUENJX0VYUFJFU1MNCj4gPiArICAgIHNlbGVjdCBQQ0lfRVhQUkVT
+U19BU1BFRUQNCj4gPg0KPiA+ICAgY29uZmlnIE1QUzINCj4gPiAgICAgICBib29sDQo+ID4gZGlm
+ZiAtLWdpdCBhL2h3L3BjaS1ob3N0L0tjb25maWcgYi9ody9wY2ktaG9zdC9LY29uZmlnIGluZGV4
+DQo+ID4gOTgyNGZhMTg4ZC4uOGNiYjgzMDRhMyAxMDA2NDQNCj4gPiAtLS0gYS9ody9wY2ktaG9z
+dC9LY29uZmlnDQo+ID4gKysrIGIvaHcvcGNpLWhvc3QvS2NvbmZpZw0KPiA+IEBAIC00Niw2ICs0
+NiwxMCBAQCBjb25maWcgUENJX0k0NDBGWA0KPiA+ICAgICAgIHNlbGVjdCBQQ0kNCj4gPiAgICAg
+ICBzZWxlY3QgUEFNDQo+ID4NCj4gPiArY29uZmlnIFBDSV9FWFBSRVNTX0FTUEVFRA0KPiA+ICsg
+ICAgYm9vbA0KPiA+ICsgICAgc2VsZWN0IFBDSV9FWFBSRVNTDQo+ID4gKw0KPiA+ICAgY29uZmln
+IFBDSV9FWFBSRVNTX1EzNQ0KPiA+ICAgICAgIGJvb2wNCj4gPiAgICAgICBzZWxlY3QgUENJX0VY
+UFJFU1MNCj4gPiBkaWZmIC0tZ2l0IGEvaHcvcGNpLWhvc3QvbWVzb24uYnVpbGQgYi9ody9wY2kt
+aG9zdC9tZXNvbi5idWlsZCBpbmRleA0KPiA+IDkzN2EwZjcyYWMuLjg2Yjc1NGQwYjAgMTAwNjQ0
+DQo+ID4gLS0tIGEvaHcvcGNpLWhvc3QvbWVzb24uYnVpbGQNCj4gPiArKysgYi9ody9wY2ktaG9z
+dC9tZXNvbi5idWlsZA0KPiA+IEBAIC0yLDYgKzIsNyBAQCBwY2lfc3MgPSBzcy5zb3VyY2Vfc2V0
+KCkNCj4gPiAgIHBjaV9zcy5hZGQod2hlbjogJ0NPTkZJR19QQU0nLCBpZl90cnVlOiBmaWxlcygn
+cGFtLmMnKSkNCj4gPiAgIHBjaV9zcy5hZGQod2hlbjogJ0NPTkZJR19QQ0lfQk9OSVRPJywgaWZf
+dHJ1ZTogZmlsZXMoJ2Jvbml0by5jJykpDQo+ID4gICBwY2lfc3MuYWRkKHdoZW46ICdDT05GSUdf
+R1Q2NDEyMCcsIGlmX3RydWU6IGZpbGVzKCdndDY0MTIwLmMnKSkNCj4gPiArcGNpX3NzLmFkZCh3
+aGVuOiAnQ09ORklHX1BDSV9FWFBSRVNTX0FTUEVFRCcsIGlmX3RydWU6DQo+ID4gK2ZpbGVzKCdh
+c3BlZWRfcGNpZS5jJykpDQo+ID4gICBwY2lfc3MuYWRkKHdoZW46ICdDT05GSUdfUENJX0VYUFJF
+U1NfREVTSUdOV0FSRScsIGlmX3RydWU6DQo+IGZpbGVzKCdkZXNpZ253YXJlLmMnKSkNCj4gPiAg
+IHBjaV9zcy5hZGQod2hlbjogJ0NPTkZJR19QQ0lfRVhQUkVTU19HRU5FUklDX0JSSURHRScsIGlm
+X3RydWU6DQo+IGZpbGVzKCdncGV4LmMnKSkNCj4gPiAgIHBjaV9zcy5hZGQod2hlbjogWydDT05G
+SUdfUENJX0VYUFJFU1NfR0VORVJJQ19CUklER0UnLA0KPiA+ICdDT05GSUdfQUNQSSddLCBpZl90
+cnVlOiBmaWxlcygnZ3BleC1hY3BpLmMnKSkgZGlmZiAtLWdpdA0KPiA+IGEvaHcvcGNpLWhvc3Qv
+dHJhY2UtZXZlbnRzIGIvaHcvcGNpLWhvc3QvdHJhY2UtZXZlbnRzIGluZGV4DQo+ID4gMGE4MTZi
+OWFhMS4uMzQzODUxNjc1NiAxMDA2NDQNCj4gPiAtLS0gYS9ody9wY2ktaG9zdC90cmFjZS1ldmVu
+dHMNCj4gPiArKysgYi9ody9wY2ktaG9zdC90cmFjZS1ldmVudHMNCj4gPiBAQCAtMSw1ICsxLDkg
+QEANCj4gPiAgICMgU2VlIGRvY3MvZGV2ZWwvdHJhY2luZy5yc3QgZm9yIHN5bnRheCBkb2N1bWVu
+dGF0aW9uLg0KPiA+DQo+ID4gKyMgYXNwZWVkX3BjaWUuYw0KPiA+ICthc3BlZWRfcGNpZV9waHlf
+cmVhZCh1aW50MzJfdCBpZCwgdWludDY0X3QgYWRkciwgdWludDMyX3QgdmFsdWUpICIlZDoNCj4g
+PiArYWRkciAweCUiIFBSSXg2NCAiIHZhbHVlIDB4JSIgUFJJeDMyIGFzcGVlZF9wY2llX3BoeV93
+cml0ZSh1aW50MzJfdA0KPiA+ICtpZCwgdWludDY0X3QgYWRkciwgdWludDMyX3QgdmFsdWUpICIl
+ZDogYWRkciAweCUiIFBSSXg2NCAiIHZhbHVlIDB4JSINCj4gPiArUFJJeDMyDQo+ID4gKw0KPiA+
+ICAgIyBib25pdG8uYw0KPiA+ICAgYm9uaXRvX3NwY2ljb25mX3NtYWxsX2FjY2Vzcyh1aW50NjRf
+dCBhZGRyLCB1bnNpZ25lZCBzaXplKSAiUENJIGNvbmZpZw0KPiBhZGRyZXNzIGlzIHNtYWxsZXIg
+dGhlbiAzMi1iaXQsIGFkZHI6IDB4JSJQUkl4NjQiLCBzaXplOiAldSINCj4gPg0KDQo=
 
