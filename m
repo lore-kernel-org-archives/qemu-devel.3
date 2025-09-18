@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D408CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 233C6CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzK7w-0004nl-Tv; Thu, 18 Sep 2025 15:17:09 -0400
+	id 1uzKBx-0006fL-4W; Thu, 18 Sep 2025 15:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK7s-0004n6-2Y; Thu, 18 Sep 2025 15:17:04 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK7o-0000tM-U9; Thu, 18 Sep 2025 15:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=LRRbEX3yfQLkEf3KZItrZNYlItPMxSHb4/WdvEuK2R8=; b=qTV4JwSZC8JIxWQhqsISCET7uZ
- V1fRI2oL3n1nhEJfe8UQR7ZdaBkQgq4M6n+j1nK4NC+NNpfKUpXDybFAVS0tdItz8EvbxcfdMSwgS
- jBtliVp6eC8B0AiAkNKt9rwrNW6IDavKDRrxXAO64QaUUb1S6n//OwN5JTVADjbIykqyJN6r+ZMne
- dgh4rAk4NWvamaBmdqADrbTYlbcMFqI5BUwbBaNlC98tXHbhpSfOnU+WKUttczTxTIVRrz7MehDlJ
- KyDimM70b7COqbPYTUiW5Jfs7X9lzR1/pWW0tV8NvrgB+XLZcRi0ULk9Slr+T0llXJnhPNHMRPXNN
- jXQxdrCpSldUVxZ6AZG1XnIqF3z1n7tV2MEwa3mS0OMbHQDW8h/rBX5k/0GJl4PObwgMUKKYOeydC
- L83sJVqYNyzv7WQRusj1spIANynR4Ug0+Qex4f+/jy76o6kZIrlDVv803631uttyGnoeeWaFR4UdP
- phEyqW4bWk99MbJfldmz+xO0NN23+Xaax/bxnxX8vFk6tAw3MgQOk3/I6Vob2iz9qLsLBk+AdGIJc
- LCZS9ofxa1FkihSUXOQmT0f9kmqW8vKuloiRpxfE6nIFTpF2exouLk+yznj4x8Aj6h51KJcep18rl
- fthQDJEAIB0GIIU5h50VRoT6w5jl/4Mfy0YJ8DPRI=;
-Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK5o-0006Eu-BA; Thu, 18 Sep 2025 20:14:56 +0100
-Message-ID: <32705f40-917f-4fe5-8203-f8a3fe7739e4@ilande.co.uk>
-Date: Thu, 18 Sep 2025 20:16:57 +0100
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uzKBv-0006dI-Kz
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 15:21:15 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uzKBt-0001it-M5
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 15:21:15 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b07c081660aso232891566b.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 12:21:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758223271; x=1758828071; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Hbc8XMQr4HmNl3+iCsqddA07FlLneSXGxCnZ8KS2I5g=;
+ b=MRQ5j3uMtLAXBlPZqu6q/lz2tAV4gWP7kq28WmBteoLn2ChGEZdF0a2BN4BXCv/PY7
+ r9Nn02NOHZGySdfYvahmAZN294QPnJhlR/B2EKXTwz9EjmyodvTszRWi4ERxVBqDcYtu
+ ui7d7j/3/Mr/YQsnPbwlKY943TcGSYFjLbispKptZed0DbuVzJXPp7MlTWOZoQEUxvnC
+ Q/QjHKIf4e3yAPe4IJkZWocV5/ARH0/FraKeuo/ygcQnB7Q+HGdLksaBPNJOWuPXDeVK
+ jmN6P3ikUIP16ZMIzjXnGyran/0I3+b9Cj2UAM3bTSKxHKCIOJ0J3b2MsUxEM1T56rmm
+ ZOiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758223271; x=1758828071;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Hbc8XMQr4HmNl3+iCsqddA07FlLneSXGxCnZ8KS2I5g=;
+ b=g1JkY/4wxZPfPtTCn+PnqIZmVx9vrzskA42G9gX9XPYkGsUj6v1OEFGSz4TFKuGRMB
+ 3wqLI38gUI2O2GnGTi/Y/3HAHqcQH+zRIFv7tN0Z46mcYQX2asxdIATZ3yi/5wQjx9+o
+ vIj758VUD3BbGbnjT93z+B2E5NQpPQoETeFFpdoSuhHqkozIlkcceZpGA6nygOrgDDuG
+ 7uAXGwBXpdhUcExg4trkh4+lw7w6xkuYZc4BSHWilRUqvH86ekyzG0Col+5uxoRPMzTH
+ j5lvzE3sljLskXPD9+7f2KylV6agRXyTJAxm7TXKY6rBQC1CQuR0YnVGF3quG+Dn7mCJ
+ hbDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXC0Q4a1minBh90gSdPAt77VNty5Mh/4wO77zStTQd2XT004sHAe9rdYQmPyPVYaByN7P2lM7FY0S1k@nongnu.org
+X-Gm-Message-State: AOJu0YxKSk/OwwyC5WBDu7SLBPXbNTou7SHSl3c0hrhqszEIPXvD09xK
+ yA/LVyMgZilsPKOQE7zn0nfZBOOTfQoFQq5ZD1r20qSbiHrMyVXjFea+
+X-Gm-Gg: ASbGncuqV3a6Pv1sohepTm3lAgQ8Dnf5DN5cMmKDErndrGXikMQNf+FqQWh352WZt2w
+ 99CnsuKH2nPir7hDfeSmU0ghhlWTg6cpj2IJkohHkMY7Pp3gXEnoPnFmkHi4ZVzYYXXntm3xNu1
+ 5XsytX4VZ8JyuudAGie63yhRcbFv1lCcVS80dJTeYHSawIE9kc5x6dq+YNwWNyjZqVWpvGkga/7
+ CULgc+SojIYcbMtqcyFjKBExH4FQVPxzSJLlETxXb/E3uaxVaq1NRCHi/mXunhv1Ov2s+CzVfTN
+ 8jtGna3IrZOnEEi7AbKBG6rS4HCvjUfBXCK3FzNrKwcDHpd29ZCbSGwIlIq3Nh+R3SrhBX8tQwj
+ YPkgDlGVgKLSXE1cQZ2VSkBmk3L46aAqUV8YFjX0qgJgQRYWchxy/K3IFbtFjNnsWwvwT
+X-Google-Smtp-Source: AGHT+IEIhmrWa/kBNrvonqiIlKraZfZn9GxmDplxkiZQmklpuhxy+Ws+w8YPbxP2ZFxkaUqhwzT/tg==
+X-Received: by 2002:a17:907:72c7:b0:b0c:b51b:81f6 with SMTP id
+ a640c23a62f3a-b24f4ec0c02mr35009466b.43.1758223271028; 
+ Thu, 18 Sep 2025 12:21:11 -0700 (PDT)
+Received: from [10.192.92.112] (cgnat129.sys-data.com. [79.98.72.129])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b1fc73bb5a6sm255305466b.35.2025.09.18.12.21.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 12:21:10 -0700 (PDT)
+Message-ID: <29c5d94258d8533ca3910656ca5ef1ce56e799db.camel@gmail.com>
+Subject: Re: [PATCH v2] char-pty: add support for the terminal size
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
+Cc: amit@kernel.org, armbru@redhat.com, eblake@redhat.com,
+ eduardo@habkost.net, 	lvivier@redhat.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, 	mst@redhat.com, noh4hss@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, 	qemu-devel@nongnu.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, 	nsg@linux.ibm.com
+Date: Thu, 18 Sep 2025 21:21:09 +0200
+In-Reply-To: <30058224264231a1d5c6315580b14e42119d16c0.camel@linux.ibm.com>
+References: <aMq4Ta4aPwRgDrxR@redhat.com>
+ <0A6C8C3D-68E7-4E88-BEBE-D653135915DF@gmail.com>
+ <aMrfGUfCSWnvkXzT@redhat.com>
+ <e2f80c7ad10b8b6376144ba5d959a2ad4739f81c.camel@gmail.com>
+ <aMr1sn-LU2f-w49o@redhat.com>
+ <15cc6bcd675f2e20efe4fbd6332018a693122b9c.camel@gmail.com>
+ <aMvETd_dlUed-nlN@redhat.com>
+ <8979fb7f27b9dbe48f6419d515c4d33a77cefe0a.camel@linux.ibm.com>
+ <aMvHScAtr3E_H2KB@redhat.com>
+ <e6c30d2143147ebf285e69b4a786c0ed0f5212d2.camel@linux.ibm.com>
+ <aMvKBxaYLR065YKu@redhat.com>
+ <30058224264231a1d5c6315580b14e42119d16c0.camel@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-References: <cover.1758219840.git.balaton@eik.bme.hu>
- <967c2416f25efd0162df32f43f8b2d048fe28b8d.1758219840.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <967c2416f25efd0162df32f43f8b2d048fe28b8d.1758219840.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 03/14] hw/pci-host/raven: Use DEFINE_TYPES macro
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,98 +118,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 19:50, BALATON Zoltan wrote:
+I will respond to all messages from this thread at once here.
 
-> Convert to using DEFINE_TYPES macro and move raven_pcihost_class_init
-> so methods of each object are grouped together.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/pci-host/raven.c | 57 +++++++++++++++++++++------------------------
->   1 file changed, 26 insertions(+), 31 deletions(-)
-> 
-> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 878c915de5..e0f98afebf 100644
-> --- a/hw/pci-host/raven.c
-> +++ b/hw/pci-host/raven.c
-> @@ -304,6 +304,15 @@ static void raven_pcihost_initfn(Object *obj)
->       h->bus = &s->pci_bus;
->   }
->   
-> +static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +    dc->realize = raven_pcihost_realizefn;
-> +    dc->fw_name = "pci";
-> +}
-> +
->   static void raven_realize(PCIDevice *d, Error **errp)
->   {
->       d->config[PCI_CACHE_LINE_SIZE] = 0x08;
-> @@ -329,37 +338,23 @@ static void raven_class_init(ObjectClass *klass, const void *data)
->       dc->user_creatable = false;
->   }
->   
-> -static const TypeInfo raven_info = {
-> -    .name = TYPE_RAVEN_PCI_DEVICE,
-> -    .parent = TYPE_PCI_DEVICE,
-> -    .class_init = raven_class_init,
-> -    .interfaces = (const InterfaceInfo[]) {
-> -        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> -        { },
-> +static const TypeInfo raven_types[] = {
-> +    {
-> +        .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
-> +        .parent = TYPE_PCI_HOST_BRIDGE,
-> +        .instance_size = sizeof(PREPPCIState),
-> +        .instance_init = raven_pcihost_initfn,
-> +        .class_init = raven_pcihost_class_init,
-> +    },
-> +    {
-> +        .name = TYPE_RAVEN_PCI_DEVICE,
-> +        .parent = TYPE_PCI_DEVICE,
-> +        .class_init = raven_class_init,
-> +        .interfaces = (const InterfaceInfo[]) {
-> +            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> +            { },
-> +        },
->       },
->   };
->   
-> -static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
-> -{
-> -    DeviceClass *dc = DEVICE_CLASS(klass);
-> -
-> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> -    dc->realize = raven_pcihost_realizefn;
-> -    dc->fw_name = "pci";
-> -}
-> -
-> -static const TypeInfo raven_pcihost_info = {
-> -    .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
-> -    .parent = TYPE_PCI_HOST_BRIDGE,
-> -    .instance_size = sizeof(PREPPCIState),
-> -    .instance_init = raven_pcihost_initfn,
-> -    .class_init = raven_pcihost_class_init,
-> -};
-> -
-> -static void raven_register_types(void)
-> -{
-> -    type_register_static(&raven_pcihost_info);
-> -    type_register_static(&raven_info);
-> -}
-> -
-> -type_init(raven_register_types)
-> +DEFINE_TYPES(raven_types)
+Daniel P. Berrang=C3=A9 wrote:
+> That we will always pass size info the guest regardless of the backend,
+> across all ports, changes my view about whether it is  reasonable to
+> enable resize by default given the known Linux guest bug.
+>
+> The impact of the guest bug is just about tolerable if we were only going
+> to enable passing size information when the user had chosen 'stdio' backe=
+nd
+> as that is relatively rarely used and mostly by ad-hoc dev usage where it
+> is perhaps easier for users to get a fixed guest kernel.
+>
+> If we enable this for all ports though, regardless of backend, then I thi=
+nk
+> we're going to cause too much pain for users with the inverted rows/cols,
+> as its going to apply in every single deployment of QEMU using virtiocons=
+ole.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Inverted rows/cols don't matter for 0x0 size, 0x0 is still 0x0 when
+swapped. Sizes other than 0x0 will only be sent from supported backends
+(but it will be supported by more than just stdio).
 
+> If the chardev backends are defaulting to 0x0 for everything except
+> the 'stdio' backend, then this series is surely going to break all
+> existing usage of virtio-console for non-stdio backends ?
 
-ATB,
+At least for Linux guests, if no size is sent, the kernel defaults to
+0x0, so sending 0x0 is equivalent to not sending anything. Nothing new
+will break by sending 0x0.
 
-Mark.
+We still need to be careful not to reset the size to 0x0 after
+userspace has changed it though. With the non-multiport interface, the
+kernel will reapply the size every time it gets the config interrupt.
+If some other use for the config interrupt is added in the future
+besides resizing, it could become a problem.
 
+Actually, from looking at Linux source, it appears that linux only
+reads the size after getting the config interrupt. This seems to imply
+that linux will ignore the initial value if no interrupt is sent. That
+might be a bug.
+
+Maximilian Immanuel Brandtner wrote:
+> I agree that this is a much more significant issue and I like your idea
+> of adding an opt-in parameter to support resizing for the virtio-
+> console chardev.
+
+The console-size property can already disable size support, so making
+it an opt-in is only a matter of changing the default
+
+> The smoothest solution would have been a spec-change.
+
+Here is the spec change proposal (thanks to MST for submitting it!):
+https://lore.kernel.org/virtio-comment/7b939d85ec0b532bae4c16bb927edddcf663=
+bb48.1758212319.git.mst@redhat.com/
+
+Best regards,
+Filip Hejsek
 
