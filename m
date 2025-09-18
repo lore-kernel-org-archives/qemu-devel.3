@@ -4,56 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63A9CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF4BCAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzMFg-0002yV-O9; Thu, 18 Sep 2025 17:33:16 -0400
+	id 1uzMMt-000551-6Z; Thu, 18 Sep 2025 17:40:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uzMFc-0002x2-UB; Thu, 18 Sep 2025 17:33:12 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMMq-00054g-FG
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:40:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uzMFa-0007ao-2V; Thu, 18 Sep 2025 17:33:12 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 39B2A56F321;
- Thu, 18 Sep 2025 23:33:03 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id jXRuf9ugvXKQ; Thu, 18 Sep 2025 23:33:01 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3248156F2AE; Thu, 18 Sep 2025 23:33:01 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3025F56F295;
- Thu, 18 Sep 2025 23:33:01 +0200 (CEST)
-Date: Thu, 18 Sep 2025 23:33:01 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v3 14/14] hw/ppc/prep: Fix non-contiguous IO control
- bit
-In-Reply-To: <f61fbc4b-596c-4325-88ac-8c800794f92b@ilande.co.uk>
-Message-ID: <ff7a20d1-f2fc-0180-1a40-aa426f935f30@eik.bme.hu>
-References: <cover.1758219840.git.balaton@eik.bme.hu>
- <9a9564915bf57a6c7e5dae2cfcf147081525e900.1758219840.git.balaton@eik.bme.hu>
- <f61fbc4b-596c-4325-88ac-8c800794f92b@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMMo-0000Q6-GB
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:40:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758231635;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4B+IyI6bsO5sv46rHVxYykJl8+IxX8MB0+se8gQEOMM=;
+ b=XZzNi79tWcnKtTpIjk4V72LCqk3BAykTtV0Pv50IRi6di7Y3vbdkDDtluK/wlyZS+TSWUq
+ NbTpvVNKVE0+m9o7O5jmLsb9IcqRrKi3TmXtxH428WoEm2je+kpN3QQ7pdiswJVXkWUIZA
+ MVUXeDWBFOr9cebiYF58Nx59nvoBqV8=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-84-lLNmpQmdNCCuYPvSMewe7w-1; Thu, 18 Sep 2025 17:40:34 -0400
+X-MC-Unique: lLNmpQmdNCCuYPvSMewe7w-1
+X-Mimecast-MFC-AGG-ID: lLNmpQmdNCCuYPvSMewe7w_1758231633
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-82b1934907dso305898385a.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 14:40:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758231633; x=1758836433;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4B+IyI6bsO5sv46rHVxYykJl8+IxX8MB0+se8gQEOMM=;
+ b=qZDuXVOdDKvksznvKqUpgBFIBzO3Vrt1rPTjV6U0bIgiFrGlUtkGkKBwt4PgcbHtUO
+ Jdp6s4HurR07FPKl1vVxy77Krzqgfl4l2s+5n53ZCZJv2p6+29Q1XrmK1RHoMxTMo8tZ
+ 1fGB3yqyR9ndXnw+UkSKlVq2/6V3ZrQhwWk/8lo+Ycula9ACPSq+XtyOYegG8z3yMwm2
+ /bBl932qmEcP/gyDbQTWc5I9fvMy7YFUMWnyZGcvPKbkoHZtCvbEq1MwZpD80LCPkjKS
+ EuLOG+bKrpMOlIBOL6smQ0AME/3c3ux5lj0DubWUORZma/yrjivwnd8gIkwgcutxlfk9
+ U30g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8xKK1wrtNUOWsjQ7vG6KQiAmWeJk0BoMdZ6AI4A/uMDWXgs23umqxSCBynubH+kP2DScFZ0U3xeiA@nongnu.org
+X-Gm-Message-State: AOJu0YwWtGjUgos9eHTUnLXRB0Q5aWEIV0Dl/nC94+PcgQ98TJD0qOKO
+ kZcov0JtX/L5Q8/ThnEzHdWgp08mDBqevBSqazVTX0DSnF8EVF0wxNNdeEmaTHSkwC84CteymSb
+ P0kaTbnQEVEVcsCWXyCtRlL1wGF3EsSyF7JMyQaBVX8vEYP+Cji4DBDoQ
+X-Gm-Gg: ASbGncsIp4tfhoq1BuUXkp20+ZpOWmYOQwzKNSISlL1bkUtQmhdFYVT2nfPJwwNl9av
+ dAYw2ivN7wIGM3RmLCukJxWsKvJjQcttOv/6qQQXuNYEcQLPZxw1twmgyzrSet8PHWPHJLpXmLh
+ /8rPxrNAdKpi+caqTw6+481quM+RpfHCLX6EfN/15A5UjRfM/nW2i8z59il6Pu4wFi0hkM6/Jzl
+ fcTmxBPm5vFZpu7kOLnzG5s5zx1tuJF+q6Q+SfOEVGHtSteuQenEV2TbyEqBpKJwt/ZyhqMYs4Z
+ pVChUwnesIB+3hMv4OReAiMetrckCtjXS6D0428MJ6ZKAQNb+krk4+s1ujHMnNOB3Uk8GE1ERxK
+ cxE1s3uc6JgpUPvDRcThuKg==
+X-Received: by 2002:a05:620a:21c3:b0:82b:1f48:6e96 with SMTP id
+ af79cd13be357-83ba494ba31mr118276785a.29.1758231633515; 
+ Thu, 18 Sep 2025 14:40:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzDJNEFRyt6p9051XoSvJBxwpBRLkVsOInVSkyjI1BSLDMXHjnC4q48Dep8jKAv+HcoR4dPQ==
+X-Received: by 2002:a05:620a:21c3:b0:82b:1f48:6e96 with SMTP id
+ af79cd13be357-83ba494ba31mr118274585a.29.1758231632994; 
+ Thu, 18 Sep 2025 14:40:32 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-83627d7dd01sm237001785a.27.2025.09.18.14.40.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 14:40:32 -0700 (PDT)
+Date: Thu, 18 Sep 2025 17:40:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [Qemu-devel] [PATCH] vfio/common: Work around kernel overflow
+ bug in DMA unmap
+Message-ID: <aMx8T5-u6Uj64Vgx@x1.local>
+References: <154707542737.22183.7160770678781819267.stgit@gimli.home>
+ <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,140 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
-> On 18/09/2025 19:50, BALATON Zoltan wrote:
->> The bit that is supposed to control if ISA IO ports are accessed with
->> discontiguous addresses was not connected so it did nothing. We can
->> now directly enable or disable the discontiguous region so allow the
->> bit to function. This did not cause a problem so far as nothing seems
->> to use this bit or discontiguous IO addresses.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/pci-host/raven.c    |  9 ---------
->>   hw/ppc/prep.c          |  3 +++
->>   hw/ppc/prep_systemio.c | 17 +++++++++++------
->>   3 files changed, 14 insertions(+), 15 deletions(-)
->> 
->> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
->> index 0c4eca04bb..fd45acb7eb 100644
->> --- a/hw/pci-host/raven.c
->> +++ b/hw/pci-host/raven.c
->> @@ -161,13 +161,6 @@ static const PCIIOMMUOps raven_iommu_ops = {
->>       .get_address_space = raven_pcihost_set_iommu,
->>   };
->>   -static void raven_change_gpio(void *opaque, int n, int level)
->> -{
->> -    PREPPCIState *s = opaque;
->> -
->> -    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
->> -}
->> -
->>   static void raven_pcihost_realize(DeviceState *d, Error **errp)
->>   {
->>       SysBusDevice *dev = SYS_BUS_DEVICE(d);
->> @@ -176,8 +169,6 @@ static void raven_pcihost_realize(DeviceState *d, Error 
->> **errp)
->>       Object *o = OBJECT(d);
->>       MemoryRegion *mr, *bm, *address_space_mem = get_system_memory();
->>   -    qdev_init_gpio_in(d, raven_change_gpio, 1);
->> -
->>       memory_region_init(&s->pci_io, o, "pci-io", 0x3f800000);
->>       memory_region_init_io(&s->pci_discontiguous_io, o,
->>                             &raven_io_ops, &s->pci_io,
->> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
->> index 23d0e1eeaa..678682fdd2 100644
->> --- a/hw/ppc/prep.c
->> +++ b/hw/ppc/prep.c
->> @@ -358,6 +358,9 @@ static void ibm_40p_init(MachineState *machine)
->>           dev = DEVICE(isa_dev);
->>           qdev_prop_set_uint32(dev, "ibm-planar-id", 0xfc);
->>           qdev_prop_set_uint32(dev, "equipment", 0xc0);
->> +        object_property_set_link(OBJECT(dev), "discontiguous-io",
->> +                                 OBJECT(sysbus_mmio_get_region(pcihost, 
->> 1)),
->> +                                 &error_fatal);
->>           isa_realize_and_unref(isa_dev, isa_bus, &error_fatal);
->>             dev = DEVICE(pci_create_simple(pci_bus, PCI_DEVFN(1, 0),
->> diff --git a/hw/ppc/prep_systemio.c b/hw/ppc/prep_systemio.c
->> index 41cd923b94..6ef9b91317 100644
->> --- a/hw/ppc/prep_systemio.c
->> +++ b/hw/ppc/prep_systemio.c
->> @@ -44,9 +44,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(PrepSystemIoState, 
->> PREP_SYSTEMIO)
->>     struct PrepSystemIoState {
->>       ISADevice parent_obj;
->> +
->>       MemoryRegion ppc_parity_mem;
->> +    MemoryRegion *discontiguous_io;
->>   -    qemu_irq non_contiguous_io_map_irq;
->>       uint8_t sreset; /* 0x0092 */
->>       uint8_t equipment; /* 0x080c */
->>       uint8_t system_control; /* 0x081c */
->> @@ -206,8 +207,8 @@ static void prep_port0850_write(void *opaque, uint32_t 
->> addr, uint32_t val)
->>       PrepSystemIoState *s = opaque;
->>         trace_prep_systemio_write(addr, val);
->> -    qemu_set_irq(s->non_contiguous_io_map_irq,
->> -                 val & PORT0850_IOMAP_NONCONTIGUOUS);
->> +    memory_region_set_enabled(s->discontiguous_io,
->> +                              !(val & PORT0850_IOMAP_NONCONTIGUOUS));
->>       s->iomap_type = val & PORT0850_IOMAP_NONCONTIGUOUS;
->>   }
->>   @@ -257,10 +258,10 @@ static void prep_systemio_realize(DeviceState *dev, 
->> Error **errp)
->>       PrepSystemIoState *s = PREP_SYSTEMIO(dev);
->>       PowerPCCPU *cpu;
->>   -    qdev_init_gpio_out(dev, &s->non_contiguous_io_map_irq, 1);
->> +    assert(s->discontiguous_io);
->>       s->iomap_type = PORT0850_IOMAP_NONCONTIGUOUS;
->> -    qemu_set_irq(s->non_contiguous_io_map_irq,
->> -                 s->iomap_type & PORT0850_IOMAP_NONCONTIGUOUS);
->> +    memory_region_set_enabled(s->discontiguous_io,
->> +                              !(s->iomap_type & 
->> PORT0850_IOMAP_NONCONTIGUOUS));
->>       cpu = POWERPC_CPU(first_cpu);
->>       s->softreset_irq = qdev_get_gpio_in(DEVICE(cpu), 
->> PPC6xx_INPUT_HRESET);
->>   @@ -288,6 +289,8 @@ static const VMStateDescription vmstate_prep_systemio 
->> = {
->>   static const Property prep_systemio_properties[] = {
->>       DEFINE_PROP_UINT8("ibm-planar-id", PrepSystemIoState, ibm_planar_id, 
->> 0),
->>       DEFINE_PROP_UINT8("equipment", PrepSystemIoState, equipment, 0),
->> +    DEFINE_PROP_LINK("discontiguous-io", PrepSystemIoState, 
->> discontiguous_io,
->> +                     TYPE_MEMORY_REGION, MemoryRegion *),
->>   };
->>     static void prep_systemio_class_initfn(ObjectClass *klass, const void 
->> *data)
->> @@ -296,6 +299,8 @@ static void prep_systemio_class_initfn(ObjectClass 
->> *klass, const void *data)
->>         dc->realize = prep_systemio_realize;
->>       dc->vmsd = &vmstate_prep_systemio;
->> +    /* Reason: PReP specific device, needs to be wired via properties */
->> +    dc->user_creatable = false;
->>       device_class_set_props(dc, prep_systemio_properties);
->>   }
->
-> Making a device non-user-creatable seems to be a step backwards: why not keep 
-> the gpio for signalling the non-contiguous IO configuration?
+On Thu, Sep 18, 2025 at 10:55:47PM +0200, Cédric Le Goater wrote:
+> Alex, Peter,
+> 
+> On 1/10/19 00:10, Alex Williamson wrote:
+> > A kernel bug was introduced in v4.15 via commit 71a7d3d78e3c which
+> > adds a test for address space wrap-around in the vfio DMA unmap path.
+> > Unfortunately due to overflow, the kernel detects an unmap of the last
+> > page in the 64-bit address space as a wrap-around.  In QEMU, a Q35
+> > guest with VT-d emulation and guest IOMMU enabled will attempt to make
+> > such an unmap request during VM system reset, triggering an error:
+> > 
+> >    qemu-kvm: VFIO_UNMAP_DMA: -22
+> >    qemu-kvm: vfio_dma_unmap(0x561f059948f0, 0xfef00000, 0xffffffff01100000) = -22 (Invalid argument)
+> > 
+> > Here the IOVA start address (0xfef00000) and the size parameter
+> > (0xffffffff01100000) add to exactly 2^64, triggering the bug.  A
+> > kernel fix is queued for the Linux v5.0 release to address this.
+> > 
+> > This patch implements a workaround to retry the unmap, excluding the
+> > final page of the range when we detect an unmap failing which matches
+> > the requirements for this issue.  This is expected to be a safe and
+> > complete workaround as the VT-d address space does not extend to the
+> > full 64-bit space and therefore the last page should never be mapped.
+> > 
+> > This workaround can be removed once all kernels with this bug are
+> > sufficiently deprecated.
+> 
+> Have we waited long enough ? what does "sufficiently deprecated" mean ?
+> Is it related to the linux stable updates ?
 
-This device implements a bunch of isa ports that control internal 
-behaviour of the PReP machine. It does not make sense to add it to any 
-other machine and as it needs to access some PReP specific internals it 
-needs to be connected. Even a gpio would need to be connected so that does 
-not change the reason for making it non-user-creatable. The previous way 
-to change a memory region via a gpio was messier and needed access the 
-memory region which is now self contained in the device where it belongs 
-and passed via a link property which I think is clearer than the previous 
-way.
+Alex might be the best to define it.
 
-Thanks again for the review. I've noted your Rb tags and made changes to 
-the commit messages you asked and answered other questions. I'll wait for 
-another round of answers before sending a v4 unless you want to see that 
-before you answer.
+To me, it doesn't sound a major issue to have it even forever just in case
+someone was using a broken v4.15..v5.0 kernel.  It's pretty small, limited
+and self contained workaround.
 
-Regards,
-BALATON Zoltan
+Any blockers on this?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
