@@ -4,104 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0BCCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6CFCAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzAyM-0007gq-4W; Thu, 18 Sep 2025 05:30:38 -0400
+	id 1uzAzm-0000Gn-5U; Thu, 18 Sep 2025 05:32:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uzAyJ-0007gH-T7; Thu, 18 Sep 2025 05:30:35 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uzAyE-0001SF-TG; Thu, 18 Sep 2025 05:30:35 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cS9NG0Z6gz4wC8;
- Thu, 18 Sep 2025 19:30:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cS9N92RGGz4w21;
- Thu, 18 Sep 2025 19:30:17 +1000 (AEST)
-Message-ID: <ef4f4cd4-6efc-4176-9043-4bca04e5da4f@kaod.org>
-Date: Thu, 18 Sep 2025 11:30:13 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 00/14] Support PCIe RC to AST2600 and AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uzAzf-0000EI-PT
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:31:59 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uzAzd-0001f0-7R
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:31:59 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45cb6428c46so6822815e9.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 02:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758187915; x=1758792715; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=GCQ6IJB4THH2mjQRZu4ktOVSYqENxEpi3gs7gRZNzTQ=;
+ b=iBWl5DOeCJzY9FK83VO59UpMfjf3yKx45E8A1e5M86lPWj9SAv+Q5xwXibTShOm321
+ gq+JV4T4RTC9HfuKl54HVeCHh+1viXMNBDj4N2TlMyxrOZF8rOzy1DSDCiFdEthyA8R6
+ 9sa6slzeU83aHJYefQjDxbrAJv8UgLSIegipNtExdBdrz4aXlgtmWOkBX916vj8bZwvg
+ 8++fsAjgrmMnbsZLXB2TIXInQnZu7gAMB/HAxYW4X3ddvJhs6Ll6kFfwCvcBYipDXleZ
+ 6geY9/7JK5h6k7wakZBLol7gp5zJiX8Xrf4uHJ9+g5VHyHGqEjwQh+413JzqjOWxxHXr
+ +2ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758187915; x=1758792715;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GCQ6IJB4THH2mjQRZu4ktOVSYqENxEpi3gs7gRZNzTQ=;
+ b=YSemho7wQFMNE2UELiCDL6coawK5X865NbscokHJ7esWBVmS5MTJa0J5LteihtuNwP
+ JTqUsedNjGhLiY6RsTfahZ6X/loFYViB4hqIoZaiKXIN01Yj7pBFJaog4NyNH2cSMdEt
+ YSjBQFC95iUiHP2sFWQ2DO0vi7Eh6EUtDsz51Q8++fR2kYJlaZcOq5cRh9LzruDWrsm0
+ cvtnyTn9FYdNfFD35LiHlha/dIj5BJ9GGmB4ZcWlF+1RSEusarVU9LZV3+ihfP2RiNMy
+ BoqpGEFjUsrm+GcX9JUQWAwcaSzEabdzi+iblsj25eWIEyUDPWUUDvjgSoikNI8EfjKi
+ FooA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUuU5pSK5pd7v26Zc4bV2TW6f+OADkMmdQH44u0MB3HUrlHoEFrxVbdh88PcD+nrwv8NWhtag1xvr2P@nongnu.org
+X-Gm-Message-State: AOJu0Yx4bZhXr3CFzwWB4F4s3m/v6xScz/gBWz0pENcz5TVdkIX+zj/o
+ 6W9Gs2gsqjvPgrLyJntb6rYmxbOfbAGu0EzMWAXbE09Ri6Z8s412YSZu
+X-Gm-Gg: ASbGncuAd9OObdMQEcogrzhSAdA/bLQu7uBGsqwVdDq612tu0mgLSIyxWaexTLfchVC
+ AI8GRpf6Rn0ZHB1BsZUt/9ChbM/xihyw702qQBDMOAfeOE6ocxgNIJFNRcviM7GOzW2xA2WoS/C
+ oWL1mERAtx38hTus5V8ec/Rzgsk4fkkgE2UjCCzyET09KaTA6HwE/NesPUgjrzktFwEhBgISWxR
+ JyoK4krUVb+FtpBQS9kWrTJTfqi7f/4tZm1CaEB30GD5daA8pde+/mvdbBCBh3wVdCYurMrPJYq
+ GirkqwgnQ5va9u06TP2Zu2Kxwog1xwd28zH7wrlBqbs0UClgUEl5J5rhvH51iwZbCUkX1SrXRLd
+ 5+naLLxcawylFOHJ5hJHiixYnyDa85l+FYQGisztwNZCj2e8gsQevGRQz7z0Hkp9UyBODSRNJis
+ eNdHTLuncMqg==
+X-Google-Smtp-Source: AGHT+IGtMuNadmZNNj37hkcW+YL7g9nje/MbhOLrhpPeWq/9Gi1MZJfkoEpTwoaofA4ctjiD8Oci0g==
+X-Received: by 2002:a05:600c:3b20:b0:45d:e110:e673 with SMTP id
+ 5b1f17b1804b1-46202175527mr46988065e9.4.1758187914516; 
+ Thu, 18 Sep 2025 02:31:54 -0700 (PDT)
+Received: from ehlo.thunderbird.net (78-80-105-95.customers.tmcz.cz.
+ [78.80.105.95]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-464f1627140sm34295795e9.6.2025.09.18.02.31.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Sep 2025 02:31:54 -0700 (PDT)
+Date: Thu, 18 Sep 2025 11:31:46 +0200
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, qemu-devel@nongnu.org
+CC: =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>,
- "wuhaotsh@google.com" <wuhaotsh@google.com>,
- "titusr@google.com" <titusr@google.com>
-References: <20250918031348.3991681-1-jamin_lin@aspeedtech.com>
- <2e5f260b-dafa-42ab-953d-f0781cd3601f@kaod.org>
- <SI2PR06MB5041C7EE49F5A61C6E8B2DE3FC16A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI2PR06MB5041C7EE49F5A61C6E8B2DE3FC16A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=jpNI=35=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Szymon Lukasz <noh4hss@gmail.com>
+Subject: Re: [PATCH v4 03/10] chardev: add qemu_chr_resize()
+User-Agent: Thunderbird for Android
+In-Reply-To: <e025952d0d0e1f78b68cfe42dbe39975570a94bc.camel@linux.ibm.com>
+References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
+ <20250912-console-resize-v4-3-7925e444afc4@gmail.com>
+ <e025952d0d0e1f78b68cfe42dbe39975570a94bc.camel@linux.ibm.com>
+Message-ID: <4C88D994-7C6A-48EE-96BC-9D8ACC31B2A9@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,149 +114,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 11:08, Jamin Lin wrote:
-> Hi Cédric
-> 
->> Subject: Re: [SPAM] [PATCH v3 00/14] Support PCIe RC to AST2600 and
->> AST2700
->>
->> Hell Jamin,
->>
->> On 9/18/25 05:13, Jamin Lin wrote:
->>> v1:
->>>    1. Add PCIe PHY, CFG, and MMIO window support for AST2600.
->>>       Note: Only supports RC_H.
->>>    2. Add PCIe PHY, CFG, and MMIO window support for AST2700.
->>>       Note: Supports 3 RCs.
->>>
->>> v2:
->>>     1. Introduce a new root port device.
->>>     2. For AST2600 RC_H, add the root device at 80:00.0 and a root port at
->> 80.08.0
->>>        to match the real hardware topology, allowing users to attach PCIe
->> devices
->>>        at the root port.
->>>     3. For AST2700, add a root port at 00.00.0 for each PCIe root complex to
->> match
->>>        the real hardware topology, allowing users to attach PCIe devices at
->> the
->>>        root port.
->>>
->>> v3:
->>>     1. Fix review issues.
->>>     2. update functional test for the e1000e network card.
->>>     3. update license header
->>>     4. Adding "Based on previous work from Cedric Le Goater, with Jamin's
->> summary
->>>        implementation.
->>
->> v3 looks good. I only had a few comments on memory allocation (g_autofree
->> and MMIO alias regions) and on functional tests.
->>
->> v4 should be the last.
->>
-> 
-> Thanks for your review and kindly support.
-> Will resend v4 very soon.
+On September 18, 2025 10:45:13 AM GMT+02:00, Maximilian Immanuel Brandtner =
+<maxbr@linux=2Eibm=2Ecom> wrote:
+> On Fri, 2025-09-12 at 05:39 +0200, Filip Hejsek wrote:
+> > From: Szymon Lukasz <noh4hss@gmail=2Ecom>
+> >=20
+> > This function should be called whenever we learn about a new size of
+> > the terminal connected to a chardev=2E
+> >=20
+> > Signed-off-by: Szymon Lukasz <noh4hss@gmail=2Ecom>
+> > Signed-off-by: Filip Hejsek <filip=2Ehejsek@gmail=2Ecom>
+> > ---
+> > =C2=A0chardev/char=2Ec=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ | 11 +++++++++++
+> > =C2=A0include/chardev/char=2Eh |=C2=A0 2 ++
+> > =C2=A02 files changed, 13 insertions(+)
+> >=20
+> > diff --git a/chardev/char=2Ec b/chardev/char=2Ec
+> > index
+> > 635d19fea4fd4bd0c7f171f055fe940f9f5ebed5=2E=2Eb45d79cb9b57643827eb7479=
+257
+> > fdda2cf6b0434 100644
+> > --- a/chardev/char=2Ec
+> > +++ b/chardev/char=2Ec
+> > @@ -351,6 +351,17 @@ int qemu_chr_wait_connected(Chardev *chr, Error
+> > **errp)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+> > =C2=A0}
+> > =C2=A0
+> > +void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 if (cols !=3D chr->cols || rows !=3D chr->rows) {
+>=20
+> Perhaps it would be better to discard resize events if the requested
+> cols or rows is 0 as it indicates that an error has occurred at some
+> point during the process of receiving the winsize=2E
 
-One last thing, the list of PCI capabilities reported on real HW
-is a little different. See below. When you have time, it would
-be good to adjust the model if possible. It can come later.
+Maybe=2E But then if the size actually changes from known
+to unknown, it wouldn't be possible to get it back to the unknown
+state=2E And what if only
+one of the values is 0, and the other differs from the last value?
 
+What I want to say is, I don't think QEMU should be in the business
+of trying to fix broken size info=2E The kernel gave us zero,
+so we should forward that and let the guest handle it=2E
 
-Thanks,
-
-C.
-
-
-
-root@ast2600-default:~# lspci -vvv
-80:00.0 Host bridge: ASPEED Technology, Inc. Device 2600
-	Subsystem: ASPEED Technology, Inc. Device 2600
-	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
-	Status: Cap- 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
-	Latency: 0
-
-80:08.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06) (prog-if 00 [Normal decode])
-	Subsystem: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr+ Stepping- SERR+ FastB2B- DisINTx+
-	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
-	Latency: 0, Cache Line Size: 64 bytes
-	Interrupt: pin A routed to IRQ 82
-	Bus: primary=80, secondary=81, subordinate=81, sec-latency=0
-	I/O behind bridge: 1000-1fff [size=4K] [16-bit]
-	Memory behind bridge: 70000000-700fffff [size=1M] [32-bit]
-	Prefetchable memory behind bridge: 00000000fff00000-00000000000fffff [disabled] [64-bit]
-	Secondary status: 66MHz+ FastB2B- ParErr- DEVSEL=medium >TAbort- <TAbort- <MAbort+ <SERR- <PERR-
-	BridgeCtl: Parity+ SERR+ NoISA- VGA- VGA16- MAbort- >Reset- FastB2B-
-		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
-	Capabilities: [50] MSI: Enable+ Count=1/1 Maskable- 64bit+
-		Address: 000000001e77005c  Data: 0000
-	Capabilities: [78] Power Management version 3
-		Flags: PMEClk- DSI- D1+ D2+ AuxCurrent=375mA PME(D0+,D1+,D2+,D3hot+,D3cold+)
-		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
-	Capabilities: [80] Express (v2) Root Port (Slot-), IntMsgNum 0
-		DevCap:	MaxPayload 512 bytes, PhantFunc 0
-			ExtTag+ RBE+ TEE-IO-
-		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
-			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+
-			MaxPayload 128 bytes, MaxReadReq 512 bytes
-		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq- AuxPwr+ TransPend-
-		LnkCap:	Port #0, Speed 5GT/s, Width x1, ASPM L0s L1, Exit Latency L0s <1us, L1 <64us
-			ClockPM- Surprise- LLActRep- BwNot+ ASPMOptComp+
-		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk-
-			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
-		LnkSta:	Speed 2.5GT/s, Width x1
-			TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
-		RootCap: CRSVisible-
-		RootCtl: ErrCorrectable- ErrNon-Fatal- ErrFatal- PMEIntEna+ CRSVisible-
-		RootSta: PME ReqID 0000, PMEStatus- PMEPending-
-		DevCap2: Completion Timeout: Range ABCD, TimeoutDis+ NROPrPrP- LTR-
-			 10BitTagComp- 10BitTagReq- OBFF Not Supported, ExtFmt- EETLPPrefix-
-			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
-			 FRS- LN System CLS Not Supported, TPHComp- ExtTPHComp- ARIFwd-
-			 AtomicOpsCap: Routing- 32bit- 64bit- 128bitCAS-
-		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis- ARIFwd-
-			 AtomicOpsCtl: ReqEn- EgressBlck-
-			 IDOReq- IDOCompl- LTR- EmergencyPowerReductionReq-
-			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
-		LnkCtl2: Target Link Speed: 5GT/s, EnterCompliance- SpeedDis-
-			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
-			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
-		LnkSta2: Current De-emphasis Level: -3.5dB, EqualizationComplete- EqualizationPhase1-
-			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
-			 Retimer- 2Retimers- CrosslinkRes: unsupported
-	Capabilities: [c0] Subsystem: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-	Capabilities: [100 v1] Virtual Channel
-		Caps:	LPEVC=0 RefClk=100ns PATEntryBits=1
-		Arb:	Fixed- WRR32- WRR64- WRR128-
-		Ctrl:	ArbSelect=Fixed
-		Status:	InProgress-
-		VC0:	Caps:	PATOffset=00 MaxTimeSlots=1 RejSnoopTrans-
-			Arb:	Fixed- WRR32- WRR64- WRR128- TWRR128- WRR256-
-			Ctrl:	Enable+ ID=0 ArbSelect=Fixed TC/VC=ff
-			Status:	NegoPending- InProgress-
-	Capabilities: [800 v1] Advanced Error Reporting
-		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
-			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
-			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+
-			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
-		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr- HeaderOF-
-		AERCap:	First Error Pointer: 00, ECRCGenCap- ECRCGenEn- ECRCChkCap- ECRCChkEn-
-			MultHdrRecCap- MultHdrRecEn- TLPPfxPres- HdrLogCap-
-		HeaderLog: 00000000 00000000 00000000 00000000
-		RootCmd: CERptEn- NFERptEn- FERptEn-
-		RootSta: CERcvd- MultCERcvd- UERcvd- MultUERcvd-
-			 FirstFatal- NonFatalMsg- FatalMsg- IntMsgNum 0
-		ErrorSrc: ERR_COR: 0000 ERR_FATAL/NONFATAL: 0000
-	Kernel driver in use: pcieport
-
-
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chr->cols =3D cols;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chr->rows =3D rows;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (chr->be_open) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qe=
+mu_chr_be_event(chr, CHR_EVENT_RESIZE);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +}
+> > +
+> > =C2=A0QemuOpts *qemu_chr_parse_compat(const char *label, const char
+> > *filename,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool permit_mux_mon)
+> > =C2=A0{
+> > diff --git a/include/chardev/char=2Eh b/include/chardev/char=2Eh
+> > index
+> > 45cb6349756ac8072dffab9354108caf90cd3565=2E=2E1e69b038241074d627ebb7f0=
+96e
+> > 98aee9953ebdf 100644
+> > --- a/include/chardev/char=2Eh
+> > +++ b/include/chardev/char=2Eh
+> > @@ -232,6 +232,8 @@ int qemu_chr_write(Chardev *s, const uint8_t
+> > *buf, int len, bool write_all);
+> > =C2=A0#define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, l=
+en,
+> > true)
+> > =C2=A0int qemu_chr_wait_connected(Chardev *chr, Error **errp);
+> > =C2=A0
+> > +void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows);
+> > +
+> > =C2=A0#define TYPE_CHARDEV "chardev"
+> > =C2=A0OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+> > =C2=A0
+> >=20
+>=20
 
 
