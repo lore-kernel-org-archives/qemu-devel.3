@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C29ACAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 11:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD19ACAC5A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 11:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzD2t-0001Iy-0f; Thu, 18 Sep 2025 07:43:27 -0400
+	id 1uzDBX-0006Cw-MR; Thu, 18 Sep 2025 07:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzD2c-0001B8-29
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:43:12 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1uzDBE-0006CR-NL
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:52:06 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzD2Y-0003Fk-RU
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:43:08 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45dd7b15a64so7894695e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 04:43:06 -0700 (PDT)
+ id 1uzDBC-0004KN-TU
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:52:04 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-7341b13f2dcso6161037b3.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 04:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758195785; x=1758800585; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=URz5a5pFm7pKh9X7FQk4P9+y/EuFGtM2lJtZiSfIZsI=;
- b=N/gx0QPp1+AgWjUugpzkVogeXI2c1MAkrTOUPs4r+yQcERVqZ2x45sWXYiO42YoN3V
- YqRzdIAqs7gttqBYHFrDwnwgu/aGNRHjL4K8H11q+Q2GLpnw+bDUeCy5Akn0yab5JCip
- qZM13M2iKPVOhEH8ps05Ym+0/GZwdfRVQC7Rc2g5U/4VUPznp7hAkpX46tJwbVAY08la
- kHw8UInsCwKTl6JFNqvnu5Cd5iESvB08wPhkw1HHPQh4dF8DF+JjDDkqPSZdz7uXuU2G
- KCbD2oPTWU6nvljrHuimW5thVatbrMctU1brbPBN4QUBabaJZwy8dZsWnVClp6B72x3/
- /Ujg==
+ d=linaro.org; s=google; t=1758196321; x=1758801121; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1n7Ht8oMM0rY+6Xt1j5k37MQdPRZli6vHpd59JIIXFA=;
+ b=E+Yi2iMJW3wrR1HBlTBw+ztqDWcwr19OwtQ44xZf/FgEYDR9rFSe+jEme7de4dsTOD
+ Kql6AU7a5tvsSClTIR0NCHqSOGKhmJR/vyExu7jI1y5/Io+p8o2Qo6CLhSpdo5fPYvWx
+ 27tf7uqcJ/WyWna+J9szFxRzxDLgMMByuZcVmI4UtbAaam1WYXuejgO7tu0RlTchRc6W
+ jePeCi8Bg7ZtU7zI+2OY+vfocvfRUS2bBua6tP7aSgvgsf0DUj7YZ6rkso2joV8IWQcA
+ SLu6IbaBUlewFB1+6Y4OtdbL/4GHC7+qn1KFEYpJTCVnZ1BDVEOoaMBHSZAQ+1euVn60
+ 4ZAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758195785; x=1758800585;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=URz5a5pFm7pKh9X7FQk4P9+y/EuFGtM2lJtZiSfIZsI=;
- b=lp7b7veyOttWXKdxRKudetEhV1og4U3eXnF2Jf5MmVYO0UOyNK7wEscF2krTXPR1XK
- zs+4P9b+eyA4VJymSnDyT9pif3hkfa2bXbT0u8EBSNd+9phrnwDhciRri1m02sSK9LAH
- r2s4e3nCaYf3LIVZ4lMADNENbJPIKk7XNIA6iNL6+tXlrtRHQiu2ptXLJyRNEiTfbnvB
- NVzll9OPhmayLqromIX6mX+zygzWuzNM7pqW2S2zX9TtOhfEETKaGbOn53amWg+g1Owp
- zp8eEPON1aLUNGkR8ex67E5bkfMhd8bHR1Egxh45Zr2XRjQyBL18xrLz6UCf9Xp7wuXY
- 16JQ==
-X-Gm-Message-State: AOJu0YwKEfdVrvH3z+B9sAoiJ0lTAC0Gen0yBRlcM7Wxx+3gs1voncLC
- b3OoYKGMSw1iI2IYyQl7tZGwX4F3gFF91I8kGsqCJbHeEffTrATrE8O0ls8D15ZYmCW8HwR3NhX
- Ndhus
-X-Gm-Gg: ASbGnctx/2FmqfNgeZtwvqPVZ4DKvdRWqc42/Xszj4CkYscO9SQgK5h6USEViP4UQk0
- p9YKeDiwbz7uCfCYWP9Sdcefy6F/c4J61E2dLxz0d9hElA+ltB0NLd1NtR13Qp7kaBvfmkIftVK
- P4gBdVVkPEh8Qs3He7Hqw9DL/B4CUnu6QQXcdRKWvVuD5orCBmU87fQLJ/XJ2FnGkbQPJ5McYTv
- Scy5X7UkMs9YCUzXRv9UQpOF+o+DQK239b48ulcRGuGLVTPeXZsWrR/3sKcDvOFyCJwEpfKmaT4
- 1rTOBFDjxxeptTAcmF1odDdgfS2dgTFSjUQjY+fh+/Rz8HxqPBWrt0a/b5U+iEFyS56bJsjOD1Y
- 4h8Rk9/SSjk653O08FxcpxQ1pHxQYOTVlK3zC+os48i3IHik=
-X-Google-Smtp-Source: AGHT+IHLbeZqpnkcMoAdKVV3qqJjSrwZAzMOnrOyyRLIHJQH6aulYez40ieTHLKtOY/SeWY6EQKnHA==
-X-Received: by 2002:a05:600c:a415:b0:45b:92a6:63e3 with SMTP id
- 5b1f17b1804b1-4652c9ee679mr22650965e9.9.1758195784907; 
- Thu, 18 Sep 2025 04:43:04 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46139122cb5sm76942665e9.8.2025.09.18.04.43.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 04:43:03 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH 2/2] hw/pci-host/astro: Don't call pci_regsiter_root_bus() in
- init
-Date: Thu, 18 Sep 2025 12:42:59 +0100
-Message-ID: <20250918114259.1802337-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250918114259.1802337-1-peter.maydell@linaro.org>
-References: <20250918114259.1802337-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1758196321; x=1758801121;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1n7Ht8oMM0rY+6Xt1j5k37MQdPRZli6vHpd59JIIXFA=;
+ b=uVzfy8FDVUOiOu3vAavAyCv/QbzVKnsdh71MlwVNdxm/H0pt4DOlQEOxoylOLwV/Es
+ UfUi6JnvkVP9GS7c3AS33cuZ25czKibUnaSYN/pcvL4IDImZOo+XHqE3uCsJvUSBA64V
+ NbGkZ5Zw53+QKFJPAjT1cPiyY3MHNmFhBh/TMCwgdCadUXAjQwiyBDJ8A7pWkcuYcbGX
+ yF35cDCfMSdxAEUs4bqgMeXAnItTVSbga0wSiZB9BPlMYdsoC55XJH3tWF9JB2x0uzSm
+ 2fIL+5x6tDumF5QFXW+pZPnrj7feG1/MHY36JKjI9TuKJn3zx/g3dbUWW4urSAOOkp84
+ p6iQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWsTPNsLdCpavKZOqpKZtKo6TnkQIb5hrc8TPuHLUl/LJS/LOUFQ91XJ/Hj8+F3TU7PqfJ1/ih9yGX@nongnu.org
+X-Gm-Message-State: AOJu0YxHVJ5ncD0W7zWZ2r4vpZhnIBnyJWuQwLAHTjCDps98p7fG+Tt9
+ F907ovtt2mUfYSgfNKMdbbhXeBKGpXYYHJli54RzBRbCpchs8mKaCcYBNqD+K+tv4S+JZ7rs6r4
+ U/AhtX0winVAQXBcMx99ZTyzTt9ivz9DhjEe7LxNbS1PCTHAiQwRl
+X-Gm-Gg: ASbGnct9PwA3cERko0WCQTFJIJQ7u3edc5QE9Pwdv2+M2JDf4C4cXu+hNAPRSWGsVjs
+ af0P9P7LVEaVE6quNfyao7koDz7hfaXe2jhqhDoMoxl2xx4qNMN+di6ZtDZK27ZsTuCrAAxRpuc
+ X40i2h+roGORHue3/uzoRFcE5Snnxz3GyH1PyXPZ7S8geb1T36wg4RvA/59Z/oKPrk/tnUyE4b2
+ 0FGhsKZDtvRebInFsKRQBap8vc=
+X-Google-Smtp-Source: AGHT+IHiE7fBVkQFqepd2cjvrKN7JIpMk7Gnnt2lDyVZ86NVVvAXw1DMVllfbWS8XUfKMZ2Q0wbEZ2c+keK7+pl5vxM=
+X-Received: by 2002:a05:690c:64ca:b0:731:b538:3aa9 with SMTP id
+ 00721157ae682-73892f4a3a9mr48627527b3.37.1758196320707; Thu, 18 Sep 2025
+ 04:52:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20250918114015.83061-1-thuth@redhat.com>
+In-Reply-To: <20250918114015.83061-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Sep 2025 12:51:49 +0100
+X-Gm-Features: AS18NWBHqBPy_Y9VlkkHpOM1v09d7owmoAV3xgWSUsBHPUk7syEbB5UY6Xdu6Io
+Message-ID: <CAFEAcA8qwgQoGrU1phd+ozQMtWdo=Jt_XNCtaxPysoqaLxd16w@mail.gmail.com>
+Subject: Re: [PATCH] tests: Fix "make check-functional" for targets without
+ thorough tests
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,122 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the astro PCI host bridge device, we call pci_register_root_bus()
-in the device's instance_init. This is a problem for two reasons
- * the PCI bridge is then available to the rest of the simulation
-   (e.g. via pci_qdev_find_device()), even though it hasn't
-   yet been realized
- * we do not attempt to unregister in an instance_deinit,
-   which means that if you go through an instance_init -> deinit
-   lifecycle the freed memory for the host-bridge device is
-   left on the pci_host_bridges list
+On Thu, 18 Sept 2025 at 12:40, Thomas Huth <thuth@redhat.com> wrote:
+>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> If QEMU gets configured for a single target that does not have
+> any thorough functional tests, "make check-functional" currently
+> fails with the error message "No rule to make target 'check-func'".
+> This happens because "check-func" only gets defined for thorough
+> tests (quick ones get added to "check-func-quick" instead).
+> Thus let's define a dummy target for this case, that simply
+> depends on the quick tests.
 
-ASAN reports the resulting use-after-free:
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
 
-==1776584==ERROR: AddressSanitizer: heap-use-after-free on address 0x51f00000cb00 at pc 0x5b2d460a89b5 bp 0x7ffef7617f50 sp 0x7ffef7617f48
-WRITE of size 8 at 0x51f00000cb00 thread T0
-    #0 0x5b2d460a89b4 in pci_host_bus_register /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:608:5
-    #1 0x5b2d46093566 in pci_root_bus_internal_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:677:5
-    #2 0x5b2d460935e0 in pci_root_bus_new /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:706:5
-    #3 0x5b2d46093fe5 in pci_register_root_bus /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:751:11
-    #4 0x5b2d46fe2335 in elroy_pcihost_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci-host/astro.c:455:16
+We also have the opposite problem if there are no 'quick'
+tests, which you can see if you try 'check-functional'
+on a build configured with the aarch64-linux-user target only:
 
-0x51f00000cb00 is located 1664 bytes inside of 3456-byte region [0x51f00000c480,0x51f00000d200)
-freed by thread T0 here:
-    #0 0x5b2d4582385a in free (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/qemu-system-hppa+0x17ad85a) (BuildId: 692b49eedc6fb0ef618bbb6784a09311b3b7f1e8)
-    #1 0x5b2d47160723 in object_finalize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:734:9
-    #2 0x5b2d471589db in object_unref /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:1232:9
-    #3 0x5b2d477d373c in qmp_device_list_properties /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/qom-qmp-cmds.c:237:5
+$ make -C build/aarch64-linux/ check-functional
+make: Entering directory
+'/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux'
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux/pyvenv/bin/meson
+introspect --targets --tests --benchmarks |
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux/pyvenv/bin/python3
+-B scripts/mtest2make.py > Makefile.mtest
+[0/1] Running external command precache-functional (wrapped by meson to set env)
+make[1]: Entering directory
+'/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux'
+make[1]: *** No rule to make target 'check-func-quick', needed by
+'check-func'. Stop.
+make[1]: Leaving directory
+'/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux'
+make: *** [/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/Makefile.include:114:
+check-functional] Error 2
+make: Leaving directory
+'/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/aarch64-linux'
 
-previously allocated by thread T0 here:
-    #0 0x5b2d45823af3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/qemu-system-hppa+0x17adaf3) (BuildId: 692b49eedc6fb0ef618bbb6784a09311b3b7f1e8)
-    #1 0x79728fa08b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
-    #2 0x5b2d471595fc in object_new_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:767:15
-    #3 0x5b2d47159409 in object_new_with_class /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/object.c:782:12
-    #4 0x5b2d477d29a5 in qmp_device_list_properties /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../qom/qom-qmp-cmds.c:206:11
+(Those errors are with this patch applied; without it
+the error is slightly different:
+make[1]: *** No rule to make target 'check-func'. Stop.)
 
-Cc: qemu-stable@nongnu.org
-Fixes: e029bb00a79be ("hw/pci-host: Add Astro system bus adapter found on PA-RISC machines")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3118
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/pci-host/astro.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+But that can't show up on a system-emulation target,
+because tests like generic/version are in the "quick"
+category.
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 859e308c577..1024ede7b68 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -424,22 +424,23 @@ static void elroy_reset(DeviceState *dev)
-     }
- }
- 
--static void elroy_pcihost_init(Object *obj)
-+static void elroy_pcihost_realize(DeviceState *dev, Error **errp)
- {
--    ElroyState *s = ELROY_PCI_HOST_BRIDGE(obj);
--    PCIHostState *phb = PCI_HOST_BRIDGE(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    ElroyState *s = ELROY_PCI_HOST_BRIDGE(dev);
-+    PCIHostState *phb = PCI_HOST_BRIDGE(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    Object *obj = OBJECT(s);
- 
-     /* Elroy config access from CPU.  */
--    memory_region_init_io(&s->this_mem, OBJECT(s), &elroy_chip_ops,
-+    memory_region_init_io(&s->this_mem, obj, &elroy_chip_ops,
-                           s, "elroy", 0x2000);
- 
-     /* Elroy PCI config. */
--    memory_region_init_io(&phb->conf_mem, OBJECT(phb),
--                          &elroy_config_addr_ops, DEVICE(s),
-+    memory_region_init_io(&phb->conf_mem, obj,
-+                          &elroy_config_addr_ops, dev,
-                           "pci-conf-idx", 8);
--    memory_region_init_io(&phb->data_mem, OBJECT(phb),
--                          &elroy_config_data_ops, DEVICE(s),
-+    memory_region_init_io(&phb->data_mem, obj,
-+                          &elroy_config_data_ops, dev,
-                           "pci-conf-data", 8);
-     memory_region_add_subregion(&s->this_mem, 0x40,
-                                 &phb->conf_mem);
-@@ -447,8 +448,8 @@ static void elroy_pcihost_init(Object *obj)
-                                 &phb->data_mem);
- 
-     /* Elroy PCI bus memory.  */
--    memory_region_init(&s->pci_mmio, OBJECT(s), "pci-mmio", UINT64_MAX);
--    memory_region_init_io(&s->pci_io, OBJECT(s), &unassigned_io_ops, obj,
-+    memory_region_init(&s->pci_mmio, obj, "pci-mmio", UINT64_MAX);
-+    memory_region_init_io(&s->pci_io, obj, &unassigned_io_ops, obj,
-                             "pci-isa-mmio",
-                             ((uint32_t) IOS_DIST_BASE_SIZE) / ROPES_PER_IOC);
- 
-@@ -459,7 +460,7 @@ static void elroy_pcihost_init(Object *obj)
- 
-     sysbus_init_mmio(sbd, &s->this_mem);
- 
--    qdev_init_gpio_in(DEVICE(obj), elroy_set_irq, ELROY_IRQS);
-+    qdev_init_gpio_in(dev, elroy_set_irq, ELROY_IRQS);
- }
- 
- static const VMStateDescription vmstate_elroy = {
-@@ -487,6 +488,7 @@ static void elroy_pcihost_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, elroy_reset);
-+    dc->realize = elroy_pcihost_realize;
-     dc->vmsd = &vmstate_elroy;
-     dc->user_creatable = false;
- }
-@@ -494,7 +496,6 @@ static void elroy_pcihost_class_init(ObjectClass *klass, const void *data)
- static const TypeInfo elroy_pcihost_info = {
-     .name          = TYPE_ELROY_PCI_HOST_BRIDGE,
-     .parent        = TYPE_PCI_HOST_BRIDGE,
--    .instance_init = elroy_pcihost_init,
-     .instance_size = sizeof(ElroyState),
-     .class_init    = elroy_pcihost_class_init,
- };
--- 
-2.43.0
-
+thanks
+-- PMM
 
