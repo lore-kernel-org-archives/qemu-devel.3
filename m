@@ -4,88 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6313CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 04:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C79CAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 05:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz5xF-0003EY-36; Thu, 18 Sep 2025 00:09:09 -0400
+	id 1uz7GZ-0004Qu-RS; Thu, 18 Sep 2025 01:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uz5xC-0003DU-5b
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 00:09:06 -0400
-Received: from p-east3-cluster7-host10-snip4-3.eps.apple.com ([57.103.84.224]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1uz7GY-0004Qa-7F; Thu, 18 Sep 2025 01:33:10 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uz5x8-0003c0-ML
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 00:09:05 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-1 (Postfix) with ESMTPS id
- 2BA22180015E; Thu, 18 Sep 2025 04:08:52 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=udV516SdWbrPwHJMPOB/C2xrkdp6rpTtChM5TiAGGyc=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=aZh9q35t+ay/CjSmhZZWRSIQiQ4u2XrBVe9qFORaK/e/9vb/XGU+c/ugvq391C3exI9jXvUMV+Vl1FbT6OoOyu5Z790sNuw/c6Mku7iv3duVTvN4ZtHaMxMkuFhUeEb2JnI5NXLkT6uk9l87Dz+kC2CxS6hV4zA/mv9fnMVMwdyN+wxImCD7GKVug/v3i+fPMML+69IWOWCNbJIJiC4nZxjeMKOpYOiMfaw2mJhLiwjMnOMNmE77Lz++gtNJctzHnlh/WBL/zOxCi+9SkHiEW9R+Q48EXmTwD/gl/F8hr84U1OhXtn86ufCV8AuJWI9kyDM+j1XIxX+99eUPJMzh7g==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-10-percent-1 (Postfix) with ESMTPSA id
- 76BE31800102; Thu, 18 Sep 2025 04:08:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <2F2C5711-E5FE-4748-9854-79C225FD916C@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_3CC3CB38-5A09-465D-A363-2886D92B0143"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
-Subject: Re: [PATCH v3 00/26] Implementing a MSHV (Microsoft Hypervisor)
- accelerator
-Date: Thu, 18 Sep 2025 06:08:37 +0200
-In-Reply-To: <20250911025906-mutt-send-email-mst@kernel.org>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250911025906-mutt-send-email-mst@kernel.org>
-X-Mailer: Apple Mail (2.3864.100.1.1.5)
-X-Proofpoint-GUID: rAQl0_wVxwI_noWPWrApQiJ9KMPkcYbM
-X-Proofpoint-ORIG-GUID: rAQl0_wVxwI_noWPWrApQiJ9KMPkcYbM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE4MDAzNCBTYWx0ZWRfX6XjIktOy5ztu
- 1aNG4WnP2HYPVBN3v31OF0amJ+8aT6d4j+wilbf74AX484T9f7j12o0mAvGh8IFj+kYK7tKXbeV
- LnlFAOqi0SPMqt/jPl0f46XMxuiclzakDNMJPG63vsCbF1oAmO5SPzEQOrlIPtOU0gm5+FZ7t4v
- vRY8YGeDb2Cb4usNvvnX0RywTDSDKrIAsRt6BCYUVLLSNXCe+rzEkA0wCWuiKL2prDtIYIjdNQ8
- racjw4F0bXWyVLFeLAty4ZZC8T+My05XAu1wqOi7z3Zpi/B3B7VlC5IsA5J0TEmNU7fZhTzyg=
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1uz7GV-0008FK-AH; Thu, 18 Sep 2025 01:33:09 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HIntOn024759;
+ Thu, 18 Sep 2025 05:33:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Tym2Fa
+ rKQvNv9yqqv9Czl9QNag9MxDRdPdODoybXmBU=; b=YLxqwWzLrXfyukG8JKOrOO
+ FkqMrBRTw4R52IcRrLwu5cu4MhmOYe84D/B591gOHLLv68kUmtNltnY47MvOf45D
+ 3qlumgIkKMqWZ3pyjD8LxcBvKmHzHx4ybA2l1jQM5FcSuDmIWj+h8Xccd3T2SGKe
+ 1W58wTY0HblQFxv9/JScElEynXf6pkqptCpzNFYGl8BCvvNJp6VOciy35NiA98SB
+ l7jp+zzWjmKn+eHxVaTAsG3TYIRftafKzaiu4buXDkSDJocqCUFRh0VNlSHn6aeh
+ T6IgztdLx+Pz0QtjKbXouyVKQO+8c/s1ifRoEdSXd4PEiqKx9CMxLOe24ilZaloA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4qqqaw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Sep 2025 05:33:02 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58I5Vk3e007389;
+ Thu, 18 Sep 2025 05:33:02 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4qqqau-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Sep 2025 05:33:02 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58I56e13005929;
+ Thu, 18 Sep 2025 05:33:01 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 495jxud8mu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Sep 2025 05:33:01 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58I5Wvbb34407052
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 18 Sep 2025 05:32:57 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D04FB20043;
+ Thu, 18 Sep 2025 05:32:57 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9AB9D20040;
+ Thu, 18 Sep 2025 05:32:54 +0000 (GMT)
+Received: from [9.39.22.243] (unknown [9.39.22.243])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 18 Sep 2025 05:32:54 +0000 (GMT)
+Message-ID: <710a12e1-9e7f-4a4c-9d8e-a78aafef33bb@linux.ibm.com>
+Date: Thu, 18 Sep 2025 11:02:52 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] hw/ppc/spapr_hcall: Return host mitigation
+ characteristics in KVM mode
+To: Gautam Menghani <gautam@linux.ibm.com>, harshpb@linux.ibm.com,
+ vaibhav@linux.ibm.com, nicholas@linux.ibm.com, rathc@linux.ibm.com,
+ npiggin@gmail.com, pbonzini@redhat.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250916061753.20517-1-gautam@linux.ibm.com>
+Content-Language: en-US
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+In-Reply-To: <20250916061753.20517-1-gautam@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: fFW8kw7t1A5wOlByF8ymsS2jn7aOdjXn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX6Gq+sNE2Rdeq
+ rfWEA9MPWqs+WaS1IJjM/zUItBs5BpAvLtllRxQxKFbt2yDYuNSLy1CfIq86UHNQNSQs0QGBfaK
+ H/xw7TPVcqauWGJERnp2lzPgaCvmEJGzvGsPJo2ha1h5TsmoZxZiW97nqF90WSbEsLzjP5S/14U
+ nXKhjlOdZRSMToXRJhdLES6Pza6Ebt68tYiH9HakqvVGGTFxAHz7IRN6FnO+HKkf2U1i1vxVlfQ
+ Mc7tktCnS1zhRZuTUw82mY11DuA3pFOHssNQ5QPCpOlVgvNYw+mnDv6PDl/9F5jzQ0x3R+zHVdw
+ vY409DxEJ0U0Uc7vhXAzxJjk31bvbeXA4pgaNGl+VyPAMImCNwtEcAuIRjxq7Hj2Zh85yBLvWyM
+ ghaPm9KP
+X-Authority-Analysis: v=2.4 cv=R8oDGcRX c=1 sm=1 tr=0 ts=68cb998f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=voM4FWlXAAAA:8 a=VnNF1IyMAAAA:8
+ a=29iC0fHVu2loanGQV3oA:9 a=QEXdDO2ut3YA:10 a=IC2XNlieTeVoXbcui8wp:22
+X-Proofpoint-GUID: el1Ndk_JHd2omE8c8RV7x8hl_22wmdxM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxscore=0 suspectscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
- bulkscore=0 phishscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2509180034
-X-JNJ: AAAAAAABiZZA+cx8MYM0yWjXtkzJdzAhq5HXggMGVgie0ncQzX2WMM2PZEUAv1zSjNNH1ORGLFCaMDtTNexAi/4+LP7K6LtHJrRP8y1WtkZmPkOd4K/c2LcHVbcB+O5SE74C6Ya5tBnTw3zAvVQA+TzmhX2VOBi7UPV5/nDJKQHo1ZBF8IapGk928Jqfrqmnuy/aAp1MP0pSvUA0UyiQWZ3spmSMRUDX2QdYMutQsqawKv8x9VGphShsoeK+yxghM15QJBNE8E0b8t7u5JJDkcMRlB6c38evDIwuLTIGx0cEG0oYbhtafAX6wDcv921eNOnHkN4uz6hA+HC4JVMH/jp07ezfxFtBEfaogXSO5Bw5HBNstGEa/qaSeAAXsvSZje2gdwEGHK1AIyrYkRaRYcoRjzMVDZ0YxCdudy1TD7FDDs/X9LvT+6NL5PYaRN3NpKmD4peN1+WhChsqYSB7Fx78vmaoOiA67fU9+UqTlUABqXD5dgxRtCfqaBFBbmhAHvmJl5CXDsNdx4xYZzVmo8EpZp2tGin/6GB0FbCrgrHcR4mbVdYMWSbX3QCiQVS+RZXA5q6slfGrHJeIprazVH5NvsFZmA7uForh/lDHMJ8xnnKW+DZpP7i19zIQVK2oEPTaWSKF168wx/T79tdOE3bhKxmCUj8GVwVJrOkEoV+oTlGBMDpWI6XVLXDIVEmfCDS4rg8F0pr2CvIL9HrfZB2Bp1/ROcbJZiXyWMVFxzeNHgf6FFz1tYk+hLaDo6dvNF/xE6LWyhtfwEwO9G20zAwerzGlXaDG0Fog62pAx/uVJZ9J4vXrBrVArXJuSEOQuBo121gBHPcCOjA7UQsDchVjifGcGr5KYurC5dasz3zWjhcG4EotiEzuCMEJn/bIVx+s
-Received-SPF: pass client-ip=57.103.84.224;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,134 +128,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/16/25 11:47 AM, Gautam Menghani wrote:
+> Currently, on a P10 KVM guest, the mitigations seen in the output of
+> "lscpu" command are different from the host. The reason for this
+> behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
+> hcall, QEMU does not consider the data it received from the host via the
+> KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
+> spapr->eff.caps[], which in turn just contain the default values set in
+> spapr_machine_class_init().
+>
+> Fix this behaviour by making sure that h_get_cpu_characteristics()
+> returns the data received from the KVM ioctl for a KVM guest.
+>
+> Mitigation status seen in lscpu output:
+> 1. P10 LPAR (host)
+> $ lscpu | grep -i mitigation
+> Vulnerability Spectre v1:             Mitigation; __user pointer sanitization, ori31 speculation barrier enabled
+> Vulnerability Spectre v2:             Mitigation; Software count cache flush (hardware accelerated), Software link stack flush
 
---Apple-Mail=_3CC3CB38-5A09-465D-A363-2886D92B0143
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+<snip>
 
+> [1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
+>
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> ---
+> v1 -> v2:
+> Handle the case where KVM_PPC_GET_CPU_CHAR ioctl fails
+>
+> v2 -> v3:
+> Add the lscpu output in the patch description
+>
+> v3 -> v4:
+> Fix QEMU CI build failure
+>
+>   hw/ppc/spapr_hcall.c | 10 ++++++++++
+>   target/ppc/kvm.c     | 27 +++++++++++++++++++--------
+>   target/ppc/kvm_ppc.h |  1 +
+>   3 files changed, 30 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 1e936f35e4..7d695ffc93 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -1415,6 +1415,16 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
+>       uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
+>                                                        SPAPR_CAP_CCF_ASSIST);
+>   
+> +    #ifdef CONFIG_KVM
+> +    struct kvm_ppc_cpu_char c = kvmppc_get_cpu_chars();
 
+Callingkvmppc_get_cpu_char() before kvm_enabled() below looks
 
-> On 11. Sep 2025, at 08:59, Michael S. Tsirkin <mst@redhat.com> wrote:
->=20
-> So regarding merging plans. Did you guys get in touch
-> with Sunil? That's the easiest smoothest path, through
-> an existing maintainer.
+counter intuitive. May be move it inside and handle the error checks
 
+accordingly. I don't see any side effects of it here in this patch though.
 
-On that bit:
+Thanks,
 
-Didn=E2=80=99t submit this yet but this is coming in the next WHPX arm64 =
-patch revision:
+Shivaprasad
 
-    MAINTAINERS: update maintainers for WHPX
-   =20
-    And add arm64 files.
-   =20
-    =46rom Pedro Barbuda (on Teams):
-   =20
-    > we meant to have that switched a while back. you can add me as the =
-maintainer. Pedro Barbuda (pbarbuda@microsoft.com)
-   =20
-    Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ece8624d01..6b1764ccf0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -544,11 +544,14 @@ F: accel/stubs/hvf-stub.c
- F: include/system/hvf.h
- F: include/system/hvf_int.h
-=20
--WHPX CPUs
--M: Sunil Muthuswamy <sunilmut@microsoft.com>
-+WHPX
-+M: Pedro Barbuda <pbarbuda@microsoft.com>
-+M: Mohamed Mediouni <mohamed@unpredictable.fr>
- S: Supported
- F: accel/whpx/
- F: target/i386/whpx/
-+F: target/arm/whpx_arm.h
-+F: target/arm/whpx/
- F: accel/stubs/whpx-stub.c
- F: include/system/whpx.h
- F: include/system/whpx-accel-ops.h=
-
---Apple-Mail=_3CC3CB38-5A09-465D-A363-2886D92B0143
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 11. Sep 2025, at 08:59, Michael S. Tsirkin =
-&lt;mst@redhat.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">So =
-regarding merging plans. Did you guys get in touch</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">with Sunil? That's the easiest smoothest =
-path, through</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">an existing =
-maintainer.</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"></div></blockquote></div><div><br></div><div>On that =
-bit:</div><div><br></div><div>Didn=E2=80=99t submit this yet but this is =
-coming in the next WHPX arm64 patch =
-revision:</div><div><br></div><div><div>&nbsp; &nbsp; MAINTAINERS: =
-update maintainers for WHPX</div><div>&nbsp; =
-&nbsp;&nbsp;</div><div>&nbsp; &nbsp; And add arm64 =
-files.</div><div>&nbsp; &nbsp;&nbsp;</div><div>&nbsp; &nbsp; =46rom =
-Pedro Barbuda (on Teams):</div><div>&nbsp; &nbsp;&nbsp;</div><div>&nbsp; =
-&nbsp; &gt; we meant to have that switched a while back. you can add me =
-as the maintainer. Pedro Barbuda =
-(pbarbuda@microsoft.com)</div><div>&nbsp; &nbsp;&nbsp;</div><div>&nbsp; =
-&nbsp; Signed-off-by: Mohamed Mediouni =
-&lt;mohamed@unpredictable.fr&gt;</div><div><br></div><div>diff --git =
-a/MAINTAINERS b/MAINTAINERS</div><div>index ece8624d01..6b1764ccf0 =
-100644</div><div>--- a/MAINTAINERS</div><div>+++ =
-b/MAINTAINERS</div><div>@@ -544,11 +544,14 @@ F: =
-accel/stubs/hvf-stub.c</div><div>&nbsp;F: =
-include/system/hvf.h</div><div>&nbsp;F: =
-include/system/hvf_int.h</div><div>&nbsp;</div><div>-WHPX =
-CPUs</div><div>-M: Sunil Muthuswamy =
-&lt;sunilmut@microsoft.com&gt;</div><div>+WHPX</div><div>+M: Pedro =
-Barbuda &lt;pbarbuda@microsoft.com&gt;</div><div>+M: Mohamed Mediouni =
-&lt;mohamed@unpredictable.fr&gt;</div><div>&nbsp;S: =
-Supported</div><div>&nbsp;F: accel/whpx/</div><div>&nbsp;F: =
-target/i386/whpx/</div><div>+F: target/arm/whpx_arm.h</div><div>+F: =
-target/arm/whpx/</div><div>&nbsp;F: =
-accel/stubs/whpx-stub.c</div><div>&nbsp;F: =
-include/system/whpx.h</div><div>&nbsp;F: =
-include/system/whpx-accel-ops.h</div></div></body></html>=
-
---Apple-Mail=_3CC3CB38-5A09-465D-A363-2886D92B0143--
+> +
+> +    if (kvm_enabled() && c.character) {
+> +        args[0] = c.character;
+> +        args[1] = c.behaviour;
+> +        return H_SUCCESS;
+> +    }
+> +    #endif
+> +
+>       switch (safe_cache) {
+>       case SPAPR_CAP_WORKAROUND:
+>           characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 015658049e..28dcf62f58 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -93,6 +93,7 @@ static int cap_fwnmi;
+>   static int cap_rpt_invalidate;
+>   static int cap_ail_mode_3;
+>   static int cap_dawr1;
+> +static struct kvm_ppc_cpu_char cpu_chars = {0};
+<snip>
 
