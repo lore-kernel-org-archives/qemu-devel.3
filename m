@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1ABECAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208E0CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzL7u-0006s2-Ex; Thu, 18 Sep 2025 16:21:10 -0400
+	id 1uzL8Y-0007O7-ND; Thu, 18 Sep 2025 16:21:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <6657f3bb55edba8f068cbc9ac40bb230ea1d7a09@kylie.crudebyte.com>)
- id 1uzL7s-0006r2-RJ
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:09 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uzL8T-0007Kt-CK; Thu, 18 Sep 2025 16:21:45 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <6657f3bb55edba8f068cbc9ac40bb230ea1d7a09@kylie.crudebyte.com>)
- id 1uzL7q-00036W-2r
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=MKZyMV6CY7ovzl8weedcjPUYkKvkbzzf2m2yu2Hq6/c=; b=ogWjc
- cAm5XUZ7I1PPP5Wb4Ex6mYsiartlXrx4rILhxeOhbux/WYaoV2zWUX7fw8uXWGWXm930UD+3jA+fu
- 2L0hyv5G7xVV7WA5UiyO+4nK5aDTgYBOeKZJWypa7YaWHXlq+K4suvozTBT3Py5sKj862Y4H7pOh5
- E8RAj1eC6ilDJIJgSq12UanOTL5zebN6yT4PQ08q7ACBJuhV+qh7jKcMcywxxOPZ6sFBpkGPXeUq7
- 0p49KNQBOrODXojj+rm0A316+xUcO1pE672ijHrgTUnJ2zZ/oMF44/dDmSLPGAPd0dZ7Vrv4Rwgyh
- bogU1+K2EoGZcIDQkRFugM1dddUJOjc4bMPjHmTgRI6qHtnphDQZADM4d4H9q81gPd/EbgcXfGxYW
- ciNL93q5JRnCeYRjfHYSFjohLG2lbqBKpAVkUMLqaBiE72pRru10rFbTNJEKrpAkjNk+lJ4f1VtEt
- KK5YrnnsNE8krrrBjK8AgthIAhVWbvY9AH7nEZCQOQ6Ojm0v42PzRiEdaAkbXgX/Kw62jhN1UUkfX
- ehxXtlE1TEDT4F5zbJDMXmBUPFhGFK7QF0128lFP+SUl9w5IAZ6brfwlnEyaWDJWMZNzuqx/c/hko
- UJlkjK48FP0O+LNu33v6WHy3ch4xSmhJbHkrBtgJxA6tIMz7D2DIDHxcM55hi0=;
-Message-Id: <6657f3bb55edba8f068cbc9ac40bb230ea1d7a09.1758224558.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1758224558.git.qemu_oss@crudebyte.com>
-References: <cover.1758224558.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Thu, 18 Sep 2025 21:42:39 +0200
-Subject: [PULL 1/2] 9pfs: Add FreeBSD support
-To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Mark Johnston <markj@freebsd.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=6657f3bb55edba8f068cbc9ac40bb230ea1d7a09@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uzL89-00039O-CF; Thu, 18 Sep 2025 16:21:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4025656F321;
+ Thu, 18 Sep 2025 22:21:21 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id qEwDcIkVSeRl; Thu, 18 Sep 2025 22:21:19 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2ECA756F30D; Thu, 18 Sep 2025 22:21:19 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2CF1356F30C;
+ Thu, 18 Sep 2025 22:21:19 +0200 (CEST)
+Date: Thu, 18 Sep 2025 22:21:19 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v3 01/14] hw/pci-host/raven: Simplify PCI facing part
+In-Reply-To: <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+Message-ID: <db65a6dd-cfdf-18b8-1764-8a1d7d3fcc24@eik.bme.hu>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <ebfd5b64421e8a876c5a6e2ce3dc871de500b69d.1758219840.git.balaton@eik.bme.hu>
+ <b5db600a-3278-427d-9f67-b222cb0c1bd1@ilande.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,372 +68,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Johnston <markj@freebsd.org>
+On Thu, 18 Sep 2025, Mark Cave-Ayland wrote:
+> On 18/09/2025 19:50, BALATON Zoltan wrote:
+>> The raven PCI device does not need a state struct as it has no data to
+>> store there any more, so we can remove that to simplify code.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/pci-host/raven.c | 30 +-----------------------------
+>>   1 file changed, 1 insertion(+), 29 deletions(-)
+>> 
+>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>> index f8c0be5d21..172f01694c 100644
+>> --- a/hw/pci-host/raven.c
+>> +++ b/hw/pci-host/raven.c
+>> @@ -31,7 +31,6 @@
+>>   #include "hw/pci/pci_bus.h"
+>>   #include "hw/pci/pci_host.h"
+>>   #include "hw/qdev-properties.h"
+>> -#include "migration/vmstate.h"
+>>   #include "hw/intc/i8259.h"
+>>   #include "hw/irq.h"
+>>   #include "hw/or-irq.h"
+>> @@ -40,12 +39,6 @@
+>>   #define TYPE_RAVEN_PCI_DEVICE "raven"
+>>   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+>>   -OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
+>> -
+>> -struct RavenPCIState {
+>> -    PCIDevice dev;
+>> -};
+>> -
+>>   typedef struct PRePPCIState PREPPCIState;
+>>   DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+>>                            TYPE_RAVEN_PCI_HOST_BRIDGE)
+>> @@ -65,7 +58,6 @@ struct PRePPCIState {
+>>       MemoryRegion bm_ram_alias;
+>>       MemoryRegion bm_pci_memory_alias;
+>>       AddressSpace bm_as;
+>> -    RavenPCIState pci_dev;
+>>         int contiguous_map;
+>>   };
+>> @@ -268,8 +260,7 @@ static void raven_pcihost_realizefn(DeviceState *d, 
+>> Error **errp)
+>>                             "pci-intack", 1);
+>>       memory_region_add_subregion(address_space_mem, 0xbffffff0, 
+>> &s->pci_intack);
+>>   -    /* TODO Remove once realize propagates to child devices. */
+>> -    qdev_realize(DEVICE(&s->pci_dev), BUS(&s->pci_bus), errp);
+>> +    pci_create_simple(&s->pci_bus, PCI_DEVFN(0, 0), 
+>> TYPE_RAVEN_PCI_DEVICE);
+>>   }
+>>     static void raven_pcihost_initfn(Object *obj)
+>> @@ -277,7 +268,6 @@ static void raven_pcihost_initfn(Object *obj)
+>>       PCIHostState *h = PCI_HOST_BRIDGE(obj);
+>>       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
+>>       MemoryRegion *address_space_mem = get_system_memory();
+>> -    DeviceState *pci_dev;
+>>         memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+>>       memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, 
+>> s,
+>> @@ -314,12 +304,6 @@ static void raven_pcihost_initfn(Object *obj)
+>>       pci_setup_iommu(&s->pci_bus, &raven_iommu_ops, s);
+>>         h->bus = &s->pci_bus;
+>> -
+>> -    object_initialize(&s->pci_dev, sizeof(s->pci_dev), 
+>> TYPE_RAVEN_PCI_DEVICE);
+>> -    pci_dev = DEVICE(&s->pci_dev);
+>> -    object_property_set_int(OBJECT(&s->pci_dev), "addr", PCI_DEVFN(0, 0),
+>> -                            NULL);
+>> -    qdev_prop_set_bit(pci_dev, "multifunction", false);
+>>   }
+>>     static void raven_realize(PCIDevice *d, Error **errp)
+>> @@ -329,16 +313,6 @@ static void raven_realize(PCIDevice *d, Error **errp)
+>>       d->config[PCI_CAPABILITY_LIST] = 0x00;
+>>   }
+>>   -static const VMStateDescription vmstate_raven = {
+>> -    .name = "raven",
+>> -    .version_id = 0,
+>> -    .minimum_version_id = 0,
+>> -    .fields = (const VMStateField[]) {
+>> -        VMSTATE_PCI_DEVICE(dev, RavenPCIState),
+>> -        VMSTATE_END_OF_LIST()
+>> -    },
+>> -};
+>> -
+>>   static void raven_class_init(ObjectClass *klass, const void *data)
+>>   {
+>>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>> @@ -350,7 +324,6 @@ static void raven_class_init(ObjectClass *klass, const 
+>> void *data)
+>>       k->revision = 0x00;
+>>       k->class_id = PCI_CLASS_BRIDGE_HOST;
+>>       dc->desc = "PReP Host Bridge - Motorola Raven";
+>> -    dc->vmsd = &vmstate_raven;
+>>       /*
+>>        * Reason: PCI-facing part of the host bridge, not usable without
+>>        * the host-facing part, which can't be device_add'ed, yet.
+>> @@ -361,7 +334,6 @@ static void raven_class_init(ObjectClass *klass, const 
+>> void *data)
+>>   static const TypeInfo raven_info = {
+>>       .name = TYPE_RAVEN_PCI_DEVICE,
+>>       .parent = TYPE_PCI_DEVICE,
+>> -    .instance_size = sizeof(RavenPCIState),
+>>       .class_init = raven_class_init,
+>>       .interfaces = (const InterfaceInfo[]) {
+>>           { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>
+> I agree with removing RavenPCIState, but pci_create_simple() isn't the right 
+> solution here because it both init()s and realize()s the inner object. The 
+> right way to do this is for the parent to init() its inner object(s) within 
+> its init() function, and similarly for it to realize() its inner object(s) 
+> within its realize() function.
+>
+> FWIW it looks as if the same mistake is present in several other hw/pci-host 
+> devices.
 
-This is largely derived from existing Darwin support.  FreeBSD
-apparently has better support for *at() system calls so doesn't require
-workarounds for a missing mknodat().  The implementation has a couple of
-warts however:
-- The extattr(2) system calls don't support anything akin to
-  XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
-- Attribute names cannot begin with "user." or "system." on ZFS.
-  However FreeBSD's extattr(2) system calls support two dedicated
-  namespaces for these two.  So "user." or "system." prefixes are
-  trimmed off from attribute names and instead EXTATTR_NAMESPACE_USER or
-  EXTATTR_NAMESPACE_SYSTEM are picked and passed to extattr system calls
-  accordingly.
+So maybe that's not a mistake then. There's no need to init and realize it 
+separately as this is an internal object which is enough to be created in 
+realize method and init and realize there at one go for which 
+pci_create_simple is appropriate. I think this inner object would only 
+need to be init separately if it exposed something (like a property) that 
+could be inspected or set before realize but that's not the case here so 
+it does not have to be created in init only in realize. (A lot of simple 
+devices don't even have init method only realize so init is only needed 
+for things that have to be set before realize.)
 
-The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
-filesystems.
-
-Signed-off-by: Mark Johnston <markj@FreeBSD.org>
-Link: https://lore.kernel.org/qemu-devel/aJOWhHB2p-fbueAm@nuc
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- fsdev/file-op-9p.h        |   6 +-
- fsdev/meson.build         |   2 +-
- hw/9pfs/9p-synth.c        |   2 +-
- hw/9pfs/9p-util-freebsd.c | 132 ++++++++++++++++++++++++++++++++++++++
- hw/9pfs/9p-util.h         |  20 ++++--
- hw/9pfs/9p.c              |  16 ++++-
- hw/9pfs/meson.build       |   2 +
- include/qemu/xattr.h      |   6 +-
- meson.build               |   8 +--
- 9 files changed, 179 insertions(+), 15 deletions(-)
- create mode 100644 hw/9pfs/9p-util-freebsd.c
-
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b9dae8c84c..b85c9934de 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -21,9 +21,11 @@
- 
- #ifdef CONFIG_LINUX
- # include <sys/vfs.h>
--#endif
--#ifdef CONFIG_DARWIN
-+#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
- # include <sys/param.h>
-+# ifdef CONFIG_FREEBSD
-+#  undef MACHINE /* work around some unfortunate namespace pollution */
-+# endif
- # include <sys/mount.h>
- #endif
- 
-diff --git a/fsdev/meson.build b/fsdev/meson.build
-index c751d8cb62..95fe816604 100644
---- a/fsdev/meson.build
-+++ b/fsdev/meson.build
-@@ -5,6 +5,6 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
-   '9p-marshal.c',
-   'qemu-fsdev.c',
- ), if_false: files('qemu-fsdev-dummy.c'))
--if host_os in ['linux', 'darwin']
-+if host_os in ['linux', 'darwin', 'freebsd']
-   system_ss.add_all(fsdev_ss)
- endif
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 9cd1884224..b3743f6169 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -451,7 +451,7 @@ static int synth_statfs(FsContext *s, V9fsPath *fs_path,
-     stbuf->f_bsize = 512;
-     stbuf->f_blocks = 0;
-     stbuf->f_files = synth_node_count;
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-     stbuf->f_namelen = NAME_MAX;
- #endif
-     return 0;
-diff --git a/hw/9pfs/9p-util-freebsd.c b/hw/9pfs/9p-util-freebsd.c
-new file mode 100644
-index 0000000000..9dd1d069f6
---- /dev/null
-+++ b/hw/9pfs/9p-util-freebsd.c
-@@ -0,0 +1,132 @@
-+/*
-+ * 9p utilities (FreeBSD Implementation)
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+/*
-+ * Not so fast! You might want to read the 9p developer docs first:
-+ * https://wiki.qemu.org/Documentation/9p
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/xattr.h"
-+#include "9p-util.h"
-+
-+static int mangle_xattr_name(const char **namep)
-+{
-+    const char *name = *namep;
-+
-+    /*
-+     * ZFS forbids attributes in starting with "user." or "system.".
-+     */
-+    if (strncmp(name, "system.", 7) == 0) {
-+        *namep = name + 7;
-+        return EXTATTR_NAMESPACE_SYSTEM;
-+    }
-+    if (strncmp(name, "user.", 5) == 0) {
-+        *namep = name + 5;
-+    }
-+    return EXTATTR_NAMESPACE_USER;
-+}
-+
-+ssize_t fgetxattr(int fd, const char *name, void *value, size_t size)
-+{
-+    int namespace;
-+
-+    namespace = mangle_xattr_name(&name);
-+    return extattr_get_fd(fd, namespace, name, value, size);
-+}
-+
-+ssize_t fgetxattrat_nofollow(int dirfd, const char *filename, const char *name,
-+                             void *value, size_t size)
-+{
-+    ssize_t ret;
-+    int fd, namespace;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    namespace = mangle_xattr_name(&name);
-+    ret = extattr_get_fd(fd, namespace, name, value, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+ssize_t flistxattrat_nofollow(int dirfd, const char *filename,
-+                              char *list, size_t size)
-+{
-+    ssize_t ret;
-+    int fd;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    ret = extattr_list_fd(fd, EXTATTR_NAMESPACE_USER, list, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+ssize_t fremovexattrat_nofollow(int dirfd, const char *filename,
-+                                const char *name)
-+{
-+    int fd, namespace, ret;
-+
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    namespace = mangle_xattr_name(&name);
-+    ret = extattr_delete_fd(fd, namespace, name);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+int fsetxattrat_nofollow(int dirfd, const char *filename, const char *name,
-+                         void *value, size_t size, int flags)
-+{
-+    ssize_t ret;
-+    int fd, namespace;
-+
-+    namespace = mangle_xattr_name(&name);
-+    if (flags == (XATTR_CREATE | XATTR_REPLACE)) {
-+        errno = EINVAL;
-+        return -1;
-+    }
-+    fd = openat_file(dirfd, filename,
-+                     O_RDONLY | O_PATH_9P_UTIL | O_NOFOLLOW, 0);
-+    if (fd == -1) {
-+        return -1;
-+    }
-+    if (flags & (XATTR_CREATE | XATTR_REPLACE)) {
-+        ret = extattr_get_fd(fd, namespace, name, NULL, 0);
-+        if (ret == -1 && errno != ENOATTR) {
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+        if (ret >= 0 && (flags & XATTR_CREATE)) {
-+            errno = EEXIST;
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+        if (ret == -1 && (flags & XATTR_REPLACE)) {
-+            errno = ENOATTR;
-+            close_preserve_errno(fd);
-+            return -1;
-+        }
-+    }
-+    ret = extattr_set_fd(fd, namespace, name, value, size);
-+    close_preserve_errno(fd);
-+    return ret;
-+}
-+
-+int qemu_mknodat(int dirfd, const char *filename, mode_t mode, dev_t dev)
-+{
-+    return mknodat(dirfd, filename, mode, dev);
-+}
-diff --git a/hw/9pfs/9p-util.h b/hw/9pfs/9p-util.h
-index a1924fe3f0..8dfa803dc2 100644
---- a/hw/9pfs/9p-util.h
-+++ b/hw/9pfs/9p-util.h
-@@ -21,6 +21,15 @@
- #define O_PATH_9P_UTIL 0
- #endif
- 
-+#ifdef CONFIG_FREEBSD
-+/*
-+ * FreeBSD does not have these flags, so we can only emulate their intended
-+ * behaviour (racily).
-+ */
-+#define XATTR_CREATE    0x1
-+#define XATTR_REPLACE   0x2
-+#endif
-+
- #if !defined(CONFIG_LINUX)
- 
- /*
-@@ -64,9 +73,9 @@ static inline uint64_t host_dev_to_dotl_dev(dev_t dev)
- static inline int errno_to_dotl(int err) {
- #if defined(CONFIG_LINUX)
-     /* nothing to translate (Linux -> Linux) */
--#elif defined(CONFIG_DARWIN)
-+#elif defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
-     /*
--     * translation mandatory for macOS hosts
-+     * translation mandatory for non-Linux hosts
-      *
-      * FIXME: Only most important errnos translated here yet, this should be
-      * extended to as many errnos being translated as possible in future.
-@@ -155,13 +164,13 @@ static inline int openat_file(int dirfd, const char *name, int flags,
- {
-     int fd, serrno, ret;
- 
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
- again:
- #endif
-     fd = qemu_openat(dirfd, name, flags | O_NOFOLLOW | O_NOCTTY | O_NONBLOCK,
-                      mode);
-     if (fd == -1) {
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-         if (errno == EPERM && (flags & O_NOATIME)) {
-             /*
-              * The client passed O_NOATIME but we lack permissions to honor it.
-@@ -202,6 +211,9 @@ again:
-     return fd;
- }
- 
-+#ifdef CONFIG_FREEBSD
-+ssize_t fgetxattr(int dirfd, const char *name, void *value, size_t size);
-+#endif
- ssize_t fgetxattrat_nofollow(int dirfd, const char *path, const char *name,
-                              void *value, size_t size);
- int fsetxattrat_nofollow(int dirfd, const char *path, const char *name,
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index acfa7db4e1..bc4a016ee3 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -136,8 +136,10 @@ static int dotl_to_open_flags(int flags)
-         { P9_DOTL_NONBLOCK, O_NONBLOCK } ,
-         { P9_DOTL_DSYNC, O_DSYNC },
-         { P9_DOTL_FASYNC, FASYNC },
--#ifndef CONFIG_DARWIN
-+#if !defined(CONFIG_DARWIN) && !defined(CONFIG_FREEBSD)
-         { P9_DOTL_NOATIME, O_NOATIME },
-+#endif
-+#ifndef CONFIG_DARWIN
-         /*
-          *  On Darwin, we could map to F_NOCACHE, which is
-          *  similar, but doesn't quite have the same
-@@ -3658,7 +3660,7 @@ static int v9fs_fill_statfs(V9fsState *s, V9fsPDU *pdu, struct statfs *stbuf)
-     f_bavail = stbuf->f_bavail / bsize_factor;
-     f_files  = stbuf->f_files;
-     f_ffree  = stbuf->f_ffree;
--#ifdef CONFIG_DARWIN
-+#if defined(CONFIG_DARWIN) || defined(CONFIG_FREEBSD)
-     fsid_val = (unsigned int)stbuf->f_fsid.val[0] |
-                (unsigned long long)stbuf->f_fsid.val[1] << 32;
-     f_namelen = NAME_MAX;
-@@ -4050,6 +4052,16 @@ out_nofid:
-  * Linux guests.
-  */
- #define P9_XATTR_SIZE_MAX 65536
-+#elif defined(CONFIG_FREEBSD)
-+/*
-+ * FreeBSD similarly doesn't define a maximum xattr size, the limit is
-+ * filesystem dependent.  On UFS filesystems it's 2 times the filesystem block
-+ * size, typically 32KB.  On ZFS it depends on the value of the xattr property;
-+ * with the default value there is no limit, and with xattr=sa it is 64KB.
-+ *
-+ * So, a limit of 64k seems reasonable here too.
-+ */
-+#define P9_XATTR_SIZE_MAX 65536
- #else
- #error Missing definition for P9_XATTR_SIZE_MAX for this host system
- #endif
-diff --git a/hw/9pfs/meson.build b/hw/9pfs/meson.build
-index d35d4f44ff..7f4d6e3a45 100644
---- a/hw/9pfs/meson.build
-+++ b/hw/9pfs/meson.build
-@@ -15,6 +15,8 @@ fs_ss.add(files(
- ))
- if host_os == 'darwin'
-   fs_ss.add(files('9p-util-darwin.c'))
-+elif host_os == 'freebsd'
-+  fs_ss.add(files('9p-util-freebsd.c'))
- elif host_os == 'linux'
-   fs_ss.add(files('9p-util-linux.c'))
- endif
-diff --git a/include/qemu/xattr.h b/include/qemu/xattr.h
-index b08a934acc..224ba1276e 100644
---- a/include/qemu/xattr.h
-+++ b/include/qemu/xattr.h
-@@ -26,7 +26,11 @@
- #    define ENOATTR ENODATA
- #  endif
- #  ifndef CONFIG_WIN32
--#    include <sys/xattr.h>
-+#    ifdef CONFIG_FREEBSD
-+#      include <sys/extattr.h>
-+#    else
-+#      include <sys/xattr.h>
-+#    endif
- #  endif
- #endif
- 
-diff --git a/meson.build b/meson.build
-index 6ade30f36a..72da97829a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2384,11 +2384,11 @@ dbus_display = get_option('dbus_display') \
-   .allowed()
- 
- have_virtfs = get_option('virtfs') \
--    .require(host_os == 'linux' or host_os == 'darwin',
--             error_message: 'virtio-9p (virtfs) requires Linux or macOS') \
--    .require(host_os == 'linux' or cc.has_function('pthread_fchdir_np'),
-+    .require(host_os == 'linux' or host_os == 'darwin' or host_os == 'freebsd',
-+             error_message: 'virtio-9p (virtfs) requires Linux or macOS or FreeBSD') \
-+    .require(host_os != 'darwin' or cc.has_function('pthread_fchdir_np'),
-              error_message: 'virtio-9p (virtfs) on macOS requires the presence of pthread_fchdir_np') \
--    .require(host_os == 'darwin' or libattr.found(),
-+    .require(host_os != 'linux' or libattr.found(),
-              error_message: 'virtio-9p (virtfs) on Linux requires libattr-devel') \
-     .disable_auto_if(not have_tools and not have_system) \
-     .allowed()
--- 
-2.39.5
-
+Regards,
+BALATON Zoltan
 
