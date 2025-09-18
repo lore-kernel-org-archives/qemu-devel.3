@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7763CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9BFACAC5A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzDh9-0002HH-KY; Thu, 18 Sep 2025 08:25:04 -0400
+	id 1uzDjs-0003mp-BW; Thu, 18 Sep 2025 08:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzDh6-0002H0-TF
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:25:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzDh3-00009Z-ON
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:25:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758198295;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=UykgPdz7hjykF80t0KUnAOgblK1fs8FBElb17yS3O24=;
- b=DVBUvj1n49SLWV9f3HAgTncNNTe0PBYViMj6vEVR7lbHlfMYlOr2smRyuNavX/d9l/owE4
- hXlgCsKheLgLlW00ppdF+vMODB/BdQZSqirle1clZhsTtfnCa6Zp29IqBYcpidJn91975p
- 4NZfYbfhufgyupZzNSqwrWbA4Xq8GnU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-gILiSSR_Msm3c5pj7hbDgQ-1; Thu,
- 18 Sep 2025 08:24:52 -0400
-X-MC-Unique: gILiSSR_Msm3c5pj7hbDgQ-1
-X-Mimecast-MFC-AGG-ID: gILiSSR_Msm3c5pj7hbDgQ_1758198291
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5288B1800296; Thu, 18 Sep 2025 12:24:51 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E1F5F300018D; Thu, 18 Sep 2025 12:24:48 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Helge Deller <deller@gmx.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH] tests/functional/hppa: Add a CD-ROM boot test for
- qemu-system-hppa
-Date: Thu, 18 Sep 2025 14:24:47 +0200
-Message-ID: <20250918122447.105861-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uzDjr-0003mg-Bl
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:27:51 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uzDjp-0000Xv-9d
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 08:27:51 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3e8123c07d7so897396f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 05:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758198467; x=1758803267; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3j0ZSAUAM5waAmLbuPHwrLZQfvbNTQqgU9WV4FSoiO0=;
+ b=oa+O3F2opws0E5uXcZt/E4nlJKgtKj534vxQgwFDojIxFzcSb/hIJ2gpIhygrIRhoc
+ T2WoZPhawjcLKfHY3dkJ5y/ofM+ifXFlwRvUH9wwcvHvGPIUTMFKou5xNYva0+q4Ltbq
+ ovrG0rlA8GoCPUt7YJA9srLoPnHNfGGXe3V2VYq3RBzZGgl/1rGpxfzoXKc3RbV8AJyR
+ KOQ+IzMGc1JYIoCYWZkvOF9bHwylb3IJgxrdF48USOo8KdSV2MshG50itdAA4lqmUC2B
+ NFILK0nphkxLGO5H5lPUhMPVfbXMT9nyxAKkPgL6BLkeEQqPab0LoWJfd0SBu20u6C0R
+ iCOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758198467; x=1758803267;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3j0ZSAUAM5waAmLbuPHwrLZQfvbNTQqgU9WV4FSoiO0=;
+ b=NhG+onp4kXIJiMYwQb0WTdptG+mSYuxBz3C+3aWih6Yxbjvak2+dILAL4zyYD/feCB
+ vjfPrl6oSqeAlXnBvxYAW8HakdduN180yI2WP1C6M7CPualZWd+LnnlEUo49ymtpsp+0
+ pHlXWPDg5OCojtEg0hrpKQOFRIOiIO7RrSzutvgcD4eModNKG94/l1mN1NGmBP+IDSns
+ QSlY3lGVnuUv1inGMdQ1zFIBwySBGKjWIxCH/30trLtvi6CHN1Y0ClfiBGj4+YMl5MHl
+ b2CvayXq+l0wFiva0uBQhIVz2o7l1K9uRH8RlJEIE5PdxN/oY5aqjOOaKyJb5o7/FQ1a
+ j5rg==
+X-Gm-Message-State: AOJu0Yyx2Jy4RNO2Nyohcjv4hoO+K2kmxGLEBCe+MWrRScJHVevIntpn
+ TLvh43mKYmsKsLjgI/Ljxo5sxnEhQmqmYyHaop4H41FjFJOrbgc4HPYIFs+IODQK/KU=
+X-Gm-Gg: ASbGnculVDP3u9yT3bLh6hKyzMLV6kavuPIfDyPg6kUMVeYkR18m/34S03OyiAOfrnn
+ Vr62CS5K491cKbVBDYGekV537CWB1Q0RJYZL1V3b8jzGlOdsEqLRqebj8kd0TuM4uRr63F3Rer4
+ CjPeqsIaFZP6d+K1nwTfPk7oZT5iNpvQsKOOFZEV2pK518pnY436o9tcyFV18HctqL/zPYikX3r
+ 29DqlUUru8I7fSKGnrWtV9+NJqZxGA/V+u40qjlkWd3bb5s4y17k8Ask76tR8a+1eNHuz4p3kIk
+ O3RNgZGNp7RBugrmZR6WCWtkEyQWKQjjBEF/wEOtKApUqLPLmGKAUR38vun1NxB6ClQ1ExfxigN
+ JM8NBvqW5KjmpI+TO9kJfXORhpxCgtgo0AKTvugm+zw==
+X-Google-Smtp-Source: AGHT+IFkGrkIq5K7FcpjgBmvlGDjC+Qt1zEhrsPcGy5tHMJPQ+hD7vJQWDI6ZX1W5F/rw6CsilI2pA==
+X-Received: by 2002:a05:6000:184b:b0:3e9:d9bd:504f with SMTP id
+ ffacd0b85a97d-3edd43e5242mr3539530f8f.21.1758198466811; 
+ Thu, 18 Sep 2025 05:27:46 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ee073f5392sm3466833f8f.13.2025.09.18.05.27.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 05:27:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0D4145F8AC;
+ Thu, 18 Sep 2025 13:27:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Ma?=
+ =?utf-8?Q?thieu-Daud=C3=A9?= <philmd@linaro.org>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  rowan Hart <rowanbhart@gmail.com>
+Subject: Re: [PATCH v7 0/9] contrib/plugins: uftrace
+In-Reply-To: <20250902075042.223990-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 2 Sep 2025 00:50:33 -0700")
+References: <20250902075042.223990-1-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Thu, 18 Sep 2025 13:27:44 +0100
+Message-ID: <87h5x0lzcv.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,98 +108,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Add a test which boots a HP-UX firmware upgrade CD-ROM. It exercise
-the PCI LSI53C895A SCSI controller. The ISO image comes from:
-https://web.archive.org/web/20101204061612/http://ftp.parisc-linux.org/kernels/712/PF_C7120023
-The test is very quick, less than 3s.
+> This plugin generates a binary trace compatible with the excellent uftrac=
+e:
+> https://github.com/namhyung/uftrace
 
-Based on an old patch from Philippe that has been posted here:
-https://www.mail-archive.com/qemu-devel@nongnu.org/msg651012.html
-
-Suggested-by: Sven Schnelle <svens@stackframe.org>
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-[thuth: Adjusted the patch to the functional framework,
-        and adjusted the commit message]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                          |  2 +-
- tests/functional/hppa/meson.build    |  4 +++
- tests/functional/hppa/test_cdboot.py | 38 ++++++++++++++++++++++++++++
- 3 files changed, 43 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/hppa/test_cdboot.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f8cd513d8b5..85f0dc685b2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1276,7 +1276,7 @@ F: include/hw/pci-host/astro.h
- F: include/hw/pci-host/dino.h
- F: pc-bios/hppa-firmware.img
- F: roms/seabios-hppa/
--F: tests/functional/hppa/test_seabios.py
-+F: tests/functional/hppa/
- 
- LoongArch Machines
- ------------------
-diff --git a/tests/functional/hppa/meson.build b/tests/functional/hppa/meson.build
-index a3348370884..df2f7ccc9c3 100644
---- a/tests/functional/hppa/meson.build
-+++ b/tests/functional/hppa/meson.build
-@@ -3,3 +3,7 @@
- tests_hppa_system_quick = [
-   'seabios',
- ]
-+
-+tests_hppa_system_thorough = [
-+  'cdboot',
-+]
-diff --git a/tests/functional/hppa/test_cdboot.py b/tests/functional/hppa/test_cdboot.py
-new file mode 100755
-index 00000000000..84421e8d63e
---- /dev/null
-+++ b/tests/functional/hppa/test_cdboot.py
-@@ -0,0 +1,38 @@
-+#!/usr/bin/env python3
-+#
-+# CD boot test for HPPA machines
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import wait_for_console_pattern
-+
-+
-+class HppaCdBoot(QemuSystemTest):
-+
-+    ASSET_CD = Asset(
-+        ('https://github.com/philmd/qemu-testing-blob/raw/ec1b741/'
-+         'hppa/hp9000/712/C7120023.frm'),
-+        '32c612ad2074516986bdc27768903c561fa92af2ca48e5ac3f3359ade1c42f70')
-+
-+    def test_cdboot(self):
-+        self.set_machine('B160L')
-+        cdrom_path = self.ASSET_CD.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-cdrom', cdrom_path,
-+                         '-boot', 'd',
-+                         '-no-reboot')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'Unrecognized MODEL TYPE = 502')
-+        wait_for_console_pattern(self, 'UPDATE PAUSED>')
-+
-+        exec_command_and_wait_for_pattern(self, 'exit\r', 'UPDATE>')
-+        exec_command_and_wait_for_pattern(self, 'ls\r', 'IMAGE1B')
-+        wait_for_console_pattern(self, 'UPDATE>')
-+        exec_command_and_wait_for_pattern(self, 'exit\r',
-+                        'THIS UTILITY WILL NOW RESET THE SYSTEM.....')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.51.0
-
+Queued to plugins/next, thanks.
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
