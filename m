@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F930CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 16:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E2DCAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 16:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzHIu-0002SK-5p; Thu, 18 Sep 2025 12:16:16 -0400
+	id 1uzHJS-0002nt-8F; Thu, 18 Sep 2025 12:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHIr-0002Mi-Bl
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1uzHJM-0002mr-Ig
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHIo-0002DV-LZ
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:12 -0400
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1uzHJK-0002Dm-AP
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758212168;
+ s=mimecast20190719; t=1758212186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=z7cfihwC+DHwd44Qb7Kpf7JbNbzJ0yG3FhNUTk1uBe4=;
- b=EGITGH/w40jhfPACt9OuAc1DgnO4vn5/kwRBF6cM9TkpOHGosT+t53BkI24AGlHiChBvd0
- CAOysRty4+2lI8IF3vxPIKRq2yP589HwER8WIhMxI2r7KqIwfMoFiQN0TQ1DkAGLs/oY+v
- Rv+6nmjhqGseVpIRId+dJKHtI0TOJRk=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P+7RDzKHBivAqcHdJuW5P+iWGjNZMGSk+E9hgSD0dBM=;
+ b=NVSVYUdiRpKdNwfqAph8YtzdItuxo4gOmjflKzU681ZH8ovLpjDLIdhxLm1sUnT8J3q2ev
+ VVbglVUSueerRad69zkzpNcgm6MMaY0cAEPxiqnvn8twiwbEL5HNYWIfZ9yyS/uisTZEjb
+ mWclGwWxVaiGHoNXb3jyKA9GCBGpFtM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-oHyj85qwOPiUZJQzKpqieA-1; Thu, 18 Sep 2025 12:16:06 -0400
-X-MC-Unique: oHyj85qwOPiUZJQzKpqieA-1
-X-Mimecast-MFC-AGG-ID: oHyj85qwOPiUZJQzKpqieA_1758212166
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4b7ad72bc9dso29854441cf.3
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 09:16:06 -0700 (PDT)
+ us-mta-396-_PUyd6v0M_-bYaMHTIMaHw-1; Thu, 18 Sep 2025 12:16:24 -0400
+X-MC-Unique: _PUyd6v0M_-bYaMHTIMaHw-1
+X-Mimecast-MFC-AGG-ID: _PUyd6v0M_-bYaMHTIMaHw_1758212183
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3e997eb7232so516991f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 09:16:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758212166; x=1758816966;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z7cfihwC+DHwd44Qb7Kpf7JbNbzJ0yG3FhNUTk1uBe4=;
- b=W2ifpINm/+NwKTJfxI/b5nNsuSlYzUOe0Q+Mg/EIqQDEp1CtzSQGdMx4J5IMTClCON
- h92j03v592UbgiFLWNwWvbZbgy/eSgfwT3WBPIUwBQgMN+NVJuNRkn6Sb0Qk+8gqrWJm
- +t4U1/GqP/n189XmyGDoATai9Y2Jd270JkdE9jniMX+keHc8J3cTm8XL5K4T/3hWc9em
- W44i2uPQLaIt4pjVqdeMn/qdLWu3pqGAFwyNe4lWQE1Pl+S+SC8aABBGYbN845aKe2LY
- 5G/4XxnwoQCIJ0Ujd3ePOcUMoGJHBl6BnDqc2d7htrsNAwpr8mtpuH1dJoxxDU5UYj64
- msqg==
-X-Gm-Message-State: AOJu0YzSRoyNnn5ykdI1cH3mNbP/haYBRN9eejb+esFBS44eLhzOkpuB
- Wa8Na/u8ASKSpvpMuBIoC7sn6WICEdhxh5SADYX1jlcJZarLPLTWNqHgCy5OVS0nWiNgOqSvF+d
- CTZixM+XVwFQ8TbKbgihWXsyLTnCK1PcbvjSOLGu3Gbq5WQrRON86VUiT
-X-Gm-Gg: ASbGncvC/AKSW4QtJlC0IyM76v4zE2QAa/o5lgOjnRTWoffZQQ/5Fzgv6A7fYHp8LC0
- eRLp+w3DNDsgOveUUKQg+5r3KU91mwdvpPzBojOA0rLvmwZpOqBBZdVlk05Blv/RS7kjmoe6LlY
- VHnZ8YEciILVNqQaIbRFeBjaG/bk8THLa0n7umqoMNdO/F6lLcK+omv0oC5qoUdActMNvp5SDP9
- +iPIIKYWPpOImX895SZZb5n87sx4gD8gSyTe5sf3cefIUExvSlh1dk9H+xN4I6FO7U0qoAo16vM
- tmonpTXN+R1V59q0blt3PgJX+ObIp3/s
-X-Received: by 2002:a05:622a:202:b0:4b5:4874:4f92 with SMTP id
- d75a77b69052e-4ba686208d8mr79066471cf.13.1758212165886; 
- Thu, 18 Sep 2025 09:16:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkctG+vJIHsx/u/098IpHmt7fYeL69op+jVFcnESPWzLbf/Bt7NAdcJI4Tgzyrmy2wrqeyvQ==
-X-Received: by 2002:a05:622a:202:b0:4b5:4874:4f92 with SMTP id
- d75a77b69052e-4ba686208d8mr79065841cf.13.1758212165367; 
- Thu, 18 Sep 2025 09:16:05 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-836292954b2sm184490885a.29.2025.09.18.09.16.04
+ d=1e100.net; s=20230601; t=1758212183; x=1758816983;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=P+7RDzKHBivAqcHdJuW5P+iWGjNZMGSk+E9hgSD0dBM=;
+ b=TYHfP1tbjCLVtD2fMvLxzXH4sXlYtFHjoiPMptnBAjtMj87Zal2M//CPym24r+k9G3
+ 9D58wL9XZRKuI3jcBCQ2fWwZHVCViV6HALFsRIV7fQg6T2N7EOcQ0mT01NeEAZjKRSEF
+ wiCXCVR8flsL9XkPW5fsRO6u88M3tFYK8oa605WruMIljwSjgN9+TX8pkIwtRi92KHJR
+ tW75CR9a0NfZw+SKnIOZEvEezTrH+mfEs3Y2gfc1GwA5Wg5r3N5TYtJXDG0EaHIQpVwc
+ si1uAM7hv1Puu8dG4t5DeL8HaMhlGB6QsbTDFBwY0NSB5o3IrJjXmMqeToFhe2miZUrg
+ ZwHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6Mkq1YQK950Bev3feGn3USy00KgHQvJQCp9NCkZaFtAbZXPWU/OIeEAFg/Irz7wabDG3vlfcZbTZs@nongnu.org
+X-Gm-Message-State: AOJu0YxofG1hbaeEcw/FhKGDeWLSPXBxjtzEiXrXeKMwZqcP+LAP57R9
+ OYM7RZoNmgofNvy5EVvZ33Ea3SYHi1nGsITKbFqUQ3onOcdyPhdoX6FK2QGhbdyt3GjMEOnZqWm
+ ao6dRXK2hurNKeRupzRJcrG/wO2oFss2gAkU43mnWgi56HapMcAcWaGvf
+X-Gm-Gg: ASbGncuZlcae50lJxnCN31yrkCkfRqiAM6JH+UiuJx1vmshc6DrcxfRPNPsv8p9Y2gV
+ BfZ4tB0hEShB20hHa4tUCfqML+5ZiCETQFr7d4II2IjKHqrWUiAtWJospezS3R1SCsu16UOlkQm
+ mXi8LTI+z2GR5cSJDe/XcqRLYJZT8iOYNp3v9jKin46dWdkoXqxriLLkKv8OrRtE3sniAKPwLR1
+ uY1Z6IAyxBVC0HVBUjRV0D/oHRkTYj/L5l0nQiB3OAQ6p/KUpFcwHxLzc2cFOeluXFnP89EkP6P
+ CDif77oscsl5QqJFq21Kkl5pslveFDIFS5tSNclCC4tQ9/g/+6ffQyUgDrCVy0D52GU9S+zMKAx
+ /nlWzfHkyl0Zz+w==
+X-Received: by 2002:a05:6000:290a:b0:3ee:14db:701c with SMTP id
+ ffacd0b85a97d-3ee14db7818mr1454268f8f.41.1758212183370; 
+ Thu, 18 Sep 2025 09:16:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHObd51+7ee4U9lQAxr1XJX1IY51S8+bxKKKF6IB+xf0nihgEKYWkhELjswfuv969pU0QBCew==
+X-Received: by 2002:a05:6000:290a:b0:3ee:14db:701c with SMTP id
+ ffacd0b85a97d-3ee14db7818mr1454245f8f.41.1758212182889; 
+ Thu, 18 Sep 2025 09:16:22 -0700 (PDT)
+Received: from rh (p200300f6af131a0027bd20bfc18c447d.dip0.t-ipconnect.de.
+ [2003:f6:af13:1a00:27bd:20bf:c18c:447d])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ee141e9cf7sm2209971f8f.12.2025.09.18.09.16.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 09:16:04 -0700 (PDT)
-Date: Thu, 18 Sep 2025 12:15:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 0/3] migration/tls: Graceful shutdowns for main and
- postcopy channels
-Message-ID: <aMwwOfX8lL25aLf7@x1.local>
-References: <20250910160144.1762894-1-peterx@redhat.com>
- <aMLK5nT4CVPrcZCB@x1.local> <87tt10vlvb.fsf@suse.de>
- <aMstJdBDMR8S2S9-@x1.local> <87ikhfvpmj.fsf@suse.de>
+ Thu, 18 Sep 2025 09:16:22 -0700 (PDT)
+Date: Thu, 18 Sep 2025 18:16:20 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, Cornelia Huck <cohuck@redhat.com>, 
+ maz@kernel.org, oliver.upton@linux.dev, gshan@redhat.com
+Subject: Re: [RFC 1/3] target/arm/cpu: Add new CPU property for KVM regs to
+ hide
+In-Reply-To: <20250911134324.3702720-2-eric.auger@redhat.com>
+Message-ID: <0f05a0ec-8b98-a9b7-6e3a-9ef73d0c34e7@redhat.com>
+References: <20250911134324.3702720-1-eric.auger@redhat.com>
+ <20250911134324.3702720-2-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87ikhfvpmj.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: multipart/mixed;
+ boundary="-1463806286-295920147-1758212182=:37575"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,47 +111,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 10:47:48AM -0300, Fabiano Rosas wrote:
-> I'm thinking if it's possible for a premature termination to be detected
-> by TLS before we did the shutdown(). So my suggestion was to always
-> bye() before shutdown(), not matter the state migration is in. But maybe
-> your way is ok, I'm not sure now. Let me read the other versions of the
-> series...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-For failing / cancelling migrations, premature termination is likely fine.
-IMHO we also shouldn't care too much on error reports on premature
-terminations because it's failing anyway.
+---1463806286-295920147-1758212182=:37575
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-So maybe you're talking about shutdown()s when the migration is
-successfully completed.
+On Thu, 11 Sep 2025, Eric Auger wrote:
+> New kernels sometimes expose new registers in an unconditionnal
+> manner.  This situation breaks backward migration as qemu notices
+> there are more registers to store on guest than supported in the
+> destination kerenl. This leads to a "failed to load
+> cpu:cpreg_vmstate_array_len" error.
+>
+> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
+> pseudo FW register in v6.16 by commit C0000e58c74e (“KVM: arm64:
+> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2”). Trying to do backward
+> migration from a host kernel which features the commit to a destination
+> host that doesn't fail.
+>
+> Currently QEMU is not using that feature so ignoring this latter
+> is not a problem. An easy way to fix the migration issue is to teach
+> qemu we don't care about that register and we can simply ignore it,
+> including its state migration.
+>
+> This patch introduces a CPU property, under the form of an array of
+> reg indices which indicates which registers can be ignored.
+>
+> The goal then is to set this property in machine type compats such
+> as:
+> static GlobalProperty arm_virt_kernel_compat_10_1[] = {
+>    /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
+>    { TYPE_ARM_CPU, "kvm-hidden-regs", "0x6030000000160003" },
+> }
 
-We can try to do that, but maybe it's not easily doable.  E.g., we have the
-preempt thread currently only be able to be kicked out by a shutdown() from
-the dst main thread.  While we can start to inject a bye() there before the
-shutdown(), it'll be:
+One thing worth noting - once this series lands:
+https://lore.kernel.org/qemu-devel/20250801074730.28329-1-shameerkolothum@gmail.com/
+we might need to add a bit more logic here. Either using the kvm
+interfaces (only ignore KVM_REG_ARM_VENDOR_HYP_BMAP_2 when the register
+value is 0) or qemu knowledge (only ignore KVM_REG_ARM_VENDOR_HYP_BMAP_2
+when the impl-cpu property is not used).
 
-  (1) a bye() sent concurrently while the preempt thread is still logically
-  owning and operating on the preempt channel (luckily, so far read-only),
-  and,
-
-  (2) we need to double check if this works if we send bye(WR) from dest to
-  src and whether it'll also gracefully shutdown the src side.
-
-  (3) currently, a shutdown() is synchronous.  bye() is yet not.  We may
-  then need similiar treatment (e.g. changing IO to block tempoararily?)
-  when doing explicit shutdown()s.
-
-I very vaguely remember when working on this series I tried (2) and it
-didn't really work, but I'm not very sure. Anyway, all these will add some
-complexity, and we'd better justify it's worthwhile..
-
-[...]
-
-> Ah, sorry, I didn't see the v2 on my list. But it's there.
-
-Nah, that's not your fault, maybe mine.
-
--- 
-Peter Xu
+Sebastian
+---1463806286-295920147-1758212182=:37575--
 
 
