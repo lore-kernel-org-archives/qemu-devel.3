@@ -4,78 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59101CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 10:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EFECAC59A
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 10:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzBpY-0004ni-K3; Thu, 18 Sep 2025 06:25:36 -0400
+	id 1uzBuV-0006yY-98; Thu, 18 Sep 2025 06:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uzBpT-0004n6-LO
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:25:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuK-0006wZ-EB
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:40 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uzBpQ-0000i7-JT
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:25:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758191123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WORciAswyTXTTjKxnafzgGDnaeauzRBrqLRG0csAdWU=;
- b=S3maYLlIsVzsDxr1vpZKkbx/TdOfRWvK4wdmFMFZO9Xwb6HAQjsxKxQb8VfgaWHRlbXmPo
- Ze/Yqi/CUCSmU+pdO2hIrMdi9vQAd3hBIEi5QZGQner/hfG3eZiztPAuwGZ2GPPHSf1stO
- UFunHrLvFVi4+Y3qNKETnB8dHj+EFW0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-FlBhYcTxOeCoQeMb-AeABQ-1; Thu,
- 18 Sep 2025 06:25:19 -0400
-X-MC-Unique: FlBhYcTxOeCoQeMb-AeABQ-1
-X-Mimecast-MFC-AGG-ID: FlBhYcTxOeCoQeMb-AeABQ_1758191118
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F7C0195605A; Thu, 18 Sep 2025 10:25:17 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.55])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA06F1955F19; Thu, 18 Sep 2025 10:25:15 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7F2B91800399; Thu, 18 Sep 2025 12:25:13 +0200 (CEST)
-Date: Thu, 18 Sep 2025 12:25:13 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>, 
- Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>
-Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
-Message-ID: <nr52ak4dgkqse2wl62xqwsy3bdai5qk45pevwddnd6xepkjkvs@v7icesyfrjqm>
-References: <20240423150951.41600-1-pbonzini@redhat.com>
- <20240423150951.41600-31-pbonzini@redhat.com>
- <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
- <28a17da6-8cde-4248-9302-2a55b3125938@tls.msk.ru>
- <7ehf4u23nzh6paso5lhhaceo7dugkktll7cbinx4faldmjvd5w@fd75vtl6wba5>
- <c9103e86-a506-4875-ba6c-cd9d3cc92938@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1uzBuH-0001Ld-LC
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 06:30:32 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id E79D36020E;
+ Thu, 18 Sep 2025 10:30:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD8CC4CEE7;
+ Thu, 18 Sep 2025 10:30:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1758191426;
+ bh=dV4uVX4HWUQHDw0uWQev5aF1tKrV/zVT0JFkQA9+V58=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=kiZhMNQQqX+qwE8TUVeKT871F21iL8xvZOvQcJ/3kr9GoUC89cMk4p9n8xg38mESq
+ fCFmTJpc0ygxKSN/MyoYzdACI2T92v3qyf/u0X37kw20U7PxXv/I4F+SXGKtMFxmny
+ VAQwVQPiwvEjlQx0JGeqcCHw27DdSK06S5vIphII//HHDp9pvJLLuwo77XmRbTQNy8
+ Iwmr2xBwZWsuYhElA7eGb4Rfo31nRnOiw/pnYkD3vJAxvqlxLBn1LZmBhecbUxWNEJ
+ mMDeW94Hgwhm2UvY8RcTz6nc3SWOzvo3moOtgS1AFGEv7kR3BYxPkmpmGind/yXLxf
+ idBzH7Qoo89iQ==
+From: "Naveen N Rao (AMD)" <naveen@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
+ Tom Lendacky <thomas.lendacky@amd.com>, Nikunj A Dadhania <nikunj@amd.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: [PATCH 4/8] target/i386: SEV: Validate that SEV-ES is enabled when
+ VMSA features are used
+Date: Thu, 18 Sep 2025 15:57:02 +0530
+Message-ID: <f18700e9ff95efb68261ad4596ebf6a222710d7a.1758189463.git.naveen@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1758189463.git.naveen@kernel.org>
+References: <cover.1758189463.git.naveen@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c9103e86-a506-4875-ba6c-cd9d3cc92938@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,26 +75,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 12:27:16PM +0300, Michael Tokarev wrote:
-> On 18.09.2025 12:20, Gerd Hoffmann wrote:
-> > On Wed, Sep 17, 2025 at 05:23:55PM +0300, Michael Tokarev wrote:
-> > > Ping, also adding kraxel@.
-> > > 
-> > > Should I send formal patch moving one line of code up?
-> > 
-> > I'm wondering why this is needed in the first place?
-> > 
-> > We already have a smm machine property, and with smm
-> > disabled all the smm-related memory regions should
-> > stay disabled ...
-> 
-> I've a bug report stating that vga output does not work
-> with -machine q35,smm=off.
+SEV features in the VMSA are only meaningful for SEV-ES and SEV-SNP
+guests, as they control aspects of the encrypted guest state that are
+not relevant for basic SEV guests.
 
-Sorry for the confusion, I was wondering why we need the original
-patch which introduces the problem ...
+Add a check in check_sev_features() to ensure that SEV-ES or SEV-SNP is
+enabled when any SEV features are specified.
 
-take care,
-  Gerd
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+---
+ target/i386/sev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 7c4cd1146b9a..f6e4333922ea 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -518,6 +518,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+             __func__);
+         return -1;
+     }
++    if (sev_features && !sev_es_enabled()) {
++        error_setg(errp,
++                   "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
++                   __func__);
++        return -1;
++    }
+     if (sev_features & ~sev_common->supported_sev_features) {
+         error_setg(errp,
+                    "%s: VMSA contains unsupported sev_features: %lX, "
+-- 
+2.51.0
 
 
