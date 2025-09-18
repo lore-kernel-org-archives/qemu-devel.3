@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B89A2CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74746CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uz9bs-0002Si-Os; Thu, 18 Sep 2025 04:03:20 -0400
+	id 1uz9j4-0004sl-4R; Thu, 18 Sep 2025 04:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uz9bp-0002RS-Cg; Thu, 18 Sep 2025 04:03:17 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=jpNI=35=kaod.org=clg@ozlabs.org>)
- id 1uz9bl-0005lV-1R; Thu, 18 Sep 2025 04:03:16 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cS7RY231Rz4wCM;
- Thu, 18 Sep 2025 18:03:05 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cS7RS3mJVz4wB0;
- Thu, 18 Sep 2025 18:03:00 +1000 (AEST)
-Message-ID: <2e5f260b-dafa-42ab-953d-f0781cd3601f@kaod.org>
-Date: Thu, 18 Sep 2025 10:02:57 +0200
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uz9j1-0004sI-8K
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:10:43 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1uz9ix-0006o6-Cy
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:10:42 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3d44d734cabso371904f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 01:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758183036; x=1758787836; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=CHB7G7/sCO190/WrnFOgeJOrQFQPkIt6kqTebZaoV5c=;
+ b=PtLnnIVx1y1g/J//Jouj+lJ5BFF3YZaZZOGQxyhaZnRkq2cEYIScL6LYv2KCXzLMw/
+ mGCeX00wu6iLsKdS5Hzx14fouyzFzUzEw6Y0fywBVayvAfQowdPLs1w9MMZIZbch8Kz+
+ S1X8NWHezTtqehomkit7Io3KbvUAWsbS3dLbIj7R/IGMFw+tO8CGB6D3tbdOScuI/hjW
+ k4cNqC4CdDVIvQe/c+66lTYnXc74MminAOxK+fya7Wy8/IxMBQjVTaFzXvlxVSuzIP/Z
+ Qm/UVbf+iKva6LXbf0Kr1/wfF9hVOcw98tCHINitbo3WJ9dKeAQYuBuh32olBIs95QzG
+ xuGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758183036; x=1758787836;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CHB7G7/sCO190/WrnFOgeJOrQFQPkIt6kqTebZaoV5c=;
+ b=GU/kDTIVWZBtzbYGqQiLgeq1R/EmNu+Os47xkUhfWopW1ODaR4tv6xF9hxEBw0dRp7
+ 64iajinGsSqK7x2PP9N0saSN6mW12t8/11FVhY1nSXR9+R33Xzyk7EYhZicuoEk2dqbx
+ S0a+t78DDnpLAKogoWbVw2nFLGnbozg5+X6/q4IDkR89kOiXq4VU3ZFS7ocQ1veokupD
+ wmLibA/Er7k43DGAN5XKfEYNAAfKEZUEVLnfhTh9hVfMsn46+iMqBZcIO9eBoIDdLV7n
+ QvFgidG9mQecENIE2woL/HEADr2zkcAZnFNfZs7JuVsO2VRHh6GIDoCIDL225TBuWm6O
+ 60Rg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXGCiPpYm6/8KizOPIY0azzkpRv+6shcMekugQiYezdU6WJMhUAe4XMSvhzMPnu4XHmdPVnCNigILjV@nongnu.org
+X-Gm-Message-State: AOJu0YxgTO5h3N+c1ynjVamheXEf2iLsN1Li+plaphJvXuhOPTeGuD4D
+ Taq/cfYCV/gE3kXrslnPiuz8OAQCf2tR9NDYzhO0NEx5kvaU/ki1+3aK
+X-Gm-Gg: ASbGnctFJQIM9cAf0VWlHgiVetxrKvNJxtDbiUO1HvZcmaGwwdYeJbyupb8/LhOncli
+ k9g2fwh//VGXt2DPhkKs+T5BLmb2RpiF4sK9eHFgJvD0ISx865l5sLBdbB5BBzyWl7CKNSaLsc2
+ lmDvYQY6K/HR7MNSHd7cPIG76Y/Ds5DIWL6LUxDuAcXpW2E6Szyui7pw9g8EPf8w5NYBko1qjZJ
+ nEto340kne2DzhCANjRPGhf9mNfr5TRM1jcs65Q3w+0h7WgN15rteIJ7W35bw6MvaMqvsfbcS5r
+ ynSWYpCiohmo+qKWOVducFboSnFL4HKgTYI3S+qUCILHn0pDz+LGbP3CYZpj3AAQidMAXBfEoPv
+ e8nWgPd9lgaAtyXTYIyapVxPmYdHu7VGNFJ5YyK3Ea+9ACmT+6qKMtIQ07F5eDmypOHgDSe6yQ9
+ 8Gm1c9
+X-Google-Smtp-Source: AGHT+IFRuBLZtHmJcnBj+fXzKfSuv+QpLjAJNiWLnvXGJrty2jyZl1e5XEjJxLiwqHe6RhwCkWYHPQ==
+X-Received: by 2002:a5d:5f54:0:b0:3e9:a1cb:ea93 with SMTP id
+ ffacd0b85a97d-3ecdf9bb0e3mr4764675f8f.21.1758183036189; 
+ Thu, 18 Sep 2025 01:10:36 -0700 (PDT)
+Received: from ehlo.thunderbird.net (37-48-56-34.nat.epc.tmcz.cz.
+ [37.48.56.34]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ee0fbf286dsm2459310f8f.56.2025.09.18.01.10.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Sep 2025 01:10:35 -0700 (PDT)
+Date: Thu, 18 Sep 2025 10:10:34 +0200
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+CC: amit@kernel.org, armbru@redhat.com, eblake@redhat.com, eduardo@habkost.net,
+ lvivier@redhat.com, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
+ mst@redhat.com, noh4hss@gmail.com, pbonzini@redhat.com, philmd@linaro.org,
+ qemu-devel@nongnu.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ nsg@linux.ibm.com
+Subject: Re: [PATCH v2] char-pty: add support for the terminal size
+User-Agent: Thunderbird for Android
+In-Reply-To: <49e6a105914fe0dd3b3476c1bceaf2c7d1f92824.camel@linux.ibm.com>
+References: <20250915162535.147642-1-maxbr@linux.ibm.com>
+ <20250915163415.149190-1-maxbr@linux.ibm.com>
+ <4c8e1ae5dd16d6ee4bcb42ed25d2987bc2c4a3cc.camel@gmail.com>
+ <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
+ <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
+ <aMq4Ta4aPwRgDrxR@redhat.com>
+ <49e6a105914fe0dd3b3476c1bceaf2c7d1f92824.camel@linux.ibm.com>
+Message-ID: <0888CCA3-F5EA-4A8F-8E8F-7C29337C5CE0@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v3 00/14] Support PCIe RC to AST2600 and AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
- titusr@google.com
-References: <20250918031348.3991681-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250918031348.3991681-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=jpNI=35=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,58 +115,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hell Jamin,
+On September 18, 2025 9:53:27 AM GMT+02:00, Maximilian Immanuel Brandtner <=
+maxbr@linux=2Eibm=2Ecom> wrote:
+> On Wed, 2025-09-17 at 14:31 +0100, Daniel P=2E Berrang=C3=A9 wrote:
+> > On Wed, Sep 17, 2025 at 03:09:50PM +0200, Filip Hejsek wrote:
+> > >=20
+> > >=20
+> > > On September 17, 2025 11:39:55 AM GMT+02:00, Maximilian Immanuel
+> > > Brandtner <maxbr@linux=2Eibm=2Ecom> wrote:
+> > > > On Tue, 2025-09-16 at 00:02 +0200, Filip Hejsek wrote:
+> > > > > On Mon, 2025-09-15 at 18:34 +0200, Maximilian Immanuel
+> > > > > Brandtner
+> > > > > wrote:
+> > > > > > Update the terminal size upon SIGWINCH delivery=2E
+> > > > > >=20
+> > > > > > Signed-off-by: Maximilian Immanuel Brandtner
+> > > > > > <maxbr@linux=2Eibm=2Ecom>
+> > > > >=20
+> > > > > I don't think this will work, because SIGWINCH is only
+> > > > > delivered for
+> > > > > the process' controling terminal=2E Unfortunately I don't think
+> > > > > there
+> > > > > is
+> > > > > any way to get size notifications for arbitrary terminal=2E
+> > > >=20
+> > > > In that case there are two solutions:
+> > > > 1=2E make qemu the controlling process of the pty (this has the
+> > > > disadvantage of QEMU being quit when the pty is closed)
+> > >=20
+> > > A bigger disadvantage is that a process can only have one
+> > > controlling terminal, and a terminal can only be the controlling
+> > > terminal for a single session (and only sends signals to the
+> > > foreground process group of that session)=2E It would require forkin=
+g
+> > > a process for each pty, and I don't even know if the master end can
+> > > have its own session=2E
+> > >=20
+> > > > 2=2E create a timer polling every eg 100ms to check if the winsize
+> > > > has
+> > > > changed
+> > > >=20
+> > > > I would go with the second approach then
+> > >=20
+> > > Me too, the timer is a bit unfortunate, but it's probably the less
+> > > bad option=2E
+> >=20
+> > I don't think we want a timer polling for an situation that will very
+> > rarely arise=2E=C2=A0 We already add the 'chardev_resize' QMP command,=
+ which
+> > is
+> > a good enough way to kick QEMU to re-read the size=2E
+> >=20
+> > With regards,
+> > Daniel
+>=20
+> This approach would only work with libvirt and not generic pty
+> applications though=2E Perhaps a bool poll_resize could be added to the
+> struct Chardev which is disabled, as soon as the chardev_resize QMP
+> command is used to avoid race conditions=2E
 
-On 9/18/25 05:13, Jamin Lin wrote:
-> v1:
->   1. Add PCIe PHY, CFG, and MMIO window support for AST2600.
->      Note: Only supports RC_H.
->   2. Add PCIe PHY, CFG, and MMIO window support for AST2700.
->      Note: Supports 3 RCs.
-> 
-> v2:
->    1. Introduce a new root port device.
->    2. For AST2600 RC_H, add the root device at 80:00.0 and a root port at 80.08.0
->       to match the real hardware topology, allowing users to attach PCIe devices
->       at the root port.
->    3. For AST2700, add a root port at 00.00.0 for each PCIe root complex to match
->       the real hardware topology, allowing users to attach PCIe devices at the
->       root port.
-> 
-> v3:
->    1. Fix review issues.
->    2. update functional test for the e1000e network card.
->    3. update license header
->    4. Adding "Based on previous work from Cedric Le Goater, with Jamin's summary
->       implementation.
+Well, terminal emulators that set the pty size typically create their own =
+pty
+and control it from the master side=2E I don't know what pty applications =
+you
+have in mind=E2=80=94changing the window size from the slave side is somew=
+hat
+atypical=2E Applications designed for a real serial port probably don't se=
+t the size at all=2E
 
-v3 looks good. I only had a few comments on memory allocation
-(g_autofree and MMIO alias regions) and on functional tests.
-
-v4 should be the last.
-
-
-> 
-> Dependencies
-> 
-> QEMU version:
-> https://github.com/qemu/qemu/commit/f0007b7f03e2d7fc33e71c3a582f2364c51a226b
-> 
-> This patch series depends on the following patch series:
-> 1. hw/arm/aspeed Move ast2700-evb alias to ast2700a1-evb
-> https://patchwork.kernel.org/project/qemu-devel/patch/20250902062550.3797040-1-jamin_lin@aspeedtech.com/
-> 2. tests/functional/arm: Update test images for ASPEED chips
-> https://patchwork.kernel.org/project/qemu-devel/cover/20250904100556.1729604-1-kane_chen@aspeedtech.com/
-> 3. tests/functional/arm: Add OTP functional test
-> https://patchwork.kernel.org/project/qemu-devel/cover/20250917035917.4141723-1-kane_chen@aspeedtech.com/
-
-
-There changes are in aspeed-next. You could use it as a reference
-in the cover letter.
-
-
-Thanks,
-
-C.
-
+Regards,
+Filip
 
