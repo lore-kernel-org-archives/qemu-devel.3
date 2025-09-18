@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E78CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1683CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:30:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzGWL-0006Dh-4D; Thu, 18 Sep 2025 11:26:05 -0400
+	id 1uzGVr-0004qV-W5; Thu, 18 Sep 2025 11:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1uzGW8-0005Zy-3d
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:25:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uzGVb-0004Ty-0y
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:25:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1uzGW6-00032y-4q
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:25:51 -0400
+ id 1uzGVX-0002xs-LR
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:25:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758209149;
+ s=mimecast20190719; t=1758209114;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sTWUNM+v16RdqicPQUSVUg/HZymrt0SY9y6hBqA0bZE=;
- b=HSJux7PB/OmQteXrJZi+bzx87IVbDVpBUIDxzcrs9jk1UU+9t9OcYse8dIi1M5NSDXGyCb
- 88mEmVdtVtBzvHtF7HGdVNe/W4+TJ54trBZ9QDqI/9GW0ns+ekolEtZ6y1gz8+x/Wb3JCr
- 4aBLzclkIwPKKpwc08RxaYOv2Xbvg5U=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FsBBzucx8y5i9VHunk1XF83aX/5bi21WNzwEAMu8Vec=;
+ b=NPr/WfwNsnYAV2F89oel53kGZnFVDY70AO9/2PAQ5YrvwcRIvdgp4z2BquAeExlQt1ZyXq
+ 4XlpB3cv7xXlU3DAmV++U7lSrPRssia2SizV+nAeR9ZN+NK4Qx49jeEx+cPq4ixL7Tu74Y
+ E6Bf3E8vgAMrTvmWVKVVSSvaz11KA9s=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-pvMjIAm9Ne-p2J-VBDjFxA-1; Thu, 18 Sep 2025 11:25:48 -0400
-X-MC-Unique: pvMjIAm9Ne-p2J-VBDjFxA-1
-X-Mimecast-MFC-AGG-ID: pvMjIAm9Ne-p2J-VBDjFxA_1758209147
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-7722ef6c864so939923b3a.1
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:25:48 -0700 (PDT)
+ us-mta-27-GN5gpzSCNcOdQmbD8KUohg-1; Thu, 18 Sep 2025 11:25:13 -0400
+X-MC-Unique: GN5gpzSCNcOdQmbD8KUohg-1
+X-Mimecast-MFC-AGG-ID: GN5gpzSCNcOdQmbD8KUohg_1758209113
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-77cb7607cfcso1408277b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:25:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758209147; x=1758813947;
+ d=1e100.net; s=20230601; t=1758209113; x=1758813913;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sTWUNM+v16RdqicPQUSVUg/HZymrt0SY9y6hBqA0bZE=;
- b=EEHp/RkJbqc79aiH+STxL1wUTfgjhqBxIeuUyAgRCAgN/hWnpcx4kerHdIf0pD+CtD
- nXvoeH4cVgnZDr+pIduEeY/gUSBdZOI2wzSd+xXTdthEJV4org7XoHAptL425mWfzve6
- xfBo3jMyvZPHUWotcQlIALp4a2Vzu7SMSfdahzaYbjh5HB546MEy4iiAcOM4cYN5f4rO
- WlMgl3pTje0P0RzJ9nnx8R176OvWGb3Im+vpidnv4vrcFzrTwexEZ6amT5SnN1taMuE8
- aGXBR7zpl/46CGinASaQt8N+FWDRiqS2xrNVNR8Pn0h5cf9RfafNsitG/Cc7cuirKLGl
- hq0A==
-X-Gm-Message-State: AOJu0YwVlUdeEv9BOrhrIhfZVij7usEnKoJKB7JAuFgHCtsrZYkvf+S+
- ft9ntwM6hphrXfbdCwNlDxQyFBfX8EBkojyWUQYXrwY02t68U3QfNOJq15LwxDk6KaBYO1duGs+
- YWcoc1fdZbHoNWlTZ3xxaZXd2RQjVuj8+CIGjp4W7fl6XZlBrbfsImNuD
-X-Gm-Gg: ASbGncsicuQT9T/Rfdgcxw+7CCPzTwVj+bYVGTckdYwsEoUaFLzZDbFefHQSEPPUtVT
- hjFQdhAKGVL9IRZh0qHalG/abjTLALTpl4ueWKUX8/mNuD6+gp17GRbh88gD4HJk5Q/dU7kz1cx
- ZQEWSbLTTMXe+gQKEdgCUXx3druzrPdvKn1leSPj9v75MI1JWFt9qT62A52dMAHimJcpdAVu5oU
- /PL1i0fpFCiDwV4R0NhAIE5Zmz7C3neBNN8e481go9vyGXTO8d6b/BmwhRpWMPmq4LGwvMszVjx
- WdnCVydE5NO+4wVCKmkjA1HB16XrBtFHC6NAcGDK7hzLAMZzH2NEIA==
-X-Received: by 2002:a05:6a00:2e94:b0:772:86aa:ed0a with SMTP id
- d2e1a72fcca58-77bf9074a10mr7866371b3a.25.1758209147119; 
- Thu, 18 Sep 2025 08:25:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFL3TrqGnADVsga37YrtTY8aAsF5vQqest3wrqepncC63N9W8kxEjr8izw20zTt3Sy8FTA0hg==
-X-Received: by 2002:a05:6a00:2e94:b0:772:86aa:ed0a with SMTP id
- d2e1a72fcca58-77bf9074a10mr7866343b3a.25.1758209146747; 
- Thu, 18 Sep 2025 08:25:46 -0700 (PDT)
+ bh=FsBBzucx8y5i9VHunk1XF83aX/5bi21WNzwEAMu8Vec=;
+ b=MPJmiuyL+cMmxB65mVLVwNYXD79WTSs1k2ZC1dO4pHLDRClYX/x33fvFsLl23hY9Zq
+ 14pAELXvRPILcn8Sc2BqFZitwL5UWbS81wo+Ab0vukEDuLiSIVtS1RmhhzOJMSkHRBR7
+ PHe1adNib1hvaNTOHowfjJTyltNkoeEiGAI7kRlEiDRvKiK0TBXlp/aJXjSxbJn1F0/L
+ /uFTRkq57K+7/4Q/xs+4By86LRq2os/7SCO6pIMmUsu0SGmOP88Cs45wwXHSJkGQLU6o
+ JSxZFICQVhysL/mFdyN/S5yoRxUocR9J0XMVLm4TzlIgcxWJYtSCKgy3wSoRe4mln1DM
+ hPzw==
+X-Gm-Message-State: AOJu0Yy7anyUt76HAj9zlcIWGpu88XtLyo9jWPR59bX4EfrLvFxvvhDw
+ uQpw/JhrOheOA+qtv3Hgu92C5FchhFGu0+X5sHpMtc88FFavT+JndueXemi8XErF7e/FpdzBkIz
+ Sn/opzeSghY9cnJqSNoY50lIYKme0IrH1iaEDGEwo0WtetcjurLaIQOfR
+X-Gm-Gg: ASbGncsThRJ8uXoywENebqSVAedJi/p8H8cZC2l/EAPl19FWxHd+ayttlYPuei25hZi
+ UpBEornrXDCC07Uh4SCyE7T4E87VSFIojIlVUOX82RHGj9gOZJeRXKMgFNEgvaBt4WYbBusS5tZ
+ bPp1Vr4geEZV5jG1+ZTXCFWKgVj8eBc0g2ljsNylxOKMvhwAhQQCuMXzW3CDAX0TQaNqoA52E2Z
+ cZ5UuCAfije/6Poe+90PjPscuEKHTqy0roWPEUeawAvgoCuVM+ht9RkwJBa0pICd1sRRUrtayLz
+ 2uKFz6z3dqurvMB29w5ECdzfDlIRhzMoftkbrj8hTdw46x1waydqSQ==
+X-Received: by 2002:a05:6a21:3983:b0:253:1e04:4e8 with SMTP id
+ adf61e73a8af0-27ab730a545mr10628753637.56.1758209112558; 
+ Thu, 18 Sep 2025 08:25:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmEmXEj1DpCBiBVgLWcSiF27Q+lvsBDXJw0zOwfXyhkfEQVnjKKHwa128pdgnS24XvYxn2mw==
+X-Received: by 2002:a05:6a21:3983:b0:253:1e04:4e8 with SMTP id
+ adf61e73a8af0-27ab730a545mr10628702637.56.1758209112208; 
+ Thu, 18 Sep 2025 08:25:12 -0700 (PDT)
 Received: from armenon-kvm.bengluru.csb ([49.36.110.230])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77cfc2481d7sm2675512b3a.32.2025.09.18.08.25.38
+ d2e1a72fcca58-77cfc2481d7sm2675512b3a.32.2025.09.18.08.25.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 08:25:46 -0700 (PDT)
+ Thu, 18 Sep 2025 08:25:11 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
-Date: Thu, 18 Sep 2025 20:53:31 +0530
-Subject: [PATCH v14 14/27] migration: push Error **errp into
- ram_postcopy_incoming_init()
+Date: Thu, 18 Sep 2025 20:53:27 +0530
+Subject: [PATCH v14 10/27] migration: push Error **errp into
+ qemu_loadvm_section_start_full()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250918-propagate_tpm_error-v14-14-36f11a6fb9d3@redhat.com>
+Message-Id: <20250918-propagate_tpm_error-v14-10-36f11a6fb9d3@redhat.com>
 References: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
 In-Reply-To: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
 To: qemu-devel@nongnu.org
@@ -107,24 +107,24 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  Arun Menon <armenon@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4806; i=armenon@redhat.com;
- h=from:subject:message-id; bh=NxHIEIcsn6ki3pjI+1SDVs7doJTeFpfWjxBGpIKPSXQ=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8YZ5R+NcxU3blCK7/XnCb/Vt3dbtUzH1pAnilctjikKK
- 2SHp2zqKGVhEONikBVTZGn4GiDbFFAYEWn78jrMHFYmkCEMXJwCMJEqb0aGi8tuXeBqVmTVsfps
- qaql+OFkyWGrJyLz75+0Zp5/Lzkmh+GvxL+FinP7ynkcGGa42H2+8ufpe1O1brdJD7XCpp74uEy
- DGwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4798; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=mjhvRtOfCNflzXKsd7LfnW6aMa0TrUuxLNhD6rtfZNc=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8YZ5e8WAsV+aubBiZyXTU/VLJbc2H1eNerNbdnJSRryi
+ fnKa5g6SlkYxLgYZMUUWRq+Bsg2BRRGRNq+vA4zh5UJZAgDF6cATOQGKyNDY/esbzeEEgRnhHbk
+ mU17dGBumvZXnfWCzsaKzS2CXN93MfxPc3RduCv9D/u/c6/eMrpOcGq2rBeZumXlrEgzp578N28
+ 5AQ==
 X-Developer-Key: i=armenon@redhat.com; a=openpgp;
  fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,117 +143,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 This is an incremental step in converting vmstate loading
 code to report error via Error objects instead of directly
 printing it to console/monitor.
-It is ensured that ram_postcopy_incoming_init() must report an error
+It is ensured that qemu_loadvm_section_start_full() must report an error
 in errp, in case of failure.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- migration/postcopy-ram.c | 9 ++++++---
- migration/postcopy-ram.h | 2 +-
- migration/ram.c          | 4 ++--
- migration/ram.h          | 2 +-
- migration/savevm.c       | 2 +-
- 5 files changed, 11 insertions(+), 8 deletions(-)
+ migration/savevm.c | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 45af9a361e8eacaad0fb217a5da2c5004416c1da..05617e5fbcad62226a54fe17d9f7d9a316baf1e4 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -681,6 +681,7 @@ out:
-  */
- static int init_range(RAMBlock *rb, void *opaque)
- {
-+    Error **errp = opaque;
-     const char *block_name = qemu_ram_get_idstr(rb);
-     void *host_addr = qemu_ram_get_host_addr(rb);
-     ram_addr_t offset = qemu_ram_get_offset(rb);
-@@ -701,6 +702,8 @@ static int init_range(RAMBlock *rb, void *opaque)
-      * (Precopy will just overwrite this data, so doesn't need the discard)
-      */
-     if (ram_discard_range(block_name, 0, length)) {
-+        error_setg(errp, "failed to discard RAM block %s len=%zu",
-+                   block_name, length);
-         return -1;
-     }
- 
-@@ -749,9 +752,9 @@ static int cleanup_range(RAMBlock *rb, void *opaque)
-  * postcopy later; must be called prior to any precopy.
-  * called from arch_init's similarly named ram_postcopy_incoming_init
-  */
--int postcopy_ram_incoming_init(MigrationIncomingState *mis)
-+int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
- {
--    if (foreach_not_ignored_block(init_range, NULL)) {
-+    if (foreach_not_ignored_block(init_range, errp)) {
-         return -1;
-     }
- 
-@@ -1703,7 +1706,7 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
-     return false;
- }
- 
--int postcopy_ram_incoming_init(MigrationIncomingState *mis)
-+int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp)
- {
-     error_report("postcopy_ram_incoming_init: No OS support");
-     return -1;
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index 3852141d7e37ab18bada4b46c137fef0969d0070..ca19433b246893fa5105bcebffb442c58a9a4f48 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -30,7 +30,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis);
-  * postcopy later; must be called prior to any precopy.
-  * called from ram.c's similarly named ram_postcopy_incoming_init
-  */
--int postcopy_ram_incoming_init(MigrationIncomingState *mis);
-+int postcopy_ram_incoming_init(MigrationIncomingState *mis, Error **errp);
- 
- /*
-  * At the end of a migration where postcopy_ram_incoming_init was called.
-diff --git a/migration/ram.c b/migration/ram.c
-index 7208bc114fb5c366740db380ee6956a91b3871a0..6a0dcc04f436524a37672c41c38f201f06773374 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3716,9 +3716,9 @@ static int ram_load_cleanup(void *opaque)
-  * postcopy-ram. postcopy-ram's similarly names
-  * postcopy_ram_incoming_init does the work.
-  */
--int ram_postcopy_incoming_init(MigrationIncomingState *mis)
-+int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp)
- {
--    return postcopy_ram_incoming_init(mis);
-+    return postcopy_ram_incoming_init(mis, errp);
- }
- 
- /**
-diff --git a/migration/ram.h b/migration/ram.h
-index 921c39a2c5c45bc2344be80854c46e4c10c09aeb..275709a99187f9429ccb4111e05281ec268ba0db 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -86,7 +86,7 @@ void ram_postcopy_migrated_memory_release(MigrationState *ms);
- void ram_postcopy_send_discard_bitmap(MigrationState *ms);
- /* For incoming postcopy discard */
- int ram_discard_range(const char *block_name, uint64_t start, size_t length);
--int ram_postcopy_incoming_init(MigrationIncomingState *mis);
-+int ram_postcopy_incoming_init(MigrationIncomingState *mis, Error **errp);
- int ram_load_postcopy(QEMUFile *f, int channel);
- 
- void ram_handle_zero(void *host, uint64_t size);
 diff --git a/migration/savevm.c b/migration/savevm.c
-index c079942b7ecb959b3b668b977174d906f73c2777..a1b606318f2ae8feff42b759ad308ebbd07318b7 100644
+index eccb3f63f8dfc070263a1d19ec3415684e8fa60e..01e1a9739aa784d90f80bf2b561fd62f5e4678f8 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -1989,7 +1989,7 @@ static int loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
-         return -1;
+@@ -2722,21 +2722,21 @@ static bool check_section_footer(QEMUFile *f, SaveStateEntry *se)
+ }
+ 
+ static int
+-qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
++qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type, Error **errp)
+ {
++    ERRP_GUARD();
+     bool trace_downtime = (type == QEMU_VM_SECTION_FULL);
+     uint32_t instance_id, version_id, section_id;
+     int64_t start_ts, end_ts;
+     SaveStateEntry *se;
+     char idstr[256];
+     int ret;
+-    Error *local_err = NULL;
+ 
+     /* Read section start */
+     section_id = qemu_get_be32(f);
+     if (!qemu_get_counted_string(f, idstr)) {
+-        error_report("Unable to read ID string for section %u",
+-                     section_id);
++        error_setg(errp, "Unable to read ID string for section %u",
++                   section_id);
+         return -EINVAL;
+     }
+     instance_id = qemu_get_be32(f);
+@@ -2744,8 +2744,7 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
+ 
+     ret = qemu_file_get_error(f);
+     if (ret) {
+-        error_report("%s: Failed to read instance/version ID: %d",
+-                     __func__, ret);
++        error_setg(errp, "Failed to read instance/version ID: %d", ret);
+         return ret;
      }
  
--    if (ram_postcopy_incoming_init(mis)) {
-+    if (ram_postcopy_incoming_init(mis, NULL) < 0) {
-         return -1;
+@@ -2754,17 +2753,17 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
+     /* Find savevm section */
+     se = find_se(idstr, instance_id);
+     if (se == NULL) {
+-        error_report("Unknown savevm section or instance '%s' %"PRIu32". "
+-                     "Make sure that your current VM setup matches your "
+-                     "saved VM setup, including any hotplugged devices",
+-                     idstr, instance_id);
++        error_setg(errp, "Unknown section or instance '%s' %"PRIu32". "
++                   "Make sure that your current VM setup matches your "
++                   "saved VM setup, including any hotplugged devices",
++                   idstr, instance_id);
+         return -EINVAL;
      }
  
+     /* Validate version */
+     if (version_id > se->version_id) {
+-        error_report("savevm: unsupported version %d for '%s' v%d",
+-                     version_id, idstr, se->version_id);
++        error_setg(errp, "unsupported version %d for '%s' v%d",
++                   version_id, idstr, se->version_id);
+         return -EINVAL;
+     }
+     se->load_version_id = version_id;
+@@ -2772,7 +2771,7 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
+ 
+     /* Validate if it is a device's state */
+     if (xen_enabled() && se->is_ram) {
+-        error_report("loadvm: %s RAM loading not allowed on Xen", idstr);
++        error_setg(errp, "loadvm: %s RAM loading not allowed on Xen", idstr);
+         return -EINVAL;
+     }
+ 
+@@ -2780,11 +2779,11 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
+         start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+     }
+ 
+-    ret = vmstate_load(f, se, &local_err);
++    ret = vmstate_load(f, se, errp);
+     if (ret < 0) {
+-        error_report("error while loading state for instance 0x%"PRIx32" of"
+-                     " device '%s'", instance_id, idstr);
+-        error_report_err(local_err);
++        error_prepend(errp,
++                      "error while loading state for instance 0x%"PRIx32" of"
++                      " device '%s': ", instance_id, idstr);
+         return ret;
+     }
+ 
+@@ -2795,6 +2794,8 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type)
+     }
+ 
+     if (!check_section_footer(f, se)) {
++        error_setg(errp, "Section footer error, section_id: %d",
++                   section_id);
+         return -EINVAL;
+     }
+ 
+@@ -3100,7 +3101,7 @@ retry:
+         switch (section_type) {
+         case QEMU_VM_SECTION_START:
+         case QEMU_VM_SECTION_FULL:
+-            ret = qemu_loadvm_section_start_full(f, section_type);
++            ret = qemu_loadvm_section_start_full(f, section_type, errp);
+             if (ret < 0) {
+                 goto out;
+             }
 
 -- 
 2.51.0
