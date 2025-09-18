@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E47C3CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9FBCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:35:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzLKy-0003S0-3e; Thu, 18 Sep 2025 16:34:40 -0400
+	id 1uzLLV-0003tG-T9; Thu, 18 Sep 2025 16:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLKv-0003Rl-D4; Thu, 18 Sep 2025 16:34:37 -0400
+ id 1uzLLU-0003sf-8X; Thu, 18 Sep 2025 16:35:12 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLKt-00056R-SY; Thu, 18 Sep 2025 16:34:37 -0400
+ id 1uzLLS-0005XC-IN; Thu, 18 Sep 2025 16:35:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=FCNvMheAuBSEdDsi1h387swkMoYJ6nGpugDfRenIdmY=; b=c7Yeb4HsKmd/n+BkKUoYDid9r2
- L09I6e/Ur/yrv/7zWb9G5MX008zQHawk4z7eBULJGIHICa8+GSK7ZCDNOrJPG3sy/isjsbZ8w2vm5
- dcZB3Jx0nw2fdlJ7TIcCYel1k4WCwrf8O9UZSKHzjnahmcfTWBNFdd0Y0EBavNY60p8pYl4rfx+CB
- 2U/Oz1cWrQ4ze8fGk8Kb7qB9X4llRPv6EqYYpr0lE+J/JeDxWNpjHBh7nxLH6+Eqkjh0W0aDoAqcF
- gIowNVKBrp33eioTBq4ZPLdU5lnn/AehGe5DIY4EBMTtdMZ80DdvL8s58guMAe0mwcDlvN21UgaTu
- edPiuNuwvvb58Lzo7TeG3thsNGBDCA6sGhSAWz5M+Z5r0R4v3SM9bAZKoN4cSPUysvS9zVVe6XFns
- GESx/KGvole3wA2/Bht2Wz1LqooeWkM8MU1uAURTHQuKEzjVcL7+fkqnfRswYrT5vHarrXsNdUxbB
- RYnpbWdwl03KfGWFf4EI2fQkJxIl6ufqTtVeOegEuanTlRBpivrnpiAI0OzLFtHk8wY1rMDPRMjSs
- LM52gMQ7+NIPB4rR5AEtO5DU+ajxwpZI86VQgzRQsPnFG6+ZXDFHsKZVIanWFekxHzewJRk7bVCkr
- 37qlhoSrnlEV8QQJjmfj7wnmr0Eyn/+wtkUqkTzJw=;
+ bh=NnSUAGInEhK3l10Zx0ne4uTde01Ddj+dj4wy7zwUl+Q=; b=UexP6ijKcKLNcv2ide6vwny44L
+ szYoBnO77UM4Vg9G+AXJumTtCbXtwKp+VDxZN8idfuOnHilqifduxe+fUCLWrovzgOirHM+iznCNy
+ eoasirCkYGI6j+PQwRFhWG9fMDyL5MXxVGz7JFneZ7Q8SHE+8LcTVfzlLM5J4zq0i6aKeGsknWvIx
+ FBb1JZ9I/e8MKfx30I6xin8V9zfkjRCQwpjSzNR1lMyf7RjGw4A03cSnkF5aB9BPEoRDsjiWbTo5C
+ kSdA/ifz/hhxHx5qCrpPMX3CIGWkPWS3KfGPHtSzjHRrPpHL2/fVVWut/3f+oaykb29dBaIheLEue
+ Yv+FuzpjthEty1Xh6pfZvA4td7BYdyv6kGLHWNBnEkdu4C1N/hnHIJlfew/SZ+41Bnx8lFOS4kqNc
+ WzwEDB6HKaXsGfvPV8vJaYM0pO3a+BJEBwPnazCNIuUQUeQjJYuL4y+dQlqKp4qPIdVvHa/V9ajXR
+ lsB48mON3avUg/N8ZVg2wfUq94JO0YkdD1YX09JzczFNmssIzL6v9a3j3AhveyacqY71webSXqk8w
+ f3vHyk+b7CzdVipM8bNcgk3MBpN79bCiAH3UvJmrIw7i9sswlwHxrQdWNOlIwVWfVpX4UZ1GQB9Yq
+ 43PntCBGTyDKaf9xcjzMdGV5/K5YzM2evb5Q1O8hQ=;
 Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLIq-0006py-Cb; Thu, 18 Sep 2025 21:32:28 +0100
-Message-ID: <0a242c0d-8f6d-49e9-b766-16c9ace4800c@ilande.co.uk>
-Date: Thu, 18 Sep 2025 21:34:30 +0100
+ id 1uzLJS-0006qT-9l; Thu, 18 Sep 2025 21:33:06 +0100
+Message-ID: <c25cd6a9-6dd6-45e3-a9e1-c8e17badc58c@ilande.co.uk>
+Date: Thu, 18 Sep 2025 21:35:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -46,7 +46,7 @@ To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1758219840.git.balaton@eik.bme.hu>
- <5e0b69e9fe3d36486a629b6c322a5eb2962f6972.1758219840.git.balaton@eik.bme.hu>
+ <76089de37939feaf66de06ffb337b1554fb3f4fa.1758219840.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <5e0b69e9fe3d36486a629b6c322a5eb2962f6972.1758219840.git.balaton@eik.bme.hu>
+In-Reply-To: <76089de37939feaf66de06ffb337b1554fb3f4fa.1758219840.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 09/14] hw/pci-host/raven: Do not use parent object for
- mmcfg region
+Subject: Re: [PATCH v3 10/14] hw/pci-host/raven: Fix PCI config direct access
+ region
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,59 +107,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-> The mmcfg field in PCIHostState is only used by raven for the PCI
-> config direct access but is not actually needed as the memory region
-> lifetime can be managed by the object given during init so use that
-> and remove the unused field from PCIHostState.
+> The PCI configuration direct access region occupies 8 MiB at offset
+> 0x800000 in PCI IO space so model that accordingly.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/pci-host/raven.c       | 7 ++++---
->   include/hw/pci/pci_host.h | 1 -
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   hw/pci-host/raven.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 2057a1869f..23020fd09f 100644
+> index 23020fd09f..bb0be40eb4 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -216,7 +216,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
->       SysBusDevice *dev = SYS_BUS_DEVICE(d);
->       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
-> -    MemoryRegion *address_space_mem = get_system_memory();
-> +    MemoryRegion *mr, *address_space_mem = get_system_memory();
+> @@ -235,8 +235,8 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
 >   
->       qdev_init_gpio_in(d, raven_change_gpio, 1);
->   
-> @@ -233,9 +233,10 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
->                             "pci-conf-data", 4);
->       memory_region_add_subregion(&s->pci_io, 0xcfc, &h->data_mem);
->   
-> -    memory_region_init_io(&h->mmcfg, OBJECT(h), &raven_mmcfg_ops, h->bus,
-> +    mr = g_new0(MemoryRegion, 1);
-> +    memory_region_init_io(mr, OBJECT(h), &raven_mmcfg_ops, h->bus,
->                             "pci-mmcfg", 0x00400000);
-> -    memory_region_add_subregion(address_space_mem, 0x80800000, &h->mmcfg);
-> +    memory_region_add_subregion(address_space_mem, 0x80800000, mr);
+>       mr = g_new0(MemoryRegion, 1);
+>       memory_region_init_io(mr, OBJECT(h), &raven_mmcfg_ops, h->bus,
+> -                          "pci-mmcfg", 0x00400000);
+> -    memory_region_add_subregion(address_space_mem, 0x80800000, mr);
+> +                          "pci-mmcfg", 8 * MiB);
+> +    memory_region_add_subregion(&s->pci_io, 0x800000, mr);
 >   
 >       memory_region_init_io(&s->pci_intack, OBJECT(s), &raven_intack_ops, s,
 >                             "pci-intack", 1);
-> diff --git a/include/hw/pci/pci_host.h b/include/hw/pci/pci_host.h
-> index 954dd446fa..a13f879872 100644
-> --- a/include/hw/pci/pci_host.h
-> +++ b/include/hw/pci/pci_host.h
-> @@ -41,7 +41,6 @@ struct PCIHostState {
->   
->       MemoryRegion conf_mem;
->       MemoryRegion data_mem;
-> -    MemoryRegion mmcfg;
->       uint32_t config_reg;
->       bool mig_enabled;
->       PCIBus *bus;
 
-Is there any reason that the lifetime of the MemoryRegion needs to be separate from 
-that of the device itself? If not, I'm struggling to understand why this needs to be 
-changed.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
