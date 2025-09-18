@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B323CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 11:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1767CCAC5A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 11:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzD0C-00088c-0J; Thu, 18 Sep 2025 07:40:41 -0400
+	id 1uzD2n-0001GA-5R; Thu, 18 Sep 2025 07:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzD01-00087Q-0i
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:40:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzCzx-00034n-Iq
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:40:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758195623;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=v8i/+BwLL+SPviwSVPOW1USXYrghU0ZkQrF4gNuEnsw=;
- b=SDA3S3tYQs02l2PuvNnDcl6yXlme/G4OH6gLI4UAfelBDEv4K01/mpd29pStFwp8yKLUb4
- dW7pms4djqeEtR5aIEVozkeUEZIZqoViX3LtqLxO29GRTzNTWPd0aMrc6FoblYXtJDmgEj
- CyJ2SIX9PLJNUP1ep4NhViOlMek7DHE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-5Ng-ljzHM7eS7j2muf7E1g-1; Thu,
- 18 Sep 2025 07:40:20 -0400
-X-MC-Unique: 5Ng-ljzHM7eS7j2muf7E1g-1
-X-Mimecast-MFC-AGG-ID: 5Ng-ljzHM7eS7j2muf7E1g_1758195620
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90B34180057B; Thu, 18 Sep 2025 11:40:19 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5F09A30002C5; Thu, 18 Sep 2025 11:40:17 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH] tests: Fix "make check-functional" for targets without
- thorough tests
-Date: Thu, 18 Sep 2025 13:40:15 +0200
-Message-ID: <20250918114015.83061-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzD2Y-0001AV-Cs
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:43:10 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzD2V-0003FV-O6
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 07:43:05 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-45dd513f4ecso5866375e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 04:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758195782; x=1758800582; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NRw7bN2IZ4fqIjs30E+Zw0/hpYU18gqWI4OvfZ3tjPI=;
+ b=NIlqK3Mye/lI6HkS0odQpG6ud7FWNGzX4jYeJ/2YxEt1ZPlVYawGJ/gKAYAHUczpsh
+ gosOBlevFRXOp1cD4p11PGtWvfottsE2JSp6AIv/DTQQIlIl9HnoJ65aagS78Pa3vVcC
+ mkhFw0XgjQPh7S0BESsA6rXIDo0Qp/p314MtR7kzfnAMfBYCOiYRXtVs1DoN0raxobAi
+ C9v423dOsW4IbRTqhtE3svrqvVEoQcxw83KFH7ng3Ote7XtbWa1h/X9I7MTCUlLu/foV
+ flGJDP6VrTCIG22aIflzfrmsIKTeiLI13+SUpg+9UGEASm0kbNFtoI8SJ8DkjWhyLgSj
+ jvpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758195782; x=1758800582;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NRw7bN2IZ4fqIjs30E+Zw0/hpYU18gqWI4OvfZ3tjPI=;
+ b=OTlSE+cNGL8c9+aPZKBeOXwHGS9/C4W7p7nymiwsQHVeeFGcN8aXg9/Vn+Mhl1853I
+ Yb91P4bAYbZxRJjBvAnLWOxA4NpNna9eLraqpc52cP7yzVbE5X6pDMRl4VJRmOkMOzvZ
+ h8GAWQylnhA+hHlO68TpBhD9il3oTKTz4qfVGdiKD1us3fhixt4X+qJlQY/b9PYUw83u
+ nefN0Cz0/ZlPbVfhkaagUTu7cGRD801/5Mq6rhvtjUjEMwuBnWW3vB0voaiAX0qNxteF
+ TqnuA3pb6CzmW68CmYpGt0YAycEJYguaWAgv/SWenLXgN673vAFzEyzTPZkot/miCpFF
+ M6Mg==
+X-Gm-Message-State: AOJu0YyPcksh3L1eNzQqCbSy7k/+60j36aukTn7XXtQNUVjlNsFRhgse
+ mNTWJhe93VdP7sEKrblUVqGWOM7gm28dTiqFRBrSI5P6gLrxul9X+qsnLnsuZtBxdSWgseHy2ri
+ xZWWx
+X-Gm-Gg: ASbGncsVoThxKIw3jNJdiHdUfBw1pjhy6YNvp0LEcywu7F8eD1AaiA7hSwqZptiAvYL
+ gvhRYEeEVGjywpYAL4EDELU4MH+FzOe11JSFADuc8/0TCzV49fORcUacPnbvOoiSRKrwNEbxsPY
+ +ph6uMrAU158AtbMelxPXnPxXzJVLVF1gBN504qWewwJYY1i8eEHB40dU58ENCKCkgCdjeUeKUO
+ hnlMlKGo291XZLcFrbypJVxFHANkzsBff4Yksf68Y9+s2v4bvCsx4Ll2VDpzVoFCRwgyYuW3azS
+ 9Jet/bZ3vbY199ROi/CK4Dig7hS0pFMvkVPTm3D2iUZtkMNGD/+ubngou4kDcmZdTE42Q+wboHs
+ KAEy+6zlXOP5HG5lvOyaiXNjQ2/O2Bqwdrs0J3hVr2i9L/ySzke9YCXv7aA==
+X-Google-Smtp-Source: AGHT+IFhWsXuSb1dh2fC9gwmtayxMoX/oTTFFM33uX9voJxjl1qgPOTwEJuZ9mtqtm07+mM1FNTHlQ==
+X-Received: by 2002:a05:600c:3b09:b0:45f:2c39:51af with SMTP id
+ 5b1f17b1804b1-461fc85bda2mr50700685e9.0.1758195781708; 
+ Thu, 18 Sep 2025 04:43:01 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46139122cb5sm76942665e9.8.2025.09.18.04.43.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 04:43:00 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH 0/2] hw/pci-host: fix use-after-free in hppa pci-host devices
+Date: Thu, 18 Sep 2025 12:42:57 +0100
+Message-ID: <20250918114259.1802337-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,37 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+This patchset fixes use-after-free bugs which show up if you put
+some of the hppa pci-host devices through an "init -> deinit" lifecycle,
+as the device-introspect-test does.
 
-If QEMU gets configured for a single target that does not have
-any thorough functional tests, "make check-functional" currently
-fails with the error message "No rule to make target 'check-func'".
-This happens because "check-func" only gets defined for thorough
-tests (quick ones get added to "check-func-quick" instead).
-Thus let's define a dummy target for this case, that simply
-depends on the quick tests.
+The problem in both cases is that we were calling pci_register_root_bus()
+in instance_init: we should only call this in realize, as all the
+other callers do.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3119
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/Makefile.include | 2 ++
- 1 file changed, 2 insertions(+)
+These bugs show up if you run 'make check' with an ASAN enabled
+build; they are also likely behind the intermittent segfaults
+on s390 that RTH has noticed recently.
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 3538c0c7407..622be12e31b 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -113,6 +113,8 @@ check-functional:
- 	@$(NINJA) precache-functional
- 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
- 
-+check-func: check-func-quick
-+
- # Consolidated targets
- 
- .PHONY: check check-clean
+thanks
+-- PMM
+
+Peter Maydell (2):
+  hw/pci-host/dino: Don't call pci_register_root_bus() in init
+  hw/pci-host/astro: Don't call pci_regsiter_root_bus() in init
+
+ hw/pci-host/astro.c | 27 +++++++-------
+ hw/pci-host/dino.c  | 90 +++++++++++++++++++++------------------------
+ 2 files changed, 55 insertions(+), 62 deletions(-)
+
 -- 
-2.51.0
+2.43.0
 
 
