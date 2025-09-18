@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A378CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D408CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzK71-0003Um-Ot; Thu, 18 Sep 2025 15:16:11 -0400
+	id 1uzK7w-0004nl-Tv; Thu, 18 Sep 2025 15:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK70-0003S6-45; Thu, 18 Sep 2025 15:16:10 -0400
+ id 1uzK7s-0004n6-2Y; Thu, 18 Sep 2025 15:17:04 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK6x-0000mh-SG; Thu, 18 Sep 2025 15:16:09 -0400
+ id 1uzK7o-0000tM-U9; Thu, 18 Sep 2025 15:17:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=b3IgQABG23O/VUy2IKrzVIy4hzqcOgEEHpQQiCUKmus=; b=QvGBONC35+UQu43yYGsvs9ySMz
- Ou9Iu1p9lwakr9++DhPiE/heLH8KQV6vTLBnH24Fgos6QBJHhjPUNtfgvMukM1ILEAQY+WEfv2nii
- SHSvuU7SH4QwalX6aFNGF0iwIcW87/oGPBim8X57uuJ8FVY/DVVTFgd0fN5vxl2oFPkbI9qUhGZY/
- m+eeNvdykcWxrTHnB+TEjrQ06x+knr5FvZFTprTW7JiuLtnltUzaSnSXzuCkh5udzIdz6Gas8xW7e
- w7wGR3Q2dZGMrzE8CEzaqqTtfD+vcAxvZlcayit9uBkKjutKNq1MPEabIy4brERxgr/HwBDr7VPg3
- UFCt8b2wnbxywM582co2yRhMTe993/XVmYYvI7PF3tOzj1AbqI1o2B5uqrXsXDtEFQaTC1xoD4NlI
- zsRGFkzInyXF5CCPQSsqMC6WfLlqoDtwpStR1Jp4CRncWhxtSmVdJeDJxL4Rk4PmkFxejzYaV9yf1
- b3urpGYiGcM1Ea6KTObFaCuOOo1uENVeyu+JqR4OwulKMlWtqBF2ZppdSOj18DT66Zfme5QirGL3e
- NTtiRON5V66V3b+xwdTZh9vmRSO8ULXsYxJHflzxUgMAYXxrS0pC+0sLTMt+W9Qrgjdxj8tq9fjXD
- fNqRrZMhoNMIFqRhuKoMH1mE5iV/Ur624opaOh2zU=;
+ bh=LRRbEX3yfQLkEf3KZItrZNYlItPMxSHb4/WdvEuK2R8=; b=qTV4JwSZC8JIxWQhqsISCET7uZ
+ V1fRI2oL3n1nhEJfe8UQR7ZdaBkQgq4M6n+j1nK4NC+NNpfKUpXDybFAVS0tdItz8EvbxcfdMSwgS
+ jBtliVp6eC8B0AiAkNKt9rwrNW6IDavKDRrxXAO64QaUUb1S6n//OwN5JTVADjbIykqyJN6r+ZMne
+ dgh4rAk4NWvamaBmdqADrbTYlbcMFqI5BUwbBaNlC98tXHbhpSfOnU+WKUttczTxTIVRrz7MehDlJ
+ KyDimM70b7COqbPYTUiW5Jfs7X9lzR1/pWW0tV8NvrgB+XLZcRi0ULk9Slr+T0llXJnhPNHMRPXNN
+ jXQxdrCpSldUVxZ6AZG1XnIqF3z1n7tV2MEwa3mS0OMbHQDW8h/rBX5k/0GJl4PObwgMUKKYOeydC
+ L83sJVqYNyzv7WQRusj1spIANynR4Ug0+Qex4f+/jy76o6kZIrlDVv803631uttyGnoeeWaFR4UdP
+ phEyqW4bWk99MbJfldmz+xO0NN23+Xaax/bxnxX8vFk6tAw3MgQOk3/I6Vob2iz9qLsLBk+AdGIJc
+ LCZS9ofxa1FkihSUXOQmT0f9kmqW8vKuloiRpxfE6nIFTpF2exouLk+yznj4x8Aj6h51KJcep18rl
+ fthQDJEAIB0GIIU5h50VRoT6w5jl/4Mfy0YJ8DPRI=;
 Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzK4x-0006E5-PP; Thu, 18 Sep 2025 20:14:04 +0100
-Message-ID: <b4d9c209-7678-40b9-81f6-39a5b75fa7b3@ilande.co.uk>
-Date: Thu, 18 Sep 2025 20:16:05 +0100
+ id 1uzK5o-0006Eu-BA; Thu, 18 Sep 2025 20:14:56 +0100
+Message-ID: <32705f40-917f-4fe5-8203-f8a3fe7739e4@ilande.co.uk>
+Date: Thu, 18 Sep 2025 20:16:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -46,7 +46,7 @@ To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1758219840.git.balaton@eik.bme.hu>
- <2950aa092b135b4652bf38d6aa6aeae6e875eab2.1758219840.git.balaton@eik.bme.hu>
+ <967c2416f25efd0162df32f43f8b2d048fe28b8d.1758219840.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +73,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <2950aa092b135b4652bf38d6aa6aeae6e875eab2.1758219840.git.balaton@eik.bme.hu>
+In-Reply-To: <967c2416f25efd0162df32f43f8b2d048fe28b8d.1758219840.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 02/14] hw/pci-host/raven: Simplify host bridge type
- declaration
+Subject: Re: [PATCH v3 03/14] hw/pci-host/raven: Use DEFINE_TYPES macro
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,34 +106,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-> Use OBJECT_DECLARE_SIMPLE_TYPE macro instead of open coding it.
+> Convert to using DEFINE_TYPES macro and move raven_pcihost_class_init
+> so methods of each object are grouped together.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/pci-host/raven.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
+>   hw/pci-host/raven.c | 57 +++++++++++++++++++++------------------------
+>   1 file changed, 26 insertions(+), 31 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 172f01694c..878c915de5 100644
+> index 878c915de5..e0f98afebf 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -39,11 +39,9 @@
->   #define TYPE_RAVEN_PCI_DEVICE "raven"
->   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+> @@ -304,6 +304,15 @@ static void raven_pcihost_initfn(Object *obj)
+>       h->bus = &s->pci_bus;
+>   }
 >   
-> -typedef struct PRePPCIState PREPPCIState;
-> -DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
-> -                         TYPE_RAVEN_PCI_HOST_BRIDGE)
-> +OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
+> +static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+> +    dc->realize = raven_pcihost_realizefn;
+> +    dc->fw_name = "pci";
+> +}
+> +
+>   static void raven_realize(PCIDevice *d, Error **errp)
+>   {
+>       d->config[PCI_CACHE_LINE_SIZE] = 0x08;
+> @@ -329,37 +338,23 @@ static void raven_class_init(ObjectClass *klass, const void *data)
+>       dc->user_creatable = false;
+>   }
 >   
-> -struct PRePPCIState {
-> +struct PREPPCIState {
->       PCIHostState parent_obj;
+> -static const TypeInfo raven_info = {
+> -    .name = TYPE_RAVEN_PCI_DEVICE,
+> -    .parent = TYPE_PCI_DEVICE,
+> -    .class_init = raven_class_init,
+> -    .interfaces = (const InterfaceInfo[]) {
+> -        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+> -        { },
+> +static const TypeInfo raven_types[] = {
+> +    {
+> +        .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
+> +        .parent = TYPE_PCI_HOST_BRIDGE,
+> +        .instance_size = sizeof(PREPPCIState),
+> +        .instance_init = raven_pcihost_initfn,
+> +        .class_init = raven_pcihost_class_init,
+> +    },
+> +    {
+> +        .name = TYPE_RAVEN_PCI_DEVICE,
+> +        .parent = TYPE_PCI_DEVICE,
+> +        .class_init = raven_class_init,
+> +        .interfaces = (const InterfaceInfo[]) {
+> +            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+> +            { },
+> +        },
+>       },
+>   };
 >   
->       OrIRQState *or_irq;
-
-Possibly worth mentioning the change of case for PREPPCIState? Otherwise:
+> -static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+> -{
+> -    DeviceClass *dc = DEVICE_CLASS(klass);
+> -
+> -    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+> -    dc->realize = raven_pcihost_realizefn;
+> -    dc->fw_name = "pci";
+> -}
+> -
+> -static const TypeInfo raven_pcihost_info = {
+> -    .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
+> -    .parent = TYPE_PCI_HOST_BRIDGE,
+> -    .instance_size = sizeof(PREPPCIState),
+> -    .instance_init = raven_pcihost_initfn,
+> -    .class_init = raven_pcihost_class_init,
+> -};
+> -
+> -static void raven_register_types(void)
+> -{
+> -    type_register_static(&raven_pcihost_info);
+> -    type_register_static(&raven_info);
+> -}
+> -
+> -type_init(raven_register_types)
+> +DEFINE_TYPES(raven_types)
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
