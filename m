@@ -4,120 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F9ECA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5695FCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzGZ4-00043V-Vd; Thu, 18 Sep 2025 11:28:56 -0400
+	id 1uzGX6-0000iD-M5; Thu, 18 Sep 2025 11:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uzGYs-0003ul-10
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:28:43 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1uzGX0-0000YC-R0
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:26:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uzGYj-0003Tb-H0
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:28:41 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IAHjUe018471;
- Thu, 18 Sep 2025 15:28:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0MeYOe
- rMHFYbKZfJ8EkG1RQNkzgw/qLIW3GFK9uDXwo=; b=Gt+zRxd8+vpd1NQrJPYx/C
- uwsEjU5dn07tR8d277Rf8zYaNQB7OeSCsISr/vRz5oJTH+06Ed771DaF8awMyptD
- Ztcuzni0oQRGR+AVKHiAImkYagWnqSR733M1Y6qoMF7k8UQA6yFiu4qZw5tOUTqC
- 8UNsLhdMEmrQMoYe09X8Jve0yzKXCIpat+C5tGTuhhczb1h48d4WmT6RLb6bJFKO
- q2wDkKnnub+QvrTLakMxAnqgM7s3xOvWqckrK6m+mYlt0q4hJ/fsjqpUbNXlZdZS
- 00t5t1ho6siz/6wFoFOvOh11ulqIAnkJeefnhw34A4ncvJfLnlsF1BCYiMCMCw3A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4pb7wn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 15:28:24 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58IFEJ4V012353;
- Thu, 18 Sep 2025 15:28:24 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4pb7wf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 15:28:24 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58IDJBho022300;
- Thu, 18 Sep 2025 15:28:22 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495kxpyb1r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 15:28:22 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58IFSKRB36503810
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Sep 2025 15:28:20 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 95CFA20040;
- Thu, 18 Sep 2025 15:28:20 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9713D20049;
- Thu, 18 Sep 2025 15:28:17 +0000 (GMT)
-Received: from Gautams-MacBook-Pro.local (unknown [9.43.53.186])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 18 Sep 2025 15:28:17 +0000 (GMT)
-Date: Thu, 18 Sep 2025 20:58:07 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Fabian Vogt <fvogt@suse.de>,
- Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH 1/4] hw/intc/xics: Add missing call to register
- vmstate_icp_server
-Message-ID: <aMwlB72gmJl0ILZt@Gautams-MacBook-Pro.local>
-References: <20250819223905.2247-1-farosas@suse.de>
- <20250819223905.2247-2-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1uzGWw-0003DM-UH
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:26:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758209202;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LB9SXkQgOnyONEMwUfFwYKtNNWRhU5cy/RayQLcVHSg=;
+ b=V39PiIcMc+Q29f0D0l7Jbr8cHSJ2KViv4h6nvlpJrT4ZIihfR0txYWsOIB6tgJiKR5k494
+ yq+JqwLfWJ3XgQduw+ahjtdOULt18eV/QfQ7EAOWmJhwXBLl/1Dba+cj1KYB4UTX9a/7dr
+ PmuvG0Yw5FxEREPBrXDf6QsaaQmWL2U=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-iRbIvrEwP9CJjQrFwgQueg-1; Thu, 18 Sep 2025 11:26:40 -0400
+X-MC-Unique: iRbIvrEwP9CJjQrFwgQueg-1
+X-Mimecast-MFC-AGG-ID: iRbIvrEwP9CJjQrFwgQueg_1758209199
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-b5508cb189cso694244a12.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:26:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758209199; x=1758813999;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LB9SXkQgOnyONEMwUfFwYKtNNWRhU5cy/RayQLcVHSg=;
+ b=TdIFkwHShGSf0XJ2KFm6wMO5T3peRmyBZWFJHShwqotcxPmMEAHrEJH4jfN4I6Fw0+
+ EBwI4DiBBw2FSJUpCLbhCocUpjuG8oJAC9+mfTC/yz9gcGYOCOvr7SXOKRs+NERTAD44
+ SSFoL+jBDc1snRNtX/gC8Am+hjHEgpcZM6qM3AAqXHXKLlJsSls4/42rQw/6bGHr1nIN
+ CrjjINr0lg0AA4nxJknqJL99n460m3tFty0asFGaLLCk37M8Y4dL+xLX8w67xO2eWin/
+ zMV+SSfq94UbyKCHBtL7bfAjlJteQtFq9gS9hPtqY9MXnBZnM33dCcfD/sueE5p593w5
+ +fqw==
+X-Gm-Message-State: AOJu0YxmhHrBM9lOusAQ3Jd4FHtjm+QB8YsGkZYeHBUFBee/WaPRskAC
+ FDgP1HNLrApOltWaOFtvvDXRl4iw8iVkVzb4SNoJz0+iIyqgc4fudb2I9LuI9pzjgC1A18uprJn
+ Xpk3aNaF66jw5nk11WDzQ7LhkuPgI78LWnVpUeNyR/ckPRdDaIUE4/KbG
+X-Gm-Gg: ASbGncvAWvEZ72WPTt49qarBxo7PaEOoZOQPIgfT00h5feq45J9z9HHjMjTwWdEVCOa
+ 103BEbp0IavpYGZAsx5BFuHtKrAECOvgrQrCYu7Mi9PifiH9oDaIkDMhmDHwmrAP6EnBRahT53l
+ N7jGEQvxubycDciRatyLs+oRfRf6Uqqc1cQhiwazXskhh3MdL3qGfKBquGjSOInufLLLSWvz94x
+ umqkh0lmbz9HemeUKfvLBLSL+8PxaDZUM1l17Tfm6kMhov3q8upMCdYEo2UZMfIryXUZdBw0UXf
+ pCTC5UIQuHYu8FYo3LdgESZ14QVYJOBNJqh8Nw5fBwRcvFm6xFDZRw==
+X-Received: by 2002:a05:6a20:7288:b0:263:1475:6653 with SMTP id
+ adf61e73a8af0-27a9f543fd7mr8828013637.16.1758209199313; 
+ Thu, 18 Sep 2025 08:26:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF15rKsO3NKh6/kOvjW96QpfmCWC5f6jUy2I7Pxr4RjWTKQBL5oAUue+v2LE6C3kpdBsK5l2A==
+X-Received: by 2002:a05:6a20:7288:b0:263:1475:6653 with SMTP id
+ adf61e73a8af0-27a9f543fd7mr8827952637.16.1758209198844; 
+ Thu, 18 Sep 2025 08:26:38 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.110.230])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-77cfc2481d7sm2675512b3a.32.2025.09.18.08.26.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 08:26:38 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
+Date: Thu, 18 Sep 2025 20:53:37 +0530
+Subject: [PATCH v14 20/27] migration: Return -1 on memory allocation
+ failure in ram.c
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250819223905.2247-2-farosas@suse.de>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX2k0ky1GF2WzM
- 0QpDqQahsmt+2o+w8fSbbq2I9RVJGjpDtkhgAMY1MdR3WVkY0qYDOSKKHiurfuSj+qk4zqTHIaW
- 5YvJTrZxXwWy48oTmSmcmQe5upUPBn6FbMP/9mjBgxG3w0kLCkhESm3T8kkdy61lwn0VAjFNulM
- kSjuHM66Zc1Ae42K67mfoQUs/pW/3TVA6cDUEC7x+8FkRvFpQI/+1Ik1K3eBQNVPpz6lZer4CkU
- qpr+vQcltmNPubDQ1lxq72pUYmxCBhbt3x8rUSV7Cpd+SIrq/Y7caUTs53m2LCkxJeBTFy8QkIy
- XZe4SGzKTfl+Q8lYktu3DSjmFz2En3yioo2r71VWGukM4Xewmk3tiyd2pchNIkN49OVVD4RXCpm
- 5dn4hMLP
-X-Proofpoint-ORIG-GUID: 38C-8FmafV4jJClMJBf1pblBv47ZxvrY
-X-Proofpoint-GUID: F5tsoFa_QEZkNowFQDfDsvF7pMELBFjT
-X-Authority-Analysis: v=2.4 cv=cNzgskeN c=1 sm=1 tr=0 ts=68cc2518 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=8nJEP1OIZ-IA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=GCogdzMTRew3jUDZFjwA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_01,2025-09-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1011 spamscore=0 bulkscore=0 malwarescore=0
- adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250918-propagate_tpm_error-v14-20-36f11a6fb9d3@redhat.com>
+References: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
+In-Reply-To: <20250918-propagate_tpm_error-v14-0-36f11a6fb9d3@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Arun Menon <armenon@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1640; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=LbrL/8rC1j/1roMz22wMr5Cto4+KiN2vW7a+UxDKaz0=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8YZ5R8XGQIqgu/+LFp3+tv11hVc8yx3L7wufXCN+AnxV
+ utZd5R/dJSyMIhxMciKKbI0fA2QbQoojIi0fXkdZg4rE8gQBi5OAZiIxCqG/9kNiz5OK3hYYjBF
+ ZOe3uW0y4UdCN3KvtnHzjXrG82v7oycM/+O+Ze40Yp+78JvCz5B5dydn7Kq+dXen82rPC9Evvwd
+ dqWMCAA==
+X-Developer-Key: i=armenon@redhat.com; a=openpgp;
+ fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,57 +140,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 07:39:02PM -0300, Fabiano Rosas wrote:
-> From: Fabian Vogt <fvogt@suse.de>
-> 
-> An obsolete wrapper function with a workaround was removed entirely,
-> without restoring the call it wrapped.
-> 
-> Without this, the guest is stuck after savevm/loadvm.
-> 
-> Fixes: 24ee9229fe31 ("ppc/spapr: remove deprecated machine pseries-2.9")
-> Signed-off-by: Fabian Vogt <fvogt@suse.de>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Link: https://lore.kernel.org/qemu-devel/6187781.lOV4Wx5bFT@fvogt-thinkpad
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  hw/intc/xics.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-> index d9a199e883..200710eb6c 100644
-> --- a/hw/intc/xics.c
-> +++ b/hw/intc/xics.c
-> @@ -335,6 +335,8 @@ static void icp_realize(DeviceState *dev, Error **errp)
->              return;
->          }
->      }
-> +
-> +    vmstate_register(NULL, icp->cs->cpu_index, &vmstate_icp_server, icp);
->  }
->  
->  static void icp_unrealize(DeviceState *dev)
-> -- 
-> 2.35.3
-> 
-> 
+The function colo_init_ram_cache() currently returns -errno if
+qemu_anon_ram_alloc() fails. However, the subsequent cleanup loop that
+calls qemu_anon_ram_free() could potentially alter the value of errno.
+This would cause the function to return a value that does not accurately
+represent the original allocation failure.
 
+This commit changes the return value to -1 on memory allocation failure.
+This ensures that the return value is consistent and is not affected by
+any errno changes that may occur during the free process.
 
-I did some testing with QEMU-9.2.0 and 10.1.0 and my observations are:
-1. QEMU-9.2.0
-With XICS, both snapshots and migrations were broken and they work
-fine with this patch
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Arun Menon <armenon@redhat.com>
+---
+ migration/ram.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-2. QEMU-10.1.0
-With XICS, snapshot and migration both are broken - lockups are observed
-(with and without this patch)
+diff --git a/migration/ram.c b/migration/ram.c
+index 6a0dcc04f436524a37672c41c38f201f06773374..163265a57f26fb1dc88d9797629d58c278e9afb7 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3575,6 +3575,8 @@ static void colo_init_ram_state(void)
+  * colo cache: this is for secondary VM, we cache the whole
+  * memory of the secondary VM, it is need to hold the global lock
+  * to call this helper.
++ *
++ * Returns zero to indicate success or -1 on error.
+  */
+ int colo_init_ram_cache(void)
+ {
+@@ -3594,7 +3596,7 @@ int colo_init_ram_cache(void)
+                         block->colo_cache = NULL;
+                     }
+                 }
+-                return -errno;
++                return -1;
+             }
+             if (!machine_dump_guest_core(current_machine)) {
+                 qemu_madvise(block->colo_cache, block->used_length,
 
-The 10.1.0 can be fixed in a follow up patch.
+-- 
+2.51.0
 
-For now since 9.2 works fine, please feel free to add
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-
-
-Thanks,
-Gautam
 
