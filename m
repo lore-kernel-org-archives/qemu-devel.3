@@ -4,78 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F805CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 14:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16942CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 14:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzFt9-0002Qo-MQ; Thu, 18 Sep 2025 10:45:35 -0400
+	id 1uzFui-0003zN-O0; Thu, 18 Sep 2025 10:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzFt7-0002Q8-O5
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:45:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzFt5-00052p-S0
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:45:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758206730;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=GccWsFP/YkEObU3YQe5mvdiRyi2djt3zw64iO9qxNsU=;
- b=Fgf6Ig8eKyuoBwftDLRF5mbwvIiXQf/dNhmm61bWNxdwXLopWF48Ze7M9e5TeuuNT67eas
- yIDH+KLlPTyI3C0e97Ech9vBEBtJKCqFFuLEpSX1SUgc8pqur/Ahc/+HJBNCT2qZ5VdIYa
- NETUX0hXza9SJa0+EFzVUOI46/H2jNQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-AaGCM-ddMQCpM_hDUJPq8Q-1; Thu,
- 18 Sep 2025 10:45:27 -0400
-X-MC-Unique: AaGCM-ddMQCpM_hDUJPq8Q-1
-X-Mimecast-MFC-AGG-ID: AaGCM-ddMQCpM_hDUJPq8Q_1758206726
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzFue-0003sx-81
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:47:08 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzFuc-0005Hl-1l
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 10:47:07 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 484E31955D77; Thu, 18 Sep 2025 14:45:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.161])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 54ABC1800447; Thu, 18 Sep 2025 14:45:24 +0000 (UTC)
-Date: Thu, 18 Sep 2025 15:45:21 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Jiri Denemark <jdenemar@redhat.com>
-Subject: Re: [PATCH] migration: Apply migration specific keep-alive defaults
- to inet socket
-Message-ID: <aMwbAdKQLzLaf4Hd@redhat.com>
-References: <20250909150127.1494626-1-jmarcin@redhat.com>
- <aMBDIwKDxTVrBJBQ@redhat.com> <aMCjGVUiM3MY-RM3@x1.local>
- <aMEkY3N9ITwH_Y8Z@redhat.com> <aMGpHBGth05JY2hl@x1.local>
- <aMPz0WFmstNmKBQc@redhat.com> <aMQ19NmgFkLs8jkA@x1.local>
- <aMhZn-fbq67WQX8u@redhat.com>
- <r2tnbymosv7kxj7h4x6mnrczy7jdn66voiodlakivovu7lhwv4@eudkicvqwefc>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B162C3368A;
+ Thu, 18 Sep 2025 14:47:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758206823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
+ b=NiwifVR/pDJqmEKbr/x6M0fVOjsI3SBIRN77cr+i71F1MXNnk6NxWSunkWSEGPcdse4/m4
+ 4fuiTZBC4HmfD1vq7lyUEL4uoN0jaNATGXyJMuzR6ljSYCXmwomCW43ewPag87kVndZN21
+ LMy8vaFApUV3Un0fWeu24dlKiN1qlNU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758206823;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
+ b=qZvhkbBWv2yPRIGjRE/M3Hxd4sng4aL1RP7d62eyD4h7csvhbxZdHDkXyFqT6CsAy0Ea6F
+ bNc+5DC4JUJDRgDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="NiwifVR/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=qZvhkbBW
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758206823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
+ b=NiwifVR/pDJqmEKbr/x6M0fVOjsI3SBIRN77cr+i71F1MXNnk6NxWSunkWSEGPcdse4/m4
+ 4fuiTZBC4HmfD1vq7lyUEL4uoN0jaNATGXyJMuzR6ljSYCXmwomCW43ewPag87kVndZN21
+ LMy8vaFApUV3Un0fWeu24dlKiN1qlNU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758206823;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Fw/Yvw7s2tvzq2t/RxZfpH8Sqi3RBXGHJOZqtZ0hiB0=;
+ b=qZvhkbBWv2yPRIGjRE/M3Hxd4sng4aL1RP7d62eyD4h7csvhbxZdHDkXyFqT6CsAy0Ea6F
+ bNc+5DC4JUJDRgDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 286F613A39;
+ Thu, 18 Sep 2025 14:47:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Q3A1NWYbzGiWTQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 18 Sep 2025 14:47:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang?=
+ =?utf-8?Q?=C3=A9?= <berrange@redhat.com>, peterx@redhat.com
+Subject: Re: [PATCH v2 2/3] io/tls: Make qio_channel_tls_bye() always
+ synchronous
+In-Reply-To: <20250911212355.1943494-3-peterx@redhat.com>
+References: <20250911212355.1943494-1-peterx@redhat.com>
+ <20250911212355.1943494-3-peterx@redhat.com>
+Date: Thu, 18 Sep 2025 11:47:00 -0300
+Message-ID: <87bjn7vmvv.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <r2tnbymosv7kxj7h4x6mnrczy7jdn66voiodlakivovu7lhwv4@eudkicvqwefc>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: B162C3368A
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,85 +126,201 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 04:16:56PM +0200, Juraj Marcin wrote:
-> If there is no outgoing traffic from the destination side (this can be
-> caused for example by a workload with no page faults or paused machine),
-> QEMU has no way of knowing if the connection is still working or not.
-> The TCP stack doesn't treat no incoming traffic as a sign of a broken
-> connection. Therefore, QEMU would stay in postcopy-active waiting for
-> pages indefinitely.
-> 
-> Also, libvirt might not be aware of a connection dropout between QEMUs,
-> if libvirt's connection is intact, especially if libvirt daemons are
-> communicating through some central entity that is managing the migration
-> and not directly. And to do postcopy migration recovery, libvirt needs
-> both sides to be in postcopy-paused state.
+Peter Xu <peterx@redhat.com> writes:
 
-Whether keepalive timeouts are at the QEMU level or global kernel
-level, there will always be situations where the timeouts are too
-long. Apps/admins can have out of band liveliness checks between
-hosts that detect a problem before the keepalives will trigger
-and shouldn't have to wait to recover migration, once they have
-resolved the underlying network issue.
+> No issue I hit, the change is only from code observation when I am looking
+> at a TLS premature termination issue.
+>
+> qio_channel_tls_bye() API needs to be synchronous.  When it's not, the
+> previous impl will attach an asynchronous task retrying but only until when
+> the channel gets the relevant GIO event. It may be problematic, because the
+> caller of qio_channel_tls_bye() may have invoked channel close() before
+> that, leading to premature termination of the TLS session.
+>
 
-There needs to be a way to initiate post-copy recovery regardless
-of whether we've hit a keepalive timeout. Especially if we can
-see one QEMU in postcopy-paused, but not the other side, it
-doesn't appear to make sense to block the recovery process.
+I'm not super versed on socket APIs, so bear with me: Wouldn't the
+subsequent shutdown() before close() ensure that the io watch gets
+triggered? Assuming we're atomically installing the watch before the
+shutdown() (at the moment, we're not).
 
-The virDomainJobCancel command can do a migrate-cancel on the
-src, but it didn't look like we could do the same on the dst.
-Unless I've overlooked something, Libvirt needs to gain a way
-to explicitly force both sides into the postcopy-paused state,
-and thus be able to immediately initiate recovery.
+> Remove the asynchronous handling, instead retry it immediately.  Currently,
+> the only two possible cases that may lead to async task is either INTERRUPT
+> or EAGAIN.  It should be suffice to spin retry as of now, until a solid
+> proof showing that a more complicated retry logic is needed.
+>
+> With that, we can remove the whole async model for the bye task.
+>
 
-> Alternatively, there also might be an issue with the connection between
-> libvirt daemons, but not the migration connection. Even if the libvirt
-> connection fails, the migration is not paused, rather libvirt lets the
-> migration finish normally. Similarly, if the libvirt connection is
-> broken up due to, for example, libvirt daemon restart, the ongoing
-> migration is not paused, but after the libvirt daemon starts again, it
-> sees an ongoing migration and lets it finish.
+With the bye() being synchronous, do we still have the issue when
+migration fails? I guess it depends on what the answer to my question
+above is...
 
-Whole this is a reliability issue for libvirt, this doesn't have
-any bearing on migration keepalive timeouts, as we're only concerned
-about QEMU connections.
-
-> Additionally, libvirt uses its own internal keep-alive packets with much
-> more aggressive timeouts, waiting 5 - 10 seconds idle before sending a
-> keep-alive packet and then killing the connection if there is no
-> response in 30 seconds.
-
-Yep, this keepalive is very aggressive and has frequently caused
-problems with libvirt connections being torn down inappropriately.
-We get away with that because most libvirt APIs don't need to have
-persistent state over the duration of a connection. The migration
-APIs are there area where this isn't true, and the keepalives on
-libvirt conmnections have resulted in us breaking otherwise still
-functional migrations. IOW, I wouldn't point to libvirt as an
-illustration of keepalives being free of significant downsides.
-
-> I think, if we enable keep-alive in QEMU, but let the default timeouts
-> be longer, for example idle time of 5 minutes and 15 retries in 1 minute
-> intervals (which would mean, that connection would be considered broken
-> after 20 minutes of unsuccessful communication attempts), that would be
-> an acceptable solution.
-
-I'm fine with turning on keepalives on the socket, but IMHO the
-out of the box behaviour should be to honour the kernel default
-tunables unless the admin decides they want different behaviour.
-I'm not seeing a rational for why the kernel defaults should be
-forceably overridden in QEMU out of the box.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+> When at it, making the function return bool, which looks like a common
+> pattern in QEMU when errp is used.
+>
+> Side note on the tracepoints: previously the tracepoint bye_complete()
+> isn't used.  Start to use it in this patch.  bye_pending() and bye_cancel()
+> can be dropped now.  Adding bye_retry() instead.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/io/channel-tls.h |  5 ++-
+>  io/channel-tls.c         | 86 +++++-----------------------------------
+>  io/trace-events          |  3 +-
+>  3 files changed, 15 insertions(+), 79 deletions(-)
+>
+> diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
+> index 7e9023570d..bcd14ffbd6 100644
+> --- a/include/io/channel-tls.h
+> +++ b/include/io/channel-tls.h
+> @@ -49,7 +49,6 @@ struct QIOChannelTLS {
+>      QCryptoTLSSession *session;
+>      QIOChannelShutdown shutdown;
+>      guint hs_ioc_tag;
+> -    guint bye_ioc_tag;
+>  };
+>  
+>  /**
+> @@ -60,8 +59,10 @@ struct QIOChannelTLS {
+>   * Perform the TLS session termination. This method will return
+>   * immediately and the termination will continue in the background,
+>   * provided the main loop is running.
+> + *
+> + * Returns: true on success, false on error (with errp set)
+>   */
+> -void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
+> +bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp);
+>  
+>  /**
+>   * qio_channel_tls_new_server:
+> diff --git a/io/channel-tls.c b/io/channel-tls.c
+> index 5a2c8188ce..8510a187a8 100644
+> --- a/io/channel-tls.c
+> +++ b/io/channel-tls.c
+> @@ -253,84 +253,25 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+>      qio_channel_tls_handshake_task(ioc, task, context);
+>  }
+>  
+> -static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+> -                                       gpointer user_data);
+> -
+> -static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+> -                                     GMainContext *context)
+> +bool qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
+>  {
+> -    GIOCondition condition;
+> -    QIOChannelTLSData *data;
+>      int status;
+> -    Error *err = NULL;
+>  
+> -    status = qcrypto_tls_session_bye(ioc->session, &err);
+> +    trace_qio_channel_tls_bye_start(ioc);
+> +retry:
+> +    status = qcrypto_tls_session_bye(ioc->session, errp);
+>  
+>      if (status < 0) {
+>          trace_qio_channel_tls_bye_fail(ioc);
+> -        qio_task_set_error(task, err);
+> -        qio_task_complete(task);
+> -        return;
+> -    }
+> -
+> -    if (status == QCRYPTO_TLS_BYE_COMPLETE) {
+> -        qio_task_complete(task);
+> -        return;
+> -    }
+> -
+> -    data = g_new0(typeof(*data), 1);
+> -    data->task = task;
+> -    data->context = context;
+> -
+> -    if (context) {
+> -        g_main_context_ref(context);
+> -    }
+> -
+> -    if (status == QCRYPTO_TLS_BYE_SENDING) {
+> -        condition = G_IO_OUT;
+> -    } else {
+> -        condition = G_IO_IN;
+> -    }
+> -
+> -    trace_qio_channel_tls_bye_pending(ioc, status);
+> -    ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
+> -                                                  qio_channel_tls_bye_io,
+> -                                                  data, NULL, context);
+> -}
+> -
+> -
+> -static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+> -                                       gpointer user_data)
+> -{
+> -    QIOChannelTLSData *data = user_data;
+> -    QIOTask *task = data->task;
+> -    GMainContext *context = data->context;
+> -    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
+> -
+> -    tioc->bye_ioc_tag = 0;
+> -    g_free(data);
+> -    qio_channel_tls_bye_task(tioc, task, context);
+> -
+> -    if (context) {
+> -        g_main_context_unref(context);
+> +        return false;
+> +    } else if (status != QCRYPTO_TLS_BYE_COMPLETE) {
+> +        /* BYE event must be synchronous, retry immediately */
+> +        trace_qio_channel_tls_bye_retry(ioc, status);
+> +        goto retry;
+>      }
+>  
+> -    return FALSE;
+> -}
+> -
+> -static void propagate_error(QIOTask *task, gpointer opaque)
+> -{
+> -    qio_task_propagate_error(task, opaque);
+> -}
+> -
+> -void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
+> -{
+> -    QIOTask *task;
+> -
+> -    task = qio_task_new(OBJECT(ioc), propagate_error, errp, NULL);
+> -
+> -    trace_qio_channel_tls_bye_start(ioc);
+> -    qio_channel_tls_bye_task(ioc, task, NULL);
+> +    trace_qio_channel_tls_bye_complete(ioc);
+> +    return true;
+>  }
+>  
+>  static void qio_channel_tls_init(Object *obj G_GNUC_UNUSED)
+> @@ -482,11 +423,6 @@ static int qio_channel_tls_close(QIOChannel *ioc,
+>          g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
+>      }
+>  
+> -    if (tioc->bye_ioc_tag) {
+> -        trace_qio_channel_tls_bye_cancel(ioc);
+> -        g_clear_handle_id(&tioc->bye_ioc_tag, g_source_remove);
+> -    }
+> -
+>      return qio_channel_close(tioc->master, errp);
+>  }
+>  
+> diff --git a/io/trace-events b/io/trace-events
+> index dc3a63ba1f..67b3814192 100644
+> --- a/io/trace-events
+> +++ b/io/trace-events
+> @@ -45,10 +45,9 @@ qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
+>  qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
+>  qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
+>  qio_channel_tls_bye_start(void *ioc) "TLS termination start ioc=%p"
+> -qio_channel_tls_bye_pending(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
+> +qio_channel_tls_bye_retry(void *ioc, int status) "TLS termination pending ioc=%p status=%d"
+>  qio_channel_tls_bye_fail(void *ioc) "TLS termination fail ioc=%p"
+>  qio_channel_tls_bye_complete(void *ioc) "TLS termination complete ioc=%p"
+> -qio_channel_tls_bye_cancel(void *ioc) "TLS termination cancel ioc=%p"
+>  qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
+>  qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
 
