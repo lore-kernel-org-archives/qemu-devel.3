@@ -4,111 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37D7CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 18:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34774CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 18:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzJ9X-0001dE-7h; Thu, 18 Sep 2025 14:14:44 -0400
+	id 1uzJIc-0004zr-Tr; Thu, 18 Sep 2025 14:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1uzJ9P-0001cD-GQ; Thu, 18 Sep 2025 14:14:35 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzJIW-0004z1-Px
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 14:24:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1uzJ9L-00039x-Qj; Thu, 18 Sep 2025 14:14:33 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IFHHAG011504;
- Thu, 18 Sep 2025 18:14:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WNjXLs
- Kvwrk8hg9Nrs9OIDhwpPzdubxb3rsey88yHgk=; b=oHqN3VCp38DCbPUh3YZdmR
- ydbgkJy+4RWW7kWGGOd7/Ir7Wjczllsvb8H39VurJjDwB9IlF5c4aZi48eIzZGmT
- ZheX2wR6ekjw3jMUBVa8akEv58WcpYLvkjCL1u3mdbm4bgQxKr1L+YXWDxzqtxvE
- OkKAve8rVOAw77D+0KkIwGEU24JRpKVyuzjMHfsdeD+Pr1QaeAPxTmVTovrsuEXK
- s5YQtiKRz4pY06Fg0iE+V+Ay9+KknTpfCDEpyGyvMPodcATX8xX8RQwnPzo373cf
- cmSAfeBg86CTPObu/n6+b5orXmXJBPaOzqCky2bA0RaU5GjFAQrQgFqDImxmiGMw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4jc3p1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 18:14:26 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58IICVe6009395;
- Thu, 18 Sep 2025 18:14:25 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 495nn3qt7e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 18:14:25 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58IIEDA72032374
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Sep 2025 18:14:13 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 534B358053;
- Thu, 18 Sep 2025 18:14:23 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF1BF58059;
- Thu, 18 Sep 2025 18:14:21 +0000 (GMT)
-Received: from [9.61.248.192] (unknown [9.61.248.192])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Sep 2025 18:14:21 +0000 (GMT)
-Message-ID: <adf0c9b9-d023-4b65-8c44-a50769978e26@linux.ibm.com>
-Date: Thu, 18 Sep 2025 11:14:15 -0700
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzJIS-0005HQ-9j
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 14:23:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758219833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lNsw5JLeKY9uVflrGldSh1MSaksI/KlXGOcdfAP4dVg=;
+ b=hnbT1VcGsztXK6y7ZCPrCjbQJSP2uNBzV9BF8H5zT4RACv0Vhk9tRwXbqRf4hoS004fSFX
+ wT+jF7zt4B49Q6a0LO/jg/cUlf9a6m4L7EH4xkJmvgB64wP5BYZCMdWIWn/xey9SXVQMfx
+ V1PJ22OB+r6nayaBzDaQ88/X9ljiee8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-417-ypKHmh_ON8qnWcB-oC1XWQ-1; Thu, 18 Sep 2025 14:23:52 -0400
+X-MC-Unique: ypKHmh_ON8qnWcB-oC1XWQ-1
+X-Mimecast-MFC-AGG-ID: ypKHmh_ON8qnWcB-oC1XWQ_1758219832
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-81ea2cb6f13so242321385a.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 11:23:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758219832; x=1758824632;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lNsw5JLeKY9uVflrGldSh1MSaksI/KlXGOcdfAP4dVg=;
+ b=vYtBGAMPAnc3lUCL42Y7W5s0/khDdsD+9Md41Kh4MCN8KPeWYnIGDj7I7ZF9K5PQuy
+ waqPQdNhvRGIQdvqwfzZM0NoRodONDlWPSadk6CB1Kpel3qo4Te3cOkY/BI68SHd++qB
+ O0AtzusCqJDhJFd2Zem6ARyZ8s6jOJz/UPqxMYxH48z+8NG4yVRwOGILh7JsaQ4DlZNQ
+ erKvHposRAukbMIJxqvPEpd5RPIrADt3g23A1G80TJkN5EcaCJUg5tIuLnU1ri4DJRO1
+ 1SdnC9EqUg7cAOs4BU4irJLJSlly+tK53u0BvNFlHBNtVS2klALCmVoGNHiULZa8izM6
+ zhZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKwWAPa+WHtnythZxI0PAPNonCdoRn+P8zOriN1m/XSmb5Y6jIbOuflOn4vJ5WuzpRbVoU/ufBl2q9@nongnu.org
+X-Gm-Message-State: AOJu0Yz5EWpr+2afYkonhtttnCQczUodHmGdRbAR8bl/pbviIz+J4liW
+ mHSm/ffZJ2rqs4rDTaxst3L4lkFY2+qvF/C4uT9prNwdcakFStbW0pRisWwOr6ZmbhIRTlyqJon
+ 5p5YZ5LPlGPmZtJZpbo581HU/hJl8/JOBCP/IYDHLc25VmtNXvks3CGBr
+X-Gm-Gg: ASbGncvm1pe6hgHHlh8qDxxcQDxiDVbppJwTKZgVIriEi1sJAsTpGWe3uskgyfw4qlU
+ zUnuGtHrih9h5ApVoJhJOcgOikT4lSvYkU5gmHTew7orzJ9ymItvanzwHtzEYx2wfjkDVozGQ9J
+ A1acwHVObw8m912WvukP8cdKooeH3D4+wQFLuOvGm/+EenMLwEZrJ2ft/KPLrSiJmq/QCP8aPMY
+ DBIMCNAvjyl1Oh08EXJXhmlRMLGVfWDe+dpYS6iEccYAveBZFpx0YLpz8hXlolaNtHi3xyiuIy+
+ adcjoh7kTVMgsyCm6YLS/lDa9IV7YrMvWziC8Au8v1QF7iAJjgfs1qZW1DpmV2dhjYnmD/aO77P
+ PYf6pW9ltncVQk95FVJQypg==
+X-Received: by 2002:a05:620a:1a8c:b0:80d:a8d5:9857 with SMTP id
+ af79cd13be357-83bab74d395mr64509085a.43.1758219831744; 
+ Thu, 18 Sep 2025 11:23:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUpTtF0CBpm8iaj0vzODs7Wm2HXXsF9gB4ig///X5jqMVyDsGMScgSe8thOnLAxmi8d11Yfg==
+X-Received: by 2002:a05:620a:1a8c:b0:80d:a8d5:9857 with SMTP id
+ af79cd13be357-83bab74d395mr64504285a.43.1758219831243; 
+ Thu, 18 Sep 2025 11:23:51 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8363344e970sm204144985a.61.2025.09.18.11.23.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 11:23:50 -0700 (PDT)
+Date: Thu, 18 Sep 2025 14:23:47 -0400
+From: Peter Xu <peterx@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v3 0/7] Do not unparent in instance_finalize()
+Message-ID: <aMxOM-XCamf2y8ke@x1.local>
+References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <aMwRSpezxmIwIHrU@x1.local>
+ <f536fc18-73ab-676c-bdec-59e94a3e5408@eik.bme.hu>
+ <aMwxYY9E3QghD10K@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/28] crypto/x509-utils: Refactor with GNUTLS fallback
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-3-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250917232131.495848-3-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Qf5mvtbv c=1 sm=1 tr=0 ts=68cc4c02 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=8efJLzWtkbXhKAT8rVIA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: JMvmlOwSQcfZ4nTxBHA8b6isTMeXtwVI
-X-Proofpoint-GUID: JMvmlOwSQcfZ4nTxBHA8b6isTMeXtwVI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX+YPEYK7q+Wky
- NCFP3vxbZGQbde23oPNS/ohl1Nw8//81DUnChRrsTZlBBWe16cJdDv8oeZv6kKGr07JoxosQl2v
- hLV9UuKlqH7lVbZJ+GuMWuWQuIwqmFFUglrfsXy9Y1ajAvopcjf7EDAvndW75NFJw/BxFXwIbU5
- OCjTDMRUanukSE3HfcIHC5+9SRHfYHypbvWI3TJx4+YuglOsrjNdRXXid/TAROV96fGzL/myF+o
- 8Er5hIge8chZVszmlYXmWfuat7iWJVqSYkuIgv8R1+wV87kS/SosWU5H3D6q8Tk1DFEGCKBtLxE
- V4XllbsMSGk0Z/dg7y6H+Gzx6JlDdk++GKApuJkkF7xA9d8++IdFRbocFyqP4uGpVSY2YaYootv
- NwHj9gQD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aMwxYY9E3QghD10K@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,65 +149,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+On Thu, Sep 18, 2025 at 12:20:49PM -0400, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 05:29:34PM +0200, BALATON Zoltan wrote:
+> > On Thu, 18 Sep 2025, Peter Xu wrote:
+> > > On Wed, Sep 17, 2025 at 07:13:25PM +0900, Akihiko Odaki wrote:
+> > > > Based-on: <cover.1751493467.git.balaton@eik.bme.hu>
+> > > > ("[PATCH v2 00/14] hw/pci-host/raven clean ups")
+> > > 
+> > > Could I ask why this is a dependency?
+> > 
+> > It removes an address_space usage from raven so this series does not have to
+> > change that and I don't have to rebase that series. Otherwise these are not
+> > related. I'll check the problem reported about my series and send an updated
+> > one.
+> 
+> This series should be a split of a previous mixed up series that may
+> contain address space changes while this one doesn't.  It also doesn't
+> touch raven.c and ppc/.
+> 
+> Can I then understand it as the dependency is simply not needed?
 
-On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
-> Always compile x509-utils.c and add a fallback when GNUTLS is
-> unavailable.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   crypto/meson.build  |  5 +----
->   crypto/x509-utils.c | 16 ++++++++++++++++
->   2 files changed, 17 insertions(+), 4 deletions(-)
->
-> diff --git a/crypto/meson.build b/crypto/meson.build
-> index 735635de1f..0614bfa914 100644
-> --- a/crypto/meson.build
-> +++ b/crypto/meson.build
-> @@ -22,12 +22,9 @@ crypto_ss.add(files(
->     'tlscredsx509.c',
->     'tlssession.c',
->     'rsakey.c',
-> +  'x509-utils.c',
->   ))
->   
-> -if gnutls.found()
-> -  crypto_ss.add(files('x509-utils.c'))
-> -endif
-> -
->   if nettle.found()
->     crypto_ss.add(nettle, files('hash-nettle.c', 'hmac-nettle.c', 'pbkdf-nettle.c'))
->     if hogweed.found()
-> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-> index 39bb6d4d8c..6176a88653 100644
-> --- a/crypto/x509-utils.c
-> +++ b/crypto/x509-utils.c
-> @@ -11,6 +11,8 @@
->   #include "qemu/osdep.h"
->   #include "qapi/error.h"
->   #include "crypto/x509-utils.h"
-> +
-> +#ifdef CONFIG_GNUTLS
->   #include <gnutls/gnutls.h>
->   #include <gnutls/crypto.h>
->   #include <gnutls/x509.h>
-> @@ -78,3 +80,17 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
->       gnutls_x509_crt_deinit(crt);
->       return ret;
->   }
-> +
-> +#else /* ! CONFIG_GNUTLS */
-> +
-> +int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-> +                                      QCryptoHashAlgo hash,
-> +                                      uint8_t *result,
-> +                                      size_t *resultlen,
-> +                                      Error **errp)
-> +{
-> +    error_setg(errp, "GNUTLS is required to get fingerprint");
-> +    return -1;
-> +}
-> +
-> +#endif /* ! CONFIG_GNUTLS */
+I meant, it seems we don't need to wait for the other series to merge this
+one, hence the there is no real dependency.
+
+I didn't mean to drop that series for sure.. if it was confusing before..
+
+Thanks,
+
+-- 
+Peter Xu
+
 
