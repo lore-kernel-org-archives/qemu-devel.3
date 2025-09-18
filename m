@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88506CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 15:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F930CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 16:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzH2E-0002Yh-9d; Thu, 18 Sep 2025 11:59:02 -0400
+	id 1uzHIu-0002SK-5p; Thu, 18 Sep 2025 12:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uzH2A-0002W8-10
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:58 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uzH28-0007Ru-9l
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 11:58:57 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7761578340dso1628289b3a.3
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 08:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758211135; x=1758815935; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xO7r/UkjJOpBdepZgahQXwA4UPtG8pwa1VMzQM5PCVo=;
- b=QIC+EgUX5qrkamxx8GF2nS5z84b6xfJp4sfNH1yxcMK/BF/mzzwAIBLyL7Co2L/S3D
- jP7D65Vt1EeYnRxJ2BfsJPlunhoi8n2O7M8T9CgPgZ/6fJfK+XaHwbOX25zt9869a3gb
- shlavRvhBNQnqJrb8dxc09EC7RUpfa/ZC3j3iIF9r0p1FIpACxn3KPEQ5mpOOMcU45Bf
- /x2xp0t4AKhpnHiFIV+Ers8RCLoL75o3i8P4zHc4fExEB8k8xI/SwlDMsQZPEEp7J3Ea
- 6HhnPaW5kbf3sFGvEaLpKEq+furfNtnz9VQrSc+PDW/WdA+LFYOZTNnUXiqQDAaBwpNC
- 9IrA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHIr-0002Mi-Bl
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzHIo-0002DV-LZ
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 12:16:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758212168;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=z7cfihwC+DHwd44Qb7Kpf7JbNbzJ0yG3FhNUTk1uBe4=;
+ b=EGITGH/w40jhfPACt9OuAc1DgnO4vn5/kwRBF6cM9TkpOHGosT+t53BkI24AGlHiChBvd0
+ CAOysRty4+2lI8IF3vxPIKRq2yP589HwER8WIhMxI2r7KqIwfMoFiQN0TQ1DkAGLs/oY+v
+ Rv+6nmjhqGseVpIRId+dJKHtI0TOJRk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-oHyj85qwOPiUZJQzKpqieA-1; Thu, 18 Sep 2025 12:16:06 -0400
+X-MC-Unique: oHyj85qwOPiUZJQzKpqieA-1
+X-Mimecast-MFC-AGG-ID: oHyj85qwOPiUZJQzKpqieA_1758212166
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4b7ad72bc9dso29854441cf.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 09:16:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758211135; x=1758815935;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xO7r/UkjJOpBdepZgahQXwA4UPtG8pwa1VMzQM5PCVo=;
- b=JlzT4fTTwnb2JTLmzRweVxF7y8nY90nVp5/gnQ7N+HiqTWaPAGCEMQQcMqgJMPQ6f2
- OixT8jirxvPgUgFUyABRRP8nmhG86Je94mLM3MyWbQku1PRzNg+9CO4epJAUpYwbRNGE
- yFpO0mMy18Es+AEJwbOezoX2ukb84pw8FxD/0SqriQGLrHpheymR/HT8WjqlcPkdIrve
- I72Zeby1eT4Ule5Of/7t+puR60gSwemRzGlkjTxJkOwQw5RA2jhNhENIAOVL1zn1t9y3
- guXn6YKjEBg2k4j5f60HTawxnzVUIchK+jROEiZ2igJM0sKEm6pcanG/T2Pice3Fgu0v
- cBgA==
-X-Gm-Message-State: AOJu0YytZ3Gi2332R+Ha/Kh5VkxRYCjqe/oYjhWM6e4wuklhS6YArZcV
- z1UCKZtBGmimrHb5ep2Y7mrrCLK7YQndneoL95X86cKFpjdaheELGRNGfWVFrfl8IB2gb998oh2
- noMSq
-X-Gm-Gg: ASbGnctXekkkY+NBgg+/SSgEwy8XOZLEMeXebR7RWBHCUBfcgVcoZK916KyKtRoBNoi
- 0tqvwOEkr02Ycw6FUVDtw/0eRs8tIMKEd1LsdPQeJGgFjwXccAN1cfGshY9LKiJoSJo+9Z1pjde
- 0nuFzt2y+vrqpjFXcxtcDji8VPymXgk1uMLXoFO5wUheP6rcLU5yF5mhacwFq51xu2nZqWKy3H5
- XqA9m2H1N/YWAdTUMETESRfWnd6j38iZlLXg0WlNfsXqyWHKIxnNbv+zmKG8u3sg81s6VtKj2Ga
- +9xqWDjsSJBBvtIcULiOBegaE7dyke/+wfbchkciDEn/sedXXfocbJyLHU8QDUqVzbSFDK2MZBI
- /9UYZ43WlOiBUKOih6vKNnfZPhyUvFSPD1iat5n+wQDfNnyISfl5Vs0Y=
-X-Google-Smtp-Source: AGHT+IFPdZfehmTFNFMOPZ2dpfXLYHUJxLLrBVq4h9M+YRTq4CeFYSIHswRwtPZCeVqW0HnwfocXug==
-X-Received: by 2002:a05:6a00:c93:b0:772:25f6:caee with SMTP id
- d2e1a72fcca58-77bfa648609mr6819451b3a.30.1758211134761; 
- Thu, 18 Sep 2025 08:58:54 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77cfbb7c127sm2723972b3a.21.2025.09.18.08.58.54
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Sep 2025 08:58:54 -0700 (PDT)
-Message-ID: <5d52ba49-df38-4006-a900-b285093813fd@linaro.org>
-Date: Thu, 18 Sep 2025 08:58:52 -0700
+ d=1e100.net; s=20230601; t=1758212166; x=1758816966;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z7cfihwC+DHwd44Qb7Kpf7JbNbzJ0yG3FhNUTk1uBe4=;
+ b=W2ifpINm/+NwKTJfxI/b5nNsuSlYzUOe0Q+Mg/EIqQDEp1CtzSQGdMx4J5IMTClCON
+ h92j03v592UbgiFLWNwWvbZbgy/eSgfwT3WBPIUwBQgMN+NVJuNRkn6Sb0Qk+8gqrWJm
+ +t4U1/GqP/n189XmyGDoATai9Y2Jd270JkdE9jniMX+keHc8J3cTm8XL5K4T/3hWc9em
+ W44i2uPQLaIt4pjVqdeMn/qdLWu3pqGAFwyNe4lWQE1Pl+S+SC8aABBGYbN845aKe2LY
+ 5G/4XxnwoQCIJ0Ujd3ePOcUMoGJHBl6BnDqc2d7htrsNAwpr8mtpuH1dJoxxDU5UYj64
+ msqg==
+X-Gm-Message-State: AOJu0YzSRoyNnn5ykdI1cH3mNbP/haYBRN9eejb+esFBS44eLhzOkpuB
+ Wa8Na/u8ASKSpvpMuBIoC7sn6WICEdhxh5SADYX1jlcJZarLPLTWNqHgCy5OVS0nWiNgOqSvF+d
+ CTZixM+XVwFQ8TbKbgihWXsyLTnCK1PcbvjSOLGu3Gbq5WQrRON86VUiT
+X-Gm-Gg: ASbGncvC/AKSW4QtJlC0IyM76v4zE2QAa/o5lgOjnRTWoffZQQ/5Fzgv6A7fYHp8LC0
+ eRLp+w3DNDsgOveUUKQg+5r3KU91mwdvpPzBojOA0rLvmwZpOqBBZdVlk05Blv/RS7kjmoe6LlY
+ VHnZ8YEciILVNqQaIbRFeBjaG/bk8THLa0n7umqoMNdO/F6lLcK+omv0oC5qoUdActMNvp5SDP9
+ +iPIIKYWPpOImX895SZZb5n87sx4gD8gSyTe5sf3cefIUExvSlh1dk9H+xN4I6FO7U0qoAo16vM
+ tmonpTXN+R1V59q0blt3PgJX+ObIp3/s
+X-Received: by 2002:a05:622a:202:b0:4b5:4874:4f92 with SMTP id
+ d75a77b69052e-4ba686208d8mr79066471cf.13.1758212165886; 
+ Thu, 18 Sep 2025 09:16:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkctG+vJIHsx/u/098IpHmt7fYeL69op+jVFcnESPWzLbf/Bt7NAdcJI4Tgzyrmy2wrqeyvQ==
+X-Received: by 2002:a05:622a:202:b0:4b5:4874:4f92 with SMTP id
+ d75a77b69052e-4ba686208d8mr79065841cf.13.1758212165367; 
+ Thu, 18 Sep 2025 09:16:05 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-836292954b2sm184490885a.29.2025.09.18.09.16.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Sep 2025 09:16:04 -0700 (PDT)
+Date: Thu, 18 Sep 2025 12:15:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/3] migration/tls: Graceful shutdowns for main and
+ postcopy channels
+Message-ID: <aMwwOfX8lL25aLf7@x1.local>
+References: <20250910160144.1762894-1-peterx@redhat.com>
+ <aMLK5nT4CVPrcZCB@x1.local> <87tt10vlvb.fsf@suse.de>
+ <aMstJdBDMR8S2S9-@x1.local> <87ikhfvpmj.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/60] CPU, Rust, x86 changes for 2025-09-13
-To: qemu-devel@nongnu.org
-References: <20250918104624.441820-1-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250918104624.441820-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ikhfvpmj.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,36 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 03:46, Paolo Bonzini wrote:
-> The following changes since commit 2e66fb24a0ca9750df0d1d5b35197ff89c4bbd46:
-> 
->    Merge tag 'pull-misc-20250916' ofhttps://gitlab.com/rth7680/qemu into staging (2025-09-16 10:10:51 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> 
-> for you to fetch changes up to 00c0911c68e5bd664de1a261b74c390f4c0be83d:
-> 
->    accel/kvm: Set guest_memfd_offset to non-zero value only when guest_memfd is valid (2025-09-17 19:01:57 +0200)
-> 
-> ----------------------------------------------------------------
-> * cpu-exec: more cleanups to CPU loop exits
-> * python: bump bundled Meson to 1.9.0
-> * rust: require Rust 1.83.0
-> * rust: temporarily remove from Ubuntu CI
-> * rust: vmstate: convert to use builder pattern
-> * rust: split "qemu-api" crate
-> * rust: rename qemu_api_macros -> qemu_macros
-> * rust: re-export qemu macros from other crates
-> * x86: fix functional test failure for Xen emulation
-> * x86: cleanups
-> ----------------------------------------------------------------
-> 
-> v1->v2: dropped "i386/kvm: Get X86MachineState in kvm_arch_init() without the cast check"
+On Thu, Sep 18, 2025 at 10:47:48AM -0300, Fabiano Rosas wrote:
+> I'm thinking if it's possible for a premature termination to be detected
+> by TLS before we did the shutdown(). So my suggestion was to always
+> bye() before shutdown(), not matter the state migration is in. But maybe
+> your way is ok, I'm not sure now. Let me read the other versions of the
+> series...
 
+For failing / cancelling migrations, premature termination is likely fine.
+IMHO we also shouldn't care too much on error reports on premature
+terminations because it's failing anyway.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+So maybe you're talking about shutdown()s when the migration is
+successfully completed.
 
-r~
+We can try to do that, but maybe it's not easily doable.  E.g., we have the
+preempt thread currently only be able to be kicked out by a shutdown() from
+the dst main thread.  While we can start to inject a bye() there before the
+shutdown(), it'll be:
+
+  (1) a bye() sent concurrently while the preempt thread is still logically
+  owning and operating on the preempt channel (luckily, so far read-only),
+  and,
+
+  (2) we need to double check if this works if we send bye(WR) from dest to
+  src and whether it'll also gracefully shutdown the src side.
+
+  (3) currently, a shutdown() is synchronous.  bye() is yet not.  We may
+  then need similiar treatment (e.g. changing IO to block tempoararily?)
+  when doing explicit shutdown()s.
+
+I very vaguely remember when working on this series I tried (2) and it
+didn't really work, but I'm not very sure. Anyway, all these will add some
+complexity, and we'd better justify it's worthwhile..
+
+[...]
+
+> Ah, sorry, I didn't see the v2 on my list. But it's there.
+
+Nah, that's not your fault, maybe mine.
+
+-- 
+Peter Xu
+
 
