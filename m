@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CD2CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF6DACAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzLPy-00065g-7J; Thu, 18 Sep 2025 16:39:50 -0400
+	id 1uzLZg-0001VB-Vt; Thu, 18 Sep 2025 16:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzLPw-00065K-D7
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:39:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzLZa-0001UR-Cf; Thu, 18 Sep 2025 16:49:47 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzLPu-0005q3-De
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:39:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758227984;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=p1n032cmrX/Gp4d8c4D+amtSwM5kKN1y9xGc3stMOZ0=;
- b=GOF5UFKsZrxtviqevtNVz1LNpIcHjitO5Y1+G9yyXUSVjIdCER5xcPRyAbIrxEOdTol3Sf
- ripIlqqHpdS1YzFf3tj4Qo6C17SX7A4lC3a1e15Z+pI3Dd4sz3vvd0h61U8CdFZrju4qit
- wmlMy0k6ka/KDIoAlVQHeJzTl/1cekE=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-XAGlmgSYOcGM6ECNOXs7sQ-1; Thu, 18 Sep 2025 16:39:43 -0400
-X-MC-Unique: XAGlmgSYOcGM6ECNOXs7sQ-1
-X-Mimecast-MFC-AGG-ID: XAGlmgSYOcGM6ECNOXs7sQ_1758227982
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4b5e178be7eso35226821cf.1
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 13:39:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758227982; x=1758832782;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p1n032cmrX/Gp4d8c4D+amtSwM5kKN1y9xGc3stMOZ0=;
- b=PdKySF3hEAQrhZb7Ak60IUSzmWRvKYaO283jvg7vf878nJW6PU1wgW+JEKEiDCoepP
- v8COi1A+QcLEym/DyrF9KLR7kwyzwRsSrI4f1N4lBsO36owz+QmxLtf5AjIM0RX8O6Ol
- VY5arzYM68S/sdwLpgilPzpWFhqNRfHCaQdBACgo7yndEb9L6L8UcEWnmM6fgdeTBp8I
- StQVhVDKn+Q/RT915BCNICWoO5ZisZ+eVzB51GVvxO3IL4n8JIISYM3vHL+bQw/Oaowx
- oWQb5T23InTTuEm2h2RCQ5EP378gmxQVZ/L7gwGhlI+wisH2vxTjyEts2E3CMhcrSShr
- AMZg==
-X-Gm-Message-State: AOJu0YxjMo4LFPC/G2QlO0CyFljgTkHd5plkhpPb+VQbnkcyomAQUM8c
- 3kPVJ0wJvP7Y14pB3Dbd4ONuesYI84k5RHU9mA2V9Vk+k1Kf7hSPhqPxP5BlxHsPwkNhRIu3iGy
- l9BhayABMoMPa/hjCX0z/y03OmtEeqW8IB+YADKmdFvC9dBBRemum0WGhrALn9M+RtKJ2F3dysn
- 0uQOb67ITckXmubZ3fKNsPd4FOdD3tbg==
-X-Gm-Gg: ASbGncvmP0c62UGQf2elzZYGJ2Mh3Ql+PlG77Z7Qp91x3DRp7ugngIFDFvQpTEwaBAi
- NmUDFgN3FpNRAtn4M4jz4DY8ZqkfLuuzICNGogpETl52MjKtrq4UBwm+SSHUFdRMukyX9ZSNBwI
- OX0887IKrNjM0kw+O926iJLjWOcs3iwOB9yRi+tZ2F5LyXAgVsTV/a271A9n0lu3EP/UhdsHzvE
- w5kQb731U5XHGvcH5P7Cqlaou7qRsvBWHZkDFochVFfn56GLx5QlgSslIy+bxdqLL6DjFQ/rVIQ
- gFhmIo+yALVw1M1FBf0gCuERR1gffAvnWm8AZFAamiFVXvs9yxwfflt66cPd0AA=
-X-Received: by 2002:a05:622a:1f0b:b0:4b1:247f:4e0f with SMTP id
- d75a77b69052e-4c072e27b63mr10827351cf.57.1758227980325; 
- Thu, 18 Sep 2025 13:39:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaEyKWvhmE7WECJBQ6jCOZ1GSpJG38uY5hxLbcAC/dHlA7+sDHpbLTFh61FPIVrJId8q3LhA==
-X-Received: by 2002:a05:622a:1f0b:b0:4b1:247f:4e0f with SMTP id
- d75a77b69052e-4c072e27b63mr10827051cf.57.1758227979909; 
- Thu, 18 Sep 2025 13:39:39 -0700 (PDT)
-Received: from x1.com
- (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-836278b8082sm226276285a.22.2025.09.18.13.39.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 13:39:39 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v3 0/2] migration/tls: Graceful shutdowns for main and
- postcopy channels
-Date: Thu, 18 Sep 2025 16:39:35 -0400
-Message-ID: <20250918203937.200833-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzLZY-0007Py-Gh; Thu, 18 Sep 2025 16:49:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=wySVsPliL+9a3J5l0F8RfbJrt0kiTQe6u8vNGVXiW4U=; b=yOk1Q1V9WboTF4YxdxzMpbd+5q
+ mpqU3MacfGlQQAKzNqJoOh1Gg0YNAcbggjgolrgruDJhjJRwak/VjgQQL8OE30CkggR2kLxp25Ff3
+ d9kaasm2/kupejpAQK49RH4Igq1CytETs4KMydOhf/FOJoTV5XDW1u2Htx+jTo5FLfWeEaUp8CeBe
+ /vavpZuXRbnjJT0QxpwKpVvb4dMOWdBu7oCM6MNcivLfu46sR99l/+kwXfs6q3S1oZ7r5xg9Cs3ry
+ xGnoAPXP092g1Z0nLb0UZ8Zsg18d4yu1zpJf8jeoKP3do70AdDWAeExvpenyaww5m3lwoUgIidZJ2
+ rtGVkcDBqs3R45edxJUIM5HsKFYD03j4UKSwj9DBo7IzWJobsBxmzJ6f4PvNBCkHkVLpUYgqKUgQj
+ H/GF/yA86/jbXcZEFBt8DRI9GXS/MRwbL9jNwLcpBA3B4RqhKeDyyks43Y+zbtC7pVQ6aLXvWFxLp
+ p3Qxe0jriReiX1Y/L4DeC0NaWwNioweovl4NcPhkMaG6B4xfiLIjZDYc/HlhyXmYkwqWxf1PmHRiw
+ JGbOku+U+YUPKvyR0OWK3+U3Th/KPA4BXMXBhpmpGymIw2HOJH/UZDdcXT6YZTzdSd7Imo27cS+B3
+ vFgBg08OhHisXn8sWw6nNqhTiZYgxL4AT6NSAuS1Q=;
+Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzLXW-0006w3-8f; Thu, 18 Sep 2025 21:47:38 +0100
+Message-ID: <c20c8e3c-dd4f-4331-a2aa-0faa01eb2b6c@ilande.co.uk>
+Date: Thu, 18 Sep 2025 21:49:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <1ce9e69c55653d66dd2ead1a19ee779937847caa.1758219840.git.balaton@eik.bme.hu>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <1ce9e69c55653d66dd2ead1a19ee779937847caa.1758219840.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 11/14] hw/pci-host/raven: Simpify discontiguous IO
+ access
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,62 +105,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-- Patch 1
-  - Update qcrypto_tls_session_read() doc to reflect the new retval [Dan]
-  - Update commit message to explain the qatomic_read() change [Dan]
-- Patch 2 (old)
-  - Dropped for now, more at the end
+On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-This is v3 of the series.
+> PREP allows remapping of the 64k ISA IO addresses from the normal
+> contiguous IO space into a discontiguous 8MB region and can switch
+> between the two modes. We can implement this in a simpler way than is
+> done currently using an io region that forwards access to the
+> contiguous pci_io region and enabling/disabling the discontiguous
+> region as needed.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/pci-host/raven.c | 88 ++++++++++++---------------------------------
+>   1 file changed, 22 insertions(+), 66 deletions(-)
+> 
+> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+> index bb0be40eb4..bf4f4b7f71 100644
+> --- a/hw/pci-host/raven.c
+> +++ b/hw/pci-host/raven.c
+> @@ -42,17 +42,14 @@ struct PREPPCIState {
+>       PCIHostState parent_obj;
+>   
+>       qemu_irq irq;
+> -    AddressSpace pci_io_as;
+>       MemoryRegion pci_io;
+> -    MemoryRegion pci_io_non_contiguous;
+> +    MemoryRegion pci_discontiguous_io;
+>       MemoryRegion pci_memory;
+>       MemoryRegion pci_intack;
+>       MemoryRegion bm;
+>       MemoryRegion bm_ram_alias;
+>       MemoryRegion bm_pci_memory_alias;
+>       AddressSpace bm_as;
+> -
+> -    int contiguous_map;
+>   };
+>   
+>   #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
+> @@ -103,63 +100,28 @@ static const MemoryRegionOps raven_intack_ops = {
+>       },
+>   };
+>   
+> -static inline hwaddr raven_io_address(PREPPCIState *s,
+> -                                      hwaddr addr)
+> +/* Convert 8 MB non-contiguous address to 64k ISA IO address */
+> +static inline hwaddr raven_io_addr(hwaddr addr)
+>   {
+> -    if (s->contiguous_map == 0) {
+> -        /* 64 KB contiguous space for IOs */
+> -        addr &= 0xFFFF;
+> -    } else {
+> -        /* 8 MB non-contiguous space for IOs */
+> -        addr = (addr & 0x1F) | ((addr & 0x007FFF000) >> 7);
+> -    }
+> -
+> -    /* FIXME: handle endianness switch */
+> -
+> -    return addr;
+> +    return ((addr & 0x007FFF000) >> 7) | (addr & 0x1F);
+>   }
+>   
+> -static uint64_t raven_io_read(void *opaque, hwaddr addr,
+> -                              unsigned int size)
+> +static uint64_t raven_io_read(void *opaque, hwaddr addr, unsigned int size)
+>   {
+> -    PREPPCIState *s = opaque;
+> -    uint8_t buf[4];
+> -
+> -    addr = raven_io_address(s, addr);
+> -    address_space_read(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+> -                       MEMTXATTRS_UNSPECIFIED, buf, size);
+> -
+> -    if (size == 1) {
+> -        return buf[0];
+> -    } else if (size == 2) {
+> -        return lduw_le_p(buf);
+> -    } else if (size == 4) {
+> -        return ldl_le_p(buf);
+> -    } else {
+> -        g_assert_not_reached();
+> -    }
+> +    uint64_t val = 0xffffffffULL;
+> +
+> +    memory_region_dispatch_read(opaque, raven_io_addr(addr), &val,
+> +                                size_memop(size) | MO_LE,
+> +                                MEMTXATTRS_UNSPECIFIED);
+> +    return val;
+>   }
 
-Fabiano fixed graceful shutdowns for multifd channels previously:
+I'm guessing the dispatch target is guaranteed not to be a RAM-backed memory region?
 
-https://lore.kernel.org/qemu-devel/20250206175824.22664-1-farosas@suse.de/
+> -static void raven_io_write(void *opaque, hwaddr addr,
+> -                           uint64_t val, unsigned int size)
+> +static void raven_io_write(void *opaque, hwaddr addr, uint64_t val,
+> +                           unsigned int size)
+>   {
+> -    PREPPCIState *s = opaque;
+> -    uint8_t buf[4];
+> -
+> -    addr = raven_io_address(s, addr);
+> -
+> -    if (size == 1) {
+> -        buf[0] = val;
+> -    } else if (size == 2) {
+> -        stw_le_p(buf, val);
+> -    } else if (size == 4) {
+> -        stl_le_p(buf, val);
+> -    } else {
+> -        g_assert_not_reached();
+> -    }
+> -
+> -    address_space_write(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
+> -                        MEMTXATTRS_UNSPECIFIED, buf, size);
+> +    memory_region_dispatch_write(opaque, raven_io_addr(addr), val,
+> +                                 size_memop(size) | MO_LE,
+> +                                 MEMTXATTRS_UNSPECIFIED);
+>   }
+>   
+>   static const MemoryRegionOps raven_io_ops = {
+> @@ -208,7 +170,7 @@ static void raven_change_gpio(void *opaque, int n, int level)
+>   {
+>       PREPPCIState *s = opaque;
+>   
+> -    s->contiguous_map = level;
+> +    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
+>   }
+>   
+>   static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+> @@ -254,23 +216,17 @@ static void raven_pcihost_initfn(Object *obj)
+>       MemoryRegion *address_space_mem = get_system_memory();
+>   
+>       memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+> -    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
+> -                          "pci-io-non-contiguous", 0x00800000);
+> +    memory_region_init_io(&s->pci_discontiguous_io, obj,
+> +                          &raven_io_ops, &s->pci_io,
+> +                          "pci-discontiguous-io", 8 * MiB);
 
-However we can still see an warning when running preempt unit test on TLS,
-even though migration functionality will not be affected:
+Again I think passing the device as the opaque is easier to understand.
 
-QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --full -r /x86_64/migration/postcopy/preempt/tls/psk
-...
-qemu-kvm: Cannot read from TLS channel: The TLS connection was non-properly terminated.
-...
+>       memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+> -    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+> -
+> -    /*
+> -     * Raven's raven_io_ops use the address-space API to access pci-conf-idx
+> -     * (which is also owned by the raven device). As such, mark the
+> -     * pci_io_non_contiguous as re-entrancy safe.
+> -     */
+> -    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+>   
+>       /* CPU address space */
+>       memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+>                                   &s->pci_io);
+>       memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
+> -                                        &s->pci_io_non_contiguous, 1);
+> +                                        &s->pci_discontiguous_io, 1);
+> +    memory_region_set_enabled(&s->pci_discontiguous_io, false);
+>       memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+>   
+>       /* Bus master address space */
 
-It turns out this is because the crypto code only passes the ->shutdown
-field into the read function, however that value can change concurrently in
-another thread by a concurrent qio_channel_shutdown().
+Out of curiosity do you have an image or firmware that tests this?
 
-Patch 1 should fix this issue.
 
-Patch 2 is something I found when looking at this problem, there's no known
-issues I am aware of with them, however I still think they're logically
-flawed, so I post them together here.
+ATB,
 
-Please review, thanks.
-
-============= ABOUT OLD PATCH 2 ===================
-
-I dropped it for now to unblock almost patch 1, because patch 1 will fix a
-real warning that can be triggered for not only qtest but also normal tls
-postcopy migration.
-
-While I was looking at temporary settings for multifd send iochannels to be
-blocking always, I found I cannot explain how migration_tls_channel_end()
-currently works, because it writes to the multifd iochannels while the
-channels should still be owned (and can be written at the same time?) by
-the sender threads.  It sounds like a thread-safety issue, or is it not?
-
-Peter Xu (2):
-  io/crypto: Move tls premature termination handling into QIO layer
-  migration: Make migration_has_failed() work even for CANCELLING
-
- include/crypto/tlssession.h | 10 +++-------
- crypto/tlssession.c         |  7 ++-----
- io/channel-tls.c            | 21 +++++++++++++++++++--
- migration/migration.c       |  3 ++-
- 4 files changed, 26 insertions(+), 15 deletions(-)
-
--- 
-2.50.1
+Mark.
 
 
