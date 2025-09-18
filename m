@@ -4,128 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC929CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEA5CAC59F
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 08:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzAQ3-00077m-PY; Thu, 18 Sep 2025 04:55:12 -0400
+	id 1uzATU-0000gb-M3; Thu, 18 Sep 2025 04:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1uzAPy-00077G-QR
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:55:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uzATT-0000gC-NF
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:58:43 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1uzAPu-00047M-UY
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:55:06 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58I52XeO011495;
- Thu, 18 Sep 2025 08:54:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=EjarOI
- D9FNqUhiCYpnixNjfIhyIUgpeLE1miThDoxlM=; b=Yv9401EV1umJtcm5pJJC/V
- YWjRP5XECDI9cjgZs0CfKacH703MHjqc9k25JizC9w+UgzPzl0gPWv1ohTzw6C8/
- qcPgZCKMtq5ElpjkzusWStX0m6Ds64sqxs8H+SWz07IVY84eXPWXM5bI13EQzPUK
- pabEBrrTHU5P901s4vQCEYcT+iJbfjTGYWw4MnUfe5mpQeWBczIXMhFdDrkEMWBr
- qiwHPQ7U/Y1CP3rP+kl8dIJeWfpreu/kDDqkgoZhxOyJVo1augTNOT6tTNq9lGuS
- ol8kaTPPPpsq1VO1n2Cj0Pk827EZ/2+JIGpODddfn57cUN6RuT/38G7EWuVvDWOw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4j95a1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 08:54:50 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58I8mtu3002506;
- Thu, 18 Sep 2025 08:54:49 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4j959y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 08:54:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58I5il4F022347;
- Thu, 18 Sep 2025 08:54:48 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495kxpwtnd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 08:54:48 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58I8sk5741353562
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Sep 2025 08:54:46 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57B9420043;
- Thu, 18 Sep 2025 08:54:46 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 653CD20040;
- Thu, 18 Sep 2025 08:54:45 +0000 (GMT)
-Received: from li-9b52914c-2c8b-11b2-a85c-a36f6d484b4a.ibm.com (unknown
- [9.87.148.84]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Sep 2025 08:54:45 +0000 (GMT)
-Message-ID: <e6c30d2143147ebf285e69b4a786c0ed0f5212d2.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] char-pty: add support for the terminal size
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
-Cc: Filip Hejsek <filip.hejsek@gmail.com>, amit@kernel.org, armbru@redhat.com, 
- eblake@redhat.com, eduardo@habkost.net, lvivier@redhat.com,
- marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- mst@redhat.com, noh4hss@gmail.com, pbonzini@redhat.com,
- philmd@linaro.org, qemu-devel@nongnu.org, wangyanan55@huawei.com,
- zhao1.liu@intel.com, nsg@linux.ibm.com
-Date: Thu, 18 Sep 2025 10:54:45 +0200
-In-Reply-To: <aMvHScAtr3E_H2KB@redhat.com>
-References: <95142e7fd2a103cfb8d8bea9727117bfe952baec.camel@linux.ibm.com>
- <E0EFD1A6-09E9-481D-82FD-84FD4B45CA9B@gmail.com>
- <aMq4Ta4aPwRgDrxR@redhat.com>
- <0A6C8C3D-68E7-4E88-BEBE-D653135915DF@gmail.com>
- <aMrfGUfCSWnvkXzT@redhat.com>
- <e2f80c7ad10b8b6376144ba5d959a2ad4739f81c.camel@gmail.com>
- <aMr1sn-LU2f-w49o@redhat.com>
- <15cc6bcd675f2e20efe4fbd6332018a693122b9c.camel@gmail.com>
- <aMvETd_dlUed-nlN@redhat.com>
- <8979fb7f27b9dbe48f6419d515c4d33a77cefe0a.camel@linux.ibm.com>
- <aMvHScAtr3E_H2KB@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uzATP-0004im-Gd
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:58:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1758185919; x=1789721919;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=091vvCMRBmyhFcy9O56x0BzO6SBHdrhgHyFr5SMy1wk=;
+ b=IJ0tr8bdsggtClFpPKhKDH+Cx/BTDeZZTXnfxTgHqv+cesZd1dXL0jbl
+ JIjuf+ZNsU03nt6Mv2NippysEN3kFmzXKQ5BWlNSRUtMQBCMZgo8FevNo
+ /dOqOiAReNnqpDV2ri0/Ny6wRLHTqh2fSx9gAq/ELwLGnilQgmBw0meoU
+ U8uXbv9ZeDksvbh8MM9mJTcVNAkS/QMMH7he2bN25pcihkcj5vHnyEAlQ
+ WvnEw5yFUXcXnt8IqAD5dB/+zHT7hvmXQu1rJvhzLBIsFjIsIj3KejlaE
+ 7hcdapk9FvpiNR0cuSNGH7s6uKXiffy5jYGJNlUazfyD7UTjZEpAp2fRk Q==;
+X-CSE-ConnectionGUID: gsUDaz0lTkiYQySHYqw93A==
+X-CSE-MsgGUID: t6OukQ6ZTralC3R97d75oA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11556"; a="78109361"
+X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="78109361"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Sep 2025 01:58:33 -0700
+X-CSE-ConnectionGUID: 5JNLf+Z9QqW0+eIagFCV/w==
+X-CSE-MsgGUID: QH/lguKrQ9uHM1QX2H84sA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="175930262"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Sep 2025 01:58:30 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, skolothumtho@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v6 00/22] intel_iommu: Enable first stage translation for
+ passthrough device
+Date: Thu, 18 Sep 2025 04:57:39 -0400
+Message-ID: <20250918085803.796942-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Qf5mvtbv c=1 sm=1 tr=0 ts=68cbc8da cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=vdxyQyfYVvcB46YxvJYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: nczI8UZWItqrNxzuWlOg--idHzRwObF3
-X-Proofpoint-GUID: gP16cnjvD8Zmvql7aarT3RUUUgd1gptA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX50IUn7k9m/Ea
- RxZeTXXIU4JPQqfGeR1YNfxvyvExYINe73PoVkD00D1utjlQuFvMU69KmOB3b3fBgB6W/1ml1wd
- +6ngOyWwFtcnhHfdps2MfVfsfBbuvG9KyBMr/6/qFM2UyMvkPO29y7K7CfzpinPfy3yuz5hsvXW
- W57FfRmj4JSUnaMjSmyyxmOpxjHy54EnpyEBuomUAFWRAYvMXxoFDj1npi8ljgyhBreb8T6kU5c
- H3iWg+PZOO7+TE+us11k9oa+gsvXuqrcYb8ws2XOytK4LVntjMxJk5NR88VHkVZi0foMkvY9UgU
- 6rQtrJ0BdICKn1KBiuiH92YpB20XWBX0AjDuTHrnj1+fl+O0QsP2A0q7m5y5JVbIG1qSvy0bXIO
- IQLFXLor
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-18_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=maxbr@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.8;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,61 +86,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-09-18 at 09:48 +0100, Daniel P. Berrang=C3=A9 wrote:
-> On Thu, Sep 18, 2025 at 10:39:28AM +0200, Maximilian Immanuel
-> Brandtner wrote:
-> > On Thu, 2025-09-18 at 09:35 +0100, Daniel P. Berrang=C3=A9 wrote:
-> > > On Wed, Sep 17, 2025 at 08:29:39PM +0200, Filip Hejsek wrote:
-> > > > On Wed, 2025-09-17 at 18:53 +0100, Daniel P. Berrang=C3=A9 wrote:
-> > > > > On Wed, Sep 17, 2025 at 07:11:03PM +0200, Filip Hejsek wrote:
-> > > > > > On Wed, 2025-09-17 at 17:17 +0100, Daniel P. Berrang=C3=A9
-> > > > > > wrote:
-> > > > > >=20
-> > > > > > > We shouldn't send any size info to the guest if the hsot
-> > > > > > > backend
-> > > > > > > does not have it available.
-> > > > > >=20
-> > > > > > Does that mean sending 0x0, or not sending anything at all?
-> > > > > > The
-> > > > > > later
-> > > > > > is tricky,=C2=A0because for non-multiport devices it's only
-> > > > > > really
-> > > > > > possible
-> > > > > > by not offering the feature bit, but we don't know upfront
-> > > > > > whether the
-> > > > > > size command will be used.
-> > >=20
-> > > What are the semantics in the guest if we sent 0x0 as the size ?
-> > > AFAICT the virtio spec is silent on what '0x0' means.
-> > >=20
-> > > It seems like it could conceivably have any behaviour, whether
-> > > a zero-size console, or a console clamped to 1x1 as a min size,
-> > > or a console reset to an arbitrary guest default like 80x24.
-> >=20
-> > During testing the kernel resized the tty to 0x0 if VirtIO
-> > instructed
-> > the kernel to resize the tty to 0x0.
->=20
-> If the chardev backends are defaulting to 0x0 for everything except
-> the 'stdio' backend, then this series is surely going to break all
-> existing usage of virtio-console for non-stdio backends ?
->=20
-> What am I missing here ?
->=20
-> With regards,
-> Daniel
+Hi,
 
-Most applications fall back to 80x24 if the terminal size is 0x0 so
-it's not as big of a dealbreaker as you might think.
+For passthrough device with intel_iommu.x-flts=on, we don't do shadowing of
+guest page table but pass first stage page table to host side to construct a
+nested HWPT. There was some effort to enable this feature in old days, see
+[1] for details.
 
-However, I think it would be even better if the patch-set could be
-changed to account for that. After initializing the VirtIO console a
-resize event could be sent to set the initial size (80x24), which might
-later be changed or be left as is.
-If the VIRTIO_CONSOLE_F_SIZE is negotiated(and this feature flag is
-necessary for multiport resize messages not to be ignored) QEMU is
-responsible for setting the initial terminal size.
+The key design is to utilize the dual-stage IOMMU translation (also known as
+IOMMU nested translation) capability in host IOMMU. As the below diagram shows,
+guest I/O page table pointer in GPA (guest physical address) is passed to host
+and be used to perform the first stage address translation. Along with it,
+modifications to present mappings in the guest I/O page table should be followed
+with an IOTLB invalidation.
 
-Kind regards,
-Max Brandtner
+        .-------------.  .---------------------------.
+        |   vIOMMU    |  | Guest I/O page table      |
+        |             |  '---------------------------'
+        .----------------/
+        | PASID Entry |--- PASID cache flush --+
+        '-------------'                        |
+        |             |                        V
+        |             |           I/O page table pointer in GPA
+        '-------------'
+    Guest
+    ------| Shadow |---------------------------|--------
+          v        v                           v
+    Host
+        .-------------.  .-----------------------------.
+        |   pIOMMU    |  | First stage for GIOVA->GPA  |
+        |             |  '-----------------------------'
+        .----------------/  |
+        | PASID Entry |     V (Nested xlate)
+        '----------------\.--------------------------------------------.
+        |             |   | Second stage for GPA->HPA, unmanaged domain|
+        |             |   '--------------------------------------------'
+        '-------------'
+<Intel VT-d Nested translation>
+
+This series reuse VFIO device's default HWPT as nesting parent instead of
+creating new one. This way avoids duplicate code of a new memory listener,
+all existing feature from VFIO listener can be shared, e.g., ram discard,
+dirty tracking, etc. Two limitations are: 1) not supporting VFIO device
+under a PCI bridge with emulated device, because emulated device wants
+IOMMU AS and VFIO device stick to system AS; 2) not supporting kexec or
+reboot from "intel_iommu=on,sm_on" to "intel_iommu=on,sm_off" on platform
+with ERRATA_772415_SPR17, because VFIO device's default HWPT is created
+with NEST_PARENT flag, kernel inhibit RO mappings when switch to shadow
+mode.
+
+This series is also a prerequisite work for vSVA, i.e. Sharing guest
+application address space with passthrough devices.
+
+There are some interactions between VFIO and vIOMMU
+* vIOMMU registers PCIIOMMUOps [set|unset]_iommu_device to PCI
+  subsystem. VFIO calls them to register/unregister HostIOMMUDevice
+  instance to vIOMMU at vfio device realize stage.
+* vIOMMU registers PCIIOMMUOps get_viommu_flags to PCI subsystem.
+  VFIO calls it to get vIOMMU exposed flags.
+* vIOMMU calls HostIOMMUDeviceIOMMUFD interface [at|de]tach_hwpt
+  to bind/unbind device to IOMMUFD backed domains, either nested
+  domain or not.
+
+See below diagram:
+
+        VFIO Device                                 Intel IOMMU
+    .-----------------.                         .-------------------.
+    |                 |                         |                   |
+    |       .---------|PCIIOMMUOps              |.-------------.    |
+    |       | IOMMUFD |(set/unset_iommu_device) || Host IOMMU  |    |
+    |       | Device  |------------------------>|| Device list |    |
+    |       .---------|(get_viommu_flags)       |.-------------.    |
+    |                 |                         |       |           |
+    |                 |                         |       V           |
+    |       .---------|  HostIOMMUDeviceIOMMUFD |  .-------------.  |
+    |       | IOMMUFD |            (attach_hwpt)|  | Host IOMMU  |  |
+    |       | link    |<------------------------|  |   Device    |  |
+    |       .---------|            (detach_hwpt)|  .-------------.  |
+    |                 |                         |       |           |
+    |                 |                         |       ...         |
+    .-----------------.                         .-------------------.
+
+Below is an example to enable first stage translation for passthrough device:
+
+    -M q35,...
+    -device intel-iommu,x-scalable-mode=on,x-flts=on...
+    -object iommufd,id=iommufd0 -device vfio-pci,iommufd=iommufd0,...
+
+Test done:
+- VFIO devices hotplug/unplug
+- different VFIO devices linked to different iommufds
+- vhost net device ping test
+
+PATCH01-09: Some preparing work
+PATCH10-11: Compatibility check between vIOMMU and Host IOMMU
+PATCH12-17: Implement first stage page table for passthrough device
+PATCH18-20: Workaround for ERRATA_772415_SPR17
+PATCH21:    Enable first stage translation for passthrough device
+PATCH22:    Add doc
+
+Qemu code can be found at [2]
+
+Fault event injection to guest isn't supported in this series, we presume guest
+kernel always construct correct first stage page table for passthrough device.
+For emulated devices, the emulation code already provided first stage fault
+injection.
+
+TODO:
+- Fault event injection to guest when HW first stage page table faults
+
+[1] https://patchwork.kernel.org/project/kvm/cover/20210302203827.437645-1-yi.l.liu@intel.com/
+[2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting.v6
+
+Thanks
+Zhenzhong
+
+Changelog:
+v6:
+- delete RPS capability related supporting code (Eric, Yi)
+- use terminology 'first/second stage' to replace 'first/second level" (Eric, Yi)
+- use get_viommu_flags() instead of get_viommu_caps() (Nicolin)
+- drop non-RID_PASID related code and simplify pasid invalidation handling (Eric, Yi)
+- drop the patch that handle pasid replay when context invalidation (Eric)
+- move vendor specific cap check from VFIO core to backend/iommufd.c (Nicolin)
+
+v5:
+- refine commit log of patch2 (Cedric, Nicolin)
+- introduce helper vfio_pci_from_vfio_device() (Cedric)
+- introduce helper vfio_device_viommu_get_nested() (Cedric)
+- pass 'bool bypass_ro' argument to vfio_listener_valid_section() instead of 'VFIOContainerBase *' (Cedric)
+- fix a potential build error reported by Jim Shu
+
+v4:
+- s/VIOMMU_CAP_STAGE1/VIOMMU_CAP_HW_NESTED (Eric, Nicolin, Donald, Shameer)
+- clarify get_viommu_cap() return pure emulated caps and explain reason in commit log (Eric)
+- retrieve the ce only if vtd_as->pasid in vtd_as_to_iommu_pasid_locked (Eric)
+- refine doc comment and commit log in patch10-11 (Eric)
+
+v3:
+- define enum type for VIOMMU_CAP_* (Eric)
+- drop inline flag in the patch which uses the helper (Eric)
+- use extract64 in new introduced MACRO (Eric)
+- polish comments and fix typo error (Eric)
+- split workaround patch for ERRATA_772415_SPR17 to two patches (Eric)
+- optimize bind/unbind error path processing
+
+v2:
+- introduce get_viommu_cap() to get STAGE1 flag to create nesting parent HWPT (Liuyi)
+- reuse VFIO's default HWPT as parent HWPT of nested translation (Nicolin, Liuyi)
+- abandon support of VFIO device under pcie-to-pci bridge to simplify design (Liuyi)
+- bypass RO mapping in VFIO's default HWPT if ERRATA_772415_SPR17 (Liuyi)
+- drop vtd_dev_to_context_entry optimization (Liuyi)
+
+v1:
+- simplify vendor specific checking in vtd_check_hiod (Cedric, Nicolin)
+- rebase to master
+
+rfcv3:
+- s/hwpt_id/id in iommufd_backend_invalidate_cache()'s parameter (Shameer)
+- hide vtd vendor specific caps in a wrapper union (Eric, Nicolin)
+- simplify return value check of get_cap() (Eric)
+- drop realize_late (Cedric, Eric)
+- split patch13:intel_iommu: Add PASID cache management infrastructure (Eric)
+- s/vtd_pasid_cache_reset/vtd_pasid_cache_reset_locked (Eric)
+- s/vtd_pe_get_domain_id/vtd_pe_get_did (Eric)
+- refine comments (Eric, Donald)
+
+rfcv2:
+- Drop VTDPASIDAddressSpace and use VTDAddressSpace (Eric, Liuyi)
+- Move HWPT uAPI patches ahead(patch1-8) so arm nesting could easily rebase
+- add two cleanup patches(patch9-10)
+- VFIO passes iommufd/devid/hwpt_id to vIOMMU instead of iommufd/devid/ioas_id
+- add vtd_as_[from|to]_iommu_pasid() helper to translate between vtd_as and
+  iommu pasid, this is important for dropping VTDPASIDAddressSpace
+
+Yi Liu (2):
+  intel_iommu: Propagate PASID-based iotlb invalidation to host
+  intel_iommu: Replay all pasid bindings when either SRTP or TE bit is
+    changed
+
+Zhenzhong Duan (20):
+  intel_iommu: Rename vtd_ce_get_rid2pasid_entry to
+    vtd_ce_get_pasid_entry
+  intel_iommu: Delete RPS capability related supporting code
+  intel_iommu: Update terminology to match VTD spec
+  hw/pci: Export pci_device_get_iommu_bus_devfn() and return bool
+  hw/pci: Introduce pci_device_get_viommu_flags()
+  intel_iommu: Implement get_viommu_flags() callback
+  intel_iommu: Introduce a new structure VTDHostIOMMUDevice
+  vfio/iommufd: Force creating nesting parent HWPT
+  intel_iommu: Stick to system MR for IOMMUFD backed host device when
+    x-fls=on
+  intel_iommu: Check for compatibility with IOMMUFD backed device when
+    x-flts=on
+  intel_iommu: Fail passthrough device under PCI bridge if x-flts=on
+  intel_iommu: Handle PASID cache invalidation
+  intel_iommu: Reset pasid cache when system level reset
+  intel_iommu: Add some macros and inline functions
+  intel_iommu: Bind/unbind guest page table to host
+  iommufd: Introduce a helper function to extract vendor capabilities
+  vfio: Add a new element bypass_ro in VFIOContainerBase
+  Workaround for ERRATA_772415_SPR17
+  intel_iommu: Enable host device when x-flts=on in scalable mode
+  docs/devel: Add IOMMUFD nesting documentation
+
+ MAINTAINERS                           |   1 +
+ docs/devel/vfio-iommufd.rst           |  24 +
+ hw/i386/intel_iommu_internal.h        | 100 ++-
+ include/hw/i386/intel_iommu.h         |  11 +-
+ include/hw/iommu.h                    |  24 +
+ include/hw/pci/pci.h                  |  29 +
+ include/hw/vfio/vfio-container-base.h |   1 +
+ include/hw/vfio/vfio-device.h         |   2 +
+ include/system/host_iommu_device.h    |  16 +
+ backends/iommufd.c                    |  13 +
+ hw/i386/intel_iommu.c                 | 848 ++++++++++++++++++++------
+ hw/pci/pci.c                          |  23 +-
+ hw/vfio/device.c                      |  12 +
+ hw/vfio/iommufd.c                     |  19 +-
+ hw/vfio/listener.c                    |  21 +-
+ tests/qtest/intel-iommu-test.c        |   4 +-
+ hw/i386/trace-events                  |   7 +
+ 17 files changed, 927 insertions(+), 228 deletions(-)
+ create mode 100644 include/hw/iommu.h
+
+-- 
+2.47.1
+
 
