@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9113CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53F8CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzKPf-00031X-3o; Thu, 18 Sep 2025 15:35:27 -0400
+	id 1uzKXm-0006Ts-GJ; Thu, 18 Sep 2025 15:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKPa-000303-LB; Thu, 18 Sep 2025 15:35:22 -0400
+ id 1uzKXl-0006Te-K3; Thu, 18 Sep 2025 15:43:49 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKPY-0004LI-2X; Thu, 18 Sep 2025 15:35:22 -0400
+ id 1uzKXj-0005Wx-P1; Thu, 18 Sep 2025 15:43:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=iRw8QiHPyjHkZyHVJRGxMWcAgSPU2T5HTgafQP0Xcf4=; b=Z1h8pO6THN0LmWCB9XpZb+YJWk
- hRMvcoKjD4NOBWFf26JAPcTkrTKwYW09yn+wBrEO4DFOw52YShX/zRktQx4abdi72sLxLw8jc3ZOp
- ogJ/4EpA2h2Ra2nOIbrr8WEB4u8FJBn8/P9DVZ9MYm3dA3bbRUyzYldQ2aq3JystgqzrTMLdX4vms
- bQaGrw2iyNcAiDg4ja36WdB4h4qlUZ2FZVFwiNd/VerPchZZIMzyLJ3SB0FVl/bh7cjemq3aBsLI4
- K1jbHMvRdC42YX4M3SFA0sOuisAdoGZXsNPwEaFLq7OdCEOf9GhUVFU4e0xBRQu8CBzqupFbXGikE
- mXdw4CEyC5VI1UCgVy0mOXGs4PPvlVhA1m+u/Vy8RJ8VPiNEbbMrsExGnHQM//MvJmUr4CPXSQqkJ
- eoy9XmNoNrwyXo7nPvBMu6vIJzJWV7gbJCJ+eErvhusNlFLDlkWuceb3I9LUeOSpZmHowWWOKzAy7
- 6W+0uyO7e9jRLZ4eIJlOMeK2sZcGd/x5cQ3wg4iDGUqE86vzeZWk7vgfKsZQnKeqjmVKIBwqpHoxj
- XiSpbbjVTkL9p7VqBAOZXRV5vIQxQpT1vb5uRe+P8Uz/I+kd736LiUbckHALEkXvuHJqSjnfci6TF
- M2aUg7PL6nSbLQwnB1b61xv1yYuAra5hnLMJoUuMk=;
+ bh=T08usq3jL6lv8gdOD8m6fY4Q7JuUtg13cFGSH3vLfAI=; b=fKqBUNdGeN9Pf41jtnGPV5bwar
+ nYx8gwULDUZ72MZZCipylj9bmx046Hh3jgxTsY6iUjFxXmrkCq0ikXqsWTZPxDcg0f1FSxZR8I14X
+ 3tgPhKTH+T2y1zLSPY0nnMNIV1QLSPRnOsBszWU/8I0yXMWpOSSuVSBxWW/f/qsWjKXMcexCRS74h
+ UN8H2IZJ2uZM5Lt6OhdjTzDPBxOPA1QWltTT+AMXFkqDsDLjeDGjqio0OVCN/ffkdRn+m/0RvOtwt
+ uavB5elb27N7cYY7SEUYJn/RLdsD3MANOl9kHbrljpCpTGfbVvtpGofr1/RRoc/JL6mBr9LTpVvX1
+ YLh7EYk16QxtdgxVJQDpdiMvXR83x+neOq4YGMRdPd9NoYl/xcw2Zv9gGkFxUX1cPKJOe++hQdWEr
+ pXpvarzhv3CTiEjJTlbO1zqqDVX+u0323Xryl6nJRBHT7jAcDzplsFtzlsNOo87mb7lpSQexYFVH4
+ t5FkTxu0bTG0HbFFVgEiQNmY0Vr1Rct7QjWIZtmtoGFZgRUrOLh2gMan9QzdNbx/yaz1ktl+XZL/7
+ yGa8SgDHuFEVZdYJnJQj3otZf6D+gNRBG5BZvNAhzX7NdCD/mzcKrFF7/Kquor8Pgj1DfPsf1QRYX
+ ZlFohofG5jMH3GY4hKseBmvoUfxjRDsdzdGIUiwPk=;
 Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzKNT-0006MM-Vr; Thu, 18 Sep 2025 20:33:12 +0100
-Message-ID: <8d2835f0-d4c3-419e-922a-8f1859877d3c@ilande.co.uk>
-Date: Thu, 18 Sep 2025 20:35:13 +0100
+ id 1uzKVf-0006Px-3s; Thu, 18 Sep 2025 20:41:43 +0100
+Message-ID: <b2dbac9c-60a0-41f8-8359-426557e87cff@ilande.co.uk>
+Date: Thu, 18 Sep 2025 20:43:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
@@ -46,7 +46,7 @@ To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1758219840.git.balaton@eik.bme.hu>
- <d1d979ab0da126dd9d812373bf0e522ea6e937fc.1758219840.git.balaton@eik.bme.hu>
+ <2d0d90d16bb02cb9c0606ca8690cf22d296f982c.1758219840.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,12 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <d1d979ab0da126dd9d812373bf0e522ea6e937fc.1758219840.git.balaton@eik.bme.hu>
+In-Reply-To: <2d0d90d16bb02cb9c0606ca8690cf22d296f982c.1758219840.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 05/14] hw/pci-host/raven: Simplify PCI interrupt routing
+Subject: Re: [PATCH v3 06/14] hw/pci-host/raven: Simplify direct config access
+ address decoding
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,119 +107,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-> No need to use an or-irq to map interrupt lines to a single IRQ as the
-> PCI code can handle this internally so simplify by dropping the or-irq.
+> Use ctz instead of an open coded version and rename function to better
+> show what it does.
 > 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 39 +++++++++++++++------------------------
->   hw/ppc/prep.c       |  5 ++++-
->   2 files changed, 19 insertions(+), 25 deletions(-)
+>   hw/pci-host/raven.c | 15 ++++-----------
+>   1 file changed, 4 insertions(+), 11 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 51427553b2..a400a22df3 100644
+> index a400a22df3..66dab28a29 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -30,11 +30,8 @@
->   #include "hw/pci/pci_device.h"
->   #include "hw/pci/pci_bus.h"
->   #include "hw/pci/pci_host.h"
-> -#include "hw/qdev-properties.h"
->   #include "hw/intc/i8259.h"
->   #include "hw/irq.h"
-> -#include "hw/or-irq.h"
-> -#include "qom/object.h"
+> @@ -57,16 +57,9 @@ struct PREPPCIState {
 >   
->   #define TYPE_RAVEN_PCI_DEVICE "raven"
->   #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
-> @@ -44,8 +41,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
->   struct PREPPCIState {
->       PCIHostState parent_obj;
+>   #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
 >   
-> -    OrIRQState *or_irq;
-> -    qemu_irq pci_irqs[PCI_NUM_PINS];
-> +    qemu_irq irq;
->       AddressSpace pci_io_as;
->       MemoryRegion pci_io;
->       MemoryRegion pci_io_non_contiguous;
-> @@ -183,16 +179,25 @@ static const MemoryRegionOps raven_io_ops = {
->       .valid.unaligned = true,
->   };
->   
-> +/*
-> + * All four IRQ[ABCD] pins from all slots are tied to a single board
-> + * IRQ, so our mapping function here maps everything to IRQ 0.
-> + * The code in pci_change_irq_level() tracks the number of times
-> + * the mapped IRQ is asserted and deasserted, so if multiple devices
-> + * assert an IRQ at the same time the behaviour is correct.
-> + *
-> + * This may need further refactoring for boards that use multiple IRQ lines.
-> + */
->   static int raven_map_irq(PCIDevice *pci_dev, int irq_num)
+> -static inline uint32_t raven_pci_io_config(hwaddr addr)
+> +static inline uint32_t raven_idsel_to_addr(hwaddr addr)
 >   {
-> -    return (irq_num + (pci_dev->devfn >> 3)) & 1;
-> +    return 0;
->   }
->   
->   static void raven_set_irq(void *opaque, int irq_num, int level)
->   {
-> -    PREPPCIState *s = opaque;
-> +    qemu_irq *irq = opaque;
->   
-> -    qemu_set_irq(s->pci_irqs[irq_num], level);
-> +    qemu_set_irq(*irq, level);
->   }
->   
->   static AddressSpace *raven_pcihost_set_iommu(PCIBus *bus, void *opaque,
-> @@ -220,26 +225,12 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
->       PCIHostState *h = PCI_HOST_BRIDGE(dev);
->       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
->       MemoryRegion *address_space_mem = get_system_memory();
 > -    int i;
 > -
-> -    /*
-> -     * According to PReP specification section 6.1.6 "System Interrupt
-> -     * Assignments", all PCI interrupts are routed via IRQ 15
-> -     */
-> -    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
-> -    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
-> -                            &error_fatal);
-> -    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
-> -    sysbus_init_irq(dev, &s->or_irq->out_irq);
-> -
-> -    for (i = 0; i < PCI_NUM_PINS; i++) {
-> -        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+> -    for (i = 0; i < 11; i++) {
+> -        if ((addr & (1 << (11 + i))) != 0) {
+> -            break;
+> -        }
 > -    }
->   
->       qdev_init_gpio_in(d, raven_change_gpio, 1);
->   
-> +    sysbus_init_irq(dev, &s->irq);
->       h->bus = pci_register_root_bus(d, NULL, raven_set_irq, raven_map_irq,
-> -                                   s, &s->pci_memory, &s->pci_io, 0, 4,
-> +                                   &s->irq, &s->pci_memory, &s->pci_io, 0, 1,
->                                      TYPE_PCI_BUS);
->   
->       memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_le_ops, s,
-> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-> index 982e40e53e..d3365414d2 100644
-> --- a/hw/ppc/prep.c
-> +++ b/hw/ppc/prep.c
-> @@ -304,7 +304,10 @@ static void ibm_40p_init(MachineState *machine)
->       qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
->       qdev_connect_gpio_out(i82378_dev, 0,
->                             qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-> -
-> +    /*
-> +     * According to PReP specification section 6.1.6 "System Interrupt
-> +     * Assignments", all PCI interrupts are routed via IRQ 15
-> +     */
->       sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
->       isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+> -    return (addr & 0x7ff) |  (i << 11);
+> +    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+>   }
 
-I'm not convinced this is the right approach, because in the past people have 
-expressed interest in monitoring the individual PCI IRQ lines (and in fact, I think 
-you've exposed them as gpios for the VIA device). I can certainly see the value of 
-modelling the OR function and driving the individual PCI IRQs from the raven device.
+This looks like a good rework of the logic.
+
+>   static void raven_pci_io_write(void *opaque, hwaddr addr,
+> @@ -74,7 +67,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
+>   {
+>       PREPPCIState *s = opaque;
+>       PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
+> +    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
+>   }
+>   
+>   static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+> @@ -82,7 +75,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
+>   {
+>       PREPPCIState *s = opaque;
+>       PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
+> +    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
+>   }
+>   
+>   static const MemoryRegionOps raven_pci_io_ops = {
+
+It's a bit confusing during review that pci_data_read()/pci_data_write() access 
+config space, but that's unrelated to this patch.
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
