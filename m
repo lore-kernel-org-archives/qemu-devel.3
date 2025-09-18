@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AA4FCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4275CCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzL88-0007Dh-An; Thu, 18 Sep 2025 16:21:24 -0400
+	id 1uzL7q-0006ox-0B; Thu, 18 Sep 2025 16:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <c921e5496f23221335bea0c9104364409cd0b2b8@kylie.crudebyte.com>)
- id 1uzL87-0007DZ-59
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:23 -0400
+ id 1uzL7o-0006op-Td
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:04 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <c921e5496f23221335bea0c9104364409cd0b2b8@kylie.crudebyte.com>)
- id 1uzL7u-00038K-Du
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:22 -0400
+ id 1uzL7k-0002xt-1e
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 16:21:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=tabMCwy7ZIrTCNu0YMYyNHd98OeNj4eDJXKYqrDHN2o=; b=ccLcy
- 6U/SsmpRVjVd8dI+mqBGwLIrateW5YiV1OZkYOUXjQaCVi/95XMBr33tKin/JK4Rn4NehqNgMUm4r
- giNX7DoDCREdjOnjTTpwlqQmBv74itlWLxbmMIo4PR/c+7rFiqgSPeEd//HwBICvY54tv1keoq07+
- ZBTUf9uvnmwRvbrZHrYo5Ac1dKY5RG7QCvWwF1G7FZR9isYM5Ll8zD+ROPor6VgTLFICYRejlXt2B
- vYL48RJSbkmxizI15hvIrlfj00ZDLTh79qG8Oc0A7Hh6faX6t/oAOdX3Hc+RYgRyojX70auOnWh6n
- f7HSWDbf0M70/7m/GSTP2PBO5dm91Jj6FZwIUNZmdkn+oQve6nEnmlxYJ7KNZACC76VFOihPvgY75
- GL1vqg0PZuUcQXRA2O9p2GvC2ctW5k9XQP+tCzXg2sxCLNKfGuqBEYmBqI0vBhDtEHKChCnXBTwMo
- MGfZBaFyups/Kb+2XA/N4hZ0TEIn3x1R1mmUCr165T68y1KmzeuNbSaT/bIItg7vvNWwmk51opbRT
- TJkxKuv+5s6yRbNTOjc5Os5bEFF7cKIKTit8xbwSsBtRmRQ76SRto2YmJOTam1hbfD49qfP41eHiT
- nv8w25OIU5fVBaF0B0jQVavN3WEHs9gjsRkvVM9HiA+ZupYEJlrwLFhBOZ+T7E=;
-Message-Id: <c921e5496f23221335bea0c9104364409cd0b2b8.1758224558.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1758224558.git.qemu_oss@crudebyte.com>
-References: <cover.1758224558.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=ck4hG/kDCub4E//5D/7hjvSxgmRVy4Ylvdj3AsA251g=; b=K5W5w
+ igcgOXX2Xu6HfessMdLbqK4QhMkPQ4i9QvAmf3QOqSBjscDVUeZxfR12icVZDbsgnTwmX6KpMS3zE
+ uLXl27K1omT8WtMNnJJCgmHaCBu1ICFDRDXa2lICeRQ3dBvT4lb+Vfkq3KeodFL5Sx5rpSJnnwLpC
+ z46mxVGAofAW/KXdiysn/MJUFglt96DpSPWnwFhyLtfrqhJSY2aGfrhCnV6tEole4mD7LLGOI138R
+ 3c/hXqM5GB7KGTRd9EVOYRA/9jjOSTG34lZJs/R0X0F8cu71CEUzMSf7nKzEyI6XgEXBB5LpKvrAW
+ jzMyzKSuMLlIDA64yAuELRL0BnBwG0b1oJR5y/k/Gd+Z4YfnswJErICmkmiecwjq1lLmccnHeahUv
+ S35KQYVlQO8MSuN/8BDHg05R6oUtxyf/TN/D4alIcqUYjV0M9umXNKfYZ+57yBWRH5XRIupo4smny
+ k8ZqqVw2DgAnk5Nw3aL40U4ZqvXqL42phRRcIjbTbqnJ+xzqn322QyzkqyqEdSx9qvzAKh0wGFrbS
+ x5Cpjs5J0OdQMj5wun5K4MiUtMdZ+u0rwmuv6wjt8h8x1n9wYbkk1VjJB03sIlgyu5f8b1xWDoCtp
+ jbIUtIVH+SUdkba6khJs69/ZgSgO8fvakNCaM0gRr4dS+fCJeZ58+WvUmBkmjg=;
+Message-Id: <cover.1758224558.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Thu, 18 Sep 2025 21:42:39 +0200
-Subject: [PULL 2/2] 9pfs: Stop including gstrfuncs.h
+Subject: [PULL 0/2] 9p queue 2025-09-18
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Peter Foley <pefoley@google.com>,
+Cc: Greg Kurz <groug@kaod.org>, Mark Johnston <markj@freebsd.org>,
+ Peter Foley <pefoley@google.com>,
  Richard Henderson <richard.henderson@linaro.org>
 Received-SPF: pass client-ip=5.189.157.229;
  envelope-from=c921e5496f23221335bea0c9104364409cd0b2b8@kylie.crudebyte.com;
@@ -69,33 +68,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Foley <pefoley@google.com>
+The following changes since commit e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6:
 
-gstrfuncs.h is not intended to be included directly.
-In fact this only works because glib.h is already included by osdep.h.
-Just remove the include.
+  Merge tag 'pull-loongarch-20250918' of https://github.com/gaosong715/qemu into staging (2025-09-18 07:08:08 -0700)
 
-Signed-off-by: Peter Foley <pefoley@google.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20250905-9p-v2-1-2ad31999684d@google.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/9p-util-generic.c | 1 -
- 1 file changed, 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/hw/9pfs/9p-util-generic.c b/hw/9pfs/9p-util-generic.c
-index 4c1e9c887d..b71fa2cb37 100644
---- a/hw/9pfs/9p-util-generic.c
-+++ b/hw/9pfs/9p-util-generic.c
-@@ -2,7 +2,6 @@
- 
- #include "qemu/osdep.h"
- #include "9p-util.h"
--#include <glib/gstrfuncs.h>
- 
- char *qemu_open_flags_tostr(int flags)
- {
--- 
-2.39.5
+  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20250918
 
+for you to fetch changes up to c921e5496f23221335bea0c9104364409cd0b2b8:
+
+  9pfs: Stop including gstrfuncs.h (2025-09-18 21:21:29 +0200)
+
+----------------------------------------------------------------
+9pfs changes:
+
+* Add FreeBSD host support.
+
+* Fix glib header inclusion.
+
+----------------------------------------------------------------
+Mark Johnston (1):
+      9pfs: Add FreeBSD support
+
+Peter Foley (1):
+      9pfs: Stop including gstrfuncs.h
+
+ fsdev/file-op-9p.h        |   6 ++-
+ fsdev/meson.build         |   2 +-
+ hw/9pfs/9p-synth.c        |   2 +-
+ hw/9pfs/9p-util-freebsd.c | 132 ++++++++++++++++++++++++++++++++++++++++++++++
+ hw/9pfs/9p-util-generic.c |   1 -
+ hw/9pfs/9p-util.h         |  20 +++++--
+ hw/9pfs/9p.c              |  16 +++++-
+ hw/9pfs/meson.build       |   2 +
+ include/qemu/xattr.h      |   6 ++-
+ meson.build               |   8 +--
+ 10 files changed, 179 insertions(+), 16 deletions(-)
+ create mode 100644 hw/9pfs/9p-util-freebsd.c
 
