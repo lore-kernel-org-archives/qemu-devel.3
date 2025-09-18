@@ -4,110 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387A7CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 18:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7624ACAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 18:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzJNd-0007ST-Gb; Thu, 18 Sep 2025 14:29:17 -0400
+	id 1uzJhZ-0001kF-6g; Thu, 18 Sep 2025 14:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uzJNB-0007Jf-2v; Thu, 18 Sep 2025 14:28:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1uzJN0-0006Tx-NJ; Thu, 18 Sep 2025 14:28:42 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IGn1dx031401;
- Thu, 18 Sep 2025 18:28:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=TEhL4ONoAmtRqRXcZ
- ZohHz9wyY+cMXpIgGb9IQaG+EE=; b=dwPFm2MkeOa+76LEeNR0Sbyah5WGX0fJb
- Eq4tQRrFuC8JU1aHfkLtelmTZHzse7LaQeTqLB6zzM4kUJ/cGICKarvjqv1Sob2W
- 62RxnSgC/gx3hbjdfTj2f0cziHZcARBIC2KMSlvVmU6WuX4E/JIlOuIkXLT3tvuM
- 5zGTwO8QTP4CtenxjucHCmfWdzaPBPduhnNvrMu10R2/QLeP4ai+mlmibb+b5kmF
- RH8kO+1GGjAMZraKO1X9RZR8BsKikO64+proOT3i3jwApo0Nvfiy+sk/SajMWxVS
- AFzUWtDlYG+ArRtENNkzBfmHQL3nQjwItIO1yUkfG7oNxou4C38wg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4hv4f5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 18:28:22 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58II9IA4024888;
- Thu, 18 Sep 2025 18:28:21 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4hv4f3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 18:28:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58IGLbj6022300;
- Thu, 18 Sep 2025 18:28:20 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495kxq07x8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 18:28:20 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58IISJ9u6619654
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Sep 2025 18:28:19 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33ED85805D;
- Thu, 18 Sep 2025 18:28:19 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5EF8258059;
- Thu, 18 Sep 2025 18:28:18 +0000 (GMT)
-Received: from mglenn-KVM.. (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Sep 2025 18:28:18 +0000 (GMT)
-From: Glenn Miles <milesg@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
- npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
- rathc@linux.ibm.com, richard.henderson@linaro.org
-Subject: [PATCH v5 5/9] target/ppc: Support for IBM PPE42 MMU
-Date: Thu, 18 Sep 2025 13:27:12 -0500
-Message-ID: <20250918182731.528944-6-milesg@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250918182731.528944-1-milesg@linux.ibm.com>
-References: <20250918182731.528944-1-milesg@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RQd1uF9981QfxS594XBlYHvvqFX68F40
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX8Cnl18WPDssS
- eau0EZX/zh6V8AQRJJIS8dKy/fW3r1eEDj8D2qgummxa6NWRc2i8vLQpzwv4Vl6Hql+zq8zuZeY
- xviDFaEB82zlsHohU1+GNEhF5ka/z0wbMzA8uvymRiBPk23QM+/JZcLOzfN+5uSxi4rH/SgvE2s
- d9S5B4a4JccQ326X7cekylBRcZengV4O0NekqpZy6UHlqnVsK6XQ88SZoGXJwfuh8ja84lXMjqE
- pYmRx9VhVewTjXnuGhTqtqeZ5ydmI9eZlLeAD7TJIkG3cSahhb3FJyMYt8Ro15sBxFBrDbo1C0M
- GR8fXQaZYuiVzLGDguQqRY16vtaRrJWn5JmDn/CiVc7lofv7umEKTPXWm9vkAo1ijUqHgVFRS+k
- iKcNVFt8
-X-Proofpoint-GUID: 7Cs1RiJN1wb0eq9Wk55yXMERyMTVNKrZ
-X-Authority-Analysis: v=2.4 cv=co2bk04i c=1 sm=1 tr=0 ts=68cc4f46 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=Uotnjwh7_nUNd4_WO1gA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- phishscore=0 malwarescore=0 spamscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3Q1TMaAcKCmoabMdQMIOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--steviea.bounces.google.com>)
+ id 1uzJhU-0001jf-CY
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 14:49:48 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3Q1TMaAcKCmoabMdQMIOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--steviea.bounces.google.com>)
+ id 1uzJhS-0002yU-MW
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 14:49:48 -0400
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-2665df2e24aso22798905ad.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 11:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1758221380; x=1758826180; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=SZh7HNwDggLgI0mFfjdx9B3XpYyPXunvtsg5o4BmdCs=;
+ b=PgopiW2IQFILIwLP0YY8aoAXRtNTd8Lxq63Y/UI26EuZbjURk3J+FCQtGAweYCBYzk
+ em+Jx8sUW5gYHOwz8UNS/lYUvHkC869yOo3DtlmMCricylQnG+YGP6GnfabIffCe2ekR
+ S6GV3Hr20+MMZoNNkvZXQhvDY6V6yo4v83loPZ/pmPx760vlNFzBD9qNwnwpbDC2EDgY
+ jNofD1oNKfCS6bm9ec6EEOZqlDnhOQ0VEWXh3JAn9CJIWkyak6oKjlaSLIX7Oi2jxb+m
+ VnyTNIZ7YNn5t5JqHdy04MFZHs0R19Wvbd7q+4Wep+WVVnO490f/SY4JUBnI1sFSVejE
+ aF9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758221380; x=1758826180;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SZh7HNwDggLgI0mFfjdx9B3XpYyPXunvtsg5o4BmdCs=;
+ b=INJ0xw8/VPNuh3RrVzVa+HJ1vTFgInrpS3Z8L0SldFeantoN7ClRvcZ9DDfKVwCSsc
+ +OLXwZwLMCdoEzaIz+EXHyW4KwvZw3h+gXc0bUgSJfZelOmYiz63EcCgGboMP3nMt7Di
+ qHR1NwaFL7aumEV2g+EAAsi7d5a/zlMMJju5SKP9BOD0vPjBaIZibSdK0OwZGbU7sntz
+ wngdKkoMUY9+RREwYr6pI52ZO5OwjHKA+LqLAvUQIEtfoUtKdFXHIMZ8izjsXRw2BsT1
+ lfDZkZCvqGQGFWPq2wk9TvCClwMRkQukXdqEUr5rUKC9OL+3XPu6RNTC10YbFX/VgXFu
+ I9AQ==
+X-Gm-Message-State: AOJu0YxqqljEG/rbcMgAzrHbuNypA8dwRLyd77drEZLvaNwnI0Vd6NQr
+ scsEphNF4BintJgN/kfWrqv03kDDU4JBHkaxr23pF8O2cU0Bloz36flrmXIpRPpxXSi12l1nvPA
+ kjC5RaG6SZA==
+X-Google-Smtp-Source: AGHT+IGN6+R7xiBzixLXr2GSr5BSsP/gfLd0IB/hHw4bwD91Jexn9kXU0/zQ6G+A78Tu/XRFeVidOGSyF0Ld
+X-Received: from pjtu6.prod.google.com ([2002:a17:90a:c886:b0:32d:a0b1:2b14])
+ (user=steviea job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:903:1b68:b0:24b:24dc:91a7
+ with SMTP id d9443c01a7336-269ba521114mr5942335ad.45.1758221379677; Thu, 18
+ Sep 2025 11:49:39 -0700 (PDT)
+Date: Thu, 18 Sep 2025 18:49:35 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.51.0.470.ga7dc726c21-goog
+Message-ID: <20250918184935.2704752-1-steviea@google.com>
+Subject: [PATCH] linux-user: Surface more /proc/self/stat fields to the
+ emulated process
+From: Stevie Alvarez <steviea@google.com>
+To: laurent@vivier.eu
+Cc: qemu-devel@nongnu.org, Shu-Chun Weng <scw@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3Q1TMaAcKCmoabMdQMIOWWOTM.KWUYMUc-LMdMTVWVOVc.WZO@flex--steviea.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,35 +91,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IBM PPE42 processor only supports real mode
-addressing and does not distinguish between
-problem and supervisor states. It also uses
-the IR and DR MSR bits for other purposes.
-Therefore, add a check for PPE42 when we update
-hflags and cause it to ignore the IR and DR bits
-when calculating MMU indexes.
+From: Shu-Chun Weng <scw@google.com>
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+
+Some fields make sense even for the emulated process. Some external
+programs/tests might depend on the fields, e.g. starttime.
+
+Signed-off-by: Shu-Chun Weng <scw@google.com>
 ---
- target/ppc/helper_regs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ linux-user/syscall.c | 93 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 90 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 41b7b939ec..a07e6a7b7b 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -186,6 +186,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
-     if (env->spr[SPR_LPCR] & LPCR_HR) {
-         hflags |= 1 << HFLAGS_HR;
-     }
-+    if (unlikely(ppc_flags & POWERPC_FLAG_PPE42)) {
-+        /* PPE42 has a single address space and no problem state */
-+        msr = 0;
-+    }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 91360a072c..7f3d346902 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8216,15 +8216,99 @@ static int open_self_smaps(CPUArchState *cpu_env, int fd)
+     return open_self_maps_1(cpu_env, fd, true);
+ }
  
- #ifndef CONFIG_USER_ONLY
-     if (!env->has_hv_mode || (msr & (1ull << MSR_HV))) {
++#define NUM_PROC_SELF_STAT_FIELDS 52
++
++static void read_proc_self_stat(char buf[], int buf_size, const char *fields[])
++{
++    char *p;
++    int i;
++
++    for (i = 0; i < NUM_PROC_SELF_STAT_FIELDS; i++) {
++        fields[i] = NULL;
++    }
++
++    int fd = open("/proc/self/stat", O_RDONLY);
++    if (fd < 0) {
++        return;
++    }
++    i = read(fd, buf, buf_size);
++    close(fd);
++    if (i <= 0) {
++        return;
++    }
++    if (i == buf_size) {
++        buf[buf_size - 1] = '\0';
++    } else {
++        buf[i] = '\0';
++    }
++
++    fields[0] = strtok_r(buf, " \n", &p);
++
++    /*
++     * Get the next field (comm), but don't tokenize -- we'll need to find the
++     * right-most ')' that marks the end of the file name instead.
++     */
++    fields[1] = strtok_r(NULL, "", &p);
++
++    p = strrchr(fields[1], ')');
++    if (!p) {
++        return;
++    }
++    p[1] = '\0';
++
++    fields[2] = strtok_r(p + 2, " \n", &p);
++    for (i = 3; i < NUM_PROC_SELF_STAT_FIELDS; i++) {
++        fields[i] = strtok_r(NULL, " \n", &p);
++    }
++}
++
+ static int open_self_stat(CPUArchState *cpu_env, int fd)
+ {
+     CPUState *cpu = env_cpu(cpu_env);
+     TaskState *ts = get_task_state(cpu);
+     g_autoptr(GString) buf = g_string_new(NULL);
++    char host_stat_buf[1024];
++    const char *fields[NUM_PROC_SELF_STAT_FIELDS];
++    const int use_host_stat_fields[] = {
++        /*
++         * `man 5 proc` uses 1-based index, so indices here are one less than
++         * on the man page.
++         */
++        0, /* pid */
++        2, /* state */
++        3, /* ppid */
++        4, /* pgrp */
++        5, /* session */
++        6, /* tty_nr */
++        7, /* tpgid */
++        17, /* priority */
++        18, /* nice */
++        21, /* starttime */
++        38, /* processor */
++        39, /* rt_priority */
++        40, /* policy */
++        NUM_PROC_SELF_STAT_FIELDS, /* sentinel */
++    };
++
+     int i;
++    const int *next_use_host_stat_field = use_host_stat_fields;
++
++    read_proc_self_stat(host_stat_buf, sizeof(host_stat_buf), fields);
++
++    for (i = 0; i < NUM_PROC_SELF_STAT_FIELDS; i++) {
++        bool may_use_host_stat = i == (*next_use_host_stat_field);
++        if (may_use_host_stat) {
++            ++next_use_host_stat_field;
++        }
+ 
+-    for (i = 0; i < 44; i++) {
+-        if (i == 0) {
++        if (may_use_host_stat && fields[i] != NULL && fields[i][0] != '\0') {
++            g_string_printf(buf, "%s ", fields[i]);
++
++            /*
++             * Some systems do not mount /proc so still check for 0 and 3 even
++             * though `may_use_host_stat` is true for them.
++             */
++        } else if (i == 0) {
+             /* pid */
+             g_string_printf(buf, FMT_pid " ", getpid());
+         } else if (i == 1) {
+@@ -8259,7 +8343,8 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
+             g_string_printf(buf, TARGET_ABI_FMT_ld " ", ts->info->start_stack);
+         } else {
+             /* for the rest, there is MasterCard */
+-            g_string_printf(buf, "0%c", i == 43 ? '\n' : ' ');
++            g_string_printf(buf, "0%c",
++                            i == NUM_PROC_SELF_STAT_FIELDS - 1 ? '\n' : ' ');
+         }
+ 
+         if (write(fd, buf->str, buf->len) != buf->len) {
+@@ -8270,6 +8355,8 @@ static int open_self_stat(CPUArchState *cpu_env, int fd)
+     return 0;
+ }
+ 
++#undef NUM_PROC_SELF_STAT_FIELDS
++
+ static int open_self_auxv(CPUArchState *cpu_env, int fd)
+ {
+     CPUState *cpu = env_cpu(cpu_env);
 -- 
-2.43.0
+2.51.0.470.ga7dc726c21-goog
 
 
