@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF4BCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C030CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 21:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzMMt-000551-6Z; Thu, 18 Sep 2025 17:40:43 -0400
+	id 1uzMT5-0007nx-6L; Thu, 18 Sep 2025 17:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMMq-00054g-FG
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:40:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMSy-0007nM-JG
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:47:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMMo-0000Q6-GB
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:40:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzMSx-0001CI-31
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 17:47:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758231635;
+ s=mimecast20190719; t=1758232017;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4B+IyI6bsO5sv46rHVxYykJl8+IxX8MB0+se8gQEOMM=;
- b=XZzNi79tWcnKtTpIjk4V72LCqk3BAykTtV0Pv50IRi6di7Y3vbdkDDtluK/wlyZS+TSWUq
- NbTpvVNKVE0+m9o7O5jmLsb9IcqRrKi3TmXtxH428WoEm2je+kpN3QQ7pdiswJVXkWUIZA
- MVUXeDWBFOr9cebiYF58Nx59nvoBqV8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jpt2drOm7EGrzNcCmtmhb3hfBq4th4EbCCrex1nM/gQ=;
+ b=ZImZiiRgGeYWlw6NN8MWTdjX1pW2ARZzub2JXp4KIHWR7ws45Ku9eDaTfKWW6PtGxh1zh4
+ pD9yWaV2mQ7sXnsIdYgh5CcuGOqSW3C/JMX6J+Ut+J5kPF+NyjSajSmfjuemFLUwKF8sG/
+ ktL9oohiZBsFjpoBD3e2CChJWbl9xIQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-lLNmpQmdNCCuYPvSMewe7w-1; Thu, 18 Sep 2025 17:40:34 -0400
-X-MC-Unique: lLNmpQmdNCCuYPvSMewe7w-1
-X-Mimecast-MFC-AGG-ID: lLNmpQmdNCCuYPvSMewe7w_1758231633
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-82b1934907dso305898385a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 14:40:34 -0700 (PDT)
+ us-mta-279-6gtxDW4xOM-d1DdIByUUgg-1; Thu, 18 Sep 2025 17:46:53 -0400
+X-MC-Unique: 6gtxDW4xOM-d1DdIByUUgg-1
+X-Mimecast-MFC-AGG-ID: 6gtxDW4xOM-d1DdIByUUgg_1758232013
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-78ea15d3548so13948066d6.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 14:46:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758231633; x=1758836433;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4B+IyI6bsO5sv46rHVxYykJl8+IxX8MB0+se8gQEOMM=;
- b=qZDuXVOdDKvksznvKqUpgBFIBzO3Vrt1rPTjV6U0bIgiFrGlUtkGkKBwt4PgcbHtUO
- Jdp6s4HurR07FPKl1vVxy77Krzqgfl4l2s+5n53ZCZJv2p6+29Q1XrmK1RHoMxTMo8tZ
- 1fGB3yqyR9ndXnw+UkSKlVq2/6V3ZrQhwWk/8lo+Ycula9ACPSq+XtyOYegG8z3yMwm2
- /bBl932qmEcP/gyDbQTWc5I9fvMy7YFUMWnyZGcvPKbkoHZtCvbEq1MwZpD80LCPkjKS
- EuLOG+bKrpMOlIBOL6smQ0AME/3c3ux5lj0DubWUORZma/yrjivwnd8gIkwgcutxlfk9
- U30g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8xKK1wrtNUOWsjQ7vG6KQiAmWeJk0BoMdZ6AI4A/uMDWXgs23umqxSCBynubH+kP2DScFZ0U3xeiA@nongnu.org
-X-Gm-Message-State: AOJu0YwWtGjUgos9eHTUnLXRB0Q5aWEIV0Dl/nC94+PcgQ98TJD0qOKO
- kZcov0JtX/L5Q8/ThnEzHdWgp08mDBqevBSqazVTX0DSnF8EVF0wxNNdeEmaTHSkwC84CteymSb
- P0kaTbnQEVEVcsCWXyCtRlL1wGF3EsSyF7JMyQaBVX8vEYP+Cji4DBDoQ
-X-Gm-Gg: ASbGncsIp4tfhoq1BuUXkp20+ZpOWmYOQwzKNSISlL1bkUtQmhdFYVT2nfPJwwNl9av
- dAYw2ivN7wIGM3RmLCukJxWsKvJjQcttOv/6qQQXuNYEcQLPZxw1twmgyzrSet8PHWPHJLpXmLh
- /8rPxrNAdKpi+caqTw6+481quM+RpfHCLX6EfN/15A5UjRfM/nW2i8z59il6Pu4wFi0hkM6/Jzl
- fcTmxBPm5vFZpu7kOLnzG5s5zx1tuJF+q6Q+SfOEVGHtSteuQenEV2TbyEqBpKJwt/ZyhqMYs4Z
- pVChUwnesIB+3hMv4OReAiMetrckCtjXS6D0428MJ6ZKAQNb+krk4+s1ujHMnNOB3Uk8GE1ERxK
- cxE1s3uc6JgpUPvDRcThuKg==
-X-Received: by 2002:a05:620a:21c3:b0:82b:1f48:6e96 with SMTP id
- af79cd13be357-83ba494ba31mr118276785a.29.1758231633515; 
- Thu, 18 Sep 2025 14:40:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzDJNEFRyt6p9051XoSvJBxwpBRLkVsOInVSkyjI1BSLDMXHjnC4q48Dep8jKAv+HcoR4dPQ==
-X-Received: by 2002:a05:620a:21c3:b0:82b:1f48:6e96 with SMTP id
- af79cd13be357-83ba494ba31mr118274585a.29.1758231632994; 
- Thu, 18 Sep 2025 14:40:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758232013; x=1758836813;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jpt2drOm7EGrzNcCmtmhb3hfBq4th4EbCCrex1nM/gQ=;
+ b=Tne3wviEXwJD/PtuY7wNBNw/XNcnPLz47Kkb3pzREp1AlLxcp/wr2EanBjCrs+hHS8
+ 8t1+2JqAHNSFbD7nUZKaNY4RjhYd5tVI45EuMI6OrG/adfXXgMD5HgeOTSVBbfnq2egF
+ r/Nbv2N7hqksGM7qKsXhKI0tLTz3wpkl3bJOhve1gmTSGVuzyqV76NGZep7sOXHOCowO
+ /aTn0PmHWBrsGP2w1kXgEctMUgOqIZ07nuJWZr3iIZNwEiZwR3t3fCOqvz233pXYtUM3
+ QVr778IDKdVOnhE67/LoC79qrGFfNhi/xP3lqzqjBZLW8dpTevBHrbmnVxe9Dffaf2iR
+ GQUA==
+X-Gm-Message-State: AOJu0YwlPmeVZBmCxvmOrXqpletosoaKdvFYz8OqrWjWSMjb5nMP0Eq3
+ Ptoj++CW6gKFYtqEkPNJJREQgqyee/o4psIruPvDT77CJS5BjPwWMOEkfKE2KV634DdjUzlFftU
+ r+xfH8M651CkMIf1YueLMXGRKU+aQ5sBOd9xkh29Ovy8tOerGdXVZI3EV
+X-Gm-Gg: ASbGncvwmvPG9+DxFrCRnwFhg0jeMTTvV2Lttkr7SSjdsBvLoSssStw3/XAsP0IHGoU
+ 2p7kul31Stxq78LAiYZUtdFdP3MjtN6X8bG3Le+S67W1q96uHTwtAOk1iqI8bU4KaWfq1fFTfMe
+ Xi3UJH/+lORCxBDdbOYjA2mOdMnRiSrySASGGGx8NKlLhuJJJZ+psVfj3IxZy9ldCK59tXoLa1f
+ WMdaU2LyqcScm+REfJz4PM+cORsubH7qRHX5uicDfHykeHJEAe0GPFRMCCqsGyIfoCYQckVu3mi
+ 575+coF2myIuvCnukCO/IBr6JAORD/fSfT9CDjbiY7qJPGZm+B1G7nKquxD5qm4Z1fdxg7peeXG
+ UaZnBw73gjZ7by5juEormkg==
+X-Received: by 2002:a05:6214:5289:b0:76a:7ff4:cb85 with SMTP id
+ 6a1803df08f44-79914920336mr14546166d6.19.1758232013251; 
+ Thu, 18 Sep 2025 14:46:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWJRGyYgS+ZxZ6LMsg5ebPfutqD1M4SWCKtwZXnYUz9+GQeSca8hnoBO8PFZ1Op63vBC0SGQ==
+X-Received: by 2002:a05:6214:5289:b0:76a:7ff4:cb85 with SMTP id
+ 6a1803df08f44-79914920336mr14545986d6.19.1758232012869; 
+ Thu, 18 Sep 2025 14:46:52 -0700 (PDT)
 Received: from x1.local
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-83627d7dd01sm237001785a.27.2025.09.18.14.40.32
+ 6a1803df08f44-793446acfa6sm19288186d6.14.2025.09.18.14.46.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Sep 2025 14:40:32 -0700 (PDT)
-Date: Thu, 18 Sep 2025 17:40:31 -0400
+ Thu, 18 Sep 2025 14:46:52 -0700 (PDT)
+Date: Thu, 18 Sep 2025 17:46:50 -0400
 From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [Qemu-devel] [PATCH] vfio/common: Work around kernel overflow
- bug in DMA unmap
-Message-ID: <aMx8T5-u6Uj64Vgx@x1.local>
-References: <154707542737.22183.7160770678781819267.stgit@gimli.home>
- <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v3 0/2] migration/tls: Graceful shutdowns for main and
+ postcopy channels
+Message-ID: <aMx9yi628fuXr_gH@x1.local>
+References: <20250918203937.200833-1-peterx@redhat.com>
+ <875xdfv4su.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <875xdfv4su.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,45 +110,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 18, 2025 at 10:55:47PM +0200, Cédric Le Goater wrote:
-> Alex, Peter,
+On Thu, Sep 18, 2025 at 06:17:37PM -0300, Fabiano Rosas wrote:
+> > ============= ABOUT OLD PATCH 2 ===================
+> >
+> > I dropped it for now to unblock almost patch 1, because patch 1 will fix a
+> > real warning that can be triggered for not only qtest but also normal tls
+> > postcopy migration.
+> >
+> > While I was looking at temporary settings for multifd send iochannels to be
+> > blocking always, I found I cannot explain how migration_tls_channel_end()
+> > currently works, because it writes to the multifd iochannels while the
+> > channels should still be owned (and can be written at the same time?) by
+> > the sender threads.  It sounds like a thread-safety issue, or is it not?
+> >
 > 
-> On 1/10/19 00:10, Alex Williamson wrote:
-> > A kernel bug was introduced in v4.15 via commit 71a7d3d78e3c which
-> > adds a test for address space wrap-around in the vfio DMA unmap path.
-> > Unfortunately due to overflow, the kernel detects an unmap of the last
-> > page in the 64-bit address space as a wrap-around.  In QEMU, a Q35
-> > guest with VT-d emulation and guest IOMMU enabled will attempt to make
-> > such an unmap request during VM system reset, triggering an error:
-> > 
-> >    qemu-kvm: VFIO_UNMAP_DMA: -22
-> >    qemu-kvm: vfio_dma_unmap(0x561f059948f0, 0xfef00000, 0xffffffff01100000) = -22 (Invalid argument)
-> > 
-> > Here the IOVA start address (0xfef00000) and the size parameter
-> > (0xffffffff01100000) add to exactly 2^64, triggering the bug.  A
-> > kernel fix is queued for the Linux v5.0 release to address this.
-> > 
-> > This patch implements a workaround to retry the unmap, excluding the
-> > final page of the range when we detect an unmap failing which matches
-> > the requirements for this issue.  This is expected to be a safe and
-> > complete workaround as the VT-d address space does not extend to the
-> > full 64-bit space and therefore the last page should never be mapped.
-> > 
-> > This workaround can be removed once all kernels with this bug are
-> > sufficiently deprecated.
-> 
-> Have we waited long enough ? what does "sufficiently deprecated" mean ?
-> Is it related to the linux stable updates ?
+> IIUC, the multifd channels will be stuck at p->sem because this is the
+> success path so migration will have already finished when we reach
+> migration_cleanup(). The ram/device state migration will hold the main
+> thread until the multifd channels finish transferring.
 
-Alex might be the best to define it.
+For success cases, indeed.  However this is not the success path?  After
+all, we check migration_has_failed().
 
-To me, it doesn't sound a major issue to have it even forever just in case
-someone was using a broken v4.15..v5.0 kernel.  It's pretty small, limited
-and self contained workaround.
+Should I then send a patch to only send bye() when succeeded?  Then I can
+also add some comment.  I wished we could assert.  Then the "temporarily
+changing nonblock mode" will also rely on this one, because ideally we
+shouldn't touch the fd nonblocking mode if some other thread is operating
+on it.
 
-Any blockers on this?
-
-Thanks,
+The other thing is I also think we shouldn't rely on checking
+"p->tls_thread_created && p->thread_created" but only rely on channel type,
+which might be more straightforward (I almost did it in v1, but v2 rewrote
+things so it was lost).
 
 -- 
 Peter Xu
