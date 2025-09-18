@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101A1CAC5A9
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA95CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzATx-0000uh-8t; Thu, 18 Sep 2025 04:59:15 -0400
+	id 1uzAUd-000335-0e; Thu, 18 Sep 2025 04:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uzATj-0000oN-TK
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:59:00 -0400
+ id 1uzAUb-0002rH-8F
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:59:53 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uzATh-0004jY-K4
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:58:59 -0400
+ id 1uzAUU-0004kz-QW
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 04:59:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758185937; x=1789721937;
+ t=1758185986; x=1789721986;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=xVsvA3MC3rq5sMUut+s4X/8edtKB0p4xkhedzqHM/Dc=;
- b=DqHTGgwQyjeAMuNxK/4axJF9KNXUsaOyn6Sgx3o4H4SdYUEtNdT2TdZl
- dHA2TPTklCtfarK4vYrM4PUIgyjVoEUMyYXY6ig+HMpVxHQ3roKK1fOs/
- 6yXTT+XZ0OCJBteaPgBxDHV04F9WIiJ8Dr5xU/cOHRmovngKsdGHiVkM3
- HSHbCZcyQBN5HT668U6jPm7DMSFybTgssXwnel4fza4Oaao3HO2fCipKt
- 16783Op487jZHZPy992y3pnhQSS+xhBkwfrlvoy48roU6BUGHpV583ef5
- B/mFWzpxRtsEGY4vVKTD+nTglNWIohc/2VbfFDl/TUEJ+qSkXellT5NCn w==;
-X-CSE-ConnectionGUID: NrjPa+3DQcGRjfUu5j85uQ==
-X-CSE-MsgGUID: XzxF7X4HT5Cw1JbqU11E4A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11556"; a="78109442"
-X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="78109442"
+ bh=23KJ24qa77slLYbUlc7r1JjQRvBtmhjnFhhB58ZbJd0=;
+ b=jS4OzAiCbSvXtlxrh5YLTu+kDmrl4vVJcMd8pF8o1HUrg8V8JqBHVs2Z
+ ApocbrcrDdkORZ4UOWypYM1sCw0A85dBuYL6cO1vWwiON7e6LpkBLvDrM
+ 5FZhmt7fS4+5HtOTwiTwhFS9kOyCyzl+HROxp1ucc+8PRTUxNkGlz5Lbq
+ ZNxTc2+GsytQRdyr5JQ5JEDsYWiQYa/RmjG0QXWQybF5JPQcg1y/QkGd5
+ /aSslGWNJzq7FSgKwPTigOouWBkIWYiX8NHEPxOlRPcm+PvdHOA62CGjq
+ oCM1akZ8akjpyuGlHZbPEr/sUHkCVQQQOXpJanTMp3ufUyNhQcGR5tqfM A==;
+X-CSE-ConnectionGUID: fVGlQomlSiexlXaT9o6dDg==
+X-CSE-MsgGUID: Ky/L0vNgTHueRaplm0Hqcg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11556"; a="78109564"
+X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="78109564"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2025 01:58:56 -0700
-X-CSE-ConnectionGUID: MSIbWrv1SdO0Po2syZVcqw==
-X-CSE-MsgGUID: iyoYgUN/Sm6onr/lZYDczw==
+ 18 Sep 2025 01:59:41 -0700
+X-CSE-ConnectionGUID: MTP1x3IyRL+SDYgmsG5aBA==
+X-CSE-MsgGUID: Ed1sULe5SKmXELVhHW61QQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="175930339"
+X-IronPort-AV: E=Sophos;i="6.18,274,1751266800"; d="scan'208";a="175930503"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Sep 2025 01:58:53 -0700
+ 18 Sep 2025 01:59:37 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,9 +54,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v6 06/22] intel_iommu: Implement get_viommu_flags() callback
-Date: Thu, 18 Sep 2025 04:57:45 -0400
-Message-ID: <20250918085803.796942-7-zhenzhong.duan@intel.com>
+Subject: [PATCH v6 17/22] intel_iommu: Replay all pasid bindings when either
+ SRTP or TE bit is changed
+Date: Thu, 18 Sep 2025 04:57:56 -0400
+Message-ID: <20250918085803.796942-18-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250918085803.796942-1-zhenzhong.duan@intel.com>
 References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
@@ -87,57 +88,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement get_viommu_flags() callback and expose a request for nesting
-parent HWPT for now.
+From: Yi Liu <yi.l.liu@intel.com>
 
-VFIO uses it to create nesting parent HWPT which is further used to create
-nested HWPT in vIOMMU. All these will be implemented in following patches.
+When either 'Set Root Table Pointer' or 'Translation Enable' bit is changed,
+all pasid bindings on host side become stale and need to be updated.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Introduce a helper function vtd_replay_pasid_bindings_all() to go through all
+pasid entries in all passthrough devices to update host side bindings.
+
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- hw/i386/intel_iommu.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/i386/intel_iommu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a47482ba9d..83c40975cc 100644
+index 92548f9573..74496c7d3b 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -24,6 +24,7 @@
- #include "qemu/main-loop.h"
- #include "qapi/error.h"
- #include "hw/sysbus.h"
-+#include "hw/iommu.h"
- #include "intel_iommu_internal.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_bus.h"
-@@ -4412,6 +4413,16 @@ static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+@@ -90,6 +90,7 @@ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
+ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+                                         gpointer user_data);
++static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s);
+ 
+ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
+ {
+@@ -2904,6 +2905,7 @@ static void vtd_handle_gcmd_srtp(IntelIOMMUState *s)
+     vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_RTPS);
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_replay_pasid_bindings_all(s);
+ }
+ 
+ /* Set Interrupt Remap Table Pointer */
+@@ -2938,6 +2940,7 @@ static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+ 
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_replay_pasid_bindings_all(s);
+ }
+ 
+ /* Handle Interrupt Remap Enable/Disable */
+@@ -3428,6 +3431,13 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
      vtd_iommu_unlock(s);
  }
  
-+static uint64_t vtd_get_viommu_flags(void *opaque)
++static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s)
 +{
-+    IntelIOMMUState *s = opaque;
-+    uint64_t caps;
++    VTDPASIDCacheInfo pc_info = { .type = VTD_INV_DESC_PASIDC_G_GLOBAL };
 +
-+    caps = s->fsts ? VIOMMU_FLAG_WANT_NESTING_PARENT : 0;
-+
-+    return caps;
++    vtd_pasid_cache_sync(s, &pc_info);
 +}
 +
- /* Unmap the whole range in the notifier's scope. */
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ static bool vtd_process_pasid_desc(IntelIOMMUState *s,
+                                    VTDInvDesc *inv_desc)
  {
-@@ -4842,6 +4853,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
-     .register_iotlb_notifier = vtd_register_iotlb_notifier,
-     .unregister_iotlb_notifier = vtd_unregister_iotlb_notifier,
-     .ats_request_translation = vtd_ats_request_translation,
-+    .get_viommu_flags = vtd_get_viommu_flags,
- };
- 
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 2.47.1
 
