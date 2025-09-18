@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FC0CAC59A
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97B6CAC5A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 12:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzDOa-0002vO-EX; Thu, 18 Sep 2025 08:05:52 -0400
+	id 1uzDRX-0004aX-UO; Thu, 18 Sep 2025 08:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uzDOW-0002mz-HT; Thu, 18 Sep 2025 08:05:49 -0400
+ id 1uzDRF-0004VA-Sg; Thu, 18 Sep 2025 08:08:38 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uzDOO-0006f1-0U; Thu, 18 Sep 2025 08:05:48 -0400
+ id 1uzDRB-0006oN-PD; Thu, 18 Sep 2025 08:08:36 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58IC4K7s012174
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58IC86he013134
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 18 Sep 2025 21:04:20 +0900 (JST)
+ Thu, 18 Sep 2025 21:08:06 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=JCSUOtDEmJ4c0XrW8cgfFF0PUaGGUUgEil6Ln+5VVVI=; 
+DKIM-Signature: a=rsa-sha256; bh=R4ggw9psAXm51WlK1j7vfVfDeA6BVrMeNhJfdKJ2OP8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1758197061; v=1;
- b=PgwV+1Mm4PPLaA9lPW94SGVJsGFExtvpGQEa4TgrAWLbKcXcpgQpNl2Y1Ui/Cmgk
- PO5u35mkfEo+71RewITdip0FOl/JUEFYpq/q+8Oc3c2AVEdohktQN+gVkpAqFSGb
- +wPXDixLCoGM4Ujddbg+kNKEiowmQALZBu1BFw23efZ0i3Wds6YZRglnVBJmHHC/
- IFYKFEuw6XSnTSzjQ099lsgO4uTHCpoEfe4dxlv95A7sMwCe8zXBumK8E1wYLm06
- VVACGVs0EOCDZ+busXu8lYM3tZGOncN8EwJuvlnYKGF0zq5/q4M8wlz7ddoK3Nq2
- 7ntkdwvDQarp7B8S21WkmQ==
-Message-ID: <4108b4f2-accf-4080-af29-a3f464d862f9@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 18 Sep 2025 21:04:19 +0900
+ s=rs20250326; t=1758197286; v=1;
+ b=nI+0YOuJa9VA5SGXn65KcbYbeub9rCNx0wvSr/y518MUpzY/GGWE2G+qhZB2snA9
+ QLfBay40F51fU4LY0x/9DR/7i2HRcNVncvd50mjt2YRij1r1F8L1O79ZGe3U9rqz
+ QTNp+NNi0skTyGXMcngfTUrx9pJBQGNImUqWUqxi86l3KGzdjgFxWNcN/ZEjYlyn
+ 8dr2GuJlf34kXO5IPXgv0jzO3OdRWoZoBauOmnVru19tHZLZh8lluOeWJYl6OtyW
+ IU/gboNNH/qldEcuKkhrPMKQGTm+l7NCvuenSEhgwROZ7tiKZb6rJv4ctWJKmqdl
+ 7CPF/syjF6Zn2RjYbtyECQ==
+Message-ID: <9d67536b-f28f-4db4-a0ff-f5c7b2476b83@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 18 Sep 2025 21:08:05 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] memory: Stop piggybacking on memory region owners
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+Subject: Re: [PATCH v13 07/27] migration: push Error **errp into
+ qemu_loadvm_state()
+To: armenon@redhat.com
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20250906-mr-v2-0-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
- <20250906-mr-v2-3-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp>
- <aMHxhTIw2EGRyD4-@x1.local>
- <fe1969e6-bc13-4438-816d-b352926c33a8@rsg.ci.i.u-tokyo.ac.jp>
- <aMNMjetBDJfBiThl@x1.local>
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <aLRt_G-pOH1rwJbb@armenon-kvm.bengluru.csb>
+ <017c40a6-3347-43e7-b7b7-9e2e2130d19e@rsg.ci.i.u-tokyo.ac.jp>
+ <aLR6mKJyVPZ4bqnZ@armenon-kvm.bengluru.csb>
+ <6bee20a5-6f12-4b12-aab3-1a2019418611@rsg.ci.i.u-tokyo.ac.jp>
+ <aLfklAy0qqetX8_K@armenon-kvm.bengluru.csb>
+ <201bb795-57af-4614-8ef1-e5218108c13f@rsg.ci.i.u-tokyo.ac.jp>
+ <aMoCIwzS7NWmTedG@armenon-kvm.bengluru.csb>
+ <1cfcf036-0cdf-44a9-8c39-5219285a1dfa@rsg.ci.i.u-tokyo.ac.jp>
+ <aMrFPbbbC3gIcvJu@armenon-kvm.bengluru.csb>
+ <bb702a89-c198-43d0-bc4e-22c355d3ac20@rsg.ci.i.u-tokyo.ac.jp>
+ <aMummAAkDFSvP-eT@armenon-kvm.bengluru.csb>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aMNMjetBDJfBiThl@x1.local>
+In-Reply-To: <aMummAAkDFSvP-eT@armenon-kvm.bengluru.csb>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -86,7 +87,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,622 +103,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/12 7:26, Peter Xu wrote:
-> On Thu, Sep 11, 2025 at 12:40:43PM +0900, Akihiko Odaki wrote:
->> On 2025/09/11 6:45, Peter Xu wrote:
->>> On Sat, Sep 06, 2025 at 04:39:06AM +0200, Akihiko Odaki wrote:
->>>> MemoryRegions used to "piggyback" on their owners instead of using their
->>>> own reference counters due to the circular dependencies between
->>>> them, which caused new circular references. Stop piggybacking, showing
->>>> that the circular dependencies are actually broken at the finalization
->>>> time.
->>>>
->>>> Circular references caused by piggybacking
->>>> ==========================================
->>>>
->>>> Piggybacking created another circular reference when an owner referred
->>>> to its MemoryRegion via memory_region_ref(). This could happen in three
->>>> scenarios:
->>>>
->>>> - A subregion and its container had the same owner. In this case, the
->>>>     container would use memory_region_ref() to take a reference to the
->>>>     subregion.
->>>>
->>>> - An AddressSpace and its root MemoryRegion had the same owner. The
->>>>     situation is similar to the subregion/container scenario.
->>>>
->>>> - An owner called address_space_map() with a guest-controlled address
->>>>     that points back to its MemoryRegion. This scenario is similar to what
->>>>     MemReentrancyGuard handles.
->>>>
->>>> Avoiding such a circular reference required checking if the referrer is
->>>> the owner at many places where memory_region_ref() is called,
->>>> complicating the code further.
->>>
->>> I understand (1).  Why (2)/(3) are causes of circular references?
->>
->> I first explain why (1) results in a circular reference, and generalize the
->> argument to (2) and (3).
->>
->> Semantically, (1) has the following dependencies:
->>
->> Owner <-> Subregion
->> Owner <-> Container
->> Container -> Subregion
->>
->> However, the bidirectional dependencies prevents finalization, so
->> piggybacking is done. It makes the following reference relationship:
->>
->> Owner -> Subregion
->> Owner -> Container
->> Container -> Owner
->>
->> In this case, we still have a circular reference:
->> Owner -> Container -> Owner
->>
->> This could be generalized: if you replace Subregion with (any kind of)
->> MemoryRegion and Container with "X", it will look like follows:
->>
->> Owner -> MemoryRegion
->> Owner -> X
->> X -> Owner
->>
->> In case of (2), "X" is an AddressSpace.
->> In case of (3), "X" is a mapped address.
->>
->>>
->>>>
->>>> Insight
->>>> =======
->>>>
->>>> This change challenges the underlying assumption that circular
->>>> dependencies exist and can be tolerated at the finalization time. The
->>>> deletable MemoryRegions are of hotpluggable devices and
->>>> virtio-gpu-virgl's hostmem. A device and its MemoryRegion have the
->>>> following dependencies:
->>>>
->>>> QOM tree -> Device
->>>> Container -> MemoryRegion
->>>> Device <-> MemoryRegion
->>>
->>> Yes, they need to "reference" each other.  That's also why IMHO the current
->>> qemu mr refcounting design is still practical, in that it keeps the
->>> reference graph to be acyclic, which is much simpler to understand.
->>
->> Piggybacking is indeed simpler but has the three possible circular reference
->> scenarios I mentioned earlier.
->>
->>>
->>>>
->>>> Techniques like piggybacking or a hypothetical garbage collector can
->>>> finalize the device and the MemoryRegion once the QOM tree and container
->>>> lose their dependencies. However, these methods are fundamentally
->>>> insufficient because the MemoryRegion and the device have finalizers,
->>>> and they do not respect the dependencies these objects may have during
->>>> finalization.
->>>>
->>>> As long as the object model based on the device and the MemoryRegion is
->>>> correct, one of them should lose its dependency on the first,
->>>> establishing a valid finalization order. Understanding this allows using
->>>> standard reference counting, which is immune to the problems of
->>>> piggybacking.
->>>>
->>>> Analysis reveals that the device no longer depends on the MemoryRegion
->>>> after being unparented. The device needs the MemoryRegion for the
->>>> following two purposes:
->>>> - To add the MemoryRegion to a container and expose it to an
->>>>     AddressSpace.
->>>> - To expose it via the QOM tree.
->>>>
->>>> Once unparented, the device is hidden from the AddresSpaces and the
->>>> QOM tree so it no longer needs the MemoryRegion and the circular
->>>> dependencies are broken. We only need to ensure that the device is
->>>> finalized after the MemoryRegion then.
->>>>
->>>> It should also be noted that the reference from the MemoryRegion to the
->>>> device needs to be tracked only after the device is unparented because
->>>> the device will not be finalized as long as it is in the QOM tree.
->>>> This fact can be exploited to avoid having a circular reference between
->>>> the device and the MemoryRegion before the device gets unparented.
->>>>
->>>> Solution
->>>> ========
->>>>
->>>> When devices get unparented, they also unparent their memory regions.
->>>> The unparented memory regions will then retain their references to the
->>>> devices. This ensures that:
->>>>
->>>> 1. the references from the devices to their memory regions are counted
->>>>      until the devices get unparented
->>>> 2. the references from their memory regions to the devices afterwards,
->>>>      which in turn ensures that devices are finalized after their
->>>>      MemoryRegions.
->>>>
->>>> When virtio-gpu's hostmems get unparented, they also unparent their
->>>> memory regions in the same manner.
->>>>
->>>> This enforces a valid finalization order, allows MemoryRegions to rely
->>>> on standard reference counting, and eliminates the entire class of
->>>> memory leaks caused by piggybacking.
->>>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> ---
->>>>    docs/devel/memory.rst         | 41 +++++++++++++++++-----------------
->>>>    include/system/memory.h       | 51 +++++++++++++++++++++----------------------
->>>>    hw/core/qdev.c                | 16 ++++++++++++++
->>>>    hw/display/virtio-gpu-virgl.c |  1 +
->>>>    system/memory.c               | 33 ++++++++++++++++++++--------
->>>>    5 files changed, 86 insertions(+), 56 deletions(-)
->>>>
->>>> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
->>>> index 749f11d8a4dd..9634d8805740 100644
->>>> --- a/docs/devel/memory.rst
->>>> +++ b/docs/devel/memory.rst
->>>> @@ -143,11 +143,7 @@ Region lifecycle
->>>>    ----------------
->>>>    A region is created by one of the memory_region_init*() functions and
->>>> -attached to an object, which acts as its owner or parent.  QEMU ensures
->>>> -that the owner object remains alive as long as the region is visible to
->>>> -the guest, or as long as the region is in use by a virtual CPU or another
->>>> -device.  For example, the owner object will not die between an
->>>> -address_space_map operation and the corresponding address_space_unmap.
->>>> +attached to an object, which acts as its owner or parent.
->>>>    After creation, a region can be added to an address space or a
->>>>    container with memory_region_add_subregion(), and removed using
->>>> @@ -158,30 +154,34 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
->>>>    as soon as the region is made visible.  This can be immediately, later,
->>>>    or never.
->>>> -Destruction of a memory region happens automatically when the owner
->>>> -object dies.
->>>> +A region will retain references to its owner object when it is
->>>> +unparented. This ensures that the owner object remains alive as long as
->>>> +the region is in use by a virtual CPU or another device.  For example,
->>>> +the owner object will not die between an address_space_map operation and
->>>> +the corresponding address_space_unmap. Devices automatically unparent
->>>> +their memory regions when they are unparented.
->>>> -You must not destroy a memory region as long as it may be in use by a
->>>> -device or CPU.  In order to do this, as a general rule do not create or
->>>> -destroy memory regions dynamically during a device's lifetime.
->>>> +You must not free a memory region as long as it may be in use by a
->>>> +device or CPU.  In order to do this, as a general rule do not allocate
->>>> +or free memory regions dynamically during a device's lifetime.
->>>>    The dynamically allocated data structure that contains the
->>>>    memory region should be freed in the instance_finalize callback.
->>>>    If you break this rule, the following situation can happen:
->>>> -- the memory region's owner had a reference taken via memory_region_ref
->>>> +- the memory region had a reference taken via memory_region_ref
->>>>      (for example by address_space_map)
->>>> -- the region is unparented, and has no owner anymore
->>>> +- the region is freed
->>>> -- when address_space_unmap is called, the reference to the memory region's
->>>> -  owner is leaked.
->>>> +- when the mapped memory is used, the use of the memory region
->>>> +  results in use-after-free.
->>>> -There is an exception to the above rule: it is okay to call
->>>> -object_unparent at any time for an alias or a container region.  It is
->>>> -therefore also okay to create or destroy alias and container regions
->>>> -dynamically during a device's lifetime.
->>>> +There is an exception to the above rule: it is okay to free an alias or
->>>> +a container region at any time.  It is therefore also okay to allocate
->>>> +or free alias and container regions dynamically during a device's
->>>> +lifetime.
->>>>    This exceptional usage is valid because aliases and containers only help
->>>>    QEMU building the guest's memory map; they are never accessed directly.
->>>> @@ -191,9 +191,8 @@ this exception is rarely necessary, and therefore it is discouraged,
->>>>    but nevertheless it is used in a few places.
->>>>    For regions that "have no owner" (NULL is passed at creation time), the
->>>> -machine object is actually used as the owner.  You must never call
->>>> -object_unparent on regions that have no owner, unless they are aliases
->>>> -or containers.
->>>> +machine object is actually used as the owner.  You must never free
->>>> +regions that have no owner, unless they are aliases or containers.
->>>>    Overlapping regions and priority
->>>> diff --git a/include/system/memory.h b/include/system/memory.h
->>>> index e2cd6ed12614..1fc773ca49e2 100644
->>>> --- a/include/system/memory.h
->>>> +++ b/include/system/memory.h
->>>> @@ -1307,7 +1307,7 @@ static inline bool memory_region_section_intersect_range(MemoryRegionSection *s,
->>>>     * memory_region_add_subregion() to add subregions.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: used for debugging; not visible to the user or ABI
->>>>     * @size: size of the region; any subregions beyond this size will be clipped
->>>>     */
->>>> @@ -1320,14 +1320,14 @@ void memory_region_init(MemoryRegion *mr,
->>>>     * memory_region_ref: Add 1 to a memory region's reference count
->>>>     *
->>>>     * Whenever memory regions are accessed outside the BQL, they need to be
->>>> - * preserved against hot-unplug.  MemoryRegions actually do not have their
->>>> - * own reference count; they piggyback on a QOM object, their "owner".
->>>> - * This function adds a reference to the owner.
->>>> + * preserved against hot-unplug. This function adds a reference to the
->>>> + * memory region.
->>>>     *
->>>> - * All MemoryRegions must have an owner if they can disappear, even if the
->>>> - * device they belong to operates exclusively under the BQL.  This is because
->>>> - * the region could be returned at any time by memory_region_find, and this
->>>> - * is usually under guest control.
->>>> + * We do not ref/unref memory regions without an owner because it slows
->>>> + * down DMA sensibly. All MemoryRegions must have an owner if they can
->>>> + * disappear, even if the device they belong to operates exclusively
->>>> + * under the BQL.  This is because the region could be returned at any
->>>> + * time by memory_region_find, and this is usually under guest control.
->>>>     *
->>>>     * @mr: the #MemoryRegion
->>>>     */
->>>> @@ -1337,9 +1337,8 @@ void memory_region_ref(MemoryRegion *mr);
->>>>     * memory_region_unref: Remove 1 to a memory region's reference count
->>>>     *
->>>>     * Whenever memory regions are accessed outside the BQL, they need to be
->>>> - * preserved against hot-unplug.  MemoryRegions actually do not have their
->>>> - * own reference count; they piggyback on a QOM object, their "owner".
->>>> - * This function removes a reference to the owner and possibly destroys it.
->>>> + * preserved against hot-unplug. This function removes a reference to
->>>> + * the memory and possibly destroys it.
->>>>     *
->>>>     * @mr: the #MemoryRegion
->>>>     */
->>>> @@ -1352,7 +1351,7 @@ void memory_region_unref(MemoryRegion *mr);
->>>>     * if @size is nonzero, subregions will be clipped to @size.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @ops: a structure containing read and write callbacks to be used when
->>>>     *       I/O is performed on the region.
->>>>     * @opaque: passed to the read and write callbacks of the @ops structure.
->>>> @@ -1372,7 +1371,7 @@ void memory_region_init_io(MemoryRegion *mr,
->>>>     *                                    directly.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1395,7 +1394,7 @@ bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
->>>>     *                                          modify memory directly.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1425,7 +1424,7 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
->>>>     *                                     canceled.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: used size of the region.
->>>> @@ -1454,7 +1453,7 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
->>>>     *                                    mmap-ed backend.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1487,7 +1486,7 @@ bool memory_region_init_ram_from_file(MemoryRegion *mr,
->>>>     *                                  mmap-ed backend.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: the name of the region.
->>>>     * @size: size of the region.
->>>>     * @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
->>>> @@ -1518,7 +1517,7 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
->>>>     *                              region will modify memory directly.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1546,7 +1545,7 @@ void memory_region_init_ram_ptr(MemoryRegion *mr,
->>>>     * skip_dump flag.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: the name of the region.
->>>>     * @size: size of the region.
->>>>     * @ptr: memory to be mapped; must contain at least @size bytes.
->>>> @@ -1566,7 +1565,7 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
->>>>     *                           part of another memory region.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: used for debugging; not visible to the user or ABI
->>>>     * @orig: the region to be referenced; @mr will be equivalent to
->>>>     *        @orig between @offset and @offset + @size - 1.
->>>> @@ -1592,7 +1591,7 @@ void memory_region_init_alias(MemoryRegion *mr,
->>>>     * of the caller.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1615,7 +1614,7 @@ bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
->>>>     * of the caller.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @ops: callbacks for write access handling (must not be NULL).
->>>>     * @opaque: passed to the read and write callbacks of the @ops structure.
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>> @@ -1651,7 +1650,7 @@ bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
->>>>     * @_iommu_mr: the #IOMMUMemoryRegion to be initialized
->>>>     * @instance_size: the IOMMUMemoryRegion subclass instance size
->>>>     * @mrtypename: the type name of the #IOMMUMemoryRegion
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: used for debugging; not visible to the user or ABI
->>>>     * @size: size of the region.
->>>>     */
->>>> @@ -1667,7 +1666,7 @@ void memory_region_init_iommu(void *_iommu_mr,
->>>>     *                          region will modify memory directly.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized
->>>> - * @owner: the object that tracks the region's reference count (must be
->>>> + * @owner: the object that provides the region's storage (must be
->>>>     *         TYPE_DEVICE or a subclass of TYPE_DEVICE, or NULL)
->>>>     * @name: name of the memory region
->>>>     * @size: size of the region in bytes
->>>> @@ -1713,7 +1712,7 @@ bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
->>>>     * If you pass a non-NULL non-device @owner then we will assert.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>>     *        must be unique within any device
->>>>     * @size: size of the region.
->>>> @@ -1744,7 +1743,7 @@ bool memory_region_init_rom(MemoryRegion *mr,
->>>>     * If you pass a non-NULL non-device @owner then we will assert.
->>>>     *
->>>>     * @mr: the #MemoryRegion to be initialized.
->>>> - * @owner: the object that tracks the region's reference count
->>>> + * @owner: the object that provides the region's storage
->>>>     * @ops: callbacks for write access handling (must not be NULL).
->>>>     * @opaque: passed to the read and write callbacks of the @ops structure.
->>>>     * @name: Region name, becomes part of RAMBlock name used in migration stream
->>>> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
->>>> index 8fdf6774f87e..b83c46615fba 100644
->>>> --- a/hw/core/qdev.c
->>>> +++ b/hw/core/qdev.c
->>>> @@ -718,8 +718,18 @@ static void device_class_base_init(ObjectClass *class, const void *data)
->>>>        klass->props_count_ = 0;
->>>>    }
->>>> +static int collect_memory_region(Object *child, void *opaque)
->>>> +{
->>>> +    if (object_dynamic_cast(child, TYPE_MEMORY_REGION)) {
->>>> +        g_array_append_val(opaque, child);
->>>> +    }
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +
->>>>    static void device_unparent(Object *obj)
->>>>    {
->>>> +    g_autoptr(GArray) array = g_array_new(FALSE, FALSE, sizeof(Object *));
->>>>        DeviceState *dev = DEVICE(obj);
->>>>        BusState *bus;
->>>> @@ -735,6 +745,12 @@ static void device_unparent(Object *obj)
->>>>            object_unref(OBJECT(dev->parent_bus));
->>>>            dev->parent_bus = NULL;
->>>>        }
->>>> +
->>>> +    object_child_foreach(OBJECT(dev), collect_memory_region, array);
->>>> +
->>>> +    for (gsize i = 0; i < array->len; i++) {
->>>> +        object_unparent(g_array_index(array, Object *, i));
->>>> +    }
->>>
->>> What if the owner is not a device?
->>>
->>> If we have a more self contained solution [1], which do not care about the
->>> type of the owner object, why bother?
->>>
->>> What is the benefit of your proposal here, comparing to [1]?
->>
->> [1] only handles (1) but this covers the entire class of memory leaks,
->> including (2) and (3).
+On 2025/09/18 15:28, Arun Menon wrote:
+> Hi Akihiko,
 > 
-> Can you provide some example memory leaks that can reproduce on current
-> master branch with (2) and (3)?  How severe are they?
-> 
-> I plan to merge the one-patch fix first on circular ref.  This issue has
-> been dangling for too long, and I highly doubt anyone would even start to
-> like patch 1 of your this series on "finalizing" stage.
-> 
-> I don't see why we need to be blocked forever on this, keeping PeterM and
-> others poking the known issues.  It'll be great if you can work whatever on
-> top of that, and justifying whatever you propose is better is also easier.
-> 
-> Is that OK for you?
-> 
+> On Thu, Sep 18, 2025 at 11:06:58AM +0900, Akihiko Odaki wrote:
+>> On 2025/09/17 23:27, Arun Menon wrote:
+>>> Hi Akihiko,
+>>>
+>>> On Wed, Sep 17, 2025 at 04:54:11PM +0900, Akihiko Odaki wrote:
+>>>> On 2025/09/17 9:34, Arun Menon wrote:
+>>>>> Hi Akihiko,
+>>>>>
+>>>>> On Sat, Sep 06, 2025 at 05:22:31AM +0200, Akihiko Odaki wrote:
+>>>>>> On 2025/09/03 8:47, Arun Menon wrote:
+>>>>>>> Hi Akihiko,
+>>>>>>>
+>>>>>>> It took some time to set up the machines; apologies for the delay in response.
+>>>>>>>
+>>>>>>> On Mon, Sep 01, 2025 at 02:12:54AM +0900, Akihiko Odaki wrote:
+>>>>>>>> On 2025/09/01 1:38, Arun Menon wrote:
+>>>>>>>>> Hi,
+>>>>>>>>>
+>>>>>>>>> On Mon, Sep 01, 2025 at 01:04:40AM +0900, Akihiko Odaki wrote:
+>>>>>>>>>> On 2025/09/01 0:45, Arun Menon wrote:
+>>>>>>>>>>> Hi Akihiko,
+>>>>>>>>>>> Thanks for the review.
+>>>>>>>>>>>
+>>>>>>>>>>> On Sat, Aug 30, 2025 at 02:58:05PM +0900, Akihiko Odaki wrote:
+>>>>>>>>>>>> On 2025/08/30 5:01, Arun Menon wrote:
+>>>>>>>>>>>>> This is an incremental step in converting vmstate loading
+>>>>>>>>>>>>> code to report error via Error objects instead of directly
+>>>>>>>>>>>>> printing it to console/monitor.
+>>>>>>>>>>>>> It is ensured that qemu_loadvm_state() must report an error
+>>>>>>>>>>>>> in errp, in case of failure.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> When postcopy live migration runs, the device states are loaded by
+>>>>>>>>>>>>> both the qemu coroutine process_incoming_migration_co() and the
+>>>>>>>>>>>>> postcopy_ram_listen_thread(). Therefore, it is important that the
+>>>>>>>>>>>>> coroutine also reports the error in case of failure, with
+>>>>>>>>>>>>> error_report_err(). Otherwise, the source qemu will not display
+>>>>>>>>>>>>> any errors before going into the postcopy pause state.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>>>>>>>>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>>>>>>>>>>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>         migration/migration.c |  9 +++++----
+>>>>>>>>>>>>>         migration/savevm.c    | 30 ++++++++++++++++++------------
+>>>>>>>>>>>>>         migration/savevm.h    |  2 +-
+>>>>>>>>>>>>>         3 files changed, 24 insertions(+), 17 deletions(-)
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>>>>>>>>>>> index 10c216d25dec01f206eacad2edd24d21f00e614c..c6768d88f45c870c7fad9b9957300766ff69effc 100644
+>>>>>>>>>>>>> --- a/migration/migration.c
+>>>>>>>>>>>>> +++ b/migration/migration.c
+>>>>>>>>>>>>> @@ -881,7 +881,7 @@ process_incoming_migration_co(void *opaque)
+>>>>>>>>>>>>>                               MIGRATION_STATUS_ACTIVE);
+>>>>>>>>>>>>>             mis->loadvm_co = qemu_coroutine_self();
+>>>>>>>>>>>>> -    ret = qemu_loadvm_state(mis->from_src_file);
+>>>>>>>>>>>>> +    ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+>>>>>>>>>>>>>             mis->loadvm_co = NULL;
+>>>>>>>>>>>>>             trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
+>>>>>>>>>>>>> @@ -908,7 +908,8 @@ process_incoming_migration_co(void *opaque)
+>>>>>>>>>>>>>             }
+>>>>>>>>>>>>>             if (ret < 0) {
+>>>>>>>>>>>>> -        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
+>>>>>>>>>>>>> +        error_prepend(&local_err, "load of migration failed: %s: ",
+>>>>>>>>>>>>> +                      strerror(-ret));
+>>>>>>>>>>>>>                 goto fail;
+>>>>>>>>>>>>>             }
+>>>>>>>>>>>>> @@ -924,13 +925,13 @@ fail:
+>>>>>>>>>>>>>             migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>>>>>>>>>>>>>                               MIGRATION_STATUS_FAILED);
+>>>>>>>>>>>>>             migrate_set_error(s, local_err);
+>>>>>>>>>>>>> -    error_free(local_err);
+>>>>>>>>>>>>> +    error_report_err(local_err);
+>>>>>>>>>>>>
+>>>>>>>>>>>> This is problematic because it results in duplicate error reports when
+>>>>>>>>>>>> !mis->exit_on_error; in that case the query-migrate QMP command reports the
+>>>>>>>>>>>> error and this error reporting is redundant.
+>>>>>>>>>>>
+>>>>>>>>>>> If I comment this change, then all of the errors propagated up to now, using
+>>>>>>>>>>> error_setg() will not be reported. This is the place where it is finally reported,
+>>>>>>>>>>> when qemu_loadvm_state() fails. In other words, all the error_reports() we removed
+>>>>>>>>>>> from all the files, replacing them with error_setg(), will finally be reported here
+>>>>>>>>>>> using error_report_err().
+>>>>>>>>>>
+>>>>>>>>>> My understanding of the code without these two changes is:
+>>>>>>>>>> - If the migrate-incoming QMP command is used with false as
+>>>>>>>>>>        exit-on-error, this function will not report the error but
+>>>>>>>>>>        the query-migrate QMP command will report the error.
+>>>>>>>>>> - Otherwise, this function reports the error.
+>>>>>>>>>
+>>>>>>>>> With my limited experience in testing, I have a question,
+>>>>>>>>> So there are 2 scenarios,
+>>>>>>>>> 1. running the virsh migrate command on the source host. Something like the following,
+>>>>>>>>>        virsh -c 'qemu:///system' migrate --live --verbose --domain guest-vm --desturi qemu+ssh://10.6.120.20/system
+>>>>>>>>>        OR for postcopy-ram,
+>>>>>>>>>        virsh migrate guest-vm --live qemu+ssh://10.6.120.20/system --verbose --postcopy --timeout 10 --timeout-postcopy
+>>>>>>>>>
+>>>>>>>>> 2. Using QMP commands, performing a migration from source to destination.
+>>>>>>>>>        Running something like the following on the destination:
+>>>>>>>>>        {
+>>>>>>>>>          "execute": "migrate-incoming",
+>>>>>>>>>          "arguments": {
+>>>>>>>>>            "uri": "tcp:127.0.0.1:7777",
+>>>>>>>>>            "exit-on-error": false
+>>>>>>>>>          }
+>>>>>>>>>        }
+>>>>>>>>>        {
+>>>>>>>>>          "execute": "migrate-incoming",
+>>>>>>>>>          "arguments": {
+>>>>>>>>>            "uri": "tcp:127.0.0.1:7777",
+>>>>>>>>>            "exit-on-error": false
+>>>>>>>>>          }
+>>>>>>>>>        }
+>>>>>>>>>        and the somthing like the following on source:
+>>>>>>>>>        {
+>>>>>>>>>          "execute": "migrate",
+>>>>>>>>>          "arguments": {
+>>>>>>>>>            "uri": "tcp:127.0.0.1:7777"
+>>>>>>>>>          }
+>>>>>>>>>        }
+>>>>>>>>>        {"execute" : "query-migrate"}
+>>>>>>>>>
+>>>>>>>>> In 1, previously, the user used to get an error message on migration failure.
+>>>>>>>>> This was because there were error_report() calls in all of the files.
+>>>>>>>>> Now that they are replaced with error_setg() and the error is stored in errp,
+>>>>>>>>> we need to display that using error_report_err(). Hence I introduced an error_report_err()
+>>>>>>>>> call in the fail section.
+>>>>>>>>>
+>>>>>>>>> In 2, we have 2 QMP sessions, one for the source and another for the destination.
+>>>>>>>>> The QMP command migrate will be issued on the source, and the errp will be set.
+>>>>>>>>> I did not understand the part where the message will be displayed because of the
+>>>>>>>>> error_report_err() call. I did not see such a message on failure scenario on both
+>>>>>>>>> the sessions.
+>>>>>>>>> If the user wants to check for errors, then the destination qemu will not exit
+>>>>>>>>> (exit-on-error = false ) and we can retrieve it using {"execute" : "query-migrate"}
+>>>>>>>>>
+>>>>>>>>> Aren't the 2 scenarios different by nature?
+>>>>>>>>
+>>>>>>>> In 1, doesn't libvirt query the error with query-migrate and print it?
+>>>>>>>
+>>>>>>> Ideally it should find the the error, and print the whole thing. It does work
+>>>>>>> in the normal scenario. However, the postcopy scenario does not show the same result,
+>>>>>>> which is mentioned in the commit message.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> In any case, it would be nice if you describe how libvirt interacts with
+>>>>>>>> QEMU in 1.
+>>>>>>>
+>>>>>>> Please find below the difference in the command output at source, when we run a live migration
+>>>>>>> with postcopy enabled.
+>>>>>>>
+>>>>>>> =========
+>>>>>>> With the current changes:
+>>>>>>> [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
+>>>>>>>
+>>>>>>> [root@dell-per750-42 build]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
+>>>>>>> root@10.6.120.9's password:
+>>>>>>> Migration: [ 1.26 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:19:15.076547Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+>>>>>>> 2025-09-03T06:19:15.076586Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+>>>>>>> 2025-09-03T06:19:27.776715Z qemu-system-x86_64: load of migration failed: Input/output error: error while loading state for instance 0x0 of device 'tpm-emulator': post load hook failed for: tpm-emulator, version_id: 0, minimum_version: 0, ret: -5: tpm-emulator: Setting the stateblob (type 1) failed with a TPM error 0x21 decryption error
+>>>>>>>
+>>>>>>> [root@dell-per750-42 build]#
+>>>>>>>
+>>>>>>> =========
+>>>>>>>
+>>>>>>> Without the current changes:
+>>>>>>> [root@dell-per750-42 qemu-priv]# virsh migrate-setspeed guest-vm 1
+>>>>>>>
+>>>>>>> [root@dell-per750-42 qemu-priv]# virsh migrate guest-vm --live qemu+ssh://10.6.120.9/system --verbose --postcopy --timeout 10 --timeout-postcopy
+>>>>>>> root@10.6.120.9's password:
+>>>>>>> Migration: [ 1.28 %]error: internal error: QEMU unexpectedly closed the monitor (vm='guest-vm'): 2025-09-03T06:26:17.733786Z qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+>>>>>>> 2025-09-03T06:26:17.733830Z qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (2) exceeds the recommended cpus supported by KVM (1)
+>>>>>>>
+>>>>>>> [root@dell-per750-42 qemu-priv]#
+>>>>>>>
+>>>>>>> =========
+>>>>>>> The original behavior was to print the error to the console regardless of whether the migration is normal or postcopy.
+>>>>>>
+>>>>>> This was true for messages in qemu_loadvm_state(), but the message "load of
+>>>>>> migration failed" was printed or queried with query-migrate, not both. We
+>>>>>> should think of which behavior is more appropriate, and I think we should
+>>>>>> avoid duplicate reports.
+>>>>>>
+>>>>>>> The source machine goes in to a paused state after this.
+>>>>>>
+>>>>>> The output is informative. It implies the destination machine exited, and it
+>>>>>> makes sense to print error messages as it is done for
+>>>>>> mis->exit_on_error. I wonder if it is possible to detect the condition and
+>>>>>> treat it identically to mis->exit_on_error.
+>>>>>
+>>>>> I see that we want to catch a specific scenario in postcopy ram migration
+>>>>> where the destination abruptly exits without a graceful shutdown,
+>>>>> thus failing to inform the source the reason for its failure through a
+>>>>> 'query-migrate' even though 'exit-on-error' was set to false on the destination.
+>>>>>
+>>>>> However, I am not sure how to reliably detect the specific error condition of
+>>>>> such a connection close that you have described. Given that this is a large
+>>>>> patch series already, could we keep the current change as is for now?
+>>>>>    From what I can tell, the additional log message "load of migration failed"
+>>>>> is not a breaking change and will not cause a crash. We can develop a more
+>>>>> elegant solution to handle the issue of duplication in a separate patch.
+>>>> There are two regressions:
+>>>> 1) Duplicate error reports when exit-on-error is false and postcopy is
+>>>> disabled.
+>>>
+>>> Thank you for your detailed response.
+>>> I am trying to fully understand the logic here, so please correct me if I'm wrong.
+>>> My understanding of the patch is that all errors are chained together
+>>> in local_err by propagating them through the call stack and prepending them with
+>>> "load of migration failed."
+>>> This creates a single, comprehensive error message, which is then passed to
+>>>     migrate_set_error(s, local_err) in the fail section.
+>>> This line already existed. So in effect we are setting the error here.
+>>
+>> There are two other changes:
+>> - The message is printed immediately with error_report_err(). This causes
+>> 1).
+>> - The error set with migrate_set_error() is ignored. This causes 2).
 >>
 >>>
->>>>    }
->>>>    static char *
->>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>>> index f5cba8a7fa66..7afcaa4bfe2e 100644
->>>> --- a/hw/display/virtio-gpu-virgl.c
->>>> +++ b/hw/display/virtio-gpu-virgl.c
->>>> @@ -203,6 +203,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
->>>>            /* memory region owns self res->mr object and frees it by itself */
->>>>            memory_region_set_enabled(mr, false);
->>>>            memory_region_del_subregion(&b->hostmem, mr);
->>>> +        object_unparent(OBJECT(mr));
+>>> Regarding the second regression you mentioned:
 >>>
->>> It's definitely not obvious why a memory core change will involve a GPU
->>> change too.
+>>>> 2) Errors reported code else qemu_loadvm_state() are ignored when
+>>>> exit-on-error is true.
 >>>
->>>>            object_unparent(OBJECT(vmr));
->>>>        }
->>>> diff --git a/system/memory.c b/system/memory.c
->>>> index 56465479406f..edaf039b0647 100644
->>>> --- a/system/memory.c
->>>> +++ b/system/memory.c
->>>> @@ -1212,11 +1212,19 @@ static char *memory_region_escape_name(const char *name)
->>>>        return escaped;
->>>>    }
->>>> +static void memory_region_free(void *obj)
->>>> +{
->>>> +    MemoryRegion *mr = obj;
->>>> +
->>>> +    object_unref(mr->owner);
->>>> +}
->>>> +
->>>>    static void memory_region_do_init(MemoryRegion *mr,
->>>>                                      Object *owner,
->>>>                                      const char *name,
->>>>                                      uint64_t size)
->>>>    {
->>>> +    OBJECT(mr)->free = memory_region_free;
+>>> Doesn't the error_prepend() function ensure that errors set higher up the call stack
+>>> are preserved and only "load of migration failed" is prepended to it?
+>>> When the fail section is reached, local_err will have the complete error message.
 >>>
->>> I think this is wrong.  This should break object_new(TYPE_MEMORY_REGION)
->>> users.
+>>>>
+>>>> 1) is trivial yet difficult to fix and I agree that it can be handled later.
+>>>> Ideally there should be a comment to note that.
+>>>>
+>>>> However, there is also 2), which is more serious and easier to fix so I
+>>>> suggest fixing it now. More concretely, the code will look like as follows:
+>>>>
+>>>>       migrate_set_error(s, local_err);
+>>>>       if (mis->exit_on_error) {
+>>>>           error_free(local_err);
+>>>>       } else {
+>>>>           /*
+>>>>            * Report the error here in case that QEMU abruptly exits when
+>>>>            * postcopy is enabled.
+>>>>            */
+>>>>           error_report_err(s->error);
+>>>>       }
+>>>>
+>>>>       migration_incoming_state_destroy();
+>>>>
+>>>>       if (mis->exit_on_error) {
+>>>>           WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>>>>               error_report_err(s->error);
+>>>>
+>>>> This ensures errors set by anyone will be reported while duplicate error
+>>>> reports are avoided when exit-on-error is true.
+>>>
+>>> yes, this part (set by anyone), I fail to follow. Do you mean that there can be
+>>> chances of a race condition between migrate_set_error() and error_report_err()?
+>>>
+>>> My analysis of your proposed code shows that whether mis->exit_on_error is true (in the final if block)
+>>> or false (in the else block), error_report_err() is called.
+>>> This seems to result in the error being reported regardless, which is similar to my original patch.
+>>> Yes in both the cases, s->error is being reported. However in my view, in the fail section, both
+>>> local_err and s->error will be the same.
+>>>
+>>> I appreciate your patience as I try to understand this better.
 >>
->> This function will never be called with an object created with
->> object_new(TYPE_MEMORY_REGION). It is called by memory_region_init() and
->> memory_region_init_iommu() and they call object_initialize(). If an object
->> created with object_new(TYPE_MEMORY_REGION) is passed to them, it will
->> result in double object initialization, which doesn't make sense.
+>> I indeed suspect the possibility of a race condition between
+>> migration_set_error() and error_report_err(). The code implies an error can
+>> be concurrently reported when migration_incoming_state_destroy() is called,
+>> and synchronized with WITH_QEMU_LOCK_GUARD(&s->error_mutex).
+>>
+>> This code fragment is useless if there is no such concurrency at all and
+>> should look like the following:
+>>
+>>      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>>                        MIGRATION_STATUS_FAILED);
+>>      error_report_err(local_err);
+>>
+>>      if (mis->exit_on_error) {
+>>          exit(EXIT_FAILURE);
+>>      }
+>>
+>>      migrate_set_error(s, local_err);
+>>
+>>      migration_incoming_state_destroy();
+>>
+>> But it is not how the code is written, so I suspect there is a race
+>> condition.
 > 
-> I actually didn't notice we don't have much users.  I think it'll block new
-> users, then, by making free() not usable anymore.  Not to mention it's also
-> definitely an abuse to reuse a free() for other things.
-> 
-> It can be relevant to the other email discussion too:
-> 
-> https://lore.kernel.org/all/aMHidDl1tdx-2G4e@x1.local/
-> 
-> I feel like object_new(TYPE_MEMORY_REGION) can be a good thing to simplify
-> allocated MRs whose lifecycle still is the same as the device for the long
-> term.
-> 
-> Some memory APIs will need touch up, but it shouldn't be much, basically we
-> want to skip object_initialize() for all memory_region_init_*() APIs on top
-> of object_new(TYPE_MEMORY_REGION) MRs.
-> 
-> I'm also not eager to change anything yet, because these MRs are minority,
-> and I don't immediately have a problem to solve myself here.  So I would
-> like to know what exactly problem you're hitting with (2)/(3) above.
+> Thank you. That is clear to me now.
+> We need to report s->error because it can be set somewhere else.
+> We are creating separate paths but only adding a placeholder comment
+> for now for the postcopy scenario. I suppose local_err can be freed outside the if clause.
 
-(I'm ccing Manos Pitsidianakis as I mention Rust below.)
-
-I couldn't reply this immediately as the topic is complicated and I 
-wanted to double-check the situation, but I'm confident enough to do so now.
-
-------
-
-First, I describe (2) and (3).
-
-(2) is almost equivalent with (1). For example, xtensa-cpu leaks because 
-of the following code:
-
-memory_region_init_io(env->system_er, obj, NULL, env, "er",
-                       UINT64_C(0x100000000));
-address_space_init(env->address_space_er, env->system_er, "ER");
-
-The difference from (1) is that we have an AddresSpace instead of a 
-container MemoryRegion. You can reproduce the issue with the following 
-command:
-meson test -C build qtest-xtensa/device-introspect-test
-
-The code lacks address_space_destroy() so it is destined to leak anyway, 
-but even if you add address_space_destroy() to instance_finalize(), it 
-still leaks due to the exactly same reason with (1). "[PATCH 00/35] 
-memory: QOM-ify AddressSpace" QOM-ifies AddressSpaces just like 
-(container) MemoryRegions, which make the situation even more closer.
-
-(3) is more complicated. The problem will occur when:
-- flatview_translate() is called.
-- The acquired memory region is owned by the parent.
-
-I do not have a reproduction case for this, but it is hard to ensure 
-that the situation never occurs because there are so many places where 
-flatview_translate() is called; note that the function is called from 
-several abstracting functions such as address_space_translate(), 
-dma_memory_map(), pci_dma_map(), etc.
-
-Your patch and my old one tried to solve (1) by checking if the owner is 
-trying to create a reference to its MemoryRegions. However, this 
-approach is not practical to cover all the memory leak hazards, 
-especially (3). In theory, we can change memory_region_ref() to take the 
-referrer as the argument and let it compare against the owner, but there 
-are too many code paths where memory_region_ref() is called.
-
-To avoid the complication, this patch avoids circular references by 
-extending the code to unparent. Unparenting occurs far less frequently 
-than memory_region_ref(); this patch eventually reduces the number of 
-affected places to just 2; the qdev common code and virtio-gpu's 
-hostmem/blob code. Changing the two is much easier than auditing all the 
-DMA code that triggers flatview_translate().
-
-------
-
-Next, I explain that patch 1 "qom: Do not finalize twice" is useful, 
-independently with this patch.
-
-The memory management code in qom/object.c has a number of assertions to 
-prevent misuses. They ensures that implemented operations have 
-well-defined semantics; memory leaks can happen with circular references 
-and misuses trigger abortion, but they do not result in an undefined 
-behavior at least.
-
-However, there is one open hole in the code, which "qom: Do not finalize 
-twice" closes: calling object_ref() and object_unref() during 
-finalization results double-free. Defeinsively closing the hole ensures 
-that an undefined behavior will not result in a hard-to-debug issue or a 
-security vulnerability.
-
-The ultimate way to prevent undefined behaviors is to use Rust; it 
-relies on programmers to avoid undefined behaviors only in a relatively 
-small number of unsafe wrappers, and when doing so, "safety" comments 
-are placed. However, a corner case that results in undefined behaviors 
-makes it hard to write unsafe wrappers.
-
-To own an QOM object in safe Rust code, the Rust wrapper provides an 
-unsafe function: Owned::from(), which wraps an object into
-Owned<T: ObjectType>. The caller must ensure that the object is not an 
-embedded object like a memory region, which is described in the "safety" 
-comment.
-
-Once an object is wrapped into Owned<T: ObjectType>, you can freely 
-create and drop references using safe object_ref() and object_unref().
-
-But the open hole in QOM breaks the safety assumption if a child decides 
-to take a reference to its parent during unparenting just like this 
-patch does. Avoiding this requires to ensure no new Owned<T: ObjectType> 
-is created by any child objects during unparenting and would require to 
-add "safety" comments anywhere Owned<T: ObjectType> is created.
-
-Instead, we can simply change qom/object.c not to attempt double-free at 
-all, ensuring the safety in one place, which is what patch 1 does.
-
-------
-
-Lastly, I explain this patch will not prevent to add functions that use 
-object_new(TYPE_MEMORY_REGION).
-
-The functions that call object_new(TYPE_MEMORY_REGION) can simply skip 
-setting OBJECT(mr)->free and ensure object_unref(mr->owner) in the 
-instance_finalize().
+The separate paths or the if clause for error_free() and 
+error_report_err() is necessary because both functions free the error 
+object and calling both results in double-free.
 
 Regards,
 Akihiko Odaki
