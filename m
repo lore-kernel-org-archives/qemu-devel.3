@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9FBCA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 842DACAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 20:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzLLV-0003tG-T9; Thu, 18 Sep 2025 16:35:13 -0400
+	id 1uzLOS-0005Qo-Dm; Thu, 18 Sep 2025 16:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLLU-0003sf-8X; Thu, 18 Sep 2025 16:35:12 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uzLOQ-0005Q7-IZ; Thu, 18 Sep 2025 16:38:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLLS-0005XC-IN; Thu, 18 Sep 2025 16:35:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=NnSUAGInEhK3l10Zx0ne4uTde01Ddj+dj4wy7zwUl+Q=; b=UexP6ijKcKLNcv2ide6vwny44L
- szYoBnO77UM4Vg9G+AXJumTtCbXtwKp+VDxZN8idfuOnHilqifduxe+fUCLWrovzgOirHM+iznCNy
- eoasirCkYGI6j+PQwRFhWG9fMDyL5MXxVGz7JFneZ7Q8SHE+8LcTVfzlLM5J4zq0i6aKeGsknWvIx
- FBb1JZ9I/e8MKfx30I6xin8V9zfkjRCQwpjSzNR1lMyf7RjGw4A03cSnkF5aB9BPEoRDsjiWbTo5C
- kSdA/ifz/hhxHx5qCrpPMX3CIGWkPWS3KfGPHtSzjHRrPpHL2/fVVWut/3f+oaykb29dBaIheLEue
- Yv+FuzpjthEty1Xh6pfZvA4td7BYdyv6kGLHWNBnEkdu4C1N/hnHIJlfew/SZ+41Bnx8lFOS4kqNc
- WzwEDB6HKaXsGfvPV8vJaYM0pO3a+BJEBwPnazCNIuUQUeQjJYuL4y+dQlqKp4qPIdVvHa/V9ajXR
- lsB48mON3avUg/N8ZVg2wfUq94JO0YkdD1YX09JzczFNmssIzL6v9a3j3AhveyacqY71webSXqk8w
- f3vHyk+b7CzdVipM8bNcgk3MBpN79bCiAH3UvJmrIw7i9sswlwHxrQdWNOlIwVWfVpX4UZ1GQB9Yq
- 43PntCBGTyDKaf9xcjzMdGV5/K5YzM2evb5Q1O8hQ=;
-Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uzLJS-0006qT-9l; Thu, 18 Sep 2025 21:33:06 +0100
-Message-ID: <c25cd6a9-6dd6-45e3-a9e1-c8e17badc58c@ilande.co.uk>
-Date: Thu, 18 Sep 2025 21:35:07 +0100
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uzLOO-0005hg-5e; Thu, 18 Sep 2025 16:38:14 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IICND5006031;
+ Thu, 18 Sep 2025 20:38:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=AoAzgz
+ vUhbPHmOq8WCnfvhroWVXY3sPLad7q5aqHJsg=; b=P2myOEI3ycuR+X6jUPre0n
+ 9cpYeg/caTDV7WGnWcTv4gFi+2BwCHhtYdxb4AidomCb5sTfUz6tY3esZldlzN+Y
+ yVG40Ga8vyHPyNM5j885Q0olffOpY3TMdEr59wjWMSQyzUSPjoA5xhCK+7+dZaTH
+ 0ZZcO5uCGzhcKljDMrSQw+bc1pt7OY2Mu/yNGQ9OYoJw5ez6/iLbDx2jxBItsFDp
+ mJKcPNj1tOt/I8S90v3xUJW/UfHlfVKop/WCFNqe1yRKDKqpdMUEpNoAKbE5m3mb
+ o3c4E4pweNg0ebm96NMH1/2HwEbgxu9384YOGfGErj0ciLEl9w4mK8FWGzQudMOg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4nm7pm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Sep 2025 20:38:09 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58IHgn2o018629;
+ Thu, 18 Sep 2025 20:38:09 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 495n5mrfgn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Sep 2025 20:38:09 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58IKc7gr66519402
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 18 Sep 2025 20:38:08 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD94B58045;
+ Thu, 18 Sep 2025 20:38:07 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 235E158056;
+ Thu, 18 Sep 2025 20:38:06 +0000 (GMT)
+Received: from [9.61.251.145] (unknown [9.61.251.145])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 18 Sep 2025 20:38:06 +0000 (GMT)
+Message-ID: <4c1fdfac-d366-40f0-b580-a341ff583e63@linux.ibm.com>
+Date: Thu, 18 Sep 2025 13:38:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-References: <cover.1758219840.git.balaton@eik.bme.hu>
- <76089de37939feaf66de06ffb337b1554fb3f4fa.1758219840.git.balaton@eik.bme.hu>
+Subject: Re: [PATCH v6 06/28] s390x/diag: Refactor address validation check
+ from diag308_parm_check
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-7-zycai@linux.ibm.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <76089de37939feaf66de06ffb337b1554fb3f4fa.1758219840.git.balaton@eik.bme.hu>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-7-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 10/14] hw/pci-host/raven: Fix PCI config direct access
- region
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=MN5gmNZl c=1 sm=1 tr=0 ts=68cc6db2 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=XA1qvbxqqnLpSlYgOKIA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: QGKCAb7NefZPkCsea0SMOaftE5ROrjPR
+X-Proofpoint-ORIG-GUID: QGKCAb7NefZPkCsea0SMOaftE5ROrjPR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX+eWVwSPUoLMN
+ J/GNdkqjUmv+z1Aq/L9egLyWocM6oxZnLBW7HdhCfmcS3dmo98waViaG4Wh32lT6f6ei/ObKtnR
+ GOrbLyD7N6VIy78tGzjzTmzJ7Shos53fzZrXp2XWW00ziEMGr62drJDQju75BEwCPoMfKLpqH3T
+ Es4+ta625BQXbOnvPOIlgU4784bEC7Jkge80DoR1fDe0rEZmRXRUpBPDmq13f8/RZEu4w5m8Y3u
+ /XQsHX5ZDxTmP48WrZFXQ5MqArhvhRSRJnB7cQ95E0RaC1HRWZVx5YXclluaRys6GMK8AD6oZ7b
+ bUwFkjM03Zu5vUCthya2CljAjCZVmIlR9JgH/7rgkLHjDhJs7MSt5Vehz6AQXTiKKWfmPTf8EJc
+ i5V68Jjc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,38 +125,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/09/2025 19:50, BALATON Zoltan wrote:
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 
-> The PCI configuration direct access region occupies 8 MiB at offset
-> 0x800000 in PCI IO space so model that accordingly.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
+> Create a function to validate the address parameter of DIAGNOSE.
+>
+> Refactor the function for reuse in the next patch, which allows address
+> validation in read or write operation of DIAGNOSE.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   hw/pci-host/raven.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 23020fd09f..bb0be40eb4 100644
-> --- a/hw/pci-host/raven.c
-> +++ b/hw/pci-host/raven.c
-> @@ -235,8 +235,8 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>   hw/s390x/ipl.h      | 6 ++++++
+>   target/s390x/diag.c | 4 +---
+>   2 files changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+> index bee72dfbb3..e26fc1cd6a 100644
+> --- a/hw/s390x/ipl.h
+> +++ b/hw/s390x/ipl.h
+> @@ -118,6 +118,12 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+>   #define S390_IPLB_MIN_FCP_LEN 384
+>   #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
 >   
->       mr = g_new0(MemoryRegion, 1);
->       memory_region_init_io(mr, OBJECT(h), &raven_mmcfg_ops, h->bus,
-> -                          "pci-mmcfg", 0x00400000);
-> -    memory_region_add_subregion(address_space_mem, 0x80800000, mr);
-> +                          "pci-mmcfg", 8 * MiB);
-> +    memory_region_add_subregion(&s->pci_io, 0x800000, mr);
->   
->       memory_region_init_io(&s->pci_intack, OBJECT(s), &raven_intack_ops, s,
->                             "pci-intack", 1);
-
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
-
+> +static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
+> +{
+> +    return address_space_access_valid(&address_space_memory, addr,
+> +                                      size, write, MEMTXATTRS_UNSPECIFIED);
+> +}
+> +
+>   static inline bool iplb_valid_len(IplParameterBlock *iplb)
+>   {
+>       return be32_to_cpu(iplb->len) <= sizeof(IplParameterBlock);
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index a35d808fd7..e67ee57f01 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -65,9 +65,7 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
+>           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>           return -1;
+>       }
+> -    if (!address_space_access_valid(&address_space_memory, addr,
+> -                                    sizeof(IplParameterBlock), write,
+> -                                    MEMTXATTRS_UNSPECIFIED)) {
+> +    if (!diag_parm_addr_valid(addr, sizeof(IplParameterBlock), write)) {
+>           s390_program_interrupt(env, PGM_ADDRESSING, ra);
+>           return -1;
+>       }
 
