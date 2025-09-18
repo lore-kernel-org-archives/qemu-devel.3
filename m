@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D382CA1013
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A639FCA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 19:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzKaH-00081V-9t; Thu, 18 Sep 2025 15:46:25 -0400
+	id 1uzKgA-0001OK-OF; Thu, 18 Sep 2025 15:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1uzKaF-00081C-Go; Thu, 18 Sep 2025 15:46:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzKg5-0001N3-Jh; Thu, 18 Sep 2025 15:52:25 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1uzKaD-00067N-6M; Thu, 18 Sep 2025 15:46:23 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IFDat9028021;
- Thu, 18 Sep 2025 19:46:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=a6Xuvl
- RM98ZL+yHq5YwSWqcSfegvhYroqVDfoPPRQ4w=; b=tUZwIx9X37QkzjekaHCJdR
- DkXUYO0u9UxUm5m/Kyn15SpPc0XP4tKHZoEwB7D6IiuMRAoBwsmu7kF1qvDefLZK
- NAh0RZyw/I2lbISS1eQ3sQT8TCGwCH81YqiIJRnpntLkgLFjfzXhBeWB6JgK5TWb
- IGS/xqCjwDUlqTUSJ/0PITna8l7XAFbGpqHZdcjBo9the6wnQvXX1YLvZSeI+uEW
- 5XaHwcDt3NqLVnhShcw+hOltGn32EGVbEl5PJGqTCFZ24xJ1zjiQGGU7pVnJhdD/
- VKVSnebmn5xwvZo30PRWuSugmhWNhR2PNi7IVjGixQ7uM4pXfgxf4icFOlyUmqoA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4pcjse-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 19:46:18 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58IHO45r027358;
- Thu, 18 Sep 2025 19:46:17 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 495mengcdu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Sep 2025 19:46:17 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58IJk5Zn26542662
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Sep 2025 19:46:05 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B213758050;
- Thu, 18 Sep 2025 19:46:15 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F2D558045;
- Thu, 18 Sep 2025 19:46:14 +0000 (GMT)
-Received: from [9.61.251.145] (unknown [9.61.251.145])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Sep 2025 19:46:14 +0000 (GMT)
-Message-ID: <612c331b-50b7-4593-82ae-791f0c943688@linux.ibm.com>
-Date: Thu, 18 Sep 2025 12:46:08 -0700
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzKg3-00077l-CN; Thu, 18 Sep 2025 15:52:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=52Dp6fS6t4QiReIjzX/ch/+RBHalSkw9EP2by5bkJ48=; b=VtR+r2zYL9ONPAaXOtQ3Yp+nFd
+ mcCtOfk94HUh+I+y2XXZrwe1GuGHwR9WAPb6XIu7f18zJMSMxo8uJXn/+o6ThKHVrNbo9UxsQJ6KD
+ 0qQfWSyqqdy7U9FDHn5YHiZBwi+qpGhT45jX1H+XzXhoNJKzv+mxeiVvu7y6fljd33vIzwjBu9yhu
+ P5+KYSyHg82oFlLrK+UiT6q9TvGDPk6rf7I5K3MkQI4lYcI6tlws6qSpmq7aEJv9jw+d8rYQJZr5f
+ 6iWx5qEfPw+gBgGS4kqVuuCr8aC5y8XmbI7OjqVOJQ3osmKXoJN49+B7APitt+dVsucWLYWcNDQao
+ JN7/z2pa/Vrp38xT6GD9XBRbmKD/Xfp7cGQEhN80/WEKRbVO07zXQNs4ccy0/x6ef4F3eI7rLsqC0
+ 54GMFZqwKkxYfXe/J7jUVpXusOzP9g3ybVMQnVlfZN4UNMO5qDzEeoOLjnUBV1AWy+yxt16Q4Pe0k
+ EqyLWZthzk7pmsjGlowG7hhZ5lIeprDwNCfVJPRUDf6DQYYKtVfTxSs5GIFg8hHqMCD6jXg1AdKUz
+ mKo/05bDMqZ45g62SOCRHqW04mUwlJvdTOlfziKtIsXocYdU6uiu6HY1DUFJF5Cuo34SBl5bKLLK4
+ w1Mwk6bp/klKWgaeewY/VeUqiCCWarD3+7Rqi60Tw=;
+Received: from [2a02:8012:2f01:0:4825:8e53:bc9c:58e6]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uzKe1-0006UQ-3W; Thu, 18 Sep 2025 20:50:17 +0100
+Message-ID: <fa60c6a1-8ab8-4fd9-b04b-9e06a4ee3b73@ilande.co.uk>
+Date: Thu, 18 Sep 2025 20:52:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/28] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-5-zycai@linux.ibm.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+References: <cover.1758219840.git.balaton@eik.bme.hu>
+ <b5b4558125e2408ded29f7cdc306011358829044.1758219840.git.balaton@eik.bme.hu>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250917232131.495848-5-zycai@linux.ibm.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <b5b4558125e2408ded29f7cdc306011358829044.1758219840.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX0DfCs42ljBxV
- DEua5UuaLGKCi7gBGCRCc4VF6oUSRElFBJ5WQN53Z1PHMczeXmr6c9ZbKdzsZDMOyz0y4v2VrQx
- Tby4ovvePS9P8Wnwvv9fGQiEUZ6u17Rvwr2uaCOEhVKe3XGzT6TNtPHVuBdeVXUHUtOL2ipBA1e
- rAU8l9ZFje7FGT40h05oOMCdUx9MqdkKXo+jetf64y2u4C7BP/pujB+S0lP2Jb4d+pva9TY24Vt
- L3Xru4MIWBvqnYynV/Og+w9reGpR4XRSaX6nUatfXyUc//wiBNhtj7cV77tDPyqlic0wiDmx6i2
- EQ1hbkUJ1JlydfDxgNzxofsb5kPAJ/lau/lmFcoIPApdvomOlDzCaiNp9gXChbRf6/fcIxaxPFe
- hskkZzi/
-X-Proofpoint-ORIG-GUID: _KvgEUcFRL7atMXauR07-x3N6vznio2e
-X-Proofpoint-GUID: _KvgEUcFRL7atMXauR07-x3N6vznio2e
-X-Authority-Analysis: v=2.4 cv=cNzgskeN c=1 sm=1 tr=0 ts=68cc618a cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=NffIB9FPGJXsOB3DuMgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0 malwarescore=0
- adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4825:8e53:bc9c:58e6
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 08/14] hw/pci-host/raven: Use correct parameter in
+ direct access ops
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,58 +105,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/09/2025 19:50, BALATON Zoltan wrote:
 
-<..snip..>
+> Instead of passing unneeded enclosing objects to the config direct
+> access ops that only need the bus we can pass that directly thus
+> simplifying the functions.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/pci-host/raven.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+> index d7a0bde382..2057a1869f 100644
+> --- a/hw/pci-host/raven.c
+> +++ b/hw/pci-host/raven.c
+> @@ -65,16 +65,16 @@ static inline uint32_t raven_idsel_to_addr(hwaddr addr)
+>   static void raven_mmcfg_write(void *opaque, hwaddr addr, uint64_t val,
+>                                 unsigned int size)
+>   {
+> -    PREPPCIState *s = opaque;
+> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
+> +    PCIBus *hbus = opaque;
+> +
+> +    pci_data_write(hbus, raven_idsel_to_addr(addr), val, size);
+>   }
+>   
+>   static uint64_t raven_mmcfg_read(void *opaque, hwaddr addr, unsigned int size)
+>   {
+> -    PREPPCIState *s = opaque;
+> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
+> -    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
+> +    PCIBus *hbus = opaque;
+> +
+> +    return pci_data_read(hbus, raven_idsel_to_addr(addr), size);
+>   }
+>   
+>   static const MemoryRegionOps raven_mmcfg_ops = {
+> @@ -233,7 +233,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>                             "pci-conf-data", 4);
+>       memory_region_add_subregion(&s->pci_io, 0xcfc, &h->data_mem);
+>   
+> -    memory_region_init_io(&h->mmcfg, OBJECT(s), &raven_mmcfg_ops, s,
+> +    memory_region_init_io(&h->mmcfg, OBJECT(h), &raven_mmcfg_ops, h->bus,
+>                             "pci-mmcfg", 0x00400000);
+>       memory_region_add_subregion(address_space_mem, 0x80800000, &h->mmcfg);
 
-> diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
-> new file mode 100644
-> index 0000000000..3f76a00277
-> --- /dev/null
-> +++ b/hw/s390x/cert-store.h
-> @@ -0,0 +1,39 @@
-> +/*
-> + * S390 certificate store
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_S390_CERT_STORE_H
-> +#define HW_S390_CERT_STORE_H
-> +
-> +#include "hw/s390x/ipl/qipl.h"
-> +#include "crypto/x509-utils.h"
-> +
-> +#define VC_NAME_LEN_BYTES  64
-> +
-> +#define CERT_KEY_ID_LEN    QCRYPTO_HASH_DIGEST_LEN_SHA256
-> +#define CERT_HASH_LEN      QCRYPTO_HASH_DIGEST_LEN_SHA256
-> +
-> +struct S390IPLCertificate {
-> +    uint8_t vc_name[VC_NAME_LEN_BYTES];
-> +    size_t  size;
-> +    size_t  der_size;
-> +    uint8_t *raw;
-> +};
-> +typedef struct S390IPLCertificate S390IPLCertificate;
-> +
-> +struct S390IPLCertificateStore {
-> +    uint16_t count;
-> +    size_t   max_cert_size;
-> +    size_t   total_bytes;
-> +    S390IPLCertificate certs[MAX_CERTIFICATES];
-> +} QEMU_PACKED;
+I find this confusing as a reviewer since the general expectation is that the device 
+is passed as the opaque for the memory region rather than the bus. What is the reason 
+for trying to change an existing convention here?
 
-I think the guidance is to avoid using QEMU_PACKED (see Thomas's reply 
-to me 
-https://lore.kernel.org/qemu-devel/ff5a3203-6afb-4202-b59a-1021f0d949db@redhat.com/). 
-Also this is an internal QEMU structure and not an architecture specific 
-one, so this shouldn't be packed, no?
+You could simplify what is there by dropping the PREPPCIState reference and simply doing:
 
-The rest of the patch LGTM.
+   static uint64_t raven_mmcfg_read(void *opaque, hwaddr addr, unsigned int size)
+   {
+      PCIHostState *phb = PCI_HOST_BRIDGE(opaque);
+      return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
+   }
 
-<...snip...>
+etc.
+
+
+ATB,
+
+Mark.
 
 
