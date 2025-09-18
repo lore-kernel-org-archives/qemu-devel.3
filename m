@@ -4,135 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1288CAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 22:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFF2CA1013
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 23:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzMwX-0003kz-7i; Thu, 18 Sep 2025 18:17:33 -0400
+	id 1uzOE9-0005hc-3c; Thu, 18 Sep 2025 19:39:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Ashish.Kalra@amd.com>)
- id 1uzMwV-0003kl-SD
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 18:17:31 -0400
-Received: from mail-westus3azon11011025.outbound.protection.outlook.com
- ([40.107.208.25] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uzOE6-0005gm-Ge; Thu, 18 Sep 2025 19:39:46 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Ashish.Kalra@amd.com>)
- id 1uzMwS-0000Px-HN
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 18:17:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ngOGox4mL9C45QzfoamUwtwfVSLjYgBDnIOcxD8Uo1IKnqB3ils0B1rwx4TvrZlqgVBt46H/hUSBoWfh9o29294Z1nF5T5dGTm1wsOQBkPM5MrUf6A0eo1ubu5zaqBL+NAXvquwx2ZJ1k4iuzO9qCDgJvRuE3ju9ANlaqyEujKldhPafaHNkDFTEO1JjHRdskLG00wlwSwW+zfqg7/2wpempmySBEoyUtEI3Dp0eXOBEw3QHqVU5+wLhz3cqcLQWdX/Wti+HMvu62ozD2zoOMHKYQC4QZHUX8LqNIxFMHtqhGg1VeTXAWlDmoNVAc+wYvOYXA0VNnTfnIC4T6Yp3Kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CvPNNl9Uy092Wcy1DyFBMKz43zkQY92/ci19FMEkdeg=;
- b=zUkG7nGeCR9SaZtFfZMakGBWzYf5NMJnycEb11zn5yIwrUENjhfoy5jquJPLgWGV3mKNUMPP0BWcwNyRADYMGkKLG1hagFEcissqpvAZ7N3FDhBr1j4404wLZUe9kkB/705/rTAayds0stxL+2hhEk2Zu31jyN174R++sp6iPBgjRp4gXLB5Uq3RmImfzZIUxSivbQNjXqMeuCvKH0EuWtaT0fvAggkSfGwfw9DBBydTdFwdyYHMgBrXSIiszFSUlyECDWB3eg0uwshdIk+55002ppaMEOR9O27iPf1qm1YFYX5Tv71A96/fHzLkSYSLdOVCa4RNTNXyeYLvdzZ+bQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CvPNNl9Uy092Wcy1DyFBMKz43zkQY92/ci19FMEkdeg=;
- b=y3mWQVNa+UZqyphRlwrVVLj9+lJWmtC8OTC9LN7WpbSRCKadsodGP9EjAn8kP6lTWIz4pNBfe/atH0RoCGxttrPiNBTd5vNQbUDKP54hp4tk4oUmE0Wvv722T+aIZFO7QsdO1duElb0gKp4QO+jVu0MjMjn5fD9V7+mUtQ/j1j4=
-Received: from SJ0PR03CA0274.namprd03.prod.outlook.com (2603:10b6:a03:39e::9)
- by DS0PR12MB7927.namprd12.prod.outlook.com (2603:10b6:8:147::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.14; Thu, 18 Sep
- 2025 22:12:19 +0000
-Received: from CO1PEPF000044EE.namprd05.prod.outlook.com
- (2603:10b6:a03:39e:cafe::92) by SJ0PR03CA0274.outlook.office365.com
- (2603:10b6:a03:39e::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.14 via Frontend Transport; Thu,
- 18 Sep 2025 22:12:19 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CO1PEPF000044EE.mail.protection.outlook.com (10.167.241.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.12 via Frontend Transport; Thu, 18 Sep 2025 22:12:18 +0000
-Received: from ethanolx7e2ehost.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 18 Sep
- 2025 15:12:17 -0700
-From: Ashish Kalra <Ashish.Kalra@amd.com>
-To: <pbonzini@redhat.com>
-CC: <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>
-Subject: [PATCH] accel/kvm: Fix kvm_convert_memory calls crossing memory
- regions
-Date: Thu, 18 Sep 2025 22:12:07 +0000
-Message-ID: <20250918221207.42209-1-Ashish.Kalra@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1uzOE4-0003mw-Kq; Thu, 18 Sep 2025 19:39:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1758238739; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Mig4MhgtPYjzxWBiFU4p8EfT6KzjNKwi+zUqptXEk5pmfIN3PdGF+lm4nKD0Ple0fna6TzkXaOoP7Pjf59ZPnIMdGgaRbBaT4NUaZqkbTF8hV4JjX0XS4ACadfG1n5thgL+/RZ8DXwrQckdgCCDNpvqjVabJ//KMcpC1ycBx77U=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1758238739;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=BiZHUDACX/eWxAfAWNOr4nUd+jqmY+F/ae2NOw0XWmk=; 
+ b=kjLbbJ6yXq/gidXsmJm/uL6iVsnxZvcGtJ7faNWv33Rnp0BEXv44Gp73LVRMFfm08SV6goiP0lXVa7wDztNydc1norrRspVriU/vHo+VL4u1+6tknghJpjkr9U6yehu5Z+F6hdZX5XEGqAI/iOiKiwSI8znMs/Nl1O9678UDERw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758238739; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=BiZHUDACX/eWxAfAWNOr4nUd+jqmY+F/ae2NOw0XWmk=;
+ b=lKaKrlywe1DHtZBYk5iydNfAUh8Urn84A/1koE40sMXWvvf7wAw6ApflFMz1+RD9
+ bh6d0/8B0D6YSj8Qts1WPSaYxSscbITfGp9zOsC8jQKimsyCu9kNnPWdEJgxOyDsLg+
+ SNyVtS1cxel+psVoDInNc0uYp4trmrMbaBPkjPks=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1758238736486549.0838698704506;
+ Thu, 18 Sep 2025 16:38:56 -0700 (PDT)
+Date: Fri, 19 Sep 2025 07:38:56 +0800
+From: Li Chen <me@linux.beauty>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
+ "Eduardo Habkost" <eduardo@habkost.net>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ "Yanan Wang" <wangyanan55@huawei.com>,
+ "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Sunil V L" <sunilvl@ventanamicro.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,
+ "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>,
+ "Li Chen" <chenl311@chinatelecom.cn>
+Message-ID: <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
+In-Reply-To: <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
+References: <20250528105404.457729-1-me@linux.beauty>
+ <20250528105404.457729-5-me@linux.beauty>
+ <20250714144303-mutt-send-email-mst@kernel.org>
+ <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
+ <20250716074207-mutt-send-email-mst@kernel.org>
+ <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
+Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
+ when guest has no serial hardware
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044EE:EE_|DS0PR12MB7927:EE_
-X-MS-Office365-Filtering-Correlation-Id: 123b661f-1fc1-4f8b-dd3e-08ddf7006ecf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1e+ZnUi3bfkji3Le0oym5TlFFQOFLc/TJQLtwGL7aPDp2JJ3Tukjl31Zl8Sb?=
- =?us-ascii?Q?CdolayYJ6y4ur638F+pxhI356r72HaZMMHT4rQkF8yL8C+mePOz4Um9jcYw1?=
- =?us-ascii?Q?egbohkxUFWzyxqsWZac3oQqgANPvCgLf7JSEG2Bx8NCNjR1Qles5USD5JN9k?=
- =?us-ascii?Q?XgsGO2stCQBwqX6tZdnLUx4CzjeKRwtSpgyKwT89+pPuLtITgarZcrLlP3bK?=
- =?us-ascii?Q?XNvNfBFRD+eMDSVjZKmBj8XyTxpgUxDxf1X1iaMIkUj2lp3N5/YZgAbpjGlq?=
- =?us-ascii?Q?UfJiz5ETffgpoeHQyIBK4ETNbyF3in1rC8n80GFoWBOtiF3vtJUjRJi7wNPl?=
- =?us-ascii?Q?EYnlkGZErQeY6LSIqo7Oe5Z3N256TvjZM+Gd9KBR2fojeqzlHoOFOUpdPeqh?=
- =?us-ascii?Q?eUKHp9Ap3mTEkHd76lONrFktXUA2Vo2g+s2UpLn231rwO5vYeBI0RaeXu7oQ?=
- =?us-ascii?Q?YN0jU1JwVn7kr54YZpfgaoUIfbreJ2JzT6xuinE3PqnApDWmAeIVzvSZ/Jop?=
- =?us-ascii?Q?HwokpsTLjCcam0nSzI8ccYfZjBVFyh71DJEmuUO7B5H9YrT78VPOwp5vUuiU?=
- =?us-ascii?Q?ZDhCgBE94IDkAlMkXjdCvVnp/wMdvPvE+PpVqOtcKl1mKLsQUQ19KO7ZHjdP?=
- =?us-ascii?Q?vC7vbQRK10PJ6cjbDr8Lcf9i9wQbBkUefLSKbR9D8WzX6zT2PBhoJiBMzY5D?=
- =?us-ascii?Q?QmtU3rNFk1p0WuHq9/wcMzm3NTS+0ETaRePpv7IO9eFYgxmFQiLJqvmsL5ms?=
- =?us-ascii?Q?j6uwoAdCp7mGO+uyq0+z7Kh6qzBLtStdc97i3IVc24BTrjOhgfwH2sDhltUj?=
- =?us-ascii?Q?hWEGfsS284it4AtuZBb8WCZecRhXP44XrSQ0LbAVr+fuIUOjVKeHQ81DH3HF?=
- =?us-ascii?Q?bKl6jJDoc8yUXSi7MGLEbdI2t83bFYY+U4ofq7Y8ypBquTj37VyKZ1kNwhHY?=
- =?us-ascii?Q?kZuljEZta488WokUFw6cCfSfkMxsi3KZN5eKVvW8/Y7WQRhXdwunQoUNqEa+?=
- =?us-ascii?Q?auWgohb4JqEUoQX8G9XZ3bDCilIg1nI+KZym7nCEAl4c7Z4q19OZTGlBV7HK?=
- =?us-ascii?Q?EnnV8GyEtJKVvuRCAPxufRZP++GKpV+TRdLih+S5xXHqIUgFXhE58SuULmGe?=
- =?us-ascii?Q?dkbbtyhfzRY07uH8FeBeFYX76KJF0OVodsp0Ot1PhxzmXBkMCNH0l8ESesnq?=
- =?us-ascii?Q?OiO8cgvnN8Kju5PR8i+/pphkIJqKzAQvEF/xZvqReyOplKo+gLtDdgFwxIua?=
- =?us-ascii?Q?XUo3QTkVgLbyJ1J+CJC4c2xhEQHLlughVnk9+dwwGzbEekCSLVJfYmT2+FE1?=
- =?us-ascii?Q?/7EIAevyyxv/qdA+tkUrBVN+a3yLTyO9sf+p1AMIVXHRrEXcSFraAIBqy6V/?=
- =?us-ascii?Q?cxT41E7rbWPGFuGDVCRRaEl0J7ZqgFbQqNkGoiWS+RyaBTztNIb+BY3hyWwE?=
- =?us-ascii?Q?hJkiFdLc3dWXoZxW3Y5/wznmyg6rubxgYv6wlMQ6E/gVrRaiKa74oPgI7FJ5?=
- =?us-ascii?Q?dEAe4x2HL4Ri+QQakVW0PSZLsngg0a5PMzAD?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2025 22:12:18.6313 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 123b661f-1fc1-4f8b-dd3e-08ddf7006ecf
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044EE.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7927
-Received-SPF: permerror client-ip=40.107.208.25;
- envelope-from=Ashish.Kalra@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.112; envelope-from=me@linux.beauty;
+ helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,78 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+Hi Michael,
 
-Page conversion call can span multiple memory regions, potentially
-resulting in a conversion failure if the memory range being converted
-extends beyond the boundaries of the referenced memory region.
-
-Handle the case of page conversion call straddling across memory
-regions.
-
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
----
- accel/kvm/kvm-all.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
-
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 9060599cd7..54034a0568 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3054,6 +3054,8 @@ static void kvm_eat_signals(CPUState *cpu)
- int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
- {
-     MemoryRegionSection section;
-+    hwaddr convert_start;
-+    hwaddr convert_size;
-     ram_addr_t offset;
-     MemoryRegion *mr;
-     RAMBlock *rb;
-@@ -3071,6 +3073,11 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-         return ret;
-     }
+ ---- On Wed, 16 Jul 2025 19:59:14 +0800  Li Chen <me@linux.beauty> wrote --- 
+ > Hi Michael,
+ > 
+ >  ---- On Wed, 16 Jul 2025 19:42:42 +0800  Michael S. Tsirkin <mst@redhat.com> wrote --- 
+ >  > On Wed, Jul 16, 2025 at 07:41:11PM +0800, Li Chen wrote:
+ >  > > Hi Michael,
+ >  > > 
+ >  > > Thanks for your kind review! All issues below have been fixed in v5:
+ >  > > https://lore.kernel.org/qemu-devel/20250716111959.404917-5-me@linux.beauty/T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
+ >  > 
+ >  > Past soft freeze now: I tagged this but pls remind me after the release
+ >  > to help make sure it's not lost.
  
-+    /*
-+     * Page conversions can span multiple memory regions, for example, if two
-+     * memory backends are added to support two different NUMA nodes/policies.
-+     */
-+next_memory_region:
-     section = memory_region_find(get_system_memory(), start, size);
-     mr = section.mr;
-     if (!mr) {
-@@ -3121,8 +3128,12 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
-     rb = qemu_ram_block_from_host(addr, false, &offset);
- 
-+    convert_start = section.offset_within_region;
-+    convert_size = (convert_start + size > mr->size) ?
-+                   mr->size - convert_start : size;
-+
-     ret = ram_block_attributes_state_change(RAM_BLOCK_ATTRIBUTES(mr->rdm),
--                                            offset, size, to_private);
-+                                            offset, convert_size, to_private);
-     if (ret) {
-         error_report("Failed to notify the listener the state change of "
-                      "(0x%"HWADDR_PRIx" + 0x%"HWADDR_PRIx") to %s",
-@@ -3138,9 +3149,15 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-              */
-             goto out_unref;
-         }
--        ret = ram_block_discard_range(rb, offset, size);
-+        ret = ram_block_discard_range(rb, offset, convert_size);
-     } else {
--        ret = ram_block_discard_guest_memfd_range(rb, offset, size);
-+        ret = ram_block_discard_guest_memfd_range(rb, offset, convert_size);
-+    }
-+
-+    if (size - convert_size) {
-+        start += convert_size;
-+        size -= convert_size;
-+        goto next_memory_region;
-     }
- 
- out_unref:
--- 
-2.34.1
+Gentle reminder: This patch is still missing from the latest master branch, but can apply without
+any conflict. Can it be included in 10.2?
+
+Regards,
+Li.
 
 
