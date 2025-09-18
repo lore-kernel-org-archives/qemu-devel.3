@@ -4,99 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6CFCAC597
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94906CAC597
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Sep 2025 09:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzAzm-0000Gn-5U; Thu, 18 Sep 2025 05:32:06 -0400
+	id 1uzB9i-0003aU-FD; Thu, 18 Sep 2025 05:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1uzAzf-0000EI-PT
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:31:59 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzB9d-0003a7-Qa
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:42:18 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1uzAzd-0001f0-7R
- for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:31:59 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45cb6428c46so6822815e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 02:31:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzB9Y-0003IM-Cf
+ for qemu-devel@nongnu.org; Thu, 18 Sep 2025 05:42:17 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-62adfdda606so452759d50.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 02:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758187915; x=1758792715; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=GCQ6IJB4THH2mjQRZu4ktOVSYqENxEpi3gs7gRZNzTQ=;
- b=iBWl5DOeCJzY9FK83VO59UpMfjf3yKx45E8A1e5M86lPWj9SAv+Q5xwXibTShOm321
- gq+JV4T4RTC9HfuKl54HVeCHh+1viXMNBDj4N2TlMyxrOZF8rOzy1DSDCiFdEthyA8R6
- 9sa6slzeU83aHJYefQjDxbrAJv8UgLSIegipNtExdBdrz4aXlgtmWOkBX916vj8bZwvg
- 8++fsAjgrmMnbsZLXB2TIXInQnZu7gAMB/HAxYW4X3ddvJhs6Ll6kFfwCvcBYipDXleZ
- 6geY9/7JK5h6k7wakZBLol7gp5zJiX8Xrf4uHJ9+g5VHyHGqEjwQh+413JzqjOWxxHXr
- +2ag==
+ d=linaro.org; s=google; t=1758188529; x=1758793329; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sxP8LYMFqSAbtbWkGWrdaiOVoIBRqWIBOEuRswWJkEk=;
+ b=yiBUPlX+tfunLqYOLGtj+9CLtrkjbLVvQg3KzQKNrvDcKEYiqhZhd+ZQXQNyv62vxF
+ oWRnwoaTh2NhaUK74LLLVKrZ5+XXpU/TTUaYmb/+osnj+Tx5Ut9VbSwIqO+1olA8Kmma
+ qj5ZRopV2cvE0vgVmik+F1JrDuwSdrAYcOSImnmxnO3TeoY3MunSq5IMNs3tKk5a1XzR
+ g7k7NewYOduDgGNKdtVSQSGodmyzvfodRYhL57Ql4IgXMSeCsv+k7kBOX980xZ54EZQe
+ GT144bdiunlpxMfTiK7a0T071TSrbmALKWLCPJAspXTof6pxuM9HpmL/3FFVEOJ4bNkM
+ DI5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758187915; x=1758792715;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GCQ6IJB4THH2mjQRZu4ktOVSYqENxEpi3gs7gRZNzTQ=;
- b=YSemho7wQFMNE2UELiCDL6coawK5X865NbscokHJ7esWBVmS5MTJa0J5LteihtuNwP
- JTqUsedNjGhLiY6RsTfahZ6X/loFYViB4hqIoZaiKXIN01Yj7pBFJaog4NyNH2cSMdEt
- YSjBQFC95iUiHP2sFWQ2DO0vi7Eh6EUtDsz51Q8++fR2kYJlaZcOq5cRh9LzruDWrsm0
- cvtnyTn9FYdNfFD35LiHlha/dIj5BJ9GGmB4ZcWlF+1RSEusarVU9LZV3+ihfP2RiNMy
- BoqpGEFjUsrm+GcX9JUQWAwcaSzEabdzi+iblsj25eWIEyUDPWUUDvjgSoikNI8EfjKi
- FooA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuU5pSK5pd7v26Zc4bV2TW6f+OADkMmdQH44u0MB3HUrlHoEFrxVbdh88PcD+nrwv8NWhtag1xvr2P@nongnu.org
-X-Gm-Message-State: AOJu0Yx4bZhXr3CFzwWB4F4s3m/v6xScz/gBWz0pENcz5TVdkIX+zj/o
- 6W9Gs2gsqjvPgrLyJntb6rYmxbOfbAGu0EzMWAXbE09Ri6Z8s412YSZu
-X-Gm-Gg: ASbGncuAd9OObdMQEcogrzhSAdA/bLQu7uBGsqwVdDq612tu0mgLSIyxWaexTLfchVC
- AI8GRpf6Rn0ZHB1BsZUt/9ChbM/xihyw702qQBDMOAfeOE6ocxgNIJFNRcviM7GOzW2xA2WoS/C
- oWL1mERAtx38hTus5V8ec/Rzgsk4fkkgE2UjCCzyET09KaTA6HwE/NesPUgjrzktFwEhBgISWxR
- JyoK4krUVb+FtpBQS9kWrTJTfqi7f/4tZm1CaEB30GD5daA8pde+/mvdbBCBh3wVdCYurMrPJYq
- GirkqwgnQ5va9u06TP2Zu2Kxwog1xwd28zH7wrlBqbs0UClgUEl5J5rhvH51iwZbCUkX1SrXRLd
- 5+naLLxcawylFOHJ5hJHiixYnyDa85l+FYQGisztwNZCj2e8gsQevGRQz7z0Hkp9UyBODSRNJis
- eNdHTLuncMqg==
-X-Google-Smtp-Source: AGHT+IGtMuNadmZNNj37hkcW+YL7g9nje/MbhOLrhpPeWq/9Gi1MZJfkoEpTwoaofA4ctjiD8Oci0g==
-X-Received: by 2002:a05:600c:3b20:b0:45d:e110:e673 with SMTP id
- 5b1f17b1804b1-46202175527mr46988065e9.4.1758187914516; 
- Thu, 18 Sep 2025 02:31:54 -0700 (PDT)
-Received: from ehlo.thunderbird.net (78-80-105-95.customers.tmcz.cz.
- [78.80.105.95]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-464f1627140sm34295795e9.6.2025.09.18.02.31.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Sep 2025 02:31:54 -0700 (PDT)
-Date: Thu, 18 Sep 2025 11:31:46 +0200
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, qemu-devel@nongnu.org
-CC: =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Szymon Lukasz <noh4hss@gmail.com>
-Subject: Re: [PATCH v4 03/10] chardev: add qemu_chr_resize()
-User-Agent: Thunderbird for Android
-In-Reply-To: <e025952d0d0e1f78b68cfe42dbe39975570a94bc.camel@linux.ibm.com>
-References: <20250912-console-resize-v4-0-7925e444afc4@gmail.com>
- <20250912-console-resize-v4-3-7925e444afc4@gmail.com>
- <e025952d0d0e1f78b68cfe42dbe39975570a94bc.camel@linux.ibm.com>
-Message-ID: <4C88D994-7C6A-48EE-96BC-9D8ACC31B2A9@gmail.com>
+ d=1e100.net; s=20230601; t=1758188529; x=1758793329;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sxP8LYMFqSAbtbWkGWrdaiOVoIBRqWIBOEuRswWJkEk=;
+ b=inJjIUne1M6xgMhzAM66dK4/tZqExn/2CR/EznK31cLGIVm6c4OqDulPxLjJXmeffK
+ tiuxUsOlR9fktjNBiGRL90oLewjTKiE55EKd6QWLwCHZ6PtBgpmzy6AjEbuT0VKa1oA4
+ Ewkcu8j6xkWzBfG9PgrRyAEaBJYVZrbxjkw2b5+tpn/iKLweI3tiiu7QLjO/4G5k901A
+ RmsFYCoWvHLAR2iTzLR60GLEheDhzqKYfCvSZ0lniF8QRNsy6IvYlD+57aXrolm/B4NR
+ qTKrqQJg2YtPcnUlHjohCFrfqoUYytnJGfCIdNdmCI4uaQJx4hVr7f3bxZyjsZ1wAS+j
+ yj4g==
+X-Gm-Message-State: AOJu0YzX/8nlTT9Ap/g3HAGzl52WvV2fJVtgxCK7ita1v9dvy6pl8SQu
+ QSi/RcKRCTjAdBSMWr01pcZV7MeBgxoIPtv4myOjono3dNAI2+dLdaQNzHk0NazONLUeX3oEiUd
+ ZmbW4pndXbFv9LHZSL8AG596edVR7/Da17HbAC61oXA==
+X-Gm-Gg: ASbGncu8XNBE2tCvHNtsgRqiiivZYAC5JO90vuXLffkFBQKKYWH7uHvkP9VVYA29vgg
+ qbTF0zWJGh5sdm1818u0Q7Yzw/7kG/XS8rTXvibYLa0u81r8cAuvEfo6zM95not9tvOUtbKtGJc
+ ArQG8VDZX8G4wSWuUsJZmL8rJG4zGrd/RPEZ8RTLRFXDwSAJikKQ5G6UBqt7dQsIVIB1RHQ7SDN
+ R9fvcGavC8cy2VTzQkQl2reJKg=
+X-Google-Smtp-Source: AGHT+IFX2qnC9oNlIjXaxDgbEzXnFVoWA9GyskxdVRyt6HweyqJOSeP8YQKo4N2aY3yB6EjBHqZfOF9Qx7zRRI9cjOI=
+X-Received: by 2002:a05:690c:b89:b0:724:fc2c:769 with SMTP id
+ 00721157ae682-738909bcc85mr43570857b3.24.1758188529287; Thu, 18 Sep 2025
+ 02:42:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32d.google.com
+References: <20250916180611.1481266-1-peter.maydell@linaro.org>
+ <ae07bd23-724a-4925-801c-d1f2b6d9abee@linaro.org>
+ <e3f9275a-999e-4114-9950-68e3925aab7a@linaro.org>
+In-Reply-To: <e3f9275a-999e-4114-9950-68e3925aab7a@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Sep 2025 10:41:57 +0100
+X-Gm-Features: AS18NWDMxAbZnd5fBLNOLhfLqgQyFZEyzbtH6k_1R-WfB3ZtCQHeT0QpgkixfgI
+Message-ID: <CAFEAcA9ZP01pX56GCATOTmmy=uorJ3jaHRq6rx9OAeF-B3rU3g@mail.gmail.com>
+Subject: Re: [PULL 00/36] target-arm queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,86 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On September 18, 2025 10:45:13 AM GMT+02:00, Maximilian Immanuel Brandtner =
-<maxbr@linux=2Eibm=2Ecom> wrote:
-> On Fri, 2025-09-12 at 05:39 +0200, Filip Hejsek wrote:
-> > From: Szymon Lukasz <noh4hss@gmail=2Ecom>
-> >=20
-> > This function should be called whenever we learn about a new size of
-> > the terminal connected to a chardev=2E
-> >=20
-> > Signed-off-by: Szymon Lukasz <noh4hss@gmail=2Ecom>
-> > Signed-off-by: Filip Hejsek <filip=2Ehejsek@gmail=2Ecom>
-> > ---
-> > =C2=A0chardev/char=2Ec=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- | 11 +++++++++++
-> > =C2=A0include/chardev/char=2Eh |=C2=A0 2 ++
-> > =C2=A02 files changed, 13 insertions(+)
-> >=20
-> > diff --git a/chardev/char=2Ec b/chardev/char=2Ec
-> > index
-> > 635d19fea4fd4bd0c7f171f055fe940f9f5ebed5=2E=2Eb45d79cb9b57643827eb7479=
-257
-> > fdda2cf6b0434 100644
-> > --- a/chardev/char=2Ec
-> > +++ b/chardev/char=2Ec
-> > @@ -351,6 +351,17 @@ int qemu_chr_wait_connected(Chardev *chr, Error
-> > **errp)
-> > =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> > =C2=A0}
-> > =C2=A0
-> > +void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 if (cols !=3D chr->cols || rows !=3D chr->rows) {
->=20
-> Perhaps it would be better to discard resize events if the requested
-> cols or rows is 0 as it indicates that an error has occurred at some
-> point during the process of receiving the winsize=2E
+On Wed, 17 Sept 2025 at 18:51, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 9/16/25 18:43, Richard Henderson wrote:
+> > I don't understand why, but this causes failure on s390x host for hppa guest:
+> >
+> > https://gitlab.com/qemu-project/qemu/-/jobs/11379271029
+> >
+> > ...
+> > # Testing device 'elroy-pcihost'
+> > Broken pipe
+> > ../alt/tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signal 11
+> > (Segmentation fault) (core dumped)
+> > Aborted (core dumped)
+> >
+> > Even more bizzarely, the failure bisects to
+> >
+> > Author: Nicolin Chen <nicolinc@nvidia.com>
+> > Date:   Fri Aug 29 09:25:27 2025 +0100
+> >
+> >      hw/arm/virt: Add an SMMU_IO_LEN macro
+> >
+> >      This is useful as the subsequent support for new SMMUv3 dev will also
+> >      use the same.
+> >
+> > which makes no sense at all.  But it's repeatable, so...
+>
+> Ho hum.  It appears to be flaky.  I now see it without this patch set at all:
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/11391070227
 
-Maybe=2E But then if the size actually changes from known
-to unknown, it wouldn't be possible to get it back to the unknown
-state=2E And what if only
-one of the values is 0, and the other differs from the last value?
+asan reports a heap-use-after-free in the dino PCI controller
+when running the device-introspect-test, which may be relevant.
+The subtest the segfault happens on is half a dozen or so
+devices after the dino-pci one, so it's plausible that heap
+corruption leads to the subsequent crash.
 
-What I want to say is, I don't think QEMU should be in the business
-of trying to fix broken size info=2E The kernel gave us zero,
-so we should forward that and let the guest handle it=2E
+I'll investigate the use-after-free...
 
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chr->cols =3D cols;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chr->rows =3D rows;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (chr->be_open) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qe=
-mu_chr_be_event(chr, CHR_EVENT_RESIZE);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +}
-> > +
-> > =C2=A0QemuOpts *qemu_chr_parse_compat(const char *label, const char
-> > *filename,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool permit_mux_mon)
-> > =C2=A0{
-> > diff --git a/include/chardev/char=2Eh b/include/chardev/char=2Eh
-> > index
-> > 45cb6349756ac8072dffab9354108caf90cd3565=2E=2E1e69b038241074d627ebb7f0=
-96e
-> > 98aee9953ebdf 100644
-> > --- a/include/chardev/char=2Eh
-> > +++ b/include/chardev/char=2Eh
-> > @@ -232,6 +232,8 @@ int qemu_chr_write(Chardev *s, const uint8_t
-> > *buf, int len, bool write_all);
-> > =C2=A0#define qemu_chr_write_all(s, buf, len) qemu_chr_write(s, buf, l=
-en,
-> > true)
-> > =C2=A0int qemu_chr_wait_connected(Chardev *chr, Error **errp);
-> > =C2=A0
-> > +void qemu_chr_resize(Chardev *chr, uint16_t cols, uint16_t rows);
-> > +
-> > =C2=A0#define TYPE_CHARDEV "chardev"
-> > =C2=A0OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
-> > =C2=A0
-> >=20
->=20
 
+==1771223==ERROR: AddressSanitizer: heap-use-after-free on address
+0x527000018f80 at pc 0x5b4b9d3369b5 bp 0x7ffd01929980 sp
+0x7ffd01929978
+WRITE of size 8 at 0x527000018f80 thread T0
+    #0 0x5b4b9d3369b4 in pci_host_bus_register
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:608:5
+    #1 0x5b4b9d321566 in pci_root_bus_internal_init
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:677:5
+    #2 0x5b4b9d3215e0 in pci_root_bus_new
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:706:5
+    #3 0x5b4b9d321fe5 in pci_register_root_bus
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci/pci.c:751:11
+    #4 0x5b4b9d390521 in dino_pcihost_init
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/hppa-asan/../../hw/pci-host/dino.c:473:16
+
+-- PMM
 
