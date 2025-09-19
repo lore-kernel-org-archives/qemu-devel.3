@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A6ACAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDC8CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXr4-0006E1-0G; Fri, 19 Sep 2025 05:56:38 -0400
+	id 1uzXr7-0006H6-Lo; Fri, 19 Sep 2025 05:56:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqc-0005hL-18
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:11 -0400
+ id 1uzXqe-0005lU-Ql
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:13 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqY-0004bN-9y
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:09 -0400
+ id 1uzXqa-0004bL-7r
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:12 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0CB5B80EB1;
- Fri, 19 Sep 2025 12:56:00 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 6500380EF5;
+ Fri, 19 Sep 2025 12:56:01 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a72::1:38])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ntP1fK1GvGk0-y00Yv60n; Fri, 19 Sep 2025 12:55:59 +0300
+ ESMTPSA id ntP1fK1GvGk0-izTsWkir; Fri, 19 Sep 2025 12:56:00 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758275759;
- bh=2Br9SnRNFti6c0drviITVAgb0JbgHHv09a0Qx40m5tQ=;
+ s=default; t=1758275760;
+ bh=5HYkPbO4hAPLbFB3eh6cxR13ZYd+5c7xqpnj9WYGlKA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=dgT9o8rQmOO0yP/TwrMXGlFsiDygA2qLDme7ULWQ6L4ZfoAxTNmCPAL3W2CkqgCBn
- 64Ivoh14/MuiPwVF2xuibaWJCQDeB6D3mw/ZcqBflt72pyCLUC1+lHykcAO5aR2qHS
- LSp9BrqmBZFb3WSkY01pFoaMge2/14/zlXY1+6iE=
+ b=O8PNS0M8q1PUQ+0d0seNOEuksM9LZ51zKKB4j32CXsFgEMLf2/BDCnwturFZM1iVX
+ QiW1w9z99LTCJemKoJudjtCrPXgOV7dIu7ACZusjOSzsO2tUuPsq2CxiLskgqk5/Y8
+ D2U3cQQ9tFHOSTJ1sIBmUT4JqdKFyDimc88tVG3o=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,9 +48,9 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v5 12/19] net/tap: use net_tap_setup() in net_init_bridge()
-Date: Fri, 19 Sep 2025 12:55:38 +0300
-Message-ID: <20250919095545.1912042-13-vsementsov@yandex-team.ru>
+Subject: [PATCH v5 14/19] migration: add MIG_EVENT_PRE_INCOMING
+Date: Fri, 19 Sep 2025 12:55:40 +0300
+Message-ID: <20250919095545.1912042-15-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
@@ -78,30 +78,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finalize the concept of pair net_tap_new() + net_tap_setup().
+We are going to implement fds-passing migration feature. When it's
+enabled (by setting migration parameter), TAP device (and later other
+devices of-course) is passed through migration channel (which should be
+a unix socket to pass fds) to a new QEMU.
 
-Now, the only extra part for bridge in net_tap_setup() is initializing
-vhost_net, but it's under if (s->vhostfd != -1), we never come into it
-for bridge case.
+So we need to know during TAP initialization, should we open TAP
+device, or wait for incoming fds. But we can't check for migration
+parameter at TAP creation time, as use may set migration parameter
+later (especially when TAP is added by command line parameter).
+
+To solve this, we have prepared TAP initialization code so that
+opening the device may be postponed to later point. And this later
+point is obviously the early beginning of qmp_migrate_incoming():
+here we already know all migration parameters and capabilities,
+but we are not in downtime, so we can continue initialization
+of TAP device.
+
+This commit introduces MIG_EVENT_PRE_INCOMING, to be used by TAP
+code in following commit.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/migration/misc.h | 1 +
+ migration/migration.c    | 8 +++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index b7175e4b10..4ca3cc75d8 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -697,7 +697,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index a261f99d89..5765fcc204 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -63,6 +63,7 @@ typedef enum MigrationEventType {
+     MIG_EVENT_PRECOPY_SETUP,
+     MIG_EVENT_PRECOPY_DONE,
+     MIG_EVENT_PRECOPY_FAILED,
++    MIG_EVENT_PRE_INCOMING,
+     MIG_EVENT_MAX
+ } MigrationEventType;
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index 10c216d25d..88daa13960 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1696,7 +1696,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+     e.type = type;
+     ret = notifier_with_return_list_notify(&migration_state_notifiers[mode],
+                                            &e, errp);
+-    assert(!ret || type == MIG_EVENT_PRECOPY_SETUP);
++    assert(!ret || type == MIG_EVENT_PRECOPY_SETUP ||
++           type == MIG_EVENT_PRE_INCOMING);
+     return ret;
+ }
+ 
+@@ -1936,6 +1937,11 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
+         return;
      }
  
-     s = net_tap_new(peer, "bridge", name, NULL, NULL, &error_abort);
--    net_tap_set_fd(s, fd, vnet_hdr, &error_abort);
-+    net_tap_setup(s, fd, vnet_hdr, &error_abort);
- 
-     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
- 
++    if (migration_call_notifiers(migrate_get_current(), MIG_EVENT_PRE_INCOMING,
++                                 errp)) {
++        return;
++    }
++
+     if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
+         return;
+     }
 -- 
 2.48.1
 
