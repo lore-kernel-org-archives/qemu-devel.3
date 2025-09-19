@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E9C3CA1013
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 03:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7458CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 03:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzRkl-0002Ix-BJ; Thu, 18 Sep 2025 23:25:43 -0400
+	id 1uzRjp-0001ds-Ji; Thu, 18 Sep 2025 23:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uzRkj-0002I8-NW; Thu, 18 Sep 2025 23:25:41 -0400
+ id 1uzRjo-0001dI-Lr; Thu, 18 Sep 2025 23:24:44 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uzRkh-0007KK-Tl; Thu, 18 Sep 2025 23:25:41 -0400
+ id 1uzRjn-000736-5b; Thu, 18 Sep 2025 23:24:44 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 19 Sep
- 2025 11:24:37 +0800
+ 2025 11:24:32 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 19 Sep 2025 11:24:37 +0800
+ Transport; Fri, 19 Sep 2025 11:24:32 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -34,17 +34,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v4 14/14] tests/functional/aarch64/aspeed_ast2700: Add PCIe
- and network tests
-Date: Fri, 19 Sep 2025 11:24:27 +0800
-Message-ID: <20250919032431.3316764-15-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v4 01/14] hw/pci/pci_ids: Add PCI vendor ID for ASPEED
+Date: Fri, 19 Sep 2025 11:24:14 +0800
+Message-ID: <20250919032431.3316764-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250919032431.3316764-1-jamin_lin@aspeedtech.com>
 References: <20250919032431.3316764-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -70,118 +70,23 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the AST2700 and AST2700fc functional tests with PCIe and network
-checks.
-
-This patch introduces a helper "do_ast2700_pcie_test()" that runs "lspci"
-on the emulated system and verifies the expected PCIe devices:
-
-- 0002:00:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-- 0002:01:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
-
-Additional changes:
-- Add `-device e1000e,netdev=net1,bus=pcie.2 -netdev user,id=net1` to the
-  AST2700 and AST2700fc test machines.
-- In the AST2700 vbootrom test, assign an IP address to the e1000e
-  interface and verify it using `ip addr`.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- .../functional/aarch64/test_aspeed_ast2700.py | 21 +++++++++++++++++++
- .../aarch64/test_aspeed_ast2700fc.py          | 13 ++++++++++++
- 2 files changed, 34 insertions(+)
+ include/hw/pci/pci_ids.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-index a3db267294..0973fce0e9 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-@@ -69,6 +69,16 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
+index 33e2898be9..16034aaa2c 100644
+--- a/include/hw/pci/pci_ids.h
++++ b/include/hw/pci/pci_ids.h
+@@ -291,4 +291,6 @@
  
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 PCI bridge: '
-+            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:01:00.0',
-+            '0002:01:00.0 Ethernet controller: '
-+            'Intel Corporation 82574L Gigabit Network Connection')
+ #define PCI_VENDOR_ID_NVIDIA             0x10de
+ 
++#define PCI_VENDOR_ID_ASPEED             0x1A03
 +
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -125,20 +135,31 @@ def test_aarch64_ast2700a0_evb_sdk_v09_06(self):
- 
-     def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.set_machine('ast2700a1-evb')
-+        self.require_netdev('user')
- 
-         self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.start_ast2700_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_07(self):
-         self.set_machine('ast2700a1-evb')
-+        self.require_netdev('user')
- 
-         self.archive_extract(self.ASSET_SDK_V907_AST2700A1_VBOOROM)
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.start_ast2700_test_vbootrom('ast2700-default')
-         self.verify_vbootrom_firmware_flow()
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-+        exec_command_and_wait_for_pattern(self,
-+            'ip addr show dev eth2',
-+            'inet 10.0.2.15/24')
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-index b85370e182..28b66614d9 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-@@ -20,6 +20,8 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-         self.vm.set_console()
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-                          '-net', 'nic', '-net', 'user', '-snapshot')
- 
-@@ -49,6 +51,16 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
- 
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 PCI bridge: '
-+            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:01:00.0',
-+            '0002:01:00.0 Ethernet controller: '
-+            'Intel Corporation 82574L Gigabit Network Connection')
-+
-     def do_ast2700fc_ssp_test(self):
-         self.vm.shutdown()
-         self.vm.set_console(console_index=1)
-@@ -128,6 +140,7 @@ def test_aarch64_ast2700fc_sdk_v09_06(self):
-         self.start_ast2700fc_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-         self.do_ast2700fc_ssp_test()
-         self.do_ast2700fc_tsp_test()
- 
+ #endif
 -- 
 2.43.0
 
