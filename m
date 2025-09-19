@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A54BCAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 17:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B259CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 18:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzfGA-0006xk-8T; Fri, 19 Sep 2025 13:51:02 -0400
+	id 1uzfRp-0001a2-Ue; Fri, 19 Sep 2025 14:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzfG8-0006xX-Al
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:51:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uzfRm-0001ZX-Ej; Fri, 19 Sep 2025 14:03:02 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzfG4-0006Cs-JR
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:50:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758304253;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kFLwhx1yxjwAvAeBQuun8IZwowW777hGdn3jgBMo5p8=;
- b=JRZbxWBHSGbBatVYBIni/p60xN0gGdvuLjYUH54Hz1jlkaBev6yhZ6fBa0xtwthhRU1f2A
- lKnewn24JocpoemVYDUfhwUlTCGJ0TAYMgfVp9RzQ4MaTmRiQrSETzfV401GOCACA/qc3N
- kyog8M1mLJg63/pK1u4QqY3TcN0c9/g=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-mIpuOabENuSsHou-Ep8wHg-1; Fri, 19 Sep 2025 13:50:51 -0400
-X-MC-Unique: mIpuOabENuSsHou-Ep8wHg-1
-X-Mimecast-MFC-AGG-ID: mIpuOabENuSsHou-Ep8wHg_1758304251
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4b5f31ef7dfso61386581cf.1
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 10:50:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758304251; x=1758909051;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kFLwhx1yxjwAvAeBQuun8IZwowW777hGdn3jgBMo5p8=;
- b=JX8x67qjtauSEDYU6dH5UTQdaIiLVt1JVANIkPKOGZVOssGRab76YTTC+793GDkjPI
- nzMGcpT66RhwTTkP262epVdi9FHnhnW7q2Maxy/dx87iHDsYWaipA5OkMuGfUud/sAU1
- 290ZrEISlMtSgbUXK0ihZ71hUHdbqjB7ox6HZipKYyvNn0NzfeojyrPv/n6L63vmQJ8x
- Tkr/fH41mo2vND6hVPm5W8au4dKJ5LZ694PyCCiDY+Fz4eao8AFapj6Q6ao+VnxlGokA
- E0FFHTBy04VMFe+QXNGT3ev1NC+GUftjSeSpskPQAfXj32SWuKSld/mmEgYPwkRRvD5J
- keOQ==
-X-Gm-Message-State: AOJu0YzULA1gxX1azLlnu5jyRsXuroKMsRHnvJvgchy659OoxYy44gWB
- keFRblv4uRgXcjxTe26rViNoQenJQqOnMkJT8HnPZ+57JglhiHRzosfP5iHZyewy4bxSNqpzsPo
- Z6oMe/eCh7ON83WWnKA7gsDyIX/qrfAME6u+XgABmdpX3MhCZcALm4YMg
-X-Gm-Gg: ASbGnct9TjpgFsykEQc1g5nNSTfCUMZlyCnlQ78gSZWOhdhCNnE5PthTUHp7EvVrDEo
- r0sE/BTEXnJJn1MnyVdkEFXxmQnsIraHIBjkysy3hbvFzWZONbwvgi62e8lyk6Bk3ggwUIJCfj9
- J3gehIWaMF9D3FHHFWr7r5Vlodec3ni0UkJubpKDiwdQNw3KpCp6mBsoH4AgyQbzMJSnC5WVqi+
- zjaHftP0k+Z/A6Dg3xyjIzvdF6XkBikgOPPY73XtHxj36uwBNPUl4OJSVrG5WiH97812oATx9tY
- +Q6SpJKYOdAJHZMLw0fVILzjTXq0SYRS
-X-Received: by 2002:ac8:7d86:0:b0:4b7:b051:a531 with SMTP id
- d75a77b69052e-4bdada0c411mr76749391cf.20.1758304251052; 
- Fri, 19 Sep 2025 10:50:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOyWB5HHXUPNfcP2Qa1Ivdm3Ctbq4G/HlQeS3NOY9ML5kfc5n11gv7sCuI/yli+mjDw8uBFQ==
-X-Received: by 2002:ac8:7d86:0:b0:4b7:b051:a531 with SMTP id
- d75a77b69052e-4bdada0c411mr76749141cf.20.1758304250575; 
- Fri, 19 Sep 2025 10:50:50 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4bda8998580sm32029181cf.30.2025.09.19.10.50.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Sep 2025 10:50:49 -0700 (PDT)
-Date: Fri, 19 Sep 2025 13:50:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
-Message-ID: <aM2X-N9gXvFxxdvI@x1.local>
-References: <20250915115918.3520735-1-jmarcin@redhat.com>
- <20250915115918.3520735-5-jmarcin@redhat.com>
- <aM2LoGDh5WsVnEi8@x1.local>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uzfRc-0002aF-5i; Fri, 19 Sep 2025 14:03:01 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDlLxh011030;
+ Fri, 19 Sep 2025 18:02:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=r0hyVT
+ G6cxYH2KgwueNDu0k3JPpzOSXF0fwiV/RkxV8=; b=D1GSfRb5JvL1GoWLf5Al6P
+ wUsCsnAOqN76hamuE6w4nqkZijQLmxPTEI94Xn9VcNBAjdUamKgZJl6Km9S9x6Eg
+ P1pwIrW5aNFWCpAjtWXG1fvJlw4pgtolpsSvd4xzKQF5h1JMJSDjJ7TuD9e2FcPa
+ ukF0g7V262W3bsb3raPfcW+FRGBcetgBKUNLrSO8Av90Iq+t8rGxsai3gG81Cb6+
+ pSbly6X4P8pi4/RRVMn0lkugwkp4m5A9OsQZv0ZC3/KS9ha7nXpsB/jII5cRbp6q
+ I5c9DHr4P2KsYFhyF9sSRCYPeKjCihQGt2OeO7L0x5/SnS+2VAzM/I+9sXWGqVyw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 497g4nsnfp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Sep 2025 18:02:47 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58JFZiPN008988;
+ Fri, 19 Sep 2025 18:02:46 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 495nn3vtev-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Sep 2025 18:02:46 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58JI2jmX26673688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 18:02:45 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CB62758056;
+ Fri, 19 Sep 2025 18:02:45 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A4AA85805D;
+ Fri, 19 Sep 2025 18:02:44 +0000 (GMT)
+Received: from [9.61.246.121] (unknown [9.61.246.121])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 19 Sep 2025 18:02:44 +0000 (GMT)
+Message-ID: <c8938dac-1fd0-4b90-b402-c074bc0351a9@linux.ibm.com>
+Date: Fri, 19 Sep 2025 11:02:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aM2LoGDh5WsVnEi8@x1.local>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 08/28] crypto/x509-utils: Add helper functions for DIAG
+ 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250917232131.495848-1-zycai@linux.ibm.com>
+ <20250917232131.495848-9-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250917232131.495848-9-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=MN5gmNZl c=1 sm=1 tr=0 ts=68cd9ac7 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VnNF1IyMAAAA:8 a=j3SwWdo30wvGsQaUlywA:9
+ a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=zZCYzV9kfG8A:10
+X-Proofpoint-GUID: ZD3isix7x28ACa2tvlt_PmSQbFB3sumy
+X-Proofpoint-ORIG-GUID: ZD3isix7x28ACa2tvlt_PmSQbFB3sumy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwNCBTYWx0ZWRfX5BOlJzw3n3jQ
+ hh6w4y4UBPmbSeKIpt9T3Z98mtMq6W4ztqOTEn9n9S0L6Qd1+0CM+u8JSq2/qGdzuqyNfg7syWA
+ kj4g7CyHMTa3IdRyKfleM8umJXrncPKwkZd56spzaInF2IhCH7bMFyQDmYtDUrz2JzKFG1GRMgV
+ WLd2ry5Lzr+SDBo53X6YAY/ZIEzxQn1UyAlSFERFlf3DeGbE0AByJh3K0KvHG9jEI4P/l5ilVod
+ 784FFMrZ47sZE2mcDJB4Ul67fL5LA+nCTH2PbOS7XwH+jNKzigoUQX89EXtNbKj7C5z8f6MiRwD
+ IpafUsch3q3lUJvLpH8Inwzzu6DVEKc4Xftd+ytEShD9zYxzIOrlbVQbHic+CBtr0IaSd7FxR2Q
+ OKuDptTw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160204
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,84 +125,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 12:58:08PM -0400, Peter Xu wrote:
-> > @@ -2564,6 +2569,11 @@ static void *source_return_path_thread(void *opaque)
-> >              tmp32 = ldl_be_p(buf);
-> >              trace_source_return_path_thread_pong(tmp32);
-> >              qemu_sem_post(&ms->rp_state.rp_pong_acks);
-> > +            if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-> > +                trace_source_return_path_thread_dst_started();
-> > +                migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> > +                                  MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> 
-> Could this race with the migration thread modifying the state concurrently?
-> 
-> To avoid it, we could have a bool, set it here once, and in the iterations
-> do something like:
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 10c216d25d..55230e10ee 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3449,6 +3449,16 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
->  
->      if (in_postcopy) {
-> +        if (s->postcopy_package_loaded) {
-> +            assert(s->state == MIGRATION_STATUS_POSTCOPY_DEVICE);
-> +            migrate_set_state(s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> +                              MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> +            /*
-> +             * Since postcopy cannot be re-initiated, this flag will only
-> +             * be set at most once for QEMU's whole lifecyce.
-> +             */
-> +            s->postcopy_package_loaded = false;
-> +        }
->          /*
->           * Iterate in postcopy until all pending data flushed.  Note that
->           * postcopy completion doesn't rely on can_switchover, because when
 
-[...]
+On 9/17/2025 4:21 PM, Zhuoying Cai wrote:
+> Introduce new helper functions to extract certificate metadata needed for
+> DIAG 320 subcode 2:
 
-> > @@ -2871,7 +2882,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-> >  
-> >      /* Now, switchover looks all fine, switching to postcopy-active */
-> >      migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
-> > -                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > +                      MIGRATION_STATUS_POSTCOPY_DEVICE);
-> >  
-> >      bql_unlock();
-> >  
-> > @@ -3035,7 +3046,8 @@ static void migration_completion(MigrationState *s)
-> >  
-> >      if (s->state == MIGRATION_STATUS_ACTIVE) {
-> >          ret = migration_completion_precopy(s);
-> > -    } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> > +    } else if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-> > +               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> 
-> Exactly.  We need to be prepared that src sending too fast so when device
-> loading on dest we finished.
+Since we are adding generic helper functions to extract certificate 
+metadata, maybe we should avoid mentioning about "DIAG 320 subcode 2"?
 
-One thing more to mention here.. which may void some previous comments I
-left.  Let's discuss.
+Thanks
+Farhan
 
-I think it may also make sense to only allow a COMPLETE after
-POSTCOPY_ACTIVE.
-
-That is, if src sends too fast to have finished sending everything,
-reaching COMPLETE during POSTCOPY_DEVICE, that is, while before it receives
-the new PONG you defined, then.. I _think_ it is better to wait for that.
-
-If it finally arrives, then it's perfect, we switch to POSTCOPY_ACTIVE,
-then continue the completion.
-
-If the channel is broken before its arrival, logically we should handle
-this case as a FAILURE and restart the VM on src.
-
-It's only relevant in a corner case, but does that sound better?
-
--- 
-Peter Xu
-
+>
+> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
+> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
+> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
+> qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
+>
+> These functions provide support for metadata extraction and validity checking
+> for X.509 certificates.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>
 
