@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE38CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AC8CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzWbV-0002oa-KD; Fri, 19 Sep 2025 04:36:29 -0400
+	id 1uzWbi-0002xX-6L; Fri, 19 Sep 2025 04:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzWbR-0002lk-CQ
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:25 -0400
+ id 1uzWbg-0002xC-Rf
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzWbO-000201-Ot
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:24 -0400
+ id 1uzWbe-00021i-EG
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758270980;
+ s=mimecast20190719; t=1758270996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=sKH5QWQw0/glUmX0Rmw2beiRAnZ2M7XabZIaFii2JXk=;
- b=ZVkIK8F85RYgvIGMkcnna16uS5C6bpR6GeOAGbYKY6tWzy/Zls2AbeGzWZX5AVJ4HR+YRW
- VWcZ5PL02orUH3uG9vQwpxn9EFfWV1RN+TiQIkHajO9lLYobMZDODiDw28aQKbl+55cyC8
- XqrPsLVxXKUJW7J7WLGOaicEICnizhU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=I7QpmFqByfXSGbut223Bkx57Iv2EkBrIKj3x/sFSAvk=;
+ b=gDzAjyr5DWVHR0O9zSZ9itGfssv20eeaJ4KoYMdLYbP++uvn87JsDknsWpWSyxGvQUhwwJ
+ p81vjDU+eRIultiOfYzygZfNLz7da4X223YKqub3wRAbsywwfBuVOd5htERrUaj50WLITX
+ DCTbTbYIGqvm161pnXvGMU96ptkUVnY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-9My6e-D-NfmvwKQnfvP8XQ-1; Fri,
- 19 Sep 2025 04:36:18 -0400
-X-MC-Unique: 9My6e-D-NfmvwKQnfvP8XQ-1
-X-Mimecast-MFC-AGG-ID: 9My6e-D-NfmvwKQnfvP8XQ_1758270977
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-ub-z1p9bPFOjgZTBNV4sNA-1; Fri,
+ 19 Sep 2025 04:36:26 -0400
+X-MC-Unique: ub-z1p9bPFOjgZTBNV4sNA-1
+X-Mimecast-MFC-AGG-ID: ub-z1p9bPFOjgZTBNV4sNA_1758270985
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2950195608B; Fri, 19 Sep 2025 08:36:16 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BA44195609F
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 08:36:25 +0000 (UTC)
 Received: from avogadro.redhat.com (unknown [10.44.33.250])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0DE830002C8; Fri, 19 Sep 2025 08:36:14 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C0B381800447; Fri, 19 Sep 2025 08:36:23 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] linux-user: avoid -Werror=int-in-bool-context
-Date: Fri, 19 Sep 2025 10:36:12 +0200
-Message-ID: <20250919083612.86546-1-pbonzini@redhat.com>
+Cc: berrange@redhat.com
+Subject: [PATCH] docs: use the pyvenv version of Meson
+Date: Fri, 19 Sep 2025 10:36:21 +0200
+Message-ID: <20250919083621.86615-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -81,34 +81,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-linux-user is failing to compile on Fedora 43:
+The version in the system might be too old for QEMU; this will be
+especially true if Rust is going to be enabled by default.
 
-../linux-user/strace.c:57:66: error: enum constant in boolean context [-Werror=int-in-bool-context]
-   57 | #define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
+Adjust the docs to suggest using pyvenv/bin/meson.
 
-The warning does not seem to useful and we could even disable it, but
-the workaround is simple in this case.
-
-Cc: qemu-stable@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- linux-user/strace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/devel/build-system.rst | 2 +-
+ docs/devel/rust.rst         | 2 +-
+ docs/system/devices/igb.rst | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 1233ebceb08..758c5d32b6c 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -54,7 +54,7 @@ struct flags {
- };
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 2c884197a20..6204aa6a72e 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -450,7 +450,7 @@ are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
+ with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
+ tests for all targets.
  
- /* No 'struct flags' element should have a zero mask. */
--#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
-+#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO((M) == 0), N }
+-If desired, it is also possible to use ``ninja`` and ``meson test``,
++If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
+ respectively to build emulators and run tests defined in meson.build.
+ The main difference is that ``make`` needs the ``-jN`` flag in order to
+ enable parallel builds or tests.
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 13a20e86a16..2f0ab2e2821 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -66,7 +66,7 @@ __ https://mesonbuild.com/Commands.html#devenv
+ As shown above, you can use the ``--tests`` option as usual to operate on test
+ code.  Note however that you cannot *build* or run tests via ``cargo``, because
+ they need support C code from QEMU that Cargo does not know about.  Tests can
+-be run via ``meson test`` or ``make``::
++be run via Meson (``pyvenv/bin/meson test``) or ``make``::
  
- /* common flags for all architectures */
- #define FLAG_GENERIC_MASK(V, M)  FLAG_BASIC(V, M, #V)
+    make check-rust
+ 
+diff --git a/docs/system/devices/igb.rst b/docs/system/devices/igb.rst
+index 71f31cb1160..50f625fd77e 100644
+--- a/docs/system/devices/igb.rst
++++ b/docs/system/devices/igb.rst
+@@ -54,7 +54,7 @@ directory:
+ 
+ .. code-block:: shell
+ 
+-  meson test qtest-x86_64/qos-test
++  pyvenv/bin/meson test qtest-x86_64/qos-test
+ 
+ ethtool can test register accesses, interrupts, etc. It is automated as an
+ functional test and can be run from the build directory with the following
 -- 
 2.51.0
 
