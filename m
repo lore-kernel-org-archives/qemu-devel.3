@@ -4,154 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7353BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B96CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXnM-0004Lz-HG; Fri, 19 Sep 2025 05:52:48 -0400
+	id 1uzXqj-00062a-8z; Fri, 19 Sep 2025 05:56:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXnK-0004LT-62
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:52:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uzXqW-0005ei-Ig
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:06 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXnE-00049H-B2
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:52:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758275549;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sfnjyFpOT5GdZ2mchwJy3m59k6aCaH+/0l017FKQI8w=;
- b=PVp06tsLfRsFZuw7L9HbrvPS1fLctWW5p61tVXciX5GouzNv9Jl3iG6uOgmLOYhMA2AmaG
- PM7lMTa+QvKrNjo2UPTo/jDOArqynmYoJQR0RxUlFg5RC371ae4v4dGedTLZn0Ct8RBR3K
- gbnsBh4F0GEJHko2zXDKKU5ERYrl4P4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-ux5uq7HJNiWVCnL56k1TWg-1; Fri, 19 Sep 2025 05:52:28 -0400
-X-MC-Unique: ux5uq7HJNiWVCnL56k1TWg-1
-X-Mimecast-MFC-AGG-ID: ux5uq7HJNiWVCnL56k1TWg_1758275547
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45de27bf706so10498145e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 02:52:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758275547; x=1758880347;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sfnjyFpOT5GdZ2mchwJy3m59k6aCaH+/0l017FKQI8w=;
- b=EuYulS7DbFXqO7qOO6azz+dSqXYPyOJWdxd5Z3to2EVfN+evAc+a4doFsrMcLoB6KJ
- sgLNuchY2anP6b8/EoE/u5bxNJzxRHcXXIPC9/gRjiPaYO7F59jlxb0S92ERR3Qcwdiw
- eNsKxzs2AI87b/GGt3Xi2wnrHbaWNgxhHduFbtjpCrtKiz+CgZhZJXICkt5z6j688COK
- WIxiqOdUwXnUFpkxjxtHe/ff9nkLbwLSy7JAeDmciZ7nrGeRAXZpp+9176UWAiz264gE
- /0pgjZhE5dtETpKOhEsYS5kCl2sy5ehr16yjodgVnof69tVJT7ShkIQQxGqzDQjI/iwT
- pOng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXPEFryVn7Gf6PpymdNNUn686yGo3VvXZNiSQ4P4uMybHfyh4DZh34h8jQywr1neoWvqx2UQrPoeXh@nongnu.org
-X-Gm-Message-State: AOJu0Yx6OJAH7C01wPxsJpTgCbwY+e7ZlQIkEkULFjeja8yEWwrV/C7W
- UXIFvtuoL3lvId4G8RXC7WuanUqmQW82a+h1esf8D/t71IAMiPAdmwXjodn6gqLa5/SfdRVr0Pa
- s+d2N0/iUXpkftxceu11tBrPv/lHqlZ70L8gzlIRuUgQjl/4Pyrw2soz9
-X-Gm-Gg: ASbGncuBiNknQgjKRjcsUMLFfVXtBC/+4+SMySLyirjgRJ/uedXFesfywDeDvqGEkYd
- q9FDhH81hZrsgzFLr4IwKCV6/KipWBnkqyjkRNWF3KFaZP+JmZI4I36qdy1aL5nxo7jcdkifwGG
- 6nmKlyXiReiSGbOYsI+I0Y78Oc7bsNT5j62Ay9i9TKXXmp5c0h4Y65taS42vunJVPV449+ZcRcZ
- /btzuXzZmVctmi1fd8ARpoKgwQRNofOVmxKtUrYpqPPitNLBYzX3LoC9MvXFbxtgeiNLhk3Muuo
- GvnNKegBE1jDVV+CycCbVrRyXNUstgfj9dScC7T++NUtvj3CLt8Rgve8eYI4gt8x7F5jxjk6KEH
- 6wFI=
-X-Received: by 2002:a05:600c:8a09:20b0:468:5d0c:fb49 with SMTP id
- 5b1f17b1804b1-4685d0d011cmr10864085e9.19.1758275546856; 
- Fri, 19 Sep 2025 02:52:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVpovK2DNL4FnXfjUXIt2v1c8OIcR9NHWnSGzLfe82Y6wUzTUS2+Ouotgs9otlyu3IRsjOJA==
-X-Received: by 2002:a05:600c:8a09:20b0:468:5d0c:fb49 with SMTP id
- 5b1f17b1804b1-4685d0d011cmr10863885e9.19.1758275546477; 
- Fri, 19 Sep 2025 02:52:26 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45f32083729sm76597265e9.0.2025.09.19.02.52.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Sep 2025 02:52:26 -0700 (PDT)
-Message-ID: <12fb1c21-d53d-4418-8782-791ea97dd54d@redhat.com>
-Date: Fri, 19 Sep 2025 11:52:24 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uzXqR-0004Zj-7d
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:03 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E361280ED6;
+ Fri, 19 Sep 2025 12:55:55 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a72::1:38])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ntP1fK1GvGk0-zWVWDwbL; Fri, 19 Sep 2025 12:55:55 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758275755;
+ bh=pY3iggxWbtv0yXEV6Sn/0zvk2K7amSFE6IZtW3rq9QU=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=JghFl339YQlEWv9Twk2aGYSxGKG8u+phxyQdi50vqdlGVPFSTWe9SfVPfnvhlDlpN
+ zJ5VY9O+g1yR8iCCP6ofhqhIRnbZEQT9FHv9viVWnJms0LiJFSz5/jTI0tBngsM2V4
+ aVCgUuHofBxgtsqR38ikj/GCkAaXh0zA/uK90VDk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
+ eblake@redhat.com, michael.roth@amd.com, armbru@redhat.com,
+ farosas@suse.de, peterx@redhat.com, berrange@redhat.com,
+ jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
+ davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v5 06/19] net/tap: setup exit notifier only when needed
+Date: Fri, 19 Sep 2025 12:55:32 +0300
+Message-ID: <20250919095545.1912042-7-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
+References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v5 00/14] Support PCIe RC to AST2600 and AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
- titusr@google.com
-References: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -163,45 +78,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/19/25 11:29, Jamin Lin wrote:
-> v1:
->   1. Add PCIe PHY, CFG, and MMIO window support for AST2600.
->      Note: Only supports RC_H.
->   2. Add PCIe PHY, CFG, and MMIO window support for AST2700.
->      Note: Supports 3 RCs.
-> 
-> v2:
->    1. Introduce a new root port device.
->    2. For AST2600 RC_H, add the root device at 80:00.0 and a root port at 80.08.0
->       to match the real hardware topology, allowing users to attach PCIe devices
->       at the root port.
->    3. For AST2700, add a root port at 00.00.0 for each PCIe root complex to match
->       the real hardware topology, allowing users to attach PCIe devices at the
->       root port.
-> 
-> v3:
->    1. Fix review issues.
->    2. update functional test for the e1000e network card.
->    3. update license header
->    4. Adding "Based on previous work from Cedric Le Goater, with Jamin's summary
->       implementation.
-> 
-> v4:
->    1. Initialize pointers to NULL when declaring them.
->    2. Use distinct variable names to resolve memory leak issues.
->    3. Update functional tests to verify assigned IP addresses from
->       Intel NIC Ethernet interfaces.
->    4. Introduce pcie_mmio_alias in AspeedSoCState instead of dynamically
->       allocating memory.
-> 
-> v5:
->    1. fix memory leak issue. Replace g_autofree with array.
-> 
-Applied to aspeed-next.
+No reason to setup notifier on each queue of multique tap,
+when we actually want to run downscript only once.
+As well, let's not setup notifier, when downscript is
+not enabled (downsciprt="no").
 
-Thanks,
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ net/tap.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-C.
-
+diff --git a/net/tap.c b/net/tap.c
+index 1e5eaae6e7..eabfc0b8d8 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -301,11 +301,9 @@ static void tap_exit_notify(Notifier *notifier, void *data)
+     TAPState *s = container_of(notifier, TAPState, exit);
+     Error *err = NULL;
+ 
+-    if (s->down_script[0]) {
+-        launch_script(s->down_script, s->down_script_arg, s->fd, &err);
+-        if (err) {
+-            error_report_err(err);
+-        }
++    launch_script(s->down_script, s->down_script_arg, s->fd, &err);
++    if (err) {
++        error_report_err(err);
+     }
+ }
+ 
+@@ -321,8 +319,11 @@ static void tap_cleanup(NetClientState *nc)
+ 
+     qemu_purge_queued_packets(nc);
+ 
+-    tap_exit_notify(&s->exit, NULL);
+-    qemu_remove_exit_notifier(&s->exit);
++    if (s->exit.notify) {
++        tap_exit_notify(&s->exit, NULL);
++        qemu_remove_exit_notifier(&s->exit);
++        s->exit.notify = NULL;
++    }
+ 
+     tap_read_poll(s, false);
+     tap_write_poll(s, false);
+@@ -415,9 +416,6 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     tap_read_poll(s, true);
+     s->vhost_net = NULL;
+ 
+-    s->exit.notify = tap_exit_notify;
+-    qemu_add_exit_notifier(&s->exit);
+-
+     return s;
+ }
+ 
+@@ -700,6 +698,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+             snprintf(s->down_script, sizeof(s->down_script), "%s", downscript);
+             snprintf(s->down_script_arg, sizeof(s->down_script_arg),
+                      "%s", ifname);
++            s->exit.notify = tap_exit_notify;
++            qemu_add_exit_notifier(&s->exit);
+         }
+     }
+ 
+-- 
+2.48.1
 
 
