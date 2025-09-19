@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F512CAC59A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B862CAC592
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 07:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzVD3-0000Kb-Oc; Fri, 19 Sep 2025 03:07:09 -0400
+	id 1uzVD4-0000Kq-7h; Fri, 19 Sep 2025 03:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uzVD1-0000Jv-EW
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 03:07:07 -0400
+ id 1uzVD2-0000Kg-MK
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 03:07:08 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uzVCz-0004OB-2I
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 03:07:07 -0400
+ id 1uzVD0-0004Ny-Dj
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 03:07:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758265625; x=1789801625;
+ t=1758265626; x=1789801626;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=c8/5w77MgDeYAIWtqXqEJyxlpnZdq93ElUWu6eEuSeA=;
- b=SbhlpU7QD2Be2rkeriFvhhjP3TmEF3FTTji5eBPl8l7QSOHaIxpNKuRH
- B4OixeBAL/obAYZx6zYDWBAjf1Lz006v1xAEBLZqNOdp4SyiHi94kw2xG
- ir9p12PPzPZ4twt4Q1xpLTAQbIOAcy1UVyLbfyoMtrRRwUE1Ll4sKC3AP
- FoLw2S1qr5f3QLz4uUd80iqszlxN4aO9chdx/GrzJiQSszmBWbHwGC4DQ
- 6oNN7X0FXvKs4Zjkfv8RaREa1S4psxMs7PJXjmNgAlTe0wwLWfl0qZBoL
- FcA7iWsGlzz1sW65g8gbIjmCsOcC+7oVJMb7gIYRb/2Hp9vgZxf4eQ5H+ g==;
-X-CSE-ConnectionGUID: OD5X1w6RQXeIHHrn80ANsA==
-X-CSE-MsgGUID: tp3t6y+5QNS+LhlZkb3V3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11557"; a="60304406"
-X-IronPort-AV: E=Sophos;i="6.18,277,1751266800"; d="scan'208";a="60304406"
+ bh=mqnx10V3WIST4DpcoDl54PQvxPbncVWp5MGYDqUo2mQ=;
+ b=N6eephgdBJLnzyP87IVzov3ziqLBlb2JFNd+i422oX3DLJI6M1uqx8bD
+ WfocaR4PUdAq9Ql4ZcqTYbhkiGW6P2KC377aRxWyDpSXWdItqLMwWuq2g
+ K5CKCLceTens7YdRcyO96eFNE2rkusWm3uTC7C2IiW8K2RWl3WiS5d2WX
+ i4ogpl3iiCE/E7jghJoGAjRUo1Fjok7PmJwIeM7qMabgmaMzVfggH1jZh
+ zWeF/fhc0DAetqqNFcWjxyMbNqxABRoUzpeB8yGKwT1W8d92BuFIUx3k3
+ m/uqPnSKLzh0WJpeVOeXwWG3ok8nJKi4gplpisFWZ08XKMgHmOz59IFJ+ Q==;
+X-CSE-ConnectionGUID: UU+ZBo3EQqSwzPN3ukyLVg==
+X-CSE-MsgGUID: 20qLdBjZQc2ynL7sap6B4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11557"; a="60304413"
+X-IronPort-AV: E=Sophos;i="6.18,277,1751266800"; d="scan'208";a="60304413"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Sep 2025 00:07:00 -0700
-X-CSE-ConnectionGUID: x7hH4QgDQ4+sn4D/CIahNw==
-X-CSE-MsgGUID: rdfd8FlkQ7CSYh9O0TMuFQ==
+ 19 Sep 2025 00:07:03 -0700
+X-CSE-ConnectionGUID: Up86aWRsSuOUIPjUQoNP3w==
+X-CSE-MsgGUID: WQqhTtc2S7aLJTkSqWwJjw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,277,1751266800"; d="scan'208";a="175584363"
+X-IronPort-AV: E=Sophos;i="6.18,277,1751266800"; d="scan'208";a="175584374"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Sep 2025 00:06:58 -0700
+ 19 Sep 2025 00:07:00 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, yi.l.liu@intel.com,
  clement.mathieu--drif@eviden.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 1/2] intel_iommu: Enable Enhanced Set Root Table Pointer
- Support (ESRTPS)
-Date: Fri, 19 Sep 2025 03:06:37 -0400
-Message-ID: <20250919070638.983549-2-zhenzhong.duan@intel.com>
+Subject: [PATCH 2/2] intel_iommu: Simplify caching mode check with VFIO device
+Date: Fri, 19 Sep 2025 03:06:38 -0400
+Message-ID: <20250919070638.983549-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250919070638.983549-1-zhenzhong.duan@intel.com>
 References: <20250919070638.983549-1-zhenzhong.duan@intel.com>
@@ -85,59 +84,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to VTD spec rev 4.1 section 6.6:
-"For implementations reporting the Enhanced Set Root Table Pointer Support
-(ESRTPS) field as Clear, on a 'Set Root Table Pointer' operation, software
-must perform a global invalidate of the context cache, PASID-cache (if
-applicable), and IOTLB, in that order. This is required to ensure hardware
-references only the remapping structures referenced by the new root table
-pointer and not stale cached entries.
+In early days, we have different tricks to ensure caching-mode=on with VFIO
+device:
 
-For implementations reporting the Enhanced Set Root Table Pointer Support
-(ESRTPS) field as Set, as part of 'Set Root Table Pointer' operation,
-hardware performs global invalidation on all DMA remapping translation
-caches and hence software is not required to perform additional
-invalidations"
+28cf553afe ("intel_iommu: Sanity check vfio-pci config on machine init done")
+c6cbc29d36 ("pc/q35: Disallow vfio-pci hotplug without VT-d caching mode")
+b8d78277c0 ("intel-iommu: fail MAP notifier without caching mode")
 
-We already implemented ESRTPS capability in vtd_handle_gcmd_srtp() by
-calling vtd_reset_caches(), just set ESRTPS in DMAR_CAP_REG to avoid
-unnecessary global invalidation requests of context, PASID-cache and
-IOTLB from guest.
+Because without caching mode, MAP notifier won't work correctly since guest
+won't send IOTLB update event when it establishes new mappings in the I/O page
+tables.
 
-This change doesn't impact migration as the content of DMAR_CAP_REG is
-migrated too.
+Now with host IOMMU device interface between VFIO and vIOMMU, we can simplify
+it with a small check in set_iommu_device(). This also works for future VDPA
+implementation which may also need caching mode on.
+
+For coldplug VFIO device:
+
+qemu-system-x86_64: -device vfio-pci,host=0000:3b:00.0,id=hostdev3,bus=root0,iommufd=iommufd0: vfio 0000:3b:00.0: Failed to set vIOMMU: Device assignment is not allowed without enabling caching-mode=on for Intel IOMMU.
+
+For hotplug VFIO device:
+
+Error: vfio 0000:3b:00.0: Failed to set vIOMMU: Device assignment is not allowed without enabling caching-mode=on for Intel IOMMU.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h | 1 +
- hw/i386/intel_iommu.c          | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ hw/i386/intel_iommu.c | 47 ++++++-------------------------------------
+ hw/i386/pc.c          | 20 ------------------
+ 2 files changed, 6 insertions(+), 61 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 360e937989..5dd92d388d 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -214,6 +214,7 @@
- #define VTD_CAP_DRAIN_WRITE         (1ULL << 54)
- #define VTD_CAP_DRAIN_READ          (1ULL << 55)
- #define VTD_CAP_FS1GP               (1ULL << 56)
-+#define VTD_CAP_ESRTPS              (1ULL << 63)
- #define VTD_CAP_DRAIN               (VTD_CAP_DRAIN_READ | VTD_CAP_DRAIN_WRITE)
- #define VTD_CAP_CM                  (1ULL << 7)
- #define VTD_PASID_ID_SHIFT          20
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 83c5e44413..f04300022e 100644
+index f04300022e..5c67b42dde 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4549,7 +4549,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+@@ -85,13 +85,6 @@ struct vtd_iotlb_key {
+ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
  
-     s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS |
--             VTD_CAP_MGAW(s->aw_bits);
-+             VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
-     if (s->dma_drain) {
-         s->cap |= VTD_CAP_DRAIN;
+-static void vtd_panic_require_caching_mode(void)
+-{
+-    error_report("We need to set caching-mode=on for intel-iommu to enable "
+-                 "device assignment with IOMMU protection.");
+-    exit(1);
+-}
+-
+ static void vtd_define_quad(IntelIOMMUState *s, hwaddr addr, uint64_t val,
+                             uint64_t wmask, uint64_t w1cmask)
+ {
+@@ -3731,13 +3724,6 @@ static int vtd_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
+                          "Snoop Control with vhost or VFIO is not supported");
+         return -ENOTSUP;
      }
+-    if (!s->caching_mode && (new & IOMMU_NOTIFIER_MAP)) {
+-        error_setg_errno(errp, ENOTSUP,
+-                         "device %02x.%02x.%x requires caching mode",
+-                         pci_bus_num(vtd_as->bus), PCI_SLOT(vtd_as->devfn),
+-                         PCI_FUNC(vtd_as->devfn));
+-        return -ENOTSUP;
+-    }
+     if (!x86_iommu->dt_supported && (new & IOMMU_NOTIFIER_DEVIOTLB_UNMAP)) {
+         error_setg_errno(errp, ENOTSUP,
+                          "device %02x.%02x.%x requires device IOTLB mode",
+@@ -4378,6 +4364,12 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+ 
+     assert(hiod);
+ 
++    if (!s->caching_mode) {
++        error_setg(errp, "Device assignment is not allowed without enabling "
++                   "caching-mode=on for Intel IOMMU.");
++        return false;
++    }
++
+     vtd_iommu_lock(s);
+ 
+     if (g_hash_table_lookup(s->vtd_host_iommu_dev, &key)) {
+@@ -4910,32 +4902,6 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+     return true;
+ }
+ 
+-static int vtd_machine_done_notify_one(Object *child, void *unused)
+-{
+-    IntelIOMMUState *iommu = INTEL_IOMMU_DEVICE(x86_iommu_get_default());
+-
+-    /*
+-     * We hard-coded here because vfio-pci is the only special case
+-     * here.  Let's be more elegant in the future when we can, but so
+-     * far there seems to be no better way.
+-     */
+-    if (object_dynamic_cast(child, "vfio-pci") && !iommu->caching_mode) {
+-        vtd_panic_require_caching_mode();
+-    }
+-
+-    return 0;
+-}
+-
+-static void vtd_machine_done_hook(Notifier *notifier, void *unused)
+-{
+-    object_child_foreach_recursive(object_get_root(),
+-                                   vtd_machine_done_notify_one, NULL);
+-}
+-
+-static Notifier vtd_machine_done_notify = {
+-    .notify = vtd_machine_done_hook,
+-};
+-
+ static void vtd_realize(DeviceState *dev, Error **errp)
+ {
+     MachineState *ms = MACHINE(qdev_get_machine());
+@@ -4990,7 +4956,6 @@ static void vtd_realize(DeviceState *dev, Error **errp)
+     pci_setup_iommu(bus, &vtd_iommu_ops, dev);
+     /* Pseudo address space under root PCI bus. */
+     x86ms->ioapic_as = vtd_host_dma_iommu(bus, s, Q35_PSEUDO_DEVFN_IOAPIC);
+-    qemu_add_machine_init_done_notifier(&vtd_machine_done_notify);
+ }
+ 
+ static void vtd_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index bc048a6d13..01cd9a67db 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1720,25 +1720,6 @@ static void pc_machine_wakeup(MachineState *machine)
+     cpu_synchronize_all_post_reset();
+ }
+ 
+-static bool pc_hotplug_allowed(MachineState *ms, DeviceState *dev, Error **errp)
+-{
+-    X86IOMMUState *iommu = x86_iommu_get_default();
+-    IntelIOMMUState *intel_iommu;
+-
+-    if (iommu &&
+-        object_dynamic_cast((Object *)iommu, TYPE_INTEL_IOMMU_DEVICE) &&
+-        object_dynamic_cast((Object *)dev, "vfio-pci")) {
+-        intel_iommu = INTEL_IOMMU_DEVICE(iommu);
+-        if (!intel_iommu->caching_mode) {
+-            error_setg(errp, "Device assignment is not allowed without "
+-                       "enabling caching-mode=on for Intel IOMMU.");
+-            return false;
+-        }
+-    }
+-
+-    return true;
+-}
+-
+ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1758,7 +1739,6 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+     x86mc->apic_xrupt_override = true;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = pc_get_hotplug_handler;
+-    mc->hotplug_allowed = pc_hotplug_allowed;
+     mc->auto_enable_numa_with_memhp = true;
+     mc->auto_enable_numa_with_memdev = true;
+     mc->has_hotpluggable_cpus = true;
 -- 
 2.47.1
 
