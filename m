@@ -4,75 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30090CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D847CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXTi-0004f1-0R; Fri, 19 Sep 2025 05:32:31 -0400
+	id 1uzXTl-0004rH-QG; Fri, 19 Sep 2025 05:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzXSo-00041G-Iz
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:31:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uzXTB-0004Ia-Dm; Fri, 19 Sep 2025 05:32:00 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzXSk-0001NY-2O
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:31:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758274286;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/ZlRdlv2YAu7OTFTNi276M9hqVhgkK5cgv1pwjmPTyM=;
- b=LB7PDw4y2TggF9A1kuN7bwIgHqaMUmcuJZyHkyqSIDlpV0KdMyocXrpAgrkY5DtMIHDF5o
- uTO9mR2hvtHOOV5q8Ekvjsc+OxpHHjD3qjExW8qnKjK6kqQqatFOYhZBJW6HtdNvDySBB+
- lm5rVGDI8k+Ev05OtFzTsjN+hsmY3IU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-131-rPnQj_tLN-uT5gqJaXP9AA-1; Fri,
- 19 Sep 2025 05:31:22 -0400
-X-MC-Unique: rPnQj_tLN-uT5gqJaXP9AA-1
-X-Mimecast-MFC-AGG-ID: rPnQj_tLN-uT5gqJaXP9AA_1758274281
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66D56180057E; Fri, 19 Sep 2025 09:31:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 049831800452; Fri, 19 Sep 2025 09:31:18 +0000 (UTC)
-Date: Fri, 19 Sep 2025 10:31:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH] linux-user: avoid -Werror=int-in-bool-context
-Message-ID: <aM0i4zxm5RaoUIPH@redhat.com>
-References: <20250919083612.86546-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uzXT9-0001Uy-J9; Fri, 19 Sep 2025 05:31:57 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 19 Sep
+ 2025 17:30:22 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Fri, 19 Sep 2025 17:30:22 +0800
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 11/14] hw/pci-host/aspeed: Disable Root Device and place
+ Root Port at 00:00.0 to AST2700
+Date: Fri, 19 Sep 2025 17:30:10 +0800
+Message-ID: <20250919093017.338309-12-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
+References: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919083612.86546-1-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,34 +66,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 10:36:12AM +0200, Paolo Bonzini wrote:
-> linux-user is failing to compile on Fedora 43:
-> 
-> ../linux-user/strace.c:57:66: error: enum constant in boolean context [-Werror=int-in-bool-context]
->    57 | #define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
-> 
-> The warning does not seem to useful and we could even disable it, but
-> the workaround is simple in this case.
-> 
-> Cc: qemu-stable@nongnu.org
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  linux-user/strace.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+AST2700 does not implement a PCIe Root Device; each RC exposes a single
+PCIe Root Port at devfn 0:0.0.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/pci-host/aspeed_pcie.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-
-With regards,
-Daniel
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+index a757fd7ec8..f7593444fc 100644
+--- a/hw/pci-host/aspeed_pcie.c
++++ b/hw/pci-host/aspeed_pcie.c
+@@ -829,6 +829,8 @@ static void aspeed_2700_pcie_cfg_class_init(ObjectClass *klass,
+     apc->nr_regs = 0x100 >> 2;
+     apc->rc_msi_addr = 0x000000F0;
+     apc->rc_bus_nr = 0;
++    apc->rc_has_rd = false;
++    apc->rc_rp_addr = PCI_DEVFN(0, 0);
+ }
+ 
+ static const TypeInfo aspeed_2700_pcie_cfg_info = {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
