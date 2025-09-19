@@ -4,56 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DD6CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9F6CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXTr-0005MV-N3; Fri, 19 Sep 2025 05:32:39 -0400
+	id 1uzXUs-0007Qd-GA; Fri, 19 Sep 2025 05:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uzXTm-0004ys-EC; Fri, 19 Sep 2025 05:32:34 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uzXTb-0001Uy-9j; Fri, 19 Sep 2025 05:32:33 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 19 Sep
- 2025 17:30:23 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 19 Sep 2025 17:30:23 +0800
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, "open list:ARM TCG CPUs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v5 14/14] tests/functional/aarch64/aspeed_ast2700: Add PCIe
- and network tests
-Date: Fri, 19 Sep 2025 17:30:13 +0800
-Message-ID: <20250919093017.338309-15-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
-References: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzXUh-0007HF-Ue
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:33:35 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uzXUW-0001ew-HK
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:33:29 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-ea669836e8dso882415276.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 02:33:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758274394; x=1758879194; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YlM8knXhiI/w7jplN+fwhCTHl+p/fpTGiqFnGVOApYE=;
+ b=Zyi2wMPfdzptAA+BZ4ZHbMBdxdnsUcE+ICv3/kwWp6DZn+umeonzUONwCy6G4cFwj5
+ LCpeaAKOG7wcL9x34Q7IYFEgltSAgshs5s03bRMUYK0dXJzqhaO/8V24FYzR9VgEwhw+
+ NYuL09YtHgb+F9m3q+wjpQpalctu5lg+w4zyJjLhsp0vV1PVVoncW0szIQGL6N7dC5cu
+ AeU8yfRsXrVCP78Ek2LCEtJQzPH/3U/zp1Bo5R48ZhGfz07PE0iiXeDYsy6djSvP+F/Q
+ 7HrjPL0w8Ljw0887+dj7pJ/RJN7i67Y4bp6uht7zCxHjX4TQMzqPgEipsJGWCrzs17UY
+ 9lyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758274394; x=1758879194;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YlM8knXhiI/w7jplN+fwhCTHl+p/fpTGiqFnGVOApYE=;
+ b=sG3J8qkcOdukAnn+koWzzVvllObAHo5KCgOu0N95lhZjh1t2BDfy22y22mx0ob9Igr
+ xaow/FryvFyGbcE0LISbZdeLfpJjkxkhGX25igGlS64FC+oejIcYUYiu6YUGjP5PMOho
+ Uuc7A1jH31jyqO6i4rvth93MESm0OipnxgQtuPYkP4CTbiS9Wd681wDOGWmdpGMnFveD
+ 6h32njgcyRofsynrLIr+Yrh4EMRKieaHsyP5bJAyOuqVRiCUaQBZbwRufAFSYcCsITGV
+ gMtPUYAeCkd5sLVDB4pzs1ux5EMDmI7VgWmKRzHB8NNJXgLaNsBZg17GRzXHNQ3Y8bt+
+ qmCg==
+X-Gm-Message-State: AOJu0YzpjOvX3kwBy5dkaNT1zU4kiL57xH/vozGMR+1Adgn0u4zRqLQd
+ 2cTBDEgosKq2CeSagMPzx124zRyPyFuUH/DBfBOt+PDtqbsdiMwXlYSHF6m7cgGgVdAeCyYTNZN
+ DO/JHbsRFY0ZznyHpl98d+oATnhEmcccJdz6T/f3X8A==
+X-Gm-Gg: ASbGncu+DyC3QgDJLXsj4qQ/Hq+0+ICCSbS0NvvQwRXdtvJ4N031d+u7fWV3T794vaE
+ MKBXV6VYWFyHdb0h+I9taeOsiGqaotT1ZjTIL7SaTsrgENGRTUEbUziTdfWbygzYtThZPeT28/I
+ vWi4dAkN4Deb/bLGpQWzIn5jSGH/t3WNQ6vN+YCi2VE2scQ4iai4G0GFZqjtF5T49/EAu8UDzI5
+ yco+i+E
+X-Google-Smtp-Source: AGHT+IHlz0SjeRzDlvHdD4/IJU1n8v3r8+RaWykJcFf4S9oq3GFfZ2VHvhJMyE1x2n5EFOGCyYOdk0B7B19TFUQM1wA=
+X-Received: by 2002:a05:690c:7089:b0:734:4161:aa55 with SMTP id
+ 00721157ae682-73d3b0b753fmr22190297b3.25.1758274394228; Fri, 19 Sep 2025
+ 02:33:14 -0700 (PDT)
 MIME-Version: 1.0
+References: <20250919083612.86546-1-pbonzini@redhat.com>
+In-Reply-To: <20250919083612.86546-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 19 Sep 2025 10:33:02 +0100
+X-Gm-Features: AS18NWCOXaAkCVZfeaWQEySbRO1vi0QioHDJ3TTD7GNBpWx8836wTrr4gl0oiPE
+Message-ID: <CAFEAcA8BBisMO3VJF=bb0a7oQCK16P4NhtTxcWRNRg0yMTWtwg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: avoid -Werror=int-in-bool-context
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,125 +90,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the AST2700 and AST2700fc functional tests with PCIe and network
-checks.
+On Fri, 19 Sept 2025 at 09:37, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> linux-user is failing to compile on Fedora 43:
+>
+> ../linux-user/strace.c:57:66: error: enum constant in boolean context [-Werror=int-in-bool-context]
+>    57 | #define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
+>
+> The warning does not seem to useful and we could even disable it, but
+> the workaround is simple in this case.
 
-This patch introduces a helper "do_ast2700_pcie_test()" that runs "lspci"
-on the emulated system and verifies the expected PCIe devices:
+I'm surprised this is the only place in the codebase
+where we treat an int as a bool...
 
-- 0002:00:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-- 0002:01:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
-
-Additional changes:
-- Add `-device e1000e,netdev=net1,bus=pcie.2 -netdev user,id=net1` to the
-  AST2700 and AST2700fc test machines.
-- In the AST2700 vbootrom test, assign an IP address to the e1000e
-  interface and verify it using `ip addr`.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- .../functional/aarch64/test_aspeed_ast2700.py | 21 +++++++++++++++++++
- .../aarch64/test_aspeed_ast2700fc.py          | 13 ++++++++++++
- 2 files changed, 34 insertions(+)
-
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
-index a3db267294..0973fce0e9 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700.py
-@@ -69,6 +69,16 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
- 
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 PCI bridge: '
-+            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:01:00.0',
-+            '0002:01:00.0 Ethernet controller: '
-+            'Intel Corporation 82574L Gigabit Network Connection')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -125,20 +135,31 @@ def test_aarch64_ast2700a0_evb_sdk_v09_06(self):
- 
-     def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.set_machine('ast2700a1-evb')
-+        self.require_netdev('user')
- 
-         self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.start_ast2700_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_07(self):
-         self.set_machine('ast2700a1-evb')
-+        self.require_netdev('user')
- 
-         self.archive_extract(self.ASSET_SDK_V907_AST2700A1_VBOOROM)
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.start_ast2700_test_vbootrom('ast2700-default')
-         self.verify_vbootrom_firmware_flow()
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-+        exec_command_and_wait_for_pattern(self,
-+            'ip addr show dev eth2',
-+            'inet 10.0.2.15/24')
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-index b85370e182..28b66614d9 100755
---- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
-+++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-@@ -20,6 +20,8 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-         self.vm.set_console()
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-+        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
-+        self.vm.add_args('-netdev', 'user,id=net1')
-         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-                          '-net', 'nic', '-net', 'user', '-snapshot')
- 
-@@ -49,6 +51,16 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
- 
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 PCI bridge: '
-+            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:01:00.0',
-+            '0002:01:00.0 Ethernet controller: '
-+            'Intel Corporation 82574L Gigabit Network Connection')
-+
-     def do_ast2700fc_ssp_test(self):
-         self.vm.shutdown()
-         self.vm.set_console(console_index=1)
-@@ -128,6 +140,7 @@ def test_aarch64_ast2700fc_sdk_v09_06(self):
-         self.start_ast2700fc_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-         self.do_ast2700fc_ssp_test()
-         self.do_ast2700fc_tsp_test()
- 
--- 
-2.43.0
-
+-- PMM
 
