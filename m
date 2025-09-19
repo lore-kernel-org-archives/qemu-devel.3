@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F243CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DBAACAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzc3t-0003nK-Ik; Fri, 19 Sep 2025 10:26:09 -0400
+	id 1uzc94-0006MB-Lx; Fri, 19 Sep 2025 10:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzc3r-0003mo-19
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:26:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzc3k-0005cj-3E
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:26:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758291956;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FqQXbDfsN693Pf58VPUSWBhSRY+3aGV0qGV9Sa5wdk0=;
- b=PQda2Q7XSeOhKycuQPIVSKgUmiC1TCzVU+ios+8tLgSDrWiq0oEBq26xGfVoRfGYb2aJ+e
- 57UMD5DaUiXURh8E9kRiS6du4bqKew4mTaGlYO/MYrRcm5JsCLajpZlKeUIpCgkYMXctiU
- fXz36Fo1vUbZjMb2oi76B66YXysC9Q0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-244-7fAE6LZOMKexZQW9JiIXEw-1; Fri,
- 19 Sep 2025 10:25:53 -0400
-X-MC-Unique: 7fAE6LZOMKexZQW9JiIXEw-1
-X-Mimecast-MFC-AGG-ID: 7fAE6LZOMKexZQW9JiIXEw_1758291950
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 252581956089; Fri, 19 Sep 2025 14:25:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A7F01955F21; Fri, 19 Sep 2025 14:25:46 +0000 (UTC)
-Date: Fri, 19 Sep 2025 15:25:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH 16/24] build-sys: cfi_debug and safe_stack are not
- compatible
-Message-ID: <aM1n5j0WzFVaaqVK@redhat.com>
-References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
- <20250919133320.240145-17-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1uzc8y-0006LR-T3
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:31:24 -0400
+Received: from mail.avm.de ([2001:bf0:244:244::94])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1uzc8p-0007kR-OG
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:31:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1758292267; bh=DVxe/KlH+huwXXc53J4y3b3H7fJZn3f18VK236eNISI=;
+ h=From:Date:Subject:To:Cc:From;
+ b=kCtyQ1RmJvjaWoDRddxF7HqmJ7wLGHeu7zMM7rr7G7ncqlZSjsdmrUxIaU9fE//0j
+ nvJAhmyl4ZTj4NhGHEgVzFkdrPgbRKtV4CeyYVGA31QGZDh+pBYScSbLAz4H41Jmbf
+ 0yRENSd6az/OhnRApebHIcXB7eUCFLEqNAb4mzYg=
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.53.4)
+ (envelope-from <c.speich@avm.de>)
+ id 68cd692b-f941-7f0000032729-7f000001a598-1
+ for <multiple-recipients>; Fri, 19 Sep 2025 16:31:07 +0200
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Fri, 19 Sep 2025 16:31:07 +0200 (CEST)
+Received: from [127.0.1.1] ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2025091916310726-16944 ;
+ Fri, 19 Sep 2025 16:31:07 +0200 
+From: Christian Speich <c.speich@avm.de>
+Date: Fri, 19 Sep 2025 16:30:53 +0200
+Subject: [PATCH] virtio: vhost-user-device: Make user creatable again
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919133320.240145-17-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
+Message-Id: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+X-B4-Tracking: v=1; b=H4sIABxpzWgC/x2MQQqAMAzAviI9W9CByPyKeFi3zhVEZVMRxL9bP
+ AaSPFA4CxcYqgcyX1JkWxXaugKf3DozSlAG05iusa3FK23lwFMzDOp7Rp/ZHY4WRuqjpZ46imR
+ AD3vmKPd/H6f3/QB/m7I8bQAAAA==
+X-Change-ID: 20250919-vhost-user-device-creatable-b7f9b7b5bfb2
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Stefano Garzarella
+ <sgarzare@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Christian Speich <c.speich@avm.de>
+X-Mailer: b4 0.14.2
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 19.09.2025 16:31:07,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 19.09.2025 16:31:07, Serialize complete at 19.09.2025 16:31:07
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-purgate-ID: 149429::1758292267-6CDE0482-918D6EF1/0/0
+X-purgate-type: clean
+X-purgate-size: 3443
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=2001:bf0:244:244::94;
+ envelope-from=c.speich@avm.de; helo=mail.avm.de
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,109 +85,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 05:33:10PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> It fails to link on fedora >= 41:
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memcpy':
-> (.text.__sanitizer_internal_memcpy+0x0): multiple definition of `__sanitizer_internal_memcpy'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memcpy+0x0): first defined here
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memmove':
-> (.text.__sanitizer_internal_memmove+0x0): multiple definition of `__sanitizer_internal_memmove'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memmove+0x0): first defined here
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memset':
-> (.text.__sanitizer_internal_memset+0x0): multiple definition of `__sanitizer_internal_memset'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memset+0x0): first defined here
-> 
-> cfi_debug seems to pull ubsan which has conflicting symbols with safe_stack.
+This removes the change introduced in [1] that prevents the use of
+vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
 
-If this is caused by the switch of dockerfiles from Fedora 40 to 41,
-then this commit should be ordered earlier in the series before that
-switch so that we are bisectable.
+[1]: 6275989647efb708f126eb4f880e593792301ed4
 
-Also if this is a regression in F41 it is probably worth a bug report
-against clang in Fedora, that could be referenced in the commit msg.
+Signed-off-by: Christian Speich <c.speich@avm.de>
+---
+vhost-user-device and vhost-user-device-pci started out as user
+creatable devices. This was changed in [1] when the vhost-user-base was
+introduced.
 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  meson.build                | 16 ++++++++++------
->  .gitlab-ci.d/buildtest.yml |  6 +++---
->  2 files changed, 13 insertions(+), 9 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 6ade30f36a..856c8f1a85 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -681,13 +681,17 @@ if get_option('cfi')
->      error('-fsanitize-cfi-icall-generalize-pointers is not supported by the compiler')
->    endif
->    if get_option('cfi_debug')
-> -    if cc.compiles('int main () { return 0; }',
-> -                   name: '-fno-sanitize-trap=cfi-icall',
-> -                   args: ['-flto', '-fsanitize=cfi-icall',
-> -                          '-fno-sanitize-trap=cfi-icall'] )
-> -      cfi_flags += '-fno-sanitize-trap=cfi-icall'
-> +    if get_option('safe_stack')
-> +      error('cfi_debug is not compatible with safe_stack')
+The reason given is to prevent user confusion. Searching qemu-discuss or
+google for "vhost-user-device" I've seen no confused users.
 
-IIUC error() terminates meson execution, so it could just
-have an 'endif' where and avoid re-indenting all the
-following code.
+Our use case is to provide wifi emulation using "vhost-user-device-pci",
+which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+24.04. With newer QEMU versions we now need to patch, distribute and
+maintain our own QEMU packages, which is non-trivial.
 
->      else
-> -      error('-fno-sanitize-trap=cfi-icall is not supported by the compiler')
-> +      if cc.compiles('int main () { return 0; }',
-> +                    name: '-fno-sanitize-trap=cfi-icall',
-> +                    args: ['-flto', '-fsanitize=cfi-icall',
-> +                            '-fno-sanitize-trap=cfi-icall'] )
-> +        cfi_flags += '-fno-sanitize-trap=cfi-icall'
-> +      else
-> +        error('-fno-sanitize-trap=cfi-icall is not supported by the compiler')
-> +      endif
->      endif
->    endif
->    add_global_arguments(cfi_flags, native: false, language: all_languages)
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 8378b663b6..94d646c5a7 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -479,7 +479,7 @@ build-cfi-aarch64:
->      LD_JOBS: 1
->      AR: llvm-ar
->      IMAGE: fedora
-> -    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
->        --enable-safe-stack --disable-slirp
->      TARGETS: aarch64-softmmu
->      MAKE_CHECK_ARGS: check-build
-> @@ -517,7 +517,7 @@ build-cfi-ppc64-s390x:
->      LD_JOBS: 1
->      AR: llvm-ar
->      IMAGE: fedora
-> -    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
->        --enable-safe-stack --disable-slirp
->      TARGETS: ppc64-softmmu s390x-softmmu
->      MAKE_CHECK_ARGS: check-build
-> @@ -555,7 +555,7 @@ build-cfi-x86_64:
->      LD_JOBS: 1
->      AR: llvm-ar
->      IMAGE: fedora
-> -    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi --enable-cfi-debug
-> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-cfi
->        --enable-safe-stack --disable-slirp
->      TARGETS: x86_64-softmmu
->      MAKE_CHECK_ARGS: check-build
-> -- 
-> 2.51.0
-> 
+So I want to propose lifting this restriction to make this feature
+usable without a custom QEMU.
 
-With regards,
-Daniel
+[1]: 6275989647efb708f126eb4f880e593792301ed4
+---
+ docs/system/devices/vhost-user.rst | 10 ----------
+ hw/virtio/vhost-user-device-pci.c  |  3 ---
+ hw/virtio/vhost-user-device.c      |  3 ---
+ 3 files changed, 16 deletions(-)
+
+diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
+index 35259d8ec7c666aa0c56497b8261f48d77216ad5..2d130f9767dbb1cbb85cef43c63dc9a8d7b30d4a 100644
+--- a/docs/system/devices/vhost-user.rst
++++ b/docs/system/devices/vhost-user.rst
+@@ -73,16 +73,6 @@ all the required parameters including:
+   - The ``num_vqs`` it needs and their ``vq_size``
+   - The ``config_size`` if needed
+ 
+-.. note::
+-  To prevent user confusion you cannot currently instantiate
+-  vhost-user-device without first patching out::
+-
+-    /* Reason: stop inexperienced users confusing themselves */
+-    dc->user_creatable = false;
+-
+-  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
+-  rebuilding.
+-
+ vhost-user daemon
+ =================
+ 
+diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-device-pci.c
+index f10bac874e78429c633752a4ce9db28385b3bb07..c76a856c9b9a67d941a93929244216658ff2a156 100644
+--- a/hw/virtio/vhost-user-device-pci.c
++++ b/hw/virtio/vhost-user-device-pci.c
+@@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
+     VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+     PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
+ 
+-    /* Reason: stop users confusing themselves */
+-    dc->user_creatable = false;
+-
+     k->realize = vhost_user_device_pci_realize;
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-device.c
+index 3939bdf755222a281da8ca22243d7d4f16990a66..1bea496afd0137ba9b42009f6252acf6800528d1 100644
+--- a/hw/virtio/vhost-user-device.c
++++ b/hw/virtio/vhost-user-device.c
+@@ -41,9 +41,6 @@ static void vud_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+-    /* Reason: stop inexperienced users confusing themselves */
+-    dc->user_creatable = false;
+-
+     device_class_set_props(dc, vud_properties);
+     dc->vmsd = &vud_vmstate;
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+
+---
+base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
+change-id: 20250919-vhost-user-device-creatable-b7f9b7b5bfb2
+
+Best regards,
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Christian Speich <c.speich@avm.de>
 
 
