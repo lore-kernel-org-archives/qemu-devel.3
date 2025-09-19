@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2ADCAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28397CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:30:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzWT9-00069m-5a; Fri, 19 Sep 2025 04:27:51 -0400
+	id 1uzWV0-00076g-66; Fri, 19 Sep 2025 04:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzWT7-00069A-Ih
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:27:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzWUy-00074E-1a
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:29:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzWT4-0008O3-KQ
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:27:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzWUv-0000i4-Rb
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758270464;
+ s=mimecast20190719; t=1758270580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/pkpFz8pDV3eXrZRhelNM7fHJTWL2KlpugVUJ776aNQ=;
- b=InHCxfCliTgk6vlMaKqAf9YIDWYzWyBHsUwKKEsSYTA5Q5B/Tut5dNQ3Uf0kfufWv4Jm+t
- NcPARq6UlIs5qeGNJPzl1cEGXjp2gJ6MMB2DLrJ/v71diAPtQuA/GVtUAZkymFsDROmxNT
- rZT7wdsSKwZaP8S42CxoIpmwrdeX0mw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HFLtOUP7N03UaSL5e3Et4I0WNFul5nYL+eIN4sotvqw=;
+ b=NAg71Yy19gVenWWwxNjV/L5dBXRi89Pw59/ZDv9ztcN/yrQ/mcnROIOVTFyBOsHJY4xrea
+ pl4bi5yTvqYW/NbGen2GfGW5Jdp4ZsUl4lu4dXs5PmhzaGQCe1AoUu3e0eDy8PbftLUW6H
+ 1qzqTZ93L8IUKRM9FDJKeVnINsSJNCo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-iq96SuswOsuD_cv_wZEOqQ-1; Fri, 19 Sep 2025 04:27:25 -0400
-X-MC-Unique: iq96SuswOsuD_cv_wZEOqQ-1
-X-Mimecast-MFC-AGG-ID: iq96SuswOsuD_cv_wZEOqQ_1758270444
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3ebbbd9a430so1267905f8f.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 01:27:25 -0700 (PDT)
+ us-mta-689-Cd9t8dSaNTGOWKbaHw4geA-1; Fri, 19 Sep 2025 04:29:38 -0400
+X-MC-Unique: Cd9t8dSaNTGOWKbaHw4geA-1
+X-Mimecast-MFC-AGG-ID: Cd9t8dSaNTGOWKbaHw4geA_1758270577
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ee1365964cso1245503f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 01:29:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758270444; x=1758875244;
+ d=1e100.net; s=20230601; t=1758270577; x=1758875377;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/pkpFz8pDV3eXrZRhelNM7fHJTWL2KlpugVUJ776aNQ=;
- b=lMRcLztNPENcyF7adX0I4ZOxFoJqmfvPuSOsxjeZW2FqPB1ULyykrR9iGb6kHuqOqK
- Gs5uQYnd198+v98YMpxkAIzj2a8PkicoHUZY8eYv5AxVjmWs2wBhVCgjNaR/JaMtnJ7N
- T5GjLYWBGqL3Hcithk3rZyVRG2u4F/TROFhYCtbdEgmsI1Z3zTNtdmK7fJoodzqvbx71
- 4Iq5sd+1913hkE16qxCdq6mJiVvcpDltVCgTO3YOdK0p1ilpNJ9ZoKlZVjZUKjOzjyid
- 017BOhJo3gt4553ezUEZlU5NyI3WvQhFccnUcH6eU26t0HsbVeON0I1G9W+zZcN3xxqb
- rBIg==
+ bh=HFLtOUP7N03UaSL5e3Et4I0WNFul5nYL+eIN4sotvqw=;
+ b=RAiB0c8ir6r8mnEzhmfy4aIbx562JqaO6P1JqbuPBpoUZw3IM0tPD6pRDnY6FVdHRm
+ MCvTTzwn93OOIPwCwyTUdjSfukvedwDtAbgybOpc55LIjQnoam4/b0ndih/iD/iHjBPH
+ xxHJW7oMQRMtbh1sx8GlfbIbI4UgboVjgC9DsnO5eTR2WzwrYDvLNJQXUEAvp8ahCLGl
+ H6lZ5ASRDLD00uQ8kc59NU34a/DQol/zX7ylQ2CRdav9zz1yQedkLdf/+HQVonEA87eb
+ bAzlAJAOUU4jvS9zYsec9smB1r5a+/PvpPNxKw/PZSldsX5rNSmd7FKbbaM4kStpEwyX
+ HAZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUU5uBXtF2jOdBkP/0ZNLSbA/DzjBgDU7CCKA1Cl45nQxg0ms3pFLK9SOjrqbISl/463aA84w/gmZdS@nongnu.org
-X-Gm-Message-State: AOJu0YxhZ95yl1Gkz6o3d/7xK7oIOmj/UaEim6PfhpC1Pmjo95FpNVbC
- oS1FOozVeZAi+z21oXDiJO646dbPqJUYBLJo13XQktkMUJwNseLJkRzcRBkKOrOZ5jDt9hZCAd6
- i28/mdcsobYWXGOorWqs1Sova7tiXmXyfiSy2pAlzOm1MRXEadspl5oh1
-X-Gm-Gg: ASbGncu1TiqL47p45Me0SzgNjYL7T6Wkq2sac8VImv8lV34ECYm7EyafZA7CN7K5UQg
- OsJkSbMx5bfxEbVC24Ig0gUeFF/jCxj09ppZd/Vd63PU3qVjvLerjBSx/w2SBWcfWO6GseqRTkA
- +wYOo+jJC8APAxVb83hglfiB/WQ/gtZWlJ5//RCN+SJefYhQtJX60+t2FMsYLeP/O383YxI+OHj
- WoLsvJni/eBtYCmhfAAoHTDMVz4XUwxKUlintC99ZKAxjQFXic9OBgtjZs8F9cAseC/ARtJfjTl
- cPECfnfRde/v5Lc+kXpbztiztv4t9BiYDxdMespY/V7k+qI9NsKgEfwImTKlcR2s5ligdpKekRI
- 7XC0=
-X-Received: by 2002:a5d:5d88:0:b0:3ee:15bb:72c1 with SMTP id
- ffacd0b85a97d-3ee88b04ed2mr1687550f8f.52.1758270443938; 
- Fri, 19 Sep 2025 01:27:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZRqVpbv+G4xMypUi0IGPf+mxGmAuj0jHfwdX3ExHMWt5qjFI6Eyh868tcqDOyf0Q/SYaZHA==
-X-Received: by 2002:a5d:5d88:0:b0:3ee:15bb:72c1 with SMTP id
- ffacd0b85a97d-3ee88b04ed2mr1687522f8f.52.1758270443495; 
- Fri, 19 Sep 2025 01:27:23 -0700 (PDT)
+ AJvYcCUYGckKv/qbEsvbpOJKjNzD4UjJwOnGWGXVZ/j6q3aUIGGWeRdyhlnAExcw0pMiZh2G3WzUx2D4HcTa@nongnu.org
+X-Gm-Message-State: AOJu0Yze6H62x4z20+KvWDycZLabi8O6EiJNU6RxsvUNOWYegrehPvvP
+ xy/uAWeZoGS2YspTETUzR/Z+cIe250Ua1PcUb1iDK3G5vrnb2e14Cr//Qb1BhDRibTv81hesurI
+ jABDX5aYDvMD9J7va23ZLqa6Xe9+mHfSupG80GshzDZX4YLbo7CAsPref
+X-Gm-Gg: ASbGnct5SlQNUcDKxdH/qm3O9e6fiuXPO558vhauckZ+wEt37mkOzOxhqarNdGr/1lI
+ qa9s+JMZhx49DS5f2f7LoUn608Yd4C86cWI07Zqo5kJJ4wRQOyiRWZqWcxxovWdiVjB9cfRNwSj
+ /pt0i4UujdY1+Dt0gvElO2QHnjat5grvvkslzjzlNSNrL+Sau5h0eFIx/vg4hCNPLwO8s/Tg4cX
+ WmH9wrQtYjLjjgLBrekjazq7VxUsxcreMYiV7mSIBrRn+FQdCfpSwwIOqkAu28jHTaL5DZ47pO8
+ 5PyYSP3o5yvFgOQsWHX9/zQk27uGihm7uvmOnIQZIFFySN+ePxeC5AwcwH5JQHofVqcJ8tJJdn4
+ X/1I=
+X-Received: by 2002:a05:6000:1ac8:b0:3e8:b4cb:c3a0 with SMTP id
+ ffacd0b85a97d-3ee7d6864f4mr1442182f8f.8.1758270577131; 
+ Fri, 19 Sep 2025 01:29:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9znMgNaWnauAbCShrysR5ogAuDXNeWTkfKCIk5L9dlfzO5uopAjtuyVSTDJCPRTTzeWWJrQ==
+X-Received: by 2002:a05:6000:1ac8:b0:3e8:b4cb:c3a0 with SMTP id
+ ffacd0b85a97d-3ee7d6864f4mr1442174f8f.8.1758270576667; 
+ Fri, 19 Sep 2025 01:29:36 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee0fbf1d35sm7483451f8f.55.2025.09.19.01.27.22
+ ffacd0b85a97d-3ee0fbc72e6sm6544998f8f.29.2025.09.19.01.29.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Sep 2025 01:27:22 -0700 (PDT)
-Message-ID: <e77f8aa9-8c19-41f5-b8b3-073c02092180@redhat.com>
-Date: Fri, 19 Sep 2025 10:27:21 +0200
+ Fri, 19 Sep 2025 01:29:36 -0700 (PDT)
+Message-ID: <4f83d92d-7742-4fc4-8a80-8a780f7e228c@redhat.com>
+Date: Fri, 19 Sep 2025 10:29:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Aspeed backlog (was Re: [SPAM] [PATCH v3 00/14] Support PCIe RC to
- AST2600 and AST2700)
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>,
- "wuhaotsh@google.com" <wuhaotsh@google.com>,
- "titusr@google.com" <titusr@google.com>
-References: <20250918031348.3991681-1-jamin_lin@aspeedtech.com>
- <2e5f260b-dafa-42ab-953d-f0781cd3601f@kaod.org>
- <SI2PR06MB5041C7EE49F5A61C6E8B2DE3FC16A@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <ef4f4cd4-6efc-4176-9043-4bca04e5da4f@kaod.org>
- <SI2PR06MB5041840F757BD2DED8342164FC11A@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Subject: Re: [PATCH v5 9/9] tests/functional: Add test for IBM PPE42
+ instructions
+To: Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ thuth@redhat.com, rathc@linux.ibm.com, richard.henderson@linaro.org
+References: <20250918182731.528944-1-milesg@linux.ibm.com>
+ <20250918182731.528944-10-milesg@linux.ibm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -142,19 +130,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB5041840F757BD2DED8342164FC11A@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <20250918182731.528944-10-milesg@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,56 +158,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
-
->> One last thing, the list of PCI capabilities reported on real HW is a little
->> different. See below. When you have time, it would be good to adjust the
->> model if possible. It can come later.
->>
+On 9/18/25 20:27, Glenn Miles wrote:
+> Adds a functional test for the IBM PPE42 instructions which
+> downloads a test image from a public github repo and then
+> loads and executes the image.
+> (see https://github.com/milesg-github/ppe42-tests for details)
 > 
-> Thanks for the suggestion and for reporting this issue. I’ll add it to my working queue.
-> Here are the tasks currently in my queue:
+> Test status is checked by periodically issuing 'info register'
+> commands and checking the NIP value.  If the NIP is 0xFFF80200
+> then the test successfully executed to completion.  If the
+> machine stops before the test completes or if a 90 second
+> timeout is reached, then the test is marked as having failed.
 > 
-> 1. Control coprocessor reset for AST2700
-> https://patchwork.kernel.org/project/qemu-devel/cover/20250717034054.1903991-1-jamin_lin@aspeedtech.com/
-
-This needs a rework of the co processor models. This should be QEMU 10.2
-material IMO.
-
-> 2. Analyze issue "func-arm-aspeed_ast2500 test occasionally times out"
-> https://gitlab.com/qemu-project/qemu/-/issues/3117
-> 3. Adjust PCIe capabilities
-> 3. Support AST2700 IPC model(may require refactoring the INTC model if needed)
-> 4. Support AST2700 A2 (planned for end of this year or Q1 next year)
-> 5. Support AST2700 boot from BootMCU(RISC-V) instead of vbootrom, if a single binary ready.
-
-It would be great if Troy (?) could resend the models, it's good to have
-since single binary is making progress.
+> This test does not test any PowerPC instructions as it is
+> expected that these instructions are well covered in other
+> tests.  Only instructions that are unique to the IBM PPE42
+> processor are tested.
+> 
+> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
-
-Also, these changes may be of interest, they need review :
-
-   - usb/uhci: Add UHCI sysbus support, and enable for AST (Guenter Roeck)
-     https://lore.kernel.org//qemu-devel/20241112170152.217664-1-linux@roeck-us.net
-
-     Looks really good. Needs reviewers and stakeholders.
-
-   - i3c: aspeed: Add I3C support (Joe Komlodi)
-     https://lore.kernel.org//qemu-devel/20250613000411.1516521-1-komlodi@google.com
-
-     Looks good overall. Needs reviewers and stakeholders.
-
-   - Add Aspeed GPIO test and Support Nuvoton Serial GPIO (Coco Li)
-     https://lore.kernel.org//qemu-devel/20250903213809.3779860-1-lixiaoyan@google.com
-
-     Needs reviewers
-
-   - hw/arm/aspeed: AST1700 IO expander support for (Kane-Chen-AS)
-     https://lore.kernel.org//qemu-devel/20250917013143.1600377-1-kane_chen@aspeedtech.com
-
-     Needs rework. I will comment more when time permits
-     
+Tested-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
