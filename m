@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF40ACAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 16:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AEFCAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 16:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzdj0-0007wk-Rl; Fri, 19 Sep 2025 12:12:42 -0400
+	id 1uzdv1-0002Uz-L3; Fri, 19 Sep 2025 12:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzdiz-0007wZ-Ae
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 12:12:41 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzdiw-00056b-Qy
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 12:12:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5EAD31F7F1;
- Fri, 19 Sep 2025 16:12:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758298354; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uzduz-0002Ue-AX
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 12:25:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uzduw-0007yQ-Ek
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 12:25:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758299095;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8hdfoWc94qlI9DC1OsQ/y8tfGgOUigm+MM0x3Ug2PzY=;
- b=PimrPmwLOlind63Ph3GnuxL/rf73y8taVDykjcVlHkkIDUFG/tswwY1lifAawOt98cCal7
- XVzlzZYX82ZucObjfIXH5O2XhVwIJSjMMv8oEKzOuN2ZbKYPwaLTW2YEaGU9I92kGzfVZh
- S9+gv3WRiptpJTGo+tmbcQ15bpxUruc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758298354;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8hdfoWc94qlI9DC1OsQ/y8tfGgOUigm+MM0x3Ug2PzY=;
- b=1hQ4H+b6/pgeX6ZneDJug9nfFrBKgY+aW6iHvth/P6Rrb+QCEK3X6JbnA5tMnEtXW7j6mT
- dPfgKCMj2JuYlGAg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758298353; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8hdfoWc94qlI9DC1OsQ/y8tfGgOUigm+MM0x3Ug2PzY=;
- b=dkQ75L9//V+BX/kvxNMtnAJlwFwSHKFT8RCp7LIvUHQ51YpwoPDEWs6tN7huN0uECWqpr8
- DQYEzrkqtozTkd0bGcL2p8InHFqsEiygzhaVn/O2Rt56uHs0yo4hRLFhi8KANhKMspmP97
- w9vSjw9pG4zVDFraQP2nzkOmh+WusmA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758298353;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8hdfoWc94qlI9DC1OsQ/y8tfGgOUigm+MM0x3Ug2PzY=;
- b=W8GP8e5ZCOUK5/O6phUliPFLX6mL+zzoCqk5ovmMdoZoR/gnnQ7K8ZJGp7Z1+BQpdhKKqD
- shqlydfessyxwVBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CEB6E13A39;
- Fri, 19 Sep 2025 16:12:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4xvFI/CAzWgFTQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 19 Sep 2025 16:12:32 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 1/4] migration: Do not try to start VM if disk
- activation fails
-In-Reply-To: <20250915115918.3520735-2-jmarcin@redhat.com>
-References: <20250915115918.3520735-1-jmarcin@redhat.com>
- <20250915115918.3520735-2-jmarcin@redhat.com>
-Date: Fri, 19 Sep 2025 13:12:30 -0300
-Message-ID: <87segito9d.fsf@suse.de>
+ bh=JRUAEAWt3oXjfTnzOYFiDniOxVnX1UjTQK/4wQnwtaM=;
+ b=bWQw402PNs6deG/Kdne9wj2M/ylIvnsCytPaceyK0XdyGca5bwURLJSMbUsJQee1DhL4DX
+ LDgYfWwvlz2sF0S5CKZEN1WoXfRQyPBB6xAMQfHWv5vI7l1QKBjzMZVsOf93lScM3aQnOo
+ LrglbS5miyI1e9FfWcdEjEh/4OiNK1U=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-380-bLUxeY2bO0iGuVmBX-2pxw-1; Fri, 19 Sep 2025 12:24:53 -0400
+X-MC-Unique: bLUxeY2bO0iGuVmBX-2pxw-1
+X-Mimecast-MFC-AGG-ID: bLUxeY2bO0iGuVmBX-2pxw_1758299093
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-4240abfbce2so4041475ab.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 09:24:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758299093; x=1758903893;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JRUAEAWt3oXjfTnzOYFiDniOxVnX1UjTQK/4wQnwtaM=;
+ b=U6OsiIKdbF/bNa9JlfHcPbEBxMUUX17Bah1nlNpaV1whDBJyrwAFAWpVGZrtRbXqfS
+ P+3JOM8XB2D2VWXliMgl5PawxFsLvP1X11xDGVptqVl3A6pRcK0i6HvKtiMQ8hJ5oYaQ
+ 7wSLp9ZHLDTi4kYMNn4KjfLm0DG3eguCSwRwIC9IO2ym9pK9URPnlp8oJg/lLjwsoSZ/
+ XvjKmLI9RywBNlfVG70tYHZx0Nkrr48bcqsemu3ICBnhbnP2qjnuog7HS5zUBADbJegK
+ j7L5v1mQT9gqYkh0WPp54UvqOs5C8TC4vXTXVEVkjY+q99v70pqqWjOBMzXtUfmhxf5T
+ ZsSQ==
+X-Gm-Message-State: AOJu0YxY8myGedbpQmrl5ZsR0drX43GiXjsqbfopS3rekQQ8atQjqKZn
+ R+oHDDafhryBFpAJ+z8VQbmh4HAE7nfn8ffq6X/420gfafWRF2GRFK2ERPcJ8yNWzqMayKZrLbi
+ uAQz6ZzSOfX39Qi79aKFDYPylJfYZxXzKvsZczEUup2sJgoQJPWxUNoqm
+X-Gm-Gg: ASbGncsPgKIKc/Tc1Z9bLvSgqVmaTi29MJ5VyuwRZTw2XU/6rf34NsrsGgZYEDSqS0d
+ MfYu3x43/PF/ve1PoZ1bCdTMQ0hqY9Y917Tfsqvz+S3FZVX2d9sH+PJtis9guYU4bxeWshb6HzX
+ 34C+KHu1CNznOiR1ntSCvCHUX5DFHpU5g6Mfj8NE/7Pb8D426TD09nyZgb/c134IPZHd6WCbDfi
+ J1M2AlHOjR9TWG4itimCfgDMuBvLLLXqr56GPK5TQBPd84862ANoXL+tfQUxYM6qtQ840w3yWzp
+ gcq0s9H6zYXL0pb9+egQX2zvUnrTpYfKhHw3rYe2PUo=
+X-Received: by 2002:a05:6e02:3786:b0:424:7ef5:af5 with SMTP id
+ e9e14a558f8ab-4248187d2fcmr22705775ab.0.1758299092735; 
+ Fri, 19 Sep 2025 09:24:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7KpOGQ3786XuDFNM7xxyrFt8OQu+ItxeJ4xEeATgRnvr+l5tM5giacr/f3azmIlONB/adig==
+X-Received: by 2002:a05:6e02:3786:b0:424:7ef5:af5 with SMTP id
+ e9e14a558f8ab-4248187d2fcmr22705625ab.0.1758299092286; 
+ Fri, 19 Sep 2025 09:24:52 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-4245169ea7dsm23171505ab.18.2025.09.19.09.24.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Sep 2025 09:24:48 -0700 (PDT)
+Date: Fri, 19 Sep 2025 10:24:47 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com
+Subject: Re: [Qemu-devel] [PATCH] vfio/common: Work around kernel overflow
+ bug in DMA unmap
+Message-ID: <20250919102447.748e17fe.alex.williamson@redhat.com>
+In-Reply-To: <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
+References: <154707542737.22183.7160770678781819267.stgit@gimli.home>
+ <cd287f5c-796e-4172-9537-b00991a95391@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,84 +110,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Juraj Marcin <jmarcin@redhat.com> writes:
+On Thu, 18 Sep 2025 22:55:47 +0200
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-> From: Peter Xu <peterx@redhat.com>
->
-> If a rare split brain happens (e.g. dest QEMU started running somehow,
-> taking shared drive locks), src QEMU may not be able to activate the
-> drives anymore.  In this case, src QEMU shouldn't start the VM or it might
-> crash the block layer later with something like:
->
-> bdrv_co_write_req_prepare: Assertion `!(bs->open_flags &
-> BDRV_O_INACTIVE)' failed.
+> Alex, Peter,
+>=20
+> On 1/10/19 00:10, Alex Williamson wrote:
+> > A kernel bug was introduced in v4.15 via commit 71a7d3d78e3c which
+> > adds a test for address space wrap-around in the vfio DMA unmap path.
+> > Unfortunately due to overflow, the kernel detects an unmap of the last
+> > page in the 64-bit address space as a wrap-around.  In QEMU, a Q35
+> > guest with VT-d emulation and guest IOMMU enabled will attempt to make
+> > such an unmap request during VM system reset, triggering an error:
+> >=20
+> >    qemu-kvm: VFIO_UNMAP_DMA: -22
+> >    qemu-kvm: vfio_dma_unmap(0x561f059948f0, 0xfef00000, 0xffffffff01100=
+000) =3D -22 (Invalid argument)
+> >=20
+> > Here the IOVA start address (0xfef00000) and the size parameter
+> > (0xffffffff01100000) add to exactly 2^64, triggering the bug.  A
+> > kernel fix is queued for the Linux v5.0 release to address this.
+> >=20
+> > This patch implements a workaround to retry the unmap, excluding the
+> > final page of the range when we detect an unmap failing which matches
+> > the requirements for this issue.  This is expected to be a safe and
+> > complete workaround as the VT-d address space does not extend to the
+> > full 64-bit space and therefore the last page should never be mapped.
+> >=20
+> > This workaround can be removed once all kernels with this bug are
+> > sufficiently deprecated. =20
+>=20
+> Have we waited long enough ? what does "sufficiently deprecated" mean ?
+> Is it related to the linux stable updates ?
 
-This patch doesn't fix the assert, so I think it's best not to mention
-it at all. We've had a few instances of this assert (or similar) and
-there's a fair chance someone still looks at git log searching for a
-backport.
+It was fixed in Linux v5.0 and I believe the oldest LTS kernel is v5.4.
+Therefore I don't think that upstream QEMU really needs to continue to
+carry this.  v4.20 was the current upstream kernel when this was
+introduced into QEMU.  Thanks,
 
->
-> Meanwhile, src QEMU cannot try to continue either even if dest QEMU can
-> release the drive locks (e.g. by QMP "stop").  Because as long as dest QEMU
-> started running, it means dest QEMU's RAM is the only version that is
-> consistent with current status of the shared storage.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 10c216d25d..54dac3db88 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3502,6 +3502,8 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->  
->  static void migration_iteration_finish(MigrationState *s)
->  {
-> +    Error *local_err = NULL;
-> +
->      bql_lock();
->  
->      /*
-> @@ -3525,11 +3527,28 @@ static void migration_iteration_finish(MigrationState *s)
->      case MIGRATION_STATUS_FAILED:
->      case MIGRATION_STATUS_CANCELLED:
->      case MIGRATION_STATUS_CANCELLING:
-> -        /*
-> -         * Re-activate the block drives if they're inactivated.  Note, COLO
-> -         * shouldn't use block_active at all, so it should be no-op there.
-> -         */
-> -        migration_block_activate(NULL);
-> +        if (!migration_block_activate(&local_err)) {
-> +            /*
-> +            * Re-activate the block drives if they're inactivated.
+Alex
 
-Comment formatting is wrong.
-
-> +            *
-> +            * If it fails (e.g. in case of a split brain, where dest QEMU
-> +            * might have taken some of the drive locks and running!), do
-> +            * not start VM, instead wait for mgmt to decide the next step.
-> +            *
-> +            * If dest already started, it means dest QEMU should contain
-> +            * all the data it needs and it properly owns all the drive
-> +            * locks.  Then even if src QEMU got a FAILED in migration, it
-> +            * normally should mean we should treat the migration as
-> +            * COMPLETED.
-> +            *
-> +            * NOTE: it's not safe anymore to start VM on src now even if
-> +            * dest would release the drive locks.  It's because as long as
-> +            * dest started running then only dest QEMU's RAM is consistent
-> +            * with the shared storage.
-> +            */
-> +            error_free(local_err);
-> +            break;
-> +        }
->          if (runstate_is_live(s->vm_old_state)) {
->              if (!runstate_check(RUN_STATE_SHUTDOWN)) {
->                  vm_start();
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
