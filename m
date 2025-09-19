@@ -4,75 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB65DCAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 17:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A54BCAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 17:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzf14-0003Jh-2z; Fri, 19 Sep 2025 13:35:26 -0400
+	id 1uzfGA-0006xk-8T; Fri, 19 Sep 2025 13:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzf0y-0003J9-CR
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:35:22 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzfG8-0006xX-Al
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:51:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzf0v-0001hJ-BI
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:35:20 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id B75BEC034C;
- Fri, 19 Sep 2025 20:35:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a72::1:38] (unknown
- [2a02:6bf:8080:a72::1:38])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8ZX9vV1FvqM0-MBvt53Qe; Fri, 19 Sep 2025 20:35:09 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758303309;
- bh=4tRzB9QjU9uZH2OPhbM+QegcFb4PZNpLa3ksjFWgkdk=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VEeWeQq3jXwcNiadKCr9IYtSe0o1105oPHvuOUpvKKHctsBFrfWSrvfjmKLHEgjrk
- CWEnOkAdYG8+hfjitp6Er4BsTbqXLMHLTcp2KZC6Apuqatuj2fASObx5lLye798qQF
- sr0iUNqS7Ar61ANsSnOOf5klr3mWIRpTGDdGQKNI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <dd172f7d-9b16-44fb-8000-f8891877bd99@yandex-team.ru>
-Date: Fri, 19 Sep 2025 20:35:08 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzfG4-0006Cs-JR
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:50:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758304253;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kFLwhx1yxjwAvAeBQuun8IZwowW777hGdn3jgBMo5p8=;
+ b=JRZbxWBHSGbBatVYBIni/p60xN0gGdvuLjYUH54Hz1jlkaBev6yhZ6fBa0xtwthhRU1f2A
+ lKnewn24JocpoemVYDUfhwUlTCGJ0TAYMgfVp9RzQ4MaTmRiQrSETzfV401GOCACA/qc3N
+ kyog8M1mLJg63/pK1u4QqY3TcN0c9/g=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-mIpuOabENuSsHou-Ep8wHg-1; Fri, 19 Sep 2025 13:50:51 -0400
+X-MC-Unique: mIpuOabENuSsHou-Ep8wHg-1
+X-Mimecast-MFC-AGG-ID: mIpuOabENuSsHou-Ep8wHg_1758304251
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4b5f31ef7dfso61386581cf.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 10:50:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758304251; x=1758909051;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kFLwhx1yxjwAvAeBQuun8IZwowW777hGdn3jgBMo5p8=;
+ b=JX8x67qjtauSEDYU6dH5UTQdaIiLVt1JVANIkPKOGZVOssGRab76YTTC+793GDkjPI
+ nzMGcpT66RhwTTkP262epVdi9FHnhnW7q2Maxy/dx87iHDsYWaipA5OkMuGfUud/sAU1
+ 290ZrEISlMtSgbUXK0ihZ71hUHdbqjB7ox6HZipKYyvNn0NzfeojyrPv/n6L63vmQJ8x
+ Tkr/fH41mo2vND6hVPm5W8au4dKJ5LZ694PyCCiDY+Fz4eao8AFapj6Q6ao+VnxlGokA
+ E0FFHTBy04VMFe+QXNGT3ev1NC+GUftjSeSpskPQAfXj32SWuKSld/mmEgYPwkRRvD5J
+ keOQ==
+X-Gm-Message-State: AOJu0YzULA1gxX1azLlnu5jyRsXuroKMsRHnvJvgchy659OoxYy44gWB
+ keFRblv4uRgXcjxTe26rViNoQenJQqOnMkJT8HnPZ+57JglhiHRzosfP5iHZyewy4bxSNqpzsPo
+ Z6oMe/eCh7ON83WWnKA7gsDyIX/qrfAME6u+XgABmdpX3MhCZcALm4YMg
+X-Gm-Gg: ASbGnct9TjpgFsykEQc1g5nNSTfCUMZlyCnlQ78gSZWOhdhCNnE5PthTUHp7EvVrDEo
+ r0sE/BTEXnJJn1MnyVdkEFXxmQnsIraHIBjkysy3hbvFzWZONbwvgi62e8lyk6Bk3ggwUIJCfj9
+ J3gehIWaMF9D3FHHFWr7r5Vlodec3ni0UkJubpKDiwdQNw3KpCp6mBsoH4AgyQbzMJSnC5WVqi+
+ zjaHftP0k+Z/A6Dg3xyjIzvdF6XkBikgOPPY73XtHxj36uwBNPUl4OJSVrG5WiH97812oATx9tY
+ +Q6SpJKYOdAJHZMLw0fVILzjTXq0SYRS
+X-Received: by 2002:ac8:7d86:0:b0:4b7:b051:a531 with SMTP id
+ d75a77b69052e-4bdada0c411mr76749391cf.20.1758304251052; 
+ Fri, 19 Sep 2025 10:50:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOyWB5HHXUPNfcP2Qa1Ivdm3Ctbq4G/HlQeS3NOY9ML5kfc5n11gv7sCuI/yli+mjDw8uBFQ==
+X-Received: by 2002:ac8:7d86:0:b0:4b7:b051:a531 with SMTP id
+ d75a77b69052e-4bdada0c411mr76749141cf.20.1758304250575; 
+ Fri, 19 Sep 2025 10:50:50 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4bda8998580sm32029181cf.30.2025.09.19.10.50.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Sep 2025 10:50:49 -0700 (PDT)
+Date: Fri, 19 Sep 2025 13:50:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
+Message-ID: <aM2X-N9gXvFxxdvI@x1.local>
+References: <20250915115918.3520735-1-jmarcin@redhat.com>
+ <20250915115918.3520735-5-jmarcin@redhat.com>
+ <aM2LoGDh5WsVnEi8@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/19] qapi: add interface for local TAP migration
-To: Fabiano Rosas <farosas@suse.de>, mst@redhat.com
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
- eblake@redhat.com, michael.roth@amd.com, armbru@redhat.com,
- peterx@redhat.com, berrange@redhat.com, jasowang@redhat.com,
- steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
- yc-core@yandex-team.ru
-References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
- <20250919095545.1912042-17-vsementsov@yandex-team.ru>
- <87y0qatqoa.fsf@suse.de>
- <82642da2-eff7-4eb6-b007-fd239fa0ef64@yandex-team.ru>
- <87ms6qtlgf.fsf@suse.de>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87ms6qtlgf.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aM2LoGDh5WsVnEi8@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -84,103 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.25 20:13, Fabiano Rosas wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Fri, Sep 19, 2025 at 12:58:08PM -0400, Peter Xu wrote:
+> > @@ -2564,6 +2569,11 @@ static void *source_return_path_thread(void *opaque)
+> >              tmp32 = ldl_be_p(buf);
+> >              trace_source_return_path_thread_pong(tmp32);
+> >              qemu_sem_post(&ms->rp_state.rp_pong_acks);
+> > +            if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
+> > +                trace_source_return_path_thread_dst_started();
+> > +                migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+> > +                                  MIGRATION_STATUS_POSTCOPY_ACTIVE);
 > 
->> On 19.09.25 18:20, Fabiano Rosas wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>> Hi Vladimir, as usual with "qapi:" patches, some comments about
->>> language:
->>>
->>>> To migrate virtio-net TAP device backend (including open fds) locally,
->>>> user should simply set migration parameter
->>>>
->>>>      fds = [virtio-net]
->>>>
->>>> Why not simple boolean? To simplify migration to further versions,
->>>> when more devices will support fds migration.
->>>>
->>>> Alternatively, we may add per-device option to disable fds-migration,
->>>> but still:
->>>>
->>>> 1. It's more comfortable to set same capabilities/parameters on both
->>>> source and target QEMU, than care about each device.
->>>>
->>>> 2. To not break the design, that machine-type + device options +
->>>> migration capabilites and parameters are fully define the resulting
->>>> migration stream. We'll break this if add in future more fds-passing
->>>> support in devices under same fds=true parameter.
->>>>
->>>
->>> These arguments look convincing to me.
->>>
->>
->> [..]
->>
->>>>        return true;
->>>>    }
->>>>    
->>>> @@ -1297,6 +1315,11 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
->>>>        if (params->has_direct_io) {
->>>>            dest->direct_io = params->direct_io;
->>>>        }
->>>> +
->>>> +    if (params->has_fds) {
->>>> +        dest->has_fds = true;
->>>
->>> I think what you want is to set this in
->>> migrate_params_init(). block_bitmap_mapping is a bit of an outlier in
->>> that it takes an empty *input* as valid.
->>
->> Hmm I made it behave like block_bitmap_mapping because it also a list.
->>
->> As I understand, for list we have to treat empty list not like absent parameter: we should have a way
->> to clear previously set list by subsequent migrate-set-parameters call.
->>
+> Could this race with the migration thread modifying the state concurrently?
 > 
-> Sorry, I explained myself poorly. Yes, the empty list is valid and it
-> clears a previously set value. But that's just:
+> To avoid it, we could have a bool, set it here once, and in the iterations
+> do something like:
 > 
-> migrate_params_init(MigrationParameters *params):
->      ...
->      params->has_fds = true;
-> 
-> migrate_params_test_apply(MigrateSetParameters *params,
->                            MigrationParameters *dest):
->      ...
->      /* means user provided it */
->      if (params->has_fds) {
->          dest->fds = params->fds;
->      }
-> 
-> migrate_params_check(MigrationParameters *params):
->      ...
->      if (params->has_fds) {
->         /* empty list ok */
->      }
-> 
-> migrate_params_apply(MigrateSetParameters *params):
->      ...
->      if (params->has_fds) {
->          qapi_free_...(s->parameters.fds);
->          /* clones the full list or the empty list, no difference */
->          s->parameters.fds = QAPI_CLONE(..., params->fds);
->      }
-> 
-> The block_bitmap_mapping does the has_ part a bit differently because it
-> wants to carry that flag over to the rest of the code. See 3cba22c9ad
-> ("migration: Fix block_bitmap_mapping migration"). In that case, even if
-> the list is empty, it needs to know when it was made empty on purpose to
-> carry on with the removal of the mappings. In your case, it doesn't
-> matter, empty is empty, whether forcefully, or because it was never
-> set. Right?
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 10c216d25d..55230e10ee 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3449,6 +3449,16 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+>      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
+>  
+>      if (in_postcopy) {
+> +        if (s->postcopy_package_loaded) {
+> +            assert(s->state == MIGRATION_STATUS_POSTCOPY_DEVICE);
+> +            migrate_set_state(s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+> +                              MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> +            /*
+> +             * Since postcopy cannot be re-initiated, this flag will only
+> +             * be set at most once for QEMU's whole lifecyce.
+> +             */
+> +            s->postcopy_package_loaded = false;
+> +        }
+>          /*
+>           * Iterate in postcopy until all pending data flushed.  Note that
+>           * postcopy completion doesn't rely on can_switchover, because when
 
-Oh, yes, understand now, thanks.
+[...]
 
+> > @@ -2871,7 +2882,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+> >  
+> >      /* Now, switchover looks all fine, switching to postcopy-active */
+> >      migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
+> > -                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> > +                      MIGRATION_STATUS_POSTCOPY_DEVICE);
+> >  
+> >      bql_unlock();
+> >  
+> > @@ -3035,7 +3046,8 @@ static void migration_completion(MigrationState *s)
+> >  
+> >      if (s->state == MIGRATION_STATUS_ACTIVE) {
+> >          ret = migration_completion_precopy(s);
+> > -    } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
+> > +    } else if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
+> > +               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
+> 
+> Exactly.  We need to be prepared that src sending too fast so when device
+> loading on dest we finished.
 
+One thing more to mention here.. which may void some previous comments I
+left.  Let's discuss.
+
+I think it may also make sense to only allow a COMPLETE after
+POSTCOPY_ACTIVE.
+
+That is, if src sends too fast to have finished sending everything,
+reaching COMPLETE during POSTCOPY_DEVICE, that is, while before it receives
+the new PONG you defined, then.. I _think_ it is better to wait for that.
+
+If it finally arrives, then it's perfect, we switch to POSTCOPY_ACTIVE,
+then continue the completion.
+
+If the channel is broken before its arrival, logically we should handle
+this case as a FAILURE and restart the VM on src.
+
+It's only relevant in a corner case, but does that sound better?
 
 -- 
-Best regards,
-Vladimir
+Peter Xu
+
 
