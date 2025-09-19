@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F543CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 21:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC79DCAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 21:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzild-00067s-04; Fri, 19 Sep 2025 17:35:45 -0400
+	id 1uzimV-0006uA-7x; Fri, 19 Sep 2025 17:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uzilb-000677-LV
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:35:43 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uzimM-0006mG-In
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:36:30 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uzilZ-0002VC-Gy
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:35:43 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDu89L017342;
- Fri, 19 Sep 2025 21:35:32 GMT
+ id 1uzimE-0002Yb-4L
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:36:29 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDtoGs023213;
+ Fri, 19 Sep 2025 21:36:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=e0XhY
- RcjNOv9dlHl2s1IooeLi/bMj0mmI0EDTOAuCUs=; b=CvZ5cHn2DnX2Tm9gWMtdt
- YlKXgXtSZGx3lUSpHAkJ3jhbWiJ0o503M7B8L5O0kwFvi3CrFSPCqbdN7WXeHqzr
- xTOp2elk3qxcFaT6GtegIFak9UCdLIyjqn7tyfQILzhE7s83EUEwledNhoFHJ+Wo
- Yz5rPyFBRrwiB93fXBP0R39nHh5wtyKY3HozzyzX15CeoIGWQSYKCV9P6QVbG7M7
- N2XphTP4tYd1oAC7T50UHyaumOihS1iialO+JGjy67c3E2e5c9wEsgWTv+/b6rDR
- IOX7AtlLG1aFwXHJSarQkmIBooCjeUjZZlF8Gh8+h18VSjEmvGy4ae7cbJs+iTzn
- w==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=bUPav
+ Y3lJxfhxP2xgahZHolvMbEwYtLblQG5B8W4OxU=; b=bzMEKdFf0KpXQPk+pwQ41
+ 8HrZlzVW9v44ns0AekdBSF4KaR9zLqjX/1CwUUJktlsBkC2gHJN2NnPfv5FfaMxM
+ Y48wghEYH90tGWNJ5eG/gQO9NVbO8Aoi/4bVIMgge+yXiBp+ONID0O2Cd1qG/F0Z
+ z8c+egYX+Kna0nToc2JKrDMf7Riv8qw9bpFI3XXpDJ1mdLYKGQs0H6bxv9ZCd9xa
+ M/boa4xeLVEf7FqWDs2BsHjbjQn7syDhyQhcBZcnygVFMHygdKb3RXhHg7xa672u
+ 03xgYFzlucI4HU2ccAFYi7ZtbB2r4qlp4gperA2Ne8FeAq6axxI/Pk0gLBgZkIU2
+ g==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497g0kefyw-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fx6pdwf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 21:35:32 +0000 (GMT)
+ Fri, 19 Sep 2025 21:36:03 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58JL5PaS033754; Fri, 19 Sep 2025 21:35:31 GMT
+ with ESMTP id 58JIx8c4033731; Fri, 19 Sep 2025 21:36:02 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 494y2gwrh5-1
+ 494y2gwru7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 21:35:31 +0000
+ Fri, 19 Sep 2025 21:36:02 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JLUm07004301;
- Fri, 19 Sep 2025 21:35:30 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JLUm0Z004301;
+ Fri, 19 Sep 2025 21:36:01 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 494y2gwra3-6; Fri, 19 Sep 2025 21:35:30 +0000
+ 494y2gwra3-19; Fri, 19 Sep 2025 21:36:01 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
@@ -66,9 +66,10 @@ Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
  santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
  Ankit.Soni@amd.com, ethan.milon@eviden.com, joao.m.martins@oracle.com,
  boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH v3 05/22] amd_iommu: Add helper function to extract the DTE
-Date: Fri, 19 Sep 2025 21:34:58 +0000
-Message-ID: <20250919213515.917111-6-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v3 18/22] amd_iommu: Toggle address translation mode on devtab
+ entry invalidation
+Date: Fri, 19 Sep 2025 21:35:11 +0000
+Message-ID: <20250919213515.917111-19-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
 References: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
@@ -82,21 +83,21 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  mlxlogscore=999 spamscore=0 mlxscore=0 suspectscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
  definitions=main-2509190201
-X-Authority-Analysis: v=2.4 cv=b9Oy4sGx c=1 sm=1 tr=0 ts=68cdcca4 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=TqbmhCXh c=1 sm=1 tr=0 ts=68cdccc3 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117
  a=WeWmnZmh0fydH62SvGsd2A==:17
- a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=e7RXMJMBNNZR3-p0WbYA:9
-X-Proofpoint-GUID: jm5kqy_SuLfxZN275TQHxpF_57TXtKBH
-X-Proofpoint-ORIG-GUID: jm5kqy_SuLfxZN275TQHxpF_57TXtKBH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMyBTYWx0ZWRfX8zxgQHy8/ok8
- iDjQmqfQqhohJR3RYIaWrwEPXpNc/X6QzzfAfPCYA6Jt4ZfzvKEdd1a/MSof9lPDeKBXIxvU3fG
- Wf4MbF7TcisUYzty0N6xN1brzIkOXS8zEJwBO35/WckXI7OT3o/FcPUsr6PWQZr2TxybKUWC6AF
- zu071yGW9vMDZv5JFGGYyGdEVdIqI6KwIii9HY1gE8+zsnM76NbI/IyxohAEINrcXucQicfGBEI
- xJoBgQ2wIVVTlku6T/CPA67ThypeZxI+vo5TRRVprTSN1Tt+9uWgk+Adf/bKD7PVvRntdIjVEUf
- vIIsJhR+2zJcAnk0Vd/Sj7lGhBHw1Sz4D6zc+JANXQ6K2/jjXHDNa6rrptm73kP1ecLdY2WQpST
- jlu7VYC1
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=YvzyzkPmWOJL5gKF_FwA:9
+X-Proofpoint-GUID: LPevFVPNJSRRBPVAVBUB-ipStWPk1u0J
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX00csENR9FHGm
+ rhUo59djyJdiJZFMEMYj+2i8Ne+Ef26kJrH7fmHeAQ7kCmuw4yVRji+JZ/ly8ABZHP/Cuv49pXc
+ bjA1xdJV+KtBuFqIA0VsWmULMhYW0a5pCjRj/l8VImFmFNW09n0RL3xYuXp5VTGeUEsdbf4DApS
+ vHcq6iOYFKcM9qqsksUmP5Q3XX3BUshP554729LpDcijRhzeyoJS0kkYMQq/XmRXsgf0zTNQ47L
+ qnXWPb5k//toSQl5Xs66qW1TtYgtCgp61V7sLWdnlCrk69Lfxl1glVfEjg3D7cvH6NRq3zC7E3L
+ ZxconKChwhUnLN7bEHGw3y+BWp2ru/UFzAJblftq5679msBEPfR9VB4fjjWMWpzKybTNztL3cIZ
+ CCvfh88d
+X-Proofpoint-ORIG-GUID: LPevFVPNJSRRBPVAVBUB-ipStWPk1u0J
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -120,96 +121,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extracting the DTE from a given AMDVIAddressSpace pointer structure is a
-common operation required for syncing the shadow page tables. Implement a
-helper to do it and check for common error conditions.
+A guest must issue an INVALIDATE_DEVTAB_ENTRY command after changing a
+Device Table entry (DTE) e.g. after attaching a device and setting up its
+DTE. When intercepting this event, determine if the DTE has been configured
+for paging or not, and toggle the appropriate memory regions to allow DMA
+address translation for the address space if needed. Requires dma-remap=on.
 
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.c | 48 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 42 insertions(+), 6 deletions(-)
+ hw/i386/amd_iommu.c | 122 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 120 insertions(+), 2 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 202f0f8c6e90c..dc7531fd4a8b9 100644
+index ce5d4c36624fd..e916dcb2be381 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -77,6 +77,18 @@ typedef struct AMDVIIOTLBEntry {
-     uint64_t page_mask;         /* physical page size  */
- } AMDVIIOTLBEntry;
- 
-+/*
-+ * These 'fault' reasons have an overloaded meaning since they are not only
-+ * intended for describing reasons that generate an IO_PAGE_FAULT as per the AMD
-+ * IOMMU specification, but are also used to signal internal errors in the
-+ * emulation code.
-+ */
-+typedef enum AMDVIFaultReason {
-+    AMDVI_FR_DTE_RTR_ERR = 1,   /* Failure to retrieve DTE */
-+    AMDVI_FR_DTE_V,             /* DTE[V] = 0 */
-+    AMDVI_FR_DTE_TV,            /* DTE[TV] = 0 */
-+} AMDVIFaultReason;
-+
- uint64_t amdvi_extended_feature_register(AMDVIState *s)
- {
-     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-@@ -524,6 +536,28 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
-     return pte;
+@@ -1032,18 +1032,136 @@ static void amdvi_reset_address_translation_all(AMDVIState *s)
+     }
  }
  
-+static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte)
++static void enable_dma_mode(AMDVIAddressSpace *as, bool inval_current)
 +{
-+    uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
-+    AMDVIState *s = as->iommu_state;
-+
-+    if (!amdvi_get_dte(s, devid, dte)) {
-+        /* Unable to retrieve DTE for devid */
-+        return -AMDVI_FR_DTE_RTR_ERR;
++    /*
++     * When enabling DMA mode for the purpose of isolating guest devices on
++     * a failure to retrieve or invalid DTE, all existing mappings must be
++     * dropped.
++     */
++    if (inval_current) {
++        IOMMUNotifier *n;
++        IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
++            amdvi_address_space_unmap(as, n);
++        }
 +    }
 +
-+    if (!(dte[0] & AMDVI_DEV_VALID)) {
-+        /* DTE[V] not set, address is passed untranslated for devid */
-+        return -AMDVI_FR_DTE_V;
++    if (as->addr_translation) {
++        return;
 +    }
 +
-+    if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID)) {
-+        /* DTE[TV] not set, host page table not valid for devid */
-+        return -AMDVI_FR_DTE_TV;
++    /* Installing DTE enabling translation, activate region */
++    as->addr_translation = true;
++    amdvi_switch_address_space(as);
++    /* Sync shadow page tables */
++    amdvi_address_space_sync(as);
++}
++
++/*
++ * If paging was previously in use in the address space
++ * - invalidate all existing mappings
++ * - switch to no_dma memory region
++ */
++static void enable_nodma_mode(AMDVIAddressSpace *as)
++{
++    IOMMUNotifier *n;
++
++    if (!as->addr_translation) {
++        /* passthrough is already active, nothing to do */
++        return;
 +    }
-+    return 0;
++
++    as->addr_translation = false;
++    IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
++        /* Drop all mappings for the address space */
++        amdvi_address_space_unmap(as, n);
++    }
++    amdvi_switch_address_space(as);
++}
++
++/*
++ * A guest driver must issue the INVALIDATE_DEVTAB_ENTRY command to the IOMMU
++ * after changing a Device Table entry. We can use this fact to detect when a
++ * Device Table entry is created for a device attached to a paging domain and
++ * enable the corresponding IOMMU memory region to allow for DMA translation if
++ * appropriate.
++ */
++static void amdvi_update_addr_translation_mode(AMDVIState *s, uint16_t devid)
++{
++    uint8_t bus_num, devfn, dte_mode;
++    AMDVIAddressSpace *as;
++    uint64_t dte[4] = { 0 };
++    int ret;
++
++    /*
++     * Convert the devid encoded in the command to a bus and devfn in
++     * order to retrieve the corresponding address space.
++     */
++    bus_num = PCI_BUS_NUM(devid);
++    devfn = devid & 0xff;
++
++    /*
++     * The main buffer of size (AMDVIAddressSpace *) * (PCI_BUS_MAX) has already
++     * been allocated within AMDVIState, but must be careful to not access
++     * unallocated devfn.
++     */
++    if (!s->address_spaces[bus_num] || !s->address_spaces[bus_num][devfn]) {
++        return;
++    }
++    as = s->address_spaces[bus_num][devfn];
++
++    ret = amdvi_as_to_dte(as, dte);
++
++    if (!ret) {
++        dte_mode = (dte[0] >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
++    }
++
++    switch (ret) {
++    case 0:
++        /* DTE was successfully retrieved */
++        if (!dte_mode) {
++            enable_nodma_mode(as); /* DTE[V]=1 && DTE[Mode]=0 => passthrough */
++        } else {
++            enable_dma_mode(as, false); /* Enable DMA translation */
++        }
++        break;
++    case -AMDVI_FR_DTE_V:
++        /* DTE[V]=0, address is passed untranslated */
++        enable_nodma_mode(as);
++        break;
++    case -AMDVI_FR_DTE_RTR_ERR:
++    case -AMDVI_FR_DTE_TV:
++        /*
++         * Enforce isolation by using DMA in rare scenarios where the DTE cannot
++         * be retrieved or DTE[TV]=0. Existing mappings are dropped.
++         */
++        enable_dma_mode(as, true);
++        break;
++    }
 +}
 +
  /* log error without aborting since linux seems to be using reserved bits */
  static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
  {
-@@ -1081,6 +1115,7 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
-     uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
-     AMDVIIOTLBEntry *iotlb_entry = amdvi_iotlb_lookup(s, addr, devid);
-     uint64_t entry[4];
-+    int dte_ret;
+     uint16_t devid = cpu_to_le16((uint16_t)extract64(cmd[0], 0, 16));
  
-     if (iotlb_entry) {
-         trace_amdvi_iotlb_hit(PCI_BUS_NUM(devid), PCI_SLOT(devid),
-@@ -1092,13 +1127,14 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
-         return;
-     }
- 
--    if (!amdvi_get_dte(s, devid, entry)) {
--        return;
--    }
-+    dte_ret = amdvi_as_to_dte(as, entry);
- 
--    /* devices with V = 0 are not translated */
--    if (!(entry[0] & AMDVI_DEV_VALID)) {
--        goto out;
-+    if (dte_ret < 0) {
-+        if (dte_ret == -AMDVI_FR_DTE_V) {
-+            /* DTE[V]=0, address is passed untranslated */
-+            goto out;
-+        }
++    trace_amdvi_devtab_inval(PCI_BUS_NUM(devid), PCI_SLOT(devid),
++                             PCI_FUNC(devid));
++
+     /* This command should invalidate internal caches of which there isn't */
+     if (extract64(cmd[0], 16, 44) || cmd[1]) {
+         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
+                                    s->cmdbuf + s->cmdbuf_head);
 +        return;
++    }
++
++    /*
++     * When DMA remapping capability is enabled, check if updated DTE is setup
++     * for paging or not, and configure the corresponding memory regions.
++     */
++    if (s->dma_remap) {
++        amdvi_update_addr_translation_mode(s, devid);
      }
+-    trace_amdvi_devtab_inval(PCI_BUS_NUM(devid), PCI_SLOT(devid),
+-                             PCI_FUNC(devid));
+ }
  
-     amdvi_page_walk(as, entry, ret,
+ static void amdvi_complete_ppr(AMDVIState *s, uint64_t *cmd)
 -- 
 2.43.5
 
