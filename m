@@ -4,85 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4065CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE26CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzWej-0005jU-Me; Fri, 19 Sep 2025 04:39:49 -0400
+	id 1uzWmZ-0000bU-UN; Fri, 19 Sep 2025 04:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzWef-0005hl-6d
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:39:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1uzWmY-0000b8-CR; Fri, 19 Sep 2025 04:47:54 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzWec-0002RM-H5
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:39:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758271180;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7Pqyqjg0uXiqy4MWiXXlKqP1WmA0uDd46qFg34n2XrA=;
- b=Zp/vl/fmHM1fdzBzJdEGbaNqW/jsXCjfbHl+QejAlwZgE7RXP9p9ZxmQtuQ45vC7mHCVOC
- cS9hM2ajGdF8GaBz+oPen/j/70weYocNBMqGEMad02QWrPiWw8C8aA4h/CDOrij5hMDB4l
- qTV/icGH2Pab/1znQ4U4pkTlEhwuZYY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-7o5JqPBGN0eQ1KyePO1nMA-1; Fri,
- 19 Sep 2025 04:39:37 -0400
-X-MC-Unique: 7o5JqPBGN0eQ1KyePO1nMA-1
-X-Mimecast-MFC-AGG-ID: 7o5JqPBGN0eQ1KyePO1nMA_1758271175
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EC551956050; Fri, 19 Sep 2025 08:39:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3759630002C5; Fri, 19 Sep 2025 08:39:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 74F9721E6A27; Fri, 19 Sep 2025 10:39:31 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna Reitz
- <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Christian Schoenebeck
- <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Subject: Re: [PATCH v3 04/20] util: expose qemu_thread_set_name
-In-Reply-To: <20250910180357.320297-5-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 10 Sep 2025 19:03:41
- +0100")
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-5-berrange@redhat.com>
-Date: Fri, 19 Sep 2025 10:39:31 +0200
-Message-ID: <87h5wy6dks.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
+ id 1uzWmT-0005c1-Ex; Fri, 19 Sep 2025 04:47:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tHd9fWq6xBCMhFpO/4gGgPz9ADOzgVrdNvdQ8dDC8FCm9XQ5bRGUzBXYiYpgv6SZPIDnhU19RQgv2/xNvUIbyMWLd6p/9bXolKMIiZHKLwDvd4ajpRD11m9uM6YEfOHbCsWJYRvu5Hah0ZSZbMQBhxVBKNOZlVpD9UPNtYrhArZEeolub/IDu1QE+IGl3LY4fJ7j8kYZxuI4iyaFAKzRjwz3KDLAQMTEdUOrv5x1zFRPmz3J82ZJUVmHANO0mMrd4sNVf9kqYYktm0BvOi1ElfZaopprTgnSodoYtbyWCRMYM4JXgIINof0E/75SlxsMHapLM5E5o1oMKA8bzWLQMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nOsi7DgFrY6L0AITNV24NSDI23Vl+ln3L0cBYJTYbN8=;
+ b=Z1z1HTdBTVGn3mzSvlA9F2ncztcneFIalx8iwXwpvDS0Tr3i1t3OicoVTfq1R3zYiGEMBm+B3Fz5MsyUWtJfmZfx990BmVmT7oUpudeSksZ4GJypx78pEZ+DRJhO8W47CGL7rg0aD2grm+TEbXKAY49qvRQkB1T8tFxd+IvqKWZS1BQEOnXseXm5sDVPV/nFHvmmosa7NuR2QAMp7ilCypgXN3OsQZa2llTmKMRx4ExpU5dYoWqXYdCgRa0bR6OkNWrGJC29WeeFE07BWwl+v8Ja3fLOQOjJtKV++UKPWoCakRzc1NMahjI3+vuncMc9RGu9WSNS9GDbJfbZrDhKbQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nOsi7DgFrY6L0AITNV24NSDI23Vl+ln3L0cBYJTYbN8=;
+ b=tR4T3L2TV4px+MIN8UF2jOfFQc/jDpb4WJBWaXc+AAKkTfyjhnuO/ADsz4xYTRzf4TOK/5v3psW0CBQdKoX9vmVjZEtobp0li/3LQxMp0qEgMU2fFZxL7T9upuCH+rrMNPKs72gwHTsh/+66gE9xBe0T42j5q9YHxCc+CG55mbE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
+ by CH3PR12MB8510.namprd12.prod.outlook.com (2603:10b6:610:15b::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.14; Fri, 19 Sep
+ 2025 08:47:40 +0000
+Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
+ ([fe80::29bb:9aa:2a72:df1b%5]) with mapi id 15.20.9115.020; Fri, 19 Sep 2025
+ 08:47:39 +0000
+Date: Fri, 19 Sep 2025 10:47:32 +0200
+From: Francisco Iglesias <francisco.iglesias@amd.com>
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: Re: [PATCH 5/7] hw/net/can/xlnx-versal-canfd: remove unused include
+ directives
+Message-ID: <aM0YpGAYD59Gz4Vg@xse-figlesia-l2.amd.com>
+References: <20250917114450.175892-1-luc.michel@amd.com>
+ <20250917114450.175892-6-luc.michel@amd.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Disposition: inline
+In-Reply-To: <20250917114450.175892-6-luc.michel@amd.com>
+X-ClientProxiedBy: FR0P281CA0004.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:15::9) To SJ2PR12MB8739.namprd12.prod.outlook.com
+ (2603:10b6:a03:549::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|CH3PR12MB8510:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6a9997d5-77b2-4cb3-164c-08ddf7593053
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?R0ZIT1paTlVrUlFEV3lwbURPRjFWWUFGMjZiZWxRcUk3TmlWODVyRkYvSUVK?=
+ =?utf-8?B?VThXMVFEMktKOXhQMk1VWC9WeE9DcTkzV3N4cmJzZERlb0gzVmozdnVaYXIx?=
+ =?utf-8?B?VFVZZkJNWDZGTHZMeGw4Z3NTVUpnQ3lmcDZGOEwvQ0g3czFnNzZCUFV6UVZm?=
+ =?utf-8?B?RzVkdjJQbE1BaVJ0UWJ1VSsxYi9ZSnlYUC9odzRLejkzRDZGVWZnWVZVbmJD?=
+ =?utf-8?B?eWx1eXljajZ0UEk0MmZCdEJqZ3RxbDFjS3ExcWUvTzI0YTR3ZTFzVGRGQmpi?=
+ =?utf-8?B?aWRUbXlHdUQrdlp6MlI4VzAxQS9jcklscWJYbFd5Z0JxZkI3WVh6bnRhcS80?=
+ =?utf-8?B?bk8yM2wyTlRtQzYvL29EU2djaUxJd3NsaUJFZVFsVmgzVHdUcE1SNkh6WElq?=
+ =?utf-8?B?ME5Xd3gxUHBkbnRCWng1LzhPMnc3UFg5OVdjZEs4TmFwNU1PMDFFTkQrOEor?=
+ =?utf-8?B?U3ZhNWJYbnNnYTNLWTFHeVpqcG40M0pHMDR3b05qeTF4b0o1d2lnWmRQRDJN?=
+ =?utf-8?B?ZFA5SDBLeVJIaFFiU3B2VWxqanhGRktDU0Y2YXdMZHpZRVFrRk1MeE5LanU4?=
+ =?utf-8?B?SGVIZmVzZWZyM3hPVTJIellFUllaRDJ5TERWV3FrYVZtcGVKS0FGUm0va2NN?=
+ =?utf-8?B?cCtyQlNuZ0lKK09BTXRCUVlRNFJabDZmWWdtT0ZNTTA5UU1qMDBSQkN3V1Vj?=
+ =?utf-8?B?d0tDWmlORDB3eTFOV3R0SXJUT0R4LzZQOWg2dkNlVHNxeFEydXJleVVCRE4r?=
+ =?utf-8?B?a0NJNzhQZ2dhNXFHL2RoZkdXWnZiVmkyVE9hSVNaQlp1c3hFWER4V0J2T0RG?=
+ =?utf-8?B?T0dwaGhyeEpGcHpUWHJIdWhQMythc1J2eVBYVTdBWVlUbDhNd0pGZEM5UEJt?=
+ =?utf-8?B?L1J4UG5qV2xCamxRUFNTUGV0Umc5QjJKRXBjVmxMMUc2Qkx6MnJBZG5Ya0ll?=
+ =?utf-8?B?cERpNlVEaXNpWE5RdDhIeUVoblFMMDBmRXgvczR0MXc5ZjZhRUg0c0MrcWpa?=
+ =?utf-8?B?YmppY2RHOFFxRzhURUsvb0xmMW95ZU13K1RndTQyVk95VEtHVWpEekZGcjJI?=
+ =?utf-8?B?MXhWOWFuMDUzUytxZFJMczhKMlpNMmkybDFYa29JM3hWTk5aZmN5czBpUmdE?=
+ =?utf-8?B?dGVwNVlnTVFIS2JTMnVlbWhaWERVUXVIZXhrb0NUMTlDRHFjaWdRNjVVa2s5?=
+ =?utf-8?B?MzJDQkNNVEVQcTNtdzFUUUZoL0ZtYmdxSFFLakJlNVVyL1ByTFpkWnlKeTRV?=
+ =?utf-8?B?cHFjQ1F3ME1RRWt1b0tmR3JMenNJSWFqdUM3ZEFkZnFOYlJsSHN1U3JVRHFT?=
+ =?utf-8?B?R1FxZy83Z3B0Ulo0TWZQRTNQeHZrU0hVQzQ3QUF4Uk1OTkVzdEI1RlFWd2Qz?=
+ =?utf-8?B?T2g5ODlGaFluWjFIM1UxMnpQazBMSC9NR1pnQWVmV1ZYVCtzcWd6RDc2VDdG?=
+ =?utf-8?B?SmwzcEZYNHJxd2l1R3BDdGdFWmdBU0MwT3ZudzhDY2NCaEU0VW9JUVRiUVl1?=
+ =?utf-8?B?MmdGeUVuclB6blRxbXJFRFVNM2tyRVRESXBVT0xHRmpQbUd1MzNRR0hXQ2J1?=
+ =?utf-8?B?V2Q1WXNWOUQ3aVQyYmIwc0loWHhVSlovUXBSY2gvSE9Oc2Voa0ZPNXBncmc0?=
+ =?utf-8?B?SHdGeXkrMGZ0cmNsRkxmTTdOL3ovZ0hwSjM5NGpxVWtxd0lSd1pOYUtmVG0r?=
+ =?utf-8?B?cjBueFRKWGtDUHAwQ3lWQ0hlcEM2MG9QVExZVzl1M2VmbE5BS0N0a1BiNlVp?=
+ =?utf-8?B?SzR1SFdUMnBXc0FiTExmV1FoTDZDL0pING1KWkJMcFhiM0h6aWxMNW1RRlJ0?=
+ =?utf-8?B?Ry9jdzMwdStodXZFQ2VVcUVKS0ttL1dwYXlkR1daR3NqbjR4TFlxblRmbStK?=
+ =?utf-8?B?dE9OK0V5Q3Q3bjV5Vmo0eWh0Qk1aQzI3ZXZxdFNLUmE0bUp5QWRFM242VmNa?=
+ =?utf-8?Q?jXlhOSmcRXQ=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V2wyRGZCRWV4VDNjQnRkalZmVmh6Ry85Zy8zQ3ZUVTBpZGxCV3JEKzZyWUUr?=
+ =?utf-8?B?UDRwbHlJWTk5aGRlSFduUXA4NFovUnU3Q2VwYzA4MS85aFA2UWZncHNuTTBP?=
+ =?utf-8?B?TEpEZlZnbC9NWThCVHZBSDQxSkZRb21laWdKc1h4ZHRxRmdNeCtRUFZjaHZJ?=
+ =?utf-8?B?U2VDemZEbVgzQk93aTFPaXhuVStQSDFNMDB3enJCMkM3V2ticmpkMGNDak1D?=
+ =?utf-8?B?RDY0cnMwTzR0QzRhZjNyclRsQmc4MVdUdDNQdHQ4U01tSzZrcnFnRnozbFEx?=
+ =?utf-8?B?Wi9zSDFuR1h5VGF6aHMzRXNER0NheDNmOUxPbHdmS2NYSmpSY2diY2NVNjRE?=
+ =?utf-8?B?dUFmcEFnNy9hcE05SlJsQnRmYURxcExlQTh6aHkvY0RCS2pubFdCaUEzUHRI?=
+ =?utf-8?B?emVpNzlTbjQ0cVQ4RW90ZGNxL1l6U0FNS2Rsbm1kbTR1d2JQVjNxZXZJek1N?=
+ =?utf-8?B?MEpza0RnNUZSSDZnSGFreVNpUy9BS2J4UjhhT0dEMndsME5vNkVFa1REMnNp?=
+ =?utf-8?B?cXV0aXl6cisrMldYaEwyVllCTWE1V2dESzhubW1ETWprREdsamZ2a0J5Q0xl?=
+ =?utf-8?B?MEZyTERQb0JpY1RUZi9ZYnZscllUTXVVTkNHWjJBMWZaU2tpZG5mTTVCUWZu?=
+ =?utf-8?B?TFhMMWVsZjVSamhnZUZ0OUpyNXJQKzRvNnhHL3pFVlBOL1RiM2ZnRTJjV0JR?=
+ =?utf-8?B?Ym5sV24wNCtsRHlTY0JkM0J6c2FHYkxPTDcvWGl4VU44VzNKNldmOHRSa3hj?=
+ =?utf-8?B?S0xnQ1pIRWdvc0wzNlFIeGhjSzJUSzk2Q2xIaXJsNEZabkFJcnQzRm5rMjlW?=
+ =?utf-8?B?a3FRNzFPR1FrSS85Q1EzMUUyRjV5dlFHZDBhQWhsT3ZxNGQvd3Z0bjZyalRL?=
+ =?utf-8?B?Yk5zWnVpaURET3E0blFLVVRRVlJZYUd1WEFzRXA3ODBMQU5SN082ZnZPRDkz?=
+ =?utf-8?B?WUx2aUxJYkw1a2FtRGRKZUtZUVFaeXpTREJxTEw3dVVIbTloTm5adXJmc1U4?=
+ =?utf-8?B?U29iSVBpTnErS0pCM2o4UHRpSTF6TVJhYXlqUm4ySW5ST3hNK1VXaXFiQTF6?=
+ =?utf-8?B?NXZnemdCemkyeVJ5OE9DMmcyeVVKcVRDdmdaeUdKQlp1S1BkQXZQK2VhOWcx?=
+ =?utf-8?B?ZlB2S3BkMC94dWo5bmQrSWtkQ1ZHU2dqeCtka1l0dHkrcjcxSzlFWW44L1k1?=
+ =?utf-8?B?bDVVWGZrMjlmQmZYc0RZblJxdVpnZHBWR0JNVlRpRjdDb2ZnZ3hkSjNKYXd5?=
+ =?utf-8?B?a1VONThRTElCRWQ5dEVNRnhYbTg0b3gxanorYWx1UHU3RDJvOFFvN0lqc2gw?=
+ =?utf-8?B?QVZTNFRzT0pibU9SbU9iRHp0WHpFNzZjQ1NKZ0I2WjNkSDlINGlEbTk5MmR1?=
+ =?utf-8?B?cXd5bGo2eStyZDBKZk9jTHZydHpDYUhvR0pDdmxZcUFFMEE1WDZxMlZENkR0?=
+ =?utf-8?B?MHJHWkUrNFNHRWV6TXEzcktZREVTbFAyYTgvTmdLRzJUekFFbnRDR2YrMzNk?=
+ =?utf-8?B?UHIvdnlmTmQzbFBNcTlQZE9aR0d6eUd4RkdYSCt2YjRlU1UzZW1wdFo5S0Fj?=
+ =?utf-8?B?cVBjaW1yTnFkUUNTNDFid1JjbTFMaG1iU0dnRllsSDdtR1BpQjAzMnNZR0VN?=
+ =?utf-8?B?dkNjTXNQMXVWNXRoakx3eFZDdGhleVdJbEdBcE01YlRQcDVpd2J2SFRKRTVs?=
+ =?utf-8?B?ZDJNSTU0T3UzRVM4aUE0VllCclNOUHAzVGhTTHp5d1NYNHdNRjNZQ3NyQ3J1?=
+ =?utf-8?B?aXRSNWpHdWlIZDk2TWxTdmxpWkZXb2JFOCtZRzZqYWk2UnZDWHFDNXRURmFG?=
+ =?utf-8?B?L0xaamZCTENLVFFSd3Z2WHRLcURGcWZYbGJ3YTIvT0V1Z3FKaEdMbCthRWRP?=
+ =?utf-8?B?OEdWenhNRVBDczMrM2pRdWl6NU5obUViREpMckpKbXdoYU1JcFV1T2dtV3lx?=
+ =?utf-8?B?Nk1ieC9Mck4wbkdEWDFQK0JZU2lsZjMxVWZaVjRHTnVqVmJyWS8vcDZTU0tw?=
+ =?utf-8?B?V1FXWkVjR1pXWnNHVGsvamMwa2dUVVNDdXF0WEFpUGNEc2pUYTNmb2NuTWQx?=
+ =?utf-8?B?QVk4WkNaK1Q1cVVLME5DVFJMNlFLMUYyVTVJYi9VKytKNUxvcTY4SXlEZjky?=
+ =?utf-8?Q?Zc5dwL35+jJdpztdOgmATMk/W?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6a9997d5-77b2-4cb3-164c-08ddf7593053
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 08:47:39.3227 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gKhebveF+PgPSCOrFC8LTExNXOFKQ5f14DNztOlbbZwtqCpGULMfYh3GUWlbIcxPMt3Blp+GgPwLGNYRIjWztw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8510
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=francisco.iglesias@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,132 +177,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Wed, Sep 17, 2025 at 01:44:46PM +0200, Luc Michel wrote:
+> Drop unecessary include directives in xlnx-versal-canfd.c.
+> 
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
 
-> The ability to set the thread name needs to be used in a number
-> of places, so expose the current impls as public methods.
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+    Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+
 > ---
->  include/qemu/thread.h    |  1 +
->  util/qemu-thread-posix.c | 30 ++++++++++++++++++------------
->  util/qemu-thread-win32.c |  6 +++---
->  3 files changed, 22 insertions(+), 15 deletions(-)
->
-> diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-> index 3a286bb3ef..27b888ab0a 100644
-> --- a/include/qemu/thread.h
-> +++ b/include/qemu/thread.h
-> @@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
->  void qemu_thread_get_self(QemuThread *thread);
->  bool qemu_thread_is_self(QemuThread *thread);
->  G_NORETURN void qemu_thread_exit(void *retval);
-> +void qemu_thread_set_name(const char *name);
->=20=20
->  struct Notifier;
->  /**
-> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-> index 7c985b5d38..ddaa1de4dd 100644
-> --- a/util/qemu-thread-posix.c
-> +++ b/util/qemu-thread-posix.c
-> @@ -329,6 +329,21 @@ static void qemu_thread_atexit_notify(void *arg)
->      notifier_list_notify(&thread_exit, NULL);
->  }
->=20=20
-> +void qemu_thread_set_name(const char *name)
-> +{
-> +    /*
-> +     * Attempt to set the threads name; note that this is for debug, so
-> +     * we're not going to fail if we can't set it.
-> +     */
-> +# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-> +    pthread_setname_np(pthread_self(), name);
-> +# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
-> +    pthread_setname_np(name);
-> +# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
-> +    pthread_set_name_np(pthread_self(), name);
-> +# endif
-> +}
-> +
->  typedef struct {
->      void *(*start_routine)(void *);
->      void *arg;
-> @@ -342,20 +357,11 @@ static void *qemu_thread_start(void *args)
->      void *arg =3D qemu_thread_args->arg;
->      void *r;
->=20=20
-> -    /* Attempt to set the threads name; note that this is for debug, so
-> -     * we're not going to fail if we can't set it.
-> -     */
->      if (qemu_thread_args->name) {
-> -# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-> -        pthread_setname_np(pthread_self(), qemu_thread_args->name);
-> -# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
-> -        pthread_setname_np(qemu_thread_args->name);
-> -# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
-> -        pthread_set_name_np(pthread_self(), qemu_thread_args->name);
-> -# endif
-> +        qemu_thread_set_name(qemu_thread_args->name);
-
-Clean factoring out up to here.
-
-> +        QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
-> +        g_free(qemu_thread_args->name);
->      }
-> -    QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
-> -    g_free(qemu_thread_args->name);
-
-This part avoids
-
-       QEMU_TSAN_ANNOTATE_THREAD_NAME(NULL);
-       g_free(NULL);
-
-The latter is an obvious no-op.  The former isn't.  Separate patch or
-mention in the commit message?
-
->      g_free(qemu_thread_args);
->=20=20
->      /*
-> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-> index 9595a5b090..62eaa11026 100644
-> --- a/util/qemu-thread-win32.c
-> +++ b/util/qemu-thread-win32.c
-> @@ -316,7 +316,7 @@ void *qemu_thread_join(QemuThread *thread)
->      return ret;
->  }
->=20=20
-> -static void set_thread_description(HANDLE h, const char *name)
-> +void qemu_thread_set_name(const char *name)
->  {
->      g_autofree wchar_t *namew =3D NULL;
->=20=20
-> @@ -329,7 +329,7 @@ static void set_thread_description(HANDLE h, const ch=
-ar *name)
->          return;
->      }
->=20=20
-> -    SetThreadDescriptionFunc(h, namew);
-> +    SetThreadDescriptionFunc(GetCurrentThread(), namew);
->  }
->=20=20
->  void qemu_thread_create(QemuThread *thread, const char *name,
-> @@ -356,7 +356,7 @@ void qemu_thread_create(QemuThread *thread, const cha=
-r *name,
-       hThread =3D (HANDLE) _beginthreadex(NULL, 0, win32_start_routine,
-                                         data, 0, &thread->tid);
-       if (!hThread) {
->          error_exit(GetLastError(), __func__);
->      }
->      if (name) {
-> -        set_thread_description(hThread, name);
-> +        qemu_thread_set_name(name);
->      }
->      CloseHandle(hThread);
-
-This changes the first argument of SetThreadDescriptionFunc() from the
-value of _beginthreadex() to GetCurrentThread().  I'm a happy Windows
-ignoramus...  sure these refer to the same thread?
-
+>  hw/net/can/xlnx-versal-canfd.c | 4 ----
+>  1 file changed, 4 deletions(-)
+> 
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+> index 3eb111949f8..343348660b5 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -33,16 +33,12 @@
+>  #include "qemu/osdep.h"
+>  #include "hw/sysbus.h"
+>  #include "hw/irq.h"
+>  #include "hw/register.h"
+>  #include "qapi/error.h"
+> -#include "qemu/bitops.h"
+>  #include "qemu/log.h"
+> -#include "qemu/cutils.h"
+> -#include "qemu/event_notifier.h"
+>  #include "hw/qdev-properties.h"
+> -#include "qom/object_interfaces.h"
+>  #include "migration/vmstate.h"
+>  #include "hw/net/xlnx-versal-canfd.h"
+>  #include "trace.h"
+>  
+>  REG32(SOFTWARE_RESET_REGISTER, 0x0)
+> -- 
+> 2.50.1
+> 
 
