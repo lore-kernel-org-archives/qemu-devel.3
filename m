@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728F7CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF3F9CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzbrh-0001DW-9e; Fri, 19 Sep 2025 10:13:33 -0400
+	id 1uzbri-0001E1-84; Fri, 19 Sep 2025 10:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uzbrB-0000V9-8l
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:13:01 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1uzbrC-0000Yy-7i
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:13:02 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uzbqz-0007Wi-Ce
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:12:59 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDtphp015796;
+ id 1uzbqz-0007WG-Bo
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:13:00 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDuSkG018787;
  Fri, 19 Sep 2025 14:12:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=C94fURgxAcm48QywS9BooAcBLZJFdjmOuloYy2rtAog=; b=
- rKo7Yj2zAEPUbq7WYJky85OtGgto8jrSsEFehD9ghhV8QyAEZ1J01gjeA/yTnYYx
- z5EJXc9+NeO/YtkBHXPuu424oZuJh44geuReiSVMAjIvD3M9JkJO1veXLIHrrNDm
- rnR8TXIcMlgKISlcfv8wGZtU30RfBvopsqfr5aNQmygmzsZ/FpYcnuteMBtUoOth
- hQfs8YNR5UzyLTUEOV8nnzy8US+medGP1TFkJM93sy6PftWPlkXT/2fO6Mo2bswp
- aNHScTuZ/tUC5SC3g9RB+0Li6R5ZnQAPraEiGOedd3EyHQD8hKEoCqOcurwM/p8J
- eXYtPGNTa5Y1BeEADQe7lw==
+ corp-2025-04-25; bh=iSkBmVyrzvdeS7/ZCn59L1EbTtbtoN3x8q49RKreKkE=; b=
+ Xi7P+zeW4KNCuexn3KDbIcKj8wFD4qMjXkW+F9bXiVwcfpyaLMcSiBqiogtyugIy
+ 2i8hioQ8eZ/WlFtMDmlEtCUfVVNBgnpERPfeLpHenedlpXtLRLTyeHK6gvW3UAOE
+ tOPme/Nhn8rAC+dfiujDJJHqwFePqbzpTBDWx4lfj+mxV5AMCI/Jf1T9Yyw2kNoU
+ 6J3UV8RLleH1iyBipWVmDJhyObN9/dvVVBTHR73kY7RbD/iaq4wF7ZPcpnt2dijl
+ p7yhLJ6u93yqY5ujRjTSPsIUKuKFKx3IkWT88vPXvILAx7Nhj4Azev511iWolp3Q
+ fCV9xMG4drONEkzmkkTdFw==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fx95m0u-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fx9wpqp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 14:12:45 +0000 (GMT)
+ Fri, 19 Sep 2025 14:12:44 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58JCUAfh035203; Fri, 19 Sep 2025 14:12:45 GMT
+ with ESMTP id 58JCujDQ035132; Fri, 19 Sep 2025 14:12:43 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 494y2pu97m-1
+ 494y2pu96q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 14:12:45 +0000
+ Fri, 19 Sep 2025 14:12:43 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JECYXL003357;
- Fri, 19 Sep 2025 14:12:44 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JECYXH003357;
+ Fri, 19 Sep 2025 14:12:42 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 494y2pu924-11; Fri, 19 Sep 2025 14:12:44 +0000
+ ESMTP id 494y2pu924-9; Fri, 19 Sep 2025 14:12:42 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 10/11] migration-test: strv parameter
-Date: Fri, 19 Sep 2025 07:12:32 -0700
-Message-Id: <1758291153-349744-11-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V1 08/11] migration-test: misc exports
+Date: Fri, 19 Sep 2025 07:12:30 -0700
+Message-Id: <1758291153-349744-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
 References: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
@@ -72,22 +72,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
  definitions=main-2509190132
-X-Proofpoint-ORIG-GUID: 0n83KltxGh5VqQ7EyK0GtZ6_qeLTzGBC
-X-Proofpoint-GUID: 0n83KltxGh5VqQ7EyK0GtZ6_qeLTzGBC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX7PbAHpzBcBn6
- C3f0veiOMR085J3Jvdxe4KIzISxVkajm/MtgvQvfxopix1agYrKkjPihEhkoYnoacXn/ytkMVJq
- 2Ws4QOm7cZCRqx6fwXP2WgXrFv0mRO70vvqubj0ITX7HPZ1EmPJT7tfwC66nwBaE+ZoxOXv3B7A
- +VcdkHa8XIZYfDhGvDomDyJUUI+Kw8b3styaTP6g6a3m0fAEaCXb33tWbfpYMR2FyozwC29LXn6
- Cha+jked8qnND9Zv7jdy/PrizX8J84mAtualyuQFojK4vvNuTOpLtrmFGC/C/QhLdH3h3q2iZXm
- tpmGxKNniQ9NZj7u+U6KHkk24TtPdNfXzjKiD4gXIXpexPbzjMFMXnm5Npz7J6Z2WnOrsgDDtw6
- wUhhzNQfWolgHOFGDx7WPJEnxTTWAw==
-X-Authority-Analysis: v=2.4 cv=N/QpF39B c=1 sm=1 tr=0 ts=68cd64dd b=1 cx=c_pps
+X-Proofpoint-ORIG-GUID: X0Od870uIzKGpWOXA4cSYI2qsySrRwiE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX0mw/OhepBEvO
+ kWvexzx/VRHRe1VFhF7Lv2+Dp2sClHsyAPbd4pG1BkTeqjlLbFg8kcjKhWORj0wztgKWJIufoDf
+ 8cu+PbLGHGNrGqx1kEvYBhYH++B4miVKDoxP4cWMmSWdpmDGCVGynrA6PUWc27MtqYoASFBBnr2
+ xBmiefq27Wj4Gn0R2iDhAsJoxv5AbPen/u4ikXzhQCyhiCLC6N1+wiC0e3Zayjhsmg412nXKpgE
+ ehREEzyuFaDcpE0yHeYhRiA8R0dG1gasXxPLbOShwn680Rqwdi70artewbuKBSkN89A0/Ig6nMK
+ SjzxIjx/GvKJiLAZh13PTBm06qtb4QmQQA3sZqryLu64fpxAo5xISRoDE90WM84NDZ1KejxPu1I
+ n1r1x57pTLnIkn6xj8dmguWu2uQ0YA==
+X-Proofpoint-GUID: X0Od870uIzKGpWOXA4cSYI2qsySrRwiE
+X-Authority-Analysis: v=2.4 cv=C7vpyRP+ c=1 sm=1 tr=0 ts=68cd64dc b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117
  a=e1sVV491RgrpLwSTMOnk8w==:17
- a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=7rmqtDVDOkByKEcGYTsA:9 cc=ntf
+ a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=ON8abKIKo2PTab2e5BMA:9 cc=ntf
  awl=host:13614
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -111,54 +111,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define migrate_set_parameter_strv.
+Export misc definitions needed by the cpr-exec test.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- tests/qtest/migration/migration-qmp.h |  2 ++
- tests/qtest/migration/migration-qmp.c | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
+ tests/qtest/migration/bootfile.h  | 1 +
+ tests/qtest/migration/framework.h | 4 ++++
+ tests/qtest/migration/bootfile.c  | 5 +++++
+ tests/qtest/migration/framework.c | 7 +++++--
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-index faa8181..44482d2 100644
---- a/tests/qtest/migration/migration-qmp.h
-+++ b/tests/qtest/migration/migration-qmp.h
-@@ -34,6 +34,8 @@ void read_blocktime(QTestState *who);
- void wait_for_migration_pass(QTestState *who, QTestMigrationState *src_state);
- void migrate_set_parameter_str(QTestState *who, const char *parameter,
-                                const char *value);
-+void migrate_set_parameter_strv(QTestState *who, const char *parameter,
-+                                char **strv);
- void migrate_set_parameter_bool(QTestState *who, const char *parameter,
-                                 int value);
- void migrate_ensure_non_converge(QTestState *who);
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 66dd369..c803fce 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -442,6 +442,22 @@ void migrate_set_parameter_str(QTestState *who, const char *parameter,
-     migrate_check_parameter_str(who, parameter, value);
+diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
+index 6d6a673..96e784b 100644
+--- a/tests/qtest/migration/bootfile.h
++++ b/tests/qtest/migration/bootfile.h
+@@ -35,5 +35,6 @@
+ 
+ void bootfile_delete(void);
+ char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
++char *bootfile_get(void);
+ 
+ #endif /* BOOTFILE_H */
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index f1bb9d4..7ff3187 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -18,6 +18,9 @@
+ #define FILE_TEST_OFFSET 0x1000
+ #define FILE_TEST_MARKER 'X'
+ 
++#define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
++#define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
++
+ typedef struct MigrationTestEnv {
+     bool has_kvm;
+     bool has_tcg;
+@@ -237,6 +240,7 @@ void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
+ 
+ typedef struct QTestMigrationState QTestMigrationState;
+ QTestMigrationState *get_src(void);
++QTestMigrationState *get_dst(void);
+ 
+ #ifdef CONFIG_GNUTLS
+ void migration_test_add_tls(MigrationTestEnv *env);
+diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
+index fac059d..479c432 100644
+--- a/tests/qtest/migration/bootfile.c
++++ b/tests/qtest/migration/bootfile.c
+@@ -68,3 +68,8 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
+ 
+     return bootpath;
+ }
++
++char *bootfile_get(void)
++{
++    return bootpath;
++}
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 9d04f36..8f9e359 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -28,8 +28,6 @@
+ 
+ 
+ #define QEMU_VM_FILE_MAGIC 0x5145564d
+-#define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
+-#define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
+ #define MULTIFD_TEST_CHANNELS 4
+ 
+ unsigned start_address;
+@@ -1005,6 +1003,11 @@ QTestMigrationState *get_src(void)
+     return &src_state;
  }
  
-+void migrate_set_parameter_strv(QTestState *who, const char *parameter,
-+                                char **strv)
++QTestMigrationState *get_dst(void)
 +{
-+    g_autofree char *args = g_strjoinv("\",\"", strv);
-+    g_autoptr(GString) value = g_string_new("");
-+    g_autofree char *command = NULL;
-+
-+    g_string_printf(value, "\"%s\"", args);
-+
-+    command = g_strdup_printf("{ 'execute': 'migrate-set-parameters',"
-+                              "'arguments': { %%s: [ %s ]}}",
-+                              value->str);
-+
-+    qtest_qmp_assert_success(who, command, parameter);
++    return &dst_state;
 +}
 +
- static long long migrate_get_parameter_bool(QTestState *who,
-                                             const char *parameter)
+ MigrationTestEnv *migration_get_env(void)
  {
+     static MigrationTestEnv *env;
 -- 
 1.8.3.1
 
