@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF3ACAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA53CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzYc0-0007ev-6j; Fri, 19 Sep 2025 06:45:08 -0400
+	id 1uzYiI-0001kR-5x; Fri, 19 Sep 2025 06:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzYby-0007e3-9t; Fri, 19 Sep 2025 06:45:06 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uzYiE-0001jE-7e; Fri, 19 Sep 2025 06:51:34 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzYbt-0003tH-LC; Fri, 19 Sep 2025 06:45:05 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7268680B0A;
- Fri, 19 Sep 2025 13:44:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a72::1:38] (unknown
- [2a02:6bf:8080:a72::1:38])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id riQA0U1Gna60-j2D2bLMJ; Fri, 19 Sep 2025 13:44:54 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758278694;
- bh=F09edft7YaQymcxDKkLfbveodyxSViH4N4UkF/w1BaQ=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=V5Bql0G4aO5Ke1O3Cn2zRdk9JissuF64jX/f6OmNqXhr0jVn+OMzpnMLrXL3NomCx
- jH6IK69xumupHrDefhYaqjz0ytACKA9VDOwakNKG6gu3+BfO1qJMDeZDmjivsO/YdO
- ntbLPs2QaGLfv8vIJQUmvBxI7AkA1RfDBsR8fNRU=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0a96b12b-5c51-4e45-bec7-679c2f588fa4@yandex-team.ru>
-Date: Fri, 19 Sep 2025 13:44:53 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uzYiA-0007In-Ca; Fri, 19 Sep 2025 06:51:33 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58JAnSkG034536
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 19 Sep 2025 19:49:28 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=MP/aWQfL5AeteLs3iYOvs5XOjlgtCOWSBWzrwpTeLHA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1758278969; v=1;
+ b=S5fu8gfxZZiPnzD5VRHNv/uTY6iJWyIUwLazMNVUmCBeynHTUOA2iEgcOHc6KflY
+ emqbX/bQhivXM0ZJTrM3Kdix317VEnNTLuR55r4BD6CCS2KsNV+u6uR2Gu2MeHSQ
+ lBZ4MUkNXjzKLJFzzUPNWcYrBs4hFzvr5zRMtUKMo/3Etb6/jheULNi1cf88hRVF
+ 09KetWzajL11CS43aTEF5Ibb+gEZWvRrpGktxAm4fHCDTmcDcDa8Ov/Q3dITg4E+
+ n588HfUKfhFonV0Thdy6AMTm3LydrhGYm0/d08ebrVqGb/oTCwq/Tj1NiNFxZ9K/
+ VBUOfiYyB4m/Du6sv1fF7Q==
+Message-ID: <10834681-260f-4727-9687-77b3eef085bb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 19 Sep 2025 19:49:27 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/13] util/vhost-user-server: vu_message_read():
- improve error handling
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, qemu-block@nongnu.org,
- leiyang@redhat.com, marcandre.lureau@redhat.com,
- Coiby Xu <Coiby.Xu@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20250916131403.368343-1-vsementsov@yandex-team.ru>
- <20250916131403.368343-14-vsementsov@yandex-team.ru>
- <aMmHUW5nqZf1RxTb@redhat.com>
- <ea5f1352-e1f8-409e-a0cb-9568585628f1@yandex-team.ru>
- <aM0v-Gr0TTAllYmF@redhat.com>
+Subject: Re: [PATCH v3 0/7] Do not unparent in instance_finalize()
+To: Peter Xu <peterx@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <aMwRSpezxmIwIHrU@x1.local> <f536fc18-73ab-676c-bdec-59e94a3e5408@eik.bme.hu>
+ <aMwxYY9E3QghD10K@x1.local> <aMxOM-XCamf2y8ke@x1.local>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aM0v-Gr0TTAllYmF@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aMxOM-XCamf2y8ke@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,38 +108,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.25 13:27, Daniel P. Berrangé wrote:
-> On Wed, Sep 17, 2025 at 01:13:15PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 16.09.25 18:50, Daniel P. Berrangé wrote:
->>> On Tue, Sep 16, 2025 at 04:14:02PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> 1. Drop extra error_report_err(NULL), it will just crash, if we get
->>>> here.
+On 2025/09/19 3:23, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 12:20:49PM -0400, Peter Xu wrote:
+>> On Thu, Sep 18, 2025 at 05:29:34PM +0200, BALATON Zoltan wrote:
+>>> On Thu, 18 Sep 2025, Peter Xu wrote:
+>>>> On Wed, Sep 17, 2025 at 07:13:25PM +0900, Akihiko Odaki wrote:
+>>>>> Based-on: <cover.1751493467.git.balaton@eik.bme.hu>
+>>>>> ("[PATCH v2 00/14] hw/pci-host/raven clean ups")
 >>>>
->>>> 2. Get and report error of qemu_set_blocking(), instead of aborting.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> ---
->>>>    util/vhost-user-server.c | 17 +++++++++++------
->>>>    1 file changed, 11 insertions(+), 6 deletions(-)
+>>>> Could I ask why this is a dependency?
 >>>
->>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->>>
+>>> It removes an address_space usage from raven so this series does not have to
+>>> change that and I don't have to rebase that series. Otherwise these are not
+>>> related. I'll check the problem reported about my series and send an updated
+>>> one.
 >>
->> Thanks a lot!
+>> This series should be a split of a previous mixed up series that may
+>> contain address space changes while this one doesn't.  It also doesn't
+>> touch raven.c and ppc/.
 >>
->> Now the whole series is reviewed. Will you queue it
->> (together with base "[PATCH v4 0/2] save qemu-file incoming non-blocking fds")?
->> Or we should wait for ACCs from other maintainers?
+>> Can I then understand it as the dependency is simply not needed?
 > 
-> I'm queuing it, with fixes for the minor problems I pointed out.
-> 
-> If possible, try to feed big patch series through gitlab.com CI in
-> your own qemu.git fork before sending to catch all edge cases.
-> 
+> I meant, it seems we don't need to wait for the other series to merge this
+> one, hence the there is no real dependency.
 
-Thanks! I'll try do it with "[PATCH v5 00/19] virtio-net: live-TAP local migration".
+You are right. This series can be merged without the raven clean ups.
 
--- 
-Best regards,
-Vladimir
+Regards,
+Akihiko Odaki
 
