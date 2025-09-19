@@ -4,159 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4C6CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 18:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF243CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 20:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzfzI-0002h8-Sd; Fri, 19 Sep 2025 14:37:41 -0400
+	id 1uzhOM-0004pO-4s; Fri, 19 Sep 2025 16:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uzfz7-0002gg-7N; Fri, 19 Sep 2025 14:37:31 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uzhOK-0004oY-94
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 16:07:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uzfz0-000198-8x; Fri, 19 Sep 2025 14:37:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M9cNTHMf8XgudM021MrTzpAp3tigGbHeKkl1q0AUm6EJ49iqJGjvOyyisrhFnV/+V7TwOH5YfPVdvzQS0Da82hgILSyDYwMnXuuRoK0li3arbVlZfmx3M1gMKN12Zc/qq7cll4aqn+gtS+kIgqrVk1EdROSjT9V6kNK4xqZyIgxoFpfmiL0Mn4rvhTh/ZxFyJs8n8uyoWGnSDsk0GGVRPE1x4hRZr37rW9xooVIiOyFg7hsoYX6tLgvBcCiI6EpmpS1ycjseIiynarsJXtDl0oG98gyKhVMTod5FXyGDavjo19IVtUkCjqTf/ABpCcpC7oAVtg36HOs+4IwL0jcpQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=I0uuRKMhclGx8WWshs5L9Qvwc/RSa+G/fdRfoMb3Hqk=;
- b=eqrbKWddKxAcSFOioc5EVplSwAxukh4jSOOwIt8xVFnTTGdj8M6r0rHx+2QU7/svQFkmnnKUm5mkJm6jHcdoAclsalhcFEpYq2PPBSyBKFYQoRD24zl3SBpSN36E27ysb2bXHL7HBzAsa6LUoH5KbG15facZ1LXNCWQzjkULryAfdpIyNQWY/UU4coMFss3COVKTx0JtNWEs8FYRXuVnbwMOT2RS/Wnb8RdHmkWZJJtBNpeZHsIID0iKtQqr/6glznc49FKpjFo8PULMPkl28bx3G3SjvA1ftObW5C52Ub6IyUcghYlftFVYeVwoQ5zg3528eNRmTucPGSYudPIN1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I0uuRKMhclGx8WWshs5L9Qvwc/RSa+G/fdRfoMb3Hqk=;
- b=tJub0SV0KBsr2wQfBAqZSFDKACJzPBdVADYfhJgZUDRnjsQLweGGKt+bQT+NmMT/N291DYlg5+A6fCXo4Bc7beBiNQLIIuijL+Iox57Fbl0uqE+5SLzCk9HlTpCOF2jJ8c5W6nvNp5/cFRYNH2wL0Mg8gvv6zDzXNrxQPfkR8PpQxSxAwUSVS3/QPwOipA0flKfeq9gFTspaQXuMDoF/gjW2VQzWCSRvl372f2MCV5WXfKR82BbmulPwlkkLhcF3x4xOYoM6PG9VvlUs9CrP3dHNkGqUnVebx05UAMcTbogvxhBPCUBcmdZ8cAgin6qTIol2+nkv3UMyp+9wOj1iBA==
-Received: from BL0PR05CA0023.namprd05.prod.outlook.com (2603:10b6:208:91::33)
- by CH3PR12MB9145.namprd12.prod.outlook.com (2603:10b6:610:19b::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.16; Fri, 19 Sep
- 2025 18:37:11 +0000
-Received: from BN1PEPF0000468E.namprd05.prod.outlook.com
- (2603:10b6:208:91:cafe::ed) by BL0PR05CA0023.outlook.office365.com
- (2603:10b6:208:91::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.16 via Frontend Transport; Fri,
- 19 Sep 2025 18:37:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BN1PEPF0000468E.mail.protection.outlook.com (10.167.243.139) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.12 via Frontend Transport; Fri, 19 Sep 2025 18:37:08 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 19 Sep
- 2025 11:36:52 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Fri, 19 Sep 2025 11:36:51 -0700
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.126.190.181)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Fri, 19 Sep 2025 11:36:51 -0700
-Date: Fri, 19 Sep 2025 11:36:49 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: Shameer Kolothum <shameerkolothum@gmail.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
- "linuxarm@huawei.com" <linuxarm@huawei.com>, "wangzhou1@hisilicon.com"
- <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>
-Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
- SMMUv3 to vfio-pci endpoints with iommufd
-Message-ID: <aM2iwSbs9X8Vx/Lo@Asurada-Nvidia>
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
- <aJKn650gOGQh2whD@Asurada-Nvidia>
- <CAHy=t28z=wrXbXOJjD4sFw0RxJR3fccqF-EdaQDB_s_F6RC4FQ@mail.gmail.com>
- <aMsBvSSEzsgeMHkK@Asurada-Nvidia>
- <CH3PR12MB7548347E93651468E70B2470AB17A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <CH3PR12MB7548B6A98B640192579078EBAB16A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aMyA4AHf7pqnOzSV@Asurada-Nvidia>
- <CH3PR12MB7548BB774BB375D5056C062CAB11A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uzhOE-0001mJ-Ky
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 16:07:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758312447;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1XdwT1Ln2spkiUpfH8kV44iubjsEUf/WQT6VPbEVlgA=;
+ b=ejiJlldra8rnAmw3IT1mOHs7OLkROWwDI8GdCXtcNGUDeIgIJe8FvcWDHY3lQjkR70ouSC
+ oSQTkxlGxpyBUE5ccQCxeTK2iGXSGMhDVjZ82Ds/HTjhMdxQkVxhmpnr7k3uSD1iyDb438
+ M5ZbohRp8iSbwzabVAeXzJyo8gWOSXs=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-358-kKbC6fJSNXyPZ8OHDpDugQ-1; Fri, 19 Sep 2025 16:07:24 -0400
+X-MC-Unique: kKbC6fJSNXyPZ8OHDpDugQ-1
+X-Mimecast-MFC-AGG-ID: kKbC6fJSNXyPZ8OHDpDugQ_1758312443
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b04a8ae1409so236110466b.2
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 13:07:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758312443; x=1758917243;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1XdwT1Ln2spkiUpfH8kV44iubjsEUf/WQT6VPbEVlgA=;
+ b=pd1wRpLCLiN/e89NSqwQfqerqeNi2GpbGoL1wxHUNFVKpfwLNfhc6ERLrLsVDDjnEQ
+ SZI8FjeZE1vWZ5T7KMD/7KZESOMzwDObtQUg7WKEAqwLe4cjz5pKysWmu1KcjVcWZ3MK
+ ELZ4qtlg0FsFWVDBhfXT1cMMbRcrmKWqzxArxmfhtYLF5EfRkzzTW+gNCdho1hJQQnQf
+ KRVaUEfzzw87QMmtBdEEV9bPGJGKMB5j3aUeh9gmhFd7vUr4wLwaJQi94/GMWwFHqMKV
+ azzZgqyq3uV9DV+swrzkpjrvjxhcU76eCye9HTT2UouRB40OekZ3ZouIJH1W0u/JkGou
+ 2Kqw==
+X-Gm-Message-State: AOJu0YzVm4wAGSnkOMuhdaQWntifOERpM7qgeQ4Jf2o6r6MAQU9f4iBI
+ PCkXVbBzfFT5vzCSyxvrq8HxCDTX5c48wwWvhXDhVDfv5AFbeO/uT0cqDg1FAJYQB6NNdO1IvTt
+ /9jcLSZRpH7LhHrJPoVTWTlLFUpGXEYYBnKMJVRdfNHMq92d7H130b2OP
+X-Gm-Gg: ASbGncsE4QPhrYCUMsygGCdep/lDBkuA9MefvIfNNV+ggI6WOSsC750FnUfhaXMM5Jh
+ Yfq71DQVu/DbbS1jI9N0y6q1DHeLHrBN2Q4XqPxKpaEf+DT3qVDyUH7Bbohl8LvAFrayt/p1K2Y
+ gyYslKbRX1GDI9d4MO6zCU+FA5hgoh3ZjKVhxAYr+XKdIHoY7p2aZ9h67N95wn2Nto6hlXydOTU
+ sn1GVeQbYAZDws9wF21q3HIU6P3cqaSlEKXPJMQLDgMTzwak0SIsA5npMZ1Nxn/L98RExckDnWT
+ smoLBE0M18giaRQzAvBJlNkviDee
+X-Received: by 2002:a17:907:3e28:b0:af9:414d:9c2 with SMTP id
+ a640c23a62f3a-b24ee6ef579mr497129566b.3.1758312443384; 
+ Fri, 19 Sep 2025 13:07:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSeov9MpenEiabdtwvgSr9s2k9XCgBB9HA7YvXYctPzvp4AWZzFgcA4EP6kx5LJq1Gooblxw==
+X-Received: by 2002:a17:907:3e28:b0:af9:414d:9c2 with SMTP id
+ a640c23a62f3a-b24ee6ef579mr497127066b.3.1758312442819; 
+ Fri, 19 Sep 2025 13:07:22 -0700 (PDT)
+Received: from redhat.com ([31.187.78.57]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b1fc73ba1e8sm501930166b.31.2025.09.19.13.07.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Sep 2025 13:07:22 -0700 (PDT)
+Date: Fri, 19 Sep 2025 16:07:19 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Christian Speich <c.speich@avm.de>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
+Message-ID: <20250919160526-mutt-send-email-mst@kernel.org>
+References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CH3PR12MB7548BB774BB375D5056C062CAB11A@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF0000468E:EE_|CH3PR12MB9145:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6b0e6d37-5eb5-4ef3-0e24-08ddf7ab8a5d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|82310400026|7416014|376014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?EIKXlwoHaPsZZU3MZNboM9ypR4vK5m/+9gRqA1rGW2fbW8C88P2uxYeoBTBE?=
- =?us-ascii?Q?mvet6rQ3ItzIgyQpyDnvUwXGU51TxzUCrM4TW6tVLhXKDaB+NwWip398IVkA?=
- =?us-ascii?Q?FnaSKpssfpbODKPmykG6x8xIQmKbN4autxH1AC6WwDhpFcq1zr6eoOLwEweg?=
- =?us-ascii?Q?9cNne7rZZklAUfit7PqLhcKcxaRukzR4w0UO1lunFlFdn2D8cw3164k0+6sD?=
- =?us-ascii?Q?nnXiAbyPpbXMeAuUd6uqlDqEMrpvW3nqyixliZZFDWy6qVG+cmG0GVxBA/xP?=
- =?us-ascii?Q?3es21i+Spb+OdJuEf+4bLIFKc9/tJimZu12/LWJC58FxMo2QdwGyJ2mbfs15?=
- =?us-ascii?Q?mMVvYXF7m3aqKrXW6Qcxh+5UyW32YCplIxJEj5LEwzqJKmTRnabSPuCKFFwx?=
- =?us-ascii?Q?Ha/vqnDEzcEJKbC/8Za8LK1gSUFPPv159qmQKpIaK8TRNW3VvggK6nLpKUwS?=
- =?us-ascii?Q?MyqvGyrCaCIEGzcdSCe38EjxopfVc1aJZ6iwb0MVgPXjSrePlFYShStLgOTl?=
- =?us-ascii?Q?LSlBiktzOD3EtuWc3DZvptqrr5lc3+26UliZ7A75/lUPfM4oOXrpZYyHIPZz?=
- =?us-ascii?Q?poA2Km6HIDb0Ir9AOsH1lZA6bMOVUdq1P7gjhVYML6u8ARuPpp3ejB7lpJjx?=
- =?us-ascii?Q?62v67bH6bFX294S3A/YxCNu/KxqeLNNmnGgP6+fMmL2ZCUZKSGfy4H3sAkLb?=
- =?us-ascii?Q?KtNm/NUUqDqYtEORaDqnp8X3VxzbLzF3peD3o3pSMkA+nKIWBnb78/cjHGS4?=
- =?us-ascii?Q?+dVHssFZL+r+4vg4gx1Dbg1ktuuQmRQPAl7M1psXU8dCDh9YuCNjrqM+hUys?=
- =?us-ascii?Q?Yx5looc9kNIatlH9Bsl1QBCkGpsftc22GflWigUIMEyjlJJpJ2jb3n06LP4B?=
- =?us-ascii?Q?vRBrd6/JcWyaR6xV8bEkJarfWr3rOldXidvvYl4TpECDMnghi0Z7mai8vbJM?=
- =?us-ascii?Q?9oexd7HiWRKHTy421dXYT/nh8xcv0M83ALEdiBXCHxE/OdbF96v4uLwGGhHE?=
- =?us-ascii?Q?X0IirQWq/ngmBMiI2sPHKSzIwqgGlxJrC4frC3qvLiHCrIeBmxoJyR6P3k/6?=
- =?us-ascii?Q?+CgcsDQKP4J9i7lREAOm+Ka9EmU5QTyGAUF60E9wTTmNzbs2z6Hprtdms3iq?=
- =?us-ascii?Q?YyoCb0WKEjicPi91d8mlEVOTdOogtAZhqHQk5ifbQ8lRzoL7GopdJAKDbCjT?=
- =?us-ascii?Q?lOJQ5nSzn07/R0jduW5Eeak+kDh4/OvKAhToQN4n7DKY3ybjvnIvDJc3VnFB?=
- =?us-ascii?Q?4IlkDaAt9RV+oOwEcdzBjP5jAvmbh2ajCJwN3M5O3R3YJIseKuK3+j+/Odde?=
- =?us-ascii?Q?U7jHHG02dgmuoaZHGtuAMLrv8ao18RMVjm0+85k7S7nWTWmkN68sKmeI6TXa?=
- =?us-ascii?Q?7yteHgWq4fN/5eusdPBkarNVy06v/jpbNgZF5khZn3/ANLUOvOHl+mlXn+Yc?=
- =?us-ascii?Q?C2WuPfARQYL4Ecvqo9gOBJ9kbpbpN4UewPAd7FXlEsTY5x5aAo+qJ8ZmBONz?=
- =?us-ascii?Q?UisUQIiyu7TaN3cXd2qYNUQsHy65kYlT0qeD?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(82310400026)(7416014)(376014)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 18:37:08.8017 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b0e6d37-5eb5-4ef3-0e24-08ddf7ab8a5d
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0000468E.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9145
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
- envelope-from=nicolinc@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+In-Reply-To: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,36 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 12:38:45AM -0700, Shameer Kolothum wrote:
-> My suggestion was...
+On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
+> This removes the change introduced in [1] that prevents the use of
+> vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
 > 
-> static AddressSpace *smmuv3_accel_find_add_as(..)
-> {
-> ...
->     if (vfio_pci) {
->         return &address_space_memory;
->     } else {
->         return &sdev->as;
->     }
-> }
+> [1]: 6275989647efb708f126eb4f880e593792301ed4
 > 
-> ie, use the global to system memory address space instead of creating an
-> alias to the system memory and a different address space. This will provide
-> the same pointer to VFIO/iommufd and  it can then reuse the ioas_id.
-> I can see that QEMU uses "&address_space_memory" directly in many places
-> (pci_device_iommu_address_space(), etc). I think the idea behind a separate 
-> address space is to have private ownership and lifetime management probably.
-> Not sure there are any other concerns here. Please let me know if there are
-> any.
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> ---
+> vhost-user-device and vhost-user-device-pci started out as user
+> creatable devices. This was changed in [1] when the vhost-user-base was
+> introduced.
+> 
+> The reason given is to prevent user confusion. Searching qemu-discuss or
+> google for "vhost-user-device" I've seen no confused users.
+> 
+> Our use case is to provide wifi emulation using "vhost-user-device-pci",
+> which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+> 24.04. With newer QEMU versions we now need to patch, distribute and
+> maintain our own QEMU packages, which is non-trivial.
+> 
+> So I want to propose lifting this restriction to make this feature
+> usable without a custom QEMU.
+> 
+> [1]: 6275989647efb708f126eb4f880e593792301ed4
 
-Oh, I misunderstood.
+The confusion is after someone reuses the ID you are claiming without
+telling anyone and then linux guests will start binding that driver to
+your device.
 
-Yea, given that address_space_memory comes from the system_memory:
 
-system/physmem.c:2824:    address_space_init(&address_space_memory, system_memory, "memory");
+We want people doing this kind of thing to *at a minimum*
+go ahead and register a device id with the virtio TC,
+but really to write and publish a spec.
 
-I suppose it should work. That way will be cleaner.
 
-Thanks
-Nicolin
+> ---
+>  docs/system/devices/vhost-user.rst | 10 ----------
+>  hw/virtio/vhost-user-device-pci.c  |  3 ---
+>  hw/virtio/vhost-user-device.c      |  3 ---
+>  3 files changed, 16 deletions(-)
+> 
+> diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
+> index 35259d8ec7c666aa0c56497b8261f48d77216ad5..2d130f9767dbb1cbb85cef43c63dc9a8d7b30d4a 100644
+> --- a/docs/system/devices/vhost-user.rst
+> +++ b/docs/system/devices/vhost-user.rst
+> @@ -73,16 +73,6 @@ all the required parameters including:
+>    - The ``num_vqs`` it needs and their ``vq_size``
+>    - The ``config_size`` if needed
+>  
+> -.. note::
+> -  To prevent user confusion you cannot currently instantiate
+> -  vhost-user-device without first patching out::
+> -
+> -    /* Reason: stop inexperienced users confusing themselves */
+> -    dc->user_creatable = false;
+> -
+> -  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
+> -  rebuilding.
+> -
+>  vhost-user daemon
+>  =================
+>  
+> diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-device-pci.c
+> index f10bac874e78429c633752a4ce9db28385b3bb07..c76a856c9b9a67d941a93929244216658ff2a156 100644
+> --- a/hw/virtio/vhost-user-device-pci.c
+> +++ b/hw/virtio/vhost-user-device-pci.c
+> @@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
+>      VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+>      PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
+>  
+> -    /* Reason: stop users confusing themselves */
+> -    dc->user_creatable = false;
+> -
+>      k->realize = vhost_user_device_pci_realize;
+>      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+>      pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+> diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-device.c
+> index 3939bdf755222a281da8ca22243d7d4f16990a66..1bea496afd0137ba9b42009f6252acf6800528d1 100644
+> --- a/hw/virtio/vhost-user-device.c
+> +++ b/hw/virtio/vhost-user-device.c
+> @@ -41,9 +41,6 @@ static void vud_class_init(ObjectClass *klass, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>  
+> -    /* Reason: stop inexperienced users confusing themselves */
+> -    dc->user_creatable = false;
+> -
+>      device_class_set_props(dc, vud_properties);
+>      dc->vmsd = &vud_vmstate;
+>      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+> 
+> ---
+> base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
+> change-id: 20250919-vhost-user-device-creatable-b7f9b7b5bfb2
+> 
+> Best regards,
+> -- 
+> Christian Speich <c.speich@avm.de>
+
 
