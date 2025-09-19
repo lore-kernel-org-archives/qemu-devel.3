@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE07CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD95CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzZG7-0001jE-Db; Fri, 19 Sep 2025 07:26:35 -0400
+	id 1uzZGM-0002AE-LO; Fri, 19 Sep 2025 07:26:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzZG4-0001iV-UD
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:32 -0400
+ id 1uzZGK-00024Z-Lz
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzZG1-0001Do-JW
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:32 -0400
+ id 1uzZGI-0001GC-Lj
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758281187;
+ s=mimecast20190719; t=1758281205;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cpl9n8Cm6uiDk/tvFICEPI9dtwQ58svqfVF0oD/eUJ0=;
- b=LdO65v3i3eB/P9FBT3r/rSV04I3kgImv8EwLUPRbOl5KXnBKIYM62OZe1IvIVyGml/Cfnq
- Ym9UiX84yoc/2y5aF83kB1X22lKRzNdVdgkqEfF+sqe1sFsXHla0vYZIEuC1NZLQeHo7sM
- y8Jvxc/zHSKjAsOQRmF7u7wJVCGMIvo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=y45NI3Neho2fbTYky/QPiYEk3JFJn1Hit1oL9nIme3M=;
+ b=KDSxK35vJE0TB6k5K/ZBeUcE3T0s6luEetAKzOJMSMwhx/MtIpkX2SwJm0D7lXDCbf447w
+ uhqs9wpCaYcViLBo6Ih4dJLMVTf4kZxRgDCriC4/hNZ2UJyPf7VCv/ZL7/FxTfGf+jE6cq
+ nHgYuj6GKbdeC2zloLOzUgDD2tygnUs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-UMWHPSC0MEi686jCyDHUWg-1; Fri,
- 19 Sep 2025 07:26:24 -0400
-X-MC-Unique: UMWHPSC0MEi686jCyDHUWg-1
-X-Mimecast-MFC-AGG-ID: UMWHPSC0MEi686jCyDHUWg_1758281183
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-Z9xZ7u_NNLWrCIyW88o9kQ-1; Fri,
+ 19 Sep 2025 07:26:44 -0400
+X-MC-Unique: Z9xZ7u_NNLWrCIyW88o9kQ-1
+X-Mimecast-MFC-AGG-ID: Z9xZ7u_NNLWrCIyW88o9kQ_1758281203
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FEBF1800365; Fri, 19 Sep 2025 11:26:23 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02FF6195609F; Fri, 19 Sep 2025 11:26:43 +0000 (UTC)
 Received: from avogadro.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C66430002C5; Fri, 19 Sep 2025 11:26:19 +0000 (UTC)
+ id E4BFF30002C5; Fri, 19 Sep 2025 11:26:38 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Tanish Desai <tanishdesai37@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 09/16] rust: add trace crate
-Date: Fri, 19 Sep 2025 13:25:29 +0200
-Message-ID: <20250919112536.141782-10-pbonzini@redhat.com>
+ Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 13/16] log: change qemu_loglevel to unsigned
+Date: Fri, 19 Sep 2025 13:25:33 +0200
+Message-ID: <20250919112536.141782-14-pbonzini@redhat.com>
 In-Reply-To: <20250919112536.141782-1-pbonzini@redhat.com>
 References: <20250919112536.141782-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -87,188 +89,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tanish Desai <tanishdesai37@gmail.com>
+Bindgen makes the LOG_* constants unsigned, even if they are defined as
+(1 << 15):
 
-The trace crate is a minimal container for dependencies of tracepoints
-(so that they do not have to be imported in all the crates that use
-tracepoints); it also contains a macro called "include_trace!" that is
-able to find the right include file from the trace/ directory.
+   pub const LOG_TRACE: u32 = 32768;
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-[Write commit message, add #[allow()]. - Paolo]
+Make them unsigned in C as well through the BIT() macro, and also change
+the type of the variable that they are used with.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/Cargo.lock        |  4 ++++
- rust/Cargo.toml        |  1 +
- rust/meson.build       |  2 +-
- rust/trace/Cargo.toml  | 16 ++++++++++++++++
- rust/trace/meson.build | 19 +++++++++++++++++++
- rust/trace/src/lib.rs  | 35 +++++++++++++++++++++++++++++++++++
- trace/meson.build      |  8 +++++++-
- 7 files changed, 83 insertions(+), 2 deletions(-)
- create mode 100644 rust/trace/Cargo.toml
- create mode 100644 rust/trace/meson.build
- create mode 100644 rust/trace/src/lib.rs
+ include/qemu/log-for-trace.h |  4 ++--
+ include/qemu/log.h           | 44 ++++++++++++++++++------------------
+ util/log.c                   |  2 +-
+ rust/util/src/log.rs         |  2 +-
+ 4 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 8315f98c46f..3428dbaf0b3 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -258,6 +258,10 @@ dependencies = [
-  "util",
- ]
+diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+index d47c9cd4462..f3a8791f1d4 100644
+--- a/include/qemu/log-for-trace.h
++++ b/include/qemu/log-for-trace.h
+@@ -19,9 +19,9 @@
+ #define QEMU_LOG_FOR_TRACE_H
  
-+[[package]]
-+name = "trace"
-+version = "0.1.0"
-+
- [[package]]
- name = "unicode-ident"
- version = "1.0.12"
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index d8183c614d4..f372d7dbf70 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -11,6 +11,7 @@ members = [
-     "hw/core",
-     "hw/char/pl011",
-     "hw/timer/hpet",
-+    "trace",
-     "util",
-     "tests",
- ]
-diff --git a/rust/meson.build b/rust/meson.build
-index b3ac3a71970..695d5a62de9 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -34,7 +34,7 @@ subdir('system')
- subdir('chardev')
- subdir('hw/core')
- subdir('tests')
--
-+subdir('trace')
- subdir('hw')
+ /* Private global variable, don't use */
+-extern int qemu_loglevel;
++extern unsigned qemu_loglevel;
  
- cargo = find_program('cargo', required: false)
-diff --git a/rust/trace/Cargo.toml b/rust/trace/Cargo.toml
-new file mode 100644
-index 00000000000..13ac0b33d6f
---- /dev/null
-+++ b/rust/trace/Cargo.toml
-@@ -0,0 +1,16 @@
-+[package]
-+name = "trace"
-+version = "0.1.0"
-+authors = ["Tanish Desai <tanishdesai37@gmail.com>"]
-+description = "QEMU tracing infrastructure support"
-+resolver = "2"
-+publish = false
-+
-+edition.workspace = true
-+homepage.workspace = true
-+license.workspace = true
-+repository.workspace = true
-+rust-version.workspace = true
-+
-+[lints]
-+workspace = true
-diff --git a/rust/trace/meson.build b/rust/trace/meson.build
-new file mode 100644
-index 00000000000..adca57e5507
---- /dev/null
-+++ b/rust/trace/meson.build
-@@ -0,0 +1,19 @@
-+rust = import('rust')
-+
-+lib_rs = configure_file(
-+  input: 'src/lib.rs',
-+  output: 'lib.rs',
-+  configuration: {
-+    'MESON_BUILD_ROOT': meson.project_build_root(),
-+  })
-+
-+_trace_rs = static_library(
-+  'trace',             # Library name,
-+  lib_rs,
-+  trace_rs_targets,         # List of generated `.rs` custom targets
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  dependencies: [libc_rs],
-+  rust_abi: 'rust',
-+)
-+
-+trace_rs = declare_dependency(link_with: _trace_rs)
-diff --git a/rust/trace/src/lib.rs b/rust/trace/src/lib.rs
-new file mode 100644
-index 00000000000..0955461573d
---- /dev/null
-+++ b/rust/trace/src/lib.rs
-@@ -0,0 +1,35 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+//! This crate provides macros that aid in using QEMU's tracepoint
-+//! functionality.
-+
-+#[macro_export]
-+/// Define the trace-points from the named directory (which should have slashes
-+/// replaced by underscore characters) as functions in a module called `trace`.
-+///
-+/// ```ignore
-+/// ::trace::include_trace!("hw_char");
-+/// // ...
-+/// trace::trace_pl011_read_fifo_rx_full();
-+/// ```
-+macro_rules! include_trace {
-+    ($name:literal) => {
-+        #[allow(
-+            clippy::ptr_as_ptr,
-+            clippy::cast_lossless,
-+            clippy::used_underscore_binding
-+        )]
-+        mod trace {
-+            #[cfg(not(MESON))]
-+            include!(concat!(
-+                env!("MESON_BUILD_ROOT"),
-+                "/trace/trace-",
-+                $name,
-+                ".rs"
-+            ));
-+
-+            #[cfg(MESON)]
-+            include!(concat!("@MESON_BUILD_ROOT@/trace/trace-", $name, ".rs"));
-+        }
-+    };
-+}
-diff --git a/trace/meson.build b/trace/meson.build
-index 9c42a57a053..d89a0db82a1 100644
---- a/trace/meson.build
-+++ b/trace/meson.build
-@@ -1,5 +1,5 @@
- system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
--
-+trace_rs_targets = []
- trace_events_files = []
- foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   if item in qapi_trace_events
-@@ -24,6 +24,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-                           input: trace_events_file,
-                           command: [ tracetool, group, '--format=c', '@INPUT@', '@OUTPUT@' ],
-                           depend_files: tracetool_depends)
-+  trace_rs = custom_target(fmt.format('trace', 'rs'),
-+                          output: fmt.format('trace', 'rs'),
-+                          input: trace_events_file,
-+                          command: [ tracetool, group, '--format=rs', '@INPUT@', '@OUTPUT@' ],
-+                          depend_files: tracetool_depends)
-   if 'ust' in get_option('trace_backends')
-     trace_ust_h = custom_target(fmt.format('trace-ust', 'h'),
-                                 output: fmt.format('trace-ust', 'h'),
-@@ -34,6 +39,7 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-     genh += trace_ust_h
-   endif
-   trace_ss.add(trace_h, trace_c)
-+  trace_rs_targets += trace_rs
-   if 'dtrace' in get_option('trace_backends')
-     trace_dtrace = custom_target(fmt.format('trace-dtrace', 'dtrace'),
-                                  output: fmt.format('trace-dtrace', 'dtrace'),
+-#define LOG_TRACE          (1 << 15)
++#define LOG_TRACE          (1u << 15)
+ 
+ /* Returns true if a bit is set in the current loglevel mask */
+ static inline bool qemu_loglevel_mask(int mask)
+diff --git a/include/qemu/log.h b/include/qemu/log.h
+index aae72985f0d..7effba4da4c 100644
+--- a/include/qemu/log.h
++++ b/include/qemu/log.h
+@@ -14,30 +14,30 @@ bool qemu_log_enabled(void);
+ /* Returns true if qemu_log() will write somewhere other than stderr. */
+ bool qemu_log_separate(void);
+ 
+-#define CPU_LOG_TB_OUT_ASM (1 << 0)
+-#define CPU_LOG_TB_IN_ASM  (1 << 1)
+-#define CPU_LOG_TB_OP      (1 << 2)
+-#define CPU_LOG_TB_OP_OPT  (1 << 3)
+-#define CPU_LOG_INT        (1 << 4)
+-#define CPU_LOG_EXEC       (1 << 5)
+-#define CPU_LOG_PCALL      (1 << 6)
+-#define CPU_LOG_TB_CPU     (1 << 8)
+-#define CPU_LOG_RESET      (1 << 9)
+-#define LOG_UNIMP          (1 << 10)
+-#define LOG_GUEST_ERROR    (1 << 11)
+-#define CPU_LOG_MMU        (1 << 12)
+-#define CPU_LOG_TB_NOCHAIN (1 << 13)
+-#define CPU_LOG_PAGE       (1 << 14)
++#define CPU_LOG_TB_OUT_ASM (1u << 0)
++#define CPU_LOG_TB_IN_ASM  (1u << 1)
++#define CPU_LOG_TB_OP      (1u << 2)
++#define CPU_LOG_TB_OP_OPT  (1u << 3)
++#define CPU_LOG_INT        (1u << 4)
++#define CPU_LOG_EXEC       (1u << 5)
++#define CPU_LOG_PCALL      (1u << 6)
++#define CPU_LOG_TB_CPU     (1u << 8)
++#define CPU_LOG_RESET      (1u << 9)
++#define LOG_UNIMP          (1u << 10)
++#define LOG_GUEST_ERROR    (1u << 11)
++#define CPU_LOG_MMU        (1u << 12)
++#define CPU_LOG_TB_NOCHAIN (1u << 13)
++#define CPU_LOG_PAGE       (1u << 14)
+ /* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
+-#define CPU_LOG_TB_OP_IND  (1 << 16)
+-#define CPU_LOG_TB_FPU     (1 << 17)
+-#define CPU_LOG_PLUGIN     (1 << 18)
++#define CPU_LOG_TB_OP_IND  (1u << 16)
++#define CPU_LOG_TB_FPU     (1u << 17)
++#define CPU_LOG_PLUGIN     (1u << 18)
+ /* LOG_STRACE is used for user-mode strace logging. */
+-#define LOG_STRACE         (1 << 19)
+-#define LOG_PER_THREAD     (1 << 20)
+-#define CPU_LOG_TB_VPU     (1 << 21)
+-#define LOG_TB_OP_PLUGIN   (1 << 22)
+-#define LOG_INVALID_MEM    (1 << 23)
++#define LOG_STRACE         (1u << 19)
++#define LOG_PER_THREAD     (1u << 20)
++#define CPU_LOG_TB_VPU     (1u << 21)
++#define LOG_TB_OP_PLUGIN   (1u << 22)
++#define LOG_INVALID_MEM    (1u << 23)
+ 
+ /* Lock/unlock output. */
+ 
+diff --git a/util/log.c b/util/log.c
+index abdcb6b3111..41f78ce86b2 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -44,7 +44,7 @@ static FILE *global_file;
+ static __thread FILE *thread_file;
+ static __thread Notifier qemu_log_thread_cleanup_notifier;
+ 
+-int qemu_loglevel;
++unsigned qemu_loglevel;
+ static bool log_per_thread;
+ static GArray *debug_regions;
+ 
+diff --git a/rust/util/src/log.rs b/rust/util/src/log.rs
+index af9a3e91234..0a4bc4249a1 100644
+--- a/rust/util/src/log.rs
++++ b/rust/util/src/log.rs
+@@ -142,7 +142,7 @@ macro_rules! log_mask_ln {
+         let _: $crate::log::Log = $mask;
+ 
+         if unsafe {
+-            ($crate::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
++            ($crate::bindings::qemu_loglevel & ($mask as std::os::raw::c_uint)) != 0
+         } {
+             _ = $crate::log::LogGuard::log_fmt(
+                 format_args!("{}\n", format_args!($fmt $($args)*)));
 -- 
 2.51.0
 
