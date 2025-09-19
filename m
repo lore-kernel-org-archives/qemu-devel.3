@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16733CAC5A5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3881CAC5AB
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzZFg-00017s-FC; Fri, 19 Sep 2025 07:26:10 -0400
+	id 1uzZFY-00013o-TH; Fri, 19 Sep 2025 07:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzZFZ-00014W-2J
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:01 -0400
+ id 1uzZFW-00012X-Ia
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:25:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzZFW-000165-RA
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:26:00 -0400
+ id 1uzZFR-00015p-6q
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:25:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758281156;
+ s=mimecast20190719; t=1758281148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KUo28CHP7FCCXh5r1Z6RrGofUxFzz8ZREv636OwD0Dc=;
- b=R6Mj2U3klgo8BwLVoxg4uE9i81FTVARL16VjqliJNVJ7rptr3afsCgEWT3SiPJgh6y8+4S
- UDZgCpN9OYYlVl+opKyZLdPXwfjqgp5rZrZUTJGkPG7cHBH8BahebYALIMRrHSi41N6W5k
- RJKPglOU4+uOknfzhdYEyL790HyKpjs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qEPlkfPBR63VfvFVpTEmLPHjfXpUGS6Ec4284GF1PHQ=;
+ b=irp/2xJ2tTvtAgqBXabcHVYU4nIm7l3ZJF68l9uob2o2H3oA7gIyArNKh0T+XNoWJ0SYJ3
+ crGsWTSHa6LqOAEXjTE7nD5PLq87VGDap61FupTSthc4rHNo7p+UpLYqirwekpmADhgs3v
+ se4VwXo9zbQQSfbu9ucXoIDvHOKT05M=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-RzMVCz-FOSS3wTJnxOHmiA-1; Fri,
- 19 Sep 2025 07:25:53 -0400
-X-MC-Unique: RzMVCz-FOSS3wTJnxOHmiA-1
-X-Mimecast-MFC-AGG-ID: RzMVCz-FOSS3wTJnxOHmiA_1758281152
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-pCistaLkMhqj-hp78CftRQ-1; Fri,
+ 19 Sep 2025 07:25:44 -0400
+X-MC-Unique: pCistaLkMhqj-hp78CftRQ-1
+X-Mimecast-MFC-AGG-ID: pCistaLkMhqj-hp78CftRQ_1758281143
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32ED11800343; Fri, 19 Sep 2025 11:25:52 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 500BF18004D8; Fri, 19 Sep 2025 11:25:43 +0000 (UTC)
 Received: from avogadro.redhat.com (unknown [10.44.33.250])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9038230002C8; Fri, 19 Sep 2025 11:25:48 +0000 (UTC)
+ id 711C930002C8; Fri, 19 Sep 2025 11:25:38 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Tanish Desai <tanishdesai37@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -54,12 +53,11 @@ Cc: Tanish Desai <tanishdesai37@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH 02/16] tracetool: remove dead code
-Date: Fri, 19 Sep 2025 13:25:22 +0200
-Message-ID: <20250919112536.141782-3-pbonzini@redhat.com>
-In-Reply-To: <20250919112536.141782-1-pbonzini@redhat.com>
-References: <20250919112536.141782-1-pbonzini@redhat.com>
+Subject: [PATCH 00/16] tracetool: add Rust support
+Date: Fri, 19 Sep 2025 13:25:20 +0200
+Message-ID: <20250919112536.141782-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -87,158 +85,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no tcg-exec events anymore and the sub-event functionality was
-only used for it.  Excise it from tracetool.
+This is the result of the summer project of Tanish Desai.  It mostly
+consists of changes to tracetool, which I used to add tracepoint support
+to the pl011 device.  All the backends are supported except dtrace and
+ust; support for Linux in dtrace should be easy using the "probe" crate,
+the rest (ust, and dtrace on macOS or Solaris) less so.  For ust, the
+plan is to deprecate it, since LTTng can use uprobes.  For dtrace on
+macOS or Solaris, support would have to be added to the "probe" crate.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/tracetool/__init__.py | 44 +++++------------------------------
- scripts/tracetool/format/h.py |  5 ----
- 2 files changed, 6 insertions(+), 43 deletions(-)
+Patches 1-5 are cleanups that could be committed separately.
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 1d5238a0843..afa889e759e 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -122,10 +122,6 @@ def __init__(self, args):
-             else:
-                 self._args.append(arg)
- 
--    def copy(self):
--        """Create a new copy."""
--        return Arguments(list(self._args))
--
-     @staticmethod
-     def build(arg_str):
-         """Build and Arguments instance from an argument string.
-@@ -222,13 +218,12 @@ class Event(object):
-                       r"(?P<name>\w+)"
-                       r"\((?P<args>[^)]*)\)"
-                       r"\s*"
--                      r"(?:(?:(?P<fmt_trans>\".+),)?\s*(?P<fmt>\".+))?"
-+                      r"(?P<fmt>\".+)?"
-                       r"\s*")
- 
-     _VALID_PROPS = set(["disable"])
- 
--    def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
--                 event_trans=None, event_exec=None):
-+    def __init__(self, name, props, fmt, args, lineno, filename):
-         """
-         Parameters
-         ----------
-@@ -236,20 +231,14 @@ def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
-             Event name.
-         props : list of str
-             Property names.
--        fmt : str, list of str
--            Event printing format string(s).
-+        fmt : str
-+            Event printing format string.
-         args : Arguments
-             Event arguments.
-         lineno : int
-             The line number in the input file.
-         filename : str
-             The path to the input file.
--        orig : Event or None
--            Original Event before transformation/generation.
--        event_trans : Event or None
--            Generated translation-time event ("tcg" property).
--        event_exec : Event or None
--            Generated execution-time event ("tcg" property).
- 
-         """
-         self.name = name
-@@ -258,29 +247,16 @@ def __init__(self, name, props, fmt, args, lineno, filename, orig=None,
-         self.args = args
-         self.lineno = int(lineno)
-         self.filename = str(filename)
--        self.event_trans = event_trans
--        self.event_exec = event_exec
- 
-         if len(args) > 10:
-             raise ValueError("Event '%s' has more than maximum permitted "
-                              "argument count" % name)
- 
--        if orig is None:
--            self.original = weakref.ref(self)
--        else:
--            self.original = orig
--
-         unknown_props = set(self.properties) - self._VALID_PROPS
-         if len(unknown_props) > 0:
-             raise ValueError("Unknown properties: %s"
-                              % ", ".join(unknown_props))
--        assert isinstance(self.fmt, str) or len(self.fmt) == 2
- 
--    def copy(self):
--        """Create a new copy."""
--        return Event(self.name, list(self.properties), self.fmt,
--                     self.args.copy(), self.lineno, self.filename,
--                     self, self.event_trans, self.event_exec)
- 
-     @staticmethod
-     def build(line_str, lineno, filename):
-@@ -302,8 +278,7 @@ def build(line_str, lineno, filename):
-         name = groups["name"]
-         props = groups["props"].split()
-         fmt = groups["fmt"]
--        fmt_trans = groups["fmt_trans"]
--        if fmt.find("%m") != -1 or fmt_trans.find("%m") != -1:
-+        if fmt.find("%m") != -1:
-             raise ValueError("Event format '%m' is forbidden, pass the error "
-                              "as an explicit trace argument")
-         if fmt.endswith(r'\n"'):
-@@ -312,29 +287,22 @@ def build(line_str, lineno, filename):
-         if '\\n' in fmt:
-             raise ValueError("Event format must not use new line character")
- 
--        if len(fmt_trans) > 0:
--            fmt = [fmt_trans, fmt]
-         args = Arguments.build(groups["args"])
- 
-         return Event(name, props, fmt, args, lineno, posix_relpath(filename))
- 
-     def __repr__(self):
-         """Evaluable string representation for this object."""
--        if isinstance(self.fmt, str):
--            fmt = self.fmt
--        else:
--            fmt = "%s, %s" % (self.fmt[0], self.fmt[1])
-         return "Event('%s %s(%s) %s')" % (" ".join(self.properties),
-                                           self.name,
-                                           self.args,
--                                          fmt)
-+                                          self.fmt)
-     # Star matching on PRI is dangerous as one might have multiple
-     # arguments with that format, hence the non-greedy version of it.
-     _FMT = re.compile(r"(%[\d\.]*\w+|%.*?PRI\S+)")
- 
-     def formats(self):
-         """List conversion specifiers in the argument print format string."""
--        assert not isinstance(self.fmt, list)
-         return self._FMT.findall(self.fmt)
- 
-     QEMU_TRACE               = "trace_%(name)s"
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index b42a8268a81..bd9e0ca7f23 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -40,11 +40,6 @@ def generate(events, backend, group):
-             enabled = 0
-         else:
-             enabled = 1
--        if "tcg-exec" in e.properties:
--            # a single define for the two "sub-events"
--            out('#define TRACE_%(name)s_ENABLED %(enabled)d',
--                name=e.original.name.upper(),
--                enabled=enabled)
-         out('#define TRACE_%s_ENABLED %d' % (e.name.upper(), enabled))
- 
-     backend.generate_begin(events, group)
+Patches 6-7 are tracetool patches that have been posted before, now
+rebased on top of the "make check-tracetool" series.  Their purpose
+is to simplify .h code generation for tracetool backends, and these
+simplifications translate directly to the new .rs code generation.
+
+Patches 8-9 add the minimal support for adding tracepoint functions
+in Rust, albeit with no content and thus no actual tracing.
+
+Patches 10-11 add back tracepoints to the Rust pl011 device model.
+
+Patches 12-16 finally add Rust code generation to the supported
+tracing backends.
+
+The tracetool testsuite is now part of QEMU and is extended to
+cover the generated Rust code.
+
+Paolo
+
+v1->v2:
+- new patch "tracetool: fix usage of try_import()"
+- new patch "tracetool: remove dead code" [Manos]
+- new patch "treewide: remove unnessary "coding" header" [Manos]
+- new patch "tracetool: add SPDX headers" [Manos]
+- dropped patch "treewide: write "unsigned long int" instead of "long unsigned int""
+- merge patch "rust: move dependencies to rust/Cargo.toml"
+- gathered Reviewed-by tags
+- sort keywords for primitive C types [Manos]
+- fix incorrect string "_{name}" in "tracetool: Add Rust format support" [Manos, Daniel]
+- adjust for moved crates
+- add SPDX headers to generated file [Daniel]
+- add @generated tag to generated file [Manos]
+- add #[allow()] to include_trace macro, in order to pacify clippy
+- tweaks to trace/Cargo.toml [Manos]
+- fix more clippy issues in generated code
+- change include_trace! macro to not require the "trace-" prefix [Zhao]
+- rename Clock::get() and get_hz() methods to period() and hz() respectively [Zhao]
+- drop the "..._ENABLED" symbols [Daniel]
+
+Paolo Bonzini (8):
+  tracetool: fix usage of try_import()
+  tracetool: remove dead code
+  treewide: remove unnessary "coding" header
+  tracetool: add SPDX headers
+  trace/ftrace: move snprintf+write from tracepoints to ftrace.c
+  rust: qdev: add minimal clock bindings
+  rust: pl011: add tracepoints
+  log: change qemu_loglevel to unsigned
+
+Tanish Desai (8):
+  tracetool: add CHECK_TRACE_EVENT_GET_STATE
+  tracetool/backend: remove redundant trace event checks
+  tracetool: Add Rust format support
+  rust: add trace crate
+  tracetool/simple: add Rust support
+  tracetool/log: add Rust support
+  tracetool/ftrace: add Rust support
+  tracetool/syslog: add Rust support
+
+ docs/conf.py                                  |   2 -
+ docs/sphinx-static/theme_overrides.css        |   3 +-
+ include/qemu/log-for-trace.h                  |   4 +-
+ include/qemu/log.h                            |  44 ++--
+ tests/tracetool/ftrace.h                      |  28 +--
+ tests/tracetool/log.h                         |  16 +-
+ trace/ftrace.h                                |   1 +
+ trace/ftrace.c                                |  15 ++
+ util/log.c                                    |   2 +-
+ hw/char/trace-events                          |  14 +-
+ rust/Cargo.lock                               |   8 +
+ rust/Cargo.toml                               |   1 +
+ rust/hw/char/pl011/Cargo.toml                 |   1 +
+ rust/hw/char/pl011/meson.build                |   1 +
+ rust/hw/char/pl011/src/device.rs              |  57 +++--
+ rust/hw/core/src/qdev.rs                      |  33 +++
+ rust/meson.build                              |   2 +-
+ rust/trace/Cargo.toml                         |  19 ++
+ rust/trace/meson.build                        |  19 ++
+ rust/trace/src/lib.rs                         |  39 ++++
+ rust/util/src/log.rs                          |   2 +-
+ scripts/analyse-locks-simpletrace.py          |   1 -
+ scripts/modinfo-collect.py                    |   1 -
+ scripts/modinfo-generate.py                   |   1 -
+ scripts/oss-fuzz/minimize_qtest_trace.py      |   1 -
+ scripts/oss-fuzz/output_reproducer.py         |   1 -
+ .../oss-fuzz/reorder_fuzzer_qtest_trace.py    |   1 -
+ scripts/probe-gdb-support.py                  |   1 -
+ scripts/qapi/error.py                         |   2 -
+ scripts/qapi/expr.py                          |   2 -
+ scripts/qapi/gen.py                           |   2 -
+ scripts/qapi/parser.py                        |   2 -
+ scripts/qapi/schema.py                        |   2 -
+ scripts/qemu-plugin-symbols.py                |   1 -
+ scripts/qemugdb/tcg.py                        |   2 -
+ scripts/qemugdb/timers.py                     |   1 -
+ scripts/replay-dump.py                        |   1 -
+ scripts/tracetool.py                          |   1 -
+ scripts/tracetool/__init__.py                 | 201 ++++++++++++++----
+ scripts/tracetool/backend/__init__.py         |  43 ++--
+ scripts/tracetool/backend/dtrace.py           |   2 +-
+ scripts/tracetool/backend/ftrace.py           |  26 +--
+ scripts/tracetool/backend/log.py              |  22 +-
+ scripts/tracetool/backend/simple.py           |  17 +-
+ scripts/tracetool/backend/syslog.py           |  17 +-
+ scripts/tracetool/backend/ust.py              |   2 +-
+ scripts/tracetool/format/__init__.py          |   4 +-
+ scripts/tracetool/format/c.py                 |   2 +-
+ scripts/tracetool/format/d.py                 |   2 +-
+ scripts/tracetool/format/h.py                 |  18 +-
+ scripts/tracetool/format/log_stap.py          |   2 +-
+ scripts/tracetool/format/rs.py                |  71 +++++++
+ scripts/tracetool/format/simpletrace_stap.py  |   2 +-
+ scripts/tracetool/format/stap.py              |   2 +-
+ scripts/tracetool/format/ust_events_c.py      |   2 +-
+ scripts/tracetool/format/ust_events_h.py      |   2 +-
+ tests/tracetool/ftrace.rs                     |  40 ++++
+ tests/tracetool/log.rs                        |  44 ++++
+ tests/tracetool/simple.rs                     |  40 ++++
+ tests/tracetool/syslog.rs                     |  40 ++++
+ tests/tracetool/tracetool-test.py             |   2 +
+ trace/meson.build                             |   8 +-
+ 62 files changed, 727 insertions(+), 218 deletions(-)
+ create mode 100644 rust/trace/Cargo.toml
+ create mode 100644 rust/trace/meson.build
+ create mode 100644 rust/trace/src/lib.rs
+ create mode 100644 scripts/tracetool/format/rs.py
+ create mode 100644 tests/tracetool/ftrace.rs
+ create mode 100644 tests/tracetool/log.rs
+ create mode 100644 tests/tracetool/simple.rs
+ create mode 100644 tests/tracetool/syslog.rs
+
 -- 
 2.51.0
-
 
 
