@@ -4,83 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6170FCAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 13:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C94ECAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 13:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzbVY-0006ZQ-Al; Fri, 19 Sep 2025 09:50:40 -0400
+	id 1uzbWI-0007S2-Te; Fri, 19 Sep 2025 09:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbVS-0006XM-7Y
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:50:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbVF-0000m2-DL
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:50:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758289817;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wQgGuSbOfRlKoQwg1JHloZA0cq6M6zIs7B1AY8sNAN0=;
- b=W4Wq0dje9TwTXtKIB9sqYrxVQhMDcM5bkQH5Xtyp6zJJ3JecmK6VpTpUai3TvvtbBq6AYX
- Lbo4vF87KNHO4ycyh0ToeQDzfk2he949n8K703Wch0YESI0KMDVhWnzPYLyNfjdiwzY662
- XT3xDBHJledIFKIa2DpRJeyCPWBm90Y=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-aLiy7mMCMDSN2WpSYSpXgw-1; Fri,
- 19 Sep 2025 09:50:13 -0400
-X-MC-Unique: aLiy7mMCMDSN2WpSYSpXgw-1
-X-Mimecast-MFC-AGG-ID: aLiy7mMCMDSN2WpSYSpXgw_1758289812
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzbWG-0007RK-1A
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:51:24 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzbW3-0001AX-JS
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:51:22 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5730C19560B6; Fri, 19 Sep 2025 13:50:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F961180035E; Fri, 19 Sep 2025 13:50:08 +0000 (UTC)
-Date: Fri, 19 Sep 2025 14:50:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH 02/24] scripts/archive-source: speed up downloading
- subprojects
-Message-ID: <aM1fjf1tuzuBXudQ@redhat.com>
-References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
- <20250919133320.240145-3-marcandre.lureau@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 19F541F7E0;
+ Fri, 19 Sep 2025 13:51:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758289860; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J13kma0PSYLA2u2dd0h85y1DFHmxQHfrKz3I2TWF4Tg=;
+ b=lW7bzsI2FeMWYl3CDjqpmjCFPHydlq5YINoJHL4x/iz/u6r3KUWJzxYVKQqFKdfFyy1/su
+ ySQ6Y/m3PYlYl+s3loyZwYw8cocD4t+O56oPJkQPAA+kCzhILQLsOMGDD6JN7YS0fK6+92
+ Faa1/lxZ/mpPRQW48fXQJgrQPOjuTog=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758289860;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J13kma0PSYLA2u2dd0h85y1DFHmxQHfrKz3I2TWF4Tg=;
+ b=gPv1oxWOmLdu5om7oFc73ydZNpCIJSN/43vUz+OKUFLNxCcV+5xRXDZSUmL00YqvrJvkdX
+ nHvsZ/8lXKBxAPAQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lW7bzsI2;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gPv1oxWO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758289860; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J13kma0PSYLA2u2dd0h85y1DFHmxQHfrKz3I2TWF4Tg=;
+ b=lW7bzsI2FeMWYl3CDjqpmjCFPHydlq5YINoJHL4x/iz/u6r3KUWJzxYVKQqFKdfFyy1/su
+ ySQ6Y/m3PYlYl+s3loyZwYw8cocD4t+O56oPJkQPAA+kCzhILQLsOMGDD6JN7YS0fK6+92
+ Faa1/lxZ/mpPRQW48fXQJgrQPOjuTog=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758289860;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J13kma0PSYLA2u2dd0h85y1DFHmxQHfrKz3I2TWF4Tg=;
+ b=gPv1oxWOmLdu5om7oFc73ydZNpCIJSN/43vUz+OKUFLNxCcV+5xRXDZSUmL00YqvrJvkdX
+ nHvsZ/8lXKBxAPAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8F89813A39;
+ Fri, 19 Sep 2025 13:50:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iHBuFMNfzWgrHQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 19 Sep 2025 13:50:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v3 0/2] migration/tls: Graceful shutdowns for main and
+ postcopy channels
+In-Reply-To: <aMx9yi628fuXr_gH@x1.local>
+References: <20250918203937.200833-1-peterx@redhat.com>
+ <875xdfv4su.fsf@suse.de> <aMx9yi628fuXr_gH@x1.local>
+Date: Fri, 19 Sep 2025 10:50:56 -0300
+Message-ID: <871po2v9dr.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919133320.240145-3-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 19F541F7E0
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_THREE(0.00)[4]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,50 +125,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 05:32:56PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Running meson on each subproject is quite slow.
+Peter Xu <peterx@redhat.com> writes:
 
-Why is this faster ?  Does it make meson do parallel downloads
-if you list then all at once ?
+> On Thu, Sep 18, 2025 at 06:17:37PM -0300, Fabiano Rosas wrote:
+>> > ============= ABOUT OLD PATCH 2 ===================
+>> >
+>> > I dropped it for now to unblock almost patch 1, because patch 1 will fix a
+>> > real warning that can be triggered for not only qtest but also normal tls
+>> > postcopy migration.
+>> >
+>> > While I was looking at temporary settings for multifd send iochannels to be
+>> > blocking always, I found I cannot explain how migration_tls_channel_end()
+>> > currently works, because it writes to the multifd iochannels while the
+>> > channels should still be owned (and can be written at the same time?) by
+>> > the sender threads.  It sounds like a thread-safety issue, or is it not?
+>> >
+>> 
+>> IIUC, the multifd channels will be stuck at p->sem because this is the
+>> success path so migration will have already finished when we reach
+>> migration_cleanup(). The ram/device state migration will hold the main
+>> thread until the multifd channels finish transferring.
+>
+> For success cases, indeed.  However this is not the success path?  After
+> all, we check migration_has_failed().
+>
 
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  scripts/archive-source.sh | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-> index 035828c532..85cd0a63a0 100755
-> --- a/scripts/archive-source.sh
-> +++ b/scripts/archive-source.sh
-> @@ -77,9 +77,10 @@ function subproject_dir() {
->  git archive --format tar "$(tree_ish)" > "$tar_file"
->  test $? -ne 0 && error "failed to archive qemu"
->  
-> +meson subprojects download $subprojects
-> +test $? -ne 0 && error "failed to download subprojects $subprojects"
-> +
->  for sp in $subprojects; do
-> -    meson subprojects download $sp
-> -    test $? -ne 0 && error "failed to download subproject $sp"
->      tar --append --file "$tar_file" --exclude=.git subprojects/"$(subproject_dir $sp)"
->      test $? -ne 0 && error "failed to append subproject $sp to $tar_file"
->  done
-> -- 
-> 2.51.0
-> 
+My point is that when we reach here, if migration has succeeded, then it
+should be ok. If not, then thread-safety doesn't matter because things
+have already went bad, we'll lose the destination anyway.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Should I then send a patch to only send bye() when succeeded?  Then I can
+> also add some comment.  I wished we could assert.  Then the "temporarily
+> changing nonblock mode" will also rely on this one, because ideally we
+> shouldn't touch the fd nonblocking mode if some other thread is operating
+> on it.
+>
 
+I don't know if it changes much. Currently we basically always ignore
+the error from bye().
+
+> The other thing is I also think we shouldn't rely on checking
+> "p->tls_thread_created && p->thread_created" but only rely on channel type,
+> which might be more straightforward (I almost did it in v1, but v2 rewrote
+> things so it was lost).
+
+Ok, but we may need to ensure bye() is not called before the session is
+initiated. So thread_created may still be needed?
 
