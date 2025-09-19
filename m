@@ -4,102 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F8ECAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 07:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D8DCAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 07:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzVJW-0004p5-08; Fri, 19 Sep 2025 03:13:50 -0400
+	id 1uzVhy-0004GW-2v; Fri, 19 Sep 2025 03:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=un+7=36=kaod.org=clg@ozlabs.org>)
- id 1uzVJK-0004Yz-AO; Fri, 19 Sep 2025 03:13:38 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1uzVht-0004F4-Qg; Fri, 19 Sep 2025 03:39:01 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=un+7=36=kaod.org=clg@ozlabs.org>)
- id 1uzVJE-0007dj-SX; Fri, 19 Sep 2025 03:13:38 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cSkHs3DWTz4wCY;
- Fri, 19 Sep 2025 17:13:29 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cSkHm2pD8z4wC3;
- Fri, 19 Sep 2025 17:13:24 +1000 (AEST)
-Message-ID: <8ab389b9-f18b-49cd-8ec9-112de0ef2b0e@kaod.org>
-Date: Fri, 19 Sep 2025 09:13:23 +0200
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1uzVhm-0000Tu-Fx; Fri, 19 Sep 2025 03:39:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f+PbFMAGok2wtr4AkeHSt+k6sPWRXEGqhprYtR67tpAHUGZeHdIgqCxx+IOvlJIJ1f7/5Yib4GaUua8t5H07Fl/f9RQsLljHfOC4lTTzDCNFmHGNgFjvpFySwgTg1F3LVnxCx754Hlmi/Qcc7n0kj97ek0F+EFgAvsvcLC3HDO1QatYK2sP4lvFnFtMvXV+XW0V9Ow23l3FnyFtduZr+tyrQetVBBMnkECbVUTU8EduOQzDNajivock+NhP9mmfYX4Bcyas/iv8pQlhEUpEgteEn2Tid9Ao5d+Lpv6gp8K1Vhmz10F28mpLpO7B9mu2Qyy/fVEUjwqHcBj+os4tZYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WxArBN3w6TtMcpX8KROWmn8So1WVLGNAn/5JRBI92eA=;
+ b=latEyhL+w7x2J3+AlSVW8fHwU1UzuI5GcnfxP4Xm7ZexqUOVQ2y7tscncWhGjeXx73dxqQhy1vSIescbMGD9RQRa2q6AFx+RxJrDXN+DcI8YjUqQUoKp9G31RQtI+j9dNvA693i50vx7JNk8LtNUFmFC7eITxeRt9qTJqCaIw9almSzGmXsXHvVqv+clOTduhD1ncGKogs1sIUVL2JiN4fBAsWerJAJe09mf8sfbaqGsACo9NJo9l7/qLwIJMT80HqgT2qEH2mfUFp2V5IdUrUC0oJ6MWquJusF/6KshQda5eKtweYiw5BM+IQOhx5AJ1e0kUn/V20xe9zaGTW7v1g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WxArBN3w6TtMcpX8KROWmn8So1WVLGNAn/5JRBI92eA=;
+ b=ZkIBMKvmklVtbj0dzPSp1n+r0i5fOjc97OOHxWPbMphdn/QSb2Lr5cxudw543JSoSPaimUKvYEUKBXiye4mUwYkfXrz4t57TZnr4T6X/3FS9mOvGnBm7/2u2q8sIagiNDbXQFqVgJI0ozNLv7/eXevffYE4yXcnN5+JjfwGt6WJuWwKEuQDyy1nyGhM18SA03nQALhHBHXaVu/Wnrr9fMhz7U647+/aO4poB3MUs3M+laopKidDLRCjuD3QWcnUwv8c3Rj/DxJcaPQGGzGHm8+rTB8Rv2bO6lOaQ+Go1keChB5+7Bj0kzmCfZJHreX7qTjdIjsadB2p3ODiSwRCf4g==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by BY5PR12MB4098.namprd12.prod.outlook.com (2603:10b6:a03:205::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.16; Fri, 19 Sep
+ 2025 07:38:45 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9137.012; Fri, 19 Sep 2025
+ 07:38:45 +0000
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: Shameer Kolothum <shameerkolothum@gmail.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
+ "linuxarm@huawei.com" <linuxarm@huawei.com>, "wangzhou1@hisilicon.com"
+ <wangzhou1@hisilicon.com>, "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>
+Subject: RE: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Topic: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
+ SMMUv3 to vfio-pci endpoints with iommufd
+Thread-Index: AQHcJvVSyZvN/mVpTUewNZT1jGrd9rSXuIGAgAABxLCAATN4wIAAk4AAgACX+rA=
+Date: Fri, 19 Sep 2025 07:38:45 +0000
+Message-ID: <CH3PR12MB7548BB774BB375D5056C062CAB11A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
+ <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
+ <aJKn650gOGQh2whD@Asurada-Nvidia>
+ <CAHy=t28z=wrXbXOJjD4sFw0RxJR3fccqF-EdaQDB_s_F6RC4FQ@mail.gmail.com>
+ <aMsBvSSEzsgeMHkK@Asurada-Nvidia>
+ <CH3PR12MB7548347E93651468E70B2470AB17A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <CH3PR12MB7548B6A98B640192579078EBAB16A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aMyA4AHf7pqnOzSV@Asurada-Nvidia>
+In-Reply-To: <aMyA4AHf7pqnOzSV@Asurada-Nvidia>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|BY5PR12MB4098:EE_
+x-ms-office365-filtering-correlation-id: 700ebae4-9be0-4664-da1b-08ddf74f9042
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?7lBn4nrn8OJ7J0KqeW2foy6nBm0OmIvfcuKJMYbgp62TimMsC9MF0DLkdnUe?=
+ =?us-ascii?Q?iORiih977ynOKlCaVVcNQpKejhbcnjMu4UDTLh/haQHmaZBF0kdM4q44hk2m?=
+ =?us-ascii?Q?LAjpYSEGCn++9THKL461FF1W7WbOZbAtv8X9b3VCm+XACV0MCYgm1VJqPWC1?=
+ =?us-ascii?Q?qiuyUajp+y4yNHlLh0IUWnQib+x7x8gwPiI+zfAv0pDctWYbZjBkTNGOGN7y?=
+ =?us-ascii?Q?G3Mw6fWES5qE0mu+fXFUnIzdT2EuDd0sUyYVKPplt2swZmILmNKyxOn2uvMf?=
+ =?us-ascii?Q?6JEW73G1qjTjkRb9aryMBf2eVL/xn96j8qMcCkTcAy7f1SgCyUb1+sPzvGsf?=
+ =?us-ascii?Q?v7LC6YUOYV7+TluodmceIWoHB/BGJiT7lwbc9hsv8H6kbld3JZD9D13jnf17?=
+ =?us-ascii?Q?3DKpq6+vdcpmqogrx7mm/ST6SWzRfK6cBieWFW5EDCrohjrjgGHNfBac91Mb?=
+ =?us-ascii?Q?iUpEY2+N1rrDSzLdfK7CNs9opOvDtAK12MwFuogYemfJR3wHCnBmWogwk9JU?=
+ =?us-ascii?Q?lznbW6AbxH7PsGFGPorQvNdznIusIrzBbh9FOY9Lv4oGl6Qd5zqo382Ccc81?=
+ =?us-ascii?Q?i1uw20tqGbvgqptbuNzU/BJfvlENVQhBBdY9EKIUBb4rFY/axZYkXNAwCIDZ?=
+ =?us-ascii?Q?41rIdcCD7cm+ySe9ln47qq/J6xz7U5B3fWC38nTb9rtAu+EwtR5VvbNFJUgg?=
+ =?us-ascii?Q?IziY1nv/LwQv9NkH92+QqHIXqAjmDJy5gipnsoEhheHgpYTTt+I8RWEMWw8L?=
+ =?us-ascii?Q?K5LSOo0ZEhZAZp/kfz+rMUMRf8ZxWqonuynK8hHX/JN0+7gv9RULFLW92JLl?=
+ =?us-ascii?Q?/8eNJ6ZCwmlu7TKiWTnBz3VVfEyOIxGi9HRR4YOSdQCJIs3VKunaywiFzIIC?=
+ =?us-ascii?Q?jnIk0G96gbwXz46Icc2wjg+QPYxS9dnxQ/1nNl4SHwJO+2KmOfgNutWhKAyB?=
+ =?us-ascii?Q?xdAAIEnf7FADfGE5yYooWkVxBwmiXfJS1T55QpP45Q6EdZ4aQueRYlbK8+Cw?=
+ =?us-ascii?Q?AZ8crkbO3KruOmcblqiontTalshG2k8Pv0Dq4MTIYgaDtv6HzHOy2YiFkXDD?=
+ =?us-ascii?Q?eRpzA9TJqwIDKB8hKKuw7YtsBTFajZ7G8sidTki4pwPduQJ0g+MbQXNmRD1G?=
+ =?us-ascii?Q?CKz3/9+J2RbS6mkIyuePxCi0OGORrbErlF+EuiCgaL3n1gN+qSWCppkpXf7X?=
+ =?us-ascii?Q?TlQjD+m4e1EvXwEZfqFgaSX5Bfkr8I5VCmsqbVd6B3IxwrPaV6CKqm4vF9Rs?=
+ =?us-ascii?Q?8zPMB9HDjA10UpXeZ+FQ/xt8+lfFxDL48LqL7SOpZPtL7nVZ0OOFVKQsP5Sw?=
+ =?us-ascii?Q?mlIWi3EMFmQ6mW83cO3zqRXf788PX7b4Ahkk+GbHdta1wOQfFCkBXIxe5rzl?=
+ =?us-ascii?Q?BqimoZRJ47N9QCLfbnqmKnqERpPmaRovakPPt4693l3rxriGMjg28cz5+zZX?=
+ =?us-ascii?Q?3rvCev1ZPw9tWDVD2pq3EnvhnwQ7AxYq4/SKBZLYhCZ+j3rm4Q+1jA=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?PytZ64RxWg++uCy4CK5fqafKj3W3d7i/8iIAMwT2pNsbUD5GkbZQrNIz1Kzd?=
+ =?us-ascii?Q?aNkZsitoXgJCZGoinK9pE8cOaE6k2Bxn6VWRAF5HokAfOFhPbai6gl8sry9u?=
+ =?us-ascii?Q?sEhTjDvUfPtYEJ4cPCLWuyG5ATrr3W1nwc+ovkHOwh7Y1ufLOdc18nvr/sAb?=
+ =?us-ascii?Q?0HP7Yx0gwwnxmkjp6DOjqpVd3oWMVh8cDKIadMw+hcWfdZO9LCsK2CLUMApi?=
+ =?us-ascii?Q?kSYGJVWKyXWHKDEK37wj/lJR6nb5t5Wa67bxwoT7HbaKe6fEzQEitA4V49cg?=
+ =?us-ascii?Q?RBDc0q6S4B9VglEeo03WZOTrKaI8HGqNfdYrvmwsVq38r8MxODU5911WkInp?=
+ =?us-ascii?Q?4E/Axs3NXty2n7NepHprNfYLFBDhwQMw9vuZ7KNSl5cWVtkYWz9oAgyMPsD9?=
+ =?us-ascii?Q?LISXt9hK5uyI4IuSFZ5HAP89C1l0NxG+NyS/RlqswWpNvP4UvffmAIWr8i4r?=
+ =?us-ascii?Q?sQFLQ8oZDiLf1dz6O38h+pYYaBUPLjhQYM12wrSumygYOzIjwrb4vz76VCSO?=
+ =?us-ascii?Q?0tlVPlfKJUXOYgWvUrA2jOhDDEU8i2neo/R/YD5rgHT89VlZLADXNcgLxiaL?=
+ =?us-ascii?Q?rCOEQrc91WmrSDA9FXYt1L/ARQCwVrepr/FI6iWx7exyCoB4oBB2OyEJyyB9?=
+ =?us-ascii?Q?gffsfFj0e9115lXLCYhxO8uZkQjdLiahMgsfnzeaUQUZArtabNVB/IelyGLc?=
+ =?us-ascii?Q?WpvJ7u3PJffb30pfUO9z4LAfrZvDy9ltuMQEYcuUdh18Y/akRPnWR72vRm73?=
+ =?us-ascii?Q?gaOo2hmBR49/CaZRpp7Fr1UvAzxybkMomw52GnI+EEmD+S9DT/SpIHPjQtL6?=
+ =?us-ascii?Q?jbkXjZSgIJ+QvkBcahSQlivWMrUr6TKAeUyCt1YiCnnxAlP4GNh7bjx14qE/?=
+ =?us-ascii?Q?AkyOkmXqF7FyyeEb6Mhvj35lvUtRYE4z98QSSQ16iwbIlE25luY+ZJCBBSEb?=
+ =?us-ascii?Q?bnLsRPaJMYHLqKF9c0zZ8pdz51aOHOtnOEitXrbT5HG40Z1V8BjWQvHKrz7A?=
+ =?us-ascii?Q?xdsVtuYvoRic55UWWBzlWdG52zjOARqZY9TfqdtTZAHv/FVruDnBsup7Cnd9?=
+ =?us-ascii?Q?4bsFlhc4nvDv78kuYFGGfzt8goZJAW5PI/xwlK1MKHvcOCqf2GNDaaedp/Va?=
+ =?us-ascii?Q?v29IYEK0fa/ME9d0RfCyPuLY41c4TxM0hCccVkSAclyVUdRL03SC3I/sBKu7?=
+ =?us-ascii?Q?Yd5f0CgXpXiLONuiJj1Oa3pJecxGsG7wu2zkq9p7pm+lsaTzs+ci3gSH0x/m?=
+ =?us-ascii?Q?7/tU65aXOFkGXlQAC1xHarwawDpp+a/bY1wEyrBp/P4QstHENNzJ4WB4IHnK?=
+ =?us-ascii?Q?AoGdPiFICqxtoK/19fi1UKHn7hH3Y0k4nbTEzyyGTKqwoqcAYzqC+D82dATE?=
+ =?us-ascii?Q?znBTFPus4l8vl3BcqipePOZPYgcwxYHv9E385g4WvfZuYTr5Rn93XppYCJZf?=
+ =?us-ascii?Q?SYlY7XOJfmXy6wssZ8pFyo2jIoOQ3GK5ele1aMX9Ll23Yb9EcttD+BWdL6MK?=
+ =?us-ascii?Q?Rr3wzUY1bN/oQnWU3DkCPP6rbHIV+DEiJtPFoNjoVefkO0cFf88AFyL9KaGr?=
+ =?us-ascii?Q?vspi/Nl7YVyognm7L2KO345ThnXFd/bee+9xxhnV?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v4 03/14] hw/pci-host/aspeed: Add AST2600 PCIe
- config space and host bridge
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
- titusr@google.com
-References: <20250919032431.3316764-1-jamin_lin@aspeedtech.com>
- <20250919032431.3316764-4-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250919032431.3316764-4-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=un+7=36=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 700ebae4-9be0-4664-da1b-08ddf74f9042
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Sep 2025 07:38:45.0990 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pOwEZKmGpNES/5Ya6eBisuRCedrGQO64G0k/ZEAUEEWWVdNCldXNbaZSipkLppVNhZyLZZLVyMfscwIFjB3h5A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4098
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_NONE=0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,573 +181,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/19/25 05:24, Jamin Lin wrote:
-> Introduce PCIe config and host bridge model for the AST2600 platform.
-> 
-> This patch adds support for the H2X (AHB to PCIe Bus Bridge) controller
-> with a 0x100 byte register space. The register layout is shared between
-> two root complexes: 0x00–0x7f is common, 0x80–0xbf for RC_L, and 0xc0–0xff
-> for RC_H. Only RC_H is modeled in this implementation.
-> 
-> The RC_H bus uses bus numbers in the 0x80–0xff range instead of the
-> standard root bus 0x00. To allow the PCI subsystem to discover devices,
-> the host bridge logic remaps the root bus number back to 0x00 whenever the
-> configured bus number matches the "bus-nr" property.
-> 
-> New MMIO callbacks are added for the H2X config space:
-> - aspeed_pcie_cfg_read() and aspeed_pcie_cfg_write() handle register
->    accesses.
-> - aspeed_pcie_cfg_readwrite() provides configuration read/write support.
-> - aspeed_pcie_cfg_translate_write() handles PCIe byte-enable semantics for
->    write operations.
-> 
-> The reset handler initializes the H2X register block with default values
-> as defined in the AST2600 datasheet.
-> 
-> Additional changes:
-> - Implement ASPEED PCIe root complex (TYPE_ASPEED_PCIE_RC).
-> - Wire up interrupt propagation via aspeed_pcie_rc_set_irq().
-> - Add tracepoints for config read/write and INTx handling.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: 18 September 2025 23:00
+> To: Shameer Kolothum <skolothumtho@nvidia.com>
+> Cc: Shameer Kolothum <shameerkolothum@gmail.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org; eric.auger@redhat.com;
+> peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>;
+> ddutile@redhat.com; berrange@redhat.com; Nathan Chen
+> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+> smostafa@google.com; linuxarm@huawei.com; wangzhou1@hisilicon.com;
+> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com
+> Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict
+> accelerated SMMUv3 to vfio-pci endpoints with iommufd
+>=20
+> On Thu, Sep 18, 2025 at 06:31:43AM -0700, Shameer Kolothum wrote:
+> > > > > @@ -37,7 +37,6 @@ typedef struct SMMUS1Hwpt {
+> > > > >
+> > > > >  typedef struct SMMUv3AccelDevice {
+> > > > >      SMMUDevice  sdev;
+> > > > > -    AddressSpace as_sysmem;
+> > > > >      HostIOMMUDeviceIOMMUFD *idev;
+> > > > >      SMMUS1Hwpt  *s1_hwpt;
+> > > > >      SMMUViommu *viommu;
+> > > > > @@ -48,6 +47,7 @@ typedef struct SMMUv3AccelDevice {  typedef
+> struct
+> > > > > SMMUv3AccelState {
+> > > > >      MemoryRegion root;
+> > > > >      MemoryRegion sysmem;
+> > > > > +    AddressSpace as_sysmem;
+> > > > >      SMMUViommu *viommu;
+> > > > >      struct iommu_hw_info_arm_smmuv3 info;  } SMMUv3AccelState;
+> > > >
+> > > > That's changing from an ioas_id per VFIO device to an ioas_id per
+> > > > vSMMU instance, right? I think it's still not enough.
+> > > >
+> > > > All vSMMU instances could share the same ioas_id. That is why I put=
+ in
+> > > > the SMMUBaseClass as it's shared structure across vSMMUs.
+> > >
+> > > Ah..you mean it is basically per VM then. Got it.
+> >
+> > Regarding using SMMUBaseClass for this, it looks like ObjectClass norma=
+lly
+> holds
+> > function pointers. Eric has made a similar observation elsewhere in thi=
+s
+> series.
+> >
+> >  @Eric, any suggestions?
+> >
+> > Is use of &address_space_memory directly in smmuv3_accel_find_add_as()
+> a complete
+> > no-go, given we are talking about having the system address space for a=
+ll the
+> SMMUv3
+> > accelerated devices here?
+>=20
+> smmuv3_accel_find_add_as() is per instance. So, it wouldn't share.
+
+My suggestion was...
+
+static AddressSpace *smmuv3_accel_find_add_as(..)
+{
+...
+    if (vfio_pci) {
+        return &address_space_memory;
+    } else {
+        return &sdev->as;
+    }
+}
+
+ie, use the global to system memory address space instead of creating an
+alias to the system memory and a different address space. This will provide
+the same pointer to VFIO/iommufd and  it can then reuse the ioas_id.
+I can see that QEMU uses "&address_space_memory" directly in many places
+(pci_device_iommu_address_space(), etc). I think the idea behind a separate=
+=20
+address space is to have private ownership and lifetime management probably=
+.
+Not sure there are any other concerns here. Please let me know if there are
+any.
+
+> Even smmuv3_accel_init() wouldn't work.
+>=20
+> If SMMUBaseClass isn't a good place, (I haven't tested but..) can
+> we do address_space_init() in the VMS? I see virt.c calling the
+> memory_region_init(), so perhaps we could init the as_sysmem there
+> and pass it in to each vSMMU instance.
+
+That will still require you to store the address space pointer somewhere an=
+d=20
+each time a SMMUv3 accel instance is created set a property to the instance
+via the hotplug handler. Doable but still...
 
 Thanks,
-
-C.
-
-
-> ---
->   include/hw/pci-host/aspeed_pcie.h |  59 +++++
->   hw/pci-host/aspeed_pcie.c         | 421 ++++++++++++++++++++++++++++++
->   hw/pci-host/trace-events          |   4 +
->   3 files changed, 484 insertions(+)
-> 
-> diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-> index d9fb829048..850d579189 100644
-> --- a/include/hw/pci-host/aspeed_pcie.h
-> +++ b/include/hw/pci-host/aspeed_pcie.h
-> @@ -22,6 +22,65 @@
->   #include "hw/pci/pcie_host.h"
->   #include "qom/object.h"
->   
-> +typedef struct AspeedPCIECfgTxDesc {
-> +    uint32_t desc0;
-> +    uint32_t desc1;
-> +    uint32_t desc2;
-> +    uint32_t desc3;
-> +    uint32_t wdata;
-> +    uint32_t rdata_reg;
-> +} AspeedPCIECfgTxDesc;
-> +
-> +typedef struct AspeedPCIERcRegs {
-> +    uint32_t int_en_reg;
-> +    uint32_t int_sts_reg;
-> +} AspeedPCIERcRegs;
-> +
-> +typedef struct AspeedPCIERegMap {
-> +    AspeedPCIERcRegs rc;
-> +} AspeedPCIERegMap;
-> +
-> +#define TYPE_ASPEED_PCIE_RC "aspeed.pcie-rc"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERcState, ASPEED_PCIE_RC);
-> +
-> +struct AspeedPCIERcState {
-> +    PCIExpressHost parent_obj;
-> +
-> +    MemoryRegion mmio_window;
-> +    MemoryRegion io_window;
-> +    MemoryRegion mmio;
-> +    MemoryRegion io;
-> +
-> +    uint32_t bus_nr;
-> +    char name[16];
-> +    qemu_irq irq;
-> +};
-> +
-> +/* Bridge between AHB bus and PCIe RC. */
-> +#define TYPE_ASPEED_PCIE_CFG "aspeed.pcie-cfg"
-> +OBJECT_DECLARE_TYPE(AspeedPCIECfgState, AspeedPCIECfgClass, ASPEED_PCIE_CFG);
-> +
-> +struct AspeedPCIECfgState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion mmio;
-> +    uint32_t *regs;
-> +    uint32_t id;
-> +
-> +    const AspeedPCIERcRegs *rc_regs;
-> +    AspeedPCIERcState rc;
-> +};
-> +
-> +struct AspeedPCIECfgClass {
-> +    SysBusDeviceClass parent_class;
-> +
-> +    const AspeedPCIERegMap *reg_map;
-> +    const MemoryRegionOps *reg_ops;
-> +
-> +    uint64_t rc_bus_nr;
-> +    uint64_t nr_regs;
-> +};
-> +
->   #define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
->   OBJECT_DECLARE_TYPE(AspeedPCIEPhyState, AspeedPCIEPhyClass, ASPEED_PCIE_PHY);
->   
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index 4c74520052..c3e92ee449 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -25,6 +25,425 @@
->   #include "hw/pci/msi.h"
->   #include "trace.h"
->   
-> +/*
-> + * PCIe Root Complex (RC)
-> + */
-> +
-> +static void aspeed_pcie_rc_set_irq(void *opaque, int irq, int level)
-> +{
-> +    AspeedPCIERcState *rc = (AspeedPCIERcState *) opaque;
-> +    AspeedPCIECfgState *cfg =
-> +        container_of(rc, AspeedPCIECfgState, rc);
-> +    bool intx;
-> +
-> +    assert(irq < PCI_NUM_PINS);
-> +
-> +    if (level) {
-> +        cfg->regs[cfg->rc_regs->int_sts_reg] |= BIT(irq);
-> +    } else {
-> +        cfg->regs[cfg->rc_regs->int_sts_reg] &= ~BIT(irq);
-> +    }
-> +
-> +    intx = !!(cfg->regs[cfg->rc_regs->int_sts_reg] &
-> +              cfg->regs[cfg->rc_regs->int_en_reg]);
-> +    trace_aspeed_pcie_rc_intx_set_irq(cfg->id, irq, intx);
-> +    qemu_set_irq(rc->irq, intx);
-> +}
-> +
-> +static int aspeed_pcie_rc_map_irq(PCIDevice *pci_dev, int irq_num)
-> +{
-> +    return irq_num % PCI_NUM_PINS;
-> +}
-> +
-> +static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
-> +    AspeedPCIERcState *rc = ASPEED_PCIE_RC(dev);
-> +    AspeedPCIECfgState *cfg =
-> +           container_of(rc, AspeedPCIECfgState, rc);
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    g_autofree char *ioport_window_name = NULL;
-> +    g_autofree char *mmio_window_name = NULL;
-> +    g_autofree char *root_bus_name = NULL;
-> +
-> +    /* PCI configuration space */
-> +    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
-> +    sysbus_init_mmio(sbd, &pex->mmio);
-> +
-> +    /* MMIO and IO region */
-> +    memory_region_init(&rc->mmio, OBJECT(rc), "mmio", UINT64_MAX);
-> +    memory_region_init(&rc->io, OBJECT(rc), "io", 0x10000);
-> +
-> +    mmio_window_name = g_strdup_printf("pcie.%d.mmio_window", cfg->id);
-> +    memory_region_init_io(&rc->mmio_window, OBJECT(rc), &unassigned_io_ops,
-> +                          OBJECT(rc), mmio_window_name, UINT64_MAX);
-> +    ioport_window_name = g_strdup_printf("pcie.%d.ioport_window", cfg->id);
-> +    memory_region_init_io(&rc->io_window, OBJECT(rc), &unassigned_io_ops,
-> +                          OBJECT(rc), ioport_window_name, 0x10000);
-> +
-> +    memory_region_add_subregion(&rc->mmio_window, 0, &rc->mmio);
-> +    memory_region_add_subregion(&rc->io_window, 0, &rc->io);
-> +    sysbus_init_mmio(sbd, &rc->mmio_window);
-> +    sysbus_init_mmio(sbd, &rc->io_window);
-> +
-> +    sysbus_init_irq(sbd, &rc->irq);
-> +    root_bus_name = g_strdup_printf("pcie.rc%d", cfg->id);
-> +    pci->bus = pci_register_root_bus(dev, root_bus_name,
-> +                                     aspeed_pcie_rc_set_irq,
-> +                                     aspeed_pcie_rc_map_irq, rc, &rc->mmio,
-> +                                     &rc->io, 0, 4, TYPE_PCIE_BUS);
-> +    pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
-> +}
-> +
-> +static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
-> +                                                PCIBus *rootbus)
-> +{
-> +    AspeedPCIERcState *rc = ASPEED_PCIE_RC(host_bridge);
-> +    AspeedPCIECfgState *cfg =
-> +           container_of(rc, AspeedPCIECfgState, rc);
-> +
-> +    snprintf(rc->name, sizeof(rc->name), "%04x:%02x", cfg->id, rc->bus_nr);
-> +
-> +    return rc->name;
-> +}
-> +
-> +static const Property aspeed_pcie_rc_props[] = {
-> +    DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
-> +};
-> +
-> +static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED PCIe RC";
-> +    dc->realize = aspeed_pcie_rc_realize;
-> +    dc->fw_name = "pci";
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +
-> +    hc->root_bus_path = aspeed_pcie_rc_root_bus_path;
-> +    device_class_set_props(dc, aspeed_pcie_rc_props);
-> +
-> +    msi_nonbroken = true;
-> +}
-> +
-> +static const TypeInfo aspeed_pcie_rc_info = {
-> +    .name = TYPE_ASPEED_PCIE_RC,
-> +    .parent = TYPE_PCIE_HOST_BRIDGE,
-> +    .instance_size = sizeof(AspeedPCIERcState),
-> +    .class_init = aspeed_pcie_rc_class_init,
-> +};
-> +
-> +/*
-> + * PCIe Config
-> + *
-> + * AHB to PCIe Bus Bridge (H2X)
-> + *
-> + * On the AST2600:
-> + * NOTE: rc_l is not supported by this model.
-> + * - Registers 0x00 - 0x7F are shared by both PCIe0 (rc_l) and PCIe1 (rc_h).
-> + * - Registers 0x80 - 0xBF are specific to PCIe0.
-> + * - Registers 0xC0 - 0xFF are specific to PCIe1.
-> + */
-> +
-> +/* AST2600 */
-> +REG32(H2X_CTRL,             0x00)
-> +    FIELD(H2X_CTRL, CLEAR_RX, 4, 1)
-> +REG32(H2X_TX_CLEAR,         0x08)
-> +    FIELD(H2X_TX_CLEAR, IDLE, 0, 1)
-> +REG32(H2X_RDATA,            0x0C)
-> +REG32(H2X_TX_DESC0,         0x10)
-> +REG32(H2X_TX_DESC1,         0x14)
-> +REG32(H2X_TX_DESC2,         0x18)
-> +REG32(H2X_TX_DESC3,         0x1C)
-> +REG32(H2X_TX_DATA,          0x20)
-> +REG32(H2X_TX_STS,           0x24)
-> +    FIELD(H2X_TX_STS, IDLE, 31, 1)
-> +    FIELD(H2X_TX_STS, RC_L_TX_COMP, 24, 1)
-> +    FIELD(H2X_TX_STS, RC_H_TX_COMP, 25, 1)
-> +    FIELD(H2X_TX_STS, TRIG, 0, 1)
-> +REG32(H2X_RC_H_CTRL,        0xC0)
-> +REG32(H2X_RC_H_INT_EN,      0xC4)
-> +REG32(H2X_RC_H_INT_STS,     0xC8)
-> +    SHARED_FIELD(H2X_RC_INT_INTDONE, 4, 1)
-> +    SHARED_FIELD(H2X_RC_INT_INTX, 0, 4)
-> +REG32(H2X_RC_H_RDATA,       0xCC)
-> +
-> +#define TLP_FMTTYPE_CFGRD0  0x04 /* Configuration Read  Type 0 */
-> +#define TLP_FMTTYPE_CFGWR0  0x44 /* Configuration Write Type 0 */
-> +#define TLP_FMTTYPE_CFGRD1  0x05 /* Configuration Read  Type 1 */
-> +#define TLP_FMTTYPE_CFGWR1  0x45 /* Configuration Write Type 1 */
-> +
-> +#define PCIE_CFG_FMTTYPE_MASK(x) (((x) >> 24) & 0xff)
-> +#define PCIE_CFG_BYTE_EN(x) ((x) & 0xf)
-> +
-> +static const AspeedPCIERegMap aspeed_regmap = {
-> +    .rc = {
-> +        .int_en_reg     = R_H2X_RC_H_INT_EN,
-> +        .int_sts_reg    = R_H2X_RC_H_INT_STS,
-> +    },
-> +};
-> +
-> +static uint64_t aspeed_pcie_cfg_read(void *opaque, hwaddr addr,
-> +                                     unsigned int size)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
-> +    uint32_t reg = addr >> 2;
-> +    uint32_t value = 0;
-> +
-> +    value = s->regs[reg];
-> +
-> +    trace_aspeed_pcie_cfg_read(s->id, addr, value);
-> +
-> +    return value;
-> +}
-> +
-> +static void aspeed_pcie_cfg_translate_write(uint8_t byte_en, uint32_t *addr,
-> +                                            uint64_t *val, int *len)
-> +{
-> +    uint64_t packed_val = 0;
-> +    int first_bit = -1;
-> +    int index = 0;
-> +    int i;
-> +
-> +    *len = ctpop8(byte_en);
-> +
-> +    if (*len == 0 || *len > 4) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid byte enable: 0x%x\n",
-> +                      __func__, byte_en);
-> +        return;
-> +    }
-> +
-> +    /* Special case: full 4-byte write must be 4-byte aligned */
-> +    if (byte_en == 0x0f) {
-> +        if ((*addr & 0x3) != 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: 4-byte write not 4-byte aligned: addr=0x%x\n",
-> +                          __func__, *addr);
-> +            return;
-> +        }
-> +        *val &= 0xffffffffULL;
-> +        return;
-> +    }
-> +
-> +    for (i = 0; i < 4; i++) {
-> +        if (byte_en & (1 << i)) {
-> +            if (first_bit < 0) {
-> +                first_bit = i;
-> +            }
-> +            packed_val |= ((*val >> (i * 8)) & 0xff) << (index * 8);
-> +            index++;
-> +        }
-> +    }
-> +
-> +    *addr += first_bit;
-> +    *val = packed_val;
-> +}
-> +
-> +static void aspeed_pcie_cfg_readwrite(AspeedPCIECfgState *s,
-> +                                      const AspeedPCIECfgTxDesc *desc)
-> +{
-> +    AspeedPCIERcState *rc = &s->rc;
-> +    PCIHostState *pci = NULL;
-> +    PCIDevice *pdev = NULL;
-> +    uint32_t cfg_addr;
-> +    uint32_t offset;
-> +    uint8_t byte_en;
-> +    bool is_write;
-> +    uint8_t devfn;
-> +    uint64_t val;
-> +    uint8_t bus;
-> +    int len;
-> +
-> +    val = ~0;
-> +    is_write = !!(desc->desc0 & BIT(30));
-> +    cfg_addr = desc->desc2;
-> +
-> +    bus = (cfg_addr >> 24) & 0xff;
-> +    devfn  = (cfg_addr >> 16) & 0xff;
-> +    offset = cfg_addr & 0xffc;
-> +
-> +    pci = PCI_HOST_BRIDGE(rc);
-> +
-> +    /*
-> +     * On the AST2600, the RC_H bus number range from 0x80 to 0xFF, with the
-> +     * root device and root port assigned to bus 0x80 instead of the standard
-> +     * 0x00. To allow the PCI subsystem to correctly discover devices on the
-> +     * root bus, bus 0x80 is remapped to 0x00.
-> +     */
-> +    if (bus == rc->bus_nr) {
-> +        bus = 0;
-> +    }
-> +
-> +    pdev = pci_find_device(pci->bus, bus, devfn);
-> +    if (!pdev) {
-> +        s->regs[desc->rdata_reg] = ~0;
-> +        goto out;
-> +    }
-> +
-> +    switch (PCIE_CFG_FMTTYPE_MASK(desc->desc0)) {
-> +    case TLP_FMTTYPE_CFGWR0:
-> +    case TLP_FMTTYPE_CFGWR1:
-> +        byte_en = PCIE_CFG_BYTE_EN(desc->desc1);
-> +        val = desc->wdata;
-> +        aspeed_pcie_cfg_translate_write(byte_en, &offset, &val, &len);
-> +        pci_host_config_write_common(pdev, offset, pci_config_size(pdev),
-> +                                     val, len);
-> +        break;
-> +    case TLP_FMTTYPE_CFGRD0:
-> +    case TLP_FMTTYPE_CFGRD1:
-> +        val = pci_host_config_read_common(pdev, offset,
-> +                                          pci_config_size(pdev), 4);
-> +        s->regs[desc->rdata_reg] = val;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid CFG type. DESC0=0x%x\n",
-> +                      __func__, desc->desc0);
-> +    }
-> +
-> +out:
-> +    trace_aspeed_pcie_cfg_rw(s->id, is_write ?  "write" : "read", bus, devfn,
-> +                             cfg_addr, val);
-> +}
-> +
-> +static void aspeed_pcie_cfg_write(void *opaque, hwaddr addr, uint64_t data,
-> +                                  unsigned int size)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
-> +    AspeedPCIECfgTxDesc desc;
-> +    uint32_t reg = addr >> 2;
-> +    uint32_t rc_reg;
-> +
-> +    trace_aspeed_pcie_cfg_write(s->id, addr, data);
-> +
-> +    switch (reg) {
-> +    case R_H2X_CTRL:
-> +        if (data & R_H2X_CTRL_CLEAR_RX_MASK) {
-> +            s->regs[R_H2X_RDATA] = ~0;
-> +        }
-> +        break;
-> +    case R_H2X_TX_CLEAR:
-> +        if (data & R_H2X_TX_CLEAR_IDLE_MASK) {
-> +            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_IDLE_MASK;
-> +        }
-> +        break;
-> +    case R_H2X_TX_STS:
-> +        if (data & R_H2X_TX_STS_TRIG_MASK) {
-> +            desc.desc0 = s->regs[R_H2X_TX_DESC0];
-> +            desc.desc1 = s->regs[R_H2X_TX_DESC1];
-> +            desc.desc2 = s->regs[R_H2X_TX_DESC2];
-> +            desc.desc3 = s->regs[R_H2X_TX_DESC3];
-> +            desc.wdata = s->regs[R_H2X_TX_DATA];
-> +            desc.rdata_reg = R_H2X_RC_H_RDATA;
-> +            aspeed_pcie_cfg_readwrite(s, &desc);
-> +            rc_reg = s->rc_regs->int_sts_reg;
-> +            s->regs[rc_reg] |= H2X_RC_INT_INTDONE_MASK;
-> +            s->regs[R_H2X_TX_STS] |=
-> +                BIT(R_H2X_TX_STS_RC_H_TX_COMP_SHIFT);
-> +            s->regs[R_H2X_TX_STS] |= R_H2X_TX_STS_IDLE_MASK;
-> +        }
-> +        break;
-> +    /* preserve INTx status */
-> +    case R_H2X_RC_H_INT_STS:
-> +        if (data & H2X_RC_INT_INTDONE_MASK) {
-> +            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_RC_H_TX_COMP_MASK;
-> +        }
-> +        s->regs[reg] &= ~data | H2X_RC_INT_INTX_MASK;
-> +        break;
-> +    default:
-> +        s->regs[reg] = data;
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps aspeed_pcie_cfg_ops = {
-> +    .read = aspeed_pcie_cfg_read,
-> +    .write = aspeed_pcie_cfg_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 1,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void aspeed_pcie_cfg_instance_init(Object *obj)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(obj);
-> +
-> +    object_initialize_child(obj, "rc", &s->rc, TYPE_ASPEED_PCIE_RC);
-> +
-> +    return;
-> +}
-> +
-> +static void aspeed_pcie_cfg_reset(DeviceState *dev)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
-> +
-> +    memset(s->regs, 0, apc->nr_regs << 2);
-> +}
-> +
-> +static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
-> +    g_autofree char *name = NULL;
-> +
-> +    s->rc_regs = &apc->reg_map->rc;
-> +    s->regs = g_new(uint32_t, apc->nr_regs);
-> +    name = g_strdup_printf(TYPE_ASPEED_PCIE_CFG ".regs.%d", s->id);
-> +    memory_region_init_io(&s->mmio, OBJECT(s), apc->reg_ops, s, name,
-> +                          apc->nr_regs << 2);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +
-> +    object_property_set_int(OBJECT(&s->rc), "bus-nr",
-> +                            apc->rc_bus_nr,
-> +                            &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rc), errp)) {
-> +        return;
-> +    }
-> +}
-> +
-> +static void aspeed_pcie_cfg_unrealize(DeviceState *dev)
-> +{
-> +    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
-> +
-> +    g_free(s->regs);
-> +    s->regs = NULL;
-> +}
-> +
-> +static const Property aspeed_pcie_cfg_props[] = {
-> +    DEFINE_PROP_UINT32("id", AspeedPCIECfgState, id, 0),
-> +};
-> +
-> +static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED PCIe Config";
-> +    dc->realize = aspeed_pcie_cfg_realize;
-> +    dc->unrealize = aspeed_pcie_cfg_unrealize;
-> +    device_class_set_legacy_reset(dc, aspeed_pcie_cfg_reset);
-> +    device_class_set_props(dc, aspeed_pcie_cfg_props);
-> +
-> +    apc->reg_ops = &aspeed_pcie_cfg_ops;
-> +    apc->reg_map = &aspeed_regmap;
-> +    apc->nr_regs = 0x100 >> 2;
-> +    apc->rc_bus_nr = 0x80;
-> +}
-> +
-> +static const TypeInfo aspeed_pcie_cfg_info = {
-> +    .name       = TYPE_ASPEED_PCIE_CFG,
-> +    .parent     = TYPE_SYS_BUS_DEVICE,
-> +    .instance_init = aspeed_pcie_cfg_instance_init,
-> +    .instance_size = sizeof(AspeedPCIECfgState),
-> +    .class_init = aspeed_pcie_cfg_class_init,
-> +    .class_size = sizeof(AspeedPCIECfgClass),
-> +};
-> +
->   /*
->    * PCIe PHY
->    *
-> @@ -150,6 +569,8 @@ static const TypeInfo aspeed_pcie_phy_info = {
->   
->   static void aspeed_pcie_register_types(void)
->   {
-> +    type_register_static(&aspeed_pcie_rc_info);
-> +    type_register_static(&aspeed_pcie_cfg_info);
->       type_register_static(&aspeed_pcie_phy_info);
->   }
->   
-> diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-> index 3438516756..2584ea56e2 100644
-> --- a/hw/pci-host/trace-events
-> +++ b/hw/pci-host/trace-events
-> @@ -1,6 +1,10 @@
->   # See docs/devel/tracing.rst for syntax documentation.
->   
->   # aspeed_pcie.c
-> +aspeed_pcie_rc_intx_set_irq(uint32_t id, int num, int level) "%d: num %d set IRQ leve %d"
-> +aspeed_pcie_cfg_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-> +aspeed_pcie_cfg_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
-> +aspeed_pcie_cfg_rw(uint32_t id, const char *dir, uint8_t bus, uint8_t devfn, uint64_t addr, uint64_t data) "%d: %s bus:0x%x devfn:0x%x addr 0x%" PRIx64 " data 0x%" PRIx64
->   aspeed_pcie_phy_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
->   aspeed_pcie_phy_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
->   
-
+Shameer
 
