@@ -4,82 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34754CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EBD5CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzbq9-0007jk-47; Fri, 19 Sep 2025 10:11:57 -0400
+	id 1uzbra-0000yw-2b; Fri, 19 Sep 2025 10:13:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbq6-0007hy-Rg
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:11:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uzbr2-0000TZ-JA
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:12:54 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbq1-00072g-2f
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:11:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758291105;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fb6UmpRgtPjSo3PPjJcPOSJF6HMNCeVXdh1aW7PSr1k=;
- b=i1MxxF2XoP07pwIy+fBGvQyTikj4wfRggD1h3JI2Z/Xu2R1v2glO/l8VNbAizZnBu24wt+
- RPiegTZz8m1Yk0rs4U2JJNGX2xAtDthNDF6CbSKV9yn75zmq1Noi/BY0PZnb4n/ZDI3W9f
- IErY9WPLUcfQzssFKC2pIw0mDy9LFiU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-2nuw3mJrPemIwK6K_x3vkQ-1; Fri,
- 19 Sep 2025 10:11:40 -0400
-X-MC-Unique: 2nuw3mJrPemIwK6K_x3vkQ-1
-X-Mimecast-MFC-AGG-ID: 2nuw3mJrPemIwK6K_x3vkQ_1758291098
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A734A180028C; Fri, 19 Sep 2025 14:11:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45FBD1800579; Fri, 19 Sep 2025 14:11:35 +0000 (UTC)
-Date: Fri, 19 Sep 2025 15:11:31 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH 13/24] tests/lcitool: add missing rust-std dep
-Message-ID: <aM1kk9lUmGlxkFiL@redhat.com>
-References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
- <20250919133320.240145-14-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250919133320.240145-14-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uzbqt-0007St-Ld
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:12:51 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDtmm8023181;
+ Fri, 19 Sep 2025 14:12:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=wHeL1wm/V33LTNAX5D4U4fJeD/N74KTXsPJSJ4miq/E=; b=
+ VEcCt84Z9iAnp1tV96+Je/5sKs94EYzWHflmbZt1GY0Bg20Ci4W6j3XiFZjyDGBK
+ dGw0+2PrzgR/6HIQpPyGku7T6dbV1V/VJHeP3ONLunKqMHSxjXsZ+IH88BlwCPsV
+ wtWwQhIpd+9ijthjLmvIHdrr779e+uFCEmnAVTh+1LWG4CPG4HmFNmwKGIUGJvdI
+ vo/uhoGRZlKIFqAiVydQb/Yq+jCTtqgQLeZeF7bc5W914OiqFcqt3pia2nwIxmR5
+ QAVdPfJiwp9cHE5T+njKoaAPcFVYm9mSczPpjop5kciEajdFwGVUNDfYua9ocVQt
+ bJVbxyo6KgfSugmCOBuQtA==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fx6np7v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 14:12:39 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 58JD4V6N035195; Fri, 19 Sep 2025 14:12:39 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 494y2pu94y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 14:12:39 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JECYX9003357;
+ Fri, 19 Sep 2025 14:12:38 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 494y2pu924-5; Fri, 19 Sep 2025 14:12:38 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 04/11] tests/qtest: qtest_qemu_spawn_func
+Date: Fri, 19 Sep 2025 07:12:26 -0700
+Message-Id: <1758291153-349744-5-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
+References: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0 mlxscore=0
+ adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
+ definitions=main-2509190132
+X-Authority-Analysis: v=2.4 cv=TqbmhCXh c=1 sm=1 tr=0 ts=68cd64d7 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117
+ a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=GWFuMjjoAsU5Ejt__ZMA:9 cc=ntf
+ awl=host:13614
+X-Proofpoint-GUID: 5j7fPA6rsw0ukk-9TNTQieiNIyFkF4DP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX3d4Oj3gnrLPD
+ UvMMhBI40ogF3NXUDBMRbAPQ0l2JQw758vGWpY1vKMe1RCpYrm84zKaZYfaJLQVLDVbtHiCywcz
+ aa+hYs8w6Z93toB8ABW0Jnp+wNEYTcYgUGkmZhN/PhWMGVuCMfTQu4mWHeMdy+lQg3H13Hfn1dp
+ DThxaBHQ09XqWw7ytD9i0Y5euUv/JSwKGzxgb+LyxpxeXl28PNxxWHYJCL74rV7hh2x+bIyQ86z
+ xVAucrbCJCYqmRIwsXzqX19x29/fQzBOwT7B/UlmsUCsl3JRntKSvOoua/RHcZIy+VFlyP2G/SK
+ tM/5Cm8FUS6OO6zmFjHrEzKIvxbiomrsuW9X4LWVq5AU7bwsGHllgczpkfcVrZYDu0tCnpC6CYs
+ NGgOuvFaV7/gkO/agziuMVEwNSmOFQ==
+X-Proofpoint-ORIG-GUID: 5j7fPA6rsw0ukk-9TNTQieiNIyFkF4DP
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,44 +108,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 05:33:07PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Some distros/targets may pull it by default, but some don't.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      | 1 +
->  scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        | 1 +
->  tests/docker/dockerfiles/centos9.docker               | 1 +
->  tests/docker/dockerfiles/debian-amd64-cross.docker    | 1 +
->  tests/docker/dockerfiles/debian-arm64-cross.docker    | 1 +
->  tests/docker/dockerfiles/debian-armhf-cross.docker    | 1 +
->  tests/docker/dockerfiles/debian-i686-cross.docker     | 1 +
->  tests/docker/dockerfiles/debian-mips64el-cross.docker | 1 +
->  tests/docker/dockerfiles/debian-mipsel-cross.docker   | 1 +
->  tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 1 +
->  tests/docker/dockerfiles/debian-s390x-cross.docker    | 1 +
->  tests/docker/dockerfiles/debian.docker                | 1 +
->  tests/docker/dockerfiles/fedora-rust-nightly.docker   | 1 +
->  tests/docker/dockerfiles/fedora-win64-cross.docker    | 3 ++-
->  tests/docker/dockerfiles/fedora.docker                | 1 +
->  tests/docker/dockerfiles/ubuntu2204.docker            | 1 +
->  tests/lcitool/projects/qemu.yml                       | 1 +
->  17 files changed, 18 insertions(+), 1 deletion(-)
+Allow the qtest_qemu_spawn caller to pass the function to be called
+to perform the spawn.  The opaque argument is needed by a new spawn
+function in a subsequent patch.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ tests/qtest/libqtest.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-
-With regards,
-Daniel
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 3fa9317..d97144e 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -418,7 +418,8 @@ static QTestState *qtest_create_test_state(int pid)
+     return s;
+ }
+ 
+-static QTestState *qtest_spawn_qemu(const char *qemu_bin, const char *args)
++static QTestState *qtest_spawn_qemu(const char *qemu_bin, const char *args,
++                                    void *opaque)
+ {
+     int pid;
+     g_autoptr(GString) command = g_string_new("");
+@@ -492,9 +493,15 @@ gchar *qtest_qemu_args(const char *extra_args)
+     return args;
+ }
+ 
++typedef QTestState *(*qtest_qemu_spawn_func)(const char *qemu_bin,
++                                             const char *extra_args,
++                                             void *opaque);
++
+ static QTestState *qtest_init_internal(const char *qemu_bin,
+                                        const char *extra_args,
+-                                       bool do_connect)
++                                       bool do_connect,
++                                       qtest_qemu_spawn_func spawn,
++                                       void *opaque)
+ {
+     QTestState *s;
+     int sock, qmpsock, i;
+@@ -515,7 +522,7 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+     sock = init_socket(socket_path);
+     qmpsock = init_socket(qmp_socket_path);
+ 
+-    s = qtest_spawn_qemu(qemu_bin, args);
++    s = spawn(qemu_bin, args, opaque);
+ 
+     qtest_client_set_rx_handler(s, qtest_client_socket_recv_line);
+     qtest_client_set_tx_handler(s, qtest_client_socket_send);
+@@ -570,7 +577,8 @@ void qtest_connect(QTestState *s)
+ 
+ QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
+ {
+-    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, true);
++    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, true,
++                               qtest_spawn_qemu, NULL);
+ }
+ 
+ void qtest_qmp_handshake(QTestState *s, QList *capabilities)
+@@ -593,7 +601,7 @@ QTestState *qtest_init_ext(const char *var, const char *extra_args,
+                            QList *capabilities, bool do_connect)
+ {
+     QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args,
+-                                        do_connect);
++                                        do_connect, qtest_spawn_qemu, NULL);
+ 
+     if (do_connect) {
+         qtest_qmp_handshake(s, capabilities);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+1.8.3.1
 
 
