@@ -4,93 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7FFCAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3EEACAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 12:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzZfW-00038E-Gg; Fri, 19 Sep 2025 07:52:50 -0400
+	id 1uzZn4-00057R-9F; Fri, 19 Sep 2025 08:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZfP-0002yV-2A
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzZmt-00054l-Qw
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:00:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZfG-0000wG-CP
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzZmm-0003Qf-Bd
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:00:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758282747;
+ s=mimecast20190719; t=1758283215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JHLoJxwljpLeo0arktfCDo5fN3hVTtZXV5S/bRj7zZo=;
- b=TMNXltkZTi4jpPJvbITlJuvlAZRW4h0V38lUT5d4P4P0zLMvGEvsbreUwMP5f4XicUhJWr
- Tt5GUmQNkcR0yaFwBeVEtZxO6KcUqsIXvEHxKzwuqFuGYhe5LBU4+gODfUN3RH76EpO7gF
- Md3G4DtNAgwHfj6lsCwpg8jgTS1j82w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-D6NsE1Q6M0m18XQDPzxITA-1; Fri,
- 19 Sep 2025 07:52:24 -0400
-X-MC-Unique: D6NsE1Q6M0m18XQDPzxITA-1
-X-Mimecast-MFC-AGG-ID: D6NsE1Q6M0m18XQDPzxITA_1758282742
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E983D180028E; Fri, 19 Sep 2025 11:52:21 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.187])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDA111955F2D; Fri, 19 Sep 2025 11:52:12 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jagannathan Raman <jag.raman@oracle.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
- Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John Levon <john.levon@nutanix.com>, Fam Zheng <fam@euphon.net>,
- Alexander Bulekov <alxndr@bu.edu>, Stefan Weil <sw@weilnetz.de>,
- Gerd Hoffmann <kraxel@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Michael Roth <michael.roth@amd.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Subject: [PULL 11/16] io/channel-socket: rework qio_channel_socket_copy_fds()
-Date: Fri, 19 Sep 2025 12:50:12 +0100
-Message-ID: <20250919115017.1536203-12-berrange@redhat.com>
-In-Reply-To: <20250919115017.1536203-1-berrange@redhat.com>
-References: <20250919115017.1536203-1-berrange@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Rf+J5SM14RRyXfWe8ZHy9mqCxWv9fVEGlfAIWlWU6Ts=;
+ b=QG6/Lrr3I2kShyHQPnL+Ug/AeQbkdvhHpdooGLwimfn7uuUDXRN72+oIm/huhchgCdNiek
+ ldT+ItIWbaKiQNWJ7tmt7AQ+WGGp/CpTyKviuDTfNFdY3YD29dm6zS7o2flD65Ods7V7jF
+ uXUq2C4DEkygkij0ELO5QZ+NSNwgnJY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-646-PQVy4JZTPEuPu5QWhoQ-Pw-1; Fri, 19 Sep 2025 08:00:13 -0400
+X-MC-Unique: PQVy4JZTPEuPu5QWhoQ-Pw-1
+X-Mimecast-MFC-AGG-ID: PQVy4JZTPEuPu5QWhoQ-Pw_1758283213
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3ecdc9dbc5fso1302666f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 05:00:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758283212; x=1758888012;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rf+J5SM14RRyXfWe8ZHy9mqCxWv9fVEGlfAIWlWU6Ts=;
+ b=nrW+8eAag/WWrMb212a7uVOtS/+qpCp/EppxAnGtyFLODJtIc/eeatI0lJohNwx+8I
+ iSEh7bU2Djo4nsxaM+MV37/nIXuac26+BpIrqaGU+9Jkafg33rURasKGtnnITXv4xqKM
+ tOwkt9cilHJ4Xnb+r3ZtcyHEMzVwEawhaqMS22wbabc+oyfuDBAh9Z0X2LgzaX4AoNQM
+ HSB8/0kszbdWi05YI01usiJZwfqknLQ6X9rRdZHsib4aq7b1QrY2F06grQtuQy0YiLkd
+ XGtDtBbiHthgzsd0V7sJCBXYO8ACos6xPysYGKfrAl5aAv5wRTKClEtR98EVDc2x18wZ
+ Go2A==
+X-Gm-Message-State: AOJu0Yxsg4KSViHghNmmS1MHzCpFHrpb5Yap9/ehVpMeobA1osafKoLo
+ 18ClJIG/iOLyCfrZJdfq4VnuwiRTnxzLL0Rs6xiMkQUIBqOI7j7r4P9csLeDy55XAzHphUBNeON
+ 3eDS8TuKFiDRl155zUoUjd7/mriCtH+Afb9OeEZHRl7Dv4SQ8zDnQwVEq
+X-Gm-Gg: ASbGncuY+uxIFfQ2wnTolGMbLeCS3q/O6J2STREqKuOLgdGj6soKQBu9iHtuNuCgQbX
+ tdmc0h7QN75OOhQF+cLyIenIDnG/hJrHgE/lxi1L3chmX8DsGFzCGDsU4B1jLQHfCYtyHhrLg5a
+ AtVMgdfBUF4pIl92p/KkMch00/pJ1xCqIameqZIYaoWQI/YMRK56E8lfn06ZXmgjSKs+IPDmr/g
+ tnFYAJNqIWwPtKGcnJyQpFuXPLp6PpTFiP46R6K3WQI3EejiWwwPtF58XcH7QQSlEcWY86++itF
+ DvJ08BiJGMNo1XCY+9OPrQMeR7EHe8nqa9dbswh9pwOBeSoN51/Tg2YBPPZiGM13Os/9fv2KgoZ
+ JNgsEGQ==
+X-Received: by 2002:a5d:5d88:0:b0:3d9:70cc:6dd0 with SMTP id
+ ffacd0b85a97d-3ee84afd2fdmr2291371f8f.33.1758283212106; 
+ Fri, 19 Sep 2025 05:00:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEn4mUuMy1MZgFy3dbPbGykt63c/gPWX1bvwhzttiBA0Dw+fRfKajmv+MicEvHTzYCjhzH3Uw==
+X-Received: by 2002:a5d:5d88:0:b0:3d9:70cc:6dd0 with SMTP id
+ ffacd0b85a97d-3ee84afd2fdmr2291328f8f.33.1758283211568; 
+ Fri, 19 Sep 2025 05:00:11 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-113-218.pools.arcor-ip.net.
+ [47.64.113.218]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3f1549285c9sm965727f8f.52.2025.09.19.05.00.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Sep 2025 05:00:11 -0700 (PDT)
+Message-ID: <137b1cb6-f264-4690-b17d-f41b367fcf0f@redhat.com>
+Date: Fri, 19 Sep 2025 14:00:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 18/19] tests/functional: add
+ skipUnlessPasswordlessSudo() decorator
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, eblake@redhat.com,
+ michael.roth@amd.com, armbru@redhat.com, farosas@suse.de, peterx@redhat.com,
+ berrange@redhat.com, jasowang@redhat.com, steven.sistare@oracle.com,
+ leiyang@redhat.com, davydov-max@yandex-team.ru, yc-core@yandex-team.ru
+References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
+ <20250919095545.1912042-19-vsementsov@yandex-team.ru>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250919095545.1912042-19-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,163 +156,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 19/09/2025 11.55, Vladimir Sementsov-Ogievskiy wrote:
+> To be used in the next commit: that would be a test for TAP
+> networking, and it will need to setup TAP device.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
+> 
+> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+> index c0d1567b14..4b332804ef 100644
+> --- a/tests/functional/qemu_test/decorators.py
+> +++ b/tests/functional/qemu_test/decorators.py
+> @@ -6,6 +6,7 @@
+>   import os
+>   import platform
+>   import resource
+> +import subprocess
+>   from unittest import skipIf, skipUnless
+>   
+>   from .cmd import which
+> @@ -149,3 +150,18 @@ def skipLockedMemoryTest(locked_memory):
+>           ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
+>           f'Test required {locked_memory} kB of available locked memory',
+>       )
+> +
+> +'''
+> +Decorator to skip execution of a test if passwordless
+> +sudo command is not available.
+> +'''
+> +def skipUnlessPasswordlessSudo():
+> +    proc = subprocess.run(["sudo", "-n", "/bin/true"],
+> +                          stdin=subprocess.PIPE,
+> +                          stdout=subprocess.PIPE,
+> +                          stderr=subprocess.STDOUT,
+> +                          universal_newlines=True,
+> +                          check=False)
+> +
+> +    return skipUnless(proc.returncode == 0,
+> +                      f'requires password-less sudo access: {proc.stdout}')
 
-We want to switch from qemu_socket_set_block() to newer
-qemu_set_blocking(), which provides return status of operation,
-to handle errors.
+I'd maybe rather just call it "skipWithoutSudo" ... but anyway:
 
-Still, we want to keep qio_channel_socket_readv() interface clean,
-as currently it allocate @fds only on success.
-
-So, in case of error, we should close all incoming fds and keep
-user's @fds untouched or zero.
-
-Let's make separate functions qio_channel_handle_fds() and
-qio_channel_cleanup_fds(), to achieve what we want.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/io/channel.h |  8 +++---
- io/channel-socket.c  | 67 +++++++++++++++++++++++++++++++++-----------
- 2 files changed, 55 insertions(+), 20 deletions(-)
-
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 999a8f5f23..0f25ae0069 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -124,8 +124,8 @@ struct QIOChannelClass {
-      * incoming fds are set BLOCKING (unless
-      * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag is set) and
-      * CLOEXEC (if available).
--     * @fds and @nfds are set only on success path, and untouched
--     * in case of errors.
-+     * @fds and @nfds are set only on success path. Still, setting
-+     * @fds and @nfds to zero is acceptable on failure path.
-      */
-     ssize_t (*io_readv)(QIOChannel *ioc,
-                         const struct iovec *iov,
-@@ -246,8 +246,8 @@ void qio_channel_set_name(QIOChannel *ioc,
-  * to call close() on each file descriptor and to
-  * call g_free() on the array pointer in @fds.
-  * @fds allocated and set (and @nfds is set too)
-- * _only_ on success path. These parameters are
-- * untouched in case of errors.
-+ * _only_ on success path. Still, @fds and @nfds
-+ * may be set to zero on failure path.
-  * qio_channel_readv_full() guarantees that all
-  * incoming fds are set BLOCKING (unless
-  * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index f7e3cb9742..e53d9ac76f 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -464,8 +464,7 @@ static void qio_channel_socket_finalize(Object *obj)
- 
- #ifndef WIN32
- static void qio_channel_socket_copy_fds(struct msghdr *msg,
--                                        int **fds, size_t *nfds,
--                                        bool preserve_blocking)
-+                                        int **fds, size_t *nfds)
- {
-     struct cmsghdr *cmsg;
- 
-@@ -473,7 +472,7 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-     *fds = NULL;
- 
-     for (cmsg = CMSG_FIRSTHDR(msg); cmsg; cmsg = CMSG_NXTHDR(msg, cmsg)) {
--        int fd_size, i;
-+        int fd_size;
-         int gotfds;
- 
-         if (cmsg->cmsg_len < CMSG_LEN(sizeof(int)) ||
-@@ -491,24 +490,53 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-         gotfds = fd_size / sizeof(int);
-         *fds = g_renew(int, *fds, *nfds + gotfds);
-         memcpy(*fds + *nfds, CMSG_DATA(cmsg), fd_size);
-+        *nfds += gotfds;
-+    }
-+}
- 
--        for (i = 0; i < gotfds; i++) {
--            int fd = (*fds)[*nfds + i];
--            if (fd < 0) {
--                continue;
--            }
-+static bool qio_channel_handle_fds(int *fds, size_t nfds,
-+                                   bool preserve_blocking, Error **errp)
-+{
-+    int *end = fds + nfds, *fd;
-+
-+#ifdef MSG_CMSG_CLOEXEC
-+    if (preserve_blocking) {
-+        /* Nothing to do */
-+        return true;
-+    }
-+#endif
- 
--            if (!preserve_blocking) {
--                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
--                qemu_socket_set_block(fd);
-+    for (fd = fds; fd != end; fd++) {
-+        if (*fd < 0) {
-+            continue;
-+        }
-+
-+        if (!preserve_blocking) {
-+            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
-+            if (!qemu_set_blocking(*fd, true, errp)) {
-+                return false;
-             }
-+        }
- 
- #ifndef MSG_CMSG_CLOEXEC
--            qemu_set_cloexec(fd);
-+        qemu_set_cloexec(*fd);
- #endif
-+    }
-+
-+    return true;
-+}
-+
-+static void qio_channel_cleanup_fds(int **fds, size_t *nfds)
-+{
-+    for (size_t i = 0; i < *nfds; i++) {
-+        if ((*fds)[i] < 0) {
-+            continue;
-         }
--        *nfds += gotfds;
-+        close((*fds)[i]);
-     }
-+
-+    g_clear_pointer(fds, g_free);
-+    *nfds = 0;
- }
- 
- 
-@@ -559,9 +587,16 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
-     }
- 
-     if (fds && nfds) {
--        qio_channel_socket_copy_fds(
--            &msg, fds, nfds,
--            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
-+        bool preserve_blocking =
-+            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING;
-+
-+        qio_channel_socket_copy_fds(&msg, fds, nfds);
-+
-+        if (!qio_channel_handle_fds(*fds, *nfds,
-+                                    preserve_blocking, errp)) {
-+            qio_channel_cleanup_fds(fds, nfds);
-+            return -1;
-+        }
-     }
- 
-     return ret;
--- 
-2.50.1
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
