@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DDECAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6D7CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXqz-0006Cs-0y; Fri, 19 Sep 2025 05:56:33 -0400
+	id 1uzXqu-0006AD-0A; Fri, 19 Sep 2025 05:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqh-0005w7-PE
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:15 -0400
+ id 1uzXqW-0005ej-Kl
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:06 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqa-0004bO-8M
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:14 -0400
+ id 1uzXqQ-0004Yw-JE
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:03 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B5E1280EDF;
- Fri, 19 Sep 2025 12:56:00 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id DB88080EC2;
+ Fri, 19 Sep 2025 12:55:50 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a72::1:38])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ntP1fK1GvGk0-MLIEkHSs; Fri, 19 Sep 2025 12:56:00 +0300
+ ESMTPSA id ntP1fK1GvGk0-To8Al743; Fri, 19 Sep 2025 12:55:50 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758275760;
- bh=Gh2o10r8Hgw72PFYg3Npf/TMioTDDjuhs1yEouTvYWw=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OSuVuHbAFUMFB+tCkBtkXQerSHeeOAhnp9sD2hpMfzfJBm5rHP6v2PnzvxEoo15gG
- A+7JBWKs8cG8zfAt8K1fE8ldn6MVtTqDq55NCvVJ7prCbscJcRliHDeqpxbkwZo+93
- 49hxi+YtKKFomixAT6llQS+90se2/LSMJf6VCPKg=
+ s=default; t=1758275750;
+ bh=W5+a2Kl2t4AD1DImDRN8stBbrtbFkVdI+xnn0fObBUk=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=hhszwWh8NDoJ7PczzbUFT5Ijr+3Y6tcDXQtmMfnGjSPLn1MJMq1rMtaNQMioqDTA5
+ aEkjBVKwPugHa6IYo8EH2w474RnOF+zu7yQCJFh/C3qCtp713+KoFq1/pKLSdAlw0b
+ MVD15Tb6GKyWSMOepzr/xVBGYd4WzI6pAlXTwyF0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,13 +47,12 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v5 13/19] net/tap: finalize net_tap_set_fd() logic
-Date: Fri, 19 Sep 2025 12:55:39 +0300
-Message-ID: <20250919095545.1912042-14-vsementsov@yandex-team.ru>
+Subject: [PATCH v5 00/19] virtio-net: live-TAP local migration
+Date: Fri, 19 Sep 2025 12:55:26 +0300
+Message-ID: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
-References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -78,50 +77,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let net_tap_set_fd() do only fd-related setup.
+Hi all!
 
-Actually, for further fds-incoming migration we'll want to skip
-net_tap_set_fd() (as incoming fds are already prepared by source
-QEMU). So move tap_read_poll() to net_tap_setup().
+Here is a  new migration parameter fds, which allows to enable the new
+local migration of TAP device, including its properties
+and open fds.
 
-Don't care about using_vnet_hdr and vhost_net, the state is
-zero-initialized.
+With this new option, management software doesn't need to
+initialize new TAP and do a switch to it. Nothing should be
+done around virtio-net in local migration: it just migrates
+and continues to use same TAP device. So we avoid extra logic
+in management software, extra allocations in kenel (for new TAP),
+and corresponding extra delay in migration downtime.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- net/tap.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+v5:
 
-diff --git a/net/tap.c b/net/tap.c
-index 4ca3cc75d8..29568ce5d2 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -455,7 +455,6 @@ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
- {
-     s->fd = fd;
-     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
--    s->using_vnet_hdr = false;
-     s->has_ufo = tap_probe_has_ufo(s->fd);
-     s->has_uso = tap_probe_has_uso(s->fd);
-     s->enabled = true;
-@@ -467,8 +466,6 @@ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
-     if (vnet_hdr) {
-         tap_fd_set_vnet_hdr_len(s->fd, s->host_vnet_hdr_len);
-     }
--    tap_read_poll(s, true);
--    s->vhost_net = NULL;
- 
-     if (s->sndbuf) {
-         Error **e = s->sndbuf_required ? errp : NULL;
-@@ -772,6 +769,8 @@ static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
-         return false;
-     }
- 
-+    tap_read_poll(s, true);
-+
-     if (s->vhostfd != -1) {
-         VhostNetOptions options;
- 
+Follows [PATCH v3 0/9] virtio-net: live-TAP local migration,
+but called v5, to not conflict with
+
+   [PATCH v4 0/8] TAP initialization refactoring
+
+, which becomes obsolete, and with
+
+   [PATCH v4 0/2] save qemu-file incoming non-blocking fds
+
+(two patches simply included here, to not create extra
+dependancy).
+
+What was changed:
+
+1. Now, based on master.
+
+As already said patches 01-02 are from
+
+   [PATCH v4 0/2] save qemu-file incoming non-blocking fds
+
+(which still may be merged in separate)
+
+Also note, that the series is in small conflict with
+in-flight
+
+   [PATCH v5 00/13] io: deal with blocking/non-blocking fds
+
+, I'll rebase if it merged first.
+
+2. New interface: simply one migration parameter
+
+    fds = [ virtio-net ]
+
+It could simply be reduced to boolean fds=true, but I think
+that a possibility to specify target is good, see more in
+patch 16.
+
+The series supersedes:
+[PATCH v4 0/8] TAP initialization refactoring
+Supersedes: <20250911165101.1637608-1-vsementsov@yandex-team.ru>
+
+Vladimir Sementsov-Ogievskiy (19):
+  migration/qemu-file: don't make incoming fds blocking again
+  io/channel: document how qio_channel_readv_full() handles fds
+  net/tap: net_init_tap_one(): drop extra error propagation
+  net/tap: net_init_tap_one(): move parameter checking earlier
+  net/tap: rework net_tap_init()
+  net/tap: setup exit notifier only when needed
+  net/tap: split net_tap_fd_init()
+  net/tap: rework tap_set_sndbuf()
+  net/tap: rework sndbuf handling
+  net/tap: introduce net_tap_setup()
+  net/tap: move vhost fd initialization to net_tap_new()
+  net/tap: use net_tap_setup() in net_init_bridge()
+  net/tap: finalize net_tap_set_fd() logic
+  migration: add MIG_EVENT_PRE_INCOMING
+  net/tap: postpone tap setup to pre-incoming
+  qapi: add interface for local TAP migration
+  virtio-net: support fds migration of TAP backend
+  tests/functional: add skipUnlessPasswordlessSudo() decorator
+  tests/functional: add test_x86_64_tap_fd_migration
+
+ hw/net/virtio-net.c                           | 138 +++++-
+ include/io/channel.h                          |  18 +
+ include/migration/misc.h                      |   1 +
+ include/net/tap.h                             |   5 +
+ include/qapi/util.h                           |  17 +
+ io/channel-socket.c                           |  13 +-
+ migration/migration.c                         |   8 +-
+ migration/options.c                           |  25 ++
+ migration/options.h                           |   2 +
+ migration/qemu-file.c                         |   3 +-
+ net/tap-bsd.c                                 |   3 +-
+ net/tap-linux.c                               |  19 +-
+ net/tap-solaris.c                             |   3 +-
+ net/tap-stub.c                                |   3 +-
+ net/tap.c                                     | 422 ++++++++++++++----
+ net/tap_int.h                                 |   4 +-
+ qapi/migration.json                           |  46 +-
+ tests/functional/qemu_test/decorators.py      |  16 +
+ .../test_x86_64_tap_fd_migration.py           | 343 ++++++++++++++
+ 19 files changed, 970 insertions(+), 119 deletions(-)
+ create mode 100644 tests/functional/test_x86_64_tap_fd_migration.py
+
 -- 
 2.48.1
 
