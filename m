@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B9BCAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C026CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzW7v-0004xB-DC; Fri, 19 Sep 2025 04:05:55 -0400
+	id 1uzW7x-0004yX-3l; Fri, 19 Sep 2025 04:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzW7p-0004u5-Bl
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:05:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzW7u-0004wE-PA
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:05:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzW7m-0006iB-VO
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:05:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzW7r-0006mf-Du
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:05:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758269144;
+ s=mimecast20190719; t=1758269149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8Ax1LpeoXo+pqGr7SQCEef56n1v1LfibcG9zvBfKnCY=;
- b=COra79ditUVIslY8kFhNrGGFZMH6dtb9Gp6wdJ3XwNOHW6o9eBBN63xQAmpF8J2cSIIokf
- SB1h2oS9xHsDwYsFgSQFaXztpaxjB+Eb/5qnzk2wXHbc/EL7z/k86ySU++ar5+IR0sI15r
- Lk//NxTC7t2tw20j789oCWfrvJX3j7k=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FbSXNfwjeJK59L1O0kxY34YbvRazp9gayZSbxh5qKww=;
+ b=TZCVe44yO6i7RlXHO1aR7pfujWJboZ7eZ+xQ7vhU5oVK9FWv2LxHdV/LjdQ2XqfaUZYtSz
+ 5IrLHM1oCjwJz/Tnn+VDYMsYBx8OK2nK4uJkI0wxJaBQzIcl8A0DB/Hu1cBvm+VSu4am6W
+ oFMo4DDy391gbf9PdFzTibiTNcBJmKA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-MwoQzC-ZN_mW_MlIeM0E9w-1; Fri, 19 Sep 2025 04:05:42 -0400
-X-MC-Unique: MwoQzC-ZN_mW_MlIeM0E9w-1
-X-Mimecast-MFC-AGG-ID: MwoQzC-ZN_mW_MlIeM0E9w_1758269141
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3eae0de749dso1113587f8f.3
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 01:05:42 -0700 (PDT)
+ us-mta-680-mtLxqPNoM-6jUtrK-WMOCA-1; Fri, 19 Sep 2025 04:05:47 -0400
+X-MC-Unique: mtLxqPNoM-6jUtrK-WMOCA-1
+X-Mimecast-MFC-AGG-ID: mtLxqPNoM-6jUtrK-WMOCA_1758269147
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3ecdc9dbc5fso1130032f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 01:05:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758269141; x=1758873941;
+ d=1e100.net; s=20230601; t=1758269146; x=1758873946;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8Ax1LpeoXo+pqGr7SQCEef56n1v1LfibcG9zvBfKnCY=;
- b=bGQEvPgrTUXMzLf8Xy102qFU/+LjQwCImO0O3B5VpvSUeBAWXRdHOTI76mw0UU0xoK
- +iQFm0F7UmE31X9kvECHFeELmqtLEX3Bd/Y3JvfplRqDKYHXkdDUMJ5m1cVgJxoGJ9VG
- ExvbEGcFKkuvuGV30AXbGPTsLsspQv9O2Gjw7v1N0CXrxGKm01V2RvJJssvwoAhrs1JO
- hgUlj9abkIPpAo/nq4AIoj1h7XNHhri+mSBSTWXm0KUuD2Aaqk9NmsAhyNr5gRu9EEEJ
- 1tXjtQsFSrbhGSCTK+iZfONI7Kcvn76dlo4P46KAlA4I/dho+ztH7mq0xPfUdK3MXwcB
- PubA==
+ bh=FbSXNfwjeJK59L1O0kxY34YbvRazp9gayZSbxh5qKww=;
+ b=qVKZQOPucYNqfu+sSOpTSxxyxcAiIYtNrS2F0w2Oc+thSklqIk+MDxJZxmaEmUlwSW
+ U2z/buOFum6SM4Ioq5Kp2ePVO7wdxWYo5e2lT86TCrk3Q3tPTm6FXrfyU3dK2jlfp6pu
+ GfkAx+j4qbIZadq6S46H2MfKB5q1Gv5HCV6ZzLG04h5SYwE8vSwrH1291BWH6XWgjESy
+ Li0KvmWyBtosSVSVtpE4Th6Q6olj3hu3jKqBuv1jwF5ZSAaQHl3sMrdYdB6baywCtUeT
+ Ns2QTcoY3NHBBu0NMH9/+z/lAzUTXgaJsbv8RZuiy6iQVYS5oMGKWd6QvxasQ1hyrHAv
+ c8vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMPsat45ZcvLSCMlvA5H3O0MSX6/VPMOTscUT9oArVix5SYRXUMeaqV3/stAlxNCrnEUSkirjBHpOu@nongnu.org
-X-Gm-Message-State: AOJu0Ywfdyj4LrZRADyxiBpR07xfzKC0eSCdiYzqArR4DYJ9rkEa3kSa
- pccy36U5iQn6vOGhBfN/mRezD4TWgwflCSOw3VurpGo+7DWFErfAfxp/VfY6kaRI8xOogLzznVv
- fkdQN7GdRb5/vfvqg989NR5NDnqMgAbAh8jONcq/bjpAIyE6Y93VhgqZU6VZ8PaUI
-X-Gm-Gg: ASbGncvbVgTE1hjGM4Oi9dmxUcGGSHn7AQubJOti/bz8n5r2oB2XFuJ/0aBtKMuZ3Os
- WgGv/3rcMq19yzds+zJ9UpR0irB59KisB7pjuZ97PqYCMEDwDqErig5nYhNZ2CFmCFHAHte1c0X
- yhA3ztrI+YH8SbalegHSRiNsflMxdWvlESIN2dEi/CnAlkF7RRZsA2JBY7s0BirTIu8gCH1gNjf
- H3XDiyBGAkHiA2o6PZ/TeyEG77hNEEEJC4mNkqcRQNX8h8+M+qVqqgylaD2QcnvS6W51PIBZxWY
- ZlHMpOuimUJMRlPHYM2GvvocPVZMtv4uP7uR6INs9626u1a8POOi5E7oLoWljUGYL7IUFxt1uzb
- ImpI=
-X-Received: by 2002:a05:6000:2f83:b0:3d9:7021:fff0 with SMTP id
- ffacd0b85a97d-3ee8481fe2amr1341828f8f.37.1758269141032; 
- Fri, 19 Sep 2025 01:05:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEupdX4JENZklh5Z6OManF1tgJBuTzzqwj0kFE08wMKXhCQf4BSCqQ5XvNDeugg6kDwRpoOLw==
-X-Received: by 2002:a05:6000:2f83:b0:3d9:7021:fff0 with SMTP id
- ffacd0b85a97d-3ee8481fe2amr1341800f8f.37.1758269140491; 
- Fri, 19 Sep 2025 01:05:40 -0700 (PDT)
+ AJvYcCXSlwrdqO1EP9mQHD7awo3AAOHXHUdKFfOkqgAlHkjhbieWVtgwwnF2u7iNIYV87t37QgEc6qGRYBQ5@nongnu.org
+X-Gm-Message-State: AOJu0Yw5xaS51lYHcs54VdfAjqHax5S/n/te2Pq+oh7Sd71g4Ldi4LLX
+ 2DfGkOy39dSFU6z/i+reMKXx1GnKXeZluQ1AAHZGajV7+f8k/lZQ35PPwRyfOTuia083IZIMYwB
+ mz6rVNlRGXnGMFKwHIfN6LkakowROfCLrsy+48KIADAS+UZDEohi5lwRz
+X-Gm-Gg: ASbGncujn13bDWoD/jhLz9mWZ5jIEeWXB0spQdHWGZ4U29DP13nDeUxiAHFMECJd65I
+ pnuioslhBYvPTpCy16MoI2bjBP76yCARRRvEGpeDpbAq9ropVpqQ5+6qUabVoFaqDquhzToVBq8
+ P5flC7deZhb2P4svnymLjPhPVB3GdpcoGgwhiTx8jXDerfTTbB9zk6df/S/Qf4khkgp1ixEH3YW
+ bdF7NN3Fj/0tW9NcWZgB1jEPboEDeHegcPrXfvr28kIz5rMLui5CX6l12XlZWMByHXwjhKir3GH
+ qcSk1sQPEE9QF37fIFW+9SKKk7sO81zBji7JBxmndAepdBIA5fbmaVr72Z3AQCds/XbNMDdQNKw
+ 0ssE=
+X-Received: by 2002:a05:6000:1a86:b0:3e8:f67:894a with SMTP id
+ ffacd0b85a97d-3ee7c552a12mr1907883f8f.5.1758269146507; 
+ Fri, 19 Sep 2025 01:05:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEabPYeM68K8ROwhOqzy0C4NhV47TDIPpOpIxeDeB5BouB3JP5ahSv08F7e5GxuPwmDD9V7tA==
+X-Received: by 2002:a05:6000:1a86:b0:3e8:f67:894a with SMTP id
+ ffacd0b85a97d-3ee7c552a12mr1907840f8f.5.1758269145993; 
+ Fri, 19 Sep 2025 01:05:45 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee0fbc7284sm6790274f8f.33.2025.09.19.01.05.39
+ ffacd0b85a97d-3ee0fbc7284sm6790274f8f.33.2025.09.19.01.05.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Sep 2025 01:05:39 -0700 (PDT)
-Message-ID: <dcfe7e79-a63c-4d48-be3c-e3f159e74dbf@redhat.com>
-Date: Fri, 19 Sep 2025 10:05:38 +0200
+ Fri, 19 Sep 2025 01:05:45 -0700 (PDT)
+Message-ID: <c282f3a5-11a6-4890-8d8e-1ce283d12ebd@redhat.com>
+Date: Fri, 19 Sep 2025 10:05:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v4 04/14] hw/pci-host/aspeed: Add AST2600 PCIe Root
- Device support
+Subject: Re: [SPAM] [PATCH v4 13/14] tests/functional/arm/test_aspeed_ast2600:
+ Add PCIe and network test
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -91,7 +91,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini
 Cc: troy_lee@aspeedtech.com, nabihestefan@google.com, wuhaotsh@google.com,
  titusr@google.com
 References: <20250919032431.3316764-1-jamin_lin@aspeedtech.com>
- <20250919032431.3316764-5-jamin_lin@aspeedtech.com>
+ <20250919032431.3316764-14-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -137,19 +137,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250919032431.3316764-5-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250919032431.3316764-14-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,22 +166,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/19/25 05:24, Jamin Lin wrote:
-> Introduce a PCIe Root Device for AST2600 platform.
+> Extend the AST2600 functional tests with PCIe and network checks.
 > 
-> The AST2600 root complex exposes a PCIe root device at bus 80, devfn 0.
-> This root device is implemented as a child of the PCIe RC and modeled
-> as a host bridge PCI function (class_id = PCI_CLASS_BRIDGE_HOST).
+> This patch introduces a new helper "do_ast2600_pcie_test()" that runs "lspci"
+> on the emulated system and verifies the presence of the expected PCIe devices:
 > 
-> Key changes:
-> - Add a new device type "aspeed.pcie-root-device".
-> - Instantiate the root device as part of AspeedPCIERcState.
-> - Initialize it during RC realize() and attach it to the root bus.
-> - Mark the root device as non-user-creatable.
-> - Add RC boolean property "has-rd" to control whether the Root Device is
->    created (platforms can enable/disable it as needed).
+> - 80:00.0 Host bridge: ASPEED Technology, Inc. Device 2600
+> - 80:08.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
+> - 81:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
 > 
-> Note: Only AST2600 implements this PCIe root device. AST2700 does not
-> provide one.
+> To exercise the PCIe network device, the test adds:
+> 
+>    -device e1000e,netdev=net1,bus=pcie.0
+>    -netdev user,id=net1
+> 
+> and assigns an IP address to the interface, verifying it with `ip addr`.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
@@ -194,148 +193,56 @@ C.
 
 
 > ---
->   include/hw/pci-host/aspeed_pcie.h | 11 ++++++
->   hw/pci-host/aspeed_pcie.c         | 56 +++++++++++++++++++++++++++++++
->   2 files changed, 67 insertions(+)
+>   tests/functional/arm/test_aspeed_ast2600.py | 21 +++++++++++++++++++++
+>   1 file changed, 21 insertions(+)
 > 
-> diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-> index 850d579189..fe30ac02ae 100644
-> --- a/include/hw/pci-host/aspeed_pcie.h
-> +++ b/include/hw/pci-host/aspeed_pcie.h
-> @@ -40,6 +40,13 @@ typedef struct AspeedPCIERegMap {
->       AspeedPCIERcRegs rc;
->   } AspeedPCIERegMap;
+> diff --git a/tests/functional/arm/test_aspeed_ast2600.py b/tests/functional/arm/test_aspeed_ast2600.py
+> index 87e3595584..49ffe89d91 100755
+> --- a/tests/functional/arm/test_aspeed_ast2600.py
+> +++ b/tests/functional/arm/test_aspeed_ast2600.py
+> @@ -101,8 +101,26 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+>           'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.07/ast2600-default-obmc.tar.gz',
+>           'cb6c08595bcbba1672ce716b068ba4e48eda1ed9abe78a07b30392ba2278feba')
 >   
-> +#define TYPE_ASPEED_PCIE_ROOT_DEVICE "aspeed.pcie-root-device"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERootDeviceState, ASPEED_PCIE_ROOT_DEVICE);
+> +    def do_ast2600_pcie_test(self):
+> +        exec_command_and_wait_for_pattern(self,
+> +            'lspci -s 80:00.0',
+> +            '80:00.0 Host bridge: '
+> +            'ASPEED Technology, Inc. Device 2600')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'lspci -s 80:08.0',
+> +            '80:08.0 PCI bridge: '
+> +            'ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'lspci -s 81:00.0',
+> +            '81:00.0 Ethernet controller: '
+> +            'Intel Corporation 82574L Gigabit Network Connection')
+> +        exec_command_and_wait_for_pattern(self,
+> +            'ip addr show dev eth4',
+> +            'inet 10.0.2.15/24')
 > +
-> +struct AspeedPCIERootDeviceState {
-> +    PCIBridge parent_obj;
-> +};
-> +
->   #define TYPE_ASPEED_PCIE_RC "aspeed.pcie-rc"
->   OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERcState, ASPEED_PCIE_RC);
+>       def test_arm_ast2600_evb_sdk(self):
+>           self.set_machine('ast2600-evb')
+> +        self.require_netdev('user')
 >   
-> @@ -53,7 +60,10 @@ struct AspeedPCIERcState {
+>           self.archive_extract(self.ASSET_SDK_V907_AST2600)
 >   
->       uint32_t bus_nr;
->       char name[16];
-> +    bool has_rd;
->       qemu_irq irq;
-> +
-> +    AspeedPCIERootDeviceState root_device;
->   };
+> @@ -110,6 +128,8 @@ def test_arm_ast2600_evb_sdk(self):
+>               'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
+>           self.vm.add_args('-device',
+>               'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
+> +        self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.0')
+> +        self.vm.add_args('-netdev', 'user,id=net1')
+>           self.do_test_arm_aspeed_sdk_start(
+>               self.scratch_file("ast2600-default", "image-bmc"))
 >   
->   /* Bridge between AHB bus and PCIe RC. */
-> @@ -79,6 +89,7 @@ struct AspeedPCIECfgClass {
+> @@ -135,6 +155,7 @@ def test_arm_ast2600_evb_sdk(self):
+>           year = time.strftime("%Y")
+>           exec_command_and_wait_for_pattern(self,
+>                '/sbin/hwclock -f /dev/rtc1', year)
+> +        self.do_ast2600_pcie_test()
 >   
->       uint64_t rc_bus_nr;
->       uint64_t nr_regs;
-> +    bool rc_has_rd;
->   };
->   
->   #define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index c3e92ee449..6e563a07a3 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -25,6 +25,44 @@
->   #include "hw/pci/msi.h"
->   #include "trace.h"
->   
-> +/*
-> + * PCIe Root Device
-> + * This device exists only on AST2600.
-> + */
-> +
-> +static void aspeed_pcie_root_device_class_init(ObjectClass *klass,
-> +                                               const void *data)
-> +{
-> +    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-> +    dc->desc = "ASPEED PCIe Root Device";
-> +    k->vendor_id = PCI_VENDOR_ID_ASPEED;
-> +    k->device_id = 0x2600;
-> +    k->class_id = PCI_CLASS_BRIDGE_HOST;
-> +    k->subsystem_vendor_id = k->vendor_id;
-> +    k->subsystem_id = k->device_id;
-> +    k->revision = 0;
-> +
-> +    /*
-> +     * PCI-facing part of the host bridge,
-> +     * not usable without the host-facing part
-> +     */
-> +    dc->user_creatable = false;
-> +}
-> +
-> +static const TypeInfo aspeed_pcie_root_device_info = {
-> +    .name = TYPE_ASPEED_PCIE_ROOT_DEVICE,
-> +    .parent = TYPE_PCI_DEVICE,
-> +    .instance_size = sizeof(AspeedPCIERootDeviceState),
-> +    .class_init = aspeed_pcie_root_device_class_init,
-> +    .interfaces = (const InterfaceInfo[]) {
-> +        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> +        { },
-> +    },
-> +};
-> +
->   /*
->    * PCIe Root Complex (RC)
->    */
-> @@ -94,6 +132,18 @@ static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
->                                        aspeed_pcie_rc_map_irq, rc, &rc->mmio,
->                                        &rc->io, 0, 4, TYPE_PCIE_BUS);
->       pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
-> +
-> +    /* setup root device */
-> +    if (rc->has_rd) {
-> +        object_initialize_child(OBJECT(rc), "root_device", &rc->root_device,
-> +                                TYPE_ASPEED_PCIE_ROOT_DEVICE);
-> +        qdev_prop_set_int32(DEVICE(&rc->root_device), "addr",
-> +                            PCI_DEVFN(0, 0));
-> +        qdev_prop_set_bit(DEVICE(&rc->root_device), "multifunction", false);
-> +        if (!qdev_realize(DEVICE(&rc->root_device), BUS(pci->bus), errp)) {
-> +            return;
-> +        }
-> +    }
->   }
->   
->   static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
-> @@ -110,6 +160,7 @@ static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
->   
->   static const Property aspeed_pcie_rc_props[] = {
->       DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
-> +    DEFINE_PROP_BOOL("has-rd", AspeedPCIERcState, has_rd, 0),
->   };
->   
->   static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
-> @@ -401,6 +452,9 @@ static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
->       object_property_set_int(OBJECT(&s->rc), "bus-nr",
->                               apc->rc_bus_nr,
->                               &error_abort);
-> +    object_property_set_bool(OBJECT(&s->rc), "has-rd",
-> +                            apc->rc_has_rd,
-> +                            &error_abort);
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->rc), errp)) {
->           return;
->       }
-> @@ -433,6 +487,7 @@ static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
->       apc->reg_map = &aspeed_regmap;
->       apc->nr_regs = 0x100 >> 2;
->       apc->rc_bus_nr = 0x80;
-> +    apc->rc_has_rd = true;
->   }
->   
->   static const TypeInfo aspeed_pcie_cfg_info = {
-> @@ -570,6 +625,7 @@ static const TypeInfo aspeed_pcie_phy_info = {
->   static void aspeed_pcie_register_types(void)
->   {
->       type_register_static(&aspeed_pcie_rc_info);
-> +    type_register_static(&aspeed_pcie_root_device_info);
->       type_register_static(&aspeed_pcie_cfg_info);
->       type_register_static(&aspeed_pcie_phy_info);
->   }
+>       def test_arm_ast2600_otp_blockdev_device(self):
+>           self.vm.set_machine("ast2600-evb")
 
 
