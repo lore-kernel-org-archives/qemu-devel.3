@@ -4,147 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F8A7CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF30CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXSM-0003Tv-HR; Fri, 19 Sep 2025 05:31:06 -0400
+	id 1uzXSJ-0003T2-EQ; Fri, 19 Sep 2025 05:31:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXSK-0003TU-1K
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:31:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uzXSH-0003Sa-Jr; Fri, 19 Sep 2025 05:31:01 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXSH-0001IU-Gk
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:31:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758274258;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cZIxGeNnU09xVcZDXBVdQM0OiBU6r79vhA+rB3ZMtuI=;
- b=GrFJmR7ahLY+iQn9Gx6btm3LW6NY9HA633pZPyrqedzBmZhNdrNMIg+RhEAK9aOUqbGMgw
- NzbGGtKbZFSr7VEfX9jOb2wXWVm+qIIlLhk1JEcb3eKbNTnBA0dgZ7srp3nEspZ7wdHMvU
- F2fhch3vt3HppllzNMmAYS9cebRDjus=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-xbdOPLqMMXiZH2QEz_reQg-1; Fri, 19 Sep 2025 05:30:54 -0400
-X-MC-Unique: xbdOPLqMMXiZH2QEz_reQg-1
-X-Mimecast-MFC-AGG-ID: xbdOPLqMMXiZH2QEz_reQg_1758274254
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-469666a417bso1299975e9.2
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 02:30:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758274253; x=1758879053;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cZIxGeNnU09xVcZDXBVdQM0OiBU6r79vhA+rB3ZMtuI=;
- b=ftUPqCKU8YnDh5Elu1sSw83uR69XC3iwNKBuB0y65hsULLwURp51TDbyJHEAQufTgZ
- ZJQhB7a/q9n84mEy479zLGVFxGSih8f1GHxxzUkBhTAashE0zUZ0zOrtIcMD6icjk3+Q
- 1MYU3gPSbnLMxL63KxwWU080ldqb30xXyDMMFemZX2lfngrRHo5ayPI483CbBdu7mZe/
- hOUKWp8Xf7HeRDQxAYAVbktWJUnHr2xUNA/0z7KcxY4r4mvBzoY2HpgpxUwiEdsaHs63
- hw3CBQi3Tsh5dtv5oP956onAprOI5ii+PTDBq5fBhPkpIq0Th3SK2xSQI6Pqh+Ne22ku
- 7kiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU548af78fz/obLzzH5EO9G7LF18KYUXXOOW7p0nBO+/3GYiu5d5lPOVDfbWY/vohC6eo3VaqwpW4fh@nongnu.org
-X-Gm-Message-State: AOJu0YwS2MYni1+EAOrrFqDh2jU5Fu9sCVMDo/6IqyNVg5UJlD69AwvK
- kgjCyHH1vu3Xfi0Hu/axHxi+NokQtWZBk1ODj9wF1olcgaxSI4LPU7wkbQ3B5JT1QASSYvopj/r
- KQZCnADP0Y5wYV99DJ4yMYx9FFspqUA8x9Bei+Q+/wNCz2+g1sjhVy8Fw
-X-Gm-Gg: ASbGncuLCzf5Z96yxDTcsySQqg1mSEK1XTNP4CupC5l4KeKaFAZKnwFXIEOftQoLtME
- +qihANVMjttRCe0VybQy67JOncX2JN1jPZLMhhB3+MHQI933zWIEInWrrlknGbtL1+3QjKAM3nx
- WgLOsDTeipkDGzj2cusvSWaF0dLcFma6TL5WYR1N79943xcKgvvIzwS+QsL87tcQD4dfgN/BIlf
- whND9dqnxcTscIyqeEWKENND36qhSfAtiaA8G2dafn7Y6uax3OdP2piUCMfy5Q8Zyv9acrV/5WR
- RmYM3S4SpTrrkj3s1mlhUYYEthYO+Q5lmTFDma16S8SpuXhyXAOo5ytgJYlprKsdHr5fwkLebcC
- 5Dts=
-X-Received: by 2002:a05:600c:190c:b0:45f:2843:e76d with SMTP id
- 5b1f17b1804b1-467e6b64cd3mr23015905e9.4.1758274253557; 
- Fri, 19 Sep 2025 02:30:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkNfaKQZpKkMyMKE1BjspKLXiuYpAa4NB4+W98wuQ1pTyRFoGHnO9l8AcJfn+qHQL9T2XXtg==
-X-Received: by 2002:a05:600c:190c:b0:45f:2843:e76d with SMTP id
- 5b1f17b1804b1-467e6b64cd3mr23015555e9.4.1758274253053; 
- Fri, 19 Sep 2025 02:30:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4613e849a41sm117090055e9.20.2025.09.19.02.30.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Sep 2025 02:30:52 -0700 (PDT)
-Message-ID: <ee5c9d7c-a85e-4da4-bd5a-a59951a19a06@redhat.com>
-Date: Fri, 19 Sep 2025 11:30:51 +0200
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1uzXSD-0001GX-EH; Fri, 19 Sep 2025 05:31:01 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 19 Sep
+ 2025 17:30:19 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Fri, 19 Sep 2025 17:30:19 +0800
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 03/14] hw/pci-host/aspeed: Add AST2600 PCIe config space
+ and host bridge
+Date: Fri, 19 Sep 2025 17:30:02 +0800
+Message-ID: <20250919093017.338309-4-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
+References: <20250919093017.338309-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] vfio/iommufd: Add framework code to support getting
- dirty bitmap before unmap
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, mst@redhat.com, jasowang@redhat.com,
- yi.l.liu@intel.com, clement.mathieu--drif@eviden.com, eric.auger@redhat.com,
- joao.m.martins@oracle.com, avihaih@nvidia.com, xudong.hao@intel.com,
- giovanni.cabiddu@intel.com, mark.gross@intel.com, arjan.van.de.ven@intel.com
-References: <20250910023701.244356-1-zhenzhong.duan@intel.com>
- <20250910023701.244356-2-zhenzhong.duan@intel.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250910023701.244356-2-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,120 +66,571 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zhenzhong
+Introduce PCIe config and host bridge model for the AST2600 platform.
 
-On 9/10/25 04:36, Zhenzhong Duan wrote:
-> Currently we support device and iommu dirty tracking, device dirty
-> tracking is preferred.
-> 
-> Add the framework code in iommufd_cdev_unmap_one() to choose either
-> device or iommu dirty tracking, just like vfio_legacy_dma_unmap_one().
+This patch adds support for the H2X (AHB to PCIe Bus Bridge) controller
+with a 0x100 byte register space. The register layout is shared between
+two root complexes: 0x00–0x7f is common, 0x80–0xbf for RC_L, and 0xc0–0xff
+for RC_H. Only RC_H is modeled in this implementation.
 
-I wonder if commit 567d7d3e6be5 ("vfio/common: Work around kernel
-overflow bug in DMA unmap") could be removed now to make the code
-common to both VFIO IOMMU Type1 and IOMMUFD backends.
+The RC_H bus uses bus numbers in the 0x80–0xff range instead of the
+standard root bus 0x00. To allow the PCI subsystem to discover devices,
+the host bridge logic remaps the root bus number back to 0x00 whenever the
+configured bus number matches the "bus-nr" property.
 
-I asked Alex and Peter in another thread.
+New MMIO callbacks are added for the H2X config space:
+- aspeed_pcie_cfg_read() and aspeed_pcie_cfg_write() handle register
+  accesses.
+- aspeed_pcie_cfg_readwrite() provides configuration read/write support.
+- aspeed_pcie_cfg_translate_write() handles PCIe byte-enable semantics for
+  write operations.
 
-Thanks,
+The reset handler initializes the H2X register block with default values
+as defined in the AST2600 datasheet.
 
-C.
+Additional changes:
+- Implement ASPEED PCIe root complex (TYPE_ASPEED_PCIE_RC).
+- Wire up interrupt propagation via aspeed_pcie_rc_set_irq().
+- Add tracepoints for config read/write and INTx handling.
 
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/pci-host/aspeed_pcie.h |  59 +++++
+ hw/pci-host/aspeed_pcie.c         | 421 ++++++++++++++++++++++++++++++
+ hw/pci-host/trace-events          |   4 +
+ 3 files changed, 484 insertions(+)
 
-
-
-> 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Tested-by: Xudong Hao <xudong.hao@intel.com>
-> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
-> ---
->   hw/vfio/iommufd.c | 56 +++++++++++++++++++++++++++++++++++++----------
->   1 file changed, 45 insertions(+), 11 deletions(-)
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 48c590b6a9..b5d6e54c45 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -58,33 +58,67 @@ static int iommufd_cdev_map_file(const VFIOContainerBase *bcontainer,
->                                           iova, size, fd, start, readonly);
->   }
->   
-> -static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
-> -                              hwaddr iova, ram_addr_t size,
-> -                              IOMMUTLBEntry *iotlb, bool unmap_all)
-> +static int iommufd_cdev_unmap_one(const VFIOContainerBase *bcontainer,
-> +                                  hwaddr iova, ram_addr_t size,
-> +                                  IOMMUTLBEntry *iotlb)
->   {
->       const VFIOIOMMUFDContainer *container =
->           container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
-> +    bool need_dirty_sync = false;
-> +    Error *local_err = NULL;
-> +    IOMMUFDBackend *be = container->be;
-> +    uint32_t ioas_id = container->ioas_id;
-> +    int ret;
-> +
-> +    if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
-> +        if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
-> +            bcontainer->dirty_pages_supported) {
-> +            /* TODO: query dirty bitmap before DMA unmap */
-> +            return iommufd_backend_unmap_dma(be, ioas_id, iova, size);
-> +        }
-> +
-> +        need_dirty_sync = true;
-> +    }
-> +
-> +    ret = iommufd_backend_unmap_dma(be, ioas_id, iova, size);
-> +    if (ret) {
-> +        return ret;
-> +    }
->   
-> +    if (need_dirty_sync) {
-> +        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
-> +                                                iotlb->translated_addr,
-> +                                                &local_err);
-> +        if (ret) {
-> +            error_report_err(local_err);
-> +            return ret;
-> +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
-> +                              hwaddr iova, ram_addr_t size,
-> +                              IOMMUTLBEntry *iotlb, bool unmap_all)
-> +{
->       /* unmap in halves */
->       if (unmap_all) {
->           Int128 llsize = int128_rshift(int128_2_64(), 1);
->           int ret;
->   
-> -        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
-> -                                        0, int128_get64(llsize));
-> +        ret = iommufd_cdev_unmap_one(bcontainer, 0, int128_get64(llsize),
-> +                                     iotlb);
->   
->           if (ret == 0) {
-> -            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
-> -                                            int128_get64(llsize),
-> -                                            int128_get64(llsize));
-> +            ret = iommufd_cdev_unmap_one(bcontainer, int128_get64(llsize),
-> +                                         int128_get64(llsize), iotlb);
->           }
->   
->           return ret;
->       }
->   
-> -    /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
-> -    return iommufd_backend_unmap_dma(container->be,
-> -                                     container->ioas_id, iova, size);
-> +    return iommufd_cdev_unmap_one(bcontainer, iova, size, iotlb);
->   }
->   
->   static bool iommufd_cdev_kvm_device_add(VFIODevice *vbasedev, Error **errp)
+diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
+index d9fb829048..850d579189 100644
+--- a/include/hw/pci-host/aspeed_pcie.h
++++ b/include/hw/pci-host/aspeed_pcie.h
+@@ -22,6 +22,65 @@
+ #include "hw/pci/pcie_host.h"
+ #include "qom/object.h"
+ 
++typedef struct AspeedPCIECfgTxDesc {
++    uint32_t desc0;
++    uint32_t desc1;
++    uint32_t desc2;
++    uint32_t desc3;
++    uint32_t wdata;
++    uint32_t rdata_reg;
++} AspeedPCIECfgTxDesc;
++
++typedef struct AspeedPCIERcRegs {
++    uint32_t int_en_reg;
++    uint32_t int_sts_reg;
++} AspeedPCIERcRegs;
++
++typedef struct AspeedPCIERegMap {
++    AspeedPCIERcRegs rc;
++} AspeedPCIERegMap;
++
++#define TYPE_ASPEED_PCIE_RC "aspeed.pcie-rc"
++OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERcState, ASPEED_PCIE_RC);
++
++struct AspeedPCIERcState {
++    PCIExpressHost parent_obj;
++
++    MemoryRegion mmio_window;
++    MemoryRegion io_window;
++    MemoryRegion mmio;
++    MemoryRegion io;
++
++    uint32_t bus_nr;
++    char name[16];
++    qemu_irq irq;
++};
++
++/* Bridge between AHB bus and PCIe RC. */
++#define TYPE_ASPEED_PCIE_CFG "aspeed.pcie-cfg"
++OBJECT_DECLARE_TYPE(AspeedPCIECfgState, AspeedPCIECfgClass, ASPEED_PCIE_CFG);
++
++struct AspeedPCIECfgState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint32_t *regs;
++    uint32_t id;
++
++    const AspeedPCIERcRegs *rc_regs;
++    AspeedPCIERcState rc;
++};
++
++struct AspeedPCIECfgClass {
++    SysBusDeviceClass parent_class;
++
++    const AspeedPCIERegMap *reg_map;
++    const MemoryRegionOps *reg_ops;
++
++    uint64_t rc_bus_nr;
++    uint64_t nr_regs;
++};
++
+ #define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
+ OBJECT_DECLARE_TYPE(AspeedPCIEPhyState, AspeedPCIEPhyClass, ASPEED_PCIE_PHY);
+ 
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+index 4c74520052..c3e92ee449 100644
+--- a/hw/pci-host/aspeed_pcie.c
++++ b/hw/pci-host/aspeed_pcie.c
+@@ -25,6 +25,425 @@
+ #include "hw/pci/msi.h"
+ #include "trace.h"
+ 
++/*
++ * PCIe Root Complex (RC)
++ */
++
++static void aspeed_pcie_rc_set_irq(void *opaque, int irq, int level)
++{
++    AspeedPCIERcState *rc = (AspeedPCIERcState *) opaque;
++    AspeedPCIECfgState *cfg =
++        container_of(rc, AspeedPCIECfgState, rc);
++    bool intx;
++
++    assert(irq < PCI_NUM_PINS);
++
++    if (level) {
++        cfg->regs[cfg->rc_regs->int_sts_reg] |= BIT(irq);
++    } else {
++        cfg->regs[cfg->rc_regs->int_sts_reg] &= ~BIT(irq);
++    }
++
++    intx = !!(cfg->regs[cfg->rc_regs->int_sts_reg] &
++              cfg->regs[cfg->rc_regs->int_en_reg]);
++    trace_aspeed_pcie_rc_intx_set_irq(cfg->id, irq, intx);
++    qemu_set_irq(rc->irq, intx);
++}
++
++static int aspeed_pcie_rc_map_irq(PCIDevice *pci_dev, int irq_num)
++{
++    return irq_num % PCI_NUM_PINS;
++}
++
++static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
++{
++    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
++    AspeedPCIERcState *rc = ASPEED_PCIE_RC(dev);
++    AspeedPCIECfgState *cfg =
++           container_of(rc, AspeedPCIECfgState, rc);
++    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    g_autofree char *ioport_window_name = NULL;
++    g_autofree char *mmio_window_name = NULL;
++    g_autofree char *root_bus_name = NULL;
++
++    /* PCI configuration space */
++    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
++    sysbus_init_mmio(sbd, &pex->mmio);
++
++    /* MMIO and IO region */
++    memory_region_init(&rc->mmio, OBJECT(rc), "mmio", UINT64_MAX);
++    memory_region_init(&rc->io, OBJECT(rc), "io", 0x10000);
++
++    mmio_window_name = g_strdup_printf("pcie.%d.mmio_window", cfg->id);
++    memory_region_init_io(&rc->mmio_window, OBJECT(rc), &unassigned_io_ops,
++                          OBJECT(rc), mmio_window_name, UINT64_MAX);
++    ioport_window_name = g_strdup_printf("pcie.%d.ioport_window", cfg->id);
++    memory_region_init_io(&rc->io_window, OBJECT(rc), &unassigned_io_ops,
++                          OBJECT(rc), ioport_window_name, 0x10000);
++
++    memory_region_add_subregion(&rc->mmio_window, 0, &rc->mmio);
++    memory_region_add_subregion(&rc->io_window, 0, &rc->io);
++    sysbus_init_mmio(sbd, &rc->mmio_window);
++    sysbus_init_mmio(sbd, &rc->io_window);
++
++    sysbus_init_irq(sbd, &rc->irq);
++    root_bus_name = g_strdup_printf("pcie.rc%d", cfg->id);
++    pci->bus = pci_register_root_bus(dev, root_bus_name,
++                                     aspeed_pcie_rc_set_irq,
++                                     aspeed_pcie_rc_map_irq, rc, &rc->mmio,
++                                     &rc->io, 0, 4, TYPE_PCIE_BUS);
++    pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
++}
++
++static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
++                                                PCIBus *rootbus)
++{
++    AspeedPCIERcState *rc = ASPEED_PCIE_RC(host_bridge);
++    AspeedPCIECfgState *cfg =
++           container_of(rc, AspeedPCIECfgState, rc);
++
++    snprintf(rc->name, sizeof(rc->name), "%04x:%02x", cfg->id, rc->bus_nr);
++
++    return rc->name;
++}
++
++static const Property aspeed_pcie_rc_props[] = {
++    DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
++};
++
++static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
++{
++    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "ASPEED PCIe RC";
++    dc->realize = aspeed_pcie_rc_realize;
++    dc->fw_name = "pci";
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
++
++    hc->root_bus_path = aspeed_pcie_rc_root_bus_path;
++    device_class_set_props(dc, aspeed_pcie_rc_props);
++
++    msi_nonbroken = true;
++}
++
++static const TypeInfo aspeed_pcie_rc_info = {
++    .name = TYPE_ASPEED_PCIE_RC,
++    .parent = TYPE_PCIE_HOST_BRIDGE,
++    .instance_size = sizeof(AspeedPCIERcState),
++    .class_init = aspeed_pcie_rc_class_init,
++};
++
++/*
++ * PCIe Config
++ *
++ * AHB to PCIe Bus Bridge (H2X)
++ *
++ * On the AST2600:
++ * NOTE: rc_l is not supported by this model.
++ * - Registers 0x00 - 0x7F are shared by both PCIe0 (rc_l) and PCIe1 (rc_h).
++ * - Registers 0x80 - 0xBF are specific to PCIe0.
++ * - Registers 0xC0 - 0xFF are specific to PCIe1.
++ */
++
++/* AST2600 */
++REG32(H2X_CTRL,             0x00)
++    FIELD(H2X_CTRL, CLEAR_RX, 4, 1)
++REG32(H2X_TX_CLEAR,         0x08)
++    FIELD(H2X_TX_CLEAR, IDLE, 0, 1)
++REG32(H2X_RDATA,            0x0C)
++REG32(H2X_TX_DESC0,         0x10)
++REG32(H2X_TX_DESC1,         0x14)
++REG32(H2X_TX_DESC2,         0x18)
++REG32(H2X_TX_DESC3,         0x1C)
++REG32(H2X_TX_DATA,          0x20)
++REG32(H2X_TX_STS,           0x24)
++    FIELD(H2X_TX_STS, IDLE, 31, 1)
++    FIELD(H2X_TX_STS, RC_L_TX_COMP, 24, 1)
++    FIELD(H2X_TX_STS, RC_H_TX_COMP, 25, 1)
++    FIELD(H2X_TX_STS, TRIG, 0, 1)
++REG32(H2X_RC_H_CTRL,        0xC0)
++REG32(H2X_RC_H_INT_EN,      0xC4)
++REG32(H2X_RC_H_INT_STS,     0xC8)
++    SHARED_FIELD(H2X_RC_INT_INTDONE, 4, 1)
++    SHARED_FIELD(H2X_RC_INT_INTX, 0, 4)
++REG32(H2X_RC_H_RDATA,       0xCC)
++
++#define TLP_FMTTYPE_CFGRD0  0x04 /* Configuration Read  Type 0 */
++#define TLP_FMTTYPE_CFGWR0  0x44 /* Configuration Write Type 0 */
++#define TLP_FMTTYPE_CFGRD1  0x05 /* Configuration Read  Type 1 */
++#define TLP_FMTTYPE_CFGWR1  0x45 /* Configuration Write Type 1 */
++
++#define PCIE_CFG_FMTTYPE_MASK(x) (((x) >> 24) & 0xff)
++#define PCIE_CFG_BYTE_EN(x) ((x) & 0xf)
++
++static const AspeedPCIERegMap aspeed_regmap = {
++    .rc = {
++        .int_en_reg     = R_H2X_RC_H_INT_EN,
++        .int_sts_reg    = R_H2X_RC_H_INT_STS,
++    },
++};
++
++static uint64_t aspeed_pcie_cfg_read(void *opaque, hwaddr addr,
++                                     unsigned int size)
++{
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
++    uint32_t reg = addr >> 2;
++    uint32_t value = 0;
++
++    value = s->regs[reg];
++
++    trace_aspeed_pcie_cfg_read(s->id, addr, value);
++
++    return value;
++}
++
++static void aspeed_pcie_cfg_translate_write(uint8_t byte_en, uint32_t *addr,
++                                            uint64_t *val, int *len)
++{
++    uint64_t packed_val = 0;
++    int first_bit = -1;
++    int index = 0;
++    int i;
++
++    *len = ctpop8(byte_en);
++
++    if (*len == 0 || *len > 4) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid byte enable: 0x%x\n",
++                      __func__, byte_en);
++        return;
++    }
++
++    /* Special case: full 4-byte write must be 4-byte aligned */
++    if (byte_en == 0x0f) {
++        if ((*addr & 0x3) != 0) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: 4-byte write not 4-byte aligned: addr=0x%x\n",
++                          __func__, *addr);
++            return;
++        }
++        *val &= 0xffffffffULL;
++        return;
++    }
++
++    for (i = 0; i < 4; i++) {
++        if (byte_en & (1 << i)) {
++            if (first_bit < 0) {
++                first_bit = i;
++            }
++            packed_val |= ((*val >> (i * 8)) & 0xff) << (index * 8);
++            index++;
++        }
++    }
++
++    *addr += first_bit;
++    *val = packed_val;
++}
++
++static void aspeed_pcie_cfg_readwrite(AspeedPCIECfgState *s,
++                                      const AspeedPCIECfgTxDesc *desc)
++{
++    AspeedPCIERcState *rc = &s->rc;
++    PCIHostState *pci = NULL;
++    PCIDevice *pdev = NULL;
++    uint32_t cfg_addr;
++    uint32_t offset;
++    uint8_t byte_en;
++    bool is_write;
++    uint8_t devfn;
++    uint64_t val;
++    uint8_t bus;
++    int len;
++
++    val = ~0;
++    is_write = !!(desc->desc0 & BIT(30));
++    cfg_addr = desc->desc2;
++
++    bus = (cfg_addr >> 24) & 0xff;
++    devfn  = (cfg_addr >> 16) & 0xff;
++    offset = cfg_addr & 0xffc;
++
++    pci = PCI_HOST_BRIDGE(rc);
++
++    /*
++     * On the AST2600, the RC_H bus number range from 0x80 to 0xFF, with the
++     * root device and root port assigned to bus 0x80 instead of the standard
++     * 0x00. To allow the PCI subsystem to correctly discover devices on the
++     * root bus, bus 0x80 is remapped to 0x00.
++     */
++    if (bus == rc->bus_nr) {
++        bus = 0;
++    }
++
++    pdev = pci_find_device(pci->bus, bus, devfn);
++    if (!pdev) {
++        s->regs[desc->rdata_reg] = ~0;
++        goto out;
++    }
++
++    switch (PCIE_CFG_FMTTYPE_MASK(desc->desc0)) {
++    case TLP_FMTTYPE_CFGWR0:
++    case TLP_FMTTYPE_CFGWR1:
++        byte_en = PCIE_CFG_BYTE_EN(desc->desc1);
++        val = desc->wdata;
++        aspeed_pcie_cfg_translate_write(byte_en, &offset, &val, &len);
++        pci_host_config_write_common(pdev, offset, pci_config_size(pdev),
++                                     val, len);
++        break;
++    case TLP_FMTTYPE_CFGRD0:
++    case TLP_FMTTYPE_CFGRD1:
++        val = pci_host_config_read_common(pdev, offset,
++                                          pci_config_size(pdev), 4);
++        s->regs[desc->rdata_reg] = val;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid CFG type. DESC0=0x%x\n",
++                      __func__, desc->desc0);
++    }
++
++out:
++    trace_aspeed_pcie_cfg_rw(s->id, is_write ?  "write" : "read", bus, devfn,
++                             cfg_addr, val);
++}
++
++static void aspeed_pcie_cfg_write(void *opaque, hwaddr addr, uint64_t data,
++                                  unsigned int size)
++{
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(opaque);
++    AspeedPCIECfgTxDesc desc;
++    uint32_t reg = addr >> 2;
++    uint32_t rc_reg;
++
++    trace_aspeed_pcie_cfg_write(s->id, addr, data);
++
++    switch (reg) {
++    case R_H2X_CTRL:
++        if (data & R_H2X_CTRL_CLEAR_RX_MASK) {
++            s->regs[R_H2X_RDATA] = ~0;
++        }
++        break;
++    case R_H2X_TX_CLEAR:
++        if (data & R_H2X_TX_CLEAR_IDLE_MASK) {
++            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_IDLE_MASK;
++        }
++        break;
++    case R_H2X_TX_STS:
++        if (data & R_H2X_TX_STS_TRIG_MASK) {
++            desc.desc0 = s->regs[R_H2X_TX_DESC0];
++            desc.desc1 = s->regs[R_H2X_TX_DESC1];
++            desc.desc2 = s->regs[R_H2X_TX_DESC2];
++            desc.desc3 = s->regs[R_H2X_TX_DESC3];
++            desc.wdata = s->regs[R_H2X_TX_DATA];
++            desc.rdata_reg = R_H2X_RC_H_RDATA;
++            aspeed_pcie_cfg_readwrite(s, &desc);
++            rc_reg = s->rc_regs->int_sts_reg;
++            s->regs[rc_reg] |= H2X_RC_INT_INTDONE_MASK;
++            s->regs[R_H2X_TX_STS] |=
++                BIT(R_H2X_TX_STS_RC_H_TX_COMP_SHIFT);
++            s->regs[R_H2X_TX_STS] |= R_H2X_TX_STS_IDLE_MASK;
++        }
++        break;
++    /* preserve INTx status */
++    case R_H2X_RC_H_INT_STS:
++        if (data & H2X_RC_INT_INTDONE_MASK) {
++            s->regs[R_H2X_TX_STS] &= ~R_H2X_TX_STS_RC_H_TX_COMP_MASK;
++        }
++        s->regs[reg] &= ~data | H2X_RC_INT_INTX_MASK;
++        break;
++    default:
++        s->regs[reg] = data;
++        break;
++    }
++}
++
++static const MemoryRegionOps aspeed_pcie_cfg_ops = {
++    .read = aspeed_pcie_cfg_read,
++    .write = aspeed_pcie_cfg_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void aspeed_pcie_cfg_instance_init(Object *obj)
++{
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(obj);
++
++    object_initialize_child(obj, "rc", &s->rc, TYPE_ASPEED_PCIE_RC);
++
++    return;
++}
++
++static void aspeed_pcie_cfg_reset(DeviceState *dev)
++{
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
++    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
++
++    memset(s->regs, 0, apc->nr_regs << 2);
++}
++
++static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
++    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(s);
++    g_autofree char *name = NULL;
++
++    s->rc_regs = &apc->reg_map->rc;
++    s->regs = g_new(uint32_t, apc->nr_regs);
++    name = g_strdup_printf(TYPE_ASPEED_PCIE_CFG ".regs.%d", s->id);
++    memory_region_init_io(&s->mmio, OBJECT(s), apc->reg_ops, s, name,
++                          apc->nr_regs << 2);
++    sysbus_init_mmio(sbd, &s->mmio);
++
++    object_property_set_int(OBJECT(&s->rc), "bus-nr",
++                            apc->rc_bus_nr,
++                            &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rc), errp)) {
++        return;
++    }
++}
++
++static void aspeed_pcie_cfg_unrealize(DeviceState *dev)
++{
++    AspeedPCIECfgState *s = ASPEED_PCIE_CFG(dev);
++
++    g_free(s->regs);
++    s->regs = NULL;
++}
++
++static const Property aspeed_pcie_cfg_props[] = {
++    DEFINE_PROP_UINT32("id", AspeedPCIECfgState, id, 0),
++};
++
++static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_CLASS(klass);
++
++    dc->desc = "ASPEED PCIe Config";
++    dc->realize = aspeed_pcie_cfg_realize;
++    dc->unrealize = aspeed_pcie_cfg_unrealize;
++    device_class_set_legacy_reset(dc, aspeed_pcie_cfg_reset);
++    device_class_set_props(dc, aspeed_pcie_cfg_props);
++
++    apc->reg_ops = &aspeed_pcie_cfg_ops;
++    apc->reg_map = &aspeed_regmap;
++    apc->nr_regs = 0x100 >> 2;
++    apc->rc_bus_nr = 0x80;
++}
++
++static const TypeInfo aspeed_pcie_cfg_info = {
++    .name       = TYPE_ASPEED_PCIE_CFG,
++    .parent     = TYPE_SYS_BUS_DEVICE,
++    .instance_init = aspeed_pcie_cfg_instance_init,
++    .instance_size = sizeof(AspeedPCIECfgState),
++    .class_init = aspeed_pcie_cfg_class_init,
++    .class_size = sizeof(AspeedPCIECfgClass),
++};
++
+ /*
+  * PCIe PHY
+  *
+@@ -150,6 +569,8 @@ static const TypeInfo aspeed_pcie_phy_info = {
+ 
+ static void aspeed_pcie_register_types(void)
+ {
++    type_register_static(&aspeed_pcie_rc_info);
++    type_register_static(&aspeed_pcie_cfg_info);
+     type_register_static(&aspeed_pcie_phy_info);
+ }
+ 
+diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
+index 3438516756..2584ea56e2 100644
+--- a/hw/pci-host/trace-events
++++ b/hw/pci-host/trace-events
+@@ -1,6 +1,10 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
+ # aspeed_pcie.c
++aspeed_pcie_rc_intx_set_irq(uint32_t id, int num, int level) "%d: num %d set IRQ leve %d"
++aspeed_pcie_cfg_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
++aspeed_pcie_cfg_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
++aspeed_pcie_cfg_rw(uint32_t id, const char *dir, uint8_t bus, uint8_t devfn, uint64_t addr, uint64_t data) "%d: %s bus:0x%x devfn:0x%x addr 0x%" PRIx64 " data 0x%" PRIx64
+ aspeed_pcie_phy_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
+ aspeed_pcie_phy_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
+ 
+-- 
+2.43.0
 
 
