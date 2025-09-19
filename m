@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F51CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14AE7CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzY4Z-0002dw-CL; Fri, 19 Sep 2025 06:10:35 -0400
+	id 1uzY4m-0002kT-Ik; Fri, 19 Sep 2025 06:10:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzY4X-0002dT-3N
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:10:33 -0400
+ id 1uzY4k-0002jD-Ix
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:10:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzY4U-0007NF-Rn
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:10:32 -0400
+ id 1uzY4c-0007St-TN
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:10:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758276626;
+ s=mimecast20190719; t=1758276636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=fSy8geoW6CL/iS00Gyz8G6KrusirCBjTO6LSJaQ+6xM=;
- b=OxASGjEHSA1uwPd/TrJb8FoeX14dX8TiOn5w/dbAwtQhgKM0do8o+7tk+zF6iuaGuOHKpO
- HnuTnqFt+sZX/Jz6F5Ma9G785yOavabXtbZTcbKqZHdU5slfV2NbRsxPfj1OtEF3sSWrif
- 2P6eVwxJe0Dyw2hmI1JEkQPb8p96n74=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m9nlTIL7ZY2QP2JpaM3AjUsx9DJ5uQxWhvcKzd0L4ZE=;
+ b=E9mkJwexw/kDd3iXKW7oR7SOrKxwcpOF80uU9oVw6eWVV9JLPGTJAO3esv5VUikx26DQlp
+ 1OoZhqnXOk2lPokRvKo7u8QN8piHnh0uNLzCwJZ2lMGYSzufFjs4EFAGbq06TGtHIlHAbM
+ 5wkQrHHmqCafB5MG0BJdIZ+3zQ4tiMo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-r1MFZ1HyN8iKWxf0SGEsKQ-1; Fri,
- 19 Sep 2025 06:10:25 -0400
-X-MC-Unique: r1MFZ1HyN8iKWxf0SGEsKQ-1
-X-Mimecast-MFC-AGG-ID: r1MFZ1HyN8iKWxf0SGEsKQ_1758276624
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-OCCRD-d2N-2LTgQfTIZ_nw-1; Fri,
+ 19 Sep 2025 06:10:34 -0400
+X-MC-Unique: OCCRD-d2N-2LTgQfTIZ_nw-1
+X-Mimecast-MFC-AGG-ID: OCCRD-d2N-2LTgQfTIZ_nw_1758276633
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 767ED195604F
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 10:10:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED6E318002C8
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 10:10:32 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.187])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C44C1800446; Fri, 19 Sep 2025 10:10:23 +0000 (UTC)
+ id E52CC1800446; Fri, 19 Sep 2025 10:10:31 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 0/6] crypto: misc fixes and improvements to cert handling
-Date: Fri, 19 Sep 2025 11:10:16 +0100
-Message-ID: <20250919101022.1491007-1-berrange@redhat.com>
+Subject: [PATCH v2 5/6] crypto: switch to newer gnutls API for distinguished
+ name
+Date: Fri, 19 Sep 2025 11:10:21 +0100
+Message-ID: <20250919101022.1491007-6-berrange@redhat.com>
+In-Reply-To: <20250919101022.1491007-1-berrange@redhat.com>
+References: <20250919101022.1491007-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -82,51 +86,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series includes three patches that were posted a fairly
-long time ago. They are borderline between a feature request
-and a bug fix, but I'm classing them more bug fix, since they
-addressing issues with cert acceptance that we really should
-not have had.
+The new API automatically allocates the right amount of memory
+to hold the distinguished name, avoiding the need to loop and
+realloc.
 
-The patches by Henry had outstanding comments from myself,
-and I've chosen to simply fix them in two followup commits
-of my own now to get this over the line.
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ crypto/tlssession.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-The patch from "matoro" was not accepted because they were
-contributed under a github alias. With our change to have
-a more relaxed interpretation of the DCO allowing any
-"known identity", we can now accept this patch. It had
-some conflicts with Henry's patch which I've fixed up.
-
-Then there is one other small bug fix and one improvement
-to use a newer gnutls API.
-
-Changed in v2:
-
- - Dropped already merged patch & re-arrange remaining
-   series
-
-Daniel P. Berrangé (4):
-  crypto: remove extraneous pointer usage in gnutls certs
-  crypto: stop requiring "key encipherment" usage in x509 certs
-  crypto: switch to newer gnutls API for distinguished name
-  crypto: fix error reporting in cert chain checks
-
-Henry Kleynhans (1):
-  crypto: only verify CA certs in chain of trust
-
-matoro (1):
-  crypto: allow client/server cert chains
-
- crypto/tlscredsx509.c                 | 223 +++++++++++++++-----------
- crypto/tlssession.c                   |  12 +-
- docs/system/tls.rst                   |  13 +-
- tests/unit/crypto-tls-x509-helpers.h  |   6 +-
- tests/unit/test-crypto-tlscredsx509.c | 138 +++++++++++++---
- tests/unit/test-crypto-tlssession.c   |  14 +-
- tests/unit/test-io-channel-tls.c      |   4 +-
- 7 files changed, 264 insertions(+), 146 deletions(-)
-
+diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+index 86d407a142..0f86d1393f 100644
+--- a/crypto/tlssession.c
++++ b/crypto/tlssession.c
+@@ -409,20 +409,14 @@ qcrypto_tls_session_check_certificate(QCryptoTLSSession *session,
+         }
+ 
+         if (i == 0) {
+-            size_t dnameSize = 1024;
+-            session->peername = g_malloc(dnameSize);
+-        requery:
+-            ret = gnutls_x509_crt_get_dn(cert, session->peername, &dnameSize);
++            gnutls_datum_t dname = {};
++            ret = gnutls_x509_crt_get_dn2(cert, &dname);
+             if (ret < 0) {
+-                if (ret == GNUTLS_E_SHORT_MEMORY_BUFFER) {
+-                    session->peername = g_realloc(session->peername,
+-                                                  dnameSize);
+-                    goto requery;
+-                }
+                 error_setg(errp, "Cannot get client distinguished name: %s",
+                            gnutls_strerror(ret));
+                 goto error;
+             }
++            session->peername = (char *)g_steal_pointer(&dname.data);
+             if (session->authzid) {
+                 bool allow;
+ 
 -- 
 2.50.1
 
