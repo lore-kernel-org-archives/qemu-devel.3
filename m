@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185A3CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8719CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzYYB-0004Wn-TG; Fri, 19 Sep 2025 06:41:11 -0400
+	id 1uzYZ1-0005VI-GF; Fri, 19 Sep 2025 06:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uzYY8-0004W0-AS
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:41:08 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1uzYYy-0005UC-H6
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:42:00 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uzYY3-0002Ri-Ev
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:41:07 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b2400dcc55eso183548766b.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 03:40:58 -0700 (PDT)
+ id 1uzYYw-0003Is-BE
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:42:00 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b079c13240eso345072766b.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 03:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758278456; x=1758883256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758278516; x=1758883316; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7aEt007MFCxdsNdLlFX2BT1JYIAZLIIaNocOP/kZ5RY=;
- b=FnKC+daUHFJELTID50ixGyyTVkI7km/twjE9KU5z4GsusBMZXaJUDhMzA9bmGK5Zwn
- RHEMwwirmcOxfVn9PFPV/XcIgw+NXDEk6+2izjuoxEtCf/srEwqczUfeH1xUZj2w6QFr
- D8oSHIimzf68cpZnP+1uVjnq2vnRftSnSpemVxmfJI6FWC8E6S96FSq1u6xI5s0LBJ7f
- YdiTlhrbUAHu+2mJOCwYwl0bnLvtmLCbQqGUeeUHqDn++azXIzn27LsYS0Eigbfna75U
- iFnPQfpVZ+Lkt7jKiK+i0DAopSd8iypIjQMMs4raU4GLYbjbZhd1I6FE+zcSxFrpLXzt
- Hj0g==
+ bh=TMSIyJ4KFet3yEGpde8P9d3ZMSPdaT2ujttqCdo0jpo=;
+ b=oyPrrPNZqPsKeXyCkzwVuvVjFHkPNtvF/2exNOmOdpzZQXCboZ17rNT9FhHAnjFI3j
+ MvQV8loSvLVk4+2QxmXGio/pLKIYippVlVTgeQLavZof/QrBP+5eLCNZTjAX8pw17qoN
+ ZvEwOMKbLeX07zq0k2u0Sc1yJE8Bt+aFhdM+rye+gfMMc6lMpU6CahsOtB9QD9EQZocv
+ BqyR6hqEa1mUnrFgZkNtAm1qETcAPUmuD9NSs71DcDlPRO5aIewpR01TyJOGrMqoL4YX
+ 9LC4HFfpG8Hd8vxIMRST1tK+yV+FcRhJ72DcAPJhR/xBLwAuMn9dq6gmMZd9uSYqpR9u
+ 2TgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758278456; x=1758883256;
+ d=1e100.net; s=20230601; t=1758278516; x=1758883316;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7aEt007MFCxdsNdLlFX2BT1JYIAZLIIaNocOP/kZ5RY=;
- b=oKw+PQvjso9mwGD+ejkrFvi94rCm3q08f4RFCqCy/KetuNElYRb+nyBnIvsn2E92+e
- 3RvaU86n/Ox4LQXtQFujWODTYI/ZN+qFR5WS9d/36MbxPp0CymXkMqzwhl8bQurDwSvg
- LNSz/49vzn8Sp42wfhiA4MjQqwpZHZYCUBkVtPPVyOUV2jv2gr9zkp/XBccPInKSwtAW
- ihIYae2dW2jVknv6CDr9TscLkIChVDpoda5yxIoq5CISOUKj81sQ1l8gNVDtegzK2QaU
- tRviQjOCWUoEK6Ej019+qVwL1XlPm5pdBG2CaF0WeFBXB6YLQH1ShGqx/ASgmVblqgGe
- ejHA==
-X-Gm-Message-State: AOJu0YxlPWmzVD0r8Vnhk8TT+91oyxVc3v6kajegnX3umsHnrSl373nb
- NJfyRQ6gXWKhEJWla9biwxAK3R3bIWsYpFJ6JCAtaaX7rmJv8J2IV3KPg7CB9uU1Ogr8Jd1WyvG
- 0iV1JaODUY+zUToAeW+wZIPbfYGnzTYSiGVhlaNuLYA==
-X-Gm-Gg: ASbGnctqCaVEAlbaMeIGHVwryB3j7K6l/0X4XFF+KB0Og6tu3vh7Z3CRWUBHnG4o0ph
- KufLCY+fw3xAha+3KhfuzScwSTX9bHGj62ZMWkmG5fh/VGpsgJt2qWhgIxSgGD4HjIoHhphkkLB
- C8ywjNqFNPdpnYu3d/YDtPE/cM20bwA4hDdH1OFYKLVb1QT2CYfYFo0z2ZOeLuhkZLoXA+RtOnF
- 49hqw==
-X-Google-Smtp-Source: AGHT+IH6HhMfUUQ3xDfUbNKCOK7AKy/PEA3hxI9gmklDLQImpAI7pgGg8W4VpKno0WyulAatKZZ1/94AKGpXLmWsQ2U=
-X-Received: by 2002:a17:906:c155:b0:b07:dbf9:a2a2 with SMTP id
- a640c23a62f3a-b24ef5853camr293852266b.20.1758278456533; Fri, 19 Sep 2025
- 03:40:56 -0700 (PDT)
+ bh=TMSIyJ4KFet3yEGpde8P9d3ZMSPdaT2ujttqCdo0jpo=;
+ b=Knyzy0cP3Cj4oICcPrN2cAOnhd2BsmAv+npkkHlkNAeeSQc254fTMvVTJDCttn36fX
+ n4BdwxEhA7H6SHnMx+E/9hwz+bNHWH0QZ/T4Zdt8jxA9EGWD9VQVbiU6viqego5+D+hg
+ DRYRu+hbenRpxUNG57IvJgsyYRwPUkaTqMrpv8hAVs2WYu96xBjh6/6BvYG2ltqdMKL7
+ Zqz0HSuVmN7ft7oqgfjXty6KTxPep9FqwwKlpbJKcFTEiFUmr87SINaV8DEvl5j6Fajy
+ zMmbThVRNvPuZ7CfE68d7serOLLcQPM8g24nD2rfIpucATYJVBvboyN8WQVspvNumvxi
+ IyEg==
+X-Gm-Message-State: AOJu0YzFcAYlmpKUT75MQatA6I5KoWQ2GjJPa68M5NXLaliH72JNKG+w
+ IY0AXUgodVoBkM+28HqR0tzin8OENwqfWpPsYyhzhGFi40nR8sA9yJHLqJTYCdOU+AB9P9sirq/
+ 6SEbtGFlMOafb0m+j9aiqsZiy7z+xioCg15Wzkh6YhQ==
+X-Gm-Gg: ASbGncvnCuuhz+HTj/avx5xL9DULV+RCQTNlLqr4O3o8C3qWx09qwygMC75RQMaCXjy
+ e3tLbSHpP5SdhEKPNtroUz1C07gQ9DapzqtYlEV8AQ6qV6LTBKmF9BsChRYD/y821Bws8H3hFT7
+ gx1LNg6QDKCI/6r39cqhp87jqxnoaBPxhIBvEw1kGI1hVnceYpzZ8kUsCt4NOO4yNyqlFdydQPp
+ onNkQ==
+X-Google-Smtp-Source: AGHT+IGyq9SXF7C2paltcJLr0tBVS6atCLiSjcn+nx4Qaerjdo5uAnx/h2Zmu0PgKsWiSCEwILQDnZq9N+YnCjdiHcE=
+X-Received: by 2002:a17:907:7290:b0:b04:48b5:6e8a with SMTP id
+ a640c23a62f3a-b24eca00bf9mr284587366b.7.1758278515772; Fri, 19 Sep 2025
+ 03:41:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250919101642.121190-1-pbonzini@redhat.com>
-In-Reply-To: <20250919101642.121190-1-pbonzini@redhat.com>
+References: <20250919083625.86678-1-pbonzini@redhat.com>
+In-Reply-To: <20250919083625.86678-1-pbonzini@redhat.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 19 Sep 2025 13:40:30 +0300
-X-Gm-Features: AS18NWByc9Lx3Fseivfzm8Z1dLQWk0O-QDlIPo1S6BP_7zbIBfRbqvZb6ww9oFM
-Message-ID: <CAAjaMXbk-sr4MAejAb8vkz_Yd1u+=k3cfnCWzeOvdWigHPiu0A@mail.gmail.com>
-Subject: Re: [PATCH] rust: build: remove "protocol: rust: from doctests
+Date: Fri, 19 Sep 2025 13:41:28 +0300
+X-Gm-Features: AS18NWDywiG_4fXkr5UrKxDHQlWBxv9TWmbCeTjIqNO7VX0EQzlold405RmnPw8
+Message-ID: <CAAjaMXa2F-AptpLNy4=LeVRb9FXX6QzzAdVR2PZcqWX6LEYR7Q@mail.gmail.com>
+Subject: Re: [PATCH] rust: vmstate: use "cast()" instead of "as"
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,86 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 1:17=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+On Fri, Sep 19, 2025 at 11:37=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
 >
-> It is added already by rust.doctest.
+> Reported by clippy, fix it.
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  rust/bql/meson.build       | 1 -
->  rust/common/meson.build    | 1 -
->  rust/migration/meson.build | 1 -
->  rust/qom/meson.build       | 1 -
->  rust/util/meson.build      | 1 -
->  5 files changed, 5 deletions(-)
+>  rust/migration/src/vmstate.rs | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/rust/bql/meson.build b/rust/bql/meson.build
-> index 2e0d8a88ed3..305d7111897 100644
-> --- a/rust/bql/meson.build
-> +++ b/rust/bql/meson.build
-> @@ -46,6 +46,5 @@ bql_rs =3D declare_dependency(link_with: [_bql_rs],
->  # in a separate suite that is run by the "build" CI jobs rather than "ch=
-eck".
->  rust.doctest('rust-bql-rs-doctests',
->       _bql_rs,
-> -     protocol: 'rust',
->       dependencies: bql_rs,
->       suite: ['doc', 'rust'])
-> diff --git a/rust/common/meson.build b/rust/common/meson.build
-> index 7fcfa87d362..89dc11b594c 100644
-> --- a/rust/common/meson.build
-> +++ b/rust/common/meson.build
-> @@ -34,6 +34,5 @@ rust.test('rust-common-tests', _common_rs,
->  # in a separate suite that is run by the "build" CI jobs rather than "ch=
-eck".
->  rust.doctest('rust-common-doctests',
->       _common_rs,
-> -     protocol: 'rust',
->       dependencies: common_rs,
->       suite: ['doc', 'rust'])
-> diff --git a/rust/migration/meson.build b/rust/migration/meson.build
-> index 26e4c98bcf7..3843b364c69 100644
-> --- a/rust/migration/meson.build
-> +++ b/rust/migration/meson.build
-> @@ -49,6 +49,5 @@ migration_rs =3D declare_dependency(link_with: [_migrat=
-ion_rs],
->  # in a separate suite that is run by the "build" CI jobs rather than "ch=
-eck".
->  rust.doctest('rust-migration-rs-doctests',
->       _migration_rs,
-> -     protocol: 'rust',
->       dependencies: migration_rs,
->       suite: ['doc', 'rust'])
-> diff --git a/rust/qom/meson.build b/rust/qom/meson.build
-> index 3b60d2be0bd..d7622a9e0b1 100644
-> --- a/rust/qom/meson.build
-> +++ b/rust/qom/meson.build
-> @@ -38,6 +38,5 @@ qom_rs =3D declare_dependency(link_with: [_qom_rs], dep=
-endencies: [qemu_macros, qo
->  # in a separate suite that is run by the "build" CI jobs rather than "ch=
-eck".
->  rust.doctest('rust-qom-rs-doctests',
->       _qom_rs,
-> -     protocol: 'rust',
->       dependencies: qom_rs,
->       suite: ['doc', 'rust'])
-> diff --git a/rust/util/meson.build b/rust/util/meson.build
-> index ba6213bf3b8..eb101495870 100644
-> --- a/rust/util/meson.build
-> +++ b/rust/util/meson.build
-> @@ -60,7 +60,6 @@ rust.test('rust-util-tests', _util_rs,
->  # in a separate suite that is run by the "build" CI jobs rather than "ch=
-eck".
->  rust.doctest('rust-util-rs-doctests',
->       _util_rs,
-> -     protocol: 'rust',
->       dependencies: util_rs,
->       suite: ['doc', 'rust']
->  )
+> diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.r=
+s
+> index c05c4a1fd66..e04b19b3c9f 100644
+> --- a/rust/migration/src/vmstate.rs
+> +++ b/rust/migration/src/vmstate.rs
+> @@ -144,7 +144,7 @@ macro_rules! vmstate_of {
+>          $crate::bindings::VMStateField {
+>              name: ::core::concat!(::core::stringify!($field_name), "\0")
+>                  .as_bytes()
+> -                .as_ptr() as *const ::std::os::raw::c_char,
+> +                .as_ptr().cast::<::std::os::raw::c_char>(),
+>              offset: ::std::mem::offset_of!($struct_name, $field_name),
+>              $(num_offset: ::std::mem::offset_of!($struct_name, $num),)?
+>              $(field_exists: $crate::vmstate_exist_fn!($struct_name, $tes=
+t_fn),)?
 > --
 > 2.51.0
 >
