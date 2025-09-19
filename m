@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00ABECAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC19CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzXqf-0005l0-TO; Fri, 19 Sep 2025 05:56:14 -0400
+	id 1uzXr3-0006Dz-O6; Fri, 19 Sep 2025 05:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqW-0005eh-IW
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:06 -0400
+ id 1uzXqY-0005ex-Ho
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:07 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uzXqQ-0004Z3-JE
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:03 -0400
+ id 1uzXqR-0004ZJ-NU
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:56:04 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B643C80ECB;
- Fri, 19 Sep 2025 12:55:51 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4C92180EC8;
+ Fri, 19 Sep 2025 12:55:53 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a72::1:38])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ntP1fK1GvGk0-5g2G55JV; Fri, 19 Sep 2025 12:55:51 +0300
+ ESMTPSA id ntP1fK1GvGk0-S0UNffSb; Fri, 19 Sep 2025 12:55:52 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758275751;
- bh=VnjjGEpdrx+Fz6XfH6ULYBNOdX6UQVMGJsU+DGOMTo8=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=0zQn9gXdpoykszQEZvpTtOhRkJbXvdptdslz0BhK+kdVOtlLLW79SsGPzapsuqJGJ
- jwTR0kYdKmwiID5TnDvLqhujPW48VlHTa/budoqZCaZuEiQZr5RhL9ZggmenMr7kND
- x7m0+rOQPwVM9Z07TstGXgXXSuLcJS6qiARoMBDI=
+ s=default; t=1758275752;
+ bh=cq2SnBEaLRu/0mSFxt8cmSAJ0yXaJUJztucOvIMJ7YE=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=KhKqEiHBwaAP4nEtdqnpDVPtzOxxKlT7of3Ls6eNJyktcBmvwcr9ZqSOjfxawvYhc
+ KRJhULlmpfs7eUMlURjYG2Tl5uVgq43lBaErQPA8Tld5DAuecjiPC8gORwqWv8I73D
+ HA0ZfGcR6Jw3HtC4XNLhZHZE320eo0cqkdsQ9DZg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,15 +47,14 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v5 01/19] migration/qemu-file: don't make incoming fds
- blocking again
-Date: Fri, 19 Sep 2025 12:55:27 +0300
-Message-ID: <20250919095545.1912042-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v5 03/19] net/tap: net_init_tap_one(): drop extra error
+ propagation
+Date: Fri, 19 Sep 2025 12:55:29 +0300
+Message-ID: <20250919095545.1912042-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -80,87 +79,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In migration we want to pass fd "as is", not changing its
-blocking status.
-
-The only current user of these fds is CPR state (through VMSTATE_FD),
-which of-course doesn't want to modify fds on target when source is
-still running and use these fds.
-
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/io/channel.h  |  1 +
- io/channel-socket.c   | 13 +++++++++----
- migration/qemu-file.c |  3 ++-
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ net/tap.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 234e5db70d..12266256a8 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -36,6 +36,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
+diff --git a/net/tap.c b/net/tap.c
+index f7df702f97..10799ab055 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -724,9 +724,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
  
- #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
- #define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
-+#define QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING 0x4
- 
- typedef enum QIOChannelFeature QIOChannelFeature;
- 
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3b7ca924ff..21f8f2e0c5 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -464,7 +464,8 @@ static void qio_channel_socket_finalize(Object *obj)
- 
- #ifndef WIN32
- static void qio_channel_socket_copy_fds(struct msghdr *msg,
--                                        int **fds, size_t *nfds)
-+                                        int **fds, size_t *nfds,
-+                                        bool preserve_blocking)
- {
-     struct cmsghdr *cmsg;
- 
-@@ -497,8 +498,10 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-                 continue;
+         if (vhostfdname) {
+-            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, &err);
++            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
+             if (vhostfd == -1) {
+-                error_propagate(errp, err);
+                 goto failed;
              }
- 
--            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
--            qemu_socket_set_block(fd);
-+            if (!preserve_blocking) {
-+                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
-+                qemu_socket_set_block(fd);
-+            }
- 
- #ifndef MSG_CMSG_CLOEXEC
-             qemu_set_cloexec(fd);
-@@ -556,7 +559,9 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
-     }
- 
-     if (fds && nfds) {
--        qio_channel_socket_copy_fds(&msg, fds, nfds);
-+        qio_channel_socket_copy_fds(
-+            &msg, fds, nfds,
-+            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
-     }
- 
-     return ret;
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index b6ac190034..d5c6e7ec61 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -340,7 +340,8 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
- 
-     do {
-         struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
--        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
-+        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd,
-+                                     QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING,
-                                      &local_error);
-         if (len == QIO_CHANNEL_ERR_BLOCK) {
-             if (qemu_in_coroutine()) {
+             if (!g_unix_set_fd_nonblocking(vhostfd, true, NULL)) {
 -- 
 2.48.1
 
