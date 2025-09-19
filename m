@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E65CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F24CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzcNl-0006VV-Ha; Fri, 19 Sep 2025 10:46:41 -0400
+	id 1uzcYM-000194-CG; Fri, 19 Sep 2025 10:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uzcNj-0006Uy-8n
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:46:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzcYK-00018J-8m
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:57:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1uzcNd-0004uT-Kg
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:46:38 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uzcYB-0008S5-MK
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:57:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758293185;
+ s=mimecast20190719; t=1758293842;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=A7VMo2oDb08dA9CCKSxIBR5Dj8JPSc0okdXrVy8mlsI=;
- b=Sn4ezel8Tu/tEPmjTG38SnLrka0+NVoqAMJKS8LFI4iRMkeEAl0dq2TsrzopIVkQtDLN8z
- 4dQDEc23eJzwn5h97uLGSaA1XMNr19Rz0pcW7CeAxkv0fk05BGav2cmZmi6mbnLEAMJ7X9
- ZGsPu3M7zTFiktXptnrX0PMkzTkUUXQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SQhBPBj2xyCF1Txti8vjAK57g/dVTUncPpxYQSDtzRM=;
+ b=hxiq28m8rE6e2BcU5QxhISiDK27/L905ezxnpGJfzRDsAxkeZjqitdyBccj1UMJ3CHy1zn
+ aa83zDLfhXwHrjLVddJvq369GtOhzKZ7xS/sjSH7QCxfEISeFPW4pQy3n0RVH+iNPYEYTx
+ BFTRMXJMcGAO4zsZ94HDz/ZgA2fqa9M=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-mAla354jO1CPu1gU4GhTGQ-1; Fri, 19 Sep 2025 10:46:23 -0400
-X-MC-Unique: mAla354jO1CPu1gU4GhTGQ-1
-X-Mimecast-MFC-AGG-ID: mAla354jO1CPu1gU4GhTGQ_1758293182
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45f2f15003aso14295085e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 07:46:23 -0700 (PDT)
+ us-mta-154-BEDiiCn3M3KALgIyVWBZdg-1; Fri, 19 Sep 2025 10:57:15 -0400
+X-MC-Unique: BEDiiCn3M3KALgIyVWBZdg-1
+X-Mimecast-MFC-AGG-ID: BEDiiCn3M3KALgIyVWBZdg_1758293835
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4b5fbf0388eso28006561cf.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 07:57:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758293182; x=1758897982;
+ d=1e100.net; s=20230601; t=1758293835; x=1758898635;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A7VMo2oDb08dA9CCKSxIBR5Dj8JPSc0okdXrVy8mlsI=;
- b=RtNI+Hajz/w0oE2aPXR57lqtCACXcA4GvGpjjE/apnQb4iM5SPjNvZ5mXThQw8JaCg
- By5xnXI5ktLpaXYvabHUjIyd4XiJTaei1fGeC4UDR1EjlzWbj5u+JL0AWQBN51CTwQNe
- ZTn+I8odg6tJ7SXX1QbEDUXCVjMq1t0sXxUH+6o+WyVRbf8Xo7G8xx15EkQX/LFv+IXb
- t7iB5zX1nbhD0Aj5rMIZAgCEgEZxmvHVOWehYLGQ3VDr5zP2gTVbovZ33Tg0WMX+LH7b
- GQaDMkq7SC4iMLqoTvsjWIxaY9eEIDfc9s7TjIVqTZyb40No5mOnjI7bVTcwTVSQz5cN
- AsAQ==
-X-Gm-Message-State: AOJu0YyDpceYKy9MmLvGhOIO+DethQBNvjQ8H3EBsXZroZ0eWo7OzEkW
- Lh3C+sV6Mjv5wMEnwGzlfiIAKCaPZpoKZ4nw937wDODuvP5WpVcq56srWql9IcWqG+Jn7w9sowd
- W8Ehi50Pjx78ew8ulzEoNUTzHvA1Q5yQoe+dSF3XLOYjKWEPNMKwtIOh4
-X-Gm-Gg: ASbGncu0H0CpZOzZ1oT9iRF4D1Pq7dNnq4eykIlDHXXYKbYerkU6BsaSHUfWuFs3fxV
- t7BTSC7PLs8VLlrHq0p1E/iF7ZJJMzQR/FVZTFowuWXhoTllZwGvl6QBFa/byUSQLMh73wS3Aqo
- EX3D4TL8+nypB8TLzyxfrSFQq1sRYcPgcfB7cjtUcOFz7ikeMMVQOb+ZOA5b4KTGIsJMOl90++S
- qSvYlB6+sQY3VKLAu0NF5PDTysvHrq8MKc8bpa4nC6hx8WPK5GSCJ1V0SANpY9KfcFAOSv4b3ZI
- YgaesmQGM8E2G1p44VFbI+lva9gTaTnjegAc1B+qq33T
-X-Received: by 2002:a05:600c:190c:b0:45f:2843:e76d with SMTP id
- 5b1f17b1804b1-467e6b64cd3mr35821385e9.4.1758293182450; 
- Fri, 19 Sep 2025 07:46:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFru3dcpzZ4DQLVrBnKU2viVlnSPNqPgs5L1VsgiFJQ3l+sHspg97lhEDGMzM4rCsbG01rPdA==
-X-Received: by 2002:a05:600c:190c:b0:45f:2843:e76d with SMTP id
- 5b1f17b1804b1-467e6b64cd3mr35821095e9.4.1758293181951; 
- Fri, 19 Sep 2025 07:46:21 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.144.126])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4613ddc01e6sm124936265e9.18.2025.09.19.07.46.20
+ bh=SQhBPBj2xyCF1Txti8vjAK57g/dVTUncPpxYQSDtzRM=;
+ b=MWv6D7e6PGuJL/ZiBqmAwKMS2DUdHA5XlyVtF5bRn8rP6yvpl1Q6xo9JWSEXeGxRai
+ PTDVvSBhuL5QNNyPCaHIaT5V+11R11tXhGJMADcD7OnX/TPLWK6Mg4ws21yK2B0mT6zp
+ oHXU5H69L7mUvGzrxcpFAo/ZDyX5gcPuUbe77r9ktD2LZiTZvKLpgTPUqWlypSc74OJO
+ ReYgKbocvg0/A7cU9Hg82XQ8cWzynWihhpsfWEEzlVCM12CAnC9l8EDO4kEOQGAtMJuF
+ r4wMUyEOr/oglId+ngXZy+CKbatuQJ3zEr/91FnyzvNpw6JysRKd8FsZ6DX/g2sDkWSI
+ +h8A==
+X-Gm-Message-State: AOJu0YyAmsB0Kd2GR9RfGhkXXTtR+x6a3RknnkZNzKdDOH6G01O7z5nW
+ nBeQfeV5oW22tiWhBpYkGIjxvREh8PZjG5zoyc4wBe+xoyTe4heHojQj79SKL5rerA02VuhDTAR
+ AJxQoKbAu+PzhxKBtO+j0CyUc1i4nx1y10SrCuras5PEkCp7vmtvpLtBn
+X-Gm-Gg: ASbGnctDGca8TL+srfF44XywFoy+CTjDR/0xm+NxScT2DKVn9ApAtaSeoKeWIY0zGkx
+ p5bGlVZnWZWWW9H4fR9p0ZaEI/y5F7DiZ84LU3w1YL4TtI4nJlFxE+bqE7bI2g9xYFyaSTDakck
+ dGJadlpbkWMSq+5CkYEf8pikL3ECA3KTSmnfvX/jUTGIcwddMttrpRKlK+OqKoqpoyxE0xo9Q70
+ MFYZY5QGTUAMWc6XO1UALj/9kb3yhfcZVILHqxs+mgsaiuM+xEFcntFFXGp2tNnGNPGCrSud5rv
+ Gkv4ywm7AuFupRRG2uJ/PDO2efSSZ1tp
+X-Received: by 2002:a05:622a:14f:b0:4b5:dc7c:a6ea with SMTP id
+ d75a77b69052e-4c073106ac8mr36489581cf.49.1758293835060; 
+ Fri, 19 Sep 2025 07:57:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQr+rP0w07AGf416rcvXKfyzrjL8kYTZbEvztQNcbM0UGxBXbgbm5VZJOf3OgdN2dgMcVT2A==
+X-Received: by 2002:a05:622a:14f:b0:4b5:dc7c:a6ea with SMTP id
+ d75a77b69052e-4c073106ac8mr36488991cf.49.1758293834534; 
+ Fri, 19 Sep 2025 07:57:14 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4bda140ccadsm30625081cf.4.2025.09.19.07.57.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Sep 2025 07:46:21 -0700 (PDT)
-Date: Fri, 19 Sep 2025 16:46:12 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Christian Speich <c.speich@avm.de>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
-Message-ID: <vugv2kmwkhguq7tx4hxkwrwgknxgmy7zkqmwkogc2sjiofyhzs@ue77hrnka34p>
-References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+ Fri, 19 Sep 2025 07:57:14 -0700 (PDT)
+Date: Fri, 19 Sep 2025 10:57:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 2/4] migration: Accept MigrationStatus in
+ migration_has_failed()
+Message-ID: <aM1vSZcXY08tfMpM@x1.local>
+References: <20250915115918.3520735-1-jmarcin@redhat.com>
+ <20250915115918.3520735-3-jmarcin@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+In-Reply-To: <20250915115918.3520735-3-jmarcin@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -91,7 +91,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,102 +107,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
->This removes the change introduced in [1] that prevents the use of
->vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
->
->[1]: 6275989647efb708f126eb4f880e593792301ed4
->
->Signed-off-by: Christian Speich <c.speich@avm.de>
->---
->vhost-user-device and vhost-user-device-pci started out as user
->creatable devices. This was changed in [1] when the vhost-user-base was
->introduced.
->
->The reason given is to prevent user confusion. Searching qemu-discuss or
->google for "vhost-user-device" I've seen no confused users.
->
->Our use case is to provide wifi emulation using "vhost-user-device-pci",
->which currently is working fine with the QEMU 9.0.2 present in Ubuntu
->24.04. With newer QEMU versions we now need to patch, distribute and
->maintain our own QEMU packages, which is non-trivial.
->
->So I want to propose lifting this restriction to make this feature
->usable without a custom QEMU.
+On Mon, Sep 15, 2025 at 01:59:13PM +0200, Juraj Marcin wrote:
+> From: Juraj Marcin <jmarcin@redhat.com>
+> 
+> This allows to reuse the helper also with MigrationIncomingState.
 
-Alex already proposed something similar:
+I get the point, but just to mention that this helper doesn't really change
+much on incoming side on simplifying the code or function-wise, because we
+don't have CANCELLING/CANCELLED state on deste QEMU.. which is definitely
+not obvious.. :(
 
-https://lore.kernel.org/qemu-devel/20250901105948.982583-1-alex.bennee@linaro.org/
+So:
 
-Thanks,
-Stefano
+  migration_has_failed(incoming->state)
 
->
->[1]: 6275989647efb708f126eb4f880e593792301ed4
->---
-> docs/system/devices/vhost-user.rst | 10 ----------
-> hw/virtio/vhost-user-device-pci.c  |  3 ---
-> hw/virtio/vhost-user-device.c      |  3 ---
-> 3 files changed, 16 deletions(-)
->
->diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
->index 35259d8ec7c666aa0c56497b8261f48d77216ad5..2d130f9767dbb1cbb85cef43c63dc9a8d7b30d4a 100644
->--- a/docs/system/devices/vhost-user.rst
->+++ b/docs/system/devices/vhost-user.rst
->@@ -73,16 +73,6 @@ all the required parameters including:
->   - The ``num_vqs`` it needs and their ``vq_size``
->   - The ``config_size`` if needed
->
->-.. note::
->-  To prevent user confusion you cannot currently instantiate
->-  vhost-user-device without first patching out::
->-
->-    /* Reason: stop inexperienced users confusing themselves */
->-    dc->user_creatable = false;
->-
->-  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
->-  rebuilding.
->-
-> vhost-user daemon
-> =================
->
->diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-device-pci.c
->index f10bac874e78429c633752a4ce9db28385b3bb07..c76a856c9b9a67d941a93929244216658ff2a156 100644
->--- a/hw/virtio/vhost-user-device-pci.c
->+++ b/hw/virtio/vhost-user-device-pci.c
->@@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
->     VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
->     PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
->
->-    /* Reason: stop users confusing themselves */
->-    dc->user_creatable = false;
->-
->     k->realize = vhost_user_device_pci_realize;
->     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
->     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
->diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-device.c
->index 3939bdf755222a281da8ca22243d7d4f16990a66..1bea496afd0137ba9b42009f6252acf6800528d1 100644
->--- a/hw/virtio/vhost-user-device.c
->+++ b/hw/virtio/vhost-user-device.c
->@@ -41,9 +41,6 @@ static void vud_class_init(ObjectClass *klass, const void *data)
-> {
->     DeviceClass *dc = DEVICE_CLASS(klass);
->
->-    /* Reason: stop inexperienced users confusing themselves */
->-    dc->user_creatable = false;
->-
->     device_class_set_props(dc, vud_properties);
->     dc->vmsd = &vud_vmstate;
->     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
->
->---
->base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
->change-id: 20250919-vhost-user-device-creatable-b7f9b7b5bfb2
->
->Best regards,
->-- 
->Christian Speich <c.speich@avm.de>
->
->
+Is exactly the same as:
+
+  incoming->state == MIGRATION_STATUS_FAILED
+
+Except it will make src start to pass in s->state.. which is slightly more
+awkward.
+
+Maybe we keep the MIGRATION_STATUS_FAILED check in your next patch, and
+drop this one for now until it grows more than FAILED on dest?
+
+> 
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> ---
+>  migration/migration.c | 8 ++++----
+>  migration/migration.h | 2 +-
+>  migration/multifd.c   | 2 +-
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 54dac3db88..2c0b3a7229 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1542,7 +1542,7 @@ static void migration_cleanup(MigrationState *s)
+>          /* It is used on info migrate.  We can't free it */
+>          error_report_err(error_copy(s->error));
+>      }
+> -    type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+> +    type = migration_has_failed(s->state) ? MIG_EVENT_PRECOPY_FAILED :
+>                                       MIG_EVENT_PRECOPY_DONE;
+>      migration_call_notifiers(s, type, NULL);
+>      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+> @@ -1700,10 +1700,10 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+>      return ret;
+>  }
+>  
+> -bool migration_has_failed(MigrationState *s)
+> +bool migration_has_failed(MigrationStatus state)
+>  {
+> -    return (s->state == MIGRATION_STATUS_CANCELLED ||
+> -            s->state == MIGRATION_STATUS_FAILED);
+> +    return (state == MIGRATION_STATUS_CANCELLED ||
+> +            state == MIGRATION_STATUS_FAILED);
+>  }
+>  
+>  bool migration_in_postcopy(void)
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 01329bf824..2c2331f40d 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -535,7 +535,7 @@ bool migration_is_blocked(Error **errp);
+>  bool migration_in_postcopy(void);
+>  bool migration_postcopy_is_alive(MigrationStatus state);
+>  MigrationState *migrate_get_current(void);
+> -bool migration_has_failed(MigrationState *);
+> +bool migration_has_failed(MigrationStatus state);
+>  bool migrate_mode_is_cpr(MigrationState *);
+>  
+>  uint64_t ram_get_total_transferred_pages(void);
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index b255778855..c569f91f2c 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -568,7 +568,7 @@ void multifd_send_shutdown(void)
+>               * already failed. If the migration succeeded, errors are
+>               * not expected but there's no need to kill the source.
+>               */
+> -            if (local_err && !migration_has_failed(migrate_get_current())) {
+> +            if (local_err && !migration_has_failed(migrate_get_current()->state)) {
+>                  warn_report(
+>                      "multifd_send_%d: Failed to terminate TLS connection: %s",
+>                      p->id, error_get_pretty(local_err));
+> -- 
+> 2.51.0
+> 
+
+-- 
+Peter Xu
 
 
