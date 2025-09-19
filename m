@@ -4,119 +4,224 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BEFCAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 17:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1805CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 17:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzefk-0001E8-Eg; Fri, 19 Sep 2025 13:13:24 -0400
+	id 1uzej6-0005GO-Bx; Fri, 19 Sep 2025 13:16:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzefj-0001DT-6R
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:13:23 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzefb-0000gb-Vt
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:13:22 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A8FC23368C;
- Fri, 19 Sep 2025 17:13:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758301988; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HIUUnSgAHvzol6DzbY+PAeVfxImF2ZHEhdQq6INCa0k=;
- b=TzESEctq8hcFqM+WJoO0fbKvV31O/Q1SDH5lJ9+7KQ1Wq3zifdMh5ZOfAHeW1zuZ4YfBAx
- 9J5cSigh1mhzh6aMq4qbhqzhTA39zrd/ASr6/SY8YkJaOrnIAs9T+XXrP0w13tj2GUtgHk
- c8/JShQysJ89tbbk9m6ddc2mUfdOqFI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758301988;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HIUUnSgAHvzol6DzbY+PAeVfxImF2ZHEhdQq6INCa0k=;
- b=el86pNcBOwa03eyZyrowRK0n4hEky/Es2T1n6A5XO+YIxv0qX3/GenV+S21EJhAo3KHo6R
- 0II9qp/lfm5nU6DQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JNhuoSQl;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=rdXJBpTc
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758301987; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HIUUnSgAHvzol6DzbY+PAeVfxImF2ZHEhdQq6INCa0k=;
- b=JNhuoSQlZBD8BT9oQWnblnIIWjsdYZOzNC8HBdoWVjye+Mm0It3N7e5BlPAqeqy+nHu9AR
- YfejSN5gFTnejZyte81aMLGHLIVVA70kqBm+T90orlEuokbpw2QhRlGFNJ4zQYLyVpi33J
- +6vLZLSV1j+C1AiY+Dx/YxX6FAE47Nw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758301987;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HIUUnSgAHvzol6DzbY+PAeVfxImF2ZHEhdQq6INCa0k=;
- b=rdXJBpTcRVFdFWNo8NBrBPGr4DXyx6ChjRkhXrU0ak8Jv7rqmX2FrD34pUHKPDq9Y5je/Q
- JsyBb3CiZPcX3eDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CE3E13A78;
- Fri, 19 Sep 2025 17:13:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id /J62MyKPzWjrXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 19 Sep 2025 17:13:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
- eblake@redhat.com, michael.roth@amd.com, armbru@redhat.com,
- peterx@redhat.com, berrange@redhat.com, jasowang@redhat.com,
- steven.sistare@oracle.com, leiyang@redhat.com, davydov-max@yandex-team.ru,
- yc-core@yandex-team.ru
-Subject: Re: [PATCH v5 16/19] qapi: add interface for local TAP migration
-In-Reply-To: <82642da2-eff7-4eb6-b007-fd239fa0ef64@yandex-team.ru>
-References: <20250919095545.1912042-1-vsementsov@yandex-team.ru>
- <20250919095545.1912042-17-vsementsov@yandex-team.ru>
- <87y0qatqoa.fsf@suse.de>
- <82642da2-eff7-4eb6-b007-fd239fa0ef64@yandex-team.ru>
-Date: Fri, 19 Sep 2025 14:13:04 -0300
-Message-ID: <87ms6qtlgf.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uzej2-0005EH-CP
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:16:49 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uzeiv-0001XT-MM
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 13:16:48 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDtqoI014713;
+ Fri, 19 Sep 2025 17:16:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=eNz5XzsozNgLALSRYp3ZFn1Oft9BdzVykxnKwajAoBg=; b=
+ TI4ZUKBzEFY8UZW2Zb7nt37qYJpG4L4vCX4fUh4i9AS2ttd1F88dOzA0qDuhQoy7
+ 9S/3lHzhFQOU3drTbEqq39c4BnH87ye7z633/J+DD5xRGk7vCTyOFVblv/X5GzaS
+ 2Xby4tr4YsLMB3/sAofkNZ2FJ1uFMW/m4ZVBO/LdYc0lKDJCtzEJt3TGb0FIgfEi
+ xRB3QVGigexuBN9ptUOBORW9NXsg3Ou0nGFpYsewoM5koRTYTsvMja+goCvaH8vf
+ Tm5FP1RxXv/MEzB5yIA40WFSW4Gsox4X+quJhI8hEL3G0tLs/B0RxktZgXhQeBJs
+ gJGyvSU8ObuxRY5pCf6arw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fxbx17p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 17:16:36 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 58JFPN2e028863; Fri, 19 Sep 2025 17:16:36 GMT
+Received: from bn1pr04cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11010057.outbound.protection.outlook.com [52.101.56.57])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 494y2gt9we-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 17:16:36 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tGhVsczAR2IsCgMUEOqnHWIjzF0LpQ4ib0v5gUJi5nA82aGWYpctzOq9OmsSC6y0YgP0LZucFNqFHwY3yENm9AAAII+NHC/tVP/cHAX9rUg4UhfWoLe5iOlryXjrq5pE5JqwNMnX4ZXTqsVgiOPGgwbSZYcUTnmpLndZSHHJsgT504xmorATokA/EpZicN+1mEsaVVX/3YYoghuoX7JLooznTrLsLe5btTYl8rALcaaXtZnkGPJjFy9bisixiTfWEe6ybNIWFi6tSTemRmkTngJoec7VRHvnqJpZ2M3ZIEBxuNg272t1Im4GY1dYOq3Ia5XkvRUfJ2qKgjZw4dv4CQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eNz5XzsozNgLALSRYp3ZFn1Oft9BdzVykxnKwajAoBg=;
+ b=BBZsyplRESsMw2cpadKP2kCdYnNPEV5zQdNXf3bKcbxUyiwGavdloSRYdhp3bb+3H0DJiVXq8Hu+XNSCsMt3kLe9HDBQQflz2zFzkqMD4PQTeJEw78ejwE7d/PmEzDuSn3U2zGC5zzetdyaHvhq+Qu41ubdDG1dDiD9m8iycq9+YDcaePhFk+pxo0hFIFywc9LxCuGw9UJzsTAjZljyq9OvTZPy97lDno1+r83wQo5T5gcOjFywCo8InqRxoMyYEA9S1J68XS6R7CmgEM9F573wfjUfukrqzPazaO2AmaCAo0e1u0dqUKRjifrwwctWXNHwHcfwT3SAjAUgnR0VlhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eNz5XzsozNgLALSRYp3ZFn1Oft9BdzVykxnKwajAoBg=;
+ b=nEb7azjAYWw3yahSbAYdlqw/UjAWdJbmTPHOSl7XeDclmGlGQGYlGbv0Wc8T8qiLGn66rSeeW0ve0g2fm1xxVENL2+0zfOzdZ4rWhkgnqFsccJvb0EZr10lXIAo7OJTTYn3GFMp5J1ucJl9JO9S88IAXvytcGNKZSpGaaxzWZxo=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by SA2PR10MB4426.namprd10.prod.outlook.com (2603:10b6:806:117::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.16; Fri, 19 Sep
+ 2025 17:16:31 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%6]) with mapi id 15.20.9137.012; Fri, 19 Sep 2025
+ 17:16:31 +0000
+Message-ID: <f81f1138-1450-4a71-8459-63f653018226@oracle.com>
+Date: Fri, 19 Sep 2025 13:16:27 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
+ <aLsUQWjW8gyZjySs@x1.local> <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
+ <aMBGnHXieiXpBCqF@x1.local> <992bf553-e622-4e51-b1c7-f59c1413558e@oracle.com>
+ <aMB0BL5SEGfwjTFm@x1.local> <1a3c46b8-985e-4768-a3d1-e797370c0822@oracle.com>
+ <aMQ_65_BybkbtZL4@x1.local>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <aMQ_65_BybkbtZL4@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH3PEPF000040AC.namprd05.prod.outlook.com
+ (2603:10b6:518:1::5b) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[15];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, yandex-team.ru:email, suse.de:mid, suse.de:dkim]
-X-Rspamd-Queue-Id: A8FC23368C
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA2PR10MB4426:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0844880e-0ef6-40d7-f015-08ddf7a04718
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TXAzd0JjbnNPeGRqRGZQS2pHSHpIUDNwWlVLM1pWaXNEMG1kcXhXY3RUNHJy?=
+ =?utf-8?B?dU9DVHlCT2VwWm1UWmJyVDQwS0E1MmUxazVtSFR6Sy9nTGN1cnlZL2hJbWxv?=
+ =?utf-8?B?cnFHWG5lU2cyTjFVaXVzZ0dZcXlGNWhYN0tRRHlPcVlJcHRnZWZ0WUxjaVJs?=
+ =?utf-8?B?KytWQ01BdUxyUlFqd29hM01IVC9xVTdZb0lXV1RtYlBBNm50eHp6TWhJa3JL?=
+ =?utf-8?B?cEozZ2xNdEdzMCtJTXlnbFhYSEMrcE1zU1VwV25jeURyRlB6L25SUUlHTDBK?=
+ =?utf-8?B?RzMvRnhYZ3NPaThnVnBoOHRnY2RCYzh3bWV6UkVsTnkrbnJNajN4MGRwZ3cx?=
+ =?utf-8?B?Z3IzVTF6b2hCVEYxV29zc3ZHR1lrRHFEWUhOMmJLV1VDNHM2ekcrcjFQbjdk?=
+ =?utf-8?B?M05wRWF6Y1VkTkhFaG1FbE9tRlBhNDhoeGx6dXprSFlRaVJYMlJEYXZEdmF3?=
+ =?utf-8?B?NnNid1VWc0RXMytWY1lQbnE4NGkvRjVOZExUQmVEbXBTajdqMVQ4N2xLR1JX?=
+ =?utf-8?B?M2tCK0c3Q1lIbG1wbXltU2hnenJCT0JPKzVEVk4yY3l0TGpvSWlZWCtta0dj?=
+ =?utf-8?B?T1h5R0VsR1NqRFN2dnIrR3FLbU44Tm93QUlwNmRFQi9TZmtSbFpicXRYRmVW?=
+ =?utf-8?B?cTJMazdsaTRsSFQzaUd6dVVoa3BUREJFbHlFRnp1Nk9GaEdPSjlwUUl3RGxI?=
+ =?utf-8?B?OFgxSk5NSXdFc2NFb2xwbEhkTVE2b1RGaFQ4d3YyZ2ZldXQwNnpmU0JUSGVK?=
+ =?utf-8?B?Z0pZU1E3REp0bWhMWklRcjJCeTcyejlQbTFlWldRcFQ3cC9tSTVrb3FmWUNn?=
+ =?utf-8?B?amVJejNPMGdkUlo3Yi90ZTZXd05DSmRrbXd3NlNBdlFJMnlCMyt4ZTRmU09I?=
+ =?utf-8?B?Z1IzWHZiSTlHYXZNSkxjZmdzYUxLUFhKUTZqSFhGRkhTYmVub0ZSQTV1blJZ?=
+ =?utf-8?B?OGdSTTdOa0hIWk5PK3N2UTR2MjZDdWRmWDQwSDJueXNEelhoWXFFc2RSbzkx?=
+ =?utf-8?B?RlVtQzdPSWNxN2U1NXQ3Vi9zUDNMclJDRzhlTENTcFNGa0RHQ243V2g4Y2hH?=
+ =?utf-8?B?WnNlUnVjNzdlYmZBOVByRnczRG5Qc2NOSnhvaXFLUjBBalV0UlM1ZlJLc2pI?=
+ =?utf-8?B?RTJqK1paOFR6SEZHTGFmYmdHOGw5RkhvVk1NdjhmdjllNjRvTENHdHM0NVlT?=
+ =?utf-8?B?OXQxVDZzdlRPaFhYelFaTi9RcWI5NkxxMmVmZE9sKzlKbkozdm85c2VSaFBm?=
+ =?utf-8?B?bDBuaitSSDBaZlF4d2QxdjVFcE9hZjRwNmdDcGV2NTJRS0ZPbGpGSTVpYmly?=
+ =?utf-8?B?ODR0eTFmaWQ0c2xjdk83dFV2bC8xMGNQeXJtTFVndHZpdjlrVmF1NCtXRmF4?=
+ =?utf-8?B?TTkzRTU0bXRaMWVFZkNhOEl0MHdVb2ZFZU9yZjhaOXNjMFBwRjFHSWRnVFkr?=
+ =?utf-8?B?Zk5VYURqZzFHQ2pFZGRIajZFb0M3QU91bmwwWEVPNDVrVThQY1VJTmtlVksx?=
+ =?utf-8?B?NFpKbXdVUStCV3V4cFIvTW9wR2kwNnkzenNSUmJ5WDlickV0d3Q3SjkwSXNs?=
+ =?utf-8?B?bVIxd1hKYVFHZ1hUUkpJQnpyM1JIZ0tqeFVWYlZKU3hacGFSSDZOWldvNlBv?=
+ =?utf-8?B?cVBOMVJ2TWR3Tlk2WTIwQ2tVSWs3dXRWSGg4dHczL0JTMm9ZaDdkZVhzYjZF?=
+ =?utf-8?B?UDZuTDh6N3R5bFRXWGI3dFoxd1lUNTBoWjB6aE81QytGL2dQOFNxY1dla3dL?=
+ =?utf-8?B?SEwrODlxaU5oNzNjbkpoOEpVaS91eHhVVUhPby9rSVd4SFJkZVd1amtYSkxo?=
+ =?utf-8?B?N2FGZHd0ZFdvYUI1Tk1DUFlZVUowUmpGOURZRU9RRFN1OWJQcXBOS1NQdkt4?=
+ =?utf-8?B?RTEzRllFZjlpY0RGTzVSRitmNVNqakJtTFNsQ29wNllxK0E9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?elN6eGxuTDd2ckhaZTJjQlMxb2ZkeUNzc3FhVmlwdmZvcEJkNytkYllqOEdm?=
+ =?utf-8?B?WVRMdXltS2JvTnNKL1ZRU2R3SUcvZVNTUVRtQXgyL1dKeklqQ1IvVXpJVDZx?=
+ =?utf-8?B?UkhDcEMvMFhCdXdKVTNIVnlWalVyNHBocUQ1ZkhsUjlseEdraFNJbWlRZ201?=
+ =?utf-8?B?V2wzWHJjdCsxdXBNR3dKZFZlbXh6Nm16ak5FM3hGWjBNUHo3aVFlUUdTbUNG?=
+ =?utf-8?B?TmxTR0ZSOUZ5TG4yc3BCMUdyMERFV3BTOHZrbktSZFlqL2EwdWFNeDFmVlNO?=
+ =?utf-8?B?WWNwWXlkZmF2YXRINXZNYkNtWGxGaUwrVm5qRkxYdktwNFB1ZDdSNTFObUQ3?=
+ =?utf-8?B?b2FTWU9xZDZzUzlSUytNb2lQTTVidFlLMjNiVW9weFpsQnpFNGt0THhkR3N3?=
+ =?utf-8?B?UmZnTWIvQis0b0JsaDBDRVhDd1c4ZWhJYmM3L2JpSmRDamxSTkhpa2tlZ1Bl?=
+ =?utf-8?B?UXN1SGQ4M0xvMVkvQWJOaGVKMTlKTW0xWmZkUjNqdEorR0RrZ1FxWWF2VGd3?=
+ =?utf-8?B?YmhhZHJrUVU2U2JJcnpYN3NyODVYQmtjbUhvTDdYYVNlS0xlblNpcnFNTXRo?=
+ =?utf-8?B?NXlqNzdzeU9jMU1zb2gvanFEbDBxenVmdzNqL3dHL24rMnZObUdiTzhQaCsr?=
+ =?utf-8?B?V2ZjZ0tQRWdldVZkOWdQMEV6alZXeWRFc1VHY2lEaFIzdFlqV1Q4THdvR3JU?=
+ =?utf-8?B?VSs3dXBhQmJMd1N5eWpId0k5TzY3Ulp3Y3FmdUJwYTNCdEdlRS9jQmF4RVdh?=
+ =?utf-8?B?dENma1YwdVdqMlZuY2o5UDluTHFEaE50ZCtQS1EydGpiSS9wR2VLRU9mL3R0?=
+ =?utf-8?B?QXZVcXo2dWdZYzE1alJaM3Z1VWluQVdsRCtjcGdMazVkdWpRZ2lyWVpvTGlv?=
+ =?utf-8?B?Uy9YMEhkVDU5SkpRMWtoc1BZU3hLeW1rcGRZUUtCN3MvOXRWR0VhcGF6NjFF?=
+ =?utf-8?B?UVNPbHFIMHprSjVNZDd2d29iUGZKZFJGWnBhQW5NOW4za1pjYzVVY0VNclp0?=
+ =?utf-8?B?UDM2bGhFc2tNZklMYmtOQmRYSjFUYTFROWdyZGVOT3p6SWhqamkybHlQK2cv?=
+ =?utf-8?B?cDY1QUdWT05oVXpHSWJjTjV4QkR6OE5TRXRJVHhYS0VieEpmMGhpSk9zSE41?=
+ =?utf-8?B?Vk5VRHFkUkJZK2VWWHk2Tmd4Y0MyL0R5VkJkaHVTSEZENXY4L09kcU9GWW9m?=
+ =?utf-8?B?Y1NzYy8ySlJWeDduVnRkUTNGUWowYVlXeUNTS2lSazlET3dBOU8vR1ZuZkF2?=
+ =?utf-8?B?VnZNTlduWW1VVVN3RHdON256OGlmUEhsb1FPU2xhVEdoalh2dFJMYkR6K1pX?=
+ =?utf-8?B?M3BxemRKeTNVUllQaG9TdUNxd056WGc3RFBJN1Jwd205TWE5YisyV3hFUmsv?=
+ =?utf-8?B?WmtWa2VYZFVWTFgxeDhLd1dqczlGR2NONXZHK3d5OGUyVDNodGJ5RVhmMHRV?=
+ =?utf-8?B?bkR4dWtwVkFpQ1ptMmtDQkFEbEZUbjFYcVBLNk5pTmpWNTA1eVJQc3FGcnU0?=
+ =?utf-8?B?MWk1OXE3ZXlhS1BzVC9reG5yUHJDdWszcG81cmdzTXdsZWRhdnZsOEs1MW5B?=
+ =?utf-8?B?c092eEJPS1ZnazZtSEtBcUVXeFhGTUpDdzYxU2MwUzVpUktKTHN1cTdkcU8w?=
+ =?utf-8?B?NWlvN2tybGdUSTNjZGZqS0NQaVVIVFZuR0xRRTVCakxQNVVHdEJpc3Z3R0xh?=
+ =?utf-8?B?K1puM245YVBxQlE1NHNBTVBIelRsUDFxaTlkdlVtL3MxdVhYYysyVjhxKzdo?=
+ =?utf-8?B?YlBnbER1WWNpYnZlWEpxbFd2OVU4bzhaMEFZcEdtRmo0c1NtQnBidWQ3LzR1?=
+ =?utf-8?B?ckgxUWFJcXBISmkyVGNkdHI5Z1dRVWY3bmVOYkZLb2lSWWtzTDFvcGF6cTdw?=
+ =?utf-8?B?anltK0J4TlFZT2pVZm4xcUprcEZySGtKZGhJeko2WXEzem5RcjRKTnBQZTNt?=
+ =?utf-8?B?VmJnUE5nSmhWcWU4czNPdHQ5dVhKRlB2ZTR4RC9KcUpyZjVoOENsNktYejF2?=
+ =?utf-8?B?NmpNV3NCWC9lZFJWaisyZGw4TTV1bWdXRzJISGRBckM0RHVKbkpLV3NnVjdT?=
+ =?utf-8?B?UVlzMWh3N3haOHVtcWdvOFZkSzNISU5yY1NCNHhKMGN1UlRWeVhLZUptcWtC?=
+ =?utf-8?B?ZUR1YnNoaEgyK0ppazcvSFMwSk1YK3NYbW5tS0JXNnR1ay95TWZSd3BDYm1h?=
+ =?utf-8?B?R1E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: EN1vsvtWTMzzGqcEXM9do9o2wVvAXh6Us5idvWsQH95NxsCDwNg/maUhWrMkSUrZRklqmkLrk0jUI8FD0Jfo/A6YvKqDA8toWMhIUNQQevtBtDRIFwFdlSbRmjC5vud1x9FRRCOSYZ2uFSmCv1zfmoz/uO6C3Irdi7JOs+Il+2tVQ1EWb8PZ9JDGYTMwV6YJJJmZZQmmZ/cabsVzBSy2BjZBZQ6i7mYVxia2kq77Ei2D80zivPlaL4hHyVubs0yvyuttdsg8vnRnhe9deZHkBpIppu3KnYMoRDddalDpoLBp3zKvr009QQut2XZqpZGkyyHfkloaHAch3WWQI/AEtLsu/9q1TaKkf7D0L4EY9HQWpIVHfc7LrmRGNkAyZahjOLZhUjUi8cWkGf2espNbOhxwA7jc8HOYvRR7WBT1JtvoKc9T0/fm15yxknGO0HbRmRhU3QjmOOnAPkAyDE66PG3dgdSTaLEftMgNq9W6zGLdAlfSeqV/XOfu9AT26nk3TKgxYH0ZW6BKvbEEJMTvLmcoFrappgPz4M4dceIHF8IoSxlAu6x6RzStnXz0lvnyitfhR+76jcIhyLq2CZ/nLuZcNEQa8/O00Nbmmzfhofk=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0844880e-0ef6-40d7-f015-08ddf7a04718
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 17:16:31.7899 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: HG38FJGd0v7vC4ckt1JoZUPWJ5jmIfdrAvaJtdYGA8Vuid0qTNcR0VWRVKjdz0090sE2xovOfcB7hDrfj/Pz6LScnmt1UnsDoKBZAUeJQfw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4426
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 phishscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
+ definitions=main-2509190161
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfXzXHJvkibQ/nV
+ CKaEo3+xrC0xtcjj5q9me4w4I6aFfng22defNRe8vYneJsVuzm9Dw5wRCq8FySOqDI7pJLdms0q
+ 0BKZyaASM+JZLOb8/Po14Z4oI9FH7idkAh/5GO9R7JllRgrl1EW2jtLYQUz5bOOHQR/fkf3uGoY
+ uqOk9zXVxJ0pQEQF2zDpoYqrT9n23VJNJm1dMfHYB4QzZYkqnbvPhHkUNobskM2UBHL9E4cFiOz
+ 1BLVaEh8Onj/875YYju06n/z4jC99BQ+r1uB+fDTJnQm0yA0AHkaF7sOBYNjzAAYjhWrOc88SIk
+ lSML1zuaCn/AxgBaquHp9HhuSElSXZF0nOrDMdsK8OeWDoNefXBC849vlzz2JPAB/tIiS2/9AFu
+ /xoWbIrB
+X-Authority-Analysis: v=2.4 cv=X5RSKHTe c=1 sm=1 tr=0 ts=68cd8ff5 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=pTy7Qt0MdbCsmxypxN0A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: eEXnmDktlGE7ePMmFUWm8SgH4FAAH57Q
+X-Proofpoint-ORIG-GUID: eEXnmDktlGE7ePMmFUWm8SgH4FAAH57Q
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,221 +237,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> On 19.09.25 18:20, Fabiano Rosas wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->> 
->> Hi Vladimir, as usual with "qapi:" patches, some comments about
->> language:
->> 
->>> To migrate virtio-net TAP device backend (including open fds) locally,
->>> user should simply set migration parameter
+On 9/12/2025 11:44 AM, Peter Xu wrote:
+> On Fri, Sep 12, 2025 at 10:50:34AM -0400, Steven Sistare wrote:
+>>>>> How to guarantee src/dst device topology match
+>>>>> exactly the same with the new cmdline?
+>>>>
+>>>> That is up to the mgmt layer, to know how QEMU was originally started, and
+>>>> what has been hot plugged afterwards.  The fast qom-list-get command that
+>>>> I recently added can help here.
 >>>
->>>     fds = [virtio-net]
->>>
->>> Why not simple boolean? To simplify migration to further versions,
->>> when more devices will support fds migration.
->>>
->>> Alternatively, we may add per-device option to disable fds-migration,
->>> but still:
->>>
->>> 1. It's more comfortable to set same capabilities/parameters on both
->>> source and target QEMU, than care about each device.
->>>
->>> 2. To not break the design, that machine-type + device options +
->>> migration capabilites and parameters are fully define the resulting
->>> migration stream. We'll break this if add in future more fds-passing
->>> support in devices under same fds=true parameter.
->>>
->> 
->> These arguments look convincing to me.
->> 
->
-> [..]
->
->>>       return true;
->>>   }
->>>   
->>> @@ -1297,6 +1315,11 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
->>>       if (params->has_direct_io) {
->>>           dest->direct_io = params->direct_io;
->>>       }
->>> +
->>> +    if (params->has_fds) {
->>> +        dest->has_fds = true;
->> 
->> I think what you want is to set this in
->> migrate_params_init(). block_bitmap_mapping is a bit of an outlier in
->> that it takes an empty *input* as valid.
->
-> Hmm I made it behave like block_bitmap_mapping because it also a list.
->
-> As I understand, for list we have to treat empty list not like absent parameter: we should have a way
-> to clear previously set list by subsequent migrate-set-parameters call.
->
+>>> I see.  If you think that is the best way to consume cpr-exec, would you
+>>> add a small section into the doc patch for it as well?
+>>
+>> It is not related to cpr-exec.  It is related to hot plug, for any migration
+>> type scenario, so it does not fit in the cpr-exec docs.
+> 
+> IMHO it matters.. With cpr-transfer, QMP hot plugs works and will not
+> contribute to downtime.
 
-Sorry, I explained myself poorly. Yes, the empty list is valid and it
-clears a previously set value. But that's just:
+I don't follow.  The guest is not resumed until after all devices that were
+present in old QEMU are hot plugged in new QEMU, regardless of mode.
 
-migrate_params_init(MigrationParameters *params):
-    ...
-    params->has_fds = true;
+> cpr-exec also works, but will contribute to
+> downtime.
+> 
+> We could, in the comparison section between cpr-exec v.s. cpr-transfer,
+> mention the potential difference on device hot plugs (out of many other
+> differences), then also mention that there's an option to reduce downtime
+> for cpr-exec due to hot-plug by converting QMP hot plugs into cmdlines
+> leveraging qom-list-get and other facilities.  From there we could further
+> link to a special small section describing the usage of qom-list-get, or
+> stop there.
 
-migrate_params_test_apply(MigrateSetParameters *params,
-                          MigrationParameters *dest):
-    ...
-    /* means user provided it */                          
-    if (params->has_fds) {
-        dest->fds = params->fds;
-    }
+To hot plug a device, *or* to add it to the new QEMU command line, the manager
+must know that the device was added sometime after old QEMU started, and
+qom-list-get can help with that, by examining old QEMU initially and again
+immediately before the update, then performing a diff.  But again, this
+is independent of mode.
 
-migrate_params_check(MigrationParameters *params):
-    ...
-    if (params->has_fds) {
-       /* empty list ok */
-    }
-
-migrate_params_apply(MigrateSetParameters *params):
-    ...
-    if (params->has_fds) {
-        qapi_free_...(s->parameters.fds);
-        /* clones the full list or the empty list, no difference */
-        s->parameters.fds = QAPI_CLONE(..., params->fds);
-    }
-
-The block_bitmap_mapping does the has_ part a bit differently because it
-wants to carry that flag over to the rest of the code. See 3cba22c9ad
-("migration: Fix block_bitmap_mapping migration"). In that case, even if
-the list is empty, it needs to know when it was made empty on purpose to
-carry on with the removal of the mappings. In your case, it doesn't
-matter, empty is empty, whether forcefully, or because it was never
-set. Right?
-
-(this migrate_params code is tricky, FYI I'm reworking that in:
-https://lore.kernel.org/r/20250603013810.4772-1-farosas@suse.de)
-
->> 
->>> +        dest->fds = params->fds;
->>> +    }
->>>   }
->>>   
->>>   static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
->>> @@ -1429,6 +1452,13 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
->>>       if (params->has_direct_io) {
->>>           s->parameters.direct_io = params->direct_io;
->>>       }
->>> +
->>> +    if (params->has_fds) {
->>> +        qapi_free_FdsTargetList(s->parameters.fds);
->>> +
->>> +        s->parameters.has_fds = true;
->>> +        s->parameters.fds = QAPI_CLONE(FdsTargetList, params->fds);
->> 
->> Same here, has_fds should always be true in s->parameters.
->> 
->>> +    }
->>>   }
->>>   
->>>   void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
->>> diff --git a/migration/options.h b/migration/options.h
->>> index 82d839709e..a79472a235 100644
->>> --- a/migration/options.h
->>> +++ b/migration/options.h
->>> @@ -87,6 +87,8 @@ const char *migrate_tls_hostname(void);
->>>   uint64_t migrate_xbzrle_cache_size(void);
->>>   ZeroPageDetection migrate_zero_page_detection(void);
->>>   
->>> +bool migrate_fds_virtio_net(void);
->>> +
->>>   /* parameters helpers */
->>>   
->>>   bool migrate_params_check(MigrationParameters *params, Error **errp);
->>> diff --git a/qapi/migration.json b/qapi/migration.json
->>> index 2387c21e9c..6ef9629c6d 100644
->>> --- a/qapi/migration.json
->>> +++ b/qapi/migration.json
->>> @@ -747,6 +747,19 @@
->>>         '*transform': 'BitmapMigrationBitmapAliasTransform'
->>>     } }
->>>   
->>> +##
->>> +# @FdsTarget:
->>> +#
->>> +# @virtio-net: Enable live backend migration for virtio-net.
->> 
->> So you're assuming normal migration is "non-live backend migration"
->> because the backend is stopped and started again on the destination. I
->> think it makes sense.
->> 
->>> +#     The only supported backend is TAP device. When enabled, TAP fds
->>> +#     and all related state is passed to target QEMU through migration
->>> +#     channel (which should be unix socket).
->>> +#
->>> +# Since: 10.2
->>> +##
->>> +{ 'enum': 'FdsTarget',
->>> +  'data': [ 'virtio-net' ] }
->>> +
->>>   ##
->>>   # @BitmapMigrationNodeAlias:
->>>   #
->>> @@ -924,10 +937,14 @@
->>>   #     only has effect if the @mapped-ram capability is enabled.
->>>   #     (Since 9.1)
->>>   #
->>> +# @fds: List of targets to enable live-backend migration for. This
->>> +#     requires migration channel to be a unix socket (to pass fds
->>> +#     through). (Since 10.2)
->> 
->> I think I prefer live-backend as written here rather than the non
->> hyphenated version above. This clears up the ambiguity and can be used
->> in variable names, as a name for the feature and ... _thinks really
->> hard_ ... as the parameter name! (maybe)
->> 
->> On that note, fds is just too broad, I'm sure you know that, but to be
->> specific, we already have fd migration, multifd, fdset (as argument of
->> file: migration), etc. Talking just about the user interface here, of
->> course.
->> 
->> Also: "@fds: List of targets..." is super confusing.
->> 
->> And although "to pass fds through" is helping clarify the meaning of
->> @fds, it exposes implementation details on the QAPI, I don't think it's
->> relevant in the parameter description.
->
-> Agree. I see all this mess, each time I come with some new name:
-> live-tap, live-backend, fds-passing, fds migration, local tap migration, fds...
-> Finally, only one should be chosen for all names and in documentation.
->
-
-Yeah, not to mention the similarities with CPR. I thought of borrowing
-the "transfer" term to underline that's a common concept between the two
-approaches, but I'm not sure it's worth the trouble.
-
-[live-]backend-transfer
-
-> With your comments, "live-backend" really looks the best one.
->
-> Still, we can't say live-backends: [virtio-net], as virtio-net is not
-> a backed.
->
-> Maybe
->     
->     live-backends: [virtio-net-tap]
->
-> to show that it's about virtio-net+TAP pair.
->
-
-Works for me.
-
->> 
->>> +#
->>>   # Features:
->>>   #
->>> -# @unstable: Members @x-checkpoint-delay and
->>> -#     @x-vcpu-dirty-limit-period are experimental.
->
->
-> Thanks!
+- Steve
 
