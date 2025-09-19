@@ -4,101 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F30CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C55CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzYiW-0001m7-Tq; Fri, 19 Sep 2025 06:51:52 -0400
+	id 1uzYkG-0003xc-5l; Fri, 19 Sep 2025 06:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1uzYiU-0001lS-HX
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:51:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uzYk8-0003rJ-9e; Fri, 19 Sep 2025 06:53:33 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1uzYiS-0007KQ-BT
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:51:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758279105;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UQRK3YPT6mwpfNmMpzhdsLCbZWvefuQUKBzBqqtWsmw=;
- b=ee22jfR8TQgq38g527D8hNFr6Kg+h8xpylkPDGMsdz+6PAJ3zFeLCajY1gZ/jxhCuxCxIT
- 1BZKkt6IJGxf52m9l4GEV5U2/pXwaiREvgzz0I5BE0aDkKwbsUiK5fIJxVyOs13wrbPh4w
- gSa3pDoRUXXj6SmbwK2Rr/CRSwSHm6c=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-QTN2vpFaPGml7QXEqX0mZw-1; Fri, 19 Sep 2025 06:51:43 -0400
-X-MC-Unique: QTN2vpFaPGml7QXEqX0mZw-1
-X-Mimecast-MFC-AGG-ID: QTN2vpFaPGml7QXEqX0mZw_1758279103
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45df7e734e0so22596135e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 03:51:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758279103; x=1758883903;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UQRK3YPT6mwpfNmMpzhdsLCbZWvefuQUKBzBqqtWsmw=;
- b=LAb7p3bo1KUHKcCmWz6d2NgbHVMn8LAZaqLxpIvUyAug5OhOUG78+rlcah3/tXWZfB
- zk4uhPAA3jhg0Uf0/gVTsGGYuCoTn1oQrrY3UINESGVcR3ld85smC+C1IioDIrApfbI1
- U0UXCQrvNa5Ri83um0tRCxqcoKcoOlgVWKU+uVs6vWtlja03SkdV40R7UN3pECqOFVPH
- EK8T5RHdjZ/McDQ3R3qeqcYklanL9G8QSjr4sFqU4L9UJMH6r7YilyGP/UmfZI6ZqVbr
- ybG7nvrFonPdcEjoVnanvYlIzSQOJ2az1RHlGHi6s0P1Anekw956DEGTXltNclRKijeg
- cwYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNdaE0514LVNUEbycegTPIDYOO9HS6Rs2Pkq+SclTsW7UbFyXrImqhEIj1ezB8B3mwAQmLH40b3wPl@nongnu.org
-X-Gm-Message-State: AOJu0Yz7e1tacjIfQnvGhbmu+8+YeYMrNokUyHhjnEes37uMO/GN583H
- TdEosfbyeg87ov6SQuPADX9L9JFTMf6Sfe7dCclSjgTpJ7DvLrpHIZFhw+hokq/NuJMQwv16B2k
- aw4uNUORklPPxwQKmL0n+KO5BKTIFmBD7maWf9qpCnksHXXb97d06BC8G
-X-Gm-Gg: ASbGnctSybLkMIlQf4O7bWd5jnjXwqPp0m6VY1BkhSHGqss5WdFersplq9ijp2iiTzy
- qeV+/TCtj31bbOGX3+wwMq+WIPM6tW4W8hQuYwLk5P0N5moD2WjEM2uYuR3727XhJ7WTKkplZ68
- FGYchecUQpx9XUAG6ajnEGRQf7oZ2qZKyRFuz4sO8X/Gw7lEw1w1TAlABuek6SEJaDASnEczwbf
- kfMl+XQ5nJWaUir2C/dglBYfpdiBpuULoluPLfm6djRi9f0ODWoYRlGVab7XYI4tUWhm1mS8C7U
- sMnBWO+o+UKJO6PWYBD0OjgNb26XcYQ3lGzSDItnz/wZP51HffLWHNwI4B2n78cgk2+KtYgGsFe
- U/lWGJ7SieaC9Aw==
-X-Received: by 2002:a05:600c:45cd:b0:45d:7d88:edcd with SMTP id
- 5b1f17b1804b1-467eb23112bmr25899105e9.30.1758279102615; 
- Fri, 19 Sep 2025 03:51:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGch0fL9uUPqIZBmMRHzx+5peKTgh9rC9sEWO8g2P/U/CDrDQ3AXj7Gu+NtDPhv7yGsIVpP4w==
-X-Received: by 2002:a05:600c:45cd:b0:45d:7d88:edcd with SMTP id
- 5b1f17b1804b1-467eb23112bmr25898835e9.30.1758279102149; 
- Fri, 19 Sep 2025 03:51:42 -0700 (PDT)
-Received: from rh (p200300f6af131a0027bd20bfc18c447d.dip0.t-ipconnect.de.
- [2003:f6:af13:1a00:27bd:20bf:c18c:447d])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee0fbf3bfcsm7363231f8f.58.2025.09.19.03.51.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Sep 2025 03:51:41 -0700 (PDT)
-Date: Fri, 19 Sep 2025 12:51:39 +0200 (CEST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Shameer Kolothum <shameerkolothum@gmail.com>
-cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
- peter.maydell@linaro.org, Cornelia Huck <cohuck@redhat.com>, 
- berrange@redhat.com, maz@kernel.org, oliver.upton@linux.dev, 
- armbru@redhat.com, linuxarm@huawei.com, wangzhou1@hisilicon.com, 
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com, 
- salil.mehta@huawei.com, yangjinqian1@huawei.com, 
- shameerali.kolothum.thodi@huawei.com
-Subject: Re: [RFC PATCH RESEND 3/4] target/arm/kvm: Handle KVM Target Imp
- CPU hypercalls
-In-Reply-To: <20250801074730.28329-4-shameerkolothum@gmail.com>
-Message-ID: <3bf24eb7-b1cd-793c-158f-7b6e2aeab026@redhat.com>
-References: <20250801074730.28329-1-shameerkolothum@gmail.com>
- <20250801074730.28329-4-shameerkolothum@gmail.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uzYk5-0007Rk-2i; Fri, 19 Sep 2025 06:53:31 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58JAkcQT033756
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 19 Sep 2025 19:46:38 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=rWCFvrSz0E2oCjuTU959aed1+QCvq+UCU8sf+vOrvRg=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1758278798; v=1;
+ b=CJhWqRXMK7EVEqt5O4fzgwRHkpbvNlCZaOFGT2JRrokvtE+QlXyrJW49lss+htTp
+ KFQ9E4TwLqRPpCtI4tDvZhlu5p+VEeAg5rZ5h32ZHa35LPKVJVUy9pwNtE/60NSZ
+ qq56vOq+zd3BaQf/Jvtr0LJAzESnC/31asffQw6Px03Q2E14OlyKOsrSBsT9SdS/
+ sf6iBD4VFClJOHPImJDN5/M2qkalIoEDAePrmpoDFSsBz1S0IDQSBvgwEmvShJG+
+ 6hbf/Npf5//RO3LzPxRwYamdTAldhiXOb0FjhvPd7Yg15U62VVBLFDiaTcrYKflb
+ uoErgJ/vf6oO0EVI+zRkug==
+Message-ID: <7511a948-10ef-4325-9818-35775c522aee@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 19 Sep 2025 19:46:38 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/7] docs/devel: Do not unparent in instance_finalize()
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <20250917-use-v3-1-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+ <aMxlpfp_LSgiIk9Z@x1.local> <aMxnj7ID0PpWUVNu@x1.local>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aMxnj7ID0PpWUVNu@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,149 +109,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Aug 2025, Shameer Kolothum wrote:
-> From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
->
-> When target implementation CPUs are set, handle the related hyper calls
-> correctly by returning the information requested.
->
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
-> target/arm/kvm.c | 99 ++++++++++++++++++++++++++++++++++++++++++++++++
-> 1 file changed, 99 insertions(+)
->
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 8f325c4ca4..5adecc864e 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1697,6 +1697,71 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
->     return false;
-> }
->
-> +/* Only supports HYP_KVM_DISCOVER_IMPL_XXX hypercalls */
-> +static void arm_handle_smccc_kvm_vendor_hypercall(ARMCPU *cpu)
-> +{
-> +    CPUARMState *env = &cpu->env;
-> +    uint64_t param[4] = { };
-> +    uint64_t idx;
-> +
-> +    if (!is_a64(env)) {
-> +        env->regs[0] = SMCCC_RET_NOT_SUPPORTED;
-> +        return;
-> +    }
-> +
-> +    memcpy(param, env->xregs, sizeof(param));
-> +
-> +    switch (param[0]) {
-> +    case ARM_SMCCC_VENDOR_HYP_KVM_DISCOVER_IMPL_VER_FUNC_ID:
-> +        if (!target_impl_cpus_num) {
-> +            env->xregs[0] = SMCCC_RET_NOT_SUPPORTED;
-> +            return;
-> +        }
-> +        env->xregs[0] = SMCCC_RET_SUCCESS;
-> +        env->xregs[1] = PSCI_VERSION(1, 0);
-> +        env->xregs[2] = target_impl_cpus_num;
-> +        break;
-> +    case ARM_SMCCC_VENDOR_HYP_KVM_DISCOVER_IMPL_CPUS_FUNC_ID:
-> +        idx = param[1];
-> +
-> +        if (!target_impl_cpus_num || idx >= target_impl_cpus_num) {
-> +            env->xregs[0] = SMCCC_RET_INVALID_PARAMETER;
-> +            return;
-> +        }
-> +
-> +        env->xregs[0] = SMCCC_RET_SUCCESS;
-> +        env->xregs[1] = target_impl_cpus[idx].midr;
-> +        env->xregs[2] = target_impl_cpus[idx].revidr;
-> +        env->xregs[3] = target_impl_cpus[idx].aidr;
-> +        break;
-> +    default:
-> +        env->xregs[0] = SMCCC_RET_NOT_SUPPORTED;
-> +    }
-> +}
-> +
-> +static int kvm_arm_handle_hypercall(CPUState *cs, struct kvm_run *run)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(cs);
-> +    CPUARMState *env = &cpu->env;
-> +
-> +    kvm_cpu_synchronize_state(cs);
-> +
-> +    if (run->hypercall.flags == KVM_HYPERCALL_EXIT_SMC) {
-> +        cs->exception_index = EXCP_SMC;
-> +        env->exception.syndrome = syn_aa64_smc(0);
-> +    } else {
-> +        cs->exception_index = EXCP_HVC;
-> +        env->exception.syndrome = syn_aa64_hvc(0);
-> +    }
-> +    env->exception.target_el = 1;
-> +
-> +    bql_lock();
-> +    arm_handle_smccc_kvm_vendor_hypercall(cpu);
-> +    bql_unlock();
-> +
-> +    return EXCP_INTERRUPT;
-> +}
-> +
-> int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-> {
->     ARMCPU *cpu = ARM_CPU(cs);
-> @@ -1713,6 +1778,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->         ret = kvm_arm_handle_dabt_nisv(cpu, run->arm_nisv.esr_iss,
->                                        run->arm_nisv.fault_ipa);
->         break;
-> +    case KVM_EXIT_HYPERCALL:
-> +        ret = kvm_arm_handle_hypercall(cs, run);
-> +        break;
->     default:
->         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
->                       __func__, run->exit_reason);
-> @@ -2212,6 +2280,29 @@ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
->     return kvm_set_one_reg(CPU(cpu), KVM_REG_ARM64_SVE_VLS, &vls[0]);
-> }
->
-> +/*
-> + * Supported Target Implementation CPU hypercalls:
-> + *   KVM_REG_ARM_VENDOR_HYP_BIT_DISCOVER_IMPL_VER   = 0,
-> + *   KVM_REG_ARM_VENDOR_HYP_BIT_DISCOVER_IMPL_CPUS  = 1
-> + *
-> + * Setting these bits advertises the availability of the corresponding
-> + * Target Implementation CPU hypercalls to the guest.
-> + */
-> +#define BMAP_2_DISCOVER_IMPL_BITS 0x3ULL
-> +static int kvm_arm_target_impl_cpus_set_hyp_bmap2(ARMCPU *cpu)
-> +{
-> +    uint64_t bmap2;
-> +    int ret;
-> +
-> +    ret = kvm_get_one_reg(CPU(cpu), KVM_REG_ARM_VENDOR_HYP_BMAP_2, &bmap2);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    bmap2 |= BMAP_2_DISCOVER_IMPL_BITS;
-> +    return kvm_set_one_reg(CPU(cpu), KVM_REG_ARM_VENDOR_HYP_BMAP_2, &bmap2);
-> +}
-> +
-> #define ARM_CPU_ID_MPIDR       3, 0, 0, 0, 5
->
-> int kvm_arch_init_vcpu(CPUState *cs)
-> @@ -2293,6 +2384,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
->     }
->     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
->
-> +    /* Set KVM_REG_ARM_VENDOR_HYP_BMAP_2 if target impl CPUs are required */
-> +    if (target_impl_cpus_num) {
-> +        ret = kvm_arm_target_impl_cpus_set_hyp_bmap2(cpu);
+On 2025/09/19 5:11, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 04:03:49PM -0400, Peter Xu wrote:
+>> On Wed, Sep 17, 2025 at 07:13:26PM +0900, Akihiko Odaki wrote:
+>>> Children are automatically unparented so manually unparenting is
+>>> unnecessary.
+>>>
+>>> Worse, automatic unparenting happens before the instance_finalize()
+>>> callback of the parent gets called, so object_unparent() calls in
+>>> the callback will refer to objects that are already unparented, which
+>>> is semantically incorrect.
+>>>
+>>> Remove the instruction to call object_unparent(), and the exception
+>>> of the "do not call object_unparent()" rule for instance_finalize().
+>>>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   docs/devel/memory.rst | 19 ++++++-------------
+>>>   1 file changed, 6 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+>>> index 57fb2aec76e0..749f11d8a4dd 100644
+>>> --- a/docs/devel/memory.rst
+>>> +++ b/docs/devel/memory.rst
+>>> @@ -161,18 +161,11 @@ or never.
+>>>   Destruction of a memory region happens automatically when the owner
+>>>   object dies.
+>>>   
+>>> -If however the memory region is part of a dynamically allocated data
+>>> -structure, you should call object_unparent() to destroy the memory region
+>>> -before the data structure is freed.  For an example see VFIOMSIXInfo
+>>> -and VFIOQuirk in hw/vfio/pci.c.
+>>
+>> Should we still keep some of these examples?  After the series they'll be
+>> doing the right things.  Dynamic MRs are still slightly tricky, I think
+>> it's still good to have some references.
 
-There's still the question of what we use to actually set the
-imp id regs for the vm. I'm in favour of using target_impl_cpus[0].*
-but if these can also be specified via the writable id regs interface
-(https://lore.kernel.org/qemu-devel/20250414163849.321857-1-cohuck@redhat.com/)
-we need to make sure that they match.
+I agree. I'll restore it with the next version.
 
-Otherwise, looks good to me!
+>>
+>>> -
+>>>   You must not destroy a memory region as long as it may be in use by a
+>>>   device or CPU.  In order to do this, as a general rule do not create or
+>>> -destroy memory regions dynamically during a device's lifetime, and only
+>>> -call object_unparent() in the memory region owner's instance_finalize
+>>> -callback.  The dynamically allocated data structure that contains the
+>>> -memory region then should obviously be freed in the instance_finalize
+>>> -callback as well.
+>>> +destroy memory regions dynamically during a device's lifetime.
+>>> +The dynamically allocated data structure that contains the
+>>> +memory region should be freed in the instance_finalize callback.
+>>>   
+>>>   If you break this rule, the following situation can happen:
+>>>   
+>>> @@ -198,9 +191,9 @@ this exception is rarely necessary, and therefore it is discouraged,
+>>>   but nevertheless it is used in a few places.
+>>>   
+>>>   For regions that "have no owner" (NULL is passed at creation time), the
+>>> -machine object is actually used as the owner.  Since instance_finalize is
+>>> -never called for the machine object, you must never call object_unparent
+>>> -on regions that have no owner, unless they are aliases or containers.
+>>> +machine object is actually used as the owner.  You must never call
+>>> +object_unparent on regions that have no owner, unless they are aliases
+>>> +or containers.
+>>
+>> This looks like a completely separate change.  So we start to allow
+>> machines to be finalized now?  I'm not familiar with machine object
+>> lifecycles.  Maybe split it out even if it's true?
 
-Sebastian
+I intended to remove phrase "since instance_finalize is never called for 
+the machine object" because whether instance_finalize is called or not 
+is no longer relevant, and thus object_unparent is always prohibited, 
+whether regions have owners or not, unless they are aliases or containers.
 
+The statement still mentions "regions that have no owner"; the 
+restriction of object_unparent is enforced whether the regions have 
+owners, so it is a bit misleading.
+
+> 
+> I didn't see anything elsewhere.  If you agree with above, I can queue this
+> series with above touched up, then no need to repost.
+
+I guess I will rewrite this patch, restoring the VFIOQuirk example, and 
+re-check if this whole section is structured logically and consistently.
+
+Regards,
+Akihiko Odaki
 
