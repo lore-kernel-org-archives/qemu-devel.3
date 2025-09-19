@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7CACAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7FFCAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzZfQ-0002xo-Pu; Fri, 19 Sep 2025 07:52:44 -0400
+	id 1uzZfW-00038E-Gg; Fri, 19 Sep 2025 07:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZen-0002cT-Pf
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uzZfP-0002yV-2A
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZel-0000sp-5z
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:05 -0400
+ id 1uzZfG-0000wG-CP
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:52:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758282717;
+ s=mimecast20190719; t=1758282747;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B0mk2+5odIxLDvJ8M3BZaxRVZ+iWKW+dUIpWQQsle4E=;
- b=Yz9L9SvuWPsJkRFRSW0T3BLxcYlFAD/J+F4PjYi03xB4eq1xQuzvnTYP+b7hKdctLDsIGh
- 7VrZ6k3+1apz1ftoTc9AVIl9qFIf5PrIj2v4vpKdopJTOEy5tVakUSZmfhjrTB1QKVLsQg
- wdwC7DSE/jNd7WcRkNCTN+uoSWOitrE=
+ bh=JHLoJxwljpLeo0arktfCDo5fN3hVTtZXV5S/bRj7zZo=;
+ b=TMNXltkZTi4jpPJvbITlJuvlAZRW4h0V38lUT5d4P4P0zLMvGEvsbreUwMP5f4XicUhJWr
+ Tt5GUmQNkcR0yaFwBeVEtZxO6KcUqsIXvEHxKzwuqFuGYhe5LBU4+gODfUN3RH76EpO7gF
+ Md3G4DtNAgwHfj6lsCwpg8jgTS1j82w=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-UuI39O5qO6yFgKM27TwZnQ-1; Fri,
- 19 Sep 2025 07:51:54 -0400
-X-MC-Unique: UuI39O5qO6yFgKM27TwZnQ-1
-X-Mimecast-MFC-AGG-ID: UuI39O5qO6yFgKM27TwZnQ_1758282712
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-D6NsE1Q6M0m18XQDPzxITA-1; Fri,
+ 19 Sep 2025 07:52:24 -0400
+X-MC-Unique: D6NsE1Q6M0m18XQDPzxITA-1
+X-Mimecast-MFC-AGG-ID: D6NsE1Q6M0m18XQDPzxITA_1758282742
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEA451800288; Fri, 19 Sep 2025 11:51:51 +0000 (UTC)
+ id E983D180028E; Fri, 19 Sep 2025 11:52:21 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.187])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C76351955F21; Fri, 19 Sep 2025 11:51:41 +0000 (UTC)
+ id EDA111955F2D; Fri, 19 Sep 2025 11:52:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,25 +71,26 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
  Kostiantyn Kostiuk <kkostiuk@redhat.com>,
  Hailiang Zhang <zhanghailiang@xfusion.com>
-Subject: [PULL 08/16] migration: qemu_file_set_blocking(): add errp parameter
-Date: Fri, 19 Sep 2025 12:50:09 +0100
-Message-ID: <20250919115017.1536203-9-berrange@redhat.com>
+Subject: [PULL 11/16] io/channel-socket: rework qio_channel_socket_copy_fds()
+Date: Fri, 19 Sep 2025 12:50:12 +0100
+Message-ID: <20250919115017.1536203-12-berrange@redhat.com>
 In-Reply-To: <20250919115017.1536203-1-berrange@redhat.com>
 References: <20250919115017.1536203-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,145 +108,160 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-qemu_file_set_blocking() is a wrapper on qio_channel_set_blocking(),
-so let's passthrough the errp.
+We want to switch from qemu_socket_set_block() to newer
+qemu_set_blocking(), which provides return status of operation,
+to handle errors.
 
-Note the migration should not be using &error_abort in these calls,
-however, this is done to expedite the API conversion.
+Still, we want to keep qio_channel_socket_readv() interface clean,
+as currently it allocate @fds only on success.
 
-The original code would have eventually ended up calling either
-qemu_socket_set_nonblock which would asset on Linux, or
-g_unix_set_fd_nonblocking which would propagate errors. We never
-saw asserts in practice, and conceptually they should not happen,
-but ideally this code will be later adapted to remove use of
-&error_abort.
+So, in case of error, we should close all incoming fds and keep
+user's @fds untouched or zero.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Let's make separate functions qio_channel_handle_fds() and
+qio_channel_cleanup_fds(), to achieve what we want.
+
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- migration/colo.c         | 5 ++++-
- migration/migration.c    | 8 +++++---
- migration/postcopy-ram.c | 2 +-
- migration/qemu-file.c    | 4 ++--
- migration/qemu-file.h    | 2 +-
- migration/savevm.c       | 4 ++--
- 6 files changed, 15 insertions(+), 10 deletions(-)
+ include/io/channel.h |  8 +++---
+ io/channel-socket.c  | 67 +++++++++++++++++++++++++++++++++-----------
+ 2 files changed, 55 insertions(+), 20 deletions(-)
 
-diff --git a/migration/colo.c b/migration/colo.c
-index e0f713c837..cf4d71d9ed 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -859,7 +859,10 @@ static void *colo_process_incoming_thread(void *opaque)
-      * coroutine, and here we are in the COLO incoming thread, so it is ok to
-      * set the fd back to blocked.
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 999a8f5f23..0f25ae0069 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -124,8 +124,8 @@ struct QIOChannelClass {
+      * incoming fds are set BLOCKING (unless
+      * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag is set) and
+      * CLOEXEC (if available).
+-     * @fds and @nfds are set only on success path, and untouched
+-     * in case of errors.
++     * @fds and @nfds are set only on success path. Still, setting
++     * @fds and @nfds to zero is acceptable on failure path.
       */
--    qemu_file_set_blocking(mis->from_src_file, true);
-+    if (!qemu_file_set_blocking(mis->from_src_file, true, &local_err)) {
-+        error_report_err(local_err);
-+        goto out;
+     ssize_t (*io_readv)(QIOChannel *ioc,
+                         const struct iovec *iov,
+@@ -246,8 +246,8 @@ void qio_channel_set_name(QIOChannel *ioc,
+  * to call close() on each file descriptor and to
+  * call g_free() on the array pointer in @fds.
+  * @fds allocated and set (and @nfds is set too)
+- * _only_ on success path. These parameters are
+- * untouched in case of errors.
++ * _only_ on success path. Still, @fds and @nfds
++ * may be set to zero on failure path.
+  * qio_channel_readv_full() guarantees that all
+  * incoming fds are set BLOCKING (unless
+  * QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index f7e3cb9742..e53d9ac76f 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -464,8 +464,7 @@ static void qio_channel_socket_finalize(Object *obj)
+ 
+ #ifndef WIN32
+ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+-                                        int **fds, size_t *nfds,
+-                                        bool preserve_blocking)
++                                        int **fds, size_t *nfds)
+ {
+     struct cmsghdr *cmsg;
+ 
+@@ -473,7 +472,7 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+     *fds = NULL;
+ 
+     for (cmsg = CMSG_FIRSTHDR(msg); cmsg; cmsg = CMSG_NXTHDR(msg, cmsg)) {
+-        int fd_size, i;
++        int fd_size;
+         int gotfds;
+ 
+         if (cmsg->cmsg_len < CMSG_LEN(sizeof(int)) ||
+@@ -491,24 +490,53 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+         gotfds = fd_size / sizeof(int);
+         *fds = g_renew(int, *fds, *nfds + gotfds);
+         memcpy(*fds + *nfds, CMSG_DATA(cmsg), fd_size);
++        *nfds += gotfds;
 +    }
++}
  
-     colo_incoming_start_dirty_log();
+-        for (i = 0; i < gotfds; i++) {
+-            int fd = (*fds)[*nfds + i];
+-            if (fd < 0) {
+-                continue;
+-            }
++static bool qio_channel_handle_fds(int *fds, size_t nfds,
++                                   bool preserve_blocking, Error **errp)
++{
++    int *end = fds + nfds, *fd;
++
++#ifdef MSG_CMSG_CLOEXEC
++    if (preserve_blocking) {
++        /* Nothing to do */
++        return true;
++    }
++#endif
  
-diff --git a/migration/migration.c b/migration/migration.c
-index 10c216d25d..e1ac4d73c2 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -951,7 +951,7 @@ static void migration_incoming_setup(QEMUFile *f)
+-            if (!preserve_blocking) {
+-                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+-                qemu_socket_set_block(fd);
++    for (fd = fds; fd != end; fd++) {
++        if (*fd < 0) {
++            continue;
++        }
++
++        if (!preserve_blocking) {
++            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
++            if (!qemu_set_blocking(*fd, true, errp)) {
++                return false;
+             }
++        }
  
-     assert(!mis->from_src_file);
-     mis->from_src_file = f;
--    qemu_file_set_blocking(f, false);
-+    qemu_file_set_blocking(f, false, &error_abort);
+ #ifndef MSG_CMSG_CLOEXEC
+-            qemu_set_cloexec(fd);
++        qemu_set_cloexec(*fd);
+ #endif
++    }
++
++    return true;
++}
++
++static void qio_channel_cleanup_fds(int **fds, size_t *nfds)
++{
++    for (size_t i = 0; i < *nfds; i++) {
++        if ((*fds)[i] < 0) {
++            continue;
+         }
+-        *nfds += gotfds;
++        close((*fds)[i]);
+     }
++
++    g_clear_pointer(fds, g_free);
++    *nfds = 0;
  }
  
- void migration_incoming_process(void)
-@@ -971,7 +971,7 @@ static bool postcopy_try_recover(void)
-         /* This should be set already in migration_incoming_setup() */
-         assert(mis->from_src_file);
-         /* Postcopy has standalone thread to do vm load */
--        qemu_file_set_blocking(mis->from_src_file, true);
-+        qemu_file_set_blocking(mis->from_src_file, true, &error_abort);
  
-         /* Re-configure the return path */
-         mis->to_src_file = qemu_file_get_return_path(mis->from_src_file);
-@@ -4002,7 +4002,9 @@ void migration_connect(MigrationState *s, Error *error_in)
+@@ -559,9 +587,16 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
      }
  
-     migration_rate_set(rate_limit);
--    qemu_file_set_blocking(s->to_dst_file, true);
-+    if (!qemu_file_set_blocking(s->to_dst_file, true, &local_err)) {
-+        goto fail;
-+    }
+     if (fds && nfds) {
+-        qio_channel_socket_copy_fds(
+-            &msg, fds, nfds,
+-            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
++        bool preserve_blocking =
++            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING;
++
++        qio_channel_socket_copy_fds(&msg, fds, nfds);
++
++        if (!qio_channel_handle_fds(*fds, *nfds,
++                                    preserve_blocking, errp)) {
++            qio_channel_cleanup_fds(fds, nfds);
++            return -1;
++        }
+     }
  
-     /*
-      * Open the return path. For postcopy, it is used exclusively. For
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 45af9a361e..0172172343 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -1909,7 +1909,7 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file)
-      * The new loading channel has its own threads, so it needs to be
-      * blocked too.  It's by default true, just be explicit.
-      */
--    qemu_file_set_blocking(file, true);
-+    qemu_file_set_blocking(file, true, &error_abort);
-     mis->postcopy_qemufile_dst = file;
-     qemu_sem_post(&mis->postcopy_qemufile_dst_done);
-     trace_postcopy_preempt_new_channel();
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index d5c6e7ec61..0f4280df21 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -888,9 +888,9 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
-  *       both directions, and thus changing the blocking on the main
-  *       QEMUFile can also affect the return path.
-  */
--void qemu_file_set_blocking(QEMUFile *f, bool block)
-+bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp)
- {
--    qio_channel_set_blocking(f->ioc, block, NULL);
-+    return qio_channel_set_blocking(f->ioc, block, errp);
- }
- 
- /*
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index f5b9f430e0..c13c967167 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -71,7 +71,7 @@ void qemu_file_set_error(QEMUFile *f, int ret);
- int qemu_file_shutdown(QEMUFile *f);
- QEMUFile *qemu_file_get_return_path(QEMUFile *f);
- int qemu_fflush(QEMUFile *f);
--void qemu_file_set_blocking(QEMUFile *f, bool block);
-+bool qemu_file_set_blocking(QEMUFile *f, bool block, Error **errp);
- int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size);
- void qemu_set_offset(QEMUFile *f, off_t off, int whence);
- off_t qemu_get_offset(QEMUFile *f);
-diff --git a/migration/savevm.c b/migration/savevm.c
-index fabbeb296a..abe0547f9b 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2095,7 +2095,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-      * Because we're a thread and not a coroutine we can't yield
-      * in qemu_file, and thus we must be blocking now.
-      */
--    qemu_file_set_blocking(f, true);
-+    qemu_file_set_blocking(f, true, &error_fatal);
- 
-     /* TODO: sanity check that only postcopiable data will be loaded here */
-     load_res = qemu_loadvm_state_main(f, mis);
-@@ -2108,7 +2108,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
-     f = mis->from_src_file;
- 
-     /* And non-blocking again so we don't block in any cleanup */
--    qemu_file_set_blocking(f, false);
-+    qemu_file_set_blocking(f, false, &error_fatal);
- 
-     trace_postcopy_ram_listen_thread_exit();
-     if (load_res < 0) {
+     return ret;
 -- 
 2.50.1
 
