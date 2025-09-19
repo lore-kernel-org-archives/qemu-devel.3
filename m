@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8780ECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 06:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C73DCAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 06:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzUNE-0007n2-5V; Fri, 19 Sep 2025 02:13:36 -0400
+	id 1uzUgj-0007mp-3S; Fri, 19 Sep 2025 02:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzUNA-0007lj-DJ
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 02:13:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzUgg-0007mL-5s
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 02:33:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzUN8-0003JF-BX
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 02:13:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uzUgZ-000092-U1
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 02:33:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758262406;
+ s=mimecast20190719; t=1758263611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Atl1Vzq0LATJ4Vj7lg6vgqxrQHfhwC4/H5PyL9zEP5o=;
- b=AUkDowPlRIjPDx22TSliLYTlvUp6hwp1HvxEYjnBYQqneQVDCvera0E6x9TOdY6p9lSWr2
- fpi5YbQOXFz5a6vceC3a0JxUT5dIZhcpAu/YZSUr1sZ8avfauWUTgnIOFr30bop+Abn5qc
- GTRotDGMG3CEJkv0ZgpnASesHmo+XWc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cP+HMX+waH6JJSIV1cm25cTmWGrP+cpXZi/vENVzDYc=;
+ b=HGMBDjEEfq5GejRVuZzY0v6h1OpzwxaflpDcVcDtRNJPjl/gBXYcWaf3OixQPlMmCOU+4d
+ 2JiRPR1mtCdaXIoldeR8ihNEXALzl8tyeeQem151TKx3rbMk5ZqIo7CjzgnHS1yMYT8fSo
+ O6uKnScYXlbKeZKEYH+KcimAG8VIsSM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-sbb_QMPnOLOjckKP9aw3Rg-1; Fri, 19 Sep 2025 02:13:25 -0400
-X-MC-Unique: sbb_QMPnOLOjckKP9aw3Rg-1
-X-Mimecast-MFC-AGG-ID: sbb_QMPnOLOjckKP9aw3Rg_1758262404
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45dd5c1b67dso8496285e9.2
- for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 23:13:24 -0700 (PDT)
+ us-mta-523-qv81A_yFNaKrPAlkSGDdwA-1; Fri, 19 Sep 2025 02:33:29 -0400
+X-MC-Unique: qv81A_yFNaKrPAlkSGDdwA-1
+X-Mimecast-MFC-AGG-ID: qv81A_yFNaKrPAlkSGDdwA_1758263608
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45dd66e1971so15380165e9.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Sep 2025 23:33:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758262404; x=1758867204;
+ d=1e100.net; s=20230601; t=1758263608; x=1758868408;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Atl1Vzq0LATJ4Vj7lg6vgqxrQHfhwC4/H5PyL9zEP5o=;
- b=aHU24kje36fJY7WU1fDlQBCXvasRARH7rgav3pzplUjsm85U33IRxsvFOtW/HAfanu
- 10HHn3h1nrNElS3C+ShxE65uaNHa3/TwZ4I6qMpKCl7OGB9QIN0VRGHVsLtrC1CCHFAa
- qcPtJ+IOBZAJ3ZMPr4CNGcTiChm2NA3oi5+yiQbXcKzNkLPbBNjnmZemQLzcme4kirOn
- zMrWLumqd6aC4rV0YgGGORHPE0B89qKeFyxVBYCE7Dq6PYW4xTsTzdgI8Fyf6AD2HgSp
- 80M7I+zyWtY05Y/5MPbQqaVBVQddSeerslyhWynbQzzEVFhnlM4ZGxR1ghjGRm0MTJwZ
- m7xQ==
+ bh=cP+HMX+waH6JJSIV1cm25cTmWGrP+cpXZi/vENVzDYc=;
+ b=AqGVbjzH2qbUVble10vKOrp1Lq+Yq9Fh0OO73K4xxKAy6jGXG8SauLv+O+lJ/XnZ7G
+ yxsT8VeDzT13JvGoMj2jOKEwZZfBHdfpF76QJwcCycD9JacUABnbC0VTHRqmNi98WIFy
+ 3al8YYSFkt8OsXdbHeblg7E/oIDED8LpNU+WhVATsojF0j1hil11v2We5Zfvk5Oa/UAV
+ KDJ0m6csUijU4br7ailB8CXuN4pIENAudfU5jgTS4iQCRfLXVnOR4vLrwcetsiJ4EV7l
+ GGdLMU99J9c8Ce6eALvjk7Y2VxhjsGrNc7bGNFnzoEmQcHA1lRuLgWpU0ubAQZwjMhfn
+ R+gw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUo486U2uu2ROJKdGLt5kZ3Bhrq9+X9dSf8+0SvAeiQtrt3k3GKA0GYKeYlJunar8OfyJmDTTe6cr4v@nongnu.org
-X-Gm-Message-State: AOJu0YyKgliQXXGlT+/mFEWB8Zk605YtJA7Zzk+YC34+cxcoiGmni3YH
- h0f2R0S2mx6mGHKHD8MwdS6PuL5+w0xwhvWaSIN7hYfl7UZB1kpluyzqz7I6CIkPpypaDHU88qC
- 1e7C11YS/AJStBN5hKkv7NyqwnaCCQhzf7ukCP83ytbM4QBwTqWYxtyYJ
-X-Gm-Gg: ASbGncv7UfWDe6llReqyk8BsCxsgu6TEud67eJQOh6TyHaLRHAeLzLLodndjgy/bvxw
- ni1iYLaL4OGXMMDsEwxt1v9N1JKAxD9oZSv/PiI057JgdZA1JKXHWopoLaqSS7zwggfrwPnYTgR
- Rn9MFIIXWi4ooZfstPo6K4Uq0GwWXA+ZcpJ/hoG184QjVFP0AB4IHkqWBJEtradou0h/e2kRypP
- E/Onrr54rDKXyxi5KFVnYoBbximyD/KdLjqAz25l8t3sVAmMNeAK1qdkIZIJQ3l4d8YuqefFKtQ
- G3zHZNWEaJZnBYucdj01fm6Cua/FahSVl/VKrSt4pp1kP+bsrVJ6H8XWu7Ao0oZThOhuu9RyD+Z
- COB7KIw==
-X-Received: by 2002:a05:600c:1f0e:b0:45b:8f11:8e00 with SMTP id
- 5b1f17b1804b1-467f3840597mr13669815e9.37.1758262403854; 
- Thu, 18 Sep 2025 23:13:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHMqmAQRTdzDvSR+QycXFpzexrhBgdgeFC2bPDY/TkVZxm4MRQanjQPzgPVxO3/ir8EIOvjzA==
-X-Received: by 2002:a05:600c:1f0e:b0:45b:8f11:8e00 with SMTP id
- 5b1f17b1804b1-467f3840597mr13669395e9.37.1758262403367; 
- Thu, 18 Sep 2025 23:13:23 -0700 (PDT)
+ AJvYcCW62z2hbjiSiCN7G7six6ryhj7vtBTNLTzoCUsk7Sm1Apk740uwcYkmq2jvpFAitJmW09viu2RYSEob@nongnu.org
+X-Gm-Message-State: AOJu0Yx9PxKndQbaowIqm0iIBN7OMBOoqO6KmwAvqD9LRC70feHs0m+d
+ UQUW3qN3YRWByTsDpW3AdNHUJ584SSHV839sgEIF4mIkaO9JBjDROXm5HZRwSbUMYT4/m86IUKv
+ Hy2YSwDP2/UOw7+Ekvb+Dwjhm4uRjY2Pwo/eMV7/CDhCPIODvOS4YCkRo
+X-Gm-Gg: ASbGncvE4uIJezCCtwpl3aEvLJi02o7wUig+WInLm2HCj3EDj5VVBlYNh00Q8T9fbWc
+ MaNs0inrn/ZRmjbKIHeMPhA7quvA6X9+DSsgQJJxhbwu3BFcmu8suWSgBzfDd/Q0vwbhtISmuNy
+ OydBa1tUMoZ35B3szBXlCyuia2D8EzBfpNRJkec/UQ0ga9Z4/zqsuvVgnrJXRbj1GHulLFvPLVR
+ dZ6HpxTGSAofdUkAiLKGoWDpdGJT0ZhzTkyeewLx2XrnHGZ1zwufde2PIzJn6I+9lulZobG/sun
+ PNHOPAcSe3U5DTcuA61dYefEq31orVq0p4ltL/z4SKClmPjdW3U6S3RtbUyg71pujgozivfnLh7
+ 7ydc7MA==
+X-Received: by 2002:a05:600c:a47:b0:45d:d86b:9e64 with SMTP id
+ 5b1f17b1804b1-467e78caa3emr14319865e9.15.1758263608108; 
+ Thu, 18 Sep 2025 23:33:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9n22R4dSlL4hKyo98T3dP2ek7jVYsCni14Lb6s0+m8QBHdOAxCSjy/cimgFRYfxCvd5GrJw==
+X-Received: by 2002:a05:600c:a47:b0:45d:d86b:9e64 with SMTP id
+ 5b1f17b1804b1-467e78caa3emr14319515e9.15.1758263607650; 
+ Thu, 18 Sep 2025 23:33:27 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-113-218.pools.arcor-ip.net.
  [47.64.113.218]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-464f527d6cdsm81369385e9.12.2025.09.18.23.13.22
+ 5b1f17b1804b1-464f0aac439sm81179175e9.5.2025.09.18.23.33.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Sep 2025 23:13:22 -0700 (PDT)
-Message-ID: <835bdd7f-3662-4fd0-be2c-1fc1bca030a9@redhat.com>
-Date: Fri, 19 Sep 2025 08:13:21 +0200
+ Thu, 18 Sep 2025 23:33:27 -0700 (PDT)
+Message-ID: <639603b9-6fa7-4316-a7c9-50fb29bdeb99@redhat.com>
+Date: Fri, 19 Sep 2025 08:33:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: add --debug CLI arg
-To: John Snow <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
- <87ms93xl69.fsf@draig.linaro.org>
- <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
- <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
- <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
- <147a8aaf-5895-435d-8394-ef6a5e03b638@redhat.com>
- <CAFn=p-Z_Du_xbOKg+2wMPzshgOT1MX+AKLNNE9FLpEp+gkQLhQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl2: fix reset scaling binding to be consistent with
+ gtk
+To: Nir Lichtman <nir@lichtman.org>, qemu-devel@nongnu.org, kraxel@redhat.com
+Cc: peter.maydell@linaro.org, marcandre.lureau@redhat.com
+References: <20250910114929.GA1783677@lichtman.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -136,17 +126,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFn=p-Z_Du_xbOKg+2wMPzshgOT1MX+AKLNNE9FLpEp+gkQLhQ@mail.gmail.com>
+In-Reply-To: <20250910114929.GA1783677@lichtman.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,47 +154,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/09/2025 21.54, John Snow wrote:
-> On Tue, Sep 9, 2025 at 6:37 AM Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 07/08/2025 23.46, John Snow wrote:
->>> On Thu, Jul 24, 2025 at 3:47 PM Thomas Huth <thuth@redhat.com> wrote:
-...
->>>> Wouldn't it be possible to add the module as a wheel in python/wheels/ ?
->>>> That's maybe the easiest solution, isn't it?
->>>
->>> The qemu.qmp wheel, yes, because it's purepython. The part I am
->>> worried about is that by removing qemu.qmp from the tree, you cannot
->>> just use the PYTHONPATH hack anymore to use the remaining in-tree
->>> goodies, namely the machine module used extensively throughout
->>> testing, because they will now rely on an external dependency.
->>
->> Would it maybe be possible to add the machine part to the qemu.qmp module,
->> too? (Gerd also ask me at KVM forum about this, so there is certainly
->> interest for extending the qemu.qmp module with the machine part)
+On 10/09/2025 13.49, Nir Lichtman wrote:
+> Problem: Currently the reset scaling hotkey is inconsistent between SDL
+> and GTK graphics modes.
 > 
-> I could, can you explain a little why we want it?
-
-I hope that Gerd can chime in, but basically he wanted to test another piece 
-of software in a similar way we do it in QEMU with the functional framework. 
-That means some function that manage the life-cycle of a QEMU VM would be handy.
-
-> It would involve
-> cleaning up the interfaces a good deal and while I don't think it is
-> hard, it will be a lot of clerical work and shuffling for a little
-> while. I have some drafts somewhere that add an asyncio VM appliance
-> to replace the existing one in the same manner as for what I did for
-> async QMP to help solve the complicated logging stack we have for VM
-> console scripts.
+> Solution: Fix SDL to use MOD+0 instead of MOD+u which is in line with
+> GTK and generally more consistent with other apps.
 > 
-> Having a solid justification and guinea pigs^H^H^H^H^H^H^H^H^H^H^H^H
-> beta users would push the project over the line for me.
+> This is also related to my previously sent patch fixing the docs.
+> 
+> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Nir Lichtman <nir@lichtman.org>
+> ---
+>   ui/sdl2.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index b00e421..032dc14 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -421,7 +421,7 @@ static void handle_keydown(SDL_Event *ev)
+>                   sdl_grab_end(scon);
+>               }
+>               break;
+> -        case SDL_SCANCODE_U:
+> +        case SDL_SCANCODE_0:
+>               sdl2_window_resize(scon);
+>               if (!scon->opengl) {
+>                   /* re-create scon->texture */
 
-I'm sure Gerd is happy to help if he can find some spare time, and I'm of 
-course happy to help with regards to the QEMU functional testing framework - 
-let me know when you've got something ready and we want to have a try to 
-move the functional tests to that new VM management code.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
