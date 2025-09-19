@@ -4,97 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A62E1CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:10:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CABCAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 09:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzX7n-0006TN-J0; Fri, 19 Sep 2025 05:09:51 -0400
+	id 1uzXMt-0001z9-Hg; Fri, 19 Sep 2025 05:25:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uzX7m-0006T2-HZ
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:09:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXMb-0001wu-Bb
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:25:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uzX7k-00057F-II
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:09:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uzXMT-0008CY-KG
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 05:25:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758272986;
+ s=mimecast20190719; t=1758273896;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yGa3323VyoXzC8YR3zQR4fMcIPxBBwfcgFJuXAAhf7c=;
- b=Uio2c9UZgrn24yrLn7KDVCDCC2Pevulsd7oC3aZX8dnm+E0RjFWcvEOf1CsdYsuD42n464
- leFsUv4aQ/TMXIEIuzQlNEugRt1o0cvTTGogcF2Zt31CcCB1g4VSfgbi+yi4VxoB0u4jdo
- z2oCXNSTr37/MhLioo9dSWg6Gmz0Hik=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=PXFw3uShH4U+BL+W34BoRWty4Z8Xo7M93f3yFLOSdsA=;
+ b=GmO1xi5imd5QwhZYjD/E/Cv+lVqRWtddMB8o7ecR4iKpY+eoA2iYCpZ4q29X7i2qPc7Jmw
+ PqS52HHnle75p4DoyLKa+WE4VORWQQLMHV6V7gnBTFYHIQOa6B9Uzv/9A972r8dtP7brqv
+ 8Epls6FYiDgBkknpYK0P8N+2i/KrMaw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-265-pk4cfufMOGykw48REsmXuw-1; Fri, 19 Sep 2025 05:09:42 -0400
-X-MC-Unique: pk4cfufMOGykw48REsmXuw-1
-X-Mimecast-MFC-AGG-ID: pk4cfufMOGykw48REsmXuw_1758272981
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3ecdf7b5c46so691911f8f.2
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 02:09:42 -0700 (PDT)
+ us-mta-647-N1H9uOp6Nb6C7_lbf8VK4g-1; Fri, 19 Sep 2025 05:24:54 -0400
+X-MC-Unique: N1H9uOp6Nb6C7_lbf8VK4g-1
+X-Mimecast-MFC-AGG-ID: N1H9uOp6Nb6C7_lbf8VK4g_1758273893
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45f2b0eba08so11643115e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 02:24:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758272981; x=1758877781;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yGa3323VyoXzC8YR3zQR4fMcIPxBBwfcgFJuXAAhf7c=;
- b=To3VB5uY4G73m4LuNfvijnbZNA+RTu57oeZFlIV/H0bQTThlSexRHwfJoTV4FOMtwl
- 8CWif+6T7J0vFZJInNfo/eOeFK4kQoORS1PWRE+/Hi4c4V0WLiHz60HmBPlGwoPfEwH7
- oYquHdOJawQOdz3q6tWhS1/lhxZXe7wcFkvsj8wopHKIeS+jEVZ+5vqCblnrspUz+SeN
- JnVo4Y8Gg671fFQhxvF89IaJvwq0NoEHcJyudDNcyI6RM8l3rONmWEGJArt3L5h8UFFx
- wmXt2UxMr9BUC9V69721yHFsLh6fB+80W082ANhzWOX86z4/OsDSZwmYKOx+mbbUQ5CF
- iJ1Q==
-X-Gm-Message-State: AOJu0YzqrDyXxhP2AcAK/abTjVSGFGqdYJNdxz1Fs6zOo2/TfAiTXlnk
- U8UdNhjmOPXYnKk1CF5Cw2Gur14CrTX8i0WGSetXiw0QS1F1NWQJwPFl1FDZDRrcamiCCsISsUG
- 3G0p2HS7L1IROLg+++BQceq92pipnUJFM1Nwnez1E3rFOctelEDEhqvi52On8nHCY
-X-Gm-Gg: ASbGncuD54c/8ahbta5mkE+cygo16UB3rj02eJu2GYL0rJrJ4O1gExRchDa+ZIoulIe
- Jux6kMmkEM3raAV3FYdcrMstMnXGJ0xowYd7FknfEMXvQGrplQQZLuK0X3lb4i6pErTNGL/IMLA
- +CrNXaNolVtn5IeiojkH6Hk/G5p4HnXzQDDSENdXE+TXk3U/T0m4bI8yX7iE8XZlx5I1nhWpW6N
- srGPhS6ReI5ChMwY546lDI/axRMDzCOgAUL4a7aCX/uQDzS8Cgu9XM43YkrznC0lnuLlFOe0gSp
- 8dYfqdeXm9WajRSEx94i+SjU2f6oDel2ar7u7gJTXsccgFiGe3getiYw/MR/4VKDiA/OtNBDxHi
- V5fOF4HxNo1MZ
-X-Received: by 2002:a05:6000:26c6:b0:3ec:d7eb:7d30 with SMTP id
- ffacd0b85a97d-3ee861f839bmr1676210f8f.49.1758272981092; 
- Fri, 19 Sep 2025 02:09:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/X4/ufWBs+McaP7BFFXHHAaezQ4DUWyt56kK9II2XFwM92+lfpS9+y9/A3CDXWVMM/i8t5w==
-X-Received: by 2002:a05:6000:26c6:b0:3ec:d7eb:7d30 with SMTP id
- ffacd0b85a97d-3ee861f839bmr1676185f8f.49.1758272980590; 
- Fri, 19 Sep 2025 02:09:40 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
+ d=1e100.net; s=20230601; t=1758273893; x=1758878693;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PXFw3uShH4U+BL+W34BoRWty4Z8Xo7M93f3yFLOSdsA=;
+ b=CvNzMe73k97aXB/m5AWYHW4q0JuZGsnuh/45KymLp08h2QGzxKnItYgUBEcfh1U0kx
+ IMUhj4bAMLwm0exX6/D5HRudZjmzoK9gYZ5zznNyfyfea0NM+9vgBprUFyNaElkV2OO6
+ Root3oBmQH2H+b5MPNCo4kmtHc7ICGFoDEJ5T7fC5Z0h/tbAvZhYmLYjlSM95QMOi/+b
+ Uf+B6vno56HSUD1RK4ChaJgTPq5oH3xs1Gup2V6Wk37gtIJBTaLoxyRn/FJDVrxSLz2+
+ kHvlnIuRW3i/+2yeebhqyUk3KoNLTND+MgtbrsywdyrHsQfbvgb+fq4tVPA7i70t1Ele
+ ze8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrWqSQDvsU/KKsoI4W4YLflrNvAEfT8D56fniaBOtDwd9gJcbkKG/m8vQwEq7j7IdIfxgbluU8qhdo@nongnu.org
+X-Gm-Message-State: AOJu0YxsdgVSUvzUx7xvE8/zIquFHz3BC+OxY4UUMAGNbmHfpcAPMMnn
+ UCOW/kLee6l4Iqwkz3UGT8m9xSdFX4igmdMK3iGnYXVvPSWh4le1WGI8fl6mq7F87c8ZBntSNiK
+ 6s3o/JFrU3ktULSR7lqJljpdReT14YTD1Mkf+7qiD7WDn0G4qMdmB6k5H
+X-Gm-Gg: ASbGncuBOMh65ISJM/MYoOX97orUb5caob6TyXl8S6XxFr68ulAgCeT7hxqCVc4hlj9
+ fVUHcSyBOHxtrFrus+vbjeX2XBhxaSdMCReCLELcpPtHMo4DUJg+QVGBWYneCELs8EDcxftPlnC
+ cQLyxGyqtlOzXlXkS6HPruwQwXLvvGZCZjFsYgjnu9jdIudLDH7HxWJxnqg3N2pi0UIQ5hRMNFD
+ 7Heksrq98NqKCD6zMMEUBy70wOoYWfUmW9zt+h+qt32wuUXE83Q6WMx8Uj0CL35Cd1ixbAl00uH
+ 4VutC+dbPczUO9rBqIZ9cyf+t56mr4dUG5JRKqjyZFuuV8+StX/vJg46RN0AQO1BV3jSwUcEpTi
+ UPPg=
+X-Received: by 2002:a05:600c:4fc3:b0:45d:e285:c4d7 with SMTP id
+ 5b1f17b1804b1-467e7f7d3f4mr21290225e9.9.1758273893165; 
+ Fri, 19 Sep 2025 02:24:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6XEK51e6tug0cGBgGAWrGnKiqdnVa8N9J1a0t+uOKc2aX54Nl5MSt1xhhd8BOL5RcquuHQg==
+X-Received: by 2002:a05:600c:4fc3:b0:45d:e285:c4d7 with SMTP id
+ 5b1f17b1804b1-467e7f7d3f4mr21289965e9.9.1758273892745; 
+ Fri, 19 Sep 2025 02:24:52 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-464f4f9f4e4sm87848775e9.13.2025.09.19.02.09.39
+ ffacd0b85a97d-3f1549285c9sm391630f8f.52.2025.09.19.02.24.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Sep 2025 02:09:40 -0700 (PDT)
-Message-ID: <833f3184-1bda-4761-9657-77ac73f01135@redhat.com>
-Date: Fri, 19 Sep 2025 11:09:38 +0200
+ Fri, 19 Sep 2025 02:24:52 -0700 (PDT)
+Message-ID: <8019c941-e67d-4288-bb75-ff18a917464a@redhat.com>
+Date: Fri, 19 Sep 2025 11:24:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/14] virtio: introduce support for GSO over UDP tunnel
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Lei Yang <leiyang@redhat.com>
-References: <cover.1757676218.git.pabeni@redhat.com>
- <CAPpAL=yfdoDzXZw+JPAfGym9me=9a+u5p97xAzJyn_VJXJTBYA@mail.gmail.com>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <CAPpAL=yfdoDzXZw+JPAfGym9me=9a+u5p97xAzJyn_VJXJTBYA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [Qemu-devel] [PATCH] vfio/common: Work around kernel overflow bug
+ in DMA unmap
+To: Peter Xu <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org
+References: <154707542737.22183.7160770678781819267.stgit@gimli.home>
+ <cd287f5c-796e-4172-9537-b00991a95391@redhat.com> <aMx8T5-u6Uj64Vgx@x1.local>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aMx8T5-u6Uj64Vgx@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -119,53 +157,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
-On Fri, Sep 12, 2025 at 9:10 PM Paolo Abeni <pabeni@redhat.com> wrote:
-> Some virtualized deployments use UDP tunnel pervasively and are impacted
-> negatively by the lack of GSO support for such kind of traffic in the
-> virtual NIC driver.
->
-> The virtio_net specification recently introduced support for GSO over
-> UDP tunnel, and the kernel side of the implementation has been merged
-> into the net-next tree; this series updates the virtio implementation to
-> support such a feature.
->
-> Currently the qemu virtio support limits the feature space to 64 bits,
-> while the virtio specification allows for a larger number of features.
-> Specifically the GSO-over-UDP-tunnel-related virtio features use bits
-> 65-69; the larger part of this series (patches 4-12) actually deals with
-> extending the features space.
->
-> The extended features are carried by fixed size uint64_t arrays,
-> bringing the current maximum features number to 128.
->
-> The patches use some syntactic sugar to try to minimize the otherwise
-> very large code churn. Specifically the extended features are boundled
-> in an union with 'legacy' features definition, allowing no changes in
-> the virtio devices not needing the extended features set.
->
-> The actual offload implementation is in patches 13 and 14 and boils down
-> to propagating the new offload to the tun devices and the vhost backend.
->
-> Patch 1 is a small pre-req refactor that ideally could enter the
-> tree separately; it's presented here in the same series to help
-> reviewers more easily getting the full picture, patch 2 updates to
-> linux headers update script to deal with annotations recently introduce
-> in the kernel and patch 3 is a needed linux headers update.
->
-> Tested with basic stream transfer with all the possible permutations of
-> host kernel/qemu/guest kernel with/without GSO over UDP tunnel support,
-> vs snapshots creation and restore and vs migration.
->
-> The new features are disabled by default to avoid compatibilty issues.
-> They could be enabled with a later patch, together with the related
-> compatiblity entries.
+On 9/18/25 23:40, Peter Xu wrote:
+> On Thu, Sep 18, 2025 at 10:55:47PM +0200, Cédric Le Goater wrote:
+>> Alex, Peter,
+>>
+>> On 1/10/19 00:10, Alex Williamson wrote:
+>>> A kernel bug was introduced in v4.15 via commit 71a7d3d78e3c which
+>>> adds a test for address space wrap-around in the vfio DMA unmap path.
+>>> Unfortunately due to overflow, the kernel detects an unmap of the last
+>>> page in the 64-bit address space as a wrap-around.  In QEMU, a Q35
+>>> guest with VT-d emulation and guest IOMMU enabled will attempt to make
+>>> such an unmap request during VM system reset, triggering an error:
+>>>
+>>>     qemu-kvm: VFIO_UNMAP_DMA: -22
+>>>     qemu-kvm: vfio_dma_unmap(0x561f059948f0, 0xfef00000, 0xffffffff01100000) = -22 (Invalid argument)
+>>>
+>>> Here the IOVA start address (0xfef00000) and the size parameter
+>>> (0xffffffff01100000) add to exactly 2^64, triggering the bug.  A
+>>> kernel fix is queued for the Linux v5.0 release to address this.
+>>>
+>>> This patch implements a workaround to retry the unmap, excluding the
+>>> final page of the range when we detect an unmap failing which matches
+>>> the requirements for this issue.  This is expected to be a safe and
+>>> complete workaround as the VT-d address space does not extend to the
+>>> full 64-bit space and therefore the last page should never be mapped.
+>>>
+>>> This workaround can be removed once all kernels with this bug are
+>>> sufficiently deprecated.
+>>
+>> Have we waited long enough ? what does "sufficiently deprecated" mean ?
+>> Is it related to the linux stable updates ?
+> 
+> Alex might be the best to define it.
+> 
+> To me, it doesn't sound a major issue to have it even forever just in case
+> someone was using a broken v4.15..v5.0 kernel.  It's pretty small, limited
+> and self contained workaround.
 
-Does this iteration solve the merge issue? Any other action needed on my
-side?
+So it seems it is not that useful anymore for upstream kernels
+and downstream should have done the required backports.
 
-Thank you!
+> Any blockers on this?
+No.
 
-Paolo
+If we could remove the workaround in QEMU, we would be able to
+refactor some of the code unmapping DMAs to make it common
+between the VFIO IOMMU Type1 and IOMMUFD backends.
+
+
+Thanks,
+
+C.
+
 
 
