@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F309CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 21:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17AECAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 21:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzibC-00046a-RD; Fri, 19 Sep 2025 17:24:59 -0400
+	id 1uzild-000682-GD; Fri, 19 Sep 2025 17:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzibB-00046R-1o
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:24:57 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uzib8-0000YD-Pp
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:24:56 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2E0131F7EC;
- Fri, 19 Sep 2025 21:24:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758317092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BsJImeTEiyRrv/6byDt4ZZ2ltHAsgQy4d4KC2FFd4+Y=;
- b=v9QB0x+hq5FkzXzy2kSARBc5KDd4BpXi3cGda8xH2cXAsSkaNV3N47XRrSY+fxJ+CjM46o
- K4SEM7GWkvtuM+5zAHl3zgB/rfphXKa/QRzgnmUeTwj7ETjrWll7+70I8pKg7EobIagEpx
- IG+JB5truxbukDu8yxeTItUETdAegt0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758317092;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BsJImeTEiyRrv/6byDt4ZZ2ltHAsgQy4d4KC2FFd4+Y=;
- b=Zsc5sbBFp/qNEaVmdq/ReMhS6mJuHw99RAdfbBxRsS3dsbIu/MU4cqGMU90bYiVs1GOknV
- cXg+SQuisU3s/NBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1758317092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BsJImeTEiyRrv/6byDt4ZZ2ltHAsgQy4d4KC2FFd4+Y=;
- b=v9QB0x+hq5FkzXzy2kSARBc5KDd4BpXi3cGda8xH2cXAsSkaNV3N47XRrSY+fxJ+CjM46o
- K4SEM7GWkvtuM+5zAHl3zgB/rfphXKa/QRzgnmUeTwj7ETjrWll7+70I8pKg7EobIagEpx
- IG+JB5truxbukDu8yxeTItUETdAegt0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1758317092;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BsJImeTEiyRrv/6byDt4ZZ2ltHAsgQy4d4KC2FFd4+Y=;
- b=Zsc5sbBFp/qNEaVmdq/ReMhS6mJuHw99RAdfbBxRsS3dsbIu/MU4cqGMU90bYiVs1GOknV
- cXg+SQuisU3s/NBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9D8B913A78;
- Fri, 19 Sep 2025 21:24:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id VanDFyPKzWiIJQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 19 Sep 2025 21:24:51 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, =?utf-8?Q?Daniel?=
- =?utf-8?Q?_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Prasad Pandit
- <ppandit@redhat.com>
-Subject: Re: [PATCH] migration: add  FEATURE_SEEKABLE to QIOChannelBlock
-In-Reply-To: <1b7bdf-68c98b00-641-3c30b780@162059662>
-References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
- <87jz7rhjzq.fsf@suse.de> <1b7bdf-68c98b00-641-3c30b780@162059662>
-Date: Fri, 19 Sep 2025 18:24:48 -0300
-Message-ID: <87ecs2t9sv.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uzilb-00067E-TG
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:35:43 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uzilQ-0002Tv-S2
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 17:35:43 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDu89K017342;
+ Fri, 19 Sep 2025 21:35:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=V/4Pz1/87AAhu3CcpJuxVCfYIxxOH
+ oAxn+kecmnC1Bo=; b=aHZ+x+3sRnY/zG+bOzI2eSwaxw13s4dcp3HSooXg2Cvis
+ w0ssb1XAGR8nsAz/8FZIraEYZeMPfkIqexbVYZEzoOjH0zeI14N/czgSH8NrOKp9
+ k9igiD2fUcTxhhh9sSYwwNl/Nc+MR64gE10hPROdHI17VZpdag8SuOwAsREK58Po
+ egH9W9JLlgVeWBl/1dyjVNr2E6hYsEv07c06tfi5xEzfiRtivMOEdF/ouT9ONty9
+ 2v/BKdsqi4080T2iM1YNO8flP2yMo6YxDfMSWnyGsFkQLrCT+JA1zSVDDnZ1NWuV
+ c4VMXDK+DD1YFTZuhDHIaG8lNKsCv+6leNWTTgg1w==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497g0kefyn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 21:35:19 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 58JLUdjt033676; Fri, 19 Sep 2025 21:35:19 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 494y2gwrbe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Sep 2025 21:35:19 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JLUmxv004301;
+ Fri, 19 Sep 2025 21:35:18 GMT
+Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
+ (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.254.235])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 494y2gwra3-1; Fri, 19 Sep 2025 21:35:18 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, clement.mathieu--drif@eviden.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, peterx@redhat.com,
+ david@redhat.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
+ Ankit.Soni@amd.com, ethan.milon@eviden.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
+Subject: [PATCH v3 00/22] AMD vIOMMU: DMA remapping support for VFIO devices
+Date: Fri, 19 Sep 2025 21:34:53 +0000
+Message-ID: <20250919213515.917111-1-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-19_03,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 mlxscore=0 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
+ definitions=main-2509190201
+X-Authority-Analysis: v=2.4 cv=b9Oy4sGx c=1 sm=1 tr=0 ts=68cdcc98 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
+ a=zd2uoN0lAAAA:8 a=q3mIixbF9PrL_VaT-24A:9
+X-Proofpoint-GUID: 9GGOd0kfiJRJxl_4g2g_cbAB0eTbTXds
+X-Proofpoint-ORIG-GUID: 9GGOd0kfiJRJxl_4g2g_cbAB0eTbTXds
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMyBTYWx0ZWRfX516t+2TUB5bM
+ +MOOpWR6bU0lzR6cKCLkv2wazKkW34S81O45i4m8SZxlo5e4UHDiKlc+6AKSmxV3iZHj2CKp+lN
+ cQ2vQgPbhDgjA4vsrEwgt+BNNDIo8OsXRnklAZp6JNQsPE7/O5yOHeUAm5T70BQ2ENgEHbFCcAl
+ qCaUVe6wyiiVago5kyRjGrz9Udb/s/iwZGx+sAO/fDwNzxmu3At/3iD8gzXvnYfv8LR733O7ksp
+ 6kGs6TraiMRnXF8JTN1zwwNk4m3VM6PePnezInNbVmZlnDhCJ9+iaB2hDhUAKCB6CjTmmbSp7Xa
+ p3Dk1Aqsi0L9xBTX8RroQ4DHvsR7ojzKAjhBugnSkzl6rdEwe+0T/ZAXs6aX7G5DhkMD0o2fha1
+ 7qeTfLN1
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,82 +118,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Marco Cavenati" <Marco.Cavenati@eurecom.fr> writes:
+This series adds support for guests using the AMD vIOMMU to enable DMA remapping
+for VFIO devices. Please see v1[0] cover letter for additional details such as
+example QEMU command line parameters used in testing.
 
-> Hello Fabiano,
->
-> On Thursday, April 10, 2025 21:52 CEST, Fabiano Rosas <farosas@suse.de> wrote:
->
->> Marco Cavenati <Marco.Cavenati@eurecom.fr> writes:
->> 
->> > Enable the use of the mapped-ram migration feature with savevm/loadvm
->> > snapshots by adding the QIO_CHANNEL_FEATURE_SEEKABLE feature to
->> > QIOChannelBlock. Implement io_preadv and io_pwritev methods to provide
->> > positioned I/O capabilities that don't modify the channel's position
->> > pointer.
->> 
->> We'll need to add the infrastructure to reject multifd and direct-io
->> before this. The rest of the capabilities should not affect mapped-ram,
->> so it's fine (for now) if we don't honor them.
->
-> Do you have any status update on this infrastructure you mentioned?
->
+I have sanity tested on an AMD EPYC Genoa host, booting a Linux guest with
+'iommu.passthrough=0' and several CX6 VFs, and there are no issues during
+typical guest operation.
 
-I'm doing the work suggested by Daniel of passing migration
-configuration options via the commands themselves. When that is ready we
-can include savevm and have it only accept mapped-ram and clear all
-other options.
+When using the non-default parameter 'iommu.forcedac=1' in the guest kernel
+cmdline, this initially fails due to a VFIO integer overflow bug which requires
+the following fix in the host kernel:
 
-But don't worry about that, propose your changes and I'll make sure to
-have *something* ready before it merges. I don't see an issue with
-merging this single patch, for instance:
-https://lore.kernel.org/r/20250327143934.7935-2-farosas@suse.de
+https://github.com/aljimenezb/linux/commit/014be8cafe7464d278729583a2dd5d94514e2e2a
+This is a work in progress as there are other locations in the driver that are
+susceptible to overflows, but the above is sufficient to fix the initial
+problem.
 
->> What about zero page handling? Mapped-ram doesn't send zero pages
->> because the file will always have zeroes in it and the migration
->> destination is guaranteed to not have been running previously. I believe
->> loading a snapshot in a VM that's already been running would leave stale
->> data in the guest's memory.
->
-> About the zero handling I'd like to hear your opinion about this idea I
-> proposed a while back:
-> The scenarios where zeroing is not required (incoming migration and
-> -loadvm) share a common characteristic: the VM has not yet run in the
-> current QEMU process.
-> To avoid splitting read_ramblock_mapped_ram(), could we implement
-> a check to determine if the VM has ever run and decide whether to zero
-> the memory based on that? Maybe using RunState?
->
+Even after that fix is applied, I see an issue on guest reboot when 'forcedac=1'
+is in use. Although the guest boots, the VF is not properly initialized, failing
+with a timeout. Once the guest reaches userspace the VF driver can be reloaded
+and it then works as expected. I am still investigating the root cause for this
+issue, and will need to discuss all the steps I have tried to eliminate
+potential sources of errors in a separate thread.
 
-We could just as well add some flag to load_snapshot() since we know
-which invocations are guaranteed to happen with clean memory.
+I am sending v3 despite this known issue since forcedac=1 is not a default or
+commonly known/used setting. Having the large portions of the infrastructure for
+DMA remapping already in place (and working) will make it easier to debug this
+corner case and get feedback/testing from the community. I hope this is a viable
+approach, otherwise I am happy to discuss all the steps I have taken to debug
+this issue in this thread and test any suggestions to address it.
 
-But if you can use existing code for that it would be great. Adding a
-global guest_has_ever_run flag, not so much. What's the MachineInitPhase
-before -loadvm?
+Changes since v2[2]:
+- P5: Fixed missed check for AMDVI_FR_DTE_RTR_ERR in amdvi_do_translate() (Sairaj)
+- P6: Reword commit message to clarify the need to discern between empty PTEs and errors (Vasant)
+- P9: Use correct enum type for notifier flags and remove whitespace changes (Sairaj)
+- P11: Fixed integer overflow bug when guest uses iommu.forcedac=1. Fixed in P8. (Sairaj)
+- P15: Fixed typo in commit message (Sairaj)
+- P16: On reset, use passthrough mode by default on all address spaces (Sairaj)
+- P18: Enforce isolation by using DMA mode on errors retrieving DTE (Ethan & Sairaj)
+- P20: Removed unused pte_override_page_mask() and pte_get_page_mask() to avoid -Wunused-function error.
+- Add HATDis support patches from Joao Martins (HATDis available in Linux since [1])
 
-> Then we can add something like this to read_ramblock_mapped_ram()
-> ...
-> clear_bit_idx = 0;
-> for (...) {
->     // Zero pages
->     if (guest_has_ever_run()) {
->         unread = TARGET_PAGE_SIZE * (set_bit_idx - clear_bit_idx);
->         offset = clear_bit_idx << TARGET_PAGE_BITS;
->         host = host_from_ram_block_offset(block, offset);
->         if (!host) {...}
->         ram_handle_zero(host, unread);
->     }
->     // Non-zero pages
->     clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
-> ...
-> (Plus trailing zero pages handling)
->
+Thank you,
+Alejandro
 
-The suggestion of splitting read_ramblock_mapped_ram() was to spare you
-from having to touch this code. =) But since you already know how to do
-it, then yes, let's add the change inline.
+[0] https://lore.kernel.org/all/20250414020253.443831-1-alejandro.j.jimenez@oracle.com/
+[1] https://lore.kernel.org/all/cover.1749016436.git.Ankit.Soni@amd.com/
+[2] https://lore.kernel.org/qemu-devel/20250502021605.1795985-1-alejandro.j.jimenez@oracle.com/
 
-> Thank you :)
-> Marco
+Alejandro Jimenez (20):
+  memory: Adjust event ranges to fit within notifier boundaries
+  amd_iommu: Document '-device amd-iommu' common options
+  amd_iommu: Reorder device and page table helpers
+  amd_iommu: Helper to decode size of page invalidation command
+  amd_iommu: Add helper function to extract the DTE
+  amd_iommu: Return an error when unable to read PTE from guest memory
+  amd_iommu: Add helpers to walk AMD v1 Page Table format
+  amd_iommu: Add a page walker to sync shadow page tables on
+    invalidation
+  amd_iommu: Add basic structure to support IOMMU notifier updates
+  amd_iommu: Sync shadow page tables on page invalidation
+  amd_iommu: Use iova_tree records to determine large page size on UNMAP
+  amd_iommu: Unmap all address spaces under the AMD IOMMU on reset
+  amd_iommu: Add replay callback
+  amd_iommu: Invalidate address translations on INVALIDATE_IOMMU_ALL
+  amd_iommu: Toggle memory regions based on address translation mode
+  amd_iommu: Set all address spaces to use passthrough mode on reset
+  amd_iommu: Add dma-remap property to AMD vIOMMU device
+  amd_iommu: Toggle address translation mode on devtab entry
+    invalidation
+  amd_iommu: Do not assume passthrough translation when DTE[TV]=0
+  amd_iommu: Refactor amdvi_page_walk() to use common code for page walk
+
+Joao Martins (2):
+  i386/intel-iommu: Move dma_translation to x86-iommu
+  amd_iommu: HATDis/HATS=11 support
+
+ hw/i386/acpi-build.c        |    6 +-
+ hw/i386/amd_iommu.c         | 1056 ++++++++++++++++++++++++++++++-----
+ hw/i386/amd_iommu.h         |   51 ++
+ hw/i386/intel_iommu.c       |    5 +-
+ hw/i386/x86-iommu.c         |    1 +
+ include/hw/i386/x86-iommu.h |    1 +
+ qemu-options.hx             |   23 +
+ system/memory.c             |   10 +-
+ 8 files changed, 999 insertions(+), 154 deletions(-)
+
+
+base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
+-- 
+2.43.5
+
 
