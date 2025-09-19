@@ -4,98 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4388CAC592
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74645CAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 14:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzbra-0000xO-Kc; Fri, 19 Sep 2025 10:13:26 -0400
+	id 1uzc0H-0002Pc-5e; Fri, 19 Sep 2025 10:22:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uzbrC-0000Yw-4o
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:13:02 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzc0E-0002P5-MB
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:22:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uzbqz-0007TH-JG
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:13:00 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDtmJ4023169;
- Fri, 19 Sep 2025 14:12:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=KVZKlScSL3fpepmijDdmzuigZVGCzb2oGsUwxVW66x0=; b=
- ZzX4FPYCgLjn0Ekjs+xp/JuEL5ZpQB//d/kTj8pf2d4Ot4DOgM0+twTFdkdo+2Fh
- LL/lFhaCmM/FqVJBWniT9kCPRJVVRyk8MsNVxJT2xpnLFsNCKQvqtNGn7z90ub9E
- cQDwr6csDM65aQZoOJ+zRGLYWGl2toz+D2LdEibpU14PhVaJQJ3bvDV7zvVBxfgC
- Lc/aUldOzwqgLzltnVdxzakacxka9dCK1+yTHt6duh74f6CgrXDESGQQcNp5ugy1
- mZMXByzWYuIgn6Ofqn1tBzw9w32EmnLGmNqL5H5RgiSFRRJFVnBHDQRebrcfcXZb
- JyFXPDZG3bW0Vb4z0O4afg==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 497fx6np81-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 14:12:42 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58JD3Kc2035230; Fri, 19 Sep 2025 14:12:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 494y2pu96c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Sep 2025 14:12:42 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58JECYXF003357;
- Fri, 19 Sep 2025 14:12:41 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 494y2pu924-8; Fri, 19 Sep 2025 14:12:41 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V1 07/11] migration-test: shm path accessor
-Date: Fri, 19 Sep 2025 07:12:29 -0700
-Message-Id: <1758291153-349744-8-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
-References: <1758291153-349744-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- malwarescore=0 mlxscore=0
- adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2509190132
-X-Authority-Analysis: v=2.4 cv=TqbmhCXh c=1 sm=1 tr=0 ts=68cd64db b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117
- a=e1sVV491RgrpLwSTMOnk8w==:17
- a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=mXoANcZEXaB-ueEzDlQA:9 cc=ntf
- awl=host:13614
-X-Proofpoint-GUID: b2W0aUOPtQGiKJ_vT_xq9BwQ8AW8wCC2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfXwH3/KmeVEsDE
- vYBAyu4lz4jrdegu5V8xoXUEfG5u1bQ2iLoHcUjZYvrCAhIcewf52M4WrM4ESOSyUaRmkfddR4Y
- l/D84sh828+E6E0o39Zf27F2fBKxgr+Ih7/b5Run2VEFMNOusfqYPI811JC3Dw/PDAd0/k9n19K
- JS8IHOZwjj7TP5EOxSyq8mzmpoeNV3+LxFoF5+XPj9zyxOa+0XDbFkI3R6NcZucm6qi6JyoWaeg
- EMagS1bhokE3f76qVMXd86liyORUliMB/+8CfYm7i/GT+R7Na6BeO5exRZsxOF1IvDm2qjv2cZj
- 2yuXyxd3aNNUDV4jxskiVUdgYjSgtZ2xBrP+DmQ38hHPtsqepiHnStU9AyE5Qu2Vp3H3OCN4DGT
- qWr4BoJwRpgekAtvt1iksBfSigmQ3Q==
-X-Proofpoint-ORIG-GUID: b2W0aUOPtQGiKJ_vT_xq9BwQ8AW8wCC2
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uzc08-0003kG-Ep
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 10:22:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758291730;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RNGAcwrmojXHqvzCX1VSbLBOAIg/kgJLQhqapGiNcNI=;
+ b=ddcfJjM7E0my3ccvZsPXGOHlPWU8KFMtB/xe+KGvDRXYXHVA1ylhbCGQCKkVzZOXnZ/JEf
+ vJ41t/cbICekAuVyCshwv+5ahDuSYV4P+FiM3Xi4KrPH57TaXHgtE2awjhfWYSuLOBqOMt
+ S7NXx5xj8RYjFo4015rcmwgPN0q4gFI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-k3JjPv0KOiqWum9EMCdKmg-1; Fri,
+ 19 Sep 2025 10:22:07 -0400
+X-MC-Unique: k3JjPv0KOiqWum9EMCdKmg-1
+X-Mimecast-MFC-AGG-ID: k3JjPv0KOiqWum9EMCdKmg_1758291726
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA65A1800285; Fri, 19 Sep 2025 14:22:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.187])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 516871955F21; Fri, 19 Sep 2025 14:22:01 +0000 (UTC)
+Date: Fri, 19 Sep 2025 15:21:58 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
+Subject: Re: [PATCH 15/24] tests/lcitool: update to debian13
+Message-ID: <aM1nBul5O62Pk01K@redhat.com>
+References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
+ <20250919133320.240145-16-marcandre.lureau@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250919133320.240145-16-marcandre.lureau@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,43 +92,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define an accessor for the shm path.  It will be referenced from
-multiple sites in a subsequent patch.
+On Fri, Sep 19, 2025 at 05:33:09PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  .../dockerfiles/debian-amd64-cross.docker      |  9 +++++----
+>  .../dockerfiles/debian-arm64-cross.docker      |  9 +++++----
+>  .../dockerfiles/debian-armhf-cross.docker      | 12 +++++-------
+>  .../dockerfiles/debian-i686-cross.docker       | 11 +++++------
+>  .../dockerfiles/debian-ppc64el-cross.docker    |  9 +++++----
+>  .../dockerfiles/debian-s390x-cross.docker      |  9 +++++----
+>  tests/docker/dockerfiles/debian.docker         |  9 +++++----
+>  tests/lcitool/refresh                          | 18 +++++++++---------
+>  8 files changed, 44 insertions(+), 42 deletions(-)
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- tests/qtest/migration/framework.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 9564293..9d04f36 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -255,6 +255,11 @@ static void migrate_start_set_capabilities(QTestState *from, QTestState *to,
-     return;
- }
- 
-+static char *test_shmem_path(void)
-+{
-+    return g_strdup_printf("/dev/shm/qemu-%d", getpid());
-+}
-+
- int migrate_start(QTestState **from, QTestState **to, const char *uri,
-                   MigrateStart *args)
- {
-@@ -342,7 +347,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
-     }
- 
-     if (args->use_shmem) {
--        shmem_path = g_strdup_printf("/dev/shm/qemu-%d", getpid());
-+        shmem_path = test_shmem_path();
-         shmem_opts = g_strdup_printf(
-             "-object memory-backend-file,id=mem0,size=%s"
-             ",mem-path=%s,share=on -numa node,memdev=mem0",
+
+With regards,
+Daniel
 -- 
-1.8.3.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
