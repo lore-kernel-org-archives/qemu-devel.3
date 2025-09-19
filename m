@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D8BCAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 10:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31F6CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzYpt-00071G-Rn; Fri, 19 Sep 2025 06:59:29 -0400
+	id 1uzYu2-0000G1-HJ; Fri, 19 Sep 2025 07:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uzYps-00070u-6K
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:59:28 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uzYpo-0008KY-Ek
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 06:59:27 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45dd7b15a64so17474465e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 03:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758279562; x=1758884362; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ge6UiqctOzW4hIEmHh3U96UtrVPRKX0oZZeYaEsPqqk=;
- b=oZ4k52E8i7XScVfu5ZVu/vzStDIqcWgToBs1tbuzjZwdJgAKUp3tsAUN7R4qOzx7Ls
- nLtqttpQ85xaM9zZMHVJ4neiy7nDpjG9PHBZrTAr8aLsCMTUemuP42lnY6P7YEEOWJkN
- Ck6UexgLvFlbcN/ULjZwktUtlqc/0RcXKLj3lyn8dUu1BoFcWufy1f4lhGOP5e7IDr/W
- xuAKRt/eFqnNJTsASOdDCXcKIhMDAcYRnAdudRfCYq1yxEMoeBmWT8ojsRPwqrqLB+FX
- Ddgbx0KFugQ1YnLjrQ3nkrOZD3EvXLpfI3zqnFWVDUYdMrTwztXxHCsNH2GrVz02m8Fj
- lTOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758279563; x=1758884363;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ge6UiqctOzW4hIEmHh3U96UtrVPRKX0oZZeYaEsPqqk=;
- b=HWhluZQhIX2fM1g3JsQyKlpSeBnELCDlOrlao2m3/TDrQ7swk3v8gmq12MOFCElsSE
- Nb2fbIGAX+r3p5ozn5/UGEyiidCTuOeB5dQ1ISPw5WY4zxz4hE4DzeBwC80jj9MxdKje
- unO+gINaSn/ORa0QK+s9Y4wy25Jv9dv9WmJnTwF8vZahjMQnw9PgRIuRQ+xeKbBTdAQ+
- khVWSM1cPB9LxnHrXwkr5zDFr5aNMdOJ5UOdD91/l2e232fiQEJy1jbpZePx43R/Fatq
- vWPxIH3PRVuXC4ToA32sAOxGSxrOQnUkkbK4EZq01PQUlkQBslNLgVC9anGNYPF6cFpj
- E1Qw==
-X-Gm-Message-State: AOJu0YwjHsT78OD4a0iXnFKxtRW56CcAPBqTpInwWY2y7ixStFLhSwfM
- RW0S826a3I16npMqKmC4u/4Xd68upU3506LFQZ5Vj3sIjL8OX33z/gNMcIaDe+7Te2U=
-X-Gm-Gg: ASbGnctUUiNashFuGGO/EfHSfq7xUFgUpXvW9N1XiklAGrPQGEoAM93jomatSKNwPC3
- BDWRnO8GDNe4tbva0gBo8lxebe01TohPJNopcCyXynqGEZC9wv4ZDLq2L1Mo7RHwzWu6aP2+RdC
- b2+I6FnNQvAhyZsRzto4MERt7Zf0+kA8rCtzqilZUDUAJm2m4lRrOxsoiBdow5mTXbn0KSBEWhn
- y8x3cyslpcEjXQcGjd6v6H/uTujDXI6j2Gkq6hoqKOIhOyhq9Su17newUcOephsMTAqMrasgxD3
- 0Sq3xLhvRiiSiuoS6/IOY0Bj/1BD/ucFfoGEYsyJl1MR+e+axNPrl71srZtoJ3HX5rwk3q18aMj
- QLpm2fRMJRUCv5IXd76KHt/s=
-X-Google-Smtp-Source: AGHT+IFCaB+vy+2+g+fQxLyRuPwVUz/e4Lx2MR+7PHTa5inYdWHIWoM9iQ2nxAgdGTEvLnrB6CSoFg==
-X-Received: by 2002:a05:600c:4754:b0:458:b8b0:6338 with SMTP id
- 5b1f17b1804b1-467a7f111b4mr33012545e9.6.1758279562580; 
- Fri, 19 Sep 2025 03:59:22 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45f320e2000sm82501235e9.1.2025.09.19.03.59.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Sep 2025 03:59:21 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C49545F827;
- Fri, 19 Sep 2025 11:59:19 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Warner Losh <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH] plugins: Add PC diversion API function
-In-Reply-To: <f56b02b1-3b50-424a-8b20-c5e5e3e0212a@epfl.ch> (Florian
- Hofhammer's message of "Thu, 11 Sep 2025 17:11:21 +0200")
-References: <f56b02b1-3b50-424a-8b20-c5e5e3e0212a@epfl.ch>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Fri, 19 Sep 2025 11:59:19 +0100
-Message-ID: <87bjn6n1x4.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uzYtt-0000EJ-Mh
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:03:38 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uzYto-0000qG-QU
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:03:37 -0400
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20250919110325epoutp040a3a0f63bd3f8bfa68f2fec37a197c09~mqirtCm741637416374epoutp04T
+ for <qemu-devel@nongnu.org>; Fri, 19 Sep 2025 11:03:25 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20250919110325epoutp040a3a0f63bd3f8bfa68f2fec37a197c09~mqirtCm741637416374epoutp04T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1758279805;
+ bh=6kmVAHMIY5EUz8/oQT22z2+iEFOIcjXTLGTMM76hRUk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=iZVQgNXoDO9MvNk92urbtwm/zG66OBoWtfD5BF7tSULsPsL3faIfLyK4tKhv8FfNh
+ dH4lm+xFcTcJyu5s/n2LbFGV//PxIcwJmaavivJMz2GSyQVqH5mx8vfCjWXrqlhHuh
+ zNNR8TEO0GPVW80UycKBxIIrYt1AaOxs5cExCza8=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250919110324epcas5p205ecc138beaa8dca32cabc6905e1e101~mqiqq1-jQ1991019910epcas5p2s;
+ Fri, 19 Sep 2025 11:03:24 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.89]) by
+ epsnrtp04.localdomain (Postfix) with ESMTP id 4cSqP75wwXz6B9m6; Fri, 19 Sep
+ 2025 11:03:23 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+ 20250919110323epcas5p38ea4211afa939c30510a8a0f9cff1c5f~mqipWW0x91372513725epcas5p35;
+ Fri, 19 Sep 2025 11:03:23 +0000 (GMT)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20250919110321epsmtip1030d4158b8b7f48695c99043044221e9~mqin6tbwy0084900849epsmtip1g;
+ Fri, 19 Sep 2025 11:03:21 +0000 (GMT)
+Date: Fri, 19 Sep 2025 16:33:12 +0530
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com, arpit.sysdev@gmail.com,
+ cpgs@samsung.com
+Subject: Re: [PATCH v4 1/2] hw/cxl: Refactored Identify Switch Device & Get
+ Physical Port State
+Message-ID: <20250919110312.naudjnvhsjmxaxjk@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250917165535.000021b1@huawei.com>
+X-CMS-MailID: 20250919110323epcas5p38ea4211afa939c30510a8a0f9cff1c5f
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----.2eTkDb0Wtw7DpTqHNw2IdxlY1ZkgCZiGa8-Nl.IQwSrXKTD=_1d3f5_"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250916080803epcas5p1cd11689108b259f21908d9779993cc0f
+References: <20250916080736.1266083-1-arpit1.kumar@samsung.com>
+ <CGME20250916080803epcas5p1cd11689108b259f21908d9779993cc0f@epcas5p1.samsung.com>
+ <20250916080736.1266083-2-arpit1.kumar@samsung.com>
+ <20250917165535.000021b1@huawei.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,111 +98,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+------.2eTkDb0Wtw7DpTqHNw2IdxlY1ZkgCZiGa8-Nl.IQwSrXKTD=_1d3f5_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-> This patch adds a plugin API function that allows diverting the program
-> counter during execution. A potential use case for this functionality is
-> to skip over parts of the code, e.g., by hooking into a specific
-> instruction and setting the PC to the next instruction in the callback.
+On 17/09/25 04:55PM, Jonathan Cameron wrote:
+>On Tue, 16 Sep 2025 13:37:35 +0530
+>Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 >
-> Link:
-> https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
-
-Thanks for taking the time to roll a proper patch. I assume this is
-working for you OK?
-
-If we were to go forward with up-streaming we would want expand a test
-case to cover the new API. Maybe we could expand the syscall plugin with
-an option to emulate a system call.
-
+>> -Storing physical ports info during enumeration.
+>> -Refactored changes using physical ports info for
+>>  Identify Switch Device (Opcode 5100h) & Get Physical Port State
+>>  (Opcode 5101h) physical switch FM-API command set.
+>>
+>> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
 >
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-> ---
->  include/qemu/qemu-plugin.h | 12 ++++++++++++
->  plugins/api.c              |  9 +++++++++
->  2 files changed, 21 insertions(+)
+>Hi Arpit.  One question inline, and one comment on code I've moved
+>around whilst queue this up.  I'll push out a tree to gitlab
+>(probably tomorrow) and when I do please check I didn't mess that up!
 >
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index c450106af1..fe4e053c52 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -943,6 +943,18 @@ QEMU_PLUGIN_API
->  int qemu_plugin_write_register(struct qemu_plugin_register *handle,
->                                GByteArray *buf);
->=20=20
-> +/**
-> + * qemu_plugin_set_pc() - set the program counter for the current vCPU
-> + *
-> + * @vaddr: the new virtual (guest) address for the program counter
-> + *
-> + * This function sets the program counter for the current vCPU to @vaddr=
- and
-> + * resumes execution at that address. This function does not return.
-> + */
-> +QEMU_PLUGIN_API
-> +G_NORETURN
-> +void qemu_plugin_set_pc(uint64_t vaddr);
-> +
+>Jonathan
+>
 
-The current potential foot guns I can see are:
+Hi Jonathan,
+Thank you for the swift response and review comments.
+Sure, will look into gitlab tree once up.
 
-  - are we called from a callback with QEMU_PLUGIN_CB_RW_REGS
-  - could multiple hooks be wanting to set the PC?
+Thanks,
+Arpit
+>
+>> +static CXLRetCode cxl_set_port_type(CXLUpstreamPort *ports, int pnum,
+>> +                                    CXLCCI *cci)
+>> +{
+>> +    uint8_t current_port_config_state;
+>> +    uint8_t connected_device_type;
+>> +    uint8_t supported_ld_count;
+>> +    uint16_t lnkcap, lnkcap2, lnksta;
+>> +    PCIBus *bus;
+>> +    PCIDevice *port_dev;
+>> +    PCIEPort *usp = PCIE_PORT(cci->d);
+>> +
+>> +    if (usp->port == pnum) {
+>> +        port_dev = PCI_DEVICE(usp);
+>> +        current_port_config_state = CXL_PORT_CONFIG_STATE_USP;
+>> +        connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+>> +        supported_ld_count = 0;
+>> +    } else {
+>> +        bus = &PCI_BRIDGE(cci->d)->sec_bus;
+>> +        port_dev = pcie_find_port_by_pn(bus, pnum);
+>> +        if (port_dev) { /* DSP */
+>> +            PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
+>> +                ->devices[0];
+>> +            current_port_config_state = CXL_PORT_CONFIG_STATE_DSP;
+>> +            if (ds_dev) {
+>> +                if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
+>> +                    /* To-do: controllable */
+>
+>In what sense controllable?  It should always match what the downstream device
+>is presenting as.  Do you ultimately mean if we mess with the alternate modes
+>and reset the port to have it come up as a PCI only device?
+>This will need to be more complex as we add different CXL type 3 device support
+>of course, but I'd still expect to auto detect it rather that control it directly.
+>
 
-Not doing the first could potentially loose you register values which
-wouldn't be rectified until later in the block.
+This is with respect to your review comment from v1 patch:
+https://lore.kernel.org/qemu-devel/20250602135942.2773823-1-arpit1.kumar@samsung.com/T/
+As per my understanding, controllable was identification of the specific type of 
+CXL type 3 device and accordingly initializing connected_device_type. Since you 
+mention auto-detect, does it mean using object_get_typename() to identify the type
+of device and initiliaze it directly to connected_device_type rather than specifying
+it explicitly. If yes, then this anyways rules out controllable part, hence the comment
+can be removed.
 
-Currently we maintain the list qemu_plugin_insn.insn_cbs in the order
-they are set. However if the callback that changes the flow is in the
-middle we risk not calling the others.
+>> +                    connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_3_SLD;
+>> +                } else {
+>> +                    connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_PCIE;
+>> +                }
+>> +            } else {
+>> +                connected_device_type = CXL_PORT_CONNECTED_DEV_TYPE_NONE;
+>> +            }
+>> +            supported_ld_count = 3;
+>> +        } else {
+>> +            return CXL_MBOX_INVALID_INPUT;
+>> +        }
+>> +    }
+>
+>>  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>>                                    DeviceState *d, size_t payload_max)
+>>  {
+>> @@ -4691,6 +4706,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>>      cci->d = d;
+>>      cci->intf = intf;
+>>      cxl_init_cci(cci, payload_max);
+>> +    cxl_set_phy_port_info(cci);
+>>  }
+>>
+>>  void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+>> @@ -4777,4 +4793,5 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+>>      cci->d = d;
+>>      cci->intf = intf;
+>>      cxl_init_cci(cci, payload_max);
+>> +    cxl_set_phy_port_info(cci);
+>
+>I'll shift this to a later patch whilst picking this up for my staging tree.
+>I want this ahead of where we introduce cxl_initialize_usp_mctpcci.
+>
+Okay
+>>  }
 
-Currently there is no protection against multiple callbacks wanting to
-change the flow.
+------.2eTkDb0Wtw7DpTqHNw2IdxlY1ZkgCZiGa8-Nl.IQwSrXKTD=_1d3f5_
+Content-Type: text/plain; charset="utf-8"
 
-Maybe we need a new callback register that implies
-QEMU_PLUGIN_CB_RW_REGS and we will always ensure is the last cb of the
-chain?
 
->  /**
->   * qemu_plugin_read_memory_vaddr() - read from memory using a virtual ad=
-dress
->   *
-> diff --git a/plugins/api.c b/plugins/api.c
-> index eac04cc1f6..0511b72ebb 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -41,6 +41,7 @@
->  #include "qemu/log.h"
->  #include "system/memory.h"
->  #include "tcg/tcg.h"
-> +#include "exec/cpu-common.h"
->  #include "exec/gdbstub.h"
->  #include "exec/target_page.h"
->  #include "exec/translation-block.h"
-> @@ -457,6 +458,14 @@ int qemu_plugin_write_register(struct qemu_plugin_re=
-gister *reg,
->      return gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(re=
-g) - 1);
->  }
->=20=20
-> +void qemu_plugin_set_pc(uint64_t vaddr)
-> +{
-> +    g_assert(current_cpu);
-> +
-> +    cpu_set_pc(current_cpu, vaddr);
-> +    cpu_loop_exit(current_cpu);
-> +}
-> +
-
-As you see the actual mechanics of restarting at the new PC is the easy
-bit ;-)
-
->  bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size=
-_t len)
->  {
->      g_assert(current_cpu);
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+------.2eTkDb0Wtw7DpTqHNw2IdxlY1ZkgCZiGa8-Nl.IQwSrXKTD=_1d3f5_--
 
