@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6485FCAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE38CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzWbZ-0002uW-Mh; Fri, 19 Sep 2025 04:36:33 -0400
+	id 1uzWbV-0002oa-KD; Fri, 19 Sep 2025 04:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzWbW-0002rS-9Z
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:30 -0400
+ id 1uzWbR-0002lk-CQ
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzWbT-00020J-GK
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:30 -0400
+ id 1uzWbO-000201-Ot
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 04:36:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758270984;
+ s=mimecast20190719; t=1758270980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=u2ujm1VawI3tEQj8Jm53WYSDc86i34iyikdx2/JKeC4=;
- b=bAeg+uaSRXhqrtj9X/0l2cJIHAUUhnXmNPOLLGa2NTbDDjx0i8snDXB8Q05Pvt6O8m8Pkv
- Q8PZLKZhnnUcJdQH9LO4IhsdV16gs7DEA/34st3tNBo4bsGWt8EU7r4qqpuYLnd9DSSblq
- b5uz9DjZ4VIv/1O9Q2KCo0vUKXd6mV0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=sKH5QWQw0/glUmX0Rmw2beiRAnZ2M7XabZIaFii2JXk=;
+ b=ZVkIK8F85RYgvIGMkcnna16uS5C6bpR6GeOAGbYKY6tWzy/Zls2AbeGzWZX5AVJ4HR+YRW
+ VWcZ5PL02orUH3uG9vQwpxn9EFfWV1RN+TiQIkHajO9lLYobMZDODiDw28aQKbl+55cyC8
+ XqrPsLVxXKUJW7J7WLGOaicEICnizhU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-RF-ybB5DMY6_XFUMvCDXSg-1; Fri,
- 19 Sep 2025 04:36:22 -0400
-X-MC-Unique: RF-ybB5DMY6_XFUMvCDXSg-1
-X-Mimecast-MFC-AGG-ID: RF-ybB5DMY6_XFUMvCDXSg_1758270981
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-9My6e-D-NfmvwKQnfvP8XQ-1; Fri,
+ 19 Sep 2025 04:36:18 -0400
+X-MC-Unique: 9My6e-D-NfmvwKQnfvP8XQ-1
+X-Mimecast-MFC-AGG-ID: 9My6e-D-NfmvwKQnfvP8XQ_1758270977
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02FBE1800285; Fri, 19 Sep 2025 08:36:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2950195608B; Fri, 19 Sep 2025 08:36:16 +0000 (UTC)
 Received: from avogadro.redhat.com (unknown [10.44.33.250])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 84A2C1800452; Fri, 19 Sep 2025 08:36:19 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B0DE830002C8; Fri, 19 Sep 2025 08:36:14 +0000 (UTC)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org
-Subject: [PATCH] rust: build: add back common and util tests
-Date: Fri, 19 Sep 2025 10:36:17 +0200
-Message-ID: <20250919083617.86582-1-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] linux-user: avoid -Werror=int-in-bool-context
+Date: Fri, 19 Sep 2025 10:36:12 +0200
+Message-ID: <20250919083612.86546-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -64,7 +65,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,43 +81,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These were dropped by mistake when extracting the crates.
+linux-user is failing to compile on Fedora 43:
 
+../linux-user/strace.c:57:66: error: enum constant in boolean context [-Werror=int-in-bool-context]
+   57 | #define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
+
+The warning does not seem to useful and we could even disable it, but
+the workaround is simple in this case.
+
+Cc: qemu-stable@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/common/meson.build | 3 +++
- rust/util/meson.build   | 4 ++++
- 2 files changed, 7 insertions(+)
+ linux-user/strace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/common/meson.build b/rust/common/meson.build
-index b805e0faf57..07d073182ed 100644
---- a/rust/common/meson.build
-+++ b/rust/common/meson.build
-@@ -24,6 +24,9 @@ _common_rs = static_library(
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 1233ebceb08..758c5d32b6c 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -54,7 +54,7 @@ struct flags {
+ };
  
- common_rs = declare_dependency(link_with: [_common_rs])
+ /* No 'struct flags' element should have a zero mask. */
+-#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
++#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO((M) == 0), N }
  
-+rust.test('rust-common-tests', _common_rs,
-+          suite: ['unit', 'rust'])
-+
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
- # in a separate suite that is run by the "build" CI jobs rather than "check".
-diff --git a/rust/util/meson.build b/rust/util/meson.build
-index 87a893673d2..96330504459 100644
---- a/rust/util/meson.build
-+++ b/rust/util/meson.build
-@@ -44,6 +44,10 @@ _util_rs = static_library(
- 
- util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
- 
-+rust.test('rust-util-tests', _util_rs,
-+          dependencies: [qemuutil, qom],
-+          suite: ['unit', 'rust'])
-+
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
- # in a separate suite that is run by the "build" CI jobs rather than "check".
+ /* common flags for all architectures */
+ #define FLAG_GENERIC_MASK(V, M)  FLAG_BASIC(V, M, #V)
 -- 
 2.51.0
 
