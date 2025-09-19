@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05386CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 13:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05312CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 13:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzbPP-0003IR-Vg; Fri, 19 Sep 2025 09:44:20 -0400
+	id 1uzbUu-0006BR-A9; Fri, 19 Sep 2025 09:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbPO-0003Hs-E7
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:44:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uzbUq-0006B8-Pl
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:49:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzbPH-0006tN-Nd
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:44:17 -0400
+ id 1uzbUe-0000Fu-KN
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 09:49:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758289447;
+ s=mimecast20190719; t=1758289779;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wQGNOO8Spv0Wvgh1QkF/AXf8NauXM4WYOfCuvSMBK+M=;
- b=DB+4dEsrUYr/RSmW4EvYM/FbBOqVsbyfSQf3n7M/TASZJbQVDwY7Jbd3A2nztaDnT6U66a
- xbgtAWpRxHXsSREJxFd2tW6uuuNqiLezBBO7nnFeduwmlfN9cBlzNlshY5MYZMPGswYbhc
- 8AvFuCxxssDa4aZ/Xf1NT0zSfc7AJys=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=AUBQV1JzvkyfWbcPAB8CcOGUh3E6/mk5bDlu6GYGEHM=;
+ b=cUfVR18wOKkrsKgQK6bxRZOYYjvAGgIJ0mWGJNJz3A1JpKR+fVJWqfalzDmYCpk4ScN6pB
+ LnIsvFmqx5NtbBpCqmV96sJpRG3d6yg8z93jmx96wrtQjXWe7DEZj4we7HXdZXaxDnw/Tm
+ NBPSBZkIc42lqFQW02lVEs/RQ9RtGwo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-RogRV0ENMTiQCoWioLuBUw-1; Fri,
- 19 Sep 2025 09:44:03 -0400
-X-MC-Unique: RogRV0ENMTiQCoWioLuBUw-1
-X-Mimecast-MFC-AGG-ID: RogRV0ENMTiQCoWioLuBUw_1758289442
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-9HJIUBKgNy6EBESEfpbBWw-1; Fri,
+ 19 Sep 2025 09:49:36 -0400
+X-MC-Unique: 9HJIUBKgNy6EBESEfpbBWw-1
+X-Mimecast-MFC-AGG-ID: 9HJIUBKgNy6EBESEfpbBWw_1758289774
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8AC018004D4; Fri, 19 Sep 2025 13:44:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3B44195607A; Fri, 19 Sep 2025 13:49:34 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.187])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B04FD18004A3; Fri, 19 Sep 2025 13:43:56 +0000 (UTC)
-Date: Fri, 19 Sep 2025 14:43:53 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7B461953953; Fri, 19 Sep 2025 13:49:30 +0000 (UTC)
+Date: Fri, 19 Sep 2025 14:49:26 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 11/20] monitor: move error_vprintf() back to
- error-report.c
-Message-ID: <aM1eGRtgZa1RVlz1@redhat.com>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-12-berrange@redhat.com>
- <874isyy6dz.fsf@pond.sub.org>
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
+Subject: Re: [PATCH 03/24] scripts/archive-source: silence subprojects
+ downloads
+Message-ID: <aM1fZosP00RPA8o7@redhat.com>
+References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
+ <20250919133320.240145-4-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <874isyy6dz.fsf@pond.sub.org>
+In-Reply-To: <20250919133320.240145-4-marcandre.lureau@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,28 +97,39 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 02:27:20PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On Fri, Sep 19, 2025 at 05:32:57PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> > This conceptually reverts 397d30e9401d2da96dbdf0ce49805d6d4bb68833.
-> > The discussion around stubs in that commit does not appear to be
-> > important to the current state of the codebase.
+> It's too verbose.
 > 
-> Can we figure out why Paolo's change is no longer needed?
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  scripts/archive-source.sh | 2 +-
+>  tests/lcitool/libvirt-ci  | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> Discussion back then:
-> https://lore.kernel.org/qemu-devel/37942764-b3c8-1ac1-5121-894ada7300f2@redhat.com/
-> https://lore.kernel.org/qemu-devel/1477326663-67817-1-git-send-email-pbonzini@redhat.com/
+> diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+> index 85cd0a63a0..68eb9672de 100755
+> --- a/scripts/archive-source.sh
+> +++ b/scripts/archive-source.sh
+> @@ -77,7 +77,7 @@ function subproject_dir() {
+>  git archive --format tar "$(tree_ish)" > "$tar_file"
+>  test $? -ne 0 && error "failed to archive qemu"
+>  
+> -meson subprojects download $subprojects
+> +meson subprojects download $subprojects >/dev/null
+>  test $? -ne 0 && error "failed to download subprojects $subprojects"
+>  
+>  for sp in $subprojects; do
+> diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
+> index 18c4bfe02c..7a92fe388f 160000
+> --- a/tests/lcitool/libvirt-ci
+> +++ b/tests/lcitool/libvirt-ci
+> @@ -1 +1 @@
+> -Subproject commit 18c4bfe02c467e5639bf9a687139735ccd7a3fff
+> +Subproject commit 7a92fe388f55d1bbc33e639e3484533f88c542ec
 
-I'm wrong, this change of mine is broken because it messes up the output
-of test-vmstate still
-
-> 
-> > This makes the error_vprintf() impl source file match that
-> > of error_printf(), and also match the header where it is declared.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
+Unrelated change here.
 
 With regards,
 Daniel
