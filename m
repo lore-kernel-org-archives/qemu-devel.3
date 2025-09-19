@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8C5CAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 12:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927A2CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 12:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzaDN-0008Gt-J7; Fri, 19 Sep 2025 08:27:49 -0400
+	id 1uzaT5-0003gE-0g; Fri, 19 Sep 2025 08:44:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzaDD-0008G5-9T
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:27:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzaT3-0003fE-Qm
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:44:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzaD7-00055s-7w
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:27:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uzaSx-0003I6-6F
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 08:43:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758284849;
+ s=mimecast20190719; t=1758285829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gkZuhX84S42dAzWd5lDeM01IGWlt01IQDxVV7y6SdAg=;
- b=EVJ+tOIimRLnxEL8J0dpdWHp7Gxz7SK1A9Rc/DpQzsFbQPXbFFrcy0Awf9xjyv86fpd2RX
- fiscJx7lnkczuy+83SBg4qfJ4I+6/aQEe87nzYVL/2THw/Pm4tGT+DNPBHD9JQllbzOCgK
- 5RZOP/iwhV3e6O4S4nF0a1DIRtOIjmI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cZH6M/G8z9UjjpH8Vku58fpTVtFVYrf5nk3lrykAhzw=;
+ b=hYwxdTovW6m6LCtSKBfhyZEQ1wk628ele/ZJHpsDyC4FkrLpMUFPjXUFqdaW1wX+HYILrr
+ HJ58Ht0OGgadrem/uO15x3EyHmksKanVk0r+OhEAlP8YQdcD06KPQFXqv3UDJB2cYTr/NJ
+ L0C/XydxBfpwnj9ggKLhgi8KOA6REXY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-UAhuhii-PpqGouTZ893T3Q-1; Fri,
- 19 Sep 2025 08:27:25 -0400
-X-MC-Unique: UAhuhii-PpqGouTZ893T3Q-1
-X-Mimecast-MFC-AGG-ID: UAhuhii-PpqGouTZ893T3Q_1758284844
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-576-imrxfF8OOhyS_cPHXcTYOw-1; Fri,
+ 19 Sep 2025 08:43:46 -0400
+X-MC-Unique: imrxfF8OOhyS_cPHXcTYOw-1
+X-Mimecast-MFC-AGG-ID: imrxfF8OOhyS_cPHXcTYOw_1758285825
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0EC5180034D; Fri, 19 Sep 2025 12:27:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAECC19560B1; Fri, 19 Sep 2025 12:43:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 49E9E1800447; Fri, 19 Sep 2025 12:27:23 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 386ED1955F21; Fri, 19 Sep 2025 12:43:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 93F5721E6A27; Fri, 19 Sep 2025 14:27:20 +0200 (CEST)
+ id 7C17421E6A27; Fri, 19 Sep 2025 14:43:41 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna Reitz
@@ -60,20 +60,19 @@ Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna Reitz
  <kraxel@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David Alan Gilbert"
  <dave@treblig.org>
-Subject: Re: [PATCH v3 11/20] monitor: move error_vprintf() back to
- error-report.c
-In-Reply-To: <20250910180357.320297-12-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 10 Sep 2025 19:03:48
+Subject: Re: [PATCH v3 12/20] monitor: introduce monitor_cur_hmp() function
+In-Reply-To: <20250910180357.320297-13-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 10 Sep 2025 19:03:49
  +0100")
 References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-12-berrange@redhat.com>
-Date: Fri, 19 Sep 2025 14:27:20 +0200
-Message-ID: <874isyy6dz.fsf@pond.sub.org>
+ <20250910180357.320297-13-berrange@redhat.com>
+Date: Fri, 19 Sep 2025 14:43:41 +0200
+Message-ID: <87zfaqwr2a.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -101,21 +100,109 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> This conceptually reverts 397d30e9401d2da96dbdf0ce49805d6d4bb68833.
-> The discussion around stubs in that commit does not appear to be
-> important to the current state of the codebase.
+> A number of callers use monitor_cur() followed by !monitor_cur_is_qmp().
 
-Can we figure out why Paolo's change is no longer needed?
+"A number of"?  I can see just one:
 
-Discussion back then:
-https://lore.kernel.org/qemu-devel/37942764-b3c8-1ac1-5121-894ada7300f2@red=
-hat.com/
-https://lore.kernel.org/qemu-devel/1477326663-67817-1-git-send-email-pbonzi=
-ni@redhat.com/
+    int error_vprintf(const char *fmt, va_list ap)
+    {
+        Monitor *cur_mon =3D monitor_cur();
 
-> This makes the error_vprintf() impl source file match that
-> of error_printf(), and also match the header where it is declared.
->
+        if (cur_mon && !monitor_cur_is_qmp()) {
+            return monitor_vprintf(cur_mon, fmt, ap);
+        }
+        return vfprintf(stderr, fmt, ap);
+    }
+
+> This is undesirable because monitor_cur_is_qmp() will itself call
+> monitor_cur() again, and monitor_cur() must acquire locks and do
+> hash table lookups. Introducing a monitor_cur_hmp() helper will
+> combine the two operations into one reducing cost.
+
+This made me expect the patch replaces the undesirable uses.  It does
+not; the new function remains unused for now.
+
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  include/monitor/monitor.h      |  1 +
+>  monitor/monitor.c              | 14 ++++++++++++++
+>  stubs/monitor-core.c           |  5 +++++
+>  tests/unit/test-util-sockets.c |  1 +
+>  4 files changed, 21 insertions(+)
+>
+> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> index 296690e1f1..c3b79b960a 100644
+> --- a/include/monitor/monitor.h
+> +++ b/include/monitor/monitor.h
+> @@ -14,6 +14,7 @@ typedef struct MonitorOptions MonitorOptions;
+>  extern QemuOptsList qemu_mon_opts;
+>=20=20
+>  Monitor *monitor_cur(void);
+> +Monitor *monitor_cur_hmp(void);
+>  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
+>  bool monitor_cur_is_qmp(void);
+>=20=20
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index e1e5dbfcbe..cff502c53e 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -84,6 +84,20 @@ Monitor *monitor_cur(void)
+>      return mon;
+>  }
+>=20=20
+> +Monitor *monitor_cur_hmp(void)
+> +{
+> +    Monitor *mon;
+> +
+> +    qemu_mutex_lock(&monitor_lock);
+> +    mon =3D g_hash_table_lookup(coroutine_mon, qemu_coroutine_self());
+> +    if (mon && monitor_is_qmp(mon)) {
+> +        mon =3D NULL;
+> +    }
+> +    qemu_mutex_unlock(&monitor_lock);
+> +
+> +    return mon;
+> +}
+> +
+>  /**
+>   * Sets a new current monitor and returns the old one.
+>   *
+> diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+> index b498a0f1af..1e0b11ec29 100644
+> --- a/stubs/monitor-core.c
+> +++ b/stubs/monitor-core.c
+> @@ -7,6 +7,11 @@ Monitor *monitor_cur(void)
+>      return NULL;
+>  }
+>=20=20
+> +Monitor *monitor_cur_hmp(void)
+> +{
+> +    return NULL;
+> +}
+> +
+>  bool monitor_cur_is_qmp(void)
+>  {
+>      return false;
+> diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-socket=
+s.c
+> index bd48731ea2..d40813c682 100644
+> --- a/tests/unit/test-util-sockets.c
+> +++ b/tests/unit/test-util-sockets.c
+> @@ -72,6 +72,7 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Er=
+ror **errp)
+>   * otherwise we get duplicate syms at link time.
+>   */
+>  Monitor *monitor_cur(void) { return cur_mon; }
+> +Monitor *monitor_cur_hmp(void) { return cur_mon; }
+
+@cur_mon is a fake here.  Why do you make this fake monitor HMP?  If we
+somehow call error_vprintf(), it'll call monitor_vprintf(), which will
+dereference the fake monitor.  Best possible outcome would be an
+immediate crash.
+
+>  bool monitor_cur_is_qmp(void) { return false; }
+>  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+>  int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort()=
+; }
 
 
