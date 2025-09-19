@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFADCAC59A
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F65DCAC59A
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 11:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzZgL-0004db-C0; Fri, 19 Sep 2025 07:53:41 -0400
+	id 1uzZds-0001ly-Ed; Fri, 19 Sep 2025 07:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZgI-0004RS-GV
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:53:38 -0400
+ id 1uzZdr-0001l2-5F
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:51:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uzZg4-00019z-QS
- for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:53:33 -0400
+ id 1uzZdi-0000mT-ET
+ for qemu-devel@nongnu.org; Fri, 19 Sep 2025 07:51:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758282797;
+ s=mimecast20190719; t=1758282656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l/nPgGoxBal0yhdLm799HPkz/9tEha6vwLh4qn0x4io=;
- b=ISD6ySah1p3G13D17ZpYEfvgmTEXUaeNyN1RYgLRxd1fXHP81LC0FZjyV6upc1jfdMeTiB
- wDPSjldfyZwGklGSfwa4wrpxAECczUexNzVMCTLdNfTXRnLYaEFC7COF1+tXlwsB+Var6J
- HDohvWjEQBBVxH3nRIWNslVN9itVkIQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PdRoEwCHMx+zjgwRt6dMBJqTTFrggUWD628P7VP28VY=;
+ b=YiXyl5LK1tOfFqE9IVloRk+rF0Yb3JdJjFKe33N91qQzEO/NZKnDbBVe5KgmfUsLEe+NdR
+ 8MnPDTRBT6vZqI3ussv8lu9nvESLBOEsid6lz5yeRQRlLHOIBj0LwUuibCLi0z+wcB1Q1c
+ YtKQu+ligb6EBhmrTwbWhGO1aSgJyiE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-_QGoYI_lP0u-9i_WIN13rw-1; Fri,
- 19 Sep 2025 07:53:14 -0400
-X-MC-Unique: _QGoYI_lP0u-9i_WIN13rw-1
-X-Mimecast-MFC-AGG-ID: _QGoYI_lP0u-9i_WIN13rw_1758282792
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-FF262A2ENbOqTtDaVXgaPg-1; Fri,
+ 19 Sep 2025 07:50:52 -0400
+X-MC-Unique: FF262A2ENbOqTtDaVXgaPg-1
+X-Mimecast-MFC-AGG-ID: FF262A2ENbOqTtDaVXgaPg_1758282650
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECDE3195608A; Fri, 19 Sep 2025 11:53:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39B5819560A1; Fri, 19 Sep 2025 11:50:50 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.187])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E0E11955F21; Fri, 19 Sep 2025 11:53:02 +0000 (UTC)
+ id DF2A01953944; Fri, 19 Sep 2025 11:50:40 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,10 +71,10 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Bandan Das <bsd@redhat.com>,
  Kostiantyn Kostiuk <kkostiuk@redhat.com>,
  Hailiang Zhang <zhanghailiang@xfusion.com>
-Subject: [PULL 16/16] util/vhost-user-server: vu_message_read(): improve error
- handling
-Date: Fri, 19 Sep 2025 12:50:17 +0100
-Message-ID: <20250919115017.1536203-17-berrange@redhat.com>
+Subject: [PULL 02/16] migration/qemu-file: don't make incoming fds blocking
+ again
+Date: Fri, 19 Sep 2025 12:50:03 +0100
+Message-ID: <20250919115017.1536203-3-berrange@redhat.com>
 In-Reply-To: <20250919115017.1536203-1-berrange@redhat.com>
 References: <20250919115017.1536203-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,7 +90,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.105,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,71 +108,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-1. Drop extra error_report_err(NULL), it will just crash, if we get
-here.
+In migration we want to pass fd "as is", not changing its
+blocking status.
 
-2. Get and report error of qemu_set_blocking(), instead of aborting.
+The only current user of these fds is CPR state (through VMSTATE_FD),
+which of-course doesn't want to modify fds on target when source is
+still running and use these fds.
 
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/vhost-user-server.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ include/io/channel.h  |  1 +
+ io/channel-socket.c   | 13 +++++++++----
+ migration/qemu-file.c |  3 ++-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
-index 04c72a92aa..1dbe409f82 100644
---- a/util/vhost-user-server.c
-+++ b/util/vhost-user-server.c
-@@ -62,7 +62,7 @@ static void vmsg_close_fds(VhostUserMsg *vmsg)
-     }
- }
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 234e5db70d..12266256a8 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -36,6 +36,7 @@ OBJECT_DECLARE_TYPE(QIOChannel, QIOChannelClass,
  
--static void vmsg_unblock_fds(VhostUserMsg *vmsg)
-+static bool vmsg_unblock_fds(VhostUserMsg *vmsg, Error **errp)
+ #define QIO_CHANNEL_READ_FLAG_MSG_PEEK 0x1
+ #define QIO_CHANNEL_READ_FLAG_RELAXED_EOF 0x2
++#define QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING 0x4
+ 
+ typedef enum QIOChannelFeature QIOChannelFeature;
+ 
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 3b7ca924ff..21f8f2e0c5 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -464,7 +464,8 @@ static void qio_channel_socket_finalize(Object *obj)
+ 
+ #ifndef WIN32
+ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+-                                        int **fds, size_t *nfds)
++                                        int **fds, size_t *nfds,
++                                        bool preserve_blocking)
  {
-     int i;
+     struct cmsghdr *cmsg;
  
-@@ -74,13 +74,16 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
-      */
-     if (vmsg->request == VHOST_USER_ADD_MEM_REG ||
-         vmsg->request == VHOST_USER_SET_MEM_TABLE) {
--        return;
-+        return true;
+@@ -497,8 +498,10 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+                 continue;
+             }
+ 
+-            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+-            qemu_socket_set_block(fd);
++            if (!preserve_blocking) {
++                /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
++                qemu_socket_set_block(fd);
++            }
+ 
+ #ifndef MSG_CMSG_CLOEXEC
+             qemu_set_cloexec(fd);
+@@ -556,7 +559,9 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
      }
  
-     for (i = 0; i < vmsg->fd_num; i++) {
--        /* TODO: handle error more gracefully than aborting */
--        qemu_set_blocking(vmsg->fds[i], false, &error_abort);
-+        if (!qemu_set_blocking(vmsg->fds[i], false, errp)) {
-+            return false;
-+        }
-     }
-+
-+    return true;
- }
- 
- static void panic_cb(VuDev *vu_dev, const char *buf)
-@@ -123,7 +126,6 @@ vu_message_read(VuDev *vu_dev, int conn_fd, VhostUserMsg *vmsg)
- 
-     vmsg->fd_num = 0;
-     if (!ioc) {
--        error_report_err(local_err);
-         goto fail;
+     if (fds && nfds) {
+-        qio_channel_socket_copy_fds(&msg, fds, nfds);
++        qio_channel_socket_copy_fds(
++            &msg, fds, nfds,
++            flags & QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING);
      }
  
-@@ -177,7 +179,10 @@ vu_message_read(VuDev *vu_dev, int conn_fd, VhostUserMsg *vmsg)
-     } while (read_bytes != VHOST_USER_HDR_SIZE);
+     return ret;
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index b6ac190034..d5c6e7ec61 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -340,7 +340,8 @@ static ssize_t coroutine_mixed_fn qemu_fill_buffer(QEMUFile *f)
  
-     /* qio_channel_readv_full will make socket fds blocking, unblock them */
--    vmsg_unblock_fds(vmsg);
-+    if (!vmsg_unblock_fds(vmsg, &local_err)) {
-+        error_report_err(local_err);
-+        goto fail;
-+    }
-     if (vmsg->size > sizeof(vmsg->payload)) {
-         error_report("Error: too big message request: %d, "
-                      "size: vmsg->size: %u, "
+     do {
+         struct iovec iov = { f->buf + pending, IO_BUF_SIZE - pending };
+-        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd, 0,
++        len = qio_channel_readv_full(f->ioc, &iov, 1, pfds, pnfd,
++                                     QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING,
+                                      &local_error);
+         if (len == QIO_CHANNEL_ERR_BLOCK) {
+             if (qemu_in_coroutine()) {
 -- 
 2.50.1
 
