@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3EECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01B7CAC592
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Sep 2025 08:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzWoX-0001ok-Tw; Fri, 19 Sep 2025 04:49:58 -0400
+	id 1uzWpb-0003bD-Pu; Fri, 19 Sep 2025 04:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uzWoI-0001a0-Ry; Fri, 19 Sep 2025 04:49:43 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1uzWpW-0003aG-Bz; Fri, 19 Sep 2025 04:50:58 -0400
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1uzWoB-0006L4-S2; Fri, 19 Sep 2025 04:49:42 -0400
+ id 1uzWpQ-0006vV-VC; Fri, 19 Sep 2025 04:50:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eF3hmSEhTmKz1yciCNOSX54Xr1qyQUeSjZaHl5KLMAdUlkwL3LxIl7tW04QFZ5iaa6OQv8B0DsurjC+AINehRp9+0d/QvO9DNJ5b2sRDWmhCo2ZSDreO3ZX+eMx3gazdBDyQOvAL6juo30VmrV/vspGmP0wIKH91jN7LoPa3AoMuh3zbiHO42jQuquQf8dondIV7HPxEBjuIxrQc0ywEZfRoK8HWH/YGsHYxEN+fVLWH913V2Euwxi8/skWn2yF1qWFXrGITeArPFglY17ifqgG4MvJ2pch848YqEblOf2qs7gw+Ca8KnR1HJBNkTZUIZ1OhL5ufC1jfQIQTHV1PcA==
+ b=oKs//pSWMLSf4rS+Zmph6cBdjZGFsNGAyWqqYsEXPQQqVBnDdVAVGaIhIeAmT20CCaxtQYGIj/xJWkUHqNwTQQboGdcc1qp42WHFhchojYRPV0ZiF27nRdto+ajtJXoWGqtBuIq9CMx3XaNQZGhkmneRwbVFJ2wSGnba0K34I3pd2p43lbegavIC6IX+6gOqnhnWE875i0NGcctadra5GofOtBh8322ECM9j6Pnfq5w5Nm+LbTmqmR/Qcc9GZ2s0Lby49vYNap5m282R3CoIpBXaQg7T13rA+kzA5okm0hOWGkivAOlcq5muHCn0jAQcvjNJs8CgQednntowaP989w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9dMjEPSkBZY34Oew6svqoZl7Lo0z8xCzrnAYLC3wkVU=;
- b=mPHfko9T3+rRe5hrRcN1oARYN4D1wal/3J0NQX38mVaLGVJDLPZuhx/+dZ1jwQdLi4un/uT73opXKoYdZhG2p7KEj3c+DIzUl9y2jjofsgYrQb9Nir60I1SQLjD44yktUHt4EsNecRjQWsHvXWrzw2bvya54fd/imEu+Z4hu5BT/us31XqpCwt2fp76WkttZKxs7tALpU3ynESagQJdC9KzofsbOdWsgFXwEEmA8JR9k5U3wjNW6J9OGZoW1dbQ9HEbuSn7qcyNMbvNJMNAXQlz8yoROgeeDuTGW/Qegwr4q+rRlctxfD4eixHE2CxwVRZBYuwwIoiCWT9VyfdexAQ==
+ bh=cWzDsGBAxn+zBSPVnqSSodHrGeuCaR18rcQ0MkFZaDM=;
+ b=G9/8h6BfkqzzkC6X2PWmkIG1tQsZAyzBCze31+YTcIcbW+eToOXd4OjJcy4S6ANYz0vKgyKdyyO1d+sMjc2hlixgwnICP3nALcWC2zCeZoBAz/MhX8V4aFa04sC+Vgrmc0ob60CoE8cHkrQ47rzZLOl5vBjgGF5Qz0eNSV4O78hzOZ9Ov0RsriZxNLhM2eOetXX9Fmlw0sbmCilK69pHJP3e5m8Z8ZjAhPKQrwtMO/HsKJVgagu0qBUtlzG8SDFcYGtSPJ3QHN18qi4q0lM0aClynByiCvfQjxDqcjA+Mi4wiAkWWtPTV+MH4zzjtzzWL7/m+lHC0DEPZ2tBlZsNvg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9dMjEPSkBZY34Oew6svqoZl7Lo0z8xCzrnAYLC3wkVU=;
- b=Q1ZRXFHMsfjSA6A01quI7NeyYVXXTk0uj6m/ld8vgdTlj8KiIAWed91SkiLsU4rhLh3uLtLOc2X6FPDOTrGj4IH9v5c4krrqesYXmau+qa+NAK7q6sBUqzH3M1QizmwS6gTRgYql6REQZkShpvpIa2zXund+XOakomfa5+VFqFA=
+ bh=cWzDsGBAxn+zBSPVnqSSodHrGeuCaR18rcQ0MkFZaDM=;
+ b=0kuS+73KOxq1LqUgQfeuCCWgDCQqymbxLSYce3HC1INXDsFRxoon7G+GEnbcj6zetb9AxEj7oCAfPdU3PTP2wpB7zprpnG4zBXKWd9DZdsxsQ3T8GSMveKYQ/4AYOe97k4g2Hp93RkC9kep5pb7JHjQijxlHgwpl27azDQ0c7Rc=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
  by CH3PR12MB8510.namprd12.prod.outlook.com (2603:10b6:610:15b::10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.14; Fri, 19 Sep
- 2025 08:49:32 +0000
+ 2025 08:50:41 +0000
 Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
  ([fe80::29bb:9aa:2a72:df1b%5]) with mapi id 15.20.9115.020; Fri, 19 Sep 2025
- 08:49:32 +0000
-Date: Fri, 19 Sep 2025 10:49:24 +0200
+ 08:50:41 +0000
+Date: Fri, 19 Sep 2025 10:50:35 +0200
 From: Francisco Iglesias <francisco.iglesias@amd.com>
 To: Luc Michel <luc.michel@amd.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -52,115 +52,115 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair@alistair23.me>
-Subject: Re: [PATCH 1/7] hw/core/register: remove the REGISTER device type
-Message-ID: <aM0ZFAuCzyU265S+@xse-figlesia-l2.amd.com>
+Subject: Re: [PATCH 2/7] hw/core/register: add the REGISTER_ARRAY type
+Message-ID: <aM0ZW5JAcOT5U1vr@xse-figlesia-l2.amd.com>
 References: <20250917114450.175892-1-luc.michel@amd.com>
- <20250917114450.175892-2-luc.michel@amd.com>
+ <20250917114450.175892-3-luc.michel@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250917114450.175892-2-luc.michel@amd.com>
-X-ClientProxiedBy: FR4P281CA0240.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e9::19) To SJ2PR12MB8739.namprd12.prod.outlook.com
+In-Reply-To: <20250917114450.175892-3-luc.michel@amd.com>
+X-ClientProxiedBy: FR4P281CA0383.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f7::6) To SJ2PR12MB8739.namprd12.prod.outlook.com
  (2603:10b6:a03:549::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|CH3PR12MB8510:EE_
-X-MS-Office365-Filtering-Correlation-Id: ccf6fdf7-641f-4620-9858-08ddf7597354
+X-MS-Office365-Filtering-Correlation-Id: 6ace84e2-85d9-4b6c-18fe-08ddf7599cb6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VC9OR0NjVDIzd1Zvb1ZWYSt5UkV0N0VaRXVvTHNxV0VNU3hCZ0hYZmVpWEdR?=
- =?utf-8?B?d1d2YWVNSGkyY1A1WitPa3RYLy9LUE9EcGpPM21JeU80L1ZGeitnQ3JzcmRH?=
- =?utf-8?B?bWRXWE8vcWlHNyt5TTlWNHVIaU9kL0lpRW5EWUt1VmNNb3hvRFhFbVdlL0V0?=
- =?utf-8?B?QUF1a2k3SmZRSmgvSWpOTW9QSklkQkpqK1lBYnYzNlZOeitoL0Q5cmZncXBn?=
- =?utf-8?B?Y2RHTFUvdk5FWmNqbzJyS1NlYUhFUVJpNURUZHBzZDdBTnJNM0J0Lzh5ZlVS?=
- =?utf-8?B?d3JaeXVqVkI4UllWRW1tMkJKWm9MOHhFOUt0RkcyTTRXZmVxU2dMU29hQmZo?=
- =?utf-8?B?bC9FenJ3SkxVeU8xU1d4YmJtVEljOUU3Mzc4NmZ5RzZkZXAvcit4N2Q4S0o1?=
- =?utf-8?B?VE5rbGcvNWdsS2x1MDlWYkJsNkMrYzM5ajJnZVowM3ViOFloa0gwK1hwNHZE?=
- =?utf-8?B?V3AyMTB5eXBvemU3cElmN09WZDBiM1NrN3B2cHFyWUpTMlBXbTVuY3MvVGhM?=
- =?utf-8?B?U3JTbXJ3c0w4TjZYRy80cktZblp5cXNMaVhOR2ZZV0FXWnN5aFgzdWtyc2p0?=
- =?utf-8?B?R1hOdEFHOGI2Nm1WbGhEZThiUlJ6QTJuSGRYeWFHMXNvVUt3YkNvVW9vc2pW?=
- =?utf-8?B?dzFjM2R2ZjVDZUxhWW1wNURSMGpVN0QrSmh4N3pFcWRYbjNTVFBnZVhNaVBF?=
- =?utf-8?B?UDB0V21talU0dzRxMm1UQlcyNWxvdUFuc2pmNDEwQ1J0aVRSMnRQbC9zRytR?=
- =?utf-8?B?NFgyV3Q0aVpQYnAxajJpblZIZWhReHd3S1o1a29CckRtTVJmT1lMMFd6VWFC?=
- =?utf-8?B?WXlnb0dka2JIajRFZnpvSzVNSk5uaWdmc2QyWDhKUlJvY2hLd3ordEhLUE8x?=
- =?utf-8?B?eHpJdkkvVFEraVpOT3BpZUZnUmtFdFplUE0wN28yUjE1V3BLWlBqMHM4WTJx?=
- =?utf-8?B?eGpYOXFUcy81bnlmVzBYZ1ovbmpwT25FK1dYcHB3b1hvQ09WTXp4eExDeVM2?=
- =?utf-8?B?Vjh0ZkIza2phOEZlOTl3b2xuZWZVWVJGVjcxaDhsemtpM2hUT1FCTTRrSk5u?=
- =?utf-8?B?SldVUlV1TGdHRGZZOWZrWVBGQ3RDWk5yWW1GeWN1NHpnL0NxZVowUjZsU2RU?=
- =?utf-8?B?MHFhUXNkaUpsTDZCOXRVQzJEQ00yNGg4by8zTEd5NkR3Ry9SRUduRjdlbEpo?=
- =?utf-8?B?c3IrTHVISm1JWFQxS3l1WDZNc3pqVEdYNm9yTEdRREU2dDBHWGRYVk1KM2Rx?=
- =?utf-8?B?WjhaSUpRcEZhWU01eWhickNjYkpRaEtNcTJqckYzV1o1L0hpeTlmdC9yVTIv?=
- =?utf-8?B?MDRzNW5ldjE3cnN2ZjF2M1pwY1o2UTYvamlVM0UxU1hKZUsyM0lLOGFNdzQr?=
- =?utf-8?B?NlNRcXM3bUMveDMvekJHKzZiOVFPWmZHbFBHSkdsQ1JjU01aMVcyZDBjcWNL?=
- =?utf-8?B?ckVvRGZpaUljNlI4czg5OGVyVjR5SHVocU9jODZEdmVOQktqVkxvaElaTVE3?=
- =?utf-8?B?OHZSZDlCVmFTMzZnNFI0V1Y1bkU2L3pPWUtYWlR2U2xORi9BYUFzUUVTOTAy?=
- =?utf-8?B?NmFpZWFDNGxkU3BxYkJHNGxzQVJmYzdUeXc5M2U2dGpxblR1anlRd2VjZmww?=
- =?utf-8?B?ZHBHMFF3c1JqUTlrSXNOa29hWldPMEdjYjluaW5BUHYycW5veVFkUzlwUHpP?=
- =?utf-8?B?Mk9LT0FuL3RpTEZBeVptd2t4OXRLLyszTG90R2tlbjlFUGNGNzlSWUFPT1lp?=
- =?utf-8?B?WVh5NE8ydzhsU3BWKytDalB3Z09kT0cwSTROTUFMSXppSHkrMWtTcEh1TFFZ?=
- =?utf-8?B?bG1iTHcyeEM4V2xwb09raTEyM2xyMEY5K1BmY2FKZEY0a29LbUlVQVkra1JE?=
- =?utf-8?B?MlY0Yy9QN1FFTCttWExzOEFDQWRMeGNrU1dTS3RrOUNkMFVJdmpxSHpGK3NT?=
- =?utf-8?Q?4Y4Q4xNjZ5M=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y0lhZmRYRmdXd2xNM0UvSGl6NjZROU5NOHBWUTBzQ0Q3cjRnaG9mQ1dRRHB4?=
+ =?utf-8?B?bHExaU9VWjA3TDlyTWJTeEhPVFdvV3dsOXpCbkNWb0ZXOU5LUC81NURQdjhS?=
+ =?utf-8?B?Y1R1aGFrbnBlblRFNlFpQ1RWYlBVVXBCT3VxT3krR2RXMk9XK3JaZ0RCd29D?=
+ =?utf-8?B?Ylo0R1JsZ2xvWmNqOHRoRE5FN1hZNzBKVnpmUVo3d3d3dG8rN3F6NVFRVWxC?=
+ =?utf-8?B?Vk5Cb24xMkYyblA4WlUvWkRadFN3VzZFZmQ2anpRQks5WmZ2SUt0L0hKY0hp?=
+ =?utf-8?B?WHVVdWtEd1M3aXo1KzRjc29HdWxlKzBvR1NNeUdoMnY5Wlc1bDExWkFSMnBy?=
+ =?utf-8?B?RS9wNVFpb3BKTDBNNTMvWUptUXhvd2czamQzWUdoL25HY00xS1lZYnRVVGhv?=
+ =?utf-8?B?Qk4rSExUeUVaTDlKZDFwcjdIZVhaTE1YcGtVb29XV1J0WTJzU0FwOGJmaUVx?=
+ =?utf-8?B?UnQ0VXVlL25RUWZvVFFpY1doT2V2aGluODRGeHdrU1BQdi9xRXQrc2t1a1VU?=
+ =?utf-8?B?aWVwL0Y5UG9WdWR2cUYwK2RIakdVQzdaREc0ZlpOT1VPRm95NytNWXFUb2lK?=
+ =?utf-8?B?b0xneEpBc0xlNXdYOFBGUkJQRE1KMDBrTXdsU2g1cVJYNjhhdWl5THFjaXBz?=
+ =?utf-8?B?MUphamlpNXA0RXpUeUtKVzFJWWFiMVBUdDUwSnpGSHY2S2cyaHNsL0dlS1BE?=
+ =?utf-8?B?MTdqQmpSYUZnN3RDdHcrUFFhalhVVnYyY2UwWHVIWlYrdlVFYTVmNUVTdTRn?=
+ =?utf-8?B?K3RBaVNtV3Ywa1hpL09FQ2V4TDVZZmNnYTlhTk1tZjZuK3BKcXFOd3FpcDBU?=
+ =?utf-8?B?SnBvMVBpQUlhZW5wSE0rM3lTdE5JZUxyemo5MXNyZUtDeGZxYXgxR2phUHBL?=
+ =?utf-8?B?ZlZLcTdhbldiY3I4VG01NERqYTVhRXQ0ZUhqOUR4RmxPOFVZdFYvQ0w1cHR4?=
+ =?utf-8?B?SDRPWUxvUHI4clN4WFdmcHZydjJXbnpTejhFRGtaSVMrZUsxNVpaUVpyaEJh?=
+ =?utf-8?B?dXRNdFBUSE9zSlpnckticW9ySFM5SlRIdXVZQzR3ZEZzaDl3UnBET2VYaDkx?=
+ =?utf-8?B?cnFqb0ptek1jWUo4elpoVmFjZktLWmJRTE1XWDlWZXlXajd4RTQ2d1RveXlQ?=
+ =?utf-8?B?bXd5UWdTTmU5TXVtRWszcVJQNzBUWXBqS1hpaThWOGhpbjNSL0wzWDJFemdC?=
+ =?utf-8?B?VDNkVXpYTEwrWkFyUG5ZTVVDYUZvaEpib1hiNCsrbmIzNVIxS0JkV2d0S2VY?=
+ =?utf-8?B?R1lHaTBBZ0Jja3lyaTVvUTBLSU1ybmtnQ1V4V3VqS3lkOWdwcU9rWHJoQzdU?=
+ =?utf-8?B?WXdMYnB3OEdYRjd6M3BTMUdPNXBZb1djZ0toZW1ob05qbFpvenZUdmtFOHFM?=
+ =?utf-8?B?R0x3WmJDek9NZE0wNVpCVkdaaDZNSzZTR0g2S2hJbHFudzY4dU1EcXVac2cx?=
+ =?utf-8?B?emUwMi9SNk5lUlVqSEFJdnk0UmQraHJWVnV1dXNnTWRJY3FQV3hnMG91cGt6?=
+ =?utf-8?B?aURqRnE4WDRTTWpQQVZuVjlSN2ladVk1L2ZZVXlCZ2hUaUVrNi9ydDFNdmlB?=
+ =?utf-8?B?TG1sYTZ4MlpXZFprNXBGcUxKVi85RC9QZFdBQXQyZFAvdlRQNnZVUWhkOGw2?=
+ =?utf-8?B?K0NnMTFEbUNodEtMdUVLMnNvZEkwZndBYmRZd3llMFMvR1ZXK1p1bFF4eHBq?=
+ =?utf-8?B?WFAyZ3hybmdrRGhaQWV5VjhwbUZTZVZiS29qVWF3VTJtbU94UTRCZzRjMzY1?=
+ =?utf-8?B?OWFwdUN1d0ljMFBJVU9vbVczRE8zd3ZwWmJmZ0pEUFQzWmZHZUtBVmxUZkp5?=
+ =?utf-8?B?RDMzMU5NWFpaVGFlRStaRURnY0tuajBSYlcyY3djUjh4SDA0NGIvUFIxM3gx?=
+ =?utf-8?B?QWJONkZsNC91UGVmUmRwTHAyeXh5UzI1bkFLMUtUbGtKaGhqQlJJc1Q2bHFL?=
+ =?utf-8?Q?zlB/d2P3z3I=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L0lpd2hDVWpLVlBGMTREUWNZSXdwb0dTK0lnL0ZzTnpwdCs5cGt2V0V3Zmx3?=
- =?utf-8?B?bEFIR3ZHMUc4T3Q5QzhSZVVLbzVTbHkxZ29BOVNTcVJhTEg4bmJ5dWdvNGEv?=
- =?utf-8?B?TmEyY1RoMHBzd3lzRWFZcDh0TTNva0ZvVEpVYkhTSTNsbEkzRUtkcyt5Q2VS?=
- =?utf-8?B?UWh1Y1FxT3V6LytKWjVkSWM2aEJJTVlrZmU4RHRLak1STWFZK1NWcXViZWxJ?=
- =?utf-8?B?a0ZSdWhyb0pzUHRqZXpxMkp5SDhGZFhvM3JBbEtNY2ducUF2VGZ2MkxWaTJZ?=
- =?utf-8?B?S1JsaU1CS1NPb3RSZm1iTk5waGx3bjdOZHU5dVhIaEQ2YmJTazMzS1JNY1NM?=
- =?utf-8?B?ejdrQmRmaFFUNzhQQkpycWhFVDE5dHBET1VDMzhvTmNCdkdLbDlLNGxvM3NX?=
- =?utf-8?B?MlRPMmtNOEhOblM2dFpTcG1DZ2tqUEw4ZDhweW9OQXZ4R1JqQkR2cmRKM1RQ?=
- =?utf-8?B?SE5scDc4cGdLRnMrRlllM2d1eUdSN2d4NkVnWThWV3Z0Z3F2dmRzTzJ4eVpy?=
- =?utf-8?B?cXk4TGZrWTRqaW9PcFphZkRSV0JnRHVMWWZRUWl2RHlLVEgrRkFkRldaeVZ5?=
- =?utf-8?B?eW5kWUxvd3EyZVFSc252YmJ0cnZTMEZ4MjVaaGpROHNDYWQzYWVsKzAvRU04?=
- =?utf-8?B?TGM2WU1hREdNaUZTYyt6TC96WlM0czdrclpOSFVudkpPQVRlTUtDT2kzTmlx?=
- =?utf-8?B?LzgydHFldmZyRlVBNWNSMHM4cWxPQnlUMW1id2NUMDl2cHZWZmxyclJXVzFI?=
- =?utf-8?B?YS82U2IyVFFiaDZwbUNLOUJVZEFUaVNSRm9tNzBGUU9scC85cklyY3hLcHIr?=
- =?utf-8?B?MkZzckVZdGd0MzFnUzkyaUZKbkMrcUQyZUlFN2ZDNjcyZldDSGoxbi93amFk?=
- =?utf-8?B?MkVaUGEvbksyTUFRS1ZLNzVDSW0xVW1KelZVSDdSS2Jrd0JTT1kyb0RUakg2?=
- =?utf-8?B?SXdSVVNPMnNZa0FRT2xKenJERnpidCtJZGwxK3hSakVZbXlKWlVCZHl5VUtN?=
- =?utf-8?B?cDdoRzhWcHczb21senVUQzdXdFFsdXZ2TVI2aUdScGdwaFllcllubHVCRnJ1?=
- =?utf-8?B?QlA2enNyKytTSkdZQXJnTGlCcklpT0p4SjNTMnoydFJiYXZGTkR2YzUyOWxV?=
- =?utf-8?B?Yks1WEJ1SVdsd3hnWDFHSlFqVXVzZ2ZZWjNEaU83Z1FxZ3FpWmdidTFaOW5F?=
- =?utf-8?B?eTZBZnRmMFZoMjNvWG1VL2h2SWxUWU5vbTVsNkM0Ujc4WXpPZjhIWk5ncmo1?=
- =?utf-8?B?eHFmNi91eVRmTnFiSEh5aDB6T3ptbHRhM2k2a2g3Um14bmRPNzMxQm9oRUtT?=
- =?utf-8?B?VjJpSU9JL1g5Nlh4OU15N1M5T3BKY0RHT1NENnBHNmRRN0NFNGxKcWhzN1VR?=
- =?utf-8?B?U3V4Qi9PRUFqbUlTNWdvWEZ6VFptVFYzMUl1STFKd2VrdXdJWjAwVWZZR09N?=
- =?utf-8?B?aE9uZGJTa20ycWpTalppWmo0U3hLK2tSZllvSXoweG5wZ1dIWThvVHlGbGhi?=
- =?utf-8?B?R3RZNkpLT1BTTWF0YnBYUmY0dEZjR0w2VThBUDZiYUF5d0tRQ2YrY3MxTWEx?=
- =?utf-8?B?ZWFWanFCTndYa3p1UEdTZTErUGkyVStkRTd5aDlnNVM1UXk1N1JoVmxpWUN3?=
- =?utf-8?B?QlJ3WUYrUEtqS3RGN2xybzBRUkY1cFdtUzVKd1NTWHluVGZKVDkvajd2Mkpw?=
- =?utf-8?B?MktrTkdFeFIzNk84Y0l2bzZGdEhvWWV1Wm93b2sxcHJoRC9BN1RNRVFiUVE5?=
- =?utf-8?B?SU9BOGdxbVRJRGl4cU1DNStHMlAvcUl0a2UzQitiQXpha2VjaUpYMlpRaTBO?=
- =?utf-8?B?VFhrRGVVcDRPSTJqMW1GSk1ldlFya0piWk5ybHZSaElJa3VjbGtrK25ycksx?=
- =?utf-8?B?Qm51RFluSEZtNFdVRWF3bDhJRnBlZGFZRm1OYWxXbXE2ZE04Sjk2aXFLc3Jt?=
- =?utf-8?B?TjJxK2RQS0FnWDRQUDJLZmE5L1hRb1pHdlNwcyt2TmNSUDZ4eUNrdXozU1Jt?=
- =?utf-8?B?VUJjaGM1bVNTNWFMK1YzR3F0OVhLWUlwd1hjeHVIb0RuQTBUUVlBS2RhNklu?=
- =?utf-8?B?S2RDWmVsZGIrWFo0NlJSTE1jRWlFZmM2alllNUVwZndNVWNJbCt6L2MxMmZu?=
- =?utf-8?Q?coTDtF5m1n8FAqVzjDt8Jrw2C?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L0NqWDdlV2s5WDZCUERnYXJJT0dsOE91QVVZRmQ1bTJQNjJqL0RXZE9DbDh4?=
+ =?utf-8?B?eGY3R1VTb0d3WlkrQzJJaW1KUkRmUm9tU0lHNkYydkplVFFXK2VUNEZNeWdi?=
+ =?utf-8?B?VHNIdStqajJhMGJrL1VjN0p2Z3NZWGl4NTJBZCsvdzFhVEhQRnFMQUFvbWVY?=
+ =?utf-8?B?MEszUGU3cDlKYnBLOTFpTVlUbVRFdU9yT3d2QVIraWh0WEpmcnVQZDZGdHVE?=
+ =?utf-8?B?bHBzT1VSK3VxRHQyMXZDMGUyZVBVUFpzWmwwQUQ5WXoxTzNwZ0NaajRyUUxV?=
+ =?utf-8?B?Tm0zQ3I4aGY3TGd4RVBYeUFqSXkyTmFGWmIrQmc0Y3orY05QRXdnbWIvYU0x?=
+ =?utf-8?B?WUVySDBXWnBwMzllSEJ1UjZSa1JQZHNrYStzMkxVNjJKaWFtVm1jSjN6anky?=
+ =?utf-8?B?Uk9tL3NFMDNPczcrQlVMRHE1Q2RXeVQrL3lwbWxObDlaRk5BRnFCOFdFT2dH?=
+ =?utf-8?B?RVRiZTAvakVGL25jTmhBaCt1aVpnenpGQ1hob3JwRWZraWtjb1lBaFVoclk0?=
+ =?utf-8?B?N2tFdVhwMmo0QkFNVWdvd29tekoxYjFFb1U2Tmc4VXNFa213MlBjVXV5NzlC?=
+ =?utf-8?B?dGptaGdmRGZHUGcyaGxGYjRMNHlGa24yeXcyLzlNV0RhbUpxbk02SncyTHVs?=
+ =?utf-8?B?WjdXeVpId2NmTjN0bVp5OGd5VU1DcFVvSEhyY1hpbUJoRldMQ0RnMWNHZWdm?=
+ =?utf-8?B?SXN4MlpkcThxWUQ3bjZySmtvM3dUbjFjdmlsSEpEWnppZjEwTlRRQlJnbWtQ?=
+ =?utf-8?B?N1VKZ2tXdjVYMVFmM0Y5ZWZVQzVsZUREK3NUUXNWM1E1YTRnTzN4T0hydVRh?=
+ =?utf-8?B?Ylc5eHJGNVNUMXI5T1h3dTdhWDJwWjRUM2ZEYzEyTnl3OTh4Q1BPRkkvVHlC?=
+ =?utf-8?B?UHRON3NMMkJKbnhubkV3YXAzLzArUGFpZGRncEtlcWtoUGRzOWVyMnNQZVFY?=
+ =?utf-8?B?OE56NGQyaEg2UWd3cFdLZnNsWG1GdTR2NndGN0VhZWYrblhKZENqUTNJK0Vh?=
+ =?utf-8?B?ZDZRbStIZG1aT3RqS2RXTjlsUG0zNHMvU253UWg1RHpIOHFzcXV2N0s5YXZZ?=
+ =?utf-8?B?MVhKUWo5cnlrOTBEaEcyS1gyUjdRSE5Jc08rdjVXblFkTFRtZ2NNUEJUN1Fa?=
+ =?utf-8?B?VU9rOVVNVmNoUm1KbmEwbm5JVHhhZVF1RkZIRkZ3b2U0NWhFajllNnVpaHRy?=
+ =?utf-8?B?SGdlb2wzNXMxak8vRmhCeTJWamJmcHR5d1g3L0tPYTdIMWxWT1BCa08zSGZm?=
+ =?utf-8?B?ekxzZFJ3Q1N5ak9weC83ellqcms5OWR6Z2FxWnFWTVhGaXIxYXMyK1JvM091?=
+ =?utf-8?B?TnBhai9XQVNFTVVucFpvR0x1UDNFR0xabzZySTM4R2dvTm10T1V6R29tS1lS?=
+ =?utf-8?B?Z0hyYXc0QitUaUFWNWhsQ3lZQ2pPYytGRHBQQmlIMWJGQ01Xck5RUnB4VTJG?=
+ =?utf-8?B?WHZ1VkhmRGRCYXAzTzdtNnpDcnJVYUpSam1scnV3Z2RBQ20rcXJkVnYxUjhF?=
+ =?utf-8?B?U2QzSnJHWVh6VnR5dUxOUXIvUG1FTU9veGlpbTQ1T3lucTA0aC9USmVtTk1s?=
+ =?utf-8?B?bEtZWUE3WlU4dDIzZnMwdTdVRVJhN0dDZnRFUnZVWGNoVzE5aGgrZjQ4RFUz?=
+ =?utf-8?B?blpPcGJPQlNpMDI3MVJPUmFmQWp3YjNLMUJ1d0R6OWRMVUR6dlkvdnZCTWs0?=
+ =?utf-8?B?M0dwZ2pVdUdVdkRGLzlHbDNKb1V4TTRXcHNaM2k5NWhUUVlsNlA3YjBYeFAw?=
+ =?utf-8?B?YWQ4ZFVoZGdDUVBPWTExdlowK2IyMmUzS25aYThtWnBOS0lRdFdYSEhEb1cr?=
+ =?utf-8?B?NmZZcXNNcHFDSDFKRGJtZFpFdjQ0a0FzdVdxVkxRSkt1U1NjT0lqMW1aRS8y?=
+ =?utf-8?B?VHJKYm5UdlNGVTZQdkE2Y3pNN21vRWswczMvcWtwYWp2SnIyb0t1Y3BQWVM4?=
+ =?utf-8?B?WHg2QUF4WjgwcGhWZmk5K1Y1Q3EzcU9BWEFJL0NzT05yaHNoOVdDWE1GYXBC?=
+ =?utf-8?B?S3lPU0JxRkI2TmYxNVR0UzJOMnBpL1h5QWgwTkxaZTIzY2JzaWdsU0Z3eFNK?=
+ =?utf-8?B?YmgraTVwQmIrZmpYbExQeXc1L2pFdmFISlNObncvK0NjQ2JyR2VKZXdGcVlz?=
+ =?utf-8?Q?frfWmrlJWkwfV3f+MwJ36VNYK?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ccf6fdf7-641f-4620-9858-08ddf7597354
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ace84e2-85d9-4b6c-18fe-08ddf7599cb6
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 08:49:32.0519 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Sep 2025 08:50:41.2352 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: O6R3/YrSQaHoYk9C/lF0Cy+hZNe2G2/N6Psfza+ys9rOXDv/7jo/1T8AGtWiCRE0h5yoiAcMde7kOQsT/nKIoA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: oaJl9S2hITHGwP4AbloSqONXXuJPD5dLRjCCNbLAu3kNGlyvUsQlKSzfZLRpk0e7INFqE+KasLyIhC3gsAqI4g==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8510
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
  envelope-from=francisco.iglesias@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.005,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,20 +176,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 17, 2025 at 01:44:42PM +0200, Luc Michel wrote:
-> The REGISTER class (RegisterInfo struct) is currently a QOM type
-> inheriting from DEVICE. This class has no real purpose:
->    - the qdev API is not used,
->    - according to the comment preceding it, the object_initialize call
->      is here to zero-initialize the struct. However all the effective
->      struct attributes are then initialized explicitly.
->    - the object is never parented.
+On Wed, Sep 17, 2025 at 01:44:43PM +0200, Luc Michel wrote:
+> Introduce the REGISTER_ARRAY QOM type. This type reuses the existing
+> RegisterInfoArray struct. When `register_init_block' is called, it creates
+> a REGISTER_ARRAY object and parents it to the calling device. This way
+> it gets finalized when the device is.
 > 
-> This commits drops the REGISTER QOM type completely, leaving the
-> RegisterInfo struct as a bare C struct.
-> 
-> The register_register_types function is left empty here because it is
-> reused in the next commit.
+> The finalize function of the REGISTER_ARRAY type performs the necessary
+> cleaning that used to be done by `register_finalize_block'. The latter
+> is left empty and will be removed when all the register API users have
+> been refactored.
 > 
 > Signed-off-by: Luc Michel <luc.michel@amd.com>
 
@@ -197,82 +193,96 @@ Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
 
 > ---
->  include/hw/register.h |  7 -------
->  hw/core/register.c    | 18 ------------------
->  2 files changed, 25 deletions(-)
+>  include/hw/register.h |  4 ++++
+>  hw/core/register.c    | 24 +++++++++++++++++++++---
+>  2 files changed, 25 insertions(+), 3 deletions(-)
 > 
 > diff --git a/include/hw/register.h b/include/hw/register.h
-> index a913c52aee5..4d13ea183c7 100644
+> index 4d13ea183c7..65c82600e06 100644
 > --- a/include/hw/register.h
 > +++ b/include/hw/register.h
-> @@ -73,25 +73,18 @@ struct RegisterAccessInfo {
->   *
->   * @opaque: Opaque data for the register
->   */
->  
->  struct RegisterInfo {
-> -    /* <private> */
-> -    DeviceState parent_obj;
-> -
-> -    /* <public> */
->      void *data;
->      int data_size;
->  
+> @@ -81,10 +81,12 @@ struct RegisterInfo {
 >      const RegisterAccessInfo *access;
 >  
 >      void *opaque;
 >  };
 >  
-> -#define TYPE_REGISTER "qemu-register"
-> -DECLARE_INSTANCE_CHECKER(RegisterInfo, REGISTER,
-> -                         TYPE_REGISTER)
+> +#define TYPE_REGISTER_ARRAY "qemu-register-array"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RegisterInfoArray, REGISTER_ARRAY)
 >  
 >  /**
 >   * This structure is used to group all of the individual registers which are
 >   * modeled using the RegisterInfo structure.
 >   *
+> @@ -94,10 +96,12 @@ struct RegisterInfo {
+>   *
+>   * @mem: optional Memory region for the register
+>   */
+>  
+>  struct RegisterInfoArray {
+> +    Object parent_obj;
+> +
+>      MemoryRegion mem;
+>  
+>      int num_elements;
+>      RegisterInfo **r;
+>  
 > diff --git a/hw/core/register.c b/hw/core/register.c
-> index 8f63d9f227c..57dde29710c 100644
+> index 57dde29710c..4d1cce02a55 100644
 > --- a/hw/core/register.c
 > +++ b/hw/core/register.c
-> @@ -256,13 +256,10 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+> @@ -243,14 +243,20 @@ static RegisterInfoArray *register_init_block(DeviceState *owner,
+>                                                bool debug_enabled,
+>                                                uint64_t memory_size,
+>                                                size_t data_size_bits)
+>  {
+>      const char *device_prefix = object_get_typename(OBJECT(owner));
+> -    RegisterInfoArray *r_array = g_new0(RegisterInfoArray, 1);
+> +    Object *obj;
+> +    RegisterInfoArray *r_array;
+>      int data_size = data_size_bits >> 3;
+>      int i;
 >  
->      for (i = 0; i < num; i++) {
->          int index = rae[i].addr / data_size;
->          RegisterInfo *r = &ri[index];
+> +    obj = object_new(TYPE_REGISTER_ARRAY);
+> +    object_property_add_child(OBJECT(owner), "reg-array[*]", obj);
+> +    object_unref(obj);
+> +
+> +    r_array = REGISTER_ARRAY(obj);
+>      r_array->r = g_new0(RegisterInfo *, num);
+>      r_array->num_elements = num;
+>      r_array->debug = debug_enabled;
+>      r_array->prefix = device_prefix;
 >  
-> -        /* Init the register, this will zero it. */
-> -        object_initialize((void *)r, sizeof(*r), TYPE_REGISTER);
-> -
->          /* Set the properties of the register */
->          r->data = data + data_size * index;
->          r->data_size = data_size;
->          r->access = &rae[i];
->          r->opaque = owner;
-> @@ -317,26 +314,11 @@ void register_finalize_block(RegisterInfoArray *r_array)
->      object_unparent(OBJECT(&r_array->mem));
->      g_free(r_array->r);
->      g_free(r_array);
+> @@ -307,18 +313,30 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
+>  {
+>      return register_init_block(owner, rae, num, ri, (void *)
+>                                 data, ops, debug_enabled, memory_size, 64);
 >  }
 >  
-> -static void register_class_init(ObjectClass *oc, const void *data)
-> -{
-> -    DeviceClass *dc = DEVICE_CLASS(oc);
-> -
-> -    /* Reason: needs to be wired up to work */
-> -    dc->user_creatable = false;
-> -}
-> -
-> -static const TypeInfo register_info = {
-> -    .name  = TYPE_REGISTER,
-> -    .parent = TYPE_DEVICE,
-> -    .class_init = register_class_init,
-> -    .instance_size = sizeof(RegisterInfo),
-> -};
+> -void register_finalize_block(RegisterInfoArray *r_array)
+> +static void register_array_finalize(Object *obj)
+>  {
+> +    RegisterInfoArray *r_array = REGISTER_ARRAY(obj);
+> +
+>      object_unparent(OBJECT(&r_array->mem));
+>      g_free(r_array->r);
+> -    g_free(r_array);
+>  }
+>  
+> +void register_finalize_block(RegisterInfoArray *r_array)
+> +{
+> +}
+> +
+> +static const TypeInfo register_array_info = {
+> +    .name  = TYPE_REGISTER_ARRAY,
+> +    .parent = TYPE_OBJECT,
+> +    .instance_size = sizeof(RegisterInfoArray),
+> +    .instance_finalize = register_array_finalize,
+> +};
 >  
 >  static void register_register_types(void)
 >  {
-> -    type_register_static(&register_info);
+> +    type_register_static(&register_array_info);
 >  }
 >  
 >  type_init(register_register_types)
