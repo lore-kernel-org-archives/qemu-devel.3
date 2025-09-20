@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BD1CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 14:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6052CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 14:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzyAr-0006aI-GR; Sat, 20 Sep 2025 10:02:49 -0400
+	id 1uzyBQ-00070R-Sg; Sat, 20 Sep 2025 10:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uzyAo-0006ZC-Mp
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:02:47 -0400
-Received: from p-east3-cluster4-host4-snip4-10.eps.apple.com ([57.103.84.43]
+ id 1uzyBN-0006v5-FH
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:03:21 -0400
+Received: from p-east3-cluster7-host3-snip4-2.eps.apple.com ([57.103.84.153]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1uzyAn-00086k-8B
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:02:46 -0400
+ id 1uzyBH-00089g-EC
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:03:18 -0400
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-3 (Postfix) with ESMTPS id
- 8914B1817080; Sat, 20 Sep 2025 14:02:41 +0000 (UTC)
+ 8BCB11817345; Sat, 20 Sep 2025 14:03:10 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=PhLJzUtKf+LkD6Ec9pG9Thcy5r3gUsucKZDUxMVqHrs=;
+ s=sig1; bh=IHjqdFZlYtMJa8HRC4VnZhdX5Q0ePonZlOFVwjjZYxU=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=A1AbolwxSOrVlLmVbAA/4tFR6/nOM5uf4tpPXVfHz0x6ndYcAOyyrThYxk7h8t2CRxgMmtT3L1udE5RrupF+nQvlAnqoWr8acVz2UaRU5zdOc5u7/GikiTE04uHJ/n5I8SQCadB5NIKU5XxPw1qs1ER3ucum5D2jHlcANRUp10HTyTsyZckxk1DR+9lTuMh36V0QqDOMbwRVYDgeyjEHzoNRkycD7kYYuZY4QeC2WGefaMq2G03R0KYflTo1BWe6LNXjTQgCykNVUxlTb2Qbe7St9i2cfhj0gSH3Cj82Pq/p6Fe6mAwnQanbPZ7H89G6nequYTCPwZECtJ/lA0VWvQ==
+ b=MPprHi67MiijYc3XhExjP2RuAVq+X9gmjes6ynzZaqHt+RY91GaILhgMrTQpZZaUnUe5mBkHvsngN3eXX4A9IQeVuKx/NBQFjzyras/latoD/9UBnWe5QOSGBGe0GmO+L82Yc6EWRrMf4NqVBCJ2bCYfiDlDs+2nlsQBzBb98yiGZsa3IJjmo3/Ov7FM6mRuFlLrC3La+BRCYJ/i2pRaxEw0DHEQzeee2aJghYoRNKO/7wqkXKBupao8XW5nafJbwI7I+OpZ25XNz6C9mMkrasUb62PxYii/PzRSA64KN06/7uRzkbMHCAot7wO5ZTmYlNLVgafCu9CSD0xfSJjhsA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
  [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-100-percent-3 (Postfix) with ESMTPSA id
- 2FF5D18172D4; Sat, 20 Sep 2025 14:02:06 +0000 (UTC)
+ 896521817098; Sat, 20 Sep 2025 14:02:29 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Shannon Zhao <shannon.zhaosl@gmail.com>,
@@ -52,41 +52,40 @@ Cc: Shannon Zhao <shannon.zhaosl@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 13/23] target/arm: cpu: mark WHPX as supporting PSCI 1.3
-Date: Sat, 20 Sep 2025 16:01:14 +0200
-Message-ID: <20250920140124.63046-14-mohamed@unpredictable.fr>
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v6 21/23] MAINTAINERS: update maintainers for WHPX
+Date: Sat, 20 Sep 2025 16:01:22 +0200
+Message-ID: <20250920140124.63046-22-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250920140124.63046-1-mohamed@unpredictable.fr>
 References: <20250920140124.63046-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 1kCwcYHxALyAWxcvWGeOKt5L23Bju8Gy
-X-Proofpoint-ORIG-GUID: 1kCwcYHxALyAWxcvWGeOKt5L23Bju8Gy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDEzNiBTYWx0ZWRfX//rypqGR+ZZ3
- 6IscCsCP413dtyLTYRS9jUM4sVSeTuh5MWok/0OvSmdCTE1e1CuZGqYdiNeSiR2aKl4oBbjrCId
- jQ9ffZyxFUmkfJ3y9SsSBJ9TfZX42GDt+dB9Atd/yLnNtVm7Azk6I7DEDx6OxYmtbs1W27AkUkS
- 55xkFroYV0JXidzXMT8CYCZ1npSRGxxAnFF1f2VJasZGoT7Em5UKL40HS61r0k2TAqC/ntcj9o5
- spVO3kDdejqRLTiazSdcANhIHgo/eBha4P4GRK1MX0ZAFyjYUr9tLuElqdm+8vYv4UZuQVKtI=
+X-Proofpoint-ORIG-GUID: 4_XIPZW8Gs1LJTl1yb4x8Cmj5FvYJ9kW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDEzNiBTYWx0ZWRfXzNkOaFQADvwR
+ Itqd7fri4VQJfZtSL+sWesK/+mgrlylaJ0L+47HqotwgRZRsYcSDF74yXqJPydM+UTG8Y60qNwj
+ z1IaocwzSe2SpZuAK4pGzQ/9Pw2zKVK9zwttgw/yBuyBYIPXi7pyoOc6NsfyBu9Xx0rHt4ZsRyw
+ hu//JcmjSXvDZWBpzyJaMi0CtLjc3l5Azqn8XWEP6+K+8JalTldlLwdeCXTvPYp0Odlz/n0J1xQ
+ tKu5Ho9FlgSWsgF2/Zg++/eNX/Y+lYcAH1UC7ac7HJy/YiC8RRutiYWQxem6DwLG7ud7+A+i0=
+X-Proofpoint-GUID: 4_XIPZW8Gs1LJTl1yb4x8Cmj5FvYJ9kW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-20_05,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxlogscore=892 phishscore=0 bulkscore=0 clxscore=1030 suspectscore=0
- malwarescore=0 adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ adultscore=0 clxscore=1030 phishscore=0
+ malwarescore=0 bulkscore=0
+ mlxlogscore=886 spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.22.0-2506270000 definitions=main-2509200136
-X-JNJ: AAAAAAABCaQ/PnPyuLfW4ZHwdiAblKEVDn58xAMRycDfP/CUPNc4G37Cjny+CiI0bGNIDMrvJeky1S9sEuUclVp6Yl6U6KgYHdw065jhw7hVVoct79AxBAQvaPJ+QWDhsx+I/ctUNYxOgIzmoLh2u96DMvmZlPADWfeFrfJmdwc8VnD9gRnHVG94ycavYiPvSRPrTIBLun0hGdeLUKZCzqIUB4wpx5QDSpuNa4EkP4Ny+6/rmr+LMESHBEObiMflwnWMw7A4485phzcsiEi17sLCkS0/3upNaCJlJ7nSqWVtwrLRKIaR3tohAKx7JZ4qy6Dm5jwWdY8UU6URwbJepZc1fQwR5PBXmEsehEJF1c3X0GZ66Jee9tU2Efzv7jzNYYXbWGi0lN4EYmp4GMl2iXfywwYeYsIgyseIIauvO1OG517X+ghps9GFNlsLLcFqz02x0Z5OE5vzOlC7isHVvantcs9VStJPjMHZlMpjXoST8gAofQbI3sRVo37UzuSwxKJLzL7vgPuuWalhXVVw89599DcXWVRtrN2LbLTS5w4C+WS5Jd19E5DNO12e0tqunSVJlhsBL3mguqLCLXtH1//j3bwSPiz4pmAOUfW1OBixaiKC3xCFHOlm6YWYvkE/vYyfxaBFEQp4QTP5H3DeB91fpp/gALZPM+IfXqNpvjO3v6EqoTbP+88pFBzwf3vR4Z5Mo8y/jZNU2WN8T0ZTHhTTZMeWtAfimOg+n3ZeG0kN3F9m7Apv29Hl28Maa57xc8Yf0qCbOZr3sHnhIgaM7Fm2YSRGLZQztrK2CzUYtup+FRNhB3ddr7BOzBfbYo4NUU3lERTlT65viI+HyORQrEPy4SHs8bsrL/BTnOAYmx3BqrywAm6tIlpB1u8GF6Eg81WeQkLMv7/aBCiajzKO03z0A/YPohiSbpU+G5M92g==
-Received-SPF: pass client-ip=57.103.84.43;
+X-JNJ: AAAAAAAB8FHS6JMIfcy7qo0KxEd26QpUFCC230Xv14XNDw4qRsHHjR8zhMv5KhP/v1+ENOuP41Z7k4OMyonbHQOGwlqjxDXss4hXe3rFz+ooGOlHO/Of/wjJlj5OADsO/R4qX+8zSU4VTAGc5Be1rTiETKLlcoFM7GiB1ZCYAurnbe+I/piujsLm1hpsmhmds/B0S1BHA8K8l9WPxporxSO26B4FvLhYZJgTmKdC8cQEHhGVEx8V/ubT2tBmjEnuqLGEvS5ZKeRUZYDDLPXm0gJ2uL9vKWdB/3uND6oMfN0DSbS5gG3/6Nom8/4B6jGFoK4e/KwzbINxbWhGn4LiPcNbpUnsvS3fSN9OwMom42HZDhTGRbBG/o4pN2fry7NNHqTfr+wFMZnehGhJ4nLp1NxFQxtNLBtNoKegQ3jn0ZbhEzQiNam+58DG/hrRauki7oTNTEGvaTgSH+hYgj1fCTS84CsiIzy9vxP7LqfzjjPzaTj9BGZH6dzQSRxdybMqkI3aINFHNqBBSASeFDZNFlp0qmJ6CFnM5bmCrK9Um6niOFxidBasCXn/VppbNf+OqIlYw2wsP+HabUi2OYd2F9hE0eXl2wHHFKEY7rc953ep8kIKg1XML0z0GheC4eR/G0uTW1vRfbnNOV+1DSF9Pqx4Dh73msS0UAxLiIKedhT+KJu6XV/verI2eLEZdKBbWqV6EI1pHgbfQ2CXmt3AkYh+ktAExt6Xgy6c6b63k4LMndAR10IM/5se2u7lyN6sNC5+LXr/Pv89PjFBHUl6xXy7BE7TSls8gMO4Bwh1PeE2E7hYcZI+250iYMlx/lAQM6ysJs4+FZ45FY9J01Wjd43T9mYyQMrQ6/TkN7M6BV+W8CT8vZZeB7HZrw==
+Received-SPF: pass client-ip=57.103.84.153;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,38 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyper-V supports PSCI 1.3, and that implementation is exposed through
-WHPX.
+And add arm64 files.
+
+From Pedro Barbuda (on Teams):
+
+> we meant to have that switched a while back. you can add me as the maintainer. Pedro Barbuda (pbarbuda@microsoft.com)
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ MAINTAINERS | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index c65af7e761..5a5dcda60c 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "exec/page-vary.h"
-+#include "system/whpx.h"
- #include "target/arm/idau.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-@@ -1126,6 +1127,8 @@ static void arm_cpu_initfn(Object *obj)
-     if (tcg_enabled() || hvf_enabled()) {
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
-+    } else if (whpx_enabled()) {
-+        cpu->psci_version = QEMU_PSCI_VERSION_1_3;
-     }
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 466ebe703a..e123abcfd6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -544,11 +544,14 @@ F: accel/stubs/hvf-stub.c
+ F: include/system/hvf.h
+ F: include/system/hvf_int.h
  
+-WHPX CPUs
+-M: Sunil Muthuswamy <sunilmut@microsoft.com>
++WHPX
++M: Pedro Barbuda <pbarbuda@microsoft.com>
++M: Mohamed Mediouni <mohamed@unpredictable.fr>
+ S: Supported
+ F: accel/whpx/
+ F: target/i386/whpx/
++F: target/arm/whpx_arm.h
++F: target/arm/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
+ F: include/system/whpx-accel-ops.h
 -- 
 2.50.1 (Apple Git-155)
 
