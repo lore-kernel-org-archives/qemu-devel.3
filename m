@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB8ECAC5A8
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF54ECAC5A7
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzzlF-00086j-8f; Sat, 20 Sep 2025 11:44:29 -0400
+	id 1uzzkt-00082s-Sc; Sat, 20 Sep 2025 11:44:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzl7-00085a-MU; Sat, 20 Sep 2025 11:44:21 -0400
+ id 1uzzkl-0007ye-20; Sat, 20 Sep 2025 11:43:59 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzl6-0001zT-4A; Sat, 20 Sep 2025 11:44:21 -0400
+ id 1uzzkj-0001zT-BS; Sat, 20 Sep 2025 11:43:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758383061; x=1789919061;
+ t=1758383038; x=1789919038;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=L8gnmi+J4MzRrbiFkXtGqJm6GBBwWXfcXWg3n8slJpE=;
- b=NRlQdUs4wUSIVH/GK9Wu0NQ/AjIH2Hk5wYZPiynWt23nXEeXFov/gq2z
- p/sVmKz94ctpf2fysSZSRBNB+xwC3n13kflcad5M3CUyJdd9pAxgu2XlG
- udobLbNamBVeruNOcT6IjEFXCi3V+S9Fo9bvXKj2Wlu6iAyzVcLoaB0Hb
- TNpzctTlJDn9Yl1RV+Y2z1kt/ejpKhjnJosDlqiCL4IjthOPKVBr7gVcB
- VKC7Cr+jIXPpRJYF3NmmdppjdbOqqVeSuERjp6HbxNxqDs+krCtTkdQCW
- G/u37oSxaNdPqtkcvQsro435pLQ0o6LKGn3P9C2cjUeEVsq3cavBJBv2y w==;
-X-CSE-ConnectionGUID: HdAnyg9qR9yoRlUW6DvyfQ==
-X-CSE-MsgGUID: /iF6uqb2QzGtalYIOsB9qA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955579"
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955579"
+ bh=7K1AoX1vYKJi0eA0/Ol1SLh0EzyubRlT44C6WqHZJJI=;
+ b=io4toLzMtAibBPZxMyoX9NVk+qNqlSkBYtkbZBZY0tSOltNvGFb/tL9v
+ rm1vaeHfB1D3+oso7Lq1k4C7M7DXoFvFzZHoQNiiNyAiCda5cS4FpXQVy
+ EidyIKrkhUWdeyFXZTAY5pcGtFYMuJ2KGRohcATxhjMi2Kgv9HO4//PKl
+ hSLzy8QzX0TRZmwYwm6ZLvtR6yFvTZTGOK7ESdjFqBCpiX5wAn/cVjYw3
+ X1FYHXLikVN6sXATg+lYqETdjf00zbvuzj33NCXYUcue+uWc5XeRat+1t
+ p0nNVJe/ByK23f442DFbJvRUwOIboVo11hriG817EiSpwbBPTg8kzVceh g==;
+X-CSE-ConnectionGUID: 8Bnhm0sbTHGb/hfMzIM5hg==
+X-CSE-MsgGUID: Vfa7384yRm2qsImKSNnm0w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955558"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955558"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2025 08:43:58 -0700
-X-CSE-ConnectionGUID: zBAUwL6vTbyJ0gic2vC3vw==
-X-CSE-MsgGUID: C6lN+5phRnG4vu/Xt5AHLA==
+ 20 Sep 2025 08:43:54 -0700
+X-CSE-ConnectionGUID: mEvzBRn+RDCRYbPHf3wBNA==
+X-CSE-MsgGUID: 7QuzDe2uSne9WR8nvwfbkA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349494"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349478"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:56 -0700
+ by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:52 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 12/12] rust/qdev: Drop declare_properties & define_property
- macros
-Date: Sun, 21 Sep 2025 00:05:20 +0800
-Message-Id: <20250920160520.3699591-13-zhao1.liu@intel.com>
+Subject: [PATCH v2 09/12] rust/qdev: Test bit property for #property
+Date: Sun, 21 Sep 2025 00:05:17 +0800
+Message-Id: <20250920160520.3699591-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250920160520.3699591-1-zhao1.liu@intel.com>
 References: <20250920160520.3699591-1-zhao1.liu@intel.com>
@@ -81,82 +80,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After HPET's #property conversion, there's no use case for
-declare_properties & define_property. So get rid of them for now.
+There's a diference between Rust and C:
 
-In future, if there's something that #property really cannot resolve,
-they can be brought back.
+Though C macro (e.g., DEFINE_PROP_BIT or DEFINE_PROP_BIT64) always
+requires default value, Rust side allows to omit this "default" field
+in #property, and provides a default value ("0" - false) for this
+field.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+This minor difference does not break user habits and should be
+acceptable. Therefore, the test cases also cover this scenario.
+
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/core/src/qdev.rs | 53 ----------------------------------------
- 1 file changed, 53 deletions(-)
+ rust/qemu-macros/src/tests.rs | 99 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index 5cc8a35d1ab0..c3097a284d73 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -248,59 +248,6 @@ pub fn class_init<T: DeviceImpl>(&mut self) {
-     }
+diff --git a/rust/qemu-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
+index c6b00c9783a8..7516bc3d92a0 100644
+--- a/rust/qemu-macros/src/tests.rs
++++ b/rust/qemu-macros/src/tests.rs
+@@ -89,6 +89,19 @@ struct DummyState {
+         "Duplicate argument",
+         "Already used here",
+     );
++    derive_compile_fail!(
++        derive_device_or_error,
++        quote! {
++            #[repr(C)]
++            #[derive(Device)]
++            struct DummyState {
++                #[property(bit = 0, bit = 1)]
++                flags: u32,
++            }
++        },
++        "Duplicate argument",
++        "Already used here",
++    );
+     // Check that the field name is preserved when `rename` isn't used:
+     derive_compile!(
+         derive_device_or_error,
+@@ -145,6 +158,92 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+             }
+         }
+     );
++    // Check that `bit` value is used for the bit property without default
++    // value (note: though C macro (e.g., DEFINE_PROP_BIT) always requires
++    // default value, Rust side allows to default this field to "0"):
++    derive_compile!(
++        derive_device_or_error,
++        quote! {
++            #[repr(C)]
++            #[derive(Device)]
++            pub struct DummyState {
++                parent: ParentField<DeviceState>,
++                #[property(bit = 3)]
++                flags: u32,
++            }
++        },
++        quote! {
++            unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
++                const PROPERTIES: &'static [::hwcore::bindings::Property] = &[
++                    ::hwcore::bindings::Property {
++                        name: ::std::ffi::CStr::as_ptr(c"flags"),
++                        info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
++                        offset: ::core::mem::offset_of!(DummyState, flags) as isize,
++                        bitnr: 3,
++                        set_default: false,
++                        defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: 0 as u64 },
++                        ..::common::Zeroable::ZERO
++                    }
++                ];
++            }
++        }
++    );
++    // Check that `bit` value is used for the bit property when used:
++    derive_compile!(
++        derive_device_or_error,
++        quote! {
++            #[repr(C)]
++            #[derive(Device)]
++            pub struct DummyState {
++                parent: ParentField<DeviceState>,
++                #[property(bit = 3, default = true)]
++                flags: u32,
++            }
++        },
++        quote! {
++            unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
++                const PROPERTIES: &'static [::hwcore::bindings::Property] = &[
++                    ::hwcore::bindings::Property {
++                        name: ::std::ffi::CStr::as_ptr(c"flags"),
++                        info: <u32 as ::hwcore::QDevProp>::BIT_INFO,
++                        offset: ::core::mem::offset_of!(DummyState, flags) as isize,
++                        bitnr: 3,
++                        set_default: true,
++                        defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
++                        ..::common::Zeroable::ZERO
++                    }
++                ];
++            }
++        }
++    );
++    // Check that `bit` value is used for the bit property with rename when used:
++    derive_compile!(
++        derive_device_or_error,
++        quote! {
++            #[repr(C)]
++            #[derive(Device)]
++            pub struct DummyState {
++                parent: ParentField<DeviceState>,
++                #[property(rename = "msi", bit = 3, default = false)]
++                flags: u64,
++            }
++        },
++        quote! {
++            unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
++                const PROPERTIES: &'static [::hwcore::bindings::Property] = &[
++                    ::hwcore::bindings::Property {
++                        name: ::std::ffi::CStr::as_ptr(c"msi"),
++                        info: <u64 as ::hwcore::QDevProp>::BIT_INFO,
++                        offset: ::core::mem::offset_of!(DummyState, flags) as isize,
++                        bitnr: 3,
++                        set_default: true,
++                        defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: false as u64 },
++                        ..::common::Zeroable::ZERO
++                    }
++                ];
++            }
++        }
++    );
  }
  
--#[macro_export]
--macro_rules! define_property {
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit = $bitnr:expr, default = $defval:expr$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            bitnr: $bitnr,
--            set_default: true,
--            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            set_default: true,
--            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            set_default: false,
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--}
--
--#[macro_export]
--macro_rules! declare_properties {
--    ($ident:ident, $($prop:expr),*$(,)*) => {
--        pub static $ident: [$crate::bindings::Property; {
--            let mut len = 0;
--            $({
--                _ = stringify!($prop);
--                len += 1;
--            })*
--            len
--        }] = [
--            $($prop),*,
--        ];
--    };
--}
--
- unsafe impl ObjectType for DeviceState {
-     type Class = DeviceClass;
-     const TYPE_NAME: &'static CStr =
+ #[test]
 -- 
 2.34.1
 
