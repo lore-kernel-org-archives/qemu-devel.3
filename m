@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE648CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 23:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2FFCAC5AC
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 23:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v07Hj-000509-5v; Sat, 20 Sep 2025 19:46:31 -0400
+	id 1v07Hj-00050M-AI; Sat, 20 Sep 2025 19:46:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1v07HR-0004Z1-Do
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:18 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1v07Hb-0004z1-QC
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:24 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1v07HL-0006eV-Pt
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:10 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3f0ae439bc3so936155f8f.1
- for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 16:46:06 -0700 (PDT)
+ id 1v07HV-0006g3-F3
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:19 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45f2acb5f42so25328715e9.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 16:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758411964; x=1759016764; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=X9w++XI6kuMpT/GrEdzmaBxMvxDieHeJG+/Fi0Z+ZQo=;
- b=ZzMW5mOfZfo7312SREkR13B48AGcpJpKJblFX+S21VlK4o/6G4XR8BqnRd5SqkrAK7
- 8d9lkGKSBPrAnzXdoPZg+IDOQaeq9sha7wdFxhDWPPZ83/uchEGGiI6Am/VAaWmKxDqg
- NZh5ATPea9/dQz9qksxNdxpRqfZAb5eZYUCE+15b+AKuXyRP0QhwdBYUDCK9ubDUpD6G
- cdAwROc0WlJ4YVyKXBczlLj4bKxnC0mk3N3Yr4UqEojjfZz8zYFzIjhsnl+6jnR2ssq1
- BpwuVGtH8KQkYAlq5c6A//wosS4gvnKVVS5hA690lu8Vm9GC/U0totviBaMpjEJCFLZM
- qLEg==
+ d=gmail.com; s=20230601; t=1758411975; x=1759016775; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=pWUMTCvtPd60N3pCgp0ThXAAih3AgIHpUnUZqc/4qJ8=;
+ b=GoBRkGnnRcF51Oz64dhgIsEsKZx5NBa+hywgQGlEm+ZEbq/Yy2WmtwpoqO2ZGS57vi
+ y9bmHa/axMZeZ6C1xswDiEzbvs6OHGK4WEcii+zbpa9uyMae767F+oevVJ1bjWnZTqqZ
+ Vi/qhdtisSqWR38KwmjlEfJYX4hPGdea+n0kZC+1ZdmSgBb+WB6+xo7EmGpSitbjS7HY
+ Cay51vWboHBRTRx7CG2cPOKhpr6a+cNiRuvbQsX5GC4zaTnaXojy3+7Q3jts+G9Ow9p/
+ 7adi9UqE5Rnj8PzSPEvrajN8JsiHyzeB3pfhTmxAqiWTWOhHPCi/FtTozdCF4eE9czxe
+ OtDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758411964; x=1759016764;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X9w++XI6kuMpT/GrEdzmaBxMvxDieHeJG+/Fi0Z+ZQo=;
- b=N2yv5YreiEfXTylcQSFaVLLEW5gqVyhIgUQDM9zsV+Z5rXxwtSsBYOf+ymz+9gdIYt
- HonvQ/g93cF4UGslgLjBMHpXJM6IC2XQ1yjUVq7rQn2oDPjYUcH3qoUeEjyDavJySC6i
- NrF+vn7vkkvl3aVjDkutoTo7K94C5L/tzsCbljfY+pkvBirUz/Fm87oXdgF1oUXKqg6b
- gjH+hsa4X2LY7INZ1Qv2iA0YPdHFtCarrq3cRiXuc3cQ933hmGZBzTqHlnErO1tesT21
- aE5L5G3Gbve0nbaqqlT6g8/kGjL6lrkY1DDXqvPXTkDlrxXOvUFfNvDQ/0A47A8S0XJ9
- tuiQ==
-X-Gm-Message-State: AOJu0YxTvXeO+h3WTzPMSc8oRA/2gEEumP0ADgk6wYhpm+5QYU/efIiF
- WQBlbbpeJLwFigtizfY1l1kHT74HdsHAoWF/vWmoYclrj170OPHWxYSF
-X-Gm-Gg: ASbGnctzv3+PG66wO1+mblb6pPK+6QvL7BgKcUSzRk2HPE47txNIAKp0LvqtjpoHsdU
- Z0SKeRpbNCAj5X04v4Ni2U9fjQWxmjVqfpsXTVf0lFsRIU19iGZ/T0NIBrcyXEocSG3xs6SiZdh
- DO9Ntd0qwnP8AXIvzmwuYUVdOCAWweTuWQF7wLxFndW4try1J8LMV/A4Oft1jbAYfYv/+gEQgeg
- B+c5wz0ct42+GdWM/vGZNSnjDt45mSo45H1urZ5oarSpYpVW4R4nzUeCaUd0IwTXqUe+xH24IMZ
- wccWPmesaT0kIEeAd6+ZYQy99yhsfncnjvKQtw7Zzv201+8XiFeTNv9xiGKpSffb5VtqX/Cly2i
- A2/AmC99BlKTd8+RzftsjYtlrzgoERalD3V6fK6vRYuCnu5/Ylj8/
-X-Google-Smtp-Source: AGHT+IED3AWMCQbGAWiWzH/oThqA02hy/2UqEByCN0SmTju+gYhsIIZzewKbE+bGT/h87gXtMQWwAA==
-X-Received: by 2002:a05:6000:310f:b0:3e4:b44d:c586 with SMTP id
- ffacd0b85a97d-3ee8472b5e6mr5913028f8f.34.1758411964279; 
- Sat, 20 Sep 2025 16:46:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758411975; x=1759016775;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pWUMTCvtPd60N3pCgp0ThXAAih3AgIHpUnUZqc/4qJ8=;
+ b=NfF87fntNMIk/nytljBEfTC+QimZP98TrnwyixZvsXlo7Dtjw9WI71AMjs98lHHxgb
+ TbjzcPBVahoxhg5rYcnH3c1lJR83ERLu63h5ayInRJeqPzdPShxofg516BlLIJeHaNx/
+ wK9INdtrst+yXz2adSdZFFb0YvDCXwrtC8quMq08DcWmNz8SkL4r48rBD2wOQIW3xFj8
+ rrZofMmHo36AXojZ74gbCLcOQvBIhz/3uZ+mKdH2FgRoaezGFuzIxRN5F6iZBS5//Hwp
+ 81F8eOqGlr+LmUH0ZT2/RKAyudrY4Ap38zGjg7iJ4DNGeB9jh2gPp3K+kN9FJcrZrDNL
+ Ht4Q==
+X-Gm-Message-State: AOJu0YwW7L+hKPOC4KVSbX5V/NC5rpXRB41iVfm9hlabPzYbj+gbDRgo
+ M+k50i425qQ2a4CPkb401NaA8CPKqGUqZy2XorHFWIi/WvU36KN5wH1z
+X-Gm-Gg: ASbGncsyeTRU79fe8zJXrymed8F7mtohtLKJ30X8kCZZF5tVKYvUffRZKCuJR/27tKv
+ czFQ4rTASWmMvcGyTvAZGKFEUtiPr9Zg2iX1TM6Q/5dwYPrIPamUoTsiuUWZAXCgje27IdnatZv
+ 0HOkCeaLa3CP2bkpD2p88Zq5dmueAZ1UssNCDyJRupI3nyxQNNBhWlB0dNFMH12OSJx9DLHQiJt
+ szRUDdJn2dLmsCi2IA5Jq82+q44AzdE2QplbMFfyIwics+sojzlrlvV2VeX3rk8XVh5jGgqY2PH
+ 2i0raDSq8OmGC/74h8gDwO1KNKKdotBCWY/b2mFMetL0TXKluABi+Zqh6qC7Qx+Ca68bV7p/5Df
+ KkeMc8Tf4rIJsniO6NjW476SE4wvfDaoK4DNfMFW6G+v6I4aU/YT5
+X-Google-Smtp-Source: AGHT+IH7ls+umpPTMUgq25wCbX6JjWVkPjuyFKdxQBhKRpjKg8ZGc+BQyYafskauwfXfDUWLEXXUkA==
+X-Received: by 2002:a05:600c:3b1e:b0:45d:dc6c:9e30 with SMTP id
+ 5b1f17b1804b1-467aba7b0f2mr90961975e9.14.1758411974746; 
+ Sat, 20 Sep 2025 16:46:14 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-3f95c5cdaaesm1699726f8f.4.2025.09.20.16.46.03
+ 5b1f17b1804b1-464f64ad1b0sm160458735e9.21.2025.09.20.16.46.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Sep 2025 16:46:03 -0700 (PDT)
+ Sat, 20 Sep 2025 16:46:14 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH RFC v5 00/12] virtio-console: notify about the terminal
- size
-Date: Sun, 21 Sep 2025 01:45:30 +0200
-Message-Id: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
+Date: Sun, 21 Sep 2025 01:45:37 +0200
+Subject: [PATCH RFC v5 07/12] qmp: add chardev-window-size-changed command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJo8z2gC/3XOQQrCMBQE0KuUrP0lCT9t40oQPIBb6SLG3ybQN
- pKUopbe3VoQ3LicgXnMzBJFT4nts5lFmnzyYViD2mXMOjO0BP62Zia5VFwLCTYMKXQEkZJ/Eej
- CohTIr4ZXbB3dIzX+sYEXdj4dWb2WTQw9jC6S+VqcF1KLAjmKHEupZAUChuDQpXRoe+O73Ib+A
- zqfxhCf28EJN/bflwmBQ6mlIkQ0jcUfqV6W5Q2zzma07QAAAA==
-X-Change-ID: 20250912-console-resize-96c42140ba08
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250921-console-resize-v5-7-89e3c6727060@gmail.com>
+References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
+In-Reply-To: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -89,15 +85,15 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
  Szymon Lukasz <noh4hss@gmail.com>, Filip Hejsek <filip.hejsek@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758411962; l=6043;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758411962; l=2620;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=/97Xcv5n5W+LYdTzUhdyogIyz5NuZYmhA+kWsYjVj5U=;
- b=gkdCnxU0xzGReEIc/naeyrBz4yaPQyozD7pfJjneLEoW7lLEBgGsXq+6/3ATtdwVczOrl2Qnu
- qFHQqCcWFghDawjU1ouWNIymTRGRXWrCmfXLyKOLgz2n9VatAE1l5S2
+ bh=ISiOK22HKC8mI4/1MK6o39Mb6am1xM/7UJSCuA6f7m0=;
+ b=Y3BwtPaXiWZ8kTIkhCIQ4oFJbO/on/nSX2O389xLlArGhsKoN5tTKrykTwAopMHXg54vTxbFV
+ lYA2v+nW1xtBPVDwLSJ9DPwT6GghLBO7cFrUDGZpUlonAfOCq27+pCw
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,136 +116,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The goal of this series is to have a resizable terminal into a guest
-without having to set up networking and using, e.g. ssh.
+From: Szymon Lukasz <noh4hss@gmail.com>
 
-I tagged this version as an RFC as we still need to wait for a decision
-on the swapped rows/cols issue by the virtio maintainers, so it cannot
-be merged right away. I would still like to request a review especially
-for the two (small) 'vc' chardev patches, which are new in this version.
+The managment software can use this command to notify QEMU about the
+size of the terminal connected to a chardev, QEMU can then forward this
+information to the guest if the chardev is connected to a virtio console
+device.
 
-The virtio spec allows a virtio-console device to notify the guest about
-terminal resizes in the host. Linux Kernel implements the driver part of
-the spec. This series implement the device part in QEMU.
-
-Terminal size support is added for stdio and vc backends. It would make
-sense to also add size support to the pty and serial backends, however
-it's not possible to receive resize notifications for tty devices other
-than a process' controlling terminal. For the serial backend, it might
-still be useful to query the initial dimensions. (In a previous
-discussion, only the pty backend was considered, where the initial
-dimensions are useless.)
-
-The 'vc' chardev changes are incomplete, because this chardev has
-multiple implementations in QEMU. This series contains adds size support
-to the generic and gtk/vte implementations. I think I also need to add
-a spice implementation, please let me know if there is anything else.
-
-I would also like some advice on how to test resizing the virtual
-console. I tried resizing the window of the sdl backend, but that didn't
-change the dimensions of the console (instead rescaling the console
-image to fit the window).
-
-This series also introduces resize messages that can be sent over QMP to
-notify QEMU about the size of the terminal connented to some chardev.
-In the libvirt setting, it will allow to implement a resizable terminal
-for virsh console and other libvirt clients.
-
-For a long time, the Linux implementation of virtio-console had rows and
-columns swapped. This was fixed in Linux 6.15, but older versions will
-interpret the dimensions incorrectly. There are two ways this might be
-resolved:
- - It has been proposed to change the virtio spec to match historical
-   Linux behavior. If the change is accepted, the fix would be reverted
-   and we would end up with only two or three broken Linux versions.
- - Alternately, the Linux fix would be kept and backported to LTS
-   versions.
-
-In any case, users of broken Linux versions can disable the feature
-using the console-size property.
-
-Thanks to Markus, Daniel and Max for their feedback on v4,
-and to Michael for helping with the swapped rows/cols issue.
-
-v5:
-- rename chardev-resize -> chardev-window-size-changed
-- improve chardev-window-size-changed documentation
-- add partial implementation for 'vc' chardev
-- config space now returns port 0 size if multiport
-- console-size property completely disables size support
-- fix misnamed variables in char-win-stdio
-- Link to v4: https://lore.kernel.org/qemu-devel/20250912-console-resize-v4-0-7925e444afc4@gmail.com
-
-v4:
-- changed order of rows and cols fields
-- added support for terminal size on Windows
-- trace event is also emitted for legacy (non-multiport) drivers
-- minor fixes required because of changes in QEMU (DECLARE_INSTANCE_CHECKER, qmp-example)
-- updated version numbers ('Since: 10.2', hw_compat_10_1)
-- Link to v3: https://lore.kernel.org/qemu-devel/20200629164041.472528-1-noh4hss@gmail.com
-
-v3:
-- add resize messages over QMP, as suggested by Daniel
-
-v2:
-- fix adding a new virtio feature bit to the virtio console device
-
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+[Filip: rename command, change documentation]
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
-Filip Hejsek (3):
-      char-win-stdio: add support for terminal size
-      ui/console-vc: forward text console size to vc chardev
-      ui/gtk: forward gtk console size to vc chardev
+ chardev/char.c | 14 ++++++++++++++
+ qapi/char.json | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-Szymon Lukasz (9):
-      chardev: add cols, rows fields
-      chardev: add CHR_EVENT_RESIZE
-      chardev: add qemu_chr_resize()
-      char-mux: add support for the terminal size
-      main-loop: change the handling of SIGWINCH
-      char-stdio: add support for the terminal size
-      qmp: add chardev-window-size-changed command
-      virtio-serial-bus: add terminal resize messages
-      virtio-console: notify the guest about terminal resizes
+diff --git a/chardev/char.c b/chardev/char.c
+index b45d79cb9b57643827eb7479257fdda2cf6b0434..f3aad545afe3d325aac388015b3d5517c2e48f0d 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -1269,6 +1269,20 @@ bool qmp_add_client_char(int fd, bool has_skipauth, bool skipauth,
+     return true;
+ }
+ 
++void qmp_chardev_window_size_changed(const char *id, uint16_t cols,
++                                     uint16_t rows, Error **errp)
++{
++    Chardev *chr;
++
++    chr = qemu_chr_find(id);
++    if (chr == NULL) {
++        error_setg(errp, "Chardev '%s' not found", id);
++        return;
++    }
++
++    qemu_chr_resize(chr, cols, rows);
++}
++
+ /*
+  * Add a timeout callback for the chardev (in milliseconds), return
+  * the GSource object created. Please use this to add timeout hook for
+diff --git a/qapi/char.json b/qapi/char.json
+index f0a53f742c8bee24c377551803a864fd36ac78cf..93b0d239276077d808af2e5479d539728377a99f 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -874,6 +874,36 @@
+ { 'command': 'chardev-send-break',
+   'data': { 'id': 'str' } }
+ 
++##
++# @chardev-window-size-changed:
++#
++# Notifies a chardev about the current size of the terminal connected
++# to this chardev. The information will be forwarded to the guest if
++# the chardev is connected to a virtio console device.
++#
++# The initial size is 0x0, which should be interpreted as an unknown size.
++#
++# Some backends detect the terminal size automatically, in which case
++# the size may unpredictably revert to the detected one at any time.
++#
++# @id: the chardev's ID, must exist
++#
++# @cols: the number of columns
++#
++# @rows: the number of rows
++#
++# Since: 10.2
++#
++# .. qmp-example::
++#
++#     -> { "execute": "chardev-window-size-changed", "arguments": { "id": "foo", "cols": 80, "rows": 24 } }
++#     <- { "return": {} }
++##
++{ 'command': 'chardev-window-size-changed',
++  'data': { 'id': 'str',
++            'cols': 'uint16',
++            'rows': 'uint16' } }
++
+ ##
+ # @VSERPORT_CHANGE:
+ #
 
- backends/cryptodev-vhost-user.c   |  1 +
- chardev/char-fe.c                 | 13 ++++++++
- chardev/char-mux.c                | 18 ++++++++++-
- chardev/char-stdio.c              | 30 +++++++++++++++++++
- chardev/char-win-stdio.c          | 19 ++++++++++++
- chardev/char.c                    | 26 ++++++++++++++++
- hw/block/vhost-user-blk.c         |  1 +
- hw/char/terminal3270.c            |  1 +
- hw/char/trace-events              |  1 +
- hw/char/virtio-console.c          | 63 ++++++++++++++++++++++++++++++++++++---
- hw/char/virtio-serial-bus.c       | 51 +++++++++++++++++++++++++++++--
- hw/core/machine.c                 |  4 ++-
- hw/ipmi/ipmi_bmc_extern.c         |  1 +
- hw/scsi/vhost-user-scsi.c         |  1 +
- hw/usb/ccid-card-passthru.c       |  1 +
- hw/usb/dev-serial.c               |  1 +
- hw/usb/redirect.c                 |  1 +
- hw/virtio/vhost-user-base.c       |  1 +
- hw/virtio/vhost-user-scmi.c       |  1 +
- include/chardev/char-fe.h         | 10 +++++++
- include/chardev/char.h            |  7 +++++
- include/hw/virtio/virtio-serial.h |  5 ++++
- include/qemu/main-loop.h          |  4 +++
- monitor/hmp.c                     |  1 +
- monitor/qmp.c                     |  1 +
- net/passt.c                       |  1 +
- net/vhost-user.c                  |  1 +
- qapi/char.json                    | 30 +++++++++++++++++++
- ui/console-vc.c                   |  3 ++
- ui/curses.c                       | 11 +++----
- ui/gtk.c                          | 27 +++++++++++++++++
- util/main-loop.c                  | 21 +++++++++++++
- 32 files changed, 344 insertions(+), 13 deletions(-)
----
-base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
-change-id: 20250912-console-resize-96c42140ba08
-
-Best regards,
 -- 
-Filip Hejsek <filip.hejsek@gmail.com>
+2.51.0
 
 
