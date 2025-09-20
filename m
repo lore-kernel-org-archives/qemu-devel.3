@@ -4,106 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1F9CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 13:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C92BCAC5A7
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 13:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzxG3-0000br-60; Sat, 20 Sep 2025 09:04:07 -0400
+	id 1uzxSs-0003ci-3N; Sat, 20 Sep 2025 09:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzxG1-0000bU-DH
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 09:04:05 -0400
-Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
+ id 1uzwI2-000584-AJ
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 08:02:06 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uzxFz-0005eP-Nx
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 09:04:05 -0400
-Received: by mail-yb1-xb2f.google.com with SMTP id
- 3f1490d57ef6-e96e1c82b01so2002777276.1
- for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 06:04:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
+ id 1uzwI0-0003Zu-Hb
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 08:02:06 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45cb5e5e71eso18591725e9.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 05:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758373442; x=1758978242; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xiQ+B8haY8wM2ZYMlbbGQ0QYSn3IkE1oi1qDQl7choQ=;
- b=V5ld5g2MPbswcwzaamgbGVh+P1X76ZQRQdYgt42I0RzHvj+9qbwMw7CIV9kgCWRt0J
- ekIQunAWjcpBaUijafhTGK8SQizZG3X1qBFl73kd20Z2Kj1urTHE+Vz6FNMbHuzAeBAR
- aqBdjkyinOePpaw1OIR0BWkmjSe/rHZMP5JUmb+quGbrdScm23Xgdtj9fK9fjgsPsrhM
- hwV2k7SuuIB047CAFS9UDsSa4Qx4XjLFLRVdkpOG67MFjLEETSIF5Lq2keiCYUDMxwkL
- ANvRqgHmJSCmQtvtp9t0naP27NaT7cIIXx3VPK0gQKERfWLdra6/KFj8e64ohM7zwoSC
- jjQQ==
+ d=gmail.com; s=20230601; t=1758369722; x=1758974522; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=N/Aat/GU86e1dBKeFErhP7PDzyMUGhadT//BKBsQPT8=;
+ b=UhEPOkWRxehBdQjE4WInheV12MRbVSwwcxbyvxd2DZs64X6A5jDCfwPAneqjwuXE2n
+ 52UdAlgQ02eh+Mj1OIC86HIeGdNZBvitoDqwf8VsHu4QMRt5d943MoLH2aeqgNwzh4Z1
+ 7B0HtXX9ogtAjTRo+pdPptPvoIU+pKDLmnDdyF99pVp5odAeD+CVKOIUN0YpS4raRmyT
+ IntSgYtm5Dd6di7MDKRSRJr6uRV3G2iy2AV9WXQg9QB43XDMnBRQmqO9lf//d4+rUc4m
+ HFr9jvgbZGaPlEGxwZAHPwlwnv7iYWMrqRaKQGij+KrdR1NVgoB8Oi11iouQ4Oq8xif6
+ A3nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758373442; x=1758978242;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1758369722; x=1758974522;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xiQ+B8haY8wM2ZYMlbbGQ0QYSn3IkE1oi1qDQl7choQ=;
- b=FkKTm/4uPJt19iNASu21PE45uj//sUeu8kMpFb5HCc2MWGvXtBRJOwSno7QioxmJXv
- Lc/0S7WAED4x48NQIffuzkcQDc3fZo5cotkNBAs8ji6glOzAzxTLxbpQYQGjvw3eEoEv
- ozJSpXRr/BcFbcPLhfvHpM94/hnNx9ThV+WFf9KKMSHchIoW2Hq9B/ZfORZXskSILkmJ
- mjMNf1DPLeZP7RfliMOoQ1WySwCoOYOJ+QoQlPdLnCucYEKjZfgONNN/0jerKaoz8pw/
- famZY3mdHLLFWWdJP3oFsLEweWywt2pAN6mabAiINh9qWbmD9F5yTrVXUjxQf0lXqKfp
- LuZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpHBRCF/3N9bkzBfW4htUhutZAmO0pDNg0usjxKm9Z/RpNbj4Tizys3nOjifeqRtv5TL9bRzVpAbx9@nongnu.org
-X-Gm-Message-State: AOJu0YyqdxbiPamtUI0f/FJKBRIDmMnsuNEvHtwcNLC5zf1a05rrwdLk
- RAOnu9JdioEf1tde0ywMD0QRHn0SslwVM4CIe8sJ6A1609ToG0C3ItjIpHngWuN3neMG0WeI9C7
- IIIzEyV95mwUE88rtzsdggsoaTt1BLX792rLNnsqr/A==
-X-Gm-Gg: ASbGncsZw4U47wb2CbutGm8VqcRVfGJb8zhsuNnLnacKKTZDi1kx9/0CmDywo5ueBdI
- C5OvqSvc7wmcnhzYs/jv3NSNJrsVRln6NDQmr/p2YarfctWs7EaHJssMQ+gEqXgZeeo0G/51Ir1
- FUPQAf7+URSRvV+SkQK3oEbYyKyvlN2aFfdcdX+F1CjyVud2ktPTyJ3oTiQ9BoSU6XvrxDjjWnr
- mUYs6rZ
-X-Google-Smtp-Source: AGHT+IFKwN5ap9KeqRJ3xvA+lwfDLFWJcD261r4mg6q0sJjVXfcAGGpIEh1vlGOAzDVYm4zomNSSIxvUoDBCsLg5YQQ=
-X-Received: by 2002:a05:690c:6f12:b0:722:85cc:3970 with SMTP id
- 00721157ae682-73d1efe5fc7mr57062327b3.4.1758373441842; Sat, 20 Sep 2025
- 06:04:01 -0700 (PDT)
+ bh=N/Aat/GU86e1dBKeFErhP7PDzyMUGhadT//BKBsQPT8=;
+ b=VFqOj7TCi8mmEkjZ3HhncZV7t9rFHyp37yu3fsHtBliqvNzahVvyQKiuYv4QyVgP9Q
+ LgsMfbNLqUU4ZtoZJFh8w21UUOUMKYdCrMXL69TfKXURWMS/3iIVzzTFhaxklpnwZ8Cy
+ tuGDkxrqkuuZMEKhnSEaUXggAZfilfOpWpiQLrFqaJLvTU3khL76iTlEzDaerUF2DpSh
+ DvDxIbpe8CBT6pBe2eCygVQYb1O0/dzepAzdEC5cwEYPgoMeBB/vgEjooBcWJvwoMhlH
+ ZubY7DVSjF9RC3U4VAj2q7kmuNqJd40Z2TuvC5At6dHRq5yyEZZdPlhKeu/pYGfrRnO7
+ UgTw==
+X-Gm-Message-State: AOJu0Ywcoh3rSDN97uxUY+5ZhI744H/zoVyW/kAYj+xCh14gkgcTjaSZ
+ JaRKRP9H6Q/nlIQiwG2GxYnH6Wv0jaHfqXTVIu0Uez4Iu3ytn/SwJq6P
+X-Gm-Gg: ASbGncvrEctCyDhJ4Omto1oktVVl3JUI1eAxa1Arz2wt9DgxPNRf4rVngYEZ0RFc00N
+ Soh7kY/U12KyviLiIDhSk1fU44H40yJYl7PW1QihHxrarzHzQkfbXZGuEikFQGHHM8hczvxl4to
+ JvlTQe7YA2W5VTFpvgQ8vyL7TxJxXsdPmWVQxiAFo0wIjJNCtyR8gxQjmATwGM6pkrAKY1/X/7h
+ V60gPdUd+PE8VaG01gSkq8Su/1Tw+BfpQmZ5xKMj/sRLH0Ob2oOkN+nkM4Fe3tFWPyIVl0RS2Sx
+ 8bm8OxYM7VRowCRZG0VksT6XOd1tShXsfAu033tGK2OImTT9d7bpyhbB3Rx85oeCaI8VAGtjnaD
+ hPq9odeVtJUvayFgEgxk5VVQkX48Btv55AoTO3CxT6Q2HlzjvcxViNdQbcec63qUc7fJLlqy6SS
+ Duyw==
+X-Google-Smtp-Source: AGHT+IFl7DQ8Rm+KsgGCcTo/AXxdwoQuB3f38doLAr6D5omhAi0vr7uTqOOdgKkZgaNRaxkY+nmTog==
+X-Received: by 2002:a05:600c:4fc5:b0:45b:88d6:8db5 with SMTP id
+ 5b1f17b1804b1-467eceea772mr59026465e9.12.1758369722048; 
+ Sat, 20 Sep 2025 05:02:02 -0700 (PDT)
+Received: from GAL-PC.localdomain (bzq-79-177-159-123.red.bezeqint.net.
+ [79.177.159.123]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-464f0d8a2bfsm126950085e9.2.2025.09.20.05.02.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Sep 2025 05:02:01 -0700 (PDT)
+From: Gal Horowitz <galush.horowitz@gmail.com>
+Date: Sat, 20 Sep 2025 15:01:39 +0300
+Subject: [PATCH] tap-win32: fix multiple tap support
 MIME-Version: 1.0
-References: <20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com>
- <20250714155941.22176-7-shameerali.kolothum.thodi@huawei.com>
- <aJKn650gOGQh2whD@Asurada-Nvidia>
- <CAHy=t28z=wrXbXOJjD4sFw0RxJR3fccqF-EdaQDB_s_F6RC4FQ@mail.gmail.com>
- <aMsBvSSEzsgeMHkK@Asurada-Nvidia>
- <CH3PR12MB7548347E93651468E70B2470AB17A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <CH3PR12MB7548B6A98B640192579078EBAB16A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aMyA4AHf7pqnOzSV@Asurada-Nvidia>
- <CH3PR12MB7548BB774BB375D5056C062CAB11A@CH3PR12MB7548.namprd12.prod.outlook.com>
-In-Reply-To: <CH3PR12MB7548BB774BB375D5056C062CAB11A@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 20 Sep 2025 14:03:50 +0100
-X-Gm-Features: AS18NWB4nIAqV6UXhK_FFSXUddoq4btZxagLVw_nJyLvtRc3Sn9gTTui00E7sP8
-Message-ID: <CAFEAcA_MReA7Lx4Mm8x6mrO9rGaeH_zNYq+EWzS4Zh=j-h-23g@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict accelerated
- SMMUv3 to vfio-pci endpoints with iommufd
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <shameerkolothum@gmail.com>, 
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- Jason Gunthorpe <jgg@nvidia.com>, 
- "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, 
- Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, 
- "smostafa@google.com" <smostafa@google.com>,
- "linuxarm@huawei.com" <linuxarm@huawei.com>, 
- "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>, 
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, 
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250920-fix-win32-multiple-taps-v1-1-bee41dcc213d@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAKOXzmgC/x2MWwqAIBAArxL73YIaFXWV6KN0q4UyUXtAdPekz
+ 4GZeSCQZwrQZg94OjnwbhPIPAO9DHYmZJMYlFClaJTAiW+82BYKt2ON7FbCOLiAZGSlNU2jkTW
+ k2nlK6n/u+vf9AB3eastpAAAA
+X-Change-ID: 20250920-fix-win32-multiple-taps-ed16ccefbd17
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
+ Gal Horowitz <galush.horowitz@gmail.com>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=galush.horowitz@gmail.com; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 20 Sep 2025 09:17:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,95 +104,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Sept 2025 at 08:38, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
->
->
->
-> > -----Original Message-----
-> > From: Nicolin Chen <nicolinc@nvidia.com>
-> > Sent: 18 September 2025 23:00
-> > To: Shameer Kolothum <skolothumtho@nvidia.com>
-> > Cc: Shameer Kolothum <shameerkolothum@gmail.com>; qemu-
-> > arm@nongnu.org; qemu-devel@nongnu.org; eric.auger@redhat.com;
-> > peter.maydell@linaro.org; Jason Gunthorpe <jgg@nvidia.com>;
-> > ddutile@redhat.com; berrange@redhat.com; Nathan Chen
-> > <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> > smostafa@google.com; linuxarm@huawei.com; wangzhou1@hisilicon.com;
-> > jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> > zhangfei.gao@linaro.org; zhenzhong.duan@intel.com
-> > Subject: Re: [RFC PATCH v3 06/15] hw/arm/smmuv3-accel: Restrict
-> > accelerated SMMUv3 to vfio-pci endpoints with iommufd
-> >
-> > On Thu, Sep 18, 2025 at 06:31:43AM -0700, Shameer Kolothum wrote:
-> > > > > > @@ -37,7 +37,6 @@ typedef struct SMMUS1Hwpt {
-> > > > > >
-> > > > > >  typedef struct SMMUv3AccelDevice {
-> > > > > >      SMMUDevice  sdev;
-> > > > > > -    AddressSpace as_sysmem;
-> > > > > >      HostIOMMUDeviceIOMMUFD *idev;
-> > > > > >      SMMUS1Hwpt  *s1_hwpt;
-> > > > > >      SMMUViommu *viommu;
-> > > > > > @@ -48,6 +47,7 @@ typedef struct SMMUv3AccelDevice {  typedef
-> > struct
-> > > > > > SMMUv3AccelState {
-> > > > > >      MemoryRegion root;
-> > > > > >      MemoryRegion sysmem;
-> > > > > > +    AddressSpace as_sysmem;
-> > > > > >      SMMUViommu *viommu;
-> > > > > >      struct iommu_hw_info_arm_smmuv3 info;  } SMMUv3AccelState;
-> > > > >
-> > > > > That's changing from an ioas_id per VFIO device to an ioas_id per
-> > > > > vSMMU instance, right? I think it's still not enough.
-> > > > >
-> > > > > All vSMMU instances could share the same ioas_id. That is why I put in
-> > > > > the SMMUBaseClass as it's shared structure across vSMMUs.
-> > > >
-> > > > Ah..you mean it is basically per VM then. Got it.
-> > >
-> > > Regarding using SMMUBaseClass for this, it looks like ObjectClass normally
-> > holds
-> > > function pointers. Eric has made a similar observation elsewhere in this
-> > series.
-> > >
-> > >  @Eric, any suggestions?
-> > >
-> > > Is use of &address_space_memory directly in smmuv3_accel_find_add_as()
-> > a complete
-> > > no-go, given we are talking about having the system address space for all the
-> > SMMUv3
-> > > accelerated devices here?
-> >
-> > smmuv3_accel_find_add_as() is per instance. So, it wouldn't share.
->
-> My suggestion was...
->
-> static AddressSpace *smmuv3_accel_find_add_as(..)
-> {
-> ...
->     if (vfio_pci) {
->         return &address_space_memory;
->     } else {
->         return &sdev->as;
->     }
-> }
->
-> ie, use the global to system memory address space instead of creating an
-> alias to the system memory and a different address space. This will provide
-> the same pointer to VFIO/iommufd and  it can then reuse the ioas_id.
-> I can see that QEMU uses "&address_space_memory" directly in many places
-> (pci_device_iommu_address_space(), etc). I think the idea behind a separate
-> address space is to have private ownership and lifetime management probably.
-> Not sure there are any other concerns here. Please let me know if there are
-> any.
+Currently when more than one tap is created on Windows, QEMU immediately
+crashes with a null-deref since the code incorrectly uses a static global
+for the tap state.
 
-I don't know about vfio, but why is it special here? Generally
-directly doing stuff with address_space_memory is not a good
-idea : you should be dealing with whatever address space the
-board model handed you as what you do transactions to. We
-have a lot of legacy code that assumes it can directly work
-with address_space_memory, but we should usually try to avoid
-adding new code that does that.
+Instead, this patch allocates a structure for each tap at startup.
 
-thanks
--- PMM
+Signed-off-by: Gal Horowitz <galush.horowitz@gmail.com>
+---
+ net/tap-win32.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 38baf90e0b3f121f74eb32f1bff779c84ce03114..217a43cc2f5effdd92e1bf49466fe8d2cd0490e6 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -114,8 +114,6 @@ typedef struct tap_win32_overlapped {
+     tun_buffer_t* output_queue_back;
+ } tap_win32_overlapped_t;
+ 
+-static tap_win32_overlapped_t tap_overlapped;
+-
+ static tun_buffer_t* get_buffer_from_free_list(tap_win32_overlapped_t* const overlapped)
+ {
+     tun_buffer_t* buffer = NULL;
+@@ -605,6 +603,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+     } version;
+     DWORD version_len;
+     DWORD idThread;
++    tap_win32_overlapped_t *tap_overlapped = NULL;
+ 
+     if (preferred_name != NULL) {
+         snprintf(name_buffer, sizeof(name_buffer), "%s", preferred_name);
+@@ -645,12 +644,14 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+         return -1;
+     }
+ 
+-    tap_win32_overlapped_init(&tap_overlapped, handle);
++    tap_overlapped = g_new0(tap_win32_overlapped_t, 1);
++
++    tap_win32_overlapped_init(tap_overlapped, handle);
+ 
+-    *phandle = &tap_overlapped;
++    *phandle = tap_overlapped;
+ 
+     CreateThread(NULL, 0, tap_win32_thread_entry,
+-                 (LPVOID)&tap_overlapped, 0, &idThread);
++                 (LPVOID)tap_overlapped, 0, &idThread);
+     return 0;
+ }
+ 
+@@ -670,6 +671,9 @@ static void tap_cleanup(NetClientState *nc)
+     /* FIXME: need to kill thread and close file handle:
+        tap_win32_close(s);
+     */
++
++   g_free(s->handle);
++   s->handle = NULL;
+ }
+ 
+ static ssize_t tap_receive(NetClientState *nc, const uint8_t *buf, size_t size)
+
+---
+base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
+change-id: 20250920-fix-win32-multiple-taps-ed16ccefbd17
+
+Best regards,
+-- 
+Gal Horowitz <galush.horowitz@gmail.com>
+
 
