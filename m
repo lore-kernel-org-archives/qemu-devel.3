@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08CBCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 23:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99113CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 23:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v07Hh-000500-4v; Sat, 20 Sep 2025 19:46:30 -0400
+	id 1v07He-0004zI-JE; Sat, 20 Sep 2025 19:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1v07He-0004zX-0z
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:26 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1v07HR-0004Z0-DQ
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:18 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1v07Hb-0006hA-Ie
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:25 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-46b7bf21fceso4786155e9.3
- for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 16:46:21 -0700 (PDT)
+ id 1v07HL-0006eg-Uu
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 19:46:10 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3ee12807d97so2673879f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 16:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758411980; x=1759016780; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1758411966; x=1759016766; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=l+6U7vuZXoA2jAif1uxe87ybSSQD3PHGgeF0aqX99Qs=;
- b=Jb/2k5o8deS5nf8BN87KsHrMiXZowQ98Z9wajl7sjTOnuQgMuDGaGsk/EVVJFFxsvU
- Ph+eK50p2XzY4chiE4IN/xY3LUKQJyPULSrSWzLqLLII+7x/GXnkTiF6K3+9Hvn//95F
- xlCcyLK/5A/BzfdZU0BQeFBVSHb5m6ibIKaSr63HWiYZvFUpdnSxIBhFzadFdhcaJDgg
- 6vNX8mv5f9qsNTQB4Z+vg4RMH63yl/AhOMJ0llueBH+qh8ZT8sauCRsCxTJrLWSOGZ4W
- w2ySD2DCtbIRon/HLACEn+0t05vE7J3m7eu20hv5YSl1Ik/JpVpAoSnpzYaKSyvazqNq
- fxxw==
+ :reply-to; bh=y8b1m3nNjRvsgCA/3OAkRK5Tn4EnpI6Wrj/uOCDNwX4=;
+ b=f51wH0gi+acPD3D8CcLcwQjhOScNY4CK9QhnlmRthlzfcH58ytPG5JX5IES4WRQ+5p
+ wjd5sowgqu2NokZpAV8CrzHAOdyupRZ+euR0+El4czpkDfomG/Wi3WQIZ/twyb7A9eyQ
+ rnqiCPuDE0hlJ5tZLxZNcpCLMl020FB5YJe5FPI+kGgrKRlmzA3NX5ABGBdAMzZlWH5q
+ SDifiW32R2PrhE012tof5Ac5hZVieHPa1P6JEeGRMCREP9o0nLTnwV/0+WVQ36v81s/E
+ H3NG9p+IsrUPOLuH0UFyouJdAbiRo+SEdqR9OB+meOlYBYVeDvXdpsaIb5URDaOEH8Pl
+ TmAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758411980; x=1759016780;
+ d=1e100.net; s=20230601; t=1758411966; x=1759016766;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l+6U7vuZXoA2jAif1uxe87ybSSQD3PHGgeF0aqX99Qs=;
- b=UCSii9w5PFlTUq7jcvvh99Tfm3IY9MATlm+4C0nhqTm9qEwkT3ITZNjrDT+O1qeTiM
- WXSrZ5sjRAmeCkITaF5kuR7SBlMGBnp2eJRVcwbp96ZhPXEpocn7PtwnNtf8b8pKTaB/
- hWr7HC7403qGPfSc/8bIdcO6O/YwQ4SAeGR/2JOe5UMwBsPXxUWHfA7oDRT/jcW5lgY0
- dHt4cZ+ZQkjxsQFVhsoS6ZUTE0BaksJQcxv6LbIbidASbI8tCztHcInJZzWPNUj5Vb1U
- Rg/psq3n03dmGA1fzco+HPntL8hbksOkKxvbOGSRpCvZGnOx1ZNNJn7hg/A/TrNqQHJx
- RvBw==
-X-Gm-Message-State: AOJu0YzLj35rkkCzJ4mJdNfyq2NoQqa33F2svq+UmmlPay32cbpw9WOv
- hXetlB4va/zRZjF3Ke6+vHb3jGQTQqrZmFDYgfLl7QC39SU/vhRQMt9c
-X-Gm-Gg: ASbGncvvrFL2v3qKv9rpAK42XCsyAFSmJsdJ8+P9XOp4o0mf8At5rOFiKDYtQCcwq77
- h3ubglO1ZoDdlSMNWjp9iu8NU0KWOTZ7CE0EJXKN+jwB1UTQZ9OWZuXpQoGz0k/iz87MOHRFP+b
- rWwZZEccjwwUEimPxJ66MzqFznRkq6B88XbXHt2/0WvDpHpN8Y7r3DCsHA/ca2I8yHWWqm9fz74
- MlGZBYSsYJTghM9rUg+IMdKl8421Igmj8lnrv8HoDtzKdeTijxBlg6jTKHiJY68hbpIb+Aj1aIe
- IMJqLGf/KOP64y95kWiTNGBN5IkyYRb3QQk3DsODgs/9AuG1vMMW8dLq5gNyxX0HJfxNRnQ44sL
- a+yaa7econePeBUfDeyyXApEG0gcyWSN8VjF+drf4RcP6woA7qwDc
-X-Google-Smtp-Source: AGHT+IGcPrcRTjfUt0bpQ7125j3MbMtv2zS3nJc/HrW2LnUXXiXefL03bmP0sDpYocEbB0Foz659gw==
-X-Received: by 2002:a05:600c:1f0e:b0:45d:e211:da7d with SMTP id
- 5b1f17b1804b1-467f3840538mr59904835e9.35.1758411980357; 
- Sat, 20 Sep 2025 16:46:20 -0700 (PDT)
+ bh=y8b1m3nNjRvsgCA/3OAkRK5Tn4EnpI6Wrj/uOCDNwX4=;
+ b=aRRnf1VF7mwMjxyJSqk97K7LiPm73JGZhlKUQO8KcTUgLnfStH7E9BCmgoysg5zbEH
+ ZRbBySxl863amDzKKKXaxUgIT16xQ2+RekR6wQuxfutZ0uPRY2JrWdKP1o0v+VOy+g9j
+ 4xqCVqT/yKqQQgWVJ6kHemb9HYitzny0Z/ud6w8NVYnMUo6NrV/RotlZWiEyZkkyJcc1
+ P8Vq7Sv5oPkVyP6nA4+BjfrUuhlr4qPKFYnf8IjdBAYoB0KDlo9vq4I+16Xlcwa71JyJ
+ Gud5YDw7XhNHVz/0xoMRn27SIJVNd31LQuv6cwxLssEFG3MitDb/SatcBDvpDQ4yCjg1
+ 3L9w==
+X-Gm-Message-State: AOJu0YzcS+UNGn2gJ555j91STRUlKy3VUMpkRmOJGo006hCh4qfIY/qE
+ b+Nqyi12z7cJzgDpO2YTCkcZbOdsgNVbCZ0BZeucEVFKLlpy3tFwj1bu
+X-Gm-Gg: ASbGnctcz+GTdmUt6G51a5+sAK7fg/qCS3CtO5MsvjCXh9pmitYu22EBzcuAen4rPsR
+ xivOYH3epA7DyOGOSzB5JDZPcISH+o2NWqilnY7j2ubL53vT3r5VlxLFyRTxLrSjKhkoW4Vr4Ry
+ O450i8fx+we99J8cmNG70qjwyRvUtwLX+WvhBEII3Lu2oVm4EOSeWKFwko36rxEEzmjfFCl7R3V
+ MHoZjfMh80TmTAXM0qy/j+t669lQDIUhAotizFw8QBnsbLrp9Ditr+zsZwzY1VtNbOpIhGeWDFb
+ qHaMzeG43AguTNrbzUJ9aAuvdTUyWoLr3SY3sL53cCFqEfWINTgajttSMxEV7PMuiAWCd7JDl3k
+ bHHY5lR2PmKgUqeygFaI813d6BXHK0eUrGUHyMNlTyQ1BcC0r2MnVT7DsVOKQ85o=
+X-Google-Smtp-Source: AGHT+IFKI8KLAPj5bk3CegRqPq8lN8lLXlqLLrl2Q7aZpyvYYqB9gd6J0Dz3nKBLlpE4zQx89rzt/g==
+X-Received: by 2002:a05:6000:400c:b0:3ea:9042:e682 with SMTP id
+ ffacd0b85a97d-3ee7c55430amr6667997f8f.11.1758411966340; 
+ Sat, 20 Sep 2025 16:46:06 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-3ee0fbf53cesm14756947f8f.59.2025.09.20.16.46.19
+ 5b1f17b1804b1-464f5d053f2sm142259325e9.20.2025.09.20.16.46.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Sep 2025 16:46:19 -0700 (PDT)
+ Sat, 20 Sep 2025 16:46:05 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Sun, 21 Sep 2025 01:45:42 +0200
-Subject: [PATCH RFC v5 12/12] ui/gtk: forward gtk console size to vc
- chardev
+Date: Sun, 21 Sep 2025 01:45:31 +0200
+Subject: [PATCH RFC v5 01/12] chardev: add cols, rows fields
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250921-console-resize-v5-12-89e3c6727060@gmail.com>
+Message-Id: <20250921-console-resize-v5-1-89e3c6727060@gmail.com>
 References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
 In-Reply-To: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,17 +83,17 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
- Filip Hejsek <filip.hejsek@gmail.com>
+ Szymon Lukasz <noh4hss@gmail.com>, Filip Hejsek <filip.hejsek@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758411962; l=2083;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758411962; l=2276;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=dxDuA1//VqDvH1os8q3NA6tUkxpa0NEBJc+VF1MvYLw=;
- b=Lp2Tht9hYrjoAEySxAR3OJMXr3WT/mfoGacMMEscps/BvMb/NljPryz8VBuKmLpDzn32+Jn4V
- llUX42tmoy8CWHexDfs5lHjMp1W3aKnJnt3Upyanjlm3n43uSCEdHEv
+ bh=qKds+se7c4I8+/AcqhGDFyyVfjfxbvfkq+ChYOtNMzo=;
+ b=oOALkNNtoP+4iyR/iK7otC7SHypbWLJUKZmFiX0DK8qVj8TlU5CTNwYWjZIovHMFWgR9aIWww
+ AhyyjOhFofiCjQw34YDEL/cuaWljbPjlXiZA8N4Y80kW2ncY5otXfzb
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,61 +116,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Query the terminal size from the vte library when creating the console
-and every time it might change. Vte doesn't send any signal specifically
-for terminal size changes, so instead we register callbacks for
-size-allocate and char-size-changed.
+From: Szymon Lukasz <noh4hss@gmail.com>
 
+These fields should be interpreted as the size of the terminal connected
+to a given chardev.
+
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- ui/gtk.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ chardev/char-fe.c         | 13 +++++++++++++
+ include/chardev/char-fe.h | 10 ++++++++++
+ include/chardev/char.h    |  1 +
+ 3 files changed, 24 insertions(+)
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index e91d093a49e5d05c10f1dbea5b9b94ff1389b456..ff2709160787f0e2974c83802d932758866f6d44 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2025,6 +2025,27 @@ static gboolean gd_vc_in(VteTerminal *terminal, gchar *text, guint size,
-     return TRUE;
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index 158a5f4f551ee49120eee6ebdf772fb450739f47..8622898bd414c208b5a0397b439e18a8bf0b8a92 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -329,6 +329,19 @@ void qemu_chr_fe_set_echo(CharBackend *be, bool echo)
+     }
  }
  
-+static void gd_vc_vte_update_size(VirtualConsole *vc)
++void qemu_chr_fe_get_winsize(CharBackend *be, uint16_t *cols, uint16_t *rows)
 +{
-+    uint16_t cols = vte_terminal_get_column_count(VTE_TERMINAL(vc->vte.terminal));
-+    uint16_t rows = vte_terminal_get_row_count(VTE_TERMINAL(vc->vte.terminal));
-+    qemu_chr_resize(vc->vte.chr, cols, rows);
++    Chardev *chr = be->chr;
++
++    if (chr) {
++        *cols = chr->cols;
++        *rows = chr->rows;
++    } else {
++        *cols = 0;
++        *rows = 0;
++    }
 +}
 +
-+static void gd_vc_size_allocate(VteTerminal *terminal,
-+                                GtkAllocation *allocation, gpointer user_data)
-+{
-+    VirtualConsole *vc = user_data;
-+    gd_vc_vte_update_size(vc);
-+}
-+
-+static void gd_vc_char_size_changed(VteTerminal *terminal, guint width,
-+                                    guint height, gpointer user_data)
-+{
-+    VirtualConsole *vc = user_data;
-+    gd_vc_vte_update_size(vc);
-+}
-+
- static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
-                               Chardev *chr, int idx,
-                               GSList *group, GtkWidget *view_menu)
-@@ -2090,6 +2111,12 @@ static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
+ void qemu_chr_fe_set_open(CharBackend *be, bool is_open)
+ {
+     Chardev *chr = be->chr;
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index 8ef05b3dd095bdcaa51b10482261a29b1e8233c7..02d5606fa343ac64a76f48dcd250b5431a0a7761 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -158,6 +158,16 @@ int qemu_chr_fe_wait_connected(CharBackend *be, Error **errp);
+  */
+ void qemu_chr_fe_set_echo(CharBackend *be, bool echo);
  
-     qemu_chr_be_event(vc->vte.chr, CHR_EVENT_OPENED);
- 
-+    g_signal_connect(vc->vte.terminal, "size-allocate",
-+                     G_CALLBACK(gd_vc_size_allocate), vc);
-+    g_signal_connect(vc->vte.terminal, "char-size-changed",
-+                     G_CALLBACK(gd_vc_char_size_changed), vc);
-+    gd_vc_vte_update_size(vc);
++/**
++ * qemu_chr_fe_get_winsize:
++ * @cols: the address for storing columns
++ * @rows: the address for storing rows
++ *
++ * Get the size of the terminal connected to the chardev backend.
++ * Returns *cols = *rows = 0, if no associated Chardev.
++ */
++void qemu_chr_fe_get_winsize(CharBackend *be, uint16_t *cols, uint16_t *rows);
 +
-     return group;
- }
- 
+ /**
+  * qemu_chr_fe_set_open:
+  * @be: a CharBackend
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 429852f8d9d3c5a7e061acea3561b019b15d658f..336b2e68d099e70a9abe71ef842b160bf12ea932 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -65,6 +65,7 @@ struct Chardev {
+     char *filename;
+     int logfd;
+     int be_open;
++    uint16_t cols, rows;
+     /* used to coordinate the chardev-change special-case: */
+     bool handover_yank_instance;
+     GSource *gsource;
 
 -- 
 2.51.0
