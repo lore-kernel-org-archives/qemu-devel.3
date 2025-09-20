@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946CECAC5A5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E48CAC5A7
 	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzzkt-000837-Sv; Sat, 20 Sep 2025 11:44:07 -0400
+	id 1uzzkq-00082C-RG; Sat, 20 Sep 2025 11:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzkn-000806-NH; Sat, 20 Sep 2025 11:44:01 -0400
+ id 1uzzkk-0007ya-PC; Sat, 20 Sep 2025 11:43:59 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzkl-0001zC-6g; Sat, 20 Sep 2025 11:44:01 -0400
+ id 1uzzki-0001zY-RL; Sat, 20 Sep 2025 11:43:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758383040; x=1789919040;
+ t=1758383037; x=1789919037;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=waLJ79Z2ZxPOvRkgcef2yGkHILtwcEpwytE2aQ9sNt8=;
- b=YEWnuszib5UMpc1h/HilWL9FleJ6Erb95MRrpcUpuS1xV/BgpsPsWqOA
- zhlV2GKsifRcdM+NNvMsLYQkv5q5EMTkmwgdqGQimXfDAe76Mys4PTYl0
- yF1JjvgYh1pKpwXEjnTPKtfHiN3GN/LI6i7neOVP7xkPAJCeVw3hnxdGK
- Qf3m4PvpVk7Ah3Sc0BSYVQQnuEk9akLuTnuqefGV8sbzJyLtpMeAd7dur
- TTu/9IzPdd4X8cTsXb6CB/eVAPOVVWn9ifPWyuBgu/e/Zslzk4SW2ur8x
- zIj4yAtr6lWb9/NJkpmqBvtvZblt8qhSmorHg6yPPlMwp8BxcqNoFb5Xn Q==;
-X-CSE-ConnectionGUID: /i1VSowERXiuUVXmvPcsXg==
-X-CSE-MsgGUID: SvicmQXPRDiAQCapeS4y0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955565"
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955565"
+ bh=A2RQC03kkpwdd2KD8mxBPSDYqTCska/UixEK4wWtb/s=;
+ b=izistnAyUgfSkmbj8M2QHtgXLvlSdtNLoshz80Mc8X+XKhXZuqJYnF3F
+ oGevOSswFp7YGHarQB0YiQNqqeLSZU2763yuY58AZ6oVluMYW/b4SyWTs
+ 02JWO3YFZpkIU7eAaU5wVyoXo+CJdTfz4weWA2hzMr/XQpz7ohlDd2LWk
+ 2rzWyJD9xa/H7Ra+uyjc88MphVKaK07nhloYyUe6r/2ejUFfKPPDEIxFa
+ NGAmCyUoIZ9Fv1MrOz38TOtBsuXJuWhl6PCu4RiVQqjIyb/IRFdv+txbP
+ cxkKR2wGjDOYb4Zern6vWJl8J/p3c5WFRds1DMCN1EPtpLLML5kIhTeBR Q==;
+X-CSE-ConnectionGUID: bLBfY3dLRxqwA30+WjnD/g==
+X-CSE-MsgGUID: v0b7tbkcT/mRQwC1mrZDZw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955549"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955549"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2025 08:43:55 -0700
-X-CSE-ConnectionGUID: JUtPN4YgSFGqR4wfx+Vu4A==
-X-CSE-MsgGUID: INZI3f0rR8i1Gn75AuY84A==
+ 20 Sep 2025 08:43:52 -0700
+X-CSE-ConnectionGUID: /UonA2rHS5C+oHvDK/0ovQ==
+X-CSE-MsgGUID: 5Dg7hN2SRj2vHMqCt4uM3w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349485"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349474"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:53 -0700
+ by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:50 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 10/12] rust/hpet: Clean up type mismatch for num_timers
- property
-Date: Sun, 21 Sep 2025 00:05:18 +0800
-Message-Id: <20250920160520.3699591-11-zhao1.liu@intel.com>
+Subject: [PATCH v2 08/12] rust/qdev: Support bit property in #property macro
+Date: Sun, 21 Sep 2025 00:05:16 +0800
+Message-Id: <20250920160520.3699591-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250920160520.3699591-1-zhao1.liu@intel.com>
 References: <20250920160520.3699591-1-zhao1.liu@intel.com>
@@ -64,8 +63,8 @@ X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.045,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,28 +80,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now `num_timers` is `usize` other than `u8`. Although the type field in
-`declare_properties` macro hasn't been used, it's better to explicitly
-point this out and clean up this before doing other property work.
+Add BIT_INFO to QDevProp trait, so that bit related property info could
+be bound to u32 & u64.
+
+Then add "bit=*" field in #property attributes macro to allow device to
+configure bit property.
+
+In addtion, convert the #property field parsing from `if-else` pattern
+to `match` pattern, to help readability. And note, the `bitnr` member of
+`Property` struct is generated by manual TokenStream construction,
+instead of conditional repetition (like #(bitnr: #bitnr,)?) since
+`quote` doesn't support this.
+
+In addtion, rename VALUE member of QDevProp trait to BASE_INFO.
+
+And update the test cases about qdev property.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes since v1:
+ * Use attrs to parse "lib" field in #property.
+ * Rename VALUE to BASE_INFO in this patch.
+ * Update test cases.
+---
+ rust/hw/core/src/qdev.rs      | 19 ++++++++++++-------
+ rust/qemu-macros/src/lib.rs   | 18 +++++++++++++++---
+ rust/qemu-macros/src/tests.rs |  8 +++++---
+ 3 files changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 3cfbe9c32bb1..fce75415579d 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -909,7 +909,7 @@ impl ObjectImpl for HPETState {
-         HPETState,
-         num_timers,
-         unsafe { &qdev_prop_usize },
--        u8,
-+        usize,
-         default = HPET_MIN_TIMERS
-     ),
-     define_property!(
+diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+index 14d6ecf2ca23..5cc8a35d1ab0 100644
+--- a/rust/hw/core/src/qdev.rs
++++ b/rust/hw/core/src/qdev.rs
+@@ -109,8 +109,8 @@ pub trait ResettablePhasesImpl {
+ ///
+ /// # Safety
+ ///
+-/// This trait is marked as `unsafe` because `VALUE` must be a valid raw
+-/// reference to a [`bindings::PropertyInfo`].
++/// This trait is marked as `unsafe` because `BASE_INFO` and `BIT_INFO` must be
++/// valid raw references to [`bindings::PropertyInfo`].
+ ///
+ /// Note we could not use a regular reference:
+ ///
+@@ -131,14 +131,19 @@ pub trait ResettablePhasesImpl {
+ /// It is the implementer's responsibility to provide a valid
+ /// [`bindings::PropertyInfo`] pointer for the trait implementation to be safe.
+ pub unsafe trait QDevProp {
+-    const VALUE: *const bindings::PropertyInfo;
++    const BASE_INFO: *const bindings::PropertyInfo;
++    const BIT_INFO: *const bindings::PropertyInfo = {
++        panic!("invalid type for bit property");
++    };
+ }
+ 
+ macro_rules! impl_qdev_prop {
+-    ($type:ty,$info:ident) => {
++    ($type:ty,$info:ident$(, $bit_info:ident)?) => {
+         unsafe impl $crate::qdev::QDevProp for $type {
+-            const VALUE: *const $crate::bindings::PropertyInfo =
++            const BASE_INFO: *const $crate::bindings::PropertyInfo =
+                 addr_of!($crate::bindings::$info);
++            $(const BIT_INFO: *const $crate::bindings::PropertyInfo =
++                addr_of!($crate::bindings::$bit_info);)?
+         }
+     };
+ }
+@@ -146,8 +151,8 @@ unsafe impl $crate::qdev::QDevProp for $type {
+ impl_qdev_prop!(bool, qdev_prop_bool);
+ impl_qdev_prop!(u8, qdev_prop_uint8);
+ impl_qdev_prop!(u16, qdev_prop_uint16);
+-impl_qdev_prop!(u32, qdev_prop_uint32);
+-impl_qdev_prop!(u64, qdev_prop_uint64);
++impl_qdev_prop!(u32, qdev_prop_uint32, qdev_prop_bit);
++impl_qdev_prop!(u64, qdev_prop_uint64, qdev_prop_bit64);
+ impl_qdev_prop!(usize, qdev_prop_usize);
+ impl_qdev_prop!(i32, qdev_prop_int32);
+ impl_qdev_prop!(i64, qdev_prop_int64);
+diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
+index ed2b997b24a4..c459f9bcb42f 100644
+--- a/rust/qemu-macros/src/lib.rs
++++ b/rust/qemu-macros/src/lib.rs
+@@ -183,6 +183,7 @@ fn parse(input: ParseStream<'_>) -> syn::Result<Self> {
+ #[derive(Default, Debug)]
+ struct DeviceProperty {
+     rename: Option<DevicePropertyName>,
++    bitnr: Option<syn::Expr>,
+     defval: Option<syn::Expr>,
+ }
+ 
+@@ -191,6 +192,7 @@ fn parse_from(&mut self, a: &Attribute) -> syn::Result<()> {
+         use attrs::{set, with, Attrs};
+         let mut parser = Attrs::new();
+         parser.once("rename", with::eq(set::parse(&mut self.rename)));
++        parser.once("bit", with::eq(set::parse(&mut self.bitnr)));
+         parser.once("default", with::eq(set::parse(&mut self.defval)));
+         a.parse_args_with(&mut parser)
+     }
+@@ -226,7 +228,11 @@ fn derive_device_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream
+     let mut properties_expanded = vec![];
+ 
+     for (field, prop) in properties {
+-        let DeviceProperty { rename, defval } = prop;
++        let DeviceProperty {
++            rename,
++            bitnr,
++            defval,
++        } = prop;
+         let field_name = field.ident.unwrap();
+         macro_rules! str_to_c_str {
+             ($value:expr, $span:expr) => {{
+@@ -256,14 +262,20 @@ macro_rules! str_to_c_str {
+             },
+         )?;
+         let field_ty = field.ty.clone();
+-        let qdev_prop = quote! { <#field_ty as ::hwcore::QDevProp>::VALUE };
++        let qdev_prop = if bitnr.is_none() {
++            quote! { <#field_ty as ::hwcore::QDevProp>::BASE_INFO }
++        } else {
++            quote! { <#field_ty as ::hwcore::QDevProp>::BIT_INFO }
++        };
++        let bitnr = bitnr.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         let set_default = defval.is_some();
+         let defval = defval.unwrap_or(syn::Expr::Verbatim(quote! { 0 }));
+         properties_expanded.push(quote! {
+             ::hwcore::bindings::Property {
+                 name: ::std::ffi::CStr::as_ptr(#prop_name),
+-                info: #qdev_prop ,
++                info: #qdev_prop,
+                 offset: ::core::mem::offset_of!(#name, #field_name) as isize,
++                bitnr: #bitnr,
+                 set_default: #set_default,
+                 defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: #defval as u64 },
+                 ..::common::Zeroable::ZERO
+diff --git a/rust/qemu-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
+index 1ce43aa568ec..c6b00c9783a8 100644
+--- a/rust/qemu-macros/src/tests.rs
++++ b/rust/qemu-macros/src/tests.rs
+@@ -60,7 +60,7 @@ struct DummyState {
+                 migrate_clock: bool,
+             }
+         },
+-        "Expected one of `default` or `rename`"
++        "Expected one of `bit`, `default` or `rename`"
+     );
+     // Check that repeated attributes are not allowed:
+     derive_compile_fail!(
+@@ -106,8 +106,9 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                 const PROPERTIES: &'static [::hwcore::bindings::Property] = &[
+                     ::hwcore::bindings::Property {
+                         name: ::std::ffi::CStr::as_ptr(c"migrate_clock"),
+-                        info: <bool as ::hwcore::QDevProp>::VALUE,
++                        info: <bool as ::hwcore::QDevProp>::BASE_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, migrate_clock) as isize,
++                        bitnr: 0,
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
+                         ..::common::Zeroable::ZERO
+@@ -133,8 +134,9 @@ unsafe impl ::hwcore::DevicePropertiesImpl for DummyState {
+                 const PROPERTIES: &'static [::hwcore::bindings::Property] = &[
+                     ::hwcore::bindings::Property {
+                         name: ::std::ffi::CStr::as_ptr(c"migrate-clk"),
+-                        info: <bool as ::hwcore::QDevProp>::VALUE,
++                        info: <bool as ::hwcore::QDevProp>::BASE_INFO,
+                         offset: ::core::mem::offset_of!(DummyState, migrate_clock) as isize,
++                        bitnr: 0,
+                         set_default: true,
+                         defval: ::hwcore::bindings::Property__bindgen_ty_1 { u: true as u64 },
+                         ..::common::Zeroable::ZERO
 -- 
 2.34.1
 
