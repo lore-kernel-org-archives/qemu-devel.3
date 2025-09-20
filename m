@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B9ECAC5A7
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9066FCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzzkn-0007zw-M6; Sat, 20 Sep 2025 11:44:01 -0400
+	id 1uzzkn-000809-PI; Sat, 20 Sep 2025 11:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzke-0007vb-V5; Sat, 20 Sep 2025 11:43:54 -0400
+ id 1uzzka-0007uI-Ra; Sat, 20 Sep 2025 11:43:50 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzkb-0001zT-Ij; Sat, 20 Sep 2025 11:43:51 -0400
+ id 1uzzkX-0001zC-PG; Sat, 20 Sep 2025 11:43:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758383030; x=1789919030;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=IFeVZke/HWz43jXrNgwIElT7PX2TkqZW6CE4stypwe0=;
- b=jDxmMI1/ILn7peS301bL+Nao+e4O72D2cTWI9Bly7J4Q+fOW4j9PTHHn
- rifr4k+ih9Cf93muIDCXRKyaBWJRHxk7bCcl9QI/f/Nbb0gWo1r1WWpeB
- Lg83/8q4pY4VbIZAGfh/j+K6ENyqJmPcUppWOiFYdUf2Xxiw33PXR3+Al
- K01LAnGf+4yiyXXYo22omEytRoOtVdRGmgHbkVAnlOF8GuQn9kh51qjWe
- GlnpChdG5heISq38cENIf8C7YCw/y/1Qjh9GT0/FUDhpqql2xv4OWsrsO
- nw/rdNPwKHj8k2LygFxxSuQ2VQV5CUextsULeRBBk/LF0LVSojPsksSc+ A==;
-X-CSE-ConnectionGUID: TZEAcpPSRPOj4wKBxwG61w==
-X-CSE-MsgGUID: StN1+M9MQ4aEDVVEpo+NXQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955520"
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955520"
+ t=1758383026; x=1789919026;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=KBVKhGRJQV5wgv2/eqkpjFKbdVkp94L7UsAfeGvMdk8=;
+ b=KDtXVzOJCE0qJy7hBy5N7i+gd+oM1VYEK9Wj92MtBxZ9KoZDkKIu3op+
+ AEvsDbtZnU8dKzG2KpCP70QdlQaTFiQ2YpLimrmju2Q+wr1nC06TQP8zM
+ lNZ3ATbMv91za/nT95OudhmVcM1Re2CDad1KXDN+CzNGkE1BJ2dJBcBSu
+ 0LMzW5A/x15VXjqDtTPyeg3MnODD8Zvwavy9pzF96mzewXquxymsM5cC8
+ 3PyiAko+/JxMSPABeM9JqZeTsXeyK0l5EBzq2JENEZOBHrFU/KOeUWfOp
+ Lh8Rpmeh3JETak31Zk19pLxd6HRBpf93jZg0HARInFVDwKgzRlxfdvfaN g==;
+X-CSE-ConnectionGUID: afuqSYKMQlO+/mLwzrJxFw==
+X-CSE-MsgGUID: 0JCTr3grQ4yK6oXZ/GjJFQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955487"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955487"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2025 08:43:46 -0700
-X-CSE-ConnectionGUID: H/BeRLvgQnqBWnjE65lokw==
-X-CSE-MsgGUID: qWJixoeuRvCx9lYSolKF6g==
+ 20 Sep 2025 08:43:40 -0700
+X-CSE-ConnectionGUID: VbbyAvJlRjKyh1MIxi3C4A==
+X-CSE-MsgGUID: wfWwVBM+TpyoiE1JbvN/WQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349451"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349421"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:44 -0700
+ by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:37 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 04/12] rust/common/uninit: Fix Clippy's complaints about
- lifetime
-Date: Sun, 21 Sep 2025 00:05:12 +0800
-Message-Id: <20250920160520.3699591-5-zhao1.liu@intel.com>
+Subject: [PATCH v2 00/12] rust: miscellaneous cleanup & HPET #property
+ conversion
+Date: Sun, 21 Sep 2025 00:05:08 +0800
+Message-Id: <20250920160520.3699591-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250920160520.3699591-1-zhao1.liu@intel.com>
-References: <20250920160520.3699591-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
@@ -81,66 +79,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clippy complains about the following cases and following its suggestion
-to fix these warnings.
+Hi,
 
-warning: the following explicit lifetimes could be elided: 'a
-  --> common/src/uninit.rs:38:6
-   |
-38 | impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-   |      ^^                                   ^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-   = note: `#[warn(clippy::needless_lifetimes)]` on by default
-help: elide the lifetimes
-   |
-38 - impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-38 + impl<T, U> Deref for MaybeUninitField<'_, T, U> {
-   |
+This series include:
+ * cleanup for .gitignore of subproject.
+ * cleanup for clippy error & warnings based on v1.83.
+ * support bit property in #property.
+ * HPET #property conversion.
+ * get rid of the legacy declare_properties & define_property.
 
-warning: the following explicit lifetimes could be elided: 'a
-  --> common/src/uninit.rs:49:6
-   |
-49 | impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-   |      ^^                                      ^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-help: elide the lifetimes
-   |
-49 - impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-49 + impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
-   |
+And this series is based on the commit 7a28f05aafb7 of Paolo's
+rust-next branch.
 
-warning: `common` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p common` to apply 2 suggestions)
+Changes since v1
+ * Use attrs to parse "bit" field in #property.
+ * Squash the "VALUE" renaming patch into the patch of "bit" property
+   support.
+ * Add test case of bit property.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Thanks and Best Regards,
+Zhao
+
 ---
- rust/common/src/uninit.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Manos Pitsidianakis (2):
+  rust/qdev: use addr_of! in QDevProp
+  rust/qdev: Refine the documentation for QDevProp trait
 
-diff --git a/rust/common/src/uninit.rs b/rust/common/src/uninit.rs
-index e7f9fcd2e3fb..8d021b1dfc6e 100644
---- a/rust/common/src/uninit.rs
-+++ b/rust/common/src/uninit.rs
-@@ -35,7 +35,7 @@ pub const fn parent_mut(f: &mut Self) -> *mut T {
-     }
- }
- 
--impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-+impl<T, U> Deref for MaybeUninitField<'_, T, U> {
-     type Target = MaybeUninit<U>;
- 
-     fn deref(&self) -> &MaybeUninit<U> {
-@@ -46,7 +46,7 @@ fn deref(&self) -> &MaybeUninit<U> {
-     }
- }
- 
--impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-+impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
-     fn deref_mut(&mut self) -> &mut MaybeUninit<U> {
-         // SAFETY: self.child was obtained by dereferencing a valid mutable
-         // reference; the content of the memory may be invalid or uninitialized
+Zhao Liu (10):
+  subprojects: Update .gitignore for proc-macro2 and syn
+  subprojects: Ignore .wraplock file generated by meson v1.9.0
+  rust/qemu-macros: Fix Clippy's complaints about lambda parameter
+    naming
+  rust/common/uninit: Fix Clippy's complaints about lifetime
+  rust/qdev: Support property info for more common types
+  rust/qdev: Support bit property in #property macro
+  rust/qdev: Test bit property for #property
+  rust/hpet: Clean up type mismatch for num_timers property
+  rust/hpet: Convert qdev properties to #property macro
+  rust/qdev: Drop declare_properties & define_property macros
+
+ rust/common/src/uninit.rs        |   4 +-
+ rust/hw/core/src/qdev.rs         | 105 ++++++++++--------------------
+ rust/hw/timer/hpet/src/device.rs |  55 ++--------------
+ rust/qemu-macros/src/lib.rs      |  22 +++++--
+ rust/qemu-macros/src/tests.rs    | 107 ++++++++++++++++++++++++++++++-
+ subprojects/.gitignore           |   5 +-
+ 6 files changed, 168 insertions(+), 130 deletions(-)
+
 -- 
 2.34.1
 
