@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5247CCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 14:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8206ACAC5A7
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 14:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzybQ-0007Hs-UU; Sat, 20 Sep 2025 10:30:16 -0400
+	id 1uzybL-0007F3-43; Sat, 20 Sep 2025 10:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzybO-0007Gw-97
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:30:14 -0400
+ id 1uzybJ-0007ET-Gg
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:30:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uzybM-0005S6-Dj
- for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:30:14 -0400
+ id 1uzybG-0005Pw-Ds
+ for qemu-devel@nongnu.org; Sat, 20 Sep 2025 10:30:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758378611;
+ s=mimecast20190719; t=1758378605;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y0J9X0otTLwkzasLt1UDH9KlN9sxJ9cBWuhH6pKrvTE=;
- b=NLlOFUX9QTS0pxVGp4oNTu8sOuVwOz+nNs+n8ZPr9aWj7Bl6HCAvFPC1Cf2BY4GReCrRWl
- W9UWpGS24dbPXFeQx6SNFwJaVLQ2lD+G47J9SwoVyulFMegwyqo+npmSCN+fNyLj6mftcz
- +A943hhvisxykBhdjXRVJ4ugB0n7sVA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RXUdmalvHm+5/GVcC2GTT1297p4snx3KOMpnEPeu9zw=;
+ b=QT1CjjmXC8ggrB/22mJmHI5oiDKQqZAiNJuC2QRiP3mG3mVakfwqwnZgRAzVtuH7wb4VzX
+ 7w6/N5YPVgZbhYGXPbhgslePHSeiuLIzj9o8X3i671+HsjV/VesIVv4Ej9F0K9CQxsW0l+
+ OVY2VkmpD4UeuGYMdXl7ZATxjzOnL5E=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-kmII5KM-NnOINQYjoSfDMg-1; Sat, 20 Sep 2025 10:30:10 -0400
-X-MC-Unique: kmII5KM-NnOINQYjoSfDMg-1
-X-Mimecast-MFC-AGG-ID: kmII5KM-NnOINQYjoSfDMg_1758378609
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45f2b9b99f0so932725e9.1
- for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 07:30:10 -0700 (PDT)
+ us-mta-543-HQuA5YxqMQu6Y_L_mxcEFg-1; Sat, 20 Sep 2025 10:30:02 -0400
+X-MC-Unique: HQuA5YxqMQu6Y_L_mxcEFg-1
+X-Mimecast-MFC-AGG-ID: HQuA5YxqMQu6Y_L_mxcEFg_1758378602
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45e037fd142so29436365e9.3
+ for <qemu-devel@nongnu.org>; Sat, 20 Sep 2025 07:30:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758378608; x=1758983408;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y0J9X0otTLwkzasLt1UDH9KlN9sxJ9cBWuhH6pKrvTE=;
- b=RD4KyRk6YEpf0NwxML9rjmuDuoPN65PdYIkUVLAdK7cxnnnF9KK1DexhMqprS3mURd
- 3H3B1PLm7WvJHnlLmeXC/uJ7WDKWnK9azdWjRHgakbD7srljUwonNPW6BlVZaBxUp5zn
- nepO+rqhavvxVghjAwNG8SzNAl52nXDdSuQeE6GqK8t1Z28T6dOc9Yw0BCEr2iHOidC8
- fj+4BbytbalxkJtRd5reV8EsTnG4VohpV61N6JU7SQPVTKh1yDi5nqNdm2Kzm5KidZ39
- 5zMO3li0gbe+EWBIPbtTuXhRBLvCUr7oD6hhgYgOfeGvFZnLBuI5Cr05x1bFaTQxXjT8
- 1AVg==
-X-Gm-Message-State: AOJu0YyEJPO5KKNfGn4GB8Ufh9PLhsnVbfAArVjthvdyNgttaWB9ZD2M
- WA/3yuK3qH9l48oqGD8n2Qa6opCtDkXstWp07TKQNBfql9writPyPoLaY6YQ6AuobAlyBuzViQy
- /uY359CeUurlSh2/XL5mi+Xa/RXow2b8Q/IdXXI0Fk2vPkMD0eBXQuKyuQucOLOOs8oMgq7Hhx+
- s3RmriaEMq1rOLq6LvxzW35r+7mVrCAJCVJgmHiBbB
-X-Gm-Gg: ASbGncuEvHXSnBCJgvneNiyRD08sAPKlabSI+azHOAbXOeWuRNpCyn9pplHuy7PBwPL
- L7TU/h05adCspWjll1YNGJVwG1Q+ip5YEdB5UhFrjlcbvt6LGPLo3GWcStT94LpLIG1sv1WDEcG
- R90m7tERYLmQhO4hguRTtX5+e/dJpuSnF3eum9Ugpv2tF1D1i8RbaPe2CflF/tmfgKiMqhOZWJ1
- fcIaNpMvocMjJKrUvr8SL4la9aiLnV8jl+wS7dAoIncOzz5f4DUrAJr7iZYcFTs6vslu1rxERq9
- Qtg/qGdcmvLdiwnF8c3XhbFJFajhW/4ZadTa6v1SIvP12uF0rk7sNe1jv9GcqGIOxpHU3NqNQYf
- beaW3rmeIoeLhXks7ytXJ+sm0jvHNSoEE0KVfF5U+KjI=
-X-Received: by 2002:a05:600c:34c8:b0:45b:8b95:7119 with SMTP id
- 5b1f17b1804b1-464f81642e8mr114252285e9.8.1758378608032; 
- Sat, 20 Sep 2025 07:30:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfhatReDU9ArBw+DDqbbFgu0vDxDVZRAp48hqeXuZBgwvm6fdJ6o4wpAJAY0O0Bz46Q6z3mQ==
-X-Received: by 2002:a05:600c:34c8:b0:45b:8b95:7119 with SMTP id
- 5b1f17b1804b1-464f81642e8mr114252005e9.8.1758378607504; 
- Sat, 20 Sep 2025 07:30:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758378601; x=1758983401;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RXUdmalvHm+5/GVcC2GTT1297p4snx3KOMpnEPeu9zw=;
+ b=KhLAZ8zPKtHW5+FyaggP/cOu0dlNPDB4j7OTUwLC/seu2Cp7wYgnSDotvrMJNAGSnX
+ cLT+7tC/JTzsG3FrgKVV1s5SlZ+9xClF4pXu3WXUzJPgsfyieOLLpaWRPwBJb4PVf8GJ
+ 20+V/siIBb4oYUs+Fo1L5iSJSIm09HBgnh/PcyyD0GUSh26wx90oxYePvtzfEJCtfqwh
+ H/xvxoQF9++6EL+xkwnME2F4jb0eHO0pog6ftinofnHcD2jhd/a+bGdoB65t3Pxr9xE5
+ +LfaD1A1jnvS/+QgrXAXMOO4xxvbRpxqwgiOg1CYRluh/KWOHDdnvibD0IvseBSN1i4r
+ YtUw==
+X-Gm-Message-State: AOJu0YweiWCfyA14XrH+v/sMA3jqY4EOBMYVSri41TlC5bHbgCtMfLeB
+ eY/OdpFnqGbmDvsC01Nr5rJyyQYxooKsRApVjeOlOzGtDNmZ+iJu/Q7oIadaqVL4ux9oI9/vnKW
+ xHFi266nGS8oVf0AyaO3OwKwe17jNF5tgOlg9i1GTXhl0ba0X0bx7jt28EdmXbuLY245RvV27Oi
+ vzP0W0lP1GG/mOWjD0XQBE8E8vxjRoAKFeyhxX9I36
+X-Gm-Gg: ASbGncuK9VQdD61YrYTJFKAr++bDgqc06Zo7A7GlA+JUXyiPmM+///5U9cTYkv+V91a
+ xyMV2kzlKbHrWeV31h723uuZ6zc8eki+KRiH0jhy9QlAy4dnzd31lGMoasCFwzwu8wo40Vs9Hrw
+ 8bR5DJkWmVbeSUIPqgsX+WkAq4x6Fd5fkfxF9gK5xLLlzMO9qsrNcL1fIUDKV33dkA8zgW4Kiuf
+ 9HCdzCfgIoQRurlRhLoOhRJmBhAZhXsVpQ+py2Q073vH7mc3UAQWUKnSmezskMAtKVpiWOxEM9r
+ BcaSAFl6BuwzSorCBdz4+kvQsCvqFDH92SWxNLYqWkRJYibivkoo7bGL5qYNvi7jG1EW2MIkgxQ
+ ss3TWlctRkSjorP2KrRPlmCNsa899ZUkY3n/nSGYotfc=
+X-Received: by 2002:a05:600c:3b26:b0:45d:d6fc:24f7 with SMTP id
+ 5b1f17b1804b1-467eaa86ec8mr52767775e9.32.1758378600758; 
+ Sat, 20 Sep 2025 07:30:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCrUkp3V8CjdTu4EsyiVArwCL6I/AP7qbQj/vHr08l9AjYtRZnxN+l1Ek4Cd/kIiDgh7qnOQ==
+X-Received: by 2002:a05:600c:3b26:b0:45d:d6fc:24f7 with SMTP id
+ 5b1f17b1804b1-467eaa86ec8mr52767635e9.32.1758378600259; 
+ Sat, 20 Sep 2025 07:30:00 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.47.123])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4613e09f879sm166476175e9.19.2025.09.20.07.30.06
+ ffacd0b85a97d-3f0e28c83d6sm6447154f8f.56.2025.09.20.07.29.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Sep 2025 07:30:06 -0700 (PDT)
+ Sat, 20 Sep 2025 07:29:59 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org, zhao1.liu@intel.com, manos.pitsidianakis@linaro.org
-Subject: [PATCH 3/7] rust: migration: extract vmstate_fields_ref
-Date: Sat, 20 Sep 2025 16:29:54 +0200
-Message-ID: <20250920142958.181910-4-pbonzini@redhat.com>
+Subject: [RFC PATCH 0/7] rust: migration: add high-level migration wrappers
+Date: Sat, 20 Sep 2025 16:29:51 +0200
+Message-ID: <20250920142958.181910-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250920142958.181910-1-pbonzini@redhat.com>
-References: <20250920142958.181910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -109,79 +106,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is useful when building a VMState for generic structs, because you have
-to avoid nested statics.  Using vmstate_fields! will fail in the likely case
-where the _FIELDS static uses Self from an outer item, because that is
-forbidden.
+This series adds high-level wrappers to handle migration state; they consist
+of a Migratable<> type that implements the snapshotting technique mentioned
+at KVM Forum.  The concepts are also discussed at
+https://lore.kernel.org/qemu-devel/8076a298-1cd9-4c90-a64c-f65004753975@redhat.com/T/
 
-I also looked into returning a &'static [VMStateField] from vmstate_fields!,
-but that also fails; the fields are not promoted to static, which is
-unfortunate but intentional (https://github.com/rust-lang/rust/issues/60502):
+The wrappers (should) make it possible to easily implement migration of
+thread-safe devices.  I say "should" because, even though there are tests
+included in the series, they are anything but "battle tested".  The first
+device to use this will be HPET.
 
-error[E0716]: temporary value dropped while borrowed
-   --> rust/hw/char/pl011/libpl011.rlib.p/structured/device.rs:743:17
-    |
-738 | /      VMStateDescriptionBuilder::<PL011State>::new()
-739 | |          .name(c"pl011/clock")
-740 | |          .version_id(1)
-741 | |          .minimum_version_id(1)
-742 | |          .needed(&PL011State::clock_needed)
-743 | |          .fields(vmstate_fields! {
-    | | _________________^
-744 | ||              vmstate_of!(PL011State, clock),
-745 | ||         })
-    | ||_________^- argument requires that borrow lasts for `'static`
-    |  |_________|
-    |            creates a temporary value which is freed while still in use
-746 |            .build();
-    |                   - temporary value is freed at the end of this statement
+This is an interesting step in enabling usage of Rust in QEMU; instead of
+just wrapping existing C APIs, it provides a new interface that deals
+better with unique features of the Rust language.  In other words,
+something like Migratable<> and ToMigrationState might hypothetically
+exist even if QEMU was written in Rust from scratch.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/migration/src/vmstate.rs | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+Paolo
 
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 05a833a8b7d..421a236194d 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -413,19 +413,30 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
-     }};
- }
- 
-+/// Add a terminator to the fields in the arguments, and return
-+/// a reference to the resulting array of values.
-+#[macro_export]
-+macro_rules! vmstate_fields_ref {
-+    ($($field:expr),*$(,)*) => {
-+        &[
-+            $($field),*,
-+            $crate::bindings::VMStateField {
-+                flags: $crate::bindings::VMStateFlags::VMS_END,
-+                ..::common::zeroable::Zeroable::ZERO
-+            }
-+        ]
-+    }
-+}
-+
- /// Helper macro to declare a list of
- /// ([`VMStateField`](`crate::bindings::VMStateField`)) into a static and return
- /// a pointer to the array of values it created.
- #[macro_export]
- macro_rules! vmstate_fields {
-     ($($field:expr),*$(,)*) => {{
--        static _FIELDS: &[$crate::bindings::VMStateField] = &[
-+        static _FIELDS: &[$crate::bindings::VMStateField] = $crate::vmstate_fields_ref!(
-             $($field),*,
--            $crate::bindings::VMStateField {
--                flags: $crate::bindings::VMStateFlags::VMS_END,
--                ..::common::zeroable::Zeroable::ZERO
--            }
--        ];
-+        );
-         _FIELDS.as_ptr()
-     }}
- }
+
+Paolo Bonzini (7):
+  rust: bql: add BqlRefCell::get_mut()
+  rust: move VMState from bql to migration
+  rust: migration: extract vmstate_fields_ref
+  rust: migration: add high-level migration wrappers
+  rust: qemu-macros: add ToMigrationState derive macro
+  rust: migration: implement ToMigrationState for Timer
+  rust: migration: implement ToMigrationState as part of
+    impl_vmstate_bitsized
+
+ rust/Cargo.lock                         |   5 +-
+ rust/bql/Cargo.toml                     |   3 -
+ rust/bql/meson.build                    |   1 -
+ rust/bql/src/cell.rs                    |  25 +-
+ rust/meson.build                        |   2 +-
+ rust/migration/Cargo.toml               |   2 +
+ rust/migration/meson.build              |   7 +-
+ rust/migration/src/lib.rs               |   5 +
+ rust/migration/src/migratable.rs        | 469 ++++++++++++++++++++++++
+ rust/migration/src/vmstate.rs           |  44 ++-
+ rust/qemu-macros/src/lib.rs             |  88 +++++
+ rust/qemu-macros/src/migration_state.rs | 296 +++++++++++++++
+ rust/qemu-macros/src/tests.rs           | 112 +++++-
+ 13 files changed, 1034 insertions(+), 25 deletions(-)
+ create mode 100644 rust/migration/src/migratable.rs
+ create mode 100644 rust/qemu-macros/src/migration_state.rs
+
 -- 
 2.51.0
 
