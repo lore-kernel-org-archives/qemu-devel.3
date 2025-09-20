@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E19CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B9ECAC5A7
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Sep 2025 15:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uzzkn-0007zs-Ib; Sat, 20 Sep 2025 11:44:01 -0400
+	id 1uzzkn-0007zw-M6; Sat, 20 Sep 2025 11:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzke-0007va-UX; Sat, 20 Sep 2025 11:43:54 -0400
+ id 1uzzke-0007vb-V5; Sat, 20 Sep 2025 11:43:54 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uzzkb-0001zC-Hc; Sat, 20 Sep 2025 11:43:50 -0400
+ id 1uzzkb-0001zT-Ij; Sat, 20 Sep 2025 11:43:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1758383030; x=1789919030;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=e2m8PPZayoxqwvYik36u1YFgyjvQ2yQsYIRZWJ/B+oc=;
- b=ZGUmHXvIELot7WBiaJ5EttDbZz/gxyI/G2N0iy7OcjY1ZkmrMtQizpmj
- dkOBkXikB+Xza7LNN9KH3Uk/ecMyWSNYxCTrLs58jJkyLbpj68vxzq898
- AXY7wMME8TXh0bxy+PRjOwA10wTAiTnw+qvwVu9p3a63z9wS8/7HqLvGO
- Fj/uk5sYRa1pCy1ivgg1tCjRM1qzJonq9H3Pwj+0ofAkonjWiXXjKoLGD
- UF4AA/gbHFpU+9LSJLg9XHVi5wHme104SP3GMCESqBf+Vuh8mXvYgBMn+
- it7aind9ZLmFhu7DZX0q1vUgPFOCATBPWqg8XJPkrRFXjmSJ6W4mCFO4H w==;
-X-CSE-ConnectionGUID: WxP2DggDSnilSN42Za8ujw==
-X-CSE-MsgGUID: 14InECDLSaWG8UgJf98F5Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955509"
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955509"
+ bh=IFeVZke/HWz43jXrNgwIElT7PX2TkqZW6CE4stypwe0=;
+ b=jDxmMI1/ILn7peS301bL+Nao+e4O72D2cTWI9Bly7J4Q+fOW4j9PTHHn
+ rifr4k+ih9Cf93muIDCXRKyaBWJRHxk7bCcl9QI/f/Nbb0gWo1r1WWpeB
+ Lg83/8q4pY4VbIZAGfh/j+K6ENyqJmPcUppWOiFYdUf2Xxiw33PXR3+Al
+ K01LAnGf+4yiyXXYo22omEytRoOtVdRGmgHbkVAnlOF8GuQn9kh51qjWe
+ GlnpChdG5heISq38cENIf8C7YCw/y/1Qjh9GT0/FUDhpqql2xv4OWsrsO
+ nw/rdNPwKHj8k2LygFxxSuQ2VQV5CUextsULeRBBk/LF0LVSojPsksSc+ A==;
+X-CSE-ConnectionGUID: TZEAcpPSRPOj4wKBxwG61w==
+X-CSE-MsgGUID: StN1+M9MQ4aEDVVEpo+NXQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="70955520"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="70955520"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2025 08:43:44 -0700
-X-CSE-ConnectionGUID: tf4WPbhGT2io0nZ715Y6CQ==
-X-CSE-MsgGUID: KBXVuPVlSW+cXm450W2Wvw==
+ 20 Sep 2025 08:43:46 -0700
+X-CSE-ConnectionGUID: H/BeRLvgQnqBWnjE65lokw==
+X-CSE-MsgGUID: qWJixoeuRvCx9lYSolKF6g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349441"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; d="scan'208";a="181349451"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:42 -0700
+ by fmviesa004.fm.intel.com with ESMTP; 20 Sep 2025 08:43:44 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 03/12] rust/qemu-macros: Fix Clippy's complaints about
- lambda parameter naming
-Date: Sun, 21 Sep 2025 00:05:11 +0800
-Message-Id: <20250920160520.3699591-4-zhao1.liu@intel.com>
+Subject: [PATCH v2 04/12] rust/common/uninit: Fix Clippy's complaints about
+ lifetime
+Date: Sun, 21 Sep 2025 00:05:12 +0800
+Message-Id: <20250920160520.3699591-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250920160520.3699591-1-zhao1.liu@intel.com>
 References: <20250920160520.3699591-1-zhao1.liu@intel.com>
@@ -81,44 +81,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-error: `rename` shadows a previous, unrelated binding
-   --> qemu-macros/src/lib.rs:265:14
-    |
-265 |             |rename| -> Result<proc_macro2::TokenStream, Error> {
-    |              ^^^^^^
-    |
-note: previous binding is here
-   --> qemu-macros/src/lib.rs:245:30
-    |
-245 |         let DeviceProperty { rename, defval } = prop;
-    |                              ^^^^^^
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#shadow_unrelated
-    = note: requested on the command line with `-D clippy::shadow-unrelated`
+Clippy complains about the following cases and following its suggestion
+to fix these warnings.
 
-Rename the lambda parameter to "prop_rename" to fix the above clippy
-error.
+warning: the following explicit lifetimes could be elided: 'a
+  --> common/src/uninit.rs:38:6
+   |
+38 | impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
+   |      ^^                                   ^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
+   = note: `#[warn(clippy::needless_lifetimes)]` on by default
+help: elide the lifetimes
+   |
+38 - impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
+38 + impl<T, U> Deref for MaybeUninitField<'_, T, U> {
+   |
+
+warning: the following explicit lifetimes could be elided: 'a
+  --> common/src/uninit.rs:49:6
+   |
+49 | impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
+   |      ^^                                      ^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
+help: elide the lifetimes
+   |
+49 - impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
+49 + impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
+   |
+
+warning: `common` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p common` to apply 2 suggestions)
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/qemu-macros/src/lib.rs | 4 ++--
+ rust/common/src/uninit.rs | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/qemu-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
-index 8151fb6d4e1e..ed2b997b24a4 100644
---- a/rust/qemu-macros/src/lib.rs
-+++ b/rust/qemu-macros/src/lib.rs
-@@ -246,8 +246,8 @@ macro_rules! str_to_c_str {
+diff --git a/rust/common/src/uninit.rs b/rust/common/src/uninit.rs
+index e7f9fcd2e3fb..8d021b1dfc6e 100644
+--- a/rust/common/src/uninit.rs
++++ b/rust/common/src/uninit.rs
+@@ -35,7 +35,7 @@ pub const fn parent_mut(f: &mut Self) -> *mut T {
+     }
+ }
  
-         let prop_name = rename.map_or_else(
-             || str_to_c_str!(field_name.to_string(), field_name.span()),
--            |rename| -> Result<proc_macro2::TokenStream, Error> {
--                match rename {
-+            |prop_rename| -> Result<proc_macro2::TokenStream, Error> {
-+                match prop_rename {
-                     DevicePropertyName::CStr(cstr_lit) => Ok(quote! { #cstr_lit }),
-                     DevicePropertyName::Str(str_lit) => {
-                         str_to_c_str!(str_lit.value(), str_lit.span())
+-impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
++impl<T, U> Deref for MaybeUninitField<'_, T, U> {
+     type Target = MaybeUninit<U>;
+ 
+     fn deref(&self) -> &MaybeUninit<U> {
+@@ -46,7 +46,7 @@ fn deref(&self) -> &MaybeUninit<U> {
+     }
+ }
+ 
+-impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
++impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
+     fn deref_mut(&mut self) -> &mut MaybeUninit<U> {
+         // SAFETY: self.child was obtained by dereferencing a valid mutable
+         // reference; the content of the memory may be invalid or uninitialized
 -- 
 2.34.1
 
