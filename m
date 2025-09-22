@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C801DCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4CBCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gbQ-0008K8-Nh; Mon, 22 Sep 2025 09:29:14 -0400
+	id 1v0gd3-0000pS-5V; Mon, 22 Sep 2025 09:30:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0gbJ-0008HT-8c
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:29:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0gcz-0000mB-5l
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:30:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0gbC-0006a1-It
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:29:04 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0gcw-00070t-8z
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:30:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758547734;
+ s=mimecast20190719; t=1758547840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jAZ0BM6O8Tbwf9x9dPX/q0c+I12wI5EGYfuM6ZQgS7Y=;
- b=G/byy3iK0hTi3L4MXxTsjuaSgzklAMN/abiAHIjUzQbuiIaDz11C0Pa0Dx+sdsD340JgRN
- sNW8aIf91JpaMNHWbHfdq8DTwvCuqTToeEuX9UQPEeo7yNeAPiyMz7h/+4RaGnpLANOYJ+
- TTGC5RwFtkutgPn50GdSKWspueYRFOs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vx0ugBXhJ6gLDEyp8p4H+RkZ6GZzEW4d6ubxPw5g3Gg=;
+ b=Q9+OtII9ZWOdXxMulC3QA4yPWyej+IwStAp73HBAHQZksxY0QvGoPd1EGSI98NgTtm7M6k
+ N84oOUqmCLBEJOI9VwJa5F63tZoKrVlAtJD+NDuoBFsT8x823lDP9nulhByK6mFeuKN/FT
+ sQaA0xkF60FmApPXSAFqI+IpCAYjjV8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-1QuEFWSnNTObr85o9lpQig-1; Mon, 22 Sep 2025 09:28:53 -0400
-X-MC-Unique: 1QuEFWSnNTObr85o9lpQig-1
-X-Mimecast-MFC-AGG-ID: 1QuEFWSnNTObr85o9lpQig_1758547732
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46d88f7d691so4028105e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:28:53 -0700 (PDT)
+ us-mta-621-JpAILNi8Mhq1_r8tUX_J3Q-1; Mon, 22 Sep 2025 09:30:39 -0400
+X-MC-Unique: JpAILNi8Mhq1_r8tUX_J3Q-1
+X-Mimecast-MFC-AGG-ID: JpAILNi8Mhq1_r8tUX_J3Q_1758547837
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45df7e734e0so41857335e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:30:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758547732; x=1759152532;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1758547837; x=1759152637;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jAZ0BM6O8Tbwf9x9dPX/q0c+I12wI5EGYfuM6ZQgS7Y=;
- b=B9Bdvr25TjhbzRdB13OYcPxXWBw6283tj1o7vLxAmV3ni4k065/lANkQJZ/FxGF9ya
- 4tZYBNwxTnIR6z31VZiHR+/BvSLGe37m0Rz4tJTDtS2n9Jv3fGg6thubtpf38UIkIs3T
- cQlnyLlK9oJjn00k0LB9mMh589VcMugslBLTTC8FYWqPMTYWYzn1N/dyXXDzmNkMuzFi
- 7InIFnMppI8DdVp9HWoMp+zQLwO43VHey6Pi40FRdPXIkso8pvBykLhc2bS2vaF2s6PR
- WlkSFzyVh9WRqmWQCd74Qa6Cb+rW98msC2shWndpKms03zSFllLOhmkCmv4e5uX2asvA
- bOWw==
-X-Gm-Message-State: AOJu0Yz3NDcUUtY31yIDWOBJVFfNQPJKI082i0is5+PJgryL7IgV6MCe
- hPZdDaShtZSNsvNenF2UcgdlvcHhTojOXfB2gaC0ieIVFgPA+pWJn3yD/RH2HA/QTiHF1Z8RwQJ
- xu/yNrjyVaTE0Cs8VWQHtgm73PVcfBRlD5K+Oyz3WeHU/VWKQQlAmpkx8
-X-Gm-Gg: ASbGncseD9ZU2xQh1Fk5fPPRJlkYr4S+oBq2C9zkPfmFoutf+CELxrbRnpLvhTP7JGA
- rh0DCd0wI8kBOE0YL1l0zzcQ+b/vmSC7FZH5kvZPqJSbiitCG1PbfsfaLNLdq1SKp7nwye+i/wx
- yMiCyiYrkrp2WBmN6L27UT/uDq/CSTHeCrxhQIogyPk1gilqehGGyPIPuJ+7Vkqfl0JKZbhYmdt
- 4Qe/U778laZbWa1IsfvkgG8Y3eYfjPc1l/+4j17gXCGfMKYWbuXbvwS2BV7qiMULbwbNcLqAzUS
- vYngiMx/AdmIjF9681aVC76ozXZDNz1moq1wHJtuHtuB17rPJc/LpmetusuF/ki67EDEHhEkXdr
- HosSqDizVyCSy
-X-Received: by 2002:a05:600c:3b09:b0:459:db7b:988e with SMTP id
- 5b1f17b1804b1-467eb8e220dmr98023265e9.13.1758547732211; 
- Mon, 22 Sep 2025 06:28:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGnmRkZD07yml2U7bc8l/td/suENQgXXD236LpM6+aOKLi4AdM9vBUDAvU1JPhkKyWdivOWg==
-X-Received: by 2002:a05:600c:3b09:b0:459:db7b:988e with SMTP id
- 5b1f17b1804b1-467eb8e220dmr98023135e9.13.1758547731798; 
- Mon, 22 Sep 2025 06:28:51 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c?
- ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
+ bh=vx0ugBXhJ6gLDEyp8p4H+RkZ6GZzEW4d6ubxPw5g3Gg=;
+ b=rdAeDK1MBzYGGRvEpnyAQReq5cThWIzVToTFb7CeuQXFf4SfnQwRGqRyWo5zvewOdZ
+ 9guUzSdHBJhhBrkQUJxlVQW05EKWWxwjsWmqBCa4amuj1N0jcXJo1ATkNki/U4p9YNu4
+ 8YCQ/XV8MML8GRgSGrNYaxR2Lw0+zmdCSp+m9UKy0vhhlz+KhxK3pcVu/ddL1oT2zb0y
+ r7yFFyswbR0BGhY3zECgaxnA0PhkixN9Sy1gUnecAdB4gVdKc/tI0FIolkyCt/toyC13
+ B0rVDnCTD6vNtUBZ+b9SoS0TItiWDPy3g0KoeXyJPseMzPp5AboO7wDMKOquLVC8RWbr
+ Nv4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAPWP0YLweQq2NEWXtgQE36tjCvJP3rtVQLtwu4UWCIi8oiwv+DzmNRJXRPoj3QP91pba0RXwnCUP+@nongnu.org
+X-Gm-Message-State: AOJu0YwP1nVNZa84pnXu4Ecz4i4Ov5yxF2RbcUPOwrCO3FafBFiJ9wFp
+ jv3/pM3c3CweeilI4AJGcb6jbvkThdW0S8mDpfpW1srY5xUPkzXHwXweKEaWtBD3sEyvO9fOwKL
+ VVzFsY+Ny9yYMTePlmNKhIuoJxbUBfp0xWODSmfVdKJHOp3G+QKRXuMqV
+X-Gm-Gg: ASbGncug0q87chI1M/tmoIkqNvF2Qk+LMjNF5uwkdNm5BYEF02ulZpzZID/0cuwzTI5
+ 0xf7gEA7SG+zjOgrdqb/GI3R4+ofr5jveEmyuYDz9zDblmGvAZ/BL2xvGtsUjlpjm6D4/K0X4E/
+ RV+VEUtcG85ESLCWd4k1OMRyULCeoIUOvdOspLeDdqkcwZwdNfEwkrtHGAJB3N6mHIz4Dkbwmek
+ r/wo+7E08cFBVYrouXtPRyqFdlg4/dEEOq+R5M+wMf4e/fGvLH+WcXM3DaiuLAUnu7MkFtZPWq1
+ fYTJVJOIpTCVnKNoaM7OgnHGRupzC/5GAsk=
+X-Received: by 2002:a05:600d:15a:10b0:45d:d197:fecf with SMTP id
+ 5b1f17b1804b1-4687aa75aecmr89794055e9.0.1758547836918; 
+ Mon, 22 Sep 2025 06:30:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyekO//x8kDhk7im3HWfGe3UnFQ/SDfg+hlQXmiyT22C+SwZroTD9TmcPIdHYA4wROaRdXIw==
+X-Received: by 2002:a05:600d:15a:10b0:45d:d197:fecf with SMTP id
+ 5b1f17b1804b1-4687aa75aecmr89793775e9.0.1758547836395; 
+ Mon, 22 Sep 2025 06:30:36 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:73ea:f900:52ee:df2b:4811:77e0])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45f325a32f6sm139058415e9.2.2025.09.22.06.28.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 06:28:51 -0700 (PDT)
-Message-ID: <3f79ff0e-5c21-4a89-99ce-b3fc31da8cbf@redhat.com>
-Date: Mon, 22 Sep 2025 15:28:49 +0200
+ 5b1f17b1804b1-461383b7b9csm245253455e9.2.2025.09.22.06.30.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Sep 2025 06:30:35 -0700 (PDT)
+Date: Mon, 22 Sep 2025 09:30:33 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Christian Speich <c.speich@avm.de>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
+Message-ID: <20250922093013-mutt-send-email-mst@kernel.org>
+References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+ <20250919160526-mutt-send-email-mst@kernel.org>
+ <aNE0Bp0hsA31sLCJ@redhat.com>
+ <20250922081403-mutt-send-email-mst@kernel.org>
+ <aNFF8wsycqqOTc-x@redhat.com>
+ <20250922090748-mutt-send-email-mst@kernel.org>
+ <kmdwf2xbgtvqiijw7mjd4ocqixvznaeszbr5zzfvuhaqrmpqn3@wdt4fhnocmxv>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 09/14] qmp: update virtio features map to support
- extended features
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1757676218.git.pabeni@redhat.com>
- <bef09bed78378da9c32d9913eefb83bd42ba8808.1757676218.git.pabeni@redhat.com>
- <20250922085341-mutt-send-email-mst@kernel.org>
- <ae5d139a-d6c7-477a-8083-26e64bdeda8b@redhat.com>
- <20250922091422-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20250922091422-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <kmdwf2xbgtvqiijw7mjd4ocqixvznaeszbr5zzfvuhaqrmpqn3@wdt4fhnocmxv>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -122,88 +116,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 3:15 PM, Michael S. Tsirkin wrote:
-> On Mon, Sep 22, 2025 at 03:10:36PM +0200, Paolo Abeni wrote:
->> On 9/22/25 2:55 PM, Michael S. Tsirkin wrote:
->>> On Fri, Sep 12, 2025 at 03:07:00PM +0200, Paolo Abeni wrote:
->>>> Extend the VirtioDeviceFeatures struct with an additional u64
->>>> to track unknown features in the 64-127 bit range and decode
->>>> the full virtio features spaces for vhost and virtio devices.
->>>>
->>>> Also add entries for the soon-to-be-supported virtio net GSO over
->>>> UDP features.
->>>>
->>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>> Acked-by: Jason Wang <jasowang@redhat.com>
->>>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->>>> ---
->>>> v3 -> v4:
->>>>   - cleanup unknown features init
->>>>   - update QMP example and doc accordingly
->>>>   - use new virtio_features macro names
->>>>
->>>> v2 -> v3:
->>>>   - unknown-dev-features-dword2 -> unknown-dev-features2
->>>>   - _array -> _ex
->>>>   - fixed typos in entries description
->>>>
->>>> v1 -> v2:
->>>>   - uint128_t -> uint64_t[]
->>>> ---
->>>>  hw/virtio/virtio-hmp-cmds.c |  3 +-
->>>>  hw/virtio/virtio-qmp.c      | 91 +++++++++++++++++++++++++------------
->>>>  hw/virtio/virtio-qmp.h      |  3 +-
->>>>  qapi/virtio.json            |  9 +++-
->>>>  4 files changed, 74 insertions(+), 32 deletions(-)
->>>>
->>>> diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
->>>> index 7d8677bcf0..1daae482d3 100644
->>>> --- a/hw/virtio/virtio-hmp-cmds.c
->>>> +++ b/hw/virtio/virtio-hmp-cmds.c
->>>> @@ -74,7 +74,8 @@ static void hmp_virtio_dump_features(Monitor *mon,
->>>>      }
->>>>  
->>>>      if (features->has_unknown_dev_features) {
->>>> -        monitor_printf(mon, "  unknown-features(0x%016"PRIx64")\n",
->>>> +        monitor_printf(mon, "  unknown-features(0x%016"PRIx64"%016"PRIx64")\n",
->>>> +                       features->unknown_dev_features2,
->>>>                         features->unknown_dev_features);
->>>>      }
->>>>  }
->>>> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
->>>> index 3b6377cf0d..502c9ae930 100644
->>>> --- a/hw/virtio/virtio-qmp.c
->>>> +++ b/hw/virtio/virtio-qmp.c
->>>> @@ -325,6 +325,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
->>>>      FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
->>>>              "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
->>>>              "negotiation supported"),
->>>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
->>>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
->>>> +            "UDP tunnel packets"),
->>>> +    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
->>>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
->>>
->>> This really should be VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM.
->>>
->>> Given they all seem to start with repeating the feature name,
->>> why not just add it to the string automatically by the macro?
->>
->> UHmm... let me keep the things simple and just fix the string; macro
->> refactoring could be a follow-up, I hope?
->>
->> Thanks,
->>
->> Paolo
+On Mon, Sep 22, 2025 at 03:26:23PM +0200, Christian Speich wrote:
+> On Mon, Sep 22, 2025 at 09:08:47AM -0400, Michael S. Tsirkin wrote:
+> > On Mon, Sep 22, 2025 at 01:49:55PM +0100, Daniel P. Berrangé wrote:
+> > > On Mon, Sep 22, 2025 at 08:15:20AM -0400, Michael S. Tsirkin wrote:
+> > > > On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. Berrangé wrote:
+> > > > > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
+> > > > > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
+> > > > > > > This removes the change introduced in [1] that prevents the use of
+> > > > > > > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
+> > > > > > > 
+> > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > > 
+> > > > > > > Signed-off-by: Christian Speich <c.speich@avm.de>
+> > > > > > > ---
+> > > > > > > vhost-user-device and vhost-user-device-pci started out as user
+> > > > > > > creatable devices. This was changed in [1] when the vhost-user-base was
+> > > > > > > introduced.
+> > > > > > > 
+> > > > > > > The reason given is to prevent user confusion. Searching qemu-discuss or
+> > > > > > > google for "vhost-user-device" I've seen no confused users.
+> > > > > > > 
+> > > > > > > Our use case is to provide wifi emulation using "vhost-user-device-pci",
+> > > > > > > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+> > > > > > > 24.04. With newer QEMU versions we now need to patch, distribute and
+> > > > > > > maintain our own QEMU packages, which is non-trivial.
+> > > > > > > 
+> > > > > > > So I want to propose lifting this restriction to make this feature
+> > > > > > > usable without a custom QEMU.
+> > > > > > > 
+> > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > 
+> > > > > > The confusion is after someone reuses the ID you are claiming without
+> > > > > > telling anyone and then linux guests will start binding that driver to
+> > > > > > your device.
+> > > > > > 
+> > > > > > 
+> > > > > > We want people doing this kind of thing to *at a minimum*
+> > > > > > go ahead and register a device id with the virtio TC,
+> > > > > > but really to write and publish a spec.
+> > > > > 
+> > > > > Wanting people to register a device ID is a social problem and
+> > > > > we're trying to apply a technical hammer to it, which is rarely
+> > > > > an productive approach.
+> > > > > 
+> > > > > If we want to demonstrate that vhost-user-device is "risky", then
+> > > > > how about we rename it to have an 'x-' prefix and thus disclaim
+> > > > > any support for it, but none the less allow its use. Document it
+> > > > > as an experimental device, and if it breaks, users get to keep
+> > > > > both pieces.
+> > > > 
+> > > > Maybe with the insecure tag you are working on?
+> > > 
+> > > Sure.
+> > > 
+> > > > And disable in the default config?
+> > > 
+> > > Disabling in default config would retain the very problem that Christian
+> > > is trying to solve - that no distro would have the functionality available
+> > > for users.
+> > 
+> > I think his problem is that he has to patch qemu.
 > 
-> the fix can be a follow-up too, but I'd like it done now pls,
-> there could be more I missed.
+> Yes I'm trying to avoid that. Patching qemu also involes providing updates
+> (and security patches!) for it. This is a very high burden to turn this
+> simple flag on.
+> 
+> > 
+> > As described, this is a developer option not an end user one.
+> 
+> I don't really get the distintion between developer and end user here.
+> 
+> As a developer I'm an end user too, I'm concerned with the linux kernel
+> and the additional host tooling for mac80211_hwsim support but QEMU
+> I'm just using as an user.
+> 
+> Greetings,
+> Christian
 
-Np. I'll follow-up as soon as this series will be merged. I'll send v7
-soon with the above typo fixed (plus the others pointed by Stefano).
+Are you ok with building qemu with an extra config flag?
 
-Thanks,
 
-Paolo
+
+> > 
+> > 
+> > I know Red Hat will disable it anyway - we support what we ship.
+> > 
+> > 
+> > > With regards,
+> > > Daniel
+> > > -- 
+> > > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > 
+> > 
 
 
