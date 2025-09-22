@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F660CAC5A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28AA3CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0hP1-00071f-5s; Mon, 22 Sep 2025 10:20:27 -0400
+	id 1v0hOX-0006at-0e; Mon, 22 Sep 2025 10:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOw-00070N-FE
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:20:22 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOM-0006XC-4S
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOp-00073S-NW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:20:21 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOC-0006ja-SA
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758550814;
+ s=mimecast20190719; t=1758550774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HJUEMwk8eVOsIvxuBYIzTBMcSQjlWbM0YhLL6aQ6JSU=;
- b=YXvNTz5GI8DtjR1ItDZmDCXPF6BxC/N/MR/koZY0Yf2gfYJ8oEXeqsZIdJgUOZSLmxBgXK
- Qhwz/DAIJZvAWbtxEAclLQFgji+d/EGPJaPzoAOxgDWmu2mgd/fBCmBa7TsKsmZLZnvCMR
- /rEW9xY59+7cBEv9+tkATGk+2m0nM2I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jflvAbeByaiIwB0oxXQZJAEk0U0wz/ORZstzdjfepls=;
+ b=H9/x4gNianh07faizl77SwBlUJJH0bEHtH/+N3KjX53GaFY8CPgc9uM+YVJbddU7knYa89
+ EfZR8Etol0/T0wZZb5wGoUlmIYKWEQ/T63dlwO/KqmWdhDcN/3gXaHMmVVhsnszcy+iAah
+ rRdr9UbVWpcZxkFnMD5FlBvfSmqqPds=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-DkFl0PpvMrmrXvutYSC6mg-1; Mon,
- 22 Sep 2025 10:20:09 -0400
-X-MC-Unique: DkFl0PpvMrmrXvutYSC6mg-1
-X-Mimecast-MFC-AGG-ID: DkFl0PpvMrmrXvutYSC6mg_1758550808
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-OTbkjr77MmyLWtRaZYBJ_A-1; Mon,
+ 22 Sep 2025 10:19:33 -0400
+X-MC-Unique: OTbkjr77MmyLWtRaZYBJ_A-1
+X-Mimecast-MFC-AGG-ID: OTbkjr77MmyLWtRaZYBJ_A_1758550771
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76217195608B; Mon, 22 Sep 2025 14:20:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7D3019560B5; Mon, 22 Sep 2025 14:19:31 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.247])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB75C1956045; Mon, 22 Sep 2025 14:20:03 +0000 (UTC)
+ id BF3FC1956045; Mon, 22 Sep 2025 14:19:26 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,9 +58,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v7 11/14] vhost-net: implement extended features support
-Date: Mon, 22 Sep 2025 16:18:25 +0200
-Message-ID: <69c78c432e28e146a8874b2a7d00e9cbd111b1ba.1758549625.git.pabeni@redhat.com>
+Subject: [PATCH v7 04/14] virtio: introduce extended features type
+Date: Mon, 22 Sep 2025 16:18:18 +0200
+Message-ID: <6a9bbb5eb33830f20afbcb7e64d300af4126dd98.1758549625.git.pabeni@redhat.com>
 In-Reply-To: <cover.1758549625.git.pabeni@redhat.com>
 References: <cover.1758549625.git.pabeni@redhat.com>
 MIME-Version: 1.0
@@ -91,233 +91,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide extended version of the features manipulation helpers,
-and let the device initialization deal with the full features space,
-adjusting the relevant format strings accordingly.
+The virtio specifications allows for up to 128 bits for the
+device features. Soon we are going to use some of the 'extended'
+bits features (bit 64 and above) for the virtio net driver.
+
+Represent the virtio features bitmask with a fixed size array, and
+introduce a few helpers to help manipulate them.
+
+Most drivers will keep using only 64 bits features space: use union
+to allow them access the lower part of the extended space without any
+per driver change.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
+v6 -> v7:
+  - fixed commit message typo
+
+v5 -> v6:
+  - removed trailing EoL
+
+v4 -> v5:
+  - DEFINE_PROP_FEATURE -> VIRTIO_DEFINE_PROP_FEATURE
+
 v3 -> v4:
-  - add missing features initialization
-  - use new virtio_features macro names
+  - VIRTIO_FEATURES_DWORDS -> VIRTIO_FEATURES_NU64S
+  - VIRTIO_FEATURES_WORDS -> VIRTIO_FEATURES_NU32S
+  - VIRTIO_DWORD ->  VIRTIO_FEATURES_U64
+  - VIRTIO_BIT -> VIRTIO_FEATURES_BIT
+  - virtio_features_use_extended -> virtio_features_use_ex
+  - move DEFINE_PROP_FEATURE definition here
 
 v2 -> v3:
-  - use virtio_features_andnot return value instead of virtio_features_empty
-  - rebased on top of "net: Consolidate vhost feature bits into vhost_net
-    structure"
+  - fix preprocessor guard name
+  - use BIT_ULL
+  - add missing parentheses
+  - use memcmp()
+  - _is_empty() -> _empty()
+  - _andnot() returns a bool, true if dst has any non zero bits
   - _array -> _ex
 
 v1 -> v2:
-  - uint128_t -> uint64_t[]
-  - provide extended variant of the features manipulation helpers
+  - use a fixed size array for features instead of uint128
+  - use union with u64 to reduce the needed code churn
 ---
- hw/net/vhost_net-stub.c |  8 +++-----
- hw/net/vhost_net.c      | 45 +++++++++++++++++++++++------------------
- include/net/vhost_net.h | 33 +++++++++++++++++++++++++++---
- 3 files changed, 58 insertions(+), 28 deletions(-)
+ include/hw/virtio/virtio-features.h | 126 ++++++++++++++++++++++++++++
+ include/hw/virtio/virtio.h          |   7 +-
+ 2 files changed, 130 insertions(+), 3 deletions(-)
+ create mode 100644 include/hw/virtio/virtio-features.h
 
-diff --git a/hw/net/vhost_net-stub.c b/hw/net/vhost_net-stub.c
-index 7d49f82906..0740d5a2eb 100644
---- a/hw/net/vhost_net-stub.c
-+++ b/hw/net/vhost_net-stub.c
-@@ -46,9 +46,8 @@ void vhost_net_cleanup(struct vhost_net *net)
- {
- }
- 
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
- {
--    return features;
- }
- 
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-@@ -62,13 +61,12 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
-     return 0;
- }
- 
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return 0;
- }
- 
- bool vhost_net_virtqueue_pending(VHostNetState *net, int idx)
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 540492b37d..a8ee18a912 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -35,10 +35,9 @@
- #include "hw/virtio/virtio-bus.h"
- #include "linux-headers/linux/vhost.h"
- 
--uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_get_features_ex(struct vhost_net *net, uint64_t *features)
- {
--    return vhost_get_features(&net->dev, net->feature_bits,
--            features);
-+    vhost_get_features_ex(&net->dev, net->feature_bits, features);
- }
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len)
-@@ -51,10 +50,11 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
-     return vhost_dev_set_config(&net->dev, data, offset, size, flags);
- }
- 
--void vhost_net_ack_features(struct vhost_net *net, uint64_t features)
-+void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
--    net->dev.acked_features = net->dev.backend_features;
--    vhost_ack_features(&net->dev, net->feature_bits, features);
-+    virtio_features_copy(net->dev.acked_features_ex,
-+                         net->dev.backend_features_ex);
-+    vhost_ack_features_ex(&net->dev, net->feature_bits, features);
- }
- 
- uint64_t vhost_net_get_max_queues(VHostNetState *net)
-@@ -62,9 +62,9 @@ uint64_t vhost_net_get_max_queues(VHostNetState *net)
-     return net->dev.max_queues;
- }
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features)
- {
--    return net->dev.acked_features;
-+    virtio_features_copy(features, net->dev.acked_features_ex);
- }
- 
- void vhost_net_save_acked_features(NetClientState *nc)
-@@ -234,7 +234,8 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     int r;
-     bool backend_kernel = options->backend_type == VHOST_BACKEND_TYPE_KERNEL;
-     struct vhost_net *net = g_new0(struct vhost_net, 1);
--    uint64_t features = 0;
-+    uint64_t missing_features[VIRTIO_FEATURES_NU64S];
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-     Error *local_err = NULL;
- 
-     if (!options->net_backend) {
-@@ -247,6 +248,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-     net->save_acked_features = options->save_acked_features;
-     net->max_tx_queue_size = options->max_tx_queue_size;
-     net->is_vhost_user = options->is_vhost_user;
+diff --git a/include/hw/virtio/virtio-features.h b/include/hw/virtio/virtio-features.h
+new file mode 100644
+index 0000000000..e29b7fe48f
+--- /dev/null
++++ b/include/hw/virtio/virtio-features.h
+@@ -0,0 +1,126 @@
++/*
++ * Virtio features helpers
++ *
++ * Copyright 2025 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_VIRTIO_FEATURES_H
++#define QEMU_VIRTIO_FEATURES_H
++
++#include "qemu/bitops.h"
++
++#define VIRTIO_FEATURES_FMT        "%016"PRIx64"%016"PRIx64
++#define VIRTIO_FEATURES_PR(f)      (f)[1], (f)[0]
++
++#define VIRTIO_FEATURES_MAX        128
++#define VIRTIO_FEATURES_BIT(b)     BIT_ULL((b) % 64)
++#define VIRTIO_FEATURES_U64(b)     ((b) / 64)
++#define VIRTIO_FEATURES_NU32S      (VIRTIO_FEATURES_MAX / 32)
++#define VIRTIO_FEATURES_NU64S      (VIRTIO_FEATURES_MAX / 64)
++
++#define VIRTIO_DECLARE_FEATURES(name)                        \
++    union {                                                  \
++        uint64_t name;                                       \
++        uint64_t name##_ex[VIRTIO_FEATURES_NU64S];           \
++    }
++
++#define VIRTIO_DEFINE_PROP_FEATURE(_name, _state, _field, _bit, _defval)   \
++    DEFINE_PROP_BIT64(_name, _state, _field[VIRTIO_FEATURES_U64(_bit)],    \
++                      (_bit) % 64, _defval)
++
++static inline void virtio_features_clear(uint64_t *features)
++{
++    memset(features, 0, sizeof(features[0]) * VIRTIO_FEATURES_NU64S);
++}
++
++static inline void virtio_features_from_u64(uint64_t *features, uint64_t from)
++{
 +    virtio_features_clear(features);
- 
-     net->dev.max_queues = 1;
-     net->dev.vqs = net->vqs;
-@@ -261,7 +263,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-         net->backend = r;
-         net->dev.protocol_features = 0;
-     } else {
--        net->dev.backend_features = 0;
-+        virtio_features_clear(net->dev.backend_features_ex);
-         net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-@@ -281,26 +283,29 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-                                sizeof(struct virtio_net_hdr_mrg_rxbuf))) {
-             net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
-         }
--        if (~net->dev.features & net->dev.backend_features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                   " for backend\n",
--                   (uint64_t)(~net->dev.features & net->dev.backend_features));
++    features[0] = from;
++}
 +
-+        if (virtio_features_andnot(missing_features,
-+                                   net->dev.backend_features_ex,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
++static inline bool virtio_has_feature_ex(const uint64_t *features,
++                                         unsigned int fbit)
++{
++    assert(fbit < VIRTIO_FEATURES_MAX);
++    return features[VIRTIO_FEATURES_U64(fbit)] & VIRTIO_FEATURES_BIT(fbit);
++}
++
++static inline void virtio_add_feature_ex(uint64_t *features,
++                                         unsigned int fbit)
++{
++    assert(fbit < VIRTIO_FEATURES_MAX);
++    features[VIRTIO_FEATURES_U64(fbit)] |= VIRTIO_FEATURES_BIT(fbit);
++}
++
++static inline void virtio_clear_feature_ex(uint64_t *features,
++                                           unsigned int fbit)
++{
++    assert(fbit < VIRTIO_FEATURES_MAX);
++    features[VIRTIO_FEATURES_U64(fbit)] &= ~VIRTIO_FEATURES_BIT(fbit);
++}
++
++static inline bool virtio_features_equal(const uint64_t *f1,
++                                         const uint64_t *f2)
++{
++    return !memcmp(f1, f2, sizeof(uint64_t) * VIRTIO_FEATURES_NU64S);
++}
++
++static inline bool virtio_features_use_ex(const uint64_t *features)
++{
++    int i;
++
++    for (i = 1; i < VIRTIO_FEATURES_NU64S; ++i) {
++        if (features[i]) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static inline bool virtio_features_empty(const uint64_t *features)
++{
++    return !virtio_features_use_ex(features) && !features[0];
++}
++
++static inline void virtio_features_copy(uint64_t *to, const uint64_t *from)
++{
++    memcpy(to, from, sizeof(to[0]) * VIRTIO_FEATURES_NU64S);
++}
++
++static inline bool virtio_features_andnot(uint64_t *to, const uint64_t *f1,
++                                           const uint64_t *f2)
++{
++    uint64_t diff = 0;
++    int i;
++
++    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
++        to[i] = f1[i] & ~f2[i];
++        diff |= to[i];
++    }
++    return diff;
++}
++
++static inline void virtio_features_and(uint64_t *to, const uint64_t *f1,
++                                       const uint64_t *f2)
++{
++    int i;
++
++    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
++        to[i] = f1[i] & f2[i];
++    }
++}
++
++static inline void virtio_features_or(uint64_t *to, const uint64_t *f1,
++                                       const uint64_t *f2)
++{
++    int i;
++
++    for (i = 0; i < VIRTIO_FEATURES_NU64S; i++) {
++        to[i] = f1[i] | f2[i];
++    }
++}
++
++#endif
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c594764f23..39e4059a66 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -16,6 +16,7 @@
  
-     /* Set sane init value. Override when guest acks. */
-     if (options->get_acked_features) {
--        features = options->get_acked_features(net->nc);
--        if (~net->dev.features & features) {
--            fprintf(stderr, "vhost lacks feature mask 0x%" PRIx64
--                    " for backend\n",
--                    (uint64_t)(~net->dev.features & features));
-+        virtio_features_from_u64(features,
-+                                 options->get_acked_features(net->nc));
-+        if (virtio_features_andnot(missing_features, features,
-+                                   net->dev.features_ex)) {
-+            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
-+                    " for backend\n", VIRTIO_FEATURES_PR(missing_features));
-             goto fail;
-         }
-     }
- 
--    vhost_net_ack_features(net, features);
-+    vhost_net_ack_features_ex(net, features);
- 
-     return net;
- 
-diff --git a/include/net/vhost_net.h b/include/net/vhost_net.h
-index 879781dad7..0225207491 100644
---- a/include/net/vhost_net.h
-+++ b/include/net/vhost_net.h
-@@ -2,6 +2,7 @@
- #define VHOST_NET_H
- 
- #include "net/net.h"
+ #include "system/memory.h"
+ #include "hw/qdev-core.h"
 +#include "hw/virtio/virtio-features.h"
- #include "hw/virtio/vhost-backend.h"
+ #include "net/net.h"
+ #include "migration/vmstate.h"
+ #include "qemu/event_notifier.h"
+@@ -121,9 +122,9 @@ struct VirtIODevice
+      * backend (e.g. vhost) and could potentially be a subset of the
+      * total feature set offered by QEMU.
+      */
+-    uint64_t host_features;
+-    uint64_t guest_features;
+-    uint64_t backend_features;
++    VIRTIO_DECLARE_FEATURES(host_features);
++    VIRTIO_DECLARE_FEATURES(guest_features);
++    VIRTIO_DECLARE_FEATURES(backend_features);
  
- struct vhost_net;
-@@ -33,8 +34,26 @@ void vhost_net_stop(VirtIODevice *dev, NetClientState *ncs,
- 
- void vhost_net_cleanup(VHostNetState *net);
- 
--uint64_t vhost_net_get_features(VHostNetState *net, uint64_t features);
--void vhost_net_ack_features(VHostNetState *net, uint64_t features);
-+void vhost_net_get_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_features(VHostNetState *net,
-+                                              uint64_t features)
-+{
-+    uint64_t features_array[VIRTIO_FEATURES_NU64S];
-+
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_get_features_ex(net, features_array);
-+    return features_array[0];
-+}
-+
-+void vhost_net_ack_features_ex(VHostNetState *net, const uint64_t *features);
-+static inline void vhost_net_ack_features(VHostNetState *net,
-+                                          uint64_t features)
-+{
-+    uint64_t features_array[VIRTIO_FEATURES_NU64S];
-+
-+    virtio_features_from_u64(features_array, features);
-+    vhost_net_ack_features_ex(net, features_array);
-+}
- 
- int vhost_net_get_config(struct vhost_net *net,  uint8_t *config,
-                          uint32_t config_len);
-@@ -51,7 +70,15 @@ VHostNetState *get_vhost_net(NetClientState *nc);
- 
- int vhost_net_set_vring_enable(NetClientState *nc, int enable);
- 
--uint64_t vhost_net_get_acked_features(VHostNetState *net);
-+void vhost_net_get_acked_features_ex(VHostNetState *net, uint64_t *features);
-+static inline uint64_t vhost_net_get_acked_features(VHostNetState *net)
-+{
-+    uint64_t features[VIRTIO_FEATURES_NU64S];
-+
-+    vhost_net_get_acked_features_ex(net, features);
-+    assert(!virtio_features_use_ex(features));
-+    return features[0];
-+}
- 
- int vhost_net_set_mtu(struct vhost_net *net, uint16_t mtu);
- 
+     size_t config_len;
+     void *config;
 -- 
 2.51.0
 
