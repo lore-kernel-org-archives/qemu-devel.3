@@ -4,146 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0735BCA100F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 15:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02029CA100F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 15:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0iTN-0008On-H8; Mon, 22 Sep 2025 11:29:02 -0400
+	id 1v0igh-0004Wn-V7; Mon, 22 Sep 2025 11:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v0iT1-0008N6-RD
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:28:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <paul.buxton@codasip.com>)
+ id 1v0igJ-0004R0-Km
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:42:28 -0400
+Received: from mail-swedencentralazon11023101.outbound.protection.outlook.com
+ ([52.101.83.101] helo=GVXPR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v0iSw-0000sm-HS
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:28:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758554912;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K6k7q3zM6D1nsCAUm4Q01StHOV5ZxZH03cpa6LKuuq8=;
- b=gfNbKFcsWoFNyQn5nyAoMw2MVUApQEPAXnho8lC46Jk3OO5Oeq3LbqdjsAXZu7d5pC4JtJ
- j4YH+MIwSDu+W3ZZv3hWgbxf86JJ0xhulP8EU9HsVw9oO5J5k5i+wMAKAH/Srf5crnJhBJ
- gZXnRAqgGukPgID48gI7S00dxCwse88=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-EfcVxNaRPBKQQS-XJ0BAkA-1; Mon, 22 Sep 2025 11:28:31 -0400
-X-MC-Unique: EfcVxNaRPBKQQS-XJ0BAkA-1
-X-Mimecast-MFC-AGG-ID: EfcVxNaRPBKQQS-XJ0BAkA_1758554910
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45f2b0eba08so32508155e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 08:28:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758554910; x=1759159710;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K6k7q3zM6D1nsCAUm4Q01StHOV5ZxZH03cpa6LKuuq8=;
- b=cUA69FdavvY5+qi//x5qlli6GzIPzZXTnW/eZGNgCpJdfbFSPEIPq7jC1c6uSys9rK
- 2YEw1rBQkcrrhQ5HeR5JURb3UTGZbr6JEm2HjCZIQa0W8h7dthitIXri+VJHeN9brckm
- rM9uDZ3tOP9eeiu7F9jNhXkZkEBS1VpzxztPYlfLRgUhcINzlSxF3zFDpenlWWUWOWcP
- bio2p676FgIo3vFQuS7xPoi0tWpxPI5xu92ketcHLJiN7E9lLB3z6ox8k5TnFeYOSXmG
- LqHsS0L9DxJzfNJNOu/TZT/GnPE7Dgb3/twRg3Es3r+SyQ7NG6ZNKFqreED8BDPlRdsm
- CYEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNkNOR0ijytewxMhcSqlJ7AAD7EZVuMmwAHlq7bXFm5pNrpOhNQ4Vz9Wx+ho9Nzp0NAPO7YzbEmtHp@nongnu.org
-X-Gm-Message-State: AOJu0Yw6NUxg7/Q8+NpJiUIoSFkb9Kip3J8ArZqFdkTMvPerCxp8TCZl
- HP32ASfUFquCKX7X4t7KMxQlR+OHvqUvIDEpJpGUlu0TDWBfJ7Vu9irEsx0V7tE3ZWqTQlMVe/d
- 8K+XmPm8CYIQRj8EWkeclzAVnzXJrqMBLE7GFYB7QgjYZAgl44HIuqnfXpzURnE5K
-X-Gm-Gg: ASbGncsjIHv1NxWnYdLS7zhnbduIsLnbL18ySDkcUqpYnsL9ebKtxWT96rDWbcvaTkt
- /7uGZvKYNlAVrzUA2hFkBMjWiDxr2qyPBVYwkC/JVOKgfnCrwg/FT4W7yVUNf6ofNHHyRVsz5c8
- oZBh14cWb/ZfuntUW5g+snR2TFfjTlzilMo0CHeTul9qQO41YtKQzQLBBlJghcUfvI+zd0mfhX0
- dponAM6DadRH2j4LX029sY1b7n/HHAbWeolFBYJkud1XsHmsdbE92Bnne9aLgVdCr4+StY4TG8j
- LwpMfqHFMzNfMOtEz3JJVLYyXI8dKJGRbSm7eDUMVvLh1u2IGwmkutryQKH7/xGTQaw5TdDockZ
- mHdI=
-X-Received: by 2002:a05:600c:c48e:b0:45d:f88f:9304 with SMTP id
- 5b1f17b1804b1-467ebbbfff4mr134581875e9.30.1758554909551; 
- Mon, 22 Sep 2025 08:28:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5oH/IbCgBFh/PQWCviuAfIhKh2ZtvrMMc5vOAAQ3gmYbMIFnz3QgGskmI9+2xvOVGwop39Q==
-X-Received: by 2002:a05:600c:c48e:b0:45d:f88f:9304 with SMTP id
- 5b1f17b1804b1-467ebbbfff4mr134581495e9.30.1758554908967; 
- Mon, 22 Sep 2025 08:28:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46566f72354sm206109985e9.3.2025.09.22.08.28.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 08:28:28 -0700 (PDT)
-Message-ID: <c76d4944-280b-49e1-a324-36429a5513cb@redhat.com>
-Date: Mon, 22 Sep 2025 17:28:27 +0200
+ (Exim 4.90_1) (envelope-from <paul.buxton@codasip.com>)
+ id 1v0ig9-0002pn-ER
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:42:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TlbiLCHmyd9xYXBKRYnhr1k17+ldCFRvEX/89VcorJsgHm+8A0tRQEwh1Lkce2T/g/KJQgfBFMykfr7SrrPRWNXM76Z1zGRhvsP5cXdNK6EOoKMO5jBPgCx2HE+dSyDHhhEPrESd1cLH/4yEFQ8LtLmGENnxiGiD5DGwnB5MRqaCMFlez/KJtqZwt0D74xqA4LhBqf0jHxzSjjRxKlfKs+BbGk4FnJkt3+OhqIvD47fVNVBmPNbuWSIKqJNYYof6VgPMYTWS3mbFVCk+zU/MQdwYvYm17T+dgJb6L0n+Dg1tVbskDYotERLJRDOySCbqGDdNLu3rfj18NWfyZIZkQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PwdaFmDSccwpnEHtp9xqnMfEKD6YjnCXc97voGAh2ig=;
+ b=EAn8v56iqAtq13vOYSCAz2cxAD1WjedQ/LvBWdsgo2aCGbYlhn7+ygFJe6ma0/Ey/qh1j2fwH2W+46Pu1mlEH3TwGWkHTyQLVjCL3SRqZNu0KJa3bwLbzhBrT7aUX0aCzUX3PMCJfMBYMeZ02SK1fZ5BAWqwCTu//P/VTqBRPi+e4OIyxh99xxHtKaH+fpQDjNZsl8UfjgDIvKfhoTe73S1RokGnTI5tCta1hB2qulAq1lGckJlTZoPsVkgm2lzskmRdXLOkL68VgssJQCceCRzR6Cy6R/Om3j/SMyvPITQfT1LfcAwUJdVfK0Bda18xIbZcHjo/LC1RvSxF0UwIrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=codasip.com; dmarc=pass action=none header.from=codasip.com;
+ dkim=pass header.d=codasip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codasip.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PwdaFmDSccwpnEHtp9xqnMfEKD6YjnCXc97voGAh2ig=;
+ b=nB+Qi1cH6AyGENAbCqQPacnM9oMrHXAFxWvzGE1sCoBlbyNOAEtH8gmMe6XjpSc76PKGr7phpGwYRXpV75HMtx+kAAs4q6khZdUNCDoSShSy4NJPdDRDC8/sInFc+yDcIcLGEg+4TbB/3fMcFqIXxYk7S8PLdfqkrC+2ShWhD8ofcf29F/x1YhjrcTmsX7i/1iUnFLmiwg91YkYzcblUAZrtq9D2AyNv4kgBhAaHeW6OZN+XSJJbAZ4wbYwrfV/kVvIPtkHLyKFBeiDCAGAWYJJxq8rcL0Y/s8JibiFykMyDv3IEyLzcoFoNX0HwtH/1gcA1AGv+Tl3IviDseMDWkA==
+Received: from PR3P192MB0796.EURP192.PROD.OUTLOOK.COM (2603:10a6:102:46::8) by
+ DB9P192MB1849.EURP192.PROD.OUTLOOK.COM (2603:10a6:10:39c::13) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9137.19; Mon, 22 Sep 2025 15:37:04 +0000
+Received: from PR3P192MB0796.EURP192.PROD.OUTLOOK.COM
+ ([fe80::8de8:ef51:94e2:2a53]) by PR3P192MB0796.EURP192.PROD.OUTLOOK.COM
+ ([fe80::8de8:ef51:94e2:2a53%5]) with mapi id 15.20.9137.018; Mon, 22 Sep 2025
+ 15:37:04 +0000
+From: Paul Buxton <paul.buxton@codasip.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PULL,2/2] .gitmodules: move u-boot mirrors to
+ qemu-project-mirrors
+Thread-Topic: [PULL,2/2] .gitmodules: move u-boot mirrors to
+ qemu-project-mirrors
+Thread-Index: AQHcK9Z68YHmX5NSQU6R889sTMbmYg==
+Date: Mon, 22 Sep 2025 15:37:04 +0000
+Message-ID: <PR3P192MB079624FFEFC75CDBFB26B653EA12A@PR3P192MB0796.EURP192.PROD.OUTLOOK.COM>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=codasip.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PR3P192MB0796:EE_|DB9P192MB1849:EE_
+x-ms-office365-filtering-correlation-id: d445da7f-ea82-4e56-bda9-08ddf9ede168
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|38070700021|13003099007|8096899003; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?llJb6EPURc/J69L+1YAyktbJs3PteJw5c+e6lI2b4rcgQ0VmBuplKoOAy1?=
+ =?iso-8859-1?Q?RV3ugBKHInaLMtvzd55bhIPpy/UvtwCfyAjGbXgtSY2mKlOv1nUZN5IG2o?=
+ =?iso-8859-1?Q?A0zQ+TTbG3cqF86OeuRjhi0ydfbSUizIfWqaKkMHg1/BfYgBWwABI46gkD?=
+ =?iso-8859-1?Q?uD8+y+AbU6v726Fb/hjOiHiNNRfeJoDjtWLLDyrD0PBINfCsr6IaqwJLnf?=
+ =?iso-8859-1?Q?c/E+sWK6ijTD1vMkDX7ef6iN6mcybIWf5jMN1UOY3UJd5/+AMkeq24R3js?=
+ =?iso-8859-1?Q?PnGUluakWxvVExz62dbs3LxeyZG1I4mGPyOt5eE6ynyiDU5IoeLRjjYSIr?=
+ =?iso-8859-1?Q?FdTgL4Ypw02NS9hZH3TGQI7dF/53M1kC+KpV1zj7XTvtLMuhqjmP0VU1Nl?=
+ =?iso-8859-1?Q?y2e5Acv11iQej6EIpcfRBElBch50ZDzhTERG/0AsLwGi3WT3GnvIT/eWyL?=
+ =?iso-8859-1?Q?1BZsA8s8spx/z61E5CFW1AEJB8LyUKEO8poT12HE0EgLMT0X+fIF5INwXa?=
+ =?iso-8859-1?Q?j75i4sDCmjsgOD/qnEHUN6B464gW1ALwewz22f7mAzc+CUSWe/w6SkRePG?=
+ =?iso-8859-1?Q?uurLcvEHzeuSWunWAGgH9P4dOT1AVzDXkLtUGztJKcvJySPcQA6le9BwPL?=
+ =?iso-8859-1?Q?b5wBWq4QrJCVgphZIqkjNgqCgDqc8WnlP8z4M6+V1SPl/J2iSh8K9Z4tWX?=
+ =?iso-8859-1?Q?R1Itkm9147Dl7V6R4ZphDil802x+LxRDtsjRduDL+Cr8sDwEMrl39MfXI4?=
+ =?iso-8859-1?Q?9xmA9qAljkqo8QcMm364OH4DeA5MzEet6ysUxN9ZAq0aJ+IscckZdlEQrO?=
+ =?iso-8859-1?Q?Et+tLRUxXwsm8zDIpZ2YM1DJ3ElDdKQnlrLsQ0ZvAsvgDYfXHZUELqCUWJ?=
+ =?iso-8859-1?Q?pC/brEBm1PaT+xnU4nnoEB8fj9nz2yEkaaNl2CJ6FPmI1KVsH+oJ9VtBxc?=
+ =?iso-8859-1?Q?Kd4R1JMVYEwkYD+v2AeklVbLYQOm1GsjFX9jFa08No7+2Y2kLhSA3np4A0?=
+ =?iso-8859-1?Q?MqfMI7ppVWyA5Lt2xay0BG3YAwF7Gk/yQhAnlgxAFkEdjOcX1DWZ+53kGh?=
+ =?iso-8859-1?Q?ptzRrdqYCNRQ3Iakg2+3uWYsKjZNOHh/YRZjy5TjsnhnE3d06mgftvO4yT?=
+ =?iso-8859-1?Q?fSUVgHo3FuDj6ozUYY3adWtXfvF6Ie42sG8S0SnQz4JDRO9hGLDcyryK0O?=
+ =?iso-8859-1?Q?5/7KhRY00KX9djqBaZVHgfEyTLejfzeytbFkC/VpdSqYMvmzhzz2K817b6?=
+ =?iso-8859-1?Q?y8Mk6rbqUtrlCn1dK41pm0KeRY4aJVt0MWdoy33Md6YUZREdO3p1FTiMb4?=
+ =?iso-8859-1?Q?Ge3E54eugPzdhSTJ3kpf10mYwvtUxNagX1y8r/bzN00lni9qIp6ed7tShE?=
+ =?iso-8859-1?Q?ifti3WB/tXQlWbff7IN4rxRHCvKibJZWkRtAD1Urmv5zJvCPAhobUOnsGD?=
+ =?iso-8859-1?Q?3aUFaMdQLWceUpV/ABPWbeKdSH9gPLqfP7lV87d6xts86xiiqpbxX7SI6U?=
+ =?iso-8859-1?Q?Rd1vrqJJ/KKzbFEUmwhc5bJIc5zB6392+aKoAAzD6w+w=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PR3P192MB0796.EURP192.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(13003099007)(8096899003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?4Cu/SdgWBdKdJHi4dyZXnqdErN7nKDIKXnvEqWMl4NYVwZKEsxAn5to+TO?=
+ =?iso-8859-1?Q?OKITvkXRcIi3J+XC57H+fKd8UGrr/xJUXfY6B9BW22CxSczsJwt/qJ7MkB?=
+ =?iso-8859-1?Q?7v55LZs2sl3rZ1eRNaQU003WDb6ZK3XsfP436+EGKL1BqW9VKsWt7gln2l?=
+ =?iso-8859-1?Q?Ex7wfGA/Z/TPezvDz/GzVze7B0+2HCCmX0wcNeRZzw4L9RCM1FSdD1TkPw?=
+ =?iso-8859-1?Q?e4lbyJujGPpJtxpNp/ws6OqrGUrOPkERgZ2fd+OuNL9unoqW3ZsPnXmkFy?=
+ =?iso-8859-1?Q?+ILz7mK1O8Z1Ov7PmB5HNzawgAPb1L8Q8RnIIgHQGnBfx5EqDvLP+wxOA5?=
+ =?iso-8859-1?Q?qXcyuapx2/VFq3RzvMsD597mhuA/ieKb+03deDIJ75M03u90D5/w3CYJ2t?=
+ =?iso-8859-1?Q?EuTIshIuLsO8UbDI57qbP3ZQ1Js4vVLUYFiZMYQKxKZ78EYiieEc/CZstJ?=
+ =?iso-8859-1?Q?4mMfQ0QRFtU77x8CdWtgfMcvmlrEWlCqn7lDLQAuitzar3piPJojjISqrQ?=
+ =?iso-8859-1?Q?gld/utY1uEYg27z98TC7t+lVN7iWdp/aZKDGW7ay+vEn1kvOQusqQ6OvGw?=
+ =?iso-8859-1?Q?aUDVN4GNX72fByrz9APIfFbXoVcQbltYiqeZSEPV2TLd/LudttS04y5kOP?=
+ =?iso-8859-1?Q?VEYndV0k7Y5Y/s6BC+GBlh75PwcWUXHFmobHzD7o8GH6lX1INtbCWX2KLj?=
+ =?iso-8859-1?Q?KZK28+ezylqKlEObCWibhQsgsX85ov2Jt+Afei9DT7ZO/ytio+wCMge3w+?=
+ =?iso-8859-1?Q?w7Pi3bEgDEswsdOv0AlDO65XbvN333AEYPl6ljG8NX42xhTrtWIN4thco7?=
+ =?iso-8859-1?Q?Kj578Zde5eBNRghwTsO3TEmuH8rfmpUiZ6P8MRmvEQozHCcn7uMxQKcPWl?=
+ =?iso-8859-1?Q?lb4+CKOUO03Wf2UM6PvTR+8QhRUA5ojhj46+KTQdaMToXrZVCsYKOSQMAs?=
+ =?iso-8859-1?Q?kbIyZrL/G3wIuRsbXGv8EPuOkjYakSXGZ55C8pfM62p7BNhejAecyDvWKB?=
+ =?iso-8859-1?Q?5oZGcpmKUX32RFDm8nOBJc/YAsJo3BtyUgTw86Nb5+ETeyVJsxvZOpEAKf?=
+ =?iso-8859-1?Q?70o8sc4eMLp6Me5TPPVZT+YDOv/9mN7JKj5N4IT0y5wDkgwrf42berxxne?=
+ =?iso-8859-1?Q?LuTJuHMCuy6AC0q+1d9S0uT8CJdT5TgrdK754clEW53OvyaoAYoxqki0vu?=
+ =?iso-8859-1?Q?Vvi0HT2gGICOzfEXWlm6uIZuk8bw6RQ+dAXK1D4qtjk4qRMKqrDTHXn0cR?=
+ =?iso-8859-1?Q?wWGmy/3oY/9HYKkuDnuaR85PdBPLU6QfoTXKfdURRlAZQYdakqCo2upRSi?=
+ =?iso-8859-1?Q?xpGVU0Uz/rLB3wS9snbPKlAaeSCGsUUhdecfxeJ0ca/hYp9uAfEQaYKVLq?=
+ =?iso-8859-1?Q?l6YLkIiprO8BpjLkh5aAMevKHDEJ1qwnM5SSnWS7uGh+JNQYwFTMYFSiuC?=
+ =?iso-8859-1?Q?s21uoVAtmETNcujSunjjmYm5TZuZifffPoRD20fxpTrOQMOZg+u7dJ7WMy?=
+ =?iso-8859-1?Q?7AQbLj9XkgE0g75gMb7orvdGMOiaxRdAxAkbhMTdgoW4pX03tm2qyg4482?=
+ =?iso-8859-1?Q?oyxFx9Z6C5ploRXlhdPe49qSiAVjIuJWTxmU0N46v7KKlSsfTfLmZBo6+k?=
+ =?iso-8859-1?Q?CgNhx7n3OmLaxrZeb6N4zkNuSIk/HfFoRf?=
+Content-Type: multipart/alternative;
+ boundary="_000_PR3P192MB079624FFEFC75CDBFB26B653EA12APR3P192MB0796EURP_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 6/8] migration: cpr-exec mode
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
- <1758548985-354793-7-git-send-email-steven.sistare@oracle.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1758548985-354793-7-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-OriginatorOrg: codasip.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PR3P192MB0796.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: d445da7f-ea82-4e56-bda9-08ddf9ede168
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2025 15:37:04.0265 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0d91ffef-bb81-4cbd-b9b8-552583685f20
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Z7LvmaDy6TNt9vuTrMMOqc0zgCjFIiLDk+VThV3Nod4UB7jYv8HP6rmlyzKMIRzQW9H3Sb7x/z94r/iejlOZ8Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9P192MB1849
+Received-SPF: pass client-ip=52.101.83.101;
+ envelope-from=paul.buxton@codasip.com;
+ helo=GVXPR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,400 +166,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 15:49, Steve Sistare wrote:
-> Add the cpr-exec migration mode.  Usage:
->    qemu-system-$arch -machine aux-ram-share=on ...
->    migrate_set_parameter mode cpr-exec
->    migrate_set_parameter cpr-exec-command \
->      <arg1> <arg2> ... -incoming <uri-1> \
->    migrate -d <uri-1>
-> 
-> The migrate command stops the VM, saves state to uri-1,
-> directly exec's a new version of QEMU on the same host,
-> replacing the original process while retaining its PID, and
-> loads state from uri-1.  Guest RAM is preserved in place,
-> albeit with new virtual addresses.
-> 
-> The new QEMU process is started by exec'ing the command
-> specified by the @cpr-exec-command parameter.  The first word of
-> the command is the binary, and the remaining words are its
-> arguments.  The command may be a direct invocation of new QEMU,
-> or may be a non-QEMU command that exec's the new QEMU binary.
-> 
-> This mode creates a second migration channel that is not visible
-> to the user.  At the start of migration, old QEMU saves CPR state
-> to the second channel, and at the end of migration, it tells the
-> main loop to call cpr_exec.  New QEMU loads CPR state early, before
-> objects are created.
-> 
-> Because old QEMU terminates when new QEMU starts, one cannot
-> stream data between the two, so uri-1 must be a type,
-> such as a file, that accepts all data before old QEMU exits.
-> Otherwise, old QEMU may quietly block writing to the channel.
-> 
-> Memory-backend objects must have the share=on attribute, but
-> memory-backend-epc is not supported.  The VM must be started with
-> the '-machine aux-ram-share=on' option, which allows anonymous
-> memory to be transferred in place to the new process.  The memfds
-> are kept open across exec by clearing the close-on-exec flag, their
-> values are saved in CPR state, and they are mmap'd in new QEMU.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   qapi/migration.json       | 25 +++++++++++++-
->   include/migration/cpr.h   |  1 +
->   migration/cpr-exec.c      | 84 +++++++++++++++++++++++++++++++++++++++++++++++
->   migration/cpr.c           | 28 ++++++++++++++--
->   migration/migration.c     | 10 +++++-
->   migration/ram.c           |  1 +
->   migration/vmstate-types.c |  8 +++++
->   system/vl.c               |  4 ++-
->   migration/trace-events    |  1 +
->   9 files changed, 157 insertions(+), 5 deletions(-)
-> 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 2be8fa1..be0f3fc 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -694,9 +694,32 @@
->   #     until you issue the `migrate-incoming` command.
->   #
->   #     (since 10.0)
-> +#
-> +# @cpr-exec: The migrate command stops the VM, saves state to the
-> +#     migration channel, directly exec's a new version of QEMU on the
-> +#     same host, replacing the original process while retaining its
-> +#     PID, and loads state from the channel.  Guest RAM is preserved
-> +#     in place.  Devices and their pinned pages are also preserved for
-> +#     VFIO and IOMMUFD.
-> +#
-> +#     Old QEMU starts new QEMU by exec'ing the command specified by
-> +#     the @cpr-exec-command parameter.  The command may be a direct
-> +#     invocation of new QEMU, or may be a wrapper that exec's the new
-> +#     QEMU binary.
-> +#
-> +#     Because old QEMU terminates when new QEMU starts, one cannot
-> +#     stream data between the two, so the channel must be a type,
-> +#     such as a file, that accepts all data before old QEMU exits.
-> +#     Otherwise, old QEMU may quietly block writing to the channel.
-> +#
-> +#     Memory-backend objects must have the share=on attribute, but
-> +#     memory-backend-epc is not supported.  The VM must be started
-> +#     with the '-machine aux-ram-share=on' option.
-> +#
-> +#     (since 10.2)
->   ##
->   { 'enum': 'MigMode',
-> -  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer' ] }
-> +  'data': [ 'normal', 'cpr-reboot', 'cpr-transfer', 'cpr-exec' ] }
->   
->   ##
->   # @ZeroPageDetection:
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index b84389f..beed392 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -53,6 +53,7 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->   
-> +void cpr_exec_init(void);
->   QEMUFile *cpr_exec_output(Error **errp);
->   QEMUFile *cpr_exec_input(Error **errp);
->   void cpr_exec_persist_state(QEMUFile *f);
-> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> index 2c32e9c..8cf55a3 100644
-> --- a/migration/cpr-exec.c
-> +++ b/migration/cpr-exec.c
-> @@ -6,15 +6,21 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/cutils.h"
-> +#include "qemu/error-report.h"
->   #include "qemu/memfd.h"
->   #include "qapi/error.h"
-> +#include "qapi/type-helpers.h"
->   #include "io/channel-file.h"
->   #include "io/channel-socket.h"
-> +#include "block/block-global-state.h"
-> +#include "qemu/main-loop.h"
->   #include "migration/cpr.h"
->   #include "migration/qemu-file.h"
-> +#include "migration/migration.h"
->   #include "migration/misc.h"
->   #include "migration/vmstate.h"
->   #include "system/runstate.h"
-> +#include "trace.h"
->   
->   #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
->   
-> @@ -92,3 +98,81 @@ QEMUFile *cpr_exec_input(Error **errp)
->       lseek(mfd, 0, SEEK_SET);
->       return qemu_file_new_fd_input(mfd, CPR_EXEC_STATE_NAME);
->   }
-> +
-> +static bool preserve_fd(int fd)
-> +{
-> +    qemu_clear_cloexec(fd);
-> +    return true;
-> +}
-> +
-> +static bool unpreserve_fd(int fd)
-> +{
-> +    qemu_set_cloexec(fd);
-> +    return true;
-> +}
-> +
-> +static void cpr_exec_cb(void *opaque)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    char **argv = strv_from_str_list(s->parameters.cpr_exec_command);
-> +    Error *err = NULL;
-> +
-> +    /*
-> +     * Clear the close-on-exec flag for all preserved fd's.  We cannot do so
-> +     * earlier because they should not persist across miscellaneous fork and
-> +     * exec calls that are performed during normal operation.
-> +     */
-> +    cpr_walk_fd(preserve_fd);
-> +
-> +    trace_cpr_exec();
-> +    execvp(argv[0], argv);
-> +
-> +    /*
-> +     * exec should only fail if argv[0] is bogus, or has a permissions problem,
-> +     * or the system is very short on resources.
-> +     */
-> +    g_strfreev(argv);
-> +    cpr_walk_fd(unpreserve_fd);
-> +
-> +    error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
-> +    error_report_err(error_copy(err));
-> +    migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> +    migrate_set_error(s, err);
-> +
-> +    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-> +
-> +    err = NULL;
-> +    if (!migration_block_activate(&err)) {
-> +        /* error was already reported */
-> +        return;
-> +    }
-> +
-> +    if (runstate_is_live(s->vm_old_state)) {
-> +        vm_start();
-> +    }
-> +}
-> +
-> +static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
-> +                             Error **errp)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +
-> +    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +        QEMUBH *cpr_exec_bh = qemu_bh_new(cpr_exec_cb, NULL);
-> +        assert(s->state == MIGRATION_STATUS_COMPLETED);
-> +        qemu_bh_schedule(cpr_exec_bh);
-> +        qemu_notify_event();
-> +
-> +    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +        cpr_exec_unpersist_state();
-> +    }
-> +    return 0;
-> +}
-> +
-> +void cpr_exec_init(void)
-> +{
-> +    static NotifierWithReturn exec_notifier;
-> +
-> +    migration_add_notifier_mode(&exec_notifier, cpr_exec_notifier,
-> +                                MIG_MODE_CPR_EXEC);
-> +}
-> diff --git a/migration/cpr.c b/migration/cpr.c
-> index d3e370e..eea3773 100644
-> --- a/migration/cpr.c
-> +++ b/migration/cpr.c
-> @@ -185,6 +185,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->       if (mode == MIG_MODE_CPR_TRANSFER) {
->           g_assert(channel);
->           f = cpr_transfer_output(channel, errp);
-> +    } else if (mode == MIG_MODE_CPR_EXEC) {
-> +        f = cpr_exec_output(errp);
->       } else {
->           return 0;
->       }
-> @@ -202,6 +204,10 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->           return ret;
->       }
->   
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-> +        cpr_exec_persist_state(f);
-> +    }
-> +
->       /*
->        * Close the socket only partially so we can later detect when the other
->        * end closes by getting a HUP event.
-> @@ -213,6 +219,12 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
->       return 0;
->   }
->   
-> +static bool unpreserve_fd(int fd)
-> +{
-> +    qemu_set_cloexec(fd);
-> +    return true;
-> +}
-> +
->   int cpr_state_load(MigrationChannel *channel, Error **errp)
->   {
->       int ret;
-> @@ -220,7 +232,13 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->       QEMUFile *f;
->       MigMode mode = 0;
->   
-> -    if (channel) {
-> +    if (cpr_exec_has_state()) {
-> +        mode = MIG_MODE_CPR_EXEC;
-> +        f = cpr_exec_input(errp);
-> +        if (channel) {
-> +            warn_report("ignoring cpr channel for migration mode cpr-exec");
+--_000_PR3P192MB079624FFEFC75CDBFB26B653EA12APR3P192MB0796EURP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-migration/cpr.c does not include "qemu/error-report.h"
+Hi,
 
-C.
+It looks like the
 
-> +        }
-> +    } else if (channel) {
->           mode = MIG_MODE_CPR_TRANSFER;
->           cpr_set_incoming_mode(mode);
->           f = cpr_transfer_input(channel, errp);
-> @@ -232,6 +250,7 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->       }
->   
->       trace_cpr_state_load(MigMode_str(mode));
-> +    cpr_set_incoming_mode(mode);
->   
->       v = qemu_get_be32(f);
->       if (v != QEMU_CPR_FILE_MAGIC) {
-> @@ -253,6 +272,11 @@ int cpr_state_load(MigrationChannel *channel, Error **errp)
->           return ret;
->       }
->   
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-> +        /* Set cloexec to prevent fd leaks from fork until the next cpr-exec */
-> +        cpr_walk_fd(unpreserve_fd);
-> +    }
-> +
->       /*
->        * Let the caller decide when to close the socket (and generate a HUP event
->        * for the sending side).
-> @@ -273,7 +297,7 @@ void cpr_state_close(void)
->   bool cpr_incoming_needed(void *opaque)
->   {
->       MigMode mode = migrate_mode();
-> -    return mode == MIG_MODE_CPR_TRANSFER;
-> +    return mode == MIG_MODE_CPR_TRANSFER || mode == MIG_MODE_CPR_EXEC;
->   }
->   
->   /*
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 08a98f7..2515bec 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -333,6 +333,7 @@ void migration_object_init(void)
->   
->       ram_mig_init();
->       dirty_bitmap_mig_init();
-> +    cpr_exec_init();
->   
->       /* Initialize cpu throttle timers */
->       cpu_throttle_init();
-> @@ -1796,7 +1797,8 @@ bool migrate_mode_is_cpr(MigrationState *s)
->   {
->       MigMode mode = s->parameters.mode;
->       return mode == MIG_MODE_CPR_REBOOT ||
-> -           mode == MIG_MODE_CPR_TRANSFER;
-> +           mode == MIG_MODE_CPR_TRANSFER ||
-> +           mode == MIG_MODE_CPR_EXEC;
->   }
->   
->   int migrate_init(MigrationState *s, Error **errp)
-> @@ -2145,6 +2147,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->           return false;
->       }
->   
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC &&
-> +        !s->parameters.has_cpr_exec_command) {
-> +        error_setg(errp, "cpr-exec mode requires setting cpr-exec-command");
-> +        return false;
-> +    }
-> +
->       if (migration_is_blocked(errp)) {
->           return false;
->       }
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 7208bc1..6730a41 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -228,6 +228,7 @@ bool migrate_ram_is_ignored(RAMBlock *block)
->       MigMode mode = migrate_mode();
->       return !qemu_ram_is_migratable(block) ||
->              mode == MIG_MODE_CPR_TRANSFER ||
-> +           mode == MIG_MODE_CPR_EXEC ||
->              (migrate_ignore_shared() && qemu_ram_is_shared(block)
->                                       && qemu_ram_is_named_file(block));
->   }
-> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> index 741a588..1aa0573 100644
-> --- a/migration/vmstate-types.c
-> +++ b/migration/vmstate-types.c
-> @@ -321,6 +321,10 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
->                     const VMStateField *field)
->   {
->       int32_t *v = pv;
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-> +        qemu_get_sbe32s(f, v);
-> +        return 0;
-> +    }
->       *v = qemu_file_get_fd(f);
->       return 0;
->   }
-> @@ -329,6 +333,10 @@ static int put_fd(QEMUFile *f, void *pv, size_t size,
->                     const VMStateField *field, JSONWriter *vmdesc)
->   {
->       int32_t *v = pv;
-> +    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-> +        qemu_put_sbe32s(f, v);
-> +        return 0;
-> +    }
->       return qemu_file_put_fd(f, *v);
->   }
->   
-> diff --git a/system/vl.c b/system/vl.c
-> index 4c24073..f395d04 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -3867,6 +3867,8 @@ void qemu_init(int argc, char **argv)
->       }
->       qemu_init_displays();
->       accel_setup_post(current_machine);
-> -    os_setup_post();
-> +    if (migrate_mode() != MIG_MODE_CPR_EXEC) {
-> +        os_setup_post();
-> +    }
->       resume_mux_open();
->   }
-> diff --git a/migration/trace-events b/migration/trace-events
-> index 706db97..e8edd1f 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -354,6 +354,7 @@ cpr_state_save(const char *mode) "%s mode"
->   cpr_state_load(const char *mode) "%s mode"
->   cpr_transfer_input(const char *path) "%s"
->   cpr_transfer_output(const char *path) "%s"
-> +cpr_exec(void) ""
->   
->   # block-dirty-bitmap.c
->   send_bitmap_header_enter(void) ""
+https://gitlab.com/qemu-project/u-boot.git  repositories have now been remo=
+ved. This breaks any older builds expecting those repositories to still exi=
+st.
 
+Is the expectation for users on older versions to update their submodule pa=
+ths? Or is this accidental?
+
+Thanks,
+Paul
+
+
+--_000_PR3P192MB079624FFEFC75CDBFB26B653EA12APR3P192MB0796EURP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+Hi,</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+It looks like the&nbsp;</div>
+<pre style=3D"background-color: rgb(255, 255, 255);" class=3D"elementToProo=
+f"><div style=3D"text-align: left; text-indent: 0px; white-space: pre-wrap;=
+ margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof"><a style=3D"margin: 0px;" data-linkindex=3D"0" title=
+=3D"https://gitlab.com/qemu-project/u-boot.git" class=3D"ms-outlook-linkify=
+ OWAAutoLink" id=3D"OWA2b9755f2-7108-078d-3a96-cd0ab3c0f487" target=3D"_bla=
+nk" href=3D"https://gitlab.com/qemu-project/u-boot.git">https://gitlab.com/=
+qemu-project/u-boot.git</a> &nbsp;repositories have now been removed. This =
+breaks any older builds expecting those repositories to still exist.</div><=
+/pre>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+Is the expectation for users on older versions to update their submodule pa=
+ths? Or is this accidental?</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+Thanks,</div>
+<div style=3D"text-align: left; text-indent: 0px; background-color: rgb(255=
+, 255, 255); margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSF=
+ontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, =
+0, 0);" class=3D"elementToProof">
+Paul</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof">
+<br>
+</div>
+</body>
+</html>
+
+--_000_PR3P192MB079624FFEFC75CDBFB26B653EA12APR3P192MB0796EURP_--
 
