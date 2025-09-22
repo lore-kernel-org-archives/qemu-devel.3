@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3837CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2B2CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0evW-0006Lt-UI; Mon, 22 Sep 2025 07:41:51 -0400
+	id 1v0eyv-0007Dt-9X; Mon, 22 Sep 2025 07:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v0evB-0006KN-4h
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:41:31 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0eyn-0007Bv-47
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:45:18 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1v0ev0-0003s7-9T
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:41:24 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6353e91a04aso601537d50.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 04:41:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0eyj-0004o2-PM
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:45:12 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4694ac46ae0so27470205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 04:45:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1758541275; x=1759146075; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1758541503; x=1759146303; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WuLGT7NbBAiH+gR9lGV3KijyooEFYXSa7Esj2mlztW0=;
- b=RXdeB5AfM1xrNxhlJZ2dMrIg8TAnnRv410CYxRjXS+7Sx28CGi0kYSbU3TEiP2Sr+D
- rxravebgD6zoRcd0P1O4NtSZ2oDHrWy5Fzb6+zcSsXXEdfoLkh9J6p7aYVfr/THu7x0U
- oQYSQ5ksEdQjLIJqa73CI6w1JTiUKyofMqY9GVoO1PEUSOd5frXfVgwsMg4p6ViRXHcd
- oXs0AH1aYrAtwmFZNME413OBMhchRGSt/C4cj170MYCOGWRITI981JeAUepoTrbpZyGE
- hSKrofZFEsw1BxT/zEK52yDAhV1SAhao9X6CqKpegQN6O4IjxzosNUR6vhPJFTiXQs5J
- RUFQ==
+ bh=8GPgQ+ZBnofQntEFxmbcCSolGQZQeJ6GKK8FUgJvcps=;
+ b=JYTZwjwqGKq02ahok+1FnXMKX95BBe1DrYHW+bPILQh/zDkgwoZ/yNTMsbocjhC++Y
+ uasZsAwemrbJVQ+zqAA/UxYP55piYx+VshBJaBNQ0/FR3HTKRw+ui0LsGFhNsErqlRsg
+ IGMDoKbYPBTR1verQp2Ea8pEcs4pOKPHqT7fA1v+aCfTsDHaRupyhzfSHKTc+L8zUgYX
+ almnbhwqnZedm9QYZXeM8DICDar6TCkLECZA9iy8eL46L5YHpJLCig/iCXhTXHWwfSoa
+ XvolsLOk5AnbFa+5IWTiLHjRPLcJNikffVsYi9rCQxdls4V1vXMM3GyalI3EyEIebUcc
+ nK+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758541275; x=1759146075;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1758541503; x=1759146303;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WuLGT7NbBAiH+gR9lGV3KijyooEFYXSa7Esj2mlztW0=;
- b=qNaqamL+9PEB7plEilN4ljppc9pJMq2feU3f3f6jPR7kcQR89BFTGifwMg5CjuYeMB
- furcH8ReTBQLJaK66rPq45ajHujLqffHzUBlutPwC/fASaPBGpifGY3b51BK0qgSLoaJ
- 3ZhwlDU5ZrGgf+QiyHnjDt3Me4AvNlAKLdMzUK2+ljsKrRj6pNdoGj+UM2HRBKN+rXdW
- IZRPB+jf0/3ZZ0v1p3owzjRwZjuAvKTm1ztH2iYrvoCHlw3S7l4GfsaQTrdfDRNEn2LT
- xl7jVy04KqpPMsFEPNm2/O02oR00FzdsLu7YdS6/IZORhOdWE/22HY6MCF1Y7413A0BZ
- uR5w==
-X-Gm-Message-State: AOJu0Yxc1ECyHCGDPagTiQMVyeaUKrUsFjoUbWSgupnnz+PqVjfNUGpo
- BZqkHJgeFfgbZU9W03IFaofjrYq5UngdR7YvVv4YhnmJIm3IH9T03fpPn7Y/u2tzJKk=
-X-Gm-Gg: ASbGncv3/bhr7O3TQ1eyga4hvqwvcmTN9h/wV7rDJwx4pWK4Hp9ViWHMRnW/tUO77NZ
- uJ5x8UC5kubuT6J66zblRzciEY2T7Pp797h9T64MSzPzfaetZX9EgMWcLt46eqxnNyhUU/5Sn/d
- SyWHx2FLdbZdqamKdBL3DeEH0JTdlE9b4Ta+7bPPROYw+iJXrXCU1s3ULfTi4rw4nIICyGpSlrp
- i/jpqmEFDYuKujzMJXV3QVYVk4c7AyiUjrKLN1gA3wYcjeI9C9W+C9AqwbfjdAh8grQ1DnX3xao
- Y0pFWDYmmq4U0iiFdVgJmFnE0IAWEgYb7HJMhUYMoq+nKbR5H0RNznYyWNJvfhK5hyF5nossoRI
- YSdmeA6kOfc1uSG1k+zrkstdAQtHMjwpE4iHvCeX0GRRK
-X-Google-Smtp-Source: AGHT+IHrxfUGMtywOleIxjQ+fw06wG4BwagZ+Zs1X6c/wGSkssXPAxiZxIyjzIamyRqGZ4YS06BUjg==
-X-Received: by 2002:a05:690c:d0d:b0:730:5445:4b2a with SMTP id
- 00721157ae682-73d3caa1e2emr110385597b3.45.1758541275205; 
- Mon, 22 Sep 2025 04:41:15 -0700 (PDT)
-Received: from [192.168.68.110] ([189.79.22.64])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-74612b99365sm16383977b3.71.2025.09.22.04.41.12
+ bh=8GPgQ+ZBnofQntEFxmbcCSolGQZQeJ6GKK8FUgJvcps=;
+ b=S1YNA7wciPZglj6n52Cuz6vWicAIllsnRFkqvRNuIqWBOuF3lZNKlb756ZOPM2fDgI
+ Rd+gwoYzX69jEpITHhvusJXtFOcotpM0OgpDmuMQgnj9J+URl0z8OYqYKG/c0C0jMMdd
+ a6GBnWAQ2X1JE/1cVzOPtdsepi7T3f5t7S9hKeXO2nMo4c9EcyDyluNUqBx/5mc1jYFl
+ vxwx59lIEL281b0HDnVV9KL1o0FT+Wrp9pzNcDMBe3RcJiQoi2u0Uao5DizW8okxYqvi
+ QHoI6oGoH4zMUi1/zzHhygGqCyDKygfLfHiODCXcz12/q74jp77LGyhY6ezCi/w2AKDf
+ 7Odg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQfd3oqWiJdTVqXL/8H8aGvrVi7dFCO5RNwsdwV/sRH6gay5E9bqNCVZKgFqymhFwR2cvxHR3/A1jn@nongnu.org
+X-Gm-Message-State: AOJu0Yzyupi+wd5IESqj1vXRzavUznm8HC638NmmK9Lj/csLNi+B+jLt
+ pQF8k1rDQl1XwMbNeSQsSlefEGaIpXRsjvLtzfFMJcoy5oRzESbzt5xpCTByZen2okY=
+X-Gm-Gg: ASbGncubtDKtAxsuLB8c87d7EacausN0Li3O6LTCVCmZ2j+Gx1farHhkYo08FNCTyO7
+ DVa3ybyyMTs6v3tHOTKImGYcwrLf/47nSb14WjMCfFdVn2nT009Eqm1oJ3Lxre+6/4cQ6f248SP
+ yf2k/tneU2n91Ab3qTbiN/9tIlaSF76Y9eCpb4xkh1yHTB86JfE4WVa3Wqzj3HD4OVCbqea57yP
+ /vM6fzJIXNZSW01cvRosDb4e3V8PDvGcXUNMbcLu7x0dqha5orXvy/F1lDZY84V0/WorDGc5Tbd
+ GmkBtqvvE1BT7WDb63B4K0/Z0Q1B1QlyOJQsSYHU0VoEAVoDBuamMw1g61C9OMz5lvUZx4ICWq1
+ 9wMQOVQCkk+X2YMToE5oiJJGiddOTUkM2mcvXZ+nf3dYOEatCHHeOb201EyoOmeXCeQ==
+X-Google-Smtp-Source: AGHT+IE+byEg1s+YzwMbCwqMro+S6ZABiylmsVF7ChYNOBKEhvRmTahbZAk46Hxcn/RAO7HavHyGlQ==
+X-Received: by 2002:a05:600c:3595:b0:458:bf0a:6061 with SMTP id
+ 5b1f17b1804b1-467f00c5fd6mr166044545e9.24.1758541502958; 
+ Mon, 22 Sep 2025 04:45:02 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46566f72354sm198210695e9.3.2025.09.22.04.45.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 04:41:13 -0700 (PDT)
-Message-ID: <1128d12f-c518-430d-b90a-8e628ac69c5e@ventanamicro.com>
-Date: Mon, 22 Sep 2025 08:41:09 -0300
+ Mon, 22 Sep 2025 04:45:02 -0700 (PDT)
+Message-ID: <449d90c7-c6c4-4a89-adc7-4a3fdbf837c8@linaro.org>
+Date: Mon, 22 Sep 2025 13:45:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/8] target/riscv: rvv: Add new VTYPE CSR field -
- altfmt
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250915084037.1816893-1-max.chou@sifive.com>
- <20250915084037.1816893-4-max.chou@sifive.com>
- <26d72d8e-5e58-4a04-865c-34f6094e74e9@ventanamicro.com>
- <CANiaA1tzoM+y8vcFUdFaP8Po8Af2AGy_1gyuHzzPo8sG9rJ+Pg@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v6 13/25] target/mips: call plugin trap callbacks
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <cover.1757018626.git.neither@nut.email>
+ <f3896fee60c263aaa4890094ec0d1acc39da8595.1757018626.git.neither@nut.email>
 Content-Language: en-US
-In-Reply-To: <CANiaA1tzoM+y8vcFUdFaP8Po8Af2AGy_1gyuHzzPo8sG9rJ+Pg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f3896fee60c263aaa4890094ec0d1acc39da8595.1757018626.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,113 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Julian,
 
+On 4/9/25 22:46, Julian Ganz wrote:
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
+> 
+> This change places hooks for MIPS targets. We consider the exceptions
+> NMI and EXT_INTERRUPT to be asynchronous interrupts rather than
+> exceptions.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
+>   target/mips/tcg/system/tlb_helper.c | 11 +++++++++++
+>   1 file changed, 11 insertions(+)
+> 
+> diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+> index 1e8901556d..566924b079 100644
+> --- a/target/mips/tcg/system/tlb_helper.c
+> +++ b/target/mips/tcg/system/tlb_helper.c
+> @@ -18,6 +18,7 @@
+>    */
+>   #include "qemu/osdep.h"
+>   #include "qemu/bitops.h"
+> +#include "qemu/plugin.h"
+>   
+>   #include "cpu.h"
+>   #include "internal.h"
+> @@ -1034,6 +1035,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+>       bool update_badinstr = 0;
+>       target_ulong offset;
+>       int cause = -1;
+> +    uint64_t last_pc = env->active_tc.PC;
+>   
+>       if (qemu_loglevel_mask(CPU_LOG_INT)
+>           && cs->exception_index != EXCP_EXT_INTERRUPT) {
+> @@ -1052,6 +1054,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+>           cs->exception_index = EXCP_NONE;
 
-On 9/22/25 5:03 AM, Max Chou wrote:
-> On Wed, Sep 17, 2025 at 9:57 PM Daniel Henrique Barboza <dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>> wrote:
-> 
->     Is this correct? The 'reserved' value you're returning when the new extension is enabled
->     is the original  value from vsetvl:
-> 
->      > +    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
->      > +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->      > +                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-> 
->     The original val you removed:
-> 
->      > -    target_ulong reserved = s2 &
->      > -                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->      > -                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-> 
-> 
->     To preserve the existing behavior I believe you want to negate the conditional:
-> 
->      > +    if (!riscv_cpu_cfg(env)->ext_zvfbfa) {
->      > +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->      > +                                           xlen - 1 - R_VTYPE_RESERVED_SHIFT);
->      > +    } else {
->      > +        reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_ALTFMT_SHIFT,
->      > +                                           xlen - 1 - R_VTYPE_ALTFMT_SHIFT);
->      > +    }
-> 
-> 
->     i.e. return the existing 'reserved' val if the new extension is absent, otherwise return
->     the new val.
-> 
-> 
->     Thanks,
-> 
->     Daniel
-> 
-> Hi Daniel,
-> 
-> 
-> Yes, I believe that’s correct. After enabling the Zvfbfa extension, the reserved field in the VTYPE CSR depends on the extension as follows:
-> 
->   * When Zvfbfa is enabled:
->       o The reserved field in the VTYPE CSR: from bit 9 (VTYPE_RESERVED) to XLEN
->   * When Zvfbfa is not enabled:
->       o The reserved field in the VTYPE CSR: from bit 8 (VTYPE_ALTFMT) to XLEN
-> 
-> 
-> PS: This commit also modifies the definition of VTYPE_RESERVED.
-> 
-> Because the EDIV extension is not planned to be part of the base V extension. Therefore, this commit modifies the default RESERVED field definition.
-> 
-> 
-> Reference: https://github.com/riscvarchive/riscv-v-spec/blob/master/ediv.adoc <https://github.com/riscvarchive/riscv-v-spec/blob/master/ediv.adoc>
+I wonder why this code path is different. I'd unify by removing this
+line and replacing s/return/break/, then handle in the switch case
+you add at the end.
 
+Anyway,
 
-Thanks for the info. That makes sense now. I suggest mentioning in the commit
-msg that VTYPE_RESERVED was changed and the default value without Zvfbfa is
-now different.
+Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-> 
-> 
-> Thanks,
-> 
-> Max
-> 
-> 
->      > +
->      > +    return reserved;
->      > +}
->      > +
->      >   target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->      >                               target_ulong s2, target_ulong x0)
->      >   {
->      > @@ -41,12 +57,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->      >       uint64_t vlmul = FIELD_EX64(s2, VTYPE, VLMUL);
->      >       uint8_t vsew = FIELD_EX64(s2, VTYPE, VSEW);
->      >       uint16_t sew = 8 << vsew;
->      > -    uint8_t ediv = FIELD_EX64(s2, VTYPE, VEDIV);
->      > +    uint8_t altfmt = FIELD_EX64(s2, VTYPE, ALTFMT);
->      >       int xlen = riscv_cpu_xlen(env);
->      >       bool vill = (s2 >> (xlen - 1)) & 0x1;
->      > -    target_ulong reserved = s2 &
->      > -                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->      > -                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
->      >       uint16_t vlen = cpu->cfg.vlenb << 3;
->      >       int8_t lmul;
->      >
->      > @@ -63,7 +76,13 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->      >           }
->      >       }
->      >
->      > -    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
->      > +    if (cpu->cfg.ext_zvfbfa) {
->      > +        if (altfmt == 1 && vsew >= MO_32) {
->      > +            vill = true;
->      > +        }
->      > +    }
->      > +
->      > +    if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) != 0)) {
->      >           /* only set vill bit. */
->      >           env->vill = 1;
->      >           env->vtype = 0;
-> 
-
+>           mips_semihosting(env);
+>           env->active_tc.PC += env->error_code;
+> +        qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+>           return;
+>       case EXCP_DSS:
+>           env->CP0_Debug |= 1 << CP0DB_DSS;
+> @@ -1336,6 +1339,14 @@ void mips_cpu_do_interrupt(CPUState *cs)
+>                    env->CP0_Status, env->CP0_Cause, env->CP0_BadVAddr,
+>                    env->CP0_DEPC);
+>       }
+> +    switch (cs->exception_index) {
+> +    case EXCP_NMI:
+> +    case EXCP_EXT_INTERRUPT:
+> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+> +        break;
+> +    default:
+> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+> +    }
+>       cs->exception_index = EXCP_NONE;
+>   }
+>   
 
