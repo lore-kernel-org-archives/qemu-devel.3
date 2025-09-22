@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9628CA100F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 18:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3753BCA100F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 18:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0ldX-0006m1-8n; Mon, 22 Sep 2025 14:51:49 -0400
+	id 1v0lbq-0004q7-4t; Mon, 22 Sep 2025 14:49:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0lcP-0005JF-SO
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:50:41 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1v0lbo-0004oQ-3E
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:49:56 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0lc6-0004UD-In
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:50:33 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-77ee6e252e5so2905580b3a.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 11:50:13 -0700 (PDT)
+ id 1v0lbf-00047u-PQ
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:49:55 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-76e6cbb991aso3910917b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 11:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758567011; x=1759171811; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758566985; x=1759171785; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kzRq+g7qBeC/3U/opiG/f/Q7ctgJstcdudImAw6mqiY=;
- b=M6R7cgJzELv1fJT+lSxPWoL1Tq98lSS5fXW0aJTBDE91LrdGfi/Dg/adecyY4YLcMy
- eQFmAyvactcYQ6pAfcXalQeX6QbQ1CAytQZKGqQGc75MD9blEtUpzcYtvuGV9fdnqUyH
- EGaoQntB/2ADMu2XCqfzK1+VZ9RNp2BLieUx0aDeN717RjvNQjZMcSzelbuI/XOUdreS
- rRhuSSUDfqObQnMFQ4SmGJbcsrIdAR4E47mW7EfyV8Du1Knlc6OQEz1D3Mb6Li9uZIX2
- 1cfXeTIFLk8SAzaCgDlnrF2CIFiWXy31qQHsyIrUUT1ld3xdaX5t7ywnc34UTRCcPKhv
- +hgw==
+ bh=jxAP5qFgcbJbR3OKukr3gh9u6b8be93wd3OS1SsOQv8=;
+ b=PyCTedMg5P1ZVFxHyqhV184OQulNBudZY2SeX+SS+F+oVI6XKwusZgixpaXIEJvYLf
+ rzjN0+d6WnTXByL8ScevhkDoJFoolUzdYxdmUhPOwkOM4xreWFSf/7R49BQy5aKULzUd
+ n5ITEk9u8aPqpP00dAAUxLgxlRGI7yLVrOUEjGVCndOxIWuXtVtiyU/njxgJA0M4bQio
+ Pz9IAhOs0m3PK59gzAyAIq1mqmQx/vRF7pBkxEHadjOHxr1vVOfQ1wc5Ii1QllFeKIO/
+ SVkv6qUlqipQi8FPP/0Q5NDFRVnGSxol8NKaOFxt8EQUukGcR5l0GGa8jJPPiFocGDnG
+ NVTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758567011; x=1759171811;
+ d=1e100.net; s=20230601; t=1758566985; x=1759171785;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kzRq+g7qBeC/3U/opiG/f/Q7ctgJstcdudImAw6mqiY=;
- b=Fgtn3xvb8n8H4kip2kkXoksiKV/RQP0RLzIBWfVPWx842cvJaLSN+oBWvCY/hKB6tA
- up7F+IwE+wlyuvsdsvr4tjLrBaOHD0LzDeGx8xFW+CgxvnncLGznuBVJnkYjont2Cxv9
- 4B3h9r6fVIk9U5Xi9bKdJtEAYAInSY01XqEbmYcEjoSJwhfYGjogpOUecTIS9kbR+dwY
- lygIUEaK25PwpudyZreblA7NJqmOJHiFMxryq76VHtGzbdD8FbjgDOqkOvN0DHu/sIYV
- MOJ09QHOg1bc5Ku0S+7VlvC4VU+I6aqC9odzypYzNskTPH1rZcIgGGpnyEXYHw7YVIhl
- PAOA==
-X-Gm-Message-State: AOJu0Yw6JhLaPfVu52iNIS2EHfhW762ZbXLsSmcGcB/jFROOpvqjdsbB
- mSxUBTA7X4rXq8XPo2OVl62ciHDRg2uMxwtVF5K7B2o4XNtqs1F0KCwy+gQ48qsVyBn22pJVJ3q
- orHAA
-X-Gm-Gg: ASbGncttA0F67Nni3EaJQ3MHQAjUtNOeEqO+xnEiPEY6BfhwFyG8+BgpYgspPohgTZv
- p/AyN/+WNBO3/ndz4dxFKU9oMxOUMuOo1+UyOJ26GyJPVQRli8qNQyOBnUxL3X7gLP18fqr9rhw
- 5Z9+zOBJwqdgaoMPDTncTXPHb7skw71lzDNUnMsw592eJiqrEmJPQSPCZaA4LlW0uiLY+U0jkwH
- VniY7/wKYF3XXA96SJYTbE/04/H29j3hBOyzk6dGvJiR9AOe8lahgO/5IiOw72kU/vUFFfFvPTf
- fH2qCp5y/m7CppIr4VySVI16/NgOb7t9gdTY/RvTyUXUZq4w8ZZUtNzH2OJr3lBgpXohRSYdRYM
- enUYWlhIFyu8Kx0eb9Q6zghtMBuIU2okBLmwT/mQ=
-X-Google-Smtp-Source: AGHT+IE7HL+cf2mZo8I2cW3KyeMmiIu4mkcR+lyvgPftZdhAAhwnklipFYpUn9fEqEFzdeJfnUPKzQ==
-X-Received: by 2002:a05:6a00:2ea9:b0:776:12ea:c737 with SMTP id
- d2e1a72fcca58-77e4f48f20fmr14052063b3a.23.1758567011534; 
- Mon, 22 Sep 2025 11:50:11 -0700 (PDT)
+ bh=jxAP5qFgcbJbR3OKukr3gh9u6b8be93wd3OS1SsOQv8=;
+ b=PxVwl8IY+pf+QvcbaW4gdrBwFbTK4jfEBa9xEOThst6jKfExO3ITghumlwSjQ1v2ad
+ 5/PXCkY+slOAbAPZ78sstC5k0Y8GXcDwhrokhAKCw80uK+o6IjnvWnR8Jo54Hb7knQtW
+ ktnO/OyTKOJZq+MjUaXeMI4ULq277WKXcXegR8V9+6WTdIltRYihGyz/fky7zSA7BnCQ
+ jf5pmeoBXK/ZogszJkBmWsOWweDNi3gpZvFXIGL8qribZ34d2J3XysH6hIb9f2M251yn
+ 8u/RNesU8Mcf0EThOtaVNeMMAfh4ys39O0kV1l6xpAcgeBMsEib9PVmc9hkfFVk1Rsgb
+ XjaQ==
+X-Gm-Message-State: AOJu0YyXBwsNUn6SDa0kbmRB57VQAe53f5HNykkYYWx2HBG/RwKPx4yh
+ zFGfyRW0D7wCiHzSSiIafd2XcGsCHbVLgxluP1w46jf1szPA0tNcTAA5Zg6bVUNvqzMokTgQTgS
+ iuw+N
+X-Gm-Gg: ASbGncs/1RRlABBZT1NiHNQfv1pBzmpjJR9fy8k3mmCsRmGV/fXMCtPWiPl3JZ2bJs6
+ j9Q66VB7BbuF5esrhuJlw8ljbfB0zsyxW1t0BrwtEKhZqFa7YZn9YlF4ry9otceqqbUjfD71HlA
+ p+5XZA/GVoM3mLfQGzH2EvWzXgj2aLQT2PakmpAtX1EW9tovnNN0Xrk5FOVcnBO2IFgr42xRbuA
+ DYoaOb3Vs/Ae8uwb9P4sZrV6W31Hyb7c7ovnbp2ZSCGDECcnm/l7sH9gdWJFFM2dqFApbOLpxVI
+ 7P1Ctn6JMDEyk3m2smOPRMi95rvZwDg3ui2ZUkBpTKIDD4d65SCeFCPbsWPh2NVvuylLurriARX
+ CghD9lKHAV06K1xegLDzvpozgohHmJRX+PSOZqhs=
+X-Google-Smtp-Source: AGHT+IEeiHCt4dAEYJqkiBHlqD3yDF9rneUTY97nxwQHwCh9FZze5ex0WsL72T+SgScsy2L+Eczdxg==
+X-Received: by 2002:a05:6a20:7f95:b0:244:aefe:71fa with SMTP id
+ adf61e73a8af0-2cff367ed2cmr91748637.37.1758566985046; 
+ Mon, 22 Sep 2025 11:49:45 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77e5fe6de75sm10583861b3a.19.2025.09.22.11.50.10
+ d2e1a72fcca58-77e5fe6de75sm10583861b3a.19.2025.09.22.11.49.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 11:50:11 -0700 (PDT)
+ Mon, 22 Sep 2025 11:49:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 39/76] target/arm: Expand pstate to 64 bits
-Date: Mon, 22 Sep 2025 11:48:47 -0700
-Message-ID: <20250922184924.2754205-40-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 13/76] include/hw/core/cpu: Introduce MMUIdxMap
+Date: Mon, 22 Sep 2025 11:48:21 -0700
+Message-ID: <20250922184924.2754205-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250922184924.2754205-1-richard.henderson@linaro.org>
 References: <20250922184924.2754205-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,324 +102,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ARM now defines 36 bits in SPSR_ELx in aarch64 mode, so
-it's time to bite the bullet and extend PSTATE to match.
+Use a typedef instead of uint16_t directly when
+describing sets of mmu indexes.
 
-Most changes are straightforward, adjusting printf formats,
-changing local variable types.  More complex is migration,
-where to maintain backward compatibility a new pstate64
-record is introduced, and only when one of the extensions
-that sets bits 32-35 are active.
-
-The fate of gdbstub is left undecided for the moment.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h            |  8 ++--
- target/arm/tcg/translate.h  | 20 ++++-----
- target/arm/cpu.c            |  6 +--
- target/arm/gdbstub64.c      |  2 +
- target/arm/helper.c         | 11 ++---
- target/arm/machine.c        | 81 +++++++++++++++++++++++++++++++++++++
- target/arm/tcg/helper-a64.c |  2 +-
- 7 files changed, 107 insertions(+), 23 deletions(-)
+ include/exec/cputlb.h | 32 ++++++++++++++++----------------
+ include/hw/core/cpu.h |  6 +++---
+ accel/tcg/cputlb.c    | 30 +++++++++++++++---------------
+ 3 files changed, 34 insertions(+), 34 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 6a214557ac..c79393d9c2 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -268,7 +268,7 @@ typedef struct CPUArchState {
-     uint64_t xregs[32];
-     uint64_t pc;
-     /* PSTATE isn't an architectural register for ARMv8. However, it is
--     * convenient for us to assemble the underlying state into a 32 bit format
-+     * convenient for us to assemble the underlying state into a 64 bit format
-      * identical to the architectural format used for the SPSR. (This is also
-      * what the Linux kernel's 'pstate' field in signal handlers and KVM's
-      * 'pstate' register are.) Of the PSTATE bits:
-@@ -280,7 +280,7 @@ typedef struct CPUArchState {
-      *  SM and ZA are kept in env->svcr
-      *  all other bits are stored in their correct places in env->pstate
-      */
--    uint32_t pstate;
-+    uint64_t pstate;
-     bool aarch64; /* True if CPU is in aarch64 state; inverse of PSTATE.nRW */
-     bool thumb;   /* True if CPU is in thumb mode; cpsr[5] */
- 
-@@ -1538,7 +1538,7 @@ static inline unsigned int aarch64_pstate_mode(unsigned int el, bool handler)
-  * interprocessing, so we don't attempt to sync with the cpsr state used by
-  * the 32 bit decoder.
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index 03ed7e2165..9bec0e7890 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -150,7 +150,7 @@ void tlb_flush_all_cpus_synced(CPUState *src_cpu);
+  * MMU indexes.
   */
--static inline uint32_t pstate_read(CPUARMState *env)
-+static inline uint64_t pstate_read(CPUARMState *env)
- {
-     int ZF;
+ void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
+-                              uint16_t idxmap);
++                              MMUIdxMap idxmap);
  
-@@ -1548,7 +1548,7 @@ static inline uint32_t pstate_read(CPUARMState *env)
-         | env->pstate | env->daif | (env->btype << 10);
+ /**
+  * tlb_flush_page_by_mmuidx_all_cpus_synced:
+@@ -165,7 +165,7 @@ void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr,
+  * translations using the flushed TLBs.
+  */
+ void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap);
++                                              MMUIdxMap idxmap);
+ 
+ /**
+  * tlb_flush_by_mmuidx:
+@@ -176,7 +176,7 @@ void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+  * Flush all entries from the TLB of the specified CPU, for the specified
+  * MMU indexes.
+  */
+-void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
++void tlb_flush_by_mmuidx(CPUState *cpu, MMUIdxMap idxmap);
+ 
+ /**
+  * tlb_flush_by_mmuidx_all_cpus_synced:
+@@ -189,7 +189,7 @@ void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap);
+  * When this function returns, no CPUs will subsequently perform
+  * translations using the flushed TLBs.
+  */
+-void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
++void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, MMUIdxMap idxmap);
+ 
+ /**
+  * tlb_flush_page_bits_by_mmuidx
+@@ -201,11 +201,11 @@ void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu, uint16_t idxmap);
+  * Similar to tlb_flush_page_mask, but with a bitmap of indexes.
+  */
+ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                   uint16_t idxmap, unsigned bits);
++                                   MMUIdxMap idxmap, unsigned bits);
+ 
+ /* Similarly, with broadcast and syncing. */
+ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                                   uint16_t idxmap,
++                                                   MMUIdxMap idxmap,
+                                                    unsigned bits);
+ 
+ /**
+@@ -220,14 +220,14 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+  * comparing only the low @bits worth of each virtual page.
+  */
+ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, uint16_t idxmap,
++                               vaddr len, MMUIdxMap idxmap,
+                                unsigned bits);
+ 
+ /* Similarly, with broadcast and syncing. */
+ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                vaddr addr,
+                                                vaddr len,
+-                                               uint16_t idxmap,
++                                               MMUIdxMap idxmap,
+                                                unsigned bits);
+ #else
+ static inline void tlb_flush_page(CPUState *cpu, vaddr addr)
+@@ -243,42 +243,42 @@ static inline void tlb_flush_all_cpus_synced(CPUState *src_cpu)
+ {
+ }
+ static inline void tlb_flush_page_by_mmuidx(CPUState *cpu,
+-                                            vaddr addr, uint16_t idxmap)
++                                            vaddr addr, MMUIdxMap idxmap)
+ {
  }
  
--static inline void pstate_write(CPUARMState *env, uint32_t val)
-+static inline void pstate_write(CPUARMState *env, uint64_t val)
+-static inline void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
++static inline void tlb_flush_by_mmuidx(CPUState *cpu, MMUIdxMap idxmap)
  {
-     env->ZF = (~val) & PSTATE_Z;
-     env->NF = val;
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 761edded52..943dfd45fe 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -378,27 +378,27 @@ static inline TCGv_i32 get_ahp_flag(void)
  }
- 
- /* Set bits within PSTATE.  */
--static inline void set_pstate_bits(uint32_t bits)
-+static inline void set_pstate_bits(uint64_t bits)
+ static inline void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                             vaddr addr,
+-                                                            uint16_t idxmap)
++                                                            MMUIdxMap idxmap)
  {
--    TCGv_i32 p = tcg_temp_new_i32();
-+    TCGv_i64 p = tcg_temp_new_i64();
- 
-     tcg_debug_assert(!(bits & CACHED_PSTATE_BITS));
- 
--    tcg_gen_ld_i32(p, tcg_env, offsetof(CPUARMState, pstate));
--    tcg_gen_ori_i32(p, p, bits);
--    tcg_gen_st_i32(p, tcg_env, offsetof(CPUARMState, pstate));
-+    tcg_gen_ld_i64(p, tcg_env, offsetof(CPUARMState, pstate));
-+    tcg_gen_ori_i64(p, p, bits);
-+    tcg_gen_st_i64(p, tcg_env, offsetof(CPUARMState, pstate));
  }
- 
- /* Clear bits within PSTATE.  */
--static inline void clear_pstate_bits(uint32_t bits)
-+static inline void clear_pstate_bits(uint64_t bits)
+ static inline void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *cpu,
+-                                                       uint16_t idxmap)
++                                                       MMUIdxMap idxmap)
  {
--    TCGv_i32 p = tcg_temp_new_i32();
-+    TCGv_i64 p = tcg_temp_new_i64();
- 
-     tcg_debug_assert(!(bits & CACHED_PSTATE_BITS));
- 
--    tcg_gen_ld_i32(p, tcg_env, offsetof(CPUARMState, pstate));
--    tcg_gen_andi_i32(p, p, ~bits);
--    tcg_gen_st_i32(p, tcg_env, offsetof(CPUARMState, pstate));
-+    tcg_gen_ld_i64(p, tcg_env, offsetof(CPUARMState, pstate));
-+    tcg_gen_andi_i64(p, p, ~bits);
-+    tcg_gen_st_i64(p, tcg_env, offsetof(CPUARMState, pstate));
  }
- 
- /* If the singlestep state is Active-not-pending, advance to Active-pending. */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index aab7250399..731b4d5725 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1190,7 +1190,7 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ static inline void tlb_flush_page_bits_by_mmuidx(CPUState *cpu,
+                                                  vaddr addr,
+-                                                 uint16_t idxmap,
++                                                 MMUIdxMap idxmap,
+                                                  unsigned bits)
  {
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
--    uint32_t psr = pstate_read(env);
-+    uint64_t psr = pstate_read(env);
-     int i, j;
-     int el = arm_current_el(env);
-     uint64_t hcr = arm_hcr_el2_eff(env);
-@@ -1212,7 +1212,7 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     } else {
-         ns_status = "";
-     }
--    qemu_fprintf(f, "PSTATE=%08x %c%c%c%c %sEL%d%c",
-+    qemu_fprintf(f, "PSTATE=%016" PRIx64 " %c%c%c%c %sEL%d%c",
-                  psr,
-                  psr & PSTATE_N ? 'N' : '-',
-                  psr & PSTATE_Z ? 'Z' : '-',
-@@ -1229,7 +1229,7 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-                      (FIELD_EX64(env->svcr, SVCR, SM) ? 'S' : '-'));
-     }
-     if (cpu_isar_feature(aa64_bti, cpu)) {
--        qemu_fprintf(f, "  BTYPE=%d", (psr & PSTATE_BTYPE) >> 10);
-+        qemu_fprintf(f, "  BTYPE=%d", (int)(psr & PSTATE_BTYPE) >> 10);
-     }
-     qemu_fprintf(f, "%s%s%s",
-                  (hcr & HCR_NV) ? " NV" : "",
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 3bccde2bf2..65d6bbe65f 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -47,6 +47,7 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-     case 32:
-         return gdb_get_reg64(mem_buf, env->pc);
-     case 33:
-+        /* pstate is now a 64-bit value; can we simply adjust the xml? */
-         return gdb_get_reg32(mem_buf, pstate_read(env));
-     }
-     /* Unknown register.  */
-@@ -75,6 +76,7 @@ int aarch64_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-         return 8;
-     case 33:
-         /* CPSR */
-+        /* pstate is now a 64-bit value; can we simply adjust the xml? */
-         pstate_write(env, tmp);
-         return 4;
-     }
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3f32eb7a9d..37cfd2064c 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -8947,8 +8947,8 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-     CPUARMState *env = &cpu->env;
-     unsigned int new_el = env->exception.target_el;
-     vaddr addr = env->cp15.vbar_el[new_el];
--    unsigned int new_mode = aarch64_pstate_mode(new_el, true);
--    unsigned int old_mode;
-+    uint64_t new_mode = aarch64_pstate_mode(new_el, true);
-+    uint64_t old_mode;
-     unsigned int cur_el = arm_current_el(env);
-     int rt;
- 
-@@ -9096,7 +9096,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-                  * If NV2 is disabled, change SPSR when NV,NV1 == 1,0 (I_ZJRNN)
-                  * If NV2 is enabled, change SPSR when NV is 1 (I_DBTLM)
-                  */
--                old_mode = deposit32(old_mode, 2, 2, 2);
-+                old_mode = deposit64(old_mode, 2, 2, 2);
-             }
-         }
-     } else {
-@@ -9109,7 +9109,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-     }
-     env->banked_spsr[aarch64_banked_spsr_index(new_el)] = old_mode;
- 
--    qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%x\n", old_mode);
-+    qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%" PRIx64 "\n", old_mode);
-     qemu_log_mask(CPU_LOG_INT, "...with ELR 0x%" PRIx64 "\n",
-                   env->elr_el[new_el]);
- 
-@@ -9163,7 +9163,8 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
- 
-     env->pc = addr;
- 
--    qemu_log_mask(CPU_LOG_INT, "...to EL%d PC 0x%" PRIx64 " PSTATE 0x%x\n",
-+    qemu_log_mask(CPU_LOG_INT, "...to EL%d PC 0x%" PRIx64
-+                  " PSTATE 0x%" PRIx64 "\n",
-                   new_el, env->pc, pstate_read(env));
  }
- 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index ce20b46f50..44a0cf844b 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -816,6 +816,80 @@ static const VMStateInfo vmstate_cpsr = {
-     .put = put_cpsr,
+ static inline void
+ tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+-                                              uint16_t idxmap, unsigned bits)
++                                              MMUIdxMap idxmap, unsigned bits)
+ {
+ }
+ static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                             vaddr len, uint16_t idxmap,
++                                             vaddr len, MMUIdxMap idxmap,
+                                              unsigned bits)
+ {
+ }
+ static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                              vaddr addr,
+                                                              vaddr len,
+-                                                             uint16_t idxmap,
++                                                             MMUIdxMap idxmap,
+                                                              unsigned bits)
+ {
+ }
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index b01a0cffd6..a7038b8c07 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -198,10 +198,10 @@ struct CPUClass {
  };
  
-+static int get_pstate64(QEMUFile *f, void *opaque, size_t size,
-+                        const VMStateField *field)
-+{
-+    ARMCPU *cpu = opaque;
-+    CPUARMState *env = &cpu->env;
-+    uint64_t val = qemu_get_be64(f);
-+
-+    env->aarch64 = ((val & PSTATE_nRW) == 0);
-+    if (is_a64(env)) {
-+        pstate_write(env, val);
-+    } else {
-+        cpsr_write_from_spsr_elx(env, val);
-+    }
-+    return 0;
-+}
-+
-+static int put_pstate64(QEMUFile *f, void *opaque, size_t size,
-+                        const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    ARMCPU *cpu = opaque;
-+    CPUARMState *env = &cpu->env;
-+    uint64_t val;
-+
-+    if (is_a64(env)) {
-+        val = pstate_read(env);
-+    } else {
-+        val = cpsr_read_for_spsr_elx(env);
-+    }
-+    qemu_put_be64(f, val);
-+    return 0;
-+}
-+
-+static bool pstate64_needed(void *opaque)
-+{
-+    ARMCPU *cpu = opaque;
-+    CPUARMState *env = &cpu->env;
-+    uint64_t val;
-+
-+    if (arm_feature(env, ARM_FEATURE_M)) {
-+        return false;
-+    }
-+    if (is_a64(env)) {
-+        val = pstate_read(env);
-+    } else {
-+        val = cpsr_read_for_spsr_elx(env);
-+        if (val & PSTATE_SS) {
-+            return true;
-+        }
-+    }
-+    return val > UINT32_MAX;
-+}
-+
-+static const VMStateDescription vmstate_pstate64 = {
-+    .name = "cpu/pstate64",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = pstate64_needed,
-+    .fields = (const VMStateField[]) {
-+        {
-+            .name = "pstate64",
-+            .version_id = 0,
-+            .size = sizeof(uint64_t),
-+            .info = &(const VMStateInfo) {
-+                .name = "pstate64",
-+                .get = get_pstate64,
-+                .put = put_pstate64,
-+            },
-+            .flags = VMS_SINGLE,
-+            .offset = 0,
-+        },
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static int get_power(QEMUFile *f, void *opaque, size_t size,
-                     const VMStateField *field)
- {
-@@ -1052,6 +1126,12 @@ const VMStateDescription vmstate_arm_cpu = {
-         VMSTATE_UINT32_ARRAY(env.regs, ARMCPU, 16),
-         VMSTATE_UINT64_ARRAY(env.xregs, ARMCPU, 32),
-         VMSTATE_UINT64(env.pc, ARMCPU),
-+        /*
-+         * If any bits are set in the upper 32 bits of cpsr/pstate,
-+         * or if the cpu is in aa32 mode and PSTATE.SS is set, then
-+         * the cpu/pstate64 subsection will override this with the
-+         * full 64 bit state.
-+         */
-         {
-             .name = "cpsr",
-             .version_id = 0,
-@@ -1128,6 +1208,7 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_irq_line_state,
-         &vmstate_wfxt_timer,
-         &vmstate_syndrome64,
-+        &vmstate_pstate64,
-         NULL
-     }
- };
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index eaea7859d3..08b7db7c46 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -620,7 +620,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-     ARMCPU *cpu = env_archcpu(env);
-     int cur_el = arm_current_el(env);
-     unsigned int spsr_idx = aarch64_banked_spsr_index(cur_el);
--    uint32_t spsr = env->banked_spsr[spsr_idx];
-+    uint64_t spsr = env->banked_spsr[spsr_idx];
-     int new_el;
-     bool return_to_aa64 = (spsr & PSTATE_nRW) == 0;
+ /*
+- * Fix the number of mmu modes to 16, which is also the maximum
+- * supported by the softmmu tlb api.
++ * Fix the number of mmu modes to 16.
+  */
+ #define NB_MMU_MODES 16
++typedef uint16_t MMUIdxMap;
  
+ /* Use a fully associative victim tlb of 8 entries. */
+ #define CPU_VTLB_SIZE 8
+@@ -306,7 +306,7 @@ typedef struct CPUTLBCommon {
+      * mmu_idx N since the last time that mmu_idx was flushed.
+      * Protected by tlb_c.lock.
+      */
+-    uint16_t dirty;
++    MMUIdxMap dirty;
+     /*
+      * Statistics.  These are not lock protected, but are read and
+      * written atomically.  This allows the monitor to print a snapshot
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 87e14bde4f..d324f33339 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -370,8 +370,8 @@ static void flush_all_helper(CPUState *src, run_on_cpu_func fn,
+ 
+ static void tlb_flush_by_mmuidx_async_work(CPUState *cpu, run_on_cpu_data data)
+ {
+-    uint16_t asked = data.host_int;
+-    uint16_t all_dirty, work, to_clean;
++    MMUIdxMap asked = data.host_int;
++    MMUIdxMap all_dirty, work, to_clean;
+     int64_t now = get_clock_realtime();
+ 
+     assert_cpu_is_self(cpu);
+@@ -408,7 +408,7 @@ static void tlb_flush_by_mmuidx_async_work(CPUState *cpu, run_on_cpu_data data)
+     }
+ }
+ 
+-void tlb_flush_by_mmuidx(CPUState *cpu, uint16_t idxmap)
++void tlb_flush_by_mmuidx(CPUState *cpu, MMUIdxMap idxmap)
+ {
+     tlb_debug("mmu_idx: 0x%" PRIx16 "\n", idxmap);
+ 
+@@ -422,7 +422,7 @@ void tlb_flush(CPUState *cpu)
+     tlb_flush_by_mmuidx(cpu, ALL_MMUIDX_BITS);
+ }
+ 
+-void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *src_cpu, uint16_t idxmap)
++void tlb_flush_by_mmuidx_all_cpus_synced(CPUState *src_cpu, MMUIdxMap idxmap)
+ {
+     const run_on_cpu_func fn = tlb_flush_by_mmuidx_async_work;
+ 
+@@ -531,7 +531,7 @@ static void tlb_flush_page_locked(CPUState *cpu, int midx, vaddr page)
+  */
+ static void tlb_flush_page_by_mmuidx_async_0(CPUState *cpu,
+                                              vaddr addr,
+-                                             uint16_t idxmap)
++                                             MMUIdxMap idxmap)
+ {
+     int mmu_idx;
+ 
+@@ -570,14 +570,14 @@ static void tlb_flush_page_by_mmuidx_async_1(CPUState *cpu,
+ {
+     vaddr addr_and_idxmap = data.target_ptr;
+     vaddr addr = addr_and_idxmap & TARGET_PAGE_MASK;
+-    uint16_t idxmap = addr_and_idxmap & ~TARGET_PAGE_MASK;
++    MMUIdxMap idxmap = addr_and_idxmap & ~TARGET_PAGE_MASK;
+ 
+     tlb_flush_page_by_mmuidx_async_0(cpu, addr, idxmap);
+ }
+ 
+ typedef struct {
+     vaddr addr;
+-    uint16_t idxmap;
++    MMUIdxMap idxmap;
+ } TLBFlushPageByMMUIdxData;
+ 
+ /**
+@@ -599,7 +599,7 @@ static void tlb_flush_page_by_mmuidx_async_2(CPUState *cpu,
+     g_free(d);
+ }
+ 
+-void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr, uint16_t idxmap)
++void tlb_flush_page_by_mmuidx(CPUState *cpu, vaddr addr, MMUIdxMap idxmap)
+ {
+     tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%" PRIx16 "\n", addr, idxmap);
+ 
+@@ -618,7 +618,7 @@ void tlb_flush_page(CPUState *cpu, vaddr addr)
+ 
+ void tlb_flush_page_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+                                               vaddr addr,
+-                                              uint16_t idxmap)
++                                              MMUIdxMap idxmap)
+ {
+     tlb_debug("addr: %016" VADDR_PRIx " mmu_idx:%"PRIx16"\n", addr, idxmap);
+ 
+@@ -715,8 +715,8 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
+ typedef struct {
+     vaddr addr;
+     vaddr len;
+-    uint16_t idxmap;
+-    uint16_t bits;
++    MMUIdxMap idxmap;
++    unsigned bits;
+ } TLBFlushRangeData;
+ 
+ static void tlb_flush_range_by_mmuidx_async_0(CPUState *cpu,
+@@ -766,7 +766,7 @@ static void tlb_flush_range_by_mmuidx_async_1(CPUState *cpu,
+ }
+ 
+ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, uint16_t idxmap,
++                               vaddr len, MMUIdxMap idxmap,
+                                unsigned bits)
+ {
+     TLBFlushRangeData d;
+@@ -797,7 +797,7 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+ }
+ 
+ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                   uint16_t idxmap, unsigned bits)
++                                   MMUIdxMap idxmap, unsigned bits)
+ {
+     tlb_flush_range_by_mmuidx(cpu, addr, TARGET_PAGE_SIZE, idxmap, bits);
+ }
+@@ -805,7 +805,7 @@ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+                                                vaddr addr,
+                                                vaddr len,
+-                                               uint16_t idxmap,
++                                               MMUIdxMap idxmap,
+                                                unsigned bits)
+ {
+     TLBFlushRangeData d, *p;
+@@ -847,7 +847,7 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+ 
+ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+                                                    vaddr addr,
+-                                                   uint16_t idxmap,
++                                                   MMUIdxMap idxmap,
+                                                    unsigned bits)
+ {
+     tlb_flush_range_by_mmuidx_all_cpus_synced(src_cpu, addr, TARGET_PAGE_SIZE,
 -- 
 2.43.0
 
