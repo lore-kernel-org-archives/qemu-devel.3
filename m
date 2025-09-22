@@ -4,70 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 721BBCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDAACAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0fzd-0007vk-Gv; Mon, 22 Sep 2025 08:50:09 -0400
+	id 1v0g0y-0000Pb-9a; Mon, 22 Sep 2025 08:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0fzb-0007vW-4y
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:50:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0g0w-0000Om-A5
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:51:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0fzY-0008A9-Pl
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:50:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0g0t-0008OX-8V
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:51:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758545403;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1758545485;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=idQNVSWnKYzroIj89epIryDkz5b36U0+Xpxq/n7ggPI=;
- b=LsAt+Xxwg/9HwAzKg+ChjUAazKl4CssEDoBZJKEtSD/qA6AZbUI5Dx56YksBkZN0r/Hx/i
- 4NTkK7HAn1IgSqNZdj/lFKXtnjZ1lUSJxw35g0IyVwFZVn9efE1JZH6E9WguakOC5KdaKJ
- Hka6KFLzeUeGOQGtG6DsuXWFit+As/o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-uoB4Cpa4PPu6T_ojSZCohQ-1; Mon,
- 22 Sep 2025 08:50:01 -0400
-X-MC-Unique: uoB4Cpa4PPu6T_ojSZCohQ-1
-X-Mimecast-MFC-AGG-ID: uoB4Cpa4PPu6T_ojSZCohQ_1758545400
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B12F91955F6A; Mon, 22 Sep 2025 12:50:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.69])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C8051956056; Mon, 22 Sep 2025 12:49:58 +0000 (UTC)
-Date: Mon, 22 Sep 2025 13:49:55 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
-Message-ID: <aNFF8wsycqqOTc-x@redhat.com>
-References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
- <20250919160526-mutt-send-email-mst@kernel.org>
- <aNE0Bp0hsA31sLCJ@redhat.com>
- <20250922081403-mutt-send-email-mst@kernel.org>
+ bh=wEU8MrtyJBFH7wtLYz6lKHBkb4dkvaBABmEVzel40tw=;
+ b=Ott40u/cPYuHxseivVT+xu/UB+dccNvMOG9MVM+b+M5nfCTYCnlyTjgqVmbmBAOF8Dl14H
+ 54BZDI55vKU5cAG8CwHnsUIebBs8/Y2jAYyne1S10WKUWXp1GRdmx405OGE1Beg5HAx7uH
+ DtTUAXMT61h6LQMNJkldlYdl6FI7+VQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-503-JPfhLUdlNK2Ipa3t6jIo2Q-1; Mon, 22 Sep 2025 08:51:23 -0400
+X-MC-Unique: JPfhLUdlNK2Ipa3t6jIo2Q-1
+X-Mimecast-MFC-AGG-ID: JPfhLUdlNK2Ipa3t6jIo2Q_1758545483
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3ee1365964cso3398772f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 05:51:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758545482; x=1759150282;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wEU8MrtyJBFH7wtLYz6lKHBkb4dkvaBABmEVzel40tw=;
+ b=CjajqCr+O8uTkxaeIPZzWLrHrAZZKVAK2MJJa8awX6fD3IW3VTMG0coPVU++jxdGFW
+ dHn6fomnFIpVnmACg1YnE7iFDBolTmkMpVCIAsNa4i3e7NiFrljZO6K7j9y//ayVDEst
+ uJEtukC5jmvB8+oHK37q1g8Bu3CX3PlUp5ZVXRPVwJgrWhqWUdx2lWiw7mLX1zCID5KQ
+ Lqj0/PhM7gjXiGkfAlemvaau4b8YHas1VQhJ0h1kBxpuoIVjLI8Hl8yyAy5DujCmxRlS
+ kDIgvO3RojZ1rzbc0BEAiFkoJ+CHKNA9hSsprxFX+Vm6L0bCbuygoOzvqeWvVn8TCpPN
+ mwZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUaCP/7t5FFf1WEl4IjTjBUv9eVEu3dR6zQ9OkR1BPMiJJueuxRo9+14yvEv1+gFT3Y5e14CWgg+3SK@nongnu.org
+X-Gm-Message-State: AOJu0YyDlcfAauhEIs+QX2a+nsnyUO0S+i/kPp394ZT2FOMQIvc1ZOyC
+ aSCQuHO+IClsDNQo6x5sNNM2j/RuoAHOy8Bdc6m6e07yTaIdeUj2U92U8I6vxHgWq10AaIZZyBF
+ +NX8yyrkmSYwrMHEGEfWi+MH5fIJ69YXOecuExls999X8A5Rz5xFkb/9k
+X-Gm-Gg: ASbGncvpF8aUz6G3bqNs1MByllmDBxrCedF1Pg5gXZpAqSN5cVfhAUABsU3bBOl+8zM
+ yM8WqUFvld2LYXYzbOiuJmsX6S1FCbpXg+Pg6bO/D0CSJYZ6h5mZbOlE+dGRhpn4ec1s2xU36k5
+ 1wOQqfVwRGbA1u1K1Rs0fWbX+jCgBzdUrmhGBx8YMvUbPAvXNL14uoijOoB1vfUdoNUEizvR6Kz
+ sMqxYLiJ9C/w5ezX/B48LzL/s86FP7nojCV3lCQ8WRHm6juazzc8QN32mWIdL1iSD2D/OkYZ7Jv
+ rweU1TL6ZR5fY5MNqMK5Bt2Lqf6xrM/k56M=
+X-Received: by 2002:a05:6000:1ac9:b0:3ee:1578:3181 with SMTP id
+ ffacd0b85a97d-3ee87aca8edmr8850947f8f.49.1758545482506; 
+ Mon, 22 Sep 2025 05:51:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBnJyKfbsGoT60gmGSw8lHVDLSbpKp/h3+mebPlmhY5lsdty8PTSlmG0n1AgxTfhHPmUKyNA==
+X-Received: by 2002:a05:6000:1ac9:b0:3ee:1578:3181 with SMTP id
+ ffacd0b85a97d-3ee87aca8edmr8850919f8f.49.1758545482036; 
+ Mon, 22 Sep 2025 05:51:22 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:73ea:f900:52ee:df2b:4811:77e0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3f0e28c83d6sm14362825f8f.56.2025.09.22.05.51.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Sep 2025 05:51:21 -0700 (PDT)
+Date: Mon, 22 Sep 2025 08:51:19 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Dongjiu Geng <gengdongjiu1@gmail.com>
+Subject: Re: [PATCH v11 16/17] docs: hest: add new "etc/acpi_table_hest_addr"
+ and update workflow
+Message-ID: <20250922084913-mutt-send-email-mst@kernel.org>
+References: <cover.1757084668.git.mchehab+huawei@kernel.org>
+ <ca6ec605d255385430a923f9bf8dced717173690.1757084668.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250922081403-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <ca6ec605d255385430a923f9bf8dced717173690.1757084668.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -76,7 +95,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,72 +108,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 22, 2025 at 08:15:20AM -0400, Michael S. Tsirkin wrote:
-> On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. Berrangé wrote:
-> > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
-> > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
-> > > > This removes the change introduced in [1] that prevents the use of
-> > > > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
-> > > > 
-> > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
-> > > > 
-> > > > Signed-off-by: Christian Speich <c.speich@avm.de>
-> > > > ---
-> > > > vhost-user-device and vhost-user-device-pci started out as user
-> > > > creatable devices. This was changed in [1] when the vhost-user-base was
-> > > > introduced.
-> > > > 
-> > > > The reason given is to prevent user confusion. Searching qemu-discuss or
-> > > > google for "vhost-user-device" I've seen no confused users.
-> > > > 
-> > > > Our use case is to provide wifi emulation using "vhost-user-device-pci",
-> > > > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
-> > > > 24.04. With newer QEMU versions we now need to patch, distribute and
-> > > > maintain our own QEMU packages, which is non-trivial.
-> > > > 
-> > > > So I want to propose lifting this restriction to make this feature
-> > > > usable without a custom QEMU.
-> > > > 
-> > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
-> > > 
-> > > The confusion is after someone reuses the ID you are claiming without
-> > > telling anyone and then linux guests will start binding that driver to
-> > > your device.
-> > > 
-> > > 
-> > > We want people doing this kind of thing to *at a minimum*
-> > > go ahead and register a device id with the virtio TC,
-> > > but really to write and publish a spec.
-> > 
-> > Wanting people to register a device ID is a social problem and
-> > we're trying to apply a technical hammer to it, which is rarely
-> > an productive approach.
-> > 
-> > If we want to demonstrate that vhost-user-device is "risky", then
-> > how about we rename it to have an 'x-' prefix and thus disclaim
-> > any support for it, but none the less allow its use. Document it
-> > as an experimental device, and if it breaks, users get to keep
-> > both pieces.
+On Fri, Sep 05, 2025 at 05:09:23PM +0200, Mauro Carvalho Chehab wrote:
+> While the HEST layout didn't change, there are some internal
+> changes related to how offsets are calculated and how memory error
+> events are triggered.
 > 
-> Maybe with the insecure tag you are working on?
+> Update specs to reflect such changes.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  docs/specs/acpi_hest_ghes.rst | 28 +++++++++++++++++-----------
+>  1 file changed, 17 insertions(+), 11 deletions(-)
+> 
+> diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
+> index c3e9f8d9a702..3d1b85d74b70 100644
+> --- a/docs/specs/acpi_hest_ghes.rst
+> +++ b/docs/specs/acpi_hest_ghes.rst
+> @@ -89,12 +89,21 @@ Design Details
+>      addresses in the "error_block_address" fields with a pointer to the
+>      respective "Error Status Data Block" in the "etc/hardware_errors" blob.
+>  
+> -(8) QEMU defines a third and write-only fw_cfg blob which is called
+> -    "etc/hardware_errors_addr". Through that blob, the firmware can send back
+> -    the guest-side allocation addresses to QEMU. The "etc/hardware_errors_addr"
+> -    blob contains a 8-byte entry. QEMU generates a single WRITE_POINTER command
+> -    for the firmware. The firmware will write back the start address of
+> -    "etc/hardware_errors" blob to the fw_cfg file "etc/hardware_errors_addr".
+> +(8) QEMU defines a third and write-only fw_cfg blob to store the location
+> +    where the error block offsets, read ack registers and CPER records are
+> +    stored.
+> +
+> +    Up to QEMU 9.2, the location was at "etc/hardware_errors_addr", and
+> +    contains a GPA for the beginning of "etc/hardware_errors".
+> +
+> +    Newer versions place the location at "etc/acpi_table_hest_addr",
+> +    pointing to the GPA of the HEST table.
+> +
+> +    Using above mentioned 'fw_cfg' files, the firmware can send back the
+> +    guest-side allocation addresses to QEMU. They contain a 8-byte entry.
+> +    QEMU generates a single WRITE_POINTER command for the firmware. The
+> +    firmware will write back the start address of either "etc/hardware_errors"
+> +    or HEST table at the corresponding fw_cfg file.
+>  
+>  (9) When QEMU gets a SIGBUS from the kernel, QEMU writes CPER into corresponding
+>      "Error Status Data Block", guest memory, and then injects platform specific
+> @@ -105,8 +114,5 @@ Design Details
+>       kernel, on receiving notification, guest APEI driver could read the CPER error
+>       and take appropriate action.
+>  
+> -(11) kvm_arch_on_sigbus_vcpu() uses source_id as index in "etc/hardware_errors" to
+> -     find out "Error Status Data Block" entry corresponding to error source. So supported
+> -     source_id values should be assigned here and not be changed afterwards to make sure
+> -     that guest will write error into expected "Error Status Data Block" even if guest was
+> -     migrated to a newer QEMU.
+> +(11) kvm_arch_on_sigbus_vcpu() report RAS errors via a SEA notifications,
 
-Sure.
+reports
 
-> And disable in the default config?
-
-Disabling in default config would retain the very problem that Christian
-is trying to solve - that no distro would have the functionality available
-for users.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +     when a SIGBUS event is triggered.
+> -- 
+> 2.51.0
 
 
