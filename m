@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A333CAC5A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454EACAC5A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0h8m-0000UN-2s; Mon, 22 Sep 2025 10:03:40 -0400
+	id 1v0hCg-0001cv-EP; Mon, 22 Sep 2025 10:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0h8i-0000Te-PC
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:03:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0h8b-0003eP-TJ
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:03:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758549806;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GDxRqIuaCUlv11HAD0ofcALtwxVxpT5FIuBJNnPwPWg=;
- b=iT5T0CQTn07pgXp9q2lnz4O+A8Sk2YbtT4cdERb1WUP75t7839DIXwEDhoXq71DjSQ+OJ9
- imUm5ZgWlePHzmk4AMghWJy1gVF/4qhfoPjZ7yAdgS1LImNwlWnF2aAVKUTlveLLkk2GqL
- qwH3VQ3pJJ3C0QmxAQKWXSNBel/PYec=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-pB-Nh4s-N1qBqwoqn3d1tg-1; Mon,
- 22 Sep 2025 10:03:25 -0400
-X-MC-Unique: pB-Nh4s-N1qBqwoqn3d1tg-1
-X-Mimecast-MFC-AGG-ID: pB-Nh4s-N1qBqwoqn3d1tg_1758549804
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C2371800589; Mon, 22 Sep 2025 14:03:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.69])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C0A830002CA; Mon, 22 Sep 2025 14:03:21 +0000 (UTC)
-Date: Mon, 22 Sep 2025 15:03:18 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [RFC PATCH 4/4] docs/code-provenance: make the exception process
- feasible
-Message-ID: <aNFXJtQu9gFkIwLg@redhat.com>
-References: <20250922113219.32122-1-pbonzini@redhat.com>
- <20250922113219.32122-5-pbonzini@redhat.com>
- <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
- <aNFJVrusgEUaLuDW@redhat.com>
- <CAFEAcA_rQhXdavAUCEt8atMhpZYEu0Lz6tVdu4+mfgPOK9iUuw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v0hCf-0001cm-5n
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:07:41 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v0hCa-00045y-Tz
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:07:40 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-72ce9790aceso29901587b3.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 07:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758550052; x=1759154852; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bya9AGe1MKcELk12G4taz6HbfdLxg/xP+VvPFK5KaPE=;
+ b=hp8n4U1usvTdLF4a1zsaleNuHrK8o7Y9Hu+7vip2sjil0QtlgMFNat+2Lb0bRh0/Fs
+ hxN5RjMP5k+vK6yFOCNKDuCUbI4frMvbay7sL03WXdprTvRDdw4YcrusqjX7AqdRTBhn
+ /+gnImH7XNigrVCTCrD1/kzXZt8o/WldMzTuggxl4WBdDFVoAZo2G9d7k0mb1AM5womm
+ HYYaQ0MFRUsi+h0kpzBpcCf8lIzVrdtRiO2Qzv1OF+rrB4B37O/Ik4a9g8yjvkTu1/BR
+ Tx411jBiHb7TXkLfxXTE9AQ5DKuZvXplvoIFCGNvcT5cye/2it7QA5DBmmkjN+eSIRM2
+ r4TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758550052; x=1759154852;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Bya9AGe1MKcELk12G4taz6HbfdLxg/xP+VvPFK5KaPE=;
+ b=Dye2SxoLEbCOYL1JPifQGpofXn89DDiaAcXEKvVD4VcP15lLz6V1hR+23Hfmvo59IQ
+ Q3fnmFmwg25PuElhAbkx1HA5m4AwazYDKut3GB1urfJ63YEMvnija6IVZ/CvdlWSl155
+ ZM/o/i6YET9MhctTLA6kWdyEXcnKN9/TnNI4zFDcG9uuTnMBOsC26Cxmx8C38hdddacl
+ O5aoTeQJUqvJvMg/Ao5Mf+imXE2KqB5WS956630FfcH/n/fukZcAw0+OTMkHAHaTdIic
+ gHzVzwWoMeyFLNsyLcsatZc/eogSRpKFfSUagJzt6kDxtMZRVnxNGhj+TNyhOyUCmQp9
+ hN2Q==
+X-Gm-Message-State: AOJu0Yw3wkZUKTUifJdeISjwISr9xjzoobdmalpwjOfeWtgQ44BvyhBX
+ amsSSl9qNUqt+GHjTCI/6nX2/lDXeAQ9pzxx8MjiadmwGCXJmikjF0Kq3K7aGD7dLyZ6VxjgjIM
+ zF1pUizRdDU0Ju9eZV8xPfUiVk1hgnWqVELRQ+jiY7w==
+X-Gm-Gg: ASbGncuqxnKGY3hlsl7gujp4uEmbxHBI6r794CkJv6jsFHCSIyspZFq7DdNULUAB+QH
+ bPmVKrL0Y1BZ7I5NF5JP6/tuXjtum+aax7vmGCirvDhovS51aEuZpl7x8HTTD/Avi+w4XlFAYOo
+ U0Nqgt7pAGuBvEZa7bj4lz8VjlkhPIoQ9gAM2NyVV5NcyjRvKQX3UW9PfFjr7IhYRpNspIkWWWB
+ B1kR1cu
+X-Google-Smtp-Source: AGHT+IEEQ+k9/2eN0BE0Yp7WNWSPyMDrnE3kx6sgjiX29cAOQlP8et7rbpwyv3BqJWXTTo+vErYol+HZ7NdjXw2v0i8=
+X-Received: by 2002:a05:690c:e17:b0:728:a5d1:e340 with SMTP id
+ 00721157ae682-73d1efe65d4mr117627027b3.2.1758550052388; Mon, 22 Sep 2025
+ 07:07:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_rQhXdavAUCEt8atMhpZYEu0Lz6tVdu4+mfgPOK9iUuw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20250913080943.11710-1-pbonzini@redhat.com>
+ <20250913080943.11710-22-pbonzini@redhat.com>
+In-Reply-To: <20250913080943.11710-22-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Sep 2025 15:07:21 +0100
+X-Gm-Features: AS18NWAIcMLeGxS63iwhSXrZS1tSH_-R69YYQ_o_UJgA81eF28qpjG8U7Qd-QVg
+Message-ID: <CAFEAcA9QA5WZnk0R2ZYg4rraX_+1LdRjfo7Ybb6MQkrBuaRt3A@mail.gmail.com>
+Subject: Re: [PULL 21/61] configure: bump Meson to 1.9.0 for use with Rust
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,99 +90,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 22, 2025 at 02:26:00PM +0100, Peter Maydell wrote:
-> On Mon, 22 Sept 2025 at 14:05, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Mon, Sep 22, 2025 at 12:46:51PM +0100, Peter Maydell wrote:
-> > > On Mon, 22 Sept 2025 at 12:32, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > > >
-> > > > I do not think that anyone knows how to demonstrate "clarity of the
-> > > > copyright status in relation to training".
-> > >
-> > > Yes; to me this is the whole driving force behind the policy.
-> > >
-> > > > On the other hand, AI tools can be used as a natural language refactoring
-> > > > engine for simple tasks such as modifying all callers of a given function
-> > > > or even less simple ones such as adding Python type annotations.
-> > > > These tasks have a very low risk of introducing training material in
-> > > > the code base, and can provide noticeable time savings because they are
-> > > > easily tested and reviewed; for the lack of a better term, I will call
-> > > > these "tasks with limited or non-existing creative content".
-> > >
-> > > Does anybody know how to demonstrate "limited or non-existing
-> > > creative content", which I assume is a standin here for
-> > > "not copyrightable" ?
-> >
-> > That was something we aimed to intentionally avoid specifying in the
-> > policy. It is very hard to define it in a way that will be clearly
-> > understood by all contributors.
-> 
-> > TL;DR: I don't think we should attempt to define whether the boundary
-> > is between copyrightable and non-copyrightable code changes.
-> 
-> Well, this is why I think a policy that just says "no" is
-> more easily understandable and followable. As soon as we
-> start defining and granting exceptions then we're effectively
-> in the position of making judgements and defining the boundary.
-
-Whether we have our AI policy or not, contributors are still required
-to abide by the terms of the DCO, which requires them to understand
-the legal situation of any contribution.
-
-Our policy is effectively saying that most use of AI is such that we
-don't think it is possible for contributions to claim DCO compliance.
-
-If we think there are situations where it might be credible for a
-contributor to claim DCO compliance, we can try to find a way to
-describe that situation, without having to explicitly state our
-legal interpretation of the "copyrightable vs non-copyrightable"
-boundary.
+On Sat, 13 Sept 2025 at 09:15, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> Meson 1.9.0 provides mixed linking of Rust and C objects.  As a side effect,
+> this also allows adding dependencies with "sources: ..." files to Rust crates
+> that use structured_sources().
+>
+> It can also clean up up the meson.build files for Rust noticeably, but due
+> to an issue with doctests (see https://github.com/mesonbuild/meson/pull/14973)
+> that will have to wait for 1.9.1.
 
 
-At KVM Forum what was notably raised as the topic fo code
-refactoring and whether it is practical to allow some such
-usage.
+It looks like this new version of meson now creates a
+subprojects/.wraplock file which shows up in "git status"
+output. Should this be listed in .gitignore ?
 
-
-We have historically allowed machine refactoring done by Coccinelle
-for example. Someone could asks an AI agent to write a Coccinelle
-script for a given task, and then tells the AI to run that script
-across the code base. I think that might be a situation where it
-would be reasonable to accept the AI driven refactoring, as the
-substance of the comit is clearly defined by the Coccinelle
-script.
-
-Could that be summarized by saying that we'll allow refactoring
-if driven via an intermediate script ? That is still quite a
-strict definition that could frustrate much usage, but it at
-least feels like something that should have greatl]y reduced
-risk compared to direct refactoring by an opaque agent.
-
-
-As an example though, we have the scripts/clean-includes.pl script
-that Markus wrote for manipulating code into our preferred style
-for headers.
-
-Whether the headers change is done manually by a human, automated
-with Markus' perl script or automated by an AI agent, the end
-result should be identical, as there is only one possible end
-point and you can describe what that end point should look like.
-
-That said there is  still a questionmark over complexity. Getting
-to the end point may be a trival & mundane exercise in some cases,
-while requiring considerable intellectual thought in other cases.
-The latter is perhaps especially true if wanting simple, easily
-bisected series of small steps rather than a big bang conversion.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
