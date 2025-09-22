@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA465CAC5AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C69DCAC592
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 18:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0liq-0001P2-3O; Mon, 22 Sep 2025 14:57:14 -0400
+	id 1v0li5-0000UJ-ER; Mon, 22 Sep 2025 14:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0lfz-00054r-6K
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:54:19 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1v0lgG-0005s8-DL
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:54:32 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0lfP-000513-Iv
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:54:14 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-77ee6e252e5so2909225b3a.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 11:53:36 -0700 (PDT)
+ id 1v0lfS-00051u-Ow
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:54:31 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-77f41086c11so1133376b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 11:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758567216; x=1759172016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758567218; x=1759172018; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TIGC+NB44/a0H+dR2upS+UgyhxrsXnOzX4fio5wssx8=;
- b=tvu/yDoYF2TBp57oodn+wPY9n15R7OcQxirA4vQnad8ALMzsx83U6+eQvE0NhHZks6
- TNZjcZ7Cpn+IN4xHc1C6zFYLbKm9yVfADyvUAPqy9FUBtlsECE2Cf1H/QK4b0PaU4tz6
- 1ZLkdGHoBHtdQjPpKtmWcyi1tM3n8zJt6JIPgqnnhuR8LGuDwo8hkeYYONB9+RRfVr79
- sgN6IVlZ0fJeqrxz0JmoAV7uZq2NDtQJ10l5Ctsgkbv8o7uCDDJfOHu6ZVlO6+WWpYn7
- Dc/ThCunk8TwdCduVIKSAXbL0ujLkllhItV51OGkNPQnlPVS+Sy6gVjhqVIwv10P+6a0
- 7AEw==
+ bh=RrRDTwGDphkvvBtsV/mK2pHDoMT9L4tWZDtSjWVgm+E=;
+ b=XpJq/XlcOgE2kphS8aDIpU+93+7l/UgcWT+DLjjePqxPn/0XQ+kMGHbOBjRPRgMx5Y
+ TD5ZeYhQpFt39grIxnJsERfQB/QCQ6P1XnlVSM6B57sunnYQ+tbeD/i5Z2xZzCmszsni
+ 7eTwMN881oFBqll9jI0ZdSr650/9eMNDfB/FlAu5dlyrdxr4dZPeUSYzu/0hrM4rj3WG
+ YjKRsJUIGSbANyOm6wxibTN4E4AOfueMJ6k5GiloLo8GgvvcjJt8h9YVf5D6xtqbmAyB
+ OuYgFEK0x/mgzHGrav4xxN4J+o49AVBsqdfi4c9zVDfBMfAmRQD6qgO2c51Hoy2GExla
+ HKnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758567216; x=1759172016;
+ d=1e100.net; s=20230601; t=1758567218; x=1759172018;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TIGC+NB44/a0H+dR2upS+UgyhxrsXnOzX4fio5wssx8=;
- b=WEXzWIgkNCpTDjqSlaY5zwA1G0O7chVjR2BGB0AWTGpCO7anm+agEOtM5Pmy3eRM/z
- IjrTidl9rBfrltTO+KzoDD9+667Gi3Th1mDVq5qMhYAZabXAN1s/IwvhNg1qqiWnNuR+
- Fyg9YjoF9ePNUPATfQhPiE5YCt5ERyD3VJkSWCuhxvcJPBZqvSjjERBoyR1P1ZRxqEL4
- Zc+a9qN4O0Q4K6bnuAVD11i3qrKJBJkiuLVMURN5eG6i3GB+VyvkfLe1szhdqATytH2w
- Hez5WvcsveEjwTu8k0f/V0ZVNGogxiI+IGoXS4UE6IjCBblzNrYWybh6AWjpjXv2ls68
- psEg==
-X-Gm-Message-State: AOJu0Ywj2Cw9wn12LeVZ+5f+PliNv4qYWgtnzRdYlhI/3zCjvwj/LGha
- 2AgyGpzD6ouQ/BilrCMWqmIJakwTD1ACHUmAMCmFLI//CR3QYUaJdcbRo0BtIITJDvmQugl9loW
- o69z1
-X-Gm-Gg: ASbGncuJUj7RrOIN7yzYx//3KgVF8SJ09IXgF0Jz3XLAbFJjgs8DqdKSkfh+dTVAPYj
- p4BpX5yWjYRjLfcXrm22+7TX9EmN3FUHJUzkn5oQavdHAo+cjZdXVWXo2VWxnFv4t8sUhbOunQn
- Hr3z6lhwNeps27H/nDhRSgwjHvb7ySlLKQUiuQDcV2fp2RxHb/GJq2AWf7cD7PK/+5gaIKSsyJ1
- 9/8UfWXkkywQ9HpToQPrVz1dLwiqgTXF6E1ah2gs+yBoStQCcQ5dvVPtwWb8GcBgFRuF4C9e/6p
- Yd4cySrZh8a6wuAuRGNQ4lE1apR9LBFmoOuALlrZnF6zBZ7hXvW2+4wGE/hkp2L6wCbQUDN3yV1
- hG4NxSCL6zIOutgmlFqCRILjcJOo/
-X-Google-Smtp-Source: AGHT+IHnK9rRG6hvlKVoT4mEeGvvAa24s+BGGifTiad+9GXWsQJCxBuEDHsu6NZlq3fMKFBguLMflw==
-X-Received: by 2002:a17:903:b48:b0:24c:9a51:9a33 with SMTP id
- d9443c01a7336-269ba455941mr172864705ad.22.1758567215770; 
- Mon, 22 Sep 2025 11:53:35 -0700 (PDT)
+ bh=RrRDTwGDphkvvBtsV/mK2pHDoMT9L4tWZDtSjWVgm+E=;
+ b=I6qb833+VF7AwkpFYqYSb9SG5U6xNf4e25AyogS7gVUfQ+KoYl1B+sjXCSiWUwg30z
+ MlZHLC8K57OAED6XmOJjc2UZVQi1fk4PfCZLW7WTJLbwhvmwBdZZo3kwz/aHEUwq/dcT
+ MTNRa8us247Qb259g+JLwyRxkGQMTucvFNzF6+2tvHEVsMpQCSqzDlFgEXlHmquieAME
+ m0UGJPAaa0E2MJJAl66Iu6NSQqj+WWT/WvEFjcIlS1qeNN/RDnSLPBirMjWONmc2YxNd
+ zUkh+C4DxoILgWURJsvfdf62sqF/FKZ7eOkHLen+wU7IwjdgZrgfvkX3gZ0T0w3QhYRE
+ BwpQ==
+X-Gm-Message-State: AOJu0YzcqTMvtD5F4bj2hUJgeU7rIEMAPMC5Z7Yl0Wrx4kek9nyG5er6
+ RRJu10ARjr9+5G8k08Tswce2hNNLZaaU9WqCRAe4Lw6FpGadoTtCk5nfUAIyoLDV23i7Ra/oWPw
+ GEJXl
+X-Gm-Gg: ASbGncvluzxo/G52TINmGsmkG0ef1h1lym5f3JSiOv1js6DhzpRj4SuBRUCD9wkSgFm
+ 5HtQFyhBh924hOJMIsn5I6nxMAPkk5BAOKp5C3CzR46WjiIf7zYDahqN3dkMooXFMHbnpZWYyVM
+ 5B4urrzUOoVARYIbSy7t4UC7OkpDLXxWs6mB9qWYs3S2qZcUXzvIPR7CrYgHawBu+bDQcUd/X34
+ bBvQrUhpqIx5ZNpFxMUZLwRyv3iLbeVwfhkzEswd36c9150EB8wAfHn6E0s0E/vXYQn5o7GYJqm
+ U/ddbjGSR6k0N3M7RbB4pkzNJpegiWVne2S4hQg0qCOei6ybD/KPDwWkPqYKjpyPF1FTbJbBave
+ YCA5v80vWzn1x7DOuD2xwzT0aE+XV
+X-Google-Smtp-Source: AGHT+IEWdpBQlC7u4fveMVXWQYys15rxESqEZr8pCzmlkj/1EM7M+uGcMto0CqhU/9Kyez+ui64jDw==
+X-Received: by 2002:a17:902:da8f:b0:250:1c22:e78 with SMTP id
+ d9443c01a7336-269ba402db2mr214039945ad.1.1758567218370; 
+ Mon, 22 Sep 2025 11:53:38 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2698018a472sm138554795ad.58.2025.09.22.11.53.35
+ d9443c01a7336-2698018a472sm138554795ad.58.2025.09.22.11.53.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 11:53:35 -0700 (PDT)
+ Mon, 22 Sep 2025 11:53:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 64/76] target/arm: Implement EXLOCK check during exception
- return
-Date: Mon, 22 Sep 2025 11:49:12 -0700
-Message-ID: <20250922184924.2754205-65-richard.henderson@linaro.org>
+Subject: [PATCH v5 67/76] linux-user/aarch64: Allocate new gcs stack on clone
+Date: Mon, 22 Sep 2025 11:49:15 -0700
+Message-ID: <20250922184924.2754205-68-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250922184924.2754205-1-richard.henderson@linaro.org>
 References: <20250922184924.2754205-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,34 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allocate the new stack early, so that error reporting need
+not clean up other objects.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ linux-user/syscall.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 08b7db7c46..ba1d775d81 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -675,6 +675,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
-         goto illegal_return;
-     }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 2f1e881046..91210775ed 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6652,6 +6652,21 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         ts = g_new0(TaskState, 1);
+         init_task_state(ts);
  
-+    /*
-+     * If GetCurrentEXLOCKEN, the exception return path must use GCSPOPCX,
-+     * which will set PSTATE.EXLOCK.  We need not explicitly check FEAT_GCS,
-+     * because GCSCR_ELx cannot be set without it.
-+     */
-+    if (new_el == cur_el &&
-+        (env->cp15.gcscr_el[cur_el] & GCSCR_EXLOCKEN) &&
-+        !(env->pstate & PSTATE_EXLOCK)) {
-+        goto illegal_return;
-+    }
++#ifdef TARGET_AARCH64
++        /*
++         * If GCS is enabled in the parent thread, it is also enabled
++         * in the child thread, but with a newly allocated stack.
++         */
++        abi_long new_gcspr = 0;
++        if (env->cp15.gcscr_el[0] & GCSCR_PCRSEL) {
++            new_gcspr = gcs_new_stack(ts);
++            if (new_gcspr == -1) {
++                g_free(ts);
++                return -TARGET_ENOMEM;
++            }
++        }
++#endif
 +
-     bql_lock();
-     arm_call_pre_el_change_hook(cpu);
-     bql_unlock();
+         /* Grab a mutex so that thread setup appears atomic.  */
+         pthread_mutex_lock(&clone_lock);
+ 
+@@ -6676,6 +6691,11 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         ts->info = parent_ts->info;
+         ts->signal_mask = parent_ts->signal_mask;
+ 
++#ifdef TARGET_AARCH64
++        ts->gcs_el0_locked = parent_ts->gcs_el0_locked;
++        new_env->cp15.gcspr_el[0] = new_gcspr;
++#endif
++
+         if (flags & CLONE_CHILD_CLEARTID) {
+             ts->child_tidptr = child_tidptr;
+         }
 -- 
 2.43.0
 
