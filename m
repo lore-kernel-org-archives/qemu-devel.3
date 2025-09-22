@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5574ACAC5A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A08CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 14:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0hOk-0006lh-Ta; Mon, 22 Sep 2025 10:20:10 -0400
+	id 1v0hOV-0006ar-NL; Mon, 22 Sep 2025 10:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOW-0006az-R8
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:56 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hOM-0006XB-3t
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hON-0006lK-VB
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:56 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1v0hNv-0006iE-5V
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 10:19:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758550786;
+ s=mimecast20190719; t=1758550754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7VyZXNYvKlhnuJsJ/XDHiG1W7A+kQtHyn5rapDmFnbk=;
- b=OoaxNgvIyLWowUkixjp06W52EABLdLVgmdA6vdUoGy6owZX/skf3gF5ZgMSCTuEToF9aNE
- rs0u7E+cUc6iIToH+22shXhefYP+fcbl3KYE76PElYXhxV9Dnd2+6AMmCit1bkjMSwysNB
- gSUZ3qiVjdi+bmUlQgNwBwhJQLPjlNg=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FBPP6T1togux7ClW1J3yGvFpnNd8wM7x2MCU9XMJxv0=;
+ b=Aw+pFlxr6RvSFF6yNSqPF1XTqyZuWJq/ZytEj1F/nfaCjr4QvvEznmhpNTwGB0fi/5wu1X
+ xPLIIy5eNr5UVDJU0Rk4m8EoWsqMtXIEUSVLmb/XAYYvDnvgmmlC+mT6rj2Q9CGzKRprEd
+ l6vJbQdKfdFA6CL5h0Gy4e7kuF+yE/s=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-xCoRWB8OO2GjpxmiwWyjAA-1; Mon,
- 22 Sep 2025 10:19:43 -0400
-X-MC-Unique: xCoRWB8OO2GjpxmiwWyjAA-1
-X-Mimecast-MFC-AGG-ID: xCoRWB8OO2GjpxmiwWyjAA_1758550782
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-AYyqexvuPOSULFYi9bWqFQ-1; Mon,
+ 22 Sep 2025 10:19:11 -0400
+X-MC-Unique: AYyqexvuPOSULFYi9bWqFQ-1
+X-Mimecast-MFC-AGG-ID: AYyqexvuPOSULFYi9bWqFQ_1758550750
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDBE618004D4; Mon, 22 Sep 2025 14:19:41 +0000 (UTC)
+ id 5C832180048E; Mon, 22 Sep 2025 14:19:09 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.44.32.247])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C1631956045; Mon, 22 Sep 2025 14:19:37 +0000 (UTC)
+ id 93C6D19560BB; Mon, 22 Sep 2025 14:19:03 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,23 +57,22 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
  Vincenzo Maffione <v.maffione@gmail.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v7 06/14] virtio: add support for negotiating extended features
-Date: Mon, 22 Sep 2025 16:18:20 +0200
-Message-ID: <9bb29d70adc3f2b8c7756d4e3cd076cffee87826.1758549625.git.pabeni@redhat.com>
-In-Reply-To: <cover.1758549625.git.pabeni@redhat.com>
-References: <cover.1758549625.git.pabeni@redhat.com>
+Subject: [PATCH v7 00/14] virtio: introduce support for GSO over UDP tunnel
+Date: Mon, 22 Sep 2025 16:18:14 +0200
+Message-ID: <cover.1758549625.git.pabeni@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pabeni@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,131 +88,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio specifications allows for a device features space up
-to 128 bits and more. Soon we are going to use some of the 'extended'
-bits features for the virtio net driver.
+Some virtualized deployments use UDP tunnel pervasively and are impacted
+negatively by the lack of GSO support for such kind of traffic in the
+virtual NIC driver.
 
-Add support to allow extended features negotiation on a per
-devices basis. Devices willing to negotiated extended features
-need to implemented a new pair of features getter/setter, the
-core will conditionally use them instead of the basic one.
+The virtio_net specification recently introduced support for GSO over
+UDP tunnel, and the kernel side of the implementation has been merged
+into the net-next tree; this series updates the virtio implementation to
+support such a feature.
 
-Note that 'bad_features' don't need to be extended, as they are
-bound to the 64 bits limit.
+Currently the qemu virtio support limits the feature space to 64 bits,
+while the virtio specification allows for a larger number of features.
+Specifically the GSO-over-UDP-tunnel-related virtio features use bits
+65-69; the larger part of this series (patches 4-12) actually deals with
+extending the features space.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The extended features are carried by fixed size uint64_t arrays,
+bringing the current maximum features number to 128.
+
+The patches use some syntactic sugar to try to minimize the otherwise
+very large code churn. Specifically the extended features are boundled
+in an union with 'legacy' features definition, allowing no changes in
+the virtio devices not needing the extended features set.
+
+The actual offload implementation is in patches 13 and 14 and boils down
+to propagating the new offload to the tun devices and the vhost backend.
+
+Patch 1 is a small pre-req refactor that ideally could enter the
+tree separately; it's presented here in the same series to help
+reviewers more easily getting the full picture, patch 2 updates to 
+linux headers update script to deal with annotations recently introduce
+in the kernel and patch 3 is a needed linux headers update.
+
+Tested with basic stream transfer with all the possible permutations of
+host kernel/qemu/guest kernel with/without GSO over UDP tunnel support,
+vs snapshots creation and restore and vs migration.
+
+The new features are disabled by default to avoid compatibilty issues.
+They could be enabled with a later patch, together with the related
+compatiblity entries.
 ---
-v6 -> v6:
-  - clarified commit message
+v6 -> v7:
+  - collected more acks
+  - fixed a few types in commit message and description string
+
+v6: https://lists.gnu.org/archive/html/qemu-devel/2025-09/msg02411.html
+
+v5 -> v6:
+  - colleted ack-by/reviewed-by tags
+  - re-included pre-req patch as per Michael's request
+  - minor checkpatch and whitestaces fixes
+
+v5: https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg02005.html
 
 v4 -> v5:
-  - reordered virtio_set_features{_ex}() definitions
+  - more sparse cleanup
+  - dropped RFC tag
+  - disable the new features by default
+
+v4: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05513.html
 
 v3 -> v4:
-  - use new virtio_features macro names
+  - more sparse cleanups
+  - fix build failures on a couple of targets
+v3: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg04872.html
 
 v2 -> v3:
-  - _array -> _ex
+  - consolidated suffixes for new fields to '_ex'
+  - avoid pre/post load trickery and relay on reset zeroing the features
+  - cleaned-up virtio store implementation deduplicating a bit of code
+  - many more cleanups, see the individual patches changelog for the
+    details
+  - I left patch 1 unmodified, still some hope we could live with that;)
+v2: https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg03000.html
 
-v1 -> v2:
-  - uint128_t -> uint64_t[]
----
- hw/virtio/virtio-bus.c     | 11 ++++++++---
- hw/virtio/virtio.c         | 14 +++++++++++---
- include/hw/virtio/virtio.h |  4 ++++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+Paolo Abeni (14):
+  net: bundle all offloads in a single struct
+  linux-headers: deal with counted_by annotation
+  linux-headers: Update to Linux v6.17-rc1
+  virtio: introduce extended features type
+  virtio: serialize extended features state
+  virtio: add support for negotiating extended features
+  virtio-pci: implement support for extended features
+  vhost: add support for negotiating extended features
+  qmp: update virtio features map to support extended features
+  vhost-backend: implement extended features support
+  vhost-net: implement extended features support
+  virtio-net: implement extended features support
+  net: implement tunnel probing
+  net: implement UDP tunnel features offloading
 
-diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
-index 11adfbf3ab..cef944e015 100644
---- a/hw/virtio/virtio-bus.c
-+++ b/hw/virtio/virtio-bus.c
-@@ -62,9 +62,14 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
-     }
- 
-     /* Get the features of the plugged device. */
--    assert(vdc->get_features != NULL);
--    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
--                                            &local_err);
-+    if (vdc->get_features_ex) {
-+        vdc->get_features_ex(vdev, vdev->host_features_ex, &local_err);
-+    } else {
-+        assert(vdc->get_features != NULL);
-+        virtio_features_from_u64(vdev->host_features_ex,
-+                                 vdc->get_features(vdev, vdev->host_features,
-+                                                   &local_err));
-+    }
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index bf53c211e5..34f977a3c9 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3103,7 +3103,9 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
-     bad = virtio_features_andnot(tmp, val, vdev->host_features_ex);
-     virtio_features_and(tmp, val, vdev->host_features_ex);
- 
--    if (k->set_features) {
-+    if (k->set_features_ex) {
-+        k->set_features_ex(vdev, val);
-+    } else if (k->set_features) {
-         bad = bad || virtio_features_use_ex(tmp);
-         k->set_features(vdev, tmp[0]);
-     }
-@@ -3149,6 +3151,13 @@ virtio_set_features_nocheck_maybe_co(VirtIODevice *vdev,
- int virtio_set_features(VirtIODevice *vdev, uint64_t val)
- {
-     uint64_t features[VIRTIO_FEATURES_NU64S];
-+
-+    virtio_features_from_u64(features, val);
-+    return virtio_set_features_ex(vdev, features);
-+}
-+
-+int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *features)
-+{
-     int ret;
-     /*
-      * The driver must not attempt to set features after feature negotiation
-@@ -3158,13 +3167,12 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
-         return -EINVAL;
-     }
- 
--    if (val & (1ull << VIRTIO_F_BAD_FEATURE)) {
-+    if (features[0] & (1ull << VIRTIO_F_BAD_FEATURE)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: guest driver for %s has enabled UNUSED(30) feature bit!\n",
-                       __func__, vdev->name);
-     }
- 
--    virtio_features_from_u64(features, val);
-     ret = virtio_set_features_nocheck(vdev, features);
-     if (virtio_vdev_has_feature(vdev, VIRTIO_RING_F_EVENT_IDX)) {
-         /* VIRTIO_RING_F_EVENT_IDX changes the size of the caches.  */
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 39e4059a66..2aeb021fb3 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -178,6 +178,9 @@ struct VirtioDeviceClass {
-     /* This is what a VirtioDevice must implement */
-     DeviceRealize realize;
-     DeviceUnrealize unrealize;
-+    void (*get_features_ex)(VirtIODevice *vdev, uint64_t *requested_features,
-+                            Error **errp);
-+    void (*set_features_ex)(VirtIODevice *vdev, const uint64_t *val);
-     uint64_t (*get_features)(VirtIODevice *vdev,
-                              uint64_t requested_features,
-                              Error **errp);
-@@ -373,6 +376,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32_t queue_index);
- void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
- void virtio_update_irq(VirtIODevice *vdev);
- int virtio_set_features(VirtIODevice *vdev, uint64_t val);
-+int virtio_set_features_ex(VirtIODevice *vdev, const uint64_t *val);
- 
- /* Base devices.  */
- typedef struct VirtIOBlkConf VirtIOBlkConf;
+ hw/net/e1000e_core.c                          |   5 +-
+ hw/net/igb_core.c                             |   5 +-
+ hw/net/vhost_net-stub.c                       |   8 +-
+ hw/net/vhost_net.c                            |  45 ++--
+ hw/net/virtio-net.c                           | 234 ++++++++++++------
+ hw/net/vmxnet3.c                              |  13 +-
+ hw/virtio/vhost-backend.c                     |  62 ++++-
+ hw/virtio/vhost.c                             |  68 +++--
+ hw/virtio/virtio-bus.c                        |  11 +-
+ hw/virtio/virtio-hmp-cmds.c                   |   3 +-
+ hw/virtio/virtio-pci.c                        |  76 +++++-
+ hw/virtio/virtio-qmp.c                        |  91 ++++---
+ hw/virtio/virtio-qmp.h                        |   3 +-
+ hw/virtio/virtio.c                            | 100 +++++---
+ include/hw/virtio/vhost-backend.h             |   6 +
+ include/hw/virtio/vhost.h                     |  56 ++++-
+ include/hw/virtio/virtio-features.h           | 126 ++++++++++
+ include/hw/virtio/virtio-net.h                |   2 +-
+ include/hw/virtio/virtio-pci.h                |   2 +-
+ include/hw/virtio/virtio.h                    |  11 +-
+ include/net/net.h                             |  20 +-
+ include/net/vhost_net.h                       |  33 ++-
+ include/standard-headers/drm/drm_fourcc.h     |  56 ++++-
+ include/standard-headers/linux/ethtool.h      |   4 +-
+ .../linux/input-event-codes.h                 |   8 +
+ include/standard-headers/linux/input.h        |   1 +
+ include/standard-headers/linux/pci_regs.h     |   9 +
+ include/standard-headers/linux/vhost_types.h  |   5 +
+ include/standard-headers/linux/virtio_net.h   |  33 +++
+ linux-headers/LICENSES/preferred/GPL-2.0      |  10 +-
+ linux-headers/asm-arm64/unistd_64.h           |   2 +
+ linux-headers/asm-generic/unistd.h            |   8 +-
+ linux-headers/asm-loongarch/unistd_64.h       |   2 +
+ linux-headers/asm-mips/unistd_n32.h           |   2 +
+ linux-headers/asm-mips/unistd_n64.h           |   2 +
+ linux-headers/asm-mips/unistd_o32.h           |   2 +
+ linux-headers/asm-powerpc/kvm.h               |  13 -
+ linux-headers/asm-powerpc/unistd_32.h         |   2 +
+ linux-headers/asm-powerpc/unistd_64.h         |   2 +
+ linux-headers/asm-riscv/kvm.h                 |   1 +
+ linux-headers/asm-riscv/unistd_32.h           |   2 +
+ linux-headers/asm-riscv/unistd_64.h           |   2 +
+ linux-headers/asm-s390/unistd_32.h            |   2 +
+ linux-headers/asm-s390/unistd_64.h            |   2 +
+ linux-headers/asm-x86/unistd_32.h             |   2 +
+ linux-headers/asm-x86/unistd_64.h             |   2 +
+ linux-headers/asm-x86/unistd_x32.h            |   2 +
+ linux-headers/linux/iommufd.h                 | 154 +++++++++++-
+ linux-headers/linux/kvm.h                     |   2 +
+ linux-headers/linux/vfio.h                    |  12 +-
+ linux-headers/linux/vhost.h                   |  35 +++
+ net/net.c                                     |  17 +-
+ net/netmap.c                                  |   3 +-
+ net/tap-bsd.c                                 |   8 +-
+ net/tap-linux.c                               |  38 ++-
+ net/tap-linux.h                               |   9 +
+ net/tap-solaris.c                             |   9 +-
+ net/tap-stub.c                                |   8 +-
+ net/tap.c                                     |  21 +-
+ net/tap_int.h                                 |   5 +-
+ qapi/virtio.json                              |   9 +-
+ scripts/update-linux-headers.sh               |   1 +
+ 62 files changed, 1196 insertions(+), 291 deletions(-)
+ create mode 100644 include/hw/virtio/virtio-features.h
+
 -- 
 2.51.0
 
