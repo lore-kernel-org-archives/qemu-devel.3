@@ -4,100 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B7ECAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 09:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F499CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 10:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0d62-0006Gx-7b; Mon, 22 Sep 2025 05:44:34 -0400
+	id 1v0dWH-0000Gt-5n; Mon, 22 Sep 2025 06:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0d59-0005Qp-0B
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:43:39 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v0dWF-0000GO-8e
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 06:11:39 -0400
+Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0d4p-0001zy-Il
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:43:38 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-46de78b595dso2364315e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 02:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758534193; x=1759138993; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7GRsJV0VAPOLcd8y8nlS+oqJKDqNktygqxz6o8+pfd4=;
- b=JQz1DxL8QuRXlkOTtdHivr6qOQRQ7jVEHe1DNBfmnTl2u98Pz36JnbO/Kc0h+pM+Ge
- iZFjfhckIpEoBmCKj8BnH0/uCGbJ4k0k0+w3xQHOXXlTHwhWx7eNNXx0WHfy0HThXamb
- LbLlD1Ej5Nrv+R6gQVfk2lRo1/4BnkdjT/7iI3UgFl5gdXZNBBh5tfxplOvA6rEmwmSg
- zE8McGCoqnUHwex2UIgAgvscTM8tgQWq2Ijs+UBQQSPynoxcxm0oGYVug9I+McQsAXkV
- h5+s/J/rCy7NxJtPeWtKV834svC6NGFVOW3XErVsdxSBU5xkwZikwZ6i/s/FJKYa7bWU
- J20g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758534193; x=1759138993;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7GRsJV0VAPOLcd8y8nlS+oqJKDqNktygqxz6o8+pfd4=;
- b=g6rgVyn1Z2eJAwnGKBMHDO2t+IFQFYvzrYDcey5dZme3GvToo0yBUxKlSFoROqF4oq
- DAl+gdNbSvnSTYO6rNjlp1Cwrm/AtZ1E/mXT73dhb0Az0ExWDFHu075bBLRGHX7BldKZ
- lr6zZFo41RUmvdlr7nyPxyqaJGGTfJphVf+8bvokTKQE3ibL+J0e9DqVAODTKhuOX8Pw
- l6bTaD2xbPcygOpY3K0T0SIpU2+9lje6iv5RFNibn9dtcDVty3fMmOHYcoS1uH5f1sJV
- h5SZnuT+XeYEN2ePyrESNqEwTeZYFBgAASNQHJZC2USgvFvld1G8aH7YRXeTF+7MSWux
- iDtg==
-X-Gm-Message-State: AOJu0Yxn3is+VCJLlb6h9kyOTJ5EXMewa0xbsgxIKNGTYc2t/SyfqmsX
- 7TLH7f2/pQNElAjbvKV/B1OsAZgTrl/38R9jnlE0OTHtts9VDhm53V0XPpirBrgczMA=
-X-Gm-Gg: ASbGncsxISy6WL5b+pvWCK/DI6dtJUZYOV2YxT9QRTZPPJO1mIBRtpJ7s3ASNkjCeh7
- 5IRr3KHtEzMhLYd7VrI73NgPfEYLpwBFgL5iZmER7iu7U9KaDGfjlOCyIOi3FNYjuw0AucEQQaa
- FeDdYdobr/VhfOXXXG2wxY2lBj6uJ2021Ny7BH1UVghNHAxkAZhKiu6/HZLs2ajatH7RpLuHXmC
- wGBTHU80KOFHCOTvVO2slXOwsxXqA/ZY2g8awhliJKZ7XZwIMVoHP7T+lEitwwCHsVGi0oYWFbW
- HQs/ayeKA/Wt7EnEpMB5jwn1xxSY/rjBHDPNKHSXjlV3Fd65lw2RU6Q5982AytqgCK/C0fvmj/m
- 2rnuazFylXvRF9ftl2NQLjNw=
-X-Google-Smtp-Source: AGHT+IGog4+Y0WnU5KswDpjQ1MvsxTCEtNhvD3dapvSYl1WAcp7YJ15rUMx6prxALge0mIrPKtA+PA==
-X-Received: by 2002:a05:600c:3593:b0:45b:8477:de1a with SMTP id
- 5b1f17b1804b1-467ead67316mr122960165e9.7.1758534193220; 
- Mon, 22 Sep 2025 02:43:13 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-464f527d6cdsm220145955e9.12.2025.09.22.02.43.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 02:43:09 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 42BE95FA2E;
- Mon, 22 Sep 2025 10:37:13 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 18/25] contrib/plugins/uftrace: define cpu operations and
- implement aarch64
-Date: Mon, 22 Sep 2025 10:37:03 +0100
-Message-ID: <20250922093711.2768983-19-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20250922093711.2768983-1-alex.bennee@linaro.org>
-References: <20250922093711.2768983-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v0dWC-0007U0-DW
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 06:11:38 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate01.uberspace.is (Postfix) with ESMTPS id BF2FF60B57
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 12:11:23 +0200 (CEST)
+Received: (qmail 27313 invoked by uid 990); 22 Sep 2025 10:11:23 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Mon, 22 Sep 2025 12:11:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Date: Mon, 22 Sep 2025 10:11:23 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From: "Julian Ganz" <neither@nut.email>
+Message-ID: <51342318ee32c932dc2a867c808989ea627d874f@nut.email>
+TLS-Required: No
+Subject: Re: [PATCH v6 23/25] tests: add plugin asserting correctness of 
+ discon event's to_pc
+To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
+ "Alexandre Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour"
+ <ma.mandourr@gmail.com>
+In-Reply-To: <87segf69f6.fsf@draig.linaro.org>
+References: <cover.1757018626.git.neither@nut.email>
+ <073cad7dd8ae509ff64a2835fd146833b60c1f60.1757018626.git.neither@nut.email>
+ <87segf69f6.fsf@draig.linaro.org>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.000336) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.399663
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=zTtRtbb5ThRRaDTZZ8a4SvnVD2pktMvpvt/CeUQ9esk=;
+ b=FlN8BKc9jCNF6H/shkPkwJ9AAF7o72jPFKHaz2V2Ktk44RLx70PcC++9S/xE4BgegcSKMkTm99
+ frRvTeAjRQ6QxEwwOoGbmrgv9NUi0gHddM2dwfE60aYgEYjwxJ30yN1D+xcU4k1afiNTZv9jHhGG
+ NohlGwvW0LdoRDB/bDU6XuuER8TWSUjYzjNs4N6ndMB/925Vo+c6GSYokPxnpdjDDjsVasMM6KBH
+ d+nRz3vZX+vb9OlNCV6lGkFFsFIZFd45cQ4MI9gQEg+LMuVwMRDLrU3sFy5cJ4NH3Ys/XWtx76qH
+ ZPRQgxiQQXT1gnr4Bwizljc6avFWfJ5c0AfB37hPOrbWkAQGLcKQLxlBqRNoe/NEx6cGTKmyInCt
+ xhPM61aE095+e4I201oNAeZ6YEJQ9fdPAgNvklxcLJiC8eWiVZrTpd5HZO8/wXd7thFLGfDZzphh
+ /Xd3n3iXI/EZ4MHFDn9sJE0UMIwpOYpx+EnxwJl5wasF2BvjnoY8uHyimSBKJ4uLThC68MupbduF
+ 1dJYNwsnFjsYbO72JnH8OxpzkzJ/E38HtOrqOmQDN0rs7ThVQNzeLy43+ne0UZImbiVgSfvz2NBF
+ nxKPnLlwRX17akB9L3CWL89EDtqSd5cxVRUN8TSwP1TV2yQiwqb6idMPpppOVAue5gfrpEmX9ZPK
+ c=
+Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
+ envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,179 +83,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi Alex,
 
-We define a new CpuOps structure that will be used to implement tracking
-independently of guest architecture.
+September 21, 2025 at 6:46 PM, "Alex Benn=C3=A9e" <alex.bennee@linaro.org=
+ mailto:alex.bennee@linaro.org?to=3D%22Alex%20Benn%C3%A9e%22%20%3Calex.be=
+nnee%40linaro.org%3E > wrote:
+> Julian Ganz <neither@nut.email> writes:
+> >  +static void report_mismatch(const char *pc_name, unsigned int vcpu_=
+index,
+> >  + enum qemu_plugin_discon_type type, uint64_t last,
+> >  + uint64_t expected, uint64_t encountered)
+> >  +{
+> >  + GString *report;
+> >=20
+>=20This could be:
+>=20
+>=20 g_autoptr(GString) buf =3D g_string_new(NULL);
 
-As well, we now instrument only instructions following ones that might
-have touched the frame pointer.
+I wanted to avoid doing an allocation regardless of whether we do have
+anything to report or not. But I guess a performance plugin isn't
+performance critical enough to worry? Anyway, I will have another look
+at g_autoptr.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250902075042.223990-3-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- contrib/plugins/uftrace.c | 114 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 110 insertions(+), 4 deletions(-)
+> > + const char *discon_type_name =3D "unknown";
+> >  +
+> >  + if (addr_eq(expected, encountered)) {
+> >  + return;
+> >  + }
+> >  +
+> >  + switch (type) {
+> >  + case QEMU_PLUGIN_DISCON_INTERRUPT:
+> >  + discon_type_name =3D "interrupt";
+> >  + break;
+> >  + case QEMU_PLUGIN_DISCON_EXCEPTION:
+> >  + discon_type_name =3D "exception";
+> >  + break;
+> >  + case QEMU_PLUGIN_DISCON_HOSTCALL:
+> >  + discon_type_name =3D "hostcall";
+> >  + break;
+> >  + default:
+> >  + break;
+> >  + }
+> >  +
+> >  + report =3D g_string_new(NULL);
+> >  + g_string_append_printf(report,
+> >  + "Discon %s PC mismatch on VCPU %d\nExpected: %"
+> >  + PRIx64"\nEncountered: %"PRIx64"\nExecuted Last: %"
+> >  + PRIx64"\nEvent type: %s\n",
+> >  + pc_name, vcpu_index, expected, encountered, last,
+> >  + discon_type_name);
+> >  + qemu_plugin_outs(report->str);
+> >=20
+>=20I think we might want to flush here because
 
-diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index 4af0130b159..d060513446c 100644
---- a/contrib/plugins/uftrace.c
-+++ b/contrib/plugins/uftrace.c
-@@ -11,14 +11,94 @@
- 
- #include <qemu-plugin.h>
- #include <glib.h>
-+#include <stdio.h>
- 
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- 
-+typedef struct Cpu Cpu;
-+
-+typedef struct {
-+    void (*init)(Cpu *cpu);
-+    void (*end)(Cpu *cpu);
-+    uint64_t (*get_frame_pointer)(Cpu *cpu);
-+    bool (*does_insn_modify_frame_pointer)(const char *disas);
-+} CpuOps;
-+
- typedef struct Cpu {
-     GByteArray *buf;
-+    CpuOps ops;
-+    void *arch;
- } Cpu;
- 
-+typedef struct {
-+    struct qemu_plugin_register *reg_fp;
-+} Aarch64Cpu;
-+
- static struct qemu_plugin_scoreboard *score;
-+static CpuOps arch_ops;
-+
-+static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
-+{
-+    GByteArray *buf = cpu->buf;
-+    g_byte_array_set_size(buf, 0);
-+    size_t sz = qemu_plugin_read_register(reg, buf);
-+    g_assert(sz == 8);
-+    g_assert(buf->len == 8);
-+    return *((uint64_t *) buf->data);
-+}
-+
-+static struct qemu_plugin_register *plugin_find_register(const char *name)
-+{
-+    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-+    for (int i = 0; i < regs->len; ++i) {
-+        qemu_plugin_reg_descriptor *reg;
-+        reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-+        if (!strcmp(reg->name, name)) {
-+            return reg->handle;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
-+{
-+    Aarch64Cpu *cpu = cpu_->arch;
-+    return cpu_read_register64(cpu_, cpu->reg_fp);
-+}
-+
-+static void aarch64_init(Cpu *cpu_)
-+{
-+    Aarch64Cpu *cpu = g_new0(Aarch64Cpu, 1);
-+    cpu_->arch = cpu;
-+    cpu->reg_fp = plugin_find_register("x29");
-+    if (!cpu->reg_fp) {
-+        fprintf(stderr, "uftrace plugin: frame pointer register (x29) is not "
-+                        "available. Please use an AArch64 cpu (or -cpu max).\n");
-+        g_abort();
-+    }
-+}
-+
-+static void aarch64_end(Cpu *cpu)
-+{
-+    g_free(cpu->arch);
-+}
-+
-+static bool aarch64_does_insn_modify_frame_pointer(const char *disas)
-+{
-+    /*
-+     * Check if current instruction concerns fp register "x29".
-+     * We add a prefix space to make sure we don't match addresses dump
-+     * in disassembly.
-+     */
-+    return strstr(disas, " x29");
-+}
-+
-+static CpuOps aarch64_ops = {
-+    .init = aarch64_init,
-+    .end = aarch64_end,
-+    .get_frame_pointer = aarch64_get_frame_pointer,
-+    .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
-+};
- 
- static void track_callstack(unsigned int cpu_index, void *udata)
- {
-@@ -28,19 +108,37 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- {
-     size_t n_insns = qemu_plugin_tb_n_insns(tb);
- 
-+    /*
-+     * Callbacks and inline instrumentation are inserted before an instruction.
-+     * Thus, to see instruction effect, we need to wait for next one.
-+     * Potentially, the last instruction of a block could modify the frame
-+     * pointer. Thus, we need to always instrument first instruction in a tb.
-+     */
-+    bool instrument_insn = true;
-     for (size_t i = 0; i < n_insns; i++) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
- 
--        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
--        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
--                                               QEMU_PLUGIN_CB_R_REGS,
--                                               (void *) pc);
-+        if (instrument_insn) {
-+            uintptr_t pc = qemu_plugin_insn_vaddr(insn);
-+            qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
-+                                                   QEMU_PLUGIN_CB_R_REGS,
-+                                                   (void *) pc);
-+            instrument_insn = false;
-+        }
-+
-+        char *disas = qemu_plugin_insn_disas(insn);
-+        if (arch_ops.does_insn_modify_frame_pointer(disas)) {
-+            instrument_insn = true;
-+        }
-     }
- }
- 
- static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
- {
-     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
-+    cpu->ops = arch_ops;
-+
-+    cpu->ops.init(cpu);
-     cpu->buf = g_byte_array_new();
- }
- 
-@@ -64,6 +162,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info,
-                                            int argc, char **argv)
- {
-+    if (!strcmp(info->target_name, "aarch64")) {
-+        arch_ops = aarch64_ops;
-+    } else {
-+        fprintf(stderr, "plugin uftrace: %s target is not supported\n",
-+                info->target_name);
-+        return 1;
-+    }
-+
-     score = qemu_plugin_scoreboard_new(sizeof(Cpu));
-     qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-     qemu_plugin_register_atexit_cb(id, at_exit, NULL);
--- 
-2.47.3
+Yes we do. I probably (incorrectly) assumed `qemu_plugin_outs` already
+did that.
 
+>=20
+>=20>=20
+>=20> + if (abort_on_mismatch) {
+> >  + g_abort();
+> >  + }
+> >=20
+>=20This is firing on:
+>=20
+>=20 =F0=9F=95=9917:35:50 alex@draig:tests/tcg/i386-linux-user on =EE=82=
+=A0 review/tcg-discon-v6 [$!?]=20
+>=20 =E2=9E=9C make run-plugin-catch-syscalls-with-libdiscons.so V=3D1
+>  timeout -s KILL --foreground 120 env QEMU=3D/home/alex/lsrc/qemu.git/b=
+uilds/sanitisers/qemu-i386 /home/alex/lsrc/qemu.git/builds/sanitisers/qem=
+u-i386 -plugin ../plugins/libdiscons.so -d plugin -D catch-syscalls-with-=
+libdiscons.so.pout catch-syscalls > run-plugin-catch-syscalls-with-libdis=
+cons.so.out
+>  Aborted
+>  make: *** [Makefile:226: run-plugin-catch-syscalls-with-libdiscons.so]=
+ Error 134
+>  =F0=9F=95=9917:35:52 alex@draig:tests/tcg/i386-linux-user on =EE=82=A0=
+ review/tcg-discon-v6 [$!?] [=F0=9F=94=B4 USAGE]=20
+>=20 =E2=9C=97
+>=20
+>=20although it never gets to the point of reporting what failed:
+>=20
+>=20 Thread 1 "qemu-i386" hit Breakpoint 1, __GI_abort () at ./stdlib/abo=
+rt.c:72
+>  warning: 72 ./stdlib/abort.c: No such file or directory
+>  (gdb) bt
+>  #0 __GI_abort () at ./stdlib/abort.c:72
+>  #1 0x00007ffff630874d in report_mismatch (pc_name=3D0x7ffff630a220 "ta=
+rget", vcpu_index=3D0, type=3DQEMU_PLUGIN_DISCON_EXCEPTION, last=3D134574=
+955, expected=3D134574953,=20
+>=20 encountered=3D134574955) at ../../tests/tcg/plugins/discons.c:89
+>  #2 0x00007ffff6308c0d in insn_exec (vcpu_index=3D0, userdata=3D0x0) at=
+ ../../tests/tcg/plugins/discons.c:132
+>  #3 0x00007fffea431114 in code_gen_buffer ()
+>  #4 0x000055555577b0a6 in cpu_tb_exec (cpu=3D0x529000005200, itb=3D0x7f=
+ffea431000 <code_gen_buffer+200659>, tb_exit=3D0x7ffff49c9530) at ../../a=
+ccel/tcg/cpu-exec.c:438
+>  #5 0x000055555577c92f in cpu_loop_exec_tb (cpu=3D0x529000005200, tb=3D=
+0x7fffea431000 <code_gen_buffer+200659>, pc=3D134574955, last_tb=3D0x7fff=
+f49c9540, tb_exit=3D0x7ffff49c9530)
+>  at ../../accel/tcg/cpu-exec.c:871
+>  #6 0x000055555577d151 in cpu_exec_loop (cpu=3D0x529000005200, sc=3D0x7=
+ffff483a740) at ../../accel/tcg/cpu-exec.c:981
+>  #7 0x000055555577d2fe in cpu_exec_setjmp (cpu=3D0x529000005200, sc=3D0=
+x7ffff483a740) at ../../accel/tcg/cpu-exec.c:998
+>  #8 0x000055555577d4c8 in cpu_exec (cpu=3D0x529000005200) at ../../acce=
+l/tcg/cpu-exec.c:1024
+>  #9 0x00005555557bfc83 in cpu_loop (env=3D0x529000007dd0) at ../../linu=
+x-user/i386/cpu_loop.c:215
+>  #10 0x00005555558ee3e1 in main (argc=3D4, argv=3D0x7fffffffe688, envp=
+=3D0x7fffffffe6b0) at ../../linux-user/main.c:1038
+>  (gdb) f 1
+>  #1 0x00007ffff630874d in report_mismatch (pc_name=3D0x7ffff630a220 "ta=
+rget", vcpu_index=3D0, type=3DQEMU_PLUGIN_DISCON_EXCEPTION, last=3D134574=
+955, expected=3D134574953,=20
+>=20 encountered=3D134574955) at ../../tests/tcg/plugins/discons.c:89
+>  89 g_abort();
+>  (gdb) p report
+>  $1 =3D (GString *) 0x50300002bf00
+>  (gdb) p report->Str
+>  There is no member named Str.
+>  (gdb) p report->str
+>  $2 =3D (gchar *) 0x51100001fbc0 "Discon target PC mismatch on VCPU 0\n=
+Expected: 8057369\nEncountered: 805736b\nExecuted Last: 805736b\nEvent ty=
+pe: exception\n"
+>  (gdb)=20
+>=20
+> I think this is where it is going wrong:
+>=20
+>=20 IN: _dl_early_allocate
+>  0x0805736b: 89 c2 movl %eax, %edx
+>  0x0805736d: 8d 1c 28 leal (%eax, %ebp), %ebx
+>  0x08057370: 89 c8 movl %ecx, %eax
+>  0x08057372: cd 80 int $0x80
+
+Thanks! I'll have a closer look.
+
+> >=20
+>=20> + g_string_free(report, true);
+> >=20
+>=20so we could drop this... or..
+
+As aborting is optional, we should free.
+
+Regards,
+Julian
 
