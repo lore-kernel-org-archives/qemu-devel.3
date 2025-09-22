@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3625CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 22:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8974FCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 22:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0obp-0005n6-2j; Mon, 22 Sep 2025 18:02:09 -0400
+	id 1v0obr-0005qY-Lw; Mon, 22 Sep 2025 18:02:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v0obj-0005hj-KS
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 18:02:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v0obo-0005mR-Ge
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 18:02:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v0obg-0001sr-VK
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 18:02:03 -0400
+ id 1v0obm-0001tj-7Y
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 18:02:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758578520;
+ s=mimecast20190719; t=1758578524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4f/lDoSl2tEdm0Pamz1TmV3fUjMmmFhYe5iOa04hOPg=;
- b=RGb+M0+f3y3O25QkQuJujJQlVyS3imNckoymD/u9ETb5x36U3ra29SQjynlDvsVuNYEHPO
- cIhzvdbIRDgE0MAvrrouUfzE3IdRl/tXDtJmQRBv//c6i1wimOULG3b35G2+c225aA2oT7
- szYZeei2cHiVUtvF/J47KZK/cN6Razc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MOkyRXBewUgAC0oUKh3r+fGvQty4Mx2Cj2IYFAhox1c=;
+ b=O1WUkDcZ47i3r2mufRkYiXFQPJ0U1DCydT9hLD9fsXrN3oOTtjoS9HH4nhuqomvWkw/nyh
+ 5YFrzWDqC1iOfUhArFIfon7Z4sAPwmDUfGd/4tcnFBizj2RRm/dy7h2QIrF6tzQLaViayd
+ EqgMt8TPNmHvZqM7kfPDxPZ6o+POu+Q=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-uu8aiVpGOwWuYfGSkUtXkw-1; Mon,
- 22 Sep 2025 18:01:58 -0400
-X-MC-Unique: uu8aiVpGOwWuYfGSkUtXkw-1
-X-Mimecast-MFC-AGG-ID: uu8aiVpGOwWuYfGSkUtXkw_1758578517
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-DdMBUD2iOkes0pMCUY64cg-1; Mon,
+ 22 Sep 2025 18:02:01 -0400
+X-MC-Unique: DdMBUD2iOkes0pMCUY64cg-1
+X-Mimecast-MFC-AGG-ID: DdMBUD2iOkes0pMCUY64cg_1758578520
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C63A19560B4; Mon, 22 Sep 2025 22:01:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A347D19560A7; Mon, 22 Sep 2025 22:02:00 +0000 (UTC)
 Received: from localhost (unknown [10.2.17.92])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3994A19560BB; Mon, 22 Sep 2025 22:01:56 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AF08E1955F21; Mon, 22 Sep 2025 22:01:59 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -55,22 +55,22 @@ Cc: Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 2/5] virtio: unify virtio_notify_irqfd() and virtio_notify()
-Date: Mon, 22 Sep 2025 18:01:46 -0400
-Message-ID: <20250922220149.498967-3-stefanha@redhat.com>
+Subject: [PATCH 3/5] virtio: support irqfd in virtio_notify_config()
+Date: Mon, 22 Sep 2025 18:01:47 -0400
+Message-ID: <20250922220149.498967-4-stefanha@redhat.com>
 In-Reply-To: <20250922220149.498967-1-stefanha@redhat.com>
 References: <20250922220149.498967-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,142 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The difference between these two functions:
-- virtio_notify() uses the interrupt code path (MSI or classic IRQs)
-- virtio_notify_irqfd() uses guest notifiers (irqfds)
+virtio_error() calls virtio_notify_config() to inject a VIRTIO
+Configuration Change Notification. This doesn't work from IOThreads
+because the BQL is not held and the interrupt code path requires the
+BQL.
 
-virtio_notify() can only be called with the BQL held because the
-interrupt code path requires the BQL. Device models use
-virtio_notify_irqfd() from IOThreads since the BQL is not held.
-
-The two functions can be unified by pushing down the if
-(qemu_in_iothread()) check from virtio-blk and virtio-scsi into core
-virtio code. This is in preparation for the next commit that will add
-irqfd support to virtio_notify_config() and where it's unattractive to
-introduce another irqfd-only API for device model callers.
+Follow the same approach as virtio_notify() and use ->config_notifier
+(an irqfd) when called from the IOThread.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/hw/virtio/virtio.h |  1 -
- hw/block/virtio-blk.c      |  6 +-----
- hw/scsi/virtio-scsi.c      |  6 +-----
- hw/virtio/virtio.c         | 28 +++++++++++++---------------
- hw/virtio/trace-events     |  1 -
- 5 files changed, 15 insertions(+), 27 deletions(-)
+ hw/virtio/virtio.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index c594764f23..8435f5e8fc 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -290,7 +290,6 @@ int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
-                               unsigned int *out_bytes, unsigned max_in_bytes,
-                               unsigned max_out_bytes);
- 
--void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq);
- void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
- 
- int virtio_save(VirtIODevice *vdev, QEMUFile *f);
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9bab2716c1..64efce4846 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -62,11 +62,7 @@ void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
-     iov_discard_undo(&req->inhdr_undo);
-     iov_discard_undo(&req->outhdr_undo);
-     virtqueue_push(req->vq, &req->elem, req->in_len);
--    if (qemu_in_iothread()) {
--        virtio_notify_irqfd(vdev, req->vq);
--    } else {
--        virtio_notify(vdev, req->vq);
--    }
-+    virtio_notify(vdev, req->vq);
- }
- 
- static int virtio_blk_handle_rw_error(VirtIOBlockReq *req, int error,
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 34ae14f7bf..d817fc42b4 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -116,11 +116,7 @@ static void virtio_scsi_complete_req(VirtIOSCSIReq *req, QemuMutex *vq_lock)
-     }
- 
-     virtqueue_push(vq, &req->elem, req->qsgl.size + req->resp_iov.size);
--    if (s->dataplane_started && !s->dataplane_fenced) {
--        virtio_notify_irqfd(vdev, vq);
--    } else {
--        virtio_notify(vdev, vq);
--    }
-+    virtio_notify(vdev, vq);
- 
-     if (vq_lock) {
-         qemu_mutex_unlock(vq_lock);
 diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e..13830debfd 100644
+index 13830debfd..ced0fea4fc 100644
 --- a/hw/virtio/virtio.c
 +++ b/hw/virtio/virtio.c
-@@ -31,6 +31,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/virtio/virtio-access.h"
- #include "system/dma.h"
-+#include "system/iothread.h"
- #include "system/runstate.h"
- #include "virtio-qmp.h"
+@@ -2706,7 +2706,12 @@ void virtio_notify_config(VirtIODevice *vdev)
  
-@@ -2654,16 +2655,8 @@ static void virtio_notify_irqfd_deferred_fn(void *opaque)
-     event_notifier_set(notifier);
- }
- 
--void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq)
-+static void virtio_irq(VirtQueue *vq)
- {
--    WITH_RCU_READ_LOCK_GUARD() {
--        if (!virtio_should_notify(vdev, vq)) {
--            return;
--        }
--    }
--
--    trace_virtio_notify_irqfd(vdev, vq);
--
-     /*
-      * virtio spec 1.0 says ISR bit 0 should be ignored with MSI, but
-      * windows drivers included in virtio-win 1.8.0 (circa 2015) are
-@@ -2680,13 +2673,18 @@ void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq)
-      * to an atomic operation.
-      */
-     virtio_set_isr(vq->vdev, 0x1);
--    defer_call(virtio_notify_irqfd_deferred_fn, &vq->guest_notifier);
--}
- 
--static void virtio_irq(VirtQueue *vq)
--{
--    virtio_set_isr(vq->vdev, 0x1);
--    virtio_notify_vector(vq->vdev, vq->vector);
-+    /*
-+     * The interrupt code path requires the Big QEMU Lock (BQL), so use the
-+     * notifier instead when in an IOThread. This assumes that device models
-+     * have already called ->set_guest_notifiers() sometime before calling this
-+     * function.
-+     */
+     virtio_set_isr(vdev, 0x3);
+     vdev->generation++;
+-    virtio_notify_vector(vdev, vdev->config_vector);
++
 +    if (qemu_in_iothread()) {
-+        defer_call(virtio_notify_irqfd_deferred_fn, &vq->guest_notifier);
++        defer_call(virtio_notify_irqfd_deferred_fn, &vdev->config_notifier);
 +    } else {
-+        virtio_notify_vector(vq->vdev, vq->vector);
++        virtio_notify_vector(vdev, vdev->config_vector);
 +    }
  }
  
- void virtio_notify(VirtIODevice *vdev, VirtQueue *vq)
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 76f0d458b2..658cc365e7 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -75,7 +75,6 @@ virtqueue_flush(void *vq, unsigned int count) "vq %p count %u"
- virtqueue_pop(void *vq, void *elem, unsigned int in_num, unsigned int out_num) "vq %p elem %p in_num %u out_num %u"
- virtio_queue_notify(void *vdev, int n, void *vq) "vdev %p n %d vq %p"
- virtio_notify_irqfd_deferred_fn(void *vdev, void *vq) "vdev %p vq %p"
--virtio_notify_irqfd(void *vdev, void *vq) "vdev %p vq %p"
- virtio_notify(void *vdev, void *vq) "vdev %p vq %p"
- virtio_set_status(void *vdev, uint8_t val) "vdev %p val %u"
- 
+ static bool virtio_device_endian_needed(void *opaque)
 -- 
 2.51.0
 
