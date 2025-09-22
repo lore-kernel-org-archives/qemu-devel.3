@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5A2CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4650CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0g1G-0000Vi-8k; Mon, 22 Sep 2025 08:51:50 -0400
+	id 1v0g2s-0001Xj-V6; Mon, 22 Sep 2025 08:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0g1E-0000Uq-MP
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:51:48 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1v0g2p-0001X9-Nl
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:53:27 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0g18-0008QF-BW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:51:48 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-46b303f7469so12895905e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 05:51:41 -0700 (PDT)
+ id 1v0g2k-000085-NN
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:53:26 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b90so2030223f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 05:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758545499; x=1759150299; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758545576; x=1759150376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dtK9F3aHFtPlT79/f/Mxxb4XrEuXtrM3o9m37D37Vkg=;
- b=D+QXzXStxlS9kGbUEDLTuOA6QQr4QAlY2e4lWoEYNjvv2NcSfKhQmtA/UWCGkfmCmx
- htU9Nx7Zk52Cm3eiDzdo4QkflYi+LR560VoXRjOnSYkN8eKqcP//H3XnZ6TTkuIaFwXC
- OmH/VJSkJp8lZo3MQTDq7ZS6hoRmpSVEKQuR1DOwMfbeSICvVYba+nLEC/XE+N5BVI2d
- hni6tBjZtZoOH9iseNW7eXQwuiSRXqkk/N0eWGrF7FryVS3o5qS7H+xolfJow9uqLQXD
- BHzmKfe6IZ4eT7xIhTKuuW3cAe8nrpekWVVYbsmA1OogX6CMIMPzQVR7NWg7jeLkoIQ0
- RGUg==
+ bh=hc6D+2jvhkFkj/ob+cLmQkmvhhav557nsMeLMgHkbpQ=;
+ b=FV29EHV3SQHDt+L6ETuYiCGpXd/GvqqR/2GFgI6OqzaPGewkeID3ug2ZG8dHI2Bpeh
+ p7SSLMSwWYciawLWKKmgyp1uW6O5gunaHYf3+WdE6AGtZM62jJbaHChTAd+vrJj4PzC9
+ +asNBFmObsVvoggvKg3RqfwEsVBdG+fhCNwdP+78yzf7I7fKqbPWZeG9BdZPKT4upgQ2
+ AT56tB0qykzoo4xllzUxja2Y62ZoNeXZkg2s2tTmwZfkc9s3slPa/CnEtuzmVyzsvfGW
+ AOHMR4ZP3cRS0RRzlCzVIl2M0Yfc71QnnJ3hsEUqbUJJhu7rWSjTX9UjnpSmIlwAMnkw
+ JaNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758545499; x=1759150299;
+ d=1e100.net; s=20230601; t=1758545576; x=1759150376;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dtK9F3aHFtPlT79/f/Mxxb4XrEuXtrM3o9m37D37Vkg=;
- b=vD+h4PgUdd/i42rtdTlLrARAJ5q7tP0h76KH0cPig2upln8+Akkjbq2LFdJEXAZE1y
- Vk5OHUn7sQrnoB5wTdJbecqhut0/yJyWXkP6l1ShB2d5iwQPnoT7XFoivWJKd3O9v67r
- x9RyGoKF4pVsO0Bkcj/DE0fTkNzb7JyugPRvF2SrAjG9YlFeunC/E0MDpCbpCKwlJZrC
- 7Txfadjz3soTdj2iTunhmjSZHtpDPDZRYSsshaVtoP1vO970DEEsFcIgK98wvQbtCdJi
- PaiV2DIScLHU6lj2kzeAIKYQqo5DuF94V12bu7LLukaolGP+lu+bhi4L10pzdnZhsb2A
- DjFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK2FUs7yw/Zn2jcnNrZ9QICmw+3iFCHw8xUDu6Mnj9qCinCsN6Yu0xGe0TSDA/3RGr9jjMTzwq5Y5f@nongnu.org
-X-Gm-Message-State: AOJu0YyRKTcugquYaXGw2jsseVtocmXjkxYJFNW/raC6tuvdfgJYnq6m
- yzIQx1bVmS2Cb+0I71Weng9Td5cMQ4WDnkc/WSwazeIO5aEhmqJu52R+L+KDL/tYPmk=
-X-Gm-Gg: ASbGncsVR8MmK4r9g3FrYc+OKQ4WC+dZwojcc1Sa3ue8YTjaWqPmhEgazxChmQi4Tcw
- rVN/hyaVoOZojNwyI4xuty2joYwD+hhK1PLRKJNICeSRWF/oVuVBAILE9xzORbNvWVHxQH3s9QE
- 8rXNfvtn0n1NOXUGFx3eoPhTSR/uXiyfNQIwzBiP/zrzyWdY+NnrpR4WiXWveNiSuLvQ1snT5cR
- cNU0jP9ofd4Yz54LhjQVu68AJx+u/K/yYJo4yHKsggqZ06PAPv3Dfp9aUomXD+ZhicV9w1KL/ze
- cpSDr2Ak3J6fIb2GQCkx5Vszlu8c835eHcmF2lGc/g4F8MrPj2OEuFWbGkoFodf0fwV+8SLefmH
- AGohnyjuH4391IGcOCjxU+MuwnAGRzu27yQ==
-X-Google-Smtp-Source: AGHT+IGNQnOIFXp81z1ukv3VkSvQuvA2qa79oVl/blIBzmdgqsrkINhDmcqwA4Ab1lT426A0C/8ucA==
-X-Received: by 2002:a05:600c:3595:b0:45d:e0cf:41c9 with SMTP id
- 5b1f17b1804b1-4680b51acaamr132814595e9.22.1758545498388; 
- Mon, 22 Sep 2025 05:51:38 -0700 (PDT)
+ bh=hc6D+2jvhkFkj/ob+cLmQkmvhhav557nsMeLMgHkbpQ=;
+ b=vztQsssws8QFt6LML4ArurwX8R6NvOeswv5VtGFl5uH9EmDAUT8RDl6f0MTqWfqH3F
+ cMRT8B0ENUlcDJVHDdGb+UPgIZHpvEzXMoIgbCHUrCDqTAK5/1Qakkk95Kh1cU4Tz8YG
+ biDWEqKH1tyyHXtFyjq6Z+w2hmhpxIgBnWp3qRDx0nbwSAJCtGmP7cWdd2r9QN23XNH+
+ H0cKkZDttTY0Z86zFvymHRVdm8x/uVKSwAiL20H2xip+KIHKx89ae3IPOn6rO6TcEiCy
+ rJexp5VFTA3yZMkgsk7rNFO6weNgWvV0b60Z+22Qs7V0EuI2/OqtIHnJB/d/KdWDTpc2
+ OGpA==
+X-Gm-Message-State: AOJu0YwT+NbxNiNLO6iEQ+tv+HOpJGa0BuN5wy8qCAMbams9Vka7BNSN
+ ln8+STDFzDJtF4ANr8gOO04cxDcrU+Lr2m5sjS6yxPhNWJwbmxjiirnH6e+hfCyUmwc=
+X-Gm-Gg: ASbGncucFwBzd7WcqoBJnkKUY9aKsL4Ojtr6EAcDZ5s0Tc8SLetKKel/8TA9AAwLEWz
+ JTAvhITCrgu6+aP0JtyQ4+ZN3BCCbnp3tUiuOFgfHygwIsQg8DL10j80g9xphSveBeffQ22mHGL
+ EiMqgMEh4PLItNVZKl+hg3ho+N+i7v4DjeTlu9gpkV+Vu3WiFXnBL43D4PLpgdF5JJeMMR+UGvN
+ WiBNf+3oT2hwnzifCqsrQTGu045vv+mnmUkBXGajqzCdhJNJKK19/T7IewDuvwOMYWUrcoZonob
+ QkmfMTrbTGEhvrVgiuKU+qC9KCCfFrjEXp5WS/Y/HFioVCqCYA9PxKcUeZ0llvKmWxdWN5t5zOw
+ gm7Zf5GDBir9sZyUbGyQ7GJw=
+X-Google-Smtp-Source: AGHT+IHtoru39zhHo1j7shfr5/Uxjn4pRqw8xGYPHvaoNEY+AoSX8jWQ87iFobOJtz02onr3fyh1ZA==
+X-Received: by 2002:a05:6000:2285:b0:3dd:8b62:5fe7 with SMTP id
+ ffacd0b85a97d-3ee8567571cmr9320586f8f.49.1758545575954; 
+ Mon, 22 Sep 2025 05:52:55 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45f325a32f6sm138493195e9.2.2025.09.22.05.51.37
+ ffacd0b85a97d-3fd84338ca2sm4853685f8f.42.2025.09.22.05.52.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 05:51:37 -0700 (PDT)
+ Mon, 22 Sep 2025 05:52:55 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9AFEA5F7C4;
- Mon, 22 Sep 2025 13:51:36 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 9576E5F7C4;
+ Mon, 22 Sep 2025 13:52:54 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,  Christian Speich
- <c.speich@avm.de>,  qemu-devel@nongnu.org,  Stefano Garzarella
- <sgarzare@redhat.com>
-Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
-In-Reply-To: <aNE0Bp0hsA31sLCJ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 22 Sep 2025 12:33:26 +0100")
-References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
- <20250919160526-mutt-send-email-mst@kernel.org>
- <aNE0Bp0hsA31sLCJ@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [RFC PATCH 1/4] docs/code-provenance: clarify scope very early
+In-Reply-To: <20250922113219.32122-2-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 22 Sep 2025 13:32:16 +0200")
+References: <20250922113219.32122-1-pbonzini@redhat.com>
+ <20250922113219.32122-2-pbonzini@redhat.com>
 User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 22 Sep 2025 13:51:36 +0100
-Message-ID: <87frceodk7.fsf@draig.linaro.org>
+Date: Mon, 22 Sep 2025 13:52:54 +0100
+Message-ID: <87a52modi1.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,68 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
->> On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
->> > This removes the change introduced in [1] that prevents the use of
->> > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
->> >=20
->> > [1]: 6275989647efb708f126eb4f880e593792301ed4
->> >=20
->> > Signed-off-by: Christian Speich <c.speich@avm.de>
->> > ---
->> > vhost-user-device and vhost-user-device-pci started out as user
->> > creatable devices. This was changed in [1] when the vhost-user-base was
->> > introduced.
->> >=20
->> > The reason given is to prevent user confusion. Searching qemu-discuss =
-or
->> > google for "vhost-user-device" I've seen no confused users.
->> >=20
->> > Our use case is to provide wifi emulation using "vhost-user-device-pci=
-",
->> > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
->> > 24.04. With newer QEMU versions we now need to patch, distribute and
->> > maintain our own QEMU packages, which is non-trivial.
->> >=20
->> > So I want to propose lifting this restriction to make this feature
->> > usable without a custom QEMU.
->> >=20
->> > [1]: 6275989647efb708f126eb4f880e593792301ed4
->>=20
->> The confusion is after someone reuses the ID you are claiming without
->> telling anyone and then linux guests will start binding that driver to
->> your device.
->>=20
->>=20
->> We want people doing this kind of thing to *at a minimum*
->> go ahead and register a device id with the virtio TC,
->> but really to write and publish a spec.
+> The AI policy in QEMU is not about content generators, it is about
+> generated content.  Other uses are explicitly not covered.  Rename the
+> policy and mention its scope only as a matter of convenience to the
+> reader, in the TL;DR section.
 >
-> Wanting people to register a device ID is a social problem and
-> we're trying to apply a technical hammer to it, which is rarely
-> an productive approach.
->
-> If we want to demonstrate that vhost-user-device is "risky", then
-> how about we rename it to have an 'x-' prefix and thus disclaim
-> any support for it, but none the less allow its use. Document it
-> as an experimental device, and if it breaks, users get to keep
-> both pieces.
->
-> It seems like it would be useful before any virtio spec submission
-> as a mechanism by which users can experiment to finese their ideas
-> prior to getting to the point of needing to make a spec proposal.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-That's basically it. Adding the stubs is fairly trivial for vhost-user
-backends that implement the config space but you can't add stubs for
-things that are currently RFC specs. Also you are forcing a delay for
-the spec to be updated and then wait for the next QEMU with the stub
-added.
-
->
-> With regards,
-> Daniel
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
