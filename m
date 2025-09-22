@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB82BCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 08:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101F5CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 08:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0c4u-0002E5-Og; Mon, 22 Sep 2025 04:39:21 -0400
+	id 1v0c6t-0004Dx-Dv; Mon, 22 Sep 2025 04:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0c4s-0002Ae-8e
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 04:39:18 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0c6q-000491-8z
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 04:41:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0c4j-0005kj-G0
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 04:39:17 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0c6m-0006I6-R2
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 04:41:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758530348;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1758530475;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+j//qdN/pDyeeiFh3NPAEpF9l0HZJY+JBpuz6+RrFbc=;
- b=FancVqb/OI5fW8gPYZRGYc16pFvD07VJ7R1g12e8zdAIp7HoexNOSvUaen27wLZMW42zt0
- jyT22Msv04t1XpmFL+cV94OncMNzGDXJ00lsQbvGwJFcjBG/NcKdEhH347OJWYZzyNb6+v
- CWZ9Rc26CyqhIo+88fUUjiLjZyuEvgQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kR/T7OvVYRayWOZHM5qce/FpN5upIaFAOk8DtTT8Z1U=;
+ b=faHxXjfB/dKid+AX3qNcTy3JodI/imlW8UiF6n8oK8kvCoXGH8vKSY3BUMOHZQJx55r+W7
+ 7U83prr7uepiP8IJ+j0Tlp6mVvI+VKUma4NDodEpshbZgpTXN3Aomo5+KrylbjrEZeK9Zn
+ 9ioQ1ZycVCPVbZxXGCgt/U6BUoJX774=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-5Pq2BEtcMteAbapDIiK0xg-1; Mon,
- 22 Sep 2025 04:39:04 -0400
-X-MC-Unique: 5Pq2BEtcMteAbapDIiK0xg-1
-X-Mimecast-MFC-AGG-ID: 5Pq2BEtcMteAbapDIiK0xg_1758530343
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-JYHLy4QNM9-ONqzMQRpjfQ-1; Mon,
+ 22 Sep 2025 04:41:11 -0400
+X-MC-Unique: JYHLy4QNM9-ONqzMQRpjfQ-1
+X-Mimecast-MFC-AGG-ID: JYHLy4QNM9-ONqzMQRpjfQ_1758530470
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E82FC195608B; Mon, 22 Sep 2025 08:39:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B531418004D4; Mon, 22 Sep 2025 08:41:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 087571956056; Mon, 22 Sep 2025 08:39:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4BA5821E6A27; Mon, 22 Sep 2025 10:38:59 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- qemu-block@nongnu.org,  Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf
- <kwolf@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 12/20] monitor: introduce monitor_cur_hmp() function
-In-Reply-To: <aM6WB4c1sMtfqM9p@gallifrey> (David Alan Gilbert's message of
- "Sat, 20 Sep 2025 11:54:47 +0000")
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-13-berrange@redhat.com>
- <87zfaqwr2a.fsf@pond.sub.org> <aM1aq1HNV7qJdrqI@redhat.com>
- <87ldm9txg0.fsf@pond.sub.org> <aM6WB4c1sMtfqM9p@gallifrey>
-Date: Mon, 22 Sep 2025 10:38:59 +0200
-Message-ID: <87plbinaos.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id 4E9AF1956056; Mon, 22 Sep 2025 08:41:05 +0000 (UTC)
+Date: Mon, 22 Sep 2025 09:41:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Subject: Re: [PATCH RFC v5 11/12] ui/console-vc: forward text console size to
+ vc chardev
+Message-ID: <aNELntNU-8RGUeyp@redhat.com>
+References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
+ <20250921-console-resize-v5-11-89e3c6727060@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250921-console-resize-v5-11-89e3c6727060@gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -95,89 +95,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
+On Sun, Sep 21, 2025 at 01:45:41AM +0200, Filip Hejsek wrote:
+> Update the vc chardev size when the size of a text console is recomputed.
+> 
+> NOTE: It seems wrong that the dpy_text_resize callback is not called
+>       when the size is recomputed. I believe this is a bug, although it
+>       doesn't matter much because the only user of the callback is
+>       ui/ncurses and it only uses the size of fixed consoles.
+> 
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> ---
+>  ui/console-vc.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-> * Markus Armbruster (armbru@redhat.com) wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Fri, Sep 19, 2025 at 02:43:41PM +0200, Markus Armbruster wrote:
->> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->> >>=20
->> >> > A number of callers use monitor_cur() followed by !monitor_cur_is_q=
-mp().
->> >>=20
->> >> "A number of"?  I can see just one:
->> >>=20
->> >>     int error_vprintf(const char *fmt, va_list ap)
->> >>     {
->> >>         Monitor *cur_mon =3D monitor_cur();
->> >>=20
->> >>         if (cur_mon && !monitor_cur_is_qmp()) {
->> >>             return monitor_vprintf(cur_mon, fmt, ap);
->> >>         }
->> >>         return vfprintf(stderr, fmt, ap);
->> >>     }
->> >
->> > Opps, that'll be referring to the other use of monitor_cur() in my
->> > patches that I then removed when I re-ordered the series.
->> >
->> >>=20
->> >> > This is undesirable because monitor_cur_is_qmp() will itself call
->> >> > monitor_cur() again, and monitor_cur() must acquire locks and do
->> >> > hash table lookups. Introducing a monitor_cur_hmp() helper will
->> >> > combine the two operations into one reducing cost.
->>=20
->> I think the actual interface flaw is having monitor_cur_is_qmp().
->>=20
->> In master, monitor_cur_is_qmp() is only used in monitor/monitor.c.  Both
->> call sites have the value of monitor_cur() available as @cur_mon.
->> They'd be better off calling monitor_is_qmp(cur_mon).
->>=20
->> Note that in master nothing outside monitor/ cares whether a monitor is
->> QMP or HMP.  I like that.
->>=20
->> Your series doesn't preserve this property.
->>=20
->> You move the first call site error_vprintf() from monitor/monitor.c to
->> util/error-report.c in PATCH 11.  QMP vs. HMP is no longer encapsulated.
->> Slighly irksome.
->
-> How about a slightly simpler approach, looking above we have:
->
->> >>         if (cur_mon && !monitor_cur_is_qmp()) {
->> >>             return monitor_vprintf(cur_mon, fmt, ap);
->> >>         }
->> >>         return vfprintf(stderr, fmt, ap);
->
-> I think we could replace this with:
->
->   ret =3D monitor_vprintf(cur_mon, fmt, ap);
->   if (ret =3D=3D -1) {
->        ret =3D vfprintf(stderr, fmt, ap);
->   }
->   return ret;
->
-> monitor_vprintf already -1 exits if !mon or monitor_is_qmp(mon)
->
-> Keeps the encapsulation, and is now 'print via the monitor but if it
-> can't do it, use printf'
-
-monitor_printf() fails when passed a null monitor[*] or a QMP monitor.
-Reporting the error to stderr then is probably better than swallowing
-it.  Same if the function somehow picks up more failure modes.
-
-I like it.
-
-One could perhaps object that it makes "report to HMP or else stderr"
-less obvious if you don't already know that monitor_vprintf() only
-prints to HMP.  I'm okay with that.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-
-[*] Feels more like a programming error, but we can ignore this
-distraction.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
