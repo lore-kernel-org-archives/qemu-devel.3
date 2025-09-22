@@ -4,93 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8426CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Sep 2025 16:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F7CCAC59A
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 03:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0NCe-0007cD-Sl; Sun, 21 Sep 2025 12:46:21 -0400
+	id 1v0X47-0005jP-28; Sun, 21 Sep 2025 23:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0NCa-0007ZY-4c
- for qemu-devel@nongnu.org; Sun, 21 Sep 2025 12:46:16 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0NCW-0002B7-Mt
- for qemu-devel@nongnu.org; Sun, 21 Sep 2025 12:46:15 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3fc36b99e92so223417f8f.0
- for <qemu-devel@nongnu.org>; Sun, 21 Sep 2025 09:46:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758473168; x=1759077968; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CVGDlSmG6zGb/AaIt76y03xYi35itpvxy4k3AzB9qi0=;
- b=F1X4EU76UuOd1Jzryt+AdSUtnMdMD8IiEL3oPWhzHw4hlztxL2NMjIQPbOx5xjmEsm
- hiQInqqt1G+6RE8NiMxDbgmU4tO7+yqy9k/ykkLI29XcEoQJOt+B26aUc/XrZprzZLm2
- DPx1/sPSdmLyxQ8jQjY24JGTt+rhQH9cKsnNaX4ZVQu097UbH7jNSmXd14e2OsP6RpKb
- xHFAcH9RsoJh7bkNzLNd3XG+N4BEl3N32NFg6qDxyAuiSByajhjpDnGXLlc495if7HPI
- awdsCkbSH7h0puTpj34lveALom2M18bgHFrIFwDWdh3xLzXW0AV4s1Fx/6lvgLEoyCT4
- cIPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758473168; x=1759077968;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CVGDlSmG6zGb/AaIt76y03xYi35itpvxy4k3AzB9qi0=;
- b=C+09aiOlNNp/z2xZfr3Dd5B6Rbjl6pXGy7AMGcqGNuhmmtbBNWuskAdiBNbenmpeZp
- FjQsgAoSHoV8U0/O8vZ/6kAWU+MCb605v+42CbgUpThfigNwJJBJoAWwRIh66Cu8zjq9
- agZVgMvoAsHEuEpobRUiBGVF4aWjSb2MFzcAsus9sRji/RL4m+OxFxqeUc3kGZXPXj/H
- TnbqDTyJ/DLOS8zQh2FG3S6ckQ7zBMW42N5X95LiqA/Zyto21H8FRLSouyz8GAr+hWsg
- pp4iJA/bLiH+Dgoi+8qh+DBt1+sTt3uLm1dlW93NaDDw6jpulbljeQsbHXA6y/ckRo1z
- 8/xA==
-X-Gm-Message-State: AOJu0Yx7eIULVxLcTKtOmwDyWt8YvXI8qmysvJpSGU0eVE+MODiivM4h
- tVnzA1Wxu8nwcp1xMv0KQmRf5AbWNPprck/sHOhr0rrqnK8T7QJX1qVD8aN0SdS5dGE=
-X-Gm-Gg: ASbGncuq60YitQog1c/e0C2/mVF7d2TcKIV3vfCAeSeYMD0MXc2Ji/be01KQpTz08Hh
- LR6jYZmz+5VW6CSmSXefvpmcZhyi66yKsJs9K1gs1i94PWv5WdH/NCFS5TPKG0A6cn7H96MGYp/
- VD+YvonJCI7Dmbx0/tdvw9mWS5PjWDW7LU93798SUrQ1wmX97IRkZNXidQrg94sMnNxCHpFRK83
- BoelkLbQ+hFghlJCFsOcmbUYD9ZDN72R/VzOMNC1Y5pkE8/+HSobU4kwJuBg2VPzP8zAQOyJHcV
- 3XUFZtAEbnAk3Ric/18+/7N8yPL1WgB06xA2HunEQu9IBYY90bEgYcywymh1xDZqtJ9D/G34M0L
- LUkaJBhXk2G5HHU8b+JdU9K8=
-X-Google-Smtp-Source: AGHT+IGMpYT4j8HK1iv03/C2yhhFKAAwytpd4vkao9Pp+l/L+mKAupOEJXjj0rW2kCEi9VqikxMupQ==
-X-Received: by 2002:a05:6000:420d:b0:3e9:d9bd:504f with SMTP id
- ffacd0b85a97d-3ee1acd872cmr11366970f8f.21.1758473167748; 
- Sun, 21 Sep 2025 09:46:07 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3f61703b206sm6133953f8f.6.2025.09.21.09.46.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 21 Sep 2025 09:46:06 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9A2465F87D;
- Sun, 21 Sep 2025 17:46:05 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>
-Subject: Re: [PATCH v6 23/25] tests: add plugin asserting correctness of
- discon event's to_pc
-In-Reply-To: <073cad7dd8ae509ff64a2835fd146833b60c1f60.1757018626.git.neither@nut.email>
- (Julian Ganz's message of "Thu, 4 Sep 2025 22:48:58 +0200")
-References: <cover.1757018626.git.neither@nut.email>
- <073cad7dd8ae509ff64a2835fd146833b60c1f60.1757018626.git.neither@nut.email>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Sun, 21 Sep 2025 17:46:05 +0100
-Message-ID: <87segf69f6.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v0X43-0005ij-5B
+ for qemu-devel@nongnu.org; Sun, 21 Sep 2025 23:18:07 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1v0X3r-0002op-97
+ for qemu-devel@nongnu.org; Sun, 21 Sep 2025 23:18:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1758511075; x=1790047075;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=9yvAhW3IIyk5ZHezLBG03E/Z4qWmCd0B/FjhkhylR9s=;
+ b=Kowj8i3v0/UBVgG/ir/a5VtyXwt99skuLrlABYIiIN9eovbaVzWPf0dh
+ ADwIxEC6YogD9alwNZkbbTFP6Wa4bH4Z3NekhydXvscJjlualPoR+KppS
+ lieRog99tKP9exm7qQ6TtsxOMGRqguWy44aogWeXDtQO1bcZpmIhWB/kd
+ rMEbDLRr0XwdZoiDvKLTSF8HkftuAHStkV5Fe4SMka3CD66iN9+J6T1PE
+ nkFJby8VpM54Hh7dvT87TkNDz25VXCwtXSYRVtdMEby3bHJVRYXlkM6/m
+ X3yOxl9bKLWVN/7q75ik9YRts40V4s6V5iSraM+e/LOwxx9okXme4Ijd+ g==;
+X-CSE-ConnectionGUID: enEUQAGgTSiCghzvm4EIiQ==
+X-CSE-MsgGUID: 5gPE3LytTj+qkEiQxpLZFA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="60823961"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="60823961"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Sep 2025 20:17:46 -0700
+X-CSE-ConnectionGUID: /FyAAXjnQP2bSaKS7b4ozA==
+X-CSE-MsgGUID: U8J3hpZ8RvS0beO0Ql4U2A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,284,1751266800"; d="scan'208";a="176432267"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Sep 2025 20:17:47 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Sun, 21 Sep 2025 20:17:45 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Sun, 21 Sep 2025 20:17:45 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.33) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Sun, 21 Sep 2025 20:17:45 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GPv3imwQIGAx8WPoCWO/btk5/O1gML32BWEreiSVQnEqudlbTdwbIKn4o8BPKGUUl2CBDk2iyudBoaLl8uBJIe1Cnr9ROar5zF1rFJ2VFQAe2Vz8tfQbza8qEklcDdMkjeqVvjGhuVuywZmvXqDa+oloeI55hulwU5XXYYReOM2wg9huU1sbmEshDkSK6BPZNk442mcaChTzH2V7TiZ6Ec93OJM49SkXSYWxWWhXyHXdF9zCurmwzD4+pCbKYzYXVresS9SzvvlOD3omYQFyFeV4MnGeTfuxhS7kHWRLjo8GoMK+Pt6gbQ2PIE00jm2iuR3ZdYtYc/jRNLN71+N3Ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aw9VfHcfa57823pBFyElECIufAFpRVnd/qXXtNc7spI=;
+ b=k81g/1ooaAV0htRgM9M2DUWt4mOl0SyPLWI3NxT9Q+Vc0UD3qydTdcAbMQbLfwi1SK1Nhx0r+cpSMutpoI9pk7vcCza3wA8G4tvCYmAgnsGshfRV35qozFDyUorW1cdX+UPHWBpnJ1h5jJhK46nqLkvirG3PdnB/3VjICGkPZR4SffNm9SSaRY2GvWPBXo5L3xsQygTeXDKQ1Qf7F/YsH+g+6AUhEdR2v9UZ3xvUyZO5resXKMFqNQeLDTQcnbvbjkQ7VnagQ2GplIFcJbqoEpUjnfKm+YQlnfqXm2xNi3GdmGLrox1Pn6f+IM30KH0iB/jpE8lWLvpO9sohjq6UUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by PH0PR11MB4966.namprd11.prod.outlook.com (2603:10b6:510:42::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.19; Mon, 22 Sep
+ 2025 03:17:43 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9115.020; Mon, 22 Sep 2025
+ 03:17:43 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "avihaih@nvidia.com" <avihaih@nvidia.com>, "Hao, 
+ Xudong" <xudong.hao@intel.com>, "Cabiddu, Giovanni"
+ <giovanni.cabiddu@intel.com>, "Gross, Mark" <mark.gross@intel.com>, "Van De
+ Ven, Arjan" <arjan.van.de.ven@intel.com>
+Subject: RE: [PATCH 1/5] vfio/iommufd: Add framework code to support getting
+ dirty bitmap before unmap
+Thread-Topic: [PATCH 1/5] vfio/iommufd: Add framework code to support getting
+ dirty bitmap before unmap
+Thread-Index: AQHcIfvimBrBaa+XB0KbskuA8pwIdbSaTDWAgAHZT1A=
+Date: Mon, 22 Sep 2025 03:17:43 +0000
+Message-ID: <IA3PR11MB91368AE2A58185BE00627E149212A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250910023701.244356-1-zhenzhong.duan@intel.com>
+ <20250910023701.244356-2-zhenzhong.duan@intel.com>
+ <ee5c9d7c-a85e-4da4-bd5a-a59951a19a06@redhat.com>
+In-Reply-To: <ee5c9d7c-a85e-4da4-bd5a-a59951a19a06@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH0PR11MB4966:EE_
+x-ms-office365-filtering-correlation-id: 684385ce-e02b-49be-bcc8-08ddf9869890
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?z5Fa9w8j0LV2UjdPAL6WRDnmdzpNkF4VY9A9TZcYOtUq8KJ/7D9z6Eepfp?=
+ =?iso-8859-1?Q?i9eXg+bMb1ls2UBOVYF1JpH0g1kJZMh8nN2qMqc9Z9k+YrCJgdkc2iJSl6?=
+ =?iso-8859-1?Q?tTRKRBu43KNIQlvsUZMCm2KuNVaULEr3/EukXZSmPnyMLefPdJ8++cWfMw?=
+ =?iso-8859-1?Q?Us8P2SQiUH2itrw19P7MGiQEYYQIj4vkpdqhHYl7egjzwbms9eWj7P9JsV?=
+ =?iso-8859-1?Q?Uoc251eYXeIwtzAm5tyV8x+uo0hyAQO6dr8Rsq4Mmj2LxGsZYamkFIWbMy?=
+ =?iso-8859-1?Q?NDbqHj2T4OKB3VasA3ODcThQHu/q5SOtTGrz+RVJzn/5Kr0mtfmxUkNT3D?=
+ =?iso-8859-1?Q?hQH9D3pexON+iH1M8lbHmbvPeXVLUdoVlB/dEVwCc2Zj7cfdpl+pZ/FAyr?=
+ =?iso-8859-1?Q?ayhjxl/um0jy2xW0Bta3TBpPDw+QvQnbYaGHt9lYMWxr4NSMUZMGotqV9Q?=
+ =?iso-8859-1?Q?ALE73d4DImXXqdaClm9im7bJaGpH/Cf9SJMOrM7W6aHQmj8AYGKi3mFq/Z?=
+ =?iso-8859-1?Q?QBP/rtXV/c7FtGHopTof7FyJEJBQTyWsUjdtke696STWLFCWxQlT8PVJns?=
+ =?iso-8859-1?Q?sCDr3u21MI2+64BWf0hQ3T+jK4MqtTnJpJFCywtfEywMWnbuowolTeZeIF?=
+ =?iso-8859-1?Q?6uilDZS5sPGNwpt7e6/x/aDmDacoGQM1N6JTVro33ygPFjwNAp/rrjgcJf?=
+ =?iso-8859-1?Q?Vm8aSJ0KMQNTVNROW6XC+ENQ2yxXOlsPTicY/ldoRN0PInrltloreiI5vn?=
+ =?iso-8859-1?Q?21CmTSHqRo4HSqLgewkLVWvdNM8MDDanI09bFUgVow5gRFfdCkWzBtkKtP?=
+ =?iso-8859-1?Q?yUEwySNkupWRRgOifo8BfndyCRnVkAfWtLzyOZ+Va1HcasQ4LYjIv6awYu?=
+ =?iso-8859-1?Q?h+UA73lOZkdxiLhDDSyEBEUz5b5peEwmtLhrj5LIYPTvcuJ4XuUCs9llab?=
+ =?iso-8859-1?Q?1xCfwR2tKD2srKt3AWHi4FaPSsucOzTTM5VacPU0kmzD5YozOC9GARXAhB?=
+ =?iso-8859-1?Q?2lo0Ln5UJsm6hTiGzXQJoKEWFjIARlYnsJ8oypXQ5N4NSZ+Fvu5iKMckVN?=
+ =?iso-8859-1?Q?auv/v+wzjZYsFoJPKF1cBrK7gmZId8OvtFdb8d4NxgJioejRLyJpsEldrE?=
+ =?iso-8859-1?Q?dxpNl6Xl0WUShm4EDfyjykfB22sqv9lopSgkeRnfGVnt+v0Po2pJ0hR53a?=
+ =?iso-8859-1?Q?RJaMCbNcksZ1qQ0+cXydbc0v1Y80MBa0421KKTVrhK0xuTixPJpekzDjiP?=
+ =?iso-8859-1?Q?lnJrvum2l3F8dp8cxgeZQ0QBESnPC+Yzmuy+hawuWewRezCPb5sIYRYG+s?=
+ =?iso-8859-1?Q?HnBS5nRG3fgUUjBnSjdcRkln6j1iP26MUmQnyBYn9Ey5Pl05D8gTCkcDGW?=
+ =?iso-8859-1?Q?SvKbebt05bqUbIY1IHGjckuFB+dAt1jJEmDWKh2T1uKJYupVYiYi2vgekw?=
+ =?iso-8859-1?Q?GvksIFpN5lWrSk/iDSZq0PBNTq362cN3+JfJphesVS0ECj5w0m0TdDee4W?=
+ =?iso-8859-1?Q?5aGV/ml7Ck+W1uUfM1/t5gu1YuU4aa/gWSBK3LF8q1QrtZZ7h97lsiK+Jx?=
+ =?iso-8859-1?Q?bQygjI0=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?c/OPOK0u0ZnG02gp5Cou1NNhBw5ZljOOa1cv52rWu7gDhixnrma+RGODjh?=
+ =?iso-8859-1?Q?2eUtSif/R95uY6EonoC+V0stVRoRpi4cwshAlqH4bcnHC4oSbfXZdcB3W0?=
+ =?iso-8859-1?Q?VVGVmYNseLbB+yttnIBz/luvcsFRQNEssW35XchAlw5QMvy1IVZMihyuQn?=
+ =?iso-8859-1?Q?ojP0xytsLsONRnjzKvge2SQjDr61apjiK660Yi9+ZmhC3wVEnCpi0b0eN9?=
+ =?iso-8859-1?Q?tY8Cu6/n4ElyD32/tXXhePxvWg/UmV/eE02gVXbf0MJlIApzyoxUkhXfKg?=
+ =?iso-8859-1?Q?ZIvTsCzL2XGzRt7cON8xAAHW0CFjZhVzBujSzy3egKn9LasRb8U0TdeIpB?=
+ =?iso-8859-1?Q?HTblnc3mxsEa3QYhDZ4PCjcXA5iRtVxuuxs0Sj76Z/AtxwDzUyD8ycKuEv?=
+ =?iso-8859-1?Q?a5yXRZE3ojLLdSCQlMvaUkw8sQPDwpQMTn891ocGnG5Fe+1X+tVrHiNdLj?=
+ =?iso-8859-1?Q?0gQjvM8HpL7uiZ6bQX0Z5i4WvoNabvI5lwyr/CgvO3G7EXJCASkz4A+Lc9?=
+ =?iso-8859-1?Q?+3FxPIbAUX16yZ1uCml1MfZpHgPWkVAJPt8tSugayuC3uM32qfVerEqQZY?=
+ =?iso-8859-1?Q?X6r6YXOJX6aUwkHWLYfmmAf99g4e/GUIdtzFfaGPeThx1BP3/M93qE8zJi?=
+ =?iso-8859-1?Q?DclKe1Wuls/KrSuc9GB2IPE9LeJQFStIrMQJOzEGPFRtzC6Zbw5mBbKkcS?=
+ =?iso-8859-1?Q?dPGQXws1Tw+8pU0cmTU5hbdG4eABzx+IVANsCmbbCUIbVIs3nUK6hTAWeZ?=
+ =?iso-8859-1?Q?OToDxgxbCCzyTTxTCXP6A28iXZmAvSocHmN/pizGNEgvneFeyhT3Rvi2aI?=
+ =?iso-8859-1?Q?TIV1BCp4wx4b2e/CYdjFQeJ5MartzpVnaKWWkcoxVWmQZ7WUy8urGFD7nD?=
+ =?iso-8859-1?Q?GKDC9wospH+rRd6ntooh5r2vyquHQTGb497Mx/1tWNlKmgHxKY9rjnH91K?=
+ =?iso-8859-1?Q?yv2aZXIi0L5GKtY4hHU6ilvKTgh1buVrAYzQEMsEDrqLCFpZPH9Nv4G5Dn?=
+ =?iso-8859-1?Q?mVAYvaxAgipPgZgfIDhSHN0XiZgoPS4rCCadHCIiSjhJTypCbJ39QnqCdm?=
+ =?iso-8859-1?Q?EboAABJ8sLpk9Z0lq9QoacfXzuX6RU8o1EG/opFqNiSa065qaPJhNF8oad?=
+ =?iso-8859-1?Q?XD6mtqwCXlvE+siBMj7tFesZS3uKICkbvwlsaaiMJUXUQY91KrVtJO+Ptd?=
+ =?iso-8859-1?Q?fccw36LK2MSb8cKY6P1Y3Wjeg2TybEe08djWmX5yPDdniuvR7mYBBKw4MN?=
+ =?iso-8859-1?Q?ZSDHQnLgZqxCEYr3gmOkss69FF4LFwONjilMDrmozNVJN92hkfHC71Dil2?=
+ =?iso-8859-1?Q?U2pn5xPPh93fkTyOK/yiiH0kuYACevCWXb8itoL5uNtogKxso9CVcqZf32?=
+ =?iso-8859-1?Q?Ght2wetjomqjQFejPl+782CKN0lOVVKVFKM8LgPG4Hmof/aFcApTJlKDej?=
+ =?iso-8859-1?Q?hZEr0kLMAXfAciwBP9+dye+v3ZD/hHf7XguDKNgah0yp0WkEmAEYeTzjVk?=
+ =?iso-8859-1?Q?J/3UW1Dg6yj/hkjC5n9j3Y0EXIFpVzO7H/AKZmGGfyIb8LlVKvAOCnhE5L?=
+ =?iso-8859-1?Q?LzuE4nvARv4OMDrmpSIEzxB38BYIGoo0QH/evf214WTQfl/W+6vKEnD5ZE?=
+ =?iso-8859-1?Q?fsSOoJnVta9wX2pIQMY4WITQb4mCI5xgta?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 684385ce-e02b-49be-bcc8-08ddf9869890
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2025 03:17:43.6883 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qnBh5Sx56oqDXR8IcOU40TNqvyyX7wCRdeEs3Hsx0r+qIiO9WHCNgAgOADV5LHs8YwD2lL1HR4FgVZfbwU//esVq2KoHcjSGpyQLnwpbKP8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4966
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.18;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,363 +209,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+Hi Cedric,
 
-> We recently introduced plugin API for the registration of callbacks for
-> discontinuity events, specifically for interrupts, exceptions and host
-> call events. The callback receives various bits of information,
-> including the VCPU index and PCs.
+>-----Original Message-----
+>From: C=E9dric Le Goater <clg@redhat.com>
+>Subject: Re: [PATCH 1/5] vfio/iommufd: Add framework code to support
+>getting dirty bitmap before unmap
 >
-> This change introduces a test plugin asserting the correctness of that
-> behaviour in cases where this is possible with reasonable effort.
+>Hello Zhenzhong
 >
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Julian Ganz <neither@nut.email>
-> ---
->  tests/tcg/plugins/discons.c   | 210 ++++++++++++++++++++++++++++++++++
->  tests/tcg/plugins/meson.build |   2 +-
->  2 files changed, 211 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/plugins/discons.c
+>On 9/10/25 04:36, Zhenzhong Duan wrote:
+>> Currently we support device and iommu dirty tracking, device dirty
+>> tracking is preferred.
+>>
+>> Add the framework code in iommufd_cdev_unmap_one() to choose either
+>> device or iommu dirty tracking, just like vfio_legacy_dma_unmap_one().
 >
-> diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
-> new file mode 100644
-> index 0000000000..f185e3948b
-> --- /dev/null
-> +++ b/tests/tcg/plugins/discons.c
-> @@ -0,0 +1,210 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + * Copyright (C) 2025, Julian Ganz <neither@nut.email>
-> + *
-> + * This plugin exercises the discontinuity plugin API and asserts some
-> + * of its behaviour regarding reported program counters.
-> + */
-> +#include <stdio.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
-> +
-> +struct cpu_state {
-> +    uint64_t last_pc;
-> +    uint64_t from_pc;
-> +    uint64_t next_pc;
-> +    uint64_t has_from;
-> +    bool has_next;
-> +    enum qemu_plugin_discon_type next_type;
-> +};
-> +
-> +struct insn_data {
-> +    uint64_t addr;
-> +    uint64_t next_pc;
-> +    bool next_valid;
-> +};
-> +
-> +static struct qemu_plugin_scoreboard *states;
-> +
-> +static qemu_plugin_u64 last_pc;
-> +static qemu_plugin_u64 from_pc;
-> +static qemu_plugin_u64 has_from;
-> +
-> +static bool abort_on_mismatch;
-> +static bool trace_all_insns;
-> +
-> +static bool addr_eq(uint64_t a, uint64_t b)
-> +{
-> +    if (a =3D=3D b) {
-> +        return true;
-> +    }
-> +
-> +    uint64_t a_hw;
-> +    uint64_t b_hw;
-> +    if (!qemu_plugin_translate_vaddr(a, &a_hw) ||
-> +        !qemu_plugin_translate_vaddr(b, &b_hw))
-> +    {
-> +        return false;
-> +    }
-> +
-> +    return a_hw =3D=3D b_hw;
-> +}
-> +
-> +static void report_mismatch(const char *pc_name, unsigned int vcpu_index,
-> +                            enum qemu_plugin_discon_type type, uint64_t =
-last,
-> +                            uint64_t expected, uint64_t encountered)
-> +{
-> +    GString *report;
+>I wonder if commit 567d7d3e6be5 ("vfio/common: Work around kernel
+>overflow bug in DMA unmap") could be removed now to make the code
+>common to both VFIO IOMMU Type1 and IOMMUFD backends.
 
-This could be:
+I am not clear if there is other reason to keep the workaround, but the ori=
+ginal
+kernel issue had been fixed with below commit:
 
-  g_autoptr(GString) buf =3D g_string_new(NULL);
+commit 58fec830fc19208354895d9832785505046d6c01
+Author: Alex Williamson <alex.williamson@redhat.com>
+Date:   Mon Jan 7 22:13:22 2019 -0700
 
-> +    const char *discon_type_name =3D "unknown";
-> +
-> +    if (addr_eq(expected, encountered)) {
-> +        return;
-> +    }
-> +
-> +    switch (type) {
-> +    case QEMU_PLUGIN_DISCON_INTERRUPT:
-> +        discon_type_name =3D "interrupt";
-> +        break;
-> +    case QEMU_PLUGIN_DISCON_EXCEPTION:
-> +        discon_type_name =3D "exception";
-> +        break;
-> +    case QEMU_PLUGIN_DISCON_HOSTCALL:
-> +        discon_type_name =3D "hostcall";
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    report =3D g_string_new(NULL);
-> +    g_string_append_printf(report,
-> +                           "Discon %s PC mismatch on VCPU %d\nExpected: =
-     %"
-> +                           PRIx64"\nEncountered:   %"PRIx64"\nExecuted L=
-ast: %"
-> +                           PRIx64"\nEvent type:    %s\n",
-> +                           pc_name, vcpu_index, expected, encountered, l=
-ast,
-> +                           discon_type_name);
-> +    qemu_plugin_outs(report->str);
+    vfio/type1: Fix unmap overflow off-by-one
 
-I think we might want to flush here because
+    The below referenced commit adds a test for integer overflow, but in
+    doing so prevents the unmap ioctl from ever including the last page of
+    the address space.  Subtract one to compare to the last address of the
+    unmap to avoid the overflow and wrap-around.
 
-> +    if (abort_on_mismatch) {
-> +        g_abort();
-> +    }
+    Fixes: 71a7d3d78e3c ("vfio/type1: silence integer overflow warning")
+    Link: https://bugzilla.redhat.com/show_bug.cgi?id=3D1662291
+    Cc: stable@vger.kernel.org # v4.15+
+    Reported-by: Pei Zhang <pezhang@redhat.com>
+    Debugged-by: Peter Xu <peterx@redhat.com>
+    Reviewed-by: Dan Carpenter <dan.carpenter@oracle.com>
+    Reviewed-by: Peter Xu <peterx@redhat.com>
+    Tested-by: Peter Xu <peterx@redhat.com>
+    Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+    Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 
-This is firing on:
+>
+>I asked Alex and Peter in another thread.
 
-  =F0=9F=95=9917:35:50 alex@draig:tests/tcg/i386-linux-user  on =EE=82=A0 r=
-eview/tcg-discon-v6 [$!?]=20
-  =E2=9E=9C  make run-plugin-catch-syscalls-with-libdiscons.so V=3D1
-  timeout -s KILL --foreground 120  env QEMU=3D/home/alex/lsrc/qemu.git/bui=
-lds/sanitisers/qemu-i386 /home/alex/lsrc/qemu.git/builds/sanitisers/qemu-i3=
-86  -plugin ../plugins/libdiscons.so -d plugin -D catch-syscalls-with-libdi=
-scons.so.pout catch-syscalls >  run-plugin-catch-syscalls-with-libdiscons.s=
-o.out
-  Aborted
-  make: *** [Makefile:226: run-plugin-catch-syscalls-with-libdiscons.so] Er=
-ror 134
-  =F0=9F=95=9917:35:52 alex@draig:tests/tcg/i386-linux-user  on =EE=82=A0 r=
-eview/tcg-discon-v6 [$!?] [=F0=9F=94=B4 USAGE]=20
-  =E2=9C=97
+Just curious on the answer, may I ask which thread?
 
-although it never gets to the point of reporting what failed:
+btw: I just found unmapping in halves seems unnecessary as both backends of=
+ kernel side support unmap_all now.
 
-  Thread 1 "qemu-i386" hit Breakpoint 1, __GI_abort () at ./stdlib/abort.c:=
-72
-  warning: 72     ./stdlib/abort.c: No such file or directory
-  (gdb) bt
-  #0  __GI_abort () at ./stdlib/abort.c:72
-  #1  0x00007ffff630874d in report_mismatch (pc_name=3D0x7ffff630a220 "targ=
-et", vcpu_index=3D0, type=3DQEMU_PLUGIN_DISCON_EXCEPTION, last=3D134574955,=
- expected=3D134574953,=20
-      encountered=3D134574955) at ../../tests/tcg/plugins/discons.c:89
-  #2  0x00007ffff6308c0d in insn_exec (vcpu_index=3D0, userdata=3D0x0) at .=
-./../tests/tcg/plugins/discons.c:132
-  #3  0x00007fffea431114 in code_gen_buffer ()
-  #4  0x000055555577b0a6 in cpu_tb_exec (cpu=3D0x529000005200, itb=3D0x7fff=
-ea431000 <code_gen_buffer+200659>, tb_exit=3D0x7ffff49c9530) at ../../accel=
-/tcg/cpu-exec.c:438
-  #5  0x000055555577c92f in cpu_loop_exec_tb (cpu=3D0x529000005200, tb=3D0x=
-7fffea431000 <code_gen_buffer+200659>, pc=3D134574955, last_tb=3D0x7ffff49c=
-9540, tb_exit=3D0x7ffff49c9530)
-      at ../../accel/tcg/cpu-exec.c:871
-  #6  0x000055555577d151 in cpu_exec_loop (cpu=3D0x529000005200, sc=3D0x7ff=
-ff483a740) at ../../accel/tcg/cpu-exec.c:981
-  #7  0x000055555577d2fe in cpu_exec_setjmp (cpu=3D0x529000005200, sc=3D0x7=
-ffff483a740) at ../../accel/tcg/cpu-exec.c:998
-  #8  0x000055555577d4c8 in cpu_exec (cpu=3D0x529000005200) at ../../accel/=
-tcg/cpu-exec.c:1024
-  #9  0x00005555557bfc83 in cpu_loop (env=3D0x529000007dd0) at ../../linux-=
-user/i386/cpu_loop.c:215
-  #10 0x00005555558ee3e1 in main (argc=3D4, argv=3D0x7fffffffe688, envp=3D0=
-x7fffffffe6b0) at ../../linux-user/main.c:1038
-  (gdb) f 1
-  #1  0x00007ffff630874d in report_mismatch (pc_name=3D0x7ffff630a220 "targ=
-et", vcpu_index=3D0, type=3DQEMU_PLUGIN_DISCON_EXCEPTION, last=3D134574955,=
- expected=3D134574953,=20
-      encountered=3D134574955) at ../../tests/tcg/plugins/discons.c:89
-  89              g_abort();
-  (gdb) p report
-  $1 =3D (GString *) 0x50300002bf00
-  (gdb) p report->Str
-  There is no member named Str.
-  (gdb) p report->str
-  $2 =3D (gchar *) 0x51100001fbc0 "Discon target PC mismatch on VCPU 0\nExp=
-ected:      8057369\nEncountered:   805736b\nExecuted Last: 805736b\nEvent =
-type:    exception\n"
-  (gdb)=20
+    if (unmap_all) {
+        /* The unmap ioctl doesn't accept a full 64-bit span. */
+        Int128 llsize =3D int128_rshift(int128_2_64(), 1);
 
-I think this is where it is going wrong:
+        ret =3D vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsiz=
+e),
+                                        iotlb);
 
-  IN: _dl_early_allocate
-  0x0805736b:  89 c2                    movl     %eax, %edx
-  0x0805736d:  8d 1c 28                 leal     (%eax, %ebp), %ebx
-  0x08057370:  89 c8                    movl     %ecx, %eax
-  0x08057372:  cd 80                    int      $0x80
+        if (ret =3D=3D 0) {
+            ret =3D vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsi=
+ze),
+                                            int128_get64(llsize), iotlb);
+        }
 
-> +    g_string_free(report, true);
+    } else {
+        ret =3D vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
+    }
 
-so we could drop this... or..
+Thanks
+Zhenzhong
 
-
-> +}
-> +
-> +static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
-> +                        enum qemu_plugin_discon_type type, uint64_t from=
-_pc,
-> +                        uint64_t to_pc)
-> +{
-> +    struct cpu_state *state =3D qemu_plugin_scoreboard_find(states, vcpu=
-_index);
-> +
-> +    if (type =3D=3D QEMU_PLUGIN_DISCON_EXCEPTION &&
-> +        addr_eq(state->last_pc, from_pc))
-> +    {
-> +        /*
-> +         * For some types of exceptions, insn_exec will be called for the
-> +         * instruction that caused the exception. This is valid behaviou=
-r and
-> +         * does not need to be reported.
-> +         */
-> +    } else if (state->has_next) {
-> +        /*
-> +         * We may encounter discontinuity chains without any instructions
-> +         * being executed in between.
-> +         */
-> +        report_mismatch("source", vcpu_index, type, state->last_pc,
-> +                        state->next_pc, from_pc);
-> +    } else if (state->has_from) {
-> +        report_mismatch("source", vcpu_index, type, state->last_pc,
-> +                        state->from_pc, from_pc);
-> +    }
-> +
-> +    state->has_from =3D false;
-> +
-> +    state->next_pc =3D to_pc;
-> +    state->next_type =3D type;
-> +    state->has_next =3D true;
-> +}
-> +
-> +static void insn_exec(unsigned int vcpu_index, void *userdata)
-> +{
-> +    struct cpu_state *state =3D qemu_plugin_scoreboard_find(states, vcpu=
-_index);
-> +
-> +    if (state->has_next) {
-> +        report_mismatch("target", vcpu_index, state->next_type, state->l=
-ast_pc,
-> +                        state->next_pc, state->last_pc);
-> +        state->has_next =3D false;
-> +    }
-> +
-> +    if (trace_all_insns) {
-> +        g_autoptr(GString) report =3D g_string_new(NULL);
-> +        g_string_append_printf(report, "Exec insn at %"PRIx64" on VCPU %=
-d\n",
-> +                               state->last_pc, vcpu_index);
-> +        qemu_plugin_outs(report->str);
-> +    }
-> +}
-> +
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    size_t n_insns =3D qemu_plugin_tb_n_insns(tb);
-> +    for (size_t i =3D 0; i < n_insns; i++) {
-> +        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i);
-> +        uint64_t pc =3D qemu_plugin_insn_vaddr(insn);
-> +        uint64_t next_pc =3D pc + qemu_plugin_insn_size(insn);
-> +        uint64_t has_next =3D (i + 1) < n_insns;
-> +
-> +        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-> +                                                            QEMU_PLUGIN_=
-INLINE_STORE_U64,
-> +                                                            last_pc, pc);
-> +        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-> +                                                            QEMU_PLUGIN_=
-INLINE_STORE_U64,
-> +                                                            from_pc, nex=
-t_pc);
-> +        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-> +                                                            QEMU_PLUGIN_=
-INLINE_STORE_U64,
-> +                                                            has_from, ha=
-s_next);
-> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
-> +                                               QEMU_PLUGIN_CB_NO_REGS, N=
-ULL);
-> +    }
-> +}
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info,
-> +                                           int argc, char **argv)
-> +{
-> +    /* Set defaults */
-> +    abort_on_mismatch =3D true;
-> +    trace_all_insns =3D false;
-> +
-> +    for (int i =3D 0; i < argc; i++) {
-> +        char *opt =3D argv[i];
-> +        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
-> +        if (g_strcmp0(tokens[0], "abort") =3D=3D 0) {
-> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-> +                                        &abort_on_mismatch)) {
-> +                fprintf(stderr, "boolean argument parsing failed: %s\n",=
- opt);
-> +                return -1;
-> +            }
-> +        } else if (g_strcmp0(tokens[0], "trace-all") =3D=3D 0) {
-> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1],
-> +                                        &trace_all_insns)) {
-> +                fprintf(stderr, "boolean argument parsing failed: %s\n",=
- opt);
-> +                return -1;
-> +            }
-> +        } else {
-> +            fprintf(stderr, "option parsing failed: %s\n", opt);
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    states =3D qemu_plugin_scoreboard_new(sizeof(struct cpu_state));
-> +    last_pc =3D qemu_plugin_scoreboard_u64_in_struct(states, struct cpu_=
-state,
-> +                                                   last_pc);
-> +    from_pc =3D qemu_plugin_scoreboard_u64_in_struct(states, struct cpu_=
-state,
-> +                                                   from_pc);
-> +    has_from =3D qemu_plugin_scoreboard_u64_in_struct(states, struct cpu=
-_state,
-> +                                                    has_from);
-> +
-> +    qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
-> +                                        vcpu_discon);
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> +
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index 61a007d9e7..561584159e 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -1,6 +1,6 @@
->  t =3D []
->  if get_option('plugins')
-> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall=
-', 'patch']
-> +  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset=
-', 'syscall', 'patch']
->      if host_os =3D=3D 'windows'
->        t +=3D shared_module(i, files(i + '.c') + '../../../contrib/plugin=
-s/win32_linker.c',
->                          include_directories: '../../../include/qemu',
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
