@@ -4,217 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63B87CA100F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 17:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE2FCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 17:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0kOJ-0002mp-Cc; Mon, 22 Sep 2025 13:31:55 -0400
+	id 1v0kXS-00063X-DW; Mon, 22 Sep 2025 13:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v0kO9-0002jV-Jb
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:31:46 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1v0kO4-0001Xz-Tq
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:31:45 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58MHNFqt009109;
- Mon, 22 Sep 2025 17:31:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=QGxprtBpkzE+owLPJk/e1HHKaln7woPGYYvG7ykemDU=; b=
- hjuTRFZkkDEU5eCbxgFqzsIFFauY3zBPmylsRPToRZ9RB1vHLHl48JZGcHYweXhk
- h4JYOGwheAKOv2TsE+tBrhykjbt8NG0zayNp/eq76ktpavTLARFMQ0kxmFwOCQp8
- BmBEVKSarcJQ/oczqeyKQqEQRQC/rN/u7NRa2d//ULT+qahU82ifHkMiVj9DjjPL
- BBu4ne+I5BdxI//GNMm+FDZpIb3Gs8aBZBkJzmkishRx8PfUiCgi5O7a3FSRzqAd
- CQ2wencYU+TvBWyq6WKT+vCzMEvH9Kr5mYdjC+eUvf4mu2FGD7SwGzH37EK4kjGI
- IzU680YY7yzMehsKt10hZw==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 499mtt2x5p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Sep 2025 17:31:35 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58MGXPIP025290; Mon, 22 Sep 2025 17:31:34 GMT
-Received: from ph8pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11012020.outbound.protection.outlook.com [40.107.209.20])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 499jq7babx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Sep 2025 17:31:34 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AD72pNFoU2m9RiCVErwsm88bR/FczpBgXOPd3lrDPpv1MBKEM8B36pkPyADNyCn/UbnYIzt56FoTu66G0sdQOdG6cNqpnsSrdriQMCnihIGdY+O5QcVcJB115KoK/Doc2Y39AnW8mBuCl28Ka7ImtKkpsN2+nqwLRHl7dvNk+RMFRuJq8sUoKZhX+F1blnHfveAn/J1vwKOQa+Jy/fkCDuviXSO9IoGydgqdg0NBcobILiQktQ1eGYWdMx+2lGjDS3tnKu05arvv/vEZ5NkmLQtKJOHDMzMsPypSIa7SIkTByxrCCfhghdiLHYYj2KwI9ee964tDE5P82lz/OargAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QGxprtBpkzE+owLPJk/e1HHKaln7woPGYYvG7ykemDU=;
- b=lwMpJ9r3Z6Qy4P/Br3WJxVeI0C2VpfCEaXTYL1eIf3/TwGmGjpUQTjUxhsPf7KOuo1UMW1Yf4J+qoWtC1XLCjU0pJBGrwRnFDnqQHVbXBcJLiZ1ZDJ3IpdEYrWR66B2C99IY5oqj62S8diXMKL1kmqDecAL4yrFuKnUW3AI+hLV2iphrpL1fqCcZGr78ZOuHBxnnacYXYoOiotGOwfU5P5E/MdcLyg7kGeULF+QKI3gRhvz0NUXadnVL68Q2Dcv2Qy5sgWwgn4VNdtW++zrRZKc2pt8AvE5sZ4NhMyIGMpyHc1PQRz2l6nEa1GW/2VqhbfTjDOV1fzZ3Jytfc+WYTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QGxprtBpkzE+owLPJk/e1HHKaln7woPGYYvG7ykemDU=;
- b=oJ0nzR+0qLCoWtvyL9EQfYEYCdzQfC1Sa8f8OWrbWmfwZxw+3AcOCRdM4tl33PlT+6wqpcGbAYIOh86G1xytxfvgMw+53crDOvuzoEPvzUhAmJQNPEfvl5k0D0paQcZBkNaeTQPuBQVT2hj1phw6E/+Ma3pCuhZrPyonOTJLvOg=
-Received: from DS7PR10MB7129.namprd10.prod.outlook.com (2603:10b6:8:e6::5) by
- DM3PR10MB7969.namprd10.prod.outlook.com (2603:10b6:0:45::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.18; Mon, 22 Sep 2025 17:31:32 +0000
-Received: from DS7PR10MB7129.namprd10.prod.outlook.com
- ([fe80::721c:7e49:d8c5:799c]) by DS7PR10MB7129.namprd10.prod.outlook.com
- ([fe80::721c:7e49:d8c5:799c%3]) with mapi id 15.20.9137.018; Mon, 22 Sep 2025
- 17:31:32 +0000
-Message-ID: <1e9f9c64-af03-466b-8212-ce5c828aac6e@oracle.com>
-Date: Mon, 22 Sep 2025 10:31:30 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: Should QEMU (accel=kvm) kvm-clock/guest_tsc stop counting during
- downtime blackout?
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org
-References: <2d375ec3-a071-4ae3-b03a-05a823c48016@oracle.com>
- <3d30b662b8cdb2d25d9b4c5bae98af1c45fac306.camel@infradead.org>
-Content-Language: en-US
-From: Dongli Zhang <dongli.zhang@oracle.com>
-In-Reply-To: <3d30b662b8cdb2d25d9b4c5bae98af1c45fac306.camel@infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN0PR08CA0023.namprd08.prod.outlook.com
- (2603:10b6:408:142::17) To DS7PR10MB7129.namprd10.prod.outlook.com
- (2603:10b6:8:e6::5)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v0kX6-0005sM-7E
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:41:01 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1v0kWt-0002jr-V5
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:40:55 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E73251F7E1;
+ Mon, 22 Sep 2025 17:40:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758562841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UUmh2R516CUzr6JrEmOT2avlKygRQsFqt/EPaeqlRm0=;
+ b=SbGCZpzs6/GAlYDIVh62qUvZ3Q1Dr0uGsEejNF97lRIZujLz5d5MnyAfl0MaNZVRWYwMcb
+ NPM2Q/rIEe/3C0B8XN2T9XAU6bD7MwmKodl9eCS9I3zqEstbP7oMbZFGtIK26cBJrFwlc7
+ nBMfAtsWbkX3QkmQ92LrW0muS+y3POY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758562841;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UUmh2R516CUzr6JrEmOT2avlKygRQsFqt/EPaeqlRm0=;
+ b=gngu1FZSsdx/feCz3FA1mfXv5vpYBsGNN46j1O83efF8COhHNriyyvdISoSOmwlZKwIRhy
+ D+Adia4T9CrEHfBw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Jf2j4pjI;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xo6XNItv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1758562840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UUmh2R516CUzr6JrEmOT2avlKygRQsFqt/EPaeqlRm0=;
+ b=Jf2j4pjIuvZ1ke6O/c5n1ZctcfMCCcbo4/6IKWOYasH1ef60Cg80JAHnqmDzkibW7tHqgc
+ qQkqxNYuttpk+gK9+XclZkqGh4k7dhT9Q4ZZLP2ePUt0LEOeJbp9Pe8q77opPkOvM3rpa5
+ IE210ZweZLXhD+bPcJ1DGHbgn5yXH+I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1758562840;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UUmh2R516CUzr6JrEmOT2avlKygRQsFqt/EPaeqlRm0=;
+ b=xo6XNItvVF9foaxzZxDFffNNsBAhubjIfMwYnTLiyTU18BGRqysOSwPIreRNrVSQwKyHtv
+ sRaKsy8Du0g16XAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5C79713A63;
+ Mon, 22 Sep 2025 17:40:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rDP5BhiK0WifTQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 22 Sep 2025 17:40:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, "Dr. David
+ Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 3/4] migration: Refactor incoming cleanup into
+ migration_incoming_finish()
+In-Reply-To: <aNFwdic2-d_Crctc@x1.local>
+References: <20250915115918.3520735-1-jmarcin@redhat.com>
+ <20250915115918.3520735-4-jmarcin@redhat.com> <87plbmtmox.fsf@suse.de>
+ <luoiumyvzjxtro6bd4vqn5mq6icf2zfic3n6shivb2e3ngkmcl@bz7vzg7xwdiq>
+ <aNFwdic2-d_Crctc@x1.local>
+Date: Mon, 22 Sep 2025 14:40:37 -0300
+Message-ID: <877bxqtmga.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB7129:EE_|DM3PR10MB7969:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3cefd7ed-d268-451b-88e5-08ddf9fddef7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?c0NWNHFZdXQwNUpUN25XVGh1bzVEblJFdHlXWVk2blRybCtyR2k5UDl0Nk4v?=
- =?utf-8?B?ZUIwNlJtcTlTVnBXYUd5K2FUanl1c1Rzb1JubklucWFmK05ObUt5bXNvRHJU?=
- =?utf-8?B?VkQ1SjV2WFhzMHE5UDlYZUh0Q1dqWmJaWVVDcmVzSXlBblZzQkVqa29aYnFy?=
- =?utf-8?B?OXVWTW5oWGIwT09YNDltZHJnM1pUYVV1bjhBM1g4VGViMW0wN0xsTG03NzZK?=
- =?utf-8?B?Y2tTelUvQTZPeG9xaVoyVXE0Sm1ab3VBZlRaRGZkdzRZTGxvRmlhUkpsZjZw?=
- =?utf-8?B?Wml0OWJTendGZ2NkVDlyOHBYaFpza2tRN0VvUG9OQUdWam94YzdpbzFpQnJz?=
- =?utf-8?B?cmltUFNvaEFpSHU1YWw3dFJKNS9nQXRYbzBxdU1NdEs0RTZxMUxsNk1xRGVH?=
- =?utf-8?B?anhXMXJuclhFamFLdHUxbFRZN1hjUTlROTZCQzNMQk5uVnd6aDE2cHp3M1JC?=
- =?utf-8?B?VzR4by9QeUd2MkUxd05jRjdtRm1WdFJXNmpzNDIxaFZ6bmxkRmdqbHQ2N3VP?=
- =?utf-8?B?Q2JRMzkvRTFqZm9iM3hmRlhXWUhSdzdRSW9YeWhvZ3RwOHQ3eWYvc0VNZ0hh?=
- =?utf-8?B?Q082TUxadGhLbDlhTjlSTzQ1VERyWW9jbExOdjR3ZW5ZUGlpQnRLVzBXdnJS?=
- =?utf-8?B?MS8rMVRsOGVMdkE1Rm1GcU9rcGlpc0xBamxTc1k3d3BDZkJjL2I2dXc0SE9h?=
- =?utf-8?B?Wms4TzdFSVZWYmZuNlVMM3pqZXEwUm9WbG1QenRuODRod1VoTWhIbDFQSFE1?=
- =?utf-8?B?UXJHcnhMN2tkR1kzVVYvR01qdVRHSFFZczBlU042c1p5REh4WGtNT3A2MnFa?=
- =?utf-8?B?cC9sN2p6MXpmdERid2srM2MvV2F0dXYxdnNJRFBsUlp0VmJ6SzBESzRrYVho?=
- =?utf-8?B?cC9XUjRWSks5TnhXaUs4WTZ5VlhyL2txRVU4RFFIT01SS01LZnp0WmdQNkp2?=
- =?utf-8?B?OEQ0N1JZang5cmV2a2JoV3VUaTVvYkFQVzQxT25WRTgzMGlERU9vZlBsb3hJ?=
- =?utf-8?B?a1A4cnRaWW90eVAranI4Tk51YzgzMGdjL1ZWK0dUT2VacW56ZjR3Tm5MT3VI?=
- =?utf-8?B?aGZnRTIzU1NlNW5VOWExQ3owVVlGRHlXOWFCM0F6ak51REIzYnIyOFJxZHRM?=
- =?utf-8?B?S3BDR01udDBWd3c1OEZPQ081aHFaZW5hNDJxUktJNTAzeVlhUkEwSzc5K21L?=
- =?utf-8?B?WTNXOHUzUHo1ZFNXZzhMUnJnSElYUDVBckJscU9tQXRISFhISk1Wa3NENVFu?=
- =?utf-8?B?Y3lRajR0QWFjeS9GY1hGWWxEamhJUzA3aG04M3NKMVdNZFBmTVZFRVNML2w4?=
- =?utf-8?B?SkZWVzFnb2Y4eDNid3BXTjBRaFp0ZlMxbThHOHpsSjA3Yy8xY05ieGRSVE9W?=
- =?utf-8?B?L0FWVVBqOThuL2dnZGlvQm9RRld3dE9DWnk5WSs4WGszRTZPS09panJwSkNM?=
- =?utf-8?B?WDhkbFlDQUhQSzBzZzFuaVJGNUx2ZVBiaWVwNmh0Mk9YQWJ4bC9samJseFEy?=
- =?utf-8?B?cVowRHBzOEk2T3pmSThpS1R0UytQMGdnTkVaU0tzVjRzVHBXUUFPV3YzUWlj?=
- =?utf-8?B?Z0gwaHNpSDdzb2d1b0EyMHVZN0ZDM3JYYk54ODBxc1FVN1VmbHJ5VjF1NXFl?=
- =?utf-8?B?RzUwSjdubEczS3JjNmpLUTYrUDA3anlKd1dOOGxVdmVSVk85SDlsQm4wbitW?=
- =?utf-8?B?Tk9QUHJEWE1abFQzRm92T0tUOXlDWlJNeS9wZStRbFhZWGVhMFZGbUVMQitR?=
- =?utf-8?B?a2h2TzMva3NyZ01qdExEM2hrQUQxTG5URTJUR2l0NU5HYnA5NjJoejU2L0Yx?=
- =?utf-8?B?NmF0N1NkTjJ3czRaSHBRWUFmNXVXMldMK0RyL0krVVhZRWtKYTBKREtYeVZD?=
- =?utf-8?Q?dFvbiGAX/mkii?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR10MB7129.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q1lNU1NzdDRPaXFLTDJkYjUyM3hGZ2d5MnUwVW5IQkVuYm5PSWF6QmFESXhP?=
- =?utf-8?B?OHVrK3JxdTdWRi9JSEthYksyNDgxSVZTR2RZa3hQYXJaNmdOSmZ4T2dZWDNV?=
- =?utf-8?B?TDh4OFBBbXRpOGRKVjhkVWlJVFhzUG51MmZZcll5NXZTTFRYbXNkOEF0c3ND?=
- =?utf-8?B?RXNPbzIyRnlVNlFtMnN5cWs5OTlJdGpHenF4RUVJd3hZbDJBeUcycloxZXJG?=
- =?utf-8?B?OTN4bkhlUlllMzVTU0ljWExIN2VvNmZJZ0NMN0dOanBqS29lMjhta3dyVDA0?=
- =?utf-8?B?Wk93QUR5NXBWVW52cjJqSlJOOEZad3JTVWdxZWxHZHo1QmUzMVkzaTJwdjAx?=
- =?utf-8?B?UWw1aDlEZHJZY0s0VHd2bDFCdkY2MFhsZ0Z1bU12ejIvZkpPeHpaOWFmZkFB?=
- =?utf-8?B?SEpEMnA3R2RSMDRMSk5RaVM0R0dtVm1ON3MvVzcxTi9WR1E1ZS9PODNoT2Zh?=
- =?utf-8?B?Y3VoQU5nUU81VTlINXAxbFVyZFB5djgydksvbng3bEhjc21DN0hPUFNmcHpO?=
- =?utf-8?B?S2Q0N3NwU3N0TzNRUE1CWUpZdkJBcXlodG1FL2JMeFJjaW0rTjlGcE5RMjh5?=
- =?utf-8?B?aThpOENTcFhGUlozdkYzcU1Tc2Z3YXJEekNCZ3RkOUJkMVhsWTRmUHRxdWR3?=
- =?utf-8?B?T1prQTJUVEN6YzFtRmwvS1I0YlNZWDZsenV3M0crcVZCbVBac1hXa3NRUzE4?=
- =?utf-8?B?QkM2bSsrbDRPOWlHV1Vib2xJdFdTaUVXV0lqaklvcFlReDl3VXhrZjhMbUk3?=
- =?utf-8?B?d3hZQWdmSHVZVVMybDVCMm5PUlZhN3k5UXB3akp0WFV0YUpxZHFUUkh1YTVn?=
- =?utf-8?B?dWFGa1RaSG90VkU0azdEQzFuMDFSdysxd2NjanFyZS8ydmliWjQ5QStycm93?=
- =?utf-8?B?N2YrTFdHY2FUbkZ6N3J1ZGpoWDBaOWc0ODFsVkovNHg4azlDZVlKWklQUU02?=
- =?utf-8?B?bjNUMUNUajVPWGZxbGs3a2IyZmZ3bmhIZytudWNkZk1lUk9RQXN2c3VuSlJU?=
- =?utf-8?B?djZscGQ1M3dScnY5Q3NRNnJMdVhkVmhyL0FZdWJLLzgranRUSTU3UmpTVXpN?=
- =?utf-8?B?MVR3OXNCSlZPcHBhb2JvUVpGTzBTb1Q0R3B4aHRhOFJnTE44TDY5T3U5K1ZC?=
- =?utf-8?B?VG1FS25tamZmc0Z0c0NhMDZKNHduOXNIZERua2pQcUVOYmQ4VDlMbG1MMnFN?=
- =?utf-8?B?alJ1NE1IK3YyeUxUQmcrdWduYS9UbjM3N2JGSWpTc25xU3NzazFsWm5zTXhl?=
- =?utf-8?B?VGFscFlaRktYRmpCdEFsVlBzVk93QXU0YkZtM3c2TEw4Q3p6dklCQ2FKYldU?=
- =?utf-8?B?N3VlSU1nVVBGaGZ2aU5zZUpzS2IyTi9iRjRPYmdGV212ZTEvS2JyR1JGc3l0?=
- =?utf-8?B?WitteHd6M244TlRONnhWR0lad3VNOUw5c3p4eUVyVHIyZlBseG9QcUliQTlm?=
- =?utf-8?B?OUNiV3gvNk5QWDJJQlNWckd2THhpTjNiTmpmT3pmd3pneUllYWNFSEx0aDJ0?=
- =?utf-8?B?bVBDR2RGTjJBWHBJOFZXYXlnMnhVdDl2K0p4TTc3NFZ6cy9WUzVKcndvdm1O?=
- =?utf-8?B?M1JpeTVNa1dXUDRha3FBQWhHbkR0MHR5UEtjd2hqdVZIYWtpOTFaSi8zdG5w?=
- =?utf-8?B?YzUrOFJRcGF6cTNXYUFCZ3NoRTk2MGlOY3NjNThES3BMZDFFSTJlMDB6UUVZ?=
- =?utf-8?B?RkwySUNJckprcHM4TTdNRVVWWndkSi9xaEVJeStrMXl3emtsbFcxam9lY0xB?=
- =?utf-8?B?ZWVtWUZocnE4WXArZlVGQXh6YUZCc3dwcTlnMENpSWJSR3JTaVFkcTlPenho?=
- =?utf-8?B?empTVTI5ZmpBalNoYW1RNnU5MFhWNElHb0dPbmZ3VlRSQm9WT1cwODg4Z1py?=
- =?utf-8?B?OXMra3pFeE9TRUVHcFNBNUVTbE5lOTVJMEtTdk8yU1FoTDlqaW93dkg2MDJ5?=
- =?utf-8?B?bE4wdDV3TFBuNXhiK2YvSFhnNTBkV3RpMnQ0bERCUjRJRDVqdFVKNmNpOHll?=
- =?utf-8?B?VVZhalE0Wm80YlBrcHlVOGpJZ1YvWjY3ZkZ5WG9aWDdJNjljaEwzNzFpRW5K?=
- =?utf-8?B?dHRrSjNhQ0ZONHpaK2NpaHhJVmdvdEtyeCtjTXNaSmE1eDlaM3ZXYis4ZGUr?=
- =?utf-8?B?djdrbWZKUy9UeTUyZ2drWEQ3d0hlakxvelRqbmlVRTZObkM2MFptaHVRWnNU?=
- =?utf-8?B?TGc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: dxPeoqDNAeOIoGTBCxgHT2df/aAKbSYX5ONObIz5LsfnM2NEkzxAejzEJzU3HoCWst8ekPpyDIkkmv7EpfNxhi6Bn2yNx9OvJUH6/fMs/cE3AVywJfuljzizHnT+PuWa97ocYFUkm2E5XjhlwhB+6D2PpXmRHRXcqhH7lfm2YgtC1sMt3zOmvgfPpDZ2lV9jha6gPJ7mKbruO6XB+KpdMfVnD+ij2OB2O4brWcWZczxJWHajbd/zhSoFxEcrLHEnu5wFn9ck5Zey/0r0hlpm8UMEJO5qse1dh1zx2isKhzFRRIJWOgNDnAnLdpTET/7FstBzd63jvOF0s2mMCDxjpdVfIrOcw2Td/DPCXxbjI0IA+wehkhtJScByMa8pYNIqw0vQ4Wxc4K4faHKmHmXmo/tEX15AKP3jkwld+uB17ODR8iJZWwm19J4j7bf1HY6l+2aSKQ8LtYVo1vnPZC0pHmv4y+AawGF2K91DXCw5IWXZHWYmlJShrLrJ8QYl58wYD/j6bXhkW//j5rlTF6O0fIfs+ldqdR0itkri9wUE0IWQ1iuLGRFz2p8+zo7SP9Mhm9IjzxadwkMWHV0gV5gSIYRv1x1LDOUYs9+oGdP/5QM=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3cefd7ed-d268-451b-88e5-08ddf9fddef7
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB7129.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2025 17:31:32.1410 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xYgFVPgPSmvxSlNqjsQsd6l/4vgjQutXwUkP9LOSyR9bTJ/hOhl6BMyKM64Uif09wWh0E14lrzbw450Vb0xVEA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR10MB7969
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_01,2025-09-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- bulkscore=0 mlxlogscore=999
- malwarescore=0 spamscore=0 adultscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2509220171
-X-Authority-Analysis: v=2.4 cv=fd2ty1QF c=1 sm=1 tr=0 ts=68d187f7 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=JfrnYn6hAAAA:8
- a=Uo5hOzLPh7jremiIRQkA:9 a=QEXdDO2ut3YA:10 a=1CNFftbPRP8L7MoqJWF3:22
-X-Proofpoint-ORIG-GUID: _9JG286SDJapxTQ1zqYpYw2k2LMSUwEH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzNCBTYWx0ZWRfXwslFJQNPspea
- 4N1lseLd6NRvC8B+wev51WBo1c6WI5XHdrzZQPqQRsp9Wbp6csRtU0EHUb0SwTLE3wp0a9JhZmP
- QBzCc5leY7+60yEnDzXYG81/9u9HCcxytUxmzdllwZx7hQRQGYLTiuNz3jR5IaAzYS9r7LINFp+
- 13I9KaTHbXm/lhmx6oiHGrVbFdrIHuKjA1NbaMa0Di35thEtL3BrL3FxtKOTZKj5TfP1vtNvXA+
- gmevOE8/cBGN/8AbnlqYmiYx5rBOfICY2b1iWLG+fJUVLbOVTBPikKOvm+teeJvfY8Ra/UHMA6+
- b7eG/Tl+/T4hvIKT/ZKwc2IH0zOxl7mofGOgAdLVHPZNESrlhNO7rDprPMGX3tlxcCi63gaHMg9
- eSuHLwAn
-X-Proofpoint-GUID: _9JG286SDJapxTQ1zqYpYw2k2LMSUwEH
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Rspamd-Queue-Id: E73251F7E1
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -230,95 +122,375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi David,
+Peter Xu <peterx@redhat.com> writes:
 
-Thank you very much for quick reply!
+> On Mon, Sep 22, 2025 at 02:58:38PM +0200, Juraj Marcin wrote:
+>> Hi Fabiano,
+>> 
+>> On 2025-09-19 13:46, Fabiano Rosas wrote:
+>> > Juraj Marcin <jmarcin@redhat.com> writes:
+>> > 
+>> > Hi Juraj,
+>> > 
+>> > Good patch, nice use of migrate_has_failed()
+>> 
+>> Thanks!
+>> 
+>> > 
+>> > > From: Juraj Marcin <jmarcin@redhat.com>
+>> > >
+>> > > Currently, there are two functions that are responsible for cleanup of
+>> > > the incoming migration state. With successful precopy, it's the main
+>> > > thread and with successful postcopy it's the listen thread. However, if
+>> > > postcopy fails during in the device load, both functions will try to do
+>> > > the cleanup. Moreover, when exit-on-error parameter was added, it was
+>> > > applied only to precopy.
+>> > >
+>> > 
+>> > Someone could be relying in postcopy always exiting on error while
+>> > explicitly setting exit-on-error=false for precopy and this patch would
+>> > change the behavior incompatibly. Is this an issue? I'm willing to
+>> > ignore it, but you guys know more about postcopy.
+>> 
+>> Good question. When going through older patches where postcopy listen
+>> thread and then where exit-on-error were implemented, it seemed more
+>> like an overlook than intentional omission. However, it might be better
+>> to not break any potential users of this, we could add another option,
+>> "exit-on-postcopy-error" that would allow such handling if postscopy
+>> failed unrecoverably. I've already talked about such option with
+>> @jdenemar and he agreed with it.
+>
+> The idea for postcopy ram is, it should never fail.. as failing should
+> never be better than a pause.  Block dirty bitmap might be different,
+> though, when enabled separately.
+>
+> For postcopy-ram, qemu_loadvm_state_main() will in reality only receive RAM
+> updates. It'll almost always trigger the postcopy_pause_incoming() path
+> when anything fails.
+>
+> For pure block-dirty-bitmap-only styled postcopy: for this exit-on-error, I
+> also don't think we should really "exit on errors", even if the flag is
+> set.  IIUC, it's not fatal to the VM if that failed, as described in:
+>
+> commit ee64722514fabcad2430982ade86180208f5be4f
+> Author: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
+> Date:   Mon Jul 27 22:42:32 2020 +0300
+>
+>     migration/savevm: don't worry if bitmap migration postcopy failed
+>
+>     ...
+>
+>     And anyway, bitmaps postcopy is not prepared to be somehow recovered.
+>     The original idea instead is that if bitmaps postcopy failed, we just
+>     lose some bitmaps, which is not critical. So, on failure we just need
+>     to remove unfinished bitmaps and guest should continue execution on
+>     destination.
+>
+> Hence, exit here might be an overkill.. need block developers to double
+> check, though..
+>
+>> 
+>> > 
+>> > > This patch refactors common cleanup and exiting on error into a helper
+>> > > function that can be started either from precopy or postcopy, reducing
+>> > > the duplication. If the listen thread has been started (the postcopy
+>> > > state is at least LISTENING), the listen thread is responsible for all
+>> > > cleanup and exiting, otherwise it's the main thread's responsibility.
+>> > 
+>> > Don't the BHs also run in the main thread? I'm not sure this sentence is
+>> > accurate.
+>> 
+>> Yeah, it is a bit inaccurate now that you mention it, BHs are indeed run
+>> in the main thread. More accurate would to replace the main thread with
+>> process incoming migration coroutine, that would precisely describe who
+>> has the responsibility to call the cleanup.
+>> 
+>> > 
+>> > >
+>> > > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+>> > > ---
+>> > >  migration/migration.c | 64 ++++++++++++++++++++++++-------------------
+>> > >  migration/migration.h |  1 +
+>> > >  migration/savevm.c    | 48 +++++++++++---------------------
+>> > 
+>> > Could someone act on the TODOs and move postcopy code into postcopy-ram?
+>> > It's never too late to make things consistent.
+>> 
+>> I can take a look.
+>> 
+>> > 
+>> > >  3 files changed, 53 insertions(+), 60 deletions(-)
+>> > >
+>> > > diff --git a/migration/migration.c b/migration/migration.c
+>> > > index 2c0b3a7229..7222e3de13 100644
+>> > > --- a/migration/migration.c
+>> > > +++ b/migration/migration.c
+>> > > @@ -442,9 +442,19 @@ void migration_incoming_transport_cleanup(MigrationIncomingState *mis)
+>> > >  void migration_incoming_state_destroy(void)
+>> > >  {
+>> > >      struct MigrationIncomingState *mis = migration_incoming_get_current();
+>> > > +    PostcopyState ps = postcopy_state_get();
+>> > >  
+>> > >      multifd_recv_cleanup();
+>> > >  
+>> > > +    if (mis->have_listen_thread) {
+>> > > +        qemu_thread_join(&mis->listen_thread);
+>> > > +        mis->have_listen_thread = false;
+>> > > +    }
+>> > > +
+>> > > +    if (ps != POSTCOPY_INCOMING_NONE) {
+>> > > +        postcopy_ram_incoming_cleanup(mis);
+>> > > +    }
+>> > > +
+>> > >      /*
+>> > >       * RAM state cleanup needs to happen after multifd cleanup, because
+>> > >       * multifd threads can use some of its states (receivedmap).
+>> > > @@ -809,6 +819,23 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+>> > >      cpr_state_close();
+>> > >  }
+>> > >  
+>> > > +void migration_incoming_finish(void)
+>> > > +{
+>> > > +    MigrationState *s = migrate_get_current();
+>> > > +    MigrationIncomingState *mis = migration_incoming_get_current();
+>> > > +
+>> > > +    migration_incoming_state_destroy();
+>> > > +
+>> > > +    if (migration_has_failed(mis->state) && mis->exit_on_error) {
+>> > > +        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>> > > +            error_report_err(s->error);
+>> > > +            s->error = NULL;
+>> > > +        }
+>> > > +
+>> > > +        exit(EXIT_FAILURE);
+>> > > +    }
+>> > > +}
+>> > > +
+>> > >  static void process_incoming_migration_bh(void *opaque)
+>> > >  {
+>> > >      MigrationIncomingState *mis = opaque;
+>> > > @@ -861,7 +888,7 @@ static void process_incoming_migration_bh(void *opaque)
+>> > >       */
+>> > >      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+>> > >                        MIGRATION_STATUS_COMPLETED);
+>> > > -    migration_incoming_state_destroy();
+>> > > +    migration_incoming_finish();
+>> > >  }
+>> > >  
+>> > >  static void coroutine_fn
+>> > > @@ -888,23 +915,13 @@ process_incoming_migration_co(void *opaque)
+>> > >  
+>> > >      ps = postcopy_state_get();
+>> > >      trace_process_incoming_migration_co_end(ret, ps);
+>> > > -    if (ps != POSTCOPY_INCOMING_NONE) {
+>> > > -        if (ps == POSTCOPY_INCOMING_ADVISE) {
+>> > > -            /*
+>> > > -             * Where a migration had postcopy enabled (and thus went to advise)
+>> > > -             * but managed to complete within the precopy period, we can use
+>> > > -             * the normal exit.
+>> > > -             */
+>> > > -            postcopy_ram_incoming_cleanup(mis);
+>> > > -        } else if (ret >= 0) {
+>> > > -            /*
+>> > > -             * Postcopy was started, cleanup should happen at the end of the
+>> > > -             * postcopy thread.
+>> > > -             */
+>> > > -            trace_process_incoming_migration_co_postcopy_end_main();
+>> > > -            goto out;
+>> > > -        }
+>> > > -        /* Else if something went wrong then just fall out of the normal exit */
+>> > > +    if (ps >= POSTCOPY_INCOMING_LISTENING) {
+>> > > +        /*
+>> > > +         * Postcopy was started, cleanup should happen at the end of the
+>> > > +         * postcopy thread.
+>> > > +         */
+>> > > +        trace_process_incoming_migration_co_postcopy_end_main();
+>> > > +        goto out;
+>> > >      }
+>> > >  
+>> > >      if (ret < 0) {
+>> > > @@ -926,16 +943,7 @@ fail:
+>> > >      migrate_set_error(s, local_err);
+>> > >      error_free(local_err);
+>> > >  
+>> > > -    migration_incoming_state_destroy();
+>> > > -
+>> > > -    if (mis->exit_on_error) {
+>> > > -        WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
+>> > > -            error_report_err(s->error);
+>> > > -            s->error = NULL;
+>> > > -        }
+>> > > -
+>> > > -        exit(EXIT_FAILURE);
+>> > > -    }
+>> > > +    migration_incoming_finish();
+>> > >  out:
+>> > >      /* Pairs with the refcount taken in qmp_migrate_incoming() */
+>> > >      migrate_incoming_unref_outgoing_state();
+>> > > diff --git a/migration/migration.h b/migration/migration.h
+>> > > index 2c2331f40d..67e3318467 100644
+>> > > --- a/migration/migration.h
+>> > > +++ b/migration/migration.h
+>> > > @@ -518,6 +518,7 @@ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+>> > >  void migration_fd_process_incoming(QEMUFile *f);
+>> > >  void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
+>> > >  void migration_incoming_process(void);
+>> > > +void migration_incoming_finish(void);
+>> > 
+>> > What about merging migration_incoming_state_destroy and
+>> > migration_incoming_finish and pair all of this with migration_cleanup?
+>> > 
+>> > static void migration_cleanup_bh(void *opaque)
+>> > {
+>> >     migration_cleanup(opaque);
+>> > }
+>> > 
+>> > static void migration_incoming_cleanup_bh(void *opaque)
+>> > {
+>> >     migration_incoming_cleanup(opaque);
+>> > }
+>> 
+>> Yes, it would pair well. I guess it would also solve Peter's nitpick
+>> about the change in process_incoming_migration_bh() above.
+>> 
+>> > >  
+>> > >  bool  migration_has_all_channels(void);
+>> > >  
+>> > > diff --git a/migration/savevm.c b/migration/savevm.c
+>> > > index fabbeb296a..d7eb416d48 100644
+>> > > --- a/migration/savevm.c
+>> > > +++ b/migration/savevm.c
+>> > > @@ -2069,6 +2069,11 @@ static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+>> > >      return 0;
+>> > >  }
+>> > >  
+>> > > +static void postcopy_ram_listen_thread_bh(void *opaque)
+>> > > +{
+>> > > +    migration_incoming_finish();
+>> > > +}
+>> > > +
+>> > >  /*
+>> > >   * Triggered by a postcopy_listen command; this thread takes over reading
+>> > >   * the input stream, leaving the main thread free to carry on loading the rest
+>> > > @@ -2122,52 +2127,31 @@ static void *postcopy_ram_listen_thread(void *opaque)
+>> > >                           "bitmaps may be lost, and present migrated dirty "
+>> > >                           "bitmaps are correctly migrated and valid.",
+>> > >                           __func__, load_res);
+>> > > -            load_res = 0; /* prevent further exit() */
+>> > >          } else {
+>> > >              error_report("%s: loadvm failed: %d", __func__, load_res);
+>> > >              migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+>> > >                                             MIGRATION_STATUS_FAILED);
+>> > > +            goto out;
+>> > >          }
+>> > >      }
+>> > > -    if (load_res >= 0) {
+>> > > -        /*
+>> > > -         * This looks good, but it's possible that the device loading in the
+>> > > -         * main thread hasn't finished yet, and so we might not be in 'RUN'
+>> > > -         * state yet; wait for the end of the main thread.
+>> > > -         */
+>> > > -        qemu_event_wait(&mis->main_thread_load_event);
+>> > > -    }
+>> > > -    postcopy_ram_incoming_cleanup(mis);
+>> > > -
+>> > > -    if (load_res < 0) {
+>> > > -        /*
+>> > > -         * If something went wrong then we have a bad state so exit;
+>> > > -         * depending how far we got it might be possible at this point
+>> > > -         * to leave the guest running and fire MCEs for pages that never
+>> > > -         * arrived as a desperate recovery step.
+>> > > -         */
+>> > > -        rcu_unregister_thread();
+>> > > -        exit(EXIT_FAILURE);
+>> > > -    }
+>> > > +    /*
+>> > > +     * This looks good, but it's possible that the device loading in the
+>> > > +     * main thread hasn't finished yet, and so we might not be in 'RUN'
+>> > > +     * state yet; wait for the end of the main thread.
+>> > > +     */
+>> > > +    qemu_event_wait(&mis->main_thread_load_event);
+>
+> PS: I didn't notice this change, looks like this may be better to be a
+> separate patch when moving out of the if.  Meanwhile, I don't think we set
+> it right either, in qemu_loadvm_state():
+>
+>     qemu_event_set(&mis->main_thread_load_event);
+>
+> The problem is e.g. load_snapshot / qmp_xen_load_devices_state also set
+> that event, even if there'll be no one to consume it.. not a huge deal, but
+> maybe while moving it out of the if, we can also cleanup the set() side
+> too, by moving the set() upper into process_incoming_migration_co().
+>
+>> > >  
+>> > >      migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+>> > >                                     MIGRATION_STATUS_COMPLETED);
+>> > > -    /*
+>> > > -     * If everything has worked fine, then the main thread has waited
+>> > > -     * for us to start, and we're the last use of the mis.
+>> > > -     * (If something broke then qemu will have to exit anyway since it's
+>> > > -     * got a bad migration state).
+>> > > -     */
+>> > > -    bql_lock();
+>> > > -    migration_incoming_state_destroy();
+>> > > -    bql_unlock();
+>> > >  
+>> > > +out:
+>> > >      rcu_unregister_thread();
+>> > > -    mis->have_listen_thread = false;
+>> > >      postcopy_state_set(POSTCOPY_INCOMING_END);
+>> > >  
+>> > >      object_unref(OBJECT(migr));
+>> > >  
+>> > > +    migration_bh_schedule(postcopy_ram_listen_thread_bh, NULL);
+>> > 
+>> > Better to schedule before the object_unref to ensure there's always
+>> > someone holding a reference?
+>> 
+>> True, I'll move it.
+>
+> Good point.  Though I'm not sure moving it upper would help, because it'll
+> be the BH that references the MigrationState*..
 
-On 9/22/25 9:58 AM, David Woodhouse wrote:
-> On Mon, 2025-09-22 at 09:37 -0700, Dongli Zhang wrote:
->> Hi,
->>
->> Would you mind helping confirm if kvm-clock/guest_tsc should stop counting
->> elapsed time during downtime blackout?
->>
->> 1. guest_clock=T1, realtime=R1.
->> 2. (qemu) stop
->> 3. Wait for several seconds.
->> 4. (qemu) cont
->> 5. guest_clock=T2, realtime=R2.
->>
->> Should (T1 == T2), or (R2 - R1 == T2 - T1)?
-> 
-> Neither.
-> 
-> Realtime is something completely different and runs at a different rate
-> to the monotonic clock. In fact its rate compared to the monotonic
-> clock (and the TSC) is *variable* as NTP guides it.
-> 
-> In your example of stopping and continuing on the *same* host, the
-> guest TSC *offset* from the host's TSC should remain the same.
-> 
-> And the *precise* mathematical relationship that KVM advertises to the
-> guest as "how to turn a TSC value into nanoseconds since boot" should
-> also remain precisely the same.
+A while ago we wrapped QEMU BHs with migration_bh_dispatch_bh. The BHs
+don't need to hold or drop MigrationState reference anymore because the
+dispatch callback does it:
 
-Does that mean:
+void migration_bh_schedule(QEMUBHFunc *cb, void *opaque)
+{
+    ...
+    object_ref(OBJECT(s));
+    qemu_bh_schedule(bh);
+}
 
-Regarding "stop/cont" scenario, both kvm-clock and guest_tsc value should remain
-the same, i.e.,
+static void migration_bh_dispatch_bh(void *opaque)
+{
+    ...        
+    migbh->cb(migbh->opaque);
+    object_unref(OBJECT(s));
+    ...
+}
 
-1. When "stop", kvm-clock=K1, guest_tsc=T1.
-2. Suppose many hours passed.
-3. When "cont", guest VM should see kvm-clock==K1 and guest_tsc==T1, by
-refreshing both PVTI and tsc_offset at KVM.
+>  So maybe we could unref at
+> the end of postcopy_ram_listen_thread_bh().  If so, we should add a comment
+> on ref() / unref() saying how they're paired.
+>
 
-
-As demonstrated in my test, currently guest_tsc doesn't stop counting during
-blackout because of the lack of "MSR_IA32_TSC put" at
-kvmclock_vm_state_change(). Per my understanding, it is a bug and we may need to
-fix it.
-
-BTW, kvmclock_vm_state_change() already utilizes KVM_SET_CLOCK to re-configure
-kvm-clock before continuing the guest VM.
-
-> 
-> KVM already lets you restore the TSC correctly. To restore KVM clock
-> correctly, you want something like KVM_SET_CLOCK_GUEST from
-> https://lore.kernel.org/all/20240522001817.619072-4-dwmw2@infradead.org/
-> 
-> For cross machine migration, you *do* need to use a realtime clock
-> reference as that's the best you have (make sure you use TAI not UTC
-> and don't get affected by leap seconds or smearing). Use that to
-> restore the *TSC* as well as you can to make it appear to have kept
-> running consistently. And then KVM_SET_CLOCK_GUEST just as you would on
-> the same host.
-
-Indeed QEMU Live Migration also relies on kvmclock_vm_state_change() to
-temporarily stop/cont the source/target VM.
-
-Would you mean we expect something different for live migration, i.e.,
-
-1. Live Migrate a source VM to a file.
-2. Copy the file to another server.
-3. Wait for 1 hour.
-4. Migrate from the file to target VM.
-
-Although it is equivalent to a one-hour downtime, we do need to count the
-missing one-hour, correct?
-
-
-That means: we have different expectations from stop/cont and live migration.
-
-- Live Migration: any downtime should be counted with the help from realtime.
-- stop/cont (savevm/loadvm): the value of kvm-clock/rdtsc should remain the same.
-
-> 
-> And use vmclock to advertise the wallclock time to the guest as
-> precisely as possible, even the cycle after a live migration.
-> 
-
-Thank you very much for suggestion on KVM_SET_CLOCK_GUEST and vmclock!
-
-Dongli Zhang
-
+>> 
+>> > 
+>> > > +
+>> > >      return NULL;
+>> > >  }
+>> > >  
+>> > > @@ -2217,7 +2201,7 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+>> > >      mis->have_listen_thread = true;
+>> > >      postcopy_thread_create(mis, &mis->listen_thread,
+>> > >                             MIGRATION_THREAD_DST_LISTEN,
+>> > > -                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+>> > > +                           postcopy_ram_listen_thread, QEMU_THREAD_JOINABLE);
+>> > >      trace_loadvm_postcopy_handle_listen("return");
+>> > >  
+>> > >      return 0;
+>> > 
+>> 
 
