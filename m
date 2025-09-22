@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CA8CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 06:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D9DCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 06:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0aWP-0005jz-4Y; Mon, 22 Sep 2025 02:59:37 -0400
+	id 1v0aW1-0005i7-AJ; Mon, 22 Sep 2025 02:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1v0aWM-0005jf-AG
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:59:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1v0aWH-0008M5-7H
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:59:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758524367;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9ILFQ0Y0zW5Kk4VARyAnZVL1s/MWkh7ue8t8bDu5Saw=;
- b=TspPoSrN/U/57QdDOYwvUZ4DD7ZfjiW8dqOcW3F0SpKCDMIpasjpxXO/phDHjQhFwqAXLc
- qlTSmXKyBiosW8im/EEIkWqKlbxlhCVRqRZa/vBtFH6EZ37YKhuy1hgb2UWW60InOLehjT
- iQfh7pOZPK34+njrVXk1Nfd6ww5aDCE=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-setGISLMO3eGRyWpVZSCJA-1; Mon, 22 Sep 2025 02:59:24 -0400
-X-MC-Unique: setGISLMO3eGRyWpVZSCJA-1
-X-Mimecast-MFC-AGG-ID: setGISLMO3eGRyWpVZSCJA_1758524364
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-244581953b8so47033825ad.2
- for <qemu-devel@nongnu.org>; Sun, 21 Sep 2025 23:59:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0aVz-0005hr-EJ
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:59:11 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0aVx-0008JU-R7
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:59:11 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3e9042021faso3172030f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Sep 2025 23:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758524348; x=1759129148; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3TrDNN+SaNnGfqX0st6UljeB4F4bS62VvZnuSvsaIcU=;
+ b=CUVtHoEVoYkV4xlpylXixxY4WtBpfJrN89aJfRrkbeJA6e2ZcfUoN1JSW/9REHSN5I
+ 0qKnDBXwzSWYCNCxe7M03etpQTGa1SBbKDJX5r0JAPa4CDQW4gLjlPRrfs0n7bpt9yBw
+ 7IlgoHy4I3xoI93huk/rVLQ9Ky1tf6lG6c9VfjJqcTxbWNn+sFiZcmOMS0crL1Zo8Qb1
+ Cbq4gR7ZxwXDwczxbD3/U4Ca057LbxZaQQjbyT/qQJOkOrALzl72J9Hi3COFmBMIUxhQ
+ G+d/dr2tFhv+VZa6zYEJjI1fOfSNSLa2TFk5ZnlEiG9YRJONUWe9t8iWPxVwApABtCUw
+ b/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758524364; x=1759129164;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9ILFQ0Y0zW5Kk4VARyAnZVL1s/MWkh7ue8t8bDu5Saw=;
- b=qBaVcxfvKwNogNToXlk1dTs5Jhbsawn9Uk28hEwSIrsCtMiU3JanwJ7VgdR2rZOIZr
- nzGnMCa2cr8gRNEt4tWRdKGDutonmvCuQqkbY4m5vVS5VTHys4yy8cjmNxRwiEeNK+ol
- 3KiZVRjJnnJTBen9BYGIeghcfE3hW0Ct3vjxzAso30ux5fsTP8dijrR5XG97A5nBJRE5
- vqQkhsBxXYfLyuwccS38SQ4drr/oHskS431ZMzUg2Lnv1sajdcE7Xh5yICqHHzi2nAHp
- 5a0ZWDJqJUpahYCoxcBoodZAKdz6mWBAeklM6K1rNIX8CjnGcpQzy4JqUTJJezIlL+P2
- q1QA==
-X-Gm-Message-State: AOJu0Yw5CFOknJa49FRUrEfQO+oFLjl75NWVIGughmMso3XqMHMq0e2m
- cKGa39CNtv6LTuq0iwQxIUN4uyXWyDtdfjzMMC37UYlprAh10OMCabnbPs9Ldtl7I/j6MvjsVcE
- DFBIrzkAFGMLRqbWaKyi4HubTCTAPUZPnIoeWBBmJuBIS+1WaHgSHolxPoQfbe/PjUxTtmKQ2n4
- uhjLu2DIiguI9+ejLwVi4wL4yYopbsqoA=
-X-Gm-Gg: ASbGncv3MhyIvWVchcjzX5lHvVfw4lnadQP8mQHGim8nTBfB1LISIMNn1XO33HM58TR
- xJkuc4LC5SiiLbW2ojx9HGovnElIdHicvewD7+BxIW2PGhW0mMghxwXv1g3fTak2HoWu59LjnlM
- 91+uuad17KJUveEykwcwklZ/JwPdQ=
-X-Received: by 2002:a17:902:dac4:b0:275:c1e7:c7e with SMTP id
- d9443c01a7336-275c1e70ff3mr44242995ad.4.1758524363759; 
- Sun, 21 Sep 2025 23:59:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKlx++rpGs3gt2oX73ThG6GM02A7J5+ackY+jAYsna3RcZosg3Kf9Ey6pSLFdnh6qxrkMUYV/ullozzO5KSWs=
-X-Received: by 2002:a17:902:dac4:b0:275:c1e7:c7e with SMTP id
- d9443c01a7336-275c1e70ff3mr44242745ad.4.1758524363322; Sun, 21 Sep 2025
- 23:59:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758524348; x=1759129148;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3TrDNN+SaNnGfqX0st6UljeB4F4bS62VvZnuSvsaIcU=;
+ b=V4Je8Owo7t0MQoRDsLwt4tQNzC5jORmu4jO6onLu+R4Q4/18i5lCeSNQIkpMZyhtIw
+ QuIdus2d8RpL1MlCoKefbW8AetKjymdKCdDPneaJr4YCmXHPkYjMBARQr2TiER76uS9+
+ wyFI/bF83IooLc86F3r6eyHRH20MD8LubK1cj3IJ03U/yUMBEYgmeZjSkooF+sKuAS40
+ gnSzKVg9zuHZ2KRumZM8rnNZDYvJGVWlL90oOmuv7cll+PBhX1Qr38NA4VpNpo5W4bVH
+ 5Nv3wRVIHiCUe0QrLVzyqTYlm4Kek6RSeLFr2WtKIAYgEbG9jTFbeyBld0MPxsK0f0Fx
+ CjGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKY45JV7ahKXcLvJBs4xmEg//NyMnZef/QHYkTbDwhCuVIXIQPYd4fZAjH52EAQEEyw4YVXldAmplG@nongnu.org
+X-Gm-Message-State: AOJu0Yx2mb9m4sU9wt4HjF76m4G7eBCequZifvBwQAK0rIf54jP5rPnq
+ lZ4CScNqKun04IwpWhDFA9xfXchg4HTHOD2sM7FC7CORIDH0+WM5z//VAev1l5jVSn0=
+X-Gm-Gg: ASbGncv7QFYBE/6SfVITwC1wg3ZiQbONluv4diQIUkc9DZi8QM8bF3pcMxs6r148n6a
+ iR9l8XI2lWt8k/S+LIvb6EzXeTHZ4oRQu5PeB0raoqyJh201JtJGrVRY60VGPnPx/aSMbFJXoWT
+ b1+baYcg0X36XzqNv3LZ88ur/EIVjhWqhTeBE1Y0c6xph2gSBdAIKaUCBZmtQc6uNr0KOxS5zpj
+ uo4bKsWRxBn7O1Nky9KWnuibDIaRCdP/oMdRS9vNmgiD6HO7Xn0GmGIIKloS5dJeJ+nf7Vc6HiZ
+ GKCkoC5MTlyIqdFzn78elrEQmDV/cZVprITDKm83CiNXeqe45Cwg4ZfB9VYFE6eM5I0Xf8Z4nIJ
+ 5XQPUNE4RR2kte5lXDS8UPC3u5DGM4pSsa9vZkmX7MeA2b88W0NoENs4g8d53OIwqh6r2G6w=
+X-Google-Smtp-Source: AGHT+IEDSU1AZQ+WzavlZzIBhKC/VWEC0uYtRTxB63EcjNIIdNuD7aEifZ8qIVZVoRj+Dr8142tVjg==
+X-Received: by 2002:a05:6000:2203:b0:3d4:2f8c:1d37 with SMTP id
+ ffacd0b85a97d-3ee7e106162mr10244216f8f.26.1758524347691; 
+ Sun, 21 Sep 2025 23:59:07 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-464f5a285efsm212240755e9.18.2025.09.21.23.59.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 21 Sep 2025 23:59:07 -0700 (PDT)
+Message-ID: <12f33412-18c0-45a2-8acf-abb4cdf1439d@linaro.org>
+Date: Mon, 22 Sep 2025 08:59:05 +0200
 MIME-Version: 1.0
-References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
- <20250919133320.240145-3-marcandre.lureau@redhat.com>
- <aM1fjf1tuzuBXudQ@redhat.com>
-In-Reply-To: <aM1fjf1tuzuBXudQ@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 22 Sep 2025 10:59:11 +0400
-X-Gm-Features: AS18NWAMgCSrZ83n8cO7sguj_0LMUhm-iYwEdbiWkfX66XlHVAkOI-Kyvk4_6p4
-Message-ID: <CAMxuvawKG1h2mv3sHvm-e1n2M8N_DOpLxJROxCi4QkN-RHqkgQ@mail.gmail.com>
-Subject: Re: [PATCH 02/24] scripts/archive-source: speed up downloading
- subprojects
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, 
- Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
-Content-Type: multipart/alternative; boundary="000000000000014ccc063f5e5ccf"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250814070650.78657-1-philmd@linaro.org>
+ <5f3ccbec-5f6f-42c5-bb65-1139a7fe86a6@tls.msk.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5f3ccbec-5f6f-42c5-bb65-1139a7fe86a6@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,175 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000014ccc063f5e5ccf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/9/25 22:15, Michael Tokarev wrote:
+> On 14.08.2025 10:06, Philippe Mathieu-Daudé wrote:
+>> We weren't parsing MIPS ASE in the ELF header, so couldn't
+>> automatically pick an appropriate CPU.
+>>
+>> Since we'll have a rc4, I propose these sensible patches
+>> for 10.1, but both ASEs are available since 15 years in QEMU,
+>> so this isn't something broken since the latest release, and
+>> I don't mind holding it for 10.2.
+> 
+> Now I wonder what should I do with this wrt qemu-stable series.
+> Since no one complained (?) for so many years..  is it worth
+> to add this to previous stable releases?
 
-Hi
+I fixed these for correctness, but indeed nobody cares.
 
-On Fri, Sep 19, 2025 at 5:50=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com>
-wrote:
+> 
+> (fwiw, all 3 patches are needed, obviously.  Also, for 7.2,
+> the following 2 patches can also be picked up:
+> f7e3d7521b4 "linux-user/mips: Use P5600 as default CPU to run NaN2008 
+> ELF binaries"
+> 3e8130da7c9 "linux-user/mips: Do not try to use removed R5900 CPU")
+> 
+> What do you think?
 
-> On Fri, Sep 19, 2025 at 05:32:56PM +0400, marcandre.lureau@redhat.com
-> wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Running meson on each subproject is quite slow.
->
-> Why is this faster ?  Does it make meson do parallel downloads
-> if you list then all at once ?
->
+Ditto. If this is too much burden for you to carry them,
+don't worry dropping them.
 
-It doesn't look like it does it in paralllel, yet it is x times faster...
+> 
+> I picked all 3 up for 7.2, 10.0 and 10.1 series for now.
 
-time sh -c 'for s in keycodemapdb libvfio-user berkeley-softfloat-3
-berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs
-bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs libc-0.2-rs
-proc-macro2-1-rs proc-macro-error-1-rs proc-macro-error-attr-1-rs
-quote-1-rs syn-2-rs unicode-ident-1-rs; do
-  meson subprojects download $s >/dev/null
-done'
-sh -c   5.27s user 0.33s system 99% cpu 5.613 total
-
-time sh -c 'meson subprojects download keycodemapdb libvfio-user
-berkeley-softfloat-3 berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs
-bilge-0.2-rs bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-libc-0.2-rs proc-macro2-1-rs proc-macro-error-1-rs
-proc-macro-error-attr-1-rs quote-1-rs syn-2-rs unicode-ident-1-rs'
-sh -c   0.32s user 0.01s system 99% cpu 0.339 total
-
-
->
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  scripts/archive-source.sh | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-> > index 035828c532..85cd0a63a0 100755
-> > --- a/scripts/archive-source.sh
-> > +++ b/scripts/archive-source.sh
-> > @@ -77,9 +77,10 @@ function subproject_dir() {
-> >  git archive --format tar "$(tree_ish)" > "$tar_file"
-> >  test $? -ne 0 && error "failed to archive qemu"
-> >
-> > +meson subprojects download $subprojects
-> > +test $? -ne 0 && error "failed to download subprojects $subprojects"
-> > +
-> >  for sp in $subprojects; do
-> > -    meson subprojects download $sp
-> > -    test $? -ne 0 && error "failed to download subproject $sp"
-> >      tar --append --file "$tar_file" --exclude=3D.git
-> subprojects/"$(subproject_dir $sp)"
-> >      test $? -ne 0 && error "failed to append subproject $sp to
-> $tar_file"
-> >  done
-> > --
-> > 2.51.0
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---000000000000014ccc063f5e5ccf
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 19, 2=
-025 at 5:50=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berran=
-ge@redhat.com">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">On Fri, Sep 19, 2025 at 05:32:56PM +0400,=
- <a href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank">marcandre=
-.lureau@redhat.com</a> wrote:<br>
-&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt; <br>
-&gt; Running meson on each subproject is quite slow.<br>
-<br>
-Why is this faster ?=C2=A0 Does it make meson do parallel downloads<br>
-if you list then all at once ?<br></blockquote><div><br></div><div>It doesn=
-&#39;t look like it does it in paralllel, yet it is x times faster...</div>=
-<div><br></div><div>time sh -c &#39;for s in keycodemapdb libvfio-user berk=
-eley-softfloat-3 berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-=
-0.2-rs bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs libc-=
-0.2-rs proc-macro2-1-rs proc-macro-error-1-rs proc-macro-error-attr-1-rs qu=
-ote-1-rs syn-2-rs unicode-ident-1-rs; do<br>=C2=A0 meson subprojects downlo=
-ad $s &gt;/dev/null<br>done&#39;<br>sh -c =C2=A0 5.27s user 0.33s system 99=
-% cpu 5.613 total</div><div><br></div><div>time sh -c &#39;meson subproject=
-s download keycodemapdb libvfio-user berkeley-softfloat-3 berkeley-testfloa=
-t-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs bilge-impl-0.2-rs either-1-=
-rs foreign-0.3-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs proc-macro=
--error-1-rs proc-macro-error-attr-1-rs quote-1-rs syn-2-rs unicode-ident-1-=
-rs&#39;</div><div>sh -c =C2=A0 0.32s user 0.01s system 99% cpu 0.339 total<=
-br>=C2=A0=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; <br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
->
-&gt; ---<br>
-&gt;=C2=A0 scripts/archive-source.sh | 5 +++--<br>
-&gt;=C2=A0 1 file changed, 3 insertions(+), 2 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh<br>
-&gt; index 035828c532..85cd0a63a0 100755<br>
-&gt; --- a/scripts/archive-source.sh<br>
-&gt; +++ b/scripts/archive-source.sh<br>
-&gt; @@ -77,9 +77,10 @@ function subproject_dir() {<br>
-&gt;=C2=A0 git archive --format tar &quot;$(tree_ish)&quot; &gt; &quot;$tar=
-_file&quot;<br>
-&gt;=C2=A0 test $? -ne 0 &amp;&amp; error &quot;failed to archive qemu&quot=
-;<br>
-&gt;=C2=A0 <br>
-&gt; +meson subprojects download $subprojects<br>
-&gt; +test $? -ne 0 &amp;&amp; error &quot;failed to download subprojects $=
-subprojects&quot;<br>
-&gt; +<br>
-&gt;=C2=A0 for sp in $subprojects; do<br>
-&gt; -=C2=A0 =C2=A0 meson subprojects download $sp<br>
-&gt; -=C2=A0 =C2=A0 test $? -ne 0 &amp;&amp; error &quot;failed to download=
- subproject $sp&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 tar --append --file &quot;$tar_file&quot; --exclud=
-e=3D.git subprojects/&quot;$(subproject_dir $sp)&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 test $? -ne 0 &amp;&amp; error &quot;failed to app=
-end subproject $sp to $tar_file&quot;<br>
-&gt;=C2=A0 done<br>
-&gt; -- <br>
-&gt; 2.51.0<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div>
-
---000000000000014ccc063f5e5ccf--
-
+Thanks for your careful work with the stable tree :)
 
