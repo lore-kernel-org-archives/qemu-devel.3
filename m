@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0ADCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 06:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C01ACAC5A7
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 06:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0aDf-00018X-3G; Mon, 22 Sep 2025 02:40:15 -0400
+	id 1v0aJ8-0002yg-OT; Mon, 22 Sep 2025 02:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v0aDV-00015u-V2
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:40:07 -0400
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1v0aDP-0004t3-Of
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:40:05 -0400
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-4d01b367f94so1061201cf.0
- for <qemu-devel@nongnu.org>; Sun, 21 Sep 2025 23:39:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758523196; x=1759127996; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UC/u2HdUxdalAWs64EknGbmZ8biYzi/zu7aMbaW1X7A=;
- b=Q1ZDjEBMhHQ24vNGV/OGmdoxeXQ+0yubVH7vUm7/y6dj0Y8lVn0dI+Ouyhx3BBg/oy
- kxtToUlRLflsZj1h8m3oVBFEjFSLdvNf0K44pa7etJTcfNbrscqfWz1rr5ViO1aax2eP
- z+QAwLsaJ3g/tE3zm0AeSiPzlcyqyLJTAvJcz4jFi4F9AoUdFqQxZYX6I3z88kduiiSy
- Y+5kdx5MMLI1tRbADBqSWoXzj2XCXxqNjh3p9x1lzuA6tsamBiDmGED8Pd49FGxLUgz/
- n3F3eJk5+yGEb0ica8cM9dt5S4DEE/rdCxojc1P8J6M7aXoiLlCHD9NO3dRTbJAlXaUN
- zn8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758523196; x=1759127996;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UC/u2HdUxdalAWs64EknGbmZ8biYzi/zu7aMbaW1X7A=;
- b=S+sOYg/wwQYGZGfs536+pPYFyhCD/tWAw4paaCaMqAAzfg1Qt1H8GRV9dp6J1ciVYF
- zJEYZ8cWiw1aw3Mxckl6sCVPU/375owiCGcVVFIbRqWEf49KRDgz8oZF5tCLO2iO0JaA
- vwHJgaQp3dphZipwl7++nT06UuAcCmtMs4zJMorP+0FhNJhwk8ve6bWshPOOGMdPiu6I
- 2UcwkjahvltIz5asyFuw2eYVB07fWLer/ckLooV5Vg6UxG2oekkZLPeE6drhexiL4ruc
- P/rbKEUi5OOkhx+OlsZ0OrKlFzbI98begv8o0sPXuRG3InFmuU9XHd+LwAOXZOuGOC5p
- Zo9Q==
-X-Gm-Message-State: AOJu0YwrsE1lffe5iZhkfhkWxeig7xKTi3gQd1JXL+alqJCbCGgKzn1x
- 5wY3sYXoHfDXEvYbAOhk1A1LJNU3HWb0hp0XOA2vYJ0ebUmT7wLIHSeeFXPaDoh6v61NNdAaigt
- pQVPc7UAHkQMENa/vrJNExv5p+vrd1fw=
-X-Gm-Gg: ASbGncupdiLQKezw5wPjZfLyrU/YK44CY+yHFtqfHdxEaCtgB8SyiEeNDVc+CfXRTFf
- M+uYUH5AeSlS56iBK26A+siDlYzn188XIfC34+ZZf88t6Ekqro2vWLfr0ekwZpeEHrmiCYszp26
- maX/vpJYTgGUJdXSxd1ulAZTXVofr/Q6vMXnOz5t1meygzv6qUWt2bhrMQ+N3zhaTg+2IiDBUpl
- V8QXFWwK1G60tnoC38GEdje
-X-Google-Smtp-Source: AGHT+IGQn1NnfZ6AamDMUEA/kLzAuv6zXUPuwS+XuZWaAg6oeW1a3kRSXUpOn74+h3VR49IaaS9tdThi7xV9HuQZ+eQ=
-X-Received: by 2002:a05:622a:a0f:b0:4b1:1fe:dcfc with SMTP id
- d75a77b69052e-4c03d7af72dmr186443861cf.16.1758523195965; Sun, 21 Sep 2025
- 23:39:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0aJ4-0002yM-EI
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:45:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0aJ0-00061H-Mx
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 02:45:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758523540;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QTgDNx5rY2NZ1/p8wRYZxQUjFRiVpdhb40CZ0+mdA5o=;
+ b=TtX1st9sQpO4MelJO37HBk8NMsVyTTTWDoFrZ4QcZp6BUTghPNesE39dkvdgKeqBtP4/jH
+ 31Zfv/UyPVAOkrsmcEbx9JLwnW3i6/xWduSPLkFBvbgd79rQwe09HoUX+gP9d19i7AhEwR
+ 8PqpiJqmUL34gUOfxEiHfYsshogJ124=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-rDUeMrX7NCGT_4LZEzGd4A-1; Mon,
+ 22 Sep 2025 02:45:37 -0400
+X-MC-Unique: rDUeMrX7NCGT_4LZEzGd4A-1
+X-Mimecast-MFC-AGG-ID: rDUeMrX7NCGT_4LZEzGd4A_1758523535
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36D3C1800286; Mon, 22 Sep 2025 06:45:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70AE418004A3; Mon, 22 Sep 2025 06:45:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C38B121E6A27; Mon, 22 Sep 2025 08:45:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,  Amit Shah
+ <amit@kernel.org>,  Eric Blake <eblake@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  Zhao Liu <zhao1.liu@intel.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Maximilian Immanuel
+ Brandtner <maxbr@linux.ibm.com>,  Szymon Lukasz <noh4hss@gmail.com>
+Subject: Re: [PATCH RFC v5 07/12] qmp: add chardev-window-size-changed command
+In-Reply-To: <20250921-console-resize-v5-7-89e3c6727060@gmail.com> (Filip
+ Hejsek's message of "Sun, 21 Sep 2025 01:45:37 +0200")
+References: <20250921-console-resize-v5-0-89e3c6727060@gmail.com>
+ <20250921-console-resize-v5-7-89e3c6727060@gmail.com>
+Date: Mon, 22 Sep 2025 08:45:31 +0200
+Message-ID: <878qi7nfxw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <A759ECC2-6B53-4B3E-A005-7D06BA403FCB@outlook.com>
-In-Reply-To: <A759ECC2-6B53-4B3E-A005-7D06BA403FCB@outlook.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 22 Sep 2025 10:39:44 +0400
-X-Gm-Features: AS18NWBkfDFHzwPyHKqrbDxXGu25WK9Bzckntv6DHpRkh_rwKM6Bg5DX7Sj4YF8
-Message-ID: <CAJ+F1CJg9wjcs9SuNfA-gyfUCSs2w9j9kZ-fRuO=tLLwVMY=7w@mail.gmail.com>
-Subject: Re: [PATCH] ui/spice: Fix abort on SPICE client connect
-To: Mohamed Akram <mohd.akram@outlook.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,43 +96,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Filip Hejsek <filip.hejsek@gmail.com> writes:
 
-On Sun, Sep 21, 2025 at 1:04=E2=80=AFAM Mohamed Akram <mohd.akram@outlook.c=
-om> wrote:
+> From: Szymon Lukasz <noh4hss@gmail.com>
 >
-> The BQL is already locked by the main loop, so avoid locking again
-> unless needed to not trigger an assertion failure.
+> The managment software can use this command to notify QEMU about the
+> size of the terminal connected to a chardev, QEMU can then forward this
+> information to the guest if the chardev is connected to a virtio console
+> device.
 >
-> Signed-off-by: Mohamed Akram <mohd.akram@outlook.com>
+> Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> [Filip: rename command, change documentation]
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 > ---
->  ui/spice-core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  chardev/char.c | 14 ++++++++++++++
+>  qapi/char.json | 30 ++++++++++++++++++++++++++++++
+>  2 files changed, 44 insertions(+)
 >
-> diff --git a/ui/spice-core.c b/ui/spice-core.c
-> index 5992f9d..31c31f2 100644
-> --- a/ui/spice-core.c
-> +++ b/ui/spice-core.c
-> @@ -222,7 +222,7 @@ static void channel_event(int event, SpiceChannelEven=
-tInfo *info)
->       * thread and grab the BQL if so before calling qemu
->       * functions.
->       */
-> -    bool need_lock =3D !qemu_thread_is_self(&me);
-> +    bool need_lock =3D !bql_locked();
+> diff --git a/chardev/char.c b/chardev/char.c
+> index b45d79cb9b57643827eb7479257fdda2cf6b0434..f3aad545afe3d325aac388015=
+b3d5517c2e48f0d 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -1269,6 +1269,20 @@ bool qmp_add_client_char(int fd, bool has_skipauth=
+, bool skipauth,
+>      return true;
+>  }
+>=20=20
+> +void qmp_chardev_window_size_changed(const char *id, uint16_t cols,
+> +                                     uint16_t rows, Error **errp)
+> +{
+> +    Chardev *chr;
+> +
+> +    chr =3D qemu_chr_find(id);
+> +    if (chr =3D=3D NULL) {
+> +        error_setg(errp, "Chardev '%s' not found", id);
+> +        return;
+> +    }
+> +
+> +    qemu_chr_resize(chr, cols, rows);
+> +}
+> +
+>  /*
+>   * Add a timeout callback for the chardev (in milliseconds), return
+>   * the GSource object created. Please use this to add timeout hook for
+> diff --git a/qapi/char.json b/qapi/char.json
+> index f0a53f742c8bee24c377551803a864fd36ac78cf..93b0d239276077d808af2e547=
+9d539728377a99f 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -874,6 +874,36 @@
+>  { 'command': 'chardev-send-break',
+>    'data': { 'id': 'str' } }
+>=20=20
+> +##
+> +# @chardev-window-size-changed:
+> +#
+> +# Notifies a chardev about the current size of the terminal connected
+> +# to this chardev. The information will be forwarded to the guest if
+> +# the chardev is connected to a virtio console device.
+> +#
+> +# The initial size is 0x0, which should be interpreted as an unknown siz=
+e.
+> +#
+> +# Some backends detect the terminal size automatically, in which case
+> +# the size may unpredictably revert to the detected one at any time.
 
-Looks good. Do you have a reproducer or a backtrace of the assertion
-or is it theoretical?
+Nicely done now!
 
->      if (need_lock) {
->          bql_lock();
->      }
-> --
-> 2.51.0
->
->
+docs/devel/qapi-code-gen.rst:
 
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
 
---=20
-Marc-Andr=C3=A9 Lureau
+    Separate sentences with two spaces.
+
+> +#
+> +# @id: the chardev's ID, must exist
+
+Let's drop ", must exist" for consistency with ID descriptions
+elsewhere.
+
+> +#
+> +# @cols: the number of columns
+> +#
+> +# @rows: the number of rows
+> +#
+> +# Since: 10.2
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "chardev-window-size-changed", "arguments": { "id"=
+: "foo", "cols": 80, "rows": 24 } }
+> +#     <- { "return": {} }
+> +##
+> +{ 'command': 'chardev-window-size-changed',
+> +  'data': { 'id': 'str',
+> +            'cols': 'uint16',
+> +            'rows': 'uint16' } }
+> +
+>  ##
+>  # @VSERPORT_CHANGE:
+>  #
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
