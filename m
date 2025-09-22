@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83EB6CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1D8CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gYn-0006XT-JT; Mon, 22 Sep 2025 09:26:29 -0400
+	id 1v0gYv-0006YO-9l; Mon, 22 Sep 2025 09:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gYl-0006XK-Pj
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:26:27 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gYa-0005yC-FG
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:26:27 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-72e565bf2f0so34031067b3.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:26:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758547573; x=1759152373; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JM5QaxpFdIxstXICZ9MSePRrwB8nlQ+4Fi8I1OdTnn0=;
- b=q5KI3mwmihBap+Dq5HcADID1L/naB9hg4nPmsUrqpKrcH5axYaFqcjpYmAd1+4Gd+5
- nmz3W6/TjuhXF8xU184U92JWoA8QwO252D2DmjhR5uGHiJUPZ8SsQOFPJa1kbwWNdaDR
- sDzuWQRavPOoRm/q41MnzW5N1P0RsRu8Man2KZm+h2G7SDj4V6Q97bEqp2wIA0E3Qt+f
- XovOZjCmvnAL9TwO9VHm0lUaFZlCSst73+oLn559WIJvjnJqhOqF36YjG02VBZjd8y1K
- S3MgLJPuwWR8ojY930fDz6nMTr//XydabHSMA4uFbskMV4aCF+9cURqdXoR5ey5DYtEg
- r+Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758547573; x=1759152373;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JM5QaxpFdIxstXICZ9MSePRrwB8nlQ+4Fi8I1OdTnn0=;
- b=N2pHPWSmL+Q8ZYccYtva6qHdMzbAjyLrYeEsxz5MFFsKrmlOWXZ2rI8HnbmqYc+5n4
- vUfGJseHQN/wWHa3b+EWL2x4RZZqgA2suLeOtgNY4eRv+wW92areekYCnj6fGpQttXpc
- Ebc/jSo0PqdPE76a4IVvL83eqazppIjqZL2MP+BcgdjhqrDO6Ie+/ocRf92IgBj8Oeef
- Dlg7OIb3Gg29RVSDF+lQzZyNm3VH1/Yt15Y6DSN2U28pwUxSkKM7xWpylGswAUBUMoFJ
- K7Bcl3KGl9JCTmo6yoW4BIhFZfxS/z65WO2Cy46S124c1ImSePnUWUXCCQONBEJIK0Xb
- 6Wnw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCHYgIEAwjwzIlq8PPw2LOxpbAgCUDLiGTkKSa8ZjDsxtoHdGPvDqQRVtJruOO9ffZkLXbG8o9pMsF@nongnu.org
-X-Gm-Message-State: AOJu0YzsWWtamXCFOt2LaQxhJKZ2YLMtDDDKwboLhdd0n8CrtpRfshib
- aIehJYTjiLoJZahA0gIN/BtEp776Jokem69kwZXYOVhh/viCl0AyaT7OK+YasJcaINTUytE+QXZ
- RduKLxQQaD+0GJFdNnSUuFj8BfGwFJjMHnf+Aq+a4wIWPDkjTOil7
-X-Gm-Gg: ASbGncsa0I0GXNbIjyzEwnFZDSjnzmq15YYLUFM3bB9TdF3wednMuLcv6SLCys15q0j
- 7aafky2AImPGqUKCePbkDcOJBSG0tvTAgVhd7oMeuBznHcae0OctUX0ZrqRCEPO2NccP6FS4/Lr
- WZEPSU1MUmZdzL2rxCETg+GFlvH6VPAvPoUhwpLDIDnGtcKgPVUZX/mpPZIUdzS5slhzWOl0paG
- +vmojPH
-X-Google-Smtp-Source: AGHT+IHzXUfXlsiEFEhmRJj4ZT8YeTCX+lMdIw5Z7uOVSKn1nYSeS9FPGgN9AJHI4erLTBRwXjOgqFMJFlGBtXZwPmI=
-X-Received: by 2002:a05:690c:4912:b0:724:2cad:8df6 with SMTP id
- 00721157ae682-73d3150f3eamr126583667b3.16.1758547573385; Mon, 22 Sep 2025
- 06:26:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v0gYs-0006Xx-1w
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:26:34 -0400
+Received: from mail.avm.de ([2001:bf0:244:244::94])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v0gYp-00061T-1M
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:26:33 -0400
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.53.4)
+ (envelope-from <c.speich@avm.de>)
+ id 68d14e80-f941-7f0000032729-7f000001e5b8-1
+ for <multiple-recipients>; Mon, 22 Sep 2025 15:26:24 +0200
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Mon, 22 Sep 2025 15:26:24 +0200 (CEST)
+Received: from l-cspeich ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2025092215262457-15975 ;
+ Mon, 22 Sep 2025 15:26:24 +0200 
+Date: Mon, 22 Sep 2025 15:26:23 +0200
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
+Message-ID: <kmdwf2xbgtvqiijw7mjd4ocqixvznaeszbr5zzfvuhaqrmpqn3@wdt4fhnocmxv>
+References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+ <20250919160526-mutt-send-email-mst@kernel.org>
+ <aNE0Bp0hsA31sLCJ@redhat.com>
+ <20250922081403-mutt-send-email-mst@kernel.org>
+ <aNFF8wsycqqOTc-x@redhat.com>
+ <20250922090748-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-References: <20250922113219.32122-1-pbonzini@redhat.com>
- <20250922113219.32122-5-pbonzini@redhat.com>
- <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
- <aNFJVrusgEUaLuDW@redhat.com>
-In-Reply-To: <aNFJVrusgEUaLuDW@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Sep 2025 14:26:00 +0100
-X-Gm-Features: AS18NWAoNoDu4YTZqZt5QO7LU-nTnV3SGdLsEUi71zSCkidLS077XL63XCVYZY8
-Message-ID: <CAFEAcA_rQhXdavAUCEt8atMhpZYEu0Lz6tVdu4+mfgPOK9iUuw@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/4] docs/code-provenance: make the exception process
- feasible
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250922090748-mutt-send-email-mst@kernel.org>
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 22.09.2025 15:26:24,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 22.09.2025 15:26:24, Serialize complete at 22.09.2025 15:26:24
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+X-purgate-ID: 149429::1758547584-11B9B482-5901DFEB/0/0
+X-purgate-type: clean
+X-purgate-size: 3857
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=2001:bf0:244:244::94;
+ envelope-from=c.speich@avm.de; helo=mail.avm.de
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,48 +79,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Christian Speich <c.speich@avm.de>
+From:  Christian Speich via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Sept 2025 at 14:05, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
->
-> On Mon, Sep 22, 2025 at 12:46:51PM +0100, Peter Maydell wrote:
-> > On Mon, 22 Sept 2025 at 12:32, Paolo Bonzini <pbonzini@redhat.com> wrot=
-e:
-> > >
-> > > I do not think that anyone knows how to demonstrate "clarity of the
-> > > copyright status in relation to training".
-> >
-> > Yes; to me this is the whole driving force behind the policy.
-> >
-> > > On the other hand, AI tools can be used as a natural language refacto=
-ring
-> > > engine for simple tasks such as modifying all callers of a given func=
-tion
-> > > or even less simple ones such as adding Python type annotations.
-> > > These tasks have a very low risk of introducing training material in
-> > > the code base, and can provide noticeable time savings because they a=
-re
-> > > easily tested and reviewed; for the lack of a better term, I will cal=
-l
-> > > these "tasks with limited or non-existing creative content".
-> >
-> > Does anybody know how to demonstrate "limited or non-existing
-> > creative content", which I assume is a standin here for
-> > "not copyrightable" ?
->
-> That was something we aimed to intentionally avoid specifying in the
-> policy. It is very hard to define it in a way that will be clearly
-> understood by all contributors.
+On Mon, Sep 22, 2025 at 09:08:47AM -0400, Michael S. Tsirkin wrote:
+> On Mon, Sep 22, 2025 at 01:49:55PM +0100, Daniel P. Berrangé wrote:
+> > On Mon, Sep 22, 2025 at 08:15:20AM -0400, Michael S. Tsirkin wrote:
+> > > On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. Berrangé wrote:
+> > > > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
+> > > > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
+> > > > > > This removes the change introduced in [1] that prevents the use of
+> > > > > > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
+> > > > > > 
+> > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > 
+> > > > > > Signed-off-by: Christian Speich <c.speich@avm.de>
+> > > > > > ---
+> > > > > > vhost-user-device and vhost-user-device-pci started out as user
+> > > > > > creatable devices. This was changed in [1] when the vhost-user-base was
+> > > > > > introduced.
+> > > > > > 
+> > > > > > The reason given is to prevent user confusion. Searching qemu-discuss or
+> > > > > > google for "vhost-user-device" I've seen no confused users.
+> > > > > > 
+> > > > > > Our use case is to provide wifi emulation using "vhost-user-device-pci",
+> > > > > > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+> > > > > > 24.04. With newer QEMU versions we now need to patch, distribute and
+> > > > > > maintain our own QEMU packages, which is non-trivial.
+> > > > > > 
+> > > > > > So I want to propose lifting this restriction to make this feature
+> > > > > > usable without a custom QEMU.
+> > > > > > 
+> > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > 
+> > > > > The confusion is after someone reuses the ID you are claiming without
+> > > > > telling anyone and then linux guests will start binding that driver to
+> > > > > your device.
+> > > > > 
+> > > > > 
+> > > > > We want people doing this kind of thing to *at a minimum*
+> > > > > go ahead and register a device id with the virtio TC,
+> > > > > but really to write and publish a spec.
+> > > > 
+> > > > Wanting people to register a device ID is a social problem and
+> > > > we're trying to apply a technical hammer to it, which is rarely
+> > > > an productive approach.
+> > > > 
+> > > > If we want to demonstrate that vhost-user-device is "risky", then
+> > > > how about we rename it to have an 'x-' prefix and thus disclaim
+> > > > any support for it, but none the less allow its use. Document it
+> > > > as an experimental device, and if it breaks, users get to keep
+> > > > both pieces.
+> > > 
+> > > Maybe with the insecure tag you are working on?
+> > 
+> > Sure.
+> > 
+> > > And disable in the default config?
+> > 
+> > Disabling in default config would retain the very problem that Christian
+> > is trying to solve - that no distro would have the functionality available
+> > for users.
+> 
+> I think his problem is that he has to patch qemu.
 
-> TL;DR: I don't think we should attempt to define whether the boundary
-> is between copyrightable and non-copyrightable code changes.
+Yes I'm trying to avoid that. Patching qemu also involes providing updates
+(and security patches!) for it. This is a very high burden to turn this
+simple flag on.
 
-Well, this is why I think a policy that just says "no" is
-more easily understandable and followable. As soon as we
-start defining and granting exceptions then we're effectively
-in the position of making judgements and defining the boundary.
+> 
+> As described, this is a developer option not an end user one.
 
--- PMM
+I don't really get the distintion between developer and end user here.
+
+As a developer I'm an end user too, I'm concerned with the linux kernel
+and the additional host tooling for mac80211_hwsim support but QEMU
+I'm just using as an user.
+
+Greetings,
+Christian
+
+> 
+> 
+> I know Red Hat will disable it anyway - we support what we ship.
+> 
+> 
+> > With regards,
+> > Daniel
+> > -- 
+> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
+> 
 
