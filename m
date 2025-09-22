@@ -4,86 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21625CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 16:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BD9CA100F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 16:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0jDy-00063y-KJ; Mon, 22 Sep 2025 12:17:11 -0400
+	id 1v0jXV-0005My-M8; Mon, 22 Sep 2025 12:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v0jDv-00061z-3O
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 12:17:07 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0jXT-0005MI-PD
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 12:37:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v0jDn-0007wo-CW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 12:17:06 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0jXJ-0002MI-NB
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 12:37:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758557816;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PYWOQn0OAAdLKYLI3DFBgh+6xUtuUc4Oeca5At2UJ1E=;
- b=U54dmNYyEGUpxMUR0qRlM9khVUynOpc3hrlZNtxXkyTwfVK670N0jl4AHlvpTrWH0LTcD5
- VuXmoCeGgoOqS+k9L4GGqM9HteYhxUoixfnXHL+QakuFg7XGSAKNMrdoh5IA4c4LK95Xf+
- 9taEMSucVj0aBC1cK7RoLWbzXqotzQs=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-YpzSZTHwP6CoY0yIuLv0KQ-1; Mon, 22 Sep 2025 12:16:55 -0400
-X-MC-Unique: YpzSZTHwP6CoY0yIuLv0KQ-1
-X-Mimecast-MFC-AGG-ID: YpzSZTHwP6CoY0yIuLv0KQ_1758557815
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8500faee0c5so59241785a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 09:16:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758557814; x=1759162614;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PYWOQn0OAAdLKYLI3DFBgh+6xUtuUc4Oeca5At2UJ1E=;
- b=uzPHgdI5tHrn3WDkQKHGDt4aRRTOei+8i0qOJjVgNZziH4rDzCo8ikqglusLL19/03
- qeL+OiUR3KzCcupa7mrlaRMn45wScUHZZcghHFsrGNlk7KFSKQBM+1zhdzsGh+EAqpw5
- GENqtRPsnrSdlwTTjL23VfNCwKnDRANIiQLiNiwkfAnPAA9ZLQXSFigUEpGpQuCO8mII
- /EZnM7x1dZPbi3VZLmFrIw1CMEM+SNx1Vb9mp29pcaPq6pF+dg8xpM1FZuXblLRCOuF5
- DElAPZwU+lMQ5CP3tVW4iWbLWtkzvYB4xUzZGibUMjMXs5iBTkYxHgfTLZ94L+kgOAry
- Jcbg==
-X-Gm-Message-State: AOJu0Yx3u3BT8qwylkWG8NaImdTHPb16EUSP0H8v9wlB0vFa5U20WVgF
- BNbjqhIzTHAYa8Tqf9xSrvt3dBGhozvfeIvPLw4Xs8tgbfZhnBZzDh0IL7WD56gA6BNLSw+Z20d
- 2gXaYOl1SonkHN7Ukv3a5IQsf3KOsGh/rjBqMyHxvL3SeOW9le+icGR4E
-X-Gm-Gg: ASbGnctpZbLs3ER4PAr41vq2ypZZ/f0HWuy/nWVl+E/j/XNNEvR9DywRpnfBYap2YHC
- 2crkUH20jwoeJTrZ8ra0KcWuxVQobYTr4R6lCz8uS4Pl+ATif2gp2SP1PWUy8+X9oehCqr+1+3K
- RXNDyddA2WoG8ecJ8fNZda9sxdfufc0C4jU4dBi7Vq9WreqVYr9jkpr2jHvZ6MTYU25/d6jajDL
- SQepab1hxy/PHxD9loTvUzXdTYLhM6aekegyDLbgh4ssX2I6t526i+ErgO2uGNgaGCN6JJIcUqi
- WoSZOyf4AxAIfA0/y7aovzdSuLCd2vj0
-X-Received: by 2002:a05:620a:4152:b0:84d:9f49:6898 with SMTP id
- af79cd13be357-84d9f49694cmr254634585a.61.1758557814343; 
- Mon, 22 Sep 2025 09:16:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrnYY8E9XZPz7WeiJgD9P6sPypVBzSDtTaIToL/HZXS+uZ7kyb+fu4h3L6kWIm6LFfRPuTnw==
-X-Received: by 2002:a05:620a:4152:b0:84d:9f49:6898 with SMTP id
- af79cd13be357-84d9f49694cmr254626785a.61.1758557813622; 
- Mon, 22 Sep 2025 09:16:53 -0700 (PDT)
-Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-83631a7fc2fsm814163185a.54.2025.09.22.09.16.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 09:16:52 -0700 (PDT)
-Date: Mon, 22 Sep 2025 12:16:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
-Message-ID: <aNF2dNdWNRaFCHMy@x1.local>
-References: <20250915115918.3520735-1-jmarcin@redhat.com>
- <20250915115918.3520735-5-jmarcin@redhat.com>
- <aM2LoGDh5WsVnEi8@x1.local> <aM2X-N9gXvFxxdvI@x1.local>
- <oy3kx54pezowk65jvt2vagz7c22g26k3fbu4byzsxtc4wvbgo3@uwzuuysbedzb>
+ s=mimecast20190719; t=1758559026;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=cNBfBvfV5NFbw39QvLROQHKaZm+WE00vbHXbFxTgh6M=;
+ b=P1Eyjur/h3Lad1jmsWqrd7rN0TbJkEsmnX3eAzKBBtIQG7Mqq6aqEjNbQ6O67j+LkV9jUS
+ VnV8L1zWBpdwRphI+DtYGouQ3shLsk2Juh1kg9o57tyJh3iDDCw3zjDHaNX42YScGg+rft
+ 5ZdqUu7Y2o2KeKUT+pmqgZNW3Jjn+eA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-WofBF9GzPgG-o15V5p4Gpw-1; Mon,
+ 22 Sep 2025 12:37:02 -0400
+X-MC-Unique: WofBF9GzPgG-o15V5p4Gpw-1
+X-Mimecast-MFC-AGG-ID: WofBF9GzPgG-o15V5p4Gpw_1758559021
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A4C9180057C; Mon, 22 Sep 2025 16:37:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38B4C1800578; Mon, 22 Sep 2025 16:36:58 +0000 (UTC)
+Date: Mon, 22 Sep 2025 17:36:55 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [RFC PATCH 4/4] docs/code-provenance: make the exception process
+ feasible
+Message-ID: <aNF7J6jpviFhwJPX@redhat.com>
+References: <20250922113219.32122-1-pbonzini@redhat.com>
+ <20250922113219.32122-5-pbonzini@redhat.com>
+ <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
+ <aNFJVrusgEUaLuDW@redhat.com>
+ <CAFEAcA_rQhXdavAUCEt8atMhpZYEu0Lz6tVdu4+mfgPOK9iUuw@mail.gmail.com>
+ <aNFXJtQu9gFkIwLg@redhat.com>
+ <ffaf300c-4f41-4741-899d-f0fc148ab2a2@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <oy3kx54pezowk65jvt2vagz7c22g26k3fbu4byzsxtc4wvbgo3@uwzuuysbedzb>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <ffaf300c-4f41-4741-899d-f0fc148ab2a2@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -105,123 +91,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 22, 2025 at 03:34:19PM +0200, Juraj Marcin wrote:
-> Hi Peter,
+On Mon, Sep 22, 2025 at 05:10:24PM +0200, Paolo Bonzini wrote:
 > 
-> On 2025-09-19 13:50, Peter Xu wrote:
-> > On Fri, Sep 19, 2025 at 12:58:08PM -0400, Peter Xu wrote:
-> > > > @@ -2564,6 +2569,11 @@ static void *source_return_path_thread(void *opaque)
-> > > >              tmp32 = ldl_be_p(buf);
-> > > >              trace_source_return_path_thread_pong(tmp32);
-> > > >              qemu_sem_post(&ms->rp_state.rp_pong_acks);
-> > > > +            if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-> > > > +                trace_source_return_path_thread_dst_started();
-> > > > +                migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> > > > +                                  MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > > 
-> > > Could this race with the migration thread modifying the state concurrently?
-> > > 
-> > > To avoid it, we could have a bool, set it here once, and in the iterations
-> > > do something like:
-> > > 
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index 10c216d25d..55230e10ee 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -3449,6 +3449,16 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-> > >      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
-> > >  
-> > >      if (in_postcopy) {
-> > > +        if (s->postcopy_package_loaded) {
-> > > +            assert(s->state == MIGRATION_STATUS_POSTCOPY_DEVICE);
-> > > +            migrate_set_state(s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> > > +                              MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > > +            /*
-> > > +             * Since postcopy cannot be re-initiated, this flag will only
-> > > +             * be set at most once for QEMU's whole lifecyce.
-> > > +             */
-> > > +            s->postcopy_package_loaded = false;
-> > > +        }
-> > >          /*
-> > >           * Iterate in postcopy until all pending data flushed.  Note that
-> > >           * postcopy completion doesn't rely on can_switchover, because when
-> 
-> It was there in the RFC version, when there was mutual handshake before
-> dst starting, but I thought cmp&exchange would be enough. I can add it
-> again, however, there is no need to set it to false afterwards, we can
-> simply check if this condition is true:
-> s->postcopy_package_loaded && s->state == MIGRATION_STATUS_POSTCOPY_DEVICE.
+> I have no QEMU example at hand, but let's look at a commit like
+> https://github.com/bonzini/meson/commit/09765594d.  Something like this
+> could be plausibly created with AI.  What I care about is:
 
-Setting it to false was a safety measure.  Indeed not needed, but when so
-we need to be extremely careful to always check with above two conditions
-to avoid it frequently triggers.  So I thought clearing it would be much
-easier to read.  I can wait and read the new version whatever you prefer.
+I'd agree it is something AI could likely come up with, given the
+right prompt, but in terms of defining policy that conceptally
+feels more like new functionality, mixed in with refactoring.
 
-> 
-> > 
-> > [...]
-> > 
-> > > > @@ -2871,7 +2882,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-> > > >  
-> > > >      /* Now, switchover looks all fine, switching to postcopy-active */
-> > > >      migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
-> > > > -                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > > > +                      MIGRATION_STATUS_POSTCOPY_DEVICE);
-> > > >  
-> > > >      bql_unlock();
-> > > >  
-> > > > @@ -3035,7 +3046,8 @@ static void migration_completion(MigrationState *s)
-> > > >  
-> > > >      if (s->state == MIGRATION_STATUS_ACTIVE) {
-> > > >          ret = migration_completion_precopy(s);
-> > > > -    } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> > > > +    } else if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-> > > > +               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> > > 
-> > > Exactly.  We need to be prepared that src sending too fast so when device
-> > > loading on dest we finished.
-> > 
-> > One thing more to mention here.. which may void some previous comments I
-> > left.  Let's discuss.
-> > 
-> > I think it may also make sense to only allow a COMPLETE after
-> > POSTCOPY_ACTIVE.
-> > 
-> > That is, if src sends too fast to have finished sending everything,
-> > reaching COMPLETE during POSTCOPY_DEVICE, that is, while before it receives
-> > the new PONG you defined, then.. I _think_ it is better to wait for that.
-> > 
-> > If it finally arrives, then it's perfect, we switch to POSTCOPY_ACTIVE,
-> > then continue the completion.
-> > 
-> > If the channel is broken before its arrival, logically we should handle
-> > this case as a FAILURE and restart the VM on src.
-> > 
-> > It's only relevant in a corner case, but does that sound better?
-> 
-> Yes, it does make sense to wait for POSTCOPY_ACTIVE as src could finish
-> before dst finished package load and could still fail. We could use a
-> qemu_event_wait() to wait and set the event in src return path thread
-> when the PONG is received.
+> * to what degree can I automate what I could do by hand.  An AI tool moves
+> the break-even point more towards automation.  I would not bring up
+> Coccinelle for a 10 line change, in fact I looked by hand at every
+> occurrence of ".cfg" and relied on mypy to check if I missed something.
+> Maybe an experienced AI user would have reached to AI as the first step?[1]
 
-Right.
+What matters is not whether Coccinelle was practical to use
+or not, and also not whether it was possible to express the
+concept in its particular language.
 
-Though since we want to move to POSTCOPY_ACTIVE asap when receiving the
-corresponding PONG, we may want to have something like qemu_event_read()
-just return "ev->value == EV_SET", as we can't event_wait() in the
-migration thread while pushing RAMs.
+Rather I'm thinking about it as a conceptual guide for whether
+a change might be expressible as a plain transformation or not.
 
-Or, to avoid touching library code, we can also introduce yet another bool,
-then when receiving the PONG we set both (1) the bool, and (2) the event.
-We can check the bool in the iterations (when set, wait() to consume the
-event; the event should have happened or just to happen), and wait() on the
-event when completing (when return, bool must have been set, hence can
-reset bool).
+I don't think the meson change satisfies that, because you
+wouldn't express the new class level properties, or the new
+get_or_create_cfg code as an algorithmic refactoring. Those
+are a case of creative coding.
 
+> * keeping people honest.  Between the two cases of "they don't tell and I
+> don't realize it is AI-generated" and "they split the commit clearly into
+> AI-generated and human-generated parts", an exception makes the latter more
+> likely to happen.
+
+
+> [1] I tried "I want to track the PackageConfiguration object per machine in
+> mesonbuild/cargo/interpreter.py.  Make PackageState.cfg a PerMachine object.
+> Initialize PackageState.cfg when the PackageState is created. The old
+> pkg.cfg becomes pkg.cfg[MachineChoice.HOST]" and it did pretty much the same
+> changes in a bit more than 2 minutes.  Including the time to write the
+> prompt it's almost certainly more than it took me to do it by hand, but this
+> time I was doing something else in the meanwhile. :)
+
+When we talk about "limited / non-creative refactoring", my interpretation
+would be that it conceptually applies to changes which could be describe as
+an algorithmic transformation. This prompt and the resulting code feel like
+more than that. The prompt is expressing a creative change, and while the
+result includes some algorithmic refactoring it, includes other stuff too.
+
+Describing a policy that allows your meson example, in a way that will be
+interpreted in a reasonably consistent way by contributors looks like a
+challenge to me.
+
+On the flip side, you might have written the new property / getter method
+manually and asked the agent to finish the conversion, and that would
+have been acceptable. This is a can or worms to express in a policy.
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
