@@ -4,78 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313C7CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 17:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D29CA100F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 18:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0khR-0001Gf-QV; Mon, 22 Sep 2025 13:51:41 -0400
+	id 1v0l5R-0004ik-LR; Mon, 22 Sep 2025 14:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v0khK-0001G9-MW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:51:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+653b648b0a91ad8bd62e+8065+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1v0l5O-0004dl-Kg
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:16:26 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v0khH-0004BP-4F
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 13:51:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758563489;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vWNkuyMytWtIQirPoXrUMwV05l9N+SazuO/usqMWB3w=;
- b=UXrboiMuqFArhGD/vE3cfbQzVPzZ+ZS9iK848RFmC9bqXjuktpJ45hTXLxPvV5qiRQU6Dd
- 0dh3ErFX60YLfHsD4KnEfnmhmm5VCH93DBGIWU6E2T7k00Yc3HwkQpshhDWvoZYcMg2gzi
- fWobqovhOWrWjc0Px4q3xKiZBgh6RUs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-FTKGGVxZPIqmeFmnIiNEsw-1; Mon,
- 22 Sep 2025 13:51:27 -0400
-X-MC-Unique: FTKGGVxZPIqmeFmnIiNEsw-1
-X-Mimecast-MFC-AGG-ID: FTKGGVxZPIqmeFmnIiNEsw_1758563486
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AA221800451; Mon, 22 Sep 2025 17:51:26 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.92])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 238C03000198; Mon, 22 Sep 2025 17:51:24 +0000 (UTC)
-Date: Mon, 22 Sep 2025 13:51:23 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Brian Song <hibriansong@gmail.com>
-Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, armbru@redhat.com, bernd@bsbernd.com,
- fam@euphon.net, kwolf@redhat.com
-Subject: Re: [PATCH 3/4] export/fuse: Safe termination for FUSE-uring
-Message-ID: <20250922175123.GC362784@fedora>
-References: <20250830025025.3610-1-hibriansong@gmail.com>
- <20250830025025.3610-4-hibriansong@gmail.com>
- <20250909193358.GE218449@fedora>
- <CAKWCU7VFbJius06j1pXvP_5aSpmhmaJq6Z41H4efWFmeMjr4OQ@mail.gmail.com>
- <ef822991-5af9-4ac7-9bcd-15f521579f8f@redhat.com>
- <00777028-aaf4-4607-80a7-d91ea9e9685a@gmail.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+653b648b0a91ad8bd62e+8065+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1v0l5I-0007i9-3Q
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 14:16:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=vjaSCFb4wopTZEYBFBvp7ybhvfpe7PkxfxDudRpCne0=; b=q9eVHc2/cfwKmu+Z+TqHRPKH4Z
+ o9GrVkIVolqb13T9JYl6fT8yk+1fJrw5TFH5WQnCH2+JtpwTmGgO2gp22iz9KIpBryLamDxQ2G/UT
+ 8h/sDyFV3QObarx18zsP+txYbvLrwzga9hFSqh5NFVfjLhG3d871h5exOmr46C4MQCod12b9lV2Y9
+ urfeQgBgepZxJshlrJQPRSu1XsINkJEi5PUPE3W3sGy9/LfsmmhEa1p3Ph/aVDVauExw1DeVR3NFJ
+ zLfhFUjeEXJFzKC1+sgxVDImQHXI+Yezi1jrlOXHqs1Bjp32twkTE3Q1Co1u7CYn/xh6BOqRFTTMp
+ V+aqUItA==;
+Received: from 54-240-197-238.amazon.com ([54.240.197.238]
+ helo=freeip.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+ id 1v0l5B-0000000Clgy-3NIE; Mon, 22 Sep 2025 18:16:13 +0000
+Message-ID: <c1ceaa4e68b9264fc1c811c1ad0b60628d7fd9cd.camel@infradead.org>
+Subject: Re: Should QEMU (accel=kvm) kvm-clock/guest_tsc stop counting
+ during downtime blackout?
+From: David Woodhouse <dwmw2@infradead.org>
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org
+Date: Mon, 22 Sep 2025 19:16:13 +0100
+In-Reply-To: <1e9f9c64-af03-466b-8212-ce5c828aac6e@oracle.com>
+References: <2d375ec3-a071-4ae3-b03a-05a823c48016@oracle.com>
+ <3d30b662b8cdb2d25d9b4c5bae98af1c45fac306.camel@infradead.org>
+ <1e9f9c64-af03-466b-8212-ce5c828aac6e@oracle.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-d6a1ovwCRfVpXUHmmCyS"
+User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="lNvxF7xu1KXVSuxT"
-Content-Disposition: inline
-In-Reply-To: <00777028-aaf4-4607-80a7-d91ea9e9685a@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+653b648b0a91ad8bd62e+8065+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,231 +80,216 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---lNvxF7xu1KXVSuxT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--=-d6a1ovwCRfVpXUHmmCyS
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 17, 2025 at 06:06:55PM -0400, Brian Song wrote:
+On Mon, 2025-09-22 at 10:31 -0700, Dongli Zhang wrote:
+> Hi David,
 >=20
+> Thank you very much for quick reply!
 >=20
-> On 9/17/25 9:01 AM, Hanna Czenczek wrote:
-> > On 15.09.25 07:43, Brian Song wrote:
-> > > Hi Hanna,
-> >=20
-> > Hi Brian!
-> >=20
-> > (Thanks for your heads-up!)
-> >=20
-> > > Stefan raised the above issue and proposed a preliminary solution: ke=
-ep
-> > > closing the file descriptor in the delete section, but perform
-> > > umount separately for FUSE uring and traditional FUSE in the shutdown
-> > > and delete sections respectively. This approach avoids the race
-> > > condition on the file descriptor.
+> On 9/22/25 9:58 AM, David Woodhouse wrote:
+> > On Mon, 2025-09-22 at 09:37 -0700, Dongli Zhang wrote:
+> > > Hi,
 > > >=20
-> > > In the case of FUSE uring, umount must be performed in the shutdown
-> > > section. The reason is that the kernel currently lacks an interface to
-> > > explicitly cancel submitted SQEs. Performing umount forces the kernel=
- to
-> > > flush all pending SQEs and return their CQEs. Without this step, CQEs
-> > > may arrive after the export has already been deleted, and invoking the
-> > > CQE handler at that point would dereference freed memory and trigger a
-> > > segmentation fault.
-> >=20
-> > The commit message says that incrementing the BB reference would be
-> > enough to solve the problem (i.e. deleting is delayed until all requests
-> > are done).=C2=A0 Why isn=E2=80=99t it?
->=20
-> Hanna:
->=20
-> If we place umount in the delete section instead of the shutdown section,
-> the kernel FUSE driver will continue waiting for user FUSE requests and
-> therefore won't return CQEs to userspace. As a result, the BB reference
-> remains held (since the reference is acquired during registration and
-> submission and only released once the CQE returns), preventing the delete
-> operation from being invoked (invoked once the reference is decreased to =
-0).
-> This is why umount must be placed in the shutdown section.
->=20
-> >=20
-> > > I=E2=80=99m curious about traditional FUSE: is it strictly necessary =
-to perform
-> > > umount in the delete section, or could it also be done in shutdown?
-> >=20
-> > Looking into libfuse, fuse_session_unmount() (in fuse_kern_unmount())
-> > closes the FUSE FD.=C2=A0 I can imagine that might result in the potent=
-ial
-> > problems Stefan described.
-> >=20
-> > > Additionally, what is the correct ordering between close(fd) and
-> > > umount, does one need to precede the other?
-> >=20
-> > fuse_kern_unmount() closes the (queue 0) FD first before actually
-> > unmounting, with a comment: =E2=80=9CNeed to close file descriptor, oth=
-erwise
-> > synchronous umount would recurse into filesystem, and deadlock.=E2=80=9D
-> >=20
-> > Given that, I assume the FDs should all be closed before unmounting.
-> >=20
-> > (Though to be fair, before looking into it now, I don=E2=80=99t think I=
-=E2=80=99ve ever
-> > given it much thought=E2=80=A6)
-> >=20
-> > Hanna
-> >=20
-> Stefan:
->=20
-> I roughly went through the umount and close system calls:
->=20
-> umount:
-> fuse_kill_sb_anon -> fuse_sb_destroy -> fuse_abort_conn
->=20
-> close:
-> __fput -> file->f_op->release(inode, file) -> fuse_dev_release ->
-> fuse_abort_conn
-> (this only runs after all /dev/fuse FDs have been closed).
->=20
-> And as Hanna mentioned, libfuse points out: =E2=80=9CNeed to close file d=
-escriptor,
-> otherwise synchronous umount would recurse into filesystem, and deadlock.=
-=E2=80=9D
->=20
-> So ideally, we should close each queue FD first, then call umount at the =
-end
-> =E2=80=94 even though calling umount directly also works. The root issue =
-is that the
-> kernel doesn't provide an interface to cancel already submitted SQEs.
->=20
-> You mentioned that in fuse over io_uring mode we perform close in the
-> shutdown path, but at that point the server may still be processing
-> requests. While handling requests, it may still write to the FD, but that=
- FD
-> might not be /dev/fuse. I=E2=80=99m not sure how this gets triggered, sin=
-ce in fuse
-> uring mode all FUSE requests are handled by io_uring, and our FUSE reques=
-ts
-> should be completed via io_uring. After shutdown closes the FD, it may ca=
-ll
-> fuse_abort_conn, which terminates all request processing in the kernel.
-
-If another thread opens a new file descriptor, the kernel will hand out
-the lowest numbered available file descriptor. That fd could be the
-FUSE-over-io_uring fd that was just closed by the main loop thread while
-the IOThread is still waiting for CQEs or in the middle of processing a
-FUSE-over-io_uring request. An IOThread must not use the stale fd (e.g.
-as part of an io_uring SQE) thinking it is a FUSE fd.
-
-> There=E2=80=99s also locking in place to protect the termination of reque=
-sts and the
-> subsequent uring cleanup.
->=20
-> That=E2=80=99s why I think the best approach for now is:
->=20
-> in shutdown, handle close and umount for fuse over io_uring;
->=20
-> in delete, handle close and umount for traditional FUSE.
-
-Yes. I would refine the FUSE-over-io_uring part like this:
-
-I remember we discussed scheduling a BH in the IOThreads so they can
-call close(2). That way there's no race between the IOThreads, which are
-still using the fds, and the main loop thread, which is in shutdown().
-
-It sounds like the main loop thread should only umount once all
-IOThreads have closed their fds. The IOThreads will need to notify the
-main loop thread when they are done. An async callback in the main loop
-thread will invoke umount and drop the reference to the export. Then
-delete() will finally be called.
-
-If someone can think of a way to achieve the same thing with less
-synchronization, that would be simpler. But if not, then I think we need
-this for correctness (to avoid the race with IOThreads still using the
-fd).
-
-Stefan
-
->=20
-> > > Thanks,
-> > > Brian
+> > > Would you mind helping confirm if kvm-clock/guest_tsc should stop cou=
+nting
+> > > elapsed time during downtime blackout?
 > > >=20
-> > > On 9/9/25 3:33 PM, Stefan Hajnoczi wrote:
-> > > =C2=A0 > On Fri, Aug 29, 2025 at 10:50:24PM -0400, Brian Song wrote:
-> > > =C2=A0 >> @@ -901,24 +941,15 @@ static void fuse_export_shutdown(Bloc=
-kExport
-> > > *blk_exp)
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 */
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- g_hash_table_remove(exports, exp->mountpoint);
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > > =C2=A0 >> -}
-> > > =C2=A0 >> -
-> > > =C2=A0 >> -static void fuse_export_delete(BlockExport *blk_exp)
-> > > =C2=A0 >> -{
-> > > =C2=A0 >> -=C2=A0=C2=A0=C2=A0 FuseExport *exp =3D container_of(blk_ex=
-p, FuseExport, common);
-> > > =C2=A0 >>
-> > > =C2=A0 >> -=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < exp->num_queues; =
-i++) {
-> > > =C2=A0 >> +=C2=A0=C2=A0=C2=A0 for (size_t i =3D 0; i < exp->num_queue=
-s; i++) {
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- FuseQueue *q =3D &exp->queues[i];
-> > > =C2=A0 >>
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- /* Queue 0's FD belongs to the FUSE session */
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- if (i > 0 && q->fuse_fd >=3D 0) {
-> > > =C2=A0 >>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 close(q->fuse_fd);
-> > > =C2=A0 >
-> > > =C2=A0 > This changes the behavior of the non-io_uring code. Now all =
-fuse
-> > > fds and
-> > > =C2=A0 > fuse_session are closed while requests are potentially still=
- being
-> > > =C2=A0 > processed.
-> > > =C2=A0 >
-> > > =C2=A0 > There is a race condition: if an IOThread is processing a
-> > > request here
-> > > =C2=A0 > then it may invoke a system call on q->fuse_fd just after it=
- has been
-> > > =C2=A0 > closed but not set to -1. If another thread has also opened a
-> > > new file
-> > > =C2=A0 > then the fd could be reused, resulting in an accidental writ=
-e(2)
-> > > to the
-> > > =C2=A0 > new file. I'm not sure whether there is a way to trigger thi=
-s in
-> > > =C2=A0 > practice, but it looks like a problem waiting to happen.
-> > > =C2=A0 >
-> > > =C2=A0 > Simply setting q->fuse_fd to -1 here doesn't fix the race. It
-> > > would be
-> > > =C2=A0 > necessary to stop processing fuse_fd in the thread before cl=
-osing it
-> > > =C2=A0 > here or to schedule a BH in each thread so that fuse_fd can =
-be closed
-> > > =C2=A0 > in the thread that uses the fd.
+> > > 1. guest_clock=3DT1, realtime=3DR1.
+> > > 2. (qemu) stop
+> > > 3. Wait for several seconds.
+> > > 4. (qemu) cont
+> > > 5. guest_clock=3DT2, realtime=3DR2.
 > > >=20
+> > > Should (T1 =3D=3D T2), or (R2 - R1 =3D=3D T2 - T1)?
 > >=20
+> > Neither.
+> >=20
+> > Realtime is something completely different and runs at a different rate
+> > to the monotonic clock. In fact its rate compared to the monotonic
+> > clock (and the TSC) is *variable* as NTP guides it.
+> >=20
+> > In your example of stopping and continuing on the *same* host, the
+> > guest TSC *offset* from the host's TSC should remain the same.
+> >=20
+> > And the *precise* mathematical relationship that KVM advertises to the
+> > guest as "how to turn a TSC value into nanoseconds since boot" should
+> > also remain precisely the same.
 >=20
+> Does that mean:
+>=20
+> Regarding "stop/cont" scenario, both kvm-clock and guest_tsc value should=
+ remain
+> the same, i.e.,
+>
+> 1. When "stop", kvm-clock=3DK1, guest_tsc=3DT1.
+> 2. Suppose many hours passed.
+> 3. When "cont", guest VM should see kvm-clock=3D=3DK1 and guest_tsc=3D=3D=
+T1, by
+> refreshing both PVTI and tsc_offset at KVM.
 
---lNvxF7xu1KXVSuxT
-Content-Type: application/pgp-signature; name=signature.asc
+Assuming a modern host where the TSC just counts sanely at a consistent
+rate and never deviates....
 
------BEGIN PGP SIGNATURE-----
+No. The PVTI should basically *never* change. Whatever the estimated
+(not NTP skewed) frequency of the TSC is believed to be, the KVM clock
+PVTI should indicate that at boot, telling the guest how to convert a
+TSC value into 'monotonic nanoseconds since boot'. If it ever changes,
+that's a KVM bug.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjRjJsACgkQnKSrs4Gr
-c8g8/gf+MQ1hPPQKFBlOQK9mUm3dW0LkBR3PxWQvZ3dyk9Nc/D/USYV1v/66R3zW
-e+6wkPMrbWpU/mkunBC6SDjsY9e+xssEYLUTaT9zSx+ENbAGRdDm7b5hMx7yMSuG
-OaBofgVZeoM6oXLX44CWb5Ok5QpfCsrCrlkEh9fmgj7i9SR/kbsoH33dYygMrxD4
-ki6R6uwmYFzvQAOebJDvsEgAp6lwyXqNRWprWHQJqJdyI73nBgiaX+UZ0f0xNRzA
-VCWVpF0hcIbIEUGm67F4Q9+RFmcQupLb4yWqIcIDIIUgHk7zFnYzWqsp9PebEjDS
-5thGM4KP5ZZx7AGyMevhXgYGWF6dSg==
-=3H5x
------END PGP SIGNATURE-----
+It should be saved and restored in precisely its native form, using the
+KVM_[GS]ET_CLOCK_GUEST I referenced before. For both live update (same
+host) and live migration (different host).
 
---lNvxF7xu1KXVSuxT--
+The TSC should also continue to count at exactly the same rate as the
+host's TSC at all times. No breaks or discontinuities due to any kind
+of 'steal time'. For live update that's easy as you just apply the same
+*offset*. For live migration that's where you have to accept that it
+depends on clock synchronization between your source and destination
+hosts, which is probably based on realtime.
 
+
+
+>=20
+> As demonstrated in my test, currently guest_tsc doesn't stop counting dur=
+ing
+> blackout because of the lack of "MSR_IA32_TSC put" at
+> kvmclock_vm_state_change(). Per my understanding, it is a bug and we may =
+need to
+> fix it.
+>=20
+> BTW, kvmclock_vm_state_change() already utilizes KVM_SET_CLOCK to re-conf=
+igure
+> kvm-clock before continuing the guest VM.
+>=20
+> >=20
+> > KVM already lets you restore the TSC correctly. To restore KVM clock
+> > correctly, you want something like KVM_SET_CLOCK_GUEST from
+> > https://lore.kernel.org/all/20240522001817.619072-4-dwmw2@infradead.org=
+/
+> >=20
+> > For cross machine migration, you *do* need to use a realtime clock
+> > reference as that's the best you have (make sure you use TAI not UTC
+> > and don't get affected by leap seconds or smearing). Use that to
+> > restore the *TSC* as well as you can to make it appear to have kept
+> > running consistently. And then KVM_SET_CLOCK_GUEST just as you would on
+> > the same host.
+>=20
+> Indeed QEMU Live Migration also relies on kvmclock_vm_state_change() to
+> temporarily stop/cont the source/target VM.
+>=20
+> Would you mean we expect something different for live migration, i.e.,
+>=20
+> 1. Live Migrate a source VM to a file.
+> 2. Copy the file to another server.
+> 3. Wait for 1 hour.
+> 4. Migrate from the file to target VM.
+>=20
+> Although it is equivalent to a one-hour downtime, we do need to count the
+> missing one-hour, correct?
+
+I don't look at it as counting anything. The clock keeps running even
+when I'm not looking at it. If I wake up and look at it again, there is
+no 'counting' how long I was asleep...
+
+
+--=-d6a1ovwCRfVpXUHmmCyS
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDkyMjE4MTYx
+M1owLwYJKoZIhvcNAQkEMSIEIDbYuLhBh/0cCceHkt/sn8urFin2WCIa7gcQmzFNW5oqMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAzLJmfwh9v1tJ
+3oPST1gcEjHCzzFFNItq+s4RHOfxYTyKs+gGs5MfwyeRm40bgVGLp+OJg9oIypYagoJBybnnRJsN
+T6A0ZiQaXBr7FNArVK2tkOzqhmGcHPf0YaQOBcQK3nbAJ8iVcEiS7dtc5tKJXHtqvFx/V8G54ZeG
+XRAuVclETJtFC9cRxHArYvojIYPHgM72sLtkr6lJBXd4QSDGcM/se5fAgwEAG7YLMe7NAUsX837V
+pvPBUSnSs4GIBJZoHAsGHnVBH6bIsV+Rgzf8VB4DWcNXxj6rcWr1Vha3Xalp9lvH052sNK9E0u3c
+LYeknK0JVyqnbyzo4OBitxYpjvvF7+6xxV5RetPWDg7oC/SjPNSXh9EO1ON8PWFmV0G7TrcILp5R
+8nO5bM+gy/na8LD2aOah1tBRg+sDbLAaul3Idgbwk8/HSyn8Qf7Vf331YipIwskrDxFgX6yOImyx
+QcVYyTMl0mmW6t3WjBZT5V0f2SZMYRZPwJiIsLgXrYECiIU/U0Jy8bji877tbstpS0r6u0DHVOYN
+dphYDR2fwAfA4861dt1vhgYhfFHZpsBTQifhI6KFlFYUmzVpJICABodtjk6EVd/JB3Z86OPIFzdR
+a5we2NLCjWocz8NgkYy6J6vWnNctVfzmfDgemeKSn294/PXk5i2vOu3HdW4xVZwAAAAAAAA=
+
+
+--=-d6a1ovwCRfVpXUHmmCyS--
 
