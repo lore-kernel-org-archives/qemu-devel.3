@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BCBACAC5A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 07:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4264CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 07:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0b49-0005yK-AR; Mon, 22 Sep 2025 03:34:29 -0400
+	id 1v0b48-0005xR-Mv; Mon, 22 Sep 2025 03:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v0b47-0005xI-A4
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:34:27 -0400
+ id 1v0b45-0005wt-JG
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:34:25 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v0b3w-0007NU-3L
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:34:27 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1v0b40-0007Nr-Qf
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:34:25 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxaNHu+9BoDhwNAA--.28344S3;
- Mon, 22 Sep 2025 15:34:06 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxH9Pv+9BoFRwNAA--.28190S3;
+ Mon, 22 Sep 2025 15:34:07 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCxocLo+9Bo5wulAA--.64540S4;
- Mon, 22 Sep 2025 15:34:05 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxocLo+9Bo5wulAA--.64540S7;
+ Mon, 22 Sep 2025 15:34:07 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/5] target/loongarch: Set function loongarch_cpu_has_work()
- as public
-Date: Mon, 22 Sep 2025 15:33:57 +0800
-Message-Id: <20250922073400.1308169-3-maobibo@loongson.cn>
+Subject: [PATCH 5/5] target/loongarch: Define loongarch_exception_name() as
+ static
+Date: Mon, 22 Sep 2025 15:34:00 +0800
+Message-Id: <20250922073400.1308169-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250922073400.1308169-1-maobibo@loongson.cn>
 References: <20250922073400.1308169-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxocLo+9Bo5wulAA--.64540S4
+X-CM-TRANSID: qMiowJCxocLo+9Bo5wulAA--.64540S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,54 +66,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function loongarch_cpu_has_work() is defined as static, it is used
-by files target/loongarch/cpu.c and target/loongarch/tcg/tcg_cpu.c,
-set it as public and declare it in header file target/loongarch/cpu.h
-
-The same with function cpu_loongarch_hw_interrupts_pending().
+Function loongarch_exception_name() is only called in defined file
+target/loongarch/tcg/tcg_cpu.c, set this function as static.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c | 4 ++--
- target/loongarch/cpu.h | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ target/loongarch/internals.h   | 2 --
+ target/loongarch/tcg/tcg_cpu.c | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 20ef221fb2..6eb8c3214a 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -141,7 +141,7 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
- }
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index e50d109767..29956f0fbe 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -24,8 +24,6 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+                                    uint32_t exception,
+                                    uintptr_t pc);
  
- /* Check if there is pending and not masked out interrupt */
--static inline bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
-+bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
+-const char *loongarch_exception_name(int32_t exception);
+-
+ #ifdef CONFIG_TCG
+ int ieee_ex_to_loongarch(int xcpt);
+ void restore_fp_status(CPULoongArchState *env);
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 59b5800ecf..82b54e6dc3 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -45,7 +45,7 @@ static const struct TypeExcp excp_names[] = {
+     {EXCP_HLT, "EXCP_HLT"},
+ };
+ 
+-const char *loongarch_exception_name(int32_t exception)
++static const char *loongarch_exception_name(int32_t exception)
  {
-     uint32_t pending;
-     uint32_t status;
-@@ -154,7 +154,7 @@ static inline bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
- #endif
+     int i;
  
- #ifndef CONFIG_USER_ONLY
--static bool loongarch_cpu_has_work(CPUState *cs)
-+bool loongarch_cpu_has_work(CPUState *cs)
- {
-     bool has_work = false;
- 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index c8b96f74dc..5475b6e44f 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -478,6 +478,9 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
-     }
- }
- 
-+bool loongarch_cpu_has_work(CPUState *cs);
-+bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
-+
- /*
-  * LoongArch CPUs hardware flags.
-  */
 -- 
 2.39.3
 
