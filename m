@@ -4,138 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49491CAC5A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB129CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0h2d-0006yY-EM; Mon, 22 Sep 2025 09:57:19 -0400
+	id 1v0h2u-000728-8r; Mon, 22 Sep 2025 09:57:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0h2a-0006xq-OM
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:57:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1v0h2o-0006zI-S0
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:57:31 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0h2K-0002qs-Vi
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:57:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758549416;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BA6uiut+DFxCaY1uUaHuRZhAnV2iUq2if9IRYp9e6VE=;
- b=PCcJ/Rf9ZzNbUbODFwT0FRBK8ReDP40/LB6dE1HJ6oFOUug9jHA/eujp5FSiXq2Tyca1Ht
- pRsraUNkzfcNvQd/gXmrDf9V+iface/jVTko3WCsyzrBpha5VBaxtC58xJU4NAl6hwobsR
- UG/8fDrykdbGDGUvd534T8WXpQqKsUA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-dr0gw-oDO-CrUheer_Fh2A-1; Mon, 22 Sep 2025 09:56:55 -0400
-X-MC-Unique: dr0gw-oDO-CrUheer_Fh2A-1
-X-Mimecast-MFC-AGG-ID: dr0gw-oDO-CrUheer_Fh2A_1758549414
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46d46692831so5206855e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:56:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758549414; x=1759154214;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BA6uiut+DFxCaY1uUaHuRZhAnV2iUq2if9IRYp9e6VE=;
- b=GedKZhGglYZbuw+nI9dMXdLtnHGThvg4Fmd8XSE18oaKtXxfIdffBwvQwXkeRE+KHV
- /Sdp5lO93AV0eL+89VLgNw3ZX7E04+BNm/EH9EW1pporNZZjQ9Tlz3Fz8FtLqeF/ixNz
- aU4/+z3n6yEm07KXvZj0hZfw3JhIQlG/upRVlBhSoCgcycXbL3TMOwD7HA1NqI9ZyN1e
- KR/7gRJFqpGd9QTJNB2Vl3TZQiM4IWjuRiU07LUIXYzdYFAEnr4DuMGOwWROosiDXOw0
- ZD9VbXVzH/BQB5ppPk8wAOb+t0smacrhoENN+lpKLmqaVnc3i3b1mAAJaEoUXghuomW0
- /Gkg==
-X-Gm-Message-State: AOJu0YxZzaSYAc7gHWwXaZ2g2o8TijMaEwvozrBf/cV114jxnex/Qsnn
- 2Ri2mDty8FMiQhI2+fBexgU1EiNFXlYtUi6An5dGg/K6HS+HHQ+XZIoUWgY3Goq/chhq0eacvov
- nboQhBQgQ++zIpgdpOJa6YCXfQJ66R4jvjmugiDaVyxzEUHvDr6JLVsfo
-X-Gm-Gg: ASbGncuy9SDVAIrFvoeSpOtgw2rXGspTlHk5UUsMHRj41vJfwkXXuQNJWDPmKWXYZfn
- Ld5I6jENLfG0XYAyaYQJsRRhlMBvU/TnkGiIkF3vpQJZxPpETqg4oC/aHgNbrfYYl2mApuF8FhD
- USLMtE9t4FuYtr9NP/fJPKt+nJGKiee88d7f1dcUbVVi9fgEKHTMb2ucs8za2Ph0XpaKaBsSywv
- tXN28yu+20UXQiEYQHb5YJ9xFZlDWkxK3AHKwVAsdiyQq+G4+rYVTASheIlegLwlXyoI0QGM4e4
- uFb8W6jP0mjHqyqb6aLJNqVT4VYdAf1ZsaQEk+grZo73c79q/erVHwS+ppMbassPaOCJ0sKe9jF
- PWYHB0LFou/1cYWfEFBZZjPjuO4X5LsESFDV5MZCGeHc=
-X-Received: by 2002:a05:600c:8a0c:10b0:46e:1b89:77f1 with SMTP id
- 5b1f17b1804b1-46e1b897b12mr2613445e9.9.1758549413595; 
- Mon, 22 Sep 2025 06:56:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZQW+6aLBCYzQXKV/cQT3TOQFVrkQoHMnIGHWD3WrVNX2WenTfB3TI6XligdarelBWJkgasA==
-X-Received: by 2002:a05:600c:8a0c:10b0:46e:1b89:77f1 with SMTP id
- 5b1f17b1804b1-46e1b897b12mr2613215e9.9.1758549413123; 
- Mon, 22 Sep 2025 06:56:53 -0700 (PDT)
-Received: from [192.168.10.81] ([151.95.47.123])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-464eadd7e11sm214507365e9.0.2025.09.22.06.56.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 06:56:52 -0700 (PDT)
-Message-ID: <d130989e-3883-410f-b96b-cead1be382ad@redhat.com>
-Date: Mon, 22 Sep 2025 15:56:51 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1v0h2b-0002rP-5l
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:57:22 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 58MB0oe91546869; Mon, 22 Sep 2025 06:57:05 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=+AJc3Q20p8dh3HmW+Arx/qH0MftNwxc2RfRjsb3Lw
+ jg=; b=KLTzE1fEjpeYoMVBIKUqTKwQlWI3Z8d9GvKVmf0B5ihsm1m7S5okS2f2j
+ 2+tiT+hiV/3DJrLf0HS1P14NhZpqsOqQ94aiLcqw4P9UTZROoh7uWwp+wFcugIYK
+ K9ISSa8uSWuHPkJBbDBU/AMDfQWe8AEQlRGtlmPR/khUeqMOaxkt2txPSyYOz9QF
+ IkY1WLdlAzzLhPfvmqJ31yST617J8zG+2V8N26iOLW6dPmdGTSJl05YBp19WPZqE
+ C/Hut1w/dUpo/bPXdLQVjauG7+RwCljc3DhRxUDqnChvO5bpQOx0jHCXzWobaWZT
+ yYJve8piLDUwpCNNWr5Pa73nZBU/w==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11022082.outbound.protection.outlook.com
+ [40.107.200.82])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 499tcfk76c-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 22 Sep 2025 06:57:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Xp1X66rDhCvHKTRBkdqSmvKMYDbcc7LRvAHa0UofyKTdKKSBJB2kLBYMyi++RtAbAted+gmaqsHEonGTgYDMDZ+PuCDiGr3VEbAyK2spTtu4A7pwp7ESmsPoqRGF/JgDFijKsD+QDGdBn709EItyNc025DNgmkRbQkuak666v7Tmf4MIfGiDn9zisCMEPFww4sR7Gq4RjJdZcTmabzmiA6XziZnQbdzhtubYxQkm79MQlzhFeYKdS435ouPA81s/zCK4ko6X0GozzfDSfyRyTO0c+Dq/RZQOEWY20D2Gt4hfI7WclbVCIFqLsZ8I3EYM5JdbnEWLAS+v7HIHIATlsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+AJc3Q20p8dh3HmW+Arx/qH0MftNwxc2RfRjsb3Lwjg=;
+ b=TQNxrwdZcImHlxsyqc3/UniDBzbF02kWTT6vxkpRwJYFujunu4IPDke5aIG1zIWcT/9Ka9Dc4zGP8C9Zmga2KdyrUpoMIpgeS//DfqE626gpUwq4iHHHWlsk0FYm2VJPfuVlkkjkdo6/n83tfCK/AgmxxRm7r22FeylCj7NJuSbmP7UIuoVlVg4eQKpIXtR+yim+NIel1Etwvj/BIPqwouemh3w1sWj8PmHa2CF9Rakwbdw6TWrHydPfBv1CJve/+kWpGXddk4I/G8f3WHzgTBdi65NXqlOdlIemS6sdPHJVFsVp1NQ3/HiX7Vs/S1uqKe5e+RAKgyaGEadGobZsdA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+AJc3Q20p8dh3HmW+Arx/qH0MftNwxc2RfRjsb3Lwjg=;
+ b=fEYXxZhMl7dIkwJ6FVdbHiZkgoPd5Z47RjbLHmdCSiwRBByjs1ZLPFhmW6F3mfnZnlPMRs+8CoSM/0ETkxhec+Mp4ynQsFYn9g5JgBO574Atvqiow/VKo+Nw73eQmgxM7dHTdoxQRRLSO/wAjEB5WwTldENim6Uw+lfPMt6gUe/sB+DkSTHzlLyqZvBDovG8Ig49ZUXt9tGTaqsJI26UBruwFDb9RjoqfisR7WIYbnW/6TL+IDZ9MUUjcfz20wqojFAxN5SS2TpCYKyhj1BHDOcf5pEzyt4U8402OHPkYlKZLS8lhxlNnX1mK2Tgn86nw+MmcRogp/N7eb+A8yngoQ==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DS7PR02MB9525.namprd02.prod.outlook.com (2603:10b6:8:ec::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.19; Mon, 22 Sep
+ 2025 13:57:02 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88%3]) with mapi id 15.20.9137.018; Mon, 22 Sep 2025
+ 13:57:02 +0000
+Message-ID: <bb967b28-4ec5-40b5-88cc-cebd7493d381@nutanix.com>
+Date: Mon, 22 Sep 2025 14:56:57 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/4] docs/code-provenance: make the exception process
- more prominent
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250922113219.32122-1-pbonzini@redhat.com>
- <20250922113219.32122-3-pbonzini@redhat.com> <aNFOFq_H8KjWM-oy@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v6 01/19] hw/i386/pc_piix.c: restrict isapc machine to
+ 32-bit CPUs
+To: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, qemu-devel@nongnu.org,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
+ <20250822121342.894223-2-mark.caveayland@nutanix.com>
+ <3c2e9fbc-db80-4dd6-a1a5-deeabb8c0194@intel.com>
+ <58c515a4-292e-4aec-b57e-73be89b9c322@nutanix.com>
+ <aK7wDn03e8RtKmk3@redhat.com>
+ <1178e514-a054-4ace-a5b7-06ca899badec@linaro.org>
+ <20250922143537.39896851@fedora>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <aNFOFq_H8KjWM-oy@redhat.com>
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <20250922143537.39896851@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+X-ClientProxiedBy: AM4PR0302CA0032.eurprd03.prod.outlook.com
+ (2603:10a6:205:2::45) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DS7PR02MB9525:EE_
+X-MS-Office365-Filtering-Correlation-Id: bce607af-ba93-4f4e-15ff-08ddf9dfe822
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|1800799024|7416014|376014|366016; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Ym1PcEdQTDFtUHZwZHozMG10THA5NjFWKzdLRFRaWnZFU1NYT0xac3BwYTE0?=
+ =?utf-8?B?MVRFeDBGR3JlKzJ0UHFFK0RXeU5zeG4wK2h4aVlFcjdXeU00Q1F4TmdiejRR?=
+ =?utf-8?B?dkdSRXZBVHpwVENYOXQ2U01LeHV6d2JxUHhlc1VmT2YxUkUyOFhadWVXd2pr?=
+ =?utf-8?B?dFBEMmpVamJmUzR6MEFPR0kwMWhseGNidW9sRHNhRkF6emxDL1R3VkpwaXR2?=
+ =?utf-8?B?eVVoaDVRQjhib0F5VEo5cms2THBmaGtkaVpYTEhLWXdLbmZ5WHZiTGw3MWxM?=
+ =?utf-8?B?d2pJdEJKMStVb2R0d3F4djdJY3p6eEEraDFGN1pOdTZQU3NKSmN2S2kydXBU?=
+ =?utf-8?B?TGVLU0xEUG05Qnd5T0NvdGhqa0Y1MkV1WldoNVRGT0M4UFc0RkJsWkswVjZp?=
+ =?utf-8?B?Wm42c1IzRFRkWHhqS1RUZ1lGeFB3bjdWZHc3ZGhYbitWbFVnUWJIUUVQQy9X?=
+ =?utf-8?B?QmZYQmQ3MnBUcHR3RndrUkgvY3RTcXNiRmtKdWszbndMMmVSVDR5NnZXbEFN?=
+ =?utf-8?B?SXcwMjRuM0E3ZXhreW9SaUtxNjFNL0U2YVJpV3RkYTcxMDNlYXhreDNFYjNI?=
+ =?utf-8?B?aEpBQnN6TlhoUkpiQ0VROFQ2S3AzWUxrRGNqUXhOcFhxUVJCTXlwaXl4ZTNo?=
+ =?utf-8?B?cVZSQ0lKa2ltLzFaSDVnWEh6S3JmbkhZbTk2bDRKWWxhS1dVRHdRL2h4dVlZ?=
+ =?utf-8?B?S2pnYjhtNXUvTFRtMzN1ekQ5OG9RSC9vQk1qMUhya1Z1dVdKYnUyL1ZrYXNv?=
+ =?utf-8?B?U0htd1I1N01QTmJxVlZSSERQM0dOa2lNa080ekF5U0JKa2pXTEU4T2dFZHN1?=
+ =?utf-8?B?L1NiMmsxRkJvSGp2bXUyd1REWjBqUWt4Z2tDcUpTWGVubkR5QlU4WTNvYmNu?=
+ =?utf-8?B?M1BJN21Edkp2NEgwYVVNeWtsektUc1BJRnBPYy93N0M3dDc1YWtqekdOMk9O?=
+ =?utf-8?B?SEl3SmN6UDk3TjhXYVREMFh5TzlwSDVLR3FoOVhnQUdMWVNqeHBBUzNHUTd5?=
+ =?utf-8?B?Ukt0U2dYM1ZnNnR3VUhMS0VxQ3Focm9tb0NickZFcmNrZWFMbWxqUmFUYkd4?=
+ =?utf-8?B?K2Uwb3IyYWI2NEo0S1pBTnh0bTloUDhaSmlmWlV2UmZzYVNOVWQvSW1Cc1BG?=
+ =?utf-8?B?d3N5c3ZOTlRQQUx0QWJ5dUdZV3VhT01KZHVSRWFZMmNIVkdQVlV5OG5iUHA2?=
+ =?utf-8?B?OFhWcllna1BXUU1jNDBrVGw4cUZ5N2kzdEtDR2VRaHJHWnZCbVlXZHI1TmNh?=
+ =?utf-8?B?S2VpOVZvSk5ITTQ4N01CSnd1cUxCSjdkNDNmVXUvRkIvaVFVSy81MkhkdWdL?=
+ =?utf-8?B?WFYzTytOc3lNaTlwRGtTeUgyODdHQnRWM0ROMEFlRU5PSUhuNmh1dENvWFEw?=
+ =?utf-8?B?bHhLeGd4MTRndGdTcVZNUjVkdlJteWRCcmZESmxKTDBtN0lXUmJJOEFQRlhk?=
+ =?utf-8?B?YzVPWGZtOXRIUVF1dFNyZ0hKb1dYQi9BZUNHNVBYV0pmV0ZYNmdJNGFwK3Rs?=
+ =?utf-8?B?czdIOXNuelN3RDErSWhzTzdKczBUV1V3R1ROcFNDMWdROWp3TzVLcUpRRWww?=
+ =?utf-8?B?T3FyeHQrT0RHbGFXbmowL2Q2OE1JYlNybWFXVTlRTDM0TmFocnRjR0ZGUlA5?=
+ =?utf-8?B?eWRoY0Y5Qm9iTkwwdzY4dytjY0lzcXlubngzRGFHMmp0V2YrQXJ3VVVEbkty?=
+ =?utf-8?B?NEtTbDVabmVYb0owejZUcXdHUHkzSTUrbGU3djZTRnBtMVR2TGNWTzNsSWFu?=
+ =?utf-8?B?QjVlVS9ZV0U0T3Y3QmE5Y0ZBcW11RXBaUTdqWnpINTNQY3AwbG1Ed1M2RTA1?=
+ =?utf-8?B?dGRmRGU3VU82RmtQTUNjUENqNkNSQTZ5TnpaZ3R2U3hxMWR5blhJMVJ4OHdp?=
+ =?utf-8?B?WEVwWER3TitMcUUrV1ZoQWRuZEFWb055ek54OTBBUFg0NWRWOUxOSE9VWHB0?=
+ =?utf-8?Q?nF9TPtyIxUA=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(1800799024)(7416014)(376014)(366016); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WFVndVZsUUJOalYrWEszS25nMkdMMnZmZkF5WFMzS1docXM1Q254dUlidFdT?=
+ =?utf-8?B?KzlVNjFyVW9HNjFGSHJCYUJFdzFMWi9RMzNuZndKWktxclZ6ZlhoWnA5bkxY?=
+ =?utf-8?B?bXdpWnAxT1UyT3BXVFdjRTNvamRvRVovNjhiT1hUL3JENWcvSGlLeTlBYS9i?=
+ =?utf-8?B?RUJkTmtvdEU3eU1tMzdlVy82MXNKMHgyTDRSa1oyN1Z3Wjk2ZGJKUjBjUVA2?=
+ =?utf-8?B?WFMyWXhsK3NyMVZRekZabGxFaVpwOEQ0ZGl3NWRYOG9NODF6YkEvcGVZWnl0?=
+ =?utf-8?B?KzExZ1cwN3NaeHExR0JLL0JqeTVHU2JxdSswdVhTOHVDdmdaa1kycUhiclA2?=
+ =?utf-8?B?dFVHeFFpc2NRMjVrSDR2dExlbW95eEdSaDdLN3ZvS0dqUVZ2bnRiSkJqT1p2?=
+ =?utf-8?B?c0VHODBySWplN2lSTHc1ZDNuOXpRUWxFQ3dJU2dVVnZ3bmM2SFEvUWJVaEh2?=
+ =?utf-8?B?N1BIWm5NcHB3dHowUmxWVjN0QkduRFJtN0d3Q2ZzT2NaQUIwSGhhM2R4ZkFM?=
+ =?utf-8?B?aGt5TGtoWUVlVEJXaWk2L2FiL3l4Nk1jSHRVWDlCNkZZWWptYmkwK2pRSi9E?=
+ =?utf-8?B?bmhwR1phdTRpWmNGa09ac3RjQVQ1anZhKzduR2lxc3N0M3M3cUxwNm41azFU?=
+ =?utf-8?B?MjNLRjNlRlV2VGcxdHNpMFhDN24vdktTYzFmQm4rcnVSRzlMVHR6bVdLK3Jv?=
+ =?utf-8?B?SWk4UEFNMlFPNjhuSnlmNkRTbEFFZU5ZemdFc2dTWXU2UDhubTFidlhWUCtq?=
+ =?utf-8?B?SjlpSk43QVVoSm5VNmZUK0RmNW1CcXpKbUU2MGVOVU5QZ25pL0NYMDJwejI1?=
+ =?utf-8?B?VCt0aThKbjJsSVBMUlVrblk4WSsxQkRTbVhwZFJoeWh2MlIwMGpmVWZPa1Ny?=
+ =?utf-8?B?VFZYckdUSUVMbHlQRTl1Sk9OQWFoNjhtQThGTWVuZ05tRlZuaVVrOEZ1M2NG?=
+ =?utf-8?B?R1lyQklNQjFWek82MGdxTzc0bjFlRFFVRm1IcStocWpmNDlTYVNPK2pwRzR1?=
+ =?utf-8?B?WUpJenNhTmQ2a3ZSTjdoZTBTNkFoZHU5SnVCWTBmajB6WW52Y1l2YVc5d3dI?=
+ =?utf-8?B?LzZ3WkROR285WFJoVnNENklEMS9Ib0NURWpDQVNhL2VrL0lOdGl3NldQUnRu?=
+ =?utf-8?B?ejNkaDBJTnF3eHltVzA4SVdxUHlLb3ZKOWZCWDI2Q1NrOUo5NGtuK09wbHBK?=
+ =?utf-8?B?MXhiYmk1L0ZHa1hjYjF6TmN1M0FJNGIxV3gyaW5XRmxaNkxYWU9YZ0J6bGlu?=
+ =?utf-8?B?Q1Z0SWhHY3R4YUhVVDJMRHdWWGV1cE9vbndydXhWazFkTEt1VDhZN045d0VM?=
+ =?utf-8?B?NU1QK2dHVURtSFNMQWpHV2M1VFlWbUh1ZEt1RS93eVBzQXpFTXNzVm1FUklj?=
+ =?utf-8?B?bi8zU3hUNjltM0xKcDh4TitPUWpYaWM3a1dIZjlxV2g3V2dWb25mMzBBZkMz?=
+ =?utf-8?B?V1MwcFB2aERva0NydW9jOGZDUGJoY3l1Q0xsdXlJSXNvZkFQbnlaU3pLM0Iz?=
+ =?utf-8?B?VndlM1owUENITE11ZXB5c2ViTFJ1NDljREJqbENINjl3a0FIb2xOUGIrayt5?=
+ =?utf-8?B?L3BpTGNhSDFWR0hWV1MvbWxGUkwzay9SY1ZFSlNJMm9xcXU2TmFEZURvNGpn?=
+ =?utf-8?B?SmQyL0RFZzg4R0RMeTJERlBLMlJ4OWsxRWNJS3JpcU8xdEplc2V3ZXhaSE5L?=
+ =?utf-8?B?QjlsN041R2RkWHkxWjBGOUU3OW9VeFFSRDZjZXVvNVFNYnArandiWFI2NGph?=
+ =?utf-8?B?Mm5RVFU2R0dBVy9oaEQzdFpDZkM1QXZjUmpEZnM5MmNGc09NYUpCdjJ3S21h?=
+ =?utf-8?B?UnUyL2V5OXZIa2NEWVpCMkRIWFBaQnBOR2gxeEJQMDlRTk1zOVJ3QUlSY2hO?=
+ =?utf-8?B?d3Exd0FkK0VQMmJmZFdZc01PdnkrWm5MYm5Pd0VhWlFUWHpqYUlrQVJuVXZY?=
+ =?utf-8?B?OVNZUFJtSHBuTXB0QTZvNlpXVldsQUhmT3RaelU0STRldVFMdWJnOFcyT2w3?=
+ =?utf-8?B?L1dYUkRyZFFXM1ZqbHNnYWxQM045Y3FnK3loTkFDb1E0VHJNcmp4aDZqTU44?=
+ =?utf-8?B?dkxXYVJ6MFNHWUErOExWRVRUTkZ3RVp2bkhnQ3FiWVRsckk5NTdWc2VTR3dt?=
+ =?utf-8?B?SlBHeklvTGljZS84T3luT0N1blN1QjJVVkRkQVRJUmdMV2xJVFBLb3NqYkVP?=
+ =?utf-8?B?cUNBNlZKVnREbGxmTlNHVTVUT1BtZzdkRlc4RHE2V2I4K1RTOU8zVEIycFM3?=
+ =?utf-8?B?MzdMQjZLa3RaL2hYdEUyZXRILzdnPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bce607af-ba93-4f4e-15ff-08ddf9dfe822
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2025 13:57:02.5341 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 18afOXbsJNJs3Ans7n+lVWm71EDykXVgJkccpM5dvnPjwdOeNPTKWl7zfOvnqpicfcmM4SxE8w9UXOA7/+4gG0GtuCskRbLJk9vHHOV0gFM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR02MB9525
+X-Authority-Analysis: v=2.4 cv=UoxjN/wB c=1 sm=1 tr=0 ts=68d155b1 cx=c_pps
+ a=g/fcdA0ru3Q2I7SmDoHu6A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=0kUYKlekyDsA:10
+ a=KKAkSRfTAAAA:8 a=64Cc0HZtAAAA:8 a=OZzLajGmYqqQTdnXNqMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIyMDEzNiBTYWx0ZWRfX63l8c8URdaFo
+ HPMmRB83y96kChRjb6ajv7RVT+bB4V0t6aiKr43/CYYGhO5oBSAqNkTK3MsAtrDMvXzPJdpRg3a
+ nlcFEVRpQBlgZB2ORhOmk2k+kjcwhqifUHs1arJYA1LJTBxVrf7hykk756bkGyji2jLDwYcwI6e
+ mRelMLv7J65/vTYQjjdPNrUmtgmZNPubDAL1QsIGNdtc9xKOlA9Lv6YuJXYEtDz1aHRxI3X7Mpu
+ sJu0Kor3dZuwC3aFK0CvqIvaBxa4rD979tgYLqI7DulDKkEDwbSkoYzBEaBpJErxZfVRKKsjm2u
+ uFS2yflBrHVfN7ZpP+5qz2EqM1qSSrhLxCEJe+Ac9k1/E6xPS4YlxYAdR75y5M=
+X-Proofpoint-GUID: YGqdG_W8dlNNbA3PidwBcXcNB9SCiex3
+X-Proofpoint-ORIG-GUID: YGqdG_W8dlNNbA3PidwBcXcNB9SCiex3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-22_01,2025-09-22_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,116 +228,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 15:24, Daniel P. Berrangé wrote:
-> FWIW, I considered that the "exception process" would end up
-> being something like...
-> 
->   * someone wants to use a particular tool for something they
->     believe is compelling
->   * they complain on qemu-devel that our policy blocks their
->     valid use
->   * we debate it
+On 22/09/2025 13:35, Igor Mammedov wrote:
 
-I guess we're here, except for hiding the complaint behind a patch. :)
-
->   * if agreed, we add a note to this code-proveance.rst doc to
->     allow it
+> On Mon, 22 Sep 2025 14:05:13 +0200
+> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
 > 
-> 
-> I would imagine that exceptions might fall into two buckets
-> 
->   * Descriptions of techniques/scenarios for using tools
->     that limit the licensing risk
->   * Details of specific tools (or more likely models) that
->     are judged to have limited licensing risk
->
-> it is hard to predict the future though, so this might be
-> too simplistic. Time will tell when someone starts the
-> debate...
-
-Yeah, I'm afraid it is; allowing specific tools might not be feasible, 
-as the scope of "allow Claude Code" or "allow cut and paste for ChatGPT 
-chats" is obviously way too large.  Allowing some usage scenarios seems 
-more feasible (as done in patch 4).
-
->> What is missing: do we want a formal way to identify commits for which an
->> exception to the AI policy was granted?  The common way to do so seems to
->> be "Generated-by" or "Assisted-by" but I don't want to turn commit message
->> into an ad space.  I would lean more towards something like
+>> On 27/8/25 13:46, Daniel P. Berrangé wrote:
+>>> On Wed, Aug 27, 2025 at 12:10:00PM +0100, Mark Cave-Ayland wrote:
+>>>> On 26/08/2025 08:25, Xiaoyao Li wrote:
+>>>>   
+>>>>> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
+>>>>>> The isapc machine represents a legacy ISA PC with a 486 CPU. Whilst it is
+>>>>>> possible to specify any CPU via -cpu on the command line, it makes no
+>>>>>> sense to allow modern 64-bit CPUs to be used.
+>>>>>>
+>>>>>> Restrict the isapc machine to the available 32-bit CPUs, taking care to
+>>>>>> handle the case where if a user inadvertently uses -cpu max then the
+>>>>>> "best"
+>>>>>> 32-bit CPU is used (in this case the pentium3).
+>>>>>>
+>>>>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+>>>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> ---
+>>>>>>     hw/i386/pc_piix.c | 26 ++++++++++++++++++++++++++
+>>>>>>     1 file changed, 26 insertions(+)
+>>>>>>
+>>>>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+>>>>>> index c03324281b..5720b6b556 100644
+>>>>>> --- a/hw/i386/pc_piix.c
+>>>>>> +++ b/hw/i386/pc_piix.c
+>>>>>> @@ -436,6 +436,19 @@ static void pc_set_south_bridge(Object *obj,
+>>>>>> int value, Error **errp)
+>>>>>>     #ifdef CONFIG_ISAPC
+>>>>>>     static void pc_init_isa(MachineState *machine)
+>>>>>>     {
+>>>>>> +    /*
+>>>>>> +     * There is a small chance that someone unintentionally passes
+>>>>>> "- cpu max"
+>>>>>> +     * for the isapc machine, which will provide a much more modern
+>>>>>> 32-bit
+>>>>>> +     * CPU than would be expected for an ISA-era PC. If the "max"
+>>>>>> cpu type has
+>>>>>> +     * been specified, choose the "best" 32-bit cpu possible which
+>>>>>> we consider
+>>>>>> +     * be the pentium3 (deliberately choosing an Intel CPU given
+>>>>>> that the
+>>>>>> +     * default 486 CPU for the isapc machine is also an Intel CPU).
+>>>>>> +     */
+>>>>>> +    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
+>>>>>> +        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
+>>>>>> +        warn_report("-cpu max is invalid for isapc machine, using
+>>>>>> pentium3");
+>>>>>> +    }
+>>>>>
+>>>>> Do we need to handle the case of "-cpu host"?
+>>>>
+>>>> I don't believe so. I wasn't originally planning to support "-cpu max" for
+>>>> isapc, however Daniel mentioned that it could possibly be generated from
+>>>> libvirt so it makes sense to add the above check to warn in this case and
+>>>> then continue.
+>>>
+>>> Libvirt will support sending any valid -cpu flag, including both
+>>> 'max' (any config) and 'host' (if KVM).
+>>>
+>>> If 'isapc' still expects to support KVM, then it would be odd to
+>>> reject 'host', but KVM presumably has no built-in way to limit to
+>>> 32-bit without QEMU manually masking many features ?
+>>>
+>>> I'm a little worried about implications of libvirt sending '-cpu max'
+>>> and QEMU secretly turning that into '-cpu pentium3', as opposed to
+>>> having '-cpu max' expand to equiv to 'pentium3', which might cauase
+>>> confusion when libvirt queries the expanded CPU ? Copying Jiri for
+>>> an opinion from libvirt side, as I might be worrying about nothing.
 >>
->>    AI-exception-granted-by: Mary Maintainer <mary.maintainer@mycorp.test>
+>> OK, on 2nd thought, even while warning the user, changing the type
+>> under the hood isn't great.
 > 
-> IMHO the code-provenance.rst doc is what grants the exception, not
-> any individual person, nor any individual commit.
+> I second that,
+> Please don't do magical mutations of CPUs, just error out.
 > 
-> Whether we want to reference that a given commit is relying on an
-> exception or not is hard to say at this point as we don't know what
-> any exception would be like.
-> 
-> Ideally the applicability of an exception could be self-evident
-> from the commit. Realiyt might be more fuzzy. So if self-evident,
-> then it likely warrants a sentence two of english text in the
-> commit to justify its applicability.
-> IOW, a tag like AI-exception-granted-by doesn't feel like it is
-> particularly useful.
+> we used to 'fix|tweak' CPUs using machine compat hack,
+> however with introduction of versioned cpu models we shouldn't do that anymore.
+> (aka: existing CPU devices should stay immutable if possible, and any visible
+> changes should go into new version)
 
-I meant it as more of an audit trail, especially for the case where a 
-new submaintainer would prefer to ask someone else, or for the case of a 
-maintainer contributing AI-generated code.  If we can keep it simple and 
-avoid this, that's fine (it's not even in the policy, only in the commit 
-message).
+The original suggestion for allowing "max"/"host" was so that it 
+wouldn't cause any regressions with command lines erroneously including 
+-cpu max or -cpu host (which I believe may be possible with libvirt).
 
-What I do *not* want is Generated-by or Assisted-by.  The exact model or 
-tool should matter in deciding whether a contribution fits the 
-exception.  Companies tell their employees "you can use this model 
-because we have an indemnification contract in place", but I don't think 
-we should care about what contracts they have---we have no way to check 
-if it's true or if the indemnification extends to QEMU, for example.
+>> What about simply removing "max" of valid_cpu_types[], since it is
+>> clearly confusing "max" == "pentium3"...
+> 
+> it seems that specifying supported cpu models in valid_cpu_types[] is the way to go.
 
->>     **Current QEMU project policy is to DECLINE any contributions which are
->>     believed to include or derive from AI generated content. This includes
->> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
->> +  ChatGPT, Claude, Copilot, Llama and similar tools.  Exceptions may be
->> +  requested on a case-by-case basis.**
-> 
-> I'm not sure what you mean by 'case-by-case basis' ? I certainly don't
-> think we should entertain debating use of AI in individual patch series,
-> as that'll be a never ending burden on reviewer/maintainer resources.
-> 
-> Exceptions should be things that can be applied somewhat generically to
-> tools, or models or usage scenarios IMHO.
+That was what I did in v1 and v2 version of the series, but I can submit 
+a patch to change this once there is agreement on the desired behaviour.
 
-I meant that at some point a human will have to agree that it fits the 
-exception, but yeah it is not the right place to say that.
 
-> I would suggest only this last paragraph be changed
-> 
-> 
->    This policy may evolve as AI tools mature and the legal situation is
->    clarifed.
-> 
->    Exceptions
->    ----------
-> 
->    The QEMU project welcomes discussion on any exceptions to this policy,
->    or more general revisions. This can be done by contacting the qemu-devel
->    mailing list with details of a proposed tool / model / usage scenario /
->    etc that is beneficial to QEMU, while still mitigating the legal risks
->    to the project.
-> 
->    After discussion, any exceptions that can be relied upon in contributions
->    will be listed below. The listing of an exception does not remove the
->    need for contributors to comply with all other pre-existing contribution
->    requirements, including DCO signoff.
+ATB,
 
-This sounds good (I'd like to keep the requirement that maintainers ask 
-for a second opinion when contributing AI-generated code, but that can 
-be weaved into your proposal).  Another benefit is that this phrasing is 
-independent of the existence of any exceptions.
-
-I'll split the first three patches into its own non-RFC series, and we 
-can keep discussing the "refactoring scenario" in this thread.
-
-Paolo
+Mark.
 
 
