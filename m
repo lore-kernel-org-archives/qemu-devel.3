@@ -4,68 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A72CA100F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 21:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868AACAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 21:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0npv-0006MN-Ca; Mon, 22 Sep 2025 17:12:39 -0400
+	id 1v0oAU-0004H9-Ay; Mon, 22 Sep 2025 17:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v0npt-0006L0-2J
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 17:12:37 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v0npq-0002jt-EA
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 17:12:36 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id 7480960A93
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 23:12:32 +0200 (CEST)
-Received: (qmail 7240 invoked by uid 990); 22 Sep 2025 21:12:32 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 22 Sep 2025 23:12:32 +0200
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v0oAS-0004GX-CE
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 17:33:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v0oAP-00076A-9V
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 17:33:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758576824;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l+icmyxcQlMlIqP7qlKm7ghEtLUZEIihNLZCXzRQT/c=;
+ b=HZH4ubMHM8z15Dj4FsnTEmG4E8ulqTpVKGJzmKCoIZbDXnwsIgG0bRS6AmZLg5DCeQMbif
+ OPuMPBqbbrqYCewCf0ZM/GUaX8SzDvOmMj6Ars0HwPcXU/rOugSDNCs1ozPnGZ1SBwlEwx
+ 06oaKFCiNz/bByEWbWGyZ3jp0bb1WQo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-Y1YDN_rcNeyMCKBTagyqRQ-1; Mon,
+ 22 Sep 2025 17:33:42 -0400
+X-MC-Unique: Y1YDN_rcNeyMCKBTagyqRQ-1
+X-Mimecast-MFC-AGG-ID: Y1YDN_rcNeyMCKBTagyqRQ_1758576821
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EFEE195609F; Mon, 22 Sep 2025 21:33:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.89])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B69381800577; Mon, 22 Sep 2025 21:33:37 +0000 (UTC)
+Date: Mon, 22 Sep 2025 16:33:35 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 02/15] qom: add tracking of security state of object types
+Message-ID: <cclqxtkskc3ksvxxpnjqedun3dysywodjzmpcsr5ve4ey7hgjl@g3rgltjyzdkh>
+References: <20250909165726.3814465-1-berrange@redhat.com>
+ <20250909165726.3814465-3-berrange@redhat.com>
 MIME-Version: 1.0
-Date: Mon, 22 Sep 2025 21:12:31 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <6c4cd09a52fc4b671767fda086dc4692f676eeca@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v6 22/25] target/xtensa: call plugin trap callbacks
-To: "=?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: "Max Filippov" <jcmvbkbc@gmail.com>
-In-Reply-To: <4226caa6-9f8e-4079-a4c6-13e557120eef@linaro.org>
-References: <cover.1757018626.git.neither@nut.email>
- <e54cd13ab5f6471e319816d34d50f4882e37c4e3.1757018626.git.neither@nut.email>
- <4226caa6-9f8e-4079-a4c6-13e557120eef@linaro.org>
-X-Rspamd-Bar: ---
-X-Rspamd-Report: BAYES_HAM(-2.999593) MIME_GOOD(-0.1)
-X-Rspamd-Score: -3.099593
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=FoR+K2x8U4ZXRFWqgjl/oyBAfBjbwq7/vTm8Mhv5LMc=;
- b=dRyUeUnVngNKXbTtkT2vFVEaebflUxKs93T/Mauv9Oc+5I2c/esUHF9IhK8N/Jzm6dFfuCCFGG
- Nzcs8eEH0lchrwuVmGGkgLcE2UC3uNpB/6LdGncmZz+d40nflGl583SFcnTHLf2nPlUdbaFmb+sX
- kGuBmDvUCofE8pso1pIxNiP1fbk4Hr2Qvc3izbwyNr6Gl41kaFtEEup4x9oLZUQR7qVMSyMbt1tz
- 15Kv5HBYes9noG7fr2kkWvgZEg8V17XkW+CeR76+moszdIW+8coHVOGsac9xSBOpVWQKhfTtX78i
- geaL+49SCqupy/GsphqRJlIINvNQeAZ2bPzeTVyeaF65XWw3IB4PsJ3amSOQjRxvSTAAmnMBnqNU
- 6UHlf5fhbmN2yOaaYtC9w2QBEhVe25PKmBbGQE/wtS8urigpYzPWEQmIrsrzsUGlJMZ7wpsJhxhZ
- uP/XpxgVCX4MI8cJblQns+yYynLjO0nNF6K7t8q1tqR+QVxdfUm4RGITeFlikVwaoUAwva96Rx1A
- FXUwl0gGzpg2o4/cP/I9hMsh0n30mn9y4F4/LFiWc66w52t/lRYQqjqv02x1WxoR+amlrLr/Byvn
- DGVVM3ovp2ojqgzsEqTu0UL5Y1jj6AuKJ3b40K6Ot1omE7HFrywat87NgLLTN9gbPB8OHRC3qvYl
- s=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250909165726.3814465-3-berrange@redhat.com>
+User-Agent: NeoMutt/20250510
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,62 +88,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-September 22, 2025 at 1:47 PM, "Philippe Mathieu-Daud=C3=A9" wrote:
-> On 4/9/25 22:48, Julian Ganz wrote:
-> > We recently introduced API for registering callbacks for trap related
-> >  events as well as the corresponding hook functions. Due to differenc=
-es
-> >  between architectures, the latter need to be called from target spec=
-ific
-> >  code.
-> >  This change places hooks for xtensa targets.
-> >  Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
-> >  Signed-off-by: Julian Ganz <neither@nut.email>
-> >  ---
-> >  target/xtensa/exc_helper.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >  diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
-> >  index b611c9bf97..fdc522698d 100644
-> >  --- a/target/xtensa/exc_helper.c
-> >  +++ b/target/xtensa/exc_helper.c
-> >  @@ -32,6 +32,7 @@
-> >  #include "exec/helper-proto.h"
-> >  #include "qemu/host-utils.h"
-> >  #include "qemu/atomic.h"
-> >  +#include "qemu/plugin.h"
-> >  > void HELPER(exception)(CPUXtensaState *env, uint32_t excp)
-> >  {
-> >  @@ -207,6 +208,8 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-> >  CPUXtensaState *env =3D cpu_env(cs);
-> >  > if (cs->exception_index =3D=3D EXC_IRQ) {
-> >  + uint64_t last_pc =3D env->pc;
-> >  +
-> >  qemu_log_mask(CPU_LOG_INT,
-> >  "%s(EXC_IRQ) level =3D %d, cintlevel =3D %d, "
-> >  "pc =3D %08x, a0 =3D %08x, ps =3D %08x, "
-> >  @@ -218,6 +221,7 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-> >  env->sregs[INTSET], env->sregs[INTENABLE],
-> >  env->sregs[CCOUNT]);
-> >  handle_interrupt(env);
-> >  + qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-> >  }
-> >  > switch (cs->exception_index) {
-> >  @@ -238,9 +242,11 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
-> >  env->sregs[CCOUNT]);
-> >  if (env->config->exception_vector[cs->exception_index]) {
-> >  uint32_t vector;
-> >  + uint64_t last_pc =3D env->pc;
-> >  > vector =3D env->config->exception_vector[cs->exception_index];
-> >  env->pc =3D relocated_vector(env, vector);
-> >  + qemu_plugin_vcpu_exception_cb(cs, last_pc);
-> >  } else {
-> >  qemu_log_mask(CPU_LOG_INT,
-> >  "%s(pc =3D %08x) bad exception_index: %d\n",
-> >=20
->=20Should we call qemu_plugin_vcpu_hostcall_cb() in SIMCALL opcode?
+On Tue, Sep 09, 2025 at 05:57:13PM +0100, Daniel P. Berrangé wrote:
+> This introduces two new flags "secure" and "insecure" against
+> the Type struct, and helpers to check this against the ObjectClass
+> struct.
+> 
+> An object type can be considered secure if it is either marked
+> 'secure', or is not marked 'insecure'. The gives an incremental
+> path where the security status is undefined for most types, but
+> with the possibility to require explicitly secure types, or
+> exclude explicitly insecure types.
 
-Probably yes. Thanks for catching that!
+Should there be a check in code that nothing tries to set both flags
+simultaneously?
 
-Regards,
-Julian
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
