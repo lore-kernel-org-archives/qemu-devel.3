@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF2DCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A114BCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 12:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0fIN-0007BB-GN; Mon, 22 Sep 2025 08:05:27 -0400
+	id 1v0fKH-0007u4-EY; Mon, 22 Sep 2025 08:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0fIL-0007Ao-Ec
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:05:25 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0fIG-0000iP-BL
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:05:25 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-54a7bf06edfso2876181e0c.0
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 05:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758542717; x=1759147517; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7qqIOTGcI6PKpM5IzeBBys6UlqxBdhvaYy3CPwc7VrY=;
- b=WXUmZHhTo4zaH70jmBcQZT63HMBg3mKx6FEmcCHMdcmxRKuP8YTwn5FQzjAD9IPHGG
- 9ptfb2YqR2lJZon+lcDPPA+P7iti+F6A+IMOUl1squO73E377vahYVBTS+uJbbJOu6PK
- Av1VvgoWtUsx/GnE1+BvQN42NRGcQk+OcOdV2xexknyzD+EaoQi/dRcvKEs318+1ljmM
- kzUrmoNO8VRBnWcy35fdPR2sGfPFh790zuDcCSHNDXFM8IHHyZXLyXe2Wx8NTRay82qF
- zL3VzSN1HJbCHnYdkNbpmQxV2x0WhUmCn3eSVkyo+kaBSdWzF5ys7ojMkUqGBW072Jn1
- GTAA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v0fKE-0007ti-N4
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:07:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v0fKA-0000vk-Ry
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 08:07:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758542819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GFR2zjC2c0PR4gSAluTLOIHYTF+4s84P2JFleKWOp3A=;
+ b=XlGTA8MVw366W7tThWp4sKvAIXrt9zPjRIX+hiUCO8TXuWeFZpP9udh6uCpcVPaMrC6pBw
+ tbDEnnIL214JII430NCSMu3MZEfTsMGx32BHX/WHWVYEZQIQujeLIheMPocl9D/GNwpIDj
+ X3vqT8mNGklHoydHi/1iuD8TwCu/WsU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-270-AFZQsFeENk65uGwNpXl5Wg-1; Mon, 22 Sep 2025 08:06:57 -0400
+X-MC-Unique: AFZQsFeENk65uGwNpXl5Wg-1
+X-Mimecast-MFC-AGG-ID: AFZQsFeENk65uGwNpXl5Wg_1758542817
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3f6b44ab789so851016f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 05:06:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758542717; x=1759147517;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7qqIOTGcI6PKpM5IzeBBys6UlqxBdhvaYy3CPwc7VrY=;
- b=axL8KPMF4PKF7vqQIdnQPBl0de9tP1X9Ms/XPDZyZon5L7HhBBaQnPjplKWBB8UuUr
- Be3HUicN2vc0Jx0XQOUJ0d4rS93D0nR8SZLzkoZ8DEMV4LuuSljxkKKdVGkvd3eHrEU0
- AmKvA43ozMun8XPTy3wYTpEVmTw+cj9DFyWc+zISBJZJLdXmCr0mtVxbFxaqL/yeSeyp
- S88wDNyVJZotbw9clQgzme8h2BqHb6ZmyXNtHgk+XeJe4/7SpociTR1nvlrtGn+4zEJP
- vSEA20RPG+bvS/9//mY0u9IBjrYZghT6E30Vy4GsRpy40TNKkDme0mKT6ckPTsq2P4NJ
- ELlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXW93epVPsJj9ugvFrsDNs06h5Hy+73I8dEQ0QtLFF+p+PXuNIShk490A1DBzPFhkCraQPdolnhwO0I@nongnu.org
-X-Gm-Message-State: AOJu0YxcA13H74qyaaP+nj5eDP9ZfZ31IKIbz7HVu8PoQcI6JTRpLcBs
- Qn+0MtZKUXn904F7I8ruRUZUmkbqowuZ2wizFO/vLlL1IcuhBkiok/XY0prT+pyvopM=
-X-Gm-Gg: ASbGncsx2lea/IIJNbzNSsdJPpPRjmCHHgE5vln8fLdcPKLEBH/3QbDMfx7wQAiEoMe
- E/Teg22oZuoI50OQ4W3rYMu4feGTtkL8x5BisXYbATx2hVpaF7gL1oHF1Y/JMZfzVkQJkDRRlUU
- wcnLLeeUvs+afMLTgtQwhkwjiCvxUXzU55DxQ2mImIQzEC6MSU5LEkDK4IGN0MB8wV1OM2BQZzY
- yrF6PrSk9NggGSPUkB5H4IaZW2C73/IBuMlFrzAVSSzoKbYBSU3+c9LDNxp3gVWoHATJHUbnVVR
- nqsZHaryPrN4jC7QA10n2XNsL151+GmrZSpE9ojIs0Tg7N4hwYY314KHE0pzrnlToFhq82dGjck
- JvmeOyZ9stFAeE3cQWxAVKtiZvCDJ69qMAITOmC1hUK7YOIfnpJjV9dm1z0ZYbyeFuw==
-X-Google-Smtp-Source: AGHT+IHlH49uEG9unLh1WtUWpbbGpshFyI+9WMpYESc1F+X3/rViUaQETYqQ3ZjoVPvCrhkgXZuESQ==
-X-Received: by 2002:a05:6122:1348:b0:520:64ea:c479 with SMTP id
- 71dfb90a1353d-54a83850acamr3569968e0c.10.1758542716770; 
- Mon, 22 Sep 2025 05:05:16 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-54a8bf1802asm1652923e0c.26.2025.09.22.05.05.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 05:05:16 -0700 (PDT)
-Message-ID: <1178e514-a054-4ace-a5b7-06ca899badec@linaro.org>
-Date: Mon, 22 Sep 2025 14:05:13 +0200
+ d=1e100.net; s=20230601; t=1758542816; x=1759147616;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GFR2zjC2c0PR4gSAluTLOIHYTF+4s84P2JFleKWOp3A=;
+ b=N1oMXYf6R+2KG/kvVJRkntEKwiULmAs4auWqr6yqWb5Hia7RL9NnRQk/WO4ppeoZw/
+ QV6nonQMz1KmATQRjFJzeqhya+hoco7vr1wooYDxviuYQ34XJjuVG/SkIkAKXbJVWxFT
+ QNE72DdeBYdjsF8n6jBOytEm1KafJH8F7FiETlMrparkK327LHTMh6Yt+9KEO18OD4Ul
+ eIR9aR+NacH3TbKW+65EhJdn6LQbGMcMPdZiew+lgW8T77zd1DYtJmBoP3/KJEfs7twp
+ W+9KfdqJ7XKV0tE/YEoYbOiRDnn0+FduFNmK/7XknqW+mcBe/medjmeXfK9daDOwfbNG
+ FFVA==
+X-Gm-Message-State: AOJu0YwAxGB5wlEtPEhH0gJdBhd0pMXppQyboSdSQbuCkpSb1arK/vlV
+ 6fDR4kfXDCNH13CyI172K/JoXshq0beiGOg+jbbGAL9LNK1fxCVvOYHdZrm3UQsO1tp8jlpyDH5
+ ZsLRSv1y1u/MXsoPY4IxW17edWxlQ6sgkjazVtIjaEN5sRJK3vTw4CqxN0PphesP0LgUaoccoVY
+ qLP+/4VibzUVtyQqyvaYXzSXAGQ+r+wP0=
+X-Gm-Gg: ASbGncuJxJknXa7uUgzCzYC3cVHZ+Lsvt/Yw43csp/exvGEYGQCTEaTYFy6G2juUl+7
+ tJ8y/bssyGAjb7o50XoNxXmTDIJXt4NB/3HpO+qHotNZlW99yxYW8mQtBm3bEsohwwLHYDgDNYl
+ p5w1pngxks72IdN9rqfN3eNdQnOnZnEq3q/tT98EF3VHeuISHMg0WkjH74XuPDflHAh56diiZCQ
+ vuazlxDfSCWJkJiBnNmK8Ec
+X-Received: by 2002:a05:6000:290b:b0:3e4:f194:2886 with SMTP id
+ ffacd0b85a97d-3ee7db4c570mr9478272f8f.19.1758542816417; 
+ Mon, 22 Sep 2025 05:06:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4VT580jxb6yrRSap4XId6+KK4meu+Re4L6g/Dr6BrYpBgSIleAALYu1cj2l7+90SX1d8JpMzExxUtrCKrMBQ=
+X-Received: by 2002:a05:6000:290b:b0:3e4:f194:2886 with SMTP id
+ ffacd0b85a97d-3ee7db4c570mr9478249f8f.19.1758542815968; Mon, 22 Sep 2025
+ 05:06:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/19] hw/i386/pc_piix.c: restrict isapc machine to
- 32-bit CPUs
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, imammedo@redhat.com,
- qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>
-References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-2-mark.caveayland@nutanix.com>
- <3c2e9fbc-db80-4dd6-a1a5-deeabb8c0194@intel.com>
- <58c515a4-292e-4aec-b57e-73be89b9c322@nutanix.com>
- <aK7wDn03e8RtKmk3@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aK7wDn03e8RtKmk3@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=philmd@linaro.org; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250922113219.32122-1-pbonzini@redhat.com>
+ <20250922113219.32122-5-pbonzini@redhat.com>
+ <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 22 Sep 2025 14:06:43 +0200
+X-Gm-Features: AS18NWDIZGe-WxxAj_jhgbjBpJ6-YvDQwoeB3VWKw35i1qvhnnNsXOePAI7VSIw
+Message-ID: <CABgObfbVb5tuHoX=NgUN__ZOx0nFXwGacuNwb_V3YPk2TTSD-A@mail.gmail.com>
+Subject: Re: [RFC PATCH 4/4] docs/code-provenance: make the exception process
+ feasible
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,77 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/8/25 13:46, Daniel P. Berrangé wrote:
-> On Wed, Aug 27, 2025 at 12:10:00PM +0100, Mark Cave-Ayland wrote:
->> On 26/08/2025 08:25, Xiaoyao Li wrote:
->>
->>> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
->>>> The isapc machine represents a legacy ISA PC with a 486 CPU. Whilst it is
->>>> possible to specify any CPU via -cpu on the command line, it makes no
->>>> sense to allow modern 64-bit CPUs to be used.
->>>>
->>>> Restrict the isapc machine to the available 32-bit CPUs, taking care to
->>>> handle the case where if a user inadvertently uses -cpu max then the
->>>> "best"
->>>> 32-bit CPU is used (in this case the pentium3).
->>>>
->>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>    hw/i386/pc_piix.c | 26 ++++++++++++++++++++++++++
->>>>    1 file changed, 26 insertions(+)
->>>>
->>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->>>> index c03324281b..5720b6b556 100644
->>>> --- a/hw/i386/pc_piix.c
->>>> +++ b/hw/i386/pc_piix.c
->>>> @@ -436,6 +436,19 @@ static void pc_set_south_bridge(Object *obj,
->>>> int value, Error **errp)
->>>>    #ifdef CONFIG_ISAPC
->>>>    static void pc_init_isa(MachineState *machine)
->>>>    {
->>>> +    /*
->>>> +     * There is a small chance that someone unintentionally passes
->>>> "- cpu max"
->>>> +     * for the isapc machine, which will provide a much more modern
->>>> 32-bit
->>>> +     * CPU than would be expected for an ISA-era PC. If the "max"
->>>> cpu type has
->>>> +     * been specified, choose the "best" 32-bit cpu possible which
->>>> we consider
->>>> +     * be the pentium3 (deliberately choosing an Intel CPU given
->>>> that the
->>>> +     * default 486 CPU for the isapc machine is also an Intel CPU).
->>>> +     */
->>>> +    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
->>>> +        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
->>>> +        warn_report("-cpu max is invalid for isapc machine, using
->>>> pentium3");
->>>> +    }
->>>
->>> Do we need to handle the case of "-cpu host"?
->>
->> I don't believe so. I wasn't originally planning to support "-cpu max" for
->> isapc, however Daniel mentioned that it could possibly be generated from
->> libvirt so it makes sense to add the above check to warn in this case and
->> then continue.
-> 
-> Libvirt will support sending any valid -cpu flag, including both
-> 'max' (any config) and 'host' (if KVM).
-> 
-> If 'isapc' still expects to support KVM, then it would be odd to
-> reject 'host', but KVM presumably has no built-in way to limit to
-> 32-bit without QEMU manually masking many features ?
-> 
-> I'm a little worried about implications of libvirt sending '-cpu max'
-> and QEMU secretly turning that into '-cpu pentium3', as opposed to
-> having '-cpu max' expand to equiv to 'pentium3', which might cauase
-> confusion when libvirt queries the expanded CPU ? Copying Jiri for
-> an opinion from libvirt side, as I might be worrying about nothing.
+On Mon, Sep 22, 2025 at 1:47=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+> > On the other hand, AI tools can be used as a natural language refactori=
+ng
+> > engine for simple tasks such as modifying all callers of a given functi=
+on
+> > or even less simple ones such as adding Python type annotations.
+> > These tasks have a very low risk of introducing training material in
+> > the code base, and can provide noticeable time savings because they are
+> > easily tested and reviewed; for the lack of a better term, I will call
+> > these "tasks with limited or non-existing creative content".
+>
+> Does anybody know how to demonstrate "limited or non-existing
+> creative content", which I assume is a standin here for
+> "not copyrightable" ?
 
-OK, on 2nd thought, even while warning the user, changing the type
-under the hood isn't great.
+The way *I* would demonstrate it is "there is exactly (or pretty much)
+one way to do this change". Any way to do that change (sed,
+coccinelle, AI or by hand) would result in the same modification to
+the code, with no real freedom to pick an algorithm, a data structure,
+or even a way to organize the code.
 
-What about simply removing "max" of valid_cpu_types[], since it is
-clearly confusing "max" == "pentium3"...
+I wouldn't say however that this is equivalent to non copyrightable.
+It's more that the creativity lies in "deciding to do it" rather than
+in "coming up with the code to do it". This is also why I mention
+having prompts in the commit message; the prompt tells you whether the
+AI is making design decisions or just executing a mechanical
+transformation.
+
+There's still a substantial amount of grey and I'm okay with treating
+anything grey as a "no". If something like "convert this script from
+bash to Python" comes up, I'd not try to claim it as "limited creative
+content". It may be a boring task with limited variability in output;
+but it's still creative and has substantially more copyright
+infringement risk.
+
+Paolo
+
 
