@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464B5CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 19:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B38CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 20:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0mc8-0006kS-4r; Mon, 22 Sep 2025 15:54:20 -0400
+	id 1v0mzo-0005Tn-M6; Mon, 22 Sep 2025 16:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0mc3-0006jb-LI
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 15:54:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v0mzl-0005TQ-TW
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 16:18:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v0mbu-0007lf-AF
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 15:54:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1v0mzg-0002Wn-PX
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 16:18:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758570841;
+ s=mimecast20190719; t=1758572316;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=q0Yqg8gEbvJo/CoFFTxRv8DSp1CKYcYqQm7EktP6gkM=;
- b=VBrwV7hxuiOUGB+N3uqXTmfT3V/Gs7EU/mSDbRMmIFRRjl6H3ceJT2qbUVQyeCTEeJ4X7B
- Po6B83ZtG8FxURssa4bXs+0YbVvUYaQQGf1iRuutNChiKHl/CD7QfSl+TYntAEqIGSXm0U
- R5NL6GSW83MnCb46vSS5t5HirU41k80=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ohDhQtnyNRuZlluu19cSZqT5eOFjUDOSrQXdvbxdhPE=;
+ b=PEMFgrRhTPOMMdVmr9qUcQBxham23qNOq6X01PD5r6OUnR50qAr7gUut/OYj92d0x7qk/E
+ j8vDLhebDMgsTSq2CqJkZLt/K8jqsGkIXqAryMpfJPpfV3ZRN/pjPEyvg2X0LajJk/DsBd
+ lr0aFvxNsqtPsrSIwTiQvllfhZbG4Jg=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-H0a9cbYfOaKHTAst-E-YqA-1; Mon, 22 Sep 2025 15:54:00 -0400
-X-MC-Unique: H0a9cbYfOaKHTAst-E-YqA-1
-X-Mimecast-MFC-AGG-ID: H0a9cbYfOaKHTAst-E-YqA_1758570839
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3f3787688b0so1394464f8f.0
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 12:53:59 -0700 (PDT)
+ us-mta-397-8_kw16TFOpi3gB4do3orCw-1; Mon, 22 Sep 2025 16:18:35 -0400
+X-MC-Unique: 8_kw16TFOpi3gB4do3orCw-1
+X-Mimecast-MFC-AGG-ID: 8_kw16TFOpi3gB4do3orCw_1758572314
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4bf85835856so100641051cf.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 13:18:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758570839; x=1759175639;
+ d=1e100.net; s=20230601; t=1758572314; x=1759177114;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q0Yqg8gEbvJo/CoFFTxRv8DSp1CKYcYqQm7EktP6gkM=;
- b=e/oovKNt4kIAh+MYmeGq/32jC1bIjrw9HR1pB/1bWVPQCUoudpwEoLB7eA1zRvAPMF
- FFL1f1ozAub0InBdtEtOONaumlR4606vJu5MSeqDBDSJpXu23isRfpP6Vu0ZPGmS8Ymh
- 1lyc+csxj98BQbKL8U7qMKNG0L3+WT9iEhd6Nd6qSkg+fTZwhRsNCnwpPm2n4D9m+08P
- aHdlIoHM04FXKqv8CxoiRsgzaMqDoCpG6L7lxxh16MGv2NCklw5snQt2W1qvEBfiw/Nc
- ejmpJaN3MFUN+mjwPhqyyxT+b4QvcIkEp4pxpDYF3fEg3XOWzFJkEPQopfZRlU5FvgGO
- 4SLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUASKBddoG2nt84IZmnfEvPFbU0Y9ZBg5KsHeL+2Tb9MLxDJb6UPeCFw0a6U5aVXbc3Vb1jbIW/ok9a@nongnu.org
-X-Gm-Message-State: AOJu0YyNJCrEjuIVxjZq3Q8CjJqKF5VCCL4TWseZexHPn2IGAtmpPXtH
- /gTpH+Bt1UiKzGvcmK9qQ1y4NateD+v21A2vCkHBPq2Ya5AqlCHPQS6awGUJ7PqKKrz3/n+XdQi
- JtzvSroJDF7mBUYGunO4Jfu/yXZeRnn8CP+8mzWFGQ+SuBWrcgJGLL51A
-X-Gm-Gg: ASbGnctzui1r2QlZ6KSBypGzIyjMPryx6MzLCVuD4+0FngAGui5VZB+hWv+zVkuXHKy
- +J5VrGOHyd0LTIbfkMyzyD7T1hssNE8w/dw/3wzKecOtDO6kktg/lt6KXm8kagioYz8DA40X05D
- VW/XYZCJQAI5gyZPjQ7plUZ410rCdbmsyNPetDjZkCqZGzDUZ71XAXBSQP3VH1jSBYj+1bpP7bS
- hp/UrsNp7ivdIne0guG7io8od5mqG9iRfsswYlxz+sMRJ/EZh18UtkFoOsuP9JApUkNmPioSOik
- n3zuvuPV4zTbmNueNdE8QgkeBnG/oemhqAw=
-X-Received: by 2002:a05:6000:144f:b0:3dc:ca9d:e3d7 with SMTP id
- ffacd0b85a97d-3ee7c92548amr10579649f8f.8.1758570838860; 
- Mon, 22 Sep 2025 12:53:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHp8THkRNhPscjEqQIO4If5x2KjyP8dZD4dQVet5lrqUeRiHNoBL7mMlbSonlrCt+D9jHyOLw==
-X-Received: by 2002:a05:6000:144f:b0:3dc:ca9d:e3d7 with SMTP id
- ffacd0b85a97d-3ee7c92548amr10579640f8f.8.1758570838450; 
- Mon, 22 Sep 2025 12:53:58 -0700 (PDT)
-Received: from redhat.com ([2a06:c701:73ea:f900:52ee:df2b:4811:77e0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-467fc818e00sm177847365e9.0.2025.09.22.12.53.56
+ bh=ohDhQtnyNRuZlluu19cSZqT5eOFjUDOSrQXdvbxdhPE=;
+ b=Ukefj0MJqoDdZKwD9Bf032z8PKZtOm8PDKIWsW2ESyWnghlGujjgvIStrk8jtzrdRD
+ o0OtsAev4reK0QgD45U1D031z+eQ1WnDLHu37JdrQMpfTVzvDcKcA80M52Oe/Jrxj5Kc
+ uE7Q0xEbnEuteE5W7b8Hw1mFcPBK22OA9SgVZE9bZ7QOe5cGfAYWO+XFwcR2WFoCx4Hq
+ ZJyda4Y2CcwZB4GoBzIUQdhwWzsLXRtAB3V+yIvr7ctCjpCEdEhFO8uVbPdCDteDbb7g
+ YAVA2DUVhy3Sl1T2nSV4QRsixykHXdfPr4sz1CBKjJv+zqtTG0eJz+OGdFu6DwI5YK78
+ 437g==
+X-Gm-Message-State: AOJu0Yw0yUIVbI3hFx3h9xseJtok7ZoZhKmYHkYc+LktoMGuFKKf4Woi
+ FdyWmAON24N1kdeWRb87wfnZEH4ounuEWumMnOph8wDUg7Cfw0aH0dQAnBowiRGEGv32q8jN4Fq
+ 7fz8XXxO64vrfHj5Ys+Y+VXOMSlJI3qD/wfJwmrfT8W2CxRD85S3I+ts6
+X-Gm-Gg: ASbGncuCOcSRC06vg2ZNEAkM4AVPv9PwA/giA85xbPcObqkHKXsgjSDFlVPinZ971n2
+ iKOO8EnOZ9dGbRqRYJLfqrh0NTk4Lgl/wv7dxE41NoZe+oj9BP29x4h+B8nkyLTPIYks5pDlQtg
+ OlXCETyZlYoSB8zYXwBMlQ/4UPvhuEgsFKzc/OWT0tAqmH/Bbyn2edJ60trEoNv8nybLfXSHyFJ
+ vkS2LOo+DR0dGLfixf4jobBXhRSg0AQoZUHHCH0Fu12CKT9sKr0i5qvvZJLLk8/gbn4hgAlMBZp
+ aoVJOOItS+oAa4cpgHONYTo+yvuUFWXL
+X-Received: by 2002:a05:622a:164f:b0:4b7:aa52:a713 with SMTP id
+ d75a77b69052e-4d3911c7387mr59751cf.14.1758572314413; 
+ Mon, 22 Sep 2025 13:18:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHVzIyr7x9qb9HEKNecUP0bI/NaIFE3KKMU8+4PfWLAnewseel5ECEdk4m77tPAp3XZrmkYg==
+X-Received: by 2002:a05:622a:164f:b0:4b7:aa52:a713 with SMTP id
+ d75a77b69052e-4d3911c7387mr59451cf.14.1758572313878; 
+ Mon, 22 Sep 2025 13:18:33 -0700 (PDT)
+Received: from x1.local ([142.188.210.50]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4bda15f59besm76661591cf.8.2025.09.22.13.18.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 12:53:57 -0700 (PDT)
-Date: Mon, 22 Sep 2025 15:53:54 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>
-Subject: Re: [PATCH v11 07/17] acpi/ghes: add a notifier to notify when error
- data is ready
-Message-ID: <20250922155111-mutt-send-email-mst@kernel.org>
-References: <cover.1757084668.git.mchehab+huawei@kernel.org>
- <ef3f17b5ca97c6e2774bba346f830cce6e0c3dc1.1757084668.git.mchehab+huawei@kernel.org>
+ Mon, 22 Sep 2025 13:18:33 -0700 (PDT)
+Date: Mon, 22 Sep 2025 16:18:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v3 0/2] migration/tls: Graceful shutdowns for main and
+ postcopy channels
+Message-ID: <aNGvGDShRyBI80XK@x1.local>
+References: <20250918203937.200833-1-peterx@redhat.com>
+ <875xdfv4su.fsf@suse.de> <aMx9yi628fuXr_gH@x1.local>
+ <871po2v9dr.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ef3f17b5ca97c6e2774bba346f830cce6e0c3dc1.1757084668.git.mchehab+huawei@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <871po2v9dr.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -96,8 +92,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,72 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 05, 2025 at 05:09:14PM +0200, Mauro Carvalho Chehab wrote:
-> Some error injection notify methods are async, like GPIO
-> notify. Add a notifier to be used when the error record is
-> ready to be sent to the guest OS.
+On Fri, Sep 19, 2025 at 10:50:56AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Acked-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/acpi/ghes.c         | 5 ++++-
->  include/hw/acpi/ghes.h | 3 +++
->  2 files changed, 7 insertions(+), 1 deletion(-)
+> > On Thu, Sep 18, 2025 at 06:17:37PM -0300, Fabiano Rosas wrote:
+> >> > ============= ABOUT OLD PATCH 2 ===================
+> >> >
+> >> > I dropped it for now to unblock almost patch 1, because patch 1 will fix a
+> >> > real warning that can be triggered for not only qtest but also normal tls
+> >> > postcopy migration.
+> >> >
+> >> > While I was looking at temporary settings for multifd send iochannels to be
+> >> > blocking always, I found I cannot explain how migration_tls_channel_end()
+> >> > currently works, because it writes to the multifd iochannels while the
+> >> > channels should still be owned (and can be written at the same time?) by
+> >> > the sender threads.  It sounds like a thread-safety issue, or is it not?
+> >> >
+> >> 
+> >> IIUC, the multifd channels will be stuck at p->sem because this is the
+> >> success path so migration will have already finished when we reach
+> >> migration_cleanup(). The ram/device state migration will hold the main
+> >> thread until the multifd channels finish transferring.
+> >
+> > For success cases, indeed.  However this is not the success path?  After
+> > all, we check migration_has_failed().
+> >
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index f49d0d628fc4..0135ac844bcf 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -510,6 +510,9 @@ static void get_ghes_source_offsets(uint16_t source_id,
->      *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
->  }
->  
-> +NotifierList acpi_generic_error_notifiers =
-> +    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
-> +
+> My point is that when we reach here, if migration has succeeded, then it
+> should be ok. If not, then thread-safety doesn't matter because things
+> have already went bad, we'll lose the destination anyway.
 
-I don't get where is "error_device_notifiers" defined.
+I'm not sure if it matters or not, maybe it depends on how bad it is when a
+race happened.
 
-I think it is not, and it works because the parameter is unused right now.
+If it's a tcp channel, it might be easier; the worst case is we write()
+concurrently in two threads and the output stream, IIUC, can be interleaved
+with the two buffers we write.  Not an issue if migration failed anyway.
 
-But it still should be:
+However this is only needed for TLS, hence I have no idea what happens if
+gnutls writes concurrently.  I don't think GnuTLS supports concurrent
+writters.  I'm not sure if it means there's still chance src QEMU (when
+having a failed live migration) can crash.
 
+So.. I still think it might be wise we only bye() after knowing it is a
+success, not only because that looks like the only way to make sure it's
+thread-safe, but also because a bye() is only needed if it didn't fail.
+Sending it ignoring error is another way of doing so, but it doesn't avoid
+the possible result of a race (even if I totally agree it is unlikely..).
 
-NotifierList acpi_generic_error_notifiers =
-    NOTIFIER_LIST_INITIALIZER(acpi_generic_error_notifiers);
+> 
+> > Should I then send a patch to only send bye() when succeeded?  Then I can
+> > also add some comment.  I wished we could assert.  Then the "temporarily
+> > changing nonblock mode" will also rely on this one, because ideally we
+> > shouldn't touch the fd nonblocking mode if some other thread is operating
+> > on it.
+> >
+> 
+> I don't know if it changes much. Currently we basically always ignore
+> the error from bye().
+> 
+> > The other thing is I also think we shouldn't rely on checking
+> > "p->tls_thread_created && p->thread_created" but only rely on channel type,
+> > which might be more straightforward (I almost did it in v1, but v2 rewrote
+> > things so it was lost).
+> 
+> Ok, but we may need to ensure bye() is not called before the session is
+> initiated. So thread_created may still be needed?
 
-Same as all other initializers.
+In v1, I was using "object_dynamic_cast((Object *)c, TYPE_QIO_CHANNEL_TLS)":
 
+https://lore.kernel.org/all/20250910160144.1762894-4-peterx@redhat.com/
 
+Would that work the same, but without relying on "thread_created" vars?
 
->  void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->                               uint16_t source_id, Error **errp)
->  {
-> @@ -550,7 +553,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->      /* Write the generic error data entry into guest memory */
->      cpu_physical_memory_write(cper_addr, cper, len);
->  
-> -    return;
-> +    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
->  }
->  
->  int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 8c4b08433760..390943e46d99 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -24,6 +24,9 @@
->  
->  #include "hw/acpi/bios-linker-loader.h"
->  #include "qapi/error.h"
-> +#include "qemu/notify.h"
-> +
-> +extern NotifierList acpi_generic_error_notifiers;
->  
->  /*
->   * Values for Hardware Error Notification Type field
-> -- 
-> 2.51.0
+-- 
+Peter Xu
 
 
