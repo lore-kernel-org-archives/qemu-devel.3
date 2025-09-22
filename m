@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2C6CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 09:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C678CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 09:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0czC-0001x1-3x; Mon, 22 Sep 2025 05:37:31 -0400
+	id 1v0d0p-0004e2-S7; Mon, 22 Sep 2025 05:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0cz2-0001qR-GQ
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:37:20 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1v0czc-0002Qf-NQ
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:38:03 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0cyz-0000cG-4K
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:37:20 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3ecdf2b1751so2388984f8f.0
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 02:37:16 -0700 (PDT)
+ id 1v0cz9-0000fo-Ki
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:37:56 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45dd5e24d16so40131425e9.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 02:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758533834; x=1759138634; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DY0XmkUw/px6He2/QViLhoiKimIF9WS2BOzUGcig47M=;
- b=PRJhJXsQuRNVUX4enWK7NFbkSDSg0iemfSk5i549omoA0IaoiJNnV0MVuPyfBse8Pg
- Tov9TRIezI/UsJvSCq1S5ujaiIUfjr58Bzq3AitgEFizGBZU4NHnKqoajYvz36DMGITu
- 8mHCiLFZC1AYpxUEy1tMVTWyvw2Za0houDPMRac7MenoHmiAIhQReXpQwuiw1sGghjns
- 6bthUT/WIUU16q4FwLvrhCOdRBBxPB8MJftFMUouQQxkJkRuv6QkKVNlPH0saItxZA4T
- ANarUY00AuZ9gRRl8gtxoS61WX3PKbvR2mNsnUr21+NNozXeR+7KxJ0xqmXo0HBaC4P0
- u6Lg==
+ d=linaro.org; s=google; t=1758533844; x=1759138644; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pcPukW9mtIUHAUBp8jxaYoUAYF89W1SMYnteBY4oBnY=;
+ b=m22+zmulqqKV1+4/jESIxTzHuJboLqMz0/h40d5HSPS2KtoTxG4pm08q44Q5NClz+k
+ ovGZC38R4qwAjOnOMWHjcBaVLFYn71+Rhkf10T8rtVHGDushlCITNP9XYzBx+61eGinS
+ sQc82UCIEKCeYaMuQHJdlUuQilRugMDlfz/xun2e+NaqYx7Pham4cnANA8J5Mkn8gaKJ
+ GZuRPRFM9yJC34uXBv7uIXEUiEStZcD2iNiluSeIix5swGnSkk6o0VHwDhYwJ/XCB+OY
+ cLhGZZUEZbSbBXbTF/jwPEiSOafl1nMb67Rz3sfyR7a7EHERUDreHFgmeF8UDWZiJPyg
+ MqtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758533834; x=1759138634;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DY0XmkUw/px6He2/QViLhoiKimIF9WS2BOzUGcig47M=;
- b=effw5buWzMZ9ifutRDGc0GBvH4Ls/B+XdGI6b3jFQ7fMrGsSsLA7RJJBFYBGRai4xI
- nJDCzdCrZMgcSk0MFejDN6wmgZ19TvM6l/5PWxyJmLreAjLumU9PElo3457c7qymhAaq
- 6ZcJORhEerxGLbIm0pymuPFAa6Wxi2rTtQAdiRI5SxpPwkaGStZ5fA1RKSrO63U79Hoe
- f3IEhU4w5RkVwraX6fGeBNtLjtlGeb0y40UY5CKlIpQuGzP5G1gm2x3OF09jXJFpQq61
- Djccz9Tne1qI0zDNQmfdaZoYf2bVveRnV9EvVwHmqtROw52r2MB6beecG0Bhc6OIyWpg
- 6ZuQ==
-X-Gm-Message-State: AOJu0Yx/Fp6cJVshGK+VkGjrBZWgTzgV3OI6BqxXdc2705rP8CQ+fMyW
- rfvw0b2MGaTlrSVo21u+XoZG2LcH5v+BaJ9KGwu3iZWClQpm6eZZb+XgT01citgb+QE=
-X-Gm-Gg: ASbGncugOpE+gUoo/HIh7JilyLZc8cWQYDNZVgPDr7Ai4sX5rTBU5LyEEO6B4OTrbG2
- bjdNKgW0RZrW1j5Z3xVFGkT5VGQoYxuGqetUKIGCjtffTlr28VMNZJY1I7Sn0bvh7XndvYN14bv
- rF16CwLvcSKOi90ykM6+0R6jwUKnrpCblbTOd9eExhHggryzDl+14Rrpwp3zVNj0hFd9EjDks+D
- slInSp3Am/Pca0f376ZCAd3f4buxy9E9TdYVtyDvhptDV1/yRuBnlma4yPEP+9+C+YxCmS0ZlYP
- IL95odRkANEm3Z2eip071I8TjHzMnqDOrHj9TklxSr+XMLMfiLTX+LanGjo5mW7JhQprYLYoG8E
- RUgu6sL1GHTvVQuFIZZZO4b4LoPkT7I+PRQ==
-X-Google-Smtp-Source: AGHT+IHWrI4/43aheYywm2/WnfKmVmn8vZizXgUs4ZCZPfXuPbJzRHgAuqENnwGr/lbSzIRfsf+B8Q==
-X-Received: by 2002:a05:6000:440a:b0:3f9:e348:f5c with SMTP id
- ffacd0b85a97d-3f9e34815b0mr2918240f8f.60.1758533834086; 
- Mon, 22 Sep 2025 02:37:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758533844; x=1759138644;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pcPukW9mtIUHAUBp8jxaYoUAYF89W1SMYnteBY4oBnY=;
+ b=n9Ai6A8brr87ZGBibsj7maOThJfFtb9/QcS3ud76nEpWDAxaKi61muyKWj9UWthPyg
+ Q+a7NYuJfp/z9n31ck58O0FDMXVvWiUre+mI69wgEKlQO4a2FxzQ1OTc0YmdDR52+4eZ
+ gim7Tgm7vQ6/IBKdKOqObmOtSiZbsbXXO9zD7BIqy+vtYiCJ8NAwNve2rCtoL6Blz5mz
+ BJvSby6dPNh/U7pKMnoonsVqpYqiKxPvnLoH5xx6cqJFVvW5NyyiHwKKA679XU1rh75V
+ EWVGXOnghsw0YV8qn34R3BmXv9R8wJWJxG0bcrRLCTty5XhKoDo7apwKMWOLgpQciDQ0
+ sAEA==
+X-Gm-Message-State: AOJu0YyVcRw6V6/jn3yqVNMljR0Tp8LrX1zjhwMexfW+vkQDOW20BT2R
+ Sk7j98TIL2vXl+QHqXfqbaAnxc+m0jsr53zj6cQ2KiKA6nlRNfoUMbqFiCsDdAF3wEo=
+X-Gm-Gg: ASbGnctFSkaJ1SZaQqq3DGqPdkpbXvhxK8Iu5PgTux4zadPzmEGEb9og7u/lEIqfLU9
+ o62HbN5RQ+iczgS1SwSBAnVZxzudCvY2EWxseTIGrfJscSFb3QjZPAf399x7zHK3VmUzydzNhh4
+ mUDO4v+JLZ3F5JamRm0/4dzk7nANGrVHOMNWkprSTZQ0sRCFJk+KFj4ZF17kMevc7C7b4LZjnrc
+ Otmvv0knPXlc/3SLJjnCsiQY8ZDImA+4Vnnibx//1WbhkRlVIwxL8v5ZwUW/2QsBaLrFCnA2YKQ
+ Fxla1ly3fA/HGArBL+g1bwiaKAgZcFbieS9o+eS7wP9Cxc75SelYTpON1jEA3gsMoolke7PW07c
+ 2dS1yYaS9fSKIGWn5+68VcTA=
+X-Google-Smtp-Source: AGHT+IGsUBp1NqafwcbALwg7UwDN4rTjCYc92dl7M1piUEbdRsb5ea8yuyhueyCJpDcb+0E7dS+OzQ==
+X-Received: by 2002:a05:600c:3593:b0:459:e398:ed89 with SMTP id
+ 5b1f17b1804b1-467e6b64adbmr110656125e9.1.1758533843575; 
+ Mon, 22 Sep 2025 02:37:23 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46d7a566a27sm27122065e9.20.2025.09.22.02.37.12
+ ffacd0b85a97d-3ee1227cc37sm17817268f8f.7.2025.09.22.02.37.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 02:37:12 -0700 (PDT)
+ Mon, 22 Sep 2025 02:37:17 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 85B005F7B1;
- Mon, 22 Sep 2025 10:37:11 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0112A5F9EB;
+ Mon, 22 Sep 2025 10:37:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -76,24 +77,26 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 00/25] September maintainer updates (docs, plugins,
- semihosting) pre-PR
-Date: Mon, 22 Sep 2025 10:36:45 +0100
-Message-ID: <20250922093711.2768983-1-alex.bennee@linaro.org>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 05/25] semihosting/syscalls: replace uint64_t with vaddr where
+ appropriate
+Date: Mon, 22 Sep 2025 10:36:50 +0100
+Message-ID: <20250922093711.2768983-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20250922093711.2768983-1-alex.bennee@linaro.org>
+References: <20250922093711.2768983-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,97 +112,292 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are all bits and pieces that have been mostly reviewed when
-posted with a few minor additional patches. I plan to send the PR by
-the end of the week.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Plugins
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20250822150058.18692-3-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ semihosting/syscalls.c | 78 +++++++++++++++++++++---------------------
+ 1 file changed, 39 insertions(+), 39 deletions(-)
 
-  - minor fix checking return values from Peter
-  - Pierrick's nifty uftrace plugin
-
-Semihosting
-
-  - build the sub-system once (single binary work)
-
-Misc
-
-  - typo fix
-  - tweak to checkpatch license checking
-  - *new* gitlab-failure-analysis script
-
-The following still need review:
-
-  scripts/ci: add gitlab-failure-analysis script
-  docs/devel: fix typo in code-provenance.rst
-
-Alex.
-
-Alex Bennée (2):
-  docs/devel: fix typo in code-provenance.rst
-  scripts/ci: add gitlab-failure-analysis script
-
-Nabih Estefan (1):
-  checkpatch: Ignore removed lines in license check
-
-Peter Maydell (1):
-  contrib/plugins/execlog: Explicitly check for
-    qemu_plugin_read_register() failure
-
-Pierrick Bouvier (21):
-  semihosting/syscalls: compile once in system and per target for user
-    mode
-  semihosting/syscalls: replace uint64_t with vaddr where appropriate
-  semihosting/guestfd: compile once for system/user
-  semihosting/arm-compat-semi: change common_semi_sys_exit_extended
-  target/riscv/common-semi-target: remove sizeof(target_ulong)
-  target/{arm, riscv}/common-semi-target: eradicate target_ulong
-  include/semihosting/common-semi: extract common_semi API
-  semihosting/arm-compat-semi: eradicate sizeof(target_ulong)
-  semihosting/arm-compat-semi: replace target_ulong with vaddr
-  semihosting/arm-compat-semi: eradicate target_long
-  semihosting/arm-compat-semi: remove dependency on cpu.h
-  semihosting/arm-compat-semi: compile once in system and per target for
-    user mode
-  contrib/plugins/uftrace: skeleton file
-  contrib/plugins/uftrace: define cpu operations and implement aarch64
-  contrib/plugins/uftrace: track callstack
-  contrib/plugins/uftrace: implement tracing
-  contrib/plugins/uftrace: implement privilege level tracing
-  contrib/plugins/uftrace: generate additional files for uftrace
-  contrib/plugins/uftrace: implement x64 support
-  contrib/plugins/uftrace_symbols.py
-  contrib/plugins/uftrace: add documentation
-
- docs/about/emulation.rst                      | 199 ++++
- docs/devel/code-provenance.rst                |   2 +-
- include/semihosting/common-semi.h             |   6 +
- include/semihosting/guestfd.h                 |   7 -
- include/semihosting/semihost.h                |   2 +
- include/semihosting/syscalls.h                |  30 +-
- contrib/plugins/execlog.c                     |   1 +
- contrib/plugins/uftrace.c                     | 878 ++++++++++++++++++
- semihosting/arm-compat-semi-stub.c            |  19 +
- semihosting/arm-compat-semi.c                 |  63 +-
- semihosting/guestfd.c                         |  26 +-
- semihosting/syscalls.c                        | 109 ++-
- ...mon-semi-target.h => common-semi-target.c} |  22 +-
- ...mon-semi-target.h => common-semi-target.c} |  23 +-
- contrib/plugins/meson.build                   |   3 +-
- contrib/plugins/uftrace_symbols.py            | 152 +++
- scripts/checkpatch.pl                         |   3 +-
- scripts/ci/gitlab-failure-analysis            | 117 +++
- semihosting/meson.build                       |  18 +-
- target/arm/meson.build                        |   4 +
- target/riscv/meson.build                      |   4 +
- 21 files changed, 1539 insertions(+), 149 deletions(-)
- create mode 100644 contrib/plugins/uftrace.c
- create mode 100644 semihosting/arm-compat-semi-stub.c
- rename target/arm/{common-semi-target.h => common-semi-target.c} (59%)
- rename target/riscv/{common-semi-target.h => common-semi-target.c} (53%)
- create mode 100755 contrib/plugins/uftrace_symbols.py
- create mode 100755 scripts/ci/gitlab-failure-analysis
-
+diff --git a/semihosting/syscalls.c b/semihosting/syscalls.c
+index f072d919193..20f155f869a 100644
+--- a/semihosting/syscalls.c
++++ b/semihosting/syscalls.c
+@@ -22,7 +22,7 @@
+ /*
+  * Validate or compute the length of the string (including terminator).
+  */
+-static int validate_strlen(CPUState *cs, uint64_t str, uint64_t tlen)
++static int validate_strlen(CPUState *cs, vaddr str, uint64_t tlen)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char c;
+@@ -51,7 +51,7 @@ static int validate_strlen(CPUState *cs, uint64_t str, uint64_t tlen)
+ }
+ 
+ static int validate_lock_user_string(char **pstr, CPUState *cs,
+-                                     uint64_t tstr, uint64_t tlen)
++                                     vaddr tstr, uint64_t tlen)
+ {
+     int ret = validate_strlen(cs, tstr, tlen);
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+@@ -71,7 +71,7 @@ static int validate_lock_user_string(char **pstr, CPUState *cs,
+  * big-endian.  Until we do something with gdb, also produce the
+  * same big-endian result from the host.
+  */
+-static int copy_stat_to_user(CPUState *cs, uint64_t addr,
++static int copy_stat_to_user(CPUState *cs, vaddr addr,
+                              const struct stat *s)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+@@ -128,7 +128,7 @@ static void gdb_open_cb(CPUState *cs, uint64_t ret, int err)
+ }
+ 
+ static void gdb_open(CPUState *cs, gdb_syscall_complete_cb complete,
+-                     uint64_t fname, uint64_t fname_len,
++                     vaddr fname, uint64_t fname_len,
+                      int gdb_flags, int mode)
+ {
+     int len = validate_strlen(cs, fname, fname_len);
+@@ -139,7 +139,7 @@ static void gdb_open(CPUState *cs, gdb_syscall_complete_cb complete,
+ 
+     gdb_open_complete = complete;
+     gdb_do_syscall(gdb_open_cb, "open,%s,%x,%x",
+-                   (uint64_t)fname, (uint32_t)len,
++                   (vaddr)fname, (uint32_t)len,
+                    (uint32_t)gdb_flags, (uint32_t)mode);
+ }
+ 
+@@ -150,17 +150,17 @@ static void gdb_close(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void gdb_read(CPUState *cs, gdb_syscall_complete_cb complete,
+-                     GuestFD *gf, uint64_t buf, uint64_t len)
++                     GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     gdb_do_syscall(complete, "read,%x,%lx,%lx",
+-                   (uint32_t)gf->hostfd, (uint64_t)buf, (uint64_t)len);
++                   (uint32_t)gf->hostfd, (vaddr)buf, (uint64_t)len);
+ }
+ 
+ static void gdb_write(CPUState *cs, gdb_syscall_complete_cb complete,
+-                      GuestFD *gf, uint64_t buf, uint64_t len)
++                      GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     gdb_do_syscall(complete, "write,%x,%lx,%lx",
+-                   (uint32_t)gf->hostfd, (uint64_t)buf, (uint64_t)len);
++                   (uint32_t)gf->hostfd, (vaddr)buf, (uint64_t)len);
+ }
+ 
+ static void gdb_lseek(CPUState *cs, gdb_syscall_complete_cb complete,
+@@ -177,15 +177,15 @@ static void gdb_isatty(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void gdb_fstat(CPUState *cs, gdb_syscall_complete_cb complete,
+-                      GuestFD *gf, uint64_t addr)
++                      GuestFD *gf, vaddr addr)
+ {
+     gdb_do_syscall(complete, "fstat,%x,%lx",
+-                   (uint32_t)gf->hostfd, (uint64_t)addr);
++                   (uint32_t)gf->hostfd, (vaddr)addr);
+ }
+ 
+ static void gdb_stat(CPUState *cs, gdb_syscall_complete_cb complete,
+-                     uint64_t fname, uint64_t fname_len,
+-                     uint64_t addr)
++                     vaddr fname, uint64_t fname_len,
++                     vaddr addr)
+ {
+     int len = validate_strlen(cs, fname, fname_len);
+     if (len < 0) {
+@@ -194,11 +194,11 @@ static void gdb_stat(CPUState *cs, gdb_syscall_complete_cb complete,
+     }
+ 
+     gdb_do_syscall(complete, "stat,%s,%lx",
+-                   (uint64_t)fname, (uint32_t)len, (uint64_t)addr);
++                   (vaddr)fname, (uint32_t)len, (vaddr)addr);
+ }
+ 
+ static void gdb_remove(CPUState *cs, gdb_syscall_complete_cb complete,
+-                       uint64_t fname, uint64_t fname_len)
++                       vaddr fname, uint64_t fname_len)
+ {
+     int len = validate_strlen(cs, fname, fname_len);
+     if (len < 0) {
+@@ -206,12 +206,12 @@ static void gdb_remove(CPUState *cs, gdb_syscall_complete_cb complete,
+         return;
+     }
+ 
+-    gdb_do_syscall(complete, "unlink,%s", (uint64_t)fname, (uint32_t)len);
++    gdb_do_syscall(complete, "unlink,%s", (vaddr)fname, (uint32_t)len);
+ }
+ 
+ static void gdb_rename(CPUState *cs, gdb_syscall_complete_cb complete,
+-                       uint64_t oname, uint64_t oname_len,
+-                       uint64_t nname, uint64_t nname_len)
++                       vaddr oname, uint64_t oname_len,
++                       vaddr nname, uint64_t nname_len)
+ {
+     int olen, nlen;
+ 
+@@ -227,12 +227,12 @@ static void gdb_rename(CPUState *cs, gdb_syscall_complete_cb complete,
+     }
+ 
+     gdb_do_syscall(complete, "rename,%s,%s",
+-                   (uint64_t)oname, (uint32_t)olen,
+-                   (uint64_t)nname, (uint32_t)nlen);
++                   (vaddr)oname, (uint32_t)olen,
++                   (vaddr)nname, (uint32_t)nlen);
+ }
+ 
+ static void gdb_system(CPUState *cs, gdb_syscall_complete_cb complete,
+-                       uint64_t cmd, uint64_t cmd_len)
++                       vaddr cmd, uint64_t cmd_len)
+ {
+     int len = validate_strlen(cs, cmd, cmd_len);
+     if (len < 0) {
+@@ -240,14 +240,14 @@ static void gdb_system(CPUState *cs, gdb_syscall_complete_cb complete,
+         return;
+     }
+ 
+-    gdb_do_syscall(complete, "system,%s", (uint64_t)cmd, (uint32_t)len);
++    gdb_do_syscall(complete, "system,%s", (vaddr)cmd, (uint32_t)len);
+ }
+ 
+ static void gdb_gettimeofday(CPUState *cs, gdb_syscall_complete_cb complete,
+-                             uint64_t tv_addr, uint64_t tz_addr)
++                             vaddr tv_addr, vaddr tz_addr)
+ {
+     gdb_do_syscall(complete, "gettimeofday,%lx,%lx",
+-                   (uint64_t)tv_addr, (uint64_t)tz_addr);
++                   (vaddr)tv_addr, (vaddr)tz_addr);
+ }
+ 
+ /*
+@@ -255,7 +255,7 @@ static void gdb_gettimeofday(CPUState *cs, gdb_syscall_complete_cb complete,
+  */
+ 
+ static void host_open(CPUState *cs, gdb_syscall_complete_cb complete,
+-                      uint64_t fname, uint64_t fname_len,
++                      vaddr fname, uint64_t fname_len,
+                       int gdb_flags, int mode)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+@@ -315,7 +315,7 @@ static void host_close(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_read(CPUState *cs, gdb_syscall_complete_cb complete,
+-                      GuestFD *gf, uint64_t buf, uint64_t len)
++                      GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     void *ptr = lock_user(VERIFY_WRITE, buf, len, 0);
+@@ -336,7 +336,7 @@ static void host_read(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_write(CPUState *cs, gdb_syscall_complete_cb complete,
+-                       GuestFD *gf, uint64_t buf, uint64_t len)
++                       GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     void *ptr = lock_user(VERIFY_READ, buf, len, 1);
+@@ -394,7 +394,7 @@ static void host_flen(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_fstat(CPUState *cs, gdb_syscall_complete_cb complete,
+-                       GuestFD *gf, uint64_t addr)
++                       GuestFD *gf, vaddr addr)
+ {
+     struct stat buf;
+     int ret;
+@@ -409,8 +409,8 @@ static void host_fstat(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_stat(CPUState *cs, gdb_syscall_complete_cb complete,
+-                      uint64_t fname, uint64_t fname_len,
+-                      uint64_t addr)
++                      vaddr fname, uint64_t fname_len,
++                      vaddr addr)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     struct stat buf;
+@@ -439,7 +439,7 @@ static void host_stat(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_remove(CPUState *cs, gdb_syscall_complete_cb complete,
+-                        uint64_t fname, uint64_t fname_len)
++                        vaddr fname, uint64_t fname_len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char *p;
+@@ -457,8 +457,8 @@ static void host_remove(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_rename(CPUState *cs, gdb_syscall_complete_cb complete,
+-                        uint64_t oname, uint64_t oname_len,
+-                        uint64_t nname, uint64_t nname_len)
++                        vaddr oname, uint64_t oname_len,
++                        vaddr nname, uint64_t nname_len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char *ostr, *nstr;
+@@ -483,7 +483,7 @@ static void host_rename(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_system(CPUState *cs, gdb_syscall_complete_cb complete,
+-                        uint64_t cmd, uint64_t cmd_len)
++                        vaddr cmd, uint64_t cmd_len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char *p;
+@@ -501,7 +501,7 @@ static void host_system(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void host_gettimeofday(CPUState *cs, gdb_syscall_complete_cb complete,
+-                              uint64_t tv_addr, uint64_t tz_addr)
++                              vaddr tv_addr, vaddr tz_addr)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     struct gdb_timeval *p;
+@@ -546,7 +546,7 @@ static void host_poll_one(CPUState *cs, gdb_syscall_complete_cb complete,
+  */
+ 
+ static void staticfile_read(CPUState *cs, gdb_syscall_complete_cb complete,
+-                            GuestFD *gf, uint64_t buf, uint64_t len)
++                            GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     uint64_t rest = gf->staticfile.len - gf->staticfile.off;
+@@ -604,7 +604,7 @@ static void staticfile_flen(CPUState *cs, gdb_syscall_complete_cb complete,
+  */
+ 
+ static void console_read(CPUState *cs, gdb_syscall_complete_cb complete,
+-                         GuestFD *gf, uint64_t buf, uint64_t len)
++                         GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char *ptr;
+@@ -621,7 +621,7 @@ static void console_read(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void console_write(CPUState *cs, gdb_syscall_complete_cb complete,
+-                          GuestFD *gf, uint64_t buf, uint64_t len)
++                          GuestFD *gf, vaddr buf, uint64_t len)
+ {
+     CPUArchState *env G_GNUC_UNUSED = cpu_env(cs);
+     char *ptr = lock_user(VERIFY_READ, buf, len, 1);
+@@ -637,7 +637,7 @@ static void console_write(CPUState *cs, gdb_syscall_complete_cb complete,
+ }
+ 
+ static void console_fstat(CPUState *cs, gdb_syscall_complete_cb complete,
+-                          GuestFD *gf, uint64_t addr)
++                          GuestFD *gf, vaddr addr)
+ {
+     static const struct stat tty_buf = {
+         .st_mode = 020666,  /* S_IFCHR, ugo+rw */
 -- 
 2.47.3
 
