@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D3CCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687D4CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0f1m-0000Jd-Jt; Mon, 22 Sep 2025 07:48:18 -0400
+	id 1v0f5n-0002RP-Km; Mon, 22 Sep 2025 07:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0f1S-0000Bj-TQ
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:48:00 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0f5f-0002QI-Qa
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:52:21 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0f1P-0005r9-S2
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:47:58 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45df0cde41bso28155415e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 04:47:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0f5a-0006eG-SO
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:52:19 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46de78b595dso3402685e9.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 04:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758541673; x=1759146473; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758541930; x=1759146730; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MxMI+RPuI8Yfkxb9R5hRcmHy8ISCUSMyAOCpO3OF0GU=;
- b=MBgq6W9I7TqfG1IpcDz62jUZ30D6lY5oaM1mJzswOEew3611+9S1YsU3e1MOBZYse9
- CB/mADZqQdIncE5TQHgd2e7KIX4xRhKlBLw7WuGnFyNFonhzKTcjGAy9VT8o/vopoHhR
- CpDhHSeZKXLQBLthdFhBan6o+nUKd6GTr6pkJXvS2Hse6rgDYESzC9zEUTrYhB8r/VgK
- 65eNhsyfNE0IKxvF++v7f+o3K5SwIDp8y0k3oTMTSoaqzbriFIAvaiXwK1AuqmTNBIhI
- IWnw5+pY7dOWpwwqE57I8h9QfNq1tynY6lzOjxr4rZi2QifjRFRIWgvtxo9PLDlzjRRI
- cEAw==
+ bh=xzeOzFV6f9ebg2fJBHj6nu9ySkmpD0tvjZMjaRHj4AA=;
+ b=u6o+03ylm1kfE6eM8B0/qMdqmeJmnVV4lO/3X4hxEQJsrA7v8oToFLMHV6V0mnKsMS
+ /EaxYlyPnTEnsCxgT3Gb5gHRAwZu1yuka1nUYoJcZx6FaYkuDOcvlpTjVa++w8pr1hMI
+ 5L7ik6mWQpTzPqFshTHpVDga2tGrwbMuccH4JuwKIDeF+lcSgVqtVHIEAHi/GTTeAOxn
+ 08vElgTYsKRcMDDjsLluIY90tF1aaH+05hTsgAJ1FT+SFbGqDVPvZqe2akXngkWLadCQ
+ cLGGcPSgPXFe7le+/venZltrBvOGofU7WtSoefg/AuhrKUDAEPEaDICjV3UmDRUYh2Y/
+ aKQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758541673; x=1759146473;
+ d=1e100.net; s=20230601; t=1758541930; x=1759146730;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MxMI+RPuI8Yfkxb9R5hRcmHy8ISCUSMyAOCpO3OF0GU=;
- b=PY4FNCiBkWwvjMx2lYTzIF+KqzlNsIOEOsbdn0Rdzk1U5xOfFohWuC21fSiOkNSxkX
- 1/7PaD8BU16EOfFyW4IFqSriZaBLyynqQYnNVpsXs9sCZMhT6/jRogJvwgWdBzY6KXWm
- PewvXfLuVTSQxvHXUsQfE+X+P4lcKpqHlt+aQfVzHw4MRuXkmZtQvh4T8bsrYmvT8STo
- z+ZN5ix4yOLha8HYsDQdMTi3F2o3duJW+Bs8nyjKTE/KqEfL6/rMn6C7Da99RB/a02Xr
- 0pQblUxPciF8Uy3fUiBMp1zFQNbDzwd+l0+FF5WMRJwzkLn/jegfXX4U4ydboFrFmR2h
- WvEg==
+ bh=xzeOzFV6f9ebg2fJBHj6nu9ySkmpD0tvjZMjaRHj4AA=;
+ b=jkTUB9KmMZ9m0MJA88+e4Jda0UqZCGOMN+HPS9Tn8gISlL7z9LQm2HCkLF0yaQfAEw
+ 3lTnbEEelIsmcHxSVEW7w5Q4UBh05lg521Zi8nQBlGsjkyvK1QzHqXuXWN+VPztyZihJ
+ aMUqGPiyerEl89NORrXYDKmSmkeaFkKBKgr6uMgLOjz7DBknHo4Sjo4j6YsyMfE4bL13
+ ApmsW2+AnHQPdown848WwExsubHPav7OT/QUxijrmTe+ORBqDzZjw8RwSTc7ZBC9WY6q
+ A/LzLUxMBklyh5qtCT5v4IFcwmjQ/34u9JNV+k27XGGUYKq30ee0u3YQYZw8xTAVYSqa
+ ryDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJGovfoJh9YFDeIThc8uqz9L8vAqmeX1I7r+EMu5PeNm9wEW/wv5KgOlA8NeCbGcbIotGmoZxUONG+@nongnu.org
-X-Gm-Message-State: AOJu0YzPJf2JBg3XIohlRvNcvwOgUXT9ROZKEIrrCcMwP3ID0QeTrkBl
- rfHCliHHbK5DC1j+P1+LQwhuMkF9o4FxfQnMqlVHZI7gM29PzitcWmFVo3wqtfWAgZQ=
-X-Gm-Gg: ASbGncs2oeJrqxvnG1dzhmF63Y9VaH3osMgzZF4XeYHIX2o3yuGxHjL7aTezND16YZm
- ec+DFtSiKON8rBp2A84kK9pX0oK9I9brHOZlQb1u84SFzkS8E1nmbNjfISNv/qRQeJOQgm7Bljx
- CGvT/Yjyc5lu8DzEbL4PTL/EOb6Plf1Q1MvtLj2SvuNKmOix9ffL7lf22Ol/Ct7SnLFUpviPyLl
- LLa14dW84uh4auG79zD5C0eqym0hiIoiqmfuQhyk7F578BrDsHNRoFkh+dg6WS22vbpWlkJV7jx
- ugehEyekF6Qhzi3jpmLt8z0WKt8BCKXtk3BMlZNIJc/TFsyPlK2okKmS7uEaBTvdIXMlGFLUWZ1
- PC9E1xfOCL+OK9P2lJJD85Jy4NF8w7qdGZ8Zeqi98URliOcIBMyLDGjwME9WNURYw2Zep5JLZdQ
- L1
-X-Google-Smtp-Source: AGHT+IHOh6W+rIGTzMWdiiGZiqDq41vGelHh5n9ANUBskRrL/EWuxMwmx2HUcppcRcZpyfA6IMHdKw==
-X-Received: by 2002:a05:600c:9a5:b0:46c:e3df:529e with SMTP id
- 5b1f17b1804b1-46ce3df54dfmr19175555e9.19.1758541672889; 
- Mon, 22 Sep 2025 04:47:52 -0700 (PDT)
+ AJvYcCUPb0Dz9IlezqDLyelNFf/OOEr2lbiC3x/T+IaNykAUCwK2Ca9/UeLVKmG2Jcdv/M1uhzhY3QpZo7Iz@nongnu.org
+X-Gm-Message-State: AOJu0YwgFUMRWWu0RmrAFgEihVZk7aydcOAiGnsnnsER2MTIV1atcETS
+ eG36XyJ/2gENv3gJwvblklhAUJK36f+/4+6rK/wgaJN7U3+7BNQEwzW6xcjq0kbVQaI=
+X-Gm-Gg: ASbGnctUZXNW31IWLWFhchZT6TeFudNvIKhE5HNl64hRzrXaAVe3L+3Uz4v7jO+rlUh
+ DwN/zeCHxOid9NgL+2NGEgStckxzsalaoeBS3TuiEWdMJDESa8/FskY+/ALqh2o8JsudRVm5x6o
+ fQwGT9Gel1AwrWauZkTiYcjwotT545Z966NxCcRIBNEh/YeRM+RolrVpPy695hpQ1+j/uc7VAxJ
+ ugTpiSFjzuAcfNgwxHVOTSSbGIGIE+T8GLglzn2hf5Z7GsTQvaJyzeGAxNRimP8nbbw1zXJV2RP
+ xZe4IiVo4B+ASkJdjMr8AnWjr90sPLSqnbZS37POjb5h4UOFIqTRUZjFVq65khkWaQHVhRqnOfu
+ dFKxiQDHQPywutFFB+TzY2BAW88RJ6raYYifC6ZTmWe1sgjehOAGU2h+88hJ7mpDr7w==
+X-Google-Smtp-Source: AGHT+IGgw0LqDQ7r1/T6odtz9zB5wIBDnC9BRKdDP32gffJkEcsCuSirEuYsRqGQb7RV+mikDCVgtQ==
+X-Received: by 2002:a05:600c:630e:b0:46c:9e81:ad0 with SMTP id
+ 5b1f17b1804b1-46c9e904ffamr37242405e9.0.1758541929709; 
+ Mon, 22 Sep 2025 04:52:09 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4697f473191sm128478735e9.22.2025.09.22.04.47.52
+ 5b1f17b1804b1-464f527d6cdsm226382965e9.12.2025.09.22.04.52.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 04:47:52 -0700 (PDT)
-Message-ID: <4226caa6-9f8e-4079-a4c6-13e557120eef@linaro.org>
-Date: Mon, 22 Sep 2025 13:47:51 +0200
+ Mon, 22 Sep 2025 04:52:09 -0700 (PDT)
+Message-ID: <dc5cf3fc-0e1d-41e1-bbfa-a3451eee1741@linaro.org>
+Date: Mon, 22 Sep 2025 13:52:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 22/25] target/xtensa: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-References: <cover.1757018626.git.neither@nut.email>
- <e54cd13ab5f6471e319816d34d50f4882e37c4e3.1757018626.git.neither@nut.email>
+Subject: Re: [PATCH 11/25] semihosting/arm-compat-semi: eradicate
+ sizeof(target_ulong)
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-arm@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250922093711.2768983-1-alex.bennee@linaro.org>
+ <20250922093711.2768983-12-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e54cd13ab5f6471e319816d34d50f4882e37c4e3.1757018626.git.neither@nut.email>
+In-Reply-To: <20250922093711.2768983-12-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,64 +112,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Julian, Max,
-
-On 4/9/25 22:48, Julian Ganz wrote:
-> We recently introduced API for registering callbacks for trap related
-> events as well as the corresponding hook functions. Due to differences
-> between architectures, the latter need to be called from target specific
-> code.
+On 22/9/25 11:36, Alex Bennée wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> This change places hooks for xtensa targets.
+> No semantic change.
 > 
-> Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
-> Signed-off-by: Julian Ganz <neither@nut.email>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Message-ID: <20250822150058.18692-9-pierrick.bouvier@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/xtensa/exc_helper.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
-> index b611c9bf97..fdc522698d 100644
-> --- a/target/xtensa/exc_helper.c
-> +++ b/target/xtensa/exc_helper.c
-> @@ -32,6 +32,7 @@
->   #include "exec/helper-proto.h"
->   #include "qemu/host-utils.h"
->   #include "qemu/atomic.h"
-> +#include "qemu/plugin.h"
->   
->   void HELPER(exception)(CPUXtensaState *env, uint32_t excp)
->   {
-> @@ -207,6 +208,8 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
->       CPUXtensaState *env = cpu_env(cs);
->   
->       if (cs->exception_index == EXC_IRQ) {
-> +        uint64_t last_pc = env->pc;
-> +
->           qemu_log_mask(CPU_LOG_INT,
->                         "%s(EXC_IRQ) level = %d, cintlevel = %d, "
->                         "pc = %08x, a0 = %08x, ps = %08x, "
-> @@ -218,6 +221,7 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
->                         env->sregs[INTSET], env->sregs[INTENABLE],
->                         env->sregs[CCOUNT]);
->           handle_interrupt(env);
-> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
->       }
->   
->       switch (cs->exception_index) {
-> @@ -238,9 +242,11 @@ void xtensa_cpu_do_interrupt(CPUState *cs)
->                         env->sregs[CCOUNT]);
->           if (env->config->exception_vector[cs->exception_index]) {
->               uint32_t vector;
-> +            uint64_t last_pc = env->pc;
->   
->               vector = env->config->exception_vector[cs->exception_index];
->               env->pc = relocated_vector(env, vector);
-> +            qemu_plugin_vcpu_exception_cb(cs, last_pc);
->           } else {
->               qemu_log_mask(CPU_LOG_INT,
->                             "%s(pc = %08x) bad exception_index: %d\n",
+>   semihosting/arm-compat-semi.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Should we call qemu_plugin_vcpu_hostcall_cb() in SIMCALL opcode?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
