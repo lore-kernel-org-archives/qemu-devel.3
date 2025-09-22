@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC258CAC5AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC35CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gBe-0005lV-4J; Mon, 22 Sep 2025 09:02:34 -0400
+	id 1v0gEv-0007G1-NI; Mon, 22 Sep 2025 09:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0gBb-0005lB-C5
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:02:31 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0gBY-0001zp-R9
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:02:31 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-46cf7bbfda8so7797625e9.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758546145; x=1759150945; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GJn90MU8veDsypxIGxdBbWc2vD6fzNI61Rb4fm5v2Z0=;
- b=fzFyp0HYgPoi2Itx0emCbgbbVDbdE+bWSOq0iGpQ1p03Gx5sg8CpHKvZ1+NczpDlf3
- 7pKUVq7yx91kL10a497v+55EpIgHNmzg5kMQ1onDthmU6yK1rKxc024JFs7/BUAtFnM5
- UrX19l3JClDQdb2y7avoIxFppXpyAjzysLe/hOvdUrKFowBLVZydWEM9rnfEQMpvpS4V
- Fs/npMNbDRmIMHCVXdY8uFvRQxiG9yFIRx+GShEt53xfwTZoY6lW+tDfk2TyOWCJcmcZ
- H7VGd92W/8ZZ4tPoVEd7J6eFCAxrUmu3rK+1TecCEL5cAH00irqPrnNK4CaZ6eibLx/A
- 5bpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758546145; x=1759150945;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GJn90MU8veDsypxIGxdBbWc2vD6fzNI61Rb4fm5v2Z0=;
- b=JJfZS2jJ30uNKDVVNqTdyKNvSEecFOQs356Ti8M0OLUfQpKtPMCxr5joummWU/qox1
- wsx5G7r29G48XfQFfc9ye8rA+v3gEc2eBmdyC1urJqdYPCoPOBK3ZOly5xMEeBKAysNu
- QVg2U4CP3pBYa3Xkod7VqOlm3CPajXJYsPdLYbcNW/7eET8dQgE5TDrDZp/b5/gdw2jw
- RhsYpvQZNI+a8zwycR6eb02JLKg5s8gXotXokSLWGbTrhQSk94CAiWk9jVm2g9IJmdyO
- y+MPCTooFqWZoRF4Z4giQI3RFeI8o+zTtgs2BhPAjU0xgjIA/C2eoxfkBBJaxiBlkXz4
- +6nw==
-X-Gm-Message-State: AOJu0YyJDOqmQ6lHcAd17KDZ76ELc+1BdC+RU2pAeBpSpiSLHwU1rwBJ
- 4SflJFuUqQ2mfjKoQM1PfsbX5coao2IImjehtg5GK55Vp7zJ/cnwZ7x2qaKlj1eylMM=
-X-Gm-Gg: ASbGncuVD7oREPCQOQtvwzcwDId3yADa6jjz7drPqkIY0X6gTongs2RtoxwJRKIJdZE
- gllkPt3QUNrQXe5WR+56Ye8HpDfylPb4Z6awaFWwp+gHglmFrPceg66ga4rX6vlVio4VWRvXb+o
- BKcWWijNLiZgg2jrPLqoHgtF+7mXUHnNn7G9aRun56MV+97tHu5Cr8TA0fFQyyADjAysWWblG5R
- 4j67mxUs5PgDwMRYNn9SlN12hNajy8oQ2FbMOxdqK/7FiLnT3fUyACYkTQxL5m/FE8+vX8caamH
- oL8gyl2u/vtbqK5cRoUoS9ghc8PVCP3LWZV/MssOj9VVfR4g0FdoJFdrDiGMsQ0JjwMcUbKTFSJ
- oP9k2JgkqJdoS2kJnT/aQCrAK9EqbdvYtsw==
-X-Google-Smtp-Source: AGHT+IGxzDoeceFiwysoFacxDtKTA7msm64IqLQMxu2IIk0znNopc/ZcoAM1LldekNGxitdSL0ImHQ==
-X-Received: by 2002:a5d:5f82:0:b0:3fe:709b:9d83 with SMTP id
- ffacd0b85a97d-3fe709ba193mr2498909f8f.13.1758546144709; 
- Mon, 22 Sep 2025 06:02:24 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee073f53c4sm19889504f8f.3.2025.09.22.06.02.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 06:02:23 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0E0E45F7C4;
- Mon, 22 Sep 2025 14:02:23 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [RFC PATCH 3/4] docs/code-provenance: clarify the scope of AI
- exceptions
-In-Reply-To: <20250922113219.32122-4-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 22 Sep 2025 13:32:18 +0200")
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0gEl-0007Cx-PX
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:05:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0gEc-0002Pi-9A
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:05:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758546335;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=m43nyM5m2RQig7T5fTNUPFrhUg6tI/+XJ2l9C4NLT+g=;
+ b=YuYx0BwuAO4I8z8YHnyc9sT5CSBwpD61YRrtqzPC3fRrrmH1212Qt3ERpxMEr6GxDwTMd8
+ 0RCtRQowYDwFqz/sGYGFcMtgNuMCr0cNHZzFR4GceWyOEOjfYTjI205DnRbIQoCCq3X4KK
+ AUSn5T9DUQaAIRp36eEl/+K1QRrTbtQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-PN3_FowsPNucC-uhBQnsog-1; Mon,
+ 22 Sep 2025 09:05:25 -0400
+X-MC-Unique: PN3_FowsPNucC-uhBQnsog-1
+X-Mimecast-MFC-AGG-ID: PN3_FowsPNucC-uhBQnsog_1758546324
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 58D6F1921EFE; Mon, 22 Sep 2025 13:05:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 203DB1800678; Mon, 22 Sep 2025 13:04:25 +0000 (UTC)
+Date: Mon, 22 Sep 2025 14:04:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [RFC PATCH 4/4] docs/code-provenance: make the exception process
+ feasible
+Message-ID: <aNFJVrusgEUaLuDW@redhat.com>
 References: <20250922113219.32122-1-pbonzini@redhat.com>
- <20250922113219.32122-4-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 22 Sep 2025 14:02:23 +0100
-Message-ID: <874isuod28.fsf@draig.linaro.org>
+ <20250922113219.32122-5-pbonzini@redhat.com>
+ <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9Vr2rxeJ0P7Yohqt2+NWQ8CmmpKsB016CoKv8RchkDDQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,71 +87,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Mon, Sep 22, 2025 at 12:46:51PM +0100, Peter Maydell wrote:
+> On Mon, 22 Sept 2025 at 12:32, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > I do not think that anyone knows how to demonstrate "clarity of the
+> > copyright status in relation to training".
+> 
+> Yes; to me this is the whole driving force behind the policy.
+> 
+> > On the other hand, AI tools can be used as a natural language refactoring
+> > engine for simple tasks such as modifying all callers of a given function
+> > or even less simple ones such as adding Python type annotations.
+> > These tasks have a very low risk of introducing training material in
+> > the code base, and can provide noticeable time savings because they are
+> > easily tested and reviewed; for the lack of a better term, I will call
+> > these "tasks with limited or non-existing creative content".
+> 
+> Does anybody know how to demonstrate "limited or non-existing
+> creative content", which I assume is a standin here for
+> "not copyrightable" ?
 
-> Using phrasing from https://openinfra.org/legal/ai-policy (with just
-> "commit" replaced by "submission", because we do not submit changes
-> as commits but rather emails), clarify that the maintainer who bestows
-> their blessing on the AI-generated contribution is not responsible
-> for its copyright or license status beyond what is required by the
-> Developer's Certificate of Origin.
->
-> [This is not my preferred phrasing.  I would prefer something lighter
-> like "the "Signed-off-by" label in the contribution gives the author
-> responsibility".  But for the sake of not reinventing the wheel I am
-> keeping the exact works from the OpenInfra policy.]
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/devel/code-provenance.rst | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.=
-rst
-> index d435ab145cf..a5838f63649 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -334,6 +334,11 @@ training model and code, to the satisfaction of the =
-project maintainers.
->  Maintainers are not allow to grant an exception on their own patch
->  submissions.
->=20=20
-> +Even after an exception is granted, the "Signed-off-by" label in the
-> +contribution is a statement that the author takes responsibility for the
-> +entire contents of the submission, including any parts that were generat=
-ed
-> +or assisted by AI tools or other tools.
-> +
+That was something we aimed to intentionally avoid specifying in the
+policy. It is very hard to define it in a way that will be clearly
+understood by all contributors.
 
-I quite like the LLVM wording which makes expectations clear to the
-submitter:
+Furthermore by defining it explicitly QEMU also weakens its legal
+position should any issues arise, because it has pre-emptively
+documented its acceptance of certain scenearios. This has the effect
+of directing risk away from contributors and back onto the project.
 
-  While the LLVM project has a liberal policy on AI tool use, contributors
-  are considered responsible for their contributions. We encourage
-  contributors to review all generated code before sending it for review
-  to verify its correctness and to understand it so that they can answer
-  questions during code review. Reviewing and maintaining generated code
-  that the original contributor does not understand is not a good use of
-  limited project resources.
+We want to be very clear that the burden / requirement for determining
+legal / license compliance of contributions rests on the contributor,
+not the project, whether AI is involve or not.
 
-It could perhaps be even stronger (must rather than encourage). The key
-point to emphasise is we don't want submissions the user of the
-generative AI doesn't understand.
+In terms of historical practice, when contributors have come to us
+with legal questions about whether they can contribute something or
+the legality of cerati nchange, as a general rule we will avoid
+giving any clear legal guidance from the project's POV.
 
-While we don't see them because our github lockdown policy auto-closes
-PRs we are already seeing a growth in submissions where the authors seem
-to have YOLO'd the code generator without really understanding the
-changes.
+Especially with any corporate contributor the rule is to refer that
+person back to their own organization's legal department. This makes
+it clear where the responsibility is and avoids the QEMU project
+pre-emptively setting out its legal interpretation.
 
->  Examples of tools impacted by this policy includes GitHub's CoPilot, Ope=
-nAI's
->  ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
->  generation agents which are built on top of such tools.
+TL;DR: I don't think we should attempt to define whether the boundary
+is between copyrightable and non-copyrightable code changes. 
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
