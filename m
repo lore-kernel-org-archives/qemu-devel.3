@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28B0CAC5A8
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E9DCCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gvX-0000Ps-T5; Mon, 22 Sep 2025 09:49:59 -0400
+	id 1v0gve-0000SP-Pk; Mon, 22 Sep 2025 09:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v0gvW-0000Ph-P4
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:49:58 -0400
+ id 1v0gvc-0000Re-GE
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:50:04 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1v0gvT-0001uF-T3
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:49:58 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M7NMAE006534;
- Mon, 22 Sep 2025 13:49:53 GMT
+ id 1v0gva-0001vj-7T
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:50:04 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M7NQTE029561;
+ Mon, 22 Sep 2025 13:50:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=qLNHKUlUg3IKOiVVxtcSzwTwsfWTIOGy9gGV6FylCYI=; b=
- Ce+Xb1ytsKiNrnfhIi0Rg+1ray+YUXIlT8Cg35xaZQhqEA4S8RDIEj8tLQwUIvMv
- YWgXhX1/SLhrg+y3YQm4Fd/nkaYDQXM0RMt14y+C/XUNI/Z5n3eTVjxv/xh3e0pj
- hW39eyMZKOeP22DMyIXHMEfslHA2ZxGIAMq4u7NbDT6bU9LYErW22vghA+oJExLD
- z32naFnk8aMIXUymeBO+98XQDtkU+YA5e8SrxvfNab5T7JLkdDDjfxX9tnnfu1W2
- stUgH9darr5DpT7Y7iccTNbAPsTmNt5J7xP6omVgbi/km03aWSW7akgiqJDqc6Gu
- IHElx2RGQh3PQq6XEeeEOQ==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=BPXzv5B6T9PMErDiIgdcjXInWBOu92+1LXdsiyJ/RNU=; b=
+ TxBw/k39lwCLXUTihBTwDGxvqn0snIIyy8T+KE5oYCGK396fj+U9OPO/vEFHwdIz
+ gpcMXGR0bnS+RBVVHkwJWMeNca54uIjCXDouOlAumSl7nRdnb3ZUcvBnhBCkkMbj
+ b3QsxTd7l9CC66y7G5igIukEWzMTIDaoRgUIMRRfkS34cIrCNNov6Gx1/f6UI3La
+ DDoEJGVnHg2zwWE2D4Kif30otlH5dQXo1HQUY0PAoU/Jf+ZfsHTygnUKZjEUQhCp
+ NvMZPmJ8a95v8r/mrxk7jjYMjfUiJM1VlIZwXfkn5ZcBv9uOlgkG7w5EA73t1zcc
+ JLuK5XlCZYwjtqJ2Bji6/A==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 499kvttfmx-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 499k23agdw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Sep 2025 13:49:53 +0000 (GMT)
+ Mon, 22 Sep 2025 13:49:59 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 58MC2Hng034336; Mon, 22 Sep 2025 13:49:52 GMT
+ with ESMTP id 58MCGk9Q034253; Mon, 22 Sep 2025 13:49:59 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 49a6nhan9a-1
+ 49a6nhane6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Sep 2025 13:49:52 +0000
+ Mon, 22 Sep 2025 13:49:59 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58MDnlWH004351;
- Mon, 22 Sep 2025 13:49:51 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58MDnlWR004351;
+ Mon, 22 Sep 2025 13:49:58 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 49a6nhan6x-4; Mon, 22 Sep 2025 13:49:51 +0000
+ ESMTP id 49a6nhan6x-9; Mon, 22 Sep 2025 13:49:58 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
@@ -63,15 +62,12 @@ Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Cedric Le Goater <clg@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 3/8] oslib: qemu_clear_cloexec
-Date: Mon, 22 Sep 2025 06:49:40 -0700
-Message-Id: <1758548985-354793-4-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 8/8] vfio: cpr-exec mode
+Date: Mon, 22 Sep 2025 06:49:45 -0700
+Message-Id: <1758548985-354793-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
 References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-22_01,2025-09-22_01,2025-03-28_01
@@ -80,21 +76,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  spamscore=0 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
  definitions=main-2509220135
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyNSBTYWx0ZWRfX8hN8TxdVL8e1
- nT6awQCEDNAmy/Y7MxhCAI2MZDVMs2iZ+jaAXL77F3QOYLocD0f4X2f9jM67qgxcHURoFdOvsKu
- NSCskU8JJV88IiD6MdAEdWgWiyaFk3cV/OLJLhIk4T8/KtLKqqqmuT7yjmShfJ0JFq6cPeCL5mr
- 0X4dMltJU5aFbI8ko9D9p3hVEQdiyaodah0gvyqkhPS0GWNe74/R0O6bbUjHCmw4OzbGUmF+zjR
- E1Ego7FtgeysxdnrJIJGhSq12LI5gM+BNG8M28TWQ6Z7EqSFLp4OUyId27g/IHSL8lpNehxSqKm
- 2NfPbO3YZjTw6KPfe0EKCTHnGkqRkFJhNat6U4yCIDxkF5kmXRBIpsbUclQwiRNn7uFGpxO25Dq
- 6WdyXnGH4E+MyGF4rjcAqMyFSLlrYw==
-X-Authority-Analysis: v=2.4 cv=UPPdHDfy c=1 sm=1 tr=0 ts=68d15401 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=C5XpyRP+ c=1 sm=1 tr=0 ts=68d15407 b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117
  a=e1sVV491RgrpLwSTMOnk8w==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=eRAJs6dweEk5O_tl00MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 cc=ntf
+ a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=V7xkzyaGXGj9tJ5OYwUA:9 cc=ntf
  awl=host:13614
-X-Proofpoint-GUID: OTB-cUUrGNnIQakcpuSLp0Y6WbVzMZeI
-X-Proofpoint-ORIG-GUID: OTB-cUUrGNnIQakcpuSLp0Y6WbVzMZeI
+X-Proofpoint-GUID: CdSSvPKFurojM_uFpi2P62fndT3sqUnz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxNiBTYWx0ZWRfX3EXTur+NXMQJ
+ hIXe+CLuPvGvuArIxbuGIlJrn2ZuoSOhYb40l5McV39VuTKSJMr67/RsSX94oknqO0Ebq3DkszX
+ YhDQf6/SnOVhlRfSCUGpSG9vlIIkYgXLR7qkl3u0flaFlkl5hAWgWfOxi1hwVbpPFZFRnzOurbt
+ NOEuUKLnfF+XFLKSN31Z/5oLdcPZg0Memu1mTzoJJdo50vsAy6M7WBgbznOBv83b8Lhzw/Q5wuH
+ 6ra6D9TG3CmvLBK+hzpTsMCNGSOF+B8bc6PYMCV/5v6Ct6czifWzsKynojsdKyAiAOvqqko4IIK
+ veQ/OclP/3ukAniPRNFcxIscipDdP9Ix9jTlCOKjcCdcLPsHaeR0AJLvKcCwV4qm39SR1YHe9i2
+ uXuS1QMJWZaVkKr1zkULArQ4OiNiCg==
+X-Proofpoint-ORIG-GUID: CdSSvPKFurojM_uFpi2P62fndT3sqUnz
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -120,73 +115,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
+All blockers and notifiers for cpr-transfer mode also apply to cpr-exec.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/qemu/osdep.h | 9 +++++++++
- util/oslib-posix.c   | 9 +++++++++
- util/oslib-win32.c   | 4 ++++
- 3 files changed, 22 insertions(+)
+ hw/vfio/container.c   |  3 ++-
+ hw/vfio/cpr-iommufd.c |  3 ++-
+ hw/vfio/cpr-legacy.c  |  9 +++++----
+ hw/vfio/cpr.c         | 13 +++++++------
+ 4 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index be3460b..8dac4ed 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -688,6 +688,15 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 030c6d3..935f14d 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -988,7 +988,8 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+         error_setg(&vbasedev->cpr.mdev_blocker,
+                    "CPR does not support vfio mdev %s", vbasedev->name);
+         if (migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, errp,
+-                                      MIG_MODE_CPR_TRANSFER, -1) < 0) {
++                                      MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
++                                      -1) < 0) {
+             goto hiod_unref_exit;
+         }
+     }
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+index 148a06d..e1f1854 100644
+--- a/hw/vfio/cpr-iommufd.c
++++ b/hw/vfio/cpr-iommufd.c
+@@ -159,7 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
  
- void qemu_set_cloexec(int fd);
+     if (!vfio_cpr_supported(be, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker, errp,
+-                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++                                         MIG_MODE_CPR_TRANSFER,
++                                         MIG_MODE_CPR_EXEC, -1) == 0;
+     }
  
-+/*
-+ * Clear FD_CLOEXEC for a descriptor.
-+ *
-+ * The caller must guarantee that no other fork+exec's occur before the
-+ * exec that is intended to inherit this descriptor, eg by suspending CPUs
-+ * and blocking monitor commands.
-+ */
-+void qemu_clear_cloexec(int fd);
-+
- /* Return a dynamically allocated directory path that is appropriate for storing
-  * local state.
-  *
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 4ff577e..4c04658 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -307,6 +307,15 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
-     return ret;
+     vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 8f43719..eebb3bf 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -176,16 +176,17 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+ 
+     if (!vfio_cpr_supported(container, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker, errp,
+-                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++                                         MIG_MODE_CPR_TRANSFER,
++                                         MIG_MODE_CPR_EXEC, -1) == 0;
+     }
+ 
+     vfio_cpr_add_kvm_notifier();
+ 
+     vmstate_register(NULL, -1, &vfio_container_vmstate, container);
+ 
+-    migration_add_notifier_mode(&container->cpr.transfer_notifier,
+-                                vfio_cpr_fail_notifier,
+-                                MIG_MODE_CPR_TRANSFER);
++    migration_add_notifier_modes(&container->cpr.transfer_notifier,
++                                 vfio_cpr_fail_notifier,
++                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
+     return true;
  }
  
-+void qemu_clear_cloexec(int fd)
-+{
-+    int f;
-+    f = fcntl(fd, F_GETFD);
-+    assert(f != -1);
-+    f = fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
-+    assert(f != -1);
-+}
-+
- char *
- qemu_get_local_state_dir(void)
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 2c71fc1..db462aa 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -195,9 +195,10 @@ static int vfio_cpr_kvm_close_notifier(NotifierWithReturn *notifier,
+ void vfio_cpr_add_kvm_notifier(void)
  {
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index b735163..843a901 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -222,6 +222,10 @@ void qemu_set_cloexec(int fd)
- {
+     if (!kvm_close_notifier.notify) {
+-        migration_add_notifier_mode(&kvm_close_notifier,
+-                                    vfio_cpr_kvm_close_notifier,
+-                                    MIG_MODE_CPR_TRANSFER);
++        migration_add_notifier_modes(&kvm_close_notifier,
++                                     vfio_cpr_kvm_close_notifier,
++                                     MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
++                                     -1);
+     }
  }
  
-+void qemu_clear_cloexec(int fd)
-+{
-+}
-+
- int qemu_get_thread_id(void)
+@@ -282,9 +283,9 @@ static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
+ 
+ void vfio_cpr_pci_register_device(VFIOPCIDevice *vdev)
  {
-     return GetCurrentThreadId();
+-    migration_add_notifier_mode(&vdev->cpr.transfer_notifier,
+-                                vfio_cpr_pci_notifier,
+-                                MIG_MODE_CPR_TRANSFER);
++    migration_add_notifier_modes(&vdev->cpr.transfer_notifier,
++                                 vfio_cpr_pci_notifier,
++                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
+ }
+ 
+ void vfio_cpr_pci_unregister_device(VFIOPCIDevice *vdev)
 -- 
 1.8.3.1
 
