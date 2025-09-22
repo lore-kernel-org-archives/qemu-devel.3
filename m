@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E299CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A365FCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 11:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0eoH-0001CI-Lj; Mon, 22 Sep 2025 07:34:22 -0400
+	id 1v0eow-0001fm-Nm; Mon, 22 Sep 2025 07:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0eoA-00013X-IW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:34:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v0eo5-00023Q-DG
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:34:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758540842;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fWYCZB5j6pPSCDPlgb0T5FFaVHM2yye2okBw2y8rlYE=;
- b=ZSZpgmQQUcPZ2EuZgiglbdZ6wlncgr/1B3M1V+bq4UcA2r5ntFqKgtWqA7Vw1YNP+53KO3
- +fbmGUT4tm8ZaND/GImtAs6iHXCTGCaTFeA1jSxqBBTrgIGfubprUICaaUVdhVaLZqaTkk
- DpVuHG2C5/Q8CTG82oYUgzSS0HF+f6A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-KgaOEq40O0GPXOqMaIdTAw-1; Mon,
- 22 Sep 2025 07:33:59 -0400
-X-MC-Unique: KgaOEq40O0GPXOqMaIdTAw-1
-X-Mimecast-MFC-AGG-ID: KgaOEq40O0GPXOqMaIdTAw_1758540838
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4739C1801FAD; Mon, 22 Sep 2025 11:33:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.69])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D795E30002CC; Mon, 22 Sep 2025 11:33:29 +0000 (UTC)
-Date: Mon, 22 Sep 2025 12:33:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
-Message-ID: <aNE0Bp0hsA31sLCJ@redhat.com>
-References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
- <20250919160526-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0eok-0001YP-P9
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:34:51 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0eoe-00029C-Di
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 07:34:48 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-46b7bf21fceso14800035e9.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 04:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758540881; x=1759145681; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MTjvk6GxZuR2zGa6Oy3VxNKzOakA+GOA3aZioMtCQXs=;
+ b=StWZ9LBb4vbD1NgAgYjcdBlprwqR+WV02jnGX3mRUEEkt/+5QiOTxsR5XD714JAFpm
+ gcUbcfFma+4DI+LY6T56DUtN8jWvehtO9CTfFaaF08pQTIY59HiSl5SQ9jbRpF/RKcGU
+ Q0JUR5XN3TfsMxCGfE9enq7LDv8hD60YW/cn446uqBakASgRdHxgwWf9MnbJjC5ScKCu
+ NPKHwVFIvIB4aLbEg/WVuUh5M7KXg/abxID0rOEcnr5GHzhNHzzQcgRbVnd0OoPv5z5h
+ k22u2rwR8H0DnNoayfTeEd1ohlYEClY8XRIVAXAiTe6qHsdOH8hW7GIUd2Yxr0hHwYNv
+ zgEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758540881; x=1759145681;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MTjvk6GxZuR2zGa6Oy3VxNKzOakA+GOA3aZioMtCQXs=;
+ b=LXKw2KImJmVEdwNY/NOcBUZGJZy+x0QxjeegToWBjPC/UgNh5elgYuzDtBm0lvtluw
+ wzAyTKnzU/Pa3+9RwOixzhHefhx/Ww2a5RlRuaIzh3Eg+3DqKGbyjVDCLY4ndo7k95jY
+ puf0Ej5tVQwDdSfSsbZ62tfO5firLeqegu0jOEFcHM+8KMvHx/FUCyrF20uP1nZAUtYj
+ 0YTlnfcWNPBVLuueWFYE9VNSJlImJEjL9GgrtgJeZ1G7dwTFRUSQHK3ox8bTr38IYfK1
+ zZ2QiG6a6BZyg+laWloMEoGtdRMK2N/iRwOBiWj0/SO+YKDzS/sj6VhH4iwZZJx28mEx
+ L+SA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxElHDFFrP7MQc87xcVMevHRWq9mKmtRl3Z9FKgK4rTOozGkWafgUhilW4tbQIj8rNHH/b8SXxHvlW@nongnu.org
+X-Gm-Message-State: AOJu0YzuAuxWYw6oxYMvXxCmomsuqYQnSGZzY/tWaeMOAHxvkDu52VSm
+ BUxIeVibTm/fXISoSL1Ux8QGNSuvsdQxiEqv7jYUQahiBomn/jP7JZUiTc9LXxnUrLQ=
+X-Gm-Gg: ASbGnctK/1tw4rID2pVMcwb8uV+lNuAW9Oaj4s6UcncLZKhMR4f2bO4WHPqCI0jnizF
+ 80Kss5hkU6HC0VNiDL6AYz563TTt+jRYyoELydf8J8jp0fe+/WuGw3/3qFM2XTbG+DiMCn2xNGU
+ +JOIP9/AYJoMN+qzMKXaQAY1byI18V72xPC0xC6Cg/KcZW33L5jrIAm7ZtGNft0hYf598+S6AjP
+ vZs6rpUONyAvmjP1Ofu1MvJ2VfeIIrfn5D3aotjl3hlkzaj+3ihTgPQCDQJLp/AKPGwW2uYYO6v
+ PkMsV976pk61BLV1cbvlwaPHqF5UfFMSkuXfhXQeyNMoOJhJck4Z13YWerZNqG2ia+qzM31mk4X
+ BcGiLdg81QobLSs55BvEDg1OK8KoN21JboazBIoGFIpPeoaezR1IpsLHWZOGluKeuHg==
+X-Google-Smtp-Source: AGHT+IGCvOUYvupXi0993l8RV+TWGYTek2iJflEx/BHxUChq4KnZ1fzP8ZnNceqg/GIAsANtMNHlKQ==
+X-Received: by 2002:a05:6000:2dc1:b0:3f9:1571:fdea with SMTP id
+ ffacd0b85a97d-3f915720302mr5531444f8f.44.1758540880519; 
+ Mon, 22 Sep 2025 04:34:40 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3ee074121b2sm19532809f8f.27.2025.09.22.04.34.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Sep 2025 04:34:40 -0700 (PDT)
+Message-ID: <cf87d645-c125-4c3c-b909-4eaabfcaa41c@linaro.org>
+Date: Mon, 22 Sep 2025 13:34:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250919160526-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 03/25] plugins: add hooks for new discontinuity related
+ callbacks
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1757018626.git.neither@nut.email>
+ <03eab59217365665b60ac169723ab689d2a97be4.1757018626.git.neither@nut.email>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <03eab59217365665b60ac169723ab689d2a97be4.1757018626.git.neither@nut.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,64 +102,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
-> On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
-> > This removes the change introduced in [1] that prevents the use of
-> > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
-> > 
-> > [1]: 6275989647efb708f126eb4f880e593792301ed4
-> > 
-> > Signed-off-by: Christian Speich <c.speich@avm.de>
-> > ---
-> > vhost-user-device and vhost-user-device-pci started out as user
-> > creatable devices. This was changed in [1] when the vhost-user-base was
-> > introduced.
-> > 
-> > The reason given is to prevent user confusion. Searching qemu-discuss or
-> > google for "vhost-user-device" I've seen no confused users.
-> > 
-> > Our use case is to provide wifi emulation using "vhost-user-device-pci",
-> > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
-> > 24.04. With newer QEMU versions we now need to patch, distribute and
-> > maintain our own QEMU packages, which is non-trivial.
-> > 
-> > So I want to propose lifting this restriction to make this feature
-> > usable without a custom QEMU.
-> > 
-> > [1]: 6275989647efb708f126eb4f880e593792301ed4
+On 4/9/25 22:46, Julian Ganz wrote:
+> The plugin API allows registration of callbacks for a variety of VCPU
+> related events, such as VCPU reset, idle and resume. In addition, we
+> recently introduced API for registering callbacks for discontinuity
+> events, specifically for interrupts, exceptions and host calls.
 > 
-> The confusion is after someone reuses the ID you are claiming without
-> telling anyone and then linux guests will start binding that driver to
-> your device.
+> This change introduces the corresponding hooks called from target
+> specific code inside qemu.
 > 
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
+>   include/qemu/plugin.h | 12 ++++++++++++
+>   plugins/core.c        | 42 ++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 54 insertions(+)
 > 
-> We want people doing this kind of thing to *at a minimum*
-> go ahead and register a device id with the virtio TC,
-> but really to write and publish a spec.
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index 8cf20cd96f..cea0a68858 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -161,6 +161,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
+>   void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
+>   void qemu_plugin_vcpu_idle_cb(CPUState *cpu);
+>   void qemu_plugin_vcpu_resume_cb(CPUState *cpu);
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from);
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from);
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from);
+>   void
+>   qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
+>                            uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
+> @@ -258,6 +261,15 @@ static inline void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+>   static inline void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+>   { }
+>   
+> +static inline void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
+> +{ }
+> +
+> +static inline void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
+> +{ }
+> +
+> +static inline void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
+> +{ }
+> +
+>   static inline void
+>   qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+>                            uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6,
+> diff --git a/plugins/core.c b/plugins/core.c
+> index a04cb2392d..1f0ddebcbf 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -105,6 +105,30 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+>       }
+>   }
+>   
+> +/*
+> + * Disable CFI checks.
+> + * The callback function has been loaded from an external library so we do not
+> + * have type information
+> + */
+> +QEMU_DISABLE_CFI
+> +static void plugin_vcpu_cb__discon(CPUState *cpu,
+> +                                   enum qemu_plugin_event ev,
+> +                                   enum qemu_plugin_discon_type type,
+> +                                   uint64_t from)
+> +{
+> +    struct qemu_plugin_cb *cb, *next;
+> +    uint64_t to = cpu->cc->get_pc(cpu);
+> +
+> +    if (cpu->cpu_index < plugin.num_vcpus) {
+> +        /* iterate safely; plugins might uninstall themselves at any time */
+> +        QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+> +            qemu_plugin_vcpu_discon_cb_t func = cb->f.vcpu_discon;
+> +
+> +            func(cb->ctx->id, cpu->cpu_index, type, from, to);
+> +        }
+> +    }
+> +}
+> +
+>   /*
+>    * Disable CFI checks.
+>    * The callback function has been loaded from an external library so we do not
+> @@ -557,6 +581,24 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+>       }
+>   }
+>   
+> +void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_INTERRUPT,
+> +                           QEMU_PLUGIN_DISCON_INTERRUPT, from);
+> +}
+> +
+> +void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_EXCEPTION,
+> +                           QEMU_PLUGIN_DISCON_EXCEPTION, from);
+> +}
+> +
+> +void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
+> +{
+> +    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_EV_VCPU_HOSTCALL,
+> +                           QEMU_PLUGIN_DISCON_HOSTCALL, from);
+> +}
 
-Wanting people to register a device ID is a social problem and
-we're trying to apply a technical hammer to it, which is rarely
-an productive approach.
-
-If we want to demonstrate that vhost-user-device is "risky", then
-how about we rename it to have an 'x-' prefix and thus disclaim
-any support for it, but none the less allow its use. Document it
-as an experimental device, and if it breaks, users get to keep
-both pieces.
-
-It seems like it would be useful before any virtio spec submission
-as a mechanism by which users can experiment to finese their ideas
-prior to getting to the point of needing to make a spec proposal.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+No blocking question; do we really need one callback for each discon
+type? (can't we just pass the type by argument?).
 
