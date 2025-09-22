@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAD2CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 07:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 157CECAC5A7
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 07:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0apj-0002n1-0z; Mon, 22 Sep 2025 03:19:36 -0400
+	id 1v0avL-0004PA-66; Mon, 22 Sep 2025 03:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0ape-0002mm-3O
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:19:30 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0avI-0004OH-Kp
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:25:20 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0apb-00046s-4i
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:19:29 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3ee12332f3dso3992630f8f.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 00:19:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0avG-0005XT-Ia
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 03:25:20 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4694ac46ae0so24743095e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 00:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758525564; x=1759130364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758525915; x=1759130715; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nirHqXsuPkI6XQMno8k8/7OhusDBgf4FpcrwdqSwKVY=;
- b=JH8F2tGzBzrVSC+I8QU2pE01V8JC7c0yUtAztaiiWelSRDoSJ4U/h5SbIfb+yufw3n
- 0rAjoz1vSNxKiewZZC/SqcisF1LS8hW4XAZq4mu3r0ZPRlK7PZ6ucYjZajUW/0/VANav
- 1cYcv2jCEN5kD7pLCUOSVD/meHnEaygsApGmzArs2UPrpzTPE3dicAiys1dUCqBTfdom
- vzdIxTn/vI161JpcGFlXZcdJKVDYDuFFhySNBEW/AZ8zYpqOETbIBJo0m0lcurIkQh6i
- UWJADCTAHcVOMnLA5gM3cPKnU7yYm7XHAxgZA8VbCUpWKhkJCjdBfkYGNQdAmC9vPrbW
- REBg==
+ bh=Bnm4ipD6PNHt9FhJVm8A1AnhPEJNitWcoXVsEx0XDsE=;
+ b=NqbWhLv5DESzkVT4NEw5VFZp149PE+M0BHtBJkggv+ongNlB7hPON392h9JliR1V1v
+ w6KHB4EWDms1d9GRFSo4Z87q1p7CpDtYG38UUwQlKnqFqDTGlGDQxzMktX7Z47GO52HU
+ oyGtZxGSHgP613NxkiCcIWz9F/cEtG4R7ALWu69EXooiscDwC/ZkaOTWsKfUzzGE0T6i
+ j+aD3kEAO8atdRLis2YoLNsj31mcFusRovhV6HGuK/Wb3WGvaYQKXk/7kHfgINwEhXWv
+ efH1J1D4N1ItG12QH+Z8BYwUBUzCQtN6WyYYPpP+bPE0oMKM1HLcuMlJ0DAQ/QMypm/e
+ j97Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758525564; x=1759130364;
+ d=1e100.net; s=20230601; t=1758525915; x=1759130715;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nirHqXsuPkI6XQMno8k8/7OhusDBgf4FpcrwdqSwKVY=;
- b=OjTUEmJqBnI0Vjmc0pwaFnOgNMMFYQtjb3wMy32LtaFdqW8rS7wZ6XBC76BY8m1H6z
- lRH0n4QZkZK09GM2RZIL5wfArHC1GstVsG3RIrj3lrLWxw3lk/0VB9jB/x0jfM/Bwh44
- U0fdPhim3x3QTefQAYEnOBkvcPYDd2Tf0WXFR9iu4znJmLu+/DKov36UYIW43mOA9aS9
- 7ZEf3i2trl+2ZWo1W0rywhO/0MzwUq35qKTrQWVb8pqi6Oa8SaQMTwgA+B+94cp1mhvU
- Jhh6hwlYhV68PCgL5mZ8oBFgxYwAMVc3RZDKj152wToZPnjpdUjzfH55GZBoYm9XdMtz
- cwTQ==
+ bh=Bnm4ipD6PNHt9FhJVm8A1AnhPEJNitWcoXVsEx0XDsE=;
+ b=xLIxA5FcCQJjrKks7Xa5zIQnBglY3zKXndHbp1ltzqM8fC9SsBmRyPlm4mmZ3An76Z
+ Z6PnT8OEGrNUIp7Cdq/+Dw/MQyc88Yahd2MpSEpl5wV+Cn/0VT58iHrLQCXlk/P6jBKO
+ zSaJv5XXyF75OpveFgR3515n7aBzXxfUwDhENG/wk1W0awSVwX5VgxEopBwf1UlJ3saH
+ IhN38NUVSRgqLlQAbYRrYgRQt63WpYr6wCDLiTlMlGmMwyrAjUzZlpVfm4LzUgPj28jg
+ cnchCzYejPOjCg7VOMIIME9QSj9btmWj2hgbuWEB0aL4RVLJaUJ/aiQ8ZzlqklAVTdb5
+ KFJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpk3KoqGUhuMyPclHurOAzuMHscKlmzP0rEZzBgLUcgf3EDtfd/GsjyNpfjsMTEHH14QIhfb0NgZsx@nongnu.org
-X-Gm-Message-State: AOJu0Ywx6FAhvRWYgebdp5E9YYeVA/3pWqMglIN+LmBTO5aXkIa0XowO
- 6A46cHix9QFVcXq2l9XCVT+rarnNiZ/tVVGDnK9lK2qlDTHJl4IWc/07rMdq20IOgJqIEMJlMVX
- 3XwuV0jsgBQ==
-X-Gm-Gg: ASbGncvrEcI5VrbLSUIXhn38drf/pp5JTEO64LvE8LmX3RH87E5DUUG6C4kSt4wkZpZ
- Od7msuhktJo27daZHiWUWUCje5LMACRMFYAdY3Apee9/VBVMXYpg+aZuo3g4G+ZeHkKtRCC0yT4
- KqKhgofP4PjpmLmeAIvcTLta1VUwF2FelD1aVeGB/83UEP0l6ubk+LhRQgqY+Y+JDNj8s2OQxfX
- temBbgVtNpwB1l4q/7Mzz10GsvN5Yo7NbjGtkYisbdTnkUuY4iOu8zaem7x0O2aCjw5ldOv8B5O
- hmWMS30MkPWQHz0aEV4fmm4xuZhYQy18ltq63u3KM0HOOsCQc7t9D8NZy/M6Pw+PdYOCTibx526
- KbGOJwfSj/2TlychUSsjwbNAvanF7jsdcuV7yP6WkLiO+dD5ddNqW+bDzxMP076W3sZtOb0M=
-X-Google-Smtp-Source: AGHT+IHZN9AlomqoiSaN01yD0FOI+xmX+DgG+4zxpwjRjPsg1me/WD3yaSksH+FJ4Df6FfrAQMyu2w==
-X-Received: by 2002:a05:6000:2892:b0:400:4507:474 with SMTP id
- ffacd0b85a97d-4004507084bmr653197f8f.18.1758525563601; 
- Mon, 22 Sep 2025 00:19:23 -0700 (PDT)
+ AJvYcCVNrx8Ke+Rl2Jo8TdYz10rea7k5bVEBfMjebmVJxAQQ/NPSy+piwB4RG9V6ZOXXsKuN7o2UwW90V2dn@nongnu.org
+X-Gm-Message-State: AOJu0YwEDe2hisCUgsQkTHia5v1qbOmEJN7bLpkSluemR6Mm51qvmUnW
+ JcM7nkwwRwRq9Rl+zhmY5zXciJr/B1pDjuBkk68mIsD3WfO6xaTLC1g4P2/ApI6sGZM=
+X-Gm-Gg: ASbGnctf3j+EoSaBWz8aEKX0fgo0ek7fYHvgv8zBBrokid97A+ym9DM50G3tuwcfXOH
+ ZA4B7U2P4Rw1+1+WPcOlPr8APCB9W6MOFiibmyJVR7idpJMeJwoM7uumrh6HMrP5BI5hNFbLUEB
+ hDG/mQWXmrsuhQ4Gec/DBmGvqxgxRQD6scupHH5xCiP7fv0pzl5CQZFSEgL9t48nwPxsEP31bMW
+ szEc4jbwrFRNrSI5H3/2V4HsIUhPTolYxfJAAgDrCrhCetzMxlwg+x6VDvDrpx89iQ2Vd3gkvSw
+ EdNRlV9WcuVB5W9WYvkg9XYUOHnWYUtu70ZSJVR0Ymkhg6MH/RHm9wOtpVXKKNdKyQOEtns6asv
+ GhWqUkYZNWUVWE9GzYVGdPrQW4WEtohF6n9BwsFdmaqxf4rWPwpmwBLOQLOtopybxWqbsktg=
+X-Google-Smtp-Source: AGHT+IEq4uyStHzi8kMHWUgeUYnkuAeUyuevUdhY1bkv8Q6D8wcdK3QrSCL3liOH/90K8QHTeaCshw==
+X-Received: by 2002:a05:600c:46c9:b0:45d:d68c:2a36 with SMTP id
+ 5b1f17b1804b1-467f0b4f285mr84373695e9.27.1758525914789; 
+ Mon, 22 Sep 2025 00:25:14 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee0fbc7460sm18843943f8f.31.2025.09.22.00.19.21
+ 5b1f17b1804b1-46139123102sm227900375e9.9.2025.09.22.00.25.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 00:19:22 -0700 (PDT)
-Message-ID: <45947ebb-edb4-4dbd-b4b4-8bb70df2f9ab@linaro.org>
-Date: Mon, 22 Sep 2025 09:19:20 +0200
+ Mon, 22 Sep 2025 00:25:14 -0700 (PDT)
+Message-ID: <86c686a7-69b6-4d6b-b454-e28d699588cd@linaro.org>
+Date: Mon, 22 Sep 2025 09:25:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bql: Fix bql_locked status with condvar APIs
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-References: <20250904223158.1276992-1-peterx@redhat.com>
+Subject: Re: [PATCH] tests/functional/m68k: Use proper polling in the
+ next-cube test
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+References: <20250909074817.84661-1-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250904223158.1276992-1-peterx@redhat.com>
+In-Reply-To: <20250909074817.84661-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/25 00:31, Peter Xu wrote:
-> QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
-> whether the current thread is holding the BQL lock.
+On 9/9/25 09:48, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> It's a pretty handy variable.  Function-wise, QEMU have codes trying to
-> conditionally take bql, relying on the var reflecting the locking status
-> (e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look at
-> the variable (in reality, co_tls_bql_locked), to see which thread is
-> currently holding the bql.
+> The next-cube tests currently sleep for 2 seconds to wait for the
+> guest's display to come up with the expected results. That's bad
+> since there is still a theoretical race left here, and since there
+> are two subtests, the whole test takes more than 4 seconds this way.
 > 
-> When using that as a debugging facility, sometimes we can observe multiple
-> threads holding bql at the same time. It's because QEMU's condvar APIs
-> bypassed the bql_*() API, hence they do not update bql_locked even if they
-> have released the mutex while waiting.
+> Looking at what the firmware does, there is a better way instead of
+> blindly waiting for two seconds: The firmware is writing some values
+> to the FPU registers during a test (and never touches them again
+> afterwards, so we can be sure about the final values), so we can
+> poll for the right values in those registers to know when we reached
+> a state when the display is initialized for sure. We just have to
+> also make sure to not look for text anymore that is only printed
+> after the FPU test has been done by the guest firmware.
 > 
-> It can cause confusion if one does "thread apply all p co_tls_bql_locked"
-> and see multiple threads reporting true.
+> This way the whole tests finishes in less than 1 second here, and
+> there should be no race condition here anymore.
 > 
-> Fix this by moving the bql status updates into the mutex debug hooks.  Now
-> the variable should always reflect the reality.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
-> rfc->v1
-> - Fix comment [Stefan]
-> ---
->   include/qemu/main-loop.h  | 18 ++++++++++++++++++
->   util/qemu-thread-common.h |  7 +++++++
->   stubs/iothread-lock.c     |  9 +++++++++
->   system/cpus.c             | 14 ++++++++++++--
->   4 files changed, 46 insertions(+), 2 deletions(-)
+>   tests/functional/m68k/test_nextcube.py | 17 ++++++++++++-----
+>   1 file changed, 12 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
