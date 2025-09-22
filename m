@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F5FCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28B0CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0grC-0007GT-68; Mon, 22 Sep 2025 09:45:30 -0400
+	id 1v0gvX-0000Ps-T5; Mon, 22 Sep 2025 09:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gr9-0007DM-AK
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:45:27 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gr5-0000tz-5X
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:45:26 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6352c8b683eso1732620d50.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758548718; x=1759153518; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w8sjjumbn4JBIclp1F0hI+lAKAn1WjOH5l5djxjRmZA=;
- b=dhVnfbkSbcG8JjkXvkQtGvv9cLYD+IpOD6K+H9b8yiffFzBlibohdULZqH+wVYKlvZ
- 6+9h40xsH/EQ2fd7JYsmXuJkfM+3kmj3GOR+oBFUMDr6QAK3uSUsiZ7xR872z7CsqHg/
- 3A81GnJ3RGMRc1FXL8MwVKr8JdRDbTCuN1th+pCU8/BnlY8gH2tf8FMNVCCazFrJYMou
- BHKWHSGfZbXLPA6b82k8V47hsW7m9Eoca0AvfeHhukJukDJVCJqducTI3mnZ7c1ilhyV
- bcVs1qUOjchS4UAhYsIadEsrJxaEOz69vdqw2A3XaPS4HATdbG1v9CLvAs71SY2cwPuQ
- JLSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758548718; x=1759153518;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=w8sjjumbn4JBIclp1F0hI+lAKAn1WjOH5l5djxjRmZA=;
- b=K50W+fypL+MLvkPoqFWjzX6ZLs8nOpd6bFSCHiXaS0iNkNXCNO7DKeremPBQ6YHdhL
- rIwwQ0GRnNN30k1vCc3hMAV9O7RQujmZJILP+f4vCYZ+x1ywA/n64K5mInl1bz34nntW
- lT5Wcm8eLVtjxAbijL0Ntu/Q2WD3PUsQdyK0fkD++wj2WHZlXQC2IWSfO7bEUmKOvSX8
- PxRbQOhnFlDFxh+JDfbSKBhUmju7WZtQ9dzUMN6RJ0biZvO17IOxoFJobBlkXOnFZoHc
- i0NGb4S0pMbIuI8TmfdXUOoQfxmPv9VwsFo1HjpjXQRJN7sAMCCXDkoYt/HzuDwDDkec
- KQzQ==
-X-Gm-Message-State: AOJu0Yya9ukBJgNuFIB/zzUbyk/MFsHDUROFBBFGCpXEpN+50dvxpRyZ
- Zof/krrXicr3WhdVm2EKUAtbVEcpcFNsaUCCwzpxqQ9JZrzPbdY8pBcUv2a7eJfJjQ9cuFaouxH
- xNQB9Nd7J86/AdJbrMzNhIfMql62hp4bUs/dz/ddiWw==
-X-Gm-Gg: ASbGnctaguxbW2VaAeg3uV8DWStwoLPWBppMxmemAGJgZjA3j8rvYfaMHBt3E92FUT5
- UuVuUVeWnzOLJTlk4rrbvZmRJ2Ol4ZWw0Kw1Bpx9wzLqfVpA9sZEKIM4NeJYCHlJkHErsBbCmlT
- KW75Fl1RtFzGig6NtfTvY4kEjpckSAhRtZlgBphdCW/Ovn/0QXFqwNX45FliyGgJQ9ErRueM6xR
- jNDT2gl
-X-Google-Smtp-Source: AGHT+IH26FMcUs6hEUBPdKjcdcczzX4rU7GplcMb+9VPZTNC8BelfgwoubWy11mn6tUGppR3MsTSWOjLIWGLiO7RkPw=
-X-Received: by 2002:a53:ac8d:0:b0:635:2ba3:c264 with SMTP id
- 956f58d0204a3-6352ba3c3bemr8676387d50.19.1758548717863; Mon, 22 Sep 2025
- 06:45:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v0gvW-0000Ph-P4
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:49:58 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1v0gvT-0001uF-T3
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:49:58 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M7NMAE006534;
+ Mon, 22 Sep 2025 13:49:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=qLNHKUlUg3IKOiVVxtcSzwTwsfWTIOGy9gGV6FylCYI=; b=
+ Ce+Xb1ytsKiNrnfhIi0Rg+1ray+YUXIlT8Cg35xaZQhqEA4S8RDIEj8tLQwUIvMv
+ YWgXhX1/SLhrg+y3YQm4Fd/nkaYDQXM0RMt14y+C/XUNI/Z5n3eTVjxv/xh3e0pj
+ hW39eyMZKOeP22DMyIXHMEfslHA2ZxGIAMq4u7NbDT6bU9LYErW22vghA+oJExLD
+ z32naFnk8aMIXUymeBO+98XQDtkU+YA5e8SrxvfNab5T7JLkdDDjfxX9tnnfu1W2
+ stUgH9darr5DpT7Y7iccTNbAPsTmNt5J7xP6omVgbi/km03aWSW7akgiqJDqc6Gu
+ IHElx2RGQh3PQq6XEeeEOQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 499kvttfmx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Sep 2025 13:49:53 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 58MC2Hng034336; Mon, 22 Sep 2025 13:49:52 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 49a6nhan9a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Sep 2025 13:49:52 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58MDnlWH004351;
+ Mon, 22 Sep 2025 13:49:51 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 49a6nhan6x-4; Mon, 22 Sep 2025 13:49:51 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Cedric Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 3/8] oslib: qemu_clear_cloexec
+Date: Mon, 22 Sep 2025 06:49:40 -0700
+Message-Id: <1758548985-354793-4-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
+References: <1758548985-354793-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-References: <20250919115017.1536203-1-berrange@redhat.com>
- <20250919115017.1536203-15-berrange@redhat.com>
-In-Reply-To: <20250919115017.1536203-15-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Sep 2025 14:45:06 +0100
-X-Gm-Features: AS18NWAytbopHV_sqAbRooQHLq7rtMpwhmMsEf6VOoQUF9G2rLDlCGubkELpJiM
-Message-ID: <CAFEAcA8AE4AcF6VOAPmtNeJi1XRBXityX1mLPw6K9+++VW6EEw@mail.gmail.com>
-Subject: Re: [PULL 14/16] chardev: qemu_chr_open_fd(): add errp
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Darren Kenny <darren.kenny@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John Levon <john.levon@nutanix.com>, 
- Fam Zheng <fam@euphon.net>, Alexander Bulekov <alxndr@bu.edu>,
- Stefan Weil <sw@weilnetz.de>, 
- Gerd Hoffmann <kraxel@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>, 
- Qiuhao Li <Qiuhao.Li@outlook.com>, Michael Roth <michael.roth@amd.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Bandan Das <bsd@redhat.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-22_01,2025-09-22_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
+ definitions=main-2509220135
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyNSBTYWx0ZWRfX8hN8TxdVL8e1
+ nT6awQCEDNAmy/Y7MxhCAI2MZDVMs2iZ+jaAXL77F3QOYLocD0f4X2f9jM67qgxcHURoFdOvsKu
+ NSCskU8JJV88IiD6MdAEdWgWiyaFk3cV/OLJLhIk4T8/KtLKqqqmuT7yjmShfJ0JFq6cPeCL5mr
+ 0X4dMltJU5aFbI8ko9D9p3hVEQdiyaodah0gvyqkhPS0GWNe74/R0O6bbUjHCmw4OzbGUmF+zjR
+ E1Ego7FtgeysxdnrJIJGhSq12LI5gM+BNG8M28TWQ6Z7EqSFLp4OUyId27g/IHSL8lpNehxSqKm
+ 2NfPbO3YZjTw6KPfe0EKCTHnGkqRkFJhNat6U4yCIDxkF5kmXRBIpsbUclQwiRNn7uFGpxO25Dq
+ 6WdyXnGH4E+MyGF4rjcAqMyFSLlrYw==
+X-Authority-Analysis: v=2.4 cv=UPPdHDfy c=1 sm=1 tr=0 ts=68d15401 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117
+ a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=eRAJs6dweEk5O_tl00MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 cc=ntf
+ awl=host:13614
+X-Proofpoint-GUID: OTB-cUUrGNnIQakcpuSLp0Y6WbVzMZeI
+X-Proofpoint-ORIG-GUID: OTB-cUUrGNnIQakcpuSLp0Y6WbVzMZeI
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,46 +120,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Sept 2025 at 12:55, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
->
-> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->
-> Every caller already support errp, let's go further.
->
-> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+Define qemu_clear_cloexec, analogous to qemu_set_cloexec.
 
-Coverity reports a bug in this change (CID 1630444):
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Dr. David Alan Gilbert <dgilbert@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+---
+ include/qemu/osdep.h | 9 +++++++++
+ util/oslib-posix.c   | 9 +++++++++
+ util/oslib-win32.c   | 4 ++++
+ 3 files changed, 22 insertions(+)
 
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index be3460b..8dac4ed 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -688,6 +688,15 @@ ssize_t qemu_write_full(int fd, const void *buf, size_t count)
+ 
+ void qemu_set_cloexec(int fd);
+ 
++/*
++ * Clear FD_CLOEXEC for a descriptor.
++ *
++ * The caller must guarantee that no other fork+exec's occur before the
++ * exec that is intended to inherit this descriptor, eg by suspending CPUs
++ * and blocking monitor commands.
++ */
++void qemu_clear_cloexec(int fd);
++
+ /* Return a dynamically allocated directory path that is appropriate for storing
+  * local state.
+  *
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index 4ff577e..4c04658 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -307,6 +307,15 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
+     return ret;
+ }
+ 
++void qemu_clear_cloexec(int fd)
++{
++    int f;
++    f = fcntl(fd, F_GETFD);
++    assert(f != -1);
++    f = fcntl(fd, F_SETFD, f & ~FD_CLOEXEC);
++    assert(f != -1);
++}
++
+ char *
+ qemu_get_local_state_dir(void)
+ {
+diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+index b735163..843a901 100644
+--- a/util/oslib-win32.c
++++ b/util/oslib-win32.c
+@@ -222,6 +222,10 @@ void qemu_set_cloexec(int fd)
+ {
+ }
+ 
++void qemu_clear_cloexec(int fd)
++{
++}
++
+ int qemu_get_thread_id(void)
+ {
+     return GetCurrentThreadId();
+-- 
+1.8.3.1
 
-> diff --git a/chardev/char-file.c b/chardev/char-file.c
-> index a9e8c5e0d7..89e9cb849c 100644
-> --- a/chardev/char-file.c
-> +++ b/chardev/char-file.c
-> @@ -92,7 +92,11 @@ static void qmp_chardev_open_file(Chardev *chr,
->          }
->      }
->
-> -    qemu_chr_open_fd(chr, in, out);
-> +    if (!qemu_chr_open_fd(chr, in, out, errp)) {
-> +        qemu_close(out);
-> +        qemu_close(in);
-
-Here 'in' can be -1 (if there is only an output file
-and no separate input file specified), so we can
-try to close(-1). Suggested fix:
-
-         if (in >=3D 0) {
-             qemu_close(in);
-         }
-
-> +        return;
-> +    }
->  #endif
->  }
-
--- PMM
 
