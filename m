@@ -4,115 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956C6CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 10:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD04FCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 10:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0ddN-0002eT-IU; Mon, 22 Sep 2025 06:19:01 -0400
+	id 1v0dsy-0007Ri-MC; Mon, 22 Sep 2025 06:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1v0ddJ-0002dr-Dc; Mon, 22 Sep 2025 06:18:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1v0dsi-0007Qf-OB
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 06:34:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1v0ddD-0000DE-5c; Mon, 22 Sep 2025 06:18:56 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M3WJp4023754;
- Mon, 22 Sep 2025 10:18:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FLijVa
- rpA8Q6ozisIZVsOcmC5C1Qfbr/SeARtC31lQs=; b=IFtUHCRbOa4OCbPJo1WY/B
- xskj0G65GI824n7JTLSBIsnyHdO4YXLgq1EeqxJ25D15lboEFo/noWPPRriBee0r
- e5+SJb/7sQ8iKUlFF/fSFbB3OwBXR5gBqXVDEglxR9gdPFfB5vSZbkGkT9vopusy
- ZPxRbmj3EHFV0713qXbKztAQNnA4LOgkRaFiDlTKOxYllAhjd3Mi7/ntKgoXJVSF
- CFUGyHFLLemBH4IwyggfVq2U4ruWB/7fGj6jGweju1czsUbxQHxa3NkR0kEF31Ox
- eYMwOViN4QhSteWVk3FMMrTdUd2l5f9Z4F+OO9RD8gPw+zfhSSWovZP/HqaLCFrQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499n0j9xvd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Sep 2025 10:18:46 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58MAD3t8000776;
- Mon, 22 Sep 2025 10:18:45 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499n0j9xvb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Sep 2025 10:18:45 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58M7m1AR029540;
- Mon, 22 Sep 2025 10:18:44 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49a6krnu6q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Sep 2025 10:18:44 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58MAIhPO22676158
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Sep 2025 10:18:43 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CE4A5805B;
- Mon, 22 Sep 2025 10:18:43 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E30C35804B;
- Mon, 22 Sep 2025 10:18:39 +0000 (GMT)
-Received: from [9.79.201.141] (unknown [9.79.201.141])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 22 Sep 2025 10:18:39 +0000 (GMT)
-Message-ID: <66009933-d94c-45da-a252-4dbdb8968cde@linux.ibm.com>
-Date: Mon, 22 Sep 2025 15:48:37 +0530
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1v0dsd-0003k7-Nq
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 06:34:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758537280;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O5gg34K1YSP/OF6z+UNbWct6AFQgrVI1wkNppcUc1tY=;
+ b=KxaFYVkGeMaj8E4Ha4YyuY23IN60NyJPYzx9g51jakOKT0V3v0nw4/9FRuUs0Jh3PD4GW5
+ H2OlodcDIY6FDQ0TdRaS8Cq2QYV0++byjwpCsIIa5kkezDmpQnyeUQf3Iyatf8wRknQdZL
+ mzBJufNYVL00TS9al/VpDqaTdtaxQJc=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-DSVo1hf-OvudEF-29FS0ww-1; Mon, 22 Sep 2025 06:34:38 -0400
+X-MC-Unique: DSVo1hf-OvudEF-29FS0ww-1
+X-Mimecast-MFC-AGG-ID: DSVo1hf-OvudEF-29FS0ww_1758537277
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-b54d0ffd16eso3317374a12.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 03:34:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758537277; x=1759142077;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=O5gg34K1YSP/OF6z+UNbWct6AFQgrVI1wkNppcUc1tY=;
+ b=pQKAhE1aWlIdvkYtX4CGdUagZ7UObBQa/qxC3g6GB0uT1HiryCDrG5C3MpiECGe9y9
+ IRsK/JIWkMaU/rQEKxSPjV0D0jz6x+//Lutmj1HmlVwen+CchHofgkZ4kt1RoqY5sXFq
+ djBDZIV6lEmGUku5xwl4uI1fmMRq3cmwZZV7hTojAFvd8PS0JBo1SpvDwrr5m63Nr1tD
+ FBkdSgfmaVS5HefUbCmpjXlF1R9vwcX95G4JpSmjkuVEDQD/dat1EZl6tH3onN6GAxNX
+ 3BdJ5QRuZaLKstn4JJvI64JAJrDnuccPR3Hev/8NxijVtu01BD5BSP9Qo8K0HSEw/r/C
+ kfeg==
+X-Gm-Message-State: AOJu0Yxvcun78ae0PAK3JJzgoFMQQ/qgCmH+AjcHyUsT64ryCV1EximV
+ e3qYUqRLB1EnKbe3u0U36SyN+9OmSjr4BwF1DhFRLNBDshmvldVDyVZVZaQPWTGOZJDt8QTkuTO
+ TXAt7mn18Z7yp/sh7YJZQhq6IkotLua+aOuHBZ42a5qUBPdS/g8uZMHBu6zPFyYCrA4uzMGUSvv
+ VSkutbhreo2HvQWNwQAbdMRZbfM8JcRYw=
+X-Gm-Gg: ASbGncvL9Mv3o39JOTWBjqQzyOyz+kesFN3iC7wHNczJwqp8Fx+xykdug/lpqueGpfm
+ cPLuLmPajQusG/S+fH3WYhF+i6hZbPMllKTlE8H6KuBFjFatmf221K6tmUUpc2e9sNrRgbgBpXP
+ uf0TMWSrzKfvHJPDGKNwfZNXo1Y+2E2Ld49g/jM82UujkKRqOby1snKg==
+X-Received: by 2002:a05:6a20:3ca1:b0:261:f6d2:e727 with SMTP id
+ adf61e73a8af0-29261fc4b81mr18495536637.25.1758537277052; 
+ Mon, 22 Sep 2025 03:34:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYVFS7nsWkBtvaLLJfHv800IEKlDIyRqQMFpyMCz4M66W2hYLZwu51lezcRc+Bs4ugaTiQyjru7RDaCrh+IuI=
+X-Received: by 2002:a05:6a20:3ca1:b0:261:f6d2:e727 with SMTP id
+ adf61e73a8af0-29261fc4b81mr18495501637.25.1758537276724; Mon, 22 Sep 2025
+ 03:34:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/9] target/ppc: Add IBM PPE42 special instructions
-To: Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com,
- harshpb@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org
-References: <20250918182731.528944-1-milesg@linux.ibm.com>
- <20250918182731.528944-7-milesg@linux.ibm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20250918182731.528944-7-milesg@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzMyBTYWx0ZWRfXxLPeK9yw/2Wc
- QBpDzvy4NxtxH4WDazHBqTaugBzEwZ8Dqadv+t3up+LRyh1YWDHn+/NnsIWNiL8S73uLtc1OOdc
- 2+kiYYHEBlXdAKKQy/Df8Dt2Sd6tEx5+LyaDYM42Fo/vq2qcu7clQ5vZFwHzeCfAy2U98s+r/9D
- XfIF9ftMdkYr7+n2J0wDKWhP8sK/5U3y4PjxX243Dt+H5/ag53IBKAd6j/a2AdkEjjlAh7Uttxf
- Ow5aIWrylHKMjMTiFARjPSs7GBqa1nGJR9f9gZieKvJMxR2lmLGTgVScASBq8NgiFoxl/+IEV+i
- c853z46GsybYOrfj1cGrxT2zxP2yBgB7ViC3ABItLtJez+czwxIu5iHd2E5VXLACIQ+E3ml7NSt
- PWGxbjM0
-X-Authority-Analysis: v=2.4 cv=TOlFS0la c=1 sm=1 tr=0 ts=68d12286 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=jRLB2SoPAAAA:8
- a=VnNF1IyMAAAA:8 a=1p4PG9sHpyDUbTMXaEAA:9 a=QEXdDO2ut3YA:10
- a=yloqiLrygL2q3s9aD-8D:22
-X-Proofpoint-ORIG-GUID: k74I_WG76vGx3oB2LpCuXEbbxn72B14q
-X-Proofpoint-GUID: jRUq71B9bBQvLZTV6VeSv2evvoo9JKRX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_01,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509200033
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
+ <20250919133320.240145-20-marcandre.lureau@redhat.com>
+ <aM1rj-5Rja1CXqy0@redhat.com>
+In-Reply-To: <aM1rj-5Rja1CXqy0@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 22 Sep 2025 14:34:25 +0400
+X-Gm-Features: AS18NWC_6iyozrjmUeWil5lQYjN6DygoC9HIHiUtHnTmi6-g-jZW8WbMOULwSbg
+Message-ID: <CAMxuvay3zOzcRZBDseDw4UwqTRC5k1Qk1cRomGvVRzR2jV8U3w@mail.gmail.com>
+Subject: Re: [PATCH 19/24] configure: set the meson executable suffix/ext
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, 
+ Yonggang Luo <luoyonggang@gmail.com>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, Kyle Evans <kevans@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000b42fa1063f615d29"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,854 +110,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000b42fa1063f615d29
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/18/25 23:57, Glenn Miles wrote:
-> Adds the following instructions exclusively for
-> IBM PPE42 processors:
+Hi
+
+On Fri, Sep 19, 2025 at 6:41=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com>
+wrote:
+
+> On Fri, Sep 19, 2025 at 05:33:13PM +0400, marcandre.lureau@redhat.com
+> wrote:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
->    LSKU
->    LCXU
->    STSKU
->    STCXU
->    LVD
->    LVDU
->    LVDX
->    STVD
->    STVDU
->    STVDX
->    SLVD
->    SRVD
->    CMPWBC
->    CMPLWBC
->    CMPWIBC
->    BNBWI
->    BNBW
->    CLRBWIBC
->    CLRWBC
->    DCBQ
->    RLDICL
->    RLDICR
->    RLDIMI
 >
-> A PPE42 GCC compiler is available here:
-> https://github.com/open-power/ppe42-gcc
+> Please actually the reason why the change is needed. The code
+> change seems related to msys2 / Windows, but our CI is already
+> covering this and so what's broken ?
 >
-> For more information on the PPE42 processors please visit:
-> https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
+
+It doesn't cover --enable-rust yet:
+
+../rust/meson.build:41:2: ERROR: Program
+'/c/Users/User/qemu/build/pyvenv/bin/meson' not found or not executable
+
+
 >
-> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-> ---
 >
-> Changes from v4:
->    - Added ability to run in TARGET_PPC64 context
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  configure | 14 +++++++++++++-
+> >  1 file changed, 13 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/configure b/configure
+> > index 8d84e3c5c0..7b1795ab29 100755
+> > --- a/configure
+> > +++ b/configure
+> > @@ -1000,7 +1000,19 @@ $mkvenv ensuregroup --dir
+> "${source_path}/python/wheels" \
+> >  # We ignore PATH completely here: we want to use the venv's Meson
+> >  # *exclusively*.
+> >
+> > -meson=3D"$(cd pyvenv/bin; pwd)/meson"
+> > +# for msys2
+> > +get_pwd() {
+> > +    if pwd -W >/dev/null 2>&1; then
+> > +        pwd -W
+> > +    else
+> > +        pwd
+> > +    fi
+> > +}
+> > +
+> > +meson=3D"$(cd pyvenv/bin; get_pwd)/meson"
+> > +if [ -f "$meson$EXESUF" ]; then
+> > +  meson=3D"$meson$EXESUF"
+> > +fi
+> >
+> >  # Conditionally ensure Sphinx is installed.
+> >
+> > --
+> > 2.51.0
+> >
 >
->   target/ppc/insn32.decode            |  66 ++-
->   target/ppc/translate.c              |  29 +-
->   target/ppc/translate/ppe-impl.c.inc | 610 ++++++++++++++++++++++++++++
->   3 files changed, 695 insertions(+), 10 deletions(-)
->   create mode 100644 target/ppc/translate/ppe-impl.c.inc
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-
+> https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-
+> https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-
+> https://www.instagram.com/dberrange :|
 >
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index e53fd2840d..16652b5c13 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -58,6 +58,10 @@
->   %ds_rtp         22:4   !function=times_2
->   @DS_rtp         ...... ....0 ra:5 .............. ..             &D rt=%ds_rtp si=%ds_si
->   
-> +%dd_si          3:s13
-> +&DD             rt ra si:int64_t
-> +@DD             ...... rt:5 ra:5 ............. . ..             &DD si=%dd_si
-> +
->   &DX_b           vrt b
->   %dx_b           6:10 16:5 0:1
->   @DX_b           ...... vrt:5  ..... .......... ..... .          &DX_b b=%dx_b
-> @@ -66,6 +70,11 @@
->   %dx_d           6:s10 16:5 0:1
->   @DX             ...... rt:5  ..... .......... ..... .           &DX d=%dx_d
->   
-> +%md_sh          1:1 11:5
-> +%md_mb          5:1 6:5
-> +&MD             rs ra sh mb rc
-> +@MD             ...... rs:5 ra:5 ..... ...... ... . rc:1        &MD sh=%md_sh mb=%md_mb
-> +
->   &VA             vrt vra vrb rc
->   @VA             ...... vrt:5 vra:5 vrb:5 rc:5 ......            &VA
->   
-> @@ -322,6 +331,13 @@ LDUX            011111 ..... ..... ..... 0000110101 -   @X
->   
->   LQ              111000 ..... ..... ............ ----    @DQ_rtp
->   
-> +LVD             000101 ..... ..... ................     @D
-> +LVDU            001001 ..... ..... ................     @D
-> +LVDX            011111 ..... ..... ..... 0000010001 -   @X
-> +LSKU            111010 ..... ..... ............. 0 11   @DD
-> +LCXU            111010 ..... ..... ............. 1 11   @DD
-> +
-> +
->   ### Fixed-Point Store Instructions
->   
->   STB             100110 ..... ..... ................     @D
-> @@ -346,6 +362,11 @@ STDUX           011111 ..... ..... ..... 0010110101 -   @X
->   
->   STQ             111110 ..... ..... ..............10     @DS_rtp
->   
-> +STVDU           010110 ..... ..... ................     @D
-> +STVDX           011111 ..... ..... ..... 0010010001 -   @X
-> +STSKU           111110 ..... ..... ............. 0 11   @DD
-> +STCXU           111110 ..... ..... ............. 1 11   @DD
-> +
->   ### Fixed-Point Compare Instructions
->   
->   CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
-> @@ -461,8 +482,14 @@ PRTYD           011111 ..... ..... ----- 0010111010 -   @X_sa
->   
->   BPERMD          011111 ..... ..... ..... 0011111100 -   @X
->   CFUGED          011111 ..... ..... ..... 0011011100 -   @X
-> -CNTLZDM         011111 ..... ..... ..... 0000111011 -   @X
-> -CNTTZDM         011111 ..... ..... ..... 1000111011 -   @X
-> +{
-> +  SLVD            011111 ..... ..... ..... 0000111011 .   @X_rc
-> +  CNTLZDM         011111 ..... ..... ..... 0000111011 -   @X
-> +}
-> +{
-> +  SRVD            011111 ..... ..... ..... 1000111011 .   @X_rc
-> +  CNTTZDM         011111 ..... ..... ..... 1000111011 -   @X
-> +}
->   PDEPD           011111 ..... ..... ..... 0010011100 -   @X
->   PEXTD           011111 ..... ..... ..... 0010111100 -   @X
->   
-> @@ -981,8 +1008,16 @@ LXSSP           111001 ..... ..... .............. 11    @DS
->   STXSSP          111101 ..... ..... .............. 11    @DS
->   LXV             111101 ..... ..... ............ . 001   @DQ_TSX
->   STXV            111101 ..... ..... ............ . 101   @DQ_TSX
-> -LXVP            000110 ..... ..... ............ 0000    @DQ_TSXP
-> -STXVP           000110 ..... ..... ............ 0001    @DQ_TSXP
-> +
-> +# STVD PPE instruction overlaps with the LXVP and STXVP instructions
-> +{
-> +  STVD          000110 ..... ..... ................     @D
-> +  [
-> +    LXVP        000110 ..... ..... ............ 0000    @DQ_TSXP
-> +    STXVP       000110 ..... ..... ............ 0001    @DQ_TSXP
-> +  ]
-> +}
-> +
->   LXVX            011111 ..... ..... ..... 0100 - 01100 . @X_TSX
->   STXVX           011111 ..... ..... ..... 0110001100 .   @X_TSX
->   LXVPX           011111 ..... ..... ..... 0101001101 -   @X_TSXP
-> @@ -1300,3 +1335,26 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
->   ## Misc POWER instructions
->   
->   ATTN            000000 00000 00000 00000 0100000000 0
-> +
-> +# Fused compare-branch instructions for PPE only
-> +%fcb_bdx        1:s10  !function=times_4
-> +&FCB            px:bool ra rb:uint64_t bdx lk:bool
-> +@FCB            ...... .. px:1 .. ra:5 rb:5 .......... lk:1       &FCB bdx=%fcb_bdx
-> +&FCB_bix        px:bool bix ra rb:uint64_t bdx lk:bool
-> +@FCB_bix        ...... .. px:1 bix:2 ra:5 rb:5 .......... lk:1    &FCB_bix bdx=%fcb_bdx
-> +
-> +CMPWBC          000001 00 . .. ..... ..... .......... .     @FCB_bix
-> +CMPLWBC         000001 01 . .. ..... ..... .......... .     @FCB_bix
-> +CMPWIBC         000001 10 . .. ..... ..... .......... .     @FCB_bix
-> +BNBWI           000001 11 . 00 ..... ..... .......... .     @FCB
-> +BNBW            000001 11 . 01 ..... ..... .......... .     @FCB
-> +CLRBWIBC        000001 11 . 10 ..... ..... .......... .     @FCB
-> +CLRBWBC         000001 11 . 11 ..... ..... .......... .     @FCB
-> +
-> +# Data Cache Block Query for PPE only
-> +DCBQ            011111 ..... ..... ..... 0110010110 -       @X
-> +
-> +# Rotate Doubleword Instructions for PPE only
-> +RLDICL          011110 ..... ..... ..... ...... 000 . .     @MD
-> +RLDICR          011110 ..... ..... ..... ...... 001 . .     @MD
-> +RLDIMI          011110 ..... ..... ..... ...... 011 . .     @MD
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index fc817dab54..d422789a1d 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -209,6 +209,11 @@ struct DisasContext {
->   #define DISAS_CHAIN        DISAS_TARGET_2  /* lookup next tb, pc updated */
->   #define DISAS_CHAIN_UPDATE DISAS_TARGET_3  /* lookup next tb, pc stale */
->   
-> +static inline bool is_ppe(const DisasContext *ctx)
-> +{
-> +    return !!(ctx->flags & POWERPC_FLAG_PPE42);
-> +}
-> +
->   /* Return true iff byteswap is needed in a scalar memop */
->   static inline bool need_byteswap(const DisasContext *ctx)
->   {
-> @@ -556,11 +561,8 @@ void spr_access_nop(DisasContext *ctx, int sprn, int gprn)
->   
->   #endif
->   
-> -/* SPR common to all PowerPC */
-> -/* XER */
-> -void spr_read_xer(DisasContext *ctx, int gprn, int sprn)
-> +static void gen_get_xer(DisasContext *ctx, TCGv dst)
->   {
-> -    TCGv dst = cpu_gpr[gprn];
->       TCGv t0 = tcg_temp_new();
->       TCGv t1 = tcg_temp_new();
->       TCGv t2 = tcg_temp_new();
-> @@ -579,9 +581,16 @@ void spr_read_xer(DisasContext *ctx, int gprn, int sprn)
->       }
->   }
->   
-> -void spr_write_xer(DisasContext *ctx, int sprn, int gprn)
-> +/* SPR common to all PowerPC */
-> +/* XER */
-> +void spr_read_xer(DisasContext *ctx, int gprn, int sprn)
-> +{
-> +    TCGv dst = cpu_gpr[gprn];
-> +    gen_get_xer(ctx, dst);
-> +}
-> +
-> +static void gen_set_xer(DisasContext *ctx, TCGv src)
->   {
-> -    TCGv src = cpu_gpr[gprn];
->       /* Write all flags, while reading back check for isa300 */
->       tcg_gen_andi_tl(cpu_xer, src,
->                       ~((1u << XER_SO) |
-> @@ -594,6 +603,12 @@ void spr_write_xer(DisasContext *ctx, int sprn, int gprn)
->       tcg_gen_extract_tl(cpu_ca, src, XER_CA, 1);
->   }
->   
-> +void spr_write_xer(DisasContext *ctx, int sprn, int gprn)
-> +{
-> +    TCGv src = cpu_gpr[gprn];
-> +    gen_set_xer(ctx, src);
-> +}
-> +
->   /* LR */
->   void spr_read_lr(DisasContext *ctx, int gprn, int sprn)
->   {
-> @@ -5755,6 +5770,8 @@ static bool resolve_PLS_D(DisasContext *ctx, arg_D *d, arg_PLS_D *a)
->   
->   #include "translate/bhrb-impl.c.inc"
->   
-> +#include "translate/ppe-impl.c.inc"
-> +
->   /* Handles lfdp */
->   static void gen_dform39(DisasContext *ctx)
->   {
-> diff --git a/target/ppc/translate/ppe-impl.c.inc b/target/ppc/translate/ppe-impl.c.inc
-> new file mode 100644
-> index 0000000000..179ec36459
-> --- /dev/null
-> +++ b/target/ppc/translate/ppe-impl.c.inc
-> @@ -0,0 +1,610 @@
-> +/*
-> + * IBM PPE Instructions
-> + *
-> + * Copyright (c) 2025, IBM Corporation.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +
-> +static bool vdr_is_valid(uint32_t vdr)
-> +{
-> +    const uint32_t valid_bitmap = 0xf00003ff;
-> +    return !!((1ul << (vdr & 0x1f)) & valid_bitmap);
-> +}
-> +
-> +static bool ppe_gpr_is_valid(uint32_t reg)
-> +{
-> +    const uint32_t valid_bitmap = 0xf00027ff;
-> +    return !!((1ul << (reg & 0x1f)) & valid_bitmap);
-> +}
-> +
-> +#define CHECK_VDR(CTX, VDR)                             \
-> +    do {                                                \
-> +        if (unlikely(!vdr_is_valid(VDR))) {             \
-> +            gen_invalid(CTX);                           \
-> +            return true;                                \
-> +        }                                               \
-> +    } while (0)
-> +
-> +#define CHECK_PPE_GPR(CTX, REG)                         \
-> +    do {                                                \
-> +        if (unlikely(!ppe_gpr_is_valid(REG))) {         \
-> +            gen_invalid(CTX);                           \
-> +            return true;                                \
-> +        }                                               \
-> +    } while (0)
-> +
-> +#define VDR_PAIR_REG(VDR) (((VDR) + 1) & 0x1f)
-> +
-> +#define CHECK_PPE_LEVEL(CTX, LVL)                       \
-> +    do {                                                \
-> +        if (unlikely(!((CTX)->insns_flags2 & (LVL)))) { \
-> +            gen_invalid(CTX);                           \
-> +            return true;                                \
-> +        }                                               \
-> +    } while (0)
-> +
-> +static bool trans_LCXU(DisasContext *ctx, arg_LCXU *a)
-> +{
-> +    int i;
-> +    TCGv base, EA;
-> +    TCGv lo, hi;
-> +    TCGv_i64 t8;
-> +    const uint8_t vd_list[] = {9, 7, 5, 3, 0};
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_PPE_GPR(ctx, a->rt);
-> +
-> +    if (unlikely((a->rt != a->ra) || (a->ra == 0) || (a->si < 0xB))) {
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    EA = tcg_temp_new();
-> +    base = tcg_temp_new();
-> +
-> +    tcg_gen_addi_tl(base, cpu_gpr[a->ra], a->si * 8);
-> +    gen_store_spr(SPR_PPE42_EDR, base);
-> +
-> +    t8 = tcg_temp_new_i64();
-> +
-> +    tcg_gen_addi_tl(EA, base, -8);
-> +    tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    tcg_gen_extr_i64_tl(cpu_gpr[31], cpu_gpr[30], t8);
-> +
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    tcg_gen_extr_i64_tl(cpu_gpr[29], cpu_gpr[28], t8);
-> +
-> +    lo = tcg_temp_new();
-> +    hi = tcg_temp_new();
-> +
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    tcg_gen_extr_i64_tl(lo, hi, t8);
-> +    gen_store_spr(SPR_SRR0, hi);
-> +    gen_store_spr(SPR_SRR1, lo);
-> +
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    tcg_gen_extr_i64_tl(lo, hi, t8);
-> +    gen_set_xer(ctx, hi);
-> +    tcg_gen_mov_tl(cpu_ctr, lo);
-> +
-> +    for (i = 0; i < sizeof(vd_list); i++) {
-> +        int vd = vd_list[i];
-> +        tcg_gen_addi_tl(EA, EA, -8);
-> +        tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +        tcg_gen_extr_i64_tl(cpu_gpr[VDR_PAIR_REG(vd)], cpu_gpr[vd], t8);
-> +    }
-> +
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    tcg_gen_extr_i64_tl(lo, hi, t8);
-> +    tcg_gen_shri_tl(hi, hi, 28);
-> +    tcg_gen_trunc_tl_i32(cpu_crf[0], hi);
-> +    gen_store_spr(SPR_SPRG0, lo);
-> +
-> +    tcg_gen_addi_tl(EA, base, 4);
-> +    tcg_gen_qemu_ld_tl(cpu_lr, EA, ctx->mem_idx, DEF_MEMOP(MO_32) | MO_ALIGN);
-> +    tcg_gen_mov_tl(cpu_gpr[a->ra], base);
-> +    return true;
-> +}
-> +
-> +static bool trans_LSKU(DisasContext *ctx, arg_LSKU *a)
-> +{
-> +    int64_t n;
-> +    TCGv base, EA;
-> +    TCGv lo, hi;
-> +    TCGv_i64 t8;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_PPE_GPR(ctx, a->rt);
-> +
-> +    if (unlikely((a->rt != a->ra) || (a->ra == 0) ||
-> +                 (a->si & PPC_BIT(0)) || (a->si == 0))) {
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    EA = tcg_temp_new();
-> +    base = tcg_temp_new();
-> +    gen_addr_register(ctx, base);
-> +
-> +
-> +    tcg_gen_addi_tl(base, base, a->si * 8);
-> +    gen_store_spr(SPR_PPE42_EDR, base);
-> +
-> +    n = a->si - 1;
-> +    t8 = tcg_temp_new_i64();
-> +    if (n > 0) {
-> +        tcg_gen_addi_tl(EA, base, -8);
-> +        tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +        hi = cpu_gpr[30];
-> +        lo = cpu_gpr[31];
-> +        tcg_gen_extr_i64_tl(lo, hi, t8);
-> +    }
-> +    if (n > 1) {
-> +        tcg_gen_addi_tl(EA, base, -16);
-> +        tcg_gen_qemu_ld_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +        hi = cpu_gpr[28];
-> +        lo = cpu_gpr[29];
-> +        tcg_gen_extr_i64_tl(lo, hi, t8);
-> +    }
-> +    tcg_gen_addi_tl(EA, base, 4);
-> +    tcg_gen_qemu_ld_tl(cpu_lr, EA, ctx->mem_idx, DEF_MEMOP(MO_32) | MO_ALIGN);
-> +    tcg_gen_mov_tl(cpu_gpr[a->ra], base);
-> +    return true;
-> +}
-> +
-> +static bool trans_STCXU(DisasContext *ctx, arg_STCXU *a)
-> +{
-> +    TCGv EA;
-> +    TCGv lo, hi;
-> +    TCGv_i64 t8;
-> +    int i;
-> +    const uint8_t vd_list[] = {9, 7, 5, 3, 0};
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_PPE_GPR(ctx, a->rt);
-> +
-> +    if (unlikely((a->rt != a->ra) || (a->ra == 0) || !(a->si & PPC_BIT(0)))) {
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    EA = tcg_temp_new();
-> +    tcg_gen_addi_tl(EA, cpu_gpr[a->ra], 4);
-> +    tcg_gen_qemu_st_tl(cpu_lr, EA, ctx->mem_idx, DEF_MEMOP(MO_32) | MO_ALIGN);
-> +
-> +    gen_store_spr(SPR_PPE42_EDR, cpu_gpr[a->ra]);
-> +
-> +    t8 = tcg_temp_new_i64();
-> +
-> +    tcg_gen_concat_tl_i64(t8, cpu_gpr[31], cpu_gpr[30]);
-> +    tcg_gen_addi_tl(EA, cpu_gpr[a->ra], -8);
-> +    tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +
-> +    tcg_gen_concat_tl_i64(t8, cpu_gpr[29], cpu_gpr[28]);
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +
-> +    lo = tcg_temp_new();
-> +    hi = tcg_temp_new();
-> +
-> +    gen_load_spr(hi, SPR_SRR0);
-> +    gen_load_spr(lo, SPR_SRR1);
-> +    tcg_gen_concat_tl_i64(t8, lo, hi);
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +
-> +    gen_get_xer(ctx, hi);
-> +    tcg_gen_mov_tl(lo, cpu_ctr);
-> +    tcg_gen_concat_tl_i64(t8, lo, hi);
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +
-> +    for (i = 0; i < sizeof(vd_list); i++) {
-> +        int vd = vd_list[i];
-> +        tcg_gen_concat_tl_i64(t8, cpu_gpr[VDR_PAIR_REG(vd)], cpu_gpr[vd]);
-> +        tcg_gen_addi_tl(EA, EA, -8);
-> +        tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    }
-> +
-> +    gen_load_spr(lo, SPR_SPRG0);
-> +    tcg_gen_extu_i32_tl(hi, cpu_crf[0]);
-> +    tcg_gen_shli_tl(hi, hi, 28);
-> +    tcg_gen_concat_tl_i64(t8, lo, hi);
-> +    tcg_gen_addi_tl(EA, EA, -8);
-> +    tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +
-> +    tcg_gen_addi_tl(EA, cpu_gpr[a->ra], a->si * 8);
-> +    tcg_gen_qemu_st_tl(cpu_gpr[a->rt], EA, ctx->mem_idx, DEF_MEMOP(MO_32) |
-> +                                                          MO_ALIGN);
-> +    tcg_gen_mov_tl(cpu_gpr[a->ra], EA);
-> +    return true;
-> +}
-> +
-> +static bool trans_STSKU(DisasContext *ctx, arg_STSKU *a)
-> +{
-> +    int64_t n;
-> +    TCGv base, EA;
-> +    TCGv lo, hi;
-> +    TCGv_i64 t8;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_PPE_GPR(ctx, a->rt);
-> +
-> +    if (unlikely((a->rt != a->ra) || (a->ra == 0) || !(a->si & PPC_BIT(0)))) {
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    EA = tcg_temp_new();
-> +    base = tcg_temp_new();
-> +    gen_addr_register(ctx, base);
-> +    tcg_gen_addi_tl(EA, base, 4);
-> +    tcg_gen_qemu_st_tl(cpu_lr, EA, ctx->mem_idx, DEF_MEMOP(MO_32) | MO_ALIGN);
-> +
-> +    gen_store_spr(SPR_PPE42_EDR, base);
-> +
-> +    n = ~(a->si);
-> +
-> +    t8 = tcg_temp_new_i64();
-> +    if (n > 0) {
-> +        hi = cpu_gpr[30];
-> +        lo = cpu_gpr[31];
-> +        tcg_gen_concat_tl_i64(t8, lo, hi);
-> +        tcg_gen_addi_tl(EA, base, -8);
-> +        tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    }
-> +    if (n > 1) {
-> +        hi = cpu_gpr[28];
-> +        lo = cpu_gpr[29];
-> +        tcg_gen_concat_tl_i64(t8, lo, hi);
-> +        tcg_gen_addi_tl(EA, base, -16);
-> +        tcg_gen_qemu_st_i64(t8, EA, ctx->mem_idx, DEF_MEMOP(MO_64) | MO_ALIGN);
-> +    }
-> +
-> +    tcg_gen_addi_tl(EA, base, a->si * 8);
-> +    tcg_gen_qemu_st_tl(cpu_gpr[a->rt], EA, ctx->mem_idx, DEF_MEMOP(MO_32) |
-> +                                                          MO_ALIGN);
-> +    tcg_gen_mov_tl(cpu_gpr[a->ra], EA);
-> +    return true;
-> +}
-> +
-> +static bool do_ppe_ldst(DisasContext *ctx, int rt, int ra, TCGv disp,
-> +                        bool update, bool store)
-> +{
-> +    TCGv ea;
-> +    int rt_lo;
-> +    TCGv_i64 t8;
-> +
-> +    CHECK_VDR(ctx, rt);
-> +    CHECK_PPE_GPR(ctx, ra);
-> +    rt_lo = VDR_PAIR_REG(rt);
-> +    if (update && (ra == 0 || (!store && ((ra == rt) || (ra == rt_lo))))) {
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +
-> +    ea = do_ea_calc(ctx, ra, disp);
-> +    t8 = tcg_temp_new_i64();
-> +    if (store) {
-> +        tcg_gen_concat_tl_i64(t8, cpu_gpr[rt_lo], cpu_gpr[rt]);
-> +        tcg_gen_qemu_st_i64(t8, ea, ctx->mem_idx, DEF_MEMOP(MO_64));
-> +    } else {
-> +        tcg_gen_qemu_ld_i64(t8, ea, ctx->mem_idx, DEF_MEMOP(MO_64));
-> +        tcg_gen_extr_i64_tl(cpu_gpr[rt_lo], cpu_gpr[rt], t8);
-> +    }
-> +    if (update) {
-> +        tcg_gen_mov_tl(cpu_gpr[ra], ea);
-> +    }
-> +    return true;
-> +}
-> +
-> +static bool do_ppe_ldst_D(DisasContext *ctx, arg_D *a, bool update, bool store)
-> +{
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    return do_ppe_ldst(ctx, a->rt, a->ra, tcg_constant_tl(a->si), update,
-> +                       store);
-> +}
-> +
-> +static bool do_ppe_ldst_X(DisasContext *ctx, arg_X *a, bool store)
-> +{
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_GPR(ctx, a->rb);
-> +    return do_ppe_ldst(ctx, a->rt, a->ra, cpu_gpr[a->rb], false, store);
-> +}
-> +
-> +TRANS(LVD,   do_ppe_ldst_D, false, false)
-> +TRANS(LVDU,  do_ppe_ldst_D, true,  false)
-> +TRANS(STVD,  do_ppe_ldst_D, false, true)
-> +TRANS(STVDU, do_ppe_ldst_D, true,  true)
-> +TRANS(LVDX,  do_ppe_ldst_X, false)
-> +TRANS(STVDX, do_ppe_ldst_X, true)
-> +
-> +
-> +static bool do_fcb(DisasContext *ctx, TCGv ra_val, TCGv rb_val, int bix,
-> +                          int32_t bdx, bool s, bool px, bool lk)
-> +{
-> +    TCGCond cond;
-> +    uint32_t mask;
-> +    TCGLabel *no_branch;
-> +    target_ulong dest;
-> +
-> +    /* Update CR0 */
-> +    gen_op_cmp32(ra_val, rb_val, s, 0);
-> +
-> +    if (lk) {
-> +        gen_setlr(ctx, ctx->base.pc_next);
-> +    }
-> +
-> +
-> +    mask = PPC_BIT32(28 + bix);
-> +    cond = (px) ? TCG_COND_TSTEQ : TCG_COND_TSTNE;
-> +    no_branch = gen_new_label();
-> +    dest = ctx->cia + bdx;
-> +
-> +    /* Do the branch if CR0[bix] == PX */
-> +    tcg_gen_brcondi_i32(cond, cpu_crf[0], mask, no_branch);
-> +    gen_goto_tb(ctx, 0, dest);
-> +    gen_set_label(no_branch);
-> +    gen_goto_tb(ctx, 1, ctx->base.pc_next);
-> +    ctx->base.is_jmp = DISAS_NORETURN;
-> +    return true;
-> +}
-> +
-> +static bool do_cmp_branch(DisasContext *ctx, arg_FCB_bix *a, bool s,
-> +                          bool rb_is_gpr)
-> +{
-> +    TCGv old_ra;
-> +    TCGv rb_val;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_GPR(ctx, a->ra);
-> +    if (rb_is_gpr) {
-> +        CHECK_PPE_GPR(ctx, a->rb);
-> +        rb_val = cpu_gpr[a->rb];
-> +    } else {
-> +        rb_val = tcg_constant_tl(a->rb);
-> +    }
-> +    if (a->bix == 3) {
-> +        old_ra = tcg_temp_new();
-> +        tcg_gen_mov_tl(old_ra, cpu_gpr[a->ra]);
-> +        tcg_gen_sub_tl(cpu_gpr[a->ra], cpu_gpr[a->ra], rb_val);
-> +        return do_fcb(ctx, old_ra, rb_val, 2,
-> +                      a->bdx, s, a->px, a->lk);
-> +    } else {
-> +        return do_fcb(ctx, cpu_gpr[a->ra], rb_val, a->bix,
-> +                      a->bdx, s, a->px, a->lk);
-> +    }
-> +}
-> +
-> +TRANS(CMPWBC, do_cmp_branch, true, true)
-> +TRANS(CMPLWBC, do_cmp_branch, false, true)
-> +TRANS(CMPWIBC, do_cmp_branch, true, false)
-> +
-> +static bool do_mask_branch(DisasContext *ctx, arg_FCB * a, bool invert,
-> +                           bool update, bool rb_is_gpr)
-> +{
-> +    TCGv r;
-> +    TCGv mask, shift;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_GPR(ctx, a->ra);
-> +    if (rb_is_gpr) {
-> +        CHECK_PPE_GPR(ctx, a->rb);
-> +        mask = tcg_temp_new();
-> +        shift = tcg_temp_new();
-> +        tcg_gen_andi_tl(shift, cpu_gpr[a->rb], 0x1f);
-> +        tcg_gen_shr_tl(mask, tcg_constant_tl(0x80000000), shift);
-> +    } else {
-> +        mask = tcg_constant_tl(PPC_BIT32(a->rb));
-> +    }
-> +    if (invert) {
-> +        tcg_gen_not_tl(mask, mask);
-> +    }
-> +
-> +    /* apply mask to ra */
-> +    r = tcg_temp_new();
-> +    tcg_gen_and_tl(r, cpu_gpr[a->ra], mask);
-> +    if (update) {
-> +        tcg_gen_mov_tl(cpu_gpr[a->ra], r);
-> +    }
-> +    return do_fcb(ctx, r, tcg_constant_tl(0), 2,
-> +                  a->bdx, false, a->px, a->lk);
-> +}
-> +
-> +TRANS(BNBWI,    do_mask_branch, false, false, false)
-> +TRANS(BNBW,     do_mask_branch, false, false, true)
-> +TRANS(CLRBWIBC, do_mask_branch, true,  true,  false)
-> +TRANS(CLRBWBC,  do_mask_branch, true,  true,  true)
-> +
-> +static void gen_set_Rc0_i64(DisasContext *ctx, TCGv_i64 reg)
-> +{
-> +    TCGv_i64 t0 = tcg_temp_new_i64();
-> +    TCGv_i64 t1 = tcg_temp_new_i64();
-> +    TCGv_i32 t = tcg_temp_new_i32();
-> +
-> +    tcg_gen_movi_i64(t0, CRF_EQ);
-> +    tcg_gen_movi_i64(t1, CRF_LT);
-> +    tcg_gen_movcond_i64(TCG_COND_LT, t0, reg, tcg_constant_i64(0), t1, t0);
-> +    tcg_gen_movi_i64(t1, CRF_GT);
-> +    tcg_gen_movcond_i64(TCG_COND_GT, t0, reg, tcg_constant_i64(0), t1, t0);
-> +    tcg_gen_extrl_i64_i32(t, t0);
-> +    tcg_gen_trunc_tl_i32(cpu_crf[0], cpu_so);
-> +    tcg_gen_or_i32(cpu_crf[0], cpu_crf[0], t);
-> +}
-> +
-> +static bool do_shift64(DisasContext *ctx, arg_X_rc *a, bool left)
-> +{
-> +    int rt_lo, ra_lo;
-> +    TCGv_i64 t0, t8;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_VDR(ctx, a->rt);
-> +    CHECK_VDR(ctx, a->ra);
-> +    CHECK_PPE_GPR(ctx, a->rb);
-> +    rt_lo = VDR_PAIR_REG(a->rt);
-> +    ra_lo = VDR_PAIR_REG(a->ra);
-> +    t8 = tcg_temp_new_i64();
-> +
-> +    /* AND rt with a mask that is 0 when rb >= 0x40 */
-> +    t0 = tcg_temp_new_i64();
-> +    tcg_gen_extu_tl_i64(t0, cpu_gpr[a->rb]);
-> +    tcg_gen_shli_i64(t0, t0, 0x39);
-> +    tcg_gen_sari_i64(t0, t0, 0x3f);
-> +
-> +    /* form 64bit value from two 32bit regs */
-> +    tcg_gen_concat_tl_i64(t8, cpu_gpr[rt_lo], cpu_gpr[a->rt]);
-> +
-> +    /* apply mask */
-> +    tcg_gen_andc_i64(t8, t8, t0);
-> +
-> +    /* do the shift */
-> +    tcg_gen_extu_tl_i64(t0, cpu_gpr[a->rb]);
-> +    tcg_gen_andi_i64(t0, t0, 0x3f);
-> +    if (left) {
-> +        tcg_gen_shl_i64(t8, t8, t0);
-> +    } else {
-> +        tcg_gen_shr_i64(t8, t8, t0);
-> +    }
-> +
-> +    /* split the 64bit word back into two 32bit regs */
-> +    tcg_gen_extr_i64_tl(cpu_gpr[ra_lo], cpu_gpr[a->ra], t8);
-> +
-> +    /* update CR0 if requested */
-> +    if (unlikely(a->rc != 0)) {
-> +        gen_set_Rc0_i64(ctx, t8);
-> +    }
-> +    return true;
-> +}
-> +
-> +TRANS(SRVD, do_shift64, false)
-> +TRANS(SLVD, do_shift64, true)
-> +
-> +static bool trans_DCBQ(DisasContext *ctx, arg_DCBQ * a)
-> +{
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +
-> +    CHECK_PPE_GPR(ctx, a->rt);
-> +    CHECK_PPE_GPR(ctx, a->ra);
-> +    CHECK_PPE_GPR(ctx, a->rb);
-> +
-> +    /* No cache exists, so just set RT to 0 */
-> +    tcg_gen_movi_tl(cpu_gpr[a->rt], 0);
-> +    return true;
-> +}
-> +
-> +static bool trans_RLDIMI(DisasContext *ctx, arg_RLDIMI *a)
-> +{
-> +    TCGv_i64 t_rs, t_ra;
-> +    int ra_lo, rs_lo;
-> +    uint32_t sh = a->sh;
-> +    uint32_t mb = a->mb;
-> +    uint32_t me = 63 - sh;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_VDR(ctx, a->rs);
-> +    CHECK_VDR(ctx, a->ra);
-> +
-> +    rs_lo = VDR_PAIR_REG(a->rs);
-> +    ra_lo = VDR_PAIR_REG(a->ra);
-> +
-> +    t_rs = tcg_temp_new_i64();
-> +    t_ra = tcg_temp_new_i64();
-> +
-> +    tcg_gen_concat_tl_i64(t_rs, cpu_gpr[rs_lo], cpu_gpr[a->rs]);
-> +    tcg_gen_concat_tl_i64(t_ra, cpu_gpr[ra_lo], cpu_gpr[a->ra]);
-> +
-> +    if (mb <= me) {
-> +        tcg_gen_deposit_i64(t_ra, t_ra, t_rs, sh, me - mb + 1);
-> +    } else {
-> +        uint64_t mask = mask_u64(mb, me);
-> +        TCGv_i64 t1 = tcg_temp_new_i64();
-> +
-> +        tcg_gen_rotli_i64(t1, t_rs, sh);
-> +        tcg_gen_andi_i64(t1, t1, mask);
-> +        tcg_gen_andi_i64(t_ra, t_ra, ~mask);
-> +        tcg_gen_or_i64(t_ra, t_ra, t1);
-> +    }
-> +
-> +    tcg_gen_extr_i64_tl(cpu_gpr[ra_lo], cpu_gpr[a->ra], t_ra);
-> +
-> +    if (unlikely(a->rc != 0)) {
-> +        gen_set_Rc0_i64(ctx, t_ra);
-> +    }
-> +    return true;
-> +}
-> +
-> +
-> +static bool gen_rldinm_i64(DisasContext *ctx, arg_MD *a, int mb, int me, int sh)
-> +{
-> +    int len = me - mb + 1;
-> +    int rsh = (64 - sh) & 63;
-> +    int ra_lo, rs_lo;
-> +    TCGv_i64 t8;
-> +
-> +    if (unlikely(!is_ppe(ctx))) {
-> +        return false;
-> +    }
-> +    CHECK_PPE_LEVEL(ctx, PPC2_PPE42X);
-> +    CHECK_VDR(ctx, a->rs);
-> +    CHECK_VDR(ctx, a->ra);
-> +
-> +    rs_lo = VDR_PAIR_REG(a->rs);
-> +    ra_lo = VDR_PAIR_REG(a->ra);
-> +    t8 = tcg_temp_new_i64();
-> +    tcg_gen_concat_tl_i64(t8, cpu_gpr[rs_lo], cpu_gpr[a->rs]);
-> +    if (sh != 0 && len > 0 && me == (63 - sh)) {
-> +        tcg_gen_deposit_z_i64(t8, t8, sh, len);
-> +    } else if (me == 63 && rsh + len <= 64) {
-> +        tcg_gen_extract_i64(t8, t8, rsh, len);
-> +    } else {
-> +        tcg_gen_rotli_i64(t8, t8, sh);
-> +        tcg_gen_andi_i64(t8, t8, mask_u64(mb, me));
-> +    }
-> +    tcg_gen_extr_i64_tl(cpu_gpr[ra_lo], cpu_gpr[a->ra], t8);
-> +    if (unlikely(a->rc != 0)) {
-> +        gen_set_Rc0_i64(ctx, t8);
-> +    }
-> +    return true;
-> +}
-> +
-> +TRANS(RLDICL, gen_rldinm_i64, a->mb, 63, a->sh)
-> +TRANS(RLDICR, gen_rldinm_i64, 0, a->mb, a->sh)
-> +
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+>
+
+--000000000000b42fa1063f615d29
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 19, 2=
+025 at 6:41=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berran=
+ge@redhat.com">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">On Fri, Sep 19, 2025 at 05:33:13PM +0400,=
+ <a href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank">marcandre=
+.lureau@redhat.com</a> wrote:<br>
+&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
+dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+<br>
+<br>
+Please actually the reason why the change is needed. The code<br>
+change seems related to msys2 / Windows, but our CI is already<br>
+covering this and so what&#39;s broken ?<br></blockquote><div><br></div><di=
+v>It doesn&#39;t cover --enable-rust yet:</div><div><br></div><div>../rust/=
+meson.build:41:2: ERROR: Program &#39;/c/Users/User/qemu/build/pyvenv/bin/m=
+eson&#39; not found or not executable</div><div>=C2=A0</div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">
+<br>
+<br>
+&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
+lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
+>
+&gt; ---<br>
+&gt;=C2=A0 configure | 14 +++++++++++++-<br>
+&gt;=C2=A0 1 file changed, 13 insertions(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/configure b/configure<br>
+&gt; index 8d84e3c5c0..7b1795ab29 100755<br>
+&gt; --- a/configure<br>
+&gt; +++ b/configure<br>
+&gt; @@ -1000,7 +1000,19 @@ $mkvenv ensuregroup --dir &quot;${source_path}/=
+python/wheels&quot; \<br>
+&gt;=C2=A0 # We ignore PATH completely here: we want to use the venv&#39;s =
+Meson<br>
+&gt;=C2=A0 # *exclusively*.<br>
+&gt;=C2=A0 <br>
+&gt; -meson=3D&quot;$(cd pyvenv/bin; pwd)/meson&quot;<br>
+&gt; +# for msys2<br>
+&gt; +get_pwd() {<br>
+&gt; +=C2=A0 =C2=A0 if pwd -W &gt;/dev/null 2&gt;&amp;1; then<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pwd -W<br>
+&gt; +=C2=A0 =C2=A0 else<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pwd<br>
+&gt; +=C2=A0 =C2=A0 fi<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +meson=3D&quot;$(cd pyvenv/bin; get_pwd)/meson&quot;<br>
+&gt; +if [ -f &quot;$meson$EXESUF&quot; ]; then<br>
+&gt; +=C2=A0 meson=3D&quot;$meson$EXESUF&quot;<br>
+&gt; +fi<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Conditionally ensure Sphinx is installed.<br>
+&gt;=C2=A0 <br>
+&gt; -- <br>
+&gt; 2.51.0<br>
+&gt; <br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
+s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
+ttps://www.flickr.com/photos/dberrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
+oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
+nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
+"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
+https://www.instagram.com/dberrange</a> :|<br>
+<br>
+</blockquote></div></div>
+
+--000000000000b42fa1063f615d29--
+
 
