@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F8FCCAC5AA
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE14CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gge-0002pE-0N; Mon, 22 Sep 2025 09:34:37 -0400
+	id 1v0gkT-0004Pd-1q; Mon, 22 Sep 2025 09:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1v0ggb-0002my-Rp
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:34:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0gkI-0004Ow-Nw
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:38:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1v0ggZ-0007XZ-3S
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:34:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v0gkE-00085B-La
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:38:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758548068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1758548296;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ui+AOXf92sW2rXVbWMlLz14NmfNtDT5NMim7VGTahuI=;
- b=XD2lzaFYTuamt88fOiNUzx93JEkYrXe7UWP98Ao5Bj9n5PrS04XzEGuYYQHT+M03RdKgGs
- YWlwHRfaIM+084GoE1M5NIvp3Pk/IdfpzlyL5gVWPOSz4hNlHikPPzvfcp+NqH3cTajtvb
- 3ygFpTJEOUrYxacPbr5vPBtArA+tJSE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-p8hLapiSOpi3aV5P5QEahg-1; Mon, 22 Sep 2025 09:34:25 -0400
-X-MC-Unique: p8hLapiSOpi3aV5P5QEahg-1
-X-Mimecast-MFC-AGG-ID: p8hLapiSOpi3aV5P5QEahg_1758548065
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45e037fd142so40495985e9.3
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:34:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758548065; x=1759152865;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ui+AOXf92sW2rXVbWMlLz14NmfNtDT5NMim7VGTahuI=;
- b=W9cz/frh0rIH0AtoNWV3fM6jXZ6AB8hPaNglNi8fmn1Pplntzca9jgKbsUFguZBRhB
- yUnrFBNK6ch8/1aFG/QRlPYjq67qDwDgdiA/KEtO9jWIGETYmjqAaadQ0Mnf0c+QptJC
- exj+KJVZviF8ErNTHZIfAGAbb0XgUSPs+W0p8ns9HsCVmIPJ723jnW6RnglwHYfkoNeV
- zs7gvv6H+3mB72hzh2O3Jh6hU2VueCTtao2zAgYSxgPZDuecLLhtM4u7qKPhTEvSAt7m
- YkhuxUwFCJ6wYCPRCbsENDVRgbY7kUwkduTteHqP+HJ7e3/ym3LWhJDMUpBIvyh+QaTu
- JHsQ==
-X-Gm-Message-State: AOJu0YzUKuW6egjh1a+pB7fTGhmZbeCvsQWSxB0PE+/BQLuv/nwydMEo
- r2eDpf60QMznJ4li0JPt2+nHfF8x2zrGynB0/a6YJ+pNW4+EBxRTgdRo81q5lPvp39vwLZSCA7C
- 5cK9p6gw8pXNNSj9yqt9+PWnfy5BI9+TWBNkb1nzWlsksc+VDMJ1R+xqr
-X-Gm-Gg: ASbGnctoIGx/FAjYuw9uM/xDVQ05DBPLH5a2i4lE1TWLgJt1/kmgN2XFD40A3LoOqCV
- C+H5RtZp/Bwy5Zs+rEr66XfiLIl1Q4kr65u/6ZWVm1PljoZnDpEV+KNY5PqFGCz05vPmbtb23gz
- Uvj+Fjzhv0CrLdDoYZQn+P1K3F5km9ANhg4KHrP59l7jUE8IvLR15eyUmvhux6cbmYzsmVz/X8k
- S0lNfIbyLsaPu3D3S3e0G3sBD82Dh7cYpg98ctmHS/a64BrVVbHGUg2q9/QVgHL1KIOkTgI4d3O
- KXlyGAfMfQgE+tdrr6qbjpjkwYdmmA==
-X-Received: by 2002:a05:600c:450b:b0:45b:9a46:69e9 with SMTP id
- 5b1f17b1804b1-467eaa86fddmr130524835e9.31.1758548064629; 
- Mon, 22 Sep 2025 06:34:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8CWJhjliRxokv6gsAkTr88hfo6EKBvomkHnH7dzf+i+tkrXkVOt5B2Jxxiokkq3zan4ru6Q==
-X-Received: by 2002:a05:600c:450b:b0:45b:9a46:69e9 with SMTP id
- 5b1f17b1804b1-467eaa86fddmr130524515e9.31.1758548064108; 
- Mon, 22 Sep 2025 06:34:24 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3fb8ebb0d91sm6627819f8f.54.2025.09.22.06.34.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 06:34:22 -0700 (PDT)
-Date: Mon, 22 Sep 2025 15:34:19 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 4/4] migration: Introduce POSTCOPY_DEVICE state
-Message-ID: <oy3kx54pezowk65jvt2vagz7c22g26k3fbu4byzsxtc4wvbgo3@uwzuuysbedzb>
-References: <20250915115918.3520735-1-jmarcin@redhat.com>
- <20250915115918.3520735-5-jmarcin@redhat.com>
- <aM2LoGDh5WsVnEi8@x1.local> <aM2X-N9gXvFxxdvI@x1.local>
+ bh=k/AgysdKxt1SKkQk5V+ElEe7Zh26j2yawQ4kJ0l1uI8=;
+ b=SJdfJ/j0sg4cqrFQ+VWsCYTTSqWRedqITKu3hNTtSVax0qQYG+UkKabWmb2k5QGjD76t77
+ SxRkXFY7KMOlRfs5S2p0sPvXhP42WjZp84Y8i/WrCSeCkisRRkSF1LGTaXjq1vhWdlloMg
+ itsArp1bBstv2Z5RW8Ua2cZmHk1C224=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-6n5EtJkFP2maKqH2sDSuDg-1; Mon,
+ 22 Sep 2025 09:38:12 -0400
+X-MC-Unique: 6n5EtJkFP2maKqH2sDSuDg-1
+X-Mimecast-MFC-AGG-ID: 6n5EtJkFP2maKqH2sDSuDg_1758548291
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA5961800285; Mon, 22 Sep 2025 13:38:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2D9D1800452; Mon, 22 Sep 2025 13:38:09 +0000 (UTC)
+Date: Mon, 22 Sep 2025 14:38:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [RFC PATCH 3/4] docs/code-provenance: clarify the scope of AI
+ exceptions
+Message-ID: <aNFRPj539UbRkLSE@redhat.com>
+References: <20250922113219.32122-1-pbonzini@redhat.com>
+ <20250922113219.32122-4-pbonzini@redhat.com>
+ <874isuod28.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aM2X-N9gXvFxxdvI@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874isuod28.fsf@draig.linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -105,104 +90,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-On 2025-09-19 13:50, Peter Xu wrote:
-> On Fri, Sep 19, 2025 at 12:58:08PM -0400, Peter Xu wrote:
-> > > @@ -2564,6 +2569,11 @@ static void *source_return_path_thread(void *opaque)
-> > >              tmp32 = ldl_be_p(buf);
-> > >              trace_source_return_path_thread_pong(tmp32);
-> > >              qemu_sem_post(&ms->rp_state.rp_pong_acks);
-> > > +            if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-> > > +                trace_source_return_path_thread_dst_started();
-> > > +                migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> > > +                                  MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > 
-> > Could this race with the migration thread modifying the state concurrently?
-> > 
-> > To avoid it, we could have a bool, set it here once, and in the iterations
-> > do something like:
-> > 
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 10c216d25d..55230e10ee 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -3449,6 +3449,16 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-> >      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
+On Mon, Sep 22, 2025 at 02:02:23PM +0100, Alex Bennée wrote:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+> 
+> > Using phrasing from https://openinfra.org/legal/ai-policy (with just
+> > "commit" replaced by "submission", because we do not submit changes
+> > as commits but rather emails), clarify that the maintainer who bestows
+> > their blessing on the AI-generated contribution is not responsible
+> > for its copyright or license status beyond what is required by the
+> > Developer's Certificate of Origin.
+> >
+> > [This is not my preferred phrasing.  I would prefer something lighter
+> > like "the "Signed-off-by" label in the contribution gives the author
+> > responsibility".  But for the sake of not reinventing the wheel I am
+> > keeping the exact works from the OpenInfra policy.]
+> >
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >  docs/devel/code-provenance.rst | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> > index d435ab145cf..a5838f63649 100644
+> > --- a/docs/devel/code-provenance.rst
+> > +++ b/docs/devel/code-provenance.rst
+> > @@ -334,6 +334,11 @@ training model and code, to the satisfaction of the project maintainers.
+> >  Maintainers are not allow to grant an exception on their own patch
+> >  submissions.
 > >  
-> >      if (in_postcopy) {
-> > +        if (s->postcopy_package_loaded) {
-> > +            assert(s->state == MIGRATION_STATUS_POSTCOPY_DEVICE);
-> > +            migrate_set_state(s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-> > +                              MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > +            /*
-> > +             * Since postcopy cannot be re-initiated, this flag will only
-> > +             * be set at most once for QEMU's whole lifecyce.
-> > +             */
-> > +            s->postcopy_package_loaded = false;
-> > +        }
-> >          /*
-> >           * Iterate in postcopy until all pending data flushed.  Note that
-> >           * postcopy completion doesn't rely on can_switchover, because when
+> > +Even after an exception is granted, the "Signed-off-by" label in the
+> > +contribution is a statement that the author takes responsibility for the
+> > +entire contents of the submission, including any parts that were generated
+> > +or assisted by AI tools or other tools.
+> > +
+> 
+> I quite like the LLVM wording which makes expectations clear to the
+> submitter:
+> 
+>   While the LLVM project has a liberal policy on AI tool use, contributors
+>   are considered responsible for their contributions. We encourage
+>   contributors to review all generated code before sending it for review
+>   to verify its correctness and to understand it so that they can answer
+>   questions during code review. Reviewing and maintaining generated code
+>   that the original contributor does not understand is not a good use of
+>   limited project resources.
+> 
+> It could perhaps be even stronger (must rather than encourage). The key
+> point to emphasise is we don't want submissions the user of the
+> generative AI doesn't understand.
+> 
+> While we don't see them because our github lockdown policy auto-closes
+> PRs we are already seeing a growth in submissions where the authors seem
+> to have YOLO'd the code generator without really understanding the
+> changes.
 
-It was there in the RFC version, when there was mutual handshake before
-dst starting, but I thought cmp&exchange would be enough. I can add it
-again, however, there is no need to set it to false afterwards, we can
-simply check if this condition is true:
-s->postcopy_package_loaded && s->state == MIGRATION_STATUS_POSTCOPY_DEVICE.
+While I understand where the LLVM maintainers are coming from, IMHO
+their proposed policy leaves alot to be desired. 80% of the material
+in the policy has nothing to do with AI content. Rather it is stating
+the general contribution norms that the project expects to be followed
+regardless of what tools may have been used.
 
-> 
-> [...]
-> 
-> > > @@ -2871,7 +2882,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-> > >  
-> > >      /* Now, switchover looks all fine, switching to postcopy-active */
-> > >      migrate_set_state(&ms->state, MIGRATION_STATUS_DEVICE,
-> > > -                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
-> > > +                      MIGRATION_STATUS_POSTCOPY_DEVICE);
-> > >  
-> > >      bql_unlock();
-> > >  
-> > > @@ -3035,7 +3046,8 @@ static void migration_completion(MigrationState *s)
-> > >  
-> > >      if (s->state == MIGRATION_STATUS_ACTIVE) {
-> > >          ret = migration_completion_precopy(s);
-> > > -    } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> > > +    } else if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-> > > +               s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-> > 
-> > Exactly.  We need to be prepared that src sending too fast so when device
-> > loading on dest we finished.
-> 
-> One thing more to mention here.. which may void some previous comments I
-> left.  Let's discuss.
-> 
-> I think it may also make sense to only allow a COMPLETE after
-> POSTCOPY_ACTIVE.
-> 
-> That is, if src sends too fast to have finished sending everything,
-> reaching COMPLETE during POSTCOPY_DEVICE, that is, while before it receives
-> the new PONG you defined, then.. I _think_ it is better to wait for that.
-> 
-> If it finally arrives, then it's perfect, we switch to POSTCOPY_ACTIVE,
-> then continue the completion.
-> 
-> If the channel is broken before its arrival, logically we should handle
-> this case as a FAILURE and restart the VM on src.
-> 
-> It's only relevant in a corner case, but does that sound better?
+I think perhaps alot of the contributions norms are previously informal
+and learnt on the job as you gradually acclimatize to participation in
+a specific project, or first learning about open source in general.
 
-Yes, it does make sense to wait for POSTCOPY_ACTIVE as src could finish
-before dst finished package load and could still fail. We could use a
-qemu_event_wait() to wait and set the event in src return path thread
-when the PONG is received.
+This reliance on informal norms was always somewhat of a problem, but
+it is being supercharged by AI. It is now much more likely to see project
+interactions from less experienced people, who are relying on AI tools
+to provide a quick on-ramp to the project, bypassing the more gradual
+learning experience.
 
-> 
-> -- 
-> Peter Xu
-> 
+
+As an example of why the distinction between AI policy and general
+contribution policy matters, consider the great many bugs / security
+reports we've had based off the output of static analysis tools.
+
+Almost none of this was related to AI, but the people submitting
+them often failed on basic expectations such as sanity checking
+what the tool claimed, or understanding what they were reporting,
+or understanding why they're changing the code they way they did.
+
+If we don't already have our "contribution norms" sufficiently
+clearly documented, we should improve that independently of any
+AI related policy.  The AI related section in our docs should
+merely refer the reader over to our other contribution policies
+for anything that isn't directly related to AI.
+
+
+We do have a gap wrt to bug reporting where I think we should document
+an expectation that any use of automated tools in the bug report must
+be diclosed, whether those tools are AI or not. This should apply to
+any static analysis tool.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
