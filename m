@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F21CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 09:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87ACCAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 09:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0d0t-0004mN-DD; Mon, 22 Sep 2025 05:39:15 -0400
+	id 1v0d0i-00047e-II; Mon, 22 Sep 2025 05:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0czl-0002Ug-Ua
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:38:13 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1v0czW-0002Oe-3M
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:37:51 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1v0czC-0000fe-9r
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:38:04 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-46cf7bbfda8so5847875e9.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 02:37:26 -0700 (PDT)
+ id 1v0cz8-0000f3-LB
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 05:37:49 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3eebc513678so2628889f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 02:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758533844; x=1759138644; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758533842; x=1759138642; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1iOqbIE2K4YSn24nejTWVSAedyV/jyzH66EOGDnjiAU=;
- b=C6RdRDhhZjUh8/0q/UifG+yJmpMyFxPToMKDssfXrAcXBu4qzMVaGr7xqNAwuQ1L57
- 6iBBcD3xluqjxxgyr1uGFa5OyNd48yNCYpNRNUZezseNELGVCRknGpPt8Re3KChzpIfa
- 81VCqpkt5dIyTDKB0/APHBpmKyh+kIw9ccfav4PNpETa/MvOWcBHl18t5H05SYi2Hgv7
- LED7dY+Q094d74kG8vdccHJk+JiMpPlhfkv4gBGwlACDvoEEvpeOcVkw2E33NDcbBbGO
- /w2Kz+rkTQ+g8XdNKBuBC0t6HVtpSi5Ee4ll7CvRCZeKAhCh/S7GipQSmRjnL7Jffh7p
- mBVg==
+ bh=rN+UABDX33GElLhpMxpOfn/bxSt0jF+QLakS0yUkPiM=;
+ b=csUCUzthCrfiTPGLeshqpcGSNkBzKLAskM6fghiccJrFkm/2d12UAN/TKuD+6FfmAE
+ wGBQIpvZIbLrlnzSIpS29OvFn0SAlndx1Pu3sl3MpvfR7ZryuIAhk41MOWo6++snSVm2
+ cG0/dWlkaWNYo3/ta0Ys5aF3w4Q8UmGHgrVq+VA2Zhft+fF3P38nt1APUf/jhXnsO+rG
+ 1Sd3lpL7ld95KphkXHr8OTNmRULKbBPzc0J2ALIvQ5UHB80dAay1hEalskXrmeL5RwH/
+ FxGE1ClHbFBCmRJQUfTC6caba333PcbXJrgeOv/VMXMWR3zMQToMmotX65+VSQPzhwUa
+ fAkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758533844; x=1759138644;
+ d=1e100.net; s=20230601; t=1758533842; x=1759138642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1iOqbIE2K4YSn24nejTWVSAedyV/jyzH66EOGDnjiAU=;
- b=Y2m1uLtYcT+e5wrJW0IydnSHUgH/07odTd6jvDpaIC9MROIjAG7Rn5U4aABk4l2oPo
- TN93YWazVSvzFx6GhbzjBWJ8/hu7VtLX4DtVYuISdDVHeJT9RaqcJj25Pt9o4kNXygIa
- I4OpGHshdVyf903C0ntn8l5r7Wugh2q2oeAEG3oCY/pG80FH+ijwKhGL0PIUFrzn8xo5
- 1PExWPWZGJQd6pqBEg0HcDEnbe1TISYnU46wJ7qQvjY7BEzO67++2/7l28rrbfSHq22u
- /FHC5M4kfHOhrpzCNwqiIhiB9KviPPFRyqR5pGk2CL/P34mRsKncLOpXh8abL/JJQV1S
- rgfA==
-X-Gm-Message-State: AOJu0YyIAZexivSiL9Jg6aqwAy0i7GBui4OiC5Ch+xLAIFhSjdxYDg8I
- ZbieMa747tlG4CFlxZPpEweo+Cuzn5ci8JkJ0vPvm7dNkpYJyv4hQHrCOkRzXGKlZb0=
-X-Gm-Gg: ASbGncsYktG+chIARJBOMWqsot7Ku8ulR57FajvrN3Wp7fa3paUWy5DTYwNqCKY9IId
- dQbbhQJsS0hsZp6sOi5AhCPOZh7v+5t3y9YRXKwWKCzQSZQV6+HbS7Phfa3ocrawvOKVfm090zg
- x58R33Q/gYO+KpBozVTQKP5DZSRe+G2E8yavfo8g9BDjZ8N36Jr/5Si40xjs0Po1aDIqaDocBsb
- MgTNYws1iD80x+Pm9zjlLnKLKUFej7Wv94TnbZiLrXrL7F9aqHWTwitT5VR92pUvLvTVpTM4m/l
- m9jT7anVjSCQ8fLwXiVSSTUwcgzl10XhBYmFXg6G5RLDiiZFHe/NHlTo4d5Ialzst0x+59rHgg0
- /bCUNZ9W6zYpO9rpJSl6vi7I=
-X-Google-Smtp-Source: AGHT+IFkZwvxSmVDmxgSasMbzlLFLbhVkG8wbrFW9ZSpxWsVrcMe5RBVXVH9Wp5gPkJf08/UW7+0Xw==
-X-Received: by 2002:a05:600c:3b11:b0:45d:d5fb:185b with SMTP id
- 5b1f17b1804b1-467eaf51178mr99398715e9.20.1758533844252; 
- Mon, 22 Sep 2025 02:37:24 -0700 (PDT)
+ bh=rN+UABDX33GElLhpMxpOfn/bxSt0jF+QLakS0yUkPiM=;
+ b=v2jDiCSlZfdGULNXXRMDeknQlCiCfEmqicwCKfyvYGKoMTh8t6g63oQWwIZsjof6FL
+ GvV6UTifnHvw4ciFhbxgkHDLE9RU3z0QjPTXkdVVGAOW9sI1+BL/7oPU+0cZhD9MsU0i
+ YeCJeKO+2JE3LVMBjOKH8AGZ5zRL4JsGcZDNXPw+BNJN7PvTG3d9m6fLwwwN1KPSGAId
+ SYGYbty6fvgjPJZ503l322P82GefIZOx9WQeZyZm4wCMSZi8zzS0hfzeZ7cNmf4YA+sr
+ L5adz1dmLfuwAB2lVzLkCA1S2k/PLim2KvSVF7VEP3y1MR2fsITBsJtY6PY0/zGlF56o
+ KoPA==
+X-Gm-Message-State: AOJu0YxLCST3YJZX8l2kjFapCJcPLNt2X4yanNBbRcfiGnkYBmrLj+ul
+ U5tFJZf+5CkXuqc3TvTVAEUUQ51ivPk91dCvqMhtL2XleKz3k0yvExhs52rioTzZbDI=
+X-Gm-Gg: ASbGncvil6R2JGHr69RNO6vhvTSVU2L7sw0zNN23ltvQ3jEU/E9pRmsHAJk2CVS5Ra/
+ MPvtqkZ9hANJL7i0wCaUK4HVOW+HJH2xkXiuLPD4bH0cIP/nv6RL772Z+1dN0zeHuT3QQOJDLzV
+ jEOGW17uXt7nfgEsKrTk1+yMdWachw+mgBEkTxZ0qs/JoN+hSiPDYvA5z0YxvQc5FJ5/ut9E+qT
+ vidEoKhGTDB40yARtHnzg57TVoovJdCUrGN6/GUQpxypax03nb3+RchkfTft3SxlRqbH+FThzEv
+ dW5ClB8jfuRFUetKN7cXYh5faMJoWLX0HpB6ztUToZ9ZQNcZobHN1wgn86Oc6YwE12YRgMgJUyb
+ M5oyVhN9bf3sqmptFCgKo5yw=
+X-Google-Smtp-Source: AGHT+IGXplVmD3OLqQHoKMQjJiyf0VDSnMaQcgJSVKAaJgaw9ilpZyoJrTJgqViPJpdsOBDUn8fHSA==
+X-Received: by 2002:a05:6000:22c7:b0:3eb:df84:62e with SMTP id
+ ffacd0b85a97d-3ee7c5535d9mr10926109f8f.3.1758533842377; 
+ Mon, 22 Sep 2025 02:37:22 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4613d42bee6sm241384845e9.15.2025.09.22.02.37.14
+ ffacd0b85a97d-3ee0fbd63a2sm19049094f8f.48.2025.09.22.02.37.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 22 Sep 2025 02:37:17 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3896B5F9F7;
+ by draig.lan (Postfix) with ESMTP id 683855F9FF;
  Mon, 22 Sep 2025 10:37:12 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -79,18 +79,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 07/25] semihosting/arm-compat-semi: change
- common_semi_sys_exit_extended
-Date: Mon, 22 Sep 2025 10:36:52 +0100
-Message-ID: <20250922093711.2768983-8-alex.bennee@linaro.org>
+Subject: [PATCH 09/25] target/{arm,
+ riscv}/common-semi-target: eradicate target_ulong
+Date: Mon, 22 Sep 2025 10:36:54 +0100
+Message-ID: <20250922093711.2768983-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20250922093711.2768983-1-alex.bennee@linaro.org>
 References: <20250922093711.2768983-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,66 +115,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-We now check only is sys_exit is extended.
-This allows to break dependency to TARGET_SYS_EXIT_EXTENDED which will
-not be available anymore from this code.
+We replace mechanically with uint64_t.
+There is no semantic change, and allows us to extract a proper API from
+this set of functions.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250822150058.18692-5-pierrick.bouvier@linaro.org>
+Message-ID: <20250822150058.18692-7-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/common-semi-target.h   | 4 ++--
- target/riscv/common-semi-target.h | 4 ++--
- semihosting/arm-compat-semi.c     | 3 ++-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ target/arm/common-semi-target.h   | 6 +++---
+ target/riscv/common-semi-target.h | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/arm/common-semi-target.h b/target/arm/common-semi-target.h
-index da51f2d7f54..7bb442f24ca 100644
+index 7bb442f24ca..6775a270aaa 100644
 --- a/target/arm/common-semi-target.h
 +++ b/target/arm/common-semi-target.h
-@@ -34,9 +34,9 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
+@@ -12,7 +12,7 @@
+ 
+ #include "target/arm/cpu-qom.h"
+ 
+-static inline target_ulong common_semi_arg(CPUState *cs, int argno)
++static inline uint64_t common_semi_arg(CPUState *cs, int argno)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+@@ -23,7 +23,7 @@ static inline target_ulong common_semi_arg(CPUState *cs, int argno)
      }
  }
  
--static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-+static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
+-static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
++static inline void common_semi_set_ret(CPUState *cs, uint64_t ret)
  {
--    return nr == TARGET_SYS_EXIT_EXTENDED || is_a64(cpu_env(cs));
-+    return is_a64(cpu_env(cs));
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+@@ -44,7 +44,7 @@ static inline bool is_64bit_semihosting(CPUArchState *env)
+     return is_a64(env);
  }
  
- static inline bool is_64bit_semihosting(CPUArchState *env)
+-static inline target_ulong common_semi_stack_bottom(CPUState *cs)
++static inline uint64_t common_semi_stack_bottom(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
 diff --git a/target/riscv/common-semi-target.h b/target/riscv/common-semi-target.h
-index 7c8a59e0cc3..ba40e794dcc 100644
+index 7e6ea8da02c..663dedfdad2 100644
 --- a/target/riscv/common-semi-target.h
 +++ b/target/riscv/common-semi-target.h
-@@ -25,9 +25,9 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
-     env->gpr[xA0] = ret;
- }
+@@ -11,14 +11,14 @@
+ #ifndef TARGET_RISCV_COMMON_SEMI_TARGET_H
+ #define TARGET_RISCV_COMMON_SEMI_TARGET_H
  
--static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-+static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
+-static inline target_ulong common_semi_arg(CPUState *cs, int argno)
++static inline uint64_t common_semi_arg(CPUState *cs, int argno)
  {
--    return (nr == TARGET_SYS_EXIT_EXTENDED || sizeof(target_ulong) == 8);
-+    return sizeof(target_ulong) == 8;
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+     return env->gpr[xA0 + argno];
  }
  
- static inline bool is_64bit_semihosting(CPUArchState *env)
-diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index a239cfc5a9d..26263a06b7a 100644
---- a/semihosting/arm-compat-semi.c
-+++ b/semihosting/arm-compat-semi.c
-@@ -755,7 +755,8 @@ void do_common_semihosting(CPUState *cs)
-     {
-         uint32_t ret;
+-static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
++static inline void common_semi_set_ret(CPUState *cs, uint64_t ret)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
+@@ -35,7 +35,7 @@ static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
+     return is_64bit_semihosting(cpu_env(cs));
+ }
  
--        if (common_semi_sys_exit_extended(cs, nr)) {
-+        if (nr == TARGET_SYS_EXIT_EXTENDED ||
-+            common_semi_sys_exit_is_extended(cs)) {
-             /*
-              * The A64 version of SYS_EXIT takes a parameter block,
-              * so the application-exit type can return a subcode which
+-static inline target_ulong common_semi_stack_bottom(CPUState *cs)
++static inline uint64_t common_semi_stack_bottom(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
 -- 
 2.47.3
 
