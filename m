@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F420CAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 15:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA16CAC592
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 15:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0iCB-0000bU-55; Mon, 22 Sep 2025 11:11:15 -0400
+	id 1v0iFv-0002TH-Sr; Mon, 22 Sep 2025 11:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0iC1-0000TZ-TV
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:11:07 -0400
+ id 1v0iFh-0002QN-H9
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:14:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0iBz-0006in-Ld
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:11:05 -0400
+ id 1v0iFf-00076O-F6
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 11:14:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758553861;
+ s=mimecast20190719; t=1758554090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3Y+9QWimXpDxg6AveCuChFhvWzHU+54yFVssbEDXr/c=;
- b=YzJ8vlbaW71GV1Qg/lUTBKRPLEU4DfRV1mV0VAOoIe8fj9WctedFD4+XxM3kd/j88A6sWB
- woGyfSmrrDXjAVUH60kGlhDCNpaOCZNXJWsa+0H3cyc4RPTOt9dMoGG2b+VxmPPBHTVIaU
- cTILhtG2pZBEkU0TXp7Fh7dpUwJcAME=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZsOhKk8k8zWF25JRFopz+bPQRcwt4sLF2X+7ZhvlSHc=;
+ b=BRE5V49V4ApIPbAlQoH+mBJUlKtzgL8z4UJQd46h5TdNhzNiGu9CkpGHnClVNiqifa41us
+ r0U8KZlx/Q1DPEt8BYjQmVQtybr/IOeXTVrQQLXic78fMmSjCfY67WbHqPKM+QACYMZax5
+ 0xu9z/4gVBc//pjAqPAtrviUS3sT3fg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-7bGnxu5tOVafFs4xAguorw-1; Mon, 22 Sep 2025 11:11:00 -0400
-X-MC-Unique: 7bGnxu5tOVafFs4xAguorw-1
-X-Mimecast-MFC-AGG-ID: 7bGnxu5tOVafFs4xAguorw_1758553859
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45f2a1660fcso39038955e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 08:11:00 -0700 (PDT)
+ us-mta-191-30j3VO7RNJKPTfaZAfoCOw-1; Mon, 22 Sep 2025 11:14:48 -0400
+X-MC-Unique: 30j3VO7RNJKPTfaZAfoCOw-1
+X-Mimecast-MFC-AGG-ID: 30j3VO7RNJKPTfaZAfoCOw_1758554087
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3ee888281c3so1097916f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 08:14:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758553859; x=1759158659;
+ d=1e100.net; s=20230601; t=1758554087; x=1759158887;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3Y+9QWimXpDxg6AveCuChFhvWzHU+54yFVssbEDXr/c=;
- b=rYgQ7FuRDlpwCAcAYY8BPjo6zImw9ut3akBxzIghNXw/PHWE+0Y92f9cyL+NhL+P2M
- cS6wH9rNa9IxmKpCDkkQH3dQ8+Dg5bzbaiR5fuiifLac8uU23VtTbDsv7w3ErC+gax89
- JsHluNElbwLM1kbEmYaUaKoW2L0eB1gRESn87kAw0KEfsAT5vw7QdH5eRIOs6EWP8wtN
- naQnRsBN82n/8tQpMjVrxe3BNZc5Hbgh6BX9mnucUxBYGMvHtG7mQb7QVsvup9vu1ogN
- oasqVivkIkpgr8OB5cnSJrOsvtn3aKP0AYyGUbivzf3Fw8OzIGsWezFtUmG8DzZyDQD2
- iXPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtoYovC/v3no6wyE72QpA7K6+hauHwlGmCiF+AsipdpZLGJGvYvzVhqOEAXHynI88Fz9Tw8d8bHEo1@nongnu.org
-X-Gm-Message-State: AOJu0Yz4ZjHJsZ2LS3hynk/HSfb96tdjlSWoap5P+Cw/sJNopzmc28FO
- pbKL/e3CsKme8xekmlosxg4kawevQdKJTxXjFiBOxDWyjvw2uqHo7P68mlevplfxDSeOzCa/GBS
- +g+znA4jzP7ps2UREnTRashtWe+EbYdLMSLomzhLtyREN07z7gy+kuaeN
-X-Gm-Gg: ASbGncv4LiQDntbLl50fqIvrH9KiCDYWY/S1wgJftHq+/A5MS+t9B0wFiIgLUFvwj9R
- 1YMXTTAa9A2i4w4RhQk5aoqP2pYzGklhXzSyuTyjGQrplOPBdO8pkHgdB/SP98wUsaP54BB0ZPf
- wWwB8rsqAUsp96Gs+JW4dxvHzPcIWwU0IsFITGePUcEm+TrSVOedoxyOHejjXtqUBpy8Sbo9DF5
- uDgIGpS3nSgYBggC51/2SM3wtKcUhhgojhd8Y6yNXoiNxi+RSEVTST+L7ZuBfjmewOi994iHk70
- 0ZCcOiuzMUpseizWPxfzkWMbpeBAKVxd4qmAKYRASqR7RP6wBQSi2sKbu1dKaBpMPcHSEa4DOFj
- xVtDZi3V/3VyGx5BbbL9+tlYLFgtt/Q7zAO7S0GBmJrk=
-X-Received: by 2002:a05:600c:c162:b0:45d:e110:e673 with SMTP id
- 5b1f17b1804b1-467e63be4d0mr115707125e9.4.1758553859164; 
- Mon, 22 Sep 2025 08:10:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSCEh78yMcLUnp2E0WdlcqOCfLSKSQt/oNCrdDVAKlUOXvOn+zhjS2BzHPDfHFAp/kfulZgg==
-X-Received: by 2002:a05:600c:c162:b0:45d:e110:e673 with SMTP id
- 5b1f17b1804b1-467e63be4d0mr115706905e9.4.1758553858718; 
- Mon, 22 Sep 2025 08:10:58 -0700 (PDT)
+ bh=ZsOhKk8k8zWF25JRFopz+bPQRcwt4sLF2X+7ZhvlSHc=;
+ b=if0wajfQbMqRQDQkJ9KQ+e8McwZKWoVpPu7Ra2dLtSXZHo9IS+iIuQ8HPDM1pzLD7y
+ qCotjXEbVHyJ7b5mcxUOMr/WP6a+vjjy8k//pCRjpNlsPtVmiBQqScGtq46+OoPPjb29
+ MsmqQktQHvJrAzu6ndp5s0wJ8NnZ40EFBWG50MktnLeTWyDlY21idFue6oibMcRJsLaM
+ P6WSIT6yULeP/hBnIElfpVBBAe6WmhCHPKkKPtzGW7j8/ixg+F5m9fLlqhH99TiT18oE
+ fPHrMYHVCmVxHr4ksEXP8pZ/hpy+SsV9InAF7W2bxyEMjG99tMDtI0lmBYGtKsTuiUqi
+ yYYQ==
+X-Gm-Message-State: AOJu0Yz1TlNaST7TYqyTTLnhEwWpZOZnDjZlmEhCqK//k6b1kZxhWPqH
+ eFKhKJ4ed4Pzmpj91uwLYB5FqYD/EAkw0wWh78hpHnBW2dxACxXLkcgQaQH53YKbtQLP3xY/XoM
+ 4W2KaalLRe/2ffglg5P0nYwhTyiSGAeOLYKiwbb9UeKWeeM1ycpYQO261
+X-Gm-Gg: ASbGncsgnc4RJm27py06zH9Wg4LI3/HCn9IUJYWJaU+7C3UbVdzLvi22pAtz7QvW+6r
+ B0aOXOKjeqxSC+SRgWtnXVzCpiJeehnlxNi0HH2RkNYfcBpRsDupoqm/L5uTiIKMg039HGqSXr0
+ TTKda3+1qK/A4kVwSZQ6h1FBbrgZjE4C2WAgVLMW65S4WpE7e84H2d1btYr22dMdXe0OWSTDNF1
+ PxQObMunAg+HICmSHl6bGrI6FfFt2bkVmK7Gqo3KGBBzD3/MKcOoNr7HeSKvVl0qb+ZHpVz99iQ
+ KTCfn2/5V/LT0EDpRfP714PF3a1IygcE5KyNupHlsWtaOhB8nyfbJPOSp65sRWuWRCr1ghCbXVE
+ Xw/HE41y8Sl2+L3GpQUcHjVyDkYXC7J2eoR1mzvXNtYs=
+X-Received: by 2002:a05:6000:2689:b0:3ee:1125:fb61 with SMTP id
+ ffacd0b85a97d-3ee7c5529a4mr11780140f8f.7.1758554087181; 
+ Mon, 22 Sep 2025 08:14:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCB42iFW9uq7DmdTQIrfHIuLUMYTeKMVmBQ50sdvrJP7igiIqVuOhfrJhLj45HwHC6EIHxzA==
+X-Received: by 2002:a05:6000:2689:b0:3ee:1125:fb61 with SMTP id
+ ffacd0b85a97d-3ee7c5529a4mr11780124f8f.7.1758554086820; 
+ Mon, 22 Sep 2025 08:14:46 -0700 (PDT)
 Received: from [192.168.10.81] ([151.95.47.123])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3fb8ebb0d91sm6956173f8f.54.2025.09.22.08.10.57
+ 5b1f17b1804b1-464f5a2850csm205261285e9.19.2025.09.22.08.14.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 08:10:57 -0700 (PDT)
-Message-ID: <c94acf92-5f35-45ea-a11e-c85ff7e4d811@redhat.com>
-Date: Mon, 22 Sep 2025 17:10:56 +0200
+ Mon, 22 Sep 2025 08:14:46 -0700 (PDT)
+Message-ID: <d4c96f37-0a72-47be-b736-6d4c50f74b10@redhat.com>
+Date: Mon, 22 Sep 2025 17:14:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/24] tests: move mips to debian-legacy-test-cross
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Yonggang Luo <luoyonggang@gmail.com>,
- Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Kyle Evans <kevans@freebsd.org>
-References: <20250919133320.240145-1-marcandre.lureau@redhat.com>
- <20250919133320.240145-15-marcandre.lureau@redhat.com>
- <aM1m13xBnM9WU_E3@redhat.com>
- <CAMxuvayXSdVaz=i56T686oKpKf5gE4y6YaPgedPBKGQEPx0v8w@mail.gmail.com>
- <aNERkB5WhM4ePIHn@redhat.com>
+Subject: Re: [PULL 21/61] configure: bump Meson to 1.9.0 for use with Rust
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20250913080943.11710-1-pbonzini@redhat.com>
+ <20250913080943.11710-22-pbonzini@redhat.com>
+ <CAFEAcA9QA5WZnk0R2ZYg4rraX_+1LdRjfo7Ybb6MQkrBuaRt3A@mail.gmail.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -131,9 +120,9 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <aNERkB5WhM4ePIHn@redhat.com>
+In-Reply-To: <CAFEAcA9QA5WZnk0R2ZYg4rraX_+1LdRjfo7Ybb6MQkrBuaRt3A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -159,19 +148,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 11:06, Daniel P. Berrangé wrote:
-> On Mon, Sep 22, 2025 at 12:38:09PM +0400, Marc-André Lureau wrote:
->> debian-legacy-test-cross is for tests/tcg. Debian 11 supports more
->> architecture than 12 or 13..
+On 9/22/25 16:07, Peter Maydell wrote:
+> On Sat, 13 Sept 2025 at 09:15, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> Meson 1.9.0 provides mixed linking of Rust and C objects.  As a side effect,
+>> this also allows adding dependencies with "sources: ..." files to Rust crates
+>> that use structured_sources().
+>>
+>> It can also clean up up the meson.build files for Rust noticeably, but due
+>> to an issue with doctests (see https://github.com/mesonbuild/meson/pull/14973)
+>> that will have to wait for 1.9.1.
 > 
-> If there are architectures in 11 that can't be tested in 12,
-> then from QEMU's POV that is now an untestable feature, since
-> 11 is outside our support target and we don't want to be
-> holding back our support platforms for this.
+> 
+> It looks like this new version of meson now creates a
+> subprojects/.wraplock file which shows up in "git status"
+> output. Should this be listed in .gitignore ?
 
-That is true for using that architecture as a host; but as a target, the 
-architecture remains testable with just a few extra hoops to obtain a 
-working cross compiler.
+Yes, there is already a patch for this on the list.
 
 Paolo
 
