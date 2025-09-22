@@ -4,105 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E468CCAC592
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2007CAC5A8
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Sep 2025 13:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0gn2-0005QN-03; Mon, 22 Sep 2025 09:41:12 -0400
+	id 1v0goL-0006Wi-EX; Mon, 22 Sep 2025 09:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gmy-0005MY-Qr
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:41:08 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1v0gmt-0000JM-G6
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:41:08 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-74625f748a0so11108737b3.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 06:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758548461; x=1759153261; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mQ20Y8k6XEdPM2+EZW8Cijyra+ZcMG8pux8eabWJVyI=;
- b=E81VjTYiIzNodYq9NGK7ddGzw9jWMdH9jGCFeSamZxEaEdNshbNJpp4CHk+hLyEcHB
- cYsshJ6u9+/lwMeejXh/fVXuJOvYi+lmPF/+9bcQz4x62csVNPtLlaSmmI7ORGS8LpYn
- hGCRcHAcYNf1BqktlZ/QHzd5oqqeEUcVeWV4lnMaNCqZQnDlKa/5/cxYhrGsWI9aHR2c
- 2k3kEOuLpoojsKjJ10lCNbHPulQMQHT5RTksXX1NegKXp07y+CGFvP/rysLQfNc2cVue
- ap1YmZ52WzXKRhu1l6v1N/kzSPTtE6kHPYmy+Cnt9KJQpzH6QGxqhp1bWPxj+Ucvt2Cg
- itFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758548461; x=1759153261;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mQ20Y8k6XEdPM2+EZW8Cijyra+ZcMG8pux8eabWJVyI=;
- b=BTrNV2QpxR+E2Cl8XQOeqhyYQsuITjkvB+J5GE4rH9kbDFQ2/QXqQWpRqXy+AqBKUj
- tzYeLmhSXea97ERvYzNCQ1MMAuyJEu4pkzLlXoEET4cA7U475OM8BLMKj73vjw2dPAZz
- vHpAcNlH/os1/YA9Hmq0jptpV8YpvK6nTB4H31KCuPih5lJ/2Y5Naeytm8CAM0cVVL3Q
- OOGUipJEd+xPa/8mu8XKLxKrHbZ5mtthFLYwmNxewD5UMEVNgmcKREc19x3TGSS/mMoq
- wgO2IO71xYtnbJlttbgNz1MY6Fpn420RyFn19t/uToVL9ef1aH4O0A2VueCTCEMnTqLJ
- llxA==
-X-Gm-Message-State: AOJu0Yz+ZuyVo064YyocRq7AMj3Xggi0nMbzTzzy8FROCd4lrAr4a4wE
- 2BWaLkCYAyeOPdQTPzl4h2fPHZNzu2nEFJcLpTTMzOidrN0HOA5TCs84j1lfcRRdU3cBKaYK0rN
- 8331c9Hk/ObZ66RrS0z8DjYmKmksarRgNgJzqcTnC5g==
-X-Gm-Gg: ASbGncs7MbLQzk8RZbKuAOPv2otXkVV11y3ff8hxnLVMly+kSFdvf/t3p908XbWwTRb
- MF8A8MIjtV3TmNJF1U5Hzali36JYV1R3Wr1KHW6hUvPXtmfHX07Ic+uKpwjVwJ7veBPyS1+lxuY
- +XWImI+6Pt008pa+7MPDURTZz/MZrueOq5aMFU8cKC+FYxOD29FKPKgWcia+9SC/p7MNphmfp+D
- CfeMqfl
-X-Google-Smtp-Source: AGHT+IEp/u9jz/CRYGKLjPmINp6o0ys2gM7FwzgTUW/mzcGiUnQG3HrgCFqtE9kjUu1ABsepWPtwvfCIBZs8VMP4d7M=
-X-Received: by 2002:a05:690c:6f12:b0:748:c4bd:79d4 with SMTP id
- 00721157ae682-748c4bd86aemr61422907b3.49.1758548461257; Mon, 22 Sep 2025
- 06:41:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v0goG-0006Vz-3B
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:42:28 -0400
+Received: from mail.avm.de ([212.42.244.94])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>) id 1v0goA-0000Qf-5n
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 09:42:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1758548537; bh=+gAWtk0XU89xNQgv+l7yZtFJKXpEjBCnOCAergIPK/g=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=qB3jc+BnMrRWPV5UBJmu+/cGYMcYa1VX9+awFG1mTB8yaKrZvHAK+5Y4/NPQpncvc
+ +8rWNwlnkWuWzhLGxZqDMucEwSv5q7le9iQWrYb5PR/fzNUvGitNJV6fCp7fgF2uZ/
+ 5t+XsFsxUKucSfld51HbtfS0jh7UOw9lQmdhoZOU=
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.53.4)
+ (envelope-from <c.speich@avm.de>)
+ id 68d15239-f941-7f0000032729-7f0000019212-1
+ for <multiple-recipients>; Mon, 22 Sep 2025 15:42:17 +0200
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Mon, 22 Sep 2025 15:42:17 +0200 (CEST)
+Received: from l-cspeich ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2025092215421676-16537 ;
+ Mon, 22 Sep 2025 15:42:16 +0200 
+Date: Mon, 22 Sep 2025 15:42:15 +0200
+From: Christian Speich <c.speich@avm.de>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] virtio: vhost-user-device: Make user creatable again
+Message-ID: <s2kqzaeervezbpt6wm35bct6wykksopp3vb42lpvszwmzjgd4g@4ri3znikntt6>
+References: <20250919-vhost-user-device-creatable-v1-1-87eefeea7f68@avm.de>
+ <20250919160526-mutt-send-email-mst@kernel.org>
+ <aNE0Bp0hsA31sLCJ@redhat.com>
+ <20250922081403-mutt-send-email-mst@kernel.org>
+ <aNFF8wsycqqOTc-x@redhat.com>
+ <20250922090748-mutt-send-email-mst@kernel.org>
+ <kmdwf2xbgtvqiijw7mjd4ocqixvznaeszbr5zzfvuhaqrmpqn3@wdt4fhnocmxv>
+ <20250922093013-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-References: <20250919115017.1536203-1-berrange@redhat.com>
- <20250919115017.1536203-14-berrange@redhat.com>
-In-Reply-To: <20250919115017.1536203-14-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Sep 2025 14:40:49 +0100
-X-Gm-Features: AS18NWBPHi0p-88LAWisMK5OfADog8hsob1tRcUq6H4a_xuc4sG7D62phb8THng
-Message-ID: <CAFEAcA8cdGC7j1WxsuZ4K0yR2i7t8=Zq0gDq6wczoBSOO_vifw@mail.gmail.com>
-Subject: Re: [PULL 13/16] treewide: use qemu_set_blocking instead of
- g_unix_set_fd_nonblocking
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Darren Kenny <darren.kenny@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, 
- Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John Levon <john.levon@nutanix.com>, 
- Fam Zheng <fam@euphon.net>, Alexander Bulekov <alxndr@bu.edu>,
- Stefan Weil <sw@weilnetz.de>, 
- Gerd Hoffmann <kraxel@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>, 
- Qiuhao Li <Qiuhao.Li@outlook.com>, Michael Roth <michael.roth@amd.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Bandan Das <bsd@redhat.com>, Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20250922093013-mutt-send-email-mst@kernel.org>
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 22.09.2025 15:42:16,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 22.09.2025 15:42:16, Serialize complete at 22.09.2025 15:42:16
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+X-purgate-ID: 149429::1758548537-68DE8482-1BBE1FAB/0/0
+X-purgate-type: clean
+X-purgate-size: 4736
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=212.42.244.94; envelope-from=c.speich@avm.de;
+ helo=mail.avm.de
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,41 +94,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Sept 2025 at 12:54, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
->
-> From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->
-> Instead of open-coded g_unix_set_fd_nonblocking() calls, use
-> QEMU wrapper qemu_set_blocking().
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> [DB: fix missing closing ) in tap-bsd.c, remove now unused GError var]
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
+On Mon, Sep 22, 2025 at 09:30:33AM -0400, Michael S. Tsirkin wrote:
+> On Mon, Sep 22, 2025 at 03:26:23PM +0200, Christian Speich wrote:
+> > On Mon, Sep 22, 2025 at 09:08:47AM -0400, Michael S. Tsirkin wrote:
+> > > On Mon, Sep 22, 2025 at 01:49:55PM +0100, Daniel P. Berrangé wrote:
+> > > > On Mon, Sep 22, 2025 at 08:15:20AM -0400, Michael S. Tsirkin wrote:
+> > > > > On Mon, Sep 22, 2025 at 12:33:26PM +0100, Daniel P. Berrangé wrote:
+> > > > > > On Fri, Sep 19, 2025 at 04:07:19PM -0400, Michael S. Tsirkin wrote:
+> > > > > > > On Fri, Sep 19, 2025 at 04:30:53PM +0200, Christian Speich wrote:
+> > > > > > > > This removes the change introduced in [1] that prevents the use of
+> > > > > > > > vhost-user-device and vhost-user-device-pci on unpatched QEMU builds.
+> > > > > > > > 
+> > > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Christian Speich <c.speich@avm.de>
+> > > > > > > > ---
+> > > > > > > > vhost-user-device and vhost-user-device-pci started out as user
+> > > > > > > > creatable devices. This was changed in [1] when the vhost-user-base was
+> > > > > > > > introduced.
+> > > > > > > > 
+> > > > > > > > The reason given is to prevent user confusion. Searching qemu-discuss or
+> > > > > > > > google for "vhost-user-device" I've seen no confused users.
+> > > > > > > > 
+> > > > > > > > Our use case is to provide wifi emulation using "vhost-user-device-pci",
+> > > > > > > > which currently is working fine with the QEMU 9.0.2 present in Ubuntu
+> > > > > > > > 24.04. With newer QEMU versions we now need to patch, distribute and
+> > > > > > > > maintain our own QEMU packages, which is non-trivial.
+> > > > > > > > 
+> > > > > > > > So I want to propose lifting this restriction to make this feature
+> > > > > > > > usable without a custom QEMU.
+> > > > > > > > 
+> > > > > > > > [1]: 6275989647efb708f126eb4f880e593792301ed4
+> > > > > > > 
+> > > > > > > The confusion is after someone reuses the ID you are claiming without
+> > > > > > > telling anyone and then linux guests will start binding that driver to
+> > > > > > > your device.
+> > > > > > > 
+> > > > > > > 
+> > > > > > > We want people doing this kind of thing to *at a minimum*
+> > > > > > > go ahead and register a device id with the virtio TC,
+> > > > > > > but really to write and publish a spec.
+> > > > > > 
+> > > > > > Wanting people to register a device ID is a social problem and
+> > > > > > we're trying to apply a technical hammer to it, which is rarely
+> > > > > > an productive approach.
+> > > > > > 
+> > > > > > If we want to demonstrate that vhost-user-device is "risky", then
+> > > > > > how about we rename it to have an 'x-' prefix and thus disclaim
+> > > > > > any support for it, but none the less allow its use. Document it
+> > > > > > as an experimental device, and if it breaks, users get to keep
+> > > > > > both pieces.
+> > > > > 
+> > > > > Maybe with the insecure tag you are working on?
+> > > > 
+> > > > Sure.
+> > > > 
+> > > > > And disable in the default config?
+> > > > 
+> > > > Disabling in default config would retain the very problem that Christian
+> > > > is trying to solve - that no distro would have the functionality available
+> > > > for users.
+> > > 
+> > > I think his problem is that he has to patch qemu.
+> > 
+> > Yes I'm trying to avoid that. Patching qemu also involes providing updates
+> > (and security patches!) for it. This is a very high burden to turn this
+> > simple flag on.
+> > 
+> > > 
+> > > As described, this is a developer option not an end user one.
+> > 
+> > I don't really get the distintion between developer and end user here.
+> > 
+> > As a developer I'm an end user too, I'm concerned with the linux kernel
+> > and the additional host tooling for mac80211_hwsim support but QEMU
+> > I'm just using as an user.
+> > 
+> > Greetings,
+> > Christian
+> 
+> Are you ok with building qemu with an extra config flag?
 
-> index fe4be6be17..e83e6c6ee9 100644
-> --- a/hw/misc/ivshmem-flat.c
-> +++ b/hw/misc/ivshmem-flat.c
-> @@ -154,7 +154,8 @@ static void ivshmem_flat_add_vector(IvshmemFTState *s=
-, IvshmemPeer *peer,
->       * peer.
->       */
->      peer->vector[peer->vector_counter].id =3D peer->vector_counter;
-> -    g_unix_set_fd_nonblocking(vector_fd, true, NULL);
-> +    /* WARNING: qemu_socket_set_nonblock() return code ignored */
-> +    qemu_set_blocking(vector_fd, false, &error_warn);
->      event_notifier_init_fd(&peer->vector[peer->vector_counter].event_not=
-ifier,
->                             vector_fd);
+No, this has the same downsides as patching does.
 
-What is this WARNING comment intended to mean? Is it a
-TODO/bug ?
+I myself don't mind building it, I prefer not to. And we have internal end users
+which we would need to distribute the patched (or config enabled) QEMU to. This
+part I really don't want to do, as it is quite involved.
 
-(Coverity has just flagged this up (CID 1630446) for
-failing to check the return value from qemu_set_blocking().)
+Greetings,
+Christian
 
-thanks
--- PMM
+> 
+> 
+> 
+> > > 
+> > > 
+> > > I know Red Hat will disable it anyway - we support what we ship.
+> > > 
+> > > 
+> > > > With regards,
+> > > > Daniel
+> > > > -- 
+> > > > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> > > > |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> > > > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > > 
+> > > 
+> 
+> 
 
