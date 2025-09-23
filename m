@@ -4,75 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245F6CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6CBCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v18vH-00042j-4T; Tue, 23 Sep 2025 15:43:35 -0400
+	id 1v18xP-0005NV-RE; Tue, 23 Sep 2025 15:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v18vF-00042X-JT
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:43:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v18xL-0005Mh-6W
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:45:43 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v18vD-0001Cn-4T
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:43:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758656609;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qAbajBdGzZ92NSPYtOiCgfbZTRXNTUJfz0XMRmJnRWI=;
- b=VecQ907/h2QthHTFHB3tsNDDAEoyNX/jy4HHGztuE5W64OJ8OXgwrSu6296dmSBvze9hfm
- A/SHsZsfHeSfZqNpKLj3KUvvBJUY41FYxH5BQjAo73Bvbh5BKTLt7LS3St4WJ3ocgsi8cw
- ExvOsHqRmXahbgpTVXR0oTRtVbbfffQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-Su2hp4X7PR-gLgZ1eV8X8A-1; Tue,
- 23 Sep 2025 15:43:25 -0400
-X-MC-Unique: Su2hp4X7PR-gLgZ1eV8X8A-1
-X-Mimecast-MFC-AGG-ID: Su2hp4X7PR-gLgZ1eV8X8A_1758656603
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7779E19560B6; Tue, 23 Sep 2025 19:43:23 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.69])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F17B91800452; Tue, 23 Sep 2025 19:43:22 +0000 (UTC)
-Date: Tue, 23 Sep 2025 15:43:21 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Tanish Desai <tanishdesai37@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 00/16] tracetool: add Rust support
-Message-ID: <20250923194321.GS509965@fedora>
-References: <20250919112536.141782-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1v18xI-0001nL-Js
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:45:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fiKwq1E66Q5p/xQNjuqx8vM7oA33NfXJVG0/rRLQ6kKHx4pf4gj6gnf0zOCsdJOTE0qha/2u1mLIsYNqUDiT3YVlDTyRsuoURvYrowrNGqcrrnH+qOaXROCi+4HGZScDlh+2qesZVqrjU+aR7bmWZhFdmlAZ28ouheOFduCThnChIEJ4YbJ67FagcgNLwllk6SrA/LVO9WgCdvqjJeZQh0TyvYybL1GyMwCSXcpEeMThdY3ufNCiyRDV7/sW+bkBCrdLEI5X6SbJAWeROhMQ8JL8rdLB/0yn/ABvbn38jb7B4HhRrAU2CWvqbQABRauP0lipH8MwTMhlNknisuDtyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4qAmKXCxanJx/iP2sHA0j/FdddQEUBeY83XjmW/H9lY=;
+ b=EYpq0QtHE13pfuFIenHthFrtBuAhnjZY9X8YyvydTVHCDXGCg+AP4dCRSekfgJOo5WVvGK2dRTSttigY5Owf9tpoFMv3bPxL2NJgoDjhwcJJ76ALYDet0gEAkDrK40ryBe4uEFuk9LnGDIf6crhrCXbpSpbHX5g4obX9rxhx3bDKD9iW4cCDTPkL5kxcGJnRhog3Vwl5aDPogu3pV55gQO8n8pV0NCCXR+UIOcFNhmiMrW3AyZjY098GdgIW6Ob2BiTd1guZXZ752iPEXG/sO99jPhjh5wH5zO5szpoM5+tpEYY45TdymGaMnElp7BE8EttHieDXGqdgu0l9KZw31A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4qAmKXCxanJx/iP2sHA0j/FdddQEUBeY83XjmW/H9lY=;
+ b=GzHP7O74Nz7sa8ZARg7BqG+0ZVB3PUjG/3eww3Fw0RawFDoRKxPWNhhEPRzod5ufjX7zpfurFG/hHtG0u7rVEJScKhDlVZXz3qhcDyMjf1nTozH6ytqym7WNgRvNaRfCpSkAgAfPek/GGImzrRu8Y8Yn/nVD6LcM2xwG/T0Xd4Ebe1FBjoMpP6K6RHB82j+TXgr/xS+XFw+2P1Fj/Yjidtb1wNm1fkRJUYyYKReYNQNMpMz+Ol/G19P5wn8RrktrpmpzGZEqNLrZxvf91jZhMXGQ4+tnqR1bmIzSsOFegAITBd9VflMkSFT23Cdcql2mjKrq/PaHUrbH2k30kr42xw==
+Received: from SN4PR0501CA0047.namprd05.prod.outlook.com
+ (2603:10b6:803:41::24) by DS0PR12MB7557.namprd12.prod.outlook.com
+ (2603:10b6:8:130::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.9; Tue, 23 Sep
+ 2025 19:45:33 +0000
+Received: from SA2PEPF000015C7.namprd03.prod.outlook.com
+ (2603:10b6:803:41:cafe::b0) by SN4PR0501CA0047.outlook.office365.com
+ (2603:10b6:803:41::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.20 via Frontend Transport; Tue,
+ 23 Sep 2025 19:45:32 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SA2PEPF000015C7.mail.protection.outlook.com (10.167.241.197) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9137.12 via Frontend Transport; Tue, 23 Sep 2025 19:45:32 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 23 Sep
+ 2025 12:45:20 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Tue, 23 Sep 2025 12:45:20 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Tue, 23 Sep 2025 12:45:19 -0700
+Date: Tue, 23 Sep 2025 12:45:18 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+CC: <qemu-devel@nongnu.org>, <alex.williamson@redhat.com>, <clg@redhat.com>,
+ <eric.auger@redhat.com>, <mst@redhat.com>, <jasowang@redhat.com>,
+ <peterx@redhat.com>, <ddutile@redhat.com>, <jgg@nvidia.com>,
+ <skolothumtho@nvidia.com>, <joao.m.martins@oracle.com>,
+ <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
+ <yi.l.liu@intel.com>, <chao.p.peng@intel.com>
+Subject: Re: [PATCH v6 18/22] iommufd: Introduce a helper function to extract
+ vendor capabilities
+Message-ID: <aNL4zruHP8P8ExrM@Asurada-Nvidia>
+References: <20250918085803.796942-1-zhenzhong.duan@intel.com>
+ <20250918085803.796942-19-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="/WMmduB2K19wYKxd"
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250919112536.141782-1-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+In-Reply-To: <20250918085803.796942-19-zhenzhong.duan@intel.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF000015C7:EE_|DS0PR12MB7557:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8f0e6f22-608b-42d6-3108-08ddfad9c22c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|82310400026|36860700013|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?94b4t5CZUisCO3Ao8yT4oiccPDmsCcXNDJSM5wV6SdqggTD2Uy0Y0gN2RHZg?=
+ =?us-ascii?Q?JXhRV9h/OizESMYqy+DX7rI0NdHrZiE6uaFGOTGRsr6Wn4e90/JjFwoiE1LZ?=
+ =?us-ascii?Q?7Oiio5ec97XMk7FhcOsgoJXrfu32dqtfr96zUDMf69vN8+w/uRygz5jWDNiQ?=
+ =?us-ascii?Q?PhXXpSm3QJKimvX8H5yGNcY1pZXTVsWAFvC7QG22rpF4sFR2mAeaF2zcCMWN?=
+ =?us-ascii?Q?VLsq72/m7NrBDXyza3ZuyEM/jy4Uy/jnqLjCqOK5xBZUVl/V5c+m7R5UX7FK?=
+ =?us-ascii?Q?3YSvF4+6jnxelMIfBcru9XOKnXBQ3/bH//+4G7Gd7ODqHrIYrXE+k5CotOi5?=
+ =?us-ascii?Q?TGiu0J+uz2bObMav9HiIdM3rQCTt942XPJYHdXDsAs39u0O4CbBYZi7ybT0c?=
+ =?us-ascii?Q?3di7faxxI/+8tIPlMZJ1HwEoxylaD81ibOPRdePFK/1JeEt//QdLW0OWMo1q?=
+ =?us-ascii?Q?ihEMVTXXtGNQgTOy+hc9UWkjwudUCdlcrzOm5pPdn4WqRJcTnX+Ywtx18fYm?=
+ =?us-ascii?Q?0snieHK+kzvZh9aGT1/PAAcnkAiuDM+TL0Xfse02cO+zZ+h/bKHOXj0+b5dY?=
+ =?us-ascii?Q?BeyR1mOv0RRWkVxEFHFX/lqJ6YGHTf4zTyItyPcdccLOkxTvVQy5TA9YecNl?=
+ =?us-ascii?Q?vvwJrmGQo6jzeDWcMW3agJ1TBp/t/Gl7IruNWEa3fxLa9v6fvwlLqs9XY7QB?=
+ =?us-ascii?Q?NSG0P+e20+tqYHJSk//ZyBT07XG7doFjA/UkKmnonsIVgAaZF8nTJ7BsOWbH?=
+ =?us-ascii?Q?1DsFFOBmkwH6ZH8o2xIsdjOChQTTVSGIrNWYy5D0xwiMz9oJ32ZeYB3BD1Id?=
+ =?us-ascii?Q?/27ts2G4CTyEuGMi6wepAJhvfKDXQBz+sLZsF1nwVJx1/mgaXHgaeTZjmnq6?=
+ =?us-ascii?Q?VT1eNvgpzN07K/8jb8Kh6jROX8CToLKnIX8Ujr3aZ0/vDl1AdvjlkvLRiV4G?=
+ =?us-ascii?Q?k69h4+4SmMtQAHqWCtqM9T+W+jzWPARkVl7aHxIqniy1speLB/YxuzRe9fAR?=
+ =?us-ascii?Q?B+qUSnJI/aucfNYWjcKu0lvo3YqvIExlnQma3iECe+hG4B/a5KKEptV4S1y4?=
+ =?us-ascii?Q?+0149ZJXWUr6I0IeaTqs3Iai1ZsZ98sYrF2Ob/6/WWxqNI+VQ7/iqd2+rLOb?=
+ =?us-ascii?Q?2YEjXQqufCBElfcit12Vy6M/OWplIgrpMLQZFMiUJ20ToX2IaFVsLxaEi03w?=
+ =?us-ascii?Q?7XP47CWUGvUCnBFm6iJj34b/A7mhF+HQqrNs7NojU6xiFshJE7VNNzjQWyPQ?=
+ =?us-ascii?Q?LChFfnFrMYHwp+phVnfgw4zhBmOBcVpATE883IpLIkFIjRVQxf/V6d2MyHa7?=
+ =?us-ascii?Q?/fpB+BGRkxy/LwmuWz1PF+1JrfT0LVUj3VKRfGdiiD3lrVNBUIyoMkNAIMRa?=
+ =?us-ascii?Q?X7HMrs1HbIE3JGHT1Z9ewvrPm87CaAOE9zt7j5XkpTN9W67ApcgRWNbhWK+h?=
+ =?us-ascii?Q?4AymkHtxiX343SmVP5K4cLHEcXz7Z3NY7KpBcpTFl1p4xkZfL4lUXnlD3s/g?=
+ =?us-ascii?Q?GpZxVUs3PEPgW2Fhulg9JN8dRiJfeUv5HY/F?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2025 19:45:32.7750 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f0e6f22-608b-42d6-3108-08ddfad9c22c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015C7.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7557
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,180 +162,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Sep 18, 2025 at 04:57:57AM -0400, Zhenzhong Duan wrote:
+> In VFIO core, we call iommufd_backend_get_device_info() to return vendor
+> specific hardware information data, but it's not good to extract this raw
+> data in VFIO core.
+> 
+> Introduce host_iommu_extract_vendor_caps() to help extracting the raw
+> data and return a bitmap in iommufd.c because it's the place defining
+> iommufd_backend_get_device_info().
+> 
+> The other choice is to put vendor data extracting code in vendor vIOMMU
+> emulation file, but that will make those files mixed with vIOMMU
+> emulation and host IOMMU extracting code, also need a new callback in
+> PCIIOMMUOps. So we choose a simpler way as above.
+> 
+> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
---/WMmduB2K19wYKxd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
-On Fri, Sep 19, 2025 at 01:25:20PM +0200, Paolo Bonzini wrote:
-> This is the result of the summer project of Tanish Desai.  It mostly
-> consists of changes to tracetool, which I used to add tracepoint support
-> to the pl011 device.  All the backends are supported except dtrace and
-> ust; support for Linux in dtrace should be easy using the "probe" crate,
-> the rest (ust, and dtrace on macOS or Solaris) less so.  For ust, the
-> plan is to deprecate it, since LTTng can use uprobes.  For dtrace on
-> macOS or Solaris, support would have to be added to the "probe" crate.
->=20
-> Patches 1-5 are cleanups that could be committed separately.
->=20
-> Patches 6-7 are tracetool patches that have been posted before, now
-> rebased on top of the "make check-tracetool" series.  Their purpose
-> is to simplify .h code generation for tracetool backends, and these
-> simplifications translate directly to the new .rs code generation.
->=20
-> Patches 8-9 add the minimal support for adding tracepoint functions
-> in Rust, albeit with no content and thus no actual tracing.
->=20
-> Patches 10-11 add back tracepoints to the Rust pl011 device model.
->=20
-> Patches 12-16 finally add Rust code generation to the supported
-> tracing backends.
->=20
-> The tracetool testsuite is now part of QEMU and is extended to
-> cover the generated Rust code.
+With some nits:
 
-Looks very close. The main issue I noticed in the Rust code is that the
-dynamic state of trace events is not being checked correctly
-(trace_event_get_state_dynamic_by_id()).
+> +enum {
+> +    /* Nesting parent HWPT shouldn't have readonly mapping, due to errata */
+> +     IOMMU_HW_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
+> +};
 
->=20
-> Paolo
->=20
-> v1->v2:
-> - new patch "tracetool: fix usage of try_import()"
-> - new patch "tracetool: remove dead code" [Manos]
-> - new patch "treewide: remove unnessary "coding" header" [Manos]
-> - new patch "tracetool: add SPDX headers" [Manos]
-> - dropped patch "treewide: write "unsigned long int" instead of "long uns=
-igned int""
-> - merge patch "rust: move dependencies to rust/Cargo.toml"
-> - gathered Reviewed-by tags
-> - sort keywords for primitive C types [Manos]
-> - fix incorrect string "_{name}" in "tracetool: Add Rust format support" =
-[Manos, Daniel]
-> - adjust for moved crates
-> - add SPDX headers to generated file [Daniel]
-> - add @generated tag to generated file [Manos]
-> - add #[allow()] to include_trace macro, in order to pacify clippy
-> - tweaks to trace/Cargo.toml [Manos]
-> - fix more clippy issues in generated code
-> - change include_trace! macro to not require the "trace-" prefix [Zhao]
-> - rename Clock::get() and get_hz() methods to period() and hz() respectiv=
-ely [Zhao]
-> - drop the "..._ENABLED" symbols [Daniel]
->=20
-> Paolo Bonzini (8):
->   tracetool: fix usage of try_import()
->   tracetool: remove dead code
->   treewide: remove unnessary "coding" header
->   tracetool: add SPDX headers
->   trace/ftrace: move snprintf+write from tracepoints to ftrace.c
->   rust: qdev: add minimal clock bindings
->   rust: pl011: add tracepoints
->   log: change qemu_loglevel to unsigned
->=20
-> Tanish Desai (8):
->   tracetool: add CHECK_TRACE_EVENT_GET_STATE
->   tracetool/backend: remove redundant trace event checks
->   tracetool: Add Rust format support
->   rust: add trace crate
->   tracetool/simple: add Rust support
->   tracetool/log: add Rust support
->   tracetool/ftrace: add Rust support
->   tracetool/syslog: add Rust support
->=20
->  docs/conf.py                                  |   2 -
->  docs/sphinx-static/theme_overrides.css        |   3 +-
->  include/qemu/log-for-trace.h                  |   4 +-
->  include/qemu/log.h                            |  44 ++--
->  tests/tracetool/ftrace.h                      |  28 +--
->  tests/tracetool/log.h                         |  16 +-
->  trace/ftrace.h                                |   1 +
->  trace/ftrace.c                                |  15 ++
->  util/log.c                                    |   2 +-
->  hw/char/trace-events                          |  14 +-
->  rust/Cargo.lock                               |   8 +
->  rust/Cargo.toml                               |   1 +
->  rust/hw/char/pl011/Cargo.toml                 |   1 +
->  rust/hw/char/pl011/meson.build                |   1 +
->  rust/hw/char/pl011/src/device.rs              |  57 +++--
->  rust/hw/core/src/qdev.rs                      |  33 +++
->  rust/meson.build                              |   2 +-
->  rust/trace/Cargo.toml                         |  19 ++
->  rust/trace/meson.build                        |  19 ++
->  rust/trace/src/lib.rs                         |  39 ++++
->  rust/util/src/log.rs                          |   2 +-
->  scripts/analyse-locks-simpletrace.py          |   1 -
->  scripts/modinfo-collect.py                    |   1 -
->  scripts/modinfo-generate.py                   |   1 -
->  scripts/oss-fuzz/minimize_qtest_trace.py      |   1 -
->  scripts/oss-fuzz/output_reproducer.py         |   1 -
->  .../oss-fuzz/reorder_fuzzer_qtest_trace.py    |   1 -
->  scripts/probe-gdb-support.py                  |   1 -
->  scripts/qapi/error.py                         |   2 -
->  scripts/qapi/expr.py                          |   2 -
->  scripts/qapi/gen.py                           |   2 -
->  scripts/qapi/parser.py                        |   2 -
->  scripts/qapi/schema.py                        |   2 -
->  scripts/qemu-plugin-symbols.py                |   1 -
->  scripts/qemugdb/tcg.py                        |   2 -
->  scripts/qemugdb/timers.py                     |   1 -
->  scripts/replay-dump.py                        |   1 -
->  scripts/tracetool.py                          |   1 -
->  scripts/tracetool/__init__.py                 | 201 ++++++++++++++----
->  scripts/tracetool/backend/__init__.py         |  43 ++--
->  scripts/tracetool/backend/dtrace.py           |   2 +-
->  scripts/tracetool/backend/ftrace.py           |  26 +--
->  scripts/tracetool/backend/log.py              |  22 +-
->  scripts/tracetool/backend/simple.py           |  17 +-
->  scripts/tracetool/backend/syslog.py           |  17 +-
->  scripts/tracetool/backend/ust.py              |   2 +-
->  scripts/tracetool/format/__init__.py          |   4 +-
->  scripts/tracetool/format/c.py                 |   2 +-
->  scripts/tracetool/format/d.py                 |   2 +-
->  scripts/tracetool/format/h.py                 |  18 +-
->  scripts/tracetool/format/log_stap.py          |   2 +-
->  scripts/tracetool/format/rs.py                |  71 +++++++
->  scripts/tracetool/format/simpletrace_stap.py  |   2 +-
->  scripts/tracetool/format/stap.py              |   2 +-
->  scripts/tracetool/format/ust_events_c.py      |   2 +-
->  scripts/tracetool/format/ust_events_h.py      |   2 +-
->  tests/tracetool/ftrace.rs                     |  40 ++++
->  tests/tracetool/log.rs                        |  44 ++++
->  tests/tracetool/simple.rs                     |  40 ++++
->  tests/tracetool/syslog.rs                     |  40 ++++
->  tests/tracetool/tracetool-test.py             |   2 +
->  trace/meson.build                             |   8 +-
->  62 files changed, 727 insertions(+), 218 deletions(-)
->  create mode 100644 rust/trace/Cargo.toml
->  create mode 100644 rust/trace/meson.build
->  create mode 100644 rust/trace/src/lib.rs
->  create mode 100644 scripts/tracetool/format/rs.py
->  create mode 100644 tests/tracetool/ftrace.rs
->  create mode 100644 tests/tracetool/log.rs
->  create mode 100644 tests/tracetool/simple.rs
->  create mode 100644 tests/tracetool/syslog.rs
->=20
-> --=20
-> 2.51.0
->=20
+I would put a name here too. And given this is defined generically:
 
---/WMmduB2K19wYKxd
-Content-Type: application/pgp-signature; name=signature.asc
+/* Host IOMMU quirks. Extracted from host IOMMU capabilities */
+enum host_iommu_quirks {
+	HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO = BIT_ULL(0),
+};
 
------BEGIN PGP SIGNATURE-----
+> +/**
+> + * host_iommu_extract_vendor_caps: Extract vendor capabilities
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS+FkACgkQnKSrs4Gr
-c8jUIgf/WKgfLrr76IeqDIAnRsXN9AAey8rk7oPrb3GlJbiGXJYOtwnT/1MvxC0n
-uIIkpoxmmn7G5MzxEqe4IIJmZMyO65RIjCbmrAIaE5kFdMystKqpaZ1HzMXfraqM
-buPhzWfwxK1SUec1IhHTdD6kACDrCYmgBLwlCjUl8+OJ/D7ogaBmcAswRoSac8f7
-TbMgAFibBobp/TlGwZ0kpO/n2mrn+BfVwU4iOCQ53pLvBcOA3RKOId+mY2mx7YX9
-GhFOivMBtizYhrPYFsjOWiF3voRnDqBAy1iwSC3/xTiIvffS3q9tQ+s67LSosmzc
-h7tt3jgxNQ8SU7jg7hJdPkCmVPBR1A==
-=K4Rx
------END PGP SIGNATURE-----
+Then:
 
---/WMmduB2K19wYKxd--
+ * host_iommu_extract_quirks: Extract host IOMMU quirks
 
+> + * This function converts @type specific hardware information data
+> + * into a standard bitmap format.
+> + *
+> + * @type: IOMMU Hardware Info Types
+> + *
+> + * @VendorCaps: IOMMU @type specific hardware information data
+> + *
+> + * Returns: 64bit bitmap with each bit represents a capability of host
+> + * IOMMU that we want to expose. See IOMMU_HW_* in include/hw/iommu.h
+> + * for all possible capabilities currently exposed.
+
+And simplify this:
+
+ * Returns: bitmap with each representing a host IOMMU quirk defined in
+ * enum host_iommu_quirks
+
+> +uint64_t host_iommu_extract_vendor_caps(uint32_t type, VendorCaps *caps)
+> +{
+> +    uint64_t vendor_caps = 0;
+> +
+> +    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD &&
+> +        caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
+> +        vendor_caps |= IOMMU_HW_NESTING_PARENT_BYPASS_RO;
+> +    }
+> +
+> +    return vendor_caps;
+> +}
+
+uint64_t host_iommu_extract_quirks(enum iommu_hw_info_type, VendorCaps *caps)
+{
+    uint64_t quirks = 0;
+
+#if defined(CONFIG_VTD)
+    if (type == IOMMU_HW_INFO_TYPE_INTEL_VTD) {
+        if (caps->vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
+            quirks |= HOST_IOMMU_QUIRK_NESTING_PARENT_BYPASS_RO;
+        }
+    }
+#endif
+
+    return quirks;
+}
+
+Thanks
+Nicolin
 
