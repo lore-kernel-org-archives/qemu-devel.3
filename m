@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E76CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33118CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v19Bi-0001ib-4N; Tue, 23 Sep 2025 16:00:34 -0400
+	id 1v19DW-0002U7-Ju; Tue, 23 Sep 2025 16:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1v19Bg-0001iI-GD
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:00:32 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v19DR-0002Nm-0P
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:02:23 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1v19Be-0004xr-Vp
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:00:32 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-62fc28843ecso6146831a12.1
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:00:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v19DO-00056s-Gw
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:02:20 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-329a41dc2ebso4878328a91.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758657629; x=1759262429; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m3G3c0nkQKew2ntKNWNXsbgvqlpxLiAsf/W1nzKD3Qg=;
- b=biXzOXzS1yIkRs7ClnoU7DTqnymis2yao7hN68zrrnhGAjuXg0bDhCfQS2S29lsJC+
- /Qq8ez6jy5xr2sW7KFqn5HiVTwRPXpd6jI0/b13xY/gOCACI5evmN2X4frA+wfvqYyiR
- srzI4LETI+G72ulq856Wv5lRX1/jTT8B5x/J3qEy6/r+rbXDKrIGYi+Q4qZkIyxBmC/b
- PD0u6XaznmkTj+aDg2y81RZmMZOT+s+qJNcb0YTjK4X6xRhGUpsck9e54cEr96wSho8o
- CQh/1oQgoIbtUQq20U5E46SFKLEJnL6xuRx1QdbCkaO7/yVr65toJ1lyguTJMfZpJKJj
- LUtQ==
+ d=linaro.org; s=google; t=1758657737; x=1759262537; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XMaTO3+HaQQ4gVXtybHWgy4ho36Fuioac4nouTUlQbQ=;
+ b=NWfiAO+rWnt72jLRn9FQB2A6NS1yeqNwDUc/xaiFFtjPCii/D99PfvSQ92dOcfwmw9
+ w8RUdEkeiiPb2LHuopmO+pi0Hm/JtI1Fpn6VUB6/jcfGTyPsdFeoaOk4ggRz3/fIbIoU
+ awDt92+g6hUgZh+I6m54FOKBKe2V8AzQdv07lPgqlCH2p0X/kyZ3ZlUDVDZnpWuMkVRk
+ 97534EeiENNYmIPau1NuJLIdJ8g6MYcV4d9l7AMSdfJY80g0T20SWiY//JpGZ7J86XYR
+ UTfemHWFmFbSotWRDzX2q/jSeG/qRU8vb1deCRon/z4OdOPwTHi4nYEnrf9Fm5djjOKV
+ PlCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758657629; x=1759262429;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=m3G3c0nkQKew2ntKNWNXsbgvqlpxLiAsf/W1nzKD3Qg=;
- b=Xa2DtbLTOtf71GkOnTxq96ZeNzEVmnj4XvS0kLmN7aJjecVLTpoxMu1ZjHmZzV2NbP
- 0qY2E4sg6T2uMT0+3RHJLZlZ3iC7UkzO97t7HPiIdJKuTDxlvZ2uMT98Jox5VkL6Iyl5
- yUMPOL4Ec/RlKIl3xBIQWBPHBkCqyMgdE1Mr869CN9zDdmvA3MiklGPdl41k64EjeVPk
- 6ghnVvsBGcsaSqPXNSPipUY36nrQlwFMY65gLU7iR8gbbQiMP+ByRwkbbplOnN9xEDE+
- ajallS9LJW1bC9BrVSDlYuS1bkWcVCXyPSaYIlbmenpvpaOHTDmI9FWrhjnTfAqSExVI
- Bckg==
+ d=1e100.net; s=20230601; t=1758657737; x=1759262537;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XMaTO3+HaQQ4gVXtybHWgy4ho36Fuioac4nouTUlQbQ=;
+ b=OeBx+4O6/eJxtqxNP7ax4GDQN3qpwd9ZApbHEDJabcsfoHJMCGJG9FSyUo8jYQZKl0
+ YMy9p0mFZwpr0nHjW17mIOpbP22zX5oyilDS1WtKDiMG85lUUIhQPM8iIJw8KDtdO8pn
+ O4SwwkVyEaNEeK36Qbs8LjXEj9AHq7XCLSVRsAxHG7/iqHgQdIoRtvICaB4HAylDipYV
+ Q5NtsdkW9+U+HR7ybiSePVd7atgrrIay6UbMRPrWdvgeUkHtPmrg7G79YatwZpVaHWiL
+ uV44AeVCkOvIxufU3nTWUbxK89B1PI2VuD6CibymRiMTinJSgC/2g5AyeMTNbW0p3dfU
+ IZnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3PVk3TOJSVqwqu4sq3AvlVmEc5xHHZURZM5NyCRkDQZjQt5y73jjhTucXXe0fWGnE8w85VC9LbbSh@nongnu.org
-X-Gm-Message-State: AOJu0YwL0bBte5e1T/xEFWuGQ758fQ8u0DkOxbB0dPrecYl3Cx+j+duR
- wJrt+Cstp9Ui/Y/GNLjLCypA3UXRuTj/KqKnXYxdLMYM2QNJQ1Lxtac9ciOk53QmxkMUC4qIxzS
- vy7rgr0AAvlzTxgnghBrRVOv/Dt9j0zw=
-X-Gm-Gg: ASbGnctgLjygpqGY1mbZ+D1E4wK0+14mJvEseI0WLpPMDRT+aO4kbkfMoLYP/4rLbes
- Mf328myWeiFWHbsvGIlpeLKwW+6pQ2QYCZpdHGqrF1gzPr3oe/tnRm58/OHb6k9hy5ICcxT3Pr/
- pdeTH45THH5RiucXFywb/M/ls9e0TrcIO8NtouDJ2vLbstC3xbBLd2Wx5fj6SgGQcu9fchDD8j2
- 1Euig==
-X-Google-Smtp-Source: AGHT+IEcL7c1IEeRuS5h0kyHLtQYmSQ1NYbsID6OQOAiOzBd6mrQwIGDCe612IbSQxEufbPO8HzLhgGvk/C9AL18YzA=
-X-Received: by 2002:a05:6402:24d5:b0:634:4e56:ba02 with SMTP id
- 4fb4d7f45d1cf-634677ed06dmr3042412a12.23.1758657628466; Tue, 23 Sep 2025
- 13:00:28 -0700 (PDT)
+ AJvYcCUqHEPMEm1QbcygLILvcPtQiDA7YR03WyzfN7pBBfZIi6ZqVIUr0eD7jlBUP9VoyXaf25udhJ3wTC/q@nongnu.org
+X-Gm-Message-State: AOJu0YwvUAJXqYeRUtqTDcWWJGEgmaBRqjLOfUwjBsuuT5eNofvWI+LN
+ kfadHqxTP++4XDYV4JnRUsweH0iCd5C/fG6B8qIkM9h1gBTH2nSVc0705XIcnjhWon4TzylVosu
+ 5iDH8
+X-Gm-Gg: ASbGnctaZh7kYGlYFshfidte9+rNAhLMUuQLkMNq2bdf6lwY1gsY2Q1UvZkN318IY7G
+ WdJ9S7ERtjlU0HvrClkuEktgdyLuT86B3ZyjpIplYD1Mgye4sNlv5cKCrpBrElBcuASg82UnQJT
+ 7dLhRPUuZkJivOXX3Rc0e9mgu3SPyiZVjEokNFNNm/zDFLU8LMqXzdsDOSc+BHbaxJJkrObm3cX
+ X4fQrz+Rg9PNbi7EeQr6peQcCt1Gm0zD2Zo951bH9lw2lgICYc8iuc0cbVjnOq4kt488hXZC3Ll
+ FFI3zQ5MgiopwBHTVx9sNht9ubaozSXZm9eahQGz+2lhVYWaSF4GNRsYSNNhmVNKLq6ZrUPoGft
+ hmjqWvKdAA8mjKcq1v3YBWMSUWqdF/+8RuQ6l
+X-Google-Smtp-Source: AGHT+IFp0fCWgvlWYxZRwQHgKc90FyGkbbwj9L30YBZMecPy4sBB1sQVrpnVY0uFAqlU6XM7xp+Nnw==
+X-Received: by 2002:a17:90b:4a42:b0:329:e2b1:def3 with SMTP id
+ 98e67ed59e1d1-332a94f055bmr4687166a91.10.1758657736678; 
+ Tue, 23 Sep 2025 13:02:16 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-330606509e9sm17382931a91.9.2025.09.23.13.02.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 13:02:15 -0700 (PDT)
+Message-ID: <cf928b24-4c1c-497d-bb8d-7308b9cd70b1@linaro.org>
+Date: Tue, 23 Sep 2025 13:02:14 -0700
 MIME-Version: 1.0
-References: <20250922154843.60233-1-pbonzini@redhat.com>
- <20250922154843.60233-3-pbonzini@redhat.com>
- <20250923175826.GB509965@fedora>
- <3232b3d4-a298-42d0-9756-0556f9edc241@redhat.com>
-In-Reply-To: <3232b3d4-a298-42d0-9756-0556f9edc241@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 23 Sep 2025 16:00:15 -0400
-X-Gm-Features: AS18NWCrFyNJBfj53i4ODrD8P2nxLSoaXzAsqjGeWIUXVJt00D-wHzuHqy_WZJo
-Message-ID: <CAJSP0QVmYUCvz_LAnMEXFEOiYvTS6E-YmCeVTpF0S52H3-=bFQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] docs/code-provenance: make the exception process more
- prominent
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x531.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/12] accel/tcg: Introduce EXCP_TB_FLUSH
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20250923023922.3102471-1-richard.henderson@linaro.org>
+ <20250923023922.3102471-10-richard.henderson@linaro.org>
+ <67f2c84b-4bb3-437b-8184-e7dfb9947df9@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <67f2c84b-4bb3-437b-8184-e7dfb9947df9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,34 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 23, 2025 at 3:20=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> On 9/23/25 19:58, Stefan Hajnoczi wrote:
-> >> +The QEMU project welcomes discussion on any exceptions to this policy=
-,
-> >> +or more general revisions. This can be done by contacting the qemu-de=
-vel
-> >> +mailing list with details of a proposed tool, model, usage scenario, =
-etc.
-> >> +that is beneficial to QEMU, while still mitigating the legal risks to=
- the
-> >> +project.  After discussion, any exception will be listed below.
-> >
-> > "Legal risks to the project" is all-encompassing and vague. People may
-> > not know how to start addressing the topic and might therefore not
-> > attempt to request an exception.
-> >
-> > I suggest replacing "legal risks to the project" with something more
-> > concrete like "issues around license and copyright status required to
-> > satisfy the Developer Certificate of Origin (DCO) requirements".
->
-> It's already a long sentence.  Would "while still mitigating issues aroun=
-d
-> compliance with the DCO" be enough?
+On 9/23/25 00:10, Paolo Bonzini wrote:
+> On 9/23/25 04:39, Richard Henderson wrote:
+>> We are going to disallow tb_flush from within the context
+>> of a running cpu.  Introduce a tcg-internal exception to
+>> return out of the cpu run loop and perform the flush there.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> One small difference is that different CPUs can fail tcg_tb_alloc() at the same time and 
+> flush multiple times.
+> 
+> I think the check on the generation count should remain.  Instead of introducing 
+> EXCP_TB_FLUSH, you can keep the guts of tb_flush() as
+> 
+> void tb_queue_flush(CPUState *cpu)
+> {
+>      unsigned tb_flush_count = qatomic_read(&tb_ctx.tb_flush_count);
+>      async_safe_run_on_cpu(cpu, do_tb_flush,
+>                            RUN_ON_CPU_HOST_INT(tb_flush_count));
+> }
+> 
+> With the unconditional async_safe_run_on_cpu() hidden behind a function, this patch goes 
+> away while the next one survives as
+> 
+>       if (unlikely(!tb)) {
+> -        /* flush must be done */
+> -        tb_flush(cpu);
+>           mmap_unlock();
+> -        /* Make the execution loop process the flush as soon as possible.  */
+> -        cpu->exception_index = EXCP_INTERRUPT;
+> +        tb_queue_flush(cpu);
 
-Yes.
+You have a point.  It's not even that unlikely a scenario.
 
-Thanks,
-Stefan
+
+r~
 
