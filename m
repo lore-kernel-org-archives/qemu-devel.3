@@ -4,108 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27554CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9548CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zMH-0006LY-0R; Tue, 23 Sep 2025 05:30:49 -0400
+	id 1v0zWU-0001mX-4S; Tue, 23 Sep 2025 05:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v0zMD-0006Km-2l
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:30:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1v0zM5-0003sP-FL
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:30:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758619835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aDZphouxOZnUK+yuhGBDqAcw5mt2BqtVB7QSXzHqH30=;
- b=WTeI+L2N0/0OZ/YWGsWPq6VaiP0XRtll0e+jwmhqm+bIC6944XguOJAnVAI3zy9xEyybhH
- kOAU+ID0MnhQWKHHDVa/TAuNsxjk0lkOxJnz7E4TywxdGvWvaYFkB8sGNB+4V2/B0l18qD
- 1p0xkghPg5K68+Ni9ycIKawFwJxxv3k=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-193-amgpOqX9PISwIlCuZTi1gg-1; Tue, 23 Sep 2025 05:30:33 -0400
-X-MC-Unique: amgpOqX9PISwIlCuZTi1gg-1
-X-Mimecast-MFC-AGG-ID: amgpOqX9PISwIlCuZTi1gg_1758619832
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3ecdb10a612so1006461f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:30:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0zWR-0001j6-Ks
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:41:19 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0zWI-00067W-PK
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:41:19 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45dd513f4ecso39250435e9.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:41:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758620464; x=1759225264; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KWoPqmvTO0S7YE+utrQnrW/HpZpS20zY8Nr9UEyJmDw=;
+ b=K0LrpBtOkcXPexVhWfv65Cf7u5iwSAmzKPRJGGVG/2BGD8qq2b52GiJTVo9ahW3Ib1
+ WioWXBv/Su/6+B/SxBSV6kMgEE5raAy2w1k7DAvNkECdqvNqlXF8mXTHQxSR0W+TZHZ5
+ lItk9Zo0EeaB/GBY2K/cgF/3BsyGWf01856i2dPHrFTTP7P23s4UJgCQXkW9fYNHS5Pb
+ MIERbDAnpTYRPtmd+YmdMzp9HYQLZtWLeKvXNbgkFlOItGrOoVWfxupfRQhRlcka8dJ3
+ L636H5B8a1OSKGEiWuOe6gpCgAoq9pMyoI74Osffp8G3GVO4KnjHbjWFO4ErYNwvF1CU
+ X3Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758619832; x=1759224632;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aDZphouxOZnUK+yuhGBDqAcw5mt2BqtVB7QSXzHqH30=;
- b=CmUusGpE8IjpaWGzIksw+dSN+yvPeoW4Ryeb7jNE9UVfRwQ9k5bpHnAlvtUrLLneCt
- yk7o4EGf3w+r6z73ru8+wq7BOXYCdHfB7KV+io9StDdkNbncdg6xDhGa5yWXjAjNg0JF
- JdSILey2gEU121L6TqJ+uHyFax5u4UuUIECU4X0MyQCRO48er/SbkBPkD420/v96wK9B
- 8PoZwL42yj5ZbInJ1364U6l+MxuoGPTKwdub/JCLSXfZP+wcVTDsnUjPoF+4tU7DHLRw
- vdWLXRhF/vwkQ23kdOnIfz69YdraHzTsfHH973RW+35gMeXgziU5VJpxtR8fLPUD+m9q
- NYNQ==
+ d=1e100.net; s=20230601; t=1758620464; x=1759225264;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KWoPqmvTO0S7YE+utrQnrW/HpZpS20zY8Nr9UEyJmDw=;
+ b=ij2EFDokIciJAt1titYLpH9mbiDifrOfKt+qXa+MDPtnrvCsXQwhdr0vyErfe0DxWV
+ eUJQ18eKFkvaHp9Fkry+rh805ddieHBJDajAdd2wYlWXrh1nMWYJTzbgm7G9+pQi0k0J
+ LX67L5DibiLH2D2dTtrpntaH4XuZ/qzrGwQrXker4yMzPuAYgmJuafuKyF9j5SQd6h1s
+ IgPGt7HjbYQBG7/U12KmmC+kyReIeR/Ily3Ls60ziuULJgOUmcjpALkeXA2Reqn7JMbs
+ N4RNwClLnXg2ARh05UQb9DyyMhXpDuO9fFShZB99Pt8CNJhhHEX2TvfejSnx7UU4AioV
+ DAIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXaAM9DIcbJg4fFxBMLOwJ4tSXYE4LkdRzse77jvZsRDMZZE/Y4L/8R849aXgYx6AWFLeL1qrMHikD9@nongnu.org
-X-Gm-Message-State: AOJu0YwcoKuLbbwKMQ4L1Xd52AfkjVM7ebLFS+PE0QZquRWXGZIw5mSh
- XowGueoc2AvQVKEFrn3doV6Df88sdg2sG4DHAcCm8sCIC2BZgsVwiliRC8Jk4ZtZmsYt6PgWtSf
- aWVkbqG8t9BbAwBWhl2mUTL3CDvyrfS9ifWEyocVE6ydGnH81gSN0WPIF
-X-Gm-Gg: ASbGncvenflJFPmCOH7RzaHazg9pEC4k4IH+PC9Yy9RuhTLqyp7nEwKrhhyx2Yf+XA1
- I6JnR8dbyTtIzXaRDRipQIVy+YV6tT/pVBTKwQ6bPhjwMfmi/gxSfFurTn4JKYcg1HZ5uw4vjqL
- mHrL46oTTWOEIHBuxYYHX19dvCPRb0WOQbjmjUyQARsgT9ErDtiOc38OjN36NkHEN8QlMaD88rB
- NP0ztBY0Fqw2UGdWu2obdZVryXD2OZT98U3uY/Z8oFHjz4eLzPNINljpTZQBhGuhVN2ITLVu25r
- KtgO3vap4LU/APYoAvCDht9K2mIDSLA=
-X-Received: by 2002:a05:6000:1a8f:b0:3ee:1521:95fc with SMTP id
- ffacd0b85a97d-405c6751d5fmr1531594f8f.14.1758619832197; 
- Tue, 23 Sep 2025 02:30:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLxZHBwQ4V5dfBA91z6hp+s2xxMF4YWZ0Zo/WKZB3v5fT9NV1/BYZs4v30CmBOKjQWChiZtQ==
-X-Received: by 2002:a05:6000:1a8f:b0:3ee:1521:95fc with SMTP id
- ffacd0b85a97d-405c6751d5fmr1531558f8f.14.1758619831691; 
- Tue, 23 Sep 2025 02:30:31 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-407a3bbeaf2sm502271f8f.49.2025.09.23.02.30.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Sep 2025 02:30:31 -0700 (PDT)
-Date: Tue, 23 Sep 2025 11:30:29 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Daniel
- P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Xiaoyao Li
- <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, qemu-devel@nongnu.org,
- Jiri Denemark <jdenemar@redhat.com>
-Subject: Re: [PATCH v6 01/19] hw/i386/pc_piix.c: restrict isapc machine to
- 32-bit CPUs
-Message-ID: <20250923113029.78c03a5c@fedora>
-In-Reply-To: <bb967b28-4ec5-40b5-88cc-cebd7493d381@nutanix.com>
-References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-2-mark.caveayland@nutanix.com>
- <3c2e9fbc-db80-4dd6-a1a5-deeabb8c0194@intel.com>
- <58c515a4-292e-4aec-b57e-73be89b9c322@nutanix.com>
- <aK7wDn03e8RtKmk3@redhat.com>
- <1178e514-a054-4ace-a5b7-06ca899badec@linaro.org>
- <20250922143537.39896851@fedora>
- <bb967b28-4ec5-40b5-88cc-cebd7493d381@nutanix.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ AJvYcCVF4scEVGTvnqHkd0n4R5K/wdIhF8CbUxLRgD5Y6BjCHsGWFnCUA3cXaxhMmaALm7WdlqqX4AG1Ynuw@nongnu.org
+X-Gm-Message-State: AOJu0Yza4oXgKrAbq3W2NuNa8kjf/mN1TF65lNqg8ZjbHNtiRjBJ6oIH
+ IBeHD+sT4l9Mcw7YuDRW1f+6IV//Igk4Fru/Xob45oDYrJ4Ix2NJ/JQ8DQDGuXbZYc4=
+X-Gm-Gg: ASbGncuDI1Q8FUL4ymSVmGgk0yb77M6KIaI58amVQHFFcT4s6aj+g5/zDBiLzDeGvCL
+ X4QkLFYnl3qVNeYpESliGFaiBD1NEa5xgOrNFSoKehOoHy/7W/1aYI/SX95v2ld0Gko1fxYlS/M
+ WFwYnVmC+3TemH8+HOptY9B3eryqEy3N7rVLdhM8Y1DXs65djczsaOW5L0sGbX+EdG5SGboPZ9/
+ jFazwVM96vgcG4OEiuz4DLTsIKMB/KDj6Yy/7cyBRaBeA7fdcdDABpvgpCQzuflkcgzV1/PP5x3
+ SGTd2Xe3XOUgZxwTG6pCfaE5ffBBWIEUzD/abagO3Feb+IkA5iT28Tf3M4o3wrQWR2l80qcXqDI
+ BX1ro3OLELEsworaTi3b0Mt91jobkGJF807CAjWraPGGAlhprgK1OxezBEkzLpX05X8bBw8O9UA
+ xb
+X-Google-Smtp-Source: AGHT+IEkUEcPdyYVal+OKD4Izind4WEqJuRPQTFwsXqzmi80QoffJSwdh6CvmgYY2o13j8oSTazK+g==
+X-Received: by 2002:a05:600c:1c05:b0:45b:7ce0:fb98 with SMTP id
+ 5b1f17b1804b1-46e1d97493fmr22604545e9.5.1758620464329; 
+ Tue, 23 Sep 2025 02:41:04 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-464f4f9f4e4sm265613865e9.13.2025.09.23.02.41.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 02:41:03 -0700 (PDT)
+Message-ID: <6ebc31f0-c6cf-4e14-a87d-5b59f6c6105f@linaro.org>
+Date: Tue, 23 Sep 2025 11:41:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/13] tcg: Fix error reporting on mprotect() failure
+ in tcg_region_init()
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
+ berrange@redhat.com, vsementsov@yandex-team.ru
+References: <20250923091000.3180122-1-armbru@redhat.com>
+ <20250923091000.3180122-3-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250923091000.3180122-3-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,147 +106,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Sep 2025 14:56:57 +0100
-Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
+On 23/9/25 11:09, Markus Armbruster wrote:
+> tcg_region_init() calls one of qemu_mprotect_rwx(),
+> qemu_mprotect_rw(), and mprotect(), then reports failure with
+> error_setg_errno(&error_fatal, errno, ...).
+> 
+> The use of &error_fatal is undesirable.  qapi/error.h advises:
+> 
+>   * Please don't error_setg(&error_fatal, ...), use error_report() and
+>   * exit(), because that's more obvious.
+> 
+> The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
+> wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
+> mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
+> with error_report().  VirtualProtect() doesn't set errno.  mprotect()
+> does, but error_report() may clobber it.
+> 
+> Fix tcg_region_init() to report errors only when it calls mprotect(),
+> and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
+> reporting otherwise.  Use error_report(), not error_setg().
+> 
+> Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protection)
+> Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/region.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tcg/region.c b/tcg/region.c
+> index 7ea0b37a84..2181267e48 100644
+> --- a/tcg/region.c
+> +++ b/tcg/region.c
+> @@ -832,13 +832,16 @@ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads)
+>               } else {
+>   #ifdef CONFIG_POSIX
+>                   rc = mprotect(start, end - start, need_prot);
+> +                if (rc) {
+> +                    error_report("mprotect of jit buffer: %s",
+> +                                 strerror(errno));
 
-> On 22/09/2025 13:35, Igor Mammedov wrote:
->=20
-> > On Mon, 22 Sep 2025 14:05:13 +0200
-> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
-> >  =20
-> >> On 27/8/25 13:46, Daniel P. Berrang=C3=A9 wrote: =20
-> >>> On Wed, Aug 27, 2025 at 12:10:00PM +0100, Mark Cave-Ayland wrote: =20
-> >>>> On 26/08/2025 08:25, Xiaoyao Li wrote:
-> >>>>    =20
-> >>>>> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote: =20
-> >>>>>> The isapc machine represents a legacy ISA PC with a 486 CPU. Whils=
-t it is
-> >>>>>> possible to specify any CPU via -cpu on the command line, it makes=
- no
-> >>>>>> sense to allow modern 64-bit CPUs to be used.
-> >>>>>>
-> >>>>>> Restrict the isapc machine to the available 32-bit CPUs, taking ca=
-re to
-> >>>>>> handle the case where if a user inadvertently uses -cpu max then t=
-he
-> >>>>>> "best"
-> >>>>>> 32-bit CPU is used (in this case the pentium3).
-> >>>>>>
-> >>>>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> >>>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >>>>>> ---
-> >>>>>>   =C2=A0 hw/i386/pc_piix.c | 26 ++++++++++++++++++++++++++
-> >>>>>>   =C2=A0 1 file changed, 26 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> >>>>>> index c03324281b..5720b6b556 100644
-> >>>>>> --- a/hw/i386/pc_piix.c
-> >>>>>> +++ b/hw/i386/pc_piix.c
-> >>>>>> @@ -436,6 +436,19 @@ static void pc_set_south_bridge(Object *obj,
-> >>>>>> int value, Error **errp)
-> >>>>>>   =C2=A0 #ifdef CONFIG_ISAPC
-> >>>>>>   =C2=A0 static void pc_init_isa(MachineState *machine)
-> >>>>>>   =C2=A0 {
-> >>>>>> +=C2=A0=C2=A0=C2=A0 /*
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * There is a small chance that someone u=
-nintentionally passes
-> >>>>>> "- cpu max"
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * for the isapc machine, which will prov=
-ide a much more modern
-> >>>>>> 32-bit
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * CPU than would be expected for an ISA-=
-era PC. If the "max"
-> >>>>>> cpu type has
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * been specified, choose the "best" 32-b=
-it cpu possible which
-> >>>>>> we consider
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * be the pentium3 (deliberately choosing=
- an Intel CPU given
-> >>>>>> that the
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 * default 486 CPU for the isapc machine =
-is also an Intel CPU).
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> >>>>>> +=C2=A0=C2=A0=C2=A0 if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NA=
-ME("max"))) {
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 machine->cpu_type =3D =
-X86_CPU_TYPE_NAME("pentium3");
-> >>>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 warn_report("-cpu max =
-is invalid for isapc machine, using
-> >>>>>> pentium3");
-> >>>>>> +=C2=A0=C2=A0=C2=A0 } =20
-> >>>>>
-> >>>>> Do we need to handle the case of "-cpu host"? =20
-> >>>>
-> >>>> I don't believe so. I wasn't originally planning to support "-cpu ma=
-x" for
-> >>>> isapc, however Daniel mentioned that it could possibly be generated =
-from
-> >>>> libvirt so it makes sense to add the above check to warn in this cas=
-e and
-> >>>> then continue. =20
-> >>>
-> >>> Libvirt will support sending any valid -cpu flag, including both
-> >>> 'max' (any config) and 'host' (if KVM).
-> >>>
-> >>> If 'isapc' still expects to support KVM, then it would be odd to
-> >>> reject 'host', but KVM presumably has no built-in way to limit to
-> >>> 32-bit without QEMU manually masking many features ?
-> >>>
-> >>> I'm a little worried about implications of libvirt sending '-cpu max'
-> >>> and QEMU secretly turning that into '-cpu pentium3', as opposed to
-> >>> having '-cpu max' expand to equiv to 'pentium3', which might cauase
-> >>> confusion when libvirt queries the expanded CPU ? Copying Jiri for
-> >>> an opinion from libvirt side, as I might be worrying about nothing. =
-=20
-> >>
-> >> OK, on 2nd thought, even while warning the user, changing the type
-> >> under the hood isn't great. =20
-> >=20
-> > I second that,
-> > Please don't do magical mutations of CPUs, just error out.
-> >=20
-> > we used to 'fix|tweak' CPUs using machine compat hack,
-> > however with introduction of versioned cpu models we shouldn't do that =
-anymore.
-> > (aka: existing CPU devices should stay immutable if possible, and any v=
-isible
-> > changes should go into new version) =20
->=20
-> The original suggestion for allowing "max"/"host" was so that it=20
-> wouldn't cause any regressions with command lines erroneously including=20
-> -cpu max or -cpu host (which I believe may be possible with libvirt).
+I'm not keen on handling errors differently in the same function.
 
-looking back and at Daniels reply,
-max/host are indeed are 'special' aka mutable as opposed to named cpu model=
-s.
+qemu_mprotect_rwx() and qemu_mprotect_rw() already print the error.
 
-if we go by the books, 'host' and by extension 'max' should work with KVM a=
-ccelerator.
-But that (aka reducing it to isapc levels) should be done at 'host' cpu mod=
-el code
-and that part of code is not really aware (nor should be) of machine types.
-I'm not sure, whether it's worth the effort and complexity.
+Why not add qemu_mprotect() as a simple qemu_mprotect__osdep() alias,
+then call it here, also covering the non-POSIX case?
+(Question for Richard, after looking at commits 22c6a9938f7 and more
+  importantly 97a83753c9 -- wondering about WoA).
 
-I'd be fine with valid_cpu_types[] approach here, i.e. user will get
-clear error that her is doing wrong thing trying 'host/max',
-and printing suggestion how to remedy error should guide user
-to the right config.
-=20
->=20
-> >> What about simply removing "max" of valid_cpu_types[], since it is
-> >> clearly confusing "max" =3D=3D "pentium3"... =20
-> >=20
-> > it seems that specifying supported cpu models in valid_cpu_types[] is t=
-he way to go. =20
->=20
-> That was what I did in v1 and v2 version of the series, but I can submit=
-=20
-> a patch to change this once there is agreement on the desired behaviour.
->=20
->=20
-> ATB,
->=20
-> Mark.
->=20
+> +                }
+>   #else
+>                   g_assert_not_reached();
+>   #endif
+>               }
+>               if (rc) {
+> -                error_setg_errno(&error_fatal, errno,
+> -                                 "mprotect of jit buffer");
+> +                exit(1);
+>               }>           }
+>           if (have_prot != 0) {
 
 
