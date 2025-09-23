@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3CCCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1F71CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0z2e-0007D4-Rc; Tue, 23 Sep 2025 05:10:32 -0400
+	id 1v0z2e-0007D0-7q; Tue, 23 Sep 2025 05:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0z2a-0007BH-27
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0z2a-0007BG-1r
  for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:10:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0z2O-0000QP-7U
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v0z2N-0000QR-4P
  for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:10:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1758618612;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Mc/1fpfnycC7fgouplaTw4Xu2tEN0RZN3ojTYtsKpYo=;
- b=iEEV7xp9Pwl0P5M4NXRoX9eTWYpwuQoLE9Ii6hrdQSnTrk19tMIoOd3wyVIgCxdfUzaxlx
- Y9+6QyGhdBnKcrL2E5fT+2k+68jcMvr0nnx/foOT5Uz+d+dxZnrOV52np2FsToVIvJZk6Z
- hI44zGMcNdKrAGY2BlW00fWZvKxDMt0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=I+jUF0eX+vQ+j7nrzGHoZQGU4GQeQJANoqy508N9Zg4=;
+ b=JQWACRgAAJjzidic+8pKwWTP28mSs1s+TjYHSpTbrfB5Zsw7BAdl3RmZKh+ZgrJPonT8k3
+ vCdW0j+QRbrpMJ14x+4wXxOetIn9Y9fpS5xk8hvlMmX+YE6I46TZQmZNUY5om1lh6lTduW
+ Wm78oU6bumpfmasX9Kj/PNkhb0vKbds=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-0zXdGnI8N32eHF3kf-TefA-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-QNLWiVcmNPqG5x3s8B6Vzg-1; Tue,
  23 Sep 2025 05:10:08 -0400
-X-MC-Unique: 0zXdGnI8N32eHF3kf-TefA-1
-X-Mimecast-MFC-AGG-ID: 0zXdGnI8N32eHF3kf-TefA_1758618606
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+X-MC-Unique: QNLWiVcmNPqG5x3s8B6Vzg-1
+X-Mimecast-MFC-AGG-ID: QNLWiVcmNPqG5x3s8B6Vzg_1758618607
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B39A01800284; Tue, 23 Sep 2025 09:10:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E779519560AE; Tue, 23 Sep 2025 09:10:06 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4126930002C5; Tue, 23 Sep 2025 09:10:06 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 154A81800577; Tue, 23 Sep 2025 09:10:06 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7C10921E66E5; Tue, 23 Sep 2025 11:10:00 +0200 (CEST)
+ id 73DF121E66E3; Tue, 23 Sep 2025 11:10:00 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
  berrange@redhat.com, richard.henderson@linaro.org,
- vsementsov@yandex-team.ru, Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v3 12/13] ivshmem-flat: Mark an instance of missing error
- handling FIXME
-Date: Tue, 23 Sep 2025 11:09:59 +0200
-Message-ID: <20250923091000.3180122-13-armbru@redhat.com>
+ vsementsov@yandex-team.ru
+Subject: [PATCH v3 10/13] ui/dbus: Clean up dbus_update_gl_cb() error checking
+Date: Tue, 23 Sep 2025 11:09:57 +0200
+Message-ID: <20250923091000.3180122-11-armbru@redhat.com>
 In-Reply-To: <20250923091000.3180122-1-armbru@redhat.com>
 References: <20250923091000.3180122-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,48 +86,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ivshmem-flat's ivshmem_flat_add_vector() neglects to handle
-qemu_set_blocking() failure.  It used to silently ignore errors there.
-Recent commit 6f607941b1c (treewide: use qemu_set_blocking instead of
-g_unix_set_fd_nonblocking) changed it to warn (without mentioning it
-the commit message, tsk, tsk, tsk).
+From GLib "Rules for use of GError":
 
-Note that ivshmem-pci's process_msg_connect() handles this error.
+    A GError* must be initialized to NULL before passing its address
+    to a function that can report errors.
 
-Add a FIXME comment to mark the missing error handling.
+dbus_update_gl_cb() seemingly violates this rule: it passes &err to
+qemu_dbus_display1_listener_call_update_dmabuf_finish() and to
+qemu_dbus_display1_listener_win32_d3d11_call_update_texture2d_finish()
+without clearing it in between.  Harmless, because the first call is
+guarded by #ifdef CONFIG_GBM, the second by #ifdef WIN32, and the two
+are mutually exclusive.  I think.
 
-Cc: Gustavo Romero <gustavo.romero@linaro.org>
+Clean this up to be obviously correct.
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/misc/ivshmem-flat.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ ui/dbus-listener.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
-index e83e6c6ee9..27ee8c9218 100644
---- a/hw/misc/ivshmem-flat.c
-+++ b/hw/misc/ivshmem-flat.c
-@@ -138,6 +138,8 @@ static void ivshmem_flat_remove_peer(IvshmemFTState *s, uint16_t peer_id)
- static void ivshmem_flat_add_vector(IvshmemFTState *s, IvshmemPeer *peer,
-                                     int vector_fd)
- {
-+    Error *err = NULL;
-+
-     if (peer->vector_counter >= IVSHMEM_MAX_VECTOR_NUM) {
-         trace_ivshmem_flat_add_vector_failure(peer->vector_counter,
-                                               vector_fd, peer->id);
-@@ -154,8 +156,10 @@ static void ivshmem_flat_add_vector(IvshmemFTState *s, IvshmemPeer *peer,
-      * peer.
-      */
-     peer->vector[peer->vector_counter].id = peer->vector_counter;
--    /* WARNING: qemu_socket_set_nonblock() return code ignored */
--    qemu_set_blocking(vector_fd, false, &error_warn);
-+    if (!qemu_set_blocking(vector_fd, false, &err)) {
-+        /* FIXME handle the error */
-+        warn_report_err(err);
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 42875b8eed..09d7a319b1 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -221,18 +221,21 @@ static void dbus_update_gl_cb(GObject *source_object,
+ #ifdef CONFIG_GBM
+     success = qemu_dbus_display1_listener_call_update_dmabuf_finish(
+         ddl->proxy, res, &err);
++    if (!success) {
++        error_report("Failed to call update: %s", err->message);
 +    }
-     event_notifier_init_fd(&peer->vector[peer->vector_counter].event_notifier,
-                            vector_fd);
+ #endif
  
+ #ifdef WIN32
+     success = qemu_dbus_display1_listener_win32_d3d11_call_update_texture2d_finish(
+         ddl->d3d11_proxy, res, &err);
+-    d3d_texture2d_acquire0(ddl->d3d_texture, &error_warn);
+-#endif
+-
+     if (!success) {
+         error_report("Failed to call update: %s", err->message);
+     }
+ 
++    d3d_texture2d_acquire0(ddl->d3d_texture, &error_warn);
++#endif
++
+     graphic_hw_gl_block(ddl->dcl.con, false);
+     g_object_unref(ddl);
+ }
 -- 
 2.49.0
 
