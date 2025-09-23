@@ -4,60 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D756CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE86CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v14gG-0000IU-2f; Tue, 23 Sep 2025 11:11:48 -0400
+	id 1v14rQ-0004TT-43; Tue, 23 Sep 2025 11:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v14gD-0000HW-91
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:11:45 -0400
-Received: from m204-227.eu.mailgun.net ([161.38.204.227])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1v14gA-0000R5-No
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:11:44 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
- s=email; t=1758640300; x=1758647500; 
- h=Content-Transfer-Encoding: MIME-Version: References: In-Reply-To:
- Message-ID: Date: Subject: Subject: Cc: To: To: From: From: Sender: Sender; 
- bh=rpuGODNpVNLsGNJORKOUv38W2o0k37vZymgKGsP72j4=;
- b=E9uGc72wiJ4pv5wKxB2YT87QvUxWh32Xh3hAfkI7irumBwbhQzIRSJaraK9lRy4/yUg5cbKv+PPZPXCtREkkvSJFaYxV/30x4cqMDh3emkg51EkeBCBSri4jgtDHQredAfcDbkF50SvylzJASeSPSDZzZSZjHc91EiFmNg83X95piVEzZkIv4jS3KzZxpjufnTpeszKMIZo94F2l3HaZnN3gmmN3GKLwt4nkI7plruZXPK7YR1pZJIiZEvcb0E0xjdWOaaORsXRIoF8h96Rvia0puC7VTmKr9qDWzLDIRjYiR6hkryvkgf7s+9xg+SXHnPH5o7lXqnKj99T5ogGUYA==
-X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
-Received: from fedora (pub082136115007.dh-hfc.datazug.ch [82.136.115.7]) by
- 3410bf604baf3b1186e1b7c3ddb9946731989e4e31ae93aebc8156634f8d87f1 with SMTP id
- 68d2b8aaf13b9dd248e463f7; Tue, 23 Sep 2025 15:11:38 GMT
-X-Mailgun-Sending-Ip: 161.38.204.227
-From: Alessandro Ratti <alessandro@0x65c.net>
-To: qemu-devel@nongnu.org
-Cc: alessandro.ratti@gmail.com, alex.bennee@linaro.org, armbru@redhat.com,
- berrange@redhat.com, mst@redhat.com,
- Alessandro Ratti <alessandro@0x65c.net>
-Subject: [PATCH v2] virtio: improve virtqueue mapping error messages
-Date: Tue, 23 Sep 2025 17:09:25 +0200
-Message-ID: <20250923151127.504186-2-alessandro@0x65c.net>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250923151127.504186-1-alessandro@0x65c.net>
-References: <20250923130034.486370-2-alessandro@0x65c.net>
- <20250923151127.504186-1-alessandro@0x65c.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=161.38.204.227;
- envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=m204-227.eu.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1v14rN-0004Su-Vz; Tue, 23 Sep 2025 11:23:18 -0400
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
+ id 1v14rL-0002DN-8z; Tue, 23 Sep 2025 11:23:17 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 76C5D7A007A;
+ Tue, 23 Sep 2025 11:23:09 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Tue, 23 Sep 2025 11:23:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1758640989;
+ x=1758727389; bh=xL8LNShCtxryXQtiUDOoxgzYHqtBVr2QeDvaNqUzP98=; b=
+ VJfgQFBRsBbeiGc6EKwSGiIDQXlFhqbY9qCs4zlvAoD9AdupHtsT8qDwzf/wAegS
+ pXALSY/LpYwpLUA4o+cymWygjPGV329hP9voj6dGMPDSsq9MjAuAnQ/wLvUReEjS
+ vKx0tzHLiwxl9sQLvxMxNIlfxBKLrq8yRwHPcGCa3eCT1NalT9bp+cWZDwAs3tkK
+ DU8hs7aIj+BCP0OmFxL1+azLGb2mr3X+PxH+x2mbZS6ddlst7xdsrc6z4zWe855F
+ NBfQwy3hltgLxYiJV9MSq7JirQWpo8i0c0nN7I/VL9dMxqZJHNHUwEGXZVgdBPok
+ QGqX+JrkfCDSzs4KU2lRqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758640989; x=
+ 1758727389; bh=xL8LNShCtxryXQtiUDOoxgzYHqtBVr2QeDvaNqUzP98=; b=l
+ DM5v0IcYi8st9QPSEOuxkyyZ2KjXd5BqJOh8y+8wjh4f1mYrlhLPmAChHfoAMs33
+ AL4Io8NmyMAi6igCsjirewi5H4HJ3+MCVfywAdimGm2aNFA8jkqjrDQ9yNeHyL4/
+ 9y23wRqASWrmaFDLJJwlpTaNA5u+q7xx5oWerwRLtOygCR/yTn6DuQnfqPet+6pz
+ EeKLoEeiAudFKGGR4ws4LP3sC2iX5c9zyqPr/4Vo6nfTevG5FGXHgwikZ0Xpct6T
+ dxcANdv9n/S1Txz5LgFuz30u4l9A1+R8WJvb4+RSS75GazEbLAs14UQD5g+ygxd+
+ Oik4n60gOACajGZQIn6zw==
+X-ME-Sender: <xms:XLvSaC3p0xL-Kk2_Ptk0_yQPb1sSWdXoMxtxbfUcAPU1DN3kBDEERg>
+ <xme:XLvSaOAPMWdlpVCJjXpWozfPwfNeZ5Ms0aWxvg1VEgpL-3M29bnO6iIyyyQ-7eZHE
+ 0siMc1bBssoBQYQMhzx0aIUptOUlRSqbLiXTI6vKoWfGEkxi8cJQw>
+X-ME-Received: <xmr:XLvSaGdK4Dz7FGEbJHrZ_FIsSDGXrJB-N4JTYn9Dpk0D9bEp3uBOttl5XoK9x4XeegvrzlVxvq-ou6yKyHX3L7uJhw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiuddtkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpegggfgtfffkvefuhffvofhfjgesthhqredtredtjeenucfhrhhomhepfdflvghsphgv
+ rhcuffgvvhgrnhhtihgvrhdfuceofhhoshhsseguvghfmhgrtghrohdrihhtqeenucggtf
+ frrghtthgvrhhnpedtveekffevgfekuedthfetlefhhefhueegfffgtdfhleefuedufffg
+ leelueduieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpehfohhsshesuggvfhhmrggtrhhordhithdpnhgspghrtghpthhtohepiedpmhhouggv
+ pehsmhhtphhouhhtpdhrtghpthhtoheprghlrghnrdgruggrmhhsohhnsehorhgrtghlvg
+ drtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhr
+ tghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhsse
+ hirhhrvghlvghvrghnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhn
+ ghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhdqsghouhhntggvshdoqh
+ gvmhhuqdguvghvvghlpegrrhgthhhivhgvrhdrkhgvrhhnvghlrdhorhhgsehnohhnghhn
+ uhdrohhrgh
+X-ME-Proxy: <xmx:XLvSaD55vU4z69cCLgzqcKPc-nV8pMFzpKTHPqZqQmeETnd1qXENAA>
+ <xmx:XLvSaBWuhZMK5ip8A6pusKt73_a2p86JHxw8_HUPl7NMNUhxJbwkiQ>
+ <xmx:XLvSaK5sm3_3xhVEsnoQcxQBPKbapQ9psR_Labo2eBOPhOwQTMwOwg>
+ <xmx:XLvSaEppr3NBe86c9HOpUt58eDsgsnkAAMn57fVdYs_uHXmqmzXn4g>
+ <xmx:XbvSaDULD-qkZ4PrtcKTAL5aM9B_1ELiL43Qx3279EDC_MAP2hHDv5Pk>
+Feedback-ID: ic0014905:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Sep 2025 11:23:07 -0400 (EDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 23 Sep 2025 17:23:04 +0200
+Message-Id: <DD0A7772884E.HOY3HVDIV4FB@defmacro.it>
+Cc: <kbusch@kernel.org>, <its@irrelevant.dk>, <qemu-block@nongnu.org>,
+ <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
+Subject: Re: [PATCH 0/2] Add support for NVMe Namespace and Boundary Atomic
+ Parameters
+From: "Jesper Devantier" <foss@defmacro.it>
+To: "Alan Adamson" <alan.adamson@oracle.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.20.1
+References: <20250602230458.1073148-1-alan.adamson@oracle.com>
+In-Reply-To: <20250602230458.1073148-1-alan.adamson@oracle.com>
+Received-SPF: pass client-ip=202.12.124.157; envelope-from=foss@defmacro.it;
+ helo=fhigh-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,106 +113,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve error reporting when virtqueue ring mapping fails by including a
-device identifier in the error message.
+On Tue Jun 3, 2025 at 1:04 AM CEST, Alan Adamson wrote:
+> This patch set is a follow on to commit ebd1568fc732 ("hw/nvme: add atomi=
+c
+> write support").  These patches introduces two updates to the NVMe subsys=
+tem in QEMU,
+> both aimed at enhancing atomic write support for namespaces.
+>
+> hw/nvme: enable ns atomic writes
+> --------------------------------
+> This patch introduces support for namespace-specific atomic write paramet=
+ers: NAWUN
+> and NAWUPF, as defined by the NVMe specification. The atomic parameters a=
+re
+> utilized to guarantee that writes conforming to these boundaries will be =
+atomic,
+> improving data integrity for namespaces that require atomic operations.
+>
+> The patch introduces new NVMe QEMU parameters:
+> 	atomic.nawun (default: 0)
+> 	atomic.nawupf (default: 0)
+> 	atomic.nsfeat (default: off)
+>
+> The addition of atomic.nsfeat sets the Namespace Supported Atomic Boundar=
+y &
+> Power (NSABP) bit in the Identify Namespace Data Structure, enabling name=
+space-specific
+> atomic write features. The patch also ensures that atomic write behavior =
+adheres to the
+> NACWU and NAWUPF parameters.
+>
+> hw/nvme: add atomic boundary support
+> ------------------------------------
+> The second patch expands on the atomic write capabilities by adding suppo=
+rt for atomic
+> boundary parameters: NABO, NABSN, and NABSPF. These parameters define the=
+ atomic
+> boundary size for writes and ensure that any writes crossing these bounda=
+ries are
+> treated atomically, based on the AWUN and AWUPF values.
+>
+> The following parameters are added:
+> 	atomic.nabo (default: 0)
+> 	atomic.nabsn (default: 0)
+> 	atomic.nabspf (default: 0)
+>
+> If the atomic boundary is crossed, the writes are guaranteed to be atomic=
+ only if their
+> size does not exceed the values defined by AWUN and AWUPF. This ensures t=
+hat larger
+> writes crossing atomic boundaries are not subject to partial updates, the=
+reby improving
+> the robustness of atomic operations across boundaries.
+>
+> See the NVMe Specification for more information.
+>
+> Alan Adamson (2):
+>   hw/nvme: enable ns atomic writes
+>   hw/nvme: add atomic boundary support
+>
+>  hw/nvme/ctrl.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/ns.c   | 74 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  hw/nvme/nvme.h | 14 ++++++++++
+>  3 files changed, 164 insertions(+)
 
-Introduce a helper virtio_get_pretty_dev_name() that returns either:
+Follows the spec far as I can see.
+Read the code, seems good
 
- - the device ID, if explicitly provided (e.g. -device ...,id=foo)
- - the QOM path from qdev_get_dev_path(dev) otherwise
- - "<unknown device>" as a fallback when no identifier is present
-
-This makes it easier to identify which device triggered the error in
-multi-device setups or when debugging complex guest configurations.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
-Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
----
- hw/virtio/virtio.c | 46 +++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
-
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e..f5adc381a4 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -235,6 +235,37 @@ static void virtio_virtqueue_reset_region_cache(struct VirtQueue *vq)
-     }
- }
- 
-+static const char *virtio_get_pretty_dev_name(VirtIODevice *vdev)
-+{
-+    DeviceState *dev = DEVICE(vdev);
-+
-+    /*
-+     * Return device ID if explicity set
-+     * (e.g. -device virtio-blk-pci,id=foo)
-+     * This allows users to correlate errors with their custom device
-+     * names.
-+     */
-+    if (dev->id) {
-+        return dev->id;
-+    }
-+    /*
-+     * Fall back to the canonical QOM device path (eg. ID for PCI
-+     * devices).
-+     * This ensures the device is still uniquely and meaningfully
-+     * identified.
-+     */
-+    const char *path = qdev_get_dev_path(dev);
-+    if (path) {
-+        return path;
-+    }
-+
-+    /*
-+     * Final fallback: if all else fails, return a placeholder string.
-+     * This ensures the error message always contains a valid string.
-+     */
-+    return "<unknow device>";
-+}
-+
- void virtio_init_region_cache(VirtIODevice *vdev, int n)
- {
-     VirtQueue *vq = &vdev->vq[n];
-@@ -256,7 +287,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->desc, vdev->dma_as,
-                                    addr, size, packed);
-     if (len < size) {
--        virtio_error(vdev, "Cannot map desc");
-+        virtio_error(vdev,
-+                "Failed to map descriptor ring for device %s: "
-+                "invalid guest physical address or corrupted queue setup",
-+                virtio_get_pretty_dev_name(vdev));
-         goto err_desc;
-     }
- 
-@@ -264,7 +298,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->used, vdev->dma_as,
-                                    vq->vring.used, size, true);
-     if (len < size) {
--        virtio_error(vdev, "Cannot map used");
-+        virtio_error(vdev,
-+                "Failed to map used ring for device %s: "
-+                "possible guest misconfiguration or insufficient memory",
-+                virtio_get_pretty_dev_name(vdev));
-         goto err_used;
-     }
- 
-@@ -272,7 +309,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->avail, vdev->dma_as,
-                                    vq->vring.avail, size, false);
-     if (len < size) {
--        virtio_error(vdev, "Cannot map avail");
-+        virtio_error(vdev,
-+                "Failed to map avalaible ring for device %s: "
-+                "possible queue misconfiguration or overlapping memory region",
-+                virtio_get_pretty_dev_name(vdev));
-         goto err_avail;
-     }
- 
--- 
-2.39.5
-
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
 
