@@ -4,100 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE86CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C43CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v14rQ-0004TT-43; Tue, 23 Sep 2025 11:23:20 -0400
+	id 1v14sz-0005A6-Mg; Tue, 23 Sep 2025 11:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1v14rN-0004Su-Vz; Tue, 23 Sep 2025 11:23:18 -0400
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v14sp-00058x-E2
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:24:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1v14rL-0002DN-8z; Tue, 23 Sep 2025 11:23:17 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 76C5D7A007A;
- Tue, 23 Sep 2025 11:23:09 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Tue, 23 Sep 2025 11:23:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1758640989;
- x=1758727389; bh=xL8LNShCtxryXQtiUDOoxgzYHqtBVr2QeDvaNqUzP98=; b=
- VJfgQFBRsBbeiGc6EKwSGiIDQXlFhqbY9qCs4zlvAoD9AdupHtsT8qDwzf/wAegS
- pXALSY/LpYwpLUA4o+cymWygjPGV329hP9voj6dGMPDSsq9MjAuAnQ/wLvUReEjS
- vKx0tzHLiwxl9sQLvxMxNIlfxBKLrq8yRwHPcGCa3eCT1NalT9bp+cWZDwAs3tkK
- DU8hs7aIj+BCP0OmFxL1+azLGb2mr3X+PxH+x2mbZS6ddlst7xdsrc6z4zWe855F
- NBfQwy3hltgLxYiJV9MSq7JirQWpo8i0c0nN7I/VL9dMxqZJHNHUwEGXZVgdBPok
- QGqX+JrkfCDSzs4KU2lRqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1758640989; x=
- 1758727389; bh=xL8LNShCtxryXQtiUDOoxgzYHqtBVr2QeDvaNqUzP98=; b=l
- DM5v0IcYi8st9QPSEOuxkyyZ2KjXd5BqJOh8y+8wjh4f1mYrlhLPmAChHfoAMs33
- AL4Io8NmyMAi6igCsjirewi5H4HJ3+MCVfywAdimGm2aNFA8jkqjrDQ9yNeHyL4/
- 9y23wRqASWrmaFDLJJwlpTaNA5u+q7xx5oWerwRLtOygCR/yTn6DuQnfqPet+6pz
- EeKLoEeiAudFKGGR4ws4LP3sC2iX5c9zyqPr/4Vo6nfTevG5FGXHgwikZ0Xpct6T
- dxcANdv9n/S1Txz5LgFuz30u4l9A1+R8WJvb4+RSS75GazEbLAs14UQD5g+ygxd+
- Oik4n60gOACajGZQIn6zw==
-X-ME-Sender: <xms:XLvSaC3p0xL-Kk2_Ptk0_yQPb1sSWdXoMxtxbfUcAPU1DN3kBDEERg>
- <xme:XLvSaOAPMWdlpVCJjXpWozfPwfNeZ5Ms0aWxvg1VEgpL-3M29bnO6iIyyyQ-7eZHE
- 0siMc1bBssoBQYQMhzx0aIUptOUlRSqbLiXTI6vKoWfGEkxi8cJQw>
-X-ME-Received: <xmr:XLvSaGdK4Dz7FGEbJHrZ_FIsSDGXrJB-N4JTYn9Dpk0D9bEp3uBOttl5XoK9x4XeegvrzlVxvq-ou6yKyHX3L7uJhw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdeiuddtkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
- hrpegggfgtfffkvefuhffvofhfjgesthhqredtredtjeenucfhrhhomhepfdflvghsphgv
- rhcuffgvvhgrnhhtihgvrhdfuceofhhoshhsseguvghfmhgrtghrohdrihhtqeenucggtf
- frrghtthgvrhhnpedtveekffevgfekuedthfetlefhhefhueegfffgtdfhleefuedufffg
- leelueduieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
- hmpehfohhsshesuggvfhhmrggtrhhordhithdpnhgspghrtghpthhtohepiedpmhhouggv
- pehsmhhtphhouhhtpdhrtghpthhtoheprghlrghnrdgruggrmhhsohhnsehorhgrtghlvg
- drtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhr
- tghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhsse
- hirhhrvghlvghvrghnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhn
- ghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhdqsghouhhntggvshdoqh
- gvmhhuqdguvghvvghlpegrrhgthhhivhgvrhdrkhgvrhhnvghlrdhorhhgsehnohhnghhn
- uhdrohhrgh
-X-ME-Proxy: <xmx:XLvSaD55vU4z69cCLgzqcKPc-nV8pMFzpKTHPqZqQmeETnd1qXENAA>
- <xmx:XLvSaBWuhZMK5ip8A6pusKt73_a2p86JHxw8_HUPl7NMNUhxJbwkiQ>
- <xmx:XLvSaK5sm3_3xhVEsnoQcxQBPKbapQ9psR_Labo2eBOPhOwQTMwOwg>
- <xmx:XLvSaEppr3NBe86c9HOpUt58eDsgsnkAAMn57fVdYs_uHXmqmzXn4g>
- <xmx:XbvSaDULD-qkZ4PrtcKTAL5aM9B_1ELiL43Qx3279EDC_MAP2hHDv5Pk>
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 23 Sep 2025 11:23:07 -0400 (EDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 23 Sep 2025 17:23:04 +0200
-Message-Id: <DD0A7772884E.HOY3HVDIV4FB@defmacro.it>
-Cc: <kbusch@kernel.org>, <its@irrelevant.dk>, <qemu-block@nongnu.org>,
- <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
-Subject: Re: [PATCH 0/2] Add support for NVMe Namespace and Boundary Atomic
- Parameters
-From: "Jesper Devantier" <foss@defmacro.it>
-To: "Alan Adamson" <alan.adamson@oracle.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.20.1
-References: <20250602230458.1073148-1-alan.adamson@oracle.com>
-In-Reply-To: <20250602230458.1073148-1-alan.adamson@oracle.com>
-Received-SPF: pass client-ip=202.12.124.157; envelope-from=foss@defmacro.it;
- helo=fhigh-b6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v14sm-0002KG-V4
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:24:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758641082;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GLyrTcqqNuaEFEFXx9yMKuhx535TvJEYGetYtD/el3E=;
+ b=fu6LzHk/5oiP60uvfA5rFbFlTX8j7Cy9VgQFmumOTjzsJDwYRhpRVcFKNL1SyNweTLj8io
+ IUbf3ihSgzcscOM58Bw/aE4F2sdxusEYgNmC8oMWDfTy6bKwxCGLllL3wyb//QJtYGGR/d
+ EVS6rUtR/ndMR5lUTS+VSi0gq0h135U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-TmdH3AufPCa6olN31-22GQ-1; Tue,
+ 23 Sep 2025 11:24:40 -0400
+X-MC-Unique: TmdH3AufPCa6olN31-22GQ-1
+X-Mimecast-MFC-AGG-ID: TmdH3AufPCa6olN31-22GQ_1758641080
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC59318002C8
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 15:24:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5A4819560BB; Tue, 23 Sep 2025 15:24:37 +0000 (UTC)
+Date: Tue, 23 Sep 2025 16:24:34 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com,
+	Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH] x86: ich9: fix default value of 'No Reboot' bit in GCS
+Message-ID: <aNK7suE2t735nV3u@redhat.com>
+References: <20250922132600.562193-1-imammedo@redhat.com>
+ <aNFcCQL7Ad_nnxMM@redhat.com> <20250923104051.1b71d6ea@fedora>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250923104051.1b71d6ea@fedora>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,75 +87,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Jun 3, 2025 at 1:04 AM CEST, Alan Adamson wrote:
-> This patch set is a follow on to commit ebd1568fc732 ("hw/nvme: add atomi=
-c
-> write support").  These patches introduces two updates to the NVMe subsys=
-tem in QEMU,
-> both aimed at enhancing atomic write support for namespaces.
->
-> hw/nvme: enable ns atomic writes
-> --------------------------------
-> This patch introduces support for namespace-specific atomic write paramet=
-ers: NAWUN
-> and NAWUPF, as defined by the NVMe specification. The atomic parameters a=
-re
-> utilized to guarantee that writes conforming to these boundaries will be =
-atomic,
-> improving data integrity for namespaces that require atomic operations.
->
-> The patch introduces new NVMe QEMU parameters:
-> 	atomic.nawun (default: 0)
-> 	atomic.nawupf (default: 0)
-> 	atomic.nsfeat (default: off)
->
-> The addition of atomic.nsfeat sets the Namespace Supported Atomic Boundar=
-y &
-> Power (NSABP) bit in the Identify Namespace Data Structure, enabling name=
-space-specific
-> atomic write features. The patch also ensures that atomic write behavior =
-adheres to the
-> NACWU and NAWUPF parameters.
->
-> hw/nvme: add atomic boundary support
-> ------------------------------------
-> The second patch expands on the atomic write capabilities by adding suppo=
-rt for atomic
-> boundary parameters: NABO, NABSN, and NABSPF. These parameters define the=
- atomic
-> boundary size for writes and ensure that any writes crossing these bounda=
-ries are
-> treated atomically, based on the AWUN and AWUPF values.
->
-> The following parameters are added:
-> 	atomic.nabo (default: 0)
-> 	atomic.nabsn (default: 0)
-> 	atomic.nabspf (default: 0)
->
-> If the atomic boundary is crossed, the writes are guaranteed to be atomic=
- only if their
-> size does not exceed the values defined by AWUN and AWUPF. This ensures t=
-hat larger
-> writes crossing atomic boundaries are not subject to partial updates, the=
-reby improving
-> the robustness of atomic operations across boundaries.
->
-> See the NVMe Specification for more information.
->
-> Alan Adamson (2):
->   hw/nvme: enable ns atomic writes
->   hw/nvme: add atomic boundary support
->
->  hw/nvme/ctrl.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  hw/nvme/ns.c   | 74 ++++++++++++++++++++++++++++++++++++++++++++++++
->  hw/nvme/nvme.h | 14 ++++++++++
->  3 files changed, 164 insertions(+)
+On Tue, Sep 23, 2025 at 10:40:51AM +0200, Igor Mammedov wrote:
+> On Mon, 22 Sep 2025 15:24:09 +0100
+> Daniel P. Berrangé <berrange@redhat.com> wrote:
+> 
+> > On Mon, Sep 22, 2025 at 03:26:00PM +0200, Igor Mammedov wrote:
+> > > [2] initialized 'No Reboot' bit to 1 by default. And due to quirk it happened
+> > > to work with linux iTCO_wdt driver (which clears it on module load).
+> > > 
+> > > However spec [1] states:
+> > > "
+> > > R/W. This bit is set when the “No Reboot” strap (SPKR pin on
+> > > ICH9) is sampled high on PWROK.
+> > > "
+> > > 
+> > > So it should be set only when  '-global ICH9-LPC.noreboot=true' and cleared
+> > > when it's false (which should be default).
+> > > 
+> > > Fix it to behave according to spec and set 'No Reboot' bit only when
+> > > '-global ICH9-LPC.noreboot=true'.  
+> > 
+> > Is there a real-world problem you hit that is being solved by
+> > this change, or is it just a theoretical spec compliance fix ?
+> 
+> I've stumbled upon it when implementing ACPI watchdog POC
+> 
+> https://gitlab.com/imammedo/qemu/-/commits/wadt_poc
+> I'm not sure that watchdog table belongs to QEMU,
+> but the ICH fix definitely is.
 
-Follows the spec far as I can see.
-Read the code, seems good
+I've tested this as follows [1]
 
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+ $ make-tiny-image.py --kmod lpc_ich --kmod iTCO_wdt  --kmod i2c_i801
+ $ qemu-system-x86_64 \
+     -kernel /lib/modules/6.15.9-201.fc42.x86_64/vmlinuz \
+     -initrd tiny-initrd.img \
+     -append 'console=ttyS0 quiet' \
+     -m 1000 \
+     -display none \
+     -serial stdio \
+     -accel kvm \
+     -M q35 \
+     -global ICH9-LPC.noreboot=false \
+     -watchdog-action poweroff \
+     -trace ich9* -trace tco*
+ich9_cc_read addr=0x3410 val=0x0 len=4
+ich9_cc_write addr=0x3410 val=0x0 len=4
+ich9_cc_read addr=0x3410 val=0x0 len=4
+tco_io_write addr=0x4 val=0x8
+tco_io_write addr=0x6 val=0x2
+tco_io_write addr=0x6 val=0x4
+tco_io_read addr=0x8 val=0x0
+tco_io_read addr=0x12 val=0x4
+tco_io_write addr=0x12 val=0x32
+tco_io_read addr=0x12 val=0x32
+tco_io_write addr=0x0 val=0x1
+tco_timer_reload ticks=50 (30000 ms)
+~ # mknod /dev/watchdog0 c 10 130
+~ # cat /dev/watchdog0
+tco_io_write addr=0x0 val=0x1
+tco_timer_reload ticks=50 (30000 ms)
+cat: read error: Invalid argument
+[    5.646147] watchdog: watchdog0: watchdog did not stop!
+tco_io_write addr=0x0 val=0x1
+tco_timer_reload ticks=50 (30000 ms)
+~ # tco_timer_expired timeouts_no=0 no_reboot=0/0
+tco_timer_reload ticks=50 (30000 ms)
+tco_timer_expired timeouts_no=1 no_reboot=0/0
+
+And the same, but with ICH9-LPC.noreboot=true.
+
+I see no functional change from Linux guest POV in either
+scenario before/after this patch, so
+
+  Tested-by: Daniel P. Berrangé <berrange@redhat.com>
+  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+With regards,
+Daniel
+
+[1] https://gitlab.com/berrange/tiny-vm-tools/-/blob/master/make-tiny-image.py
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
