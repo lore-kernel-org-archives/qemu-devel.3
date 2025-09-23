@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5A2CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F4ACAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v10QN-0000wM-9I; Tue, 23 Sep 2025 06:39:07 -0400
+	id 1v10RB-0001Rj-Bg; Tue, 23 Sep 2025 06:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10QK-0000sz-6s
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:39:04 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10R2-0001K8-RO
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:39:50 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10QE-0005Go-C4
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:39:02 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46c78a1784dso8032295e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 03:38:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10Qv-0005Nz-0d
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:39:48 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3f0308469a4so2086392f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 03:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758623935; x=1759228735; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758623974; x=1759228774; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CRbwK4NBPHdo4l0/P5FLE2ifGdo+X2eMPuXGFnC1gKU=;
- b=RqClT7cVdYrXcw1Tqqflfsrk6iU1moDAb3YG6WIBhUuEqbKB/5uaGoPJkZ0vonmjwT
- Ei00cUMwb77QADmV0wLUAP9j0V1sUaw/2Y1WseELthh/AM5KNGtgBfayl4JYU8gs9ze7
- H6JKUzGFjZ79t8b5oKoZd3Tqm5LB4EHds3W5DevQPf0eXMwHpsC9zOiUwVAjJqzRFzQM
- XjDIF5N51WUgUB63mjvK+DkemB9USqvdSGqC0SIIWPmAe3GungOLY1SKKLoZqVapKDDu
- AXWRO0KCIawrLpxzDuBwqYf5KYZwHJGNnjSidgkpRozBHe5TinZZ0mjD32AfzKxP3uU4
- osiQ==
+ bh=jjX/GzuCm6wxPV6i5nZAbkBCVwKmsvIhAZarqahABBg=;
+ b=nyhfANpnTHDEZ0hzspxIQvrJcNhhMZwhdnNsq3kqBE7QZlH3MP1hqLRHjz/h/oLk3U
+ 4VlrC5vfVRqNsodr6f6rtlKI8BSE++DWF/iiVTKAQGGeexip7jnxdgeV8M7suqsC7F2N
+ RXW0ZM0FG16veGFI0BLMrOI5cEqkurjp6b8h57eDWHRjCkfkvls/2SEvrM+om3+6xN+R
+ MdSyIyAzSBTwXHDrPU1Fseos27dV3pRbHuHHYlXvJzbzXttdaLu2x75TTT/tUr4PG21k
+ tHlPyvy/qxRwln04PrnsuKEXSvbiUJrtU36syA6b+MFFxe0KIj+Dva2HPRwOJivnsvob
+ erPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758623935; x=1759228735;
+ d=1e100.net; s=20230601; t=1758623974; x=1759228774;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CRbwK4NBPHdo4l0/P5FLE2ifGdo+X2eMPuXGFnC1gKU=;
- b=Dhbp81ra+dlRlJDjjeaoAj/U4PdFnqNyrpueZJB/YU92pRlsL/fkMrupYhhhmStje1
- Xk7DKNdJb/crO4Y9Gf8GqD2A4PcXr68mLYGusXHmjNHInz9d0I4DqpGX9Dhk+9UygwLp
- Hr/SX4YGybcTfq6A0rQKg+qkGXEjfvxUBSoq925OvF8grtEEyPPAOoa8ulhhlwNOXEio
- PIeHIs5ggpFQNRBTHgum513RUb7f0tlEAv2XJ85wwsTa85Ug5aqn6BHa7bTAvSwDZePL
- H/PErlcmHhKJ3muDqfKjK/vdMNTj+wtBbAMz5HWgkPnM1FCczomTn417nHVLaLcghZ7b
- USwQ==
+ bh=jjX/GzuCm6wxPV6i5nZAbkBCVwKmsvIhAZarqahABBg=;
+ b=oc7ikERiHK7+9AWTJUM1W2TcUIkmGmWWbyPcZEuKZsTyYqdQgwqQ3Y5oYt8g3ObRDu
+ pjfetYz/mL7SnJHlyF6BQjh7PxmA8NptDNrOn7hC3TY5xpoSzR+a79UuG8WM5HidH+Ww
+ 3BtA6maaoateFivx1yQsbUHBUSxxyIs2okLI7TgP0h8ykzcJem+noy1OeYSWUQ1Jvsx8
+ VG/2NFJMwKlBnG8OcDTvKf8rep098+tAoXt0iex9u64sr36ESpyGKB7YQPiEIMgPz09D
+ dqsLtRGLd3W7Ah3+ZYz5hJik3z8hfDunHeDiwUXVochu4QHmF9Ys/Ihg0oFxdyAWPh64
+ 9DSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWb5FWWjO1VdhlMHxVfs2pIummF/SNcPYLzAeOEs9rcbMO6Jk7iun4rnWbm/byJP87TyQzPdYvKeqBC@nongnu.org
-X-Gm-Message-State: AOJu0Yzek3UXAWLRFhPuXq85NJh5DwAILDGWMItDhQfVSLZXIWeiCDNG
- CFzKxJ3PAZ9NHwmyRL877rIe3k4R697zusGjScdTko3/zOlOfH6ifpGu6f+/W9LbQiA=
-X-Gm-Gg: ASbGncvJ31ggFR7G7eht4TWQKz9+OToKIJ8CVyKm3B/wlgcY4n2x9M2+bRwuoHh4SWr
- GIqBYjenIVi29EjzPJbUVa3Nvgq7pRBLeLqUN6FxsuM2uvhqzj3+22m1C7Vc0oNJYluM1dXLgS9
- 8/6SXEVZg0z2yl1T6pYttiXxByk7MrkTVq/7Ecu3I/s34lxsvijb7bb1DNOHNiCXBwx/t9qtEYX
- vKEaO7jjTcqWa8y0g2LynvOM9HoPN+24nAJc+UI1JVN0p7XQ6uzHGgIVIzM0rYneSKkWsYxtKXD
- CDAOvKukSqKHbZPCz3T2dxCils4yDYG7L2SX5SHGWvvfJPb/qG7U9PMIhQQ2nfO8zBz27J+CoEj
- WqP4PH/XeleYnC1FotRYLB6RLboraIeecoElz7ko4b56GA3k2UUJaz75qtF/Rh4wBDQ==
-X-Google-Smtp-Source: AGHT+IEED/1eEDvqGeN2HUpSyohwO+hqti9yS6VXZf7uwr0ifC7od9VYb1TD4Xyqu0W/DojU8UBkMg==
-X-Received: by 2002:a05:600c:3588:b0:45d:2ac9:4240 with SMTP id
- 5b1f17b1804b1-46e1daacc85mr32542705e9.17.1758623935036; 
- Tue, 23 Sep 2025 03:38:55 -0700 (PDT)
+ AJvYcCWbDajdbUPVUr2HeQ/eCGD1ScaOIMBi3bnNHC8/qn5drc9AE7biSScvSp9lWswcipTNL/Btmi6uAPji@nongnu.org
+X-Gm-Message-State: AOJu0Yx53/D+u1PI1nMBz0JbI8We91uz/nfE1yQa544WshfhaqdLEeh0
+ JaI383SEMjC2RSSHqmzQl/IkmNWG917YuNpgYOivR+4e6DdhjZdveijfa2TapWRsbHC4dF2Xex1
+ mYRHEo2q1LQ==
+X-Gm-Gg: ASbGncvEPSaWaAWTJ0ub58ppT2PCoGPGND7Ru+hgjfhL9eqNsIP5AakVKd554BSKu3b
+ LEzjpxz5IXRyomXq/tb5THiwpAOsghsa9VLasGnuCD9K0SIu6LWYPevNHb4vORPgDVVzJbFSN56
+ GnpGZgh3lazbWDoT5z1INioiMUOGSSOd+FTL4tYQxnRsR9PGghvK5I8dOUQJZ8B+cgM/c6Jg8FZ
+ cMruNZui6mqYMKsd7SaIEunKoF1M72TZXjEIZChZB1p2mz2Xi+OdwF0WTYLMnW4oqYFQdjQwPMo
+ h1iG0auymJ7QYf16k9xuJduDwmU6RNprKama2Pdy5ekInZxaJLSx4gBpacmO+cRGOhCeVDhTY5L
+ MPO6okzemhZT7omYyjqgGW6J9X3GEf2Yxy/msJVwQwPMWOAIx0tyoM6FCOE6VgMfX3g==
+X-Google-Smtp-Source: AGHT+IEDrzf5dJkAo8wu7PABPnspZLwd0RXGNeVvmNqanAm0Fua06e7mQju0Nv3EeCWIktFuvIxYWw==
+X-Received: by 2002:a05:6000:610:b0:3ee:154e:4f9 with SMTP id
+ ffacd0b85a97d-405c523c2c5mr1727862f8f.20.1758623974428; 
+ Tue, 23 Sep 2025 03:39:34 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46c9d5d52dcsm107406275e9.8.2025.09.23.03.38.53
+ ffacd0b85a97d-3ee0fc00a92sm23619654f8f.63.2025.09.23.03.39.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 03:38:54 -0700 (PDT)
-Message-ID: <43943c2c-126e-425a-b32e-f15fb144a1b5@linaro.org>
-Date: Tue, 23 Sep 2025 12:38:53 +0200
+ Tue, 23 Sep 2025 03:39:33 -0700 (PDT)
+Message-ID: <a4ad976f-beb7-440a-b23c-45bd691fcc08@linaro.org>
+Date: Tue, 23 Sep 2025 12:39:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/36] target/arm/hvf: Reorder DEF_SYSREG arguments
+Subject: Re: [PATCH v2 05/36] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20250916142238.664316-1-richard.henderson@linaro.org>
- <20250916142238.664316-5-richard.henderson@linaro.org>
+ <20250916142238.664316-6-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250916142238.664316-5-richard.henderson@linaro.org>
+In-Reply-To: <20250916142238.664316-6-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/9/25 16:22, Richard Henderson wrote:
-> The order of the parameters in the Arm ARM is
-> 
->    op0, op1, crn, crm, op2
-> 
-> Reorder the arguments of DEF_SYSREG to match.
-> Mechanical change to sysreg.c.inc using
-> 
->    sed 's/\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\),\([^,]*\)/\1,\4,\5,\2,\3/'
+> Conversion between KVM system registers ids and the HVF system
+> register ids is trivial.
 > 
 > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/arm/hvf/hvf.c        |   2 +-
->   target/arm/hvf/sysreg.c.inc | 224 ++++++++++++++++++------------------
->   2 files changed, 113 insertions(+), 113 deletions(-)
+>   target/arm/hvf/hvf.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
