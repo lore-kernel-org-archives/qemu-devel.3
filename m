@@ -4,187 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3287ACAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 14:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D815CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 14:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v13UQ-00082W-GC; Tue, 23 Sep 2025 09:55:30 -0400
+	id 1v13ad-0003Uz-D5; Tue, 23 Sep 2025 10:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1v13Tx-0006ab-Ar; Tue, 23 Sep 2025 09:55:06 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v13Zc-0002wW-23
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 10:01:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1v13Tv-00043m-9j; Tue, 23 Sep 2025 09:55:00 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 58N5a3dS3995717; Tue, 23 Sep 2025 06:54:53 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=LNrYqOnmSKSqge36mAEIR56sWg5tSwCjRrRDrtJUZ
- pU=; b=N+xnFrR+Y2NasefDJMLlZVv2beG5tOkAsm9RtufnzPsSA22qHFiiyMx8g
- zzvRgACbaPE3kkZ2HkWS2GmD8y1Uu3+BIjAypKOXHenzj4mbNBVugl2S+r0VCNuM
- ChwW+08qmg8jouO9oalqoR9f1AdUbltlxsj80mvbUNoxBvW6J7pcTYTxXijBCYrr
- IMxrHnN46Jw7bbVw9CA4kCVALIhmGMQhIU5v6TmK8jERAraKUVfZj4hFMteBRL2g
- tM3Ahf18RpxdpB+DdbBdZ8r0i0hM69XC4RyepO1p5/5xjNpI24eJeBRIv5HqY6nd
- rCCAeCNqv2r/viEFjeN/qPiiPOH4A==
-Received: from sa9pr02cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11023098.outbound.protection.outlook.com
- [40.93.196.98])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 49b9pjjfby-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 23 Sep 2025 06:54:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iNfXaa8WvBdFEsl8GjART1cnC6+JczGlEmA2gRNMOgJAUjIRaTadbJZbaGuFcwO7cPZQQR7UHAAq3MOJdfavq/HSAbEJSbO+rKBASfx3EyMldWTm2C23c8H7FQ2+1lkRffr/7eBBRAVAntmlDiwpey8a/zfephipQGdiIghmWO0/8r8BG0yoQHQPjwGffQFwnyKgd04LW7vSxNoPjRRDqk2qEoXST3yn2HtlM0iHwx48QE1YRNEuFXvAE9pR1qK4d/XaAknfAPlCgR3xH/kdgsPvRgdRJtanQtT4M7UyF8dq/wnAzAEWtEvgOgXXjbiSe+vqgd7dWxp96AdZVcpFuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LNrYqOnmSKSqge36mAEIR56sWg5tSwCjRrRDrtJUZpU=;
- b=vuRV6Pw66Te9kiT2ZyKMdbZAEqx5fEBVZLquuLdxy+8WNbFSpL8s/ZiHEwnyeJuVMFKKO6PeDp5WYGgaQh4pXxRQvgjCvP7iipM9eFhM0MbVFAO8Gxi2my4/QNtSnZ0HgHvsha69h3U/MGPLJ7TWkxJMcV2pOSPBFxH5ZeW2/ZsAPsGBxcqwhDYcSyWdDBxuMdjbgqOIDf3QLPRbBnZ9VjfIdV4pToO+R7hlAzO4CqaV+/6InB+G3PxbPSIeXDoPRaZftnI29po9yrrbVJNcX5a0Y/4RZxuZ4WbHfAaPJSzbyT97VglL7d7JH40A/F9bBNSijv2hfv3gYFaKWSIotA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LNrYqOnmSKSqge36mAEIR56sWg5tSwCjRrRDrtJUZpU=;
- b=OJfSJYb9NDyt2R2DSNOfgsS4EneOnEZimOP8FNOZyhuC8VG/+sMGK2HOdoCsjnHjoviFq8nv0Y/hbhNftoF1QMEidJcHLaxsIhWmEI5CxmlICb/O2JlHm6wMmUBwnFrUUBfpjz85g04rD9tqksT3m7ToNdubTv8KJGnSrmlSCGG+CUkBR1dj9wwxktw31UAm6pHahGD43nDkzZc44XD991mlkRtbqvrghdRRN707NuBCBdQIuatBT0hNSeWYE+CNJn8FTNrK03Z1uLPYDnd0QVuA93PCX3WOrlP83zLriQXwv+U4VC0hYgT55i0q2sj6Xfuk/vGmDJvlatKSa4RtgQ==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SJ0PR02MB7742.namprd02.prod.outlook.com (2603:10b6:a03:320::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.20; Tue, 23 Sep
- 2025 13:54:51 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::6cf9:b35c:b143:bb88%3]) with mapi id 15.20.9160.008; Tue, 23 Sep 2025
- 13:54:51 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: npiggin@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
- farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com, john.levon@nutanix.com, thanos.makatos@nutanix.com,
- clg@redhat.com, alex.williamson@redhat.com, steven.sistare@oracle.com,
- qemu-ppc@nongnu.org, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 15/27] vfio/pci.c: rename vfio_pci_dev_info to vfio_pci_info
-Date: Tue, 23 Sep 2025 14:53:21 +0100
-Message-ID: <20250923135352.1157250-16-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
-References: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM4PR05CA0019.eurprd05.prod.outlook.com (2603:10a6:205::32)
- To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v13ZZ-0005PL-SS
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 10:00:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758636048;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AxPOvCe3JzXAmTLeoQfDt3vDwcdgYKfpGI2jOpstdOM=;
+ b=KEqfY+0RGMMnalsp+HnekCU1EBVcclU/H22lrQJXiHbuH2Cjas/aKBDtfZfeWYv1bBoLdW
+ OIRqJGS19HDSd7gO0aNxOSPwzb6LesF0oUpxG3fQT6wTLmwUNdGitNfleo63dkxgyE2V4N
+ zZ66O/kLbpRGJn4mmtlPWu3T8R8b54E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-213-V1UeV5hIOHGl0jQo8XvEmw-1; Tue, 23 Sep 2025 10:00:47 -0400
+X-MC-Unique: V1UeV5hIOHGl0jQo8XvEmw-1
+X-Mimecast-MFC-AGG-ID: V1UeV5hIOHGl0jQo8XvEmw_1758636043
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45f2b9b99f0so17819035e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 07:00:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758636043; x=1759240843;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AxPOvCe3JzXAmTLeoQfDt3vDwcdgYKfpGI2jOpstdOM=;
+ b=fJ6PublA3sYxtC/Im3bkYjj5cEm94ncetwsHpE05sSHyILTbVAk+DueuSAI7PnsEJp
+ BQSqx8cldtTU/BiS971xNsaaA7p0+YwrhnRDNxmiinlFGl61UIsFIfnm3f++S2qy0gKJ
+ +zqnOWCN193l8aqJdGyjGrTuOkSLk73hUnn9k6YGHA6utsmR5t/vqaZEZxcF647pOAUz
+ k1aqlOw/4gtcp8d/DyKpFmfdAvVZTw6uuiYbdTXSWdJrXVJ7JLUozOB/qGx9fCKeRjBi
+ KF4ftQgxAbs38rNI97rJSZxRTeQxHd+6eVvZBG+P6Fedo667C/O7IBvtAXqCcXPfC9Hw
+ CB2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfmnd4P9chJg7q1HJ3a7fSoA8pBket91NZVEaLJGauFcJddBcc/6ghHfnv5aMhW1e2acSPEy+rzmp3@nongnu.org
+X-Gm-Message-State: AOJu0YzJTKJ5FZGXqPRQSFl9ZEnmdodKbvSntfUrpzklqJy0VDtXPfXG
+ LoUFETl5TvYMJbLsPSxvnYxMgyceARhudUHiETLFM60RSDr7pp4fspBXB+75QFrYp4AjMPkHxzj
+ CIliLn983R0Z0IFaUI2LTQwP4rGQrO2HMFrLR5I0GhMT/95zwn9FMJp4C
+X-Gm-Gg: ASbGncsIeZEhf949HcvOCEE4lM0++0hVbx32e2DQ07O8BTkiD/6/3bCLw+oo0yITcMm
+ r9JQLBygwbaTX4ovdr3uaIt2bEEAVnmHDB+Ei6izgG3/h/p7f3uBzkBFufuUcGsStIcnetSarrC
+ YQd+LF1ZYsHKEQI3fUkjnBYLfqq65GdJVOhfh1WgAiTJraKAjGJe82aLCU6E09Kj6zcEBPrJ6JV
+ 0JQ4cAZM2rC8CNlzMcQpi9tUKVLpoYA+CzJ+eKpwezQjLL80epBRsgirMn1lx/BXp2tvNb6/Pwd
+ 06HG0TrIfyYBk2VkchH5D877TULo9BrfvQ50idt1CBWO9DljIImpWc+jcpBAi/E/Cgc9oYXIpsL
+ Wsf0=
+X-Received: by 2002:a05:600c:1f82:b0:456:942:b162 with SMTP id
+ 5b1f17b1804b1-46e1e15f33bmr24658245e9.11.1758636042847; 
+ Tue, 23 Sep 2025 07:00:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvwBagm5fqCasYl1jN5HHHr1NwSHlUDz4qFg7Oh3KM1g61eSgUA1qsSCIByCzewr/FhMnGXg==
+X-Received: by 2002:a05:600c:1f82:b0:456:942:b162 with SMTP id
+ 5b1f17b1804b1-46e1e15f33bmr24657695e9.11.1758636042288; 
+ Tue, 23 Sep 2025 07:00:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46e1b578ac3sm47723765e9.9.2025.09.23.07.00.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 07:00:41 -0700 (PDT)
+Message-ID: <ef1aaf1a-1e9c-43f1-b971-012440c36389@redhat.com>
+Date: Tue, 23 Sep 2025 16:00:40 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SJ0PR02MB7742:EE_
-X-MS-Office365-Filtering-Correlation-Id: d11db84b-a045-40f4-8067-08ddfaa8c433
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|10070799003|366016|1800799024|921020; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/LN/4o9KCVEQ8oMb2E2YAhx7ALApiIBJdC1ZPOTuFzMSq2aqpN2JOyWkow4c?=
- =?us-ascii?Q?DEXUFW7GsefILzEq928qAYH+WgNHT725KsxqoEBZi6zxVsv8oP0hc51Y2ABl?=
- =?us-ascii?Q?ItY7LQ05+fz8dKdju6N46tLhumpHjeWjyVOOb1SPqWx3gtAMVQVPIXg4x7ds?=
- =?us-ascii?Q?3WR40t82VdLTuE0muLD4Dby1G68FcX3/2bd979OcfE+J8Fxg4JUSvDfKFZJn?=
- =?us-ascii?Q?A1NEkMhV+qVbUSZUxlV1zOHOTpWfRab4AmaLzUpg4/zQ2gDY3QDkDO7qQSJK?=
- =?us-ascii?Q?Idv07/MdaXtJVD6O+mJ287Y4Bx+sWbmFS2j4dMUMXneb4LKH7OnS6T1LeL1D?=
- =?us-ascii?Q?R7eSFWOf0/FtdF2dv71Lx5BouWj0kZMp+BwhVCFyKIBer8CWqMNeUkJU5/53?=
- =?us-ascii?Q?vcBuogFQLObFqdyLMK5x+AO18v0xH9329fsvZ+wHTCNuPs/dejGo/459YbpC?=
- =?us-ascii?Q?IQ166BeabUBahHlrvWMiG3+gkneezXQ+qyXGejWwBTcj7FU41qxI6V2eAc0o?=
- =?us-ascii?Q?moxlr6EElGCzwEEXrg0MdGTu7dUcfuBKTOp6oRDb9SSLnzcKqG3m1tuf21dM?=
- =?us-ascii?Q?8J5SU4OOH/kQK4z3nzcTtyixFgf0Gjh7C1wQwu8/KzHgPC9ulXlmDXu6Zuty?=
- =?us-ascii?Q?nAqFhyWhcYSNqXGpmKSRz9hYJ4smvUJyFr7S4zOIapuiYLpWHk/t8+uXt/o1?=
- =?us-ascii?Q?YArUfIJjDdCUiXzZFmI+lwKRIw9GXVM17dZr+YAEseYXuKq6psJ9A5UZwtWA?=
- =?us-ascii?Q?aCIfFRgYs81qvXTdouaNAwu4cGoeIDYlIWLcUlbtbR6M0FwZe9sCc3jCHznK?=
- =?us-ascii?Q?W9kaUs0YhloEQ/UpGAuZwmVTwrzbxXDL6tP32icjc6hwFm3A8e+d0fes6lV0?=
- =?us-ascii?Q?+5Qv+M1VAUDhc+QW3iPFA5tJLtW9XdpQv79PnjT+QbxmU8vnpqhlUUTj4zCd?=
- =?us-ascii?Q?/YMtvicg5+puAS1yx5WIi3DXOVS+uOI7r9VLJz07xKXwJaf19K9Uikt+hvnW?=
- =?us-ascii?Q?lg/plnP9tHJSv//BhNc/wCx3gf09UCxBeeUL4ciqpBTTMq1dlx/qLm0Rnbo+?=
- =?us-ascii?Q?uCNmoxPZufi5tpVxM0WdvT7UPWo4LLYC67WlVOoOhq4fOhQM6rbU2XHeBOl1?=
- =?us-ascii?Q?KYXfgDRpORB3RyVV33w/rRFAixw3/eT+TwotQfocSeranRoykRRSq1oVVjRE?=
- =?us-ascii?Q?GlxW446A5EbW9jZFw2uvZ/pPR5iJLl5LvKD93btcYURFJiKWeZsEab+IgPcp?=
- =?us-ascii?Q?NAErP/frPwoOftnjqBEXhBRqH0gmE32FtdwEH4qO1hcWGB8ifAL9mCYx6ofF?=
- =?us-ascii?Q?0U0S35yPufm866+rIS7ojCqXnH/MWh1orCafRX36AeAN2qz4WGLgmVx0TAKe?=
- =?us-ascii?Q?uE5OmyUUoDaCXrij0uZ1612g7DSAOIqZQCx+a1XZcI26ym6OVdi9N3glQDMn?=
- =?us-ascii?Q?6G2jcBomBeA/ub0lgUuySP3FaUN0QbwnuSgAg2bYyoeUVkQiozNKHw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(10070799003)(366016)(1800799024)(921020);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VrKyG2SUR60VEEcB4DFiSQ5WerkRTGO+WFSO25bls0/KtwzfZWi00k2c4YMc?=
- =?us-ascii?Q?G6IVvykEEu5DKK2zN5MHsGmadIIc0xprR53kj2bS6b9EU1RI84EPwynXFeZP?=
- =?us-ascii?Q?wMk13B/UxSvYFu42SxfstmuMxueUSAuSbXckaXg9mQWJemyUq/Kl4c7xmrmq?=
- =?us-ascii?Q?aa0i3Ip1+/4Ag6pSi15I00KWxWbh61hJqgR0EwGNvJ0INqG3AcUxr3YoaTsX?=
- =?us-ascii?Q?nc+WLcWI/j4adj55oE6L5qQdPJRmwFPIkN0e0/jKOWM6enFAhShrj30ajgC4?=
- =?us-ascii?Q?v+vrZROamI/BRdPadLFPARxoHM+MMFC3nkLs8lO6xN22w6Al57ZS1PzG6GOU?=
- =?us-ascii?Q?apuXeMFp4oKCk1FwQzGzLLVRZh3PbIqgxEutgqBEn5bRGNyi+wKsL4tskkS3?=
- =?us-ascii?Q?7y5lU0XUSU4NnC/tsMdcb4wU2/itHSoMS7/agzIrphwrIRZsSopXwswlORMj?=
- =?us-ascii?Q?18KmmHdWe/BfPt6bmJJ+0698tKQRLTGgSROTI9WkBO2Kbe1EEHSdbmElrHYh?=
- =?us-ascii?Q?uy7DHsmJ6oaI7vKTHFRzZDpS/I6BFPF9KUlvqMW058BoVVPKlrmtnkF5nj3Q?=
- =?us-ascii?Q?C/OwsF4oAikolJkZ0RHOoyc9HreJkgfufipXbW711giJint16YESYVUz4uBv?=
- =?us-ascii?Q?nuAE1iZlKhCRywyFnLZ2SLv5JGOfK+d6muTiPfVvMqpNdKKWTEHIEmFSj5sI?=
- =?us-ascii?Q?7xMBisBwb/6ZXNVOQEcI+JMQAunHox67vQYZ5E+RusiOX+ySkRgke7KMXOgb?=
- =?us-ascii?Q?q+s8eVO1v7GDHU2PbzlapYF8YwxRfU3t2uaDbbd5E9TR+uPY0+s4anvznPtb?=
- =?us-ascii?Q?KT4bnPtia1un2yJW/5nLYm9lC2QvVHkyO58vlhgG7epRzIhoKL8XhhcOY0dY?=
- =?us-ascii?Q?Sssm/2nLEi2FTMBPP7LVCqiGJOxZQSVhaM0BbSyTvWmS4L0BYI0DPqvKy42Q?=
- =?us-ascii?Q?ANn/Ju052LxP69gWYmEyfg6VKdlo5O6W5rpFkA+LWYff2tJV4bAl/Ig+ESQH?=
- =?us-ascii?Q?9FVP6v8P4T98OoyZ+CcySerxEs4LH37LaJe2ZLPCmZiEyHPkzpCRHJTQRK2L?=
- =?us-ascii?Q?3ZbRImH5TEQJSxAwcxt6gDQ8JDb0FBhlGD4SHJ1lyGDyZJNeyugfGnb9VDBT?=
- =?us-ascii?Q?u/mz+OLuINdYhcMaxyjJUYXWOVzjeXneKizopc8niiWbP/73oZlSqGdJVcrD?=
- =?us-ascii?Q?sDCiBVkTfkjpf8bPNrw1IcqumNeAOtTSM9lOHoFus+jgMvAwTDuhh2h0mtLn?=
- =?us-ascii?Q?LCYSR9vxUu6ckJeCUOtHJhXZFqy+DtpKw4S4UY+hOU1fqTUv0Xx7iaxgrguK?=
- =?us-ascii?Q?twXiDHNZFOm/1Au2eg+vkqvPhr7Qrualcp2552rp9PQDk8hO19mUVAhxqNEH?=
- =?us-ascii?Q?IPROYu60l3X6bgpRcg/CoIxqM1LbG6aPEL0v/gFZ/MN6cTt0NWVNpZWpqryZ?=
- =?us-ascii?Q?G3cOG60p4rev8PlILOAtphNVMBHvSpGZc0FmJvEFDAh4fMW8yrbzcF4dt/Tm?=
- =?us-ascii?Q?ll6r2k5XSDBbnjMUjJZ6I1O1Duh5OTBeN5Qh+cJXy1UMqgC/QVrlDKPxpv7m?=
- =?us-ascii?Q?4kKbnyf2aRj98zdDQfcZiFdhD2RoNdD8Oj8NB8U8EEw7E52pvzI6dpBI74XL?=
- =?us-ascii?Q?lZGUNr3Nj3Vy/9WNSUfeGM1RGykpzi/1v3TYsTOObDbfIpHg36F3bJdbQ6Yv?=
- =?us-ascii?Q?eyZWHw=3D=3D?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d11db84b-a045-40f4-8067-08ddfaa8c433
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2025 13:54:51.0388 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZgMXv4oNAoSdfXp5/w3FK1i/OYYmHoepO+wtFPlHmVRp7ZtR5i890d2LBmGXG20yGXfqq31wo/yFEC+FlytyZICkZI8LB7EsW6dHcHqWqNc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7742
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDEyOCBTYWx0ZWRfX3h0wg8aXp6Y0
- SsLAxdEGxsyCXEXmi3pCxSYiGwwa80ZYV87O4FvH5l28sshHGfFNXbT8B/HMR5FAJ8at0+ZpcNL
- cMQnrVa/G4O/B8v9pzEonks86rofvkzrPmNf+d0hvXHibw+3pWaq4rGCCV0rnLZP9SUD2wOfkzm
- niTYjCJD16WSS17SqmX0CRxpZ1tk+/K1tm3UHDbx5w7jrUJOUHnWzPOPOs+2p2sie0J021eATqn
- CU5OVtq5YzyC0v1YE2yo/yRtSRdybdg+m4D1Wod+WwkiGzVjc2QejP3sP/hVpRc8UZHB7eDNDKT
- 1fHKJ1akyUsXFWEjNsL0I2BT1CVWnM4KbO/NVZizXeEwIuvqDGamhe3CImkpQk=
-X-Proofpoint-GUID: ptWYgsvvyCdkUl7_-Us_Pq6GqX6SKXn_
-X-Proofpoint-ORIG-GUID: ptWYgsvvyCdkUl7_-Us_Pq6GqX6SKXn_
-X-Authority-Analysis: v=2.4 cv=LOBmQIW9 c=1 sm=1 tr=0 ts=68d2a6ac cx=c_pps
- a=RF33hWjtojM2TPqP3ubyaQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=yJojWOMRYYMA:10 a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8
- a=-an67RP_g-7o1LT8KO4A:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-23_03,2025-09-22_05,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/27] vfio: improve naming conventions
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
+ harshpb@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ john.levon@nutanix.com, thanos.makatos@nutanix.com,
+ alex.williamson@redhat.com, steven.sistare@oracle.com, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -200,36 +159,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This changes the prefix to match the name of the QOM type.
+On 9/23/25 15:53, Mark Cave-Ayland wrote:
+> This series aims to further improve the naming conventions for some
+> QOM-related parts of VFIO so that it is easier to understand the
+> object model.
+> 
+> The first part of the series renames VFIOContainer to VFIOLegacyContainer
+> as the existing name is misleading, particularly in the context of classes
+> that are derived from it. Following on from this the VFIOContainerBase
+> struct is now renamed to VFIOContainer as it represents the parent of
+> other VFIOFOOContainer types.
+> 
+> The next part of the series adds some extra QOM casts that were missed
+> from my last patchset, which then allows us to rename the QOM parent
+> object to parent_obj as per our current coding guidelines.
+> 
+> After this there are some more renames for various QOM/qdev declarations
+> so that the function names correspond with the underlying QOM type
+> name: this makes it easier to locate them within the source tree.
+> 
+> Finally there is also a rename of TYPE_VFIO_PCI_BASE to
+> TYPE_VFIO_PCI_DEVICE since that allows the QOM type (and cast) to match
+> the name of the underlying VFIOPCIDevice struct.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> 
+> 
+> Mark Cave-Ayland (27):
+>    include/hw/vfio/vfio-container.h: rename VFIOContainer to
+>      VFIOLegacyContainer
+>    include/hw/vfio/vfio-container-base.h: rename VFIOContainerBase to
+>      VFIOContainer
+>    include/hw/vfio/vfio-container.h: rename file to
+>      vfio-container-legacy.h
+>    include/hw/vfio/vfio-container-base.h: rename file to vfio-container.h
+>    hw/vfio/container.c: rename file to container-legacy.c
+>    hw/vfio/container-base.c: rename file to container.c
+>    vfio/iommufd.c: use QOM casts where appropriate
+>    vfio/cpr-iommufd.c: use QOM casts where appropriate
+>    vfio/vfio-iommufd.h: rename VFIOContainer bcontainer field to
+>      parent_obj
+>    vfio/spapr.c: use QOM casts where appropriate
+>    vfio/spapr.c: rename VFIOContainer bcontainer field to parent_obj
+>    vfio/pci.c: rename vfio_instance_init() to vfio_pci_init()
+>    vfio/pci.c: rename vfio_instance_finalize() to vfio_pci_finalize()
+>    vfio/pci.c: rename vfio_pci_dev_class_init() to vfio_pci_class_init()
+>    vfio/pci.c: rename vfio_pci_dev_info to vfio_pci_info
+>    hw/vfio/types.h: rename TYPE_VFIO_PCI_BASE to TYPE_VFIO_PCI_DEVICE
+>    vfio/pci.c: rename vfio_pci_base_dev_class_init() to
+>      vfio_pci_device_class_init()
+>    vfio/pci.c: rename vfio_pci_base_dev_info to vfio_pci_device_info
+>    vfio/pci.c: rename vfio_pci_dev_properties[] to vfio_pci_properties[]
+>    vfio/pci.c: rename vfio_pci_dev_nohotplug_properties[] to
+>      vfio_pci_nohotplug_properties[]
+>    vfio/pci.c: rename vfio_pci_nohotplug_dev_class_init() to
+>      vfio_pci_nohotplug_class_init()
+>    vfio/pci.c: rename vfio_pci_nohotplug_dev_info to
+>      vfio_pci_nohotplug_info
+>    vfio-user/pci.c: rename vfio_user_pci_dev_class_init() to
+>      vfio_user_pci_class_init()
+>    vfio-user/pci.c: rename vfio_user_pci_dev_properties[] to
+>      vfio_user_pci_properties[]
+>    vfio-user/pci.c: rename vfio_user_instance_init() to
+>      vfio_user_pci_init()
+>    vfio-user/pci.c: rename vfio_user_instance_finalize() to
+>      vfio_user_pci_finalize()
+>    vfio-user/pci.c: rename vfio_user_pci_dev_info to vfio_user_pci_info
+> 
+>   hw/ppc/spapr_pci_vfio.c                 |   14 +-
+>   hw/s390x/s390-pci-vfio.c                |   16 +-
+>   hw/vfio-user/container.c                |   18 +-
+>   hw/vfio-user/container.h                |    4 +-
+>   hw/vfio-user/pci.c                      |   35 +-
+>   hw/vfio/container-base.c                |  347 ------
+>   hw/vfio/container-legacy.c              | 1277 ++++++++++++++++++++++
+>   hw/vfio/container.c                     | 1325 ++++-------------------
+>   hw/vfio/cpr-iommufd.c                   |    4 +-
+>   hw/vfio/cpr-legacy.c                    |   43 +-
+>   hw/vfio/device.c                        |    4 +-
+>   hw/vfio/iommufd.c                       |   48 +-
+>   hw/vfio/listener.c                      |   74 +-
+>   hw/vfio/meson.build                     |    2 +-
+>   hw/vfio/pci.c                           |   68 +-
+>   hw/vfio/pci.h                           |    2 +-
+>   hw/vfio/spapr.c                         |   52 +-
+>   hw/vfio/types.h                         |    4 +-
+>   hw/vfio/vfio-iommufd.h                  |    9 +-
+>   hw/vfio/vfio-listener.h                 |    4 +-
+>   include/hw/vfio/vfio-container-base.h   |  279 -----
+>   include/hw/vfio/vfio-container-legacy.h |   39 +
+>   include/hw/vfio/vfio-container.h        |  286 ++++-
+>   include/hw/vfio/vfio-cpr.h              |   15 +-
+>   include/hw/vfio/vfio-device.h           |    6 +-
+>   25 files changed, 1988 insertions(+), 1987 deletions(-)
+>   delete mode 100644 hw/vfio/container-base.c
+>   create mode 100644 hw/vfio/container-legacy.c
+>   delete mode 100644 include/hw/vfio/vfio-container-base.h
+>   create mode 100644 include/hw/vfio/vfio-container-legacy.h
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
----
- hw/vfio/pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+oh my ... ! Let's get that in first :) I will move it at the top of
+the TODO list.
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 3c0e678723..6e8b872275 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3916,7 +3916,7 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
-                                           "multifd channels");
- }
- 
--static const TypeInfo vfio_pci_dev_info = {
-+static const TypeInfo vfio_pci_info = {
-     .name = TYPE_VFIO_PCI,
-     .parent = TYPE_VFIO_PCI_BASE,
-     .class_init = vfio_pci_class_init,
-@@ -3974,7 +3974,7 @@ static void register_vfio_pci_dev_type(void)
-     vfio_pci_migration_multifd_transfer_prop.realized_set_allowed = true;
- 
-     type_register_static(&vfio_pci_base_dev_info);
--    type_register_static(&vfio_pci_dev_info);
-+    type_register_static(&vfio_pci_info);
-     type_register_static(&vfio_pci_nohotplug_dev_info);
- }
- 
--- 
-2.43.0
+Thanks,
+
+C.
+
+
+  
 
 
