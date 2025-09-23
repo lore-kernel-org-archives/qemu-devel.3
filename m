@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCA9CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9A8CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zqs-0003fA-ST; Tue, 23 Sep 2025 06:02:27 -0400
+	id 1v0zqm-0003TT-Qs; Tue, 23 Sep 2025 06:02:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zqK-0002vh-1W
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:52 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1v0zqE-0002sF-Pk
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:48 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zpy-0000vQ-Sg
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:51 -0400
+ id 1v0zpu-0000us-Ic
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:46 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2708980B6E;
- Tue, 23 Sep 2025 13:01:21 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A0A90807D1;
+ Tue, 23 Sep 2025 13:01:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b38::1:12])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id C1Ug0C0Fha60-BVlNaRNH; Tue, 23 Sep 2025 13:01:20 +0300
+ ESMTPSA id C1Ug0C0Fha60-1JTnM1op; Tue, 23 Sep 2025 13:01:20 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
  s=default; t=1758621680;
- bh=GzChdpIiKM7X9bgeu4CwKiMXmrBRh/3YN7kvx854C6k=;
+ bh=DfzOyCICzHBH/C+sRPO/6zCB1uwXvXGrUTU5e+HA5lw=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OF3WdaO4FbwXyhl/0dqAiFImJ9RDWHHMfeiU6sWStq/BdVbCRbOoh9PR0HwrlwYhK
- s2iT+mL8XOFwOFuoPM5ka4Iwob6HNTIgH/hMgSLp0MqAtj9jlQhPr4oV1vrdif1LSS
- HfZBfOPRpVf1wzm4Glopyo7o3U/c9goaoZEzozbA=
+ b=FiQOh7Nd6nrpxElWhIen2Yr/hnl3A/wLvQsMV/O2JQyrfUjD1/HjNlBuzYa26l199
+ km0uCnm+T050Rw8pB3wPGec3ywkjNnNNYzd/hFoy6Z9JCYinqtwMZNYhB58W5scEI7
+ prqxyvaDnXRASvSlB/q+dCAPR5Y3i21LMLHcAKqo=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,23 +48,22 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v6 14/19] migration: add MIG_EVENT_PRE_INCOMING
-Date: Tue, 23 Sep 2025 13:01:05 +0300
-Message-ID: <20250923100110.70862-15-vsementsov@yandex-team.ru>
+Subject: [PATCH v6 13/19] net/tap: finalize net_tap_set_fd() logic
+Date: Tue, 23 Sep 2025 13:01:04 +0300
+Message-ID: <20250923100110.70862-14-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250923100110.70862-1-vsementsov@yandex-team.ru>
 References: <20250923100110.70862-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,70 +78,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement backend-transfer migration feature for
-virtio-net/tap. When it's enabled (by setting migration parameter), TAP
-device is passed through migration channel (which should be a unix
-socket to pass fds) to a new QEMU.
+Let net_tap_set_fd() do only fd-related setup.
 
-So we need to know during TAP initialization, should we open TAP
-device, or wait for incoming fds. But we can't check for migration
-parameter at TAP creation time, as use may set migration parameter
-later (especially when TAP is added by command line parameter).
+Actually, for further backend-transfer migration for virtio-net/tap
+we'll want to skip net_tap_set_fd() (as incoming fds are already
+prepared by source QEMU). So move tap_read_poll() to net_tap_setup().
 
-To solve this, we have prepared TAP initialization code so that
-opening the device may be postponed to later point. And this later
-point is obviously the early beginning of qmp_migrate_incoming():
-here we already know all migration parameters and capabilities,
-but we are not in downtime, so we can continue initialization
-of TAP device.
-
-This commit introduces MIG_EVENT_PRE_INCOMING, to be used by TAP
-code in following commit.
+Don't care about using_vnet_hdr and vhost_net, the state is
+zero-initialized.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/migration/misc.h | 1 +
- migration/migration.c    | 8 +++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ net/tap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index a261f99d89..5765fcc204 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -63,6 +63,7 @@ typedef enum MigrationEventType {
-     MIG_EVENT_PRECOPY_SETUP,
-     MIG_EVENT_PRECOPY_DONE,
-     MIG_EVENT_PRECOPY_FAILED,
-+    MIG_EVENT_PRE_INCOMING,
-     MIG_EVENT_MAX
- } MigrationEventType;
+diff --git a/net/tap.c b/net/tap.c
+index dbd1eb3a17..340d8d0cda 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -467,7 +467,6 @@ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
+ {
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+-    s->using_vnet_hdr = false;
+     s->has_ufo = tap_probe_has_ufo(s->fd);
+     s->has_uso = tap_probe_has_uso(s->fd);
+     s->enabled = true;
+@@ -479,8 +478,6 @@ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
+     if (vnet_hdr) {
+         tap_fd_set_vnet_hdr_len(s->fd, s->host_vnet_hdr_len);
+     }
+-    tap_read_poll(s, true);
+-    s->vhost_net = NULL;
  
-diff --git a/migration/migration.c b/migration/migration.c
-index e1ac4d73c2..4c356e0b92 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1696,7 +1696,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
-     e.type = type;
-     ret = notifier_with_return_list_notify(&migration_state_notifiers[mode],
-                                            &e, errp);
--    assert(!ret || type == MIG_EVENT_PRECOPY_SETUP);
-+    assert(!ret || type == MIG_EVENT_PRECOPY_SETUP ||
-+           type == MIG_EVENT_PRE_INCOMING);
-     return ret;
- }
- 
-@@ -1936,6 +1937,11 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
-         return;
+     if (s->sndbuf) {
+         Error **e = s->sndbuf_required ? errp : NULL;
+@@ -781,6 +778,8 @@ static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
+         return false;
      }
  
-+    if (migration_call_notifiers(migrate_get_current(), MIG_EVENT_PRE_INCOMING,
-+                                 errp)) {
-+        return;
-+    }
++    tap_read_poll(s, true);
 +
-     if (!yank_register_instance(MIGRATION_YANK_INSTANCE, errp)) {
-         return;
-     }
+     if (s->vhostfd != -1) {
+         VhostNetOptions options;
+ 
 -- 
 2.48.1
 
