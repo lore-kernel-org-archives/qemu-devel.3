@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF52ECAC5AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4506CCAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0sPg-0000Yn-0l; Mon, 22 Sep 2025 22:05:52 -0400
+	id 1v0sUl-0002Xb-0r; Mon, 22 Sep 2025 22:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
- id 1v0sPd-0000YH-2P
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:05:49 -0400
-Received: from smtpbguseast2.qq.com ([54.204.34.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
- id 1v0sPS-00085Q-95
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:05:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kubuds.cn;
- s=reyb2403; t=1758593088;
- bh=/AbnPR+R+isrSTmMzJqlnhqIyh2RbvsFPwL4iVZ2liA=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=oH0GEA01GPS/MhAnNowaQsOiCM15SHXanx1rPEPhsq9ZCkr3+hThkYvBBp33f/2gx
- zYK6d6iSkwDhks+W9oR58ql0hsgjzpmw0xOkarPKDGgtxAr6SO5yVOD3vfX+s81/k9
- /f+tgGvEg27yjE52nvdCT7QUWUruUb1qg133MEWs=
-EX-QQ-RecipientCnt: 7
-X-QQ-GoodBg: 2
-X-QQ-SSF: 00400000000000F0
-X-QQ-FEAT: D4aqtcRDiqQ/FTdNJNZZ5kJldjn3TTKGTDiQTNQJo28=
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-Originating-IP: GNuAIe4AAwcY1N5swqzg8pUKeYIiDanR1Z7WuuGn/KU=
-X-Originating-IP: 139.227.152.226
-X-QQ-STYLE: 
-X-QQ-mid: lv2sz3a-1t1758593082t8e25c4be
-From: "=?utf-8?B?5p2O5aiB5aiB?=" <liweiwei@kubuds.cn>
-To: "=?utf-8?B?UmljaGFyZCBIZW5kZXJzb24=?=" <richard.henderson@linaro.org>,
- "=?utf-8?B?cGJvbnppbmk=?=" <pbonzini@redhat.com>,
- "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
-Cc: "=?utf-8?B?a2FzcGVybA==?=" <kasperl@rivosinc.com>,
- "=?utf-8?B?546L5L+K5by6?=" <wangjunqiang@kubuds.cn>,
- "=?utf-8?B?V2VpIFd1?=" <lazyparser@gmail.com>,
- "=?utf-8?B?bGl3ZWkxNTE4?=" <liwei1518@gmail.com>
-Subject: Re: Re: [PATCH] accel/tcg: fix self-modify-code problem when modify
- code in a single tb loop
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_68D20039_C9129260_1D3F922C"
-Content-Transfer-Encoding: 8Bit
-Date: Tue, 23 Sep 2025 10:04:41 +0800
-X-Priority: 3
-Message-ID: <tencent_55B681D209516B8364F39BD9@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 1756259144
-X-BIZMAIL-ID: 16342767215359068385
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Tue, 23 Sep 2025 10:04:43 +0800 (CST)
-Feedback-ID: lv:kubuds.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: NGozucvtNhs93edkWbgeKn9CMtK0SpPl5JRfnFP/WUUg2TvHiRbKpJzm
- 8uQjT/l4vN1l0U0c5qlqEfTH3nAB7ljQeF8VYSaMcji0615viVSRrT5UvbabDxzkbzHsLY7
- Doo6bgjIhp0EP33HVhQDZ2SrWLV4A7ELw2UBX58+C8gxXS32ewTGkCj3ambWBExKjpldI2A
- LRblehOHBwqv+MDDh+pk5JQHaNj0kek6K2CYp8ubC8O4NvmAU6EM8bombBCjWp3B+7Xcb68
- TO6p7OjzXEoo/x41GdoFhQqFcObnmrmpuscSpitfFogB1AC5jeFqHUFjinG0ssXu/e5BXcy
- 54ZfC+Wi084FDpSQK+tF2PMYUPgn4On3zA9Tp2kQ4luFQFmLvN/tgkCkAh8Bgbyrb53Byv0
- r1Yp+XTEAkCiNwc0NKHKnzSFNggMffh6qLL78+6DfhtwIz+j/oWVQNdYbyzRS/Yfo8U3kzR
- xM/bo5Km8UKi5cvr7d4dJ3FD/vdQxX635uKEacrYuygUu2n6ow77SMT8rQCBIyL81FzYS4n
- tu+6rxMIXmiQ6/njorSBJI6kdJ3fGQCUfJnN4w+zV5H4bRtdeTCPCRTAUKdprTAAJb8DVn1
- LJDYPM/suL79A5zN/yQjniKY7ijyPw+OiHKlUyDT3XB80kZdDWG2TMfIDk0jHuPbYW7AUAS
- 7NltVwyNd151h5zhAJ6kv5Y299X/9ZpBYZwbwfyCvxT0XFA1dMM2uy+ye4vH6bD9JZyHiQm
- 5PoJS7bWWLycl3UZzjxZBH7R36UzgpuekwNCSqAl+wZsnbsUYQD0GpMvxngphuzY3RQaboj
- UL5oI3dYSxlckpOXFJjdePigiLJlvyfrTzoHveNE3A+rHDjS1hpsTMfMrIPj2D0GHngeViB
- YYdlT3Dk4PaOZD91kXZoMLqt2h5TtPBq8MiSGVR9apiQCdFhVVej76qPID/PTJLzFuv3nHS
- WkX3PM88yJkYwU2TVm/GPnykD03Vu2LjDeyZ5sDCaLuKOtv/OjjqFqRIngMJhIxT2bKaGUR
- jKXrobmh5z/39AtaLA
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.204.34.130; envelope-from=liweiwei@kubuds.cn;
- helo=smtpbguseast2.qq.com
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v0sUi-0002Wc-TW
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:05 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v0sUb-00009a-Le
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:04 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-77f1f8a114bso1909739b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 19:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758593445; x=1759198245; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=s4+SlQx+DMzy+4DCfZxmwJDvy0AC/rcKOjjhVaXW8is=;
+ b=tROlP25o3avZ87b0NeJBAMaT+xBEw+VFa242Un5ERN5NItxt0UNcMl7tSwuj4chFLO
+ OxuUPHpLTDu4R122GM/8DhY0RnxoKbkCtR0dAlj25HbURnK5HkYGAP23bSn++yzhOTuV
+ py2KK+yV8xsMRF64CsLF9lVu042YRFBXSG04Py1PS7DP/DY7aMBqNfevMMOLsNQwCZTV
+ 9Sb5fUFnga3lm78AjnYZober51M9l3Z1dvpnC99FNr3yNZs2LRRr3DOFGuRdkkX9k+zU
+ XyBQGotbuLcQZ/KcNsXLDJ53WKDKkcSea8jB1NBtq46OjJdoQZ6PoDgUTk09RgLFX0Ta
+ G7Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758593445; x=1759198245;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s4+SlQx+DMzy+4DCfZxmwJDvy0AC/rcKOjjhVaXW8is=;
+ b=HuW/5Qnw3brbVOzGlznPNYnmsQyhmh0VG8E6afqmrhKX78VqV1sbYT89DZwC9xf5yf
+ c3l5v6kZDsvvOW/ZPTkqxux0UyCH2RTS9igoyDpifwsy3gCVqprim6l/Q1gPqZpOBmKq
+ X6Ik+9wAGKeVFOA9LtiptyfEef7EmXWbuBCJ/FPEj7QXzQ7VsrbUTS54gxX2mPwCvjrc
+ fmXOQqlj2t27oAb+74mLnoTRE+mPdPy4g+hyM0eZM8JJIxaK9JYYg4ibLyzFzL8MA8l3
+ bsF7TOs5gFyI5zLj8krZG0nj7VANK71CTwj9PtYVW8Ib5FlFPtLQ6Sut3WqF8HVj3DBN
+ H+vA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhUhyJUu4+0yizfbltgOOFhGBMhscGbTC6Yp4DgO2hg4KF1ykDRtPm5ls3rqfbAf31HS6QnKH/v8xH@nongnu.org
+X-Gm-Message-State: AOJu0Yz7DnY/glD54Als5hqRiYczxo1REH3f/R3c999a9peJnByrex/I
+ uXx8DlS9q/rT9a19E/Fg9IZZpTbWf5u0QUJ/98RpVVHRz0mvV8tww6ARpuM/PoPmbvc=
+X-Gm-Gg: ASbGncvvIuaJZwCM+ZdyuKMoKZzGLILBRO4a51P51koJbdAqfLrHIlt/BwHpYm8fkrX
+ ACF7WZNKDWW0VdAGJ5ytOpOuXjh1FQlnGmhym6+2DazXrZfQkUIpMvrdrSR/R4caHKCxGoIPwuz
+ OFitJ5VwubDNj0J7fN/YlymvSLdypzlLGZlzhx5JQTl7BC8CqzbjM55p1uReFVZvLtYKk4eDCMb
+ k0fDA6iqs6WAXYEvtml9y4M8CVR3q1RsMYMpiohF3dIxhojcCOX5HLtZNCfWFOlk8XD+orOyHjH
+ xidx3+wumPxe/ZzN7Ls7CsBnMATLhPnbZHVX0DE2F+O+4RqKyaTH1hng11eLZyMVjhykbjzlUml
+ 3g730GtnmkIawtzCnfuSt3MLrmmHakdRojlIw
+X-Google-Smtp-Source: AGHT+IGnuP5BsIL6t8f1XgxP6tQ6pTsRRSiXj2y3bN9ZlJyC/DgmPkH1te3ywstvmQeNrB6aALgo1g==
+X-Received: by 2002:a05:6a00:2ea6:b0:77f:37a5:97b6 with SMTP id
+ d2e1a72fcca58-77f5486f60dmr875260b3a.6.1758593445333; 
+ Mon, 22 Sep 2025 19:10:45 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-77ea933bfeasm10715652b3a.53.2025.09.22.19.10.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Sep 2025 19:10:44 -0700 (PDT)
+Message-ID: <455f0e94-4539-494d-ab8f-23c7832a991f@linaro.org>
+Date: Mon, 22 Sep 2025 19:10:43 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: fix self-modify-code problem when modify code
+ in a single tb loop
+To: =?UTF-8?B?5p2O5aiB5aiB?= <liweiwei@kubuds.cn>,
+ pbonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: kasperl <kasperl@rivosinc.com>, =?UTF-8?B?546L5L+K5by6?=
+ <wangjunqiang@kubuds.cn>, Wei Wu <lazyparser@gmail.com>,
+ liwei1518 <liwei1518@gmail.com>
+References: <tencent_55B681D209516B8364F39BD9@qq.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <tencent_55B681D209516B8364F39BD9@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,96 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
+On 9/22/25 19:04, 李威威 wrote:
+>  > If there's a problem with 1 tb, there's also a problem with 2 tb like
+>  >
+>  >         jal     zero, #4
+>  >         jal     zero, #-4
+>  >
+> 
+> I tried this case. And it didn't have this problem.
+> This problem seems only existed in single tb loop.
+> 
+>  >
+>  > But unlinking the tb should be part of invalidation, so I don't quite see where the
+>  > problem is.  You need to expand on the description of the problem.
+>  >
+> 
+> I think the problem is the single tb is always in use  when the single tb is linked with 
+> itself，
+> and it cannot be updated when we update the code。
 
-------=_NextPart_68D20039_C9129260_1D3F922C
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+There's no use count for tb's, so that explanation doesn't make sense.
+Can you please share a testcase for this?
 
-UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7IOS6
-jjIwMjXlubQ55pyIMjPml6XlkajkuowgMDc6MjLlhpnpgZPvvJoNCiZndDsNCiZndDsgT24g
-OS8xNy8yNSAwNTo0NywgbGl3ZWl3ZWlAa3VidWRzLmNuIHdyb3RlOg0KJmd0OyAmZ3Q7IEZy
-b206IFdlaXdlaSBMaSA8bGl3ZWl3ZWlAa3VidWRzLmNuJmd0Ow0KJmd0OyAmZ3Q7DQomZ3Q7
-ICZndDsgVGhlIHByb2JsZW0gaXMgdHJpZ2dlcmVkIGluIGZvbGxvd2luZyBjb25kaXRpb25z
-Og0KJmd0OyAmZ3Q7IC0gdGhyZWFkIDE6DQomZ3Q7ICZndDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDtydW4gc3BpbiBsb29wKGVuZGVkIHdpdGggYSBkaXJlY3QganVtcCkgbGlrZSAiMHgwMDAw
-MDA2ZiwgLy8gamFsIHplcm8sICMwIg0KJmd0OyAmZ3Q7IC0gdGhyZWFkIDI6DQomZ3Q7ICZn
-dDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtkbyBzb21ldGhpbmcsIGFuZCB0aGVuIG1vZGlmeSB0
-aGUgbG9vcCBjb2RlIG9mIHRocmVhZCAxIHRvIG5vcCBpc250cnVjdGlvbiwNCiZndDsgJmd0
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwO2ZpbmFsbHkgd2FpdCB0aHJlYWQgMSBleGl0Lg0KJmd0
-OyAmZ3Q7DQomZ3Q7ICZndDsgVGhlIGxvb3AgdGIgd2hpY2ggaXMgcGF0Y2hlZCB0byBqdW1w
-IHRvIGl0c2VsZiwgd2lsbCBub3QgYmUgdXBkYXRlZCBpbiB0aGlzIGNhc2UNCiZndDsgJmd0
-OyBhbmQgd2lsbCBuZXZlciBleGl0Lg0KJmd0OyAmZ3Q7DQomZ3Q7ICZndDsgU2lnbmVkLW9m
-Zi1ieTogV2Vpd2VpIExpIDxsaXdlaXdlaUBrdWJ1ZHMuY24mZ3Q7DQomZ3Q7ICZndDsgLS0t
-DQomZ3Q7ICZndDsgJm5ic3A7IGFjY2VsL3RjZy9jcHUtZXhlYy5jIHwgOCArKysrKystLQ0K
-Jmd0OyAmZ3Q7ICZuYnNwOyAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRl
-bGV0aW9ucygtKQ0KJmd0Ow0KJmd0OyBJZiB0aGVyZSdzIGEgcHJvYmxlbSB3aXRoIDEgdGIs
-IHRoZXJlJ3MgYWxzbyBhIHByb2JsZW0gd2l0aCAyIHRiIGxpa2UNCiZndDsNCiZndDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IGphbCAmbmJzcDsgJm5ic3A7IHplcm8sICM0DQom
-Z3Q7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBqYWwgJm5ic3A7ICZuYnNwOyB6ZXJv
-LCAjLTQNCiZndDsNCg0KSSB0cmllZCB0aGlzIGNhc2UuIEFuZCBpdCBkaWRuJ3QgaGF2ZSB0
-aGlzIHByb2JsZW0uDQpUaGlzIHByb2JsZW0gc2VlbXMgb25seSBleGlzdGVkIGluIHNpbmds
-ZSB0YiBsb29wLg0KJmd0Ow0KJmd0OyBCdXQgdW5saW5raW5nIHRoZSB0YiBzaG91bGQgYmUg
-cGFydCBvZiBpbnZhbGlkYXRpb24sIHNvIEkgZG9uJ3QgcXVpdGUgc2VlIHdoZXJlIHRoZQ0K
-Jmd0OyBwcm9ibGVtIGlzLiAmbmJzcDtZb3UgbmVlZCB0byBleHBhbmQgb24gdGhlIGRlc2Ny
-aXB0aW9uIG9mIHRoZSBwcm9ibGVtLg0KJmd0Ow0KDQoNCkkgdGhpbmsgdGhlIHByb2JsZW0g
-aXMgdGhlIHNpbmdsZSB0YiBpcyBhbHdheXMgaW4gdXNlJm5ic3A7Jm5ic3A7d2hlbiB0aGUg
-c2luZ2xlIHRiIGlzIGxpbmtlZCB3aXRoIGl0c2VsZu+8jA0KYW5kIGl0IGNhbm5vdCBiZSB1
-cGRhdGVkIHdoZW4gd2UgdXBkYXRlIHRoZSBjb2Rl44CCDQoNCg0KUmVnYXJkc++8jA0KV2Vp
-d2VpIExpDQoNCiZndDsNCiZndDsgcn4=
-
-------=_NextPart_68D20039_C9129260_1D3F922C
-Content-Type: text/html;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxMXB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5l
-LWhlaWdodDogMS40MzsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lz
-dGVtRm9udCwgJnF1b3Q7UGluZ0ZhbmcgU0MmcXVvdDssICZxdW90O01pY3Jvc29mdCBZYUhl
-aSZxdW90OzsiPjxkaXYgY2xhc3M9IkFtIGFpTCBhTzkgQWwgZWRpdGFibGUgTFctYXZmIHRT
-LXRXIHRTLXRZIiBzdHlsZT0ibWluLWhlaWdodDo4NXB4IiBzcGVsbGNoZWNrPSJmYWxzZSI+
-PGRpdiBjbGFzcz0iQW0gYWlMIGFPOSBBbCBlZGl0YWJsZSBMVy1hdmYgdFMtdFcgdFMtdFki
-IHN0eWxlPSJtaW4taGVpZ2h0Ojg1cHgiIHNwZWxsY2hlY2s9ImZhbHNlIj48YnI+UmljaGFy
-ZCBIZW5kZXJzb24gJmx0O3JpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7IOS6jjIw
-MjXlubQ55pyIMjPml6XlkajkuowgMDc6MjLlhpnpgZPvvJo8YnI+Jmd0Ozxicj4mZ3Q7IE9u
-IDkvMTcvMjUgMDU6NDcsIGxpd2Vpd2VpQGt1YnVkcy5jbiB3cm90ZTo8YnI+Jmd0OyAmZ3Q7
-IEZyb206IFdlaXdlaSBMaSAmbHQ7bGl3ZWl3ZWlAa3VidWRzLmNuJmd0Ozxicj4mZ3Q7ICZn
-dDs8YnI+Jmd0OyAmZ3Q7IFRoZSBwcm9ibGVtIGlzIHRyaWdnZXJlZCBpbiBmb2xsb3dpbmcg
-Y29uZGl0aW9uczo8YnI+Jmd0OyAmZ3Q7IC0gdGhyZWFkIDE6PGJyPiZndDsgJmd0OyAmbmJz
-cDsgJm5ic3A7ICZuYnNwO3J1biBzcGluIGxvb3AoZW5kZWQgd2l0aCBhIGRpcmVjdCBqdW1w
-KSBsaWtlICIweDAwMDAwMDZmLCAvLyBqYWwgemVybywgIzAiPGJyPiZndDsgJmd0OyAtIHRo
-cmVhZCAyOjxicj4mZ3Q7ICZndDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtkbyBzb21ldGhpbmcs
-IGFuZCB0aGVuIG1vZGlmeSB0aGUgbG9vcCBjb2RlIG9mIHRocmVhZCAxIHRvIG5vcCBpc250
-cnVjdGlvbiw8YnI+Jmd0OyAmZ3Q7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ZmluYWxseSB3YWl0
-IHRocmVhZCAxIGV4aXQuPGJyPiZndDsgJmd0Ozxicj4mZ3Q7ICZndDsgVGhlIGxvb3AgdGIg
-d2hpY2ggaXMgcGF0Y2hlZCB0byBqdW1wIHRvIGl0c2VsZiwgd2lsbCBub3QgYmUgdXBkYXRl
-ZCBpbiB0aGlzIGNhc2U8YnI+Jmd0OyAmZ3Q7IGFuZCB3aWxsIG5ldmVyIGV4aXQuPGJyPiZn
-dDsgJmd0Ozxicj4mZ3Q7ICZndDsgU2lnbmVkLW9mZi1ieTogV2Vpd2VpIExpICZsdDtsaXdl
-aXdlaUBrdWJ1ZHMuY24mZ3Q7PGJyPiZndDsgJmd0OyAtLS08YnI+Jmd0OyAmZ3Q7ICZuYnNw
-OyBhY2NlbC90Y2cvY3B1LWV4ZWMuYyB8IDggKysrKysrLS08YnI+Jmd0OyAmZ3Q7ICZuYnNw
-OyAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKTxicj4m
-Z3Q7PGJyPiZndDsgSWYgdGhlcmUncyBhIHByb2JsZW0gd2l0aCAxIHRiLCB0aGVyZSdzIGFs
-c28gYSBwcm9ibGVtIHdpdGggMiB0YiBsaWtlPGJyPiZndDs8YnI+Jmd0OyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgamFsICZuYnNwOyAmbmJzcDsgemVybywgIzQ8YnI+Jmd0OyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgamFsICZuYnNwOyAmbmJzcDsgemVybywgIy00
-PGJyPiZndDs8YnI+PGJyPkkgdHJpZWQgdGhpcyBjYXNlLiBBbmQgaXQgZGlkbid0IGhhdmUg
-dGhpcyBwcm9ibGVtLjxicj5UaGlzIHByb2JsZW0gc2VlbXMgb25seSBleGlzdGVkIGluIHNp
-bmdsZSB0YiBsb29wLjxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1
-NSwgMjU1KTsiPjxicj4mZ3Q7PGJyPiZndDsgQnV0IHVubGlua2luZyB0aGUgdGIgc2hvdWxk
-IGJlIHBhcnQgb2YgaW52YWxpZGF0aW9uLCBzbyBJIGRvbid0IHF1aXRlIHNlZSB3aGVyZSB0
-aGU8YnI+Jmd0OyBwcm9ibGVtIGlzLiAmbmJzcDtZb3UgbmVlZCB0byBleHBhbmQgb24gdGhl
-IGRlc2NyaXB0aW9uIG9mIHRoZSBwcm9ibGVtLjxicj4mZ3Q7PGJyPjxicj48L2Rpdj48ZGl2
-IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ij5JIHRoaW5r
-IHRoZSBwcm9ibGVtIGlzIHRoZSBzaW5nbGUgdGIgaXMgYWx3YXlzIGluIHVzZSZuYnNwOyZu
-YnNwO3doZW4gdGhlIHNpbmdsZSB0YiBpcyBsaW5rZWQgd2l0aCBpdHNlbGbvvIw8L2Rpdj48
-ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ij5hbmQg
-aXQgY2Fubm90IGJlIHVwZGF0ZWQgd2hlbiB3ZSB1cGRhdGUgdGhlIGNvZGXjgII8YnI+PC9k
-aXY+PGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyI+
-PGJyPlJlZ2FyZHPvvIw8YnI+V2Vpd2VpIExpPGJyPjxicj4mZ3Q7PGJyPiZndDsgcn48L2Rp
-dj48L2Rpdj48L2Rpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+
+For extra kudos, a small assembly test for tests/tcg/loongarch64/system/, so that we have 
+a regression test for the issue.  :-)
 
 
-------=_NextPart_68D20039_C9129260_1D3F922C--
-
+r~
 
