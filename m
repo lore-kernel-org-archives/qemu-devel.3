@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1386CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 23:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA12CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 23:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1CGG-0000rG-Vk; Tue, 23 Sep 2025 19:17:29 -0400
+	id 1v1Cov-0000to-9Y; Tue, 23 Sep 2025 19:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1CGC-0000qn-Ly
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:17:24 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1v1Cos-0000tV-V8
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:53:14 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1CG9-0006Df-O7
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:17:24 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-77f35113821so2575767b3a.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 16:17:20 -0700 (PDT)
+ id 1v1Coq-0001rC-UZ
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:53:14 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2680cf68265so45861595ad.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 16:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758669439; x=1759274239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758671587; x=1759276387; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SoRE6SQ/RRSpcu6XVYVnMkmCRu20mGPrEAEIMIbBxoc=;
- b=EKAmslts13icbA6gH+CR4ZuJLv8HxrN34YJ7CJyhu/u3HIl2wYnt25HDE+dboI9wfz
- H/ypJVMZaDTOe/wx+vzywooY97y8t87GnFWpTE1gWgetY5ME97ZsoGmXhCaYs/4JRT82
- uSN8bDl7PEM/xH+QAP8gKdwP88zgfzQXa3Ds6lHHZQnshHUGGPYtlbULrBAgzHU8kC4v
- FeOsHTtCs0SiMbN0Wou3rPF1pURFT/nXVVKCNnWvKsmVYUKfacN51+4keW32wJGD3rKE
- /xwVxcThH8wb8S7FiIUyCADyNnvKGVayxbLEfg1fAFJSYvHBdcLsN6l6JtPvKERoY/OF
- UDJQ==
+ bh=sz7XfCOQUHEbVARaNnHhQS/7wUnja+zUrs5SqhMlAGk=;
+ b=VfTBlLIM57PGWZGFRJAtqnxxDiweme0wB7vfZGQDtB7b3/Hu8YKAmq6AZB2SI7q5I5
+ 8JjJNK8mxL9ZALmXyRNapGjkbBVCjBTC24euXqCtiOfC+Aud8xFESuUn/tWgYBPHfoyo
+ SP0hOgwtIe8jMqKVONyi06K6SM/QZSNJ/DhL3o+r7D9KRxJCk+Q4+L15ZPIslawkUJBS
+ tVtu39u6AkuZhTrS4unG5GHLvt+95c+fRGb46ykVpXOqvUbVsRw2waRWpa9IGhbJ1UoU
+ goPvrSBy5jjraXsa+tYsLwZE5ThQtbE0n3o64hyZVoNO4mBJtksHDalv3k1FAwUwS4UJ
+ KpCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758669439; x=1759274239;
+ d=1e100.net; s=20230601; t=1758671587; x=1759276387;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SoRE6SQ/RRSpcu6XVYVnMkmCRu20mGPrEAEIMIbBxoc=;
- b=uggfVOhtLIBnwTbhATdGHnAMZ4ZMq4fP1xCo3Ey82ihA830neuxC4s1pZX+Uvle4uQ
- aeowesu5KuGCqQazldoJTZCY+TSJ/NP6LLpCKzosTp/b9cC/McWfAn9CnhTPMFkn3DeB
- +HPraoAPJxvPH0Vs9+opbu7tGdnyMBROh6Ma15bRa+k5fs4g08kj+IW7bTV5TwD/P4df
- 7GeFmqM4tCbygByCujzTuQvpGHsrYbdQta2HdHgoFbyjFCnmIk8XE3q4Nk66NriL/m7K
- ABolSxeLMlVbtqtgF/22EDooyfFZJX0P+QZyl2JuCbEFwbYikZ529nGHXWBjkWmfwTjr
- p91w==
-X-Gm-Message-State: AOJu0YxzYB3ZZnkoZRr+zPZ96Igvq5esuWQDnXmaWf8bvNKK0ekKk5KB
- s/rRwTPyhVEvHspbJBDEjpm6DybYBJq6NlgQFejFD8ZR+/sHsgtrkWXgLZn85nR7Ca0B4K7gXqK
- hGa5G
-X-Gm-Gg: ASbGncuuBRJmul4B+rJLj7iQsWnWjdXGSvODhU5Zao3trk/npboAAkLzH+xqX6cW7af
- y2S9QX2vO3qRZMV8FBfW51nEWH840vhKlSjqu+gsc85d+OBQnJtgkKupygPzu26aJpI2iezGQOV
- 7WxJ6qWEiCSduqYioY7jAMkZ931WMnPoT/eQASj3cNVOT0rHGOMjzBuf4NXcReH9ph9w7wkzac2
- iAdOw5Ti6gPlpANS2mUo0vFXc0ZZeSME1KrUwpk3RuhAP5VEKcYBGQij6CayJ//qpEKcbgiIWyF
- OiYknfEuqChiY8j+V1eKtQbWxT8+o67IY+/jiGVtz10JaBUvX/34VqVfAwJ3INDlRb8fwN2Q8hE
- QAmeQHFwghjhOWlzHEnwPFG04lImmdT9zuhRh3LV7fHsGMlY=
-X-Google-Smtp-Source: AGHT+IEWCF9DHzl5FG8Oe+9cyR2jWCg4nc2Qw5Pi/63JhX35qq7lnTR0nRfELHDx4aN9bkZ2kMB6IQ==
-X-Received: by 2002:a05:6a00:13a7:b0:77f:414d:3774 with SMTP id
- d2e1a72fcca58-77f53855c15mr5320876b3a.4.1758669438532; 
- Tue, 23 Sep 2025 16:17:18 -0700 (PDT)
+ bh=sz7XfCOQUHEbVARaNnHhQS/7wUnja+zUrs5SqhMlAGk=;
+ b=OGcbIkdeYJ5yhM4AVUJg/8Qfuw2xbjEI15jG30Aw+91FBpOfvCEJv/uK49iHHd49CM
+ zODXTDCuECX1+8pLkR+TDsKDEMkvMZ4IlZ5kbYrxvv2IDs70KZYTGU4LL2pAYRq8IDQP
+ YnDXdPulqD1ck5vLlkLnZ34sH5x1MU0FVTOQe9yMgPqJ8ziIG6D2LUkHHsnXEpOEpJvj
+ 4dUFpXHte5ThLoDYmRJXSsOSeRAXA4Lr4KLpWoPtlPoKP9AQwGus2OlUebzh35ddN3sQ
+ SZzRymaaKkMel3S/vGXDy5zeLOL5W6BYEuFJzXOPvvWaFC0Q0CmUypj+nncODBaZvBpP
+ N2QA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXykh7rGM+4DR2zwESjTC/uFac1pd2oI26E5KToaE6clCbqO4BFLsbZ/YQduGqthbhB9OdcsS3fGr1E@nongnu.org
+X-Gm-Message-State: AOJu0YxOCQCXiZAbUaSPWgT9sa6fQn46p9yahOhvn3WCX3Xw+XZ8kBs2
+ sV/RauVPJgHOH+33fOaiC3KbcjCqkKWicw4Sd3mcFEGKSC/w4/ojcN11xpEK1U7K7lg=
+X-Gm-Gg: ASbGncuQN/oOByG9LBCmJWJyrvsu+ubd1imXJGrL/o0yntI7g4UDuirX8ip2jnuE351
+ G90d2kkW79mtmLCUrGyBAYJ0VvU2Oaxi+D/UAAKclAs4Vn2X7gc5URteS8CRfhkdJb4nn/R1FDR
+ vvrLbQOIig+7TAivMcTs+DOva7WiHY/+lSfrGyJoAOdcaOXwlL9ono+pwmlawrMmaytwJw9oIzL
+ wEbKj2eIA3slcMKY24A0PvROt3W7X8Yq7SuA+iVjw1WsBkd6FKSUpJ5lzUryIX1yGKvKQssoe19
+ sSgCSFfVCUnuralAJ8kwEkBU+vc4Z0xYy5I8KgKqXr05PIFkdGms6B0Z92uDjs//FA51QiE1FEU
+ rH65oFyYyINrS/Wj28b8Ck8Up/VOUqjRKaZom
+X-Google-Smtp-Source: AGHT+IHV80gDW9y5mUA23vpux3vyp4iY8uh9biVdzc6eQJZJ0mDp9qd/G4R7o/zcox8l9Rsv2UtHwQ==
+X-Received: by 2002:a17:903:3bce:b0:24a:fab6:d15a with SMTP id
+ d9443c01a7336-27cc185851emr43937975ad.20.1758671587094; 
+ Tue, 23 Sep 2025 16:53:07 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77f2d414457sm8379236b3a.30.2025.09.23.16.17.17
+ d9443c01a7336-269802de963sm169992525ad.77.2025.09.23.16.53.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 16:17:18 -0700 (PDT)
-Message-ID: <45f2be87-8cbd-45e5-a6ba-fb76f37eb718@linaro.org>
-Date: Tue, 23 Sep 2025 16:17:16 -0700
+ Tue, 23 Sep 2025 16:53:06 -0700 (PDT)
+Message-ID: <8adf8096-4279-4549-aa89-4aafe262e5fb@linaro.org>
+Date: Tue, 23 Sep 2025 16:53:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/optimize: Fix folding of vector bitsel
-To: WANG Rui <wangrui@loongson.cn>
-Cc: qemu-devel@nongnu.org, qemu@hev.cc
-References: <20250919124901.2756538-1-wangrui@loongson.cn>
+Subject: Re: [PATCH 0/2] hw/pci-host: fix use-after-free in hppa pci-host
+ devices
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20250918114259.1802337-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250919124901.2756538-1-wangrui@loongson.cn>
+In-Reply-To: <20250918114259.1802337-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,50 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/19/25 05:49, WANG Rui wrote:
-> It looks like a typo. When the false value (C) is the constant -1, the
-> correct fold should be: R = B | ~A
+On 9/18/25 04:42, Peter Maydell wrote:
+> This patchset fixes use-after-free bugs which show up if you put
+> some of the hppa pci-host devices through an "init -> deinit" lifecycle,
+> as the device-introspect-test does.
 > 
-> Reproducer (LoongArch64 assembly):
+> The problem in both cases is that we were calling pci_register_root_bus()
+> in instance_init: we should only call this in realize, as all the
+> other callers do.
 > 
->       .text
->       .globl  _start
->   _start:
->       vldi    $vr1, 3073
->       vldi    $vr2, 1023
->       vbitsel.v       $vr0, $vr2, $vr1, $vr2
->       vpickve2gr.d    $a1, $vr0, 1
->       xori    $a0, $a1, 1
->       li.w    $a7, 93
->       syscall 0
+> These bugs show up if you run 'make check' with an ASAN enabled
+> build; they are also likely behind the intermittent segfaults
+> on s390 that RTH has noticed recently.
 > 
-> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
-> Link: https://github.com/llvm/llvm-project/issues/159610
-> Signed-off-by: WANG Rui <wangrui@loongson.cn>
-> ---
->   tcg/optimize.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> thanks
+> -- PMM
+> 
+> Peter Maydell (2):
+>    hw/pci-host/dino: Don't call pci_register_root_bus() in init
+>    hw/pci-host/astro: Don't call pci_regsiter_root_bus() in init
+> 
+>   hw/pci-host/astro.c | 27 +++++++-------
+>   hw/pci-host/dino.c  | 90 +++++++++++++++++++++------------------------
+>   2 files changed, 55 insertions(+), 62 deletions(-)
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Queued, thanks.
 
 r~
-
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index 3638ab9fea..f69702b26e 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
->               return fold_and(ctx, op);
->           }
->           if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-> +            TCGArg ta = op->args[2];
->               op->opc = INDEX_op_orc_vec;
->               op->args[2] = op->args[1];
-> -            op->args[1] = op->args[3];
-> +            op->args[1] = ta;
->               return fold_orc(ctx, op);
->           }
->       }
-
 
