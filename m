@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BC8CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C2ACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Ay7-0006Kx-Sm; Tue, 23 Sep 2025 17:54:39 -0400
+	id 1v1Ay0-0006IE-SR; Tue, 23 Sep 2025 17:54:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ay3-0006JJ-OB
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:35 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1v1Axz-0006HK-D6
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:31 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ay1-0003ie-0E
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:35 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-279e2554b5fso3463645ad.1
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:32 -0700 (PDT)
+ id 1v1Axx-0003i5-Aw
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:31 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-27d3540a43fso14420055ad.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758664471; x=1759269271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758664467; x=1759269267; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cyCevuOZBxjdSdzWhJH69VXeS030D/A2jQgzyM1Qqts=;
- b=FSH9XLuVVLy4NYY603pw7fDI/XocqrL2tmHgfqpqCeOZ+H8W+IGNmO0/CHkgxjKAlF
- KckV4EG0zfTkpDIXq+s/CnhOnO+vCA9jImhN+FKD3bNmWNcWQfWC8aI1kxlsqMuBxkZ6
- RC9fv43QePUJhHJHEIFboOyJFQzWcqIv2dEqH68aUVdGvFNrjfWNW7uB/1sEPAXDTyF4
- XuZwo8kDsKzopW+c8CuYJk2TBtXM7VscHEM38gTEkUqdyMUMK+6NbaNPvA9ZsS0FTZRB
- 7RmKZG4bTMkncojeoyGTyLsNEAcSo0NoiiZFqCV6Mxlg9rlLxd7C3wFds67YioI7tGS4
- aOmw==
+ bh=tkajwB0LkhYnqCNRGrXzrsBCk6tFlVZCMEBA7S1wExk=;
+ b=JhDSt0f8eBFqqStdB35fEZ5T+mfDmbtS2GeENRHs8ek9woPzLYvpDW4v9dQ0o17Tb/
+ I+l43R91nAHbMn7hwPBeYRYWh/TOx912K1t2BX2+OY6QksFbKqNLZrY+dQpHCwbDknzs
+ CYRWS/XaoIhoryL1hpd5B2YRU2+AE9DpKEtpXkVBL3Zm7t7urmCU3YikjU1fkGjPlofj
+ w9KTtZ8BS1S4YQ3cslzyCiUqnx2Ltxnm106+LmlAdTPvomTEqyQhAr6w6XqOeavYaCde
+ qQcWHkLyRCuBZldIz3sX8Gsv8H03ZHk3hmgG+r/WsyX55zfOBwjIjHfdpN7PTJti2m+E
+ nL4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758664471; x=1759269271;
+ d=1e100.net; s=20230601; t=1758664467; x=1759269267;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cyCevuOZBxjdSdzWhJH69VXeS030D/A2jQgzyM1Qqts=;
- b=w3b57C7CDY35dFCBF9Nk30noPnhitzgkG0I6hUCePHzD72neayudCVJjc1pR7iCUY8
- 1u6Gg/3VVGaY3cCqTL2UwXQ6hpdwGXyRxkbu1DpExVYBy4DhxoMj3Tu6awNtpcFN9MlV
- WlDhC/TbVA+xOcf8ItVMsIUeXdVe961aLCJlKwejUCu3fo8FaVIAKotVZTsJpn3TWMp+
- HtSHhBAEfciZehNzp0js2m1kWtYtFOyC0CZu64ekYn6ZMxkd96Sv+kwSKWg8pCyCPl+A
- BeJCH6NR5BVnZE83o5Son5j3sRzsNe+3+/AWx+VekRDoM6ZOCP7Y7PZ2m68zmUwKuHXW
- 3pQg==
-X-Gm-Message-State: AOJu0Yz7h6AtUP50bcdY74DQCGP6Zctaki/0okMix7kPwch0ZpLZIGvT
- fZ+XHm/xHIjaTWinBCuMOrB0TTnnjH6u2K4j1ymUK9r9tlgDDzv6+B/VtHpNJFz8PRS8aScb4RT
- D5Csg
-X-Gm-Gg: ASbGncvl/dcci943Pp+l20naQs64B0UqXw7FI4Y02xLQ4eiVKuv/2mfGDAz+cahdE/M
- /rblXjE1TDJP5CKCDd04fUpPTGVynGxZKma+atdPkpH2PZcDSaRAdP/WQsVmZHBp1wcNsbH7wkG
- A4afnOkDY91cvNw/A9Nm6qcKQENNYRcc7cM8REZROETC+95GlYiQYkD8UiMLg3O1hehRJmG/a+9
- CZ2ZZUFMkeu2uQskydR5hvh29ZHy/1YpiqY2wy1JqGIhZ1elNbMNbNAnHBbfig5t4V3mc/KUvRj
- V40l+DcIFoCLsMKdTN6PW7CBynbsvTcblSDX6mmMGjzQFBubr5UFTgiMX8uDR7jmW3d9iNn8qoD
- 8wev+Pt2agpg3EePNCnNexGFkXnek
-X-Google-Smtp-Source: AGHT+IFzzV/MEWIj7fjPW8nwQCJZO/2VGgCI3t1y/MiNQVrW6WH+QNjzbxT/ls5IPSjLTzx80U4a8A==
-X-Received: by 2002:a17:902:e752:b0:267:44e6:11d6 with SMTP id
- d9443c01a7336-27ec114dca0mr2219105ad.6.1758664471243; 
- Tue, 23 Sep 2025 14:54:31 -0700 (PDT)
+ bh=tkajwB0LkhYnqCNRGrXzrsBCk6tFlVZCMEBA7S1wExk=;
+ b=Ql67K1SQrOkSDqG6e3tvOqjaHHp8xLlWtdQPsGhB83dX87c5egiyeQ9G5bYH/T5K2H
+ l6/mOqp+UbcMMgJNe0onzR3VbHCXPTZ641j1//Rq5k5mRQNR2lWo7rDHo2jBwEMDisEd
+ Lm1ECrD/I7vMgtG8aHbdx7ml7LdlOUZCQBoiae8Oo7WFk+duDPbvARLKDadTkJC1WgtA
+ oIuiKvmPU4+4mzfwbp89HIMBrqgCqYzqqIpnIw1/rLzw4Oq3HL5VLXQOT3qxrqt2CCn/
+ zwPQeRNn/Z2sTWk571vG8thmpTI0QYGiJR++Ve7dtEPtvQyWl6GzLXrsmWJ1SlisE6Sx
+ 08TQ==
+X-Gm-Message-State: AOJu0YzLqvtT83ESUFy4/ZA6Ljazk7i5p9MtBvcvMbKtYVplRhkof/Qp
+ qYASuyMSIz5bEFolcxou78GRfUwCMfpJqv5OowcFTJ6uT1ofRXYqNcbKlUMtKgpZ/EKQaZl6SiX
+ 9JduB
+X-Gm-Gg: ASbGncup0Rqzjr5jz1sQH1GDDzf9TxSBJjIxrEr+/NlIaHqgYliMMgr5RKbxWeLqZNa
+ ZvTJ3ZEsJZ/2FezDfaLchBFAtWwmZMQfq5qSvPRWIZHI+zbOQbFSG4tdgZSlOL879phq9H+uIuL
+ K47uEMPAEYYADkzz1e4E1lstmnXdy+VU1FBElj3XP7y5/f6L1NEDKLAX3DjxtCGKqbErJsKF3q0
+ BN8RETwZErekAM0zHPYa6BN4raMvkt3fUfKIjEHAgngRcohqzJb1VZyHU4OwfJ3jdwJTRfZPVgF
+ lyV1sWRYKVZc222EjxTyQWAXj5SfzyTTJlV8GSPfCzNEF3U5E8E6Uzb/xgXngC3AUMqZR0FvpJd
+ 2ySSuYJhxR4TQ7/GgN1G2ju38vqMI
+X-Google-Smtp-Source: AGHT+IF4e25HHdHJP6TzFOqjb9YsyfUad9ing6qbxJI5i0wA8W92TtkHxS17NU2WHQK+hZ+H7XXcew==
+X-Received: by 2002:a17:902:e951:b0:25c:76f1:b024 with SMTP id
+ d9443c01a7336-27cc24e015cmr45815735ad.25.1758664467465; 
+ Tue, 23 Sep 2025 14:54:27 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.30
+ d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Sep 2025 14:54:30 -0700 (PDT)
+ Tue, 23 Sep 2025 14:54:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 06/10] accel/tcg: Move post-load tb_flush to
- vm_change_state hook
-Date: Tue, 23 Sep 2025 14:54:20 -0700
-Message-ID: <20250923215425.3685950-7-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 01/10] gdbstub: Remove tb_flush uses
+Date: Tue, 23 Sep 2025 14:54:15 -0700
+Message-ID: <20250923215425.3685950-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250923215425.3685950-1-richard.henderson@linaro.org>
 References: <20250923215425.3685950-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,94 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need not call tb_flush once per cpu, only once per vmload.
+This hasn't been needed since d828b92b8a6
+("accel/tcg: Introduce CF_BP_PAGE").
 
-By moving the call from cpu_common_post_load to a tcg-specific
-vm_change_state_handler, we do even better than that: we only
-flush when called from HMP triggered loadvm, when we had old
-state to flush.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-all.c  | 21 +++++++++++++++++++++
- hw/core/cpu-system.c |  9 ---------
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ gdbstub/system.c | 5 -----
+ gdbstub/user.c   | 3 ---
+ 2 files changed, 8 deletions(-)
 
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index 5125e1a4e2..18ea0c58b0 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -38,6 +38,8 @@
- #include "qemu/target-info.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/boards.h"
-+#include "exec/tb-flush.h"
-+#include "system/runstate.h"
- #endif
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 5be0d3c58c..5221c579d9 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -18,13 +18,11 @@
+ #include "gdbstub/syscalls.h"
+ #include "gdbstub/commands.h"
+ #include "exec/hwaddr.h"
+-#include "exec/tb-flush.h"
  #include "accel/accel-ops.h"
  #include "accel/accel-cpu-ops.h"
-@@ -82,6 +84,23 @@ static void tcg_accel_instance_init(Object *obj)
- 
- bool one_insn_per_tb;
- 
-+#ifndef CONFIG_USER_ONLY
-+static void tcg_vm_change_state(void *opaque, bool running, RunState state)
-+{
-+    if (state == RUN_STATE_RESTORE_VM) {
-+        /*
-+         * loadvm will update the content of RAM, bypassing the usual
-+         * mechanisms that ensure we flush TBs for writes to memory
-+         * we've translated code from, so we must flush all TBs.
-+         *
-+         * vm_stop() has just stopped all cpus, so we are exclusive.
-+         */
-+        assert(!running);
-+        tb_flush__exclusive_or_serial();
-+    }
-+}
-+#endif
-+
- static int tcg_init_machine(AccelState *as, MachineState *ms)
- {
-     TCGState *s = TCG_STATE(as);
-@@ -124,6 +143,8 @@ static int tcg_init_machine(AccelState *as, MachineState *ms)
-     default:
-         g_assert_not_reached();
-     }
-+
-+    qemu_add_vm_change_state_handler(tcg_vm_change_state, NULL);
- #endif
- 
-     tcg_allowed = true;
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 09c928c1f9..f601a083d1 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -23,7 +23,6 @@
- #include "system/address-spaces.h"
- #include "exec/cputlb.h"
- #include "system/memory.h"
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+ #include "system/replay.h"
+-#include "system/tcg.h"
+ #include "hw/core/cpu.h"
+ #include "hw/cpu/cluster.h"
+ #include "hw/boards.h"
+@@ -174,9 +172,6 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+         } else {
+             trace_gdbstub_hit_break();
+         }
+-        if (tcg_enabled()) {
+-            tb_flush(cpu);
+-        }
+         ret = GDB_SIGNAL_TRAP;
+         break;
+     case RUN_STATE_PAUSED:
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 67403e5a25..2e14ded3f0 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -15,7 +15,6 @@
+ #include "qemu/sockets.h"
+ #include "qapi/error.h"
+ #include "exec/hwaddr.h"
 -#include "exec/tb-flush.h"
- #include "qemu/target-info.h"
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
-@@ -207,14 +206,6 @@ static int cpu_common_post_load(void *opaque, int version_id)
-         cpu_reset_interrupt(cpu, 0x01);
+ #include "exec/gdbstub.h"
+ #include "gdbstub/commands.h"
+ #include "gdbstub/syscalls.h"
+@@ -220,7 +219,6 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
  
-         tlb_flush(cpu);
--
--        /*
--         * loadvm has just updated the content of RAM, bypassing the
--         * usual mechanisms that ensure we flush TBs for writes to
--         * memory we've translated code from. So we must flush all TBs,
--         * which will now be stale.
--         */
--        tb_flush(cpu);
+     /* disable single step if it was enabled */
+     cpu_single_step(cpu, 0);
+-    tb_flush(cpu);
+ 
+     if (sig != 0) {
+         gdb_set_stop_cpu(cpu);
+@@ -539,7 +537,6 @@ static void disable_gdbstub(CPUState *thread_cpu)
+         /* no cpu_watchpoint_remove_all for user-mode */
+         cpu_single_step(cpu, 0);
      }
+-    tb_flush(thread_cpu);
+ }
  
-     return 0;
+ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
 -- 
 2.43.0
 
