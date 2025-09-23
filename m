@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9E1CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03ABCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v19Jz-0004co-Qu; Tue, 23 Sep 2025 16:09:09 -0400
+	id 1v19dR-0002bL-90; Tue, 23 Sep 2025 16:29:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v19Jg-0004YP-Gr
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:08:51 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1v19dK-0002aQ-JM
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:29:08 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v19Jc-0005oB-BC
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:08:47 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b55115148b4so3922467a12.3
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:08:42 -0700 (PDT)
+ id 1v19dH-0008CG-EB
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:29:05 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-25669596955so54043205ad.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758658121; x=1759262921; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758659341; x=1759264141; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=L+A870irlUyzIlTjkl7PKvI9+jV2CUJnu1PK217zi+M=;
- b=dRSeQlnPEDEwPgWwDg5F7g4LwNKZuEwnYEtOliE7USLB0jOEG0gqUoIUEL5QjQZwet
- QPK25CQtJWpchUsRXF8o7pZxxXYM89aE953Rak2wwSdjGLL2AwI3er0+xwcD3SQ+7F9X
- lr2IAFL+c9KacWsdojuLqfgL4XdKtN3rBqzlNyNS/zUBhnpARz36LheOpSBvk1N6y2ic
- eobtuhATxQs8F5qRSaZjd1st1FevXneO+gkDKaysx2wrmUeVYBbDgKldVJU4zzrSqmr0
- +rY4ufkJb9T77E8WKz4B4HooSwCDJI4FHOGBzsvDFcXR/Xhw43+TdmUdQRnsrzoAvLbs
- TgYA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TueKAXxicr8LpxwRHWuGX9s+twLAY3aqBgl/b3SMYsI=;
+ b=j33bFtR44OagBmMKlHK300Om1NEfLdPw1qS/0Ln5ABkHMxFm82vVy2X3T+v1y4YsP8
+ 7JB72Aex8gSrACbfUUnaXq7ZJQBP3/d0jB1GC6MJmnp+5+NOpmcVOK7ssmIYUyAHx9lF
+ 3pecHZLWIhFL30wbY2xj+HzaMZGvuWMjnOQ78rEkv0nxQo3OviO6LOGAQcsVc11DykY1
+ 80Q0YNeA//Pzueg/ivwfgJ0EvAiabsU4KHLwdvPdivRAyyDavPDnBzFgxhFgDgQZVawJ
+ Dg8c50uN7ph1ph+bxDib9txHvwaG7QiETIZpdEblImu+qJFt4MUojwJFaMt9VAAH9FER
+ qw+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758658121; x=1759262921;
+ d=1e100.net; s=20230601; t=1758659341; x=1759264141;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=L+A870irlUyzIlTjkl7PKvI9+jV2CUJnu1PK217zi+M=;
- b=OAtXKqUwYSnMhEa6XBtGxOBUo1S9vTGy5kLeepDhCJscFw9JA2nYtYZawj0PNSrsq8
- seu8/IN/aQVDIzMlWqH32AVsqUWCrsYJ7mW46zr5+LNVnKdDzO/a33P7Q3lUatKbnQ5P
- KQyXp7E+4ZAql6kZdxbpy/rqIU6JtEwtXNvWw99U+J4EFBK1uETrzWciGpclm1MhhOQK
- PaNNwOgOM7Mc9WhS9wR79fmCirkKAMWvzNTVLg6Up8edEw5yc295QwlPbNuQu+BiS8Y7
- jLBx6MvDj3RcYqCbP4O+NPAWNbr/FJJuXO2S2JwsVRQYVntXgtQba1N8mmRfjy3VCQlg
- 2ezw==
+ bh=TueKAXxicr8LpxwRHWuGX9s+twLAY3aqBgl/b3SMYsI=;
+ b=Lwn8xMMeyHuyHjCre4sOcufsS8gxfVc1FZMezaT3gZEulURWokloOVes9fQ5iQDQOu
+ FgL2pLFW7QhC2ZV2PxYksBwu7ccruJZV5YJ7jjNE1S3SfTlwAA324yuRxI68/shA2AeY
+ gMz7GPXEJ4lzImfGkxr49OVsqvjDxevTKlZ01rixIerGALOm1qwXiZxiWR2TbYdjTknh
+ XWbr886jkb9IBYYOBNMfLAbIAoOS10tCplPlBnNWwjBNDp4oCRfdB8lrUt/PpBnR6jx0
+ JLCS2jR3VE+C8FxxsWbVPtHaX9GBUIQ5hgPgQvN8PXySCaJGqshPFau3CCTH9YMMLnkr
+ QzfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMGzowTOzwnXOu2xoJ+nBaNB0d4eeZfvl6E4fZXiTK7iZUXIO3k11l3oEYHozSvrvkR7+o2Hoddw/W@nongnu.org
-X-Gm-Message-State: AOJu0Yws0DQMiknHYNiMpDmtTWICqYk005yKKM0hk0rZjEvOyzxf+X0e
- 4EzCpQXCrJiQseHA5DutNdntlwhm6Llb7f+6NOqJ+Am+kQEomV7lJGTVA//nA2hQqXcotGDYuKB
- uK00l
-X-Gm-Gg: ASbGncscCVJsvv1FgHBPzx4Wa4LB2bT2MKG3XHKTutkECZau/VJB7Zbdx/UCU9bSlAy
- nizuUQknmKg7+JczBvV+NoaVh6taFCR6S9MnVb9TlNYy5YnpLJ7RHugxuH3IcRkjBTDdgL4BLLw
- dDkGBLP46X3ygz0plvMs9lhH6TE41xtn4MwRu2Z8VyRDecmB+Ch6PsFxkhJGooWdxMwDLeSQBIx
- hEWZVE04wC6ehG3VF457Ocmq4KqWtR2cuItGhni5H9Rxrl9zcCtzkprQwB9bEeTWeZleemMS6Z+
- cMc2lMLV6oDTM4VjlGlzeM/DiEpweIbSIYOtgf9xDVqiZXl1uNmRrYvZZjkkq81Sn5ge8FszKE8
- EZJLZCe1SkzByOuQw+3Yj5L+3lpgvuFXf2Us+
-X-Google-Smtp-Source: AGHT+IFGJ4d2E0v3lW32Kclb1pxxEn7rcJk0mlGTWRriQWqKSlqObk7D+mf2fjZIJV7b0jkzS/7OnQ==
-X-Received: by 2002:a17:902:e88b:b0:276:305b:14a7 with SMTP id
- d9443c01a7336-27cc5a06cfbmr48977945ad.33.1758658120852; 
- Tue, 23 Sep 2025 13:08:40 -0700 (PDT)
+ AJvYcCW3M2Oytd1SljYPp+y5IjQEaAwCST3obYY0hulWdRVP7zeFE0Wz4YIp8flXemakZU1gUksrKVbchq0B@nongnu.org
+X-Gm-Message-State: AOJu0Yz2E8fZ/UtZgCm1GJYcadw4jTI78+LQ3uLcpV4HUy7LklCBBhzl
+ RPFrcONgEOqQEMBNWnvszNyveIrKbCy4Dyf/H/9EajRuTz2JMhoOKea1DF+knUwOixc=
+X-Gm-Gg: ASbGncvEP4rjQ4a5Ubv5YiT9ZV31ndlhku4ieY3e9Y7h5eCUGPzjcZlMl9eZciaka4U
+ XO3SO3rROTsDpNbuedPniESDSRL3rm3HxIB1zxn8clqTdsTPTh9xAq4XDG0Zcmm2QFgFbIBPRRK
+ zcPgntqdfxNiVnRomZPxRTYUB7ibaNaw4BQRmiPPFn/rnPZhVC8AQwJm/l2Gkkb/NrqnZoekfO0
+ 15yaSw+zW6tuNXXOOtjuVRHKQSm3JHRp0Ynz+Ts2uGkSNY1aWPP6awLiRHXuQDXT9dJ+/YfrCif
+ EvNB04wmXhusYZBv8vUK6+mrapjbZpSo95Pg6jk1tHQG2G0138wy2KXXXU07zhNZUYFZszkrfCb
+ ikz7cd5ebNKkTzK118aC/G0ZhbJOGd1tea2cx
+X-Google-Smtp-Source: AGHT+IH9kRM3DFG0P/yMpCIAYlP+tuuwjWhJEnD/6V7vkWEsx7WxqhZRSq3rBZNRpexWREVjcWtOrA==
+X-Received: by 2002:a17:902:e946:b0:25c:d4b6:f117 with SMTP id
+ d9443c01a7336-27cc580e150mr44975975ad.35.1758659341268; 
+ Tue, 23 Sep 2025 13:29:01 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-26980053dc8sm171070535ad.13.2025.09.23.13.08.40
+ d9443c01a7336-2698035d6f4sm170181315ad.140.2025.09.23.13.29.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 13:08:40 -0700 (PDT)
-Message-ID: <ea5c9843-527a-410c-9c7d-12f3a5264f9e@linaro.org>
-Date: Tue, 23 Sep 2025 13:08:38 -0700
+ Tue, 23 Sep 2025 13:29:00 -0700 (PDT)
+Message-ID: <d8f4298e-f89c-4a39-8eee-12e5c8504f51@linaro.org>
+Date: Tue, 23 Sep 2025 13:28:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] target/arm: Implement ID_AA64PFR2_EL1
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250923175751.966795-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 08/12] plugins: Use tb_flush__exclusive
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>, qemu-devel@nongnu.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250923023922.3102471-1-richard.henderson@linaro.org>
+ <20250923023922.3102471-9-richard.henderson@linaro.org>
+ <d9624d53-9562-4ac8-94c5-bdc5fefddb3f@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250923175751.966795-1-peter.maydell@linaro.org>
+In-Reply-To: <d9624d53-9562-4ac8-94c5-bdc5fefddb3f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +108,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/25 10:57, Peter Maydell wrote:
-> The ID register ID_AA64PFR2_EL1 is in the space previously reserved
-> in the system register ID space, but recent versions of the
-> architecture have started to define fields in it to advertise the
-> presence of new architectural features. We don't implement any
-> of those new features yet, but will need to do so at some point.
-> (Notably, the GICv5 EAC spec defines a field in this register
-> to advertise the GICv5 CPU interface.)
+On 9/23/25 06:35, Philippe Mathieu-Daudé wrote:
+> On 23/9/25 04:39, Richard Henderson wrote:
+>> In all cases, we are already within start_exclusive.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>> Cc: Alex Bennée" <alex.bennee@linaro.org>
+>> Cc: Alexandre Iooss <erdnaxe@crans.org>
+>> Cc: Mahmoud Mandour <ma.mandourr@gmail.com>
+>> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   plugins/core.c   | 6 ++----
+>>   plugins/loader.c | 2 +-
+>>   2 files changed, 3 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/plugins/core.c b/plugins/core.c
+>> index c6e9ef1478..4ae1a6ae17 100644
+>> --- a/plugins/core.c
+>> +++ b/plugins/core.c
+>> @@ -248,7 +248,7 @@ static void plugin_grow_scoreboards__locked(CPUState *cpu)
+>>           }
+>>           plugin.scoreboard_alloc_size = scoreboard_size;
+>>           /* force all tb to be flushed, as scoreboard pointers were changed. */
+>> -        tb_flush(cpu);
+>> +        tb_flush__exclusive();
+>>       }
+>>       end_exclusive();
+>>   }
+>> @@ -684,8 +684,6 @@ void qemu_plugin_user_exit(void)
+>>        * with the one in fork_start(). That is:
+>>        * - start_exclusive(), which acquires qemu_cpu_list_lock,
+>>        *   must be called before acquiring plugin.lock.
+>> -     * - tb_flush(), which acquires mmap_lock(), must be called
+>> -     *   while plugin.lock is not held.
+>>        */
+>>       start_exclusive();
+>> @@ -705,7 +703,7 @@ void qemu_plugin_user_exit(void)
+>>       }
+>>       qemu_rec_mutex_unlock(&plugin.lock);
+>> -    tb_flush(current_cpu);
+>> +    tb_flush__exclusive();
+>>       end_exclusive();
+>>       /* now it's safe to handle the exit case */
 > 
-> This patchset gives ID_AA64PFR2_EL1 a backing field in the CPU
-> ID regs struct, defines the field names, and reads it from KVM if
-> it's present there. The only visible behaviour change is the
-> name we present to the user via the gdbstub.
+> Hmm it seems we are triggering again the issue reported about
+> TARGET_NR_exit_group in https://linaro.atlassian.net/browse/QEMU-706:
 > 
-> Commit 1 is a code movement one to clear some more stuff out
-> of cpu.h that doesn't need to be there; it's mostly because of that
-> that I'm sending this patchset rather than holding on to it until
-> I have some GICv5 patches ready to send.
+>    "Under user emulation, threads can exit via pthread_join or at
+>     the end of the process via exit_group syscall.
 > 
-> (Compare commit f7ddd7b6a1f90c from last year which added the
-> ID_AA64MMFR3_EL1 register.)
+>    The current plugin exit hook affects all vcpus (see
+>    qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit)."
 > 
-> v2 here is just a rebase which updates the patchset to handle
-> the new array-based storage we're using for ID register values.
+> Crash log:
 > 
-> thanks
-> -- PMM
+> qemu-loongarch64: ../../accel/tcg/tb-maint.c:94: tb_remove_all: Assertion 
+> `have_mmap_lock()' failed.
 > 
-> Peter Maydell (2):
->    target/arm: Move ID register field defs to cpu-features.h
->    target/arm: Implement ID_AA64PFR2_EL1
-> 
+> Thread 1 "qemu-loongarch6" received signal SIGABRT, Aborted.
+> __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737340860416) at ./nptl/ 
+> pthread_kill.c:44
+> 44    ./nptl/pthread_kill.c: No such file or directory.
+> (gdb) bt
+> #0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737340860416) at ./nptl/ 
+> pthread_kill.c:44
+> #1  __pthread_kill_internal (signo=6, threadid=140737340860416) at ./nptl/pthread_kill.c:78
+> #2  __GI___pthread_kill (threadid=140737340860416, signo=signo@entry=6) at ./nptl/ 
+> pthread_kill.c:89
+> #3  0x00007ffff746f476 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+> #4  0x00007ffff74557f3 in __GI_abort () at ./stdlib/abort.c:79
+> #5  0x00007ffff745571b in __assert_fail_base (fmt=0x7ffff760a130 "%s%s%s:%u: %s%sAssertion 
+> `%s' failed.\n%n", assertion=0x555555733f0c "have_mmap_lock()",
+>      file=0x555555733ef1 "../../accel/tcg/tb-maint.c", line=94, function=<optimized out>) 
+> at ./assert/assert.c:94
+> #6  0x00007ffff7466e96 in __GI___assert_fail (assertion=assertion@entry=0x555555733f0c 
+> "have_mmap_lock()",
+>      file=file@entry=0x555555733ef1 "../../accel/tcg/tb-maint.c", line=line@entry=94, 
+> function=function@entry=0x555555734038 <__PRETTY_FUNCTION__.8> "tb_remove_all")
+>      at ./assert/assert.c:103
+> #7  0x0000555555612e41 in tb_remove_all () at ../../accel/tcg/tb-maint.c:94
+> #8  tb_flush__exclusive () at ../../accel/tcg/tb-maint.c:781
+> #9  0x0000555555623a0c in qemu_plugin_user_exit () at ../../plugins/core.c:706
+> #10 0x0000555555696e54 in preexit_cleanup (env=<optimized out>, code=code@entry=0) 
+> at ../../linux-user/exit.c:36
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I fixed this by replacing the assert in the user-only version of tb_remove_all.
+
 
 r~
 
