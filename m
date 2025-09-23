@@ -4,135 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77C4CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 07:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5450CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 08:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0xqL-0002P7-Us; Tue, 23 Sep 2025 03:53:46 -0400
+	id 1v0y5J-0006uO-FG; Tue, 23 Sep 2025 04:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0xqG-0002OI-PD
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 03:53:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v0y5G-0006ta-DO
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:09:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v0xqD-0005LE-JA
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 03:53:40 -0400
+ id 1v0y5A-0007pE-Hi
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:09:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758614012;
+ s=mimecast20190719; t=1758614941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M4ECiPnnzb0/4sDd6Qb3WQvrt9UzCo77Rq26Q9/jxyg=;
- b=e5rcZqvaz0aFhH8MyMzzW6WVLtIfFKCDKFGsWfCWps1AG1rWucRJDpmXMwUF9OeMxqATRT
- 26Mpt2iHI2xWOY+ZQE8GOG/bWPmVyRInZl5tl7+nijRIqz67s4B/qZHAcPeYwXls1yxyM7
- iZZDzHvqHw+1mBV0RxaYYD42zYKBEVk=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=KjrYIxYkTzNnXWH4QXzhA0r7Aoa2jAreU4nvfoqSJ+CisgaSf/L7ayjLmFHUld+O+oZjv5
+ v8q61Cl+AjArBPnAzvzZbstrS0MS0JHVW0q2LHgmTVqvu/Mms1W3ZMyAXaTeeOp3fKWBUZ
+ jM1L397NmW2R2MBPGmCxEbLsoXdS3pw=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-1TLOnLSoN-mmEiE5uXotOA-1; Tue, 23 Sep 2025 03:53:24 -0400
-X-MC-Unique: 1TLOnLSoN-mmEiE5uXotOA-1
-X-Mimecast-MFC-AGG-ID: 1TLOnLSoN-mmEiE5uXotOA_1758614003
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-62fd1b03d74so5005542a12.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 00:53:24 -0700 (PDT)
+ us-mta-231-zNLh1fhFPbiQa66zAswZNg-1; Tue, 23 Sep 2025 04:08:59 -0400
+X-MC-Unique: zNLh1fhFPbiQa66zAswZNg-1
+X-Mimecast-MFC-AGG-ID: zNLh1fhFPbiQa66zAswZNg_1758614939
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-afe6216085aso486826866b.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 01:08:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758614003; x=1759218803;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M4ECiPnnzb0/4sDd6Qb3WQvrt9UzCo77Rq26Q9/jxyg=;
- b=gw0PUMe00RGhvl7jFNxrx17Gtre5Be3yp0JJ5CHmapS8S3yeUy9Juy0aL6nxlPLiTC
- h92nC6HZ+SEwvvPtdG94N75pZc8/CJ65q0VbyTE76rn1qTWh1DdZhzvI6MFCmTtWLbgz
- A8gXI8LKV3wtHby3qyDG59wC8mTuqacyJe8jaB65uElx1YLFTMOuSCvQK3rD2Lp1iOVA
- Ubko4cfFuRt57O7IRyEcinyVXndSWt8v3ORlaPavrIeiEX0wblgFO2vSRVMmlpEW3EVZ
- pXwaAg/2KJhNQl/cE91CX0U4eVlaiIH/yn2J8MIcIB4M5h00bhnfuW1Lnhq613ZxT0Ca
- vzoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUh18+VFLmM7XK0gKMI8gRBx66xhx8ZNWL0YjZH5uFh9hw45RB3TcMK0cEDbPpuZl1Rwo9pcV19asIv@nongnu.org
-X-Gm-Message-State: AOJu0YzvBSfD6Ry0EN4a5OqAfS0CbIb76CrSIgoyX/BpZn4i6TwPyO1Q
- 0AVjMZEXU0p9QQ23IK0/jRDfjAm4+6MJ/c95t+GFzBWDvtydCmweAAmyEJLGdNblll78IgZzRDl
- 9aVJMCaZxc8/5sDtmmSd4tgXudMeXE7A3lC5zUXf6t95ZgFQwA8w1djOB
-X-Gm-Gg: ASbGncuJnCwPjwwPOr1hwj7cfGKWXd48NEBGSPn4+dYY9HD5d4DD0/KK7OxezuFfA/t
- AgsGJojwT08a9+A+oljktzQuAx45yEn4UJsf2GlJc4y7Klh8dw6di5+i8+o9K2azkR3We9SNW9y
- 4DHfc7p7q1joFkIPOCy93HKuyPxzT4sC5DR5pELRfrFuom6lpWbFm/aiWz8iBixEPHlMmd3G+hm
- ZAv3idv12ac8W8UdC+ANX+jEyMc3fB/SJkY+gmNzeb/I8QX/x13lwPBju9MKhz60Knlsr4OA2ar
- MZfYeI98lUSX/YcN2nYmX5hJfHKq3DSAIHoEw8BwRJnfyfmGiUrs+5kPdXqa0ASqc343kv0rUlj
- lz50mXeagVhrJXGmqQiVo+04IygMbJyFrZ+qWjiowZ5rkWQ==
-X-Received: by 2002:a05:6402:2343:b0:62f:36bb:d8ba with SMTP id
- 4fb4d7f45d1cf-634677e7c9amr1463077a12.22.1758614003491; 
- Tue, 23 Sep 2025 00:53:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWqfRTr/AzEg5ZFnk07VTiqUm5y+YSQPLvjOfrTMwAZ0xWeA6Re4XcL0EozpCJROrMV5XJvw==
-X-Received: by 2002:a05:6402:2343:b0:62f:36bb:d8ba with SMTP id
- 4fb4d7f45d1cf-634677e7c9amr1463062a12.22.1758614003038; 
- Tue, 23 Sep 2025 00:53:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758614938; x=1759219738;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=qz+LN7ZMWBYgyiCpiBCHW6Uud2ZHLS6AHnwc4F7R16jYU2OQVcoHHgCeWDRzyLiijt
+ sOBq78IszhPlcNRj85bNOTTlOL8L5/Fv+9RMCz2zaLJp3kM0+wTGhRb5ZbPrb221BI5E
+ uPtbUEjN88ypdM55bOxivAkTk/j1E2Bx6wDBxldJrzGIrYjyK8DsBaYIhQKYegPsaZ9G
+ 1TTLutq5qScu2LN44UFfH997StEJzJVKlRpCtZAbG9dvmCrklR2pUjRmof5WVS5w9vbh
+ P2Yxp70gfwYbYba6vWz/jF0YjBXRCI9RncarW/+aS4dO/ja/LpXWp9M1cw1R2RQIWKaB
+ NMyg==
+X-Gm-Message-State: AOJu0YygYgEiKqip6Qw04LV28tNR1PcAFRNaKFnjdKsRHEb5ghhfG3QS
+ bjZmwHT39WzeNMhSsvoLno0MIRDEW+yVJtZzLGzCPA0AieiNnnudXtzPp63dJBXWi8sZvCPy0lX
+ aHIID8ciDtYuh2jg+BXdw7KuSW0avC0HzlU1+epTLnwhDdrAG52F4wdlT
+X-Gm-Gg: ASbGncuQpKlyLhiLoWYGtgheteC8WdeuWQv3lFFGa9jY62+6Y6YXdStkXMdBnIwXyjl
+ AR4H2Oe2Vd8TGeH3YABf/hY3JQgDV9+bP6pY6ZlnS6oDyXG66Tb0LVo3WUya0tHOFdCSx9gsXeW
+ 8jey9eN4YNzVN0Bw7z7Syc+FXtD6pgi+bfzjoda0IXTC/dHNi3/RBzljSUSTomjOFIVE1M1Ha8K
+ zGelud7wGGikxFceUw7SsSAOXQOLe5UxJdXoWc9s11JYata0xMlGn2X1g2l/eOfdmXVNlFElg0w
+ AEqxrySJaldWkRD2DagiSC2ZIPdI3bWM5NCw5o/B+fB0w0eWrhPkocqgdArSvfepA2XWxjpQoMx
+ 0W8/8PAobsZVZtKdCXXqbv6GSOQxj25ek37lyL9P3q2wCZg==
+X-Received: by 2002:a05:6402:5041:b0:633:9e:4036 with SMTP id
+ 4fb4d7f45d1cf-6346778e1b9mr1374778a12.11.1758614938538; 
+ Tue, 23 Sep 2025 01:08:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfEVzMzlegsS8RRRWXf5AuMiTyV3RuuZ4ChXwgv3Yn5mo7kYPCIJoERh+giB7/42ECgMCO6g==
+X-Received: by 2002:a05:6402:5041:b0:633:9e:4036 with SMTP id
+ 4fb4d7f45d1cf-6346778e1b9mr1374717a12.11.1758614938103; 
+ Tue, 23 Sep 2025 01:08:58 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-62fa5d03befsm10695887a12.2.2025.09.23.00.53.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 00:53:22 -0700 (PDT)
-Message-ID: <b2fb1e8c-4b30-4bde-9b16-b9a0cd314b70@redhat.com>
-Date: Tue, 23 Sep 2025 09:53:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/2] Fix cross migration issue with missing features:
- pdcm, arch-capabilities
-To: Hector Cao <hector.cao@canonical.com>, qemu-devel@nongnu.org
-References: <CABjvBV7wgfSv-OjGf_L2t9ranXfzTQTSBdRAFODpHH-nFcLFig@mail.gmail.com>
- <20250910115733.21149-1-hector.cao@canonical.com>
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-633148d2df3sm4465772a12.30.2025.09.23.01.08.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 01:08:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250910115733.21149-1-hector.cao@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v3 0/7] Do not unparent in instance_finalize()
+Date: Tue, 23 Sep 2025 10:08:53 +0200
+Message-ID: <20250923080853.94322-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp>
+References: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,42 +145,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/10/25 13:57, Hector Cao wrote:
-> Hello,
-> 
-> Since it is a blocking issue for us, we went further and ended up with a solution along [1]
-> that allows us to get out of this situation.
-> 
-> The idea is to add compatibility properties to restore legacy behaviors for machine types
-> with older versions of QEMU (<10.1). 2 compatiblity properties have been added to address
-> respectively the 2 missing features, each one is done in a separate patch.
-> 
-> We know that 10.1 has been released and it's final, but working on a solution towards 11.0
-> would allow everyone to settle on the fix and even consider backporting where not yet released
-> like Ubuntu 25.10 for us.
-
-Thanks, I have applied the patch.  It's better to have the fix in 10.1.1.
-
-Sorry for the delay, I was on vacation for one week and working reduced 
-hours the next.
+Queued, thanks.
 
 Paolo
-
-> It is important to have upstream support going forward in this or any other way
-> and therefore reach out with this RFC to ask you to think about it with us.
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/migration/compatibility.rst
-> 
-> Hector Cao (2):
->    target/i386: add compatibility property for arch_capabilities
->    target/i386: add compatibility property for pdcm feature
-> 
->   hw/core/machine.c     |  2 ++
->   migration/migration.h | 23 +++++++++++++++++++++++
->   migration/options.c   |  6 ++++++
->   target/i386/cpu.c     | 17 ++++++++++++++---
->   target/i386/kvm/kvm.c |  5 ++++-
->   5 files changed, 49 insertions(+), 4 deletions(-)
-> 
 
 
