@@ -4,70 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B79F1CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 14:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46623CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 14:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v149h-0005Cu-Ts; Tue, 23 Sep 2025 10:38:09 -0400
+	id 1v14Lw-0000J7-7m; Tue, 23 Sep 2025 10:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v149f-0005CC-6t
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 10:38:07 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v14Lt-0000HB-Uh; Tue, 23 Sep 2025 10:50:45 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v149c-0002zt-TB
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 10:38:06 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2071780B54;
- Tue, 23 Sep 2025 17:37:57 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b38::1:12] (unknown
- [2a02:6bf:8080:b38::1:12])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id tbY9rG0FkmI0-uje54IkS; Tue, 23 Sep 2025 17:37:56 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758638276;
- bh=T04+Wxfc5FBSPfeTdZEmwGtnUzlz4DBavL1R9Yiciwg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=WPcT1380VUrVF0m2maxSO/CAjR4baikYgQkmDosPDx2kT8uCYNtpvd1KsbU2yba5o
- d/KoHwRKFZ5fWFnG5ZqJ/7lnU5ykFMKg9w7MOBBTBSXxlA1BlSxwtV6AEyY5Ppuy8G
- eCj/hnRs+IRjwXovaJDLCRbddvoieWwKtcL7jNGY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2855a1ab-fed9-49b1-9724-3c0631db5f8a@yandex-team.ru>
-Date: Tue, 23 Sep 2025 17:37:55 +0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1v14Lr-0005W1-U4; Tue, 23 Sep 2025 10:50:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1758639044; x=1790175044;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=yTy9mhJ0v6U4wFlKJO78ZOgcatDYlofPdRUASbtEN10=;
+ b=LbCwSfUtgezRICjCNsWLV8Xkm9fUTBC2zTLjRIkU2dUFQVWlOApHuZD/
+ zzb4t5t2WOoBbhWqxBQAXdm9ucqlDopP/FA+gkhXWWkApViEyqxayYboL
+ Qk3V0TsnjVauNff5V7pi+si6ApDdva6YzZK/XcuM3/kz/mFRpuPSd3q8m
+ PzuyXt5InMwr4U04qwwDQ2w/iN0gEJwpDhmn+QBuVeDGjk2hvi/ao+0z6
+ YAl1iY9XJmAm5kGWVfPCVSeoVRreT1wG0xfshP6zZSZOUDkva3BZl7qIo
+ jkCO9cHd8OA4vLKaJzWcasx2C09QL9LL9b28zeBDsrurKdrp6mPmMdBYW w==;
+X-CSE-ConnectionGUID: BH58yB51Ry6mu36y6R0G/g==
+X-CSE-MsgGUID: 9TFkaWb1TvmF9wJ2BRpbPA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11561"; a="64747654"
+X-IronPort-AV: E=Sophos;i="6.18,288,1751266800"; d="scan'208";a="64747654"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Sep 2025 07:50:38 -0700
+X-CSE-ConnectionGUID: AZTwWG4PSz+0ZclZ6nk3WQ==
+X-CSE-MsgGUID: 6s56t54rRMiQEN8DxMlVXQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,288,1751266800"; d="scan'208";a="200481996"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 23 Sep 2025 07:50:36 -0700
+Date: Tue, 23 Sep 2025 23:12:33 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, manos.pitsidianakis@linaro.org
+Subject: Re: [PATCH 1/7] rust: bql: add BqlRefCell::get_mut()
+Message-ID: <aNK44f/1+VEiOUQs@intel.com>
+References: <20250920142958.181910-1-pbonzini@redhat.com>
+ <20250920142958.181910-2-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 0/9] Live update: cpr-exec
-To: Steven Sistare <steven.sistare@oracle.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
- <aLsUQWjW8gyZjySs@x1.local> <fd56205a-11c1-4297-898d-603f1836bdad@oracle.com>
- <aMBGnHXieiXpBCqF@x1.local> <992bf553-e622-4e51-b1c7-f59c1413558e@oracle.com>
- <aMB0BL5SEGfwjTFm@x1.local> <1a3c46b8-985e-4768-a3d1-e797370c0822@oracle.com>
- <aMQ_65_BybkbtZL4@x1.local> <f81f1138-1450-4a71-8459-63f653018226@oracle.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <f81f1138-1450-4a71-8459-63f653018226@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250920142958.181910-2-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,53 +81,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.25 20:16, Steven Sistare wrote:
-> On 9/12/2025 11:44 AM, Peter Xu wrote:
->> On Fri, Sep 12, 2025 at 10:50:34AM -0400, Steven Sistare wrote:
->>>>>> How to guarantee src/dst device topology match
->>>>>> exactly the same with the new cmdline?
->>>>>
->>>>> That is up to the mgmt layer, to know how QEMU was originally started, and
->>>>> what has been hot plugged afterwards.  The fast qom-list-get command that
->>>>> I recently added can help here.
->>>>
->>>> I see.  If you think that is the best way to consume cpr-exec, would you
->>>> add a small section into the doc patch for it as well?
->>>
->>> It is not related to cpr-exec.  It is related to hot plug, for any migration
->>> type scenario, so it does not fit in the cpr-exec docs.
->>
->> IMHO it matters.. With cpr-transfer, QMP hot plugs works and will not
->> contribute to downtime.
+On Sat, Sep 20, 2025 at 04:29:52PM +0200, Paolo Bonzini wrote:
+> Date: Sat, 20 Sep 2025 16:29:52 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 1/7] rust: bql: add BqlRefCell::get_mut()
+> X-Mailer: git-send-email 2.51.0
 > 
-> I don't follow.  The guest is not resumed until after all devices that were
-> present in old QEMU are hot plugged in new QEMU, regardless of mode.
-
-Yes, but in case of cpr-transfer, source is still running at time when we do adding
-devices to target through QMP. So, downtime is not started until we say "migrate-incoming".
-
+> This method is rarely useful in QEMU due to the pervasiveness of
+> shared references, but add it for when a &mut BqlRefCell<> is used.
 > 
->> cpr-exec also works, but will contribute to
->> downtime.
->>
->> We could, in the comparison section between cpr-exec v.s. cpr-transfer,
->> mention the potential difference on device hot plugs (out of many other
->> differences), then also mention that there's an option to reduce downtime
->> for cpr-exec due to hot-plug by converting QMP hot plugs into cmdlines
->> leveraging qom-list-get and other facilities.  From there we could further
->> link to a special small section describing the usage of qom-list-get, or
->> stop there.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/bql/src/cell.rs | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 > 
-> To hot plug a device, *or* to add it to the new QEMU command line, the manager
-> must know that the device was added sometime after old QEMU started, and
-> qom-list-get can help with that, by examining old QEMU initially and again
-> immediately before the update, then performing a diff.  But again, this
-> is independent of mode.
-> 
-> - Steve
+> diff --git a/rust/bql/src/cell.rs b/rust/bql/src/cell.rs
+> index 24ab294b60d..8a0c8c14ad4 100644
+> --- a/rust/bql/src/cell.rs
+> +++ b/rust/bql/src/cell.rs
+> @@ -580,6 +580,25 @@ pub fn borrow_mut(&self) -> BqlRefMut<'_, T> {
+>          }
+>      }
+>  
+> +    /// Returns a mutable reference to the underlying data in this cell,
+> +    /// while the owner already has a mutable reference to the cell.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// use bql::BqlRefCell;
+> +    ///
+> +    /// let mut c = BqlRefCell::new(5);
+> +    ///
+> +    /// *c.get_mut() = 10;
+> +    /// ```
+> +    #[inline]
+> +    pub const fn get_mut(&mut self) -> &mut T {
+> +        // SAFETY: there cannot be any outstanding borrow,
+> +        // since `self` is mutably owned.
+> +        unsafe { &mut *self.as_ptr() }
 
+Why not use UnsafeCell::get_mut?
 
--- 
-Best regards,
-Vladimir
+self.value.get_mut()
+
+Regards,
+Zhao
 
