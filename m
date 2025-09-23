@@ -4,114 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D70E9CAC5AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 01:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF52ECAC5AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0rsX-0007wm-FW; Mon, 22 Sep 2025 21:31:38 -0400
+	id 1v0sPg-0000Yn-0l; Mon, 22 Sep 2025 22:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1v0rsT-0007vZ-Nz; Mon, 22 Sep 2025 21:31:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
+ id 1v0sPd-0000YH-2P
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:05:49 -0400
+Received: from smtpbguseast2.qq.com ([54.204.34.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1v0rsI-0003j1-BR; Mon, 22 Sep 2025 21:31:32 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58MILXqt027350;
- Tue, 23 Sep 2025 01:31:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9wVzPJ
- x2EbSMWRnu2BW5jh7MAdOJodEQMnDMPVZJbuA=; b=pBvSfSAQJFd5+cZyVii+HC
- V1gD1ftKyy0aE5LEpojuCwq7g4W0LHpPfgREuzTN/1LnzVlmgVWCunpRuIKEnYDN
- z9Ks2TLok2ga15/gwCdXUdVIonrqj7zOMUwka80LA7R70o6NGR2hLrWxSDyR7MOB
- JQnn4hkUs3UQAGV58jVQvyFB2nlt449VRRUAnt9R7tpJtjpTkCS/VxkWAsed3lJC
- mH8b/v32CpCnSMXDNjL8WKf3OF8adBY0Ywh1vUwfiIk3zQS0bT0WYehS0XJicbqh
- ENvBANjJi+Os9MAKYesu6CGBKB1htvB5vXdgt/cLVrtPhBhebTVPVEv4oxGqRngg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499kwydjp5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Sep 2025 01:31:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58N0qQDf031129;
- Tue, 23 Sep 2025 01:31:13 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 49b9vd1vk3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Sep 2025 01:31:13 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 58N1VCu627656744
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Sep 2025 01:31:13 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E75C858058;
- Tue, 23 Sep 2025 01:31:12 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E7E2A58057;
- Tue, 23 Sep 2025 01:31:11 +0000 (GMT)
-Received: from [9.61.109.241] (unknown [9.61.109.241])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 23 Sep 2025 01:31:11 +0000 (GMT)
-Message-ID: <e1a0d95d-7a67-479e-ae0d-d840ac207636@linux.ibm.com>
-Date: Mon, 22 Sep 2025 21:31:12 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/28] Add boot-certs to s390-ccw-virtio machine type
- option
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- alifm@linux.ibm.com
-References: <20250917232131.495848-1-zycai@linux.ibm.com>
- <20250917232131.495848-2-zycai@linux.ibm.com> <87ldmcz1so.fsf@pond.sub.org>
- <aMvE7Phd7sLvgj-J@redhat.com> <87348kywgv.fsf@pond.sub.org>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <87348kywgv.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=J5Cq7BnS c=1 sm=1 tr=0 ts=68d1f862 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
- a=ea03lzvqYZLvFwxVDnUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: NbieVnX2h2U3Tf3BdFu1thW7Uad6TCVi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxNSBTYWx0ZWRfX5IbEKS2Zc4Bn
- 9qLbUIgsfnvfXYk/6GvuXfeJip3Rbv7SHE5BfTisy75GcI4oEqmfl6CrlyhRfm8aftRspi4x5mt
- qoc44wk7csfeMz+vLCRJ9LMqZndP1mI6qVRQ/10XTbjJXUYkRSBd1/b/OtwU3+x6SbLrQJCWx9j
- MPlj8NASGk2AucBhw20qNjm00zxm4HyxThHwOIs+KXkl/MEunj6ocC+IDcs4nQwah0pGy1e4OTL
- x93/0QnVyolTX7P7886Plr4jPtCbBp/++A5QDQcnACJWWMebEGTNt1b0tIW4NjvPGQV3aWHBfNh
- 99qQSZ6TX56tYZcBcRwmr8Pn8TSSQCEbrueq/Ie3UseVOTTbaaGIyR3RFVuEEQgR83Dv13fDOYH
- KjTZeNQL
-X-Proofpoint-ORIG-GUID: NbieVnX2h2U3Tf3BdFu1thW7Uad6TCVi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_05,2025-09-22_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0
- phishscore=0 clxscore=1015 adultscore=0 suspectscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509200015
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <liweiwei@kubuds.cn>)
+ id 1v0sPS-00085Q-95
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:05:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kubuds.cn;
+ s=reyb2403; t=1758593088;
+ bh=/AbnPR+R+isrSTmMzJqlnhqIyh2RbvsFPwL4iVZ2liA=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=oH0GEA01GPS/MhAnNowaQsOiCM15SHXanx1rPEPhsq9ZCkr3+hThkYvBBp33f/2gx
+ zYK6d6iSkwDhks+W9oR58ql0hsgjzpmw0xOkarPKDGgtxAr6SO5yVOD3vfX+s81/k9
+ /f+tgGvEg27yjE52nvdCT7QUWUruUb1qg133MEWs=
+EX-QQ-RecipientCnt: 7
+X-QQ-GoodBg: 2
+X-QQ-SSF: 00400000000000F0
+X-QQ-FEAT: D4aqtcRDiqQ/FTdNJNZZ5kJldjn3TTKGTDiQTNQJo28=
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-Originating-IP: GNuAIe4AAwcY1N5swqzg8pUKeYIiDanR1Z7WuuGn/KU=
+X-Originating-IP: 139.227.152.226
+X-QQ-STYLE: 
+X-QQ-mid: lv2sz3a-1t1758593082t8e25c4be
+From: "=?utf-8?B?5p2O5aiB5aiB?=" <liweiwei@kubuds.cn>
+To: "=?utf-8?B?UmljaGFyZCBIZW5kZXJzb24=?=" <richard.henderson@linaro.org>,
+ "=?utf-8?B?cGJvbnppbmk=?=" <pbonzini@redhat.com>,
+ "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
+Cc: "=?utf-8?B?a2FzcGVybA==?=" <kasperl@rivosinc.com>,
+ "=?utf-8?B?546L5L+K5by6?=" <wangjunqiang@kubuds.cn>,
+ "=?utf-8?B?V2VpIFd1?=" <lazyparser@gmail.com>,
+ "=?utf-8?B?bGl3ZWkxNTE4?=" <liwei1518@gmail.com>
+Subject: Re: Re: [PATCH] accel/tcg: fix self-modify-code problem when modify
+ code in a single tb loop
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_68D20039_C9129260_1D3F922C"
+Content-Transfer-Encoding: 8Bit
+Date: Tue, 23 Sep 2025 10:04:41 +0800
+X-Priority: 3
+Message-ID: <tencent_55B681D209516B8364F39BD9@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-ReplyHash: 1756259144
+X-BIZMAIL-ID: 16342767215359068385
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Tue, 23 Sep 2025 10:04:43 +0800 (CST)
+Feedback-ID: lv:kubuds.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: NGozucvtNhs93edkWbgeKn9CMtK0SpPl5JRfnFP/WUUg2TvHiRbKpJzm
+ 8uQjT/l4vN1l0U0c5qlqEfTH3nAB7ljQeF8VYSaMcji0615viVSRrT5UvbabDxzkbzHsLY7
+ Doo6bgjIhp0EP33HVhQDZ2SrWLV4A7ELw2UBX58+C8gxXS32ewTGkCj3ambWBExKjpldI2A
+ LRblehOHBwqv+MDDh+pk5JQHaNj0kek6K2CYp8ubC8O4NvmAU6EM8bombBCjWp3B+7Xcb68
+ TO6p7OjzXEoo/x41GdoFhQqFcObnmrmpuscSpitfFogB1AC5jeFqHUFjinG0ssXu/e5BXcy
+ 54ZfC+Wi084FDpSQK+tF2PMYUPgn4On3zA9Tp2kQ4luFQFmLvN/tgkCkAh8Bgbyrb53Byv0
+ r1Yp+XTEAkCiNwc0NKHKnzSFNggMffh6qLL78+6DfhtwIz+j/oWVQNdYbyzRS/Yfo8U3kzR
+ xM/bo5Km8UKi5cvr7d4dJ3FD/vdQxX635uKEacrYuygUu2n6ow77SMT8rQCBIyL81FzYS4n
+ tu+6rxMIXmiQ6/njorSBJI6kdJ3fGQCUfJnN4w+zV5H4bRtdeTCPCRTAUKdprTAAJb8DVn1
+ LJDYPM/suL79A5zN/yQjniKY7ijyPw+OiHKlUyDT3XB80kZdDWG2TMfIDk0jHuPbYW7AUAS
+ 7NltVwyNd151h5zhAJ6kv5Y299X/9ZpBYZwbwfyCvxT0XFA1dMM2uy+ye4vH6bD9JZyHiQm
+ 5PoJS7bWWLycl3UZzjxZBH7R36UzgpuekwNCSqAl+wZsnbsUYQD0GpMvxngphuzY3RQaboj
+ UL5oI3dYSxlckpOXFJjdePigiLJlvyfrTzoHveNE3A+rHDjS1hpsTMfMrIPj2D0GHngeViB
+ YYdlT3Dk4PaOZD91kXZoMLqt2h5TtPBq8MiSGVR9apiQCdFhVVej76qPID/PTJLzFuv3nHS
+ WkX3PM88yJkYwU2TVm/GPnykD03Vu2LjDeyZ5sDCaLuKOtv/OjjqFqRIngMJhIxT2bKaGUR
+ jKXrobmh5z/39AtaLA
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
+Received-SPF: pass client-ip=54.204.34.130; envelope-from=liweiwei@kubuds.cn;
+ helo=smtpbguseast2.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,40 +106,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 4:51 AM, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
->> On Thu, Sep 18, 2025 at 08:56:39AM +0200, Markus Armbruster wrote:
->>> Zhuoying Cai <zycai@linux.ibm.com> writes:
->>>
->>>> Introduce a new `boot-certs` machine type option for the s390-ccw-virtio
->>>> machine. This allows users to specify one or more certificate file paths
->>>> or directories to be used during secure boot.
->>>>
->>>> Each entry is specified using the syntax:
->>>> 	boot-certs.<index>.path=/path/to/cert.pem
->>>>
->>>> Multiple paths can be specify using array properties:
->>>> 	boot-certs.0.path=/path/to/cert.pem,
->>>> 	boot-certs.1.path=/path/to/cert-dir,
->>>> 	boot-certs.2.path=/path/to/another-dir...
->>>
->>> Given we can specifiy a directory containing any number of certificate
->>> files, is the ability to specify multiple paths worth the additional
->>> complexity?
->>
->> The typical scenario would be point to somewhere in /etc/pki
->> for some globally provided certs, and then also point to
->> somewhere local ($HOME) for custom extra certs. So IMHO it
->> is reasonable to want multiple paths, to avoid copying around
->> certs from different locations.
-> 
-> Thanks.
-> 
-> Preferably with BootCertificate renamed to BootCertificates
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> 
+This is a multi-part message in MIME format.
 
-I'll rename it in the next version. Thanks for the review!
+------=_NextPart_68D20039_C9129260_1D3F922C
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+
+UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7IOS6
+jjIwMjXlubQ55pyIMjPml6XlkajkuowgMDc6MjLlhpnpgZPvvJoNCiZndDsNCiZndDsgT24g
+OS8xNy8yNSAwNTo0NywgbGl3ZWl3ZWlAa3VidWRzLmNuIHdyb3RlOg0KJmd0OyAmZ3Q7IEZy
+b206IFdlaXdlaSBMaSA8bGl3ZWl3ZWlAa3VidWRzLmNuJmd0Ow0KJmd0OyAmZ3Q7DQomZ3Q7
+ICZndDsgVGhlIHByb2JsZW0gaXMgdHJpZ2dlcmVkIGluIGZvbGxvd2luZyBjb25kaXRpb25z
+Og0KJmd0OyAmZ3Q7IC0gdGhyZWFkIDE6DQomZ3Q7ICZndDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDtydW4gc3BpbiBsb29wKGVuZGVkIHdpdGggYSBkaXJlY3QganVtcCkgbGlrZSAiMHgwMDAw
+MDA2ZiwgLy8gamFsIHplcm8sICMwIg0KJmd0OyAmZ3Q7IC0gdGhyZWFkIDI6DQomZ3Q7ICZn
+dDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtkbyBzb21ldGhpbmcsIGFuZCB0aGVuIG1vZGlmeSB0
+aGUgbG9vcCBjb2RlIG9mIHRocmVhZCAxIHRvIG5vcCBpc250cnVjdGlvbiwNCiZndDsgJmd0
+OyAmbmJzcDsgJm5ic3A7ICZuYnNwO2ZpbmFsbHkgd2FpdCB0aHJlYWQgMSBleGl0Lg0KJmd0
+OyAmZ3Q7DQomZ3Q7ICZndDsgVGhlIGxvb3AgdGIgd2hpY2ggaXMgcGF0Y2hlZCB0byBqdW1w
+IHRvIGl0c2VsZiwgd2lsbCBub3QgYmUgdXBkYXRlZCBpbiB0aGlzIGNhc2UNCiZndDsgJmd0
+OyBhbmQgd2lsbCBuZXZlciBleGl0Lg0KJmd0OyAmZ3Q7DQomZ3Q7ICZndDsgU2lnbmVkLW9m
+Zi1ieTogV2Vpd2VpIExpIDxsaXdlaXdlaUBrdWJ1ZHMuY24mZ3Q7DQomZ3Q7ICZndDsgLS0t
+DQomZ3Q7ICZndDsgJm5ic3A7IGFjY2VsL3RjZy9jcHUtZXhlYy5jIHwgOCArKysrKystLQ0K
+Jmd0OyAmZ3Q7ICZuYnNwOyAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRl
+bGV0aW9ucygtKQ0KJmd0Ow0KJmd0OyBJZiB0aGVyZSdzIGEgcHJvYmxlbSB3aXRoIDEgdGIs
+IHRoZXJlJ3MgYWxzbyBhIHByb2JsZW0gd2l0aCAyIHRiIGxpa2UNCiZndDsNCiZndDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IGphbCAmbmJzcDsgJm5ic3A7IHplcm8sICM0DQom
+Z3Q7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBqYWwgJm5ic3A7ICZuYnNwOyB6ZXJv
+LCAjLTQNCiZndDsNCg0KSSB0cmllZCB0aGlzIGNhc2UuIEFuZCBpdCBkaWRuJ3QgaGF2ZSB0
+aGlzIHByb2JsZW0uDQpUaGlzIHByb2JsZW0gc2VlbXMgb25seSBleGlzdGVkIGluIHNpbmds
+ZSB0YiBsb29wLg0KJmd0Ow0KJmd0OyBCdXQgdW5saW5raW5nIHRoZSB0YiBzaG91bGQgYmUg
+cGFydCBvZiBpbnZhbGlkYXRpb24sIHNvIEkgZG9uJ3QgcXVpdGUgc2VlIHdoZXJlIHRoZQ0K
+Jmd0OyBwcm9ibGVtIGlzLiAmbmJzcDtZb3UgbmVlZCB0byBleHBhbmQgb24gdGhlIGRlc2Ny
+aXB0aW9uIG9mIHRoZSBwcm9ibGVtLg0KJmd0Ow0KDQoNCkkgdGhpbmsgdGhlIHByb2JsZW0g
+aXMgdGhlIHNpbmdsZSB0YiBpcyBhbHdheXMgaW4gdXNlJm5ic3A7Jm5ic3A7d2hlbiB0aGUg
+c2luZ2xlIHRiIGlzIGxpbmtlZCB3aXRoIGl0c2VsZu+8jA0KYW5kIGl0IGNhbm5vdCBiZSB1
+cGRhdGVkIHdoZW4gd2UgdXBkYXRlIHRoZSBjb2Rl44CCDQoNCg0KUmVnYXJkc++8jA0KV2Vp
+d2VpIExpDQoNCiZndDsNCiZndDsgcn4=
+
+------=_NextPart_68D20039_C9129260_1D3F922C
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxMXB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5l
+LWhlaWdodDogMS40MzsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lz
+dGVtRm9udCwgJnF1b3Q7UGluZ0ZhbmcgU0MmcXVvdDssICZxdW90O01pY3Jvc29mdCBZYUhl
+aSZxdW90OzsiPjxkaXYgY2xhc3M9IkFtIGFpTCBhTzkgQWwgZWRpdGFibGUgTFctYXZmIHRT
+LXRXIHRTLXRZIiBzdHlsZT0ibWluLWhlaWdodDo4NXB4IiBzcGVsbGNoZWNrPSJmYWxzZSI+
+PGRpdiBjbGFzcz0iQW0gYWlMIGFPOSBBbCBlZGl0YWJsZSBMVy1hdmYgdFMtdFcgdFMtdFki
+IHN0eWxlPSJtaW4taGVpZ2h0Ojg1cHgiIHNwZWxsY2hlY2s9ImZhbHNlIj48YnI+UmljaGFy
+ZCBIZW5kZXJzb24gJmx0O3JpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmcmZ3Q7IOS6jjIw
+MjXlubQ55pyIMjPml6XlkajkuowgMDc6MjLlhpnpgZPvvJo8YnI+Jmd0Ozxicj4mZ3Q7IE9u
+IDkvMTcvMjUgMDU6NDcsIGxpd2Vpd2VpQGt1YnVkcy5jbiB3cm90ZTo8YnI+Jmd0OyAmZ3Q7
+IEZyb206IFdlaXdlaSBMaSAmbHQ7bGl3ZWl3ZWlAa3VidWRzLmNuJmd0Ozxicj4mZ3Q7ICZn
+dDs8YnI+Jmd0OyAmZ3Q7IFRoZSBwcm9ibGVtIGlzIHRyaWdnZXJlZCBpbiBmb2xsb3dpbmcg
+Y29uZGl0aW9uczo8YnI+Jmd0OyAmZ3Q7IC0gdGhyZWFkIDE6PGJyPiZndDsgJmd0OyAmbmJz
+cDsgJm5ic3A7ICZuYnNwO3J1biBzcGluIGxvb3AoZW5kZWQgd2l0aCBhIGRpcmVjdCBqdW1w
+KSBsaWtlICIweDAwMDAwMDZmLCAvLyBqYWwgemVybywgIzAiPGJyPiZndDsgJmd0OyAtIHRo
+cmVhZCAyOjxicj4mZ3Q7ICZndDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtkbyBzb21ldGhpbmcs
+IGFuZCB0aGVuIG1vZGlmeSB0aGUgbG9vcCBjb2RlIG9mIHRocmVhZCAxIHRvIG5vcCBpc250
+cnVjdGlvbiw8YnI+Jmd0OyAmZ3Q7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ZmluYWxseSB3YWl0
+IHRocmVhZCAxIGV4aXQuPGJyPiZndDsgJmd0Ozxicj4mZ3Q7ICZndDsgVGhlIGxvb3AgdGIg
+d2hpY2ggaXMgcGF0Y2hlZCB0byBqdW1wIHRvIGl0c2VsZiwgd2lsbCBub3QgYmUgdXBkYXRl
+ZCBpbiB0aGlzIGNhc2U8YnI+Jmd0OyAmZ3Q7IGFuZCB3aWxsIG5ldmVyIGV4aXQuPGJyPiZn
+dDsgJmd0Ozxicj4mZ3Q7ICZndDsgU2lnbmVkLW9mZi1ieTogV2Vpd2VpIExpICZsdDtsaXdl
+aXdlaUBrdWJ1ZHMuY24mZ3Q7PGJyPiZndDsgJmd0OyAtLS08YnI+Jmd0OyAmZ3Q7ICZuYnNw
+OyBhY2NlbC90Y2cvY3B1LWV4ZWMuYyB8IDggKysrKysrLS08YnI+Jmd0OyAmZ3Q7ICZuYnNw
+OyAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKTxicj4m
+Z3Q7PGJyPiZndDsgSWYgdGhlcmUncyBhIHByb2JsZW0gd2l0aCAxIHRiLCB0aGVyZSdzIGFs
+c28gYSBwcm9ibGVtIHdpdGggMiB0YiBsaWtlPGJyPiZndDs8YnI+Jmd0OyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgamFsICZuYnNwOyAmbmJzcDsgemVybywgIzQ8YnI+Jmd0OyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgamFsICZuYnNwOyAmbmJzcDsgemVybywgIy00
+PGJyPiZndDs8YnI+PGJyPkkgdHJpZWQgdGhpcyBjYXNlLiBBbmQgaXQgZGlkbid0IGhhdmUg
+dGhpcyBwcm9ibGVtLjxicj5UaGlzIHByb2JsZW0gc2VlbXMgb25seSBleGlzdGVkIGluIHNp
+bmdsZSB0YiBsb29wLjxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1
+NSwgMjU1KTsiPjxicj4mZ3Q7PGJyPiZndDsgQnV0IHVubGlua2luZyB0aGUgdGIgc2hvdWxk
+IGJlIHBhcnQgb2YgaW52YWxpZGF0aW9uLCBzbyBJIGRvbid0IHF1aXRlIHNlZSB3aGVyZSB0
+aGU8YnI+Jmd0OyBwcm9ibGVtIGlzLiAmbmJzcDtZb3UgbmVlZCB0byBleHBhbmQgb24gdGhl
+IGRlc2NyaXB0aW9uIG9mIHRoZSBwcm9ibGVtLjxicj4mZ3Q7PGJyPjxicj48L2Rpdj48ZGl2
+IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ij5JIHRoaW5r
+IHRoZSBwcm9ibGVtIGlzIHRoZSBzaW5nbGUgdGIgaXMgYWx3YXlzIGluIHVzZSZuYnNwOyZu
+YnNwO3doZW4gdGhlIHNpbmdsZSB0YiBpcyBsaW5rZWQgd2l0aCBpdHNlbGbvvIw8L2Rpdj48
+ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ij5hbmQg
+aXQgY2Fubm90IGJlIHVwZGF0ZWQgd2hlbiB3ZSB1cGRhdGUgdGhlIGNvZGXjgII8YnI+PC9k
+aXY+PGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyI+
+PGJyPlJlZ2FyZHPvvIw8YnI+V2Vpd2VpIExpPGJyPjxicj4mZ3Q7PGJyPiZndDsgcn48L2Rp
+dj48L2Rpdj48L2Rpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+
+
+
+------=_NextPart_68D20039_C9129260_1D3F922C--
 
 
