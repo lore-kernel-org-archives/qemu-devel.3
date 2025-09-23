@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EABCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 17:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F59FCAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 17:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v17Hp-0003pK-Dy; Tue, 23 Sep 2025 13:58:45 -0400
+	id 1v17HD-0003YA-8v; Tue, 23 Sep 2025 13:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v17Hn-0003n2-0e
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 13:58:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v17Hj-0003Hp-08
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 13:58:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758650312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=svf0TTqxjoBEdj/rDDy8hPRqa3QnBg6O5aGsfeXUVzY=;
- b=g2Jcbo1VE6vja3jb/KQzD4eahrqt+jrlAjBNNNXUQdZftttNZVHEDl4/63rHcXyu6qsbiL
- NtbS7umhQRJkxnRjQP4VINP6gsOjRYK0JAv7EAUNL3wCm2p4jnWpflepnimK5OGEmrV/ZS
- CWQO9dHusqifwNii79ozdzzVqveIgLM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-P_OM-tSINJaBIY4cM6U5KQ-1; Tue,
- 23 Sep 2025 13:58:28 -0400
-X-MC-Unique: P_OM-tSINJaBIY4cM6U5KQ-1
-X-Mimecast-MFC-AGG-ID: P_OM-tSINJaBIY4cM6U5KQ_1758650308
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C13B1195608C; Tue, 23 Sep 2025 17:58:27 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.69])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CE8D300018D; Tue, 23 Sep 2025 17:58:27 +0000 (UTC)
-Date: Tue, 23 Sep 2025 13:58:26 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 2/3] docs/code-provenance: make the exception process
- more prominent
-Message-ID: <20250923175826.GB509965@fedora>
-References: <20250922154843.60233-1-pbonzini@redhat.com>
- <20250922154843.60233-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v17HA-0003X3-GD
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 13:58:05 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1v17H5-00030C-C2
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 13:58:02 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-46e21249891so7360915e9.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 10:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758650277; x=1759255077; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=SPOAEg2ZDVQ82CttQLaZkvE+MrumCL5fkpDHx7L8yTc=;
+ b=v4frP9GWBFxwlYX3Cnu+5yRRLL7ZJHsKl2hdgvWKhtOVeKUo9DMXD+VmqPsX8hhFkN
+ Ts5kjDtLnnitC14tQjdA89aydEbVvS5GN5HAG2DYx4A0EwSx4/mcBPbyCqmuD9ionY+6
+ olRCyrZmgdmOEc0O/2f21uathFQ7GKDxLoyNhBIdYfxpKjDobrJg2R7L8A1HTkJHPsHb
+ RTZxt4rebzCkqrDYSdJVtyBiGyPXH8XX+YuFUL1224MfVa8qQ6Ls1jdC7iwWS0mnpqCF
+ 5rU97UOToaPd6ZsstGKHGmM7EQu2hX5KpvSsSqaZzldR9sAl3bCXRKRvhzSihucjXoP9
+ 3WpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758650277; x=1759255077;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SPOAEg2ZDVQ82CttQLaZkvE+MrumCL5fkpDHx7L8yTc=;
+ b=faCG/wWdkhwH0p++c0RxV0TbKZDZXJFEgntLyt89IUka1SH4qr/0SE1G2d6XnPR72I
+ waGos4+1wjU4GSIAYk6b0OhC23L/QslQaoXW+lOhhpOO7syZ6T3Iw+sgLrNi7BugYGWM
+ ewIiPS50tStPZNgvvFQUsvc9r1wUuxAhRL6X1eWIxd6LERMTDMvT4vKiKMfW42JM18aB
+ 6gL1hsOZw66YfSvH/Z20OEN7RfviVYaXz/3UnAiNcIu1hyJlzH3mfz4cEbpgvVgtAKUb
+ JMHIuSEACTdEg9LtPNWBKK0dXCFb1TiJ7OUtESIVJd7Oo1w3BVND8cSOXa2m/cHTORo/
+ o79A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEzFFVGwf5SpiAS77cYymLxgE0sP3qK6pLweiHQ1VQqnwivhsWqCXxy+cgH4ICtIGwe0oYGGZbwfWr@nongnu.org
+X-Gm-Message-State: AOJu0YzNxpH/xun2d76fVY+iOivyNYGDbJzTWWi+YJq5AiP/j8CoH9/w
+ MvWdo6NCfn0HvBw7Re7lDq9xu0OPHwRRxMRZZKFlCs/9oKDjh9MbtF2Ax7aDkcxs7xA=
+X-Gm-Gg: ASbGncvH5aaHLjuiPS6fimG9/+cx2U3EX4M/qUDGw3/c88tFsyfoF0oXNgtX+ysnZdQ
+ tg2iUMhwbyvalUvYId0rbMaHlfSuZ8ZtY1rbJi0zDJKcFvpbhQxm6LGL1e5llMJQLUq9O6oHi9y
+ 7hiWg8BXql5KcbPJedyYyvA2gJSATLMYoP6MrKnQmWkDt6ni9uHt0R3TKrZyXDhgLGEEqKU9JMS
+ JOHxA6zwMB4SMU8MjvXburdm4AF/pwN0vDzTEvLlRdafPIoN3fbFnBuSGAqz/dRIal8974j7yz6
+ 9HHUngwjusWVDo4mw6MjKdyUDgYVjnEu2Iv692h0xXeGnGqyzsEm1xjRtlGUFzY7aX+0qPrE5x+
+ E85/imllV6hIhz39zPWoAFwNOHwj6
+X-Google-Smtp-Source: AGHT+IFQL+iuzcSUxZJowYl1gxbjiZUrMkfcHm8kV5izuX6A3VTALUs973UsQZr92cUQRqypbA/18A==
+X-Received: by 2002:a05:600c:a47:b0:458:a559:a693 with SMTP id
+ 5b1f17b1804b1-46e1dabacccmr37057765e9.18.1758650277225; 
+ Tue, 23 Sep 2025 10:57:57 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46d1c97a87csm97657155e9.20.2025.09.23.10.57.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 10:57:55 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 1/2] target/arm: Move ID register field defs to
+ cpu-features.h
+Date: Tue, 23 Sep 2025 18:57:50 +0100
+Message-ID: <20250923175751.966795-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250923175751.966795-1-peter.maydell@linaro.org>
+References: <20250923175751.966795-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Y2IDlzQMWZkpdJPE"
-Content-Disposition: inline
-In-Reply-To: <20250922154843.60233-3-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,85 +101,879 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Currently we define constants for the ID register fields in cpu.h.
+This means they're defined for a lot more code in QEMU than actually
+needs them.  Move them to cpu-features.h, which is where we define
+the feature functions that test fields in these registers.
 
---Y2IDlzQMWZkpdJPE
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There's only one place where we need to use some of these macro
+definitions that we weren't already including cpu-features.h:
+linux-user/arm/target_proc.h.  Otherwise this patch is a pure
+movement of code from one file to the other.
 
-On Mon, Sep 22, 2025 at 05:48:41PM +0200, Paolo Bonzini wrote:
-> QEMU's AI generated content policy does not flesh out the exception
-> process yet.  Do it, while at the same time keeping things informal: ask
-> contributors to explain what they would like to use AI for, and let them
-> reach a consensus with the project on why it is credible to claim DCO
-> compliance in that specific scenario.
->=20
-> In other words, exceptions do not "solve the AI copyright problem".  They
-> take a position that a reasonable contributor could have, and assert that
-> we're comfortable with the argument.
->=20
-> Suggested-by: Daniel P. Berrang=E9 <berrange@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/devel/code-provenance.rst | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
->=20
-> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.=
-rst
-> index dba99a26f64..103e0a97d76 100644
-> --- a/docs/devel/code-provenance.rst
-> +++ b/docs/devel/code-provenance.rst
-> @@ -326,8 +326,13 @@ The QEMU project thus requires that contributors ref=
-rain from using AI content
->  generation agents which are built on top of such tools.
-> =20
->  This policy may evolve as AI tools mature and the legal situation is
-> -clarifed. In the meanwhile, requests for exceptions to this policy will =
-be
-> -evaluated by the QEMU project on a case by case basis. To be granted an
-> -exception, a contributor will need to demonstrate clarity of the license=
- and
-> -copyright status for the tool's output in relation to its training model=
- and
-> -code, to the satisfaction of the project maintainers.
-> +clarified.
-> +
-> +Exceptions
-> +^^^^^^^^^^
-> +
-> +The QEMU project welcomes discussion on any exceptions to this policy,
-> +or more general revisions. This can be done by contacting the qemu-devel
-> +mailing list with details of a proposed tool, model, usage scenario, etc.
-> +that is beneficial to QEMU, while still mitigating the legal risks to the
-> +project.  After discussion, any exception will be listed below.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ linux-user/arm/target_proc.h |   2 +
+ target/arm/cpu-features.h    | 410 +++++++++++++++++++++++++++++++++++
+ target/arm/cpu.h             | 410 -----------------------------------
+ 3 files changed, 412 insertions(+), 410 deletions(-)
 
-"Legal risks to the project" is all-encompassing and vague. People may
-not know how to start addressing the topic and might therefore not
-attempt to request an exception.
-
-I suggest replacing "legal risks to the project" with something more
-concrete like "issues around license and copyright status required to
-satisfy the Developer Certificate of Origin (DCO) requirements".
-
-> --=20
-> 2.51.0
->=20
-
---Y2IDlzQMWZkpdJPE
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS38EACgkQnKSrs4Gr
-c8jm2wf/bYYsxujMp71GCOU8Hr8OoXDRZN6BD2Jlb/JeXMGrFY4CbR+XJm8/ogm6
-jHFX64QUtuzNF+0T8bAdMuhWYPRu8LA0J0hFVzLRZGhmsJjmxqyOEmZV5RYO5ARi
-jtmeOfYitGOvmy6zMzyiaCu6iEmkP1HjCqapCX8BOj4cLKqg6RSwZsJWAgqzterA
-3tbD1D0CZzWqlmhGW3FRq4byVzgUg9cwaAIYhc8yOvjf3NfjGhxDqrT+Q67JsLAu
-w5FEeODMRkIdYG95UBAhJ7avGKNL6NDC9LYWUv4ZukhfYWCD+17GSwB1gMWA58YB
-963OULzPatfcjWxmUPxszKhvb34Vfw==
-=p/oS
------END PGP SIGNATURE-----
-
---Y2IDlzQMWZkpdJPE--
+diff --git a/linux-user/arm/target_proc.h b/linux-user/arm/target_proc.h
+index a4cd6948c60..a28d7231cdc 100644
+--- a/linux-user/arm/target_proc.h
++++ b/linux-user/arm/target_proc.h
+@@ -6,6 +6,8 @@
+ #ifndef ARM_TARGET_PROC_H
+ #define ARM_TARGET_PROC_H
+ 
++#include "target/arm/cpu-features.h" /* for MIDR_EL1 field definitions */
++
+ static int open_cpuinfo(CPUArchState *cpu_env, int fd)
+ {
+     ARMCPU *cpu = env_archcpu(cpu_env);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 512eeaf551e..ad571e2ffee 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -25,6 +25,416 @@
+ #include "cpu.h"
+ #include "cpu-sysregs.h"
+ 
++/*
++ * System register ID fields.
++ */
++FIELD(CLIDR_EL1, CTYPE1, 0, 3)
++FIELD(CLIDR_EL1, CTYPE2, 3, 3)
++FIELD(CLIDR_EL1, CTYPE3, 6, 3)
++FIELD(CLIDR_EL1, CTYPE4, 9, 3)
++FIELD(CLIDR_EL1, CTYPE5, 12, 3)
++FIELD(CLIDR_EL1, CTYPE6, 15, 3)
++FIELD(CLIDR_EL1, CTYPE7, 18, 3)
++FIELD(CLIDR_EL1, LOUIS, 21, 3)
++FIELD(CLIDR_EL1, LOC, 24, 3)
++FIELD(CLIDR_EL1, LOUU, 27, 3)
++FIELD(CLIDR_EL1, ICB, 30, 3)
++
++/* When FEAT_CCIDX is implemented */
++FIELD(CCSIDR_EL1, CCIDX_LINESIZE, 0, 3)
++FIELD(CCSIDR_EL1, CCIDX_ASSOCIATIVITY, 3, 21)
++FIELD(CCSIDR_EL1, CCIDX_NUMSETS, 32, 24)
++
++/* When FEAT_CCIDX is not implemented */
++FIELD(CCSIDR_EL1, LINESIZE, 0, 3)
++FIELD(CCSIDR_EL1, ASSOCIATIVITY, 3, 10)
++FIELD(CCSIDR_EL1, NUMSETS, 13, 15)
++
++FIELD(CTR_EL0,  IMINLINE, 0, 4)
++FIELD(CTR_EL0,  L1IP, 14, 2)
++FIELD(CTR_EL0,  DMINLINE, 16, 4)
++FIELD(CTR_EL0,  ERG, 20, 4)
++FIELD(CTR_EL0,  CWG, 24, 4)
++FIELD(CTR_EL0,  IDC, 28, 1)
++FIELD(CTR_EL0,  DIC, 29, 1)
++FIELD(CTR_EL0,  TMINLINE, 32, 6)
++
++FIELD(MIDR_EL1, REVISION, 0, 4)
++FIELD(MIDR_EL1, PARTNUM, 4, 12)
++FIELD(MIDR_EL1, ARCHITECTURE, 16, 4)
++FIELD(MIDR_EL1, VARIANT, 20, 4)
++FIELD(MIDR_EL1, IMPLEMENTER, 24, 8)
++
++FIELD(ID_ISAR0, SWAP, 0, 4)
++FIELD(ID_ISAR0, BITCOUNT, 4, 4)
++FIELD(ID_ISAR0, BITFIELD, 8, 4)
++FIELD(ID_ISAR0, CMPBRANCH, 12, 4)
++FIELD(ID_ISAR0, COPROC, 16, 4)
++FIELD(ID_ISAR0, DEBUG, 20, 4)
++FIELD(ID_ISAR0, DIVIDE, 24, 4)
++
++FIELD(ID_ISAR1, ENDIAN, 0, 4)
++FIELD(ID_ISAR1, EXCEPT, 4, 4)
++FIELD(ID_ISAR1, EXCEPT_AR, 8, 4)
++FIELD(ID_ISAR1, EXTEND, 12, 4)
++FIELD(ID_ISAR1, IFTHEN, 16, 4)
++FIELD(ID_ISAR1, IMMEDIATE, 20, 4)
++FIELD(ID_ISAR1, INTERWORK, 24, 4)
++FIELD(ID_ISAR1, JAZELLE, 28, 4)
++
++FIELD(ID_ISAR2, LOADSTORE, 0, 4)
++FIELD(ID_ISAR2, MEMHINT, 4, 4)
++FIELD(ID_ISAR2, MULTIACCESSINT, 8, 4)
++FIELD(ID_ISAR2, MULT, 12, 4)
++FIELD(ID_ISAR2, MULTS, 16, 4)
++FIELD(ID_ISAR2, MULTU, 20, 4)
++FIELD(ID_ISAR2, PSR_AR, 24, 4)
++FIELD(ID_ISAR2, REVERSAL, 28, 4)
++
++FIELD(ID_ISAR3, SATURATE, 0, 4)
++FIELD(ID_ISAR3, SIMD, 4, 4)
++FIELD(ID_ISAR3, SVC, 8, 4)
++FIELD(ID_ISAR3, SYNCHPRIM, 12, 4)
++FIELD(ID_ISAR3, TABBRANCH, 16, 4)
++FIELD(ID_ISAR3, T32COPY, 20, 4)
++FIELD(ID_ISAR3, TRUENOP, 24, 4)
++FIELD(ID_ISAR3, T32EE, 28, 4)
++
++FIELD(ID_ISAR4, UNPRIV, 0, 4)
++FIELD(ID_ISAR4, WITHSHIFTS, 4, 4)
++FIELD(ID_ISAR4, WRITEBACK, 8, 4)
++FIELD(ID_ISAR4, SMC, 12, 4)
++FIELD(ID_ISAR4, BARRIER, 16, 4)
++FIELD(ID_ISAR4, SYNCHPRIM_FRAC, 20, 4)
++FIELD(ID_ISAR4, PSR_M, 24, 4)
++FIELD(ID_ISAR4, SWP_FRAC, 28, 4)
++
++FIELD(ID_ISAR5, SEVL, 0, 4)
++FIELD(ID_ISAR5, AES, 4, 4)
++FIELD(ID_ISAR5, SHA1, 8, 4)
++FIELD(ID_ISAR5, SHA2, 12, 4)
++FIELD(ID_ISAR5, CRC32, 16, 4)
++FIELD(ID_ISAR5, RDM, 24, 4)
++FIELD(ID_ISAR5, VCMA, 28, 4)
++
++FIELD(ID_ISAR6, JSCVT, 0, 4)
++FIELD(ID_ISAR6, DP, 4, 4)
++FIELD(ID_ISAR6, FHM, 8, 4)
++FIELD(ID_ISAR6, SB, 12, 4)
++FIELD(ID_ISAR6, SPECRES, 16, 4)
++FIELD(ID_ISAR6, BF16, 20, 4)
++FIELD(ID_ISAR6, I8MM, 24, 4)
++
++FIELD(ID_MMFR0, VMSA, 0, 4)
++FIELD(ID_MMFR0, PMSA, 4, 4)
++FIELD(ID_MMFR0, OUTERSHR, 8, 4)
++FIELD(ID_MMFR0, SHARELVL, 12, 4)
++FIELD(ID_MMFR0, TCM, 16, 4)
++FIELD(ID_MMFR0, AUXREG, 20, 4)
++FIELD(ID_MMFR0, FCSE, 24, 4)
++FIELD(ID_MMFR0, INNERSHR, 28, 4)
++
++FIELD(ID_MMFR1, L1HVDVA, 0, 4)
++FIELD(ID_MMFR1, L1UNIVA, 4, 4)
++FIELD(ID_MMFR1, L1HVDSW, 8, 4)
++FIELD(ID_MMFR1, L1UNISW, 12, 4)
++FIELD(ID_MMFR1, L1HVD, 16, 4)
++FIELD(ID_MMFR1, L1UNI, 20, 4)
++FIELD(ID_MMFR1, L1TSTCLN, 24, 4)
++FIELD(ID_MMFR1, BPRED, 28, 4)
++
++FIELD(ID_MMFR2, L1HVDFG, 0, 4)
++FIELD(ID_MMFR2, L1HVDBG, 4, 4)
++FIELD(ID_MMFR2, L1HVDRNG, 8, 4)
++FIELD(ID_MMFR2, HVDTLB, 12, 4)
++FIELD(ID_MMFR2, UNITLB, 16, 4)
++FIELD(ID_MMFR2, MEMBARR, 20, 4)
++FIELD(ID_MMFR2, WFISTALL, 24, 4)
++FIELD(ID_MMFR2, HWACCFLG, 28, 4)
++
++FIELD(ID_MMFR3, CMAINTVA, 0, 4)
++FIELD(ID_MMFR3, CMAINTSW, 4, 4)
++FIELD(ID_MMFR3, BPMAINT, 8, 4)
++FIELD(ID_MMFR3, MAINTBCST, 12, 4)
++FIELD(ID_MMFR3, PAN, 16, 4)
++FIELD(ID_MMFR3, COHWALK, 20, 4)
++FIELD(ID_MMFR3, CMEMSZ, 24, 4)
++FIELD(ID_MMFR3, SUPERSEC, 28, 4)
++
++FIELD(ID_MMFR4, SPECSEI, 0, 4)
++FIELD(ID_MMFR4, AC2, 4, 4)
++FIELD(ID_MMFR4, XNX, 8, 4)
++FIELD(ID_MMFR4, CNP, 12, 4)
++FIELD(ID_MMFR4, HPDS, 16, 4)
++FIELD(ID_MMFR4, LSM, 20, 4)
++FIELD(ID_MMFR4, CCIDX, 24, 4)
++FIELD(ID_MMFR4, EVT, 28, 4)
++
++FIELD(ID_MMFR5, ETS, 0, 4)
++FIELD(ID_MMFR5, NTLBPA, 4, 4)
++
++FIELD(ID_PFR0, STATE0, 0, 4)
++FIELD(ID_PFR0, STATE1, 4, 4)
++FIELD(ID_PFR0, STATE2, 8, 4)
++FIELD(ID_PFR0, STATE3, 12, 4)
++FIELD(ID_PFR0, CSV2, 16, 4)
++FIELD(ID_PFR0, AMU, 20, 4)
++FIELD(ID_PFR0, DIT, 24, 4)
++FIELD(ID_PFR0, RAS, 28, 4)
++
++FIELD(ID_PFR1, PROGMOD, 0, 4)
++FIELD(ID_PFR1, SECURITY, 4, 4)
++FIELD(ID_PFR1, MPROGMOD, 8, 4)
++FIELD(ID_PFR1, VIRTUALIZATION, 12, 4)
++FIELD(ID_PFR1, GENTIMER, 16, 4)
++FIELD(ID_PFR1, SEC_FRAC, 20, 4)
++FIELD(ID_PFR1, VIRT_FRAC, 24, 4)
++FIELD(ID_PFR1, GIC, 28, 4)
++
++FIELD(ID_PFR2, CSV3, 0, 4)
++FIELD(ID_PFR2, SSBS, 4, 4)
++FIELD(ID_PFR2, RAS_FRAC, 8, 4)
++
++FIELD(ID_AA64ISAR0, AES, 4, 4)
++FIELD(ID_AA64ISAR0, SHA1, 8, 4)
++FIELD(ID_AA64ISAR0, SHA2, 12, 4)
++FIELD(ID_AA64ISAR0, CRC32, 16, 4)
++FIELD(ID_AA64ISAR0, ATOMIC, 20, 4)
++FIELD(ID_AA64ISAR0, TME, 24, 4)
++FIELD(ID_AA64ISAR0, RDM, 28, 4)
++FIELD(ID_AA64ISAR0, SHA3, 32, 4)
++FIELD(ID_AA64ISAR0, SM3, 36, 4)
++FIELD(ID_AA64ISAR0, SM4, 40, 4)
++FIELD(ID_AA64ISAR0, DP, 44, 4)
++FIELD(ID_AA64ISAR0, FHM, 48, 4)
++FIELD(ID_AA64ISAR0, TS, 52, 4)
++FIELD(ID_AA64ISAR0, TLB, 56, 4)
++FIELD(ID_AA64ISAR0, RNDR, 60, 4)
++
++FIELD(ID_AA64ISAR1, DPB, 0, 4)
++FIELD(ID_AA64ISAR1, APA, 4, 4)
++FIELD(ID_AA64ISAR1, API, 8, 4)
++FIELD(ID_AA64ISAR1, JSCVT, 12, 4)
++FIELD(ID_AA64ISAR1, FCMA, 16, 4)
++FIELD(ID_AA64ISAR1, LRCPC, 20, 4)
++FIELD(ID_AA64ISAR1, GPA, 24, 4)
++FIELD(ID_AA64ISAR1, GPI, 28, 4)
++FIELD(ID_AA64ISAR1, FRINTTS, 32, 4)
++FIELD(ID_AA64ISAR1, SB, 36, 4)
++FIELD(ID_AA64ISAR1, SPECRES, 40, 4)
++FIELD(ID_AA64ISAR1, BF16, 44, 4)
++FIELD(ID_AA64ISAR1, DGH, 48, 4)
++FIELD(ID_AA64ISAR1, I8MM, 52, 4)
++FIELD(ID_AA64ISAR1, XS, 56, 4)
++FIELD(ID_AA64ISAR1, LS64, 60, 4)
++
++FIELD(ID_AA64ISAR2, WFXT, 0, 4)
++FIELD(ID_AA64ISAR2, RPRES, 4, 4)
++FIELD(ID_AA64ISAR2, GPA3, 8, 4)
++FIELD(ID_AA64ISAR2, APA3, 12, 4)
++FIELD(ID_AA64ISAR2, MOPS, 16, 4)
++FIELD(ID_AA64ISAR2, BC, 20, 4)
++FIELD(ID_AA64ISAR2, PAC_FRAC, 24, 4)
++FIELD(ID_AA64ISAR2, CLRBHB, 28, 4)
++FIELD(ID_AA64ISAR2, SYSREG_128, 32, 4)
++FIELD(ID_AA64ISAR2, SYSINSTR_128, 36, 4)
++FIELD(ID_AA64ISAR2, PRFMSLC, 40, 4)
++FIELD(ID_AA64ISAR2, RPRFM, 48, 4)
++FIELD(ID_AA64ISAR2, CSSC, 52, 4)
++FIELD(ID_AA64ISAR2, LUT, 56, 4)
++FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
++
++FIELD(ID_AA64PFR0, EL0, 0, 4)
++FIELD(ID_AA64PFR0, EL1, 4, 4)
++FIELD(ID_AA64PFR0, EL2, 8, 4)
++FIELD(ID_AA64PFR0, EL3, 12, 4)
++FIELD(ID_AA64PFR0, FP, 16, 4)
++FIELD(ID_AA64PFR0, ADVSIMD, 20, 4)
++FIELD(ID_AA64PFR0, GIC, 24, 4)
++FIELD(ID_AA64PFR0, RAS, 28, 4)
++FIELD(ID_AA64PFR0, SVE, 32, 4)
++FIELD(ID_AA64PFR0, SEL2, 36, 4)
++FIELD(ID_AA64PFR0, MPAM, 40, 4)
++FIELD(ID_AA64PFR0, AMU, 44, 4)
++FIELD(ID_AA64PFR0, DIT, 48, 4)
++FIELD(ID_AA64PFR0, RME, 52, 4)
++FIELD(ID_AA64PFR0, CSV2, 56, 4)
++FIELD(ID_AA64PFR0, CSV3, 60, 4)
++
++FIELD(ID_AA64PFR1, BT, 0, 4)
++FIELD(ID_AA64PFR1, SSBS, 4, 4)
++FIELD(ID_AA64PFR1, MTE, 8, 4)
++FIELD(ID_AA64PFR1, RAS_FRAC, 12, 4)
++FIELD(ID_AA64PFR1, MPAM_FRAC, 16, 4)
++FIELD(ID_AA64PFR1, SME, 24, 4)
++FIELD(ID_AA64PFR1, RNDR_TRAP, 28, 4)
++FIELD(ID_AA64PFR1, CSV2_FRAC, 32, 4)
++FIELD(ID_AA64PFR1, NMI, 36, 4)
++FIELD(ID_AA64PFR1, MTE_FRAC, 40, 4)
++FIELD(ID_AA64PFR1, GCS, 44, 4)
++FIELD(ID_AA64PFR1, THE, 48, 4)
++FIELD(ID_AA64PFR1, MTEX, 52, 4)
++FIELD(ID_AA64PFR1, DF2, 56, 4)
++FIELD(ID_AA64PFR1, PFAR, 60, 4)
++
++FIELD(ID_AA64MMFR0, PARANGE, 0, 4)
++FIELD(ID_AA64MMFR0, ASIDBITS, 4, 4)
++FIELD(ID_AA64MMFR0, BIGEND, 8, 4)
++FIELD(ID_AA64MMFR0, SNSMEM, 12, 4)
++FIELD(ID_AA64MMFR0, BIGENDEL0, 16, 4)
++FIELD(ID_AA64MMFR0, TGRAN16, 20, 4)
++FIELD(ID_AA64MMFR0, TGRAN64, 24, 4)
++FIELD(ID_AA64MMFR0, TGRAN4, 28, 4)
++FIELD(ID_AA64MMFR0, TGRAN16_2, 32, 4)
++FIELD(ID_AA64MMFR0, TGRAN64_2, 36, 4)
++FIELD(ID_AA64MMFR0, TGRAN4_2, 40, 4)
++FIELD(ID_AA64MMFR0, EXS, 44, 4)
++FIELD(ID_AA64MMFR0, FGT, 56, 4)
++FIELD(ID_AA64MMFR0, ECV, 60, 4)
++
++FIELD(ID_AA64MMFR1, HAFDBS, 0, 4)
++FIELD(ID_AA64MMFR1, VMIDBITS, 4, 4)
++FIELD(ID_AA64MMFR1, VH, 8, 4)
++FIELD(ID_AA64MMFR1, HPDS, 12, 4)
++FIELD(ID_AA64MMFR1, LO, 16, 4)
++FIELD(ID_AA64MMFR1, PAN, 20, 4)
++FIELD(ID_AA64MMFR1, SPECSEI, 24, 4)
++FIELD(ID_AA64MMFR1, XNX, 28, 4)
++FIELD(ID_AA64MMFR1, TWED, 32, 4)
++FIELD(ID_AA64MMFR1, ETS, 36, 4)
++FIELD(ID_AA64MMFR1, HCX, 40, 4)
++FIELD(ID_AA64MMFR1, AFP, 44, 4)
++FIELD(ID_AA64MMFR1, NTLBPA, 48, 4)
++FIELD(ID_AA64MMFR1, TIDCP1, 52, 4)
++FIELD(ID_AA64MMFR1, CMOW, 56, 4)
++FIELD(ID_AA64MMFR1, ECBHB, 60, 4)
++
++FIELD(ID_AA64MMFR2, CNP, 0, 4)
++FIELD(ID_AA64MMFR2, UAO, 4, 4)
++FIELD(ID_AA64MMFR2, LSM, 8, 4)
++FIELD(ID_AA64MMFR2, IESB, 12, 4)
++FIELD(ID_AA64MMFR2, VARANGE, 16, 4)
++FIELD(ID_AA64MMFR2, CCIDX, 20, 4)
++FIELD(ID_AA64MMFR2, NV, 24, 4)
++FIELD(ID_AA64MMFR2, ST, 28, 4)
++FIELD(ID_AA64MMFR2, AT, 32, 4)
++FIELD(ID_AA64MMFR2, IDS, 36, 4)
++FIELD(ID_AA64MMFR2, FWB, 40, 4)
++FIELD(ID_AA64MMFR2, TTL, 48, 4)
++FIELD(ID_AA64MMFR2, BBM, 52, 4)
++FIELD(ID_AA64MMFR2, EVT, 56, 4)
++FIELD(ID_AA64MMFR2, E0PD, 60, 4)
++
++FIELD(ID_AA64MMFR3, TCRX, 0, 4)
++FIELD(ID_AA64MMFR3, SCTLRX, 4, 4)
++FIELD(ID_AA64MMFR3, S1PIE, 8, 4)
++FIELD(ID_AA64MMFR3, S2PIE, 12, 4)
++FIELD(ID_AA64MMFR3, S1POE, 16, 4)
++FIELD(ID_AA64MMFR3, S2POE, 20, 4)
++FIELD(ID_AA64MMFR3, AIE, 24, 4)
++FIELD(ID_AA64MMFR3, MEC, 28, 4)
++FIELD(ID_AA64MMFR3, D128, 32, 4)
++FIELD(ID_AA64MMFR3, D128_2, 36, 4)
++FIELD(ID_AA64MMFR3, SNERR, 40, 4)
++FIELD(ID_AA64MMFR3, ANERR, 44, 4)
++FIELD(ID_AA64MMFR3, SDERR, 52, 4)
++FIELD(ID_AA64MMFR3, ADERR, 56, 4)
++FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
++
++FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
++FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
++FIELD(ID_AA64DFR0, PMUVER, 8, 4)
++FIELD(ID_AA64DFR0, BRPS, 12, 4)
++FIELD(ID_AA64DFR0, PMSS, 16, 4)
++FIELD(ID_AA64DFR0, WRPS, 20, 4)
++FIELD(ID_AA64DFR0, SEBEP, 24, 4)
++FIELD(ID_AA64DFR0, CTX_CMPS, 28, 4)
++FIELD(ID_AA64DFR0, PMSVER, 32, 4)
++FIELD(ID_AA64DFR0, DOUBLELOCK, 36, 4)
++FIELD(ID_AA64DFR0, TRACEFILT, 40, 4)
++FIELD(ID_AA64DFR0, TRACEBUFFER, 44, 4)
++FIELD(ID_AA64DFR0, MTPMU, 48, 4)
++FIELD(ID_AA64DFR0, BRBE, 52, 4)
++FIELD(ID_AA64DFR0, EXTTRCBUFF, 56, 4)
++FIELD(ID_AA64DFR0, HPMN0, 60, 4)
++
++FIELD(ID_AA64ZFR0, SVEVER, 0, 4)
++FIELD(ID_AA64ZFR0, AES, 4, 4)
++FIELD(ID_AA64ZFR0, BITPERM, 16, 4)
++FIELD(ID_AA64ZFR0, BFLOAT16, 20, 4)
++FIELD(ID_AA64ZFR0, B16B16, 24, 4)
++FIELD(ID_AA64ZFR0, SHA3, 32, 4)
++FIELD(ID_AA64ZFR0, SM4, 40, 4)
++FIELD(ID_AA64ZFR0, I8MM, 44, 4)
++FIELD(ID_AA64ZFR0, F32MM, 52, 4)
++FIELD(ID_AA64ZFR0, F64MM, 56, 4)
++
++FIELD(ID_AA64SMFR0, F32F32, 32, 1)
++FIELD(ID_AA64SMFR0, BI32I32, 33, 1)
++FIELD(ID_AA64SMFR0, B16F32, 34, 1)
++FIELD(ID_AA64SMFR0, F16F32, 35, 1)
++FIELD(ID_AA64SMFR0, I8I32, 36, 4)
++FIELD(ID_AA64SMFR0, F16F16, 42, 1)
++FIELD(ID_AA64SMFR0, B16B16, 43, 1)
++FIELD(ID_AA64SMFR0, I16I32, 44, 4)
++FIELD(ID_AA64SMFR0, F64F64, 48, 1)
++FIELD(ID_AA64SMFR0, I16I64, 52, 4)
++FIELD(ID_AA64SMFR0, SMEVER, 56, 4)
++FIELD(ID_AA64SMFR0, FA64, 63, 1)
++
++FIELD(ID_DFR0, COPDBG, 0, 4)
++FIELD(ID_DFR0, COPSDBG, 4, 4)
++FIELD(ID_DFR0, MMAPDBG, 8, 4)
++FIELD(ID_DFR0, COPTRC, 12, 4)
++FIELD(ID_DFR0, MMAPTRC, 16, 4)
++FIELD(ID_DFR0, MPROFDBG, 20, 4)
++FIELD(ID_DFR0, PERFMON, 24, 4)
++FIELD(ID_DFR0, TRACEFILT, 28, 4)
++
++FIELD(ID_DFR1, MTPMU, 0, 4)
++FIELD(ID_DFR1, HPMN0, 4, 4)
++
++FIELD(DBGDIDR, SE_IMP, 12, 1)
++FIELD(DBGDIDR, NSUHD_IMP, 14, 1)
++FIELD(DBGDIDR, VERSION, 16, 4)
++FIELD(DBGDIDR, CTX_CMPS, 20, 4)
++FIELD(DBGDIDR, BRPS, 24, 4)
++FIELD(DBGDIDR, WRPS, 28, 4)
++
++FIELD(DBGDEVID, PCSAMPLE, 0, 4)
++FIELD(DBGDEVID, WPADDRMASK, 4, 4)
++FIELD(DBGDEVID, BPADDRMASK, 8, 4)
++FIELD(DBGDEVID, VECTORCATCH, 12, 4)
++FIELD(DBGDEVID, VIRTEXTNS, 16, 4)
++FIELD(DBGDEVID, DOUBLELOCK, 20, 4)
++FIELD(DBGDEVID, AUXREGS, 24, 4)
++FIELD(DBGDEVID, CIDMASK, 28, 4)
++
++FIELD(DBGDEVID1, PCSROFFSET, 0, 4)
++
++FIELD(MVFR0, SIMDREG, 0, 4)
++FIELD(MVFR0, FPSP, 4, 4)
++FIELD(MVFR0, FPDP, 8, 4)
++FIELD(MVFR0, FPTRAP, 12, 4)
++FIELD(MVFR0, FPDIVIDE, 16, 4)
++FIELD(MVFR0, FPSQRT, 20, 4)
++FIELD(MVFR0, FPSHVEC, 24, 4)
++FIELD(MVFR0, FPROUND, 28, 4)
++
++FIELD(MVFR1, FPFTZ, 0, 4)
++FIELD(MVFR1, FPDNAN, 4, 4)
++FIELD(MVFR1, SIMDLS, 8, 4) /* A-profile only */
++FIELD(MVFR1, SIMDINT, 12, 4) /* A-profile only */
++FIELD(MVFR1, SIMDSP, 16, 4) /* A-profile only */
++FIELD(MVFR1, SIMDHP, 20, 4) /* A-profile only */
++FIELD(MVFR1, MVE, 8, 4) /* M-profile only */
++FIELD(MVFR1, FP16, 20, 4) /* M-profile only */
++FIELD(MVFR1, FPHP, 24, 4)
++FIELD(MVFR1, SIMDFMAC, 28, 4)
++
++FIELD(MVFR2, SIMDMISC, 0, 4)
++FIELD(MVFR2, FPMISC, 4, 4)
++
+ /*
+  * Naming convention for isar_feature functions:
+  * Functions which test 32-bit ID registers should have _aa32_ in
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 1c0deb723d7..25fd4baa023 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1994,416 +1994,6 @@ FIELD(V7M_VPR, P0, 0, 16)
+ FIELD(V7M_VPR, MASK01, 16, 4)
+ FIELD(V7M_VPR, MASK23, 20, 4)
+ 
+-/*
+- * System register ID fields.
+- */
+-FIELD(CLIDR_EL1, CTYPE1, 0, 3)
+-FIELD(CLIDR_EL1, CTYPE2, 3, 3)
+-FIELD(CLIDR_EL1, CTYPE3, 6, 3)
+-FIELD(CLIDR_EL1, CTYPE4, 9, 3)
+-FIELD(CLIDR_EL1, CTYPE5, 12, 3)
+-FIELD(CLIDR_EL1, CTYPE6, 15, 3)
+-FIELD(CLIDR_EL1, CTYPE7, 18, 3)
+-FIELD(CLIDR_EL1, LOUIS, 21, 3)
+-FIELD(CLIDR_EL1, LOC, 24, 3)
+-FIELD(CLIDR_EL1, LOUU, 27, 3)
+-FIELD(CLIDR_EL1, ICB, 30, 3)
+-
+-/* When FEAT_CCIDX is implemented */
+-FIELD(CCSIDR_EL1, CCIDX_LINESIZE, 0, 3)
+-FIELD(CCSIDR_EL1, CCIDX_ASSOCIATIVITY, 3, 21)
+-FIELD(CCSIDR_EL1, CCIDX_NUMSETS, 32, 24)
+-
+-/* When FEAT_CCIDX is not implemented */
+-FIELD(CCSIDR_EL1, LINESIZE, 0, 3)
+-FIELD(CCSIDR_EL1, ASSOCIATIVITY, 3, 10)
+-FIELD(CCSIDR_EL1, NUMSETS, 13, 15)
+-
+-FIELD(CTR_EL0,  IMINLINE, 0, 4)
+-FIELD(CTR_EL0,  L1IP, 14, 2)
+-FIELD(CTR_EL0,  DMINLINE, 16, 4)
+-FIELD(CTR_EL0,  ERG, 20, 4)
+-FIELD(CTR_EL0,  CWG, 24, 4)
+-FIELD(CTR_EL0,  IDC, 28, 1)
+-FIELD(CTR_EL0,  DIC, 29, 1)
+-FIELD(CTR_EL0,  TMINLINE, 32, 6)
+-
+-FIELD(MIDR_EL1, REVISION, 0, 4)
+-FIELD(MIDR_EL1, PARTNUM, 4, 12)
+-FIELD(MIDR_EL1, ARCHITECTURE, 16, 4)
+-FIELD(MIDR_EL1, VARIANT, 20, 4)
+-FIELD(MIDR_EL1, IMPLEMENTER, 24, 8)
+-
+-FIELD(ID_ISAR0, SWAP, 0, 4)
+-FIELD(ID_ISAR0, BITCOUNT, 4, 4)
+-FIELD(ID_ISAR0, BITFIELD, 8, 4)
+-FIELD(ID_ISAR0, CMPBRANCH, 12, 4)
+-FIELD(ID_ISAR0, COPROC, 16, 4)
+-FIELD(ID_ISAR0, DEBUG, 20, 4)
+-FIELD(ID_ISAR0, DIVIDE, 24, 4)
+-
+-FIELD(ID_ISAR1, ENDIAN, 0, 4)
+-FIELD(ID_ISAR1, EXCEPT, 4, 4)
+-FIELD(ID_ISAR1, EXCEPT_AR, 8, 4)
+-FIELD(ID_ISAR1, EXTEND, 12, 4)
+-FIELD(ID_ISAR1, IFTHEN, 16, 4)
+-FIELD(ID_ISAR1, IMMEDIATE, 20, 4)
+-FIELD(ID_ISAR1, INTERWORK, 24, 4)
+-FIELD(ID_ISAR1, JAZELLE, 28, 4)
+-
+-FIELD(ID_ISAR2, LOADSTORE, 0, 4)
+-FIELD(ID_ISAR2, MEMHINT, 4, 4)
+-FIELD(ID_ISAR2, MULTIACCESSINT, 8, 4)
+-FIELD(ID_ISAR2, MULT, 12, 4)
+-FIELD(ID_ISAR2, MULTS, 16, 4)
+-FIELD(ID_ISAR2, MULTU, 20, 4)
+-FIELD(ID_ISAR2, PSR_AR, 24, 4)
+-FIELD(ID_ISAR2, REVERSAL, 28, 4)
+-
+-FIELD(ID_ISAR3, SATURATE, 0, 4)
+-FIELD(ID_ISAR3, SIMD, 4, 4)
+-FIELD(ID_ISAR3, SVC, 8, 4)
+-FIELD(ID_ISAR3, SYNCHPRIM, 12, 4)
+-FIELD(ID_ISAR3, TABBRANCH, 16, 4)
+-FIELD(ID_ISAR3, T32COPY, 20, 4)
+-FIELD(ID_ISAR3, TRUENOP, 24, 4)
+-FIELD(ID_ISAR3, T32EE, 28, 4)
+-
+-FIELD(ID_ISAR4, UNPRIV, 0, 4)
+-FIELD(ID_ISAR4, WITHSHIFTS, 4, 4)
+-FIELD(ID_ISAR4, WRITEBACK, 8, 4)
+-FIELD(ID_ISAR4, SMC, 12, 4)
+-FIELD(ID_ISAR4, BARRIER, 16, 4)
+-FIELD(ID_ISAR4, SYNCHPRIM_FRAC, 20, 4)
+-FIELD(ID_ISAR4, PSR_M, 24, 4)
+-FIELD(ID_ISAR4, SWP_FRAC, 28, 4)
+-
+-FIELD(ID_ISAR5, SEVL, 0, 4)
+-FIELD(ID_ISAR5, AES, 4, 4)
+-FIELD(ID_ISAR5, SHA1, 8, 4)
+-FIELD(ID_ISAR5, SHA2, 12, 4)
+-FIELD(ID_ISAR5, CRC32, 16, 4)
+-FIELD(ID_ISAR5, RDM, 24, 4)
+-FIELD(ID_ISAR5, VCMA, 28, 4)
+-
+-FIELD(ID_ISAR6, JSCVT, 0, 4)
+-FIELD(ID_ISAR6, DP, 4, 4)
+-FIELD(ID_ISAR6, FHM, 8, 4)
+-FIELD(ID_ISAR6, SB, 12, 4)
+-FIELD(ID_ISAR6, SPECRES, 16, 4)
+-FIELD(ID_ISAR6, BF16, 20, 4)
+-FIELD(ID_ISAR6, I8MM, 24, 4)
+-
+-FIELD(ID_MMFR0, VMSA, 0, 4)
+-FIELD(ID_MMFR0, PMSA, 4, 4)
+-FIELD(ID_MMFR0, OUTERSHR, 8, 4)
+-FIELD(ID_MMFR0, SHARELVL, 12, 4)
+-FIELD(ID_MMFR0, TCM, 16, 4)
+-FIELD(ID_MMFR0, AUXREG, 20, 4)
+-FIELD(ID_MMFR0, FCSE, 24, 4)
+-FIELD(ID_MMFR0, INNERSHR, 28, 4)
+-
+-FIELD(ID_MMFR1, L1HVDVA, 0, 4)
+-FIELD(ID_MMFR1, L1UNIVA, 4, 4)
+-FIELD(ID_MMFR1, L1HVDSW, 8, 4)
+-FIELD(ID_MMFR1, L1UNISW, 12, 4)
+-FIELD(ID_MMFR1, L1HVD, 16, 4)
+-FIELD(ID_MMFR1, L1UNI, 20, 4)
+-FIELD(ID_MMFR1, L1TSTCLN, 24, 4)
+-FIELD(ID_MMFR1, BPRED, 28, 4)
+-
+-FIELD(ID_MMFR2, L1HVDFG, 0, 4)
+-FIELD(ID_MMFR2, L1HVDBG, 4, 4)
+-FIELD(ID_MMFR2, L1HVDRNG, 8, 4)
+-FIELD(ID_MMFR2, HVDTLB, 12, 4)
+-FIELD(ID_MMFR2, UNITLB, 16, 4)
+-FIELD(ID_MMFR2, MEMBARR, 20, 4)
+-FIELD(ID_MMFR2, WFISTALL, 24, 4)
+-FIELD(ID_MMFR2, HWACCFLG, 28, 4)
+-
+-FIELD(ID_MMFR3, CMAINTVA, 0, 4)
+-FIELD(ID_MMFR3, CMAINTSW, 4, 4)
+-FIELD(ID_MMFR3, BPMAINT, 8, 4)
+-FIELD(ID_MMFR3, MAINTBCST, 12, 4)
+-FIELD(ID_MMFR3, PAN, 16, 4)
+-FIELD(ID_MMFR3, COHWALK, 20, 4)
+-FIELD(ID_MMFR3, CMEMSZ, 24, 4)
+-FIELD(ID_MMFR3, SUPERSEC, 28, 4)
+-
+-FIELD(ID_MMFR4, SPECSEI, 0, 4)
+-FIELD(ID_MMFR4, AC2, 4, 4)
+-FIELD(ID_MMFR4, XNX, 8, 4)
+-FIELD(ID_MMFR4, CNP, 12, 4)
+-FIELD(ID_MMFR4, HPDS, 16, 4)
+-FIELD(ID_MMFR4, LSM, 20, 4)
+-FIELD(ID_MMFR4, CCIDX, 24, 4)
+-FIELD(ID_MMFR4, EVT, 28, 4)
+-
+-FIELD(ID_MMFR5, ETS, 0, 4)
+-FIELD(ID_MMFR5, NTLBPA, 4, 4)
+-
+-FIELD(ID_PFR0, STATE0, 0, 4)
+-FIELD(ID_PFR0, STATE1, 4, 4)
+-FIELD(ID_PFR0, STATE2, 8, 4)
+-FIELD(ID_PFR0, STATE3, 12, 4)
+-FIELD(ID_PFR0, CSV2, 16, 4)
+-FIELD(ID_PFR0, AMU, 20, 4)
+-FIELD(ID_PFR0, DIT, 24, 4)
+-FIELD(ID_PFR0, RAS, 28, 4)
+-
+-FIELD(ID_PFR1, PROGMOD, 0, 4)
+-FIELD(ID_PFR1, SECURITY, 4, 4)
+-FIELD(ID_PFR1, MPROGMOD, 8, 4)
+-FIELD(ID_PFR1, VIRTUALIZATION, 12, 4)
+-FIELD(ID_PFR1, GENTIMER, 16, 4)
+-FIELD(ID_PFR1, SEC_FRAC, 20, 4)
+-FIELD(ID_PFR1, VIRT_FRAC, 24, 4)
+-FIELD(ID_PFR1, GIC, 28, 4)
+-
+-FIELD(ID_PFR2, CSV3, 0, 4)
+-FIELD(ID_PFR2, SSBS, 4, 4)
+-FIELD(ID_PFR2, RAS_FRAC, 8, 4)
+-
+-FIELD(ID_AA64ISAR0, AES, 4, 4)
+-FIELD(ID_AA64ISAR0, SHA1, 8, 4)
+-FIELD(ID_AA64ISAR0, SHA2, 12, 4)
+-FIELD(ID_AA64ISAR0, CRC32, 16, 4)
+-FIELD(ID_AA64ISAR0, ATOMIC, 20, 4)
+-FIELD(ID_AA64ISAR0, TME, 24, 4)
+-FIELD(ID_AA64ISAR0, RDM, 28, 4)
+-FIELD(ID_AA64ISAR0, SHA3, 32, 4)
+-FIELD(ID_AA64ISAR0, SM3, 36, 4)
+-FIELD(ID_AA64ISAR0, SM4, 40, 4)
+-FIELD(ID_AA64ISAR0, DP, 44, 4)
+-FIELD(ID_AA64ISAR0, FHM, 48, 4)
+-FIELD(ID_AA64ISAR0, TS, 52, 4)
+-FIELD(ID_AA64ISAR0, TLB, 56, 4)
+-FIELD(ID_AA64ISAR0, RNDR, 60, 4)
+-
+-FIELD(ID_AA64ISAR1, DPB, 0, 4)
+-FIELD(ID_AA64ISAR1, APA, 4, 4)
+-FIELD(ID_AA64ISAR1, API, 8, 4)
+-FIELD(ID_AA64ISAR1, JSCVT, 12, 4)
+-FIELD(ID_AA64ISAR1, FCMA, 16, 4)
+-FIELD(ID_AA64ISAR1, LRCPC, 20, 4)
+-FIELD(ID_AA64ISAR1, GPA, 24, 4)
+-FIELD(ID_AA64ISAR1, GPI, 28, 4)
+-FIELD(ID_AA64ISAR1, FRINTTS, 32, 4)
+-FIELD(ID_AA64ISAR1, SB, 36, 4)
+-FIELD(ID_AA64ISAR1, SPECRES, 40, 4)
+-FIELD(ID_AA64ISAR1, BF16, 44, 4)
+-FIELD(ID_AA64ISAR1, DGH, 48, 4)
+-FIELD(ID_AA64ISAR1, I8MM, 52, 4)
+-FIELD(ID_AA64ISAR1, XS, 56, 4)
+-FIELD(ID_AA64ISAR1, LS64, 60, 4)
+-
+-FIELD(ID_AA64ISAR2, WFXT, 0, 4)
+-FIELD(ID_AA64ISAR2, RPRES, 4, 4)
+-FIELD(ID_AA64ISAR2, GPA3, 8, 4)
+-FIELD(ID_AA64ISAR2, APA3, 12, 4)
+-FIELD(ID_AA64ISAR2, MOPS, 16, 4)
+-FIELD(ID_AA64ISAR2, BC, 20, 4)
+-FIELD(ID_AA64ISAR2, PAC_FRAC, 24, 4)
+-FIELD(ID_AA64ISAR2, CLRBHB, 28, 4)
+-FIELD(ID_AA64ISAR2, SYSREG_128, 32, 4)
+-FIELD(ID_AA64ISAR2, SYSINSTR_128, 36, 4)
+-FIELD(ID_AA64ISAR2, PRFMSLC, 40, 4)
+-FIELD(ID_AA64ISAR2, RPRFM, 48, 4)
+-FIELD(ID_AA64ISAR2, CSSC, 52, 4)
+-FIELD(ID_AA64ISAR2, LUT, 56, 4)
+-FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
+-
+-FIELD(ID_AA64PFR0, EL0, 0, 4)
+-FIELD(ID_AA64PFR0, EL1, 4, 4)
+-FIELD(ID_AA64PFR0, EL2, 8, 4)
+-FIELD(ID_AA64PFR0, EL3, 12, 4)
+-FIELD(ID_AA64PFR0, FP, 16, 4)
+-FIELD(ID_AA64PFR0, ADVSIMD, 20, 4)
+-FIELD(ID_AA64PFR0, GIC, 24, 4)
+-FIELD(ID_AA64PFR0, RAS, 28, 4)
+-FIELD(ID_AA64PFR0, SVE, 32, 4)
+-FIELD(ID_AA64PFR0, SEL2, 36, 4)
+-FIELD(ID_AA64PFR0, MPAM, 40, 4)
+-FIELD(ID_AA64PFR0, AMU, 44, 4)
+-FIELD(ID_AA64PFR0, DIT, 48, 4)
+-FIELD(ID_AA64PFR0, RME, 52, 4)
+-FIELD(ID_AA64PFR0, CSV2, 56, 4)
+-FIELD(ID_AA64PFR0, CSV3, 60, 4)
+-
+-FIELD(ID_AA64PFR1, BT, 0, 4)
+-FIELD(ID_AA64PFR1, SSBS, 4, 4)
+-FIELD(ID_AA64PFR1, MTE, 8, 4)
+-FIELD(ID_AA64PFR1, RAS_FRAC, 12, 4)
+-FIELD(ID_AA64PFR1, MPAM_FRAC, 16, 4)
+-FIELD(ID_AA64PFR1, SME, 24, 4)
+-FIELD(ID_AA64PFR1, RNDR_TRAP, 28, 4)
+-FIELD(ID_AA64PFR1, CSV2_FRAC, 32, 4)
+-FIELD(ID_AA64PFR1, NMI, 36, 4)
+-FIELD(ID_AA64PFR1, MTE_FRAC, 40, 4)
+-FIELD(ID_AA64PFR1, GCS, 44, 4)
+-FIELD(ID_AA64PFR1, THE, 48, 4)
+-FIELD(ID_AA64PFR1, MTEX, 52, 4)
+-FIELD(ID_AA64PFR1, DF2, 56, 4)
+-FIELD(ID_AA64PFR1, PFAR, 60, 4)
+-
+-FIELD(ID_AA64MMFR0, PARANGE, 0, 4)
+-FIELD(ID_AA64MMFR0, ASIDBITS, 4, 4)
+-FIELD(ID_AA64MMFR0, BIGEND, 8, 4)
+-FIELD(ID_AA64MMFR0, SNSMEM, 12, 4)
+-FIELD(ID_AA64MMFR0, BIGENDEL0, 16, 4)
+-FIELD(ID_AA64MMFR0, TGRAN16, 20, 4)
+-FIELD(ID_AA64MMFR0, TGRAN64, 24, 4)
+-FIELD(ID_AA64MMFR0, TGRAN4, 28, 4)
+-FIELD(ID_AA64MMFR0, TGRAN16_2, 32, 4)
+-FIELD(ID_AA64MMFR0, TGRAN64_2, 36, 4)
+-FIELD(ID_AA64MMFR0, TGRAN4_2, 40, 4)
+-FIELD(ID_AA64MMFR0, EXS, 44, 4)
+-FIELD(ID_AA64MMFR0, FGT, 56, 4)
+-FIELD(ID_AA64MMFR0, ECV, 60, 4)
+-
+-FIELD(ID_AA64MMFR1, HAFDBS, 0, 4)
+-FIELD(ID_AA64MMFR1, VMIDBITS, 4, 4)
+-FIELD(ID_AA64MMFR1, VH, 8, 4)
+-FIELD(ID_AA64MMFR1, HPDS, 12, 4)
+-FIELD(ID_AA64MMFR1, LO, 16, 4)
+-FIELD(ID_AA64MMFR1, PAN, 20, 4)
+-FIELD(ID_AA64MMFR1, SPECSEI, 24, 4)
+-FIELD(ID_AA64MMFR1, XNX, 28, 4)
+-FIELD(ID_AA64MMFR1, TWED, 32, 4)
+-FIELD(ID_AA64MMFR1, ETS, 36, 4)
+-FIELD(ID_AA64MMFR1, HCX, 40, 4)
+-FIELD(ID_AA64MMFR1, AFP, 44, 4)
+-FIELD(ID_AA64MMFR1, NTLBPA, 48, 4)
+-FIELD(ID_AA64MMFR1, TIDCP1, 52, 4)
+-FIELD(ID_AA64MMFR1, CMOW, 56, 4)
+-FIELD(ID_AA64MMFR1, ECBHB, 60, 4)
+-
+-FIELD(ID_AA64MMFR2, CNP, 0, 4)
+-FIELD(ID_AA64MMFR2, UAO, 4, 4)
+-FIELD(ID_AA64MMFR2, LSM, 8, 4)
+-FIELD(ID_AA64MMFR2, IESB, 12, 4)
+-FIELD(ID_AA64MMFR2, VARANGE, 16, 4)
+-FIELD(ID_AA64MMFR2, CCIDX, 20, 4)
+-FIELD(ID_AA64MMFR2, NV, 24, 4)
+-FIELD(ID_AA64MMFR2, ST, 28, 4)
+-FIELD(ID_AA64MMFR2, AT, 32, 4)
+-FIELD(ID_AA64MMFR2, IDS, 36, 4)
+-FIELD(ID_AA64MMFR2, FWB, 40, 4)
+-FIELD(ID_AA64MMFR2, TTL, 48, 4)
+-FIELD(ID_AA64MMFR2, BBM, 52, 4)
+-FIELD(ID_AA64MMFR2, EVT, 56, 4)
+-FIELD(ID_AA64MMFR2, E0PD, 60, 4)
+-
+-FIELD(ID_AA64MMFR3, TCRX, 0, 4)
+-FIELD(ID_AA64MMFR3, SCTLRX, 4, 4)
+-FIELD(ID_AA64MMFR3, S1PIE, 8, 4)
+-FIELD(ID_AA64MMFR3, S2PIE, 12, 4)
+-FIELD(ID_AA64MMFR3, S1POE, 16, 4)
+-FIELD(ID_AA64MMFR3, S2POE, 20, 4)
+-FIELD(ID_AA64MMFR3, AIE, 24, 4)
+-FIELD(ID_AA64MMFR3, MEC, 28, 4)
+-FIELD(ID_AA64MMFR3, D128, 32, 4)
+-FIELD(ID_AA64MMFR3, D128_2, 36, 4)
+-FIELD(ID_AA64MMFR3, SNERR, 40, 4)
+-FIELD(ID_AA64MMFR3, ANERR, 44, 4)
+-FIELD(ID_AA64MMFR3, SDERR, 52, 4)
+-FIELD(ID_AA64MMFR3, ADERR, 56, 4)
+-FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+-
+-FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+-FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+-FIELD(ID_AA64DFR0, PMUVER, 8, 4)
+-FIELD(ID_AA64DFR0, BRPS, 12, 4)
+-FIELD(ID_AA64DFR0, PMSS, 16, 4)
+-FIELD(ID_AA64DFR0, WRPS, 20, 4)
+-FIELD(ID_AA64DFR0, SEBEP, 24, 4)
+-FIELD(ID_AA64DFR0, CTX_CMPS, 28, 4)
+-FIELD(ID_AA64DFR0, PMSVER, 32, 4)
+-FIELD(ID_AA64DFR0, DOUBLELOCK, 36, 4)
+-FIELD(ID_AA64DFR0, TRACEFILT, 40, 4)
+-FIELD(ID_AA64DFR0, TRACEBUFFER, 44, 4)
+-FIELD(ID_AA64DFR0, MTPMU, 48, 4)
+-FIELD(ID_AA64DFR0, BRBE, 52, 4)
+-FIELD(ID_AA64DFR0, EXTTRCBUFF, 56, 4)
+-FIELD(ID_AA64DFR0, HPMN0, 60, 4)
+-
+-FIELD(ID_AA64ZFR0, SVEVER, 0, 4)
+-FIELD(ID_AA64ZFR0, AES, 4, 4)
+-FIELD(ID_AA64ZFR0, BITPERM, 16, 4)
+-FIELD(ID_AA64ZFR0, BFLOAT16, 20, 4)
+-FIELD(ID_AA64ZFR0, B16B16, 24, 4)
+-FIELD(ID_AA64ZFR0, SHA3, 32, 4)
+-FIELD(ID_AA64ZFR0, SM4, 40, 4)
+-FIELD(ID_AA64ZFR0, I8MM, 44, 4)
+-FIELD(ID_AA64ZFR0, F32MM, 52, 4)
+-FIELD(ID_AA64ZFR0, F64MM, 56, 4)
+-
+-FIELD(ID_AA64SMFR0, F32F32, 32, 1)
+-FIELD(ID_AA64SMFR0, BI32I32, 33, 1)
+-FIELD(ID_AA64SMFR0, B16F32, 34, 1)
+-FIELD(ID_AA64SMFR0, F16F32, 35, 1)
+-FIELD(ID_AA64SMFR0, I8I32, 36, 4)
+-FIELD(ID_AA64SMFR0, F16F16, 42, 1)
+-FIELD(ID_AA64SMFR0, B16B16, 43, 1)
+-FIELD(ID_AA64SMFR0, I16I32, 44, 4)
+-FIELD(ID_AA64SMFR0, F64F64, 48, 1)
+-FIELD(ID_AA64SMFR0, I16I64, 52, 4)
+-FIELD(ID_AA64SMFR0, SMEVER, 56, 4)
+-FIELD(ID_AA64SMFR0, FA64, 63, 1)
+-
+-FIELD(ID_DFR0, COPDBG, 0, 4)
+-FIELD(ID_DFR0, COPSDBG, 4, 4)
+-FIELD(ID_DFR0, MMAPDBG, 8, 4)
+-FIELD(ID_DFR0, COPTRC, 12, 4)
+-FIELD(ID_DFR0, MMAPTRC, 16, 4)
+-FIELD(ID_DFR0, MPROFDBG, 20, 4)
+-FIELD(ID_DFR0, PERFMON, 24, 4)
+-FIELD(ID_DFR0, TRACEFILT, 28, 4)
+-
+-FIELD(ID_DFR1, MTPMU, 0, 4)
+-FIELD(ID_DFR1, HPMN0, 4, 4)
+-
+-FIELD(DBGDIDR, SE_IMP, 12, 1)
+-FIELD(DBGDIDR, NSUHD_IMP, 14, 1)
+-FIELD(DBGDIDR, VERSION, 16, 4)
+-FIELD(DBGDIDR, CTX_CMPS, 20, 4)
+-FIELD(DBGDIDR, BRPS, 24, 4)
+-FIELD(DBGDIDR, WRPS, 28, 4)
+-
+-FIELD(DBGDEVID, PCSAMPLE, 0, 4)
+-FIELD(DBGDEVID, WPADDRMASK, 4, 4)
+-FIELD(DBGDEVID, BPADDRMASK, 8, 4)
+-FIELD(DBGDEVID, VECTORCATCH, 12, 4)
+-FIELD(DBGDEVID, VIRTEXTNS, 16, 4)
+-FIELD(DBGDEVID, DOUBLELOCK, 20, 4)
+-FIELD(DBGDEVID, AUXREGS, 24, 4)
+-FIELD(DBGDEVID, CIDMASK, 28, 4)
+-
+-FIELD(DBGDEVID1, PCSROFFSET, 0, 4)
+-
+-FIELD(MVFR0, SIMDREG, 0, 4)
+-FIELD(MVFR0, FPSP, 4, 4)
+-FIELD(MVFR0, FPDP, 8, 4)
+-FIELD(MVFR0, FPTRAP, 12, 4)
+-FIELD(MVFR0, FPDIVIDE, 16, 4)
+-FIELD(MVFR0, FPSQRT, 20, 4)
+-FIELD(MVFR0, FPSHVEC, 24, 4)
+-FIELD(MVFR0, FPROUND, 28, 4)
+-
+-FIELD(MVFR1, FPFTZ, 0, 4)
+-FIELD(MVFR1, FPDNAN, 4, 4)
+-FIELD(MVFR1, SIMDLS, 8, 4) /* A-profile only */
+-FIELD(MVFR1, SIMDINT, 12, 4) /* A-profile only */
+-FIELD(MVFR1, SIMDSP, 16, 4) /* A-profile only */
+-FIELD(MVFR1, SIMDHP, 20, 4) /* A-profile only */
+-FIELD(MVFR1, MVE, 8, 4) /* M-profile only */
+-FIELD(MVFR1, FP16, 20, 4) /* M-profile only */
+-FIELD(MVFR1, FPHP, 24, 4)
+-FIELD(MVFR1, SIMDFMAC, 28, 4)
+-
+-FIELD(MVFR2, SIMDMISC, 0, 4)
+-FIELD(MVFR2, FPMISC, 4, 4)
+-
+ FIELD(GPCCR, PPS, 0, 3)
+ FIELD(GPCCR, IRGN, 8, 2)
+ FIELD(GPCCR, ORGN, 10, 2)
+-- 
+2.43.0
 
 
