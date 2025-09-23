@@ -4,65 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C36CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 07:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 017A7CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 07:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0x5O-0001UR-2a; Tue, 23 Sep 2025 03:05:16 -0400
+	id 1v0x5R-0001UW-27; Tue, 23 Sep 2025 03:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1v0x4t-00018K-8g; Tue, 23 Sep 2025 03:04:44 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1v0x4l-000169-AT; Tue, 23 Sep 2025 03:04:39 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1v0x4f-0007Lr-8v; Tue, 23 Sep 2025 03:04:38 -0400
+ id 1v0x4a-0007K0-GC; Tue, 23 Sep 2025 03:04:33 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id D731060283;
+ by sea.source.kernel.org (Postfix) with ESMTP id 6AEFB448FF;
  Tue, 23 Sep 2025 07:04:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0D6C19421;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4A7C19423;
  Tue, 23 Sep 2025 07:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1758611060;
- bh=+Q0lq4mqcrXsmek4Z95A05ADAyhxt+dGy9pcGEAgD2I=;
+ bh=hpDjKcBQ4t16Nsv061QCEld2ZZZDViwNk+Xf3dVhoxk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=aI5nPcr7u5QvypmIx66BeoMstmSKRgG7EOSK6TaXQk7opxls5jtrVJeQ+csQEz17s
- 5F12Rel0wv04rWlPhZz8LP6SLPxNQBbi6MsIxdmoTpKlYmzJy6MDSmh25Uh/Ud/RJk
- WJK13d0+Rx3Kg4wdTrx+LRCKLcVEGYZmcrcDpV+6OaD07X8eQ1VWzwiH5HWL6VmZMx
- XfaRQDEd7+mz7a9rZLevQQZdju9yFhrSIUickpNJ83/E0D112ckQsg91QndI8S+v0b
- dCKDiqdiRV0nGwYINYZ5wxNUIyDHO5WLfq8KjjSlZPPzr+BZcSlYIGoODD6xCg1fgF
- 12Hof+JP3Y/vQ==
+ b=KtsueZLplF+RDEmjdIUFM6/OQ6snaGEd3Mti1OGguE4XVyRWfR8aVoYWE/d8VkrOl
+ j3P4zbsbQkFWrMCtTKkpP24wnv5oQmg/M7KkI1LAge5LEKrpDB/E7URk9lzd5pmCn+
+ Nvgcnex7ojJ+ZXWgu6u0kSZDG2T1QDl9pBXPnxxt6Z/+1MZQhTTGbrreyqL8K/DSfr
+ +e1Nru48nrAdDs8j6TpXfXCyGTcQ2neJrDbN7M+kIg9HET+8NlgzFOh7g8Uv4XsvMd
+ zTcqXvowsBh69mgNiE8u/r6CC4yo47eOoA2b/BwGyvhoSkHU2apvLHZgv1korYa1Vr
+ WQqwQoNbPlEEw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1v0x4U-00000006bKi-1P1r; Tue, 23 Sep 2025 09:04:18 +0200
+ id 1v0x4U-00000006bKy-1s12; Tue, 23 Sep 2025 09:04:18 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH v12 06/17] acpi/ghes: don't hard-code the number of sources
- for HEST table
-Date: Tue, 23 Sep 2025 09:04:00 +0200
-Message-ID: <1698680848c11d6f26368426f1657e14faaf55c4.1758610789.git.mchehab+huawei@kernel.org>
+ Ani Sinha <anisinha@redhat.com>, linux-kernel@vger.kernel.org
+Subject: [PATCH v12 10/17] acpi/generic_event_device: add an APEI error device
+Date: Tue, 23 Sep 2025 09:04:04 +0200
+Message-ID: <2790f664c849d53de0ce3049fa8c7950c1de1f86.1758610789.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758610789.git.mchehab+huawei@kernel.org>
 References: <cover.1758610789.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,221 +73,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current code is actually dependent on having just one error
-structure with a single source, as any change there would cause
-migration issues.
+Adds a generic error device to handle generic hardware error
+events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+using HID PNP0C33.
 
-As the number of sources should be arch-dependent, as it will depend on
-what kind of notifications will exist, and how many errors can be
-reported at the same time, change the logic to be more flexible,
-allowing the number of sources to be defined when building the
-HEST table by the caller.
+The PNP0C33 device is used to report hardware errors to
+the guest via ACPI APEI Generic Hardware Error Source (GHES).
 
+Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c           | 39 +++++++++++++++++++++------------------
- hw/arm/virt-acpi-build.c |  8 +++++++-
- include/hw/acpi/ghes.h   | 17 ++++++++++++-----
- target/arm/kvm.c         |  2 +-
- 4 files changed, 41 insertions(+), 25 deletions(-)
+ hw/acpi/aml-build.c                    | 10 ++++++++++
+ hw/acpi/generic_event_device.c         | 13 +++++++++++++
+ include/hw/acpi/acpi_dev_interface.h   |  1 +
+ include/hw/acpi/aml-build.h            |  2 ++
+ include/hw/acpi/generic_event_device.h |  1 +
+ 5 files changed, 27 insertions(+)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 668ca72587c7..f49d0d628fc4 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -238,17 +238,17 @@ ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
-  * See docs/specs/acpi_hest_ghes.rst for blobs format.
-  */
- static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
--                                   BIOSLinker *linker)
-+                                   BIOSLinker *linker, int num_sources)
- {
-     int i, error_status_block_offset;
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 1e685f982f31..2d5826a8f134 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2629,3 +2629,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
  
-     /* Build error_block_address */
--    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-+    for (i = 0; i < num_sources; i++) {
-         build_append_int_noprefix(hardware_errors, 0, sizeof(uint64_t));
-     }
- 
-     /* Build read_ack_register */
--    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-+    for (i = 0; i < num_sources; i++) {
-         /*
-          * Initialize the value of read_ack_register to 1, so GHES can be
-          * writable after (re)boot.
-@@ -263,13 +263,13 @@ static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
- 
-     /* Reserve space for Error Status Data Block */
-     acpi_data_push(hardware_errors,
--        ACPI_GHES_MAX_RAW_DATA_LENGTH * ACPI_GHES_ERROR_SOURCE_COUNT);
-+        ACPI_GHES_MAX_RAW_DATA_LENGTH * num_sources);
- 
-     /* Tell guest firmware to place hardware_errors blob into RAM */
-     bios_linker_loader_alloc(linker, ACPI_HW_ERROR_FW_CFG_FILE,
-                              hardware_errors, sizeof(uint64_t), false);
- 
--    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-+    for (i = 0; i < num_sources; i++) {
-         /*
-          * Tell firmware to patch error_block_address entries to point to
-          * corresponding "Generic Error Status Block"
-@@ -295,12 +295,14 @@ static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
+     return var;
  }
- 
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data,
--                          BIOSLinker *linker,
--                          enum AcpiGhesNotifyType notify,
--                          uint16_t source_id)
-+static void build_ghes_v2_entry(GArray *table_data,
-+                                BIOSLinker *linker,
-+                                const AcpiNotificationSourceId *notif_src,
-+                                uint16_t index, int num_sources)
- {
-     uint64_t address_offset;
-+    const uint16_t notify = notif_src->notify;
-+    const uint16_t source_id = notif_src->source_id;
- 
-     /*
-      * Type:
-@@ -331,7 +333,7 @@ static void build_ghes_v2(GArray *table_data,
-                                    address_offset + GAS_ADDR_OFFSET,
-                                    sizeof(uint64_t),
-                                    ACPI_HW_ERROR_FW_CFG_FILE,
--                                   source_id * sizeof(uint64_t));
-+                                   index * sizeof(uint64_t));
- 
-     /* Notification Structure */
-     build_ghes_hw_error_notification(table_data, notify);
-@@ -351,8 +353,7 @@ static void build_ghes_v2(GArray *table_data,
-                                    address_offset + GAS_ADDR_OFFSET,
-                                    sizeof(uint64_t),
-                                    ACPI_HW_ERROR_FW_CFG_FILE,
--                                   (ACPI_GHES_ERROR_SOURCE_COUNT + source_id)
--                                   * sizeof(uint64_t));
-+                                   (num_sources + index) * sizeof(uint64_t));
- 
-     /*
-      * Read Ack Preserve field
-@@ -368,22 +369,26 @@ static void build_ghes_v2(GArray *table_data,
- void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-                      GArray *hardware_errors,
-                      BIOSLinker *linker,
-+                     const AcpiNotificationSourceId *notif_source,
-+                     int num_sources,
-                      const char *oem_id, const char *oem_table_id)
- {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
-     uint32_t hest_offset;
-+    int i;
- 
-     hest_offset = table_data->len;
- 
--    build_ghes_error_table(ags, hardware_errors, linker);
-+    build_ghes_error_table(ags, hardware_errors, linker, num_sources);
- 
-     acpi_table_begin(&table, table_data);
- 
-     /* Error Source Count */
--    build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, linker,
--                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
-+    build_append_int_noprefix(table_data, num_sources, 4);
-+    for (i = 0; i < num_sources; i++) {
-+        build_ghes_v2_entry(table_data, linker, &notif_source[i], i, num_sources);
-+    }
- 
-     acpi_table_end(linker, &table);
- 
-@@ -515,8 +520,6 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
-         return;
-     }
- 
--    assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
--
-     if (!ags->use_hest_addr) {
-         get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
-                              &cper_addr, &read_ack_register_addr);
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index bbe83fab9abb..c856d293c6e8 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -1125,6 +1125,10 @@ static void acpi_align_size(GArray *blob, unsigned align)
-     g_array_set_size(blob, ROUND_UP(acpi_data_len(blob), align));
- }
- 
-+static const AcpiNotificationSourceId hest_ghes_notify[] = {
-+    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-+};
 +
- static
- void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
- {
-@@ -1189,7 +1193,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-         if (ags) {
-             acpi_add_table(table_offsets, tables_blob);
-             acpi_build_hest(ags, tables_blob, tables->hardware_errors,
--                            tables->linker, vms->oem_id, vms->oem_table_id);
-+                            tables->linker, hest_ghes_notify,
-+                            ARRAY_SIZE(hest_ghes_notify),
-+                            vms->oem_id, vms->oem_table_id);
-         }
-     }
- 
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 5265102ba51f..8c4b08433760 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -57,13 +57,18 @@ enum AcpiGhesNotifyType {
-     ACPI_GHES_NOTIFY_RESERVED = 12
++/* ACPI 5.0b: 18.3.2.6.2 Event Notification For Generic Error Sources */
++Aml *aml_error_device(void)
++{
++    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
++    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
++    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
++
++    return dev;
++}
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index b1ff6ab74d8f..e575b9404be4 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -30,6 +30,7 @@ static const uint32_t ged_supported_events[] = {
+     ACPI_GED_NVDIMM_HOTPLUG_EVT,
+     ACPI_GED_CPU_HOTPLUG_EVT,
+     ACPI_GED_PCI_HOTPLUG_EVT,
++    ACPI_GED_ERROR_EVT,
  };
  
--enum {
--    ACPI_HEST_SRC_ID_SEA = 0,
--    /* future ids go here */
--
--    ACPI_GHES_ERROR_SOURCE_COUNT
-+/*
-+ * ID numbers used to fill HEST source ID field
-+ */
-+enum AcpiGhesSourceID {
-+    ACPI_HEST_SRC_ID_SYNC,
- };
- 
-+typedef struct AcpiNotificationSourceId {
-+    enum AcpiGhesSourceID source_id;
-+    enum AcpiGhesNotifyType notify;
-+} AcpiNotificationSourceId;
-+
  /*
-  * AcpiGhesState stores GPA values that will be used to fill HEST entries.
+@@ -120,6 +121,16 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+                                       aml_int(0x80)));
+                 break;
++            case ACPI_GED_ERROR_EVT:
++                /*
++                 * ACPI 5.0b: 5.6.6 Device Object Notifications
++                 * Table 5-135 Error Device Notification Values
++                 * Defines 0x80 as the value to be used on notifications
++                 */
++                aml_append(if_ctx,
++                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
++                                      aml_int(0x80)));
++                break;
+             case ACPI_GED_NVDIMM_HOTPLUG_EVT:
+                 aml_append(if_ctx,
+                            aml_notify(aml_name("\\_SB.NVDR"),
+@@ -320,6 +331,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+         sel = ACPI_GED_MEM_HOTPLUG_EVT;
+     } else if (ev & ACPI_POWER_DOWN_STATUS) {
+         sel = ACPI_GED_PWR_DOWN_EVT;
++    } else if (ev & ACPI_GENERIC_ERROR) {
++        sel = ACPI_GED_ERROR_EVT;
+     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
+diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+index 68d9d15f50aa..8294f8f0ccca 100644
+--- a/include/hw/acpi/acpi_dev_interface.h
++++ b/include/hw/acpi/acpi_dev_interface.h
+@@ -13,6 +13,7 @@ typedef enum {
+     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+     ACPI_VMGENID_CHANGE_STATUS = 32,
+     ACPI_POWER_DOWN_STATUS = 64,
++    ACPI_GENERIC_ERROR = 128,
+ } AcpiEventStatusBits;
+ 
+ #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index c18f68134246..f38e12971932 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -252,6 +252,7 @@ struct CrsRangeSet {
+ /* Consumer/Producer */
+ #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
+ 
++#define ACPI_APEI_ERROR_DEVICE   "GEDD"
+ /**
+  * init_aml_allocator:
   *
-@@ -84,6 +89,8 @@ typedef struct AcpiGhesState {
- void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-                      GArray *hardware_errors,
-                      BIOSLinker *linker,
-+                     const AcpiNotificationSourceId * const notif_source,
-+                     int num_sources,
-                      const char *oem_id, const char *oem_table_id);
- void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-                           GArray *hardware_errors);
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index bdc04aa41d54..e73415c00059 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2466,7 +2466,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
-              */
-             if (code == BUS_MCEERR_AR) {
-                 kvm_cpu_synchronize_state(c);
--                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SEA,
-+                if (!acpi_ghes_memory_errors(ags, ACPI_HEST_SRC_ID_SYNC,
-                                              paddr)) {
-                     kvm_inject_arm_sea(c);
-                 } else {
+@@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
+              uint8_t channel);
+ Aml *aml_sleep(uint64_t msec);
+ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
++Aml *aml_error_device(void);
+ 
+ /* Block AML object primitives */
+ Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
+diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+index 2c5b055327a4..130c014d3f0e 100644
+--- a/include/hw/acpi/generic_event_device.h
++++ b/include/hw/acpi/generic_event_device.h
+@@ -103,6 +103,7 @@ OBJECT_DECLARE_TYPE(AcpiGedState, AcpiGedClass, ACPI_GED)
+ #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+ #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+ #define ACPI_GED_PCI_HOTPLUG_EVT    0x10
++#define ACPI_GED_ERROR_EVT          0x20
+ 
+ typedef struct GEDState {
+     MemoryRegion evt;
 -- 
 2.51.0
 
