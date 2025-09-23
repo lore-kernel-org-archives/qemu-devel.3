@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF6BCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 13:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D854CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 13:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v13Aw-0007jb-Sh; Tue, 23 Sep 2025 09:35:22 -0400
+	id 1v13CJ-0008Rh-Bo; Tue, 23 Sep 2025 09:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v13Av-0007jM-F6
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 09:35:21 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v13C3-0008Mj-AD
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 09:36:35 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v13Al-0000cN-AG
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 09:35:21 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-3f42b54d1b9so2647119f8f.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 06:35:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v13Bp-0000mF-4r
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 09:36:27 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-46b303f755aso27679345e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 06:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758634503; x=1759239303; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eodG4YR1JgOg8AZig+FSUlxob+fpQZD/gP9Y2m4O/T4=;
- b=Xto/aY5uBiLuZqfL+mtyZHJEPuYuaLOg3FrligPWv5Fhf8ZtNnmYK0x3s09TzhH+G5
- Rs/tRoMwJ9tZo2e7B+C604CBsUywtGODxjC+SvnwejVI4WxNRUaq7CDEfj0J8ZW77q4h
- fGJ2jx5vzCWLbaev80YgZ/HV154+yVN1uSc4n7RASphtR5+bt2uy6u7ybV7rNe5QPMdg
- 2GUk5iLlup76cSG3Zx37CYarJMlIV7zMo7ADABR9Pxr9tNtRTeM5FoRz+T5kukmD06Yu
- D/WgPdjwrp/1gsNirf+2M71GH7K60NtTgCn2YwcgHpKQJUcOn+6UHx1fRuOy01Poz7kB
- UVYQ==
+ d=linaro.org; s=google; t=1758634562; x=1759239362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PfUtgFeSbjMRyCAmZlAogG0hou7P3YxK0T9Pbp0hsN0=;
+ b=rMo0Nwt+dL5QJJJzhsiEsDSGTLGdjvmkb/iOvxaMoJ98fGhsmxUSCXBKjntluYi0/W
+ 4Yb6cIoa5a3lXhCYsGYdaCag0ehPJENvdSHxu7/BWEyXHc2aoYBQIqss9Eu5eLTLFp+M
+ BdeiJZ4ocWLWSol/7AOg2NLDiwAv+TSaCpcNNDa4KpUwgq2UBN/ubBS+yofoiccrOS5N
+ tWUAfwqEf4U3Z1+00h6j+5dg5fUC1+ZWaYB1VivmoSg9rUc5M2ugFQrOpeUyl36oP0cg
+ ApOKhlq7uDQmSyp32V7ZVM55YpN1wTzV2AyawKg4Go4oStvXaDyZme41AVqfNy+rMyK8
+ O4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758634503; x=1759239303;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eodG4YR1JgOg8AZig+FSUlxob+fpQZD/gP9Y2m4O/T4=;
- b=vfcMM7BRgSKutP6ue/uGfBNMZnVloETwanemkEK1CCex2DhPaCut+8FINAD26ye+rV
- faF7up4TpNBVk6HUyV7Q3JU9zDqBZu+La/ph+G0FtFtnDbZ939BBkdvO26NiDn02xgx+
- 1b9dsbTtXFyJQjPjW26uWiJtDux19nD1jpvJZn2bIlm8cSkRp2GvjDfRpP64cMaCiPPT
- ouUFT0Gdd/EOL4G89Lm1s9iiip4CTZ7qCGK2c1dztbQJw6n/tvj5nR8iJ4koiP9qQh4Y
- vyTjukiNGaFJhiCk2NQlSwhCh1HXm76T+YYDdAVcHchP/yduY3LAp7m4TjOmSY/nQrf2
- lrPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUa0ADo+kpJwIKOddE7jzryuhiQmaO9h5kfDYjfNwnGBTQi06McZwI5kFjTFd0AfRsfEmzTp+2vuTj1@nongnu.org
-X-Gm-Message-State: AOJu0YzSaV16mMc+tYKn8gYw4fYrtnfRfaXwTysgZjAQptthgjflohtz
- n4tH+uK2F5Rcw+DvNz6MVoGZuUDmX+TBBACeHDCyzpuse+gSvSHNZDSYKyeJzZzA83I=
-X-Gm-Gg: ASbGncvTbJQ5dUuL90VQvjuyKm+JffgjEY6cb28RoIKabwukniCdhVCOOc8D+D+sssd
- eGiIcY5CIK7zuoVdTXITNvDEd+QD07f2Ilo6X61Sqo2Rrjz0cVlh1Ri1yxFjQ22DWQoXzlPh/H+
- XlwpLaBeXhgEJrRKQ9PF/QfCIqgCeCwlZzRd0L8Y6/6te5n3vjldaUWv9SZRYo208GsVL9J7JGt
- tnN+J/8Oy8rQ+7FVYtCrsihQ9866e4m3q0mckRnBh3Pt/VyLRXl9R20QM18H+zx8K+qPY2cNs1y
- +XzeNWUBshjlQxsEZJEoYQ0JrNT+34WNibonrC/8SGNZ8jErVipn22LhUsjogZKh8DvR4iEjDPl
- +NrPlb/V/8MnxWFzRZmNrbGAFKorj7PCVd77x0kEj7t01bJgiPh/J8RyHMhQ0XlX5ug==
-X-Google-Smtp-Source: AGHT+IFvMQeCT4K/jdPsRcGfsdp2aoAubxAqu9Uzlgv3XMpvz0vUPBuwgLOGs9MnwBrU5C2yN/qc5g==
-X-Received: by 2002:a05:6000:2c10:b0:401:70eb:eec7 with SMTP id
- ffacd0b85a97d-405cb5d1ca4mr2724967f8f.43.1758634503367; 
- Tue, 23 Sep 2025 06:35:03 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee07411f4dsm23819303f8f.26.2025.09.23.06.35.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 06:35:02 -0700 (PDT)
-Message-ID: <d9624d53-9562-4ac8-94c5-bdc5fefddb3f@linaro.org>
-Date: Tue, 23 Sep 2025 15:35:01 +0200
+ d=1e100.net; s=20230601; t=1758634562; x=1759239362;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PfUtgFeSbjMRyCAmZlAogG0hou7P3YxK0T9Pbp0hsN0=;
+ b=turcgqF0RgxtmpJexUlmpqkG/2+YPu21e+zkG7KTe3sP6/bJETBgKo+k3HH2bCJCiD
+ LGQVOM+HlJtTdC2KN6j0xo4y1FhDw5RNfwvSdUV9PeErh5htVt71Yhoo/QZyl+CmmrwW
+ yWbOZRT9hnltKpU7u8bTmFJljUHJ3M7ecJWm3h+4E5z/wQ8BJ6PTXiBvhFuJn+/qDYAK
+ rVBWHa5ostU50Jlx1jGpwYsu3x7s5s4qkkggHKijskUVgAm9WFffd+SF4hBDp06LpHd2
+ dkdMo5cUmsWuchoo+5seKtVza67PVEWUpyQJT4d67VelztT6wjAHQxU6W0koUfUeKit3
+ tlNQ==
+X-Gm-Message-State: AOJu0YwVkEwS2snX38DxMCV1J1i5rjFkzTT8WGWllkW7ePTZ97pY9fCH
+ Im/yYqG7ddEH7t36oBdWISh98EG+BJOqj0zof4RuUkk0VNtO+v1HQGxfw3ACV83O84Y=
+X-Gm-Gg: ASbGnctdt7CWoOFeNBhuw6CVwXbsMgbDgBnrC5kGOfALIGCZIsDUYaYwAU9XanwuxfT
+ w9IQgauaF/S08emgnWBF5TLruLZTUuowI0POveFGSvjcYLmzamOuTLi5+E5X3Uj6bo3YszEo7Uy
+ 1AK1EpzqRffXw0vXu1LK/RADIf2PehMFjOwlCxOPAo1Vz8xBR6Lx95yfpFZgPYqVttcMDoFuN3h
+ Lafe3hL/+sMdlI7vVZBSqksZUyvfUhkCYpcd43tWbdhbLeYlbP5k675pEI18HwKUF0mh4v/sfbx
+ ZFmc9zniffigSOdNsKxHFG0YD/QMVVru0aGGblaNOuNEQIqfLj9nP4h5B+lJBhzjancuiJo5bog
+ oTHfLBAQpubDB1m6zTPGYtNZ2qz3J9alhjg==
+X-Google-Smtp-Source: AGHT+IFru5XOFoGpQltCHL+uwZ29k5D8S/2Af362p8XHi2BvCKhKMPKczQ1Pa1ffcnvO59bIkiJkFA==
+X-Received: by 2002:a05:600c:4fc7:b0:45f:286e:49a8 with SMTP id
+ 5b1f17b1804b1-46e1e0564famr31599495e9.30.1758634562413; 
+ Tue, 23 Sep 2025 06:36:02 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3fe9dbf13f3sm8139152f8f.50.2025.09.23.06.36.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 06:36:01 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DFC355F8AD;
+ Tue, 23 Sep 2025 14:36:00 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-trivial@nongnu.org
+Subject: Re: [PATCH] docs/specs/spdm.rst: Fix typo in x86_64 architecture name
+In-Reply-To: <20250923120118.858581-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Tue, 23 Sep 2025 13:01:18 +0100")
+References: <20250923120118.858581-1-peter.maydell@linaro.org>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 23 Sep 2025 14:36:00 +0100
+Message-ID: <87bjn1mgu7.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/12] plugins: Use tb_flush__exclusive
-To: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>, qemu-devel@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20250923023922.3102471-1-richard.henderson@linaro.org>
- <20250923023922.3102471-9-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923023922.3102471-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,109 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/9/25 04:39, Richard Henderson wrote:
-> In all cases, we are already within start_exclusive.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> Cc: Alex Bennée" <alex.bennee@linaro.org>
-> Cc: Alexandre Iooss <erdnaxe@crans.org>
-> Cc: Mahmoud Mandour <ma.mandourr@gmail.com>
-> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   plugins/core.c   | 6 ++----
->   plugins/loader.c | 2 +-
->   2 files changed, 3 insertions(+), 5 deletions(-)
-> 
-> diff --git a/plugins/core.c b/plugins/core.c
-> index c6e9ef1478..4ae1a6ae17 100644
-> --- a/plugins/core.c
-> +++ b/plugins/core.c
-> @@ -248,7 +248,7 @@ static void plugin_grow_scoreboards__locked(CPUState *cpu)
->           }
->           plugin.scoreboard_alloc_size = scoreboard_size;
->           /* force all tb to be flushed, as scoreboard pointers were changed. */
-> -        tb_flush(cpu);
-> +        tb_flush__exclusive();
->       }
->       end_exclusive();
->   }
-> @@ -684,8 +684,6 @@ void qemu_plugin_user_exit(void)
->        * with the one in fork_start(). That is:
->        * - start_exclusive(), which acquires qemu_cpu_list_lock,
->        *   must be called before acquiring plugin.lock.
-> -     * - tb_flush(), which acquires mmap_lock(), must be called
-> -     *   while plugin.lock is not held.
->        */
->       start_exclusive();
->   
-> @@ -705,7 +703,7 @@ void qemu_plugin_user_exit(void)
->       }
->       qemu_rec_mutex_unlock(&plugin.lock);
->   
-> -    tb_flush(current_cpu);
-> +    tb_flush__exclusive();
->       end_exclusive();
->   
->       /* now it's safe to handle the exit case */
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Hmm it seems we are triggering again the issue reported about
-TARGET_NR_exit_group in https://linaro.atlassian.net/browse/QEMU-706:
+> The spdm.rst docs call the 64-bit x86 architecture "x64-64".
+> This is a typo; correct it to our canonical name for the
+> architecture, "x86_64".
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-   "Under user emulation, threads can exit via pthread_join or at
-    the end of the process via exit_group syscall.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-   The current plugin exit hook affects all vcpus (see
-   qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit)."
-
-Crash log:
-
-qemu-loongarch64: ../../accel/tcg/tb-maint.c:94: tb_remove_all: 
-Assertion `have_mmap_lock()' failed.
-
-Thread 1 "qemu-loongarch6" received signal SIGABRT, Aborted.
-__pthread_kill_implementation (no_tid=0, signo=6, 
-threadid=140737340860416) at ./nptl/pthread_kill.c:44
-44	./nptl/pthread_kill.c: No such file or directory.
-(gdb) bt
-#0  __pthread_kill_implementation (no_tid=0, signo=6, 
-threadid=140737340860416) at ./nptl/pthread_kill.c:44
-#1  __pthread_kill_internal (signo=6, threadid=140737340860416) at 
-./nptl/pthread_kill.c:78
-#2  __GI___pthread_kill (threadid=140737340860416, signo=signo@entry=6) 
-at ./nptl/pthread_kill.c:89
-#3  0x00007ffff746f476 in __GI_raise (sig=sig@entry=6) at 
-../sysdeps/posix/raise.c:26
-#4  0x00007ffff74557f3 in __GI_abort () at ./stdlib/abort.c:79
-#5  0x00007ffff745571b in __assert_fail_base (fmt=0x7ffff760a130 
-"%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=0x555555733f0c 
-"have_mmap_lock()",
-     file=0x555555733ef1 "../../accel/tcg/tb-maint.c", line=94, 
-function=<optimized out>) at ./assert/assert.c:94
-#6  0x00007ffff7466e96 in __GI___assert_fail 
-(assertion=assertion@entry=0x555555733f0c "have_mmap_lock()",
-     file=file@entry=0x555555733ef1 "../../accel/tcg/tb-maint.c", 
-line=line@entry=94, function=function@entry=0x555555734038 
-<__PRETTY_FUNCTION__.8> "tb_remove_all")
-     at ./assert/assert.c:103
-#7  0x0000555555612e41 in tb_remove_all () at ../../accel/tcg/tb-maint.c:94
-#8  tb_flush__exclusive () at ../../accel/tcg/tb-maint.c:781
-#9  0x0000555555623a0c in qemu_plugin_user_exit () at 
-../../plugins/core.c:706
-#10 0x0000555555696e54 in preexit_cleanup (env=<optimized out>, 
-code=code@entry=0) at ../../linux-user/exit.c:36
-#11 0x00005555556b49e7 in do_syscall1 (cpu_env=<optimized out>, num=94, 
-arg1=0, arg2=0, arg3=-4096, arg4=4832763904, arg5=2, arg6=140737354113832,
-     arg8=<optimized out>, arg7=<optimized out>) at 
-../../linux-user/syscall.c:11199
-#12 0x00005555556b966a in do_syscall 
-(cpu_env=cpu_env@entry=0x555555860df0, num=94, arg1=0, arg2=<optimized 
-out>, arg3=<optimized out>, arg4=<optimized out>,
-     arg5=2, arg6=140737354113832, arg7=-1, arg8=-1) at 
-../../linux-user/syscall.c:13929
-#13 0x0000555555623d3d in cpu_loop (env=env@entry=0x555555860df0) at 
-../../linux-user/loongarch64/cpu_loop.c:38
-#14 0x000055555558886d in main (argc=<optimized out>, argv=<optimized 
-out>, envp=<optimized out>) at ../../linux-user/main.c:1033
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
