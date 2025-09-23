@@ -4,75 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C43CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA718CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 15:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v14sz-0005A6-Mg; Tue, 23 Sep 2025 11:24:57 -0400
+	id 1v15Gt-0004nE-1G; Tue, 23 Sep 2025 11:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v14sp-00058x-E2
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:24:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <lizhaoxin04@baidu.com>)
+ id 1v15Gr-0004my-IS
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:49:37 -0400
+Received: from mx24.baidu.com ([111.206.215.185] helo=baidu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v14sm-0002KG-V4
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:24:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758641082;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GLyrTcqqNuaEFEFXx9yMKuhx535TvJEYGetYtD/el3E=;
- b=fu6LzHk/5oiP60uvfA5rFbFlTX8j7Cy9VgQFmumOTjzsJDwYRhpRVcFKNL1SyNweTLj8io
- IUbf3ihSgzcscOM58Bw/aE4F2sdxusEYgNmC8oMWDfTy6bKwxCGLllL3wyb//QJtYGGR/d
- EVS6rUtR/ndMR5lUTS+VSi0gq0h135U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-TmdH3AufPCa6olN31-22GQ-1; Tue,
- 23 Sep 2025 11:24:40 -0400
-X-MC-Unique: TmdH3AufPCa6olN31-22GQ-1
-X-Mimecast-MFC-AGG-ID: TmdH3AufPCa6olN31-22GQ_1758641080
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC59318002C8
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 15:24:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5A4819560BB; Tue, 23 Sep 2025 15:24:37 +0000 (UTC)
-Date: Tue, 23 Sep 2025 16:24:34 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com,
-	Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] x86: ich9: fix default value of 'No Reboot' bit in GCS
-Message-ID: <aNK7suE2t735nV3u@redhat.com>
-References: <20250922132600.562193-1-imammedo@redhat.com>
- <aNFcCQL7Ad_nnxMM@redhat.com> <20250923104051.1b71d6ea@fedora>
+ (Exim 4.90_1) (envelope-from <lizhaoxin04@baidu.com>)
+ id 1v15Go-0006Il-NT
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 11:49:37 -0400
+To: qemu-devel <qemu-devel@nongnu.org>
+CC: "Michael S . Tsirkin" <mst@redhat.com>, Stefano Garzarella
+ <sgarzare@redhat.com>, Cindy Lu <lulu@redhat.com>, Li Zhaoxin
+ <lizhaoxin04@baidu.com>, Gao Shiyuan <gaoshiyuan@baidu.com>
+Subject: Re: [PATCH] vhost: Do not actively send a config interrupt
+Date: Tue, 23 Sep 2025 23:49:18 +0800
+Message-ID: <19ac5fa24777515f9f0878e6874dc9f6edec45a3.1758552835.git.lizhaoxin04@baidu.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <19ac5fa24777515f9f0878e6874dc9f6edec45a3.1758552835.git.lizhaoxin04@baidu.com>
+References: <19ac5fa24777515f9f0878e6874dc9f6edec45a3.1758552835.git.lizhaoxin04@baidu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250923104051.1b71d6ea@fedora>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain
+X-Originating-IP: [10.127.73.8]
+X-ClientProxiedBy: bjhj-exc8.internal.baidu.com (172.31.3.18) To
+ bjhj-exc18.internal.baidu.com (172.31.4.16)
+X-FEAS-Client-IP: 172.31.4.16
+X-FE-Policy-ID: 52:10:53:SYSTEM
+Received-SPF: pass client-ip=111.206.215.185;
+ envelope-from=lizhaoxin04@baidu.com; helo=baidu.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,93 +58,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Li Zhaoxin <lizhaoxin04@baidu.com>
+From:  Li Zhaoxin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20250923154918.3P5pP-EivvNCqaNBM4g6kiTZiKEiTa6QFdwaDO5-wVA@z>
 
-On Tue, Sep 23, 2025 at 10:40:51AM +0200, Igor Mammedov wrote:
-> On Mon, 22 Sep 2025 15:24:09 +0100
-> Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > On Mon, Sep 22, 2025 at 03:26:00PM +0200, Igor Mammedov wrote:
-> > > [2] initialized 'No Reboot' bit to 1 by default. And due to quirk it happened
-> > > to work with linux iTCO_wdt driver (which clears it on module load).
-> > > 
-> > > However spec [1] states:
-> > > "
-> > > R/W. This bit is set when the “No Reboot” strap (SPKR pin on
-> > > ICH9) is sampled high on PWROK.
-> > > "
-> > > 
-> > > So it should be set only when  '-global ICH9-LPC.noreboot=true' and cleared
-> > > when it's false (which should be default).
-> > > 
-> > > Fix it to behave according to spec and set 'No Reboot' bit only when
-> > > '-global ICH9-LPC.noreboot=true'.  
-> > 
-> > Is there a real-world problem you hit that is being solved by
-> > this change, or is it just a theoretical spec compliance fix ?
-> 
-> I've stumbled upon it when implementing ACPI watchdog POC
-> 
-> https://gitlab.com/imammedo/qemu/-/commits/wadt_poc
-> I'm not sure that watchdog table belongs to QEMU,
-> but the ICH fix definitely is.
+From: lizhaoxin <lizhaoxin04@baidu.com>
 
-I've tested this as follows [1]
+>CCing Cindy since she introduced this code with commit
+>f9a09ca3ea ("vhost: add support for configure interrupt"), so she can
+>help to review this, since I don't really get this change.
+>
+>On Mon, Sep 22, 2025 at 11:19:32PM +0800, Li Zhaoxin wrote:
+>>From: lizhaoxin <lizhaoxin04@baidu.com>
+>>
+>>After the VM is suspended/resumed or live-migrated,
+>>we do not want the guest to output information such as
+>>the capacity of the block device, as this is noticeable to the tenant.
+>>Also, there is no need to immediately send a config notifier
+>>for the virtio device after vhost_dev_start.
+>
+>Can you explain more clearly what your problem is and why this patch
+>solves it?
+>
+>Thanks,
+>Stefano
+>
 
- $ make-tiny-image.py --kmod lpc_ich --kmod iTCO_wdt  --kmod i2c_i801
- $ qemu-system-x86_64 \
-     -kernel /lib/modules/6.15.9-201.fc42.x86_64/vmlinuz \
-     -initrd tiny-initrd.img \
-     -append 'console=ttyS0 quiet' \
-     -m 1000 \
-     -display none \
-     -serial stdio \
-     -accel kvm \
-     -M q35 \
-     -global ICH9-LPC.noreboot=false \
-     -watchdog-action poweroff \
-     -trace ich9* -trace tco*
-ich9_cc_read addr=0x3410 val=0x0 len=4
-ich9_cc_write addr=0x3410 val=0x0 len=4
-ich9_cc_read addr=0x3410 val=0x0 len=4
-tco_io_write addr=0x4 val=0x8
-tco_io_write addr=0x6 val=0x2
-tco_io_write addr=0x6 val=0x4
-tco_io_read addr=0x8 val=0x0
-tco_io_read addr=0x12 val=0x4
-tco_io_write addr=0x12 val=0x32
-tco_io_read addr=0x12 val=0x32
-tco_io_write addr=0x0 val=0x1
-tco_timer_reload ticks=50 (30000 ms)
-~ # mknod /dev/watchdog0 c 10 130
-~ # cat /dev/watchdog0
-tco_io_write addr=0x0 val=0x1
-tco_timer_reload ticks=50 (30000 ms)
-cat: read error: Invalid argument
-[    5.646147] watchdog: watchdog0: watchdog did not stop!
-tco_io_write addr=0x0 val=0x1
-tco_timer_reload ticks=50 (30000 ms)
-~ # tco_timer_expired timeouts_no=0 no_reboot=0/0
-tco_timer_reload ticks=50 (30000 ms)
-tco_timer_expired timeouts_no=1 no_reboot=0/0
+Hi Stefano and Cindy,
 
-And the same, but with ICH9-LPC.noreboot=true.
+In the vhost-vdpa scenario, after executing virsh suspend vm followed by virsh resume vm, or when live migrating the VM to the destination host, the guest kernel will output the following additional logs:
 
-I see no functional change from Linux guest POV in either
-scenario before/after this patch, so
+[Tue Sep 23 19:07:04 2025] virtio_blk virtio1: [vda] new size: 20971520 512-byte logical blocks (10.7 GB/10.0 GiB)
+[Tue Sep 23 19:07:04 2025] virtio_blk virtio3: [vdb] new size: 20971520 512-byte logical blocks (10.7 GB/10.0 GiB)
 
-  Tested-by: Daniel P. Berrangé <berrange@redhat.com>
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This occurs because when the vhost device is started, the sequence vhost_dev_start -> vhost_start_config_intr -> event_notifier_set(&dev->vdev->config_notifier) is triggered, which sends a configuration change notification (config notification) to the guest. However, it appears that actively sending this notification is currently unnecessary, and no additional processing is performed in the event of a sending failure. So, we removed the call to event_notifier_set(&dev->vdev->config_notifier).
 
-With regards,
-Daniel
+Thanks,
+Li Zhaoxin
 
-[1] https://gitlab.com/berrange/tiny-vm-tools/-/blob/master/make-tiny-image.py
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+>>
+>>Co-developed-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+>>Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+>>Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+>>---
+>> hw/virtio/vhost.c | 7 +------
+>> 1 file changed, 1 insertion(+), 6 deletions(-)
+>>
+>>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>index 6557c58d12..1f8a495ef8 100644
+>>--- a/hw/virtio/vhost.c
+>>+++ b/hw/virtio/vhost.c
+>>@@ -1847,15 +1847,10 @@ static void vhost_stop_config_intr(struct vhost_dev *dev)
+>>
+>> static void vhost_start_config_intr(struct vhost_dev *dev)
+>> {
+>>-    int r;
+>>-
+>>     assert(dev->vhost_ops);
+>>     int fd = event_notifier_get_fd(&dev->vdev->config_notifier);
+>>     if (dev->vhost_ops->vhost_set_config_call) {
+>>-        r = dev->vhost_ops->vhost_set_config_call(dev, fd);
+>>-        if (!r) {
+>>-            event_notifier_set(&dev->vdev->config_notifier);
+>>-        }
+>>+        dev->vhost_ops->vhost_set_config_call(dev, fd);
+>>     }
+>> }
+>>
+>>--
+>>2.34.1
+>>
 
