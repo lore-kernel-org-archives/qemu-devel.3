@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3B2CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 08:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E6F5CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 08:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0yjw-0005OM-FT; Tue, 23 Sep 2025 04:51:12 -0400
+	id 1v0yoX-0008IZ-9I; Tue, 23 Sep 2025 04:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yjt-0005Ky-C8
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:51:09 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yoO-0008Gk-C2
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:55:51 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yjo-0006Zq-7S
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:51:09 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45f2c9799a3so39518675e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 01:51:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yoH-00077u-82
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:55:48 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3f2ae6fae12so1846978f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 01:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758617459; x=1759222259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758617735; x=1759222535; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PwMw4Ohz4+Mg6xUqra7umlihCilljwsntZEbiQu9KM4=;
- b=mqqOMp/P49errsjzW4teb4z7UUQ90CYk5c/sF7PDuMODcSXZinyFlXq/OE2nEk1hwD
- lJu4LfXgnnl+lN53PlZA/nCta5zumC1g2i96Y3CyhIhkn0PnGjlYLZHQ2lt1TkACX7Mv
- MmqX93xVqJ9QTq/pI7Hil3FTU6WW/Oqc+aBPJQTiVap6yz3kEADqRkvR4IoJMsTGZjzc
- zDCNEBqGaQ3S2C74DSRIrPdB0pKFUZv5yrW+9anfIWzxOxFhkWFCGffd2PeYFDprPcAy
- XkC1rXek77EmO47XnFC0QtRxVPTgA1yI0XMuhD6EOrc+BRpEO0m8RqAaC4nZEiRAsvDb
- eJbA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=94ZY4lsRezsD6JpcPVX6PoxjsyVUQTAMf3zT7OOJyTs=;
+ b=BEIbw2+atj13ahAgqTaiLWZDWtMnY4xuFd/Eb8kWA5Hr5slitoZZz+marQ0JiR36GA
+ EqkTEZ754qWhlUr5mUcgvywMjAuwymaPbHRPKnxdoAgRZnxi8/TVnwwQEyk8AqLU/IFw
+ QPyMr2g2WFqRgNSlKHO3SPumGapiVgDNZ+0HKhrcjPxapcREFk0akvh/HeFaSwoHVtXz
+ Boxsw+4LDmX/FV/WHqdOrPUS4ttWzK5jpAawnLT3dXNyVdXRcN1dUD+Fee8urPxCAwCo
+ pF5DxNcPRFB1M5o2UiE2tg3FC41zCqYT0oh23rr4D9Ep8H3kTNSF8FCViqux+fn5npDf
+ Gn+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758617459; x=1759222259;
+ d=1e100.net; s=20230601; t=1758617735; x=1759222535;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PwMw4Ohz4+Mg6xUqra7umlihCilljwsntZEbiQu9KM4=;
- b=McG2LxyVfQWirRsjlr5boqSwFbW21dqUwJiXoTgvhJQqT96Ch6NUDp6MMuPwGyqIr2
- N9W++7fPffy64D4tSUgk59BdaQhkoAI0jlfa4+laK7viDVwS65SOHSV6/tYyIU5zWTpd
- cyDcCCR5FLJ4hpg+qG9brXC+qcM+Gr2I3aioq/Zk/i7r4lkr15UhXm9iQozTYby75xPI
- zxQg1beqqbdo5nkBjNmPbDUFs5Z4DOUhqsD07vsr93wwXMETsfinIF6SZ7UwwujDUNro
- ShgOMDYTEcfohNtaSF9xZROl6TTaWp1NtU7cl+Yuy5RACKBndS55TZEzcSSOSc8hOjtK
- ExUg==
+ bh=94ZY4lsRezsD6JpcPVX6PoxjsyVUQTAMf3zT7OOJyTs=;
+ b=tH8dYReRknwJW15X+RV/yVeBPvzvI1C5Oe2AeZU2tzlEmqkk43jQu/q3r0SPj2SaVp
+ L0Ls0qP1y6XoBWcMgPvNYw2iTfd918QRXbcc2YtCaYHNiVZeEz5WDGNG0GMdxTpFnNQS
+ uOke6hgCagGRPmozo9p+/9+z7AJTmlwbmXfWMkK/vnVQV/9q4Nx55DESODtKXvOj9iNg
+ dhFdeR8g6OcXHQgsX6pKPWP5eWDoRkcLUj7rLxGd/WXkOY/vueKEOiOCweqxDSuuVH/8
+ OXCHUMmE1TpNA/lksvxnuERoeZFR3W5rzDsRnM0xj6qoRXZNYbt2jyeCRKe8S38/69qQ
+ JhKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXs+E8uqJ53xRzC0DucqnzAE5o0aXaB/yeUxb9jXpeXAUbnld7pqSQQJakQKOJERJMinPJNFGR/Cr9U@nongnu.org
-X-Gm-Message-State: AOJu0Yw+PWZEfE4sJdfCaBXMYBDNdSuWerN4a0aCWOufl2zKgr+VgQHQ
- ECC7hw7FqSoKpbNEYNzjOf16rv7kYr/LIaqEqjY4WFifCQeLt5cylPZ42culiW0TywzYYzqiZ9G
- NND1oFQ2zLw==
-X-Gm-Gg: ASbGncvDP+EA6LzGOnpraquCPydgCkIsqKNgP8C2EIyAXuJZL90+x4IjenEl6QIgZEZ
- 6gxr2YGBhDk8T/auSPtNtjmyL9VQ81vo3S21eD5OqmjBVfmGsDyJoN+WEHhZZuCvdVbi3rksPGP
- vi0Buli1iHUOwFkdZrEYRbbg2MGzofFi0d8mT0mqL7FqLwBmr5P6orEGLrBJS7vJOjeCICnuasU
- H0LIBfp7PSA8q+G7OIAiBx0obt8q1Yr1W0vvhvdJ8VS7jIAZI9fkZwr+txQGp1xZNqWKl9bycoD
- yHAcZl/al8hZsUB+igmMHjWoJv75oUTB1IBY0W59V8tKY8rryn3TDblVKY4b8ak9y0ipTYqh1T9
- S5SeRWPbgplgAY0VMTbpldZtNmTGDIiKCeABgOrokc0mNNKsgkpH5OsoujXCROuJwIw==
-X-Google-Smtp-Source: AGHT+IG4LwJj+R+ihQZxGOzlkXUMhlUaL4Xr2NimoK0WWjuB2nVxOyI7Ygpyo/7OWpqb7K2c8NhREg==
-X-Received: by 2002:a05:600c:1d20:b0:46d:9d28:fb78 with SMTP id
- 5b1f17b1804b1-46e1d9953cemr21575445e9.8.1758617459113; 
- Tue, 23 Sep 2025 01:50:59 -0700 (PDT)
+ AJvYcCV8oGyLSFKsMJqyWVCQSakDV3IfAaTSvYWn0ykKe/27Ak5nD1LvQoOScX3v1wAsBrB8R0wmda6kqjka@nongnu.org
+X-Gm-Message-State: AOJu0Yw+Kka4HKXHFjEYHOfaFZgkQ2EgmG6vWQ3dQp6TjsttolCr10Dz
+ gSUNxHLWoG/7N91m6+TgZUo7MhgRGVMeyqDyfh74i0b2YIbIUOXYyCNOyyjtVQwHnDA=
+X-Gm-Gg: ASbGncvJsQ0k1QEOSHAkTRrOCjVP4bkJkBac8xz25vwZQcydkBg3GI9W8W5ruXtxy3A
+ nI8tXGir+s24tdNHW+YM2qQ/8obJYZomGIsBk5Qeu290o/b6LkXqLMmMnu0qb2lsnhB9lhZUiK5
+ hJyhZcPH9gMfTGGBz34RwpBFEmnD6OpmURW4BgeM82vuCUqot5A7i3o3Ql0ycPNM4NHr6AF6Kg/
+ q5JZGWrPP1FPDoXCA1Fs7jH0LZx+8Wj1QtxMGpFj+Xr4ZyJTXKjLDwuNyWOg/P28hADMSiePv2L
+ 7xCbWkYCpWSWV9FV4g4ER31QHDSiS4+9LgyfcPp0EY+u9MhYJYP23FrnNjUxivXwtaEeBlw+jK9
+ fvXLQHjfHvrw3WpEc47qtD2J6xOzQEPhJLGIje0WJTKLVfhygN2vb70WErjF7LEyRqA==
+X-Google-Smtp-Source: AGHT+IHQ6WmvWhJNVmzJ03KMtS34Yp8QNSX7JBk+ih+Dutzw8z/ZHso3Gdz872E9Uxx/9ht+gtUWuQ==
+X-Received: by 2002:a05:6000:178e:b0:3f1:2671:6d9e with SMTP id
+ ffacd0b85a97d-405c33a35bamr1316964f8f.1.1758617734649; 
+ Tue, 23 Sep 2025 01:55:34 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46dea20f833sm63358875e9.10.2025.09.23.01.50.58
+ ffacd0b85a97d-3ee07407d33sm23276803f8f.18.2025.09.23.01.55.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 01:50:58 -0700 (PDT)
-Message-ID: <9567e59a-e7e1-4106-936c-88ad7f5c202d@linaro.org>
-Date: Tue, 23 Sep 2025 10:50:57 +0200
+ Tue, 23 Sep 2025 01:55:34 -0700 (PDT)
+Message-ID: <5ed7c59b-5e61-4e79-b4e0-a8441ac5b784@linaro.org>
+Date: Tue, 23 Sep 2025 10:55:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/12] linux-user: Use tb_flush_exclusive to start
- second thread
+Subject: Re: [PATCH v2 06/12] hw/ppc/spapr: Use tb_invalidate_phys_range in
+ h_page_init
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
 References: <20250923023922.3102471-1-richard.henderson@linaro.org>
- <20250923023922.3102471-8-richard.henderson@linaro.org>
+ <20250923023922.3102471-7-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923023922.3102471-8-richard.henderson@linaro.org>
+In-Reply-To: <20250923023922.3102471-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,55 +105,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/9/25 04:39, Richard Henderson wrote:
-> When we start the second thread, we discard all translations
-> so that we can re-do them with CF_PARALLEL.  Since there is
-> as yet only one cpu, and we are processing a syscall, there
-> are no live translation blocks and we have exclusivity.
-
-Maybe factor out a helper expressing that? (can be done on top,
-of course).
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+> We only need invalidate tbs from a single page, not flush
+> all translations.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/mmap.c    | 4 ++--
->   linux-user/syscall.c | 2 +-
->   2 files changed, 3 insertions(+), 3 deletions(-)
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: qemu-ppc@nongnu.org
+> ---
+>   hw/ppc/spapr_hcall.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> index 002e1e668e..bd2bbaf1f4 100644
-> --- a/linux-user/mmap.c
-> +++ b/linux-user/mmap.c
-> @@ -1010,7 +1010,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
->           CPUState *cpu = thread_cpu;
->           if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
->               tcg_cflags_set(cpu, CF_PARALLEL);
-> -            tb_flush(cpu);
-> +            tb_flush__exclusive();
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index c594d4b916..feb31d5dd8 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -8,7 +8,7 @@
+>   #include "qemu/main-loop.h"
+>   #include "qemu/module.h"
+>   #include "qemu/error-report.h"
+> -#include "exec/tb-flush.h"
+> +#include "exec/translation-block.h"
+>   #include "exec/target_page.h"
+>   #include "helper_regs.h"
+>   #include "hw/ppc/ppc.h"
+> @@ -301,7 +301,7 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>           if (kvm_enabled()) {
+>               kvmppc_icbi_range(cpu, pdst, len);
+>           } else if (tcg_enabled()) {
+> -            tb_flush(CPU(cpu));
+> +            tb_invalidate_phys_range(CPU(cpu), dst, len);
+
+Shouldn't this be:
+
+                tb_invalidate_phys_range(CPU(cpu), dst, dst + len - 1);
+
+?
+
+>           } else {
+>               g_assert_not_reached();
 >           }
->       }
->   
-> @@ -1450,7 +1450,7 @@ abi_ulong target_shmat(CPUArchState *cpu_env, int shmid,
->        */
->       if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
->           tcg_cflags_set(cpu, CF_PARALLEL);
-> -        tb_flush(cpu);
-> +        tb_flush__exclusive();
->       }
->   
->       if (qemu_loglevel_mask(CPU_LOG_PAGE)) {
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 91360a072c..d9c394856f 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -6633,7 +6633,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
->            */
->           if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
->               tcg_cflags_set(cpu, CF_PARALLEL);
-> -            tb_flush(cpu);
-> +            tb_flush__exclusive();
->           }
->   
->           /* we create a new CPU instance. */
+
 
