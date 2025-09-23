@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E336DCAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5DBCAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zq3-0002jd-7S; Tue, 23 Sep 2025 06:01:35 -0400
+	id 1v0zrP-00046l-Ah; Tue, 23 Sep 2025 06:02:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zpt-0002fc-4m
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:25 -0400
+ id 1v0zqL-0002w1-Fa
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:53 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zpm-0000t3-Qv
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:24 -0400
+ id 1v0zpz-0000vr-Hv
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:53 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7ECD5807C9;
- Tue, 23 Sep 2025 13:01:15 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id AE1A78081F;
+ Tue, 23 Sep 2025 13:01:23 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b38::1:12])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id C1Ug0C0Fha60-W2RIwL7U; Tue, 23 Sep 2025 13:01:15 +0300
+ ESMTPSA id C1Ug0C0Fha60-NdAweWPs; Tue, 23 Sep 2025 13:01:23 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758621675;
- bh=FeDOTAGsW1Pcdbg0ZZNDxeOSWxQ+N3Fw7mdS9vL/kGY=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=n6SEW6xwVgpop0j6Oqndhu1ZvkPR3OCldJ7z+GyEpKhB1OJxZ9UiVAJKBosB05uvX
- iNQ2APQzFWLi67kHW0FDNUTbL1pxRzMqiD9LAyakgVjd1NT47oARzWtZn1BXqgi1kp
- nKLA0TeWBWxLOrUgi90JGO95Yftt0V8XsvkRdkcU=
+ s=default; t=1758621683;
+ bh=tVt9MTceZxb+Z2P97d76cU/wUeCLYbrndwjIMj44b50=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=ekxjVH0oHFqQUIEKs4pli785hx6TivY2rvcyMWiIstOjZ4nXcnOB08MRnhPg8p+K6
+ 7Fu18Eb9DgXT3WEGIIjgnvElwWwMg3z5IKObiXdlvdRceeaHfg6n2MEjiA5LzDxGLn
+ 1BL1oOEKRLtdTPnqw3RuRkWlg1ONsbCd/H0jVmWQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,14 +47,14 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v6 04/19] net/tap: pass NULL to net_init_tap_one() in cases
- when scripts are NULL
-Date: Tue, 23 Sep 2025 13:00:55 +0300
-Message-ID: <20250923100110.70862-5-vsementsov@yandex-team.ru>
+Subject: [PATCH v6 18/19] tests/functional: add skipWithoutSudo() decorator
+Date: Tue, 23 Sep 2025 13:01:09 +0300
+Message-ID: <20250923100110.70862-19-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250923100110.70862-1-vsementsov@yandex-team.ru>
 References: <20250923100110.70862-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -79,72 +79,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly pass NULL in cases where we report an error if script or
-downscript are set.
+To be used in the next commit: that would be a test for TAP
+networking, and it will need to setup TAP device.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- net/tap.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/tap.c b/net/tap.c
-index 506dc9d226..e42c7ca044 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -787,8 +787,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     const NetdevTapOptions *tap;
-     int fd, vnet_hdr = 0, i = 0, queues;
-     /* for the no-fd, no-helper case */
--    const char *script;
--    const char *downscript;
-     Error *err = NULL;
-     const char *vhostfdname;
-     char ifname[128];
-@@ -798,8 +796,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     tap = &netdev->u.tap;
-     queues = tap->has_queues ? tap->queues : 1;
-     vhostfdname = tap->vhostfd;
--    script = tap->script;
--    downscript = tap->downscript;
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index c0d1567b14..d1e97f7995 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -6,6 +6,7 @@
+ import os
+ import platform
+ import resource
++import subprocess
+ from unittest import skipIf, skipUnless
  
-     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
-      * For -netdev, peer is always NULL. */
-@@ -840,7 +836,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-         }
- 
-         net_init_tap_one(tap, peer, "tap", name, NULL,
--                         script, downscript,
-+                         NULL, NULL,
-                          vhostfdname, vnet_hdr, fd, &err);
-         if (err) {
-             error_propagate(errp, err);
-@@ -901,7 +897,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             }
- 
-             net_init_tap_one(tap, peer, "tap", name, ifname,
--                             script, downscript,
-+                             NULL, NULL,
-                              tap->vhostfds ? vhost_fds[i] : NULL,
-                              vnet_hdr, fd, &err);
-             if (err) {
-@@ -946,7 +942,7 @@ free_fail:
-         }
- 
-         net_init_tap_one(tap, peer, "bridge", name, ifname,
--                         script, downscript, vhostfdname,
-+                         NULL, NULL, vhostfdname,
-                          vnet_hdr, fd, &err);
-         if (err) {
-             error_propagate(errp, err);
-@@ -954,6 +950,8 @@ free_fail:
-             return -1;
-         }
-     } else {
-+        const char *script = tap->script;
-+        const char *downscript = tap->downscript;
-         g_autofree char *default_script = NULL;
-         g_autofree char *default_downscript = NULL;
-         bool vnet_hdr_required = tap->has_vnet_hdr && tap->vnet_hdr;
+ from .cmd import which
+@@ -149,3 +150,18 @@ def skipLockedMemoryTest(locked_memory):
+         ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
+         f'Test required {locked_memory} kB of available locked memory',
+     )
++
++'''
++Decorator to skip execution of a test if passwordless
++sudo command is not available.
++'''
++def skipWithoutSudo():
++    proc = subprocess.run(["sudo", "-n", "/bin/true"],
++                          stdin=subprocess.PIPE,
++                          stdout=subprocess.PIPE,
++                          stderr=subprocess.STDOUT,
++                          universal_newlines=True,
++                          check=False)
++
++    return skipUnless(proc.returncode == 0,
++                      f'requires password-less sudo access: {proc.stdout}')
 -- 
 2.48.1
 
