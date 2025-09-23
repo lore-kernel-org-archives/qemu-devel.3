@@ -4,129 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A5BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5309DCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v18Z2-0001s4-1X; Tue, 23 Sep 2025 15:20:36 -0400
+	id 1v18cT-0004p3-1S; Tue, 23 Sep 2025 15:24:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v18Yz-0001rd-Th
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:20:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v18cR-0004oN-AR
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:24:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v18Yy-0006Rx-1Y
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:20:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v18cP-00076C-33
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:24:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758655228;
+ s=mimecast20190719; t=1758655443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SKaWTSpekMbhCVttoIpxfnicDLRPqMAkcf7nGgcO5GU=;
- b=diiuj1zS5Rut/+eSGMV0/K05Iqaraee9o5+Lonizi6UGxrc5kTsSHX1D7Kfg18YMimC/30
- eY7+ORbBNbSI9QTcTXg9BTrJMHHI8EFqjRr3h7Bm4OpCp+v3DwBR6VRBXZYi6rtsMp9c1X
- nAFO9RmiDKh63sifaClsG2tD8Tcrj7w=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-77-bK6v-WjvMH6F7yRAn9O7iQ-1; Tue, 23 Sep 2025 15:20:27 -0400
-X-MC-Unique: bK6v-WjvMH6F7yRAn9O7iQ-1
-X-Mimecast-MFC-AGG-ID: bK6v-WjvMH6F7yRAn9O7iQ_1758655226
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b0c1a67399aso821502366b.2
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 12:20:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758655226; x=1759260026;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SKaWTSpekMbhCVttoIpxfnicDLRPqMAkcf7nGgcO5GU=;
- b=qUOrPEZCnuRTevYeIokMTs/kpw3B74pCd5WEqfVlCN1i/lym/0vsBB7MlJX9pZEs/B
- FFDw1gOdr8S7ofRp5yST8yJ7gNHN0W3mubt09CQvOVJ6DfnkX4bGwzN/nkqhs+A+fHgb
- 5wnBUACRZVAYO4h4+A+/fcxZuEIc/Yqo+leqxe8EgABVBkY5oz3jJq0GJQUJHYxRiV/w
- iRCsaXNs8jXs8bLmNx6uXtfeYguxhFf2Hf2HF8dFmEntXIgjyMW8q+dCvHnmN3JN0bEH
- 9w9f6RPYzYMJo/scm04EWmMbcd/U067VzIMc9O52iM/Ueubch54H3uVheJP2zd0IgIZy
- F3xA==
-X-Gm-Message-State: AOJu0YxxCEfGnzXrJ7HM4CbUriMXsKfr6wUvySVmKPTWJb4I7WTrIryu
- gr2rOcQZboiI6EIfUnqvNaXPiphH160JLEpesoKzqCyzmcEqEVB34prW0RVv9eTTDC8v2nLMMHR
- 32lLmYkkAfBBv8Xaz9Gou2iJdPrbEshM4W3ieG/HAehep3hiLBwasOznW
-X-Gm-Gg: ASbGnct0PqRvOIdiWEUwQOaB6IbFx2H/iwb3mtKJDJKFud84KhbN7LIqPUHYEGpVZzj
- oi7St+HqO8v3a94i7HJrlp7i/1GM+ExPNLZdy+7Co9tTmT079xlVdMtv+bKEx5t963YAYy6BX3v
- 7HzOEouI2qhPmFUcIS7zvs+xMY6jmogBO4bl49Akk/bdrEDRjf9fMVDcl5jHis1r4CmuZ4XL1sj
- vPR7s7wHi53XO19e/c1eLVw6v9heb8zgGD3/RwhYckonkm+LwgewExrbV1U+ID7e72owGtERSaf
- t4pPppvG+Kbs08xqL9fo1wCoufxn7ZvhWJAFm7DeT6hf0X/LCowTdxWs9zASa2oC8z5cyCc3sAt
- sRQVD3watsGCSGxXa1g6+XDVAWYg+WvDyg9WPBe9W0TIWlQ==
-X-Received: by 2002:a17:907:9713:b0:b04:2ee1:8e2 with SMTP id
- a640c23a62f3a-b302a174dddmr394118266b.36.1758655226330; 
- Tue, 23 Sep 2025 12:20:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmctqWzN2jW9ShZatBZQiF++CJbL8fOQrdSKosTgzhq1KkgCZP1ha/rdyfYXYh53In2MawAQ==
-X-Received: by 2002:a17:907:9713:b0:b04:2ee1:8e2 with SMTP id
- a640c23a62f3a-b302a174dddmr394116266b.36.1758655225982; 
- Tue, 23 Sep 2025 12:20:25 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.127.188])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b26c49ab9c8sm1010095666b.47.2025.09.23.12.20.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 12:20:25 -0700 (PDT)
-Message-ID: <3232b3d4-a298-42d0-9756-0556f9edc241@redhat.com>
-Date: Tue, 23 Sep 2025 21:20:24 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=hQujldYOkJSiLuRw/jzm97StSNFnDtlEVoHUwDixRQ0=;
+ b=AU/CFoCIWX9dv10EkcDe6XqpeIqstAEeBf35YMrbLJidXkOD9qictkdee95AAy5RWBeKXC
+ Usa9/BGIEXbRaMYtJKTz4o1YuM6RmvW4qoaxyn1GPFuM0VnX0q+7yFnp/OqxbCGPj7ys/6
+ RNqDKZjmlL0kEpCFOrOC57B3PihXfUU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-183-oQnkSxV_OFG2E7cri0VuFg-1; Tue,
+ 23 Sep 2025 15:23:58 -0400
+X-MC-Unique: oQnkSxV_OFG2E7cri0VuFg-1
+X-Mimecast-MFC-AGG-ID: oQnkSxV_OFG2E7cri0VuFg_1758655437
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B395E19560A7; Tue, 23 Sep 2025 19:23:56 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.69])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2CBD4180035E; Tue, 23 Sep 2025 19:23:55 +0000 (UTC)
+Date: Tue, 23 Sep 2025 15:23:54 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Tanish Desai <tanishdesai37@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
+Message-ID: <20250923192354.GL509965@fedora>
+References: <20250919112536.141782-1-pbonzini@redhat.com>
+ <20250919112536.141782-9-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] docs/code-provenance: make the exception process more
- prominent
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250922154843.60233-1-pbonzini@redhat.com>
- <20250922154843.60233-3-pbonzini@redhat.com> <20250923175826.GB509965@fedora>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250923175826.GB509965@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="7sarsVfnZ4KbpEW7"
+Content-Disposition: inline
+In-Reply-To: <20250919112536.141782-9-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -151,24 +89,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/25 19:58, Stefan Hajnoczi wrote:
->> +The QEMU project welcomes discussion on any exceptions to this policy,
->> +or more general revisions. This can be done by contacting the qemu-devel
->> +mailing list with details of a proposed tool, model, usage scenario, etc.
->> +that is beneficial to QEMU, while still mitigating the legal risks to the
->> +project.  After discussion, any exception will be listed below.
-> 
-> "Legal risks to the project" is all-encompassing and vague. People may
-> not know how to start addressing the topic and might therefore not
-> attempt to request an exception.
-> 
-> I suggest replacing "legal risks to the project" with something more
-> concrete like "issues around license and copyright status required to
-> satisfy the Developer Certificate of Origin (DCO) requirements".
 
-It's already a long sentence.  Would "while still mitigating issues around
-compliance with the DCO" be enough?
+--7sarsVfnZ4KbpEW7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Paolo
+On Fri, Sep 19, 2025 at 01:25:28PM +0200, Paolo Bonzini wrote:
+> From: Tanish Desai <tanishdesai37@gmail.com>
+>=20
+> Generating .rs files makes it possible to support tracing in rust.
+> This support comprises a new format, and common code that converts
+> the C expressions in trace-events to Rust.  In particular, types
+> need to be converted, and PRI macros expanded.
+>=20
+> As of this commit no backend generates Rust code, but it is already
+> possible to use tracetool to generate Rust sources; they are not
+> functional but they compile and contain tracepoint functions.
+>=20
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> [Move Rust argument conversion from Event to Arguments; string
+>  support. - Paolo]
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  scripts/tracetool/__init__.py  | 155 +++++++++++++++++++++++++++++++++
+>  scripts/tracetool/format/rs.py |  71 +++++++++++++++
+>  2 files changed, 226 insertions(+)
+>  create mode 100644 scripts/tracetool/format/rs.py
+>=20
+> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+> index a58d7938658..ea3e83f5adf 100644
+> --- a/scripts/tracetool/__init__.py
+> +++ b/scripts/tracetool/__init__.py
+> @@ -31,6 +31,49 @@ def error(*lines):
+>      error_write(*lines)
+>      sys.exit(1)
+> =20
+> +FMT_TOKEN =3D re.compile(r'''(?:
+> +                       " ( (?: [^"\\] | \\[\\"abfnrt] |            # a s=
+tring literal
+> +                               \\x[0-9a-fA-F][0-9a-fA-F]) *? ) "
+> +                       | ( PRI [duixX] (?:8|16|32|64|PTR|MAX) )    # a P=
+RIxxx macro
+> +                       | \s+                                       # spa=
+ces (ignored)
+> +                       )''', re.X)
+> +
+> +PRI_SIZE_MAP =3D {
+> +    '8':  'hh',
+> +    '16': 'h',
+> +    '32': '',
+> +    '64': 'll',
+> +    'PTR': 't',
+> +    'MAX': 'j',
+> +}
+> +
+> +def expand_format_string(c_fmt, prefix=3D""):
+> +    def pri_macro_to_fmt(pri_macro):
+> +        assert pri_macro.startswith("PRI")
+> +        fmt_type =3D pri_macro[3]  # 'd', 'i', 'u', or 'x'
+> +        fmt_size =3D pri_macro[4:]  # '8', '16', '32', '64', 'PTR', 'MAX'
+> +
+> +        size =3D PRI_SIZE_MAP.get(fmt_size, None)
+> +        if size is None:
+> +            raise Exception(f"unknown macro {pri_macro}")
+> +        return size + fmt_type
+> +
+> +    result =3D prefix
+> +    pos =3D 0
+> +    while pos < len(c_fmt):
+> +        m =3D FMT_TOKEN.match(c_fmt, pos)
+> +        if not m:
+> +            print("No match at position", pos, ":", repr(c_fmt[pos:]), f=
+ile=3Dsys.stderr)
+> +            raise Exception("syntax error in trace file")
+> +        if m[1]:
+> +            substr =3D m[1]
+> +        elif m[2]:
+> +            substr =3D pri_macro_to_fmt(m[2])
+> +        else:
+> +            substr =3D ""
+> +        result +=3D substr
+> +        pos =3D m.end()
+> +    return result
+> =20
+>  out_lineno =3D 1
+>  out_filename =3D '<none>'
+> @@ -90,6 +133,49 @@ def out(*lines, **kwargs):
+>      "ptrdiff_t",
+>  ]
+> =20
+> +C_TYPE_KEYWORDS =3D {"char", "int", "void", "short", "long", "signed", "=
+unsigned"}
+> +
+> +C_TO_RUST_TYPE_MAP =3D {
+> +    "int": "std::ffi::c_int",
+> +    "long": "std::ffi::c_long",
+> +    "long long": "std::ffi::c_longlong",
+> +    "short": "std::ffi::c_short",
+> +    "char": "std::ffi::c_char",
+> +    "bool": "bool",
+> +    "unsigned": "std::ffi::c_uint",
+> +    # multiple keywords, keep them sorted
+> +    "long unsigned": "std::ffi::c_long",
+> +    "long long unsigned": "std::ffi::c_ulonglong",
+> +    "short unsigned": "std::ffi::c_ushort",
+> +    "char unsigned": "u8",
+> +    "int8_t": "i8",
+> +    "uint8_t": "u8",
+> +    "int16_t": "i16",
+> +    "uint16_t": "u16",
+> +    "int32_t": "i32",
+> +    "uint32_t": "u32",
+> +    "int64_t": "i64",
+> +    "uint64_t": "u64",
+> +    "void": "()",
+> +    "size_t": "usize",
+> +    "ssize_t": "isize",
+> +    "uintptr_t": "usize",
+> +    "ptrdiff_t": "isize",
+> +}
+> +
+> +# Rust requires manual casting of <32-bit types when passing them to
+> +# variable-argument functions.
+> +RUST_VARARGS_SMALL_TYPES =3D {
+> +    "std::ffi::c_short",
+> +    "std::ffi::c_ushort",
+> +    "std::ffi::c_char",
+> +    "i8",
+> +    "u8",
+> +    "i16",
+> +    "u16",
+> +    "bool",
+> +}
+> +
+>  def validate_type(name):
+>      bits =3D name.split(" ")
+>      for bit in bits:
+> @@ -105,6 +191,38 @@ def validate_type(name):
+>                               "other complex pointer types should be "
+>                               "declared as 'void *'" % name)
+> =20
+> +def c_type_to_rust(name):
+> +    ptr =3D False
+> +    const =3D False
+> +    name =3D name.rstrip()
+> +    if name[-1] =3D=3D '*':
+> +        name =3D name[:-1].rstrip()
+> +        ptr =3D True
+> +        if name[-1] =3D=3D '*':
+> +            # pointers to pointers are the same as void*
+> +            name =3D "void"
+> +
+> +    bits =3D name.split()
+> +    if "const" in bits:
+> +        const =3D True
+> +        bits.remove("const")
+> +    if bits[0] in C_TYPE_KEYWORDS:
+> +        if "signed" in bits:
+> +            bits.remove("signed")
+> +        if len(bits) > 1 and "int" in bits:
+> +            bits.remove("int")
+> +        bits.sort()
+> +        name =3D ' '.join(bits)
+> +    else:
+> +        if len(bits) > 1:
+> +            raise ValueError("Invalid type '%s'." % name)
+> +        name =3D bits[0]
+> +
+> +    ty =3D C_TO_RUST_TYPE_MAP[name.strip()]
+> +    if ptr:
+> +        ty =3D f'*{"const" if const else "mut"} {ty}'
+> +    return ty
+> +
+>  class Arguments:
+>      """Event arguments description."""
+> =20
+> @@ -193,6 +311,43 @@ def casted(self):
+>          """List of argument names casted to their type."""
+>          return ["(%s)%s" % (type_, name) for type_, name in self._args]
+> =20
+> +    def rust_decl_extern(self):
+> +        """Return a Rust argument list for an extern "C" function"""
+> +        return ", ".join((f"_{name}: {c_type_to_rust(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_decl(self):
+> +        """Return a Rust argument list for a tracepoint function"""
+> +        def decl_type(type_):
+> +            if type_ =3D=3D "const char *":
+> +                return "&std::ffi::CStr"
+> +            return c_type_to_rust(type_)
+> +
+> +        return ", ".join((f"_{name}: {decl_type(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_call_extern(self):
+> +        """Return a Rust argument list for a call to an extern "C" funct=
+ion"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +            return f"_{name}"
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+=2E_args))
+> +
+> +    def rust_call_varargs(self):
+> +        """Return a Rust argument list for a call to a C varargs functio=
+n"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +
+> +            type_ =3D c_type_to_rust(type_)
+> +            if type_ in RUST_VARARGS_SMALL_TYPES:
+> +                return f"_{name} as std::ffi::c_int"
+> +            return f"_{name} /* as {type_} */"
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+=2E_args))
+> +
+> =20
+>  class Event(object):
+>      """Event description.
+> diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs=
+=2Epy
+> new file mode 100644
+> index 00000000000..c4ab0e59d85
+> --- /dev/null
+> +++ b/scripts/tracetool/format/rs.py
+> @@ -0,0 +1,71 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +"""
+> +trace-DIR.rs
+> +"""
+> +
+> +__author__     =3D "Tanish Desai <tanishdesai37@gmail.com>"
+> +__copyright__  =3D "Copyright 2025, Tanish Desai <tanishdesai37@gmail.co=
+m>"
+> +__license__    =3D "GPL version 2 or (at your option) any later version"
+> +
+> +__maintainer__ =3D "Stefan Hajnoczi"
+> +__email__      =3D "stefanha@redhat.com"
+> +
+> +
+> +from tracetool import out
+> +
+> +
+> +def generate(events, backend, group):
+> +    out('// SPDX-License-Identifier: GPL-2.0-or-later',
+> +        '// This file is @generated by tracetool, do not edit.',
+> +        '',
+> +        '#[allow(unused_imports)]',
+> +        'use std::ffi::c_char;',
+> +        '#[allow(unused_imports)]',
+> +        'use util::bindings;',
+> +        '',
+> +        '#[inline(always)]',
+> +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
+> +        '    unsafe { (trace_events_enabled_count !=3D 0) && (_id !=3D 0=
+) }',
+> +        '}',
+
+This was translated to Rust from:
+
+  /* it's on fast path, avoid consistency checks (asserts) */
+  #define trace_event_get_state_dynamic_by_id(id) \
+      (unlikely(trace_events_enabled_count) && _ ## id ## _DSTATE)
+
+The _id !=3D 0 expression is incorrect. The purpose was to check whether
+the trace event is currently enabled (i.e. dynamically at runtime).
+
+> +        '',
+> +        'extern "C" {',
+> +        '    static mut trace_events_enabled_count: u32;',
+> +        '}',)
+> +
+> +    out('extern "C" {')
+> +
+> +    for e in events:
+> +        out('    static mut %s: u16;' % e.api(e.QEMU_DSTATE))
+> +    out('}')
+> +
+> +    # static state
+> +    for e in events:
+> +        if 'disable' in e.properties:
+> +            enabled =3D "false"
+> +        else:
+> +            enabled =3D "true"
+
+What is the purpose of this loop? The variable enabled is unused so I
+think it can be deleted.
+
+> +
+> +    backend.generate_begin(events, group)
+> +
+> +    for e in events:
+> +        out('',
+> +			'#[inline(always)]',
+
+Tabs snuck in here. This should be indented with spaces.
+
+> +            '#[allow(dead_code)]',
+> +            'pub fn %(api)s(%(args)s)',
+> +            '{',
+> +            api=3De.api(e.QEMU_TRACE),
+> +            args=3De.args.rust_decl())
+> +
+> +        if "disable" not in e.properties:
+> +            backend.generate(e, group, check_trace_event_get_state=3DFal=
+se)
+> +            if backend.check_trace_event_get_state:
+> +                event_id =3D 'TRACE_' + e.name.upper()
+> +                out('    if trace_event_get_state_dynamic_by_id(unsafe {=
+ _%(event_id)s_DSTATE}) {',
+> +                    event_id =3D event_id,
+> +                    api=3De.api())
+> +                backend.generate(e, group, check_trace_event_get_state=
+=3DTrue)
+> +                out('    }')
+> +        out('}')
+> +
+> +    backend.generate_end(events, group)
+> --=20
+> 2.51.0
+>=20
+>=20
+
+--7sarsVfnZ4KbpEW7
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS88oACgkQnKSrs4Gr
+c8iFDwgAr4LYaHPGQYWSRn6SmO2wJq1Y9OB30YRyGEWOtHF0IEgiDmOMdeII2dUO
+i2kj0N4NEvXNNy4qbLH8rViUOezEMkMIS56uKfLK4i+Tn5ana1DUcLcWgSV7iC6n
+g1WSRu+pwWt4bUcFqy3O6xCnm1/P6EZRgeHavTj5qzGnvp2B7RWHKn5JgQbn9cam
+hDb3ByLRem+bS5ya+lV01x5F5B3GKpvVPQjZpSYP33yZn3Cg6axatIpaLHADBv/0
+gRLxu9KyjwnGtCLtcEUixpYFIXCDBxaHlnLZL32q1Mo5+QFl6XgAgxHUI8V5k/j6
+A0k0xKllWfcL+MPhIIM9UGkKDxJWcA==
+=JTMZ
+-----END PGP SIGNATURE-----
+
+--7sarsVfnZ4KbpEW7--
 
 
