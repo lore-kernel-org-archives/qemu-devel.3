@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33118CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9E1CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 20:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v19DW-0002U7-Ju; Tue, 23 Sep 2025 16:02:26 -0400
+	id 1v19Jz-0004co-Qu; Tue, 23 Sep 2025 16:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v19DR-0002Nm-0P
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:02:23 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1v19Jg-0004YP-Gr
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:08:51 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v19DO-00056s-Gw
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:02:20 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-329a41dc2ebso4878328a91.3
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:02:18 -0700 (PDT)
+ id 1v19Jc-0005oB-BC
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 16:08:47 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b55115148b4so3922467a12.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 13:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758657737; x=1759262537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758658121; x=1759262921; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XMaTO3+HaQQ4gVXtybHWgy4ho36Fuioac4nouTUlQbQ=;
- b=NWfiAO+rWnt72jLRn9FQB2A6NS1yeqNwDUc/xaiFFtjPCii/D99PfvSQ92dOcfwmw9
- w8RUdEkeiiPb2LHuopmO+pi0Hm/JtI1Fpn6VUB6/jcfGTyPsdFeoaOk4ggRz3/fIbIoU
- awDt92+g6hUgZh+I6m54FOKBKe2V8AzQdv07lPgqlCH2p0X/kyZ3ZlUDVDZnpWuMkVRk
- 97534EeiENNYmIPau1NuJLIdJ8g6MYcV4d9l7AMSdfJY80g0T20SWiY//JpGZ7J86XYR
- UTfemHWFmFbSotWRDzX2q/jSeG/qRU8vb1deCRon/z4OdOPwTHi4nYEnrf9Fm5djjOKV
- PlCA==
+ bh=L+A870irlUyzIlTjkl7PKvI9+jV2CUJnu1PK217zi+M=;
+ b=dRSeQlnPEDEwPgWwDg5F7g4LwNKZuEwnYEtOliE7USLB0jOEG0gqUoIUEL5QjQZwet
+ QPK25CQtJWpchUsRXF8o7pZxxXYM89aE953Rak2wwSdjGLL2AwI3er0+xwcD3SQ+7F9X
+ lr2IAFL+c9KacWsdojuLqfgL4XdKtN3rBqzlNyNS/zUBhnpARz36LheOpSBvk1N6y2ic
+ eobtuhATxQs8F5qRSaZjd1st1FevXneO+gkDKaysx2wrmUeVYBbDgKldVJU4zzrSqmr0
+ +rY4ufkJb9T77E8WKz4B4HooSwCDJI4FHOGBzsvDFcXR/Xhw43+TdmUdQRnsrzoAvLbs
+ TgYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758657737; x=1759262537;
+ d=1e100.net; s=20230601; t=1758658121; x=1759262921;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XMaTO3+HaQQ4gVXtybHWgy4ho36Fuioac4nouTUlQbQ=;
- b=OeBx+4O6/eJxtqxNP7ax4GDQN3qpwd9ZApbHEDJabcsfoHJMCGJG9FSyUo8jYQZKl0
- YMy9p0mFZwpr0nHjW17mIOpbP22zX5oyilDS1WtKDiMG85lUUIhQPM8iIJw8KDtdO8pn
- O4SwwkVyEaNEeK36Qbs8LjXEj9AHq7XCLSVRsAxHG7/iqHgQdIoRtvICaB4HAylDipYV
- Q5NtsdkW9+U+HR7ybiSePVd7atgrrIay6UbMRPrWdvgeUkHtPmrg7G79YatwZpVaHWiL
- uV44AeVCkOvIxufU3nTWUbxK89B1PI2VuD6CibymRiMTinJSgC/2g5AyeMTNbW0p3dfU
- IZnw==
+ bh=L+A870irlUyzIlTjkl7PKvI9+jV2CUJnu1PK217zi+M=;
+ b=OAtXKqUwYSnMhEa6XBtGxOBUo1S9vTGy5kLeepDhCJscFw9JA2nYtYZawj0PNSrsq8
+ seu8/IN/aQVDIzMlWqH32AVsqUWCrsYJ7mW46zr5+LNVnKdDzO/a33P7Q3lUatKbnQ5P
+ KQyXp7E+4ZAql6kZdxbpy/rqIU6JtEwtXNvWw99U+J4EFBK1uETrzWciGpclm1MhhOQK
+ PaNNwOgOM7Mc9WhS9wR79fmCirkKAMWvzNTVLg6Up8edEw5yc295QwlPbNuQu+BiS8Y7
+ jLBx6MvDj3RcYqCbP4O+NPAWNbr/FJJuXO2S2JwsVRQYVntXgtQba1N8mmRfjy3VCQlg
+ 2ezw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqHEPMEm1QbcygLILvcPtQiDA7YR03WyzfN7pBBfZIi6ZqVIUr0eD7jlBUP9VoyXaf25udhJ3wTC/q@nongnu.org
-X-Gm-Message-State: AOJu0YwvUAJXqYeRUtqTDcWWJGEgmaBRqjLOfUwjBsuuT5eNofvWI+LN
- kfadHqxTP++4XDYV4JnRUsweH0iCd5C/fG6B8qIkM9h1gBTH2nSVc0705XIcnjhWon4TzylVosu
- 5iDH8
-X-Gm-Gg: ASbGnctaZh7kYGlYFshfidte9+rNAhLMUuQLkMNq2bdf6lwY1gsY2Q1UvZkN318IY7G
- WdJ9S7ERtjlU0HvrClkuEktgdyLuT86B3ZyjpIplYD1Mgye4sNlv5cKCrpBrElBcuASg82UnQJT
- 7dLhRPUuZkJivOXX3Rc0e9mgu3SPyiZVjEokNFNNm/zDFLU8LMqXzdsDOSc+BHbaxJJkrObm3cX
- X4fQrz+Rg9PNbi7EeQr6peQcCt1Gm0zD2Zo951bH9lw2lgICYc8iuc0cbVjnOq4kt488hXZC3Ll
- FFI3zQ5MgiopwBHTVx9sNht9ubaozSXZm9eahQGz+2lhVYWaSF4GNRsYSNNhmVNKLq6ZrUPoGft
- hmjqWvKdAA8mjKcq1v3YBWMSUWqdF/+8RuQ6l
-X-Google-Smtp-Source: AGHT+IFp0fCWgvlWYxZRwQHgKc90FyGkbbwj9L30YBZMecPy4sBB1sQVrpnVY0uFAqlU6XM7xp+Nnw==
-X-Received: by 2002:a17:90b:4a42:b0:329:e2b1:def3 with SMTP id
- 98e67ed59e1d1-332a94f055bmr4687166a91.10.1758657736678; 
- Tue, 23 Sep 2025 13:02:16 -0700 (PDT)
+ AJvYcCWMGzowTOzwnXOu2xoJ+nBaNB0d4eeZfvl6E4fZXiTK7iZUXIO3k11l3oEYHozSvrvkR7+o2Hoddw/W@nongnu.org
+X-Gm-Message-State: AOJu0Yws0DQMiknHYNiMpDmtTWICqYk005yKKM0hk0rZjEvOyzxf+X0e
+ 4EzCpQXCrJiQseHA5DutNdntlwhm6Llb7f+6NOqJ+Am+kQEomV7lJGTVA//nA2hQqXcotGDYuKB
+ uK00l
+X-Gm-Gg: ASbGncscCVJsvv1FgHBPzx4Wa4LB2bT2MKG3XHKTutkECZau/VJB7Zbdx/UCU9bSlAy
+ nizuUQknmKg7+JczBvV+NoaVh6taFCR6S9MnVb9TlNYy5YnpLJ7RHugxuH3IcRkjBTDdgL4BLLw
+ dDkGBLP46X3ygz0plvMs9lhH6TE41xtn4MwRu2Z8VyRDecmB+Ch6PsFxkhJGooWdxMwDLeSQBIx
+ hEWZVE04wC6ehG3VF457Ocmq4KqWtR2cuItGhni5H9Rxrl9zcCtzkprQwB9bEeTWeZleemMS6Z+
+ cMc2lMLV6oDTM4VjlGlzeM/DiEpweIbSIYOtgf9xDVqiZXl1uNmRrYvZZjkkq81Sn5ge8FszKE8
+ EZJLZCe1SkzByOuQw+3Yj5L+3lpgvuFXf2Us+
+X-Google-Smtp-Source: AGHT+IFGJ4d2E0v3lW32Kclb1pxxEn7rcJk0mlGTWRriQWqKSlqObk7D+mf2fjZIJV7b0jkzS/7OnQ==
+X-Received: by 2002:a17:902:e88b:b0:276:305b:14a7 with SMTP id
+ d9443c01a7336-27cc5a06cfbmr48977945ad.33.1758658120852; 
+ Tue, 23 Sep 2025 13:08:40 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-330606509e9sm17382931a91.9.2025.09.23.13.02.15
+ d9443c01a7336-26980053dc8sm171070535ad.13.2025.09.23.13.08.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 13:02:15 -0700 (PDT)
-Message-ID: <cf928b24-4c1c-497d-bb8d-7308b9cd70b1@linaro.org>
-Date: Tue, 23 Sep 2025 13:02:14 -0700
+ Tue, 23 Sep 2025 13:08:40 -0700 (PDT)
+Message-ID: <ea5c9843-527a-410c-9c7d-12f3a5264f9e@linaro.org>
+Date: Tue, 23 Sep 2025 13:08:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/12] accel/tcg: Introduce EXCP_TB_FLUSH
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20250923023922.3102471-1-richard.henderson@linaro.org>
- <20250923023922.3102471-10-richard.henderson@linaro.org>
- <67f2c84b-4bb3-437b-8184-e7dfb9947df9@redhat.com>
+Subject: Re: [PATCH v2 0/2] target/arm: Implement ID_AA64PFR2_EL1
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250923175751.966795-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <67f2c84b-4bb3-437b-8184-e7dfb9947df9@redhat.com>
+In-Reply-To: <20250923175751.966795-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/25 00:10, Paolo Bonzini wrote:
-> On 9/23/25 04:39, Richard Henderson wrote:
->> We are going to disallow tb_flush from within the context
->> of a running cpu.  Introduce a tcg-internal exception to
->> return out of the cpu run loop and perform the flush there.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 9/23/25 10:57, Peter Maydell wrote:
+> The ID register ID_AA64PFR2_EL1 is in the space previously reserved
+> in the system register ID space, but recent versions of the
+> architecture have started to define fields in it to advertise the
+> presence of new architectural features. We don't implement any
+> of those new features yet, but will need to do so at some point.
+> (Notably, the GICv5 EAC spec defines a field in this register
+> to advertise the GICv5 CPU interface.)
 > 
-> One small difference is that different CPUs can fail tcg_tb_alloc() at the same time and 
-> flush multiple times.
+> This patchset gives ID_AA64PFR2_EL1 a backing field in the CPU
+> ID regs struct, defines the field names, and reads it from KVM if
+> it's present there. The only visible behaviour change is the
+> name we present to the user via the gdbstub.
 > 
-> I think the check on the generation count should remain.  Instead of introducing 
-> EXCP_TB_FLUSH, you can keep the guts of tb_flush() as
+> Commit 1 is a code movement one to clear some more stuff out
+> of cpu.h that doesn't need to be there; it's mostly because of that
+> that I'm sending this patchset rather than holding on to it until
+> I have some GICv5 patches ready to send.
 > 
-> void tb_queue_flush(CPUState *cpu)
-> {
->      unsigned tb_flush_count = qatomic_read(&tb_ctx.tb_flush_count);
->      async_safe_run_on_cpu(cpu, do_tb_flush,
->                            RUN_ON_CPU_HOST_INT(tb_flush_count));
-> }
+> (Compare commit f7ddd7b6a1f90c from last year which added the
+> ID_AA64MMFR3_EL1 register.)
 > 
-> With the unconditional async_safe_run_on_cpu() hidden behind a function, this patch goes 
-> away while the next one survives as
+> v2 here is just a rebase which updates the patchset to handle
+> the new array-based storage we're using for ID register values.
 > 
->       if (unlikely(!tb)) {
-> -        /* flush must be done */
-> -        tb_flush(cpu);
->           mmap_unlock();
-> -        /* Make the execution loop process the flush as soon as possible.  */
-> -        cpu->exception_index = EXCP_INTERRUPT;
-> +        tb_queue_flush(cpu);
+> thanks
+> -- PMM
+> 
+> Peter Maydell (2):
+>    target/arm: Move ID register field defs to cpu-features.h
+>    target/arm: Implement ID_AA64PFR2_EL1
+> 
 
-You have a point.  It's not even that unlikely a scenario.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
