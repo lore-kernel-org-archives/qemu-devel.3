@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9548CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AA4CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zWU-0001mX-4S; Tue, 23 Sep 2025 05:41:22 -0400
+	id 1v0zYM-0002nZ-7c; Tue, 23 Sep 2025 05:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0zWR-0001j6-Ks
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:41:19 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v0zYH-0002m8-PW
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:43:14 -0400
+Received: from m204-227.eu.mailgun.net ([161.38.204.227])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0zWI-00067W-PK
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:41:19 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45dd513f4ecso39250435e9.3
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758620464; x=1759225264; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KWoPqmvTO0S7YE+utrQnrW/HpZpS20zY8Nr9UEyJmDw=;
- b=K0LrpBtOkcXPexVhWfv65Cf7u5iwSAmzKPRJGGVG/2BGD8qq2b52GiJTVo9ahW3Ib1
- WioWXBv/Su/6+B/SxBSV6kMgEE5raAy2w1k7DAvNkECdqvNqlXF8mXTHQxSR0W+TZHZ5
- lItk9Zo0EeaB/GBY2K/cgF/3BsyGWf01856i2dPHrFTTP7P23s4UJgCQXkW9fYNHS5Pb
- MIERbDAnpTYRPtmd+YmdMzp9HYQLZtWLeKvXNbgkFlOItGrOoVWfxupfRQhRlcka8dJ3
- L636H5B8a1OSKGEiWuOe6gpCgAoq9pMyoI74Osffp8G3GVO4KnjHbjWFO4ErYNwvF1CU
- X3Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758620464; x=1759225264;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KWoPqmvTO0S7YE+utrQnrW/HpZpS20zY8Nr9UEyJmDw=;
- b=ij2EFDokIciJAt1titYLpH9mbiDifrOfKt+qXa+MDPtnrvCsXQwhdr0vyErfe0DxWV
- eUJQ18eKFkvaHp9Fkry+rh805ddieHBJDajAdd2wYlWXrh1nMWYJTzbgm7G9+pQi0k0J
- LX67L5DibiLH2D2dTtrpntaH4XuZ/qzrGwQrXker4yMzPuAYgmJuafuKyF9j5SQd6h1s
- IgPGt7HjbYQBG7/U12KmmC+kyReIeR/Ily3Ls60ziuULJgOUmcjpALkeXA2Reqn7JMbs
- N4RNwClLnXg2ARh05UQb9DyyMhXpDuO9fFShZB99Pt8CNJhhHEX2TvfejSnx7UU4AioV
- DAIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVF4scEVGTvnqHkd0n4R5K/wdIhF8CbUxLRgD5Y6BjCHsGWFnCUA3cXaxhMmaALm7WdlqqX4AG1Ynuw@nongnu.org
-X-Gm-Message-State: AOJu0Yza4oXgKrAbq3W2NuNa8kjf/mN1TF65lNqg8ZjbHNtiRjBJ6oIH
- IBeHD+sT4l9Mcw7YuDRW1f+6IV//Igk4Fru/Xob45oDYrJ4Ix2NJ/JQ8DQDGuXbZYc4=
-X-Gm-Gg: ASbGncuDI1Q8FUL4ymSVmGgk0yb77M6KIaI58amVQHFFcT4s6aj+g5/zDBiLzDeGvCL
- X4QkLFYnl3qVNeYpESliGFaiBD1NEa5xgOrNFSoKehOoHy/7W/1aYI/SX95v2ld0Gko1fxYlS/M
- WFwYnVmC+3TemH8+HOptY9B3eryqEy3N7rVLdhM8Y1DXs65djczsaOW5L0sGbX+EdG5SGboPZ9/
- jFazwVM96vgcG4OEiuz4DLTsIKMB/KDj6Yy/7cyBRaBeA7fdcdDABpvgpCQzuflkcgzV1/PP5x3
- SGTd2Xe3XOUgZxwTG6pCfaE5ffBBWIEUzD/abagO3Feb+IkA5iT28Tf3M4o3wrQWR2l80qcXqDI
- BX1ro3OLELEsworaTi3b0Mt91jobkGJF807CAjWraPGGAlhprgK1OxezBEkzLpX05X8bBw8O9UA
- xb
-X-Google-Smtp-Source: AGHT+IEkUEcPdyYVal+OKD4Izind4WEqJuRPQTFwsXqzmi80QoffJSwdh6CvmgYY2o13j8oSTazK+g==
-X-Received: by 2002:a05:600c:1c05:b0:45b:7ce0:fb98 with SMTP id
- 5b1f17b1804b1-46e1d97493fmr22604545e9.5.1758620464329; 
- Tue, 23 Sep 2025 02:41:04 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-464f4f9f4e4sm265613865e9.13.2025.09.23.02.41.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 02:41:03 -0700 (PDT)
-Message-ID: <6ebc31f0-c6cf-4e14-a87d-5b59f6c6105f@linaro.org>
-Date: Tue, 23 Sep 2025 11:41:03 +0200
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v0zY6-0006EO-V9
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:43:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
+ s=email; t=1758620576; x=1758627776; 
+ h=Content-Transfer-Encoding: Content-Type: Cc: To: To: Subject: Subject:
+ Message-ID: Date: From: From: In-Reply-To: References: MIME-Version: Sender:
+ Sender; bh=juO6PgdhUpkSD85ak2KJtgBCDDKFCBiwovdiZcdZfT0=;
+ b=C/DU/3eMij0k2Djlo87fZyQ3sG2ArHgpO0m77NjMK1vpFxcy9rx8SZtubtjLawhHOAKvjPKeOvfSj+1QrNtE0Asq1pVA2kpqa2bhfnSS3Fir/YrDOaRIQJOS1fR6Zq6UcW68J6rKR+GjrI5dYKiHhrKdQNXK6Qsnyc6XnUapFiw14YPbtxCSdSULO7zSsukjWVjaaTJ/Tship89MIhUK4M0kYwDWBTxiaqHQWMZfg42/5gYm1kq+8tl3Zz+TUhC6Cfhj3VTrPzqq/BCqaCjM5Tc2rM7gTto0yFnQttfIUr75mDaJfwHJ6VScbbjbCMVvwXECroFivqqv4inzSq4yTg==
+X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com
+ [74.125.224.50]) by
+ f956498d761e37a502969325b327bf1c178b753e880ddeae2c7348fee5072e27 with SMTP id
+ 68d26ba0a6079c31f549fce9 (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256);
+ Tue, 23 Sep 2025 09:42:56 GMT
+X-Mailgun-Sending-Ip: 161.38.204.227
+Received: by mail-yx1-f50.google.com with SMTP id
+ 956f58d0204a3-63497c2a27dso2671368d50.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:42:56 -0700 (PDT)
+X-Gm-Message-State: AOJu0YymfY7czlHs7Hbptwf6B2Vy54Sk6z5FQHJ/3OXxegUEQoa70zb7
+ vC9SZ09jzKuYwpLUf9GvxF1nCsBLluH8ImlU60CtznO9FpnMAd4QKV5u3BrQ2vIYg1UIlpZ5W1/
+ seyWJ2B69ZOxcxEwf1PUy5tmXBc4Q0iM=
+X-Google-Smtp-Source: AGHT+IEl9oJdFqqFnqSXeXW77DHdoTFEScATsWRcrF0dT++YLlcwVU9GiA53dUiTtakN/ZpE3W4VT0Ey2j3ADlaLK88=
+X-Received: by 2002:a05:690e:1544:10b0:632:ebca:988b with SMTP id
+ 956f58d0204a3-636046ee2e4mr1334512d50.3.1758620575897; Tue, 23 Sep 2025
+ 02:42:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/13] tcg: Fix error reporting on mprotect() failure
- in tcg_region_init()
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
- berrange@redhat.com, vsementsov@yandex-team.ru
-References: <20250923091000.3180122-1-armbru@redhat.com>
- <20250923091000.3180122-3-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923091000.3180122-3-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+References: <87a52wqa03.fsf@draig.linaro.org>
+ <20250915162643.44716-1-alessandro@0x65c.net>
+ <20250915162643.44716-2-alessandro@0x65c.net> <87h5wulqm2.fsf@pond.sub.org>
+ <aNEpVhkZ2r5e2Z9X@redhat.com> <87wm5qoig7.fsf@draig.linaro.org>
+ <877bxqk6vp.fsf@pond.sub.org>
+ <CAKiXHKe07RKxBUCqfTFYkaGRj6T-avnS4C5=WcUqevD9eBQ4_g@mail.gmail.com>
+ <87a52mh8hl.fsf@pond.sub.org>
+In-Reply-To: <87a52mh8hl.fsf@pond.sub.org>
+From: Alessandro Ratti <alessandro@0x65c.net>
+Date: Tue, 23 Sep 2025 11:42:44 +0200
+X-Gmail-Original-Message-ID: <CAKiXHKfQYKRu6MDCJdgiAhv2rxj8hnvQE+GXQsxtnK5R7F5d5g@mail.gmail.com>
+X-Gm-Features: AS18NWC9KBW3ZJW4jtNezVrU7bAPvn4jUfIUNR3OpXnekaonXly3ZPN6EujlDcQ
+Message-ID: <CAKiXHKfQYKRu6MDCJdgiAhv2rxj8hnvQE+GXQsxtnK5R7F5d5g@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio: Add function name to error messages
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Alessandro Ratti <alessandro@0x65c.net>, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=161.38.204.227;
+ envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
+ helo=m204-227.eu.mailgun.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,67 +93,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/9/25 11:09, Markus Armbruster wrote:
-> tcg_region_init() calls one of qemu_mprotect_rwx(),
-> qemu_mprotect_rw(), and mprotect(), then reports failure with
-> error_setg_errno(&error_fatal, errno, ...).
-> 
-> The use of &error_fatal is undesirable.  qapi/error.h advises:
-> 
->   * Please don't error_setg(&error_fatal, ...), use error_report() and
->   * exit(), because that's more obvious.
-> 
-> The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
-> wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
-> mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
-> with error_report().  VirtualProtect() doesn't set errno.  mprotect()
-> does, but error_report() may clobber it.
-> 
-> Fix tcg_region_init() to report errors only when it calls mprotect(),
-> and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
-> reporting otherwise.  Use error_report(), not error_setg().
-> 
-> Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protection)
-> Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/region.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tcg/region.c b/tcg/region.c
-> index 7ea0b37a84..2181267e48 100644
-> --- a/tcg/region.c
-> +++ b/tcg/region.c
-> @@ -832,13 +832,16 @@ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads)
->               } else {
->   #ifdef CONFIG_POSIX
->                   rc = mprotect(start, end - start, need_prot);
-> +                if (rc) {
-> +                    error_report("mprotect of jit buffer: %s",
-> +                                 strerror(errno));
+On Mon, 22 Sept 2025 at 16:23, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> Alessandro Ratti <alessandro.ratti@gmail.com> writes:
+>
+> > On Mon, 22 Sept 2025 at 14:29, Markus Armbruster <armbru@redhat.com> wr=
+ote:
+> >>
+> >> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+> >>
+> >> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> >> >
+> >> >> On Mon, Sep 22, 2025 at 12:37:57PM +0200, Markus Armbruster wrote:
+> >> >>> Alessandro Ratti <alessandro@0x65c.net> writes:
+> >> >>>
+> >> >>> > Replace virtio_error() with a macro that automatically prepends =
+the
+> >> >>> > calling function name to error messages. This provides better co=
+ntext
+> >> >>> > for debugging virtio issues by showing exactly which function
+> >> >>> > encountered the error.
+> >> >>> >
+> >> >>> > Before: "Invalid queue size: 1024"
+> >> >>> > After:  "virtio_queue_set_num: Invalid queue size: 1024"
+> >> >>> >
+> >> >>> > The implementation uses a macro to insert __func__ at compile ti=
+me,
+> >> >>> > avoiding any runtime overhead while providing more specific erro=
+r
+> >> >>> > context than a generic "virtio:" prefix.
+> >> >>>
+> >> >>> A need for function names and such in error messages suggests the =
+error
+> >> >>> messages are crap.
+> >> >>
+> >> >> I pretty much agree. If we take that view forwards, then I think ou=
+r
+> >> >> coding guidelines should explicitly state something like
+> >> >>
+> >> >>  "Function names must never be included in error messages.
+> >> >>
+> >> >>   The messages need to be sufficiently descriptive in their
+> >> >>   text, such that including function names is redundant"
+> >>
+> >> I'm in favor.
+> >>
+> >> > Ahh I missed the fact this ends up as an error_report. I think havin=
+g
+> >> > function names in debug output is fine.
+> >>
+> >> No argument!
+> >>
+> >> > It does however miss important information like which VirtIO device =
+is
+> >> > actually failing, despite having vdev passed down to the function.
+> >>
+> >> Yes, which device failed should definitely be reported.
+> >>
+> >> [...]
+> >
+> > Hi Markus, Alex, Daniel,
+> >
+> > Thanks again for the thoughtful feedback and for helping me see the big=
+ger
+> > picture. I now fully agree that adding function names to error messages=
+ (via
+> > __func__) doesn't really address the core issue, and I appreciate the
+> > push to rethink how error reporting can better serve both users and dev=
+elopers.
+> >
+> > I've taken a first stab at improving one of the messages in
+> > virtio_init_region_cache(), following your suggestions.
+> >
+> > Here's the updated call:
+> >
+> > ---8<--- Example diff --8<---
+> > --- a/hw/virtio/virtio.c
+> > +++ b/hw/virtio/virtio.c
+> > @@ -240,6 +240,7 @@ void virtio_init_region_cache(VirtIODevice *vdev, i=
+nt n)
+> >      VirtQueue *vq =3D &vdev->vq[n];
+> >      VRingMemoryRegionCaches *old =3D vq->vring.caches;
+> >      VRingMemoryRegionCaches *new =3D NULL;
+> > +    DeviceState *dev =3D DEVICE(vdev);
+> >      hwaddr addr, size;
+> >      int64_t len;
+> >      bool packed;
+> > @@ -264,7 +265,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, =
+int n)
+> >      len =3D address_space_cache_init(&new->used, vdev->dma_as,
+> >                                     vq->vring.used, size, true);
+> >      if (len < size) {
+> > -        virtio_error(vdev, "Cannot map used");
+> > +        virtio_error(vdev,
+> > +                    "Failed to map used ring for device %s - "
+> > +                    "possible guest misconfiguration or insufficient m=
+emory",
+> > +                    qdev_get_dev_path(dev));
+> >          goto err_used;
+> >      }
+> >
+> > With this change, the error output now reads:
+> >
+> >     qemu-system-x86_64: Failed to map used ring for device
+> > 0000:00:04.0 - possible guest misconfiguration or insufficient memory
+> >
+> > This feels like a clear improvement =E2=80=94 it gives context (what fa=
+iled),
+> > identifies the device, and hints at likely causes.
+>
+> It's *much* better!
+>
+> Developers will appreciate "Failed to map used ring for device".  By
+> itself it would still be gobbledygook for users, but together with the
+> "possible guest misconfiguration or insufficient memory" clue it's fine.
+>
+> Perhaps we can still improve on "device 0000:00:04.0".  The device's ID
+> is a good way to identify it to the user, because it's chosen by the
+> user, and unique (among devices).  Sadly, devices without ID exist.  We
+> fall back to canonical QOM path in places.  Have a look at
+> qdev_get_human_name() to see whether it works here.
 
-I'm not keen on handling errors differently in the same function.
+I experimented with qdev_get_human_name(), but it usually returns paths lik=
+e:
 
-qemu_mprotect_rwx() and qemu_mprotect_rw() already print the error.
+  /machine/peripheral-anon/device[0]/virtio-backend
 
-Why not add qemu_mprotect() as a simple qemu_mprotect__osdep() alias,
-then call it here, also covering the non-POSIX case?
-(Question for Richard, after looking at commits 22c6a9938f7 and more
-  importantly 97a83753c9 -- wondering about WoA).
+=E2=80=A6which seems less user-friendly than the PCI address provided by
+qdev_get_dev_path().
+For now, I'm sticking to using the device ID when set (e.g. via -device=E2=
+=80=A6,id=3Dfoo)
+and falling back to qdev_get_dev_path() otherwise =E2=80=94 which provides =
+predictable
+output for both PCI and non-PCI devices.
 
-> +                }
->   #else
->                   g_assert_not_reached();
->   #endif
->               }
->               if (rc) {
-> -                error_setg_errno(&error_fatal, errno,
-> -                                 "mprotect of jit buffer");
-> +                exit(1);
->               }>           }
->           if (have_prot != 0) {
+> Should we spell out that the device is now broken (whatever vdev->broken
+> means)?
 
+That's a good point =E2=80=94 I'll leave that for a possible follow-up so w=
+e can keep
+this patch focused on improving error clarity and device identification fir=
+st.
+
+I'll submit a new patch shortly based on this discussion, with the
+debug scaffolding removed. I'll include a link to this thread in the cover
+letter for continuity.
+
+> > If this is more in line with what you'd expect, I'd be happy to submit =
+a new
+> > patch focused solely on improving a few key virtio error messages in th=
+is
+> > direction, starting with the worst offenders in virtio_init_region_cach=
+e().
+> >
+> > Thanks again for your time and guidance =E2=80=94 I'm learning a lot fr=
+om this process.
+>
+> You're welcome!  And thank you for accepting my little rant as
+> constructive criticism :)
+
+:)
+Thanks again for your time and guidance =E2=80=94 it's really helping me le=
+arn the ropes
+here.
+
+Best regards,
+Alessandro
 
