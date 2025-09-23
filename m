@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38458CAC5B1
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9E6CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0yya-0003ne-7F; Tue, 23 Sep 2025 05:06:20 -0400
+	id 1v0z0A-0004KR-2p; Tue, 23 Sep 2025 05:08:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yyX-0003mB-05
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:06:17 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1v0z02-0004JQ-MO
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:07:52 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yyM-0008NA-DC
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:06:15 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45f2cf99bbbso25066365e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:06:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1v0yzz-000055-08
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:07:49 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-25669596921so57213835ad.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758618359; x=1759223159; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DLhw0MG6P/nv2aD54ftxzSa4yDLYhf66ozUOdh2WoYk=;
- b=QJ7sm4ujFiQ5kJ6nml9XgIaRd3BaWmVDig4cji8bAFJM9ec66HxtdFyGJv17De0soK
- XJVOOgcNV/4cApP5IXnf07AWz47nk34CFXRYAbF+OdJZLHIB1xU+KXPtaRGA3S3Ml/mJ
- vnZN/p8vUCvev9aHmx0XvGQaG7a8h+7jGTDCcv3VHsbl4QTt8p6BwS4mPV6sfrxTjT/Z
- SPnXFlcYzZdNvxtfiRvNSaLNceBLFEsgTUzxmXtRChx1V94K1usTzt1yS/EfPdu/7nmW
- q5YABDOXXzXNSHUJRBWKa/AUgD0uQxzI9LlQgIqR2QhpxOGS5pEtMqspTBzOdC3Mzgee
- dUqQ==
+ d=sifive.com; s=google; t=1758618460; x=1759223260; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TwDWGCnzVp2md9jXpRmyhyahuiECd2RbbH3vyHCO39c=;
+ b=VSegOUCISJxf0MPjEJItY8T/GsP/mFR0mPjN3ReETZaAXkgRV+ani+sB15x48CPpfa
+ Yr/es7SqCFNE+msk5d4YrXrlNlXRMZGDHmRFDDsMiBSOj+8bLwSnZU6FKoVO2ezFpgzC
+ Iy/ZPRwkekoIClgFI/QOyWQE0RjJ9264N3VoP4wkouwch8Li1CgkN2EjpNOb9JwBRYUh
+ enb9+7UArA2dp9Xde2j3hu0ZCRZvkv9PdqyRVYlPiSHAtYX9Nj6jqN7Jn7hc4Zs6I3jJ
+ ekt8xiGRhRAKBy9RU4AteZbYRyOwXaRemG912wSaUvgaSlZjt+suW2OK+kg3ayCV12ei
+ Msfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758618359; x=1759223159;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DLhw0MG6P/nv2aD54ftxzSa4yDLYhf66ozUOdh2WoYk=;
- b=Qys4yBn2oJEbk0GnLgayoUIpAfY2tTThde9231FuTmQJEdcvTVY2M7SnwmjIvM4XyA
- QsrGf8SOF3CjTBlo7hwwvUtailHZHr8BZ/OWKZWiEnhLmbITB3X1BhB97f+Zzh7a/HqG
- TV+ZW+UBmmmAkueriZqlKrLsl4P08yfgSUYqespj9idndcXj9rR7Gyd3HZx3QJ7NmJkP
- DR04sMybJEkMU1uCChTNPgvH33btOfzpCEhAO4zdYiltT78e6hDy9vu1edTFh5ToxUBU
- tXBbc48hKeiB0WnWHtFXd/OYiQ71xDfRjB/zj4jPt7D5e8gbIJ1W5UpQje5EuQO15rYH
- 3YSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVH1DaNQr+xfmmkw8Lxz5M79a68q/KKzwTSN5Tv5E9TmjQeNgI7FFSW6K8YCxaVlf4TYNttSw/yeyp@nongnu.org
-X-Gm-Message-State: AOJu0YwAQQTjCIfIJbYGZhysz+Rbp6qdgU0x+SUoW3mF7JbGvLpIwO8d
- FprBxSWJ0Ltx8REaPro2j2nSlV14c4Qzb+fLn012j2P/E9kwJpi3dTdFTRI/xNSg0czjMPlGGQo
- /4FzCpg97tg==
-X-Gm-Gg: ASbGncvp4JKwNVW7hzopoij85JwKoXEStQ8fgR/Toaagf/rVFs5duGLp/NWvzYvEk/2
- ziNHim5X2NMZ32rorrRv7QjZUGbvdTEggDKiY/KyU0HbwAIVSf5zPJkTLHytTRl3WNqbS4EOZkJ
- 5Sr4GOGyG6fPJ0lu1otUWXkxSgw03txH+7qmYEgRamK7/BoUNr44yxtjIv8mI/IQnrT8ZV0ju32
- QFUU2IqnQLIiQ0MK4ExYCyoMysPjL8cwUtilLn9BNXLGDHEgW04NT+YzWj1BEtmICbH4WLF8pmG
- 5J53dD0f6+jn/ZM2i2FOn0aKDq+SX1/Hyn+cCu1woqGLIc1Beh6Mpgbu0pKvfqMVnhs4FXPyTqA
- cvNaNMY/hphFIW7VIVnVUcBP+gT1NEKLOxbckt91A22Ho3JlZWB5qNGqGUTwMAYAZlQfx1U7Ikd
- sG
-X-Google-Smtp-Source: AGHT+IGI7ncS2M2tBg9fLBqO6Cm1CbYif3sOR2AXL3cS/1Epj2HhCvT8b+PFIwYe1vJoYo9WfBKbhw==
-X-Received: by 2002:a05:600c:1e09:b0:45d:cf5f:cff8 with SMTP id
- 5b1f17b1804b1-46e1d97fad2mr15504235e9.11.1758618359295; 
- Tue, 23 Sep 2025 02:05:59 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46c9d5d52dcsm103412655e9.8.2025.09.23.02.05.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 02:05:58 -0700 (PDT)
-Message-ID: <6a091e0b-c198-42ce-9279-702785939cfb@linaro.org>
-Date: Tue, 23 Sep 2025 11:05:58 +0200
+ d=1e100.net; s=20230601; t=1758618460; x=1759223260;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TwDWGCnzVp2md9jXpRmyhyahuiECd2RbbH3vyHCO39c=;
+ b=YKMPywMYlr5gjAAJ3TmfZ0fZi9FSXjj9ienvblLAuG92imrAtyw+ICLRr8kphWL6uo
+ x2mY0gQvyfyTwcQro/HwQ5vqFmQZJnYVR2mHvPvSU6okGEAxf1HguegzU2PyYYLe3Dli
+ ZPj64aQvHOHtfUK4GwYGQQSM2ROhE9wixDAIpLjZ9pk7hNgoQS4OQVrm7tdcWM85bdWu
+ iiCg6wvh/c6dMUlWewm3jGaP83IyEF7EK5/Zo3JJ53Vmr2E9HgOw+zIT6ZP6Yw8WvQ0i
+ ZeMjo0k8I5G82TtbmsiIYUMUrEgioCs2CBvpnSlE/hy2qd8SiU6CUQfcINaIp4ofV3aL
+ RE3Q==
+X-Gm-Message-State: AOJu0Yz4XhosSZHqvrXUJgD5GpdyiQVS8X6Qmnv5fOewl9lEEzw70J3m
+ oWsq1PYbPHQ0m0Rt09V4O9tacE4I0WQv8plGmNpymUayz47lsrmX9bgD5qOgHsJZ9Cxz92sGU2D
+ 0nZ90IMQzRiK1Bt1+K1SWjTu7n8AYT8nck68ZA5GY0zEfZfCPzpu5jq/LWxEEb/iZoGhWY+x/C+
+ Pmp6MYuqVW+xpSIrjS0draxjbmfcJ9YrJfueeXpaL0hw==
+X-Gm-Gg: ASbGncs0X8wdHfZIcQrs6GxIG3pZUjMjgQ6egjN7JaudXDVfrfXYYf/Xs+QkHxjKnjR
+ 3vW7rZPPcBiyWWG5kcyK4fDDLBQbD22eyQFo7JLwYhFceNZLDBqMFNm0Y0yjrcODOUqXjJhtMV7
+ MwSxiC7u2H0SeVphas6Wx9eBZRSDr0oNpF6RxmagTuH3AzJhubbPW3oDM+q/XJWlnCn0VOCaWyv
+ b044sbGhQDRD3wwytnHGpz+QvoogmUCCBEk8huzs7hVcwgEdJ8b9aKYAVPQl1K1T76yM9p/Q6On
+ D3+2dy9rbLH0RSaS631otfO//uGGNcabeurcZ3dDRN3062t5Hi1evEaPtmTqV5fji5hPGb+eNPU
+ 96EmcL2T3l6B9hg8cGYilP/Wrlq7/NIMSq/fZNCBPPwZ4/QWVDaIYfOGcCvf98gujP1Q=
+X-Google-Smtp-Source: AGHT+IE0YziYtVaKy+f37OepKYp/a2J1JQbC7hktUlSENlG6gniAMbzgLAxoaPdn5ApY5M5NkbnctQ==
+X-Received: by 2002:a17:902:ec84:b0:249:3efa:3c99 with SMTP id
+ d9443c01a7336-27cc7f92191mr19399125ad.61.1758618460280; 
+ Tue, 23 Sep 2025 02:07:40 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-269800530b7sm157486245ad.18.2025.09.23.02.07.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 02:07:39 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH v2 0/2] riscv: Modify minimum VLEN rule
+Date: Tue, 23 Sep 2025 17:07:27 +0800
+Message-ID: <20250923090729.1887406-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/12] target/alpha: Simplify call_pal implementation
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250923023922.3102471-1-richard.henderson@linaro.org>
- <20250923023922.3102471-4-richard.henderson@linaro.org>
- <adcd026f-398f-47c3-828b-af13f362cc94@linaro.org>
-Content-Language: en-US
-In-Reply-To: <adcd026f-398f-47c3-828b-af13f362cc94@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,37 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/9/25 09:30, Philippe Mathieu-Daudé wrote:
-> On 23/9/25 04:39, Richard Henderson wrote:
->> Since 288a5fe980f, we don't link translation blocks
->> directly to palcode entry points.  If we load palbr
->> from env instead of encoding the constant, we avoid
->> all need for tb_flush().
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/alpha/helper.h     |  1 -
->>   target/alpha/sys_helper.c |  6 ------
->>   target/alpha/translate.c  | 21 ++++++---------------
->>   3 files changed, 6 insertions(+), 22 deletions(-)
+According to the RISC-V unprivileged specification, the VLEN should be greater
+or equal to the ELEN. This patchset provides following modifications:
 
+* Replace the checkings of standard V with the checkings of Zve32x
+* Introduces a check rule for VLEN and ELEN
+* Modifies the minimum VLEN based on the vector extensions
 
-> Probably unrelated but still same target, could you also update the
-> comment added in commit fe57ca82b09 ("target-alpha: Add placeholders
-> for missing userspace PALcalls")?
-> 
->          case 0x86:
->              /* IMB */
->              /* ??? We can probably elide the code using page_unprotect
->                 that is checking for self-modifying code.  Instead we
->                 could simply call tb_flush here.  Until we work out the
->                 changes required to turn off the extra write protection,
->                 this can be a no-op.  */
->              break;
-> 
+Extension     Minimum VLEN
+V                      128
+Zve64[d|f|x]            64
+Zve32[f|x]              32
 
-Otherwise,
+v1: 20250627132156.440214-1-max.chou@sifive.com
+- Rebase to riscv-to-apply.next branch
+- Add patch 1 to replace checking RVV by checking Zve32x
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Max Chou (2):
+  target/riscv: rvv: Replace checking V by checking Zve32x
+  target/riscv: rvv: Modify minimum VLEN according to enabled vector
+    extensions
+
+ target/riscv/cpu.c            |  2 +-
+ target/riscv/csr.c            |  3 ++-
+ target/riscv/machine.c        |  3 ++-
+ target/riscv/riscv-qmp-cmds.c |  2 +-
+ target/riscv/tcg/tcg-cpu.c    | 21 ++++++++++++++++++---
+ 5 files changed, 24 insertions(+), 7 deletions(-)
+
+-- 
+2.43.0
 
 
