@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB4FCAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 18:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25EECCAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 18:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v17SR-0001gS-7k; Tue, 23 Sep 2025 14:09:43 -0400
+	id 1v183K-000726-IB; Tue, 23 Sep 2025 14:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v17SH-0001cq-HC
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:09:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v183E-00071k-B9
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:47:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v17SD-00055U-GR
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:09:31 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v183C-0002it-3h
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:47:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758650966;
+ s=mimecast20190719; t=1758653259;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DjBtG0fDQUjMrg6hAnCIull9AvTRB2FACXoPgEZcKv4=;
- b=IjVvSD1tZ/TKApT3wykCc1/fdDrkKOcK0k9Qnn+npoeUQgp9NWiColjE32bItveHGGE3lz
- CCaB2lFvvHglGzocthSnXssy42DGW3ZPDH9CwKBzubl0daT5xQIRmOgyITFNgr3LM7Row4
- Ios89fjuiiGcMLt8tcX7ETVx9JtUOY0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1P3YME+UcVZM2GPE7hqCzpOVF6GYqIDDX0zDNldBWnY=;
+ b=Cn9u6s7upRQprsyfjCNBg6gkn9bYeTM1pVZPeJT2uVm07KfxgqhNJ3h77SngmQjqw/SfrB
+ EoYJnAyH01MmVykzGlaRS3LEk6GvMVN4b44tGl0JjcSjpUZDhLJZOukp37fAItOB04EeGF
+ SwiTMNNevQBUKh06uSvujxLbGc51fbA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-AD2jCumGOzOiSAvRowa5lw-1; Tue,
- 23 Sep 2025 14:09:23 -0400
-X-MC-Unique: AD2jCumGOzOiSAvRowa5lw-1
-X-Mimecast-MFC-AGG-ID: AD2jCumGOzOiSAvRowa5lw_1758650962
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-c4OfasqtO5ai3J2unKjHVw-1; Tue,
+ 23 Sep 2025 14:47:37 -0400
+X-MC-Unique: c4OfasqtO5ai3J2unKjHVw-1
+X-Mimecast-MFC-AGG-ID: c4OfasqtO5ai3J2unKjHVw_1758653257
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F3731956089; Tue, 23 Sep 2025 18:09:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.89])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECB631955F19; Tue, 23 Sep 2025 18:09:20 +0000 (UTC)
-Date: Tue, 23 Sep 2025 13:09:17 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] qemu-img info: Optionally show block limits
-Message-ID: <xsupfh7ch565s7tmiq5r4u7zwc2nui7grdrt4dliqodaujvn5z@d3u7as7xqwhx>
-References: <20250923163735.378254-1-kwolf@redhat.com>
- <20250923163735.378254-3-kwolf@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCFC21956058; Tue, 23 Sep 2025 18:47:36 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.69])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 46B6D300018D; Tue, 23 Sep 2025 18:47:36 +0000 (UTC)
+Date: Tue, 23 Sep 2025 14:47:35 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, mads@ynddal.dk
+Subject: Re: [PATCH v2] tracing: deprecate "ust" tracing backend
+Message-ID: <20250923184735.GE509965@fedora>
+References: <20250923074418.87716-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="NzRVrZ4TapwK8k06"
 Content-Disposition: inline
-In-Reply-To: <20250923163735.378254-3-kwolf@redhat.com>
-User-Agent: NeoMutt/20250510
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+In-Reply-To: <20250923074418.87716-1-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -83,49 +84,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 23, 2025 at 06:37:35PM +0200, Kevin Wolf wrote:
-> Add a new --limits option to 'qemu-img info' that displays the block
-> limits for the image and all of its children, making the information
-> more accessible for human users than in QMP. This option is not enabled
-> by default because it can be a lot of output that isn't usually relevant
-> if you're not specifically trying to diagnose some I/O problem.
-> 
-> This makes the same information automatically also available in HMP
-> 'info block -v'.
-> 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+
+--NzRVrZ4TapwK8k06
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Sep 23, 2025 at 09:44:18AM +0200, Paolo Bonzini wrote:
+> The "ust" backend is complex (tracetool contains two output formats just
+> for that backend).  It is not clear if if it has any users, and LTTng
+> anyway can use the uprobe tracepoints provided by the "dtrace" backend,
+> therefore deprecate "ust".
+
+LTTng UST cannot trace all of QEMU's SDT probes because QEMU uses SDT
+semaphores. Semaphores appear to be unsupported by LTTng:
+https://bugs.lttng.org/issues/1180
+
+Here is an example that won't work:
+
+  static MemTxResult  memory_region_read_accessor(MemoryRegion *mr,
+                                                  hwaddr addr,
+                                                  uint64_t *value,
+                                                  unsigned size,
+                                                  signed shift,
+                                                  uint64_t mask,
+                                                  MemTxAttrs attrs)
+  {
+      uint64_t tmp;
+ =20
+      tmp =3D mr->ops->read(mr->opaque, addr, size);
+      if (mr->subpage) {
+          trace_memory_region_subpage_read(get_cpu_index(), mr, addr, tmp, =
+size);
+      } else if (trace_event_get_state_backends(TRACE_MEMORY_REGION_OPS_REA=
+D)) {
+                 ^^^ semaphore ^^^
+          hwaddr abs_addr =3D memory_region_to_absolute_addr(mr, addr);
+          trace_memory_region_ops_read(get_cpu_index(), mr, abs_addr, tmp, =
+size,
+                                       memory_region_name(mr));
+      }
+
+However, I don't remember hearing from LTTng UST users all these years,
+so I think it's okay to deprecate this tracing backend.
+
+Please update the commit description to mention that trace events that
+use SDT semaphores do not work with LTTng UST.
+
+Thanks,
+Stefan
+
+>=20
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  docs/tools/qemu-img.rst |  6 +++++-
->  include/block/qapi.h    |  2 +-
->  block/qapi.c            | 34 ++++++++++++++++++++++++++++++++--
->  qemu-img.c              | 15 ++++++++++++---
->  qemu-img-cmds.hx        |  4 ++--
->  5 files changed, 52 insertions(+), 9 deletions(-)
-> 
+>  docs/about/deprecated.rst | 9 +++++++++
+>  meson.build               | 4 ++++
+>  2 files changed, 13 insertions(+)
+>=20
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index aa300bbd507..57250f9d47f 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -533,3 +533,12 @@ command documentation for details on the ``fdset`` u=
+sage.
+> =20
+>  The ``zero-blocks`` capability was part of the block migration which
+>  doesn't exist anymore since it was removed in QEMU v9.1.
+> +
+> +Host features
+> +-------------
+> +
+> +``ust`` tracing backend
+> +-----------------------
+> +
+> +LTTng can use uprobe tracepoints, therefore it is recommended to use
+> +the ``dtrace`` backend instead.
+> diff --git a/meson.build b/meson.build
+> index 72da97829ab..b5e2186b35e 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -5073,3 +5073,7 @@ if not actually_reloc and (host_os =3D=3D 'windows'=
+ or get_option('relocatable'))
+>    message('QEMU will have to be installed under ' + get_option('prefix')=
+ + '.')
+>    message('Use --disable-relocatable to remove this warning.')
+>  endif
+> +
+> +if 'ust' in get_option('trace_backends')
+> +  warning('ust trace backend is deprecated, use dtrace backend for uprob=
+e support')
+> +endif
+> --=20
+> 2.51.0
+>=20
 
-> +++ b/qemu-img.c
+--NzRVrZ4TapwK8k06
+Content-Type: application/pgp-signature; name=signature.asc
 
-> @@ -3119,6 +3123,8 @@ static int img_info(const img_cmd_t *ccmd, int argc, char **argv)
->  "     display information about the backing chain for copy-on-write overlays\n"
->  "  -U, --force-share\n"
->  "     open image in shared mode for concurrent access\n"
-> +"  --limits\n"
-> +"     show detected block limits (may depend on options, e.g. cache mode)\n"
+-----BEGIN PGP SIGNATURE-----
 
-I'm trying to figure out how the parenthetical helps the --help
-message.  The fact that it is detected limits already implies that
-anything else (like cache mode) that can change what gets detected
-would have an impact.  So I think it would be fine to just use " show
-detected block limits\n".
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS60YACgkQnKSrs4Gr
+c8jUiwf+IKrd4qx+F6jWq8DtJKzjWuU+/sb8FVBEqsAKp9CpeWa3MI0IYjn7Tt2Z
+YIr/AzTL5ioH2csHd0XCR5/qHe3dRkbPsFtZo27GilMQwStKh6My5qxPbaqTUwZ0
+0Ye0sbfZsGqO2PYHQjzv6a4oIZprI6JymNsYLrai9RuUX+tqb+OmJmk08NzQ8gGG
+oAg0YSNmPc4CUc6vhnZzZMEyEeQB0gpcitW4npeStt+lS14ACOOW7H/GYGqUgcso
+5xd6r1WtTBXMY38fiZNZ8tWaCbGEcUqnyh2ADhPkiHw99zbejSA+qi2y1BKN3lnw
+sGGh/9vCxJyobqZOqDW1ekjBR6hfnw==
+=cUdY
+-----END PGP SIGNATURE-----
 
-But overall, I like the idea of being able to display what used to be
-internal information.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+--NzRVrZ4TapwK8k06--
 
 
