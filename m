@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18886CAC5AA
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69592CAC5AA
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0swh-0004Oq-CV; Mon, 22 Sep 2025 22:39:59 -0400
+	id 1v0swi-0004Pv-EA; Mon, 22 Sep 2025 22:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0swb-0004Jy-Ex
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:39:54 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1v0swV-0004HK-IZ
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:39:47 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0swL-0003hY-F0
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:39:52 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-77f35113821so1498296b3a.0
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 19:39:33 -0700 (PDT)
+ id 1v0swJ-0003he-Dt
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:39:46 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-77f1f29a551so2566423b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 19:39:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1758595172; x=1759199972; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+Wx1IpKJt7P9pYpYwnZlwVnkoKrnXLfmcCjmrbQwDAg=;
- b=DKV6GTRQmX4IUK3EHUixc5b/5xs/NR3MzgQb1xDh91iknFDWt/ImAReP0FfQz7f+yv
- 0//LkMhzRu74NrAHNm9MqCoCKjTfS3h8qPd/9FDHj0EYvAELxEgqG+96QGKdw1k7QyWo
- dLVLFbmefRTFA+L4bAXbqIrwirAEeo0KLIHUYmHbHX7hjO+AKKxl+iYgK/FAKIFGWVqq
- 4MEWkJ1h28CKoFJtlEhqiZRgPw55dlzD2w+i1uVyQp/6v2rNCXzCImB1RoiBn20pTqV2
- +kVGaEIo6ABzNknBBAW3GsAZAoy/7k/HA1pAiinYxL1m3aZf9gkqVwQMUN2On1cJOSaL
- iE9g==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9c9CwLpLhaHtQKrXnaX1zcy9qSt57CBpOe3eqvDcA1Y=;
+ b=ZepRR60j1ESKPELgGnOadC6l16nnScjbdQz+IkzW674CBkIFebn3XLp8aWNDFbV5+g
+ aROcEPmkr7Bp5+2nB8+Q3DU23Z50FDEK+szNuqpQH3aBnSzgtHxFrnppmHbuYpG/1kyv
+ /NPLURKpyxVcZzD1gOv8BKzqQbIikSXgYtzjCe0DaKdEIl1raU6ocvW6I6pbVkId8GKo
+ qqnimbuSAf/HdQwZ9mzzuKcw9DnHvDHFjUhaa5XREvACrf6/eD3Vzm/dwUdyVQ+8Fl4O
+ +73OxFtasIUCJrnmWOZP7J0mu8TW+CKl1rsXin8ldqt7UPX5zVe3ZY/b3M6yE+JrNncI
+ 4o7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1758595172; x=1759199972;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+Wx1IpKJt7P9pYpYwnZlwVnkoKrnXLfmcCjmrbQwDAg=;
- b=J2Tsjlg4B5Ze1xytkVKv+PdDegY9ZS8pN9fIieEmG2M+TI4tjhIZP/S2K6EYPMrGer
- cwpv8qeinOpNIAsdZMx60/hrwVaJCUpAeXtIIdNucwcfm2tLUi6SEab/+2AMbwnjJn1Z
- da6bkWnu443uybeufyF1ttj0uwnNp2DfDfDRdob7Zde9X1a61E8N/FB5q3RSLPlL1XpL
- g64U/uU8odFSGAe05XnoS+pb1Z0CB1AON9w91/oEu43T+/r0o+rmq6zrTRAvXwiPWGPK
- z8W3J17e4sMH+cm8vN8bjNK6bgN6JUofG2bUoqFm2H1KutJdC8QtEnxt1TyZxNOU+0/+
- Rejg==
-X-Gm-Message-State: AOJu0YyOciNNcpF9XTZH5OZonM7XGOsPzf2ZvZwl7y/8rqMAdLNcp8i+
- T9+fWGyPWPJZ3J2LxjPTihIOSmy1hKiPh9HBV3WEA7vb+0mdhDhVSiGOoa5i7mhklbeoxUSp4HO
- Jzaqc
-X-Gm-Gg: ASbGncueOY6/mU5ZfGd/TI7rPs3a9mc+GUSuCQdhqUs1SAFOVUvIZiLZcAnblgxOljg
- YpSOsFOJcyZLu17NloKf7VEOB2gd578bE4yR/Pws701hnDnHSyusG2yqNf+WfMlyuKzRRO70HxR
- zLlLGh+FryCzAKniRrXx3tMXmr/gBIFplllveSRdREtSQ7sBFznwTqHfi9avM5IxyGtgBdTA+K+
- PqBuZRRvAyBImYNDWE3Bei7owTT5dhbNP48yAJgc/vd/3rGHCmmx4hpdXcW8nu2YQueJc69JAiS
- fg64p2iwTTOY18Tr7MW5EYQ9L38DtzkCJgrgiREewGUSt+7BVAAtZKT9l75dk0UvvsTrGZTMRs1
- gvOB15GLuufkrmEIGi6Ijwa2hygYOP4qQhEck6XE=
-X-Google-Smtp-Source: AGHT+IFk0Ol0fUOi6mk3Hx34RNQSNa6E5BJWKc4agxTq1oAoj+deIa5Accqy6iwcXO1+DmmvQG6RcA==
-X-Received: by 2002:a05:6a20:3d08:b0:2ca:1b5:9d4d with SMTP id
- adf61e73a8af0-2cfd4836d5cmr1645685637.2.1758595171830; 
- Mon, 22 Sep 2025 19:39:31 -0700 (PDT)
+ bh=9c9CwLpLhaHtQKrXnaX1zcy9qSt57CBpOe3eqvDcA1Y=;
+ b=pFoIU7mboLXTjJs94FM0rSEbfbR4gM1TPa50ixfwWFStR5CSQygDUhDZpvidf+MeYo
+ bNpASLi2jy+Z9HqcrN3nn1ILcFo2PZZx1pGAM8HNfygM636vXxgpzwQZRK4nNPWP0hy3
+ AhsdgNGTyS1am7Xf7iKHvVTS58a4B3XOerx1IIJbDxEkgGueiKS+QwZIzsC5m+J+KspJ
+ i3uoxYZcHFJlccqexMnH0vNdHfdbZGl49l4FZiWbbsEyx08DyKs1aq+2ifxBh+2X6DlU
+ JNKqu7jqYJn7d6kfW8s/M8TmhC8OYyciH6BJowryUImFpu9qNUcAFYRhFhj9Cu2eDx5q
+ MVVw==
+X-Gm-Message-State: AOJu0Yw1uVljlhEGR3Dbkew0veKK+6qubXi58CeKdyVCdGod4WtfAEv5
+ FMaXpdg+Fxx+Y0Fjw9P1pKfPY0ZAxvmlJMxxHIRIJB+5qQejiV0c7EBlZL3HWxh95/5wZmOJIbn
+ 7FR21
+X-Gm-Gg: ASbGncuQ71qzL6v4sDRWhlFi9L1TqlAvk08dg3M410wbsiWq27UZEnqHnaq923LFQ8d
+ B99GfrWQG9mA03MTHxDYYuuNA3KrHAFFn6hmgWMT9MBTwkem7CvvodrKypEmeNRnm8/d05kzrxL
+ /A+w/vcTDoUVDVaEGlsAI1lC5g6WazHcDsGNV/VtOTVlJRIP+R31RMwbAEBMamwFNBOpr7xGwzQ
+ bzKLqcrqXFIlvlWqsQmZjDJnQvFbMhPXRMf3UlEXCjXnrPwbX9YvdNLDJFFP1I/Exy5ExDRAHBJ
+ UCfbWfaIBkXrjtRomP7x13YQhBeEtQpY0y5oQ363Vdx7lpUdICSb/NL640vRcXnkPaL9boTseUP
+ +Dm9a6XagLSlUKlrJj5ZQ7o+XC2gd
+X-Google-Smtp-Source: AGHT+IF5g2zmWDxP2h77YJN9xtoMUSxKuXMdeszPKAqDpP6ME/pR9qMp4qdEy3LyZFUJuTSjm4OoBg==
+X-Received: by 2002:a05:6a00:cc5:b0:77f:5358:b43d with SMTP id
+ d2e1a72fcca58-77f53847a3fmr1403162b3a.6.1758595172562; 
+ Mon, 22 Sep 2025 19:39:32 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77f0da43089sm9899622b3a.90.2025.09.22.19.39.31
+ d2e1a72fcca58-77f0da43089sm9899622b3a.90.2025.09.22.19.39.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Sep 2025 19:39:31 -0700 (PDT)
+ Mon, 22 Sep 2025 19:39:32 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 11/12] accel/tcg: Remove tb_flush
-Date: Mon, 22 Sep 2025 19:39:15 -0700
-Message-ID: <20250923023922.3102471-12-richard.henderson@linaro.org>
+Subject: [PATCH v2 12/12] accel/tcg: Tighten assert in tb_flush__exclusive
+Date: Mon, 22 Sep 2025 19:39:16 -0700
+Message-ID: <20250923023922.3102471-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250923023922.3102471-1-richard.henderson@linaro.org>
 References: <20250923023922.3102471-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,74 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All uses have been replaced with tb_flush__exclusive.
+Now that tb_flush is gone, with its cpu_in_serial_context
+check, we can tighten to cpu_in_exclusive_context.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/tb-flush.h | 15 ---------------
- accel/tcg/tb-maint.c    | 22 ----------------------
- 2 files changed, 37 deletions(-)
+ accel/tcg/tb-maint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/tb-flush.h b/include/exec/tb-flush.h
-index 5076b13bbd..d6586b9d5f 100644
---- a/include/exec/tb-flush.h
-+++ b/include/exec/tb-flush.h
-@@ -21,21 +21,6 @@
-  */
- void tb_flush__exclusive(void);
- 
--/**
-- * tb_flush() - flush all translation blocks
-- * @cs: CPUState (must be valid, but treated as anonymous pointer)
-- *
-- * Used to flush all the translation blocks in the system. Sometimes
-- * it is simpler to flush everything than work out which individual
-- * translations are now invalid and ensure they are not called
-- * anymore.
-- *
-- * tb_flush() takes care of running the flush in an exclusive context
-- * if it is not already running in one. This means no guest code will
-- * run until this complete.
-- */
--void tb_flush(CPUState *cs);
--
- void tcg_flush_jmp_cache(CPUState *cs);
- 
- #endif /* _TB_FLUSH_H_ */
 diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 71216fa75e..879ed12442 100644
+index 879ed12442..81e8ec14d4 100644
 --- a/accel/tcg/tb-maint.c
 +++ b/accel/tcg/tb-maint.c
-@@ -785,28 +785,6 @@ void tb_flush__exclusive(void)
-     qemu_plugin_flush_cb();
- }
+@@ -770,7 +770,7 @@ void tb_flush__exclusive(void)
  
--static void do_tb_flush(CPUState *cpu, run_on_cpu_data tb_flush_count)
--{
--    /* If it is already been done on request of another CPU, just retry. */
--    if (tb_ctx.tb_flush_count == tb_flush_count.host_int) {
--        tb_flush__exclusive();
--    }
--}
--
--void tb_flush(CPUState *cpu)
--{
--    if (tcg_enabled()) {
--        unsigned tb_flush_count = qatomic_read(&tb_ctx.tb_flush_count);
--
--        if (cpu_in_serial_context(cpu)) {
--            do_tb_flush(cpu, RUN_ON_CPU_HOST_INT(tb_flush_count));
--        } else {
--            async_safe_run_on_cpu(cpu, do_tb_flush,
--                                  RUN_ON_CPU_HOST_INT(tb_flush_count));
--        }
--    }
--}
--
- /* remove @orig from its @n_orig-th jump list */
- static inline void tb_remove_from_jmp_list(TranslationBlock *orig, int n_orig)
- {
+     assert(tcg_enabled());
+     assert(!runstate_is_running() ||
+-           (current_cpu && cpu_in_serial_context(current_cpu)));
++           (current_cpu && cpu_in_exclusive_context(current_cpu)));
+ 
+     CPU_FOREACH(cpu) {
+         tcg_flush_jmp_cache(cpu);
 -- 
 2.43.0
 
