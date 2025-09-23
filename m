@@ -4,74 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E57BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 04:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4B5CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 04:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0uYn-0004QW-KK; Tue, 23 Sep 2025 00:23:25 -0400
+	id 1v0uZT-0004cN-9W; Tue, 23 Sep 2025 00:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1v0uYl-0004QD-PQ
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 00:23:24 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <nikunj.dadhania@amd.com>)
+ id 1v0uZR-0004by-6Q
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 00:24:05 -0400
+Received: from mail-southcentralusazon11013022.outbound.protection.outlook.com
+ ([40.93.196.22] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1v0uYh-0000kb-5j
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 00:23:23 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 06C0944D39
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 04:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2059C113CF
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 04:23:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1758601391;
- bh=1/qrgHoa2j7ulr8oZ6R/RE8U3p0nUHGQ82rMg2R4iTY=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=sfbWriOFUfhypypqCCKRwRd1vmi9fe5hWYbrb8OMmWwVuAprjihjqsWDimOv/6VbB
- ZrQRzDGZJWt6d1bDAQ5rU1pztVb7H4XiG7rQrXzMzlvEiW/StnRkvV3ErU2QreXsy1
- tlV3OpfLS0o8Eo1fVd4vsM38c6UASuaKOlU+8f75Xfvfhi3dkAjeq6Q6NU0dUfslri
- JBmAg2SwEa9yDI6v4fcpDm9ojRJ171q5EjHhTUV1GoLKm3o8KL0R27TD+F/rM2YQr8
- 1Y9h315iDwYKaWhoiwsm8uWdV/A5tV0QnLWO5cqfHX0R/Jb9KoIP4QuBsltVZhD10D
- sfBb8xROr69nw==
-Received: by mail-ej1-f50.google.com with SMTP id
- a640c23a62f3a-b07c28f390eso938456166b.2
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 21:23:11 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVA4S2fwvvhBOmy+Sn1TdskWK0ExglyIiaM+braG02ZUuHZKXnAcEtEn0Uq3NBztmRfmHh+5hseMyC@nongnu.org
-X-Gm-Message-State: AOJu0Yz2y4fGoBVCCvOlmOQAPrx0MKGa8At+fN4pVyWXeqdlTB7TlDI/
- Vo0HnZx+M80Cegrw/A305EPup8VQH27SWKANau1zJbWI9ea38zIr5s5ZdTKvoIhHwfpMTWp+Aou
- XfjtzguYPdQVepTpx20Y7TEHIpnZ8ps8=
-X-Google-Smtp-Source: AGHT+IH3HnE9f3krQa8ccEnCQLAmt87nTWKPkmHvaxekKa9jZJIb+tkM4N/rrnG7FG5vTxbh8y0Hx83c0JUmGqBMgLs=
-X-Received: by 2002:a17:907:c26:b0:b04:858e:c1ee with SMTP id
- a640c23a62f3a-b30260c9adcmr100389466b.2.1758601390386; Mon, 22 Sep 2025
- 21:23:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nikunj.dadhania@amd.com>)
+ id 1v0uZM-0000nS-9u
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 00:24:04 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tDSTQepSoH/g8uxzcT4tt87tyVIxPwYq3LqEaoOGy4Ls8vGI/1peiNTmcyLlPh5T3Fz8NwIx46m/eBzpehXP64AjyMJe7bmXG3envFEL66n64GYxsEvy/PYDliaxkWTUdkKgCwKcePp2WCr+sYDTNirtiLCGf8YxkAGc5tkUyS2C0+Qp5AAb9UtcyTIX1ryWE1XHk83B7Rt5Rj5eT49j2wqdptaTnMdjdNifBigrmATezzOU50fxXZL4bHBZk58zuYTnwYICAv5Oye6cayoiXzNQlwg4nZ/krHswllBUP37WRV1azqOgkQ5m2suP/N9KP9arUzezGZGclUc76qV8Ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z7tUHmMozLYj2kJMrVTY7GKcxahS9k+pcMc22fSLPqQ=;
+ b=QLeNz3Z4+jKp3LKz5DWU/DeFz2ZtiRDE/a4vP69t1B/28VNB0d0PK3N+QroBVlJoMVRLDoCF5p3hPVqvxG7++3hAv55MGZW7nTS1W2T2D8se4UVWBpzdIaM6qtun1d4fCQ+aK7uWJQyghWee6nyFifyCZQRMgn9L8scC1YHOGkbI9yjD00lfxCXMcbguF7XUV1bkgdtUzSTySpSNjNwvKojt9SfoCEL8T7/kHKufL3qmISP6Vk2AZkRvbXPIsr2IO+/WoG0QCCei+Qoz0Goo0po4CmivhIS1Lho/RHqWzSyoTSVhrWEXZiZkwlXSUU6lE2vkakHdaGdiwDGgWIjDFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Z7tUHmMozLYj2kJMrVTY7GKcxahS9k+pcMc22fSLPqQ=;
+ b=w0Ar6nN2qkTsRknQC0GL4JUtuGX/DBe1VVHhB2FAOyxJ4k/6s1eocCqxsWIKkaa2mWG4Eu+cjX+D44za5W7NAQ6NSRn5PAls4qr10WRGIJsxZTuuimvL/JO3e47/tzLnEN2Azw7vwI1FXHpylCwRqeJPT1WKwAlRmyx9MHGZ5rg=
+Received: from MW4PR02CA0026.namprd02.prod.outlook.com (2603:10b6:303:16d::25)
+ by SA3PR12MB9226.namprd12.prod.outlook.com (2603:10b6:806:396::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.20; Tue, 23 Sep
+ 2025 04:18:48 +0000
+Received: from MWH0EPF000971E3.namprd02.prod.outlook.com
+ (2603:10b6:303:16d::4) by MW4PR02CA0026.outlook.office365.com
+ (2603:10b6:303:16d::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.20 via Frontend Transport; Tue,
+ 23 Sep 2025 04:18:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ MWH0EPF000971E3.mail.protection.outlook.com (10.167.243.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9137.12 via Frontend Transport; Tue, 23 Sep 2025 04:18:47 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 22 Sep
+ 2025 21:18:33 -0700
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 22 Sep
+ 2025 21:18:12 -0700
+Received: from [10.136.37.89] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Mon, 22 Sep 2025 21:18:09 -0700
+Message-ID: <4f3f7b7d-f6bf-49de-8c3a-96876e298ad5@amd.com>
+Date: Tue, 23 Sep 2025 09:48:07 +0530
 MIME-Version: 1.0
-References: <20250922141557.1939333-1-chenhuacai@kernel.org>
- <b8f1cea3-cd26-855a-b772-1f4d8b9b2fc3@loongson.cn>
-In-Reply-To: <b8f1cea3-cd26-855a-b772-1f4d8b9b2fc3@loongson.cn>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Tue, 23 Sep 2025 12:22:56 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H4pONDCQSOg1rRO2Mu5ADHkpA8Pk2ep7Cf0OT72yg=YeQ@mail.gmail.com>
-X-Gm-Features: AS18NWAR09zFaDbvp6Jw8tlYmKcb4_0ixoQ4n6Sdge_Gt0XXOP7rwzlEe129Ltg
-Message-ID: <CAAhV-H4pONDCQSOg1rRO2Mu5ADHkpA8Pk2ep7Cf0OT72yg=YeQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/loongarch/virt: Align VIRT_GED_CPUHP_ADDR to 4 bytes
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- WANG Xuerui <git@xen0n.name>, qemu-devel@nongnu.org, 
- Huacai Chen <chenhuacai@loongson.cn>, Nathan Chancellor <nathan@kernel.org>, 
- WANG Rui <wangrui@loongson.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] target/i386: SEV: Add support for setting TSC
+ frequency for Secure TSC
+To: Tom Lendacky <thomas.lendacky@amd.com>, "Naveen N Rao (AMD)"
+ <naveen@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>
+CC: qemu-devel <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, "Zhao
+ Liu" <zhao1.liu@intel.com>, Michael Roth <michael.roth@amd.com>, Roy Hopkins
+ <roy.hopkins@randomman.co.uk>
+References: <cover.1758189463.git.naveen@kernel.org>
+ <6a9b3e02d1a1eb903bd3e7c9596dfe00029de01e.1758189463.git.naveen@kernel.org>
+ <412fce46-e143-4b71-b5ac-24f4f5ae230f@amd.com>
+Content-Language: en-US
+From: "Nikunj A. Dadhania" <nikunj@amd.com>
+In-Reply-To: <412fce46-e143-4b71-b5ac-24f4f5ae230f@amd.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=chenhuacai@kernel.org; helo=sea.source.kernel.org
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000971E3:EE_|SA3PR12MB9226:EE_
+X-MS-Office365-Filtering-Correlation-Id: ebdf07d1-5ffc-47fc-1ffd-08ddfa584af9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|82310400026|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?L3dXSWtpM0wxRldYSUpnOGFXOHFHVUpGVERVakJ0UnVyUnVCa2tKck1Ncmhl?=
+ =?utf-8?B?bEtBZU1uSld5eU5lNXZKQnpWWldVTDJjcnYxSWsvK0ZISWNwZXgvU3FDeTEy?=
+ =?utf-8?B?ZDBVTVdCVGNKT2pkV2ttc3FhQWsvR3NaQTgrTkxiREpxb0Q4Wm0rcHdnSTBY?=
+ =?utf-8?B?bEREd3RkTUtwZjhXcnhVUDdIZjFkWUt0TEJ5cmhDV29sY2VpeDMyeDV5TkRG?=
+ =?utf-8?B?T1dVZ1hlVURxbWxHdU1XQWNJYTRqUHY3N0l6ajZkVEorRkpVSUpVb1FiMjl2?=
+ =?utf-8?B?SklQakNhK2k0MTBMZkJIUUNJRFUyWVN6UzArcDQ0TzFjQitZaGxxN0Y1Zkk4?=
+ =?utf-8?B?Z2NoUXRxbHR5UWZkeGJlS3BWa1hOZVNad2pDa3BWaUMwTGNUMi9hdVRKRjk0?=
+ =?utf-8?B?czNJdjJCeDBWM0IyZXFWT2gwQjh5dXFEbnhHNjF6UFREMVJFK1hMQnlodkYr?=
+ =?utf-8?B?Vmd2dmx4bFhXNXA1bGZ4bk4yMGNwOTBucjgvekQ3c2c3SmxEL1F4MVNVRVcw?=
+ =?utf-8?B?aWVUREJIeldITEN2OWZTQmo2enpUcTlZaWZ0bFp2Y1FhMVVHaDRiL213MGhy?=
+ =?utf-8?B?dytCY0xpV3UxZ0V3OGV2aWZzTU40UmNoN1ArckNEc3N0N3lTamxTazFOTWUv?=
+ =?utf-8?B?dG9UTDZOZkN2SnB6ZWVZWkpnbkR2Q1VzS09McWNzUzNmd1BaQmlWMkFTc3JG?=
+ =?utf-8?B?WXVYNlB5ZjFYRXI2cDRKYkNXNlM5RmdWc3dpWjU1WEl4eGR2SnNQanY0a21W?=
+ =?utf-8?B?RTcwL3VyWE9naTFmdVBDTTlUdHNFSytBZzNSUG1uWGxKbHppSlRaemVDM1gy?=
+ =?utf-8?B?UUEvcmtMMXJqOWNyTjZYWkZrekljR0hTNGVPS1B4RzJOSmtpZ2dVdktXSG9N?=
+ =?utf-8?B?Tk1BYU5DdHpLTk1JTlhSazdVMEtZTk1aVzB5N0xJb2ppTlkvREp1OXI4ZzFo?=
+ =?utf-8?B?MUZCTk44T1A5S1Z4V3dabnc1MUx2ajAvNGh6NFR4eVpucG1QNVJndDhSMXBQ?=
+ =?utf-8?B?b1Y5a0lRNHVra3NYbE92WDdLU0U3Q3pHR2VIdDVXbWtJVG9lUHRBWVFiVWRI?=
+ =?utf-8?B?cmRUSGJ0djNFU0NkNkVLOGlOdDRJQUFvRUp1UlF1eTFyVUlieHRZdVkzOHZo?=
+ =?utf-8?B?VG5mUTZ3eklKMzZ3UDdGOUI2SU51a3FGbjNwSUtqK0VsZUE1Um92b0dQdjhm?=
+ =?utf-8?B?c1lreU4zQW4vSDgycFY2Nnl5TklSbkoranlMblhQU3JzVW5OYXJGM1lzdHNY?=
+ =?utf-8?B?WmFjeXZmSVZ1VWhFTnlaMC9PNVk2RHFXWVQ1UzVQUDlsRngwQUhNQkhIQkEx?=
+ =?utf-8?B?R3VVeXkxQU5jS2dDRzBTbXY1UWo1cmkyMVRzN3JEdTBlRjJzVW5lMU9mWDdz?=
+ =?utf-8?B?SFpqR1VQT3dyNStXYk9iVTROR0N5VXZDTjMxWEhTbEM4STJBcmt5WkgvQmE1?=
+ =?utf-8?B?VkY4N2NnYnJpWmdqdkV4TWhrSmhjVjBObUpWZUNwOXAyVkV2eUx0QTVyUDZP?=
+ =?utf-8?B?aGQ2dVRxWmdnQ0tFNUNmVWxQdkVZeEZ6bGMzZkxpWDFyK2JySEc1eFpYTEZT?=
+ =?utf-8?B?UHRKWGhNTHZRaytRWlFKVHJpRFRVZlkxU2FPOGpTRGdER1VsY2FoVythZm5X?=
+ =?utf-8?B?VXpYaXE2V2JjUDI2VGdKQkdQdFRuVmtWMklrcFoxOW5nM2hCdHVNRVFzYkNN?=
+ =?utf-8?B?d2dVNktVOFExcjVpRVo4cGNYM3B3R01UaWFNUWN3SWx0ZnNDR0d4RWJobmVk?=
+ =?utf-8?B?bVlHb25iN3B3UUNLSm54Z0ttQ29Wc2ZzYXRlWjAzd25OMkpMVVBsUGhSUzhQ?=
+ =?utf-8?B?K05XZEVLWHpGRjRWSGkrZDZjQWN5WWJhVHc4cEFrZVlvVnZOYXh0Z0JmSmo0?=
+ =?utf-8?B?eWVQbVI0VkNrbzlYWlRMNGUrK05maUZ5UFphUzNPQmdTUVRPNkQzMHdHR1M1?=
+ =?utf-8?B?K01qTDlINlNyK212VElkZVFmWnBWb0dFK214LzRVNlhIelVucW9ueGxWcXFP?=
+ =?utf-8?B?eHZmMEQxaTFjaWdGYk9pQ3JBWTNHbmErWjZHNGxOT2tXbWRaRmFXRGNlUXEy?=
+ =?utf-8?Q?KJJnqA?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(82310400026)(1800799024)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2025 04:18:47.7053 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ebdf07d1-5ffc-47fc-1ffd-08ddfa584af9
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E3.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9226
+Received-SPF: permerror client-ip=40.93.196.22;
+ envelope-from=nikunj.dadhania@amd.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,101 +172,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Bibo,
 
-On Tue, Sep 23, 2025 at 11:40=E2=80=AFAM Bibo Mao <maobibo@loongson.cn> wro=
-te:
->
-> Hi huacai,
->
-> It breaks with compatible issue since acpi table is changed, and test
-> case qtest-loongarch64/bios-tables-test fails to run.
->
-> LoongArch VM compatibility is not perfect now, one method is to modify
-> test case at the same time, another method is to add extra option in
-> order to support aligned GED ACPI address.
->
-> Does this issue must be fixed now? With ACPI spec, 5.2.12.20 Core
-> Programmable Interrupt Controller (CORE PIC) Structure, ACPI Processor
-> ID is not aligned also, its size is 4 byte and offset is 3 bytes.
-They are different.
 
-ACPI tables are probably packed (so the members may not be aligned),
-such as CORE PIC you mentioned. Linux kernel defines two kinds of
-accessors to parse members. You can see the code in
-drivers/acpi/acpica/acmacros.h from the kernel as an example.
+On 9/20/2025 3:36 AM, Tom Lendacky wrote:
+> On 9/18/25 05:27, Naveen N Rao (AMD) wrote:
 
-The problem mentioned in this patch is the alignment of a struct as a
-whole. If the struct itself isn't aligned, Linux kernel cannot handle
-it on hardware without UAL, even with two kinds of accessors.
+>> @@ -1085,6 +1093,18 @@ sev_snp_launch_start(SevCommonState *sev_common)
+>>              return 1;
+>>      }
+>>  
+>> +    if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC)) {
+>> +        rc = -EINVAL;
+>> +        if (kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
+>> +            rc = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, sev_snp_guest->tsc_khz);
+>> +        }
+>> +        if (rc < 0) {
+>> +            error_report("%s: Unable to set Secure TSC frequency to %u kHz ret=%d",
+>> +                         __func__, sev_snp_guest->tsc_khz, rc);
+>> +            return 1;
+>> +        }
+> 
+> It looks like KVM_CAP_VM_TSC_CONTROL is required for Secure TSC. Should
+> this cap check be part of check_sev_features() then, rather than waiting
+> until launch start?
 
->
-> If it must be fixed, the test case should be modified also together with
-> the patch. If not, it can be record as pending bug, will solve it if VM
-> compatibility method is decided.
-Generally speaking, I think this should be fixed, because it is
-allowed for qemu to emulate a machine without UAL. I will take a look
-at qtest-loongarch64/bios-tables-test (maybe you means
-tests/qtest/bios-tables-test.c?), but it seeams a separate patch is
-better?
+If the user has not provided tsc-frequency, KVM_CAP_VM_TSC_CONTROL is not required.
 
-Huacai
+> 
+> And does KVM_SET_TSC_KHZ have to be called if "tsc-frequency" wasn't set?
+No, this is not required. This patch has changed a bit from my original version, we should have something like below: 
 
->
-> Regards
-> Bibo Mao
->
-> On 2025/9/22 =E4=B8=8B=E5=8D=8810:15, Huacai Chen wrote:
-> > From: Huacai Chen <chenhuacai@loongson.cn>
-> >
-> > Now VIRT_GED_CPUHP_ADDR is not aligned to 4 bytes, but if Linux kernel
-> > is built with ACPI_MISALIGNMENT_NOT_SUPPORTED, it assumes the alignment=
-,
-> > otherwise we get ACPI errors at boot phase:
-> >
-> > ACPI Error: AE_AML_ALIGNMENT, Returned by Handler for [SystemMemory] (2=
-0250404/evregion-301)
-> > ACPI Error: Aborting method \_SB.CPUS.CSTA due to previous error (AE_AM=
-L_ALIGNMENT) (20250404/psparse-529)
-> > ACPI Error: Aborting method \_SB.CPUS.C000._STA due to previous error (=
-AE_AML_ALIGNMENT) (20250404/psparse-529)
-> > ACPI Error: Method execution failed \_SB.CPUS.C000._STA due to previous=
- error (AE_AML_ALIGNMENT) (20250404/uteval-68)
-> >
-> > VIRT_GED_MEM_ADDR and VIRT_GED_REG_ADDR are already aligned now, but us=
-e
-> > QEMU_ALIGN_UP() to explicitly align them can make code more robust.
-> >
-> > Reported-by: Nathan Chancellor <nathan@kernel.org>
-> > Suggested-by: WANG Rui <wangrui@loongson.cn>
-> > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-> > ---
-> >   include/hw/loongarch/virt.h | 6 +++---
-> >   1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> > index 602feab0f0..be4f5d603f 100644
-> > --- a/include/hw/loongarch/virt.h
-> > +++ b/include/hw/loongarch/virt.h
-> > @@ -28,9 +28,9 @@
-> >   #define VIRT_LOWMEM_SIZE        0x10000000
-> >   #define VIRT_HIGHMEM_BASE       0x80000000
-> >   #define VIRT_GED_EVT_ADDR       0x100e0000
-> > -#define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_=
-LEN)
-> > -#define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO=
-_LEN)
-> > -#define VIRT_GED_CPUHP_ADDR     (VIRT_GED_REG_ADDR + ACPI_GED_REG_COUN=
-T)
-> > +#define VIRT_GED_MEM_ADDR       QEMU_ALIGN_UP(VIRT_GED_EVT_ADDR + ACPI=
-_GED_EVT_SEL_LEN, 4)
-> > +#define VIRT_GED_REG_ADDR       QEMU_ALIGN_UP(VIRT_GED_MEM_ADDR + MEMO=
-RY_HOTPLUG_IO_LEN, 4)
-> > +#define VIRT_GED_CPUHP_ADDR     QEMU_ALIGN_UP(VIRT_GED_REG_ADDR + ACPI=
-_GED_REG_COUNT, 4)
-> >
-> >   #define COMMAND_LINE_SIZE       512
-> >
-> >
->
+if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC) && sev_snp_guest->stsc_khz) {
+...
+}
+
+Regards
+Nikunj
+
+
 
