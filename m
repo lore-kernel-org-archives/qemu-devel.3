@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8196ACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE3CCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zqk-0003Kh-ND; Tue, 23 Sep 2025 06:02:18 -0400
+	id 1v0zqa-00038s-Sg; Tue, 23 Sep 2025 06:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zqE-0002rC-C4
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:46 -0400
+ id 1v0zqF-0002sL-9W
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:48 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v0zpt-0000ui-4q
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:45 -0400
+ id 1v0zpw-0000ur-JS
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:01:46 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 028F080A2D;
- Tue, 23 Sep 2025 13:01:19 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1982680A41;
+ Tue, 23 Sep 2025 13:01:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b38::1:12])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id C1Ug0C0Fha60-y5BpctxA; Tue, 23 Sep 2025 13:01:18 +0300
+ ESMTPSA id C1Ug0C0Fha60-DqZvLq09; Tue, 23 Sep 2025 13:01:19 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758621678;
- bh=JcPxia8LOA7Ubdd+E2a5buipeOnDhmAVsVoDx82qifQ=;
+ s=default; t=1758621679;
+ bh=0hyZv3Tmf7qh6fxmfFpnAzLfwhXELi2XZF0zR5DEdEY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=yw/Kj+Kmi/Qi4W61W59Jra+RZOks2qjGCtC2pu2AYFvqQLFRoIZSSFbXW3GDIlNQu
- 6QTk3CiEML+smtG4BvhCkwZt6R1CK+yVknL3+bMDS1TDa3K/qBssQ837onJYI+U7Xv
- 3rJKmwKp8tQ0zft9+gpko959HAGgeA6OylI6DtY8=
+ b=x2eL+kBaTTQliz+ZoHsyTs6C26oZglC9BkKB38rxUeKJQbAZfj6lhoUHXWRFzk5uk
+ VvmGMe6k0Jjdcg5Be0aoJ2K669zDdCtfZByF67muoItoVMFeTcCbQQLmcleZLFPCQ3
+ Qv23kc12rdNJ/HpwNpHNBnz3b2ZMBS/vA8ByaD2Q=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,9 +48,10 @@ Cc: qemu-devel@nongnu.org, philmd@linaro.org, thuth@redhat.com,
  jasowang@redhat.com, steven.sistare@oracle.com, leiyang@redhat.com,
  davydov-max@yandex-team.ru, yc-core@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v6 10/19] net/tap: rework sndbuf handling
-Date: Tue, 23 Sep 2025 13:01:01 +0300
-Message-ID: <20250923100110.70862-11-vsementsov@yandex-team.ru>
+Subject: [PATCH v6 12/19] net/tap: move vhost fd initialization to
+ net_tap_new()
+Date: Tue, 23 Sep 2025 13:01:03 +0300
+Message-ID: <20250923100110.70862-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250923100110.70862-1-vsementsov@yandex-team.ru>
 References: <20250923100110.70862-1-vsementsov@yandex-team.ru>
@@ -78,109 +79,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Continue the main idea: avoid dependency on @tap in net_tap_setup().
-So, move QAPI parsing to net_tap_new().
-Move setting sndbuf to net_tap_set_fd(), as it's more appropriate place
-(other initial fd settings are here).
-
-Note that net_tap_new() and net_tap_set_fd() are shared with
-net_init_bridge(), which didn't set sndbuf. Handle this case by sndbuf=0
-(we never pass zero to tap_set_sndbuf(), so let this specific value mean
-that we don't want touch sndbuf).
+Continue the track to avoid dependency on @tap in net_tap_setup(),
+no move the vhost fd initialization to net_tap_new(). So in
+net_tap_setup() we simply check, do we have and vhostfd at this
+point or not.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 38 ++++++++++++++++++++++++++------------
- 1 file changed, 26 insertions(+), 12 deletions(-)
+ net/tap.c | 90 ++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 50 insertions(+), 40 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index e6431d0e08..5a74cb325f 100644
+index 877564405a..dbd1eb3a17 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -80,6 +80,9 @@ typedef struct TAPState {
-     VHostNetState *vhost_net;
-     unsigned host_vnet_hdr_len;
-     Notifier exit;
-+
-+    bool sndbuf_required;
-+    int sndbuf;
+@@ -83,11 +83,11 @@ typedef struct TAPState {
+ 
+     bool sndbuf_required;
+     int sndbuf;
++    int vhostfd;
++    uint32_t vhost_busyloop_timeout;
  } TAPState;
  
+-static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
+-                          const char *vhostfdname,
+-                          int fd, int vnet_hdr, Error **errp);
++static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp);
+ 
  static void launch_script(const char *setup_script, const char *ifname,
-@@ -402,17 +405,25 @@ static NetClientInfo net_tap_info = {
+                           int fd, Error **errp);
+@@ -351,6 +351,11 @@ static void tap_cleanup(NetClientState *nc)
+     tap_write_poll(s, false);
+     close(s->fd);
+     s->fd = -1;
++
++    if (s->vhostfd != -1) {
++        close(s->vhostfd);
++        s->vhostfd = -1;
++    }
+ }
+ 
+ static void tap_poll(NetClientState *nc, bool enable)
+@@ -409,12 +414,14 @@ static NetClientInfo net_tap_info = {
  };
  
  static TAPState *net_tap_new(NetClientState *peer, const char *model,
--                             const char *name)
-+                             const char *name, const NetdevTapOptions *tap)
+-                             const char *name, const NetdevTapOptions *tap)
++                             const char *name, const NetdevTapOptions *tap,
++                             const char *vhostfdname, Error **errp)
  {
      NetClientState *nc = qemu_new_net_client(&net_tap_info, peer, model, name);
      TAPState *s = DO_UPCAST(TAPState, nc, nc);
  
      s->fd = -1;
++    s->vhostfd = -1;
  
-+    if (!tap) {
-+        return s;
-+    }
+     if (!tap) {
+         return s;
+@@ -424,7 +431,36 @@ static TAPState *net_tap_new(NetClientState *peer, const char *model,
+     s->sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+ 
++    if (tap->has_vhost ? tap->vhost :
++        vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
++        if (vhostfdname) {
++            s->vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
++            if (s->vhostfd == -1) {
++                goto failed;
++            }
++            if (!qemu_set_blocking(s->vhostfd, false, errp)) {
++                goto failed;
++            }
++        } else {
++            s->vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (s->vhostfd < 0) {
++                error_setg_errno(errp, errno,
++                                 "tap: open vhost char device failed");
++                goto failed;
++            }
++            if (!qemu_set_blocking(s->vhostfd, false, errp)) {
++                goto failed;
++            }
++        }
 +
-+    s->sndbuf_required = tap->has_sndbuf;
-+    s->sndbuf =
-+        (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
++        s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++    }
 +
      return s;
++
++failed:
++    qemu_del_net_client(&s->nc);
++    return NULL;
  }
  
--static void net_tap_set_fd(TAPState *s, int fd, int vnet_hdr)
-+static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
- {
-     s->fd = fd;
-     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
-@@ -430,6 +441,15 @@ static void net_tap_set_fd(TAPState *s, int fd, int vnet_hdr)
-     }
-     tap_read_poll(s, true);
-     s->vhost_net = NULL;
-+
-+    if (s->sndbuf) {
-+        Error **e = s->sndbuf_required ? errp : NULL;
-+        if (!tap_set_sndbuf(s->fd, s->sndbuf, e) && s->sndbuf_required) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
- }
- 
- static void close_all_fds_after_fork(int excluded_fd)
-@@ -647,8 +667,8 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+ static bool net_tap_set_fd(TAPState *s, int fd, int vnet_hdr, Error **errp)
+@@ -671,7 +707,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
          return -1;
      }
  
--    s = net_tap_new(peer, "bridge", name);
--    net_tap_set_fd(s, fd, vnet_hdr);
-+    s = net_tap_new(peer, "bridge", name, NULL);
-+    net_tap_set_fd(s, fd, vnet_hdr, &error_abort);
+-    s = net_tap_new(peer, "bridge", name, NULL);
++    s = net_tap_new(peer, "bridge", name, NULL, NULL, &error_abort);
+     net_tap_set_fd(s, fd, vnet_hdr, &error_abort);
  
      qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
- 
-@@ -688,16 +708,10 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+@@ -712,7 +748,10 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
                               const char *downscript, const char *vhostfdname,
                               int vnet_hdr, int fd, Error **errp)
  {
--    TAPState *s = net_tap_new(peer, model, name);
-+    TAPState *s = net_tap_new(peer, model, name, tap);
-     int vhostfd;
--    bool sndbuf_required = tap->has_sndbuf;
--    int sndbuf =
--        (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
--
--    net_tap_set_fd(s, fd, vnet_hdr);
+-    TAPState *s = net_tap_new(peer, model, name, tap);
++    TAPState *s = net_tap_new(peer, model, name, tap, vhostfdname, errp);
++    if (!s) {
++        return;
++    }
  
--    if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
--        sndbuf_required) {
-+    if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
-         goto failed;
+     if (tap->fd || tap->fds) {
+         qemu_set_info_str(&s->nc, "fd=%d", fd);
+@@ -731,53 +770,24 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
      }
  
+-    if (!net_tap_setup(s, tap, vhostfdname, fd, vnet_hdr, errp)) {
++    if (!net_tap_setup(s, fd, vnet_hdr, errp)) {
+         qemu_del_net_client(&s->nc);
+     }
+ }
+ 
+-static bool net_tap_setup(TAPState *s, const NetdevTapOptions *tap,
+-                          const char *vhostfdname,
+-                          int fd, int vnet_hdr, Error **errp)
++static bool net_tap_setup(TAPState *s, int fd, int vnet_hdr, Error **errp)
+ {
+-    int vhostfd;
+-
+     if (!net_tap_set_fd(s, fd, vnet_hdr, errp)) {
+         return false;
+     }
+ 
+-    if (tap->has_vhost ? tap->vhost :
+-        vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
++    if (s->vhostfd != -1) {
+         VhostNetOptions options;
+ 
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+         options.net_backend = &s->nc;
+-        if (tap->has_poll_us) {
+-            options.busyloop_timeout = tap->poll_us;
+-        } else {
+-            options.busyloop_timeout = 0;
+-        }
+-
+-        if (vhostfdname) {
+-            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
+-            if (vhostfd == -1) {
+-                return false;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                return false;
+-            }
+-        } else {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_errno(errp, errno,
+-                                 "tap: open vhost char device failed");
+-                return false;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                return false;
+-            }
+-        }
+-        options.opaque = (void *)(uintptr_t)vhostfd;
++        options.busyloop_timeout = s->vhost_busyloop_timeout;
++        options.opaque = (void *)(uintptr_t)s->vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+         options.get_acked_features = NULL;
 -- 
 2.48.1
 
