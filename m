@@ -4,67 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E9ACAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD01CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v10AW-0002sB-85; Tue, 23 Sep 2025 06:22:46 -0400
+	id 1v10Ir-0006Li-NO; Tue, 23 Sep 2025 06:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v10AL-0002ns-8V
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:22:34 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1v10A4-0003Io-3m
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:22:24 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0CF15C0160;
- Tue, 23 Sep 2025 13:22:06 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b38::1:12] (unknown
- [2a02:6bf:8080:b38::1:12])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 3MUwHC0GsCg0-BqgHmiqD; Tue, 23 Sep 2025 13:22:05 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1758622925;
- bh=xsXx/X+o0vONPccTKBYTstWs3lavfgjePkDCVoJv/gk=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=TT+CTG2/z+u/NN+ECXKKJYrThO9FVWvONq6k+GCOoJmvN99xPGoqetVWvNaDsi1DL
- eb+qmyqvh5ujJkohOnYi+cU3NZariUXzV8Hl96cMe330YgQbWJBtuEsegGs7NxD8NG
- CE/C4zxLorSxCwuFuP/hClwTlQr+/oAl3IQBozkI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <d335cd2a-19df-49b7-a187-6afda90e4853@yandex-team.ru>
-Date: Tue, 23 Sep 2025 13:22:02 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10Io-0006IL-8h
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:31:18 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v10Ij-0004Hx-CN
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:31:16 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45dd513f4ecso39683865e9.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 03:31:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758623467; x=1759228267; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VBxEajzs7Wxc5qI1Nh5llJDIOdnTsd5c/L8oX7nwzr4=;
+ b=BKiXuxbbEfXNXPz6+wne21FAGvZ5QDC4h3d7aTbrwUn6fV/kDBFPraisVbck93rTxK
+ 6XBAzr3tKWMmyXUj+mEe9KLg5FHaG+bYikz/+HEIPSqm0zwr+5XoUGRWMGB8CddzVml7
+ RNjPOFHs9mv7Vg0g7mmGm4L4uOuL8mZAcQQmFeUjs8cQAB5FcYGnyH6pYYrUjVGBkOTz
+ PY1i9sxWUY7vy9SVJB5eMQ03tYI+Hu2v+LICxtJ68OXnHpuDGONNLn3TTzM1WPU6Ge8T
+ B9uqlWe5ddw7xYA8RbGWkXZ2wRzWYVlpIRWGbNpG096Ycr9P6V604y/CRQuLAFCSw/WE
+ Hl+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758623467; x=1759228267;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VBxEajzs7Wxc5qI1Nh5llJDIOdnTsd5c/L8oX7nwzr4=;
+ b=XTnJQjRpTUz14+gQ/xd84WkD16CPrFyeI/ehpfQswMe4MsLBxgQmlO4MO517favD/E
+ XPx1vaqK/O2TW02ZBpgu1ERAnWs0eKhqqMfPO1I4j3DDCMVofQ1nMjzhpVmPpYloctED
+ U8Isis6+AyInO+fQJCpAy7k1EQloIo493XMyIrkAL/NbiVh1db3oWCKxtStJCWc3g/gm
+ qRTZ4WCHkNVxYf1hNygRaZSuLamiKiKlrOJbizQrT0ZxBc4cY6/475lFvPH/BUpbCTR6
+ FzQcJ4IZRizPL+qwnUBdSwiqM/5+S1eiPeOe6r0tpXGNGCh9gzsuYGRvmh61syc9Bc6a
+ 6JFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJWh8sZ58Hq3RYX+9vHotJJVw5AlWvCg0XM3Iig0aa8VEeKduzQ62sCdJt+obS8ECHUp/FQLHXk0as@nongnu.org
+X-Gm-Message-State: AOJu0Yxsy07N3zxGZXh5M1CGrwheDXTYxUDSproSVUwwve7cPBMqjvJ/
+ YMEMzC55e8hP2RKqcbbg9npuK/82xE2hdh4kawwNXdM0EwdbNhVhm5USwMGpAMPnV+8=
+X-Gm-Gg: ASbGncutZQrJzWpi5dtn7tEiljN1ITF1Vx+rrXEWARW67OIsU5NuBCg6AI298UhDfyd
+ OSGH6UYsf1JkNWvRGeOm7RDehwtVwlsvHgRKQ+bEIOF/Q7zGHazFQg3pIrRwcwKJ64pWuznbo2f
+ fs0CzD+97nBIDJua/EQBs/F9vcfKkff2OvzoViVRCOuawhCwLGvR0zybkJSgCple+WH1avUgQPR
+ K/GZ3tUcdcSYbCffBM9LR+m9OBwmthmEV316s/s4Gbkq+w299s1sTo0BlFGIOvHwQoPWuJup8ZS
+ FvFFDSod6rMaVqQSq/DIpmVb+vsMV/8cQTMhSjHB9Y96jF5P/HpDY0ApQWyTwk3i2n9X8jfSkkF
+ ds+aPApxGEq46h1PsTZAOhoYA5+EmxJq62czesTKXbKoq3/t1lSMUwBCokYEsXN0RyA==
+X-Google-Smtp-Source: AGHT+IFLcn6lWjI2aBiMfQfdSgBcoFHi1htcAN+ykOPAbMZlNc1sp3QoKI+lQNBvwQLhI4KWdY2x/g==
+X-Received: by 2002:a05:600c:4f56:b0:46c:7097:6363 with SMTP id
+ 5b1f17b1804b1-46e1d98bf65mr20761295e9.13.1758623467277; 
+ Tue, 23 Sep 2025 03:31:07 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4613d33633bsm284377745e9.11.2025.09.23.03.31.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 03:31:06 -0700 (PDT)
+Message-ID: <9cf69af4-fe5f-4998-acae-cffee41d2c91@linaro.org>
+Date: Tue, 23 Sep 2025 12:31:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/13] ivshmem-flat: Mark an instance of missing error
- handling FIXME
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
- berrange@redhat.com, richard.henderson@linaro.org,
- Gustavo Romero <gustavo.romero@linaro.org>
-References: <20250923091000.3180122-1-armbru@redhat.com>
- <20250923091000.3180122-13-armbru@redhat.com>
+Subject: Re: [PATCH v2 11/36] target/arm: Rename all ARMCPRegInfo from opaque
+ to ri
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20250916142238.664316-1-richard.henderson@linaro.org>
+ <20250916142238.664316-12-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250923091000.3180122-13-armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250916142238.664316-12-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,57 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.09.25 12:09, Markus Armbruster wrote:
-> ivshmem-flat's ivshmem_flat_add_vector() neglects to handle
-> qemu_set_blocking() failure.  It used to silently ignore errors there.
-> Recent commit 6f607941b1c (treewide: use qemu_set_blocking instead of
-> g_unix_set_fd_nonblocking) changed it to warn (without mentioning it
-> the commit message, tsk, tsk, tsk).
-
-Yes, my fault.
+On 16/9/25 16:22, Richard Henderson wrote:
+> These pointers are no opaque, they have a specific type.
 > 
-> Note that ivshmem-pci's process_msg_connect() handles this error.
-> 
-> Add a FIXME comment to mark the missing error handling.
-> 
-> Cc: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/misc/ivshmem-flat.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
-> index e83e6c6ee9..27ee8c9218 100644
-> --- a/hw/misc/ivshmem-flat.c
-> +++ b/hw/misc/ivshmem-flat.c
-> @@ -138,6 +138,8 @@ static void ivshmem_flat_remove_peer(IvshmemFTState *s, uint16_t peer_id)
->   static void ivshmem_flat_add_vector(IvshmemFTState *s, IvshmemPeer *peer,
->                                       int vector_fd)
->   {
-> +    Error *err = NULL;
-> +
->       if (peer->vector_counter >= IVSHMEM_MAX_VECTOR_NUM) {
->           trace_ivshmem_flat_add_vector_failure(peer->vector_counter,
->                                                 vector_fd, peer->id);
-> @@ -154,8 +156,10 @@ static void ivshmem_flat_add_vector(IvshmemFTState *s, IvshmemPeer *peer,
->        * peer.
->        */
->       peer->vector[peer->vector_counter].id = peer->vector_counter;
-> -    /* WARNING: qemu_socket_set_nonblock() return code ignored */
-> -    qemu_set_blocking(vector_fd, false, &error_warn);
-> +    if (!qemu_set_blocking(vector_fd, false, &err)) {
-> +        /* FIXME handle the error */
-> +        warn_report_err(err);
-> +    }
->       event_notifier_init_fd(&peer->vector[peer->vector_counter].event_notifier,
->                              vector_fd);
->   
+>   target/arm/cpregs.h | 10 +++++-----
+>   target/arm/helper.c |  6 +++---
+>   2 files changed, 8 insertions(+), 8 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- 
-Best regards,
-Vladimir
 
