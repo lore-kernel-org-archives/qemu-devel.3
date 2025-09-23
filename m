@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2B0CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 12:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6764CCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 12:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v11sk-0002ib-TB; Tue, 23 Sep 2025 08:12:32 -0400
+	id 1v11zu-0004rA-Ck; Tue, 23 Sep 2025 08:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v11si-0002i8-VN
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 08:12:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v11sW-0005E6-0n
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 08:12:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758629531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GNnMDmC5IJuwEeVAA46sq5fAhML7kbcvja4cFbP1fAc=;
- b=iya5MVvi3neBxMp7gnyOEhwcGp5sPNIi3/ZReDy0ZUurOMEeFAOO98KexiraygRnJyHOUp
- gtDMrco9r7fGGhbhjPj2flEzfzLP+B3+tWOvyjDQb88c0fjWlVhCOA6JyZmMZbPuau9zxU
- BzeXV7Xn/pAheYrFjOo/NZvRM+rK9mI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-1wXQJXNlNYu9WsTzSXO7cA-1; Tue,
- 23 Sep 2025 08:12:08 -0400
-X-MC-Unique: 1wXQJXNlNYu9WsTzSXO7cA-1
-X-Mimecast-MFC-AGG-ID: 1wXQJXNlNYu9WsTzSXO7cA_1758629526
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 339F218002C2; Tue, 23 Sep 2025 12:12:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66C913000198; Tue, 23 Sep 2025 12:12:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C638B21E6A27; Tue, 23 Sep 2025 14:12:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna Reitz
- <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Christian Schoenebeck
- <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Subject: Re: [PATCH v3 07/20] util: add API to fetch the current thread name
-In-Reply-To: <20250910180357.320297-8-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 10 Sep 2025 19:03:44
- +0100")
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-8-berrange@redhat.com>
-Date: Tue, 23 Sep 2025 14:12:02 +0200
-Message-ID: <877bxp9xm5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v11zi-0004nx-Cf
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 08:19:46 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v11zQ-0006fG-RI
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 08:19:39 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3ee12a63af1so2437448f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 05:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758629953; x=1759234753; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mtUtxOYte546DTIBwSJ4GxuCOojA4ezq+akkecOlHyY=;
+ b=T9rREt0KtwXkjJnbQss4trBYBbiVVVyHyDaL5gGLUJGa1AtvEoSFyCaEwwNznA8Pbj
+ wP4X37eEx12NbzinUG9WTi6G1qFDGii0wqamso/pluqLlCLZ3v36PB5GPYi7M+HrwDAk
+ 7c0P/ZBHVFZJFz6h3IaNZBYWtEiqLdagqp2zEdFvuhXSSFgxVl215etzeZsD+DKn3WpX
+ JOH1n6GaV/c6MnBCFcr3vYUqsx1uPi4QN8QbH3k2PtzQsyPJN2gtEcWdzoU4pEZij3J5
+ Nuy6IHSK3yRnAUcCtGLhlR0v7dDygnBEWS+X/Sd/hZ1XinSg6FoeML4wANEx4rfGAJaB
+ 6Cig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758629953; x=1759234753;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mtUtxOYte546DTIBwSJ4GxuCOojA4ezq+akkecOlHyY=;
+ b=rCiKDWMw4cz6sP2U30yJNopsHXL2ekjPRMev0uOQiyWFrtCjiYE6R4M5yXw26c3PsP
+ vDExlMWH+z+Y4tZUxeOHQQpVAE/Zc/d7VcrdB0dATMha/9+Sssyo4oS453eLSro1DxCh
+ wEJGuMDhmO8lFHhDcxepJB9EYGFbOksD5JulP8wPGynmaP2q1RsppdgOaXUNZs1FhnZn
+ alNXbYL6JJXibOcKC1+JK/fTLuMukhIJGZDNT1BgAV62hfyB7T+z3s/bMHHKBlfqJvIl
+ GPUTPOTsJNbAtVjIXS+EDEaUBK+CH1QGvDaEEZsUzWWsUuq46gxIkGoaOZNLbojEuSzB
+ H1bg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWdlJoetdTdS/gHyzsBthkVAdtFuz50CBRo32l/buEYIHNmrx47Scn8gcDP3asb9YIVoqij5sKhUK8@nongnu.org
+X-Gm-Message-State: AOJu0YyQJG5C1jgT29Nt6kNHfCH9AGvhpUtJXgV0CrZ8+SaRQ9q5S+rh
+ DVhIk5QhAKubP7b8sV/ah5Mx22yCpCueKdumy28yoFxv330139U4xR7A2MJFpNk7hwRrDgZq5hO
+ Ok3nZ38r/JQ==
+X-Gm-Gg: ASbGncuUuTzwCUT94x3hBVms9Y1w4qjEtnSf0PrKZOPnM7ghsyUuOAgTFdtKoK72+fq
+ zJZ25uITmGyrPKdmzWgtesTCsHl6cabCt11TH9DM9Jgcz0Jx0R4axb0RNTS77xIJHnoSsxSRqpt
+ GoLjTL3Y0lBPj1GITvx9TsMEzOOXQt0OWAp1t3AtjqNDndQ9YUtQiNq7E0g5q2bWj/amo/NXKaJ
+ 46GGDNEkMMTt9ua2UH/hU6EHSERjmEHlikrquqpaTxzH6Es74LL9Gdv60Jr9ISfnwMSdvd7b9N0
+ y3W9xof+K8ESR077ESY6w3wJZPCv2Arr8H5Kl0uV+WhIaMrmhtGfX+/T/GypW/Mr0zCQeCX8FK+
+ iy0H5vF+X2Mki1veFfQKyCjDN7frl3GG7h2KVvoolMxYiqpsEt8JNjiNUo6LSbHKm3A==
+X-Google-Smtp-Source: AGHT+IEV805tL9JEr5LGyZjVLPqHZMTuLQmT65L5nc8vRarrS/nVjqBNQE98wqBfps+IS3k5meyooQ==
+X-Received: by 2002:a05:6000:200b:b0:3ea:6680:8fa0 with SMTP id
+ ffacd0b85a97d-405c5bd8627mr2011290f8f.14.1758629953138; 
+ Tue, 23 Sep 2025 05:19:13 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-46dea20f833sm72665415e9.10.2025.09.23.05.19.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 05:19:12 -0700 (PDT)
+Message-ID: <8c99f4b6-3ce1-414c-92fe-6e2118599550@linaro.org>
+Date: Tue, 23 Sep 2025 14:19:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/specs/spdm.rst: Fix typo in x86_64 architecture name
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20250923120118.858581-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250923120118.858581-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,73 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 23/9/25 14:01, Peter Maydell wrote:
+> The spdm.rst docs call the 64-bit x86 architecture "x64-64".
+> This is a typo; correct it to our canonical name for the
+> architecture, "x86_64".
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   docs/specs/spdm.rst | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-> This will be used to include the thread name in error reports
-> in a later patch. It returns a const string stored in a thread
-> local to avoid memory allocation when it is called repeatedly
-> in a single thread. This makes the assumption that the thread
-> name is set at the very start of the thread, which is the case
-> when using qemu_thread_create.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-
-[...]
-
-> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-> index 7a734a7a09..e3789c20d1 100644
-> --- a/util/qemu-thread-win32.c
-> +++ b/util/qemu-thread-win32.c
-
-[...]
-
-> @@ -412,3 +418,38 @@ bool qemu_thread_is_self(QemuThread *thread)
->  {
->      return GetCurrentThreadId() =3D=3D thread->tid;
->  }
-> +
-> +static __thread char namebuf[64];
-> +
-> +const char *qemu_thread_get_name(void)
-> +{
-> +    HRESULT hr;
-> +    wchar_t *namew =3D NULL;
-> +    g_autofree char *name =3D NULL;
-> +
-> +    if (namebuf[0] !=3D '\0') {
-> +        return namebuf;
-> +    }
-> +
-> +    if (!load_thread_description()) {
-> +        goto error;
-> +    }
-> +
-> +    hr =3D GetThreadDescriptionFunc(GetCurrentThread(), &namew);
-> +    if (!SUCCEEDED(hr)) {
-> +        goto error;
-> +    }
-> +
-> +    name =3D g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
-> +    LocalFree(namew);
-> +    if (!name) {
-> +        goto error;
-> +    }
-> +
-> +    g_strlcpy(namebuf, name, G_N_ELEMENTS(namebuf));
-> +    return namebuf;
-> +
-> + error:
-> +    strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-> +    return namebuf;
-> +}
-
-../util/qemu-thread-win32.c: In function 'qemu_thread_get_name':
-../util/qemu-thread-win32.c:453:5: error: implicit declaration of function =
-'strlcpy'; did you mean 'strncpy'? [-Wimplicit-function-declaration]
-  453 |     strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-      |     ^~~~~~~
-      |     strncpy
-../util/qemu-thread-win32.c:453:5: error: nested extern declaration of 'str=
-lcpy' [-Werror=3Dnested-externs]
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
