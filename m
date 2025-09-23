@@ -4,71 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64BECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 06:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56372CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 06:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0wM4-00036X-Dq; Tue, 23 Sep 2025 02:18:24 -0400
+	id 1v0wZ9-0007u8-AI; Tue, 23 Sep 2025 02:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1v0wM1-00035X-Q6
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 02:18:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1v0wLu-00009b-LL
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 02:18:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxHvCdO9Jog4kNAA--.29018S3;
- Tue, 23 Sep 2025 14:18:05 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxocKZO9JoCWKnAA--.6205S3;
- Tue, 23 Sep 2025 14:18:03 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/virt: Align VIRT_GED_CPUHP_ADDR to 4 bytes
-To: Huacai Chen <chenhuacai@kernel.org>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- WANG Xuerui <git@xen0n.name>, qemu-devel@nongnu.org,
- Huacai Chen <chenhuacai@loongson.cn>, Nathan Chancellor <nathan@kernel.org>,
- WANG Rui <wangrui@loongson.cn>
-References: <20250922141557.1939333-1-chenhuacai@kernel.org>
- <b8f1cea3-cd26-855a-b772-1f4d8b9b2fc3@loongson.cn>
- <CAAhV-H4pONDCQSOg1rRO2Mu5ADHkpA8Pk2ep7Cf0OT72yg=YeQ@mail.gmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <f16d42be-4fcc-7ec0-dc05-a0bdb793e354@loongson.cn>
-Date: Tue, 23 Sep 2025 14:15:52 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1v0wZ2-0007sU-Sx; Tue, 23 Sep 2025 02:31:48 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1v0wYz-0002Eb-TV; Tue, 23 Sep 2025 02:31:48 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id C190A4191D;
+ Tue, 23 Sep 2025 06:31:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1336C4CEF5;
+ Tue, 23 Sep 2025 06:31:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1758609087;
+ bh=RsUOjWNMuW8fTpkA5v4oUy7565EFHVMf8hFPI9OPMWk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=gz6bM0kUbawRQUyoC68iDL5h886rZ+Jy6rW3K07YmvngJ2U89xF/+tW1olgHdTa2+
+ v3TmCTlTQie/83DjYk6i0ExLcciOInRWtfIj/aIoQ5fo7klHOXMzJ8qYhVbOrzEZ4R
+ jTsLQNr6d29NctyYNI6K+zJ/kjDj8y/2nbCb+UvB7abTgb6B1YjEl7+hWnLamDzBWf
+ 4rfAPZ0XC/biw/GRkSd4vjcHpjpO4Iqe/UJNluwEJjt6zJlfNqygHutDNh+wJLrR2I
+ +PwYM7zBw4w+UOkmJcy4SH6D4sH4KtATpdmU4Zzp1CnElhmwPz47pGw9Sa4ynP4u+d
+ kPbiOzG2e8Gmw==
+Date: Tue, 23 Sep 2025 08:31:22 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v11 17/17] scripts/ghes_inject: add a script to generate
+ GHES error inject
+Message-ID: <20250923083122.6b75ae82@foz.lan>
+In-Reply-To: <20250922084417-mutt-send-email-mst@kernel.org>
+References: <cover.1757084668.git.mchehab+huawei@kernel.org>
+ <41cfda8170605a25a795b555cdb49402af4ef5b0.1757084668.git.mchehab+huawei@kernel.org>
+ <20250922084417-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <CAAhV-H4pONDCQSOg1rRO2Mu5ADHkpA8Pk2ep7Cf0OT72yg=YeQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxocKZO9JoCWKnAA--.6205S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAF43Jry8tr4Uur1UXryfZrc_yoWrCrWfpa
- 4xAF4qgF4UJF1xCw1vqasxWFW2qrn3KrWqgrWxKrySkw1vkr18Xry0k398uFyDZw4xWF4I
- vF4Dta1fWF98A3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8HSoJUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.559,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.234.252.31;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,103 +75,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Em Mon, 22 Sep 2025 08:48:03 -0400
+"Michael S. Tsirkin" <mst@redhat.com> escreveu:
 
+> On Fri, Sep 05, 2025 at 05:09:24PM +0200, Mauro Carvalho Chehab wrote:
 
-On 2025/9/23 下午12:22, Huacai Chen wrote:
-> Hi, Bibo,
+> > diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+> > new file mode 100644
+> > index 000000000000..1dd42e42a877
+> > --- /dev/null
+> > +++ b/scripts/arm_processor_error.py
+> > @@ -0,0 +1,476 @@  
 > 
-> On Tue, Sep 23, 2025 at 11:40 AM Bibo Mao <maobibo@loongson.cn> wrote:
->>
->> Hi huacai,
->>
->> It breaks with compatible issue since acpi table is changed, and test
->> case qtest-loongarch64/bios-tables-test fails to run.
->>
->> LoongArch VM compatibility is not perfect now, one method is to modify
->> test case at the same time, another method is to add extra option in
->> order to support aligned GED ACPI address.
->>
->> Does this issue must be fixed now? With ACPI spec, 5.2.12.20 Core
->> Programmable Interrupt Controller (CORE PIC) Structure, ACPI Processor
->> ID is not aligned also, its size is 4 byte and offset is 3 bytes.
-> They are different.
-> 
-> ACPI tables are probably packed (so the members may not be aligned),
-> such as CORE PIC you mentioned. Linux kernel defines two kinds of
-> accessors to parse members. You can see the code in
-> drivers/acpi/acpica/acmacros.h from the kernel as an example.
-> 
-> The problem mentioned in this patch is the alignment of a struct as a
-> whole. If the struct itself isn't aligned, Linux kernel cannot handle
-> it on hardware without UAL, even with two kinds of accessors.
-> 
->>
->> If it must be fixed, the test case should be modified also together with
->> the patch. If not, it can be record as pending bug, will solve it if VM
->> compatibility method is decided.
-> Generally speaking, I think this should be fixed, because it is
-> allowed for qemu to emulate a machine without UAL. I will take a look
-ok, loongarch VM compatibility is not good now, maybe we can skip it 
-now. There will be compatibility problem every time new feature and 
-hardware is added.
+> Malformed patch: script only has 474 lines.
 
-> at qtest-loongarch64/bios-tables-test (maybe you means
-> tests/qtest/bios-tables-test.c?), but it seeams a separate patch is
-> better?
-yeap, it is this test case, it fails with command "make check" or in 
-qemu CI. In general it should be in one patch set such as:
-https://lists.nongnu.org/archive/html/qemu-riscv/2025-07/msg00155.html
+Sorry for that. This time I sent the series with a new (not so) shiny 
+mailbomb script, I rewrote in Python. It turned to be a big headache to
+use python EmailMessage class: it always ended badly encoding something.
+It also affected patches I sent to the Kernel, badly handling utf-8 chars
+and "\" characters. I gave up on it and I'm reusing my 10+ years old Perl
+script again.
 
-Regards
-Bibo Mao
+Sorry for that.
 
+> > +#!/usr/bin/env python3
+> > +#
+> > +# pylint: disable=C0301,C0114,R0903,R0912,R0913,R0914,R0915,W0511
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +#
+> > +# Copyright (C) 2024-2025 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > +
+> > +# TODO: current implementation has dummy defaults.
+> > +#
+> > +# For a better implementation, a QMP addition/call is needed to
+> > +# retrieve some data for ARM Processor Error injection:
+> > +#
+> > +#   - ARM registers: power_state, mpidr.
+> > +
+> > +"""
+> > +Generates an ARM processor error CPER, compatible with  
 > 
-> Huacai
+> Generates -> Generate
 > 
->>
->> Regards
->> Bibo Mao
->>
->> On 2025/9/22 下午10:15, Huacai Chen wrote:
->>> From: Huacai Chen <chenhuacai@loongson.cn>
->>>
->>> Now VIRT_GED_CPUHP_ADDR is not aligned to 4 bytes, but if Linux kernel
->>> is built with ACPI_MISALIGNMENT_NOT_SUPPORTED, it assumes the alignment,
->>> otherwise we get ACPI errors at boot phase:
->>>
->>> ACPI Error: AE_AML_ALIGNMENT, Returned by Handler for [SystemMemory] (20250404/evregion-301)
->>> ACPI Error: Aborting method \_SB.CPUS.CSTA due to previous error (AE_AML_ALIGNMENT) (20250404/psparse-529)
->>> ACPI Error: Aborting method \_SB.CPUS.C000._STA due to previous error (AE_AML_ALIGNMENT) (20250404/psparse-529)
->>> ACPI Error: Method execution failed \_SB.CPUS.C000._STA due to previous error (AE_AML_ALIGNMENT) (20250404/uteval-68)
->>>
->>> VIRT_GED_MEM_ADDR and VIRT_GED_REG_ADDR are already aligned now, but use
->>> QEMU_ALIGN_UP() to explicitly align them can make code more robust.
->>>
->>> Reported-by: Nathan Chancellor <nathan@kernel.org>
->>> Suggested-by: WANG Rui <wangrui@loongson.cn>
->>> Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
->>> ---
->>>    include/hw/loongarch/virt.h | 6 +++---
->>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
->>> index 602feab0f0..be4f5d603f 100644
->>> --- a/include/hw/loongarch/virt.h
->>> +++ b/include/hw/loongarch/virt.h
->>> @@ -28,9 +28,9 @@
->>>    #define VIRT_LOWMEM_SIZE        0x10000000
->>>    #define VIRT_HIGHMEM_BASE       0x80000000
->>>    #define VIRT_GED_EVT_ADDR       0x100e0000
->>> -#define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
->>> -#define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
->>> -#define VIRT_GED_CPUHP_ADDR     (VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT)
->>> +#define VIRT_GED_MEM_ADDR       QEMU_ALIGN_UP(VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN, 4)
->>> +#define VIRT_GED_REG_ADDR       QEMU_ALIGN_UP(VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN, 4)
->>> +#define VIRT_GED_CPUHP_ADDR     QEMU_ALIGN_UP(VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT, 4)
->>>
->>>    #define COMMAND_LINE_SIZE       512
->>>
->>>
->>
+> prefer imperative mood
+> 
+> > +UEFI 2.9A Errata.
+> > +
+> > +Injecting such errors can be done using:
+> > +
+> > +    $ ./scripts/ghes_inject.py arm
+> > +    Error injected.
+> > +
+> > +Produces a simple CPER register, as detected on a Linux guest:
+> > +
+> > +[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
+> > +[Hardware Error]: event severity: recoverable
+> > +[Hardware Error]:  Error 0, type: recoverable
+> > +[Hardware Error]:   section_type: ARM processor error
+> > +[Hardware Error]:   MIDR: 0x0000000000000000
+> > +[Hardware Error]:   running state: 0x0
+> > +[Hardware Error]:   Power State Coordination Interface state: 0
+> > +[Hardware Error]:   Error info structure 0:
+> > +[Hardware Error]:   num errors: 2
+> > +[Hardware Error]:    error_type: 0x02: cache error
+> > +[Hardware Error]:    error_info: 0x000000000091000f
+> > +[Hardware Error]:     transaction type: Data Access
+> > +[Hardware Error]:     cache error, operation type: Data write
+> > +[Hardware Error]:     cache level: 2
+> > +[Hardware Error]:     processor context not corrupted
+> > +[Firmware Warn]: GHES: Unhandled processor error type 0x02: cache error
+> > +
+> > +The ARM Processor Error message can be customized via command line
+> > +parameters. For instance:
+> > +
+> > +    $ ./scripts/ghes_inject.py arm --mpidr 0x444 --running --affinity 1 +        --error-info 12345678 --vendor 0x13,123,4,5,1 --ctx-array 0,1,2,3,4,5 +        -t cache tlb bus micro-arch tlb,micro-arch  
+> 
+> Weird formatting. Are these + signs intentional here?
+> Oh, maybe that is where the 2 missing lines are hiding.
 
+Nope. Broken mailbomb script: EmailMessage decided to handle itself 
+lines ended with "\", even after being asked to parse an e-mail as
+binary.
+
+For v12 I'll be using the old script which doesn't corrupt patches.
+
+Thanks,
+Mauro
 
