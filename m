@@ -4,74 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF03CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A5BCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 19:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v18M8-0004WB-5z; Tue, 23 Sep 2025 15:07:19 -0400
+	id 1v18Z2-0001s4-1X; Tue, 23 Sep 2025 15:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v18Ld-0004Mo-QP
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:06:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v18Yz-0001rd-Th
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:20:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v18Lb-0004zO-46
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:06:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v18Yy-0006Rx-1Y
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 15:20:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758654401;
+ s=mimecast20190719; t=1758655228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jLT8WlnZYF6IejL46+lC2i14Kr2kZPIxnVewAh36mzc=;
- b=JtFV77w9KKE7Bo41j3g3Y34lG6cAHe3wk/o5aGw311lJWHyaIZyO840v/3E6BmbwFzULrj
- 8jbODrL+NdSWoH/JDD6YH4ivAXD5/wYKYT1o0rCqdUPjKC2mNKLkSiTLsQs9BYnTRa1B4u
- gy5upqf6g7QJCvJFLgfDngjJsQf/zFQ=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-thJEyRtfOdaLHC3BoqqKXg-1; Tue,
- 23 Sep 2025 15:06:39 -0400
-X-MC-Unique: thJEyRtfOdaLHC3BoqqKXg-1
-X-Mimecast-MFC-AGG-ID: thJEyRtfOdaLHC3BoqqKXg_1758654397
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE5B81956087; Tue, 23 Sep 2025 19:06:37 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.69])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 43EEB1800451; Tue, 23 Sep 2025 19:06:37 +0000 (UTC)
-Date: Tue, 23 Sep 2025 15:06:36 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Tanish Desai <tanishdesai37@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 03/16] treewide: remove unnessary "coding" header
-Message-ID: <20250923190636.GJ509965@fedora>
-References: <20250919112536.141782-1-pbonzini@redhat.com>
- <20250919112536.141782-4-pbonzini@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=SKaWTSpekMbhCVttoIpxfnicDLRPqMAkcf7nGgcO5GU=;
+ b=diiuj1zS5Rut/+eSGMV0/K05Iqaraee9o5+Lonizi6UGxrc5kTsSHX1D7Kfg18YMimC/30
+ eY7+ORbBNbSI9QTcTXg9BTrJMHHI8EFqjRr3h7Bm4OpCp+v3DwBR6VRBXZYi6rtsMp9c1X
+ nAFO9RmiDKh63sifaClsG2tD8Tcrj7w=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-77-bK6v-WjvMH6F7yRAn9O7iQ-1; Tue, 23 Sep 2025 15:20:27 -0400
+X-MC-Unique: bK6v-WjvMH6F7yRAn9O7iQ-1
+X-Mimecast-MFC-AGG-ID: bK6v-WjvMH6F7yRAn9O7iQ_1758655226
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b0c1a67399aso821502366b.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 12:20:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758655226; x=1759260026;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SKaWTSpekMbhCVttoIpxfnicDLRPqMAkcf7nGgcO5GU=;
+ b=qUOrPEZCnuRTevYeIokMTs/kpw3B74pCd5WEqfVlCN1i/lym/0vsBB7MlJX9pZEs/B
+ FFDw1gOdr8S7ofRp5yST8yJ7gNHN0W3mubt09CQvOVJ6DfnkX4bGwzN/nkqhs+A+fHgb
+ 5wnBUACRZVAYO4h4+A+/fcxZuEIc/Yqo+leqxe8EgABVBkY5oz3jJq0GJQUJHYxRiV/w
+ iRCsaXNs8jXs8bLmNx6uXtfeYguxhFf2Hf2HF8dFmEntXIgjyMW8q+dCvHnmN3JN0bEH
+ 9w9f6RPYzYMJo/scm04EWmMbcd/U067VzIMc9O52iM/Ueubch54H3uVheJP2zd0IgIZy
+ F3xA==
+X-Gm-Message-State: AOJu0YxxCEfGnzXrJ7HM4CbUriMXsKfr6wUvySVmKPTWJb4I7WTrIryu
+ gr2rOcQZboiI6EIfUnqvNaXPiphH160JLEpesoKzqCyzmcEqEVB34prW0RVv9eTTDC8v2nLMMHR
+ 32lLmYkkAfBBv8Xaz9Gou2iJdPrbEshM4W3ieG/HAehep3hiLBwasOznW
+X-Gm-Gg: ASbGnct0PqRvOIdiWEUwQOaB6IbFx2H/iwb3mtKJDJKFud84KhbN7LIqPUHYEGpVZzj
+ oi7St+HqO8v3a94i7HJrlp7i/1GM+ExPNLZdy+7Co9tTmT079xlVdMtv+bKEx5t963YAYy6BX3v
+ 7HzOEouI2qhPmFUcIS7zvs+xMY6jmogBO4bl49Akk/bdrEDRjf9fMVDcl5jHis1r4CmuZ4XL1sj
+ vPR7s7wHi53XO19e/c1eLVw6v9heb8zgGD3/RwhYckonkm+LwgewExrbV1U+ID7e72owGtERSaf
+ t4pPppvG+Kbs08xqL9fo1wCoufxn7ZvhWJAFm7DeT6hf0X/LCowTdxWs9zASa2oC8z5cyCc3sAt
+ sRQVD3watsGCSGxXa1g6+XDVAWYg+WvDyg9WPBe9W0TIWlQ==
+X-Received: by 2002:a17:907:9713:b0:b04:2ee1:8e2 with SMTP id
+ a640c23a62f3a-b302a174dddmr394118266b.36.1758655226330; 
+ Tue, 23 Sep 2025 12:20:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmctqWzN2jW9ShZatBZQiF++CJbL8fOQrdSKosTgzhq1KkgCZP1ha/rdyfYXYh53In2MawAQ==
+X-Received: by 2002:a17:907:9713:b0:b04:2ee1:8e2 with SMTP id
+ a640c23a62f3a-b302a174dddmr394116266b.36.1758655225982; 
+ Tue, 23 Sep 2025 12:20:25 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.127.188])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b26c49ab9c8sm1010095666b.47.2025.09.23.12.20.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Sep 2025 12:20:25 -0700 (PDT)
+Message-ID: <3232b3d4-a298-42d0-9756-0556f9edc241@redhat.com>
+Date: Tue, 23 Sep 2025 21:20:24 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="NQkRc6C6Eauc/SIg"
-Content-Disposition: inline
-In-Reply-To: <20250919112536.141782-4-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] docs/code-provenance: make the exception process more
+ prominent
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250922154843.60233-1-pbonzini@redhat.com>
+ <20250922154843.60233-3-pbonzini@redhat.com> <20250923175826.GB509965@fedora>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250923175826.GB509965@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,78 +151,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/23/25 19:58, Stefan Hajnoczi wrote:
+>> +The QEMU project welcomes discussion on any exceptions to this policy,
+>> +or more general revisions. This can be done by contacting the qemu-devel
+>> +mailing list with details of a proposed tool, model, usage scenario, etc.
+>> +that is beneficial to QEMU, while still mitigating the legal risks to the
+>> +project.  After discussion, any exception will be listed below.
+> 
+> "Legal risks to the project" is all-encompassing and vague. People may
+> not know how to start addressing the topic and might therefore not
+> attempt to request an exception.
+> 
+> I suggest replacing "legal risks to the project" with something more
+> concrete like "issues around license and copyright status required to
+> satisfy the Developer Certificate of Origin (DCO) requirements".
 
---NQkRc6C6Eauc/SIg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It's already a long sentence.  Would "while still mitigating issues around
+compliance with the DCO" be enough?
 
-On Fri, Sep 19, 2025 at 01:25:23PM +0200, Paolo Bonzini wrote:
-> The "-*- coding: utf-8 -*-" header was needed in Python 2,
-> but in Python 3 UTF-8 is already the default encoding of
-> source files.
->=20
-> It is even less necessary in .css files that do not have UTF-8
-> sequences at all.
->=20
-> Suggested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  docs/conf.py                                   | 2 --
->  docs/sphinx-static/theme_overrides.css         | 3 +--
->  scripts/analyse-locks-simpletrace.py           | 1 -
->  scripts/modinfo-collect.py                     | 1 -
->  scripts/modinfo-generate.py                    | 1 -
->  scripts/oss-fuzz/minimize_qtest_trace.py       | 1 -
->  scripts/oss-fuzz/output_reproducer.py          | 1 -
->  scripts/oss-fuzz/reorder_fuzzer_qtest_trace.py | 1 -
->  scripts/probe-gdb-support.py                   | 1 -
->  scripts/qapi/error.py                          | 2 --
->  scripts/qapi/expr.py                           | 2 --
->  scripts/qapi/gen.py                            | 2 --
->  scripts/qapi/parser.py                         | 2 --
->  scripts/qapi/schema.py                         | 2 --
->  scripts/qemu-plugin-symbols.py                 | 1 -
->  scripts/qemugdb/tcg.py                         | 2 --
->  scripts/qemugdb/timers.py                      | 1 -
->  scripts/replay-dump.py                         | 1 -
->  scripts/tracetool.py                           | 1 -
->  scripts/tracetool/__init__.py                  | 2 --
->  scripts/tracetool/backend/__init__.py          | 2 --
->  scripts/tracetool/backend/dtrace.py            | 2 --
->  scripts/tracetool/backend/ftrace.py            | 2 --
->  scripts/tracetool/backend/log.py               | 2 --
->  scripts/tracetool/backend/simple.py            | 2 --
->  scripts/tracetool/backend/syslog.py            | 2 --
->  scripts/tracetool/backend/ust.py               | 2 --
->  scripts/tracetool/format/__init__.py           | 2 --
->  scripts/tracetool/format/c.py                  | 2 --
->  scripts/tracetool/format/d.py                  | 2 --
->  scripts/tracetool/format/h.py                  | 2 --
->  scripts/tracetool/format/log_stap.py           | 2 --
->  scripts/tracetool/format/simpletrace_stap.py   | 2 --
->  scripts/tracetool/format/stap.py               | 2 --
->  scripts/tracetool/format/ust_events_c.py       | 2 --
->  scripts/tracetool/format/ust_events_h.py       | 2 --
->  36 files changed, 1 insertion(+), 61 deletions(-)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---NQkRc6C6Eauc/SIg
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS77sACgkQnKSrs4Gr
-c8jwvgf/dFAHMxOV9e/hrAWIUVWrgb0DFUyd/nvhw8qpUgvPMCtow7HPSnnp1GrK
-Liefn+uOo0R7RhWwqPLOFU0gJ75Nhf60j1tb0tHzyQKyEgqVzAmnvTy6HGDVtaTB
-SlmXsbD3VBGsMhzs+CCMwUosb2G6gZKOJsakPcvxEgwEZLHQEyoHYobb7mTmBr+o
-iqajS6/ts4u6AtPwOu4Rq0cu86l/CESZXA8LC+zd6aKLp+icMI18MiIbglHMjio1
-Lse+/7do+jkzq2AUSMaEuxyhRqBqB/TvFABKOeiSFn2hx7y0RiuRjU8huAgAEGNH
-Wt20QKz82rkHlv0L2IFKPEfS9bNIAw==
-=N6Qe
------END PGP SIGNATURE-----
-
---NQkRc6C6Eauc/SIg--
+Paolo
 
 
