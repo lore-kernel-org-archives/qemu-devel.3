@@ -4,96 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB39CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696DBCAC5B1
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 10:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0zxE-0005tm-OM; Tue, 23 Sep 2025 06:09:00 -0400
+	id 1v102i-0007xq-KO; Tue, 23 Sep 2025 06:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hector.cao@canonical.com>)
- id 1v0zxC-0005t3-I6
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:08:58 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v102f-0007wl-U6
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:14:38 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hector.cao@canonical.com>)
- id 1v0zx3-0001Xs-Kn
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:08:58 -0400
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 80D943F475
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 10:08:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1758622123;
- bh=099/PqO0/ld4mqz6Qpknk+8TyGUJ6QdDQqoau6D09fw=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=dXKtw4gW3aBFXhgOJs/rsq5ifsUonmse4c37bWDvAasv0ShbZjAjGbGYisJ46A4vo
- W/QEDjoI0Iou6lLece3Qhhp+m6x5oXIHkdvPlo1FiNzF0wWA0ybJQCAC2fHTkhCAly
- c+mZ1iyzpreaXz+N/VAZ1nr4a5effi/g1IA0B8lETh/V0eiqVsgFSX98MZyqsdBbZh
- xUTijz59RrCDD3rioaOKyK+nj+xJYU6gnFsm/Mzh6cHaIBGBIQrWZkDxY/6qL2QeQO
- BL0mNydj7FdrrF9z4VyyHYX1AFVcSkN+ejw1zQAvouiIxDL93OPwzGkxErBy0hsNUM
- eCwnW0VpbCj1A==
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6339aa08acfso2231899a12.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 03:08:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758622122; x=1759226922;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=099/PqO0/ld4mqz6Qpknk+8TyGUJ6QdDQqoau6D09fw=;
- b=TRaDjOfojLm8QEYp3Jbl8jd2vUIRpm2WmMWEcuobWu3dlK0zPtUta+H2Nw9SsjfGUK
- /KJJR1wR+vRGeLO2DrjjfzsbJj6jTMzq8+hNj/17t3F4y4wgTSWhQx47wGm+3IMxHopc
- ma4FJTTAdYirVzQayjRacpxLEWB4RSwjZ4mQibiWinTnpoRU97fae/Sxa4QzJ+1nSp9w
- iPalpjpLO1XpZ5od0mO3/DUlkyTJ0ujxhwK6X7N6W0eAo/BvlY4xfwjpsq6JHsp2ehiJ
- cPIFVEqYCpi0pQPR03ENnvsPo8U6TErLGKO1Fx4PA22AYX4fkeJ0LBFvuqSF0JsUr1dQ
- inkQ==
-X-Gm-Message-State: AOJu0YyFyG3AXyXlEkw49WevwzjC7wpFaCDCHjKiqPcAnMGOraOlJtEW
- LxC5W7Llbxoto3QjrS5F/7S3sxMy/fSgTE4pGfpnixYjBkgu1Pi1moqIY1BZZr80xUIaSTrW+7v
- iOuFOL1sEO6852lE3+TjxUooKOvh9Qq0+K+H81JV2wfYo/8i7q2jlAkoEUm/89U15vOcb72PoNg
- tKxw9eNTCUp7MX2Wxi+tmASzN6xVTqofeUD7nbeh/+mGzFlDPxDe0FnP8=
-X-Gm-Gg: ASbGncudyh1iuKu+KA7LiiQZELAtU1A+TqhDCNjlQTKasJPJTdDUaLv3468rIR//6dc
- /oPY4bwolB7XsubS4rm2kSoRCdrCFsLBDICk6GtH50cgGTpueTeCWXSEAvCODTYKMGxJcn5rRxV
- OBkfMTnRazTkcIA4iF5nwrmwUiZkEdMSig1/nPO5zp1T6IqW3BzKacG1TCA1RavTTBAWX8v0XYh
- a0=
-X-Received: by 2002:a05:6402:5204:b0:632:466d:5d08 with SMTP id
- 4fb4d7f45d1cf-63467c35438mr1874931a12.10.1758622122274; 
- Tue, 23 Sep 2025 03:08:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3I9jItMP4fKnSc7EmCMseSCd5rrnVEb70L31XIaI5BG1xk0etmri4yqrZsq6bUgbPXn9SliwNkh2zZfXSL8o=
-X-Received: by 2002:a05:6402:5204:b0:632:466d:5d08 with SMTP id
- 4fb4d7f45d1cf-63467c35438mr1874917a12.10.1758622121828; Tue, 23 Sep 2025
- 03:08:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v102a-0002LN-RV
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 06:14:37 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1621:0:640:12d9:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D80E38851F;
+ Tue, 23 Sep 2025 13:14:25 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b38::1:12] (unknown
+ [2a02:6bf:8080:b38::1:12])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id NEUjuB0Gl8c0-9cRBDPUp; Tue, 23 Sep 2025 13:14:25 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758622465;
+ bh=xbqZ33OMicFc58SmT8yXDDQdxSYpnD87LVbZjSdvPtI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=yXZb2IGsjUDGuNOB5XJ07Yh+zpOYcc52vvM9n6vfwiITz+m32XFoYxC+uu5rXZ0+G
+ kTyf0OEzoK5V4tu8s5HmI++AXmL7bocQeMWDp7/DK5F0Is+gwJ3S0gKhrA4W4QpBI9
+ twP2ohgsKBq+Lufy3A/lvv/chGONn/5JrRfWgWJk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <1a10e0d3-17fc-4ec9-aa4c-cdfed13988e6@yandex-team.ru>
+Date: Tue, 23 Sep 2025 13:14:23 +0300
 MIME-Version: 1.0
-References: <CABjvBV7wgfSv-OjGf_L2t9ranXfzTQTSBdRAFODpHH-nFcLFig@mail.gmail.com>
- <20250910115733.21149-1-hector.cao@canonical.com>
- <b2fb1e8c-4b30-4bde-9b16-b9a0cd314b70@redhat.com>
-In-Reply-To: <b2fb1e8c-4b30-4bde-9b16-b9a0cd314b70@redhat.com>
-From: Hector Cao <hector.cao@canonical.com>
-Date: Tue, 23 Sep 2025 12:08:22 +0200
-X-Gm-Features: AS18NWDNx91Ccj8kRxX7LVyefqb13jLxPc1T-7xGBS7KzHQmNTIOOMj3dnxSqk8
-Message-ID: <CABjvBV6YZvufYXcUeBjY3Av=_VALWy2Dw9o6jGeL2FQTf1CgOA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] Fix cross migration issue with missing features:
- pdcm, arch-capabilities
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000ddae7a063f751e0c"
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=hector.cao@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/13] hw/remote/vfio-user: Clean up error reporting
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
+ berrange@redhat.com, richard.henderson@linaro.org,
+ Jagannathan Raman <jag.raman@oracle.com>
+References: <20250923091000.3180122-1-armbru@redhat.com>
+ <20250923091000.3180122-6-armbru@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250923091000.3180122-6-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_IMAGE_ONLY_32=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_REMOTE_IMAGE=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,155 +79,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ddae7a063f751e0c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 23.09.25 12:09, Markus Armbruster wrote:
+> VFU_OBJECT_ERROR() reports the error with error_setg(&error_abort,
+> ...) when auto-shutdown is enabled, else with error_report().
+> 
+> Issues:
+> 
+> 1. The error is serious enough to warrant aborting the process when
+> auto-shutdown is enabled, yet harmless enough to permit carrying on
+> when it's disabled.  This makes no sense to me.
+> 
+> 2. Like assert(), &error_abort is strictly for programming errors.  Is
+> this one?
 
-Thanks Paolo,
+Brief look at the code make me think that, no it isn't.
 
-Is it still time for me to submit the v2 of this patch ? I would like do
-add 2 changes:
-- add fixes:xxx line suggested by Daniel
-- fix link error for qemu-user build (since it has no access to migration
-code)
+>  Or should we exit(1) instead?
+> 
+> 3. qapi/error.h advises "don't error_setg(&error_abort, ...), use
+> assert()."
+> 
+> This patch addresses just 3.
+> 
+> Cc: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   hw/remote/vfio-user-obj.c | 9 +++------
+>   1 file changed, 3 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+> index ea6165ebdc..eb96982a3a 100644
+> --- a/hw/remote/vfio-user-obj.c
+> +++ b/hw/remote/vfio-user-obj.c
+> @@ -75,12 +75,9 @@ OBJECT_DECLARE_TYPE(VfuObject, VfuObjectClass, VFU_OBJECT)
+>    */
+>   #define VFU_OBJECT_ERROR(o, fmt, ...)                                     \
+>       {                                                                     \
+> -        if (vfu_object_auto_shutdown()) {                                 \
+> -            error_setg(&error_abort, (fmt), ## __VA_ARGS__);              \
+> -        } else {                                                          \
+> -            error_report((fmt), ## __VA_ARGS__);                          \
+> -        }                                                                 \
+> -    }                                                                     \
+> +        error_report((fmt), ## __VA_ARGS__);                              \
+> +        assert(!vfu_object_auto_shutdown());                              \
 
-Best,
-Hector
+Probably, it's only my feeling, but for me, assert() is really strictly bound
+to programming errors, more than abort(). Using abort() for errors which are
+not programming, but we can't handle them looks less confusing, i.e.
 
-<https://launchpad.net/~hectorcao>
+if (vfu_object_auto_shutdown()) {
+     abort();
+}
 
-Le mar. 23 sept. 2025, 09:53, Paolo Bonzini <pbonzini@redhat.com> a =C3=A9c=
-rit :
+Not really matter. Anyway:
 
-> On 9/10/25 13:57, Hector Cao wrote:
-> > Hello,
-> >
-> > Since it is a blocking issue for us, we went further and ended up with =
-a
-> solution along [1]
-> > that allows us to get out of this situation.
-> >
-> > The idea is to add compatibility properties to restore legacy behaviors
-> for machine types
-> > with older versions of QEMU (<10.1). 2 compatiblity properties have bee=
-n
-> added to address
-> > respectively the 2 missing features, each one is done in a separate
-> patch.
-> >
-> > We know that 10.1 has been released and it's final, but working on a
-> solution towards 11.0
-> > would allow everyone to settle on the fix and even consider backporting
-> where not yet released
-> > like Ubuntu 25.10 for us.
->
-> Thanks, I have applied the patch.  It's better to have the fix in 10.1.1.
->
-> Sorry for the delay, I was on vacation for one week and working reduced
-> hours the next.
->
-> Paolo
->
-> > It is important to have upstream support going forward in this or any
-> other way
-> > and therefore reach out with this RFC to ask you to think about it with
-> us.
-> >
-> > [1]
-> https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/migration/c=
-ompatibility.rst
-> >
-> > Hector Cao (2):
-> >    target/i386: add compatibility property for arch_capabilities
-> >    target/i386: add compatibility property for pdcm feature
-> >
-> >   hw/core/machine.c     |  2 ++
-> >   migration/migration.h | 23 +++++++++++++++++++++++
-> >   migration/options.c   |  6 ++++++
-> >   target/i386/cpu.c     | 17 ++++++++++++++---
-> >   target/i386/kvm/kvm.c |  5 ++++-
-> >   5 files changed, 49 insertions(+), 4 deletions(-)
-> >
->
->
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
---000000000000ddae7a063f751e0c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> +    }
+>   
+>   struct VfuObjectClass {
+>       ObjectClass parent_class;
 
-<div dir=3D"auto"><div>Thanks Paolo,</div><div dir=3D"auto"><br></div><div =
-dir=3D"auto">Is it still time for me to submit the v2 of this patch ? I wou=
-ld like do add 2 changes:</div><div dir=3D"auto">- add fixes:xxx line sugge=
-sted by Daniel</div><div dir=3D"auto">- fix link error for qemu-user build =
-(since it has no access to migration code)</div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">Best,</div><div>Hector</div><div data-smartmail=3D"gmail=
-_signature"><div dir=3D"ltr"><div style=3D"text-align:left">
-<p style=3D"line-height:100%;margin-bottom:0in"> =20
-<a href=3D"https://launchpad.net/~hectorcao" target=3D"_blank"><img width=
-=3D"96" height=3D"81" src=3D"https://ci3.googleusercontent.com/mail-sig/AIo=
-rK4z5yECcB4DOFqFQjPXjogBAVC5Vv1klgihEnAZXkqybF5lNxe9SeDqtm-9dmSwj3Sbw2kDL58=
-U"></a></p>
 
-</div></div></div></div><br><div class=3D"gmail_quote gmail_quote_container=
-"><div dir=3D"ltr" class=3D"gmail_attr">Le mar. 23 sept. 2025, 09:53, Paolo=
- Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>=
-&gt; a =C3=A9crit=C2=A0:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 9/10/=
-25 13:57, Hector Cao wrote:<br>
-&gt; Hello,<br>
-&gt; <br>
-&gt; Since it is a blocking issue for us, we went further and ended up with=
- a solution along [1]<br>
-&gt; that allows us to get out of this situation.<br>
-&gt; <br>
-&gt; The idea is to add compatibility properties to restore legacy behavior=
-s for machine types<br>
-&gt; with older versions of QEMU (&lt;10.1). 2 compatiblity properties have=
- been added to address<br>
-&gt; respectively the 2 missing features, each one is done in a separate pa=
-tch.<br>
-&gt; <br>
-&gt; We know that 10.1 has been released and it&#39;s final, but working on=
- a solution towards 11.0<br>
-&gt; would allow everyone to settle on the fix and even consider backportin=
-g where not yet released<br>
-&gt; like Ubuntu 25.10 for us.<br>
-<br>
-Thanks, I have applied the patch.=C2=A0 It&#39;s better to have the fix in =
-10.1.1.<br>
-<br>
-Sorry for the delay, I was on vacation for one week and working reduced <br=
->
-hours the next.<br>
-<br>
-Paolo<br>
-<br>
-&gt; It is important to have upstream support going forward in this or any =
-other way<br>
-&gt; and therefore reach out with this RFC to ask you to think about it wit=
-h us.<br>
-&gt; <br>
-&gt; [1] <a href=3D"https://gitlab.com/qemu-project/qemu/-/blob/master/docs=
-/devel/migration/compatibility.rst" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://gitlab.com/qemu-project/qemu/-/blob/master/docs/devel/migr=
-ation/compatibility.rst</a><br>
-&gt; <br>
-&gt; Hector Cao (2):<br>
-&gt;=C2=A0 =C2=A0 target/i386: add compatibility property for arch_capabili=
-ties<br>
-&gt;=C2=A0 =C2=A0 target/i386: add compatibility property for pdcm feature<=
-br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0hw/core/machine.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 2 ++<br>
-&gt;=C2=A0 =C2=A0migration/migration.h | 23 +++++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0migration/options.c=C2=A0 =C2=A0|=C2=A0 6 ++++++<br>
-&gt;=C2=A0 =C2=A0target/i386/cpu.c=C2=A0 =C2=A0 =C2=A0| 17 ++++++++++++++--=
--<br>
-&gt;=C2=A0 =C2=A0target/i386/kvm/kvm.c |=C2=A0 5 ++++-<br>
-&gt;=C2=A0 =C2=A05 files changed, 49 insertions(+), 4 deletions(-)<br>
-&gt; <br>
-<br>
-</blockquote></div>
-
---000000000000ddae7a063f751e0c--
+-- 
+Best regards,
+Vladimir
 
