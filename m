@@ -4,94 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4506CCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6545CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 02:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0sUl-0002Xb-0r; Mon, 22 Sep 2025 22:11:07 -0400
+	id 1v0sVH-0002ki-U6; Mon, 22 Sep 2025 22:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0sUi-0002Wc-TW
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:05 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v0sUb-00009a-Le
- for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:04 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-77f1f8a114bso1909739b3a.0
- for <qemu-devel@nongnu.org>; Mon, 22 Sep 2025 19:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758593445; x=1759198245; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s4+SlQx+DMzy+4DCfZxmwJDvy0AC/rcKOjjhVaXW8is=;
- b=tROlP25o3avZ87b0NeJBAMaT+xBEw+VFa242Un5ERN5NItxt0UNcMl7tSwuj4chFLO
- OxuUPHpLTDu4R122GM/8DhY0RnxoKbkCtR0dAlj25HbURnK5HkYGAP23bSn++yzhOTuV
- py2KK+yV8xsMRF64CsLF9lVu042YRFBXSG04Py1PS7DP/DY7aMBqNfevMMOLsNQwCZTV
- 9Sb5fUFnga3lm78AjnYZober51M9l3Z1dvpnC99FNr3yNZs2LRRr3DOFGuRdkkX9k+zU
- XyBQGotbuLcQZ/KcNsXLDJ53WKDKkcSea8jB1NBtq46OjJdoQZ6PoDgUTk09RgLFX0Ta
- G7Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758593445; x=1759198245;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s4+SlQx+DMzy+4DCfZxmwJDvy0AC/rcKOjjhVaXW8is=;
- b=HuW/5Qnw3brbVOzGlznPNYnmsQyhmh0VG8E6afqmrhKX78VqV1sbYT89DZwC9xf5yf
- c3l5v6kZDsvvOW/ZPTkqxux0UyCH2RTS9igoyDpifwsy3gCVqprim6l/Q1gPqZpOBmKq
- X6Ik+9wAGKeVFOA9LtiptyfEef7EmXWbuBCJ/FPEj7QXzQ7VsrbUTS54gxX2mPwCvjrc
- fmXOQqlj2t27oAb+74mLnoTRE+mPdPy4g+hyM0eZM8JJIxaK9JYYg4ibLyzFzL8MA8l3
- bsF7TOs5gFyI5zLj8krZG0nj7VANK71CTwj9PtYVW8Ib5FlFPtLQ6Sut3WqF8HVj3DBN
- H+vA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhUhyJUu4+0yizfbltgOOFhGBMhscGbTC6Yp4DgO2hg4KF1ykDRtPm5ls3rqfbAf31HS6QnKH/v8xH@nongnu.org
-X-Gm-Message-State: AOJu0Yz7DnY/glD54Als5hqRiYczxo1REH3f/R3c999a9peJnByrex/I
- uXx8DlS9q/rT9a19E/Fg9IZZpTbWf5u0QUJ/98RpVVHRz0mvV8tww6ARpuM/PoPmbvc=
-X-Gm-Gg: ASbGncvvIuaJZwCM+ZdyuKMoKZzGLILBRO4a51P51koJbdAqfLrHIlt/BwHpYm8fkrX
- ACF7WZNKDWW0VdAGJ5ytOpOuXjh1FQlnGmhym6+2DazXrZfQkUIpMvrdrSR/R4caHKCxGoIPwuz
- OFitJ5VwubDNj0J7fN/YlymvSLdypzlLGZlzhx5JQTl7BC8CqzbjM55p1uReFVZvLtYKk4eDCMb
- k0fDA6iqs6WAXYEvtml9y4M8CVR3q1RsMYMpiohF3dIxhojcCOX5HLtZNCfWFOlk8XD+orOyHjH
- xidx3+wumPxe/ZzN7Ls7CsBnMATLhPnbZHVX0DE2F+O+4RqKyaTH1hng11eLZyMVjhykbjzlUml
- 3g730GtnmkIawtzCnfuSt3MLrmmHakdRojlIw
-X-Google-Smtp-Source: AGHT+IGnuP5BsIL6t8f1XgxP6tQ6pTsRRSiXj2y3bN9ZlJyC/DgmPkH1te3ywstvmQeNrB6aALgo1g==
-X-Received: by 2002:a05:6a00:2ea6:b0:77f:37a5:97b6 with SMTP id
- d2e1a72fcca58-77f5486f60dmr875260b3a.6.1758593445333; 
- Mon, 22 Sep 2025 19:10:45 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77ea933bfeasm10715652b3a.53.2025.09.22.19.10.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Sep 2025 19:10:44 -0700 (PDT)
-Message-ID: <455f0e94-4539-494d-ab8f-23c7832a991f@linaro.org>
-Date: Mon, 22 Sep 2025 19:10:43 -0700
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1v0sVD-0002k3-Fa
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1v0sV2-0000BO-6q
+ for qemu-devel@nongnu.org; Mon, 22 Sep 2025 22:11:35 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxHvDDAdJoGXoNAA--.28890S3;
+ Tue, 23 Sep 2025 10:11:16 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxzsHBAdJo9O6mAA--.45386S3;
+ Tue, 23 Sep 2025 10:11:15 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/virt: Align VIRT_GED_CPUHP_ADDR to 4 bytes
+To: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, WANG Xuerui <git@xen0n.name>,
+ qemu-devel@nongnu.org, Huacai Chen <chenhuacai@loongson.cn>,
+ Nathan Chancellor <nathan@kernel.org>, WANG Rui <wangrui@loongson.cn>
+References: <20250922141557.1939333-1-chenhuacai@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <8c422837-ea2f-1de0-c43f-840166096b82@loongson.cn>
+Date: Tue, 23 Sep 2025 10:09:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: fix self-modify-code problem when modify code
- in a single tb loop
-To: =?UTF-8?B?5p2O5aiB5aiB?= <liweiwei@kubuds.cn>,
- pbonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Cc: kasperl <kasperl@rivosinc.com>, =?UTF-8?B?546L5L+K5by6?=
- <wangjunqiang@kubuds.cn>, Wei Wu <lazyparser@gmail.com>,
- liwei1518 <liwei1518@gmail.com>
-References: <tencent_55B681D209516B8364F39BD9@qq.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250922141557.1939333-1-chenhuacai@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <tencent_55B681D209516B8364F39BD9@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJBxzsHBAdJo9O6mAA--.45386S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7KFW8uw4rKry3XF4fKF43twc_yoW8tF15p3
+ Z7Aa1vgF1UJF1xuay0qFy3WF47Jrn7GrsFkFW7K34fA3Wvkw18uF10ywn8CrWqqws3WF4I
+ vr4qkayxWas8JwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUB0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAaw2AFwI0_Jrv_JF1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
+ Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_
+ JF1lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrw
+ CYjI0SjxkI62AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
+ 6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
+ AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
+ 0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
+ v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AK
+ xVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU74lkDUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.559,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,31 +83,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/25 19:04, 李威威 wrote:
->  > If there's a problem with 1 tb, there's also a problem with 2 tb like
->  >
->  >         jal     zero, #4
->  >         jal     zero, #-4
->  >
+yes, it is actually one problem. And thanks for doing this.
+
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+
+On 2025/9/22 下午10:15, Huacai Chen wrote:
+> From: Huacai Chen <chenhuacai@loongson.cn>
 > 
-> I tried this case. And it didn't have this problem.
-> This problem seems only existed in single tb loop.
+> Now VIRT_GED_CPUHP_ADDR is not aligned to 4 bytes, but if Linux kernel
+> is built with ACPI_MISALIGNMENT_NOT_SUPPORTED, it assumes the alignment,
+> otherwise we get ACPI errors at boot phase:
 > 
->  >
->  > But unlinking the tb should be part of invalidation, so I don't quite see where the
->  > problem is.  You need to expand on the description of the problem.
->  >
+> ACPI Error: AE_AML_ALIGNMENT, Returned by Handler for [SystemMemory] (20250404/evregion-301)
+> ACPI Error: Aborting method \_SB.CPUS.CSTA due to previous error (AE_AML_ALIGNMENT) (20250404/psparse-529)
+> ACPI Error: Aborting method \_SB.CPUS.C000._STA due to previous error (AE_AML_ALIGNMENT) (20250404/psparse-529)
+> ACPI Error: Method execution failed \_SB.CPUS.C000._STA due to previous error (AE_AML_ALIGNMENT) (20250404/uteval-68)
 > 
-> I think the problem is the single tb is always in use  when the single tb is linked with 
-> itself，
-> and it cannot be updated when we update the code。
+> VIRT_GED_MEM_ADDR and VIRT_GED_REG_ADDR are already aligned now, but use
+> QEMU_ALIGN_UP() to explicitly align them can make code more robust.
+> 
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Suggested-by: WANG Rui <wangrui@loongson.cn>
+> Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+> ---
+>   include/hw/loongarch/virt.h | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 602feab0f0..be4f5d603f 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -28,9 +28,9 @@
+>   #define VIRT_LOWMEM_SIZE        0x10000000
+>   #define VIRT_HIGHMEM_BASE       0x80000000
+>   #define VIRT_GED_EVT_ADDR       0x100e0000
+> -#define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
+> -#define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
+> -#define VIRT_GED_CPUHP_ADDR     (VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT)
+> +#define VIRT_GED_MEM_ADDR       QEMU_ALIGN_UP(VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN, 4)
+> +#define VIRT_GED_REG_ADDR       QEMU_ALIGN_UP(VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN, 4)
+> +#define VIRT_GED_CPUHP_ADDR     QEMU_ALIGN_UP(VIRT_GED_REG_ADDR + ACPI_GED_REG_COUNT, 4)
+>   
+>   #define COMMAND_LINE_SIZE       512
+>   
+> 
 
-There's no use count for tb's, so that explanation doesn't make sense.
-Can you please share a testcase for this?
-
-For extra kudos, a small assembly test for tests/tcg/loongarch64/system/, so that we have 
-a regression test for the issue.  :-)
-
-
-r~
 
