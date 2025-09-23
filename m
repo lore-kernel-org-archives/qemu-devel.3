@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16CBECAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 11:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7ADCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 11:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v110w-0003fK-GK; Tue, 23 Sep 2025 07:16:54 -0400
+	id 1v1198-0008KK-NC; Tue, 23 Sep 2025 07:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v110s-0003eI-67
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 07:16:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v110b-00049e-Kw
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 07:16:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758626186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UjyYjLRPSv22rCsXR1hMeAMrVZioKbGm0F5xZ+m+jlQ=;
- b=K4RIssQmk2BXYa6FJ4DwUT2MwUY5CpHmZQALMs2Cx+OJdINJ2epQstA56c9MjrwUyuGZDN
- Bt0BbNFfy3Lbob3+Yd4LbPtDhDtriOgaXu4OfFdVLoLMDRhOhWWtjM5GPI6/3OAiKHpQ5Q
- oH5xkYyh4xgd9T9OrZn0/dPrmbCjNyA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-WIgsPGtIPR28JxkGtwtMbw-1; Tue,
- 23 Sep 2025 07:16:23 -0400
-X-MC-Unique: WIgsPGtIPR28JxkGtwtMbw-1
-X-Mimecast-MFC-AGG-ID: WIgsPGtIPR28JxkGtwtMbw_1758626182
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99F351956086; Tue, 23 Sep 2025 11:16:21 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F12701800452; Tue, 23 Sep 2025 11:16:20 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 454F021E6A27; Tue, 23 Sep 2025 13:16:18 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  odaki@rsg.ci.i.u-tokyo.ac.jp,
- marcandre.lureau@redhat.com,  berrange@redhat.com,
- vsementsov@yandex-team.ru
-Subject: Re: [PATCH v3 02/13] tcg: Fix error reporting on mprotect() failure
- in tcg_region_init()
-In-Reply-To: <6ebc31f0-c6cf-4e14-a87d-5b59f6c6105f@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 23 Sep 2025 11:41:03
- +0200")
-References: <20250923091000.3180122-1-armbru@redhat.com>
- <20250923091000.3180122-3-armbru@redhat.com>
- <6ebc31f0-c6cf-4e14-a87d-5b59f6c6105f@linaro.org>
-Date: Tue, 23 Sep 2025 13:16:18 +0200
-Message-ID: <87h5wta071.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v1195-0008JH-ME
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 07:25:19 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1v118w-00066D-Nl
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 07:25:19 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3fa528f127fso1403131f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 04:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758626705; x=1759231505; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qphk+y/nf5t0zQGEMW8vPfUD+5qK/36RpDrK0y9TPYA=;
+ b=x9eJZCAIosO195WsuPCNBrlSlvuaPXvY0coDyNZDMk4PkyXdRBclbCY8VUlC/UAFUE
+ CEeGzjZ1ZkfBVCZgMwgQS+cQNpVz/IHQFcp2wsW+bkscVpJH8ZB0v1AvDKS7tvDlJNfq
+ zdq15Am/td2/xxIcTCTcJDiJiQ+yYLSxCbeMPG2SJdhxdPf+HKSzx4qC+xBoacSAPTWA
+ 7ZtwYDSGxWQ4icN8Rxcf3ayM/sBhovqe00Zsfm75LRZYSVYb0sVmSYumiwDO493bAiS0
+ SRGONJ+iVC9DVoqBW0A32gCOzGrpYYoyg5vbh3nKdkBZeVWeLse42www7LEOcDEIkp96
+ U8hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758626705; x=1759231505;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Qphk+y/nf5t0zQGEMW8vPfUD+5qK/36RpDrK0y9TPYA=;
+ b=V7uPE0TJWHw1IaFw+NAlRgpL3e8ea1FOOABUrkpNayvsqHgbsc6DGGzgOdLAeQD1ol
+ f3+QIJR9+SQBKa1MlHmr8WizRvMbeatur/DhTvUEMYrhJOfPNE4gsdaKz1yBKbRnZpnT
+ bBhaH/18TfunVl1K7V6B1BdokRKTmnJpx/B0CKFj9lkiPQ+yRR0KTHdrG6mawlQzxtiE
+ Q/z7ZpDro3fKE7OpOhOB9igSgIp3TWh3RTlvO7zT+t2PCYP4HlavQ6FZJkCJAoJ1EiSm
+ 8BlN4o80zFDIsZ6+zSUvrCXdS3i1nz9Nq+/C+DacMP/5rF/UYknqKb/R0RR9GnOomPjY
+ hOlQ==
+X-Gm-Message-State: AOJu0YwrXAWTQidIu88BNjiXecvzvu87d5z1kxdexvL/wRkyjIaT2ea0
+ 6D7h+8CEQUZDh1NIJGsV4JAFM3f83Osu15imptCBpdDGW0aa0lhNuaoOmPuu5K/HW9yA2Fmb0zo
+ V7TW+ZeY=
+X-Gm-Gg: ASbGnct7UKqu95dSYpdlVMlOEgArZB7bywVqp7XeShUR4/W7yO95mUDtWS9xPRUigJC
+ JXh4a1FDXOAaATugeHXXorrA8ndtJbwczzbXyKzucwIkUunImhb1HAAw9pUglwIT6wQWw2Io+Mc
+ kSzhJfFil0KF9rgiCMBf2hGyfhM4eIvTqs/y98l3KP/iaDx/4P15FVKou058KVyqjuRWP6OP8+2
+ CIYE3tpb07cf0MLx9ffIyhgryeXNwJIolLCflq9dIwz1lvpCE2r6vmmKtnq8xE3zNbQfeVH/7Y1
+ a4GK9sQtNgZmS7i2ie2RYVem/0eOxISHhsIc6aLZHgbFWz/JSqlZwHb5IV1tOgGIJKHSsqa5geT
+ xUWGAEEbq3RJa30L4AFQ6UUI=
+X-Google-Smtp-Source: AGHT+IFcebgSOZXw7pl8V3D4YezfQlXvjumyFcD5E5jTZCFqFPQzYXJVSFIZ/wmXDknYMiHF0gbs5Q==
+X-Received: by 2002:a05:6000:2384:b0:3f5:3578:e538 with SMTP id
+ ffacd0b85a97d-405d090c99cmr1793930f8f.21.1758626705125; 
+ Tue, 23 Sep 2025 04:25:05 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4613d14d564sm316435265e9.14.2025.09.23.04.25.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 04:25:04 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 897A75F8AD;
+ Tue, 23 Sep 2025 12:25:03 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  stefanha@redhat.com,
+ mads@ynddal.dk
+Subject: Re: [PATCH v2] tracing: deprecate "ust" tracing backend
+In-Reply-To: <20250923074418.87716-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 23 Sep 2025 09:44:18 +0200")
+References: <20250923074418.87716-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 23 Sep 2025 12:25:03 +0100
+Message-ID: <87h5wtmmwg.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,78 +105,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> On 23/9/25 11:09, Markus Armbruster wrote:
->> tcg_region_init() calls one of qemu_mprotect_rwx(),
->> qemu_mprotect_rw(), and mprotect(), then reports failure with
->> error_setg_errno(&error_fatal, errno, ...).
->>
->> The use of &error_fatal is undesirable.  qapi/error.h advises:
->>
->>   * Please don't error_setg(&error_fatal, ...), use error_report() and
->>   * exit(), because that's more obvious.
->>
->> The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
->> wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
->> mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
->> with error_report().  VirtualProtect() doesn't set errno.  mprotect()
->> does, but error_report() may clobber it.
->>
->> Fix tcg_region_init() to report errors only when it calls mprotect(),
->> and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
->> reporting otherwise.  Use error_report(), not error_setg().
->>
->> Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protect=
-ion)
->> Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
->> Cc: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   tcg/region.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->> diff --git a/tcg/region.c b/tcg/region.c
->> index 7ea0b37a84..2181267e48 100644
->> --- a/tcg/region.c
->> +++ b/tcg/region.c
->> @@ -832,13 +832,16 @@ void tcg_region_init(size_t tb_size, int splitwx, =
-unsigned max_threads)
->>              } else {
->>  #ifdef CONFIG_POSIX
->>                  rc =3D mprotect(start, end - start, need_prot);
->> +                if (rc) {
->> +                    error_report("mprotect of jit buffer: %s",
->> +                                 strerror(errno));
+> The "ust" backend is complex (tracetool contains two output formats just
+> for that backend).  It is not clear if if it has any users, and LTTng
+> anyway can use the uprobe tracepoints provided by the "dtrace" backend,
+> therefore deprecate "ust".
 >
-> I'm not keen on handling errors differently in the same function.
->
-> qemu_mprotect_rwx() and qemu_mprotect_rw() already print the error.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Yes: they call qemu_mprotect__osdep(), which uses error_report().
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-> Why not add qemu_mprotect() as a simple qemu_mprotect__osdep() alias,
-> then call it here, also covering the non-POSIX case?
-> (Question for Richard, after looking at commits 22c6a9938f7 and more
->  importantly 97a83753c9 -- wondering about WoA).
-
-There is no commit 97a83753c9.  Do you mean a97a83753c9?
-
-I'd like to merge this commit as is.  It's a minimal fix, and it's been
-reviewed.  We can always improve on top.
-
->> +                }
->>  #else
->>                  g_assert_not_reached();
->>  #endif
->>              }
->>              if (rc) {
->> -                error_setg_errno(&error_fatal, errno,
->> -                                 "mprotect of jit buffer");
->> +                exit(1);
->>              }
->>           }
->>           if (have_prot !=3D 0) {
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
