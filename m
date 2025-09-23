@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53878CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 18:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DABCAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 18:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v17JB-0006PR-FN; Tue, 23 Sep 2025 14:00:09 -0400
+	id 1v17Me-0000Vf-HH; Tue, 23 Sep 2025 14:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v17J9-0006PD-LE
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:00:07 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v17Mc-0000Uz-52
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:03:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v17J5-0003ZW-A6
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:00:05 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1v17Ma-0004R5-Am
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 14:03:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758650402;
+ s=mimecast20190719; t=1758650617;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eacQxv6pgrHdboqFFU3dcqFS04smjIBxLfh6YOLugaU=;
- b=JGrCOO9LeNssSt5ZmNJ+1+K6FIxGT17LYIeol5bd1hA87E9eslfRP1W8ia0VGfi5jJZ7S2
- jxkGxM49N8BoKomDyaexnNk3mzzMsUV7MhDxY1dwNUYScy89sXb4CMLb2NHx4IzJxMStv0
- DVpEE3qF+Yhy2SW7v3d/uC5MhKi1l8k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=TSTyU/dc96wgvzHEhWCnffelvYTkPsoP+0tpVcdadeg=;
+ b=KUZL6qm0XHe3m+ueS7asE8k9x/6X1tYb+wzN/7mby2ILayZoVfOv1oXFgg7IJTq1GfeGXY
+ vOixboHTQpn64Mb0RY2yxvFbbQ8gng6sNrhDMTm+pv3NsNV4xlNVS8gsQmnpbPt0dm/+s7
+ bYZ/Ud0toxDHqdr8LLWmJg8B75NK6yA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-F2Xh0YGKP9muvRbO5bQ_7g-1; Tue,
- 23 Sep 2025 14:00:00 -0400
-X-MC-Unique: F2Xh0YGKP9muvRbO5bQ_7g-1
-X-Mimecast-MFC-AGG-ID: F2Xh0YGKP9muvRbO5bQ_7g_1758650399
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-cz5XHWyHNH-JlHaIUVvfSQ-1; Tue,
+ 23 Sep 2025 14:03:35 -0400
+X-MC-Unique: cz5XHWyHNH-JlHaIUVvfSQ-1
+X-Mimecast-MFC-AGG-ID: cz5XHWyHNH-JlHaIUVvfSQ_1758650614
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C42E1800577; Tue, 23 Sep 2025 17:59:59 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.69])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7742D1955F19; Tue, 23 Sep 2025 17:59:58 +0000 (UTC)
-Date: Tue, 23 Sep 2025 13:59:57 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 3/3] docs/code-provenance: AI exceptions are in addition
- to DCO
-Message-ID: <20250923175957.GD509965@fedora>
-References: <20250922154843.60233-1-pbonzini@redhat.com>
- <20250922154843.60233-4-pbonzini@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9796B195606C; Tue, 23 Sep 2025 18:03:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.89])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C47281800451; Tue, 23 Sep 2025 18:03:32 +0000 (UTC)
+Date: Tue, 23 Sep 2025 13:03:30 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] block: Expose block limits for images in QMP
+Message-ID: <jpdlse4d46upjbeapa45ic7kpfuqv7vuyxo4ka4ansnqvrd32b@yqmxu256sujs>
+References: <20250923163735.378254-1-kwolf@redhat.com>
+ <20250923163735.378254-2-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="sYSeXdabDD4a1k8m"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250922154843.60233-4-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20250923163735.378254-2-kwolf@redhat.com>
+User-Agent: NeoMutt/20250510
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -90,45 +83,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---sYSeXdabDD4a1k8m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Sep 22, 2025 at 05:48:42PM +0200, Paolo Bonzini wrote:
-> Using phrasing from https://openinfra.org/legal/ai-policy (with just
-> "commit" replaced by "submission", because we do not submit changes
-> as commits but rather emails), clarify that the contributor remains
-> responsible for its copyright or license status.
->=20
-> [This is not my preferred phrasing.  I would prefer something lighter
-> like "the "Signed-off-by" label in the contribution gives the author
-> responsibility".  But for the sake of not reinventing the wheel I am
-> keeping the exact words from the OpenInfra policy.]
->=20
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On Tue, Sep 23, 2025 at 06:37:34PM +0200, Kevin Wolf wrote:
+> This information can be useful both for debugging and for management
+> tools trying to configure guest devices with the optimal limits
+> (possibly across multiple hosts). There is no reason not to make it
+> available, so just add it to BlockNodeInfo.
+> 
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  docs/devel/code-provenance.rst | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  qapi/block-core.json             | 59 ++++++++++++++++++++++++++++++++
+>  block/qapi.c                     | 34 ++++++++++++++++--
+>  tests/qemu-iotests/184           |  3 +-
+>  tests/qemu-iotests/184.out       |  8 -----
+>  tests/qemu-iotests/common.filter |  3 +-
+>  5 files changed, 94 insertions(+), 13 deletions(-)
+> 
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index dc6eb4ae23..eda041ac1c 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -275,6 +275,62 @@
+>        'file': 'ImageInfoSpecificFileWrapper'
+>    } }
+>  
+> +##
+> +# @BlockLimitsInfo:
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Quite a few additions to the QMP, but this is really just exposing
+what we already have.  I don't think the larger output is going to
+make QMP any noticeably slower, and it's not recursive, so I have no
+objection to your decision of just always exposing it.
 
---sYSeXdabDD4a1k8m
-Content-Type: application/pgp-signature; name=signature.asc
+> +++ b/tests/qemu-iotests/184
+> @@ -46,7 +46,8 @@ do_run_qemu()
+>  run_qemu()
+>  {
+>      do_run_qemu "$@" 2>&1 | _filter_testdir | _filter_qemu | _filter_qmp\
+> -                          | _filter_qemu_io | _filter_generated_node_ids
+> +                          | _filter_qemu_io | _filter_generated_node_ids \
+> +                          | _filter_img_info
 
------BEGIN PGP SIGNATURE-----
+Inconsistent on absence or use of space before backslash-newline.
+Cosmetic only.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjS4BwACgkQnKSrs4Gr
-c8gWeAf+IMZtwZl4OGRW8MmUVTKPUHn9R5jdKnA7Kh/gvoidvaCrvdyVor2eXqqP
-rEhszfJtoxrvOUmEZWiEWn3oXjNMZi2Wsn//Z06C8lG5takl5lXJAjlkt21ZQL7L
-FMXgO/MiW6VIktnlDloVJ11Clh/BVXeTjnqxiinXsv19qQJZhtx7gt1KY19gWbqu
-odnnH8Yoq7ZTYUM1/j+1pSLHMuY1Hv9go397I5F4246wLqWNL1j1ZI97AFXL1qcK
-WS1o6vqrgRTLqXqXDIRv/4wWGOyoymiDa9lbOlZYqwGr8YTQpvr0snJWaM9K+5dj
-x/WCVfVljwaD9Oi+CW42SA23LDy3+Q==
-=aj03
------END PGP SIGNATURE-----
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
---sYSeXdabDD4a1k8m--
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
