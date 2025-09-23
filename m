@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E6F5CAC5A7
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 08:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDA6CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 09:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v0yoX-0008IZ-9I; Tue, 23 Sep 2025 04:55:57 -0400
+	id 1v0yz3-0003wA-4h; Tue, 23 Sep 2025 05:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yoO-0008Gk-C2
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:55:51 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v0yoH-00077u-82
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 04:55:48 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3f2ae6fae12so1846978f8f.1
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 01:55:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758617735; x=1759222535; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=94ZY4lsRezsD6JpcPVX6PoxjsyVUQTAMf3zT7OOJyTs=;
- b=BEIbw2+atj13ahAgqTaiLWZDWtMnY4xuFd/Eb8kWA5Hr5slitoZZz+marQ0JiR36GA
- EqkTEZ754qWhlUr5mUcgvywMjAuwymaPbHRPKnxdoAgRZnxi8/TVnwwQEyk8AqLU/IFw
- QPyMr2g2WFqRgNSlKHO3SPumGapiVgDNZ+0HKhrcjPxapcREFk0akvh/HeFaSwoHVtXz
- Boxsw+4LDmX/FV/WHqdOrPUS4ttWzK5jpAawnLT3dXNyVdXRcN1dUD+Fee8urPxCAwCo
- pF5DxNcPRFB1M5o2UiE2tg3FC41zCqYT0oh23rr4D9Ep8H3kTNSF8FCViqux+fn5npDf
- Gn+A==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1v0yz0-0003ux-L6
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:06:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1v0yyk-0008OY-Fh
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 05:06:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758618383;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G7jMiyHHwtKmMvq0mk1wU4kw143HvrC1x6M6BtqO9KY=;
+ b=EdQuKx6AIZabqP+kj0Pi2ORAcUHV0B32Q253Znf3qwNQw+X9VOKLRyFAjbMzBK4gKmz319
+ S/kUinEfIWwmWJDxi5YKxv75W7ffbK0X2HXnRTv59i3dHUAnfjzd9C0sFcJ9m+Fq1GltIQ
+ UedS5xaChuaWEs/dEEsn2F2sYeCVIK0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-512-Kot6wcaPPP24zoOlVw4mJw-1; Tue, 23 Sep 2025 05:06:22 -0400
+X-MC-Unique: Kot6wcaPPP24zoOlVw4mJw-1
+X-Mimecast-MFC-AGG-ID: Kot6wcaPPP24zoOlVw4mJw_1758618381
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b98de0e34so45063185e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 02:06:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758617735; x=1759222535;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=94ZY4lsRezsD6JpcPVX6PoxjsyVUQTAMf3zT7OOJyTs=;
- b=tH8dYReRknwJW15X+RV/yVeBPvzvI1C5Oe2AeZU2tzlEmqkk43jQu/q3r0SPj2SaVp
- L0Ls0qP1y6XoBWcMgPvNYw2iTfd918QRXbcc2YtCaYHNiVZeEz5WDGNG0GMdxTpFnNQS
- uOke6hgCagGRPmozo9p+/9+z7AJTmlwbmXfWMkK/vnVQV/9q4Nx55DESODtKXvOj9iNg
- dhFdeR8g6OcXHQgsX6pKPWP5eWDoRkcLUj7rLxGd/WXkOY/vueKEOiOCweqxDSuuVH/8
- OXCHUMmE1TpNA/lksvxnuERoeZFR3W5rzDsRnM0xj6qoRXZNYbt2jyeCRKe8S38/69qQ
- JhKw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8oGyLSFKsMJqyWVCQSakDV3IfAaTSvYWn0ykKe/27Ak5nD1LvQoOScX3v1wAsBrB8R0wmda6kqjka@nongnu.org
-X-Gm-Message-State: AOJu0Yw+Kka4HKXHFjEYHOfaFZgkQ2EgmG6vWQ3dQp6TjsttolCr10Dz
- gSUNxHLWoG/7N91m6+TgZUo7MhgRGVMeyqDyfh74i0b2YIbIUOXYyCNOyyjtVQwHnDA=
-X-Gm-Gg: ASbGncvJsQ0k1QEOSHAkTRrOCjVP4bkJkBac8xz25vwZQcydkBg3GI9W8W5ruXtxy3A
- nI8tXGir+s24tdNHW+YM2qQ/8obJYZomGIsBk5Qeu290o/b6LkXqLMmMnu0qb2lsnhB9lhZUiK5
- hJyhZcPH9gMfTGGBz34RwpBFEmnD6OpmURW4BgeM82vuCUqot5A7i3o3Ql0ycPNM4NHr6AF6Kg/
- q5JZGWrPP1FPDoXCA1Fs7jH0LZx+8Wj1QtxMGpFj+Xr4ZyJTXKjLDwuNyWOg/P28hADMSiePv2L
- 7xCbWkYCpWSWV9FV4g4ER31QHDSiS4+9LgyfcPp0EY+u9MhYJYP23FrnNjUxivXwtaEeBlw+jK9
- fvXLQHjfHvrw3WpEc47qtD2J6xOzQEPhJLGIje0WJTKLVfhygN2vb70WErjF7LEyRqA==
-X-Google-Smtp-Source: AGHT+IHQ6WmvWhJNVmzJ03KMtS34Yp8QNSX7JBk+ih+Dutzw8z/ZHso3Gdz872E9Uxx/9ht+gtUWuQ==
-X-Received: by 2002:a05:6000:178e:b0:3f1:2671:6d9e with SMTP id
- ffacd0b85a97d-405c33a35bamr1316964f8f.1.1758617734649; 
- Tue, 23 Sep 2025 01:55:34 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee07407d33sm23276803f8f.18.2025.09.23.01.55.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 01:55:34 -0700 (PDT)
-Message-ID: <5ed7c59b-5e61-4e79-b4e0-a8441ac5b784@linaro.org>
-Date: Tue, 23 Sep 2025 10:55:33 +0200
+ d=1e100.net; s=20230601; t=1758618380; x=1759223180;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G7jMiyHHwtKmMvq0mk1wU4kw143HvrC1x6M6BtqO9KY=;
+ b=jQxalIVSSp7ltjzJc5HzdD6WqhOMd5b2Dq3bdvHeAclbPx3D0BuHOEcygS2c5ahZgZ
+ zR5pUpyWlN02GcKZl7dXSkEtf9im1JCduF92D0fXYUPwjrjpK3aAsSFJYKn05KsB96sh
+ nVaK9YomCk2Uk19v2N24ST1fx4gZS1+bzfhnsn39To2VhvRhIm8mdVgOS1UMoDNP8OKI
+ bnJ5xCaIBqh7E6zp4JQjsFANopvhlyH39D1z0zuQU9SOPpY/LF02PNZYzSE2jKIkzu6+
+ k2DvpM8CuQV/J4KrHn4iUOhlVa2rcPWFDOJTWdXHZ7pUe/KaGA7AI0Ov8+HVweH3LVcr
+ 560w==
+X-Gm-Message-State: AOJu0Yz1ISO0DnWKmbPd2W45Vm7FypPeP7MMjLbLvIIEs027oRxsFDzp
+ R66fe0nHBsneqiyDI3hzHfiF6xcB0oNsyAQdebQzxqY0GhhghPNc5gEZygi3L/NXVEhCG79JcX5
+ +Bb2TGPE0kYVSTvHqttDerGgN4MF5/2FJ2geQ8FWL8Cj4lNeyLy9wWzmil/W0HwnL
+X-Gm-Gg: ASbGncv4qWHfId8YGqGmlvHk6sjtMw+XLV8NgwTmmIdbwDPVWvHaLhYHm5h6bReMTQW
+ PVlHsnswBrUZR384McLmJhMFg47tiY7dHPytfJ3GfgGxecpRMF7zo2IuWpOnHzOFmsnV8Hf9UtA
+ 1jm/9o7GjunrxkUbLEp/Teb96OGokdRtF8yRPMyoTsGM2HHs45WA1/PNU8Z1BGviSxvtTxkwG5+
+ iFhInvy8NACLVV8rhawO0k/yxOrTHvVvhYUzHnel76IxGF6fIEzv+QUn5f5WHd2PmDSK+C/aV9O
+ dqzz9sYb4/7RYjbz2xTokAd0SuQzdyJL2ae0kxWhwA==
+X-Received: by 2002:a05:600c:4fcb:b0:46e:1d8d:cfb6 with SMTP id
+ 5b1f17b1804b1-46e1dab52e2mr15204275e9.19.1758618380328; 
+ Tue, 23 Sep 2025 02:06:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFW+LIquqAZ9x+XCVHfS0Le+ZnA6l5GcyOU4RxQAR7WNpXuq9mwnt4UvpBRxqtfc3286d6M9g==
+X-Received: by 2002:a05:600c:4fcb:b0:46e:1d8d:cfb6 with SMTP id
+ 5b1f17b1804b1-46e1dab52e2mr15203915e9.19.1758618379771; 
+ Tue, 23 Sep 2025 02:06:19 -0700 (PDT)
+Received: from sgarzare-redhat ([5.77.70.155])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4613dccb5e2sm272973145e9.17.2025.09.23.02.06.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Sep 2025 02:06:18 -0700 (PDT)
+Date: Tue, 23 Sep 2025 11:06:13 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Li Zhaoxin <lizhaoxin04@baidu.com>, Cindy Lu <lulu@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Gao Shiyuan <gaoshiyuan@baidu.com>
+Subject: Re: [PATCH] vhost: Do not actively send a config interrupt
+Message-ID: <7hklwelliflg7ridixhyiqsd3l5fmuscfai4c4xhtqswa53jn5@62k5iwtpouxc>
+References: <19ac5fa24777515f9f0878e6874dc9f6edec45a3.1758552835.git.lizhaoxin04@baidu.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/12] hw/ppc/spapr: Use tb_invalidate_phys_range in
- h_page_init
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-References: <20250923023922.3102471-1-richard.henderson@linaro.org>
- <20250923023922.3102471-7-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923023922.3102471-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <19ac5fa24777515f9f0878e6874dc9f6edec45a3.1758552835.git.lizhaoxin04@baidu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,47 +107,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/9/25 04:39, Richard Henderson wrote:
-> We only need invalidate tbs from a single page, not flush
-> all translations.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: qemu-ppc@nongnu.org
-> ---
->   hw/ppc/spapr_hcall.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index c594d4b916..feb31d5dd8 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -8,7 +8,7 @@
->   #include "qemu/main-loop.h"
->   #include "qemu/module.h"
->   #include "qemu/error-report.h"
-> -#include "exec/tb-flush.h"
-> +#include "exec/translation-block.h"
->   #include "exec/target_page.h"
->   #include "helper_regs.h"
->   #include "hw/ppc/ppc.h"
-> @@ -301,7 +301,7 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
->           if (kvm_enabled()) {
->               kvmppc_icbi_range(cpu, pdst, len);
->           } else if (tcg_enabled()) {
-> -            tb_flush(CPU(cpu));
-> +            tb_invalidate_phys_range(CPU(cpu), dst, len);
+CCing Cindy since she introduced this code with commit
+f9a09ca3ea ("vhost: add support for configure interrupt"), so she can 
+help to review this, since I don't really get this change.
 
-Shouldn't this be:
+On Mon, Sep 22, 2025 at 11:19:32PM +0800, Li Zhaoxin wrote:
+>From: lizhaoxin <lizhaoxin04@baidu.com>
+>
+>After the VM is suspended/resumed or live-migrated,
+>we do not want the guest to output information such as
+>the capacity of the block device, as this is noticeable to the tenant.
+>Also, there is no need to immediately send a config notifier
+>for the virtio device after vhost_dev_start.
 
-                tb_invalidate_phys_range(CPU(cpu), dst, dst + len - 1);
+Can you explain more clearly what your problem is and why this patch 
+solves it?
 
-?
+Thanks,
+Stefano
 
->           } else {
->               g_assert_not_reached();
->           }
+>
+>Co-developed-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+>Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+>Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+>---
+> hw/virtio/vhost.c | 7 +------
+> 1 file changed, 1 insertion(+), 6 deletions(-)
+>
+>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>index 6557c58d12..1f8a495ef8 100644
+>--- a/hw/virtio/vhost.c
+>+++ b/hw/virtio/vhost.c
+>@@ -1847,15 +1847,10 @@ static void vhost_stop_config_intr(struct vhost_dev *dev)
+>
+> static void vhost_start_config_intr(struct vhost_dev *dev)
+> {
+>-    int r;
+>-
+>     assert(dev->vhost_ops);
+>     int fd = event_notifier_get_fd(&dev->vdev->config_notifier);
+>     if (dev->vhost_ops->vhost_set_config_call) {
+>-        r = dev->vhost_ops->vhost_set_config_call(dev, fd);
+>-        if (!r) {
+>-            event_notifier_set(&dev->vdev->config_notifier);
+>-        }
+>+        dev->vhost_ops->vhost_set_config_call(dev, fd);
+>     }
+> }
+>
+>-- 
+>2.34.1
+>
 
 
