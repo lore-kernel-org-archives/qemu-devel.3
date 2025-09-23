@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C2ACAC5A5
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6035ECAC5AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Ay0-0006IE-SR; Tue, 23 Sep 2025 17:54:32 -0400
+	id 1v1Ay2-0006Iq-A8; Tue, 23 Sep 2025 17:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Axz-0006HK-D6
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:31 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1v1Ay0-0006Ha-De
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:32 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Axx-0003i5-Aw
+ id 1v1Axx-0003i8-WB
  for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:31 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-27d3540a43fso14420055ad.3
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:28 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-267fac63459so57534235ad.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758664467; x=1759269267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758664468; x=1759269268; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tkajwB0LkhYnqCNRGrXzrsBCk6tFlVZCMEBA7S1wExk=;
- b=JhDSt0f8eBFqqStdB35fEZ5T+mfDmbtS2GeENRHs8ek9woPzLYvpDW4v9dQ0o17Tb/
- I+l43R91nAHbMn7hwPBeYRYWh/TOx912K1t2BX2+OY6QksFbKqNLZrY+dQpHCwbDknzs
- CYRWS/XaoIhoryL1hpd5B2YRU2+AE9DpKEtpXkVBL3Zm7t7urmCU3YikjU1fkGjPlofj
- w9KTtZ8BS1S4YQ3cslzyCiUqnx2Ltxnm106+LmlAdTPvomTEqyQhAr6w6XqOeavYaCde
- qQcWHkLyRCuBZldIz3sX8Gsv8H03ZHk3hmgG+r/WsyX55zfOBwjIjHfdpN7PTJti2m+E
- nL4A==
+ bh=ZamIB9qOqLDXfHWztLFTsDY1Wf4aDJfUVKiJDrru8TA=;
+ b=NP3LyLsc82v/I5+Hjom25xl/WszN0Z4g84X+yiQW/Wbx5SkbA3BcYgiY3hNBUciyrA
+ Xt+fITrASCb7FdkJJZSszdV8FQ+zuvOMxc8WD6c6GcN1ocJG6IkQrfkW0xYA8AQGs6II
+ fZI2NpQebQ6knUleT2ZA/wBRHjo0gxp2IcR7AY4VKrEI5wqicoGHcSrdZogKDEvVvnki
+ c1McIFvgoeM4SWkIrVg9MJePqCDNxnC8eRpK/R6jMa6GwO5snTRfzmLqRhGeCr5UdWjE
+ 0MbEJqV9hsNNwsYl7iLVQoP3MSK2+YpMHFRp5vL9DMnvhEvKbfb4KoTE3bTfs1MNJFbE
+ 9Qag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758664467; x=1759269267;
+ d=1e100.net; s=20230601; t=1758664468; x=1759269268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tkajwB0LkhYnqCNRGrXzrsBCk6tFlVZCMEBA7S1wExk=;
- b=Ql67K1SQrOkSDqG6e3tvOqjaHHp8xLlWtdQPsGhB83dX87c5egiyeQ9G5bYH/T5K2H
- l6/mOqp+UbcMMgJNe0onzR3VbHCXPTZ641j1//Rq5k5mRQNR2lWo7rDHo2jBwEMDisEd
- Lm1ECrD/I7vMgtG8aHbdx7ml7LdlOUZCQBoiae8Oo7WFk+duDPbvARLKDadTkJC1WgtA
- oIuiKvmPU4+4mzfwbp89HIMBrqgCqYzqqIpnIw1/rLzw4Oq3HL5VLXQOT3qxrqt2CCn/
- zwPQeRNn/Z2sTWk571vG8thmpTI0QYGiJR++Ve7dtEPtvQyWl6GzLXrsmWJ1SlisE6Sx
- 08TQ==
-X-Gm-Message-State: AOJu0YzLqvtT83ESUFy4/ZA6Ljazk7i5p9MtBvcvMbKtYVplRhkof/Qp
- qYASuyMSIz5bEFolcxou78GRfUwCMfpJqv5OowcFTJ6uT1ofRXYqNcbKlUMtKgpZ/EKQaZl6SiX
- 9JduB
-X-Gm-Gg: ASbGncup0Rqzjr5jz1sQH1GDDzf9TxSBJjIxrEr+/NlIaHqgYliMMgr5RKbxWeLqZNa
- ZvTJ3ZEsJZ/2FezDfaLchBFAtWwmZMQfq5qSvPRWIZHI+zbOQbFSG4tdgZSlOL879phq9H+uIuL
- K47uEMPAEYYADkzz1e4E1lstmnXdy+VU1FBElj3XP7y5/f6L1NEDKLAX3DjxtCGKqbErJsKF3q0
- BN8RETwZErekAM0zHPYa6BN4raMvkt3fUfKIjEHAgngRcohqzJb1VZyHU4OwfJ3jdwJTRfZPVgF
- lyV1sWRYKVZc222EjxTyQWAXj5SfzyTTJlV8GSPfCzNEF3U5E8E6Uzb/xgXngC3AUMqZR0FvpJd
- 2ySSuYJhxR4TQ7/GgN1G2ju38vqMI
-X-Google-Smtp-Source: AGHT+IF4e25HHdHJP6TzFOqjb9YsyfUad9ing6qbxJI5i0wA8W92TtkHxS17NU2WHQK+hZ+H7XXcew==
-X-Received: by 2002:a17:902:e951:b0:25c:76f1:b024 with SMTP id
- d9443c01a7336-27cc24e015cmr45815735ad.25.1758664467465; 
- Tue, 23 Sep 2025 14:54:27 -0700 (PDT)
+ bh=ZamIB9qOqLDXfHWztLFTsDY1Wf4aDJfUVKiJDrru8TA=;
+ b=CDil/fAm6DDoxzGRKvGXToxPasMfC02mbVNSVypf24jfp7Huyu266tCbCvmxAH98Jq
+ 4BRnbGtWOtK+xoSMpJUvkkUeOksHbpniHYNe0UQqFpaifscZQ939tQE2SEZxZ1HyJj62
+ xCAE7P4+jOFW6V/SlM3Kmt7H5IubuIg9b7U9DzbOEvVz7pMziOUEIGaeC/xu8tGg3Fmb
+ 9Jt2q6RmiZiRZBmpSqb5Kctw5rlodhWWznOtDwpmBwk6u9mZVcntErlRbEJuC8PHozDg
+ QEoZrWcmzDgQjW5cq6fZVT9g475m0xYLJRBg0VoEjIrCKofQ/yFOMo9nrXSt26DmlKc6
+ hXjQ==
+X-Gm-Message-State: AOJu0YwF6uNqO9RunRyP/oWIY+bwXPb3kmY+9dE3RHmV0wLE1dxkahAI
+ g1YIiDnUJWIjnIeYgm2BpPZCXpCuuhZJIZd5lLWpSoSHK+r1xnLXzfc53yqao24jWFKFn7uu3IU
+ B1PCr
+X-Gm-Gg: ASbGnct/EaM9hgtlRXxM42gM5ZFWwI2GVSJMhJ959QLZQtqZckhrZ6MTDK6UIpnB3+F
+ 0cRRt/c8Ll9rIwYcpGMI8Ca4yeV32C+2uJAOYUdqg8L/7zgvk+IL1tCpDk0Pd/DJnT40jT2rWwG
+ VKdUTWdHUcAKXzh3Ce32cJxyJ8LBv+yH+cPWfDSdqChTrSQw8V65DlO9UK4NnRry7SxoDyTXied
+ JQ+8lXbBrFclddCfnL8m+bztix2dClMvEX3hzXmBl9fXOgFiRzwMN0Ehi4zhLr8k2rQjP1py51X
+ yPyTF4M1q6KFq+/PG1jHQDjJINStHWO+nnit9yzvujUguKOlc6UFCf6o1XZJi+cuIHOh9RYXYT/
+ 5/YhNZ05zGBimxWul6wWFOcx+G92v
+X-Google-Smtp-Source: AGHT+IH+c5Yk+YV6LrcH+gh1k70ihRRGyDu721kqleWbyAhx5u+mjm0kl0vz6F5eZByJEj6mfD1GRQ==
+X-Received: by 2002:a17:903:1107:b0:267:b0e4:314e with SMTP id
+ d9443c01a7336-27cc2c9a0c3mr51670835ad.23.1758664468282; 
+ Tue, 23 Sep 2025 14:54:28 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.26
+ d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 23 Sep 2025 14:54:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 01/10] gdbstub: Remove tb_flush uses
-Date: Tue, 23 Sep 2025 14:54:15 -0700
-Message-ID: <20250923215425.3685950-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 02/10] target/alpha: Simplify call_pal implementation
+Date: Tue, 23 Sep 2025 14:54:16 -0700
+Message-ID: <20250923215425.3685950-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250923215425.3685950-1-richard.henderson@linaro.org>
 References: <20250923215425.3685950-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,72 +100,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This hasn't been needed since d828b92b8a6
-("accel/tcg: Introduce CF_BP_PAGE").
+Since 288a5fe980f, we don't link translation blocks
+directly to palcode entry points.  If we load palbr
+from env instead of encoding the constant, we avoid
+all need for tb_flush().
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/system.c | 5 -----
- gdbstub/user.c   | 3 ---
- 2 files changed, 8 deletions(-)
+ target/alpha/helper.h       |  1 -
+ linux-user/alpha/cpu_loop.c |  5 -----
+ target/alpha/sys_helper.c   |  6 ------
+ target/alpha/translate.c    | 21 ++++++---------------
+ 4 files changed, 6 insertions(+), 27 deletions(-)
 
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index 5be0d3c58c..5221c579d9 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -18,13 +18,11 @@
- #include "gdbstub/syscalls.h"
- #include "gdbstub/commands.h"
- #include "exec/hwaddr.h"
+diff --git a/target/alpha/helper.h b/target/alpha/helper.h
+index d60f208703..788d2fbf28 100644
+--- a/target/alpha/helper.h
++++ b/target/alpha/helper.h
+@@ -90,7 +90,6 @@ DEF_HELPER_FLAGS_2(ieee_input_s, TCG_CALL_NO_WG, void, env, i64)
+ #if !defined (CONFIG_USER_ONLY)
+ DEF_HELPER_FLAGS_1(tbia, TCG_CALL_NO_RWG, void, env)
+ DEF_HELPER_FLAGS_2(tbis, TCG_CALL_NO_RWG, void, env, i64)
+-DEF_HELPER_FLAGS_1(tb_flush, TCG_CALL_NO_RWG, void, env)
+ 
+ DEF_HELPER_1(halt, void, i64)
+ 
+diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
+index bb8346b509..f93597c400 100644
+--- a/linux-user/alpha/cpu_loop.c
++++ b/linux-user/alpha/cpu_loop.c
+@@ -94,11 +94,6 @@ void cpu_loop(CPUAlphaState *env)
+                 break;
+             case 0x86:
+                 /* IMB */
+-                /* ??? We can probably elide the code using page_unprotect
+-                   that is checking for self-modifying code.  Instead we
+-                   could simply call tb_flush here.  Until we work out the
+-                   changes required to turn off the extra write protection,
+-                   this can be a no-op.  */
+                 break;
+             case 0x9E:
+                 /* RDUNIQUE */
+diff --git a/target/alpha/sys_helper.c b/target/alpha/sys_helper.c
+index 51e3254428..87e37605c1 100644
+--- a/target/alpha/sys_helper.c
++++ b/target/alpha/sys_helper.c
+@@ -20,7 +20,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/cputlb.h"
 -#include "exec/tb-flush.h"
- #include "accel/accel-ops.h"
- #include "accel/accel-cpu-ops.h"
- #include "system/cpus.h"
+ #include "exec/helper-proto.h"
  #include "system/runstate.h"
- #include "system/replay.h"
--#include "system/tcg.h"
- #include "hw/core/cpu.h"
- #include "hw/cpu/cluster.h"
- #include "hw/boards.h"
-@@ -174,9 +172,6 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
-         } else {
-             trace_gdbstub_hit_break();
-         }
--        if (tcg_enabled()) {
--            tb_flush(cpu);
--        }
-         ret = GDB_SIGNAL_TRAP;
-         break;
-     case RUN_STATE_PAUSED:
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 67403e5a25..2e14ded3f0 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -15,7 +15,6 @@
- #include "qemu/sockets.h"
- #include "qapi/error.h"
- #include "exec/hwaddr.h"
--#include "exec/tb-flush.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/commands.h"
- #include "gdbstub/syscalls.h"
-@@ -220,7 +219,6 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
- 
-     /* disable single step if it was enabled */
-     cpu_single_step(cpu, 0);
--    tb_flush(cpu);
- 
-     if (sig != 0) {
-         gdb_set_stop_cpu(cpu);
-@@ -539,7 +537,6 @@ static void disable_gdbstub(CPUState *thread_cpu)
-         /* no cpu_watchpoint_remove_all for user-mode */
-         cpu_single_step(cpu, 0);
-     }
--    tb_flush(thread_cpu);
+ #include "system/system.h"
+@@ -38,11 +37,6 @@ void helper_tbis(CPUAlphaState *env, uint64_t p)
+     tlb_flush_page(env_cpu(env), p);
  }
  
- void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+-void helper_tb_flush(CPUAlphaState *env)
+-{
+-    tb_flush(env_cpu(env));
+-}
+-
+ void helper_halt(uint64_t restart)
+ {
+     if (restart) {
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index cebab0318c..f11b382438 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -48,8 +48,6 @@ struct DisasContext {
+ 
+ #ifdef CONFIG_USER_ONLY
+     MemOp unalign;
+-#else
+-    uint64_t palbr;
+ #endif
+     uint32_t tbflags;
+     int mem_idx;
+@@ -1155,7 +1153,6 @@ static DisasJumpType gen_call_pal(DisasContext *ctx, int palcode)
+ #else
+     {
+         TCGv tmp = tcg_temp_new();
+-        uint64_t entry;
+ 
+         gen_pc_disp(ctx, tmp, 0);
+         if (ctx->tbflags & ENV_FLAG_PAL_MODE) {
+@@ -1165,12 +1162,11 @@ static DisasJumpType gen_call_pal(DisasContext *ctx, int palcode)
+         }
+         tcg_gen_st_i64(tmp, tcg_env, offsetof(CPUAlphaState, exc_addr));
+ 
+-        entry = ctx->palbr;
+-        entry += (palcode & 0x80
+-                  ? 0x2000 + (palcode - 0x80) * 64
+-                  : 0x1000 + palcode * 64);
+-
+-        tcg_gen_movi_i64(cpu_pc, entry);
++        tcg_gen_ld_i64(cpu_pc, tcg_env, offsetof(CPUAlphaState, palbr));
++        tcg_gen_addi_i64(cpu_pc, cpu_pc,
++                         palcode & 0x80
++                         ? 0x2000 + (palcode - 0x80) * 64
++                         : 0x1000 + palcode * 64);
+         return DISAS_PC_UPDATED;
+     }
+ #endif
+@@ -1292,11 +1288,7 @@ static DisasJumpType gen_mtpr(DisasContext *ctx, TCGv vb, int regno)
+     case 7:
+         /* PALBR */
+         tcg_gen_st_i64(vb, tcg_env, offsetof(CPUAlphaState, palbr));
+-        /* Changing the PAL base register implies un-chaining all of the TBs
+-           that ended with a CALL_PAL.  Since the base register usually only
+-           changes during boot, flushing everything works well.  */
+-        gen_helper_tb_flush(tcg_env);
+-        return DISAS_PC_STALE;
++        break;
+ 
+     case 32 ... 39:
+         /* Accessing the "non-shadow" general registers.  */
+@@ -2874,7 +2866,6 @@ static void alpha_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
+     ctx->ir = cpu_std_ir;
+     ctx->unalign = (ctx->tbflags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
+ #else
+-    ctx->palbr = env->palbr;
+     ctx->ir = (ctx->tbflags & ENV_FLAG_PAL_MODE ? cpu_pal_ir : cpu_std_ir);
+ #endif
+ 
 -- 
 2.43.0
 
