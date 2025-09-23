@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8627BCAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454F9CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 21:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Ay3-0006JL-Pd; Tue, 23 Sep 2025 17:54:35 -0400
+	id 1v1Ay7-0006Kf-5x; Tue, 23 Sep 2025 17:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ay0-0006IK-Qq
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:32 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1v1Ay4-0006Ji-9r
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:36 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Axz-0003iG-6m
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:32 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2570bf6058aso82387525ad.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:30 -0700 (PDT)
+ id 1v1Ay2-0003j2-8N
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 17:54:36 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-26a0a694ea8so41627695ad.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 14:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758664470; x=1759269270; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758664473; x=1759269273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bI01yo0kUGWJmBVW9EA2Eo0iWFIm1s7La1lCDq4SBkA=;
- b=qdOAGKq7VMRi2rtVVHF6ehiP0tuEl6ke3+5CsTA7/c9ls/rKj+ySkKYMyazZmIgYj0
- DId5UsrtCezR/W+cLLh7dqqM9geW6pJGoEpQho/IlX2VUCBilrP+wWNRj0yn4hMCPRhG
- BHfZhuGAT0r/YeyBI1gDJFQkoZ8gTXjZkWSF9t7gkrNX2MykDCUfBlVPuWSdrmqEJOZF
- d0hKB4xuAkp5faegKjuPam6xfhF4D9GqsvTnu+rxsoZq/Copgy35bi6exnNtOK9xsp7P
- V1xW8T8qEsmyG3XzMNjEHxc14UJ6UnT65hDMlaAYMk9c3R0cA/wfGe/lgs8gKGHlhDuX
- zkHg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=eQTsRUAq4JwFxeRITx6gawdeUeSfrBkGrxQoOoMpUjE=;
+ b=iB7670TGB4bTyBcuv+uNPaNI1iEbxJ4dzeIp91e62zVm1XMSlliySnu1Sx5nUNoeK3
+ zVB8yM/KIK/q1yO/FEl47EEFIBcUVecNoHkooJm4HJVXLCI9Dr2ld7Ajah8MSrmvpBbj
+ cTSzc1JXlNxLw5QzJlwB1UjybN32gR9+IF6Ha18HjsB0Q+0H2wT1CMoukfYjfwcP6J52
+ bFyuNxheRCPP5BkJu7+Xie7BY+sn57wAjiXFX8v+dAyDGhhbIIIi5YWXz2thgY7+7xM6
+ gXTk5PO/w/dGkdrFYfwl3HpBLI17PYYE5P4+uea/x9UDWxQtH/KfIUUWAP25B2c9BJRG
+ Fr8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758664470; x=1759269270;
+ d=1e100.net; s=20230601; t=1758664473; x=1759269273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bI01yo0kUGWJmBVW9EA2Eo0iWFIm1s7La1lCDq4SBkA=;
- b=rS3AQEkV4I7SuLPsgwm6myKdmh2twnJa5+ycqDK5/YUtDlKzr/fDXOuskHHoJDMPMC
- d2fgGFn4HWzRLKQN4CzACtDH1hno9heu5+2SAylo2Qq9ckFmBGUjX+F+jI/9xgx5Y5vX
- igS7k9qt2CJxqAWZU45HBQ3/4MpH0O6olIBQEUeE0yvhnBerOVp4OplRNYnMEMbBLiTH
- LY1jTUPKEgkpiCY7PATbjL3i7RhguoMr8Nz/zNXJ9PUD1O1ShPj5UW+LjU+H9enJSm/g
- 6z/nU5hsiv8xpodRYjQCfC+NH3DWr4GKDrlJEsNVY0/lpa8vCGg2R4h3Prf3mLpEXIMZ
- TemQ==
-X-Gm-Message-State: AOJu0YxHeIxke/itiK4aBddYSwY86sS3BFNlvlTYIdx+/raew2JU+26u
- 1860+yAO6fTh2cGzyHGkVdSRFMkYWG/vPZ4bS5x9FS7UsR/KQKuvgmxOSPEhpLPZ4AOEgSq//yc
- swAQB
-X-Gm-Gg: ASbGncubHzsyMvRGBtSsqp/frpIkd4APA64qY79sdikB8I+QJWUHCdRAWzxvY4DhtE8
- +MjnO+VPZJhujrmlS+7ZtkSnSsjhU6BAn8aEl+LrbHURWnEG0FCtqhoOgQVrUejCBEYekAwUO/N
- hC0Ws4Tqwcp0B9Wvoc56kkz+JCmqUKwCUDfFcBqpIMYPNV0j5/Yqq9OVGA/lpoVa6oHLvVvtCsJ
- elQedmpMLYI7zfKXmYPrsSAj8T36LdZmPTqJG20aADWQUrA4fyniGqAiuG2S2/6DbmPfrCQlYzz
- +wKtFiOwem/Nc1lHzVRBzUwTyV249PtcIPnBqYv9FyXTkxNMHaDdr87Vo8/ZKMG+OxMOqw40YX6
- X9HlJbLCfqimZpMixY+2WrBjhZdGm
-X-Google-Smtp-Source: AGHT+IHcYuBbcewqNEI3mRL74jOEb3uZRLQBgpWk7nlFGZ6+LNRdunme5Cfzda+pGBZh40NHotPVxg==
-X-Received: by 2002:a17:903:3c25:b0:26b:3aab:f6b8 with SMTP id
- d9443c01a7336-27cc98a13f3mr54679475ad.58.1758664469764; 
- Tue, 23 Sep 2025 14:54:29 -0700 (PDT)
+ bh=eQTsRUAq4JwFxeRITx6gawdeUeSfrBkGrxQoOoMpUjE=;
+ b=X7SGZbOCOu5TOR8UM9lCHgzdwxgW32U2yizo3nid9UeF58VBBVhCKa/CAMgjEphCbE
+ BuRAyuOcDkAkC+4RyDEjmWpeo2IZtmzRIa4lH0iGbvmCEUMzzLhnm8Hn3QEtsx/Rt13y
+ 6FwFVnZhvQQNZCnvSsHYp/ZDXM+0OPLGM/trrtwtzdveTTEEr7jR4oGa9F7/acdrgH8C
+ fLtNn2mHODnRGsWhw7UqoQY7mCYf6NBTYR931hXQhMnZJGTK6LpwEOQm0+obfilbtfAL
+ pUI7h5mwQzuphJuV7P1Ot6AoWyAlHXqpZ/BRno8KyLN9BP0oo2VIMsZ/1IMuJIuxp9xd
+ EBfw==
+X-Gm-Message-State: AOJu0YyWe3S7jv71rwKaIBXB5Cfs6IoMKRwI2nSS/VTcQaJYuiXeYWty
+ KyujAtupnqPY8ZlaI4S2UK7fFkGSyV9++w1BNB2LQ/4Yni0UW7cgE0EC+gQHcZjawb/PjkkcOpv
+ 6aS4Q
+X-Gm-Gg: ASbGncu+fE0wCmca5FLtewiprUFD++QKP9qA7SBEWdVp8ePMhxv7EOHTErW/GJYSbaI
+ zR8SyCDvkAImSSngMFDu5jbBc6ysB87BKG7wRJq84yEJzo+kChpx2gwQlRFQvhLPkmS+esVIQcW
+ skX9j/GLSRt+jcEbegIC93c7GtyaZPKfh/+rClB8l01NYP2UBbcN5f7LnXSb36JJJmyW6PPBlW7
+ RtYCVqeUOgOGba4JovTeO2p3rWSZH7ZrkXYd7zyt3MHYqow4Qeow6V/ci1TvSksjtieO3oKO0ul
+ /2xZa8RhfpAqT9yoWReYfmzs7idXwOA8JGPxDNRSwCwzmE3JizgXNcUPYxbyCft2ZNX6nUpDcJ3
+ 9l6VSd/bu21gZ7eaZtPKnUbgxDmixOAgvk/7OM4c=
+X-Google-Smtp-Source: AGHT+IGy1sCykf7uLICFyhn8NSutJ1hRTgj/U9dwxQoLSGMMRgs7sQFQw/BZ+zrJVl6Ro0CrfuvIyg==
+X-Received: by 2002:a17:903:1a43:b0:267:ba92:4d19 with SMTP id
+ d9443c01a7336-27cbab337f3mr45872725ad.0.1758664472672; 
+ Tue, 23 Sep 2025 14:54:32 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.29
+ d9443c01a7336-269802e14f1sm168294035ad.71.2025.09.23.14.54.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Sep 2025 14:54:29 -0700 (PDT)
+ Tue, 23 Sep 2025 14:54:32 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v3 04/10] hw/ppc/spapr: Use tb_invalidate_phys_range in
- h_page_init
-Date: Tue, 23 Sep 2025 14:54:18 -0700
-Message-ID: <20250923215425.3685950-5-richard.henderson@linaro.org>
+Subject: [PATCH v3 08/10] linux-user: Split out begin_parallel_context
+Date: Tue, 23 Sep 2025 14:54:22 -0700
+Message-ID: <20250923215425.3685950-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250923215425.3685950-1-richard.henderson@linaro.org>
 References: <20250923215425.3685950-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +98,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only need invalidate tbs from a single page, not flush
-all translations.
+Move the test/flush/set block to a new function.
+Use tb_flush__exclusive_or_serial while we're at it.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/ppc/spapr_hcall.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ linux-user/user-internals.h | 16 ++++++++++++++++
+ linux-user/mmap.c           | 13 ++-----------
+ linux-user/syscall.c        |  7 +------
+ 3 files changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index c594d4b916..8c1e0a4817 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -8,7 +8,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
--#include "exec/tb-flush.h"
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 691b9a1775..7099349ec8 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -20,6 +20,8 @@
+ 
+ #include "user/thunk.h"
+ #include "qemu/log.h"
++#include "exec/tb-flush.h"
 +#include "exec/translation-block.h"
- #include "exec/target_page.h"
- #include "helper_regs.h"
- #include "hw/ppc/ppc.h"
-@@ -301,7 +301,7 @@ static target_ulong h_page_init(PowerPCCPU *cpu, SpaprMachineState *spapr,
-         if (kvm_enabled()) {
-             kvmppc_icbi_range(cpu, pdst, len);
-         } else if (tcg_enabled()) {
--            tb_flush(CPU(cpu));
-+            tb_invalidate_phys_range(CPU(cpu), dst, dst + len - 1);
-         } else {
-             g_assert_not_reached();
-         }
+ 
+ extern char *exec_path;
+ void init_task_state(TaskState *ts);
+@@ -172,6 +174,20 @@ static inline int regpairs_aligned(CPUArchState *cpu_env, int num) { return 0; }
+  */
+ void preexit_cleanup(CPUArchState *env, int code);
+ 
++/**
++ * begin_parallel_context
++ * @cs: the CPU context
++ *
++ * Called when starting the second vcpu, or joining shared memory.
++ */
++static inline void begin_parallel_context(CPUState *cs)
++{
++    if (!tcg_cflags_has(cs, CF_PARALLEL)) {
++        tb_flush__exclusive_or_serial();
++        tcg_cflags_set(cs, CF_PARALLEL);
++    }
++}
++
+ /*
+  * Include target-specific struct and function definitions;
+  * they may need access to the target-independent structures
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 002e1e668e..847092a28a 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -22,8 +22,6 @@
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+-#include "exec/tb-flush.h"
+-#include "exec/translation-block.h"
+ #include "qemu.h"
+ #include "user/page-protection.h"
+ #include "user-internals.h"
+@@ -1007,11 +1005,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+      * be atomic with respect to an external process.
+      */
+     if (ret != -1 && (flags & MAP_TYPE) != MAP_PRIVATE) {
+-        CPUState *cpu = thread_cpu;
+-        if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-            tcg_cflags_set(cpu, CF_PARALLEL);
+-            tb_flush(cpu);
+-        }
++        begin_parallel_context(thread_cpu);
+     }
+ 
+     return ret;
+@@ -1448,10 +1442,7 @@ abi_ulong target_shmat(CPUArchState *cpu_env, int shmid,
+      * supported by the host -- anything that requires EXCP_ATOMIC will not
+      * be atomic with respect to an external process.
+      */
+-    if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-        tcg_cflags_set(cpu, CF_PARALLEL);
+-        tb_flush(cpu);
+-    }
++    begin_parallel_context(cpu);
+ 
+     if (qemu_loglevel_mask(CPU_LOG_PAGE)) {
+         FILE *f = qemu_log_trylock();
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 91360a072c..101dc427a4 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -27,8 +27,6 @@
+ #include "target_mman.h"
+ #include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+-#include "exec/tb-flush.h"
+-#include "exec/translation-block.h"
+ #include <elf.h>
+ #include <endian.h>
+ #include <grp.h>
+@@ -6631,10 +6629,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+          * generate code for parallel execution and flush old translations.
+          * Do this now so that the copy gets CF_PARALLEL too.
+          */
+-        if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-            tcg_cflags_set(cpu, CF_PARALLEL);
+-            tb_flush(cpu);
+-        }
++        begin_parallel_context(cpu);
+ 
+         /* we create a new CPU instance. */
+         new_env = cpu_copy(env);
 -- 
 2.43.0
 
