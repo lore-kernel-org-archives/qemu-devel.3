@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA12CAC5AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 23:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C845DCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Sep 2025 23:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Cov-0000to-9Y; Tue, 23 Sep 2025 19:53:17 -0400
+	id 1v1Cte-0002WV-Kt; Tue, 23 Sep 2025 19:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Cos-0000tV-V8
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:53:14 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1v1Ctd-0002Vu-59
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:58:09 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Coq-0001rC-UZ
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:53:14 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2680cf68265so45861595ad.2
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 16:53:09 -0700 (PDT)
+ id 1v1Ctb-0002Qo-1X
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 19:58:08 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-77f198bd8eeso2739554b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 16:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758671587; x=1759276387; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sz7XfCOQUHEbVARaNnHhQS/7wUnja+zUrs5SqhMlAGk=;
- b=VfTBlLIM57PGWZGFRJAtqnxxDiweme0wB7vfZGQDtB7b3/Hu8YKAmq6AZB2SI7q5I5
- 8JjJNK8mxL9ZALmXyRNapGjkbBVCjBTC24euXqCtiOfC+Aud8xFESuUn/tWgYBPHfoyo
- SP0hOgwtIe8jMqKVONyi06K6SM/QZSNJ/DhL3o+r7D9KRxJCk+Q4+L15ZPIslawkUJBS
- tVtu39u6AkuZhTrS4unG5GHLvt+95c+fRGb46ykVpXOqvUbVsRw2waRWpa9IGhbJ1UoU
- goPvrSBy5jjraXsa+tYsLwZE5ThQtbE0n3o64hyZVoNO4mBJtksHDalv3k1FAwUwS4UJ
- KpCg==
+ d=linaro.org; s=google; t=1758671885; x=1759276685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ohYkDz3ePYZGBAisxRgaxuKZJqcSul3RB+ZPtKB6yYc=;
+ b=Kp+zBSXrtzEGIERgMrJDDxWkpVREEN2OazDOOG/iAYsoXbXVS7wESo+9d/5x1nwVLz
+ 6t0zPkfmMSq26MlyKlC7IcEGbDdHu5L9GuRZqhzkrj98x9MlQ9VTCni1hK3v4Gt4VdbA
+ 2XVcOuQ9HFZ92juKJ6dqdLo80PDH54H4KGOm1SkqTtZMQMWP72j4WRLA0ZAlWPtwQWkx
+ X+SV7gSCXilh5JYIIfWDoJSmp7hJwab110rPWctT9rIZc7FOxSauIGgLTg+bjSSb49LW
+ j5ofdyRHqeloM7koYgISKIagt38BNOts33dooT0QX8n3xxRCt75oGVmnJK8PxYYAK8Jz
+ /i6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758671587; x=1759276387;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1758671885; x=1759276685;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sz7XfCOQUHEbVARaNnHhQS/7wUnja+zUrs5SqhMlAGk=;
- b=OGcbIkdeYJ5yhM4AVUJg/8Qfuw2xbjEI15jG30Aw+91FBpOfvCEJv/uK49iHHd49CM
- zODXTDCuECX1+8pLkR+TDsKDEMkvMZ4IlZ5kbYrxvv2IDs70KZYTGU4LL2pAYRq8IDQP
- YnDXdPulqD1ck5vLlkLnZ34sH5x1MU0FVTOQe9yMgPqJ8ziIG6D2LUkHHsnXEpOEpJvj
- 4dUFpXHte5ThLoDYmRJXSsOSeRAXA4Lr4KLpWoPtlPoKP9AQwGus2OlUebzh35ddN3sQ
- SZzRymaaKkMel3S/vGXDy5zeLOL5W6BYEuFJzXOPvvWaFC0Q0CmUypj+nncODBaZvBpP
- N2QA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXykh7rGM+4DR2zwESjTC/uFac1pd2oI26E5KToaE6clCbqO4BFLsbZ/YQduGqthbhB9OdcsS3fGr1E@nongnu.org
-X-Gm-Message-State: AOJu0YxOCQCXiZAbUaSPWgT9sa6fQn46p9yahOhvn3WCX3Xw+XZ8kBs2
- sV/RauVPJgHOH+33fOaiC3KbcjCqkKWicw4Sd3mcFEGKSC/w4/ojcN11xpEK1U7K7lg=
-X-Gm-Gg: ASbGncuQN/oOByG9LBCmJWJyrvsu+ubd1imXJGrL/o0yntI7g4UDuirX8ip2jnuE351
- G90d2kkW79mtmLCUrGyBAYJ0VvU2Oaxi+D/UAAKclAs4Vn2X7gc5URteS8CRfhkdJb4nn/R1FDR
- vvrLbQOIig+7TAivMcTs+DOva7WiHY/+lSfrGyJoAOdcaOXwlL9ono+pwmlawrMmaytwJw9oIzL
- wEbKj2eIA3slcMKY24A0PvROt3W7X8Yq7SuA+iVjw1WsBkd6FKSUpJ5lzUryIX1yGKvKQssoe19
- sSgCSFfVCUnuralAJ8kwEkBU+vc4Z0xYy5I8KgKqXr05PIFkdGms6B0Z92uDjs//FA51QiE1FEU
- rH65oFyYyINrS/Wj28b8Ck8Up/VOUqjRKaZom
-X-Google-Smtp-Source: AGHT+IHV80gDW9y5mUA23vpux3vyp4iY8uh9biVdzc6eQJZJ0mDp9qd/G4R7o/zcox8l9Rsv2UtHwQ==
-X-Received: by 2002:a17:903:3bce:b0:24a:fab6:d15a with SMTP id
- d9443c01a7336-27cc185851emr43937975ad.20.1758671587094; 
- Tue, 23 Sep 2025 16:53:07 -0700 (PDT)
+ bh=ohYkDz3ePYZGBAisxRgaxuKZJqcSul3RB+ZPtKB6yYc=;
+ b=umnJ/So/zzCQSZiwNzzkHkYdQsz4KnSJIXxNOu07o2sbMwUPs9pqjRD/SDuy6C+sOp
+ XEDSKhrv8huIBzcJdZcF9TtHHVTCDcZAfxQxS3VJPjudWSG7blO8MXrYGQdIj472sJQW
+ dI4HLRIzE4k6sqj154zZABsh816EmYNB7FVc44EeRJIfed3Ml2WOVkZpzqfbHMhN5HfN
+ FUIvpEJ8gzwvAHHwY9GhgqiZuSPqJ2599cahHTKLVOieCKNoAq8NcFqfd3VP4qtafKPH
+ lboJrm/NlkWIxRm5sSoapJgf09+UIA3RoPDhK1gcXDQFOdDgkHJiO/JqnN692LVqIlx8
+ 1ZXg==
+X-Gm-Message-State: AOJu0YxtwbdjJSI1igUXihVZ3rd72bVGV7mROFsf70otfeS8Yid3kwKB
+ kOhEfMjZig8s0AftFzvaiIoPitKJzBKKDr1aTzSYdxJnTvG2p+poN4/uZgRXD5OdXH7noHK8gtX
+ h+3Sw
+X-Gm-Gg: ASbGncuRmeJI+G13n7IOd3d4pol6BvfcVP36IKPTwuZuVGm1ERVlicPR7GhGMOf3B4C
+ 9YQlUP66eSRUulgM6pgWBf4QT39ReDEiayhSwrvG8fI++VAbnIEW/j9UNRe8vIAVqGu3QOagj8z
+ Ayh8l/TZ7YHXHVBN4+nuH9S5BDD3bxr6k/Zd+Qg9rMf+S1yxMMXdLaGYHFW9btn/ecoj7hOIdxi
+ 2fo6a2KZLwLfAv7kvW10/4zH0aC8ukMFuv/B7OIjKfIybQOzFDZIJc7n1e1ZY+R9TxjDnXKEm6Y
+ chWU0QC5mUqAHNOWfdviDTRATF9GH0bKmDCtda27oJG7wMFKhz+x92msoF7DdwITUNlK3LXYcmS
+ ldgUXO7v2CfXYmuBIsY/fkzKpGJQXz5yTHne9
+X-Google-Smtp-Source: AGHT+IHhU/WZzi9es2uLhUoHWYlPI2f7LvkuJY7ALiLiJUbFKGN6fVQFi6wfsUxa6yIYuZb0jCdAPg==
+X-Received: by 2002:a05:6a00:a1f:b0:77f:3a99:77b1 with SMTP id
+ d2e1a72fcca58-77f538c0394mr4827880b3a.9.1758671884893; 
+ Tue, 23 Sep 2025 16:58:04 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-269802de963sm169992525ad.77.2025.09.23.16.53.06
+ d2e1a72fcca58-77f68e38c44sm325036b3a.25.2025.09.23.16.58.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 16:53:06 -0700 (PDT)
-Message-ID: <8adf8096-4279-4549-aa89-4aafe262e5fb@linaro.org>
-Date: Tue, 23 Sep 2025 16:53:04 -0700
+ Tue, 23 Sep 2025 16:58:04 -0700 (PDT)
+Message-ID: <ecb5a63b-dec4-440e-9e55-570c8bcd4b5a@linaro.org>
+Date: Tue, 23 Sep 2025 16:58:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/pci-host: fix use-after-free in hppa pci-host
- devices
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-References: <20250918114259.1802337-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH v5 00/76] target/arm: Implement FEAT_GCS
 From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20250922184924.2754205-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250918114259.1802337-1-peter.maydell@linaro.org>
+In-Reply-To: <20250922184924.2754205-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +102,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/25 04:42, Peter Maydell wrote:
-> This patchset fixes use-after-free bugs which show up if you put
-> some of the hppa pci-host devices through an "init -> deinit" lifecycle,
-> as the device-introspect-test does.
+On 9/22/25 11:48, Richard Henderson wrote:
+> Based-on: 20250916142238.664316-1-richard.henderson@linaro.org
+> ("[PATCH v2 00/36] target/arm: Reorg VHE redirection")
 > 
-> The problem in both cases is that we were calling pci_register_root_bus()
-> in instance_init: we should only call this in realize, as all the
-> other callers do.
+> Changes from v4:
+>    - Master now includes FEAT_ATS1A.
+>    - Rebase on VHE reorg
+>      - Trivial adjustments to S1PIE and GCS regs for REG12 redirect.
+>      - Simplifies EXLOCK access test.
+>    - Migration fixes based on review.
 > 
-> These bugs show up if you run 'make check' with an ASAN enabled
-> build; they are also likely behind the intermittent segfaults
-> on s390 that RTH has noticed recently.
+> Note that tests/functional/aarch64/test_rme_* will fail.
+> The TF-A images need updating again for at least FEAT_S1PIE
+> (EL1 accessing PIRE0_EL1 trapping to EL3 is the fatal fault).
 > 
-> thanks
-> -- PMM
+> I'm toying with updating the QEMU build to match the FVP build,
+> so that all features are runtime enabled.
 > 
-> Peter Maydell (2):
->    hw/pci-host/dino: Don't call pci_register_root_bus() in init
->    hw/pci-host/astro: Don't call pci_regsiter_root_bus() in init
 > 
->   hw/pci-host/astro.c | 27 +++++++-------
->   hw/pci-host/dino.c  | 90 +++++++++++++++++++++------------------------
->   2 files changed, 55 insertions(+), 62 deletions(-)
+> r~
 > 
+> 
+> Richard Henderson (76):
+...>    include/hw/core/cpu: Introduce MMUIdxMap
+>    include/hw/core/cpu: Introduce cpu_tlb_fast
+>    include/hw/core/cpu: Invert the indexing into CPUTLBDescFast
+>    target/hppa: Adjust mmu indexes to begin with 0
 
-Queued, thanks.
+I'm cherry-picking these 4 into tcg-next.
+
 
 r~
 
