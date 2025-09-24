@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C2CCAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 03:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23942CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1GP1-0007sk-6P; Tue, 23 Sep 2025 23:42:47 -0400
+	id 1v1Gj1-00050D-LS; Wed, 24 Sep 2025 00:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1GOr-0007q9-2l
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:42:37 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gir-0004zJ-Q4
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:03:19 -0400
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1GOl-0005ag-Lf
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:42:36 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-46b303f755aso33570785e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 20:42:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gim-0001LS-N0
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:03:17 -0400
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-3e8ef75b146so5817382f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 21:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758685347; x=1759290147; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758686588; x=1759291388; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XbUjZEackku+2xlQhlBf3yl6Kx3zftUQ//S8OZsjVmA=;
- b=l90CJmjulO0kt3Qon62uu8J1I+iN5GqwPfFt3k970umJW2Ave4voM0WSNYPjfkx+Nv
- CiwDOEfVlutPwzcIqmsGwCdZDlkzsGV0yJJ0ddHi5Ndb7EO3SfdilBbeiAxOvjpdukQy
- rPyvEkHMjJplhc43wFfHrIzxj0Nietr99KiNl2cPGMIFJmlIwZfDiVOOmrdq77wXQwFd
- eHZHoRX6ZzfUMkLQCZJ3L3f6S3d9h6Ctkijm2rvTNzD0NHHps7wuVvDx6fxwPNu9KGBf
- FZQsgnk40aF2Z8cXfSe5i9BkV7RuEB5ICGs/P5ZnUd3EM2tVrCuTUZpDglrqQeULM3U9
- 9TnA==
+ bh=5QGctKIHVWhra1SN7ty393fx2eXvL8dHbcAzcFxQqhM=;
+ b=zwrzNt/YsE+HNG0UwOrwUFNyMYEdCUCEgqDT0knImfOlzOFaMrLJBQUMxZQr5Tf27q
+ RkCPeqiaEA6S5uU1d/X2kLk3AwI9eP2FDwXjX5ul4VovTyIg8DakeneYZT3zfNgZVehp
+ iZPZ8eTP0Tp7nGdI1o/0H0/eZ3RUCmnDmcPTx3UAgFUasoWu8heN5HelH9XaWqDdxbHy
+ JMenb7W7aEJt70tp6y6kPKdvrEp1hMNqiDaz0sI62NRoGcDzNyZWMaD8vyMz/GjNkCkR
+ idErWmYfYCu7vXWZPhI1Tcijx5UBPJ0o7Ajf8IGGZqZNz+63LWNQwJ2QjhM+IJEuYyIM
+ A6SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758685347; x=1759290147;
+ d=1e100.net; s=20230601; t=1758686588; x=1759291388;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XbUjZEackku+2xlQhlBf3yl6Kx3zftUQ//S8OZsjVmA=;
- b=Wgek7zbj+S4bkLI/ednYrnVS1OmBVpDfPeRkN8+MoSmPoCpf5aGxVMHssjXrF/MfKK
- mBm04ZujvpAXT8uWjmxn3C9UxT5B26CW3Yr6ItmBsSGzMm+daYEbBmLW5rPh/6KCIDE3
- gPqbsQBNE5PVmXiSroknbpIZZiczFC40dBO3I6zQifcv4RYtzEAzUTHO9PCaQeMS9Ibo
- GhEX4sIaHxQ5iO+GL3oz+FGhB3XUST8QXT74Fsjm+EuwzDzaH/sg1VeP8fsFMcuBkY8N
- aJ98xXdv/E+46SgBcH+RvRd5IS9Puxn2LcHGa+8ahJNghBtne5LjuLDiYrGSEHBwP5tD
- PnCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXi66/oHd9s3Y3iMQeGrS959Tp1wVvyz8FmuoAvksF3p4m+I3fc2Ync2CXI9R5oOWFwrJPks29UlN82@nongnu.org
-X-Gm-Message-State: AOJu0Yy67bG9SMErmjZX8e7Y46WFFq7yG36CIn+O6z5qaN8YeyRDFUo2
- uklzYGAhe5ZAb8xVDddLikWddUXC/u8OwVhYAz+cw3N35l4CITFL+fqLHcAwsfSVynU=
-X-Gm-Gg: ASbGncup+OfRbiMGoB+jN4TP9SmTmkmAOSqKb/sPuheCpbPaVd+Q2QIUaiBkyGMFSMj
- o+xCGukRoZVIZCECcB+x6wIViXR7GJ2WQqICOAjBbOlQR+lo0SnPv0ltyp39Ayx2h0xe9EmWTju
- PtJlNus4yM1fyDTPOC50EYK3qIxMbGDN7pbVe/uyaJvKRsYfQpbIfb4y0UYQ/Yj2pGeFPO1+K5t
- 0IgCRjGcI+nSrzYBU7njOVeBKbttrT4gZA7t6RvmqZp8XUZSRoJ7cIOayfQ6l20bF4RoKHB67Bb
- ifSSCKkstvia+yPn35o6elZzn2WYHaspZ7M/mWDUss3AaaW8Z8BHD3JZPnmPb7XeftEp7baiY5G
- 2A6yhPC2g/pdUkId+xylyCpkbAqkxVy7e2GBIFdiIiGSvrBkyE47lnVPduisu5wsM9w==
-X-Google-Smtp-Source: AGHT+IEMk+RSqSKYev4AjmaQKRmttunasCgC6N/lhxlBUQrTB6ATBow2pf5TE28guj0S+VyPYOXhUg==
-X-Received: by 2002:a05:600c:a44:b0:45c:b6fa:352e with SMTP id
- 5b1f17b1804b1-46e1dab5488mr53612015e9.18.1758685347170; 
- Tue, 23 Sep 2025 20:42:27 -0700 (PDT)
+ bh=5QGctKIHVWhra1SN7ty393fx2eXvL8dHbcAzcFxQqhM=;
+ b=hrDS0tRHOaA162z/ya1gl+Oc0iqw1bdF6r2GowVl2Y90pL3DkINGBWBuI1crsZGIjS
+ pGqqyH/keEpGtNmoFHaShfq12tCAQU8PVL6GT3+BRiENsEpZH/cqZzQFx73OsYjW16d5
+ vlcGV82NqvspjNGTAco8PsE5wZ3b/OXy9m5FmCDelePVzKyA1wa7RNPfTCjlqr8JjV/U
+ xm9ePE2WnLt9ZJAcGVVl8/4Y3y0Dyv52bh/McXK0G4T1+n+oED/iP8K8SM8O6POynIKp
+ ytls5YXSMOu5RvX0oy5jMOpS2lj9C1DrdQeOiEoHREnOB0+okbkLUzo0/ATbm5Hm2pU5
+ gnLA==
+X-Gm-Message-State: AOJu0YzLwkxw8oPoaUPuu8sXLvbNdPTZto0Tgb83n3aerv67MjDeCljy
+ zuEeq5y7cGoLOFWHIq5Areai1H70v7Hv4/lZzWBsy2WikSV7aye3WcWZAq9KJOtCfSs=
+X-Gm-Gg: ASbGncsICz2nEOAFEJd/woxlBJHNKTiDGc1YACBesOfZTHDlh9iJ0WazQj0gAv0PBw1
+ /pCP4x8tRYgbFcMYoP83eEr7RYWP3vagEMqG2ahBlB1oECqQU4N0PmZt8eV60X2qtkdHJR3EPno
+ +25Ci4Wsf+HZK3bh2KiWeXKiOyRV86W1udT10F8ydBDO2qm6xnvVead/xT79y7DyxTjKqjRF9hJ
+ xRPJs4Ohof+V2jeMUBJDBhN1pHY1CSYabdmGH+NAC8CoO7pzYB4+WtzNbRsp3x0oHIr/L7DX55J
+ B80MiTDZZIvxwUCnIpoZe6Jm7JfK0cFiSYWUuaOtrdA4zutEBfMjZn4G7s4LclcH6S/JQ1mCqUL
+ iolXIwuahDCiUsaqbJMDfwQR3X/1rcEci2kVp9S/zBlU+w00aEgnBExGXCA36w+o82w==
+X-Google-Smtp-Source: AGHT+IGuM/8bN+bSoU36irWwiqvmsLWVSOTz37jsELLMh2+XrN/g73x6H5wjiZEcGsh3uaVvFoN5ZQ==
+X-Received: by 2002:a05:6000:200e:b0:3eb:df84:60f with SMTP id
+ ffacd0b85a97d-405cb7bb881mr4117908f8f.48.1758686588459; 
+ Tue, 23 Sep 2025 21:03:08 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-407a3bbeaf2sm3632438f8f.49.2025.09.23.20.42.26
+ ffacd0b85a97d-3ee0fbf1d35sm28223843f8f.55.2025.09.23.21.03.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 20:42:26 -0700 (PDT)
-Message-ID: <d76f2dd4-f20f-4d8c-9f85-d0ac51483ee3@linaro.org>
-Date: Wed, 24 Sep 2025 05:42:25 +0200
+ Tue, 23 Sep 2025 21:03:07 -0700 (PDT)
+Message-ID: <c0fc38df-9c52-406f-8d8b-f2496b4e410f@linaro.org>
+Date: Wed, 24 Sep 2025 06:03:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] linux-user: Support MADV_DONTDUMP, MADV_DODUMP
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: jonwilson030981@googlemail.com, Jon Wilson <jonwilson030981@gmail.com>
-References: <20250924020735.3909216-1-richard.henderson@linaro.org>
- <20250924020735.3909216-4-richard.henderson@linaro.org>
+Subject: Re: [PATCH] tcg/optimize: Fix folding of vector bitsel
+To: WANG Rui <wangrui@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu@hev.cc
+References: <20250919124901.2756538-1-wangrui@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250924020735.3909216-4-richard.henderson@linaro.org>
+In-Reply-To: <20250919124901.2756538-1-wangrui@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,20 +100,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/9/25 04:07, Richard Henderson wrote:
-> From: Jon Wilson <jonwilson030981@gmail.com>
+On 19/9/25 14:49, WANG Rui wrote:
+> It looks like a typo.
+
+Likely from the TCG_TARGET_HAS_andc_vec case.
+
+> When the false value (C) is the constant -1, the
+> correct fold should be: R = B | ~A
 > 
-> Set and clear PAGE_DONTDUMP, and honor that in vma_dump_size.
+> Reproducer (LoongArch64 assembly):
 > 
-> Signed-off-by: Jon Wilson <jonwilson030981@gmail.com>
-> [rth: Use new page_set_flags semantics; also handle DODUMP]
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>       .text
+>       .globl  _start
+>   _start:
+>       vldi    $vr1, 3073
+>       vldi    $vr2, 1023
+>       vbitsel.v       $vr0, $vr2, $vr1, $vr2
+>       vpickve2gr.d    $a1, $vr0, 1
+>       xori    $a0, $a1, 1
+>       li.w    $a7, 93
+>       syscall 0
+> 
+> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
+> Link: https://github.com/llvm/llvm-project/issues/159610
+> Signed-off-by: WANG Rui <wangrui@loongson.cn>
 > ---
->   include/exec/page-protection.h | 6 +++++-
->   linux-user/elfload.c           | 4 ++--
->   linux-user/mmap.c              | 6 ++++++
->   3 files changed, 13 insertions(+), 3 deletions(-)
+>   tcg/optimize.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tcg/optimize.c b/tcg/optimize.c
+> index 3638ab9fea..f69702b26e 100644
+> --- a/tcg/optimize.c
+> +++ b/tcg/optimize.c
+> @@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
+>               return fold_and(ctx, op);
+>           }
+>           if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
+> +            TCGArg ta = op->args[2];
+>               op->opc = INDEX_op_orc_vec;
+>               op->args[2] = op->args[1];
+> -            op->args[1] = op->args[3];
+> +            op->args[1] = ta;
+>               return fold_orc(ctx, op);
+>           }
+>       }
+Looks correct, but I don't understand the swap. Can't we justkeep the 
+same argument order for an ORC opcode? I'd have done:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+-- >8 --
+@@ -1569,8 +1569,6 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp 
+*op)
+          }
+          if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
+              op->opc = INDEX_op_orc_vec;
+-            op->args[2] = op->args[1];
+-            op->args[1] = op->args[3];
+              return fold_orc(ctx, op);
+          }
+      }
+---
 
