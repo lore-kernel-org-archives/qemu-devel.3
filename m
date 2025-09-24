@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4072DCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 16:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF128CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 16:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1SWf-00059e-Lh; Wed, 24 Sep 2025 12:39:31 -0400
+	id 1v1SXv-0005sL-Jk; Wed, 24 Sep 2025 12:40:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1SWb-00055n-Hy
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:39:27 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1SXi-0005nF-1a
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:40:35 -0400
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1SWL-0008WN-Vd
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:39:20 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-77f2e621ef8so64489b3a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 09:39:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1SXZ-0000RP-40
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:40:32 -0400
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-46e317bc647so3710075e9.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 09:40:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758731942; x=1759336742; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Xib1yeeW4VxdYdCEaHe4ye8jhO22FyajqAxMF3SO7pg=;
- b=hyLwPjB79mN7u2zMlJPGzhjALoq6dSKaoF4zMxK94FAMnkFNuLK/z6udqgdRC4bikm
- bifL0enLvH0vMT4Hei1fG1WwQko1X1MFDgO0GZdRQJW07XftiYM1HqD4sLsn2zDt2tLN
- Ie1YIXVhfvhMV9Pdklw5NBvQWk0RUlh0OG/pZhpWhZMI+gCb7gkH+nOetYci1GmP2HT6
- vyIZZkCre3NCF5cJmQjMmI+oqIzwU5mJQn6ngnn6gGIOsPaVe3Xl12LsTbo+dunfhAoG
- xhe5sjsFZptcNCtjrtrEHx2pHcT4JlyxS69MbVSn3c61quUkc71YYTGsQzu+kxEq6E4B
- P6kQ==
+ d=linaro.org; s=google; t=1758732017; x=1759336817; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gu6yUgiVh9d5U81j9Y3EUC7hWTF1x0xYVkxXp3FokLU=;
+ b=KWAt+biJKWUKQA6KtM7xQcQ7jfWBtMcMg8ufZcnTEOV6y+28TjhvyNaxvTdFcs7mWy
+ WlOI6p6/b2bPp3IwBcft7q0uY59Ud+HuMaD1CljshVaivTII20b9qDDV2jepOsjQvh/p
+ CRndUnk/MEMhHr1j2jRyZU9Mv20oQ5uXy0Q5UTij5yNXoZfH2luZevdEljXtV8nRlSD0
+ aiSeMsmoN1toupQtV0aZUXwiYJer2by6SimHYlesabmVZo1uVOpmeMlXhkQP93MwTX5+
+ lGc3HziWykntGfpO1gXy5RIm356oBvyCWwQleDdkmb+qI4cK3GxBnikAk3hL79Ac90L8
+ brtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758731942; x=1759336742;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1758732017; x=1759336817;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xib1yeeW4VxdYdCEaHe4ye8jhO22FyajqAxMF3SO7pg=;
- b=e5ul49shOpKV+XMid7tyTOD8phwmtpDS18URnw8mjNmIxuKdgFkcp0qlX8TanMkYo0
- 5AiBt9UbNBY6R1bp748tTJpGUoxs7uiE5ebaPzjktJ4VR55X0ayVwcmNZHahsF8wVc5j
- SpFKYrnVUcslFe3ibkL9nhw3KESvyaCgPz9E6UGMgfClD1SUUvfzgrgWnSYawuV0eY2p
- nm8E7icPScgAa9WVobiMpEFLRDn/y8zNy872Y5qm2edIWTL8hbyU6xrByTRsjiffnbeh
- zTXsNibVhqW2BNHW8IAmqWP7XeA8BmbWPAM3mCbcqNezp8zOkKR8iKXWONyP5V6Dxf4+
- H1+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUpVMJQt3Kli4f48f8Blv109zdWHOv5b2kSWsSiauTCPOkfsoFKj6Pk43pL/qODcQXKMlm9Cfy3rhuP@nongnu.org
-X-Gm-Message-State: AOJu0YzXaE7TolC4/+F9C8rSG9yee0PWs/zTdGNcIjR2LseAMFP+F8bo
- +gkiYrMPHvlbZYMnv7mwquprAvXZ8wRY1nzI/RhiHhKpPw+ByJIl7hHWc9QAsAyAJtv/ApAuV5q
- KH0je
-X-Gm-Gg: ASbGncsYR2qBb3bST3LGB0QaowPVIXdyWV5Dm2MogRe5HvFYMRd+lYk8DNW25E4sx20
- 04OhyqywhbhtR/me3GuFnHMVNqO40hTH5lw23xWx8/9bEMc4VEV2C0RW7agQxX/qIiiX97yAuyf
- KiTDc2+YkHvvFQDqkoPXA0Pa97RAmAJDPSfGC8wXY4OknuaCc8NsbGFrhMpVFsqEr8+5n8Xf8tv
- r7SGmjXvcfgcI5tSQjP3SMPgLPDyser5SEruoKH5MFqFaDGQEHN5ekNAn25jOD/YVXSnoYibgLQ
- jwevZigw20RzZ7Gdk68NXvKDpuCIf3ah4geoD9ssAdTwVK+gJzQWBeN9DRQEjGNcuPB6D+rIRsA
- 8ICXudB4jZCug80+hJgSYIuBek3DleKKpBei3
-X-Google-Smtp-Source: AGHT+IE5KR+jjHmDKn+5BXEIUYkiU6jwPkTqKbzTcYwF/LZ6uoc6VUy94HaPbbvy1HKgk23h57t7Zg==
-X-Received: by 2002:a05:6a00:986:b0:77f:2d28:8938 with SMTP id
- d2e1a72fcca58-780fcefa51amr529583b3a.30.1758731942356; 
- Wed, 24 Sep 2025 09:39:02 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77f60e640cbsm3724167b3a.65.2025.09.24.09.39.01
+ bh=gu6yUgiVh9d5U81j9Y3EUC7hWTF1x0xYVkxXp3FokLU=;
+ b=UygoWuuGSQjLlaXe7SZLCFbc96gWUXUyg89n8wZHRAUQudwgD13ZbAKORnFWbxUsh8
+ cAVCNV9/7TRuSq1UaGwVtiJ84SEI7BQMXFDTF8JprlG19UMa9F3diHs4G3jYlNWGHIia
+ OGadw/Tk/6xDM1rHgEUtRQ+a+TQZDKV7GGdkV0mOXS5HdVGVCXoPliUHQ1MMD7jayGfV
+ SLu4+vTdSmfzaWccPUrODw2ypLD4JUmCZhfMLfwjjnoTOi1T0mcnJmmnrli4gE1VuWp0
+ OGu2RC7gQ14WVjbqhnvQHwl2yi/EZe60Du9rCgTiH4cGmTAvc1f5bcpX3cwE3UURqSin
+ 0PYw==
+X-Gm-Message-State: AOJu0Yx1dYATp4sA4OEH/BqAuFg5JAhC/oefYXbZQRYZBtgZ5VKm1RiL
+ SSHo0BQV2dCPcOjgmuFglLZ8HhSuJgunmRn7Mp3qiPP4vVOFnG4XMGZbQDCq7i7lxTBEv4rfLg4
+ wzx+qEBvqdtkU
+X-Gm-Gg: ASbGncuO8s/bB6RfV2uHrAA0kvWlZ6POHIJX0m47HpjfAGbAD1XHQjPkGAi+9vcFe/h
+ sErpi6lUt3BxCi97UoMV5uIM95s+EXUsyVS7niTLIOl9LzhC52p64OtJDzBRc2pimzgQGUGBUiF
+ lyv45M/JfLhq5bb70znVuWfqJkfML+Q2s19L9Az+rpMa6ssI62cwsz4lAYIc4NFuodQqu2sIn1W
+ 2S988lKAF27uEV3vy1MuQVJJ+kuDEJpuhkMEJgm0Ap1HMtT4x+OnyaiUvKonbnMPMr2/be+4kkw
+ QFcIFHQK5zqFNKSvjkKvGabiOA0/b6Tums5wkq5mWJnoWkBTMZF2hMqgzVzQE/cubn3qLJXlSuf
+ zMJmhBs0bKm8gLXICRKpAcyxIw2vFho69J1cGuPCGxR43dRbOCiF4yfXlv7J1DNoCTQ==
+X-Google-Smtp-Source: AGHT+IGbRnDibNupntsRWTL9/Xpllt7LcnVbncFcVKCBgEPCflFms08wu+bTXhsDsXDvysmZohpFEg==
+X-Received: by 2002:a05:600c:5297:b0:465:a51d:ab with SMTP id
+ 5b1f17b1804b1-46e329bbf5amr5447735e9.15.1758732017098; 
+ Wed, 24 Sep 2025 09:40:17 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3f70b47ca57sm18186683f8f.0.2025.09.24.09.40.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 09:39:01 -0700 (PDT)
-Message-ID: <9758de22-e663-412a-b536-a8fcce30ffbc@linaro.org>
-Date: Wed, 24 Sep 2025 09:39:00 -0700
+ Wed, 24 Sep 2025 09:40:16 -0700 (PDT)
+Message-ID: <2891f8d5-e4ea-433f-84ba-a878875bb4d6@linaro.org>
+Date: Wed, 24 Sep 2025 18:40:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] accel/tcg: Improve tb_flush usage
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250923215425.3685950-1-richard.henderson@linaro.org>
- <6ef7e6e1-9ac1-466d-b4bc-332e135c258e@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] scripts/checkpatch: Avoid recommending legacy
+ qemu_bh_new_guarded()
 Content-Language: en-US
-In-Reply-To: <6ef7e6e1-9ac1-466d-b4bc-332e135c258e@linaro.org>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Alexander Bulekov <alxndr@bu.edu>, Thomas Huth <thuth@redhat.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+References: <20250924163911.51479-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250924163911.51479-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,36 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 05:14, Philippe Mathieu-Daudé wrote:
-> On 23/9/25 23:54, Richard Henderson wrote:
->> It is too easy to mis-use tb_flush().  For instance, because of
->> the cpu argument, some parts assumed that it needed to call the
->> global flush function for every cpu.  It is easy to forget that
->> the flush is not complete when the call returns: we have merely
->> queued work to the cpu run loop.  So: remove tb_flush and expose
->> only the core as tb_flush__exclusive, to be used only when we
->> are already within an exclusive context.
->>
->> In some cases (gdbstub, alpha, riscv, ppc spapr),
->> we can eliminate the need for tb_flush completely.
->>
->> Changes for v3:
->>    - Rename to tb_flush__exclusive_or_serial; retain the serial
->>      check within, not updating to exclusive only.
->>    - Rename the existing tb_flush to queue_tb_flush; retain the
->>      sequence number check for duplicated flushes.
->>    - Drop EXCP_TB_FLUSH.
+(forgot to Cc qemu-block@nongnu.org)
+
+On 24/9/25 18:39, Philippe Mathieu-Daudé wrote:
+> qemu_bh_new_guarded() is considered legacy since commit 9c86c97f12c
+> ("async: Add an optional reentrancy guard to the BH API"); recommend
+> the new API: aio_bh_new_guarded().
 > 
-> When using my split-accel branch, I had good results with v2.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   scripts/checkpatch.pl | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> I'm getting crashes with v3:
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 91616c974f2..6a0c06bebb9 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -3197,9 +3197,9 @@ sub process {
+>   		if ($line =~ /\bsignal\s*\(/ && !($line =~ /SIG_(?:IGN|DFL)/)) {
+>   			ERROR("use sigaction to establish signal handlers; signal is not portable\n" . $herecurr);
+>   		}
+> -# recommend qemu_bh_new_guarded instead of qemu_bh_new
+> -        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\bqemu_bh_new\s*\(/) {
+> -			ERROR("use qemu_bh_new_guarded() instead of qemu_bh_new() to avoid reentrancy problems\n" . $herecurr);
+> +# recommend aio_bh_new_guarded instead of legacy qemu_bh_new / qemu_bh_new_guarded
+> +        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\bqemu_bh_new(_guarded)?\s*\(/) {
+> +			ERROR("use aio_bh_new_guarded() instead of qemu_bh_new*() to avoid reentrancy problems\n" . $herecurr);
+>   		}
+>   # recommend aio_bh_new_guarded instead of aio_bh_new
+>           if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\baio_bh_new\s*\(/) {
 
-Are you sure you didn't just get lucky with v2?
-There's little functional change to v3...
-
-Point me at your branch?  While I can't test HVF, I can double-check at how you integrated 
-the flush.
-
-
-r~
 
