@@ -4,95 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4370CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED00ACAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Jqm-0003fs-Kv; Wed, 24 Sep 2025 03:23:40 -0400
+	id 1v1Jnt-0005xM-5J; Wed, 24 Sep 2025 03:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v1JqU-0003Wi-LD
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:23:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jnq-0005vc-UA
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:40 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1v1JqA-0003vp-LY
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:23:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758698578;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rj3RQ4GXp5AjX5PkH/P7r4/EWTQrzqL0qIzlzX+1qL0=;
- b=Y+mJY5LEEjDY0bSJvnjD3UKNOXRN7Z6Lz+aMBHBQ7jQdJB54+L51UrTTdYUGIA3sWoTo8k
- Jl68J+jqum37UFhzSx7Ce2Wn30e1C4IgdPTFUInkQ348IDO5v3VFz/7npVTD9+2sfSD2XR
- yikAVSYc8dn3THNBUkjR8KNcrG5Y+Z8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-358-bgCGd124NM6_dEC5D2jEqg-1; Wed, 24 Sep 2025 03:22:57 -0400
-X-MC-Unique: bgCGd124NM6_dEC5D2jEqg-1
-X-Mimecast-MFC-AGG-ID: bgCGd124NM6_dEC5D2jEqg_1758698576
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-46c84b3b27bso22127975e9.2
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 00:22:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758698575; x=1759303375;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rj3RQ4GXp5AjX5PkH/P7r4/EWTQrzqL0qIzlzX+1qL0=;
- b=v4gwLmAWuDAzT8VVgNqPnaLLmsh4HmryBuBmveKcm/XqiNrmmFVb9bhqa28q66MJTT
- KaibKzpl4ZVFynGP/2IsaVFiqJPm8fsR8RoX8aXSMA06IM/LclqZWPITMqguhYBHM3ah
- uNx6gXhFsvN+aINkGZ5h8cyMxcU+ydwJkK/qTRLBezkLR1J9n1sbLCEcJAkNdcKMAq8c
- a3Y4M/ZqJRIxgiYwAMhvBLO6eoo5DAuLKZEuB7hm9e3/IS/MMhNr8z0GtXnjCjGQPUh2
- e0KKodgCLKB4z+ud4zNm54dPgLl1d0BPZYCnG8Ild+rMSvBPl1B5Xz9XWSK4DSP3JdRv
- 0URw==
-X-Gm-Message-State: AOJu0YxtFMZltZBcY/gLIBgyS2slsJFg1DQH+bO127+wADYpWJ3dQbFM
- VtJZy+jWtx8QLx2KbEz6GcNAGPOSJ9Q7UiVhR9YRl39E591NQ1PqwAMbZcm3PsHlKqjt18NOo+T
- k2k5BF2xEpz4JkBl7wb/VNgCdn+iy384d0gsc6eFFO232N54SZuTrk/IQ1ocBTHJ+
-X-Gm-Gg: ASbGncsWzRLCt4MIJnKgNx2WdLxbwXi0x27groAgHeBVE38aNH7L4h/TITXC75B8lCl
- Wb7FrkS23nvw9Z4PEGWdASXKparb3TrJ2/QIEljg+v8+4yzEM6uUK5CIIySl+qSYDolyd46xtDV
- UZiAcQfnN5i5eaQQmOi9nBjBpLB653/lxk7D9RKnWF33ej9Kv+2U9fkXKVfa74LMiZ3fiXxC84U
- CAcWPtmYAB80/QAm0ESYcDaOdhxdlmzPKh7MMrwfOtFSTufR50drp/4Bvw81cDYSGzll2uC1Wlr
- DLhQEqMDQgGtnzLIkCUabXiN5odjBRUbpc3tkQjPUFY=
-X-Received: by 2002:a05:600c:c04b:10b0:46e:1eaf:2564 with SMTP id
- 5b1f17b1804b1-46e1eaf29femr34543285e9.29.1758698575290; 
- Wed, 24 Sep 2025 00:22:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGzJEWAI4D1F69jZufVQMJVr/24juD8nmCY08MX7KVV/ISHu4zCaYuSPhOjJQePyJez3MDnA==
-X-Received: by 2002:a05:600c:c04b:10b0:46e:1eaf:2564 with SMTP id
- 5b1f17b1804b1-46e1eaf29femr34543135e9.29.1758698574901; 
- Wed, 24 Sep 2025 00:22:54 -0700 (PDT)
-Received: from sgarzare-redhat ([5.77.110.171])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2aacfc3dsm19268265e9.16.2025.09.24.00.22.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 00:22:54 -0700 (PDT)
-Date: Wed, 24 Sep 2025 09:22:47 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Li Zhaoxin <lizhaoxin04@baidu.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- Miao Kezhan <miaokezhan@baidu.com>
-Subject: Re: [PATCH] vdpa-dev: add get_vhost() callback for vhost-vdpa device
-Message-ID: <lh5yr3s3xej3mejfkoz5q6m5jf62b6ox2mvaspu5t3niuhv3qx@gdwzsqquroei>
-References: <bf9c6885d0d425248a5765951a817ea518d92e8a.1758635007.git.lizhaoxin04@baidu.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jnj-0003hD-6l
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=7oHRxPq9Z6cPf1b6yiYBrI164arRf+hxCj2kw7nzqZY=; b=ekzMp14fPfxnsh7
+ RzSo+jQk1wnvXRVug/JPSgUgpedaYszq3D/oZ2V5DnymveDA/uxbAKbb0CxT/MHcKRshAeWKUwzhw
+ Fx3PxDvVSgCTeWiuof/Zr0TMMuiMyuJXzGGx+rmRRlaijbXFXFDABMX5NY/41o7dsLwb3G8t1lC70
+ AY=;
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
+ palmer@dabbelt.com
+Subject: [RFC PATCH 33/34] target/riscv: Introduce externally facing CSR
+ access functions
+Date: Wed, 24 Sep 2025 09:21:23 +0200
+Message-ID: <20250924072124.6493-34-anjo@rev.ng>
+In-Reply-To: <20250924072124.6493-1-anjo@rev.ng>
+References: <20250924072124.6493-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <bf9c6885d0d425248a5765951a817ea518d92e8a.1758635007.git.lizhaoxin04@baidu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,58 +60,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 23, 2025 at 09:51:10PM +0800, Li Zhaoxin wrote:
->Commit c255488d67 "virtio: add vhost support for virtio devices"
->added the get_vhost() function, but it did not include vhost-vdpa devices.
->Now we add it.
+Convert riscv_csr_[read|write]() into target_ulong angnostic CSR access
+functions that can be safely used from outside of target/ without
+knowledge of the target register size.  Replace the 4 existing CSR
+accesses in hw/ and linux-user/.
 
-Again, could you please explain what problem you had and how this patch 
-solves it?
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/riscv/cpu.h        |  7 ++++++-
+ target/riscv/csr.h        | 13 -------------
+ hw/riscv/riscv_hart.c     |  7 +++----
+ linux-user/riscv/signal.c |  5 +++--
+ target/riscv/csr.c        | 17 +++++++++++++++++
+ 5 files changed, 29 insertions(+), 20 deletions(-)
 
-This information must always be included in a commit message, so please 
-pay attention to this.
-
-Thanks,
-Stefano
-
->
->Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
->Signed-off-by: Miao Kezhan <miaokezhan@baidu.com>
->Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
->---
-> hw/virtio/vdpa-dev.c | 7 +++++++
-> 1 file changed, 7 insertions(+)
->
->diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->index d1da40afc8..4a7b970976 100644
->--- a/hw/virtio/vdpa-dev.c
->+++ b/hw/virtio/vdpa-dev.c
->@@ -338,6 +338,12 @@ static int vhost_vdpa_device_set_status(VirtIODevice *vdev, uint8_t status)
->     return 0;
-> }
->
->+static struct vhost_dev *vhost_vdpa_device_get_vhost(VirtIODevice *vdev)
->+{
->+    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
->+    return &s->dev;
->+}
->+
-> static const Property vhost_vdpa_device_properties[] = {
->     DEFINE_PROP_STRING("vhostdev", VhostVdpaDevice, vhostdev),
->     DEFINE_PROP_UINT16("queue-size", VhostVdpaDevice, queue_size, 0),
->@@ -369,6 +375,7 @@ static void vhost_vdpa_device_class_init(ObjectClass *klass, const void *data)
->     vdc->set_config = vhost_vdpa_device_set_config;
->     vdc->get_features = vhost_vdpa_device_get_features;
->     vdc->set_status = vhost_vdpa_device_set_status;
->+    vdc->get_vhost = vhost_vdpa_device_get_vhost;
-> }
->
-> static void vhost_vdpa_device_instance_init(Object *obj)
->-- 
->2.34.1
->
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index a954605e83..12b6cafbf0 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -849,7 +849,12 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+ RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env);
+ uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
+ 
+-#include "csr.h"
++/*
++ * Externally facing CSR access functions, asserts if access fails.
++ */
++
++int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val);
++int riscv_csr_read_i64(CPURISCVState *env, int csrn, uint64_t *res);
+ 
+ /*
+  * The event id are encoded based on the encoding specified in the
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+index fab53992bb..552e6c5de5 100644
+--- a/target/riscv/csr.h
++++ b/target/riscv/csr.h
+@@ -23,19 +23,6 @@ RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+                                  target_ulong new_value,
+                                  target_ulong write_mask);
+ 
+-static inline void riscv_csr_write(CPURISCVState *env, int csrno,
+-                                   target_ulong val)
+-{
+-    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+-}
+-
+-static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
+-{
+-    target_ulong val = 0;
+-    riscv_csrrw(env, csrno, &val, 0, 0, 0);
+-    return val;
+-}
+-
+ typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
+                                                  int csrno);
+ typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index 7f2676008c..c7e98a4308 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -67,12 +67,11 @@ static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
+     RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
+     CPURISCVState *env = &cpu->env;
+ 
+-    int ret = RISCV_EXCP_NONE;
++    RISCVException ret = RISCV_EXCP_NONE;
+     if (strcmp(cmd, "get_csr") == 0) {
+-        ret = riscv_csrr(env, csrno, (target_ulong *)val);
++        ret = riscv_csr_read_i64(env, csrno, val);
+     } else if (strcmp(cmd, "set_csr") == 0) {
+-        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
+-                          MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
++        ret = riscv_csr_write_i64(env, csrno, *val);
+     }
+ 
+     g_assert(ret == RISCV_EXCP_NONE);
+diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+index 358fa1d82d..9d5ba300e4 100644
+--- a/linux-user/riscv/signal.c
++++ b/linux-user/riscv/signal.c
+@@ -90,7 +90,8 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+         __put_user(env->fpr[i], &sc->fpr[i]);
+     }
+ 
+-    uint32_t fcsr = riscv_csr_read(env, CSR_FCSR);
++    uint64_t fcsr;
++    riscv_csr_read_i64(env, CSR_FCSR, &fcsr);
+     __put_user(fcsr, &sc->fcsr);
+ }
+ 
+@@ -159,7 +160,7 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
+ 
+     uint32_t fcsr;
+     __get_user(fcsr, &sc->fcsr);
+-    riscv_csr_write(env, CSR_FCSR, fcsr);
++    riscv_csr_write_i64(env, CSR_FCSR, fcsr);
+ }
+ 
+ static void restore_ucontext(CPURISCVState *env, struct target_ucontext *uc)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index f079a89793..846052a6ed 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5656,6 +5656,23 @@ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+     return riscv_csrrw_do64(env, csrno, ret_value, new_value, write_mask, ra);
+ }
+ 
++int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val)
++{
++    RISCVException ret;
++    ret = riscv_csrrw(env, csrno, NULL, val,
++                      MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
++    return ret;
++}
++
++int riscv_csr_read_i64(CPURISCVState *env, int csrno, uint64_t *res)
++{
++    RISCVException ret;
++    target_ulong val = 0;
++    ret = riscv_csrr(env, csrno, &val);
++    *res = val;
++    return ret;
++}
++
+ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+                                         Int128 *ret_value,
+                                         Int128 new_value,
+-- 
+2.51.0
 
 
