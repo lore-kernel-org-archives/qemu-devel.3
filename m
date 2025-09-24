@@ -4,66 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E566BCAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27DE9CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1J1R-0007H1-CQ; Wed, 24 Sep 2025 02:30:37 -0400
+	id 1v1J4K-0001MN-IU; Wed, 24 Sep 2025 02:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1J1P-0007GH-V5
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:30:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1v1J4E-0001Jy-I0
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:33:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1J1L-0005lk-ES
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:30:35 -0400
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1v1J3F-0005py-Ej
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:32:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758695428;
+ s=mimecast20190719; t=1758695543;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ZBFbT/0UOIAnFVc+lcWU/h/CTIl7iEPK7PR/yeNyXUk=;
- b=QtwKah2iOsmjz30xzvDUlNsH0AY4E9ynmd32Quv422tAgXLDdEAovdWtZiX4h+A1WG8Z4t
- PcMtzy6ZU3rg1P+DY68wGUAwWVhfpVQLCQmNhkrkMJA3IE75RlBdGhLRvZGwUKTY0Hmcgi
- sv4KfCtM8dZzUePfXbDXZwfy9RM843M=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-2bnaE451P3ao-yEJPgEunw-1; Wed,
- 24 Sep 2025 02:28:53 -0400
-X-MC-Unique: 2bnaE451P3ao-yEJPgEunw-1
-X-Mimecast-MFC-AGG-ID: 2bnaE451P3ao-yEJPgEunw_1758695333
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E57E21956086
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 06:28:52 +0000 (UTC)
-Received: from localhost.localdomain.com (unknown [10.72.116.111])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28B701800451; Wed, 24 Sep 2025 06:28:49 +0000 (UTC)
-From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
- Michael Tsirkin <mst@redhat.com>
-Subject: [PATCH] net/net.c: add tap device fd validity check to prevent abort
- on deleted device
-Date: Wed, 24 Sep 2025 14:28:31 +0800
-Message-ID: <20250924062831.1788305-1-hzuo@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cEDOgbZmY0NzAxxBt1XQSNhzuSfHiDjnE5F2iQW6/DM=;
+ b=SSR8ZuPfQgzzIWbBEZd0KDnN5KPjhT3atmEoQGEYD79Xy1gE52FqLZaU+77+ZCI3zc9QfL
+ 0yK6PcY7bjQceU0/JL2/ynaPMKzUPsQT7/qqq4bC+7XqNag9OX49UDbYo3ErrzmqcLH203
+ euzwC0ZBB2hjEPgEskc5Cbu+04myzTY=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-92-wzlgmiD9PBGfMR67hHaLBA-1; Wed, 24 Sep 2025 02:32:15 -0400
+X-MC-Unique: wzlgmiD9PBGfMR67hHaLBA-1
+X-Mimecast-MFC-AGG-ID: wzlgmiD9PBGfMR67hHaLBA_1758695534
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-32e09eaf85dso7751084a91.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 23:32:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758695534; x=1759300334;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cEDOgbZmY0NzAxxBt1XQSNhzuSfHiDjnE5F2iQW6/DM=;
+ b=vWKzzyaHLVyDtspKLWugMCLYfcioMFwX8I7NP8itkqHqLKarWT/0sSAm/7FBxELlFp
+ TbmAE0UHouHU4vZKt2e9lu+jk5JxkuGzgv1+GbsZ+q1KueR+p3KAstlqzK0f6D1phCXa
+ iB1J/UQik4X5UlwMqyC3bJnWeJfGLM5lThUpptxW0f9IpVhv4aEUaXVOPvhckhmEj86s
+ 7xXj2bxphaAUMlqkIPkdG9ya7stwQohNnsWftwfMbJX+5di5r50lAIq7uuA5nmCBe5YZ
+ bJ8N9LFXIENIc8NXXCxzzCP3Qex6qCAV2lyOJsHcykhrYA7aAYSj6WWIXkWepf8Rj5iV
+ aKPg==
+X-Gm-Message-State: AOJu0YwmcgRZkRTkjlg54EKczg0sH35DotJjXz3O67iiQCQcyiRHID9x
+ hFL8YCeERgs8mLWjOOsUgtTyD0wYe6xsbc6r3i7xkUhFLQs4e1QuB+kXSLL7xlBNwEiqh+5zOcT
+ z4XgALUAxagz3cBjUOoSyJ1ZDo75NUWqpKk8g/ngpNYtjqpQAz4FSfWELZvNwTXlHXWAJTlD9Sg
+ 8VT/DWnqdavgk1laEFtqdOljZ8pqd3rh0=
+X-Gm-Gg: ASbGnctVD1juzttGjHdXvX8TpGyJVlPIkuKE1iwYfah2cxHoOsqYsxUXJPG03R6Ykyc
+ IUdq6/zf6flZ9MVEFgn0DM6yn0jNGyVtgox95fX0sDzS5Gtrw+UlSeD/bnIkFjYPMqYUUB4ryzi
+ ISP/FKlMolaaQwYoqumw==
+X-Received: by 2002:a17:90b:1b47:b0:330:4d30:5009 with SMTP id
+ 98e67ed59e1d1-332a94da7b4mr5679583a91.2.1758695534262; 
+ Tue, 23 Sep 2025 23:32:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHjGRurbEUK/SpB3YuFpttfO+FqRS9fSb263blrIVlSewZfdANrzgElXj8nMsDMa4AXnWF/RhPkXv8Rt7SfycI=
+X-Received: by 2002:a17:90b:1b47:b0:330:4d30:5009 with SMTP id
+ 98e67ed59e1d1-332a94da7b4mr5679555a91.2.1758695533776; Tue, 23 Sep 2025
+ 23:32:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hzuo@redhat.com;
+References: <20250924062831.1788305-1-hzuo@redhat.com>
+In-Reply-To: <20250924062831.1788305-1-hzuo@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 24 Sep 2025 14:32:02 +0800
+X-Gm-Features: AS18NWA8kk1bilSrPyfj02sFU-t0-mmoVTnxdSa7s-p6lCfPEOISGWdabsPVQfA
+Message-ID: <CACGkMEt9f0d1E9=4cw8p6-mFiq3ASVoxmXrCygyhz5r+o1mVdw@mail.gmail.com>
+Subject: Re: [PATCH] net/net.c: add tap device fd validity check to prevent
+ abort on deleted device
+To: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+Cc: qemu-devel@nongnu.org, Cindy Lu <lulu@redhat.com>, 
+ Michael Tsirkin <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,237 +104,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch addresses a scenario where QEMU would abort with a core dump
-when a tap device created by QEMU is manually deleted from the host while
-the guest is running.
+On Wed, Sep 24, 2025 at 2:29=E2=80=AFPM Houqi (Nick) Zuo <hzuo@redhat.com> =
+wrote:
+>
+> This patch addresses a scenario where QEMU would abort with a core dump
+> when a tap device created by QEMU is manually deleted from the host while
+> the guest is running.
+>
+> The specific negative test case is:
+> 1. Start QEMU with a tap device (created by QEMU)
+> 2. Manually delete the tap device on the host
+> 3. Execute shutdown in the guest
+> 4. QEMU attempts to clean up the tap device but finds the file descriptor
+>    in a bad state, leading to abort and core dump
+>
+> The patch introduces a tap device file descriptor validity check using
+> the TUNGETIFF ioctl to detect when the underlying tap device has been
+> removed. When detected, the operations are skipped gracefully instead
+> of proceeding with invalid file descriptors that cause ioctl failures.
+>
+> The validity check is integrated into:
+> - qemu_set_vnet_hdr_len() in net/net.c
+> - qemu_set_offload() in net/net.c
+>
+> This ensures that when the tap device is no longer valid, these functions
+> return early without attempting operations that would fail and trigger
+> aborts,
 
-The specific negative test case is:
-1. Start QEMU with a tap device (created by QEMU)
-2. Manually delete the tap device on the host
-3. Execute shutdown in the guest
-4. QEMU attempts to clean up the tap device but finds the file descriptor
-   in a bad state, leading to abort and core dump
+Let's just remove the abort then?
 
-The patch introduces a tap device file descriptor validity check using
-the TUNGETIFF ioctl to detect when the underlying tap device has been
-removed. When detected, the operations are skipped gracefully instead
-of proceeding with invalid file descriptors that cause ioctl failures.
+> thus achieving the expected behavior of error reporting without
+> crashing.
+>
+> (gdb) bt full
+> #0  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Dsi=
+gno@entry=3D6, no_tid=3Dno_tid@entry=3D0) at pthread_kill.c:44
+>         tid =3D <optimized out>
+>         ret =3D 0
+>         pd =3D <optimized out>
+>         old_mask =3D {__val =3D {10}}
+>         ret =3D <optimized out>
+> #1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=3D<optimized =
+out>, signo=3D6) at pthread_kill.c:78
+> #2  0x00007f1710b15f56 in __GI_raise (sig=3Dsig@entry=3D6) at ../sysdeps/=
+posix/raise.c:26
+>         ret =3D <optimized out>
+> #3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
+>         save_stage =3D 1
+>         act =3D {__sigaction_handler =3D {sa_handler =3D 0x20, sa_sigacti=
+on =3D 0x20}, sa_mask =3D {__val =3D {16929458408262392576, 184467440737095=
+50848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943=
+, 139737042670528, 18446744073709550328, 77, 139705603579344, 1844674407370=
+9551615, 139737041472378, 139705595179568, 16929458408262392576, 9404967979=
+4864}}, sa_flags =3D 281695456, sa_restorer =3D 0xa}
+> #4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=3D<optimized out>, =
+len=3D10) at ../net/tap-linux.c:204
+> #5  tap_set_vnet_hdr_len (nc=3D<optimized out>, len=3D10) at ../net/tap.c=
+:269
+>         s =3D <optimized out>
+> #6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=3D0x2956, len=3D10588=
+) at ../net/net.c:573
+> #7  virtio_net_set_mrg_rx_bufs (n=3D0x5589a72cfa10, mergeable_rx_bufs=3D<=
+optimized out>, version_1=3D<error reading variable: Incompatible types on =
+DWARF stack>, hash_report=3D<optimized out>) at ../hw/net/virtio-net.c:664
+>         i =3D 0
+>         nc =3D 0x5589a730ab28
+> #8  virtio_net_set_features (vdev=3D0x5589a72cfa10, features=3D0) at ../h=
+w/net/virtio-net.c:897
+>         n =3D 0x5589a72cfa10
+>         err =3D 0x0
+>         i =3D 0
+> #9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=3D0x5589a72cf=
+a10, val=3D0) at ../hw/virtio/virtio.c:3079
+>         k =3D <optimized out>
+>         bad =3D <optimized out>
+> #10 virtio_reset (opaque=3D0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
+>         vdev =3D 0x5589a72cfa10
+>         k =3D 0x5589a5c162b0
+>         i =3D 0
+> #11 0x000055899a630d2b in virtio_bus_reset (bus=3D0x5589a72cf990) at ../h=
+w/virtio/virtio-bus.c:109
+>         vdev =3D <optimized out>
+> #12 virtio_pci_reset (qdev=3D0x5589a72c7470) at ../hw/virtio/virtio-pci.c=
+:2311
+>         proxy =3D 0x5589a72c7470
+>         i =3D 0
+>         bus =3D 0x5589a72cf990
+> #13 0x000055899a686ded in memory_region_write_accessor (mr=3D<optimized o=
+ut>, addr=3D<optimized out>, value=3D<optimized out>, size=3D<optimized out=
+>, shift=3D<optimized out>, mask=3D<optimized out>, attrs=3D...) at ../syst=
+em/memory.c:490
+>         tmp =3D <optimized out>
+> #14 0x000055899a686cbc in access_with_adjusted_size (addr=3D20, value=3D0=
+x7f0fbedfde00, size=3D1, access_size_min=3D<optimized out>, access_size_max=
+=3D<optimized out>, access_fn=3D0x55899a686d30 <memory_region_write_accesso=
+r>, mr=3D0x5589a72c8040, attrs=3D...) at ../system/memory.c:566
+>         print_once_ =3D false
+>         access_mask =3D 255
+>         access_size =3D 1
+>         i =3D 0
+>         r =3D 0
+>         reentrancy_guard_applied =3D <optimized out>
+> #15 0x000055899a686ac5 in memory_region_dispatch_write (mr=3D<optimized o=
+ut>, addr=3D20, data=3D<optimized out>, op=3D<optimized out>, attrs=3D...) =
+at ../system/memory.c:1545
+>         size =3D <optimized out>
+> #16 0x000055899a69f7da in flatview_write_continue_step (attrs=3D..., buf=
+=3D0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, =
+len=3D<optimized out>, mr_addr=3D20, l=3D0x7f0fbedfde28, mr=3D0x5589a72c804=
+0) at ../system/physmem.c:2972
+>         val =3D 6
+>         result =3D 0
+>         release_lock =3D <optimized out>
+> #17 0x000055899a697c15 in flatview_write_continue (fv=3D0x7f0f6c124d90, a=
+ddr=3D61675730370580, attrs=3D..., ptr=3D0x7f1711da6028, len=3D1, mr_addr=
+=3D6, l=3D1, mr=3D0x0) at ../system/physmem.c:3002
+>         result =3D 0
+>         buf =3D 0x7f1711da6028 <error: Cannot access memory at address 0x=
+7f1711da6028>
+> #18 flatview_write (fv=3D0x7f0f6c124d90, addr=3D61675730370580, attrs=3D.=
+.., buf=3D0x7f1711da6028, len=3D1) at ../system/physmem.c:3033
+> --Type <RET> for more, q to quit, c to continue without paging--
+>         l =3D <optimized out>
+>         mr_addr =3D 6
+>         mr =3D 0x0
+> #19 0x000055899a697a91 in address_space_write (as=3D0x55899bceeba0 <addre=
+ss_space_memory>, addr=3D61675730370580, attrs=3D..., buf=3D0x7f1711da6028,=
+ len=3D1) at ../system/physmem.c:3153
+>         _rcu_read_auto =3D 0x1
+>         result =3D 0
+>         fv =3D 0x2956
+> #20 0x000055899a91159b in address_space_rw (addr=3D10588, attrs=3D..., bu=
+f=3D0x7f1711da6028, len=3D0, as=3D<optimized out>, is_write=3D<optimized ou=
+t>) at ../system/physmem.c:3163
+> #21 kvm_cpu_exec (cpu=3D0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
+>         attrs =3D {secure =3D 0, space =3D 0, user =3D 0, memory =3D 0, d=
+ebug =3D 0, requester_id =3D 0, pid =3D 0, address_type =3D 0, unspecified =
+=3D false, _reserved1 =3D 0 '\000', _reserved2 =3D 0}
+>         run =3D 0x7f1711da6000
+>         ret =3D <optimized out>
+>         run_ret =3D <optimized out>
+> #22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=3D0x5589a5d68b40) at ..=
+/accel/kvm/kvm-accel-ops.c:51
+>         r =3D <optimized out>
+>         cpu =3D <optimized out>
+> #23 0x000055899aba817a in qemu_thread_start (args=3D0x5589a5d72580) at ..=
+/util/qemu-thread-posix.c:393
+>         __clframe =3D {__cancel_routine =3D <optimized out>, __cancel_arg=
+ =3D 0x0, __do_it =3D 1, __cancel_type =3D <optimized out>}
+>         qemu_thread_args =3D 0x5589a5d72580
+>         start_routine =3D 0x55899a918850 <kvm_vcpu_thread_fn>
+>         arg =3D 0x5589a5d68b40
+>         r =3D 0x0
+> #24 0x00007f1710b6a128 in start_thread (arg=3D<optimized out>) at pthread=
+_create.c:448
+>         ret =3D <optimized out>
+>         pd =3D <optimized out>
+>         out =3D <optimized out>
+>         unwind_buf =3D {cancel_jmp_buf =3D {{jmp_buf =3D {32, 88945440577=
+43421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908,=
+ -8844535456800460908}, mask_was_saved =3D 0}}, priv =3D {pad =3D {0x0, 0x0=
+, 0x0, 0x0}, data =3D {prev =3D 0x0, cleanup =3D 0x0, canceltype =3D 0}}}
+>         not_first_call =3D <optimized out>
+> #25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/c=
+lone.S:100
+>
+> Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+> ---
 
-The validity check is integrated into:
-- qemu_set_vnet_hdr_len() in net/net.c
-- qemu_set_offload() in net/net.c
-
-This ensures that when the tap device is no longer valid, these functions
-return early without attempting operations that would fail and trigger
-aborts, thus achieving the expected behavior of error reporting without
-crashing.
-
-(gdb) bt full
-#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-        tid = <optimized out>
-        ret = 0
-        pd = <optimized out>
-        old_mask = {__val = {10}}
-        ret = <optimized out>
-#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
-#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-        ret = <optimized out>
-#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
-        save_stage = 1
-        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
-#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
-#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
-        s = <optimized out>
-#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
-#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
-        i = 0
-        nc = 0x5589a730ab28
-#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
-        n = 0x5589a72cfa10
-        err = 0x0
-        i = 0
-#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
-        k = <optimized out>
-        bad = <optimized out>
-#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
-        vdev = 0x5589a72cfa10
-        k = 0x5589a5c162b0
-        i = 0
-#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
-        vdev = <optimized out>
-#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
-        proxy = 0x5589a72c7470
-        i = 0
-        bus = 0x5589a72cf990
-#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
-        tmp = <optimized out>
-#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
-        print_once_ = false
-        access_mask = 255
-        access_size = 1
-        i = 0
-        r = 0
-        reentrancy_guard_applied = <optimized out>
-#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
-        size = <optimized out>
-#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
-        val = 6
-        result = 0
-        release_lock = <optimized out>
-#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
-        result = 0
-        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
-#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
---Type <RET> for more, q to quit, c to continue without paging--
-        l = <optimized out>
-        mr_addr = 6
-        mr = 0x0
-#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
-        _rcu_read_auto = 0x1
-        result = 0
-        fv = 0x2956
-#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
-#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
-        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
-        run = 0x7f1711da6000
-        ret = <optimized out>
-        run_ret = <optimized out>
-#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
-        r = <optimized out>
-        cpu = <optimized out>
-#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
-        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
-        qemu_thread_args = 0x5589a5d72580
-        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
-        arg = 0x5589a5d68b40
-        r = 0x0
-#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
-        ret = <optimized out>
-        pd = <optimized out>
-        out = <optimized out>
-        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
-        not_first_call = <optimized out>
-#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
-
-Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
----
- include/net/net.h |  2 ++
- net/net.c         |  7 +++++--
- net/tap-linux.c   | 11 +++++++++++
- net/tap.c         |  9 +++++++++
- net/tap_int.h     |  1 +
- 5 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/include/net/net.h b/include/net/net.h
-index 84ee18e0f9..9e435f3275 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -69,6 +69,7 @@ typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
- typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
-+typedef int (QueryValidity)(NetClientState *nc);
- 
- typedef struct NetClientInfo {
-     NetClientDriver type;
-@@ -96,6 +97,7 @@ typedef struct NetClientInfo {
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-     GetVHostNet *get_vhost_net;
-+    QueryValidity *query_validity;
- } NetClientInfo;
- 
- struct NetClientState {
-diff --git a/net/net.c b/net/net.c
-index da275db86e..c0750fd0b9 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -57,6 +57,7 @@
- #include "qapi/string-output-visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "standard-headers/linux/virtio_net.h"
-+#include "qemu/log.h"
- 
- /* Net bridge is currently not supported for W32. */
- #if !defined(_WIN32)
-@@ -543,7 +544,8 @@ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len)
- void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
-                           int ecn, int ufo, int uso4, int uso6)
- {
--    if (!nc || !nc->info->set_offload) {
-+    if (!nc || !nc->info->set_offload ||
-+        (nc->info->query_validity && nc->info->query_validity(nc) != 1)) {
-         return;
-     }
- 
-@@ -561,7 +563,8 @@ int qemu_get_vnet_hdr_len(NetClientState *nc)
- 
- void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
- {
--    if (!nc || !nc->info->set_vnet_hdr_len) {
-+    if (!nc || !nc->info->set_vnet_hdr_len ||
-+        (nc->info->query_validity && nc->info->query_validity(nc) != 1)) {
-         return;
-     }
- 
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index e832810665..2911c66149 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -346,3 +346,14 @@ int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- 
-     return 0;
- }
-+
-+int tap_fd_query_validity(int fd)
-+{
-+    struct ifreq ifr;
-+
-+    if (ioctl(fd, TUNGETIFF, &ifr) != 0) {
-+        error_report("The tap device fd: %d is NOT valid.", fd);
-+        return -1;
-+    }
-+    return 1;
-+}
-diff --git a/net/tap.c b/net/tap.c
-index f37133e301..a9af3c7279 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -364,6 +364,14 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
-     return s->vhost_net;
- }
- 
-+static int tap_query_validity(NetClientState *nc)
-+{
-+    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-+
-+    return tap_fd_query_validity(s->fd);
-+}
-+
- /* fd support */
- 
- static NetClientInfo net_tap_info = {
-@@ -383,6 +391,7 @@ static NetClientInfo net_tap_info = {
-     .set_vnet_be = tap_set_vnet_be,
-     .set_steering_ebpf = tap_set_steering_ebpf,
-     .get_vhost_net = tap_get_vhost_net,
-+    .query_validity = tap_query_validity,
- };
- 
- static TAPState *net_tap_fd_init(NetClientState *peer,
-diff --git a/net/tap_int.h b/net/tap_int.h
-index 8857ff299d..5deb380201 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -46,5 +46,6 @@ int tap_fd_enable(int fd);
- int tap_fd_disable(int fd);
- int tap_fd_get_ifname(int fd, char *ifname);
- int tap_fd_set_steering_ebpf(int fd, int prog_fd);
-+int tap_fd_query_validity(int fd);
- 
- #endif /* NET_TAP_INT_H */
--- 
-2.47.3
+Thanks
 
 
