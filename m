@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2224ACAC5B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A171CCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:30:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1LoN-0004ba-C7; Wed, 24 Sep 2025 05:29:20 -0400
+	id 1v1LoY-0004jf-3b; Wed, 24 Sep 2025 05:29:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1LoH-0004Z7-AJ
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v1LoW-0004iO-Ej
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1LoA-0004lE-6Z
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:13 -0400
+ id 1v1LoP-0004mh-D6
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758706143;
+ s=mimecast20190719; t=1758706160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sxLN7RzrnIG6H43LZkavcvPiQ5d1T/R4AZOxvLvIHQQ=;
- b=A5klvJmjDDXvs6TXCQBl086Hm/00gC0zm25glLBovcI6Na08lhTGKcE5kRIuRI99q7vQuO
- GUoRv+U8ncAOPoKMMaok4N2HjhnSQykVSft87OoQu6/kLZPsjuGoNmnEj45uHw8PkCZE56
- cvUoIffMAQf8eXFMjALl9vm/bfzMIWI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cQtQgz5paDlJPQB2PzlMqA4uvKzTZV/KR4MEWJ2j6p8=;
+ b=IV4pwMCB0SKcIeQ/avuGIIQ+sbZ/r6Q+y6WQ1oHNyESbabA0lCydDw/6qZE8TpXBjRxqMb
+ xNDM7Vb/bvCgyGPg/cmQ4vPscHWtCYLr7xN7tofiZ0y6bvNPIJbpviuRz9rf4Elc7yd0pj
+ YU8SYS6PSfB6e1o5JUlT6UakJ/t9pMg=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-JQwrumkLO8WiLb0bbYtUFg-1; Wed, 24 Sep 2025 05:28:56 -0400
-X-MC-Unique: JQwrumkLO8WiLb0bbYtUFg-1
-X-Mimecast-MFC-AGG-ID: JQwrumkLO8WiLb0bbYtUFg_1758706135
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-63359dd377cso5207887a12.2
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:28:56 -0700 (PDT)
+ us-mta-627-fYuwfd_8PACXOPLLYLBflA-1; Wed, 24 Sep 2025 05:29:18 -0400
+X-MC-Unique: fYuwfd_8PACXOPLLYLBflA-1
+X-Mimecast-MFC-AGG-ID: fYuwfd_8PACXOPLLYLBflA_1758706157
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b07c2924d53so317575866b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758706135; x=1759310935;
+ d=1e100.net; s=20230601; t=1758706156; x=1759310956;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sxLN7RzrnIG6H43LZkavcvPiQ5d1T/R4AZOxvLvIHQQ=;
- b=nX2ICj9zgkPIinnjDwRAJt8iH2Rw7HE+GRlFy6iXlA5DUR0C00lgzSi7k/r7WdKdnP
- IUX2CiPytuaqP+1VUHkVfVeuAM6XcCd8SL7vx80yRvwlG6sFYUWuUATkFHQII/F7JKXj
- 4pNEh/QIcoGcm9rwxuN8P7SnTqXQw2hBB8mZmqfU6ZkhpcYDnM38L+ZCoPxMorfBt7ei
- G1AWMESoeoYq21Taj2czZldQiuc4lYGIFPb9CaGRimrfW/Er7y97l9NwM1vgedFQEWau
- lUQCRa0dZtJZ/jgSi5v16uAYCELivr8Q650iQttLXx0A93wYQ1iBsM6VSUZz8P/TUiZ1
- rGHQ==
-X-Gm-Message-State: AOJu0Yzw+WFfENl+8YnSiPGfWud3W/mLXrbzKjCITJEYBgx1eqgYw3iD
- L2egB7+v07+5isY6rJy2loRd9tnvwQN+f37g0UxxjwJPVnKthLVPkVdBLiu5U4HEF/UeGI5z3xG
- +IC3/VvUzILQX6FKaICSb6kuZ+Tijoa8Ksaw3S3uLv+sEmrrAv9Kjfloadt3G6tVukRHqrDGMIm
- x4skVlPYEfW/gKOLpIlTIcG+TOtyz+UnIfJ/OopuSV
-X-Gm-Gg: ASbGncuppVu8U0uXS8e7uHwihczEvU/T7CFe2VQhtw/9T0gRxVEbYmgGUux0zhz51NT
- e1uL/tVtYr1urZtzHCtpgbdH4BG1LEKVdOZv5ZcEZ3Kne9jFRV1zIQq2raS2MsKsaswA2IdeLW9
- JERTUF5cHyW8TZNw/L4t0pJJ/NEgNTOBkCybhTlJNHTsO7UYh7uvGWoN3BtKkWxctmXSARTmDL3
- LzNNRSmkrw7G8kjILC9f3kjk7JNYq+4Rd7XfdWbjrlqycwrQPd1laHksw1ap7FnKc4NPTwlnSat
- cHM2e8/1Ty9h3StJkOCMes8eFd6dmTKaY7I/PBx6MVpFpoPCfNSiwt3KI6yIefPONu4raupDYOI
- zDwtiwNa6z55F0SRm3ZWRVIvNPgC9OABTgZTQczcSgRcmuw==
-X-Received: by 2002:a05:6402:34d1:b0:634:b40:a0ce with SMTP id
- 4fb4d7f45d1cf-63467807609mr4857120a12.34.1758706134592; 
- Wed, 24 Sep 2025 02:28:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuXyR1HUpsoER9Tam99y9GkdCDLQpTTr92c79H8aqY+3jrk9sv9YJjJXjH41I+1P64Qd417A==
-X-Received: by 2002:a05:6402:34d1:b0:634:b40:a0ce with SMTP id
- 4fb4d7f45d1cf-63467807609mr4857086a12.34.1758706134028; 
- Wed, 24 Sep 2025 02:28:54 -0700 (PDT)
+ bh=cQtQgz5paDlJPQB2PzlMqA4uvKzTZV/KR4MEWJ2j6p8=;
+ b=wb1fiXtQ+szRGQW04XItvP2poM3KAMEeAm6FSJOi+Ra98OHm18V9tWgRVpJIuGHVFm
+ Yy3Ex/g3zva/EYEDfmwZVnNYZpn9b407joGSSxt287kN3SMkiVVpG/vx+bFdkVawWyNX
+ f6tM/6kOfjZeJanwSYD+St4EdZYCP4skqm4lTQRF+hTCZ9w7TvzuLqc18URRmQeTVomV
+ gTDhjA9qLRsjDwCkI9WNdam8S6vA3p0GARScr8lIQIQ68zEIV5NEoPQfDv6eZsNr2vlM
+ OXTpAc7WLq5H5b0Jp0WUXiOqtsKkn6KIEgKNSAtvX/TwNxJuMua5Zd4HegG/z3CHvq6G
+ UDXQ==
+X-Gm-Message-State: AOJu0YxR8nA1kPCPtwfiwEyq+yXTe7dA2H7ilUbkQ+8Dk1pr675hTiEE
+ yCUMwV7Z+1yEtMpB5JU/3z8IBAgXktV7EyLcR7ohnQrwl6NM9q5EU1rcbQIHzuC1aA919GKjsy8
+ 5/kdJxAyqISv/EqkeCC5BIxM6gFGnnbit7yy+6wGGSzp3ii0lB3XfC9a4u16Lq0jBHDdYXK5PGG
+ UoGzpXkSSOWfWNFqeVJnF5K8DhMEWlpxIr30p0t07V
+X-Gm-Gg: ASbGncuC/2f+ua4yT1r6c88iEIXK2CZcSXl3RjLPI0bWQkvfrAIM8q1GNrs6qvonDbh
+ Rf6gn65f3aX1KuqSwLm9jCeN/Gb3yiLLn6uy/r6r5WKKlcXPoiMJxTEDKFdgbvNPB94rx+vyVIi
+ 5NNJitX1yKqpFRpcerOxvm9TP6RyUn0sXXdHmGse7ZO6S5MLVMxpDjTnSbd4i4mhlG1+hnNd8od
+ xEkI6Nsy9+H6a+0QaViFw34UbfuE8JcSpX9L0LFPc3IIFndzVHKmAp+yxWazdU1IOA2oeUxxxdU
+ BCDo7zhgTiR3YMNRsIqnt2Jl3BC3dS1u9pIgnevqVbiGF2gm3HaR9iMvxja2gu1peWOr8J1eY+T
+ A0vc/LLJVdV4/WJHREEfZzdgdA5jBekzFHSVP/2XYr1/26Q==
+X-Received: by 2002:a17:907:3dab:b0:b2c:bf1e:2788 with SMTP id
+ a640c23a62f3a-b302ac325acmr545950066b.39.1758706156144; 
+ Wed, 24 Sep 2025 02:29:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUPph/8p4yfLKz9JGOSXuhkU3JFaptmlKllL6HwAJB2mvMlYDczB5flsfU+2ErEWuwnLjtJQ==
+X-Received: by 2002:a17:907:3dab:b0:b2c:bf1e:2788 with SMTP id
+ a640c23a62f3a-b302ac325acmr545948166b.39.1758706155728; 
+ Wed, 24 Sep 2025 02:29:15 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-62fa5d4357esm12689164a12.23.2025.09.24.02.28.53
+ a640c23a62f3a-b27d7eeafc7sm1054233966b.86.2025.09.24.02.29.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:28:53 -0700 (PDT)
+ Wed, 24 Sep 2025 02:29:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 01/29] docs: use the pyvenv version of Meson
-Date: Wed, 24 Sep 2025 11:28:21 +0200
-Message-ID: <20250924092850.42047-2-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 07/29] subprojects: Update .gitignore for proc-macro2 and syn
+Date: Wed, 24 Sep 2025 11:28:27 +0200
+Message-ID: <20250924092850.42047-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250924092850.42047-1-pbonzini@redhat.com>
 References: <20250924092850.42047-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,59 +110,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The version in the system might be too old for QEMU; this will be
-especially true if Rust is going to be enabled by default.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Adjust the docs to suggest using pyvenv/bin/meson, which is in fact
-what the "make" wrappers will be running internally.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20250920160520.3699591-2-zhao1.liu@intel.com
 ---
- docs/devel/build-system.rst | 2 +-
- docs/devel/rust.rst         | 2 +-
- docs/system/devices/igb.rst | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ subprojects/.gitignore | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 2c884197a20..6204aa6a72e 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -450,7 +450,7 @@ are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
- with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
- tests for all targets.
- 
--If desired, it is also possible to use ``ninja`` and ``meson test``,
-+If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
- respectively to build emulators and run tests defined in meson.build.
- The main difference is that ``make`` needs the ``-jN`` flag in order to
- enable parallel builds or tests.
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 13a20e86a16..2f0ab2e2821 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -66,7 +66,7 @@ __ https://mesonbuild.com/Commands.html#devenv
- As shown above, you can use the ``--tests`` option as usual to operate on test
- code.  Note however that you cannot *build* or run tests via ``cargo``, because
- they need support C code from QEMU that Cargo does not know about.  Tests can
--be run via ``meson test`` or ``make``::
-+be run via Meson (``pyvenv/bin/meson test``) or ``make``::
- 
-    make check-rust
- 
-diff --git a/docs/system/devices/igb.rst b/docs/system/devices/igb.rst
-index 71f31cb1160..50f625fd77e 100644
---- a/docs/system/devices/igb.rst
-+++ b/docs/system/devices/igb.rst
-@@ -54,7 +54,7 @@ directory:
- 
- .. code-block:: shell
- 
--  meson test qtest-x86_64/qos-test
-+  pyvenv/bin/meson test qtest-x86_64/qos-test
- 
- ethtool can test register accesses, interrupts, etc. It is automated as an
- functional test and can be run from the build directory with the following
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index 983c4c1549e..38e949640f6 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -17,7 +17,7 @@
+ /libc-0.2.162
+ /proc-macro-error-1.0.4
+ /proc-macro-error-attr-1.0.4
+-/proc-macro2-1.0.84
++/proc-macro2-1.0.95
+ /quote-1.0.36
+ /syn-2.0.66
+ /unicode-ident-1.0.12
 -- 
 2.51.0
 
