@@ -4,96 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45545CAC5B3
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A869CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Lp7-0005N8-3X; Wed, 24 Sep 2025 05:30:05 -0400
+	id 1v1Ltz-0008CV-8O; Wed, 24 Sep 2025 05:35:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1Lp1-0005J8-HV
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1Ltj-0007xp-7b
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:34:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1Loy-0004q8-44
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1Ltc-0005ea-QI
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:34:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758706192;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1758706482;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5Lr8fIGw+ra7DxehRDJAgbjkaaSFobuUwVbfza7dpxE=;
- b=i/Kw9wSx3ToCViat8L16lrDB5IdqWnVMV89nfw+EMl4Evv03KHb0nsdxgxsUpFQs7F62Sk
- CGYZpPHk/Gi+7ll+jyVzTPEujAY/FfG59cJrPmSl49jX9BvDPhsWOkvMAxZCOShH9OwWvK
- 5uypY2kpVhD9iLrUPOQRDC99obkHu88=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-G2xi3pd-M8SswEIwGpdwcA-1; Wed, 24 Sep 2025 05:29:51 -0400
-X-MC-Unique: G2xi3pd-M8SswEIwGpdwcA-1
-X-Mimecast-MFC-AGG-ID: G2xi3pd-M8SswEIwGpdwcA_1758706190
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b3347f0b205so37571266b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758706189; x=1759310989;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5Lr8fIGw+ra7DxehRDJAgbjkaaSFobuUwVbfza7dpxE=;
- b=f/AI1ws7In8TENTsJqKSb3DsFOZQAL+UUhrV17EZ3Jziqa/xGd1La/g2l02+fniXIQ
- S55y4vPc4JHbqhFq613NfEic8pjxhHX7FuuoL64b270wezqRPc/5OzBTbtWX29zJq/ZO
- gB4Jn92BzOEJQi6zGuvr2dHLgWd6yCNIGe09YFFWKg8Kw9Z7hH0yajYuOb3khHSTNO6x
- lU24Y4BgahAv+z7r2liHzl3Ud6KeuL3QWKMKBPL/ZCNRedIlXqfGtqY8Y0zugdhhY9/s
- RW2RLuPygcaaZmgWhvUDms3Gt5mFSDdA66KhrhRb4ywvD3ad1HaZZW2nrqkD8SxZrIiE
- bVfA==
-X-Gm-Message-State: AOJu0YzyhxBgszNK4YWr8ROgpHGlhtEX3A/q2YRwOn0Uv/8IZW7Jyq40
- 8r5ia8JqQLByPwYhFSF4j9C40W8XvgUQ5y+iAuAUF9HMIGwlWZpJyBeqVRAEijawRVnBPCiw7Ra
- C0VIJmLs2QnqQgr+U8eYExYolGfRTppputbyVc9F5hrc+0i2+8jE43p80jtoMUEKIIXZtjtRS1g
- wzRWeE51D+fHIA8mtuXF3qFl0q85yW6JM6UutCQAbe
-X-Gm-Gg: ASbGncuTrU9addeIlpCv3n6hW1/qVrQkQyzCWDq044Jti17Po2rXUnnTWIh//U8+qZX
- 6ksbw0dbYEwIDFyP7PIsFawlEIctLjhGRYp3c7G/ilsiayaogqyNu/N5Q7WbU52uzOZ9fEeN17v
- 7z43/ODrlCKZBaLEUc7d+zH4Q+MT/QZ0BZpF02nWI36oPw6F3Kjj58t5YvXIh1XKh4WjGFX3chw
- Kj8QdUFrlC0qdsXK1/DLNAw07sD/UuN7f9ebjImzYtXBLfqCckCFXcFeodweeJDVeRYzouPUHWj
- JyUsGS7rxRiL4+JgfRx/BjLGpR6YQVUzkBEdS/oNAzF+1IOA7VjjaYssfSOsADP7A4TH3E8jo+R
- PiLfa0nmDwBiRcjm05NbTv88l5hxlWrliP5CVp2JdOyZURA==
-X-Received: by 2002:a17:907:d14:b0:b1d:285d:185d with SMTP id
- a640c23a62f3a-b3021ca6d78mr537924166b.0.1758706189067; 
- Wed, 24 Sep 2025 02:29:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMQNcYKQvCMZuf1j6Q0h3pUx+56rZgVUcElX3RFudcdOG4EbiU3uNSSjPlf2xO9OUrxqBuwQ==
-X-Received: by 2002:a17:907:d14:b0:b1d:285d:185d with SMTP id
- a640c23a62f3a-b3021ca6d78mr537920766b.0.1758706188618; 
- Wed, 24 Sep 2025 02:29:48 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.127.188])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b32859673b4sm130560566b.30.2025.09.24.02.29.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:29:47 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 19/29] linux-user: avoid -Werror=int-in-bool-context
-Date: Wed, 24 Sep 2025 11:28:39 +0200
-Message-ID: <20250924092850.42047-20-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250924092850.42047-1-pbonzini@redhat.com>
-References: <20250924092850.42047-1-pbonzini@redhat.com>
+ bh=eAmc7ng1DshMG3byOC3I+oWPKZYVKD/Ui3WzD+LV9Sk=;
+ b=eup8K2IsO09F5MW/7Ligxc8MpZ4WtugP2JsTzkvtqtrn/IU4hDveYYAlaIPPK+5RiRj9ab
+ G1tOSrdC0WgUwdWkgu+0GShgdPcvf6ZWjpRxqUTY3m6HHI9wlajsa7AlaugQ6TPN9YALM/
+ 2kRf1DH6TA81zVPFevG2Xwvd5Izc2q0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-OYOoNe9pPcWkM_PtiZ9XWQ-1; Wed,
+ 24 Sep 2025 05:34:41 -0400
+X-MC-Unique: OYOoNe9pPcWkM_PtiZ9XWQ-1
+X-Mimecast-MFC-AGG-ID: OYOoNe9pPcWkM_PtiZ9XWQ_1758706480
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B6C619560B2; Wed, 24 Sep 2025 09:34:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 887361800451; Wed, 24 Sep 2025 09:34:36 +0000 (UTC)
+Date: Wed, 24 Sep 2025 10:34:31 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alessandro Ratti <alessandro@0x65c.net>
+Cc: alessandro.ratti@gmail.com, alex.bennee@linaro.org, armbru@redhat.com,
+ mst@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] virtio: improve virtqueue mapping error messages
+Message-ID: <aNO7J7Y6wsk1-wyw@redhat.com>
+References: <aNLIHOwcGB47qbUY@redhat.com>
+ <20250924093138.559872-1-alessandro@0x65c.net>
+ <20250924093138.559872-2-alessandro@0x65c.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <20250924093138.559872-2-alessandro@0x65c.net>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,39 +87,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-linux-user is failing to compile on Fedora 43:
+On Wed, Sep 24, 2025 at 11:14:04AM +0200, Alessandro Ratti wrote:
+> Improve error reporting when virtqueue ring mapping fails by including a
+> device identifier in the error message.
+> 
+> Introduce a helper qdev_get_printable_name() in qdev-core, which returns
+> either:
+> 
+>  - the device ID, if explicitly provided (e.g. -device ...,id=foo)
+>  - the QOM path from qdev_get_dev_path(dev) otherwise
+>  - "<unknown device>" as a fallback when no identifier is present
+> 
+> This makes it easier to identify which device triggered the error in
+> multi-device setups or when debugging complex guest configurations.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+> Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+> 
+> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> ---
+>  hw/core/qdev.c         | 29 +++++++++++++++++++++++++++++
+>  hw/virtio/virtio.c     | 15 ++++++++++++---
+>  include/hw/qdev-core.h |  1 +
+>  3 files changed, 42 insertions(+), 3 deletions(-)
 
-../linux-user/strace.c:57:66: error: enum constant in boolean context [-Werror=int-in-bool-context]
-   57 | #define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
-
-The warning does not seem to be too useful and we could even disable it,
-but the workaround is simple in this case.
-
-Cc: qemu-stable@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- linux-user/strace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 1233ebceb08..758c5d32b6c 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -54,7 +54,7 @@ struct flags {
- };
- 
- /* No 'struct flags' element should have a zero mask. */
--#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO(!(M)), N }
-+#define FLAG_BASIC(V, M, N)      { V, M | QEMU_BUILD_BUG_ON_ZERO((M) == 0), N }
- 
- /* common flags for all architectures */
- #define FLAG_GENERIC_MASK(V, M)  FLAG_BASIC(V, M, #V)
+
+With regards,
+Daniel
 -- 
-2.51.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
