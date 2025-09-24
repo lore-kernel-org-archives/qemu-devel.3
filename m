@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BC6CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7245DCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1PaC-000379-9x; Wed, 24 Sep 2025 09:30:56 -0400
+	id 1v1Pch-00048s-CC; Wed, 24 Sep 2025 09:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1PZu-00034g-JM
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:30:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v1Pcc-000488-Cy
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:33:26 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1PZn-0003mW-BU
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:30:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758720628;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=0q0AD55+4Gr4QXqPdtncsfokbi0PrLu1WfnIPLqCwpQ=;
- b=ggDe8G9on35hPOZwoXZw8tEH+Fckwm+CAGP+g8gCCPVdahNpcHnAnfBpAoq22zNi3WawNN
- MnbyKQFKbP255JwZdIayGjSBIN6QnGgbJNaVtxcZtIFzz9nsxDIFUN/ycBmiA1TUE7XdUL
- VplzXAHex45lbXxu7BUVpxfXq+PtixE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-xJcDF44TO1Grb2PryAc_Fw-1; Wed,
- 24 Sep 2025 09:30:24 -0400
-X-MC-Unique: xJcDF44TO1Grb2PryAc_Fw-1
-X-Mimecast-MFC-AGG-ID: xJcDF44TO1Grb2PryAc_Fw_1758720623
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 878E118002C8; Wed, 24 Sep 2025 13:30:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.136])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 643511800446; Wed, 24 Sep 2025 13:30:17 +0000 (UTC)
-Date: Wed, 24 Sep 2025 14:30:13 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 08/20] log: avoid repeated prefix on incremental
- qemu_log calls
-Message-ID: <aNPyZbpiyiR6ZqD4@redhat.com>
-References: <20250910180357.320297-1-berrange@redhat.com>
- <20250910180357.320297-9-berrange@redhat.com>
- <87plbh8cpx.fsf@pond.sub.org> <aNK0-q58zw_KygMU@redhat.com>
- <87h5ws5nxs.fsf@pond.sub.org> <87ecrw112h.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1v1PcT-00047U-7b
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:33:23 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 870A8C102A;
+ Wed, 24 Sep 2025 16:33:12 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b6c::1:2c])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id AXYn2X0FqeA0-9O1ahz6j; Wed, 24 Sep 2025 16:33:11 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758720791;
+ bh=irCkse1XJDbrp3bOJle/wi2hzTP+EhpQQfGe4cGOV3s=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=kDZjWPQB9BPfMOijyS3ftH9iJFO5UozcSQA679o73D9xs8mwWp1AnnxISoQuMv7Qd
+ mcDaOE7FPa13A4JR5BgbViU2SuIagz6e++PxDWHKWxZqu7AbAqgNy9zqPcmUbUrXRR
+ Ds2+1lttUewCbSw508qvxtYu9EH8vOUMbbVfCytY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: armbru@redhat.com
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, jasowang@redhat.com,
+ devel@lists.libvirt.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ yc-core@yandex-team.ru, vsementsov@yandex-team.ru,
+ d-tatianin@yandex-team.ru
+Subject: [PATCH v2 1/2] chardev: remove deprecated 'reconnect' option
+Date: Wed, 24 Sep 2025 16:33:08 +0300
+Message-ID: <20250924133309.334631-2-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250924133309.334631-1-vsementsov@yandex-team.ru>
+References: <20250924133309.334631-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87ecrw112h.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -94,52 +74,186 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 24, 2025 at 02:34:30PM +0200, Markus Armbruster wrote:
-> Pondering the interleave between logging and error reporting led me to
-> an interleave between error reporting and itself.
-> 
-> vreport() prints a single line to stderr in several parts:
-> 
-> * Timestamp (if enabled)
-> 
-> * Guest name (if enabled)
-> 
-> * Program name
-> 
-> * Location (if there is one)
-> 
-> * Message type
-> 
-> * Message text
-> 
-> * Newline
-> 
-> Stdio guarantees that each part comes out as a whole even when other
-> threads print to the same FILE at the same time.  But another thread's
-> print output can still squeeze in between parts.  Unlikely, but
-> possible.  To avoid it, we'd need to guard vreport()'s printing with
-> flockfile() ... funlockfile().
-> 
-> Thoughts?
+It was deprecated in 9.2, time to remove.
 
-You are totally correct. The qemu_log code will do the right thing
-with flockfile /funlockfile, but we're missing that serialization
-in the error report code. It doesn't matter quite as much as logging,
-since much of time when error_report is used, it is in a scenario
-that is likely to either be serialized, or be about to call exit/
-abort. None the less I'm sure we can come up with real world
-scenarios where error report will be concurrent in QEMU that can
-interleave, so we should add the flockfile usage.
+Note, that (which become obvious with this commit) we forget to do some
+checks for reconnect-ms options, for example, it was silently ignored
+for listening server, instead of error-out. The commit fixes this, as
+now we use reconnect_ms everywhere.
 
-With regards,
-Daniel
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ chardev/char-socket.c           | 24 +++++-------------------
+ chardev/char.c                  |  3 ---
+ docs/about/deprecated.rst       |  6 ------
+ docs/about/removed-features.rst | 12 ++++++++++++
+ qapi/char.json                  | 14 +-------------
+ 5 files changed, 18 insertions(+), 41 deletions(-)
+
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index cb4ec78ebe..62852e3caf 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1296,9 +1296,9 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+     /* Validate any options which have a dependency on address type */
+     switch (addr->type) {
+     case SOCKET_ADDRESS_TYPE_FD:
+-        if (sock->has_reconnect) {
++        if (sock->has_reconnect_ms) {
+             error_setg(errp,
+-                       "'reconnect' option is incompatible with "
++                       "'reconnect-ms' option is incompatible with "
+                        "'fd' address type");
+             return false;
+         }
+@@ -1342,9 +1342,9 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+ 
+     /* Validate any options which have a dependency on client vs server */
+     if (!sock->has_server || sock->server) {
+-        if (sock->has_reconnect) {
++        if (sock->has_reconnect_ms) {
+             error_setg(errp,
+-                       "'reconnect' option is incompatible with "
++                       "'reconnect-ms' option is incompatible with "
+                        "socket in server listen mode");
+             return false;
+         }
+@@ -1361,12 +1361,6 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+         }
+     }
+ 
+-    if (sock->has_reconnect_ms && sock->has_reconnect) {
+-        error_setg(errp,
+-            "'reconnect' and 'reconnect-ms' are mutually exclusive");
+-        return false;
+-    }
+-
+     return true;
+ }
+ 
+@@ -1384,7 +1378,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
+     bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
+     bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
+     bool is_websock     = sock->has_websocket ? sock->websocket : false;
+-    int64_t reconnect_ms = 0;
++    int64_t reconnect_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
+     SocketAddress *addr;
+ 
+     s->is_listen = is_listen;
+@@ -1456,12 +1450,6 @@ static void qmp_chardev_open_socket(Chardev *chr,
+             return;
+         }
+     } else {
+-        if (sock->has_reconnect) {
+-            reconnect_ms = sock->reconnect * 1000ULL;
+-        } else if (sock->has_reconnect_ms) {
+-            reconnect_ms = sock->reconnect_ms;
+-        }
+-
+         if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0) {
+             return;
+         }
+@@ -1526,8 +1514,6 @@ static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
+      */
+     sock->has_wait = qemu_opt_find(opts, "wait") || sock->server;
+     sock->wait = qemu_opt_get_bool(opts, "wait", true);
+-    sock->has_reconnect = qemu_opt_find(opts, "reconnect");
+-    sock->reconnect = qemu_opt_get_number(opts, "reconnect", 0);
+     sock->has_reconnect_ms = qemu_opt_find(opts, "reconnect-ms");
+     sock->reconnect_ms = qemu_opt_get_number(opts, "reconnect-ms", 0);
+ 
+diff --git a/chardev/char.c b/chardev/char.c
+index bbebd246c3..a43b7e5481 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -892,9 +892,6 @@ QemuOptsList qemu_chardev_opts = {
+         },{
+             .name = "nodelay",
+             .type = QEMU_OPT_BOOL,
+-        },{
+-            .name = "reconnect",
+-            .type = QEMU_OPT_NUMBER,
+         },{
+             .name = "reconnect-ms",
+             .type = QEMU_OPT_NUMBER,
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index aa300bbd50..ba0be97513 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -438,12 +438,6 @@ Backend ``memory`` (since 9.0)
+ 
+ ``memory`` is a deprecated synonym for ``ringbuf``.
+ 
+-``reconnect`` (since 9.2)
+-^^^^^^^^^^^^^^^^^^^^^^^^^
+-
+-The ``reconnect`` option only allows specifying second granularity timeouts,
+-which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+-
+ 
+ Net device options
+ ''''''''''''''''''
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index a5338e44c2..d67928956a 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1361,4 +1361,16 @@ The ``blacklist`` config file option has been renamed to ``block-rpcs``
+ (to be in sync with the renaming of the corresponding command line
+ option).
+ 
++Device options
++--------------
++
++Character device options
++''''''''''''''''''''''''
++
++``reconnect`` (removed in 10.2)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The ``reconnect`` has been replaced by ``reconnect-ms``, which provides
++better precision.
++
+ .. _Intel discontinuance notification: https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
+diff --git a/qapi/char.json b/qapi/char.json
+index f0a53f742c..b07e3bb827 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -269,22 +269,11 @@
+ # @websocket: enable websocket protocol on server sockets
+ #     (default: false) (Since: 3.1)
+ #
+-# @reconnect: For a client socket, if a socket is disconnected, then
+-#     attempt a reconnect after the given number of seconds.  Setting
+-#     this to zero disables this function.  The use of this member is
+-#     deprecated, use @reconnect-ms instead.  (default: 0) (Since: 2.2)
+-#
+ # @reconnect-ms: For a client socket, if a socket is disconnected,
+ #     then attempt a reconnect after the given number of milliseconds.
+-#     Setting this to zero disables this function.  This member is
+-#     mutually exclusive with @reconnect.
++#     Setting this to zero disables this function.
+ #     (default: 0) (Since: 9.2)
+ #
+-# Features:
+-#
+-# @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+-#     instead.
+-#
+ # Since: 1.4
+ ##
+ { 'struct': 'ChardevSocket',
+@@ -297,7 +286,6 @@
+             '*telnet': 'bool',
+             '*tn3270': 'bool',
+             '*websocket': 'bool',
+-            '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+             '*reconnect-ms': 'int' },
+   'base': 'ChardevCommon' }
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.48.1
 
 
