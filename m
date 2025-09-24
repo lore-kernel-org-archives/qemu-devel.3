@@ -4,61 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA94ECAC5A7
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A369CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1LEJ-0004WQ-3i; Wed, 24 Sep 2025 04:52:03 -0400
+	id 1v1LIZ-00067t-6n; Wed, 24 Sep 2025 04:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1LEG-0004VA-Tl
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:52:01 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1LIV-00067D-58
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:56:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1LE1-0007sy-SY
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:51:52 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1LIP-0000B0-HG
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758703892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1758704173;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f0rPKYKM4xIwwnfthWHAOPQkqHrNBKktcgnNQaRSKWA=;
- b=gZbUZnEX8JL/+MjITzfzouPNaj18K0Co3pT5l8rc9JkaFz6zbB/SoY618lsDdCwLlA5C3t
- Laj5TyrZ1rG4QMWGZ0efmcG9MaeF2thivW0zEgzo1Gs3Tc00N2fYu/AkcoPr14uHgbLiue
- EG3IiYpLnJUKsPEfJdBXPnHE9czzIF0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=E+6HcEeGn4EQXRiWkN65TtZAbP+MJwu9nEgiKy8V93Y=;
+ b=NBQDNJ8HGBA0+80DwV+U3WPQBCj8jvzkx+uYF5HjdaBMN9v4vYeQwwk/lJ7CiewIpNNdHr
+ 5OL8XQeNjRf9hrgZxs5zAyjUAgk5oqyoXR2/TXEoCwM8awhfm2XYjucUA/FT9i89mn+uOY
+ lC6CMl/7DuG+Cz2CJTH3sGZ6bUL2/r4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-ZhnW4elZNHqXNYMQhfYc9w-1; Wed,
- 24 Sep 2025 04:51:25 -0400
-X-MC-Unique: ZhnW4elZNHqXNYMQhfYc9w-1
-X-Mimecast-MFC-AGG-ID: ZhnW4elZNHqXNYMQhfYc9w_1758703884
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-u9DKIbh3M4imjkZkjJl6Vw-1; Wed,
+ 24 Sep 2025 04:56:04 -0400
+X-MC-Unique: u9DKIbh3M4imjkZkjJl6Vw-1
+X-Mimecast-MFC-AGG-ID: u9DKIbh3M4imjkZkjJl6Vw_1758704162
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6F57180045C
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 08:51:24 +0000 (UTC)
-Received: from localhost.localdomain.com (unknown [10.72.116.111])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 131AC1800446; Wed, 24 Sep 2025 08:51:21 +0000 (UTC)
-From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
- Michael Tsirkin <mst@redhat.com>
-Subject: [PATCH v3] net/tap-linux.c: avoid abort when setting invalid fd
-Date: Wed, 24 Sep 2025 16:50:56 +0800
-Message-ID: <20250924085056.1833233-1-hzuo@redhat.com>
-In-Reply-To: <20250924062831.1788305-1-hzuo@redhat.com>
-References: <20250924062831.1788305-1-hzuo@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F06C1956055; Wed, 24 Sep 2025 08:56:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 867011800452; Wed, 24 Sep 2025 08:55:57 +0000 (UTC)
+Date: Wed, 24 Sep 2025 09:55:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v3 07/20] util: add API to fetch the current thread name
+Message-ID: <aNOyGfTQ4oYoufCg@redhat.com>
+References: <20250910180357.320297-1-berrange@redhat.com>
+ <20250910180357.320297-8-berrange@redhat.com>
+ <877bxp9xm5.fsf@pond.sub.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hzuo@redhat.com;
+In-Reply-To: <877bxp9xm5.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -67,7 +82,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,174 +95,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When QEMU creates a tap device automatically and the tap device is
-manually removed from the host while the guest is running, the tap
-device file descriptor becomes invalid. Later, when the guest executes
-shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
-abort QEMU with a core dump when attempting to use the invalid fd.
+On Tue, Sep 23, 2025 at 02:12:02PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > This will be used to include the thread name in error reports
+> > in a later patch. It returns a const string stored in a thread
+> > local to avoid memory allocation when it is called repeatedly
+> > in a single thread. This makes the assumption that the thread
+> > name is set at the very start of the thread, which is the case
+> > when using qemu_thread_create.
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> [...]
+> 
+> > diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> > index 7a734a7a09..e3789c20d1 100644
+> > --- a/util/qemu-thread-win32.c
+> > +++ b/util/qemu-thread-win32.c
+> 
+> [...]
+> 
+> > @@ -412,3 +418,38 @@ bool qemu_thread_is_self(QemuThread *thread)
+> >  {
+> >      return GetCurrentThreadId() == thread->tid;
+> >  }
+> > +
+> > +static __thread char namebuf[64];
+> > +
+> > +const char *qemu_thread_get_name(void)
+> > +{
+> > +    HRESULT hr;
+> > +    wchar_t *namew = NULL;
+> > +    g_autofree char *name = NULL;
+> > +
+> > +    if (namebuf[0] != '\0') {
+> > +        return namebuf;
+> > +    }
+> > +
+> > +    if (!load_thread_description()) {
+> > +        goto error;
+> > +    }
+> > +
+> > +    hr = GetThreadDescriptionFunc(GetCurrentThread(), &namew);
+> > +    if (!SUCCEEDED(hr)) {
+> > +        goto error;
+> > +    }
+> > +
+> > +    name = g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
+> > +    LocalFree(namew);
+> > +    if (!name) {
+> > +        goto error;
+> > +    }
+> > +
+> > +    g_strlcpy(namebuf, name, G_N_ELEMENTS(namebuf));
+> > +    return namebuf;
+> > +
+> > + error:
+> > +    strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
+> > +    return namebuf;
+> > +}
+> 
+> ../util/qemu-thread-win32.c: In function 'qemu_thread_get_name':
+> ../util/qemu-thread-win32.c:453:5: error: implicit declaration of function 'strlcpy'; did you mean 'strncpy'? [-Wimplicit-function-declaration]
+>   453 |     strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
+>       |     ^~~~~~~
+>       |     strncpy
+> ../util/qemu-thread-win32.c:453:5: error: nested extern declaration of 'strlcpy' [-Werror=nested-externs]
 
-This patch removes many abort() calls in this file. If the fd is found
-to be in a bad state (e.g., EBADFD or ENODEV), the related function
-will print an error message.
+Sigh, I meant g_strlcopy like the line shortly before.
 
-The expected behavior for this negative test case is that QEMU should
-report an error but continue running rather than aborting.
-
-Testing:
-- Start QEMU with automatically created tap device
-- Manually remove the tap device on the host
-- Execute shutdown in the guest
-- Verify QEMU reports an error but does not abort
-
-(gdb) bt full
-#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-        tid = <optimized out>
-        ret = 0
-        pd = <optimized out>
-        old_mask = {__val = {10}}
-        ret = <optimized out>
-#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
-#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-        ret = <optimized out>
-#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
-        save_stage = 1
-        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
-#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
-#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
-        s = <optimized out>
-#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
-#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
-        i = 0
-        nc = 0x5589a730ab28
-#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
-        n = 0x5589a72cfa10
-        err = 0x0
-        i = 0
-#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
-        k = <optimized out>
-        bad = <optimized out>
-#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
-        vdev = 0x5589a72cfa10
-        k = 0x5589a5c162b0
-        i = 0
-#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
-        vdev = <optimized out>
-#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
-        proxy = 0x5589a72c7470
-        i = 0
-        bus = 0x5589a72cf990
-#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
-        tmp = <optimized out>
-#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
-        print_once_ = false
-        access_mask = 255
-        access_size = 1
-        i = 0
-        r = 0
-        reentrancy_guard_applied = <optimized out>
-#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
-        size = <optimized out>
-#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
-        val = 6
-        result = 0
-        release_lock = <optimized out>
-#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
-        result = 0
-        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
-#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
---Type <RET> for more, q to quit, c to continue without paging--
-        l = <optimized out>
-        mr_addr = 6
-        mr = 0x0
-#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
-        _rcu_read_auto = 0x1
-        result = 0
-        fv = 0x2956
-#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
-#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
-        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
-        run = 0x7f1711da6000
-        ret = <optimized out>
-        run_ret = <optimized out>
-#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
-        r = <optimized out>
-        cpu = <optimized out>
-#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
-        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
-        qemu_thread_args = 0x5589a5d72580
-        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
-        arg = 0x5589a5d68b40
-        r = 0x0
-#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
-        ret = <optimized out>
-        pd = <optimized out>
-        out = <optimized out>
-        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
-        not_first_call = <optimized out>
-#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
-
-Fixes: 0caed25cd171c611781589b5402161d27d57229c virtio: Call set_features during reset
-
-Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
----
- net/tap-linux.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index e832810665..24e63a0b54 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -206,15 +206,16 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
-     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
-         fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
-                 strerror(errno));
--        abort();
-     }
- }
- 
- int tap_fd_set_vnet_le(int fd, int is_le)
- {
-     int arg = is_le ? 1 : 0;
-+    int ret;
- 
--    if (!ioctl(fd, TUNSETVNETLE, &arg)) {
-+    ret = ioctl(fd, TUNSETVNETLE, &arg);
-+    if (!ret) {
-         return 0;
-     }
- 
-@@ -224,14 +225,16 @@ int tap_fd_set_vnet_le(int fd, int is_le)
-     }
- 
-     error_report("TUNSETVNETLE ioctl() failed: %s.", strerror(errno));
--    abort();
-+    return ret;
- }
- 
- int tap_fd_set_vnet_be(int fd, int is_be)
- {
-     int arg = is_be ? 1 : 0;
-+    int ret;
- 
--    if (!ioctl(fd, TUNSETVNETBE, &arg)) {
-+    ret = ioctl(fd, TUNSETVNETBE, &arg);
-+    if (!ret) {
-         return 0;
-     }
- 
-@@ -241,7 +244,7 @@ int tap_fd_set_vnet_be(int fd, int is_be)
-     }
- 
-     error_report("TUNSETVNETBE ioctl() failed: %s.", strerror(errno));
--    abort();
-+    return ret;
- }
- 
- void tap_fd_set_offload(int fd, int csum, int tso4,
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
