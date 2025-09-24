@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC5E2CAC5B5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8CACAC5A5
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 14:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1QpU-0003jj-9y; Wed, 24 Sep 2025 10:50:48 -0400
+	id 1v1QpK-0003dw-Nl; Wed, 24 Sep 2025 10:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
- id 1v1QpR-0003iJ-Ab
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 10:50:45 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1v1QpI-0003dV-Il
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 10:50:36 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <galush.horowitz@gmail.com>)
- id 1v1QpI-00085g-6d
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 10:50:45 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3f0308469a4so2840466f8f.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 07:50:35 -0700 (PDT)
+ id 1v1QpF-00085Q-R4
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 10:50:36 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3ee13baf2e1so5208824f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 07:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1758725433; x=1759330233; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fKsW8MTn6Ud4eb6hMK8khOSmJ73MNvmZ+g7b8RpElHI=;
- b=V6xr/x8SfDC4+3dYOlOeyMMALUvYyW9aeLc4qtPKNZegY3o/i5yHwbxy/9JzJ1GGpk
- 2YFm6zUCwa7MOO7jiebdG7JWrsbvb09l82eU9kDhCt/N/6CaCMtYm+tmpRExp+DSQlNi
- hXK+KSKqV/UhANrKfz0nlMos3w9sPFhORNqnGk4Siy/WlR7lUd9B8kGPdPBamGB1fZ5O
- VcdRrbus5PlcTRpWZ5TU1PEQqkPhLB8j71iel6tjbMebVN3guO1QsQTev4UxkSeqJpA0
- gLJf69dZAPdRHBI3iiTAZ/zyJluaZTt2czkwVp+RfTEl4qHfpRoU/QMrsvEr2e1fs7TU
- 2VpA==
+ d=gmail.com; s=20230601; t=1758725431; x=1759330231; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sDBxiHv8MUFfVnrLIAfIHpy4Rx3PdI+dUCQiy9ka1bE=;
+ b=Dtnvqvob8smJ7KG1arEU7mHis7SuYhInxmCssJOLVYPTqLp94C07BwHpw2FBBRBdKY
+ VARLCstfqY/rnE+fBq3RcH51YlI0OFkf/zOjejyakslaY8eJCObY9ar9ssHTbuQ5asng
+ qA7IzdtT5AR98NNL6KV1+elom6j2JRPlhBIMcrUE2uRUrcKTabIaoPu7+9IjhhRomKPI
+ ra8eAG5fmpXNNERM4nRfRdI2ugp0S1n7K4rgtGdDI4Lo1mDc2FLvfUqRw4Q9YsOwhOly
+ 1drHJt0aMArUqQGJtmxk8JgON2EzuYtgO1vqhxdrTTVGxdrKIZrR2bV9RP7+3JMk0kwC
+ DdRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758725433; x=1759330233;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fKsW8MTn6Ud4eb6hMK8khOSmJ73MNvmZ+g7b8RpElHI=;
- b=oblBwGtaP7DbLjgP6QXnu8/waBeVNGUTEmxZCbhNI39zKhEJO3F0jZ8zbU1HYmLRuF
- ODHpz7WVHyDf7zCjBg4YsRLs10kL5vRboeFssClF+dCax6tUOn8Jlba5HQaD/JyDER0x
- 36ijBO4MDOaixbL+/f/pJ76s7ttSGMRSWdVM9IpuC/HCE2SW2snhqzIf2KkkjN9TrVBw
- /ioFhsZYMP/Y06ikvli0BqL7cuZkMDukNiPQ6tDg3ChVbvKtYeHuDrmc28pfzCTiQbwu
- 1XxnXtdwsiW50R2ykAzvThyQW0rQXuZEGo2dYnw4L4myu9xhk9N4O/oAH4JChqpxz9kY
- 4CBA==
-X-Gm-Message-State: AOJu0Yzw5QjZ70EZsCNnu589UpZrFnG/hFZ2ENMxpHma+TjYRj1M/Prz
- PqvwP7xoYLApPwqNnw9U7X41OutXUqJ0Wna6Ok78a1ayu2G/MN+6Bu6qJqH7oA==
-X-Gm-Gg: ASbGnculq+pR4SY8BRLjeeTHyNigYqh7cSUsCmzoA2JQclvmljFHtJVO/028fbtoWaW
- dCLWyAPa5Sr7LjDY+sYqLuQJmxAaOrAHl61Vh7JWZjAHs7v7+MERrq+RdI0qSfgmrQrRx/62gOM
- B3sj5Yz3yeWN7YT/y/50ACe8RzdoXGTTOO37i51z7uMaxWygsftAKzMuaI64QNB2+X192b94sUY
- vwD9B9+iub3sn5GV2j7OdfhMSH67Ne5pIdxcZGbQg36SvJQEFz5WtdfYZTKkLMrh1oymb85mBKM
- mA+H3Hsc+bya9hjPeoIWE7e5oEFGY6R85KmZBPhYfPpiiO5aNzj7U1GeJDVBCiMe7yegLDUZaZ4
- ONA0GMTtNotkCsYe7d9gUUnhS21JDSsibqY4H26KgZg1j1VYxYF4klxrNGwqehWupZLOtkvq8bw
- nyjw==
-X-Google-Smtp-Source: AGHT+IFAKvPOrscXGN5NQtuVlKiAe8k/A6X3KeuLHZBiwQcoHRIvwUfgJAUIydjAHU2NcbGyAp0p4g==
-X-Received: by 2002:a05:6000:4010:b0:3fb:ddb3:f121 with SMTP id
- ffacd0b85a97d-40e4b1a079dmr238218f8f.45.1758725433345; 
- Wed, 24 Sep 2025 07:50:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758725431; x=1759330231;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sDBxiHv8MUFfVnrLIAfIHpy4Rx3PdI+dUCQiy9ka1bE=;
+ b=rkV5R1nMSiGx2fXQ+podvmiQwA98rD5G62GWJj+keichoUO6qGEmNV0BKM9yJxhU1c
+ JndtPGhzprMfju+fLOK4p2NqFRmi6qd1awJsR0jYmXPgNtbIx/cfkvvsvjqln26MXCir
+ 3F5y518LJfuWnJCA4QEYOflL4AXY9qAqWbSSaPq0G01PP8btubQzBk6ZZJAwgOEpqsmv
+ LxoUXNgzPCb5Tl4CC2BEcfW4E3SK+xTRcAbRh/6V9uE8MKiDSd960ivPT7xQKEhdKStM
+ b8qlEtFNVT16azXQPJR5QkwfjJzNvGIm65rdLOQs7pb8yR5T6uKLaf68c1S59C7GATla
+ zbUQ==
+X-Gm-Message-State: AOJu0YyH6OrzIS1/G/R9+O+AafjSx0QNmJ/UV8yG0HZit7BVqhFUIfCB
+ yDniC3NI5xaEV9UHj6Ib47s/argls+Alk7ifCvBzW9PO20+9UToeJ1Q8
+X-Gm-Gg: ASbGnctQZhOqHUqrM1c6h/zOD4tRP4X1LhNBKe+9LFiqMoMXucq/n3PlmuXh69AY0Pj
+ FBUm4Jimmg/nYfyc4sKTROoDb4frd98G3wm4nJmxVgZRcdAtpXnjqtqYGSCvNs/vkX6VY5mrhUk
+ vPF7KpEB4vw63Uf4g0RF4l86bnhyR6fySlYEhYoCjtZhlIlewocy/Ot7gNawqMs7fpptdBPRCws
+ QnFbP2o/HD/2fT4Fddqqqx+UA0StMo8lmG8fXczd4FECS3W8ihX1o/zj1naqTChmJnOZCK7TxMD
+ fRegw6FyhS6taKYMY8btHJhTYOTwKvL7rr7PQhy3ATpDbmq74t6h/k9WCPjtAsqHsAb2038VtEo
+ aVC8/bgtuKj+GULPZJiNllzO90mid+rISuI8/pgEFieFP/8vMsy8CAF38w+IMdtonhxzYYKgH8W
+ 2KvfFD3Ljls1uU
+X-Google-Smtp-Source: AGHT+IEpS1CuD2iuCbaJqO7fczgXTChjyMUkgJWlRMZKpRknJEUbAWRUW1KpFXCL42e8KGBtLuMmrw==
+X-Received: by 2002:a05:6000:2507:b0:3e4:64b0:a776 with SMTP id
+ ffacd0b85a97d-40e4bf00f46mr195595f8f.52.1758725431267; 
+ Wed, 24 Sep 2025 07:50:31 -0700 (PDT)
 Received: from GAL-PC.localdomain (bzq-79-177-159-123.red.bezeqint.net.
  [79.177.159.123]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee07407cffsm28188158f8f.16.2025.09.24.07.50.32
+ ffacd0b85a97d-3ee07407cffsm28188158f8f.16.2025.09.24.07.50.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 07:50:32 -0700 (PDT)
+ Wed, 24 Sep 2025 07:50:30 -0700 (PDT)
 From: Gal Horowitz <galush.horowitz@gmail.com>
-Date: Wed, 24 Sep 2025 17:49:50 +0300
-Subject: [PATCH v3 2/2] tap-win32: allocate separate tap state for each
- instance
+Subject: [PATCH v3 0/2] tap-win32: fix multiple tap support
+Date: Wed, 24 Sep 2025 17:49:48 +0300
+Message-Id: <20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250924-fix-win32-multiple-taps-v3-2-9335df866c14@gmail.com>
-References: <20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com>
-In-Reply-To: <20250924-fix-win32-multiple-taps-v3-0-9335df866c14@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAwF1GgC/4XNOw6DMAyA4augzHVFHoDoxD2qDiExYImXEpq2Q
+ ty9gYml6vhb9ueVeXSEnt2SlTkM5GkaY8hLwkynxxaBbGwmUpGlpUihoTe8aJQChme/0NwjLHr
+ 2gJbnxmBTW16weD07jKuHfH/E7sgvk/scjwLfp//NwIFDjai4NUZwaat20NRfzTSw3Qzi7Mjfj
+ oiOVWWBmTZK5c3Z2bbtC6QH4L4GAQAA
+X-Change-ID: 20250920-fix-win32-multiple-taps-ed16ccefbd17
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
  Gal Horowitz <galush.horowitz@gmail.com>
 X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=galush.horowitz@gmail.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=galush.horowitz@gmail.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
  DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,81 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Currently when more than one tap is created on Windows, QEMU immediately
+crashes with a null-deref since the code incorrectly uses a static global
+for the tap state.
+
+Instead, this series allocates a structure for each tap at startup.
+We also take care of cleaning up when the tap device is close.
+
+NOTE: Checkpatch has a false positive on the first commit, where it
+mistakenly flags a cast before an address-of operator as a bitwise
+and operator missing spaces.
+
 Signed-off-by: Gal Horowitz <galush.horowitz@gmail.com>
 ---
- net/tap-win32.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+Changes in v3:
+- Split to multiple commits
+- Link to v2: https://lore.kernel.org/qemu-devel/20250923-fix-win32-multiple-taps-v2-1-d497e5ac446f@gmail.com
 
-diff --git a/net/tap-win32.c b/net/tap-win32.c
-index 1a79e35c2708eae32ccdbc873908aa1ccc7a03f0..1b83423191c5a6f248c771d5eb5582cc80e8abcb 100644
---- a/net/tap-win32.c
-+++ b/net/tap-win32.c
-@@ -115,8 +115,6 @@ typedef struct tap_win32_overlapped {
-     tun_buffer_t* output_queue_back;
- } tap_win32_overlapped_t;
- 
--static tap_win32_overlapped_t tap_overlapped;
--
- static tun_buffer_t* get_buffer_from_free_list(tap_win32_overlapped_t* const overlapped)
- {
-     tun_buffer_t* buffer = NULL;
-@@ -403,8 +401,10 @@ static int tap_win32_set_status(HANDLE handle, int status)
-                 &status, sizeof (status), &len, NULL);
- }
- 
--static void tap_win32_overlapped_init(tap_win32_overlapped_t* const overlapped, const HANDLE handle)
-+static tap_win32_overlapped_t *tap_win32_overlapped_new(const HANDLE handle)
- {
-+    tap_win32_overlapped_t *overlapped = g_new0(tap_win32_overlapped_t, 1);
-+
-     overlapped->handle = handle;
- 
-     overlapped->read_event = CreateEvent(NULL, FALSE, FALSE, NULL);
-@@ -455,6 +455,8 @@ static void tap_win32_overlapped_init(tap_win32_overlapped_t* const overlapped,
-     overlapped->tap_semaphore = CreateSemaphore(NULL, 0, TUN_MAX_BUFFER_COUNT, NULL);
-     if(!overlapped->tap_semaphore)
-         fprintf(stderr, "error creating tap_semaphore.\n");
-+
-+    return overlapped;
- }
- 
- static int tap_win32_write(tap_win32_overlapped_t *overlapped,
-@@ -605,6 +607,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
-         unsigned long debug;
-     } version;
-     DWORD version_len;
-+    tap_win32_overlapped_t *tap_overlapped = NULL;
- 
-     if (preferred_name != NULL) {
-         snprintf(name_buffer, sizeof(name_buffer), "%s", preferred_name);
-@@ -645,12 +648,12 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
-         return -1;
-     }
- 
--    tap_win32_overlapped_init(&tap_overlapped, handle);
-+    tap_overlapped = tap_win32_overlapped_new(handle);
- 
--    tap_overlapped.thread_handle = CreateThread(NULL, 0,
--        tap_win32_thread_entry, (LPVOID)&tap_overlapped, 0, NULL);
-+    tap_overlapped->thread_handle = CreateThread(NULL, 0,
-+        tap_win32_thread_entry, (LPVOID)tap_overlapped, 0, NULL);
- 
--    *phandle = &tap_overlapped;
-+    *phandle = tap_overlapped;
- 
-     return 0;
- }
-@@ -670,6 +673,8 @@ static void tap_win32_close(tap_win32_overlapped_t *overlapped)
-     CloseHandle(overlapped->read_event);
- 
-     CloseHandle(overlapped->handle);
-+
-+    g_free(overlapped);
- }
- 
- /********************************************/
+Changes in v2:
+- Add cleanup of the structure fields
+- Terminate the thread before freeing the structure
+- Link to v1: https://lore.kernel.org/qemu-devel/20250920-fix-win32-multiple-taps-v1-1-bee41dcc213d@gmail.com
 
+---
+Gal Horowitz (2):
+      tap-win32: cleanup leaked handles on tap close
+      tap-win32: allocate separate tap state for each instance
+
+ net/tap-win32.c | 44 +++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 11 deletions(-)
+---
+base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
+change-id: 20250920-fix-win32-multiple-taps-ed16ccefbd17
+
+Best regards,
 -- 
-2.34.1
+Gal Horowitz <galush.horowitz@gmail.com>
 
 
