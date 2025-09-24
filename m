@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7C5CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF4CCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1HId-0006ZZ-1b; Wed, 24 Sep 2025 00:40:15 -0400
+	id 1v1HMo-0002Zz-6T; Wed, 24 Sep 2025 00:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HIA-0006NE-0a; Wed, 24 Sep 2025 00:39:46 -0400
+ id 1v1HMj-0002Xu-JG; Wed, 24 Sep 2025 00:44:29 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HI3-0006QT-3O; Wed, 24 Sep 2025 00:39:44 -0400
+ id 1v1HMh-00070L-0y; Wed, 24 Sep 2025 00:44:29 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSn1091795
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSmv091795
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 24 Sep 2025 13:37:42 +0900 (JST)
+ Wed, 24 Sep 2025 13:37:40 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=vi4sMCmLJjgfxvWMbOYby11DlXiXjOhpwer283mUMTs=; 
+DKIM-Signature: a=rsa-sha256; bh=kiY10umG59rX3Ai7tv8N39IcOWzLTG5ZJdgQouDTy2w=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758688663; v=1;
- b=vMUFXDPYCmcF3lkI3BSe8blrWRLpmkSDNiuoijwb8afjg4NFFoXRVFRUcZKqSDWZ
- UxyHm40QSJbHGmhdgwFt2tLNGNwgCN9rY3rBjQRTYhwEgeOZHxvqM8it4xuvLD2I
- Y64/RVkv+TGrq1SHjZX01HPGzBAE1tXU/+8KZ9eiHUy+bjnBFdvJZGS56faG53Pm
- ayjh52pqL+SyZAbZWvtUf/zdn43pa9CblMdEmFQi+w3kalRFalhT9Gcto4h5FPcD
- kHSwZrG/MFphOqwon+RkDuWJB+7ep1P8/2N8JN+8Xus32JicITr97APzWeqPas3v
- utrloMLlNHbmgml831WcIQ==
+ s=rs20250326; t=1758688660; v=1;
+ b=bYISStphDJwegYwwc2rICh89XnoVbrBbd3Jr4ouFuJjLVwyeUjtqjTleQ7UE6nED
+ 5vJ/TcBEBn6sqzYTNLaB0oj75gpOKIDdYgCYt5vEDn3Mh8WY/o+35Ii2LIHZkf4e
+ i53fFpswin9p5Dm26bNuRVKY1LjWr0XkMmbBPdYo07Jdh9cSvgRGW4Nw0i6V/Sac
+ oeN0eaoO9HSSEzaOTVMKg4JVUIVXrmZozVIxOLaPkgluMFw3jzAe5zFT85PN1xe8
+ yYj56giV4oVv2QBk7zRIo+fuDGTQ5cYYRBMn5TcacbjlD+WA4psk/qNrLJOGp3yq
+ 4VVjbYMEuou5BrRW0FwIqw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 24 Sep 2025 13:37:26 +0900
-Subject: [PATCH v4 7/7] hw/xen: Do not unparent in instance_finalize()
+Date: Wed, 24 Sep 2025 13:37:22 +0900
+Subject: [PATCH v4 3/7] hw/core/register: Do not unparent in
+ instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250924-use-v4-7-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250924-use-v4-3-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -120,28 +121,20 @@ is semantically incorrect.
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/xen/xen_pt_msi.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ hw/core/register.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/xen/xen_pt_msi.c b/hw/xen/xen_pt_msi.c
-index 09cca4eecb1c..e9ba17317aba 100644
---- a/hw/xen/xen_pt_msi.c
-+++ b/hw/xen/xen_pt_msi.c
-@@ -637,14 +637,5 @@ void xen_pt_msix_unmap(XenPCIPassthroughState *s)
+diff --git a/hw/core/register.c b/hw/core/register.c
+index 8f63d9f227c4..3340df70b06e 100644
+--- a/hw/core/register.c
++++ b/hw/core/register.c
+@@ -314,7 +314,6 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
  
- void xen_pt_msix_delete(XenPCIPassthroughState *s)
+ void register_finalize_block(RegisterInfoArray *r_array)
  {
--    XenPTMSIX *msix = s->msix;
--
--    if (!msix) {
--        return;
--    }
--
--    object_unparent(OBJECT(&msix->mmio));
--
--    g_free(s->msix);
--    s->msix = NULL;
-+    g_clear_pointer(&s->msix, g_free);
+-    object_unparent(OBJECT(&r_array->mem));
+     g_free(r_array->r);
+     g_free(r_array);
  }
 
 -- 
