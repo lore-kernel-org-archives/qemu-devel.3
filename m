@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4608FCAC5B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A37CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1VDP-0006Lp-E0; Wed, 24 Sep 2025 15:31:47 -0400
+	id 1v1VFT-0007mU-VQ; Wed, 24 Sep 2025 15:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v1VDK-0006L9-Cn; Wed, 24 Sep 2025 15:31:43 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1v1VDE-0008RC-Ul; Wed, 24 Sep 2025 15:31:42 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 235E5157367;
- Wed, 24 Sep 2025 22:31:07 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EFDED28DA1A;
- Wed, 24 Sep 2025 22:31:09 +0300 (MSK)
-Message-ID: <1c834cbf-95be-4ee6-8048-7a6ca34ab0f8@tls.msk.ru>
-Date: Wed, 24 Sep 2025 22:31:09 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v1VFR-0007li-VQ
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:33:54 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1v1VFC-0000TK-7G
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:33:53 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-27d3540a43fso1702975ad.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758742411; x=1759347211; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7P3iEpW3QqR3smW/O41zMIZR+phakm/oOTlUE2K7V8Q=;
+ b=Euv6HPIexWcRykzbdXxTInPzG9tnW7iHnrL6Ddm5XRSx2yQs22jhR+R6opKndjQpYp
+ IBwLR4JQSXbz7tROrrbbSJ3gGx8UdNECVRffeOxUq7kyfeX5Q2KhLfQtPLyBwelRqfNa
+ q9ym0N40I3MCUidrkwpU1jp8iOKbM8itCpJ4PRprEAkgirolaN8dvh//6ropRbAbS4LE
+ Y8RnUUxNG6D9BGpCNs5erNSB8CHMPYAN2qYMeSoolZLTY00r2myW/iy163VjtUBCBPK2
+ 6tW32yBvPl6nvYhGsPol0aZ+wgKuFo3ilQK425+kMheqS0eq/l+gO7kuqAcs25QQ5sTV
+ CIzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758742411; x=1759347211;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7P3iEpW3QqR3smW/O41zMIZR+phakm/oOTlUE2K7V8Q=;
+ b=aPJWXGu/IgfYmonypbTOM5vrpBa5KJuotTgOfmONb2r3wnLGicYgkNGVHJ5iUKcFbE
+ gu2wVHmxby6ieCCoZ9fWXxpa1YiFI6Bthia7c0LsWgZ/I6KA3ckRHv4sLK9UAlEgNbVF
+ WNMm0a6c34/Zfr9oRB1TsxK/9gMILOVbwFOZ3pXS1dr9Vfo99DT8X3u4r9hgzm3YeeiY
+ yK7Dk7Bo3r/+BSbNed7OvlGaFHUMprA6zl3gvvUe0GXZUQPYFxC+K3doTnFyF1CmWjf9
+ RbENe3enRqW4Cl4kuOz4n5wSYz4oOs7rNTwu3kaKVgMoSgrqTVTCMpkUXIQ2+0cGkcDE
+ 51Qw==
+X-Gm-Message-State: AOJu0Yy2MfuKp9MfM//X/tZOWdDVF+9OExMnXVplBNEf/8LqsIH6PAlt
+ 9DBw7v3M7tI5gc+Y+jD7e/6RtcSlP0rjZjvLWWLzNcjFoMsSYrEpTejZn3S2bGIMLn4=
+X-Gm-Gg: ASbGnctIilVQZFtPSw93jjUlbQfF2t6ZRKZVNqfGJmDaLduu7QpAm90Vd5BZxPtEAC4
+ YeWS/P7muXrqcyrCSb2T+WZ1V1FsBLcNQUABy96kjn00Xfo5NoVQhHeGcITV00okKApOJbJDseH
+ nhABDnfPZx+9zRPZulV04KJno8AVUEzIm+Iz65fwS3jNaTzEcGLaH9QpaMJ5AnZGhdTsbhfrGxE
+ qDbrxUPNx3EKeSsst96zWY5ixt1FgB1+m9bxAw2D/E/rqA0crmklsSbrt/9ucjUp/xk1gMlAeZE
+ V9eVwpejEPXflnggoPHcCRE2GMGa2Bwu/O8oaFMULF1OYXcnmw23qGZ+zyG4/aP6Sytt06/TsQ+
+ L641+8hc+DlxQcfVH/TeJXAra6agauUTrw39p
+X-Google-Smtp-Source: AGHT+IHKFYQHG1d0LaMrnxQO5NFOHbWyq29BN+3KGEvd24hfxYsjPQCSyAxrhd00sjNse/zFtIKFFQ==
+X-Received: by 2002:a17:902:fc8f:b0:264:f714:8dce with SMTP id
+ d9443c01a7336-27ed4a76ed9mr9166065ad.36.1758742411542; 
+ Wed, 24 Sep 2025 12:33:31 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.157.132])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3341bcd80b5sm3177762a91.0.2025.09.24.12.33.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Sep 2025 12:33:31 -0700 (PDT)
+Message-ID: <e6911694-a412-4092-9c72-98d33aec9f70@linaro.org>
+Date: Wed, 24 Sep 2025 12:33:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tcg/optimize: Fix folding of vector bitsel
-To: WANG Rui <wangrui@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
+To: Michael Tokarev <mjt@tls.msk.ru>, WANG Rui <wangrui@loongson.cn>
 Cc: qemu-devel@nongnu.org, qemu@hev.cc, qemu-stable <qemu-stable@nongnu.org>
 References: <20250919124901.2756538-1-wangrui@loongson.cn>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250919124901.2756538-1-wangrui@loongson.cn>
+ <1c834cbf-95be-4ee6-8048-7a6ca34ab0f8@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <1c834cbf-95be-4ee6-8048-7a6ca34ab0f8@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.09.2025 15:49, WANG Rui wrote:
-> It looks like a typo. When the false value (C) is the constant -1, the
-> correct fold should be: R = B | ~A
+On 9/24/25 12:31, Michael Tokarev wrote:
+> On 19.09.2025 15:49, WANG Rui wrote:
+>> It looks like a typo. When the false value (C) is the constant -1, the
+>> correct fold should be: R = B | ~A
+>>
+>> Reproducer (LoongArch64 assembly):
+>>
+>>       .text
+>>       .globl  _start
+>>   _start:
+>>       vldi    $vr1, 3073
+>>       vldi    $vr2, 1023
+>>       vbitsel.v       $vr0, $vr2, $vr1, $vr2
+>>       vpickve2gr.d    $a1, $vr0, 1
+>>       xori    $a0, $a1, 1
+>>       li.w    $a7, 93
+>>       syscall 0
+>>
+>> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
+>> Link: https://github.com/llvm/llvm-project/issues/159610
+>> Signed-off-by: WANG Rui <wangrui@loongson.cn>
 > 
-> Reproducer (LoongArch64 assembly):
+> It also looks like qemu-stable@ material.
 > 
->       .text
->       .globl  _start
->   _start:
->       vldi    $vr1, 3073
->       vldi    $vr2, 1023
->       vbitsel.v       $vr0, $vr2, $vr1, $vr2
->       vpickve2gr.d    $a1, $vr0, 1
->       xori    $a0, $a1, 1
->       li.w    $a7, 93
->       syscall 0
-> 
-> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
-> Link: https://github.com/llvm/llvm-project/issues/159610
-> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+> Please let me know if it isn't.
 
-It also looks like qemu-stable@ material.
+It is, yes.
 
-Please let me know if it isn't.
-
-Thanks,
-
-/mjt
-
->   tcg/optimize.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index 3638ab9fea..f69702b26e 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
->               return fold_and(ctx, op);
->           }
->           if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-> +            TCGArg ta = op->args[2];
->               op->opc = INDEX_op_orc_vec;
->               op->args[2] = op->args[1];
-> -            op->args[1] = op->args[3];
-> +            op->args[1] = ta;
->               return fold_orc(ctx, op);
->           }
->       }
-
+r~
 
