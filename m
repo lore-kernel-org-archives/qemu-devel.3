@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB496CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 17:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366C2CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 17:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Tea-0008Jf-UF; Wed, 24 Sep 2025 13:51:47 -0400
+	id 1v1Tf9-0000Mj-Ik; Wed, 24 Sep 2025 13:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1TeZ-0008IO-8B
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 13:51:43 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1TeV-0004PG-VR
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 13:51:42 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3327f8ed081so152362a91.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 10:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758736295; x=1759341095; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pJ1zYOZAWEZLMIyPt44ezC8+l9O09YARq98WFp17SXg=;
- b=SmVllo6WDLptMV26NEYfcVdOMTehl80DLxttYW+XKXuX56ItnlSpfOPGt6AYtN3HkC
- tHSM0h9UWKVaKrKYcijcWrQLKU/a/HPycwmIpjiObK53CS9vpq+3M8r8SrNaOY/R4Nmg
- x7cLWVhkwqaYJ6pHO+5hDjFxO4O7qE5qiyCgsVMTdWcklvBWk+F9bqb2gtI7aUk10ifR
- 6VL1IPSdtijj9az68v8v1QigcaLeOCspFituWmGZbzs6fZ4C+xbibBWCKoZ5GL54Y7ij
- qlxeP+6q247Zb+MxE+KlpOSlRK+Jk2S0OrUbT7Gys6Zqb6OAZr/j4vI4D3XQEAHMvD9i
- F//g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758736295; x=1759341095;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pJ1zYOZAWEZLMIyPt44ezC8+l9O09YARq98WFp17SXg=;
- b=t0nJud545R8c3RQS2lHdaKMuubMuwAYBuGWN01Sgkw0AXwdfHaa6OjrpXfN3un52uK
- TlMsaTzuVQRBamxvZCRgbW21Uf4FXfWxbvHCjDjHaIkJWSm2tXg0yOFaqivTaKWWoVuw
- M//PQuw5oEJ1Qm+6R84moEoebBFwbQ1a5d40lUsaJWOmY8P4A+MInraM6Z15JLIG0S8k
- S3mIHmbxAbg0tSTuyVZYPGHZ5upoT18yFs+2wLWzeP7voGjp5HF7oAtrUdJxUhsykG8h
- 1mlC8BhF5y4P+6FPa2BLsbO9SsJzgLjpXfXTHU80iZzEx0s4zRTTsz7CE9u0ebBQakqo
- K0Sw==
-X-Gm-Message-State: AOJu0YzM2ElqGF3JzKY98FCVvQvsm0ULzMheS+AsVhqEIKliArkbG7UC
- P+5V0xZtWsrgHXXmre09567B9Ohx9PBiON3UoBol1mHrfFNlceMfwh4+8OHlMMG9x6T4qf2EuG9
- tR0ro
-X-Gm-Gg: ASbGncuGQLc3kk2BieOp+wWB1p3DSk0Xtbk3ZgPdHkd1cRyvGgcenIv98AQlm3Nwn+L
- /iiWgGpA9MLbaeXC75cziFvxYAHgqiYOKcPWF98++FJsCTv0U8a0Kb5BGwQ9GaoVZLEaowOloaC
- nd/Q/ieV6yJ46ABEP7mfytdtpTL829npcDRzpe3O2fpJ8NMn/jkz/D3T6TZ67QC+MIxv9yMxaAx
- vmtLEoKgX00vFitiMAzE1lX9SvrjndENLHyIlKodANs8Pfe9AZpamRDygJ7aRWfVYA+beJwvv0n
- V/e0XXDH95y8Jl23Cq+/+Qdh53JTY71QCt8V41AIMfg3jBr/jN0CUzFRf0t3BGS8namjbOXsG6S
- Tw1YkJ9lUoIUdZGhmGhaBC2Yd1wypwC25LAr1
-X-Google-Smtp-Source: AGHT+IGLmhteh52tmcM6UuVgGvQuxXl4apMfyF6sCsBsWNCeBKze8VFWgw30JafOCHbvYrX0VdprVQ==
-X-Received: by 2002:a17:90b:2684:b0:32b:94a2:b0d5 with SMTP id
- 98e67ed59e1d1-3342a318acbmr576508a91.37.1758736295188; 
- Wed, 24 Sep 2025 10:51:35 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3341be36bdesm3023337a91.24.2025.09.24.10.51.34
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 10:51:34 -0700 (PDT)
-Message-ID: <b66e966c-dabd-4b48-99c8-9d786bc9f651@linaro.org>
-Date: Wed, 24 Sep 2025 10:51:32 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/xtensa: Replace CPUXtensa:runstall by
- CPUState:start_powered_off
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v1Tf2-0000EW-Nz
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 13:52:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v1Tem-0004Sc-Hf
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 13:52:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758736313;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4D+E5eW85LYsd97op4pNBgDv+LNXYZwb/qz/5sSXQ/w=;
+ b=NAJolO+Xqo5M07KmjHnlZsY/4CroqEtdDdySe3Yrg+emLlwG2mRt3TCyZ/Up+kbhUSpsfr
+ hJMqn2aQyUP8EvV6/a9IPo2emtMDok+G0NNn5vf/I6VcCG10PbTZ/Ubr/AUDQ3aue7w5Ef
+ 3sO4f5IWW4iNmdpc2+pJYW56bhJw0BY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-mnKL-0fPO2CjTTbmdW9sZQ-1; Wed,
+ 24 Sep 2025 13:51:50 -0400
+X-MC-Unique: mnKL-0fPO2CjTTbmdW9sZQ-1
+X-Mimecast-MFC-AGG-ID: mnKL-0fPO2CjTTbmdW9sZQ_1758736309
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A24A41800447; Wed, 24 Sep 2025 17:51:48 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.176])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F90C300018D; Wed, 24 Sep 2025 17:51:47 +0000 (UTC)
+Date: Wed, 24 Sep 2025 13:51:46 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-References: <20250924174045.54241-1-philmd@linaro.org>
- <20250924174045.54241-3-philmd@linaro.org>
- <d9109c47-6452-401f-94a6-784949d5f421@linaro.org>
-Content-Language: en-US
-In-Reply-To: <d9109c47-6452-401f-94a6-784949d5f421@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Qing Wang <qinwang@redhat.com>, qemu-stable@nongnu.org
+Subject: Re: [PATCH] pcie_sriov: make pcie_sriov_pf_exit() safe on non-SR-IOV
+ devices
+Message-ID: <20250924175146.GA6015@fedora>
+References: <20250924155153.579495-1-stefanha@redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="vBcO+r+BvqDvzWJR"
+Content-Disposition: inline
+In-Reply-To: <20250924155153.579495-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,23 +89,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 10:50, Richard Henderson wrote:
->> -    cs->halted = env->runstall;
->> +    if (cs->start_powered_off) {
->> +        cs->halted = 1;
->> +    } else {
->> +        cs->halted = 0;
->> +    }
-> 
-> This would of course be
-> 
->    cs->halted = cs->start_powered_off;
-> 
-> though I'm a bit surprised that such generic fields must
-> be handled in target-specific code.
 
-Indeed, this is done by cpu_common_reset_hold.
+--vBcO+r+BvqDvzWJR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Sep 24, 2025 at 11:51:53AM -0400, Stefan Hajnoczi wrote:
+> Commit 3f9cfaa92c96 ("virtio-pci: Implement SR-IOV PF") added an
+> unconditional call from virtio_pci_exit() to pcie_sriov_pf_exit().
+>=20
+> pcie_sriov_pf_exit() reads from the SR-IOV Capability in Configuration
+> Space:
+>=20
+>   uint8_t *cfg =3D dev->config + dev->exp.sriov_cap;
+>   ...
+>   unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+>                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>=20
+> This results in undefined behavior when dev->exp.sriov_cap is 0 because
+> this is not an SR-IOV device. For example, unparent_vfs() segfaults when
+> total_vfs happens to be non-zero.
+>=20
+> Fix this by returning early from pcie_sriov_pf_exit() when
+> dev->exp.sriov_cap is 0 because this is not an SR-IOV device.
+>=20
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Reported-by: Qing Wang <qinwang@redhat.com>
+> Buglink: https://issues.redhat.com/browse/RHEL-116443
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  hw/pci/pcie_sriov.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 
-r~
+CCing qemu-stable
+
+>=20
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index 8a4bf0d6f7..cf1b5b5c05 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -195,7 +195,9 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offs=
+et,
+> =20
+>  void pcie_sriov_pf_exit(PCIDevice *dev)
+>  {
+> -    uint8_t *cfg =3D dev->config + dev->exp.sriov_cap;
+> +    if (dev->exp.sriov_cap =3D=3D 0) {
+> +        return;
+> +    }
+> =20
+>      if (dev->exp.sriov_pf.vf_user_created) {
+>          uint16_t ven_id =3D pci_get_word(dev->config + PCI_VENDOR_ID);
+> @@ -211,6 +213,8 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
+>              pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf=
+_dev_id);
+>          }
+>      } else {
+> +        uint8_t *cfg =3D dev->config + dev->exp.sriov_cap;
+> +
+>          unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+>      }
+>  }
+> --=20
+> 2.51.0
+>=20
+
+--vBcO+r+BvqDvzWJR
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjUL7EACgkQnKSrs4Gr
+c8inlQf8CQ09TgDo52GpnhDL3VAagmq1aDtFB+RUF/k1unvpv2b95mDvZwxiTxUj
+AcdYx+GQ46qwz6BUprgllZNAF4AfDwy2TX5fWYddSUxpAYoF3XYcebuqqP84sprm
+89AgYXCwooycoorByBRcuyHTA1EQX5I1hsj+0hGlB7gRi726puyEHPsx8yaUs3Bg
+hHbzNj6+if3dCFs/j8QdRCdwKsylW8y7UGGxErL0HqmX3qcnbD5vgpTMkUTdqeWu
+sJp0i4j5D4VCte7p5iGqUPQctVvAfVftE8WmRaAl8AaMsu+S5GW4BVp8+3kmCj9M
+YeckdG1lbXd+WgR0Cb9Eu2ZfxcNukg==
+=UZeH
+-----END PGP SIGNATURE-----
+
+--vBcO+r+BvqDvzWJR--
+
 
