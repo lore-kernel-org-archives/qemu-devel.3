@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7892ECAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C47F6CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1HIc-0006ZQ-Nu; Wed, 24 Sep 2025 00:40:14 -0400
+	id 1v1HIb-0006XH-NO; Wed, 24 Sep 2025 00:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HI9-0006Mn-BP; Wed, 24 Sep 2025 00:39:45 -0400
+ id 1v1HI7-0006LR-UR; Wed, 24 Sep 2025 00:39:43 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HI3-0006QP-2g; Wed, 24 Sep 2025 00:39:44 -0400
+ id 1v1HI3-0006QQ-2j; Wed, 24 Sep 2025 00:39:43 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSms091795
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSmw091795
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 24 Sep 2025 13:37:38 +0900 (JST)
+ Wed, 24 Sep 2025 13:37:40 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4Lrx+OHmEWMxnbxoN2F7Ox37ZHsYr5d+IsqXMnVqT1o=; 
+DKIM-Signature: a=rsa-sha256; bh=7V8/qJWDXy9ssgUKD3EAH/SqAL55N0OPmxt1YNRhgjg=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Subject:Date:Message-Id:To;
- s=rs20250326; t=1758688659; v=1;
- b=UAXiXKO4Ji2vMqO4/0Y9wj6BVXDQ0BLFjbEBQlzZfWNdKZ7EehKftBG/zVO7C2CD
- gZMA31hZQaPekdxCHeEquvjPWsJ+tNGhTgp3tH4qQ++pq3IOJn0j5WbkZhrmtH0P
- 8J4BUrEuD5GSWFI7bGB/xClYcXwviVMSPSwBpsOq0aemdfD/EnhdyjvbU6IA/gVg
- yZJMAHLl/323C6NqM3uIurnJq0/txBN/IPFkMf9CrwXtbQp6+cLx/gbIiXkGbPDB
- /VcwOelMjazEgXZIaR+olA4iYG20nC81SCiN0e/gP4FYvURae3M1ucgYB4HCJ2Cp
- bfMmFGxBXYoh+4tIcWKsRw==
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1758688661; v=1;
+ b=fpEBclbjIpKxVrq15ObmeGZp2X/hB8cpT+Fe9ZF5ZwtxWHg367i9ECVMpItYYweS
+ DohE22Tg/9jZhCUI5s7FKc1H9W8MlVuCMARv6JIyr9D1c0NGzhDk38GWl3Jz5q1Q
+ YAVE8A1GB/BpemF3PehrsfWVyGLx1vCtH3YsngVEfqcRhi9+YPgRGYG0xATeQakf
+ HVIfH42Ks5Db+qbIX5PdX/z41TkljcGjQagV5kudvXnF0DNKDzVqwMlwubuCP0Ut
+ QxcNW98yc5qReI0Pr5yJWdlE5fRwA7dRt504qTCEgqhDK6WEw2+MpzoUpE6FY0Za
+ ciOhUwfZuaYV4vSgEyu1YA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 0/7] Do not unparent in instance_finalize()
-Date: Wed, 24 Sep 2025 13:37:19 +0900
-Message-Id: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 24 Sep 2025 13:37:23 +0900
+Subject: [PATCH v4 4/7] hv-balloon: hw/core/register: Do not unparent in
+ instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH9102gC/33MTQ6CMBCG4auYrm3TH6HgynsYF3WYQjWxpAUiI
- dzdAhtc6PKdzPdMJGJwGMn5MJGAg4vOv1KcjgcCjXnVSF2VmkguM17ynPYRqdIIUHJlSuQkfbY
- BrXuvyvWWunGx82Fc0UEs1+/9ICinkAkwxlYC7/oSYs3AMcd62vnn6JkB9mjJgg1yB4hsA2QC7
- Am0tULdLZZ/AbUH9AaoBGgJ0uRFoSGHn8A8zx+kFuP8JQEAAA==
-X-Change-ID: 20250906-use-37ecc903a9e0
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250924-use-v4-4-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+References: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -112,9 +110,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Supersedes: <20240829-memory-v1-1-ac07af2f4fa5@daynix.com>
-("[PATCH] docs/devel: Prohibit calling object_unparent() for memory region")
-
 Children are automatically unparented so manually unparenting is
 unnecessary.
 
@@ -124,65 +119,43 @@ the callback will refer to objects that are already unparented, which
 is semantically incorrect.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
-Changes in v4:
-- Removed Based-on:.
-- Restored the examples of VFIOMSIXInfo and VFIOQuirk in
-  docs/devel/memory.rst.
-- Ensured that the timing to call object_unparent() and free memory
-  regions is mentioned once for each.
-- Link to v3: https://lore.kernel.org/qemu-devel/20250917-use-v3-0-72c2a6887c6c@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v3:
-- Added patches to remove other object_unparent() calls in
-  instance_finalize().
-- Dropped patch "qdev: Automatically delete memory subregions" and the
-  succeeding patches to avoid Ccing many.
-- Link to v2: https://lore.kernel.org/qemu-devel/20250915-use-v2-0-f4c7ff13bfe9@rsg.ci.i.u-tokyo.ac.jp
-
-Changes in v2:
-- Added a reference to "[PATCH] docs/devel: Prohibit calling
-  object_unparent() for memory region", which does something similar to
-  patch "docs/devel: Do not unparent in instance_finalize()" but I
-  forgot I sent it in the past.
-- Fixed a typo in patch
-  "docs/devel: Do not unparent in instance_finalize()" and
-  "[PATCH 02/22] vfio/pci: Do not unparent in instance_finalize()".
-- Dropped patches to move address_space_init() calls; I intend to
-  QOM-ify to fix memory leaks automatically as discussed in the
-  following thread:
-  https://lore.kernel.org/qemu-devel/cd21698f-db77-eb75-6966-d559fdcab835@eik.bme.hu/
-  But the QOM-ification will be big so I'll send it as a separate
-  series.
-- Rebased on top of "[PATCH v2 00/14] hw/pci-host/raven clean ups".
-  https://lore.kernel.org/qemu-devel/cover.1751493467.git.balaton@eik.bme.hu/
-- Link to v1: https://lore.kernel.org/qemu-devel/20250906-use-v1-0-c51caafd1eb7@rsg.ci.i.u-tokyo.ac.jp
-
----
-Akihiko Odaki (7):
-      docs/devel: Do not unparent in instance_finalize()
-      vfio/pci: Do not unparent in instance_finalize()
-      hw/core/register: Do not unparent in instance_finalize()
-      hv-balloon: hw/core/register: Do not unparent in instance_finalize()
-      hw/sd/sdhci: Do not unparent in instance_finalize()
-      vfio: Do not unparent in instance_finalize()
-      hw/xen: Do not unparent in instance_finalize()
-
- docs/devel/memory.rst  | 17 ++++++-----------
- hw/core/register.c     |  1 -
  hw/hyperv/hv-balloon.c | 12 +-----------
- hw/sd/sdhci.c          |  4 ----
- hw/vfio/pci-quirks.c   |  9 +--------
- hw/vfio/pci.c          |  4 ----
- hw/vfio/region.c       |  3 ---
- hw/xen/xen_pt_msi.c    | 11 +----------
- 8 files changed, 9 insertions(+), 52 deletions(-)
----
-base-commit: ab8008b231e758e03c87c1c483c03afdd9c02e19
-change-id: 20250906-use-37ecc903a9e0
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
+index 6dbcb2d9a29d..2d6d7db4ee0e 100644
+--- a/hw/hyperv/hv-balloon.c
++++ b/hw/hyperv/hv-balloon.c
+@@ -1475,16 +1475,6 @@ static void hv_balloon_ensure_mr(HvBalloon *balloon)
+     balloon->mr->align = memory_region_get_alignment(hostmem_mr);
+ }
+ 
+-static void hv_balloon_free_mr(HvBalloon *balloon)
+-{
+-    if (!balloon->mr) {
+-        return;
+-    }
+-
+-    object_unparent(OBJECT(balloon->mr));
+-    g_clear_pointer(&balloon->mr, g_free);
+-}
+-
+ static void hv_balloon_vmdev_realize(VMBusDevice *vdev, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -1580,7 +1570,7 @@ static void hv_balloon_vmdev_reset(VMBusDevice *vdev)
+  */
+ static void hv_balloon_unrealize_finalize_common(HvBalloon *balloon)
+ {
+-    hv_balloon_free_mr(balloon);
++    g_clear_pointer(&balloon->mr, g_free);
+     balloon->addr = 0;
+ 
+     balloon->memslot_count = 0;
+
+-- 
+2.51.0
 
 
