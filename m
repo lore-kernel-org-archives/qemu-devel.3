@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67450CAC5B2
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5831CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Ks6-0005n9-2G; Wed, 24 Sep 2025 04:29:06 -0400
+	id 1v1KuB-0007e1-W8; Wed, 24 Sep 2025 04:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1Ks2-0005l2-HX
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:29:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1Krv-0005Or-E0
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:29:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758702534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qPpQ8yoMPPLG2xx9wdIYSUU76pjXAmLIwF4KciPl55A=;
- b=fyaGrvpke11T9lmZQxyC0vfBIr/P4iz3e3wQIVsrvivOTgHSVV9GVTaUKAMnQKl4n7G2PI
- +juYNdMatpfb7SNHjTdjFbYr/V/cJrZ+uVmlSUplF7SBsIPi7mb/CczabP2WTCD7OZvBJq
- SwYKSdKktzd9w5C4o3WjTrweLicD8PM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-G8l7j7OuMVyExCwaA9N8SQ-1; Wed,
- 24 Sep 2025 04:28:50 -0400
-X-MC-Unique: G8l7j7OuMVyExCwaA9N8SQ-1
-X-Mimecast-MFC-AGG-ID: G8l7j7OuMVyExCwaA9N8SQ_1758702529
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFDCF1956050; Wed, 24 Sep 2025 08:28:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.13])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0E1119560BB; Wed, 24 Sep 2025 08:28:47 +0000 (UTC)
-Date: Wed, 24 Sep 2025 10:28:45 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] qemu-img info: Optionally show block limits
-Message-ID: <aNOrvWSQMlNMH6q3@redhat.com>
-References: <20250923163735.378254-1-kwolf@redhat.com>
- <20250923163735.378254-3-kwolf@redhat.com>
- <xsupfh7ch565s7tmiq5r4u7zwc2nui7grdrt4dliqodaujvn5z@d3u7as7xqwhx>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1v1Ku9-0007di-I6
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:31:13 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1v1Ku5-0005gL-JR
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:31:12 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxbNJDrNNo7gAOAA--.30259S3;
+ Wed, 24 Sep 2025 16:30:59 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJAxvsFArNNoGQKrAA--.41804S3;
+ Wed, 24 Sep 2025 16:30:58 +0800 (CST)
+Subject: Re: [PATCH v4 05/13] target/loongarch: Fix page size set issue with
+ CSR_STLBPS
+To: Bibo Mao <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250906070441.3749413-1-maobibo@loongson.cn>
+ <20250906070441.3749413-6-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <e82355ce-d3e6-a336-63b9-1a67fae211b1@loongson.cn>
+Date: Wed, 24 Sep 2025 16:30:56 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xsupfh7ch565s7tmiq5r4u7zwc2nui7grdrt4dliqodaujvn5z@d3u7as7xqwhx>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20250906070441.3749413-6-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJAxvsFArNNoGQKrAA--.41804S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrW7Zr4fWry5CryxGF47WrX_yoW8Cr17pr
+ W7CrWDKFWkKrWDA3Z2qa4Yqw1DursrGw4vqan3Gry8CwnxXrWIgry8t392gFyfJayrCF18
+ XFnayry0vF47XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.829, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,54 +86,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.09.2025 um 20:09 hat Eric Blake geschrieben:
-> On Tue, Sep 23, 2025 at 06:37:35PM +0200, Kevin Wolf wrote:
-> > Add a new --limits option to 'qemu-img info' that displays the block
-> > limits for the image and all of its children, making the information
-> > more accessible for human users than in QMP. This option is not enabled
-> > by default because it can be a lot of output that isn't usually relevant
-> > if you're not specifically trying to diagnose some I/O problem.
-> > 
-> > This makes the same information automatically also available in HMP
-> > 'info block -v'.
-> > 
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> >  docs/tools/qemu-img.rst |  6 +++++-
-> >  include/block/qapi.h    |  2 +-
-> >  block/qapi.c            | 34 ++++++++++++++++++++++++++++++++--
-> >  qemu-img.c              | 15 ++++++++++++---
-> >  qemu-img-cmds.hx        |  4 ++--
-> >  5 files changed, 52 insertions(+), 9 deletions(-)
-> > 
-> 
-> > +++ b/qemu-img.c
-> 
-> > @@ -3119,6 +3123,8 @@ static int img_info(const img_cmd_t *ccmd, int argc, char **argv)
-> >  "     display information about the backing chain for copy-on-write overlays\n"
-> >  "  -U, --force-share\n"
-> >  "     open image in shared mode for concurrent access\n"
-> > +"  --limits\n"
-> > +"     show detected block limits (may depend on options, e.g. cache mode)\n"
-> 
-> I'm trying to figure out how the parenthetical helps the --help
-> message.  The fact that it is detected limits already implies that
-> anything else (like cache mode) that can change what gets detected
-> would have an impact.  So I think it would be fine to just use " show
-> detected block limits\n".
+ÔÚ 2025/9/6 ÏÂÎç3:04, Bibo Mao Ð´µÀ:
+> When modify register CSR_STLBPS, the page size should come from
+> input parameter rather than old value.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/cpu-csr.h        | 1 +
+>   target/loongarch/tcg/csr_helper.c | 5 +++--
+>   2 files changed, 4 insertions(+), 2 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Yes, other options can influence the limits, too. I just thought that
-the most common pitfall for users will be that they actually want to
-know the limits for cache=none because that's what their VM uses, but
-'qemu-img info' returns them for cache=writeback. So it felt helpful to
-add the note. But if you think that we'd better leave it out, I can
-remove it.
-
-Actually, this reminds me that I wanted to add a -t <cache_mode> option
-to 'qemu-img info', too, so that you can actually get the interesting
-information without using --image-opts. That will be something for a
-separate patch, though.
-
-Kevin
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+> index 0834e91f30..1a311bf06a 100644
+> --- a/target/loongarch/cpu-csr.h
+> +++ b/target/loongarch/cpu-csr.h
+> @@ -106,6 +106,7 @@ FIELD(CSR_PWCH, DIR4_WIDTH, 18, 6)
+>   
+>   #define LOONGARCH_CSR_STLBPS         0x1e /* Stlb page size */
+>   FIELD(CSR_STLBPS, PS, 0, 5)
+> +FIELD(CSR_STLBPS, RESERVE, 5, 27)
+>   
+>   #define LOONGARCH_CSR_RVACFG         0x1f /* Reduced virtual address config */
+>   FIELD(CSR_RVACFG, RBITS, 0, 4)
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 0d99e2c92b..eb60fefa82 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -26,13 +26,14 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+>        * The real hardware only supports the min tlb_ps is 12
+>        * tlb_ps=0 may cause undefined-behavior.
+>        */
+> -    uint8_t tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+> +    uint8_t tlb_ps = FIELD_EX64(val, CSR_STLBPS, PS);
+>       if (!check_ps(env, tlb_ps)) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                         "Attempted set ps %d\n", tlb_ps);
+>       } else {
+>           /* Only update PS field, reserved bit keeps zero */
+> -        env->CSR_STLBPS = FIELD_DP64(old_v, CSR_STLBPS, PS, tlb_ps);
+> +        val = FIELD_DP64(val, CSR_STLBPS, RESERVE, 0);
+> +        env->CSR_STLBPS = val;
+>       }
+>   
+>       return old_v;
 
 
