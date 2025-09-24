@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573D1CAC5B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 15:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EF4CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 15:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1RCM-0004H0-4G; Wed, 24 Sep 2025 11:14:26 -0400
+	id 1v1RBa-0003RE-On; Wed, 24 Sep 2025 11:13:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1RCE-0004D2-ET
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:14:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1RBZ-0003QE-2K
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:13:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1RC2-0003aQ-Gh
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:14:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1RBN-0003UA-No
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:13:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758726843;
+ s=mimecast20190719; t=1758726801;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wm/XCpCv15lsj4n+Vc6Ta8Iqv/pB6NIodkUPFvXOydg=;
- b=giECynD3+1f98cjlNKeOvhkYTEI2FbjUezUFLz9NXw2ZT96HSqhrgE/p3gZqOPIzfmEu7K
- xtj14A6fWKXAxgq5T/k3EBeH/MiabubLSj2cgAwelKXl97amglmA3ohiKd2dfKIu7WEl6U
- n+2zZNrTu7vf0hYcJevQDBLpfR5c13I=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g4Iy/KuP+RzQSIN92iFFy87oo4HWoLCNClXmsV8Xz7E=;
+ b=hbyXIvCeTuCIIdKVlIDozRdVw432ZDNkY2vmNAxs8vIYL4Mu3QssjqiNmIJ9cYFDsYSScZ
+ DWdBte1Se1cxs1/D667MF1rrlGEa3YnZHXJFfbVgZLQtzCuk35dh9nAREOG+c3NRS1OyfO
+ rzXaGrd142NkYz72gJAMrUChbmdp9kI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-LxWZGqIHN32QA5UGHNipkA-1; Wed, 24 Sep 2025 11:14:01 -0400
-X-MC-Unique: LxWZGqIHN32QA5UGHNipkA-1
-X-Mimecast-MFC-AGG-ID: LxWZGqIHN32QA5UGHNipkA_1758726840
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3ecdc9dbc5fso4786846f8f.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 08:14:01 -0700 (PDT)
+ us-mta-246-gLOizLSSPC6yGFLc394U1g-1; Wed, 24 Sep 2025 11:13:19 -0400
+X-MC-Unique: gLOizLSSPC6yGFLc394U1g-1
+X-Mimecast-MFC-AGG-ID: gLOizLSSPC6yGFLc394U1g_1758726797
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-46e19f00bc2so27435125e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 08:13:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758726840; x=1759331640;
+ d=1e100.net; s=20230601; t=1758726797; x=1759331597;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wm/XCpCv15lsj4n+Vc6Ta8Iqv/pB6NIodkUPFvXOydg=;
- b=Y54P5kBlLmL2epI9osFbRMiLHri5S8Y4AHFeFoJWIyRAWGAFswXrvPRqm+OFe3Eiws
- 6qQgAtTNdiiB2LmQSEoUT7z9TNKSEx5Tc6soDRJQ10VqT8qdroLRb9N8/bWvk+r83ty0
- YSpymfiydMneaTU7e1r+dyIYXuGZUQTrKB6JqOuRRvYHN5A1RNr8JB/MylRZcrsYPHSi
- 5nNegMFuYg7b6QnFQzoQqWL0iWuehMzSW4vOBKqdxPfoJSPzR/CTuP9pOCozecwtmhiQ
- WJ3zkqKMPJVmmiklP/v9MdAP38YheY0iBF/vEnga8fOnXsaOPyPaKf2CfRkJGd7bUOuO
- PwXg==
+ bh=g4Iy/KuP+RzQSIN92iFFy87oo4HWoLCNClXmsV8Xz7E=;
+ b=kWR9qAfAV9bZEKI53KvE72I+PgCGnq6dXk7uCQGhwE1yYXg+QovfILKLdDbvXKneKM
+ ULuCauPLZbcQdTx1riIxru08R8IUVR8VWv3Ozj7IIs7ymixkNE0ASr1XFpHKhXwmyLVo
+ ktDt3QfjyKCB+lsetfZZf901F89HtL1L3Rx2IUZ4eRKcT/FVYHxa6NDl8MYWp5Vxqj72
+ b133leGNka32o3QjdZJbhB9yzgFPaZ5mAqTg1/SDDQ1oULEVOAbtvoBQ+K6l7a3VKHFY
+ Autzxe4SwvnSOUPvuqR7rKcZowrGDp2YL5yHLDISk6EI0fTzMY8p/xeQBFYJ8omISoC6
+ /nvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjQyUn0p/48enQU0Nn2bX0DtyH+7uiO3UiC7636ra3bmqeIQueG5hQEVoYFahfH6GlnPhYXZbzqsfp@nongnu.org
-X-Gm-Message-State: AOJu0Yxon2HkgtXx5eZTZZ1THrx0AblZ/tA2oNAlYoU4osxG0eDLtJeg
- KebtG2JE0YUEQ6G6HE2pxWl/Sm1ktvvRURSUlLOoTTbvaK3oDjMS6xL0ABFoRSOGUoLXMeGYTz8
- ghQbPo4T8hL5fC0omQIHvKCocG+NqKCWBPEkDq8mmD+1vqS8VqeiIK5Wj
-X-Gm-Gg: ASbGncsjYL39O7Fc+XQfs3elp8fpfV++RTNHOOk0+lKjSxLItacRaCv/JwFIJjaNFfo
- JGasbN28ktTzQsioBNqitq2kWd+bSAIh3L7i3bd9jctQW+oyMd34pyJTTny/GAoQMqA73aaYRfu
- RTjUeBW+uBsZxwU4rUAql1U9S/V6X/HOIWTJbr+ruif/tLvg08P4JLMppJMqRUWoOg1aFENrmYV
- V8Dy/bIbQ0Bj4TxrKsKm5LyH/48i4o+MxCxO9zoJH0lZvPTl8zOxMNSOdqAGX2uqzpI50SKoh1e
- ZkKEcJdWvPljzC2TnxTS80uF6Nh76J+VHxE8yi83ucHJ9bzuptNRNcWU4ODNFhbuvhdov9ebp4g
- dIN4=
-X-Received: by 2002:a05:6000:2285:b0:3ed:e1d8:bd72 with SMTP id
- ffacd0b85a97d-40e4364289amr335746f8f.17.1758726840293; 
- Wed, 24 Sep 2025 08:14:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+uqKkIXlv10zdl6Wd27GeuPzwiwa15//M0YN3wNfnEw2vP/HBFUQH6/EuA8gPo9XkOYtrkA==
-X-Received: by 2002:a05:6000:2285:b0:3ed:e1d8:bd72 with SMTP id
- ffacd0b85a97d-40e4364289amr335720f8f.17.1758726839866; 
- Wed, 24 Sep 2025 08:13:59 -0700 (PDT)
+ AJvYcCU+kdIxKzOay+znYgeswXkU+nev+wkNrhRh77/9IaFnEmWJWEOjNPsBw5DSkd6r7f2rFfOK7pMeFHr3@nongnu.org
+X-Gm-Message-State: AOJu0Yy/52MtS35adLEJXPGO2zXBKwSQM9s2uaAuv0LTa9zu/uctmt7U
+ aO9m1a54GTfBCzN+ovgr0m4d3s7XhvgCfXYDEqFoYUCIcMKpdEOjaRBz4qJDMJTkofWbFiEvYMn
+ W/EV5jLOKprhPj0gkVTLwfNHdGce8h0Grf7dgbNoXdZWhwgXlFM9765OM
+X-Gm-Gg: ASbGncsSqqOwgdFmJOdNrok4Yd1s1+fT3a99ueGLeWWvn4EBYKRMBTTmTkMkQ6ZEoDg
+ vsjfrNdxk3xdcIp+APmQ9JHHtn6A+CFg/HNv5YBi7GIe63TFubbynbXcXI7ujckS35HyLi4ddvl
+ uWoSQS5IFt9yvbCSBXw40l1fyGGXAwhaJJ0omJWHJTcJ87hkHo2X3EGNzbQoOgvmOsteb04mK28
+ 6Ciib3xqPmXug79xrZZBQsKvs8IvoeqNdNHSR5KXhegh9b1e3Q3Q1yAp53erEFGMEwDreM1+78K
+ fUO9yJe1HhLAhf4zYlD3fJlyqUi/c9MZGbKmRgqXovLahuMPh77NveQPqdlSTeR5g5yz7AqyMv5
+ twmo=
+X-Received: by 2002:a05:600c:3b8b:b0:46d:996b:8270 with SMTP id
+ 5b1f17b1804b1-46e329fb92cmr1944835e9.21.1758726797286; 
+ Wed, 24 Sep 2025 08:13:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEe7lQdcln0X9PMRWxf8O75eZB283LF+R5e9WOmUEvza5gk6QJXqnpOvFJUGsHi0LHKXkwklQ==
+X-Received: by 2002:a05:600c:3b8b:b0:46d:996b:8270 with SMTP id
+ 5b1f17b1804b1-46e329fb92cmr1944525e9.21.1758726796889; 
+ Wed, 24 Sep 2025 08:13:16 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee15bfab67sm24784958f8f.43.2025.09.24.08.13.58
+ 5b1f17b1804b1-46e2a998314sm42238835e9.3.2025.09.24.08.13.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 08:13:59 -0700 (PDT)
-Message-ID: <14863a89-c7a8-4de9-b698-383dd0b559fe@redhat.com>
-Date: Wed, 24 Sep 2025 17:13:58 +0200
+ Wed, 24 Sep 2025 08:13:16 -0700 (PDT)
+Message-ID: <2fa01dbd-c998-417a-a908-6496e20eca84@redhat.com>
+Date: Wed, 24 Sep 2025 17:13:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/27] vfio-user/pci.c: rename vfio_user_instance_init()
- to vfio_user_pci_init()
+Subject: Re: [PATCH 21/27] vfio/pci.c: rename
+ vfio_pci_nohotplug_dev_class_init() to vfio_pci_nohotplug_class_init()
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  harshpb@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
@@ -87,7 +87,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  alex.williamson@redhat.com, steven.sistare@oracle.com, qemu-ppc@nongnu.org,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 References: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
- <20250923135352.1157250-26-mark.caveayland@nutanix.com>
+ <20250923135352.1157250-22-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250923135352.1157250-26-mark.caveayland@nutanix.com>
+In-Reply-To: <20250923135352.1157250-22-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -145,8 +145,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,36 +162,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/23/25 15:53, Mark Cave-Ayland wrote:
-> This is the more typical naming convention for QOM init() functions, in
-> particular it changes the prefix to match the name of the QOM type.
+> This changes the function prefix to match the name of the QOM type.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->   hw/vfio-user/pci.c | 4 ++--
+>   hw/vfio/pci.c | 4 ++--
 >   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-> index 30f485fdbb..52561900fd 100644
-> --- a/hw/vfio-user/pci.c
-> +++ b/hw/vfio-user/pci.c
-> @@ -344,7 +344,7 @@ error:
->       vfio_pci_put_device(vdev);
->   }
->   
-> -static void vfio_user_instance_init(Object *obj)
-> +static void vfio_user_pci_init(Object *obj)
->   {
->       PCIDevice *pci_dev = PCI_DEVICE(obj);
->       VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(obj);
-> @@ -468,7 +468,7 @@ static const TypeInfo vfio_user_pci_dev_info = {
->       .parent = TYPE_VFIO_PCI_DEVICE,
->       .instance_size = sizeof(VFIOUserPCIDevice),
->       .class_init = vfio_user_pci_class_init,
-> -    .instance_init = vfio_user_instance_init,
-> +    .instance_init = vfio_user_pci_init,
->       .instance_finalize = vfio_user_instance_finalize,
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index a32a507059..ec60bc3907 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3932,7 +3932,7 @@ static const Property vfio_pci_nohotplug_properties[] = {
+>                               ON_OFF_AUTO_AUTO),
 >   };
 >   
+> -static void vfio_pci_nohotplug_dev_class_init(ObjectClass *klass,
+> +static void vfio_pci_nohotplug_class_init(ObjectClass *klass,
+>                                                 const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+> @@ -3957,7 +3957,7 @@ static const TypeInfo vfio_pci_nohotplug_dev_info = {
+>       .name = TYPE_VFIO_PCI_NOHOTPLUG,
+>       .parent = TYPE_VFIO_PCI,
+>       .instance_size = sizeof(VFIOPCIDevice),
+> -    .class_init = vfio_pci_nohotplug_dev_class_init,
+> +    .class_init = vfio_pci_nohotplug_class_init,
+>   };
+>   
+>   static void register_vfio_pci_dev_type(void)
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
