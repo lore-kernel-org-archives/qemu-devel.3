@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8201CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6729BCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1OPE-0004jF-Vq; Wed, 24 Sep 2025 08:15:41 -0400
+	id 1v1OT2-00088w-SV; Wed, 24 Sep 2025 08:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1OP5-0004ZJ-UO
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:15:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1OP2-0007YS-9c
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:15:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758716113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+VJ81iI/BYOgcd30DJXdVmgjY7sz2jQMQ3ox4YPssAo=;
- b=Nsa97KCWFC91BOIe59LrVU/Jz+v+5O7e1WIwQDS9R+QIsI/SYdvMGVZ7rA7IfgrzdrRmBx
- QcyKiEJIQCGlbaNHeYM4V0LW/TKIapuOClbcBVJVBE8dbE+MAEg1JH70R8dcWIagakTsxn
- U+TOfHtReM7LZuZLscLgv8TYCjehi3U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-VsMO-_M5Mr2N1xNR_T4EJw-1; Wed, 24 Sep 2025 08:15:11 -0400
-X-MC-Unique: VsMO-_M5Mr2N1xNR_T4EJw-1
-X-Mimecast-MFC-AGG-ID: VsMO-_M5Mr2N1xNR_T4EJw_1758716110
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-46e1ac7110eso16141985e9.2
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 05:15:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1OSp-00086c-Aq
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:19:16 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1OSm-0007va-6n
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:19:14 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b90so3407068f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 05:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1758716348; x=1759321148; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xcKQmiNzA+d1TU6yTKF54QkpJV19S4hDwbzqBOcmF+c=;
+ b=uQsaSsVrOpZXe2ltCp/Ut9BfZ66Owz0FN/8QGPLbpsBswcMTjBoaXh8NMXiYvwbLRt
+ k598ccms2GspGoYcwZ5ZTnjI4oGZS23IPXh/FquNgZysxrjv5+80cLWtG+giTBDcuAHp
+ pPXoHzFBeke7Xyku0m6cvS6RKx1DRvp3yNYyskzycL59ygcFTHDi2JiL44lkqO9UfIjg
+ uftGIG+dbUoPnoZtdXcrbCxvT/y7/grk5HYbjzE3D/zAEPFAgyavcb2+rTw2eFg9aeQg
+ 0FLuUyX+/Zn6DI7481RrA9DKDwEhAXttfSQhKoH4Lodj9YWNJBMmdeG45i01sJFZmf7n
+ 9ECg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758716110; x=1759320910;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+VJ81iI/BYOgcd30DJXdVmgjY7sz2jQMQ3ox4YPssAo=;
- b=gQ18s2sLMPEbTgt++xhMF8CwG4eIvKjxuyxBdfy8/QIyNREFBFIbGMZAiHYBmiWad9
- kbuGy3FGpjrVvMYFqT7BYpIz5sjP1pl14NisdshS3ERNAuHMN/rxmU6hRAih4+xocJEz
- oJHJv4+6Qb+27fBpBOhvOWsOejAZVOIX6BQ+tgeZCE+LktabJwZFQoONKJIOXtFbPNnC
- f15wkVdS0+ZdYdszAdtvZCA02nSphUNo4P9MNHOn2QHHnkQM3UN85dMeK9hNZa3NdxaN
- Pm80wLnfVV5vQAfbyjtAKnS86dwutFvM7DgM5QiA7viJmq7TfR6V/G1vdfibJ3kUfHZO
- WXbw==
-X-Gm-Message-State: AOJu0YzTre8NmYXec1DueR5d2s3fmzlBYHf8vwtrSAv6cwrcIarF5GWD
- u3alK7QIy8/hTMlgQNMV1RddnD8mThTYQ6a/DfdtVP3E8dI02ELCoY/MESg/nh3r8Nnc+U/cLFt
- ejT6shfyiU8kmiTC2+zvXJYb0pELiFZ9/kk1cqxoyR0bjK88FlKgjWg5fyna6qw7XuBkkQehAz1
- IjLhcYh3w+OlYVxNIM0mjA0p3OjWvFwwM=
-X-Gm-Gg: ASbGncstYO0tXUeY0VQC2VpE1gU4Qp4nixDLdtwacLf2VocoNRO+iZwyQSWumVEcBc4
- ybfeK0dhPPZj8wxrqiJrb9Qi8AJ15qXVLnOnF+EWLX+sxsrJTfw/0CjZBtxakWgmdf9d1BHV/HR
- cwth0tTdrAwOWtQq7A8AZCeCElrp8pOO7MTL2w3rKlHWl1RSeHtdLvtO0qv8czQV7j7sma9voC7
- OJ+79GGm8WP0DBqcKY0cBycVjs=
-X-Received: by 2002:a05:600c:8b35:b0:46c:adf8:c845 with SMTP id
- 5b1f17b1804b1-46e1d98cba8mr80830705e9.16.1758716109709; 
- Wed, 24 Sep 2025 05:15:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErRZSiHTOP3DZFlZz6QshcgI3XGibhpRXmjJP3YhkUw+ylIvbciUri+i/BfIy5ypo5QfAJGkuRxmsxPPZfoHo=
-X-Received: by 2002:a05:600c:8b35:b0:46c:adf8:c845 with SMTP id
- 5b1f17b1804b1-46e1d98cba8mr80830405e9.16.1758716109307; Wed, 24 Sep 2025
- 05:15:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758716348; x=1759321148;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xcKQmiNzA+d1TU6yTKF54QkpJV19S4hDwbzqBOcmF+c=;
+ b=kuDu0NmTsi9bvDGQFD9yzHigOnTrU3lESw1M8uq2lr38sAln03ESbp7UHt7xLkE89n
+ bVd+VUVuAAtgdYN75OCiX56TD+Hf3l/j0NQPKpy0eYv7BCpoZ+DqGUKfuTGspye1Yh1N
+ nzlxssXDEdJsokNwiKaCoolIdDCWBPdV99Aqt5pxNgv+avmgIoRxBdAtwySpAgvhTnSw
+ 938Xe0lDCXwAPByMU2ciA5I2ugsgQyPPzjHUCObPuPcdcCGZ33SXBzxXn0LZcwP24p2M
+ eDEgJhlTOGaofXWhYIzNy14oa9/yyXWPQwPG1Uzdgns9GYBVA4yhAaJbm5PXwj/XuUO7
+ NtBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWT23q0q9AJ5wR61+H3VfdBJPuHkdCxfK/fwyxIhHNEjU4l5ujpQ5XzVepi+OtHkSbn0Jiuewizcq3D@nongnu.org
+X-Gm-Message-State: AOJu0Yzx7L94yy3AExWx/GJ8Zl/YulQ1wpwDwjHYoIvvTY757VuYISbq
+ kqm+k9n8BuQFfeYO+lR3J/n/hb1uzU7Z7hEO7cVQvjJVv/UaXQ5gpt2oekxIRDaGV40=
+X-Gm-Gg: ASbGncv2z9ovJkbjkUHmDsHIS/O82jyAzxFS0ADmzK3J/E1+qgpzymzpJvEfvebvBqM
+ E0UNjpdjqdPjQ3Gk7KBve+AfCzy2XTRYx7ONu/TDVHnK65C34RjL6ofOvFm29nAI77KTCGd6OOq
+ OgVJD2v13xMCDmMjfSdZrr040PZrOc96nIdQYHekJguiffWMKG2FoWs0ZVAQmIKbQDN0LJAJdJM
+ F3oUFScKQlTsX2apEnVNVGn+XFjzzfe04zbebA7f6aE8UN98KAYuWl62AqT4w7M6HPiEnlHDvSz
+ q/vJRuN5ZBZ3UME+sDd8w0aTmYAUxlmC0lQVyMyo9jHhHcSSKAD5EE5Ma8cuoGo3x8nsvjnVloX
+ iHStV4+AsEUDLGgZ8aEof+lmjMbABuV4EFadY7D/R/SGpN1fjpxVw1sBZMo6RrCuZ3g==
+X-Google-Smtp-Source: AGHT+IEmMaQ+Xc/Ag4A7vHfIlWgjKBpf62/0ITUpXr1iuYNqpBDqSGeZUtBCCdIqEFXMDB6Tj3dpgw==
+X-Received: by 2002:a5d:5886:0:b0:403:8cc:db6b with SMTP id
+ ffacd0b85a97d-405caa502fdmr4936255f8f.35.1758716348047; 
+ Wed, 24 Sep 2025 05:19:08 -0700 (PDT)
+Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3f88de2d09fsm16561628f8f.36.2025.09.24.05.19.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Sep 2025 05:19:07 -0700 (PDT)
+Message-ID: <c2fe2847-d8ba-4339-97a9-c3951e3b5d18@linaro.org>
+Date: Wed, 24 Sep 2025 14:19:06 +0200
 MIME-Version: 1.0
-References: <20250920142958.181910-1-pbonzini@redhat.com>
- <20250920142958.181910-2-pbonzini@redhat.com>
- <aNK44f/1+VEiOUQs@intel.com>
-In-Reply-To: <aNK44f/1+VEiOUQs@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 24 Sep 2025 14:14:58 +0200
-X-Gm-Features: AS18NWCvW4P7x8NNkHbSZh_nqku4dMTJINVfzdBa5v5Z4kHTVmaag5Hci95STkA
-Message-ID: <CABgObfZ-+Og8pJ02Dz7Wfk9_o=c-Wv60JAJjw-cX7a3du6yjkg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] rust: bql: add BqlRefCell::get_mut()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000f4d888063f8b000a"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/27] tests/lcitool: update to debian13
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Ed Maste <emaste@freebsd.org>,
+ devel@lists.libvirt.org, qemu-rust@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>
+References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
+ <20250924120426.2158655-17-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250924120426.2158655-17-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,61 +110,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f4d888063f8b000a
-Content-Type: text/plain; charset="UTF-8"
+On 24/9/25 14:04, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .../dockerfiles/debian-amd64-cross.docker     |  9 +++++----
+>   .../dockerfiles/debian-arm64-cross.docker     |  9 +++++----
+>   .../dockerfiles/debian-armhf-cross.docker     | 12 +++++------
+>   .../dockerfiles/debian-i686-cross.docker      | 11 +++++-----
+>   .../dockerfiles/debian-ppc64el-cross.docker   |  9 +++++----
+>   .../dockerfiles/debian-s390x-cross.docker     |  9 +++++----
+>   tests/docker/dockerfiles/debian.docker        |  9 +++++----
+>   tests/lcitool/refresh                         | 20 ++++++++++---------
+>   8 files changed, 46 insertions(+), 42 deletions(-)
 
-On Tue, Sep 23, 2025, 16:50 Zhao Liu <zhao1.liu@intel.com> wrote:
-
-> > +    pub const fn get_mut(&mut self) -> &mut T {
-> > +        // SAFETY: there cannot be any outstanding borrow,
-> > +        // since `self` is mutably owned.
-> > +        unsafe { &mut *self.as_ptr() }
->
-> Why not use UnsafeCell::get_mut?
->
-> self.value.get_mut()
->
-
-Uh, of course. I thought it was too new, but it's even available as const
-in 1.83.
-
-Paolo
-
-Regards,
-> Zhao
->
->
-
---000000000000f4d888063f8b000a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 23, 2025, 16:50 Zhao=
- Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt;=
- wrote:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; +=C2=A0 =C2=A0 pub const fn get_mut(&amp;mut self) -&gt; &amp;mut T {<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 // SAFETY: there cannot be any outstandin=
-g borrow,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 // since `self` is mutably owned.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe { &amp;mut *self.as_ptr() }<br>
-<br>
-Why not use UnsafeCell::get_mut?<br>
-<br>
-self.value.get_mut()<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">Uh, of course. I thought it was too new, but it&#39;s e=
-ven available as const in 1.83.</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
-ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-Regards,<br>
-Zhao<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000f4d888063f8b000a--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
