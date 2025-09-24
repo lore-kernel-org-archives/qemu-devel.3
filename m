@@ -4,95 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF205CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 11:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73AFCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 11:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1NRj-0004b0-V4; Wed, 24 Sep 2025 07:14:03 -0400
+	id 1v1NZx-0006wU-BY; Wed, 24 Sep 2025 07:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1NRg-0004aS-L9
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 07:14:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1NZv-0006wM-QV
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 07:22:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1NRd-0005uS-4F
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 07:14:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1NZs-0007kn-8c
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 07:22:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758712433;
+ s=mimecast20190719; t=1758712945;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=j2EmDkCImx35XV788vJSIDBoGNSDc9briiINMmIkETQ=;
- b=gVYJSt8u5ySi9yp1hoo9NIkJmB9shtdwIlOBXyvYP3Vbwq4JEM9CTRo8ua2P1Ex/JWANwl
- 3f8hZQy5uoFHyO89m3KAFYbscPGZKcaiB/FetUmINGJy7SLnKqRdBF/dHF0ARxIkRlgrMZ
- a3kI5PabBtQL6voKYqOl2ya75ScGg1Y=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KQXPYLh+of7Gb6x92qz6TH1PpHfEJDOd50U9lMltvh8=;
+ b=HN5z3j9oSfff1KpfZjLRrAhqOAd6tKRzP8I9EhhUEPRg1NeU5Q2240AEvjJy63fiNq0chC
+ 708rEmGGU0dmIV317GfczkpPo+iKC3EA6XcKSGxqBNLkOnZ9YPRuu3jhWP+n46EmLPSct7
+ S+6J1YIXuvuvPDpIYCPCJNaKntGqyOQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-HBECcgxXOhGLxlrKhFVrFw-1; Wed, 24 Sep 2025 07:13:51 -0400
-X-MC-Unique: HBECcgxXOhGLxlrKhFVrFw-1
-X-Mimecast-MFC-AGG-ID: HBECcgxXOhGLxlrKhFVrFw_1758712430
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45de07b831dso47578775e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 04:13:50 -0700 (PDT)
+ us-mta-204-D-VynL0VM8KTbbwt1gVVFA-1; Wed, 24 Sep 2025 07:22:23 -0400
+X-MC-Unique: D-VynL0VM8KTbbwt1gVVFA-1
+X-Mimecast-MFC-AGG-ID: D-VynL0VM8KTbbwt1gVVFA_1758712943
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3f030846a41so3080513f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 04:22:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758712430; x=1759317230;
+ d=1e100.net; s=20230601; t=1758712942; x=1759317742;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=j2EmDkCImx35XV788vJSIDBoGNSDc9briiINMmIkETQ=;
- b=SJgjf0+L3QxqvN9gq3Kom7iyT+o6V9g3q5Pj3uRFFzZGTr+0ef1uU52UN3u4M3f2SB
- rXL/RNNWpUnqiDy3pBpOzKB9ixoARxMpWdldD0+U9OtainPDd9dFrGX1hfKIDrdn0CyE
- rg7RpTkx0zgCBrvCo4sYVj2dsW46JsZj8rqnRwZyBORVASUIeJG6BLLO+Xu8Ey+EKG+x
- gGBgbmuTv1m5U1SWdBIyMcg1j4lznt2NUkk5RWIvYZg4m+miYi5AYGvbyaZ3DJpRbmF6
- 9rVWnWrBehYN3/B9kJPQWz45d7mJzrJJlxdo2aFVYn8q+InOtPeHIwPwDwe25SW6Y7Vb
- H2Rg==
+ bh=KQXPYLh+of7Gb6x92qz6TH1PpHfEJDOd50U9lMltvh8=;
+ b=FBkpfJvUZMEJetjwWHEmlWQNMkCB1nfLtTQUfLb/VTeebUUp9fvm2aHn0eMwXFtnPU
+ +h6zu+thbUW+WN1Mux3g3r5aISLUBSk5sn3gTEn/om0skXb8pDWN/cMhv7SJlpOfFXwS
+ kd8eGC6S5nM5DSI0CdbPRLOjxg8H5gMYZIBrH3rbQEnprNQgKKvI5bYXlQCljlNZ5x1h
+ Zad2mhkdz3/6vf0ly+TEQG4+IqJbl01JE5ZEODAAnua2bNdODuY+O7M5MXhmux1tGgEb
+ rdjZj4fBPq29dPrm12Sj2fllCL5tg7udZJRWhj8TJku4zmXYSTwf8tNzyLvu7JL3X6id
+ zOKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsmGM9HUuZWuCsaocWAa/QofwbEga+bACRJYNRl8GWEkJHz/2ZbqtloTChldbJu5Qh/DhZeoHcYlDF@nongnu.org
-X-Gm-Message-State: AOJu0Yw9tRB7a/9BinL2HntM/hvf3MWwmPf8XYKekym/lxvkiZHhCR3f
- 1wba3hMbZSV8WjGMO09jd/TmY9jgSIQC+uDBzoO7k1KoaZrB7vpBxjdppxTgeCs3redPJbqhUGC
- KG7XvtYymxA/oYyclEtwWDQXN40oAtG9FhYpb8W2btxeV2DylWjWbaCfY
-X-Gm-Gg: ASbGncsBRzCoirsf3f8LjCVDnNftkmacATLOOhOKRzP+9Qz4OFTY0ChKpaTcfrs8SXx
- UtrlqNJQeNDLW7ITwqRZxQspwAiDFFbsvKdAsgT509vAYX00fDf+UBCtSSQtNtX8e+5oqOODCan
- mbObjNISLU6k72aQaIVKtNVWGtLflBAO+XCUTcZdRP8CM8uD2IOUbUmTreQe7JkpDundi1I1qPH
- EDQZP29LPchB++0QQ1SmxfozKVV8EuL9D9ePvnhHGeVDnqruCl44mZ00K+OoRchhNXlDqofxsyp
- 257ziNfspIaKyTA7yqStubteKtraxkDAy9u9qUKfcROCUSlvYTYEm+ptO8I0/wcZjeT+ZVyDrAN
- woz4=
-X-Received: by 2002:a05:600c:4595:b0:46c:e3df:529e with SMTP id
- 5b1f17b1804b1-46e1dacf719mr50715115e9.19.1758712429950; 
- Wed, 24 Sep 2025 04:13:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHesjxBgX99igxtnOSLLBO391xh2CSV6A9cUrfscWNrzc3K2rD1rzP+BPZmmMNGVg0wyx0HuA==
-X-Received: by 2002:a05:600c:4595:b0:46c:e3df:529e with SMTP id
- 5b1f17b1804b1-46e1dacf719mr50714835e9.19.1758712429508; 
- Wed, 24 Sep 2025 04:13:49 -0700 (PDT)
+ AJvYcCUlATNKYgkcTNoZiKBmBsEUTLKvNKgSeMvP7Gl0P3AxyWLE8g4YOPkh5Z0EhEmKZNSdRriOEgTNqA3d@nongnu.org
+X-Gm-Message-State: AOJu0YxwD1tOCubSB0SWCDLG40ltbLt590S0CJhrIMv0FOeCob9bMWTp
+ vSfb3h2GSIvzuN5Dtd5VUzqd3SfhThfxIXkNsm2mItLGqrM74fK2Na8QMd1Oe0MtBw924THLWwi
+ XmiM2F+fjyMMzu5OfEm8yDXSGPz4Ovo7pZu5yu+MB1ul8tHzTqclJBHf2
+X-Gm-Gg: ASbGnctYyqjnB54dWeyihS0VbAWvOiXpgkaXkkNuxGyLZnOZgoJTASggjFqbpIa/54d
+ JJb8IY/OT8KDC9joXQbN3B6my8FDCX+HCjyGKSCNdwwAhCpct3uFOzaFillGmsmVghWX9STw91E
+ d+qjWWlbHLpHyuVHKE1MhS0O6aHwEMsQA4tH8dDWLOHCP1klUaKBMlxn5b1wKPKOXrux/0bOsF2
+ 5cbct1h6b+GrbFDsHlBTl9HdXwIatLWfbF0m4y3KGL5/PjhfhP+gB5oVHIXiWgz5tfqCX+UTwR9
+ g7UlJTURihvWBi7gjxUXSiyyWWM9fycPxb68GX9KGlcB9BrksjtQVO/2Mxr1COIdRTJOOXkPVSB
+ JoMQ=
+X-Received: by 2002:a05:600c:1c27:b0:46d:7fa2:7579 with SMTP id
+ 5b1f17b1804b1-46e1d97f519mr61733005e9.9.1758712942547; 
+ Wed, 24 Sep 2025 04:22:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH4zxIdqb0bQt7+O6bR7wlR8dDmENCHycIYRfk3vyL1fyeHgFfcRcxjXOAAR51hT9R4ZdiPfA==
+X-Received: by 2002:a05:600c:1c27:b0:46d:7fa2:7579 with SMTP id
+ 5b1f17b1804b1-46e1d97f519mr61732805e9.9.1758712942128; 
+ Wed, 24 Sep 2025 04:22:22 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-407f579c1e9sm4602597f8f.46.2025.09.24.04.13.48
+ 5b1f17b1804b1-46e2aae3d58sm30912385e9.21.2025.09.24.04.22.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 04:13:49 -0700 (PDT)
-Message-ID: <078f252f-774b-47f8-bf94-6b1de8e70359@redhat.com>
-Date: Wed, 24 Sep 2025 13:13:48 +0200
+ Wed, 24 Sep 2025 04:22:21 -0700 (PDT)
+Message-ID: <2e5a20cd-7ea6-44fd-9401-82e741a089ff@redhat.com>
+Date: Wed, 24 Sep 2025 13:22:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 08/21] hw/arm/ast27x0: Add SCU alias for SSP and
- ensure correct device realization order
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
+Subject: Re: [PATCH v4 2/7] vfio/pci: Do not unparent in instance_finalize()
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Yanan Wang <wangyanan55@huawei.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
- <20250717034054.1903991-9-jamin_lin@aspeedtech.com>
- <a06379d8-ec0f-4842-87d9-5cecdb1dfd86@kaod.org>
- <SI2PR06MB5041DB54104CB51250E5E110FC1DA@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <5003d6ba-bf7e-4bdc-9c22-7360024536cf@redhat.com>
- <SI2PR06MB504175E8604D90397E631042FC1CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+ <20250924-use-v4-2-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -138,19 +162,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB504175E8604D90397E631042FC1CA@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <20250924-use-v4-2-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,42 +190,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
+On 9/24/25 06:37, Akihiko Odaki wrote:
+> Children are automatically unparented so manually unparenting is
+> unnecessary.
+> 
+> Worse, automatic unparenting happens before the insntance_finalize()
+> callback of the parent gets called, so object_unparent() calls in
+> the callback will refer to objects that are already unparented, which
+> is semantically incorrect.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/vfio/pci.c | 4 ----
+>   1 file changed, 4 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index d14e96b2f82d..bc0b4c4d562b 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2025,7 +2025,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+>           vfio_region_finalize(&bar->region);
+>           if (bar->mr) {
+>               assert(bar->size);
+> -            object_unparent(OBJECT(bar->mr));
+>               g_free(bar->mr);
+>               bar->mr = NULL;
+>           }
+> @@ -2033,9 +2032,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+>   
+>       if (vdev->vga) {
+>           vfio_vga_quirk_finalize(vdev);
+> -        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+> -            object_unparent(OBJECT(&vdev->vga->region[i].mem));
+> -        }
+>           g_free(vdev->vga);
+>       }
+>   }
+> 
 
 
->>> 3. Migrate all ASPEED coprocessors (e.g. SSP/TSP) to a common
->> AspeedCoprocessorState.
->>
->> Is 'AspeedCoprocessorState' a new model structure minimizing the number of
->> sub controllers ? if so, looks good. Could be merged fairly quickly.
->>
-> 
-> Yes, I am planning to use the new AspeedCoprocessorState instead of AspeedSoCState for SSP and TSP.
-> struct Aspeed27x0SSPSoCState {
->      AspeedSoCState parent;  -------> Change to AspeedCoprocessorState
->      AspeedINTCState intc[2];
->      UnimplementedDeviceState ipc[2];
->      UnimplementedDeviceState scuio;
-> 
->      ARMv7MState armv7m;
-> };
-> 
-> struct Aspeed27x0TSPSoCState {
->      AspeedSoCState parent;  -------> Change to AspeedCoprocessorState
->      AspeedINTCState intc[2];
->      UnimplementedDeviceState ipc[2];
->      UnimplementedDeviceState scuio;
-> 
->      ARMv7MState armv7m;
-> };
-> This change consolidates SSP and TSP under a common coprocessor model,
-> reducing duplication and aligning them with the new AspeedCoprocessorState abstraction.
 
-Aspeed27x0TSPSoCState and Aspeed27x0SSPSoCState look similar. Could they
-be merged ?
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
 
