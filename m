@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60456CAC5B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8201CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1OOO-0002qp-LB; Wed, 24 Sep 2025 08:14:41 -0400
+	id 1v1OPE-0004jF-Vq; Wed, 24 Sep 2025 08:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1OOD-0002b5-Mi
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:14:31 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1OO7-0007GC-JC
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:14:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-46b303f7469so29101365e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 05:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758716058; x=1759320858; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UYsB8Eri/EE7M3fVD2dzBWmjHjSazmhrYsNLnMAEpCI=;
- b=iTOteq0x5jH7n5QYaixSTun9G5FUZZCU7heeljcWtbagHOlC8LojNSPm6YODWh0f2s
- vCf68eQjRgmwgJ47J04tULqBCDdaeGczkNpJOJZAeZA/q0fze9khZ1ZddRjaUoMm0Q14
- Ao7FIo1R7mvZ5Sf6sAIrhSUQg3avZBwGjJp/zVLU/E9AA7gSaAU5+nw6SMg2tlYQyrE5
- 9QrKvlkRoDqSPAYQUMoaNLkwCQdHODqTm86P+RNHySAbsTYKHMVOvTAduWk8mcFEsOrt
- Jl5h3ZHt34hgt7+T41zByyhpZMlMqeQEwbIFBU3LAcdl37WB6+S5QVfY9sP2+KwNazfM
- bXwQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1OP5-0004ZJ-UO
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:15:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1v1OP2-0007YS-9c
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:15:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758716113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+VJ81iI/BYOgcd30DJXdVmgjY7sz2jQMQ3ox4YPssAo=;
+ b=Nsa97KCWFC91BOIe59LrVU/Jz+v+5O7e1WIwQDS9R+QIsI/SYdvMGVZ7rA7IfgrzdrRmBx
+ QcyKiEJIQCGlbaNHeYM4V0LW/TKIapuOClbcBVJVBE8dbE+MAEg1JH70R8dcWIagakTsxn
+ U+TOfHtReM7LZuZLscLgv8TYCjehi3U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-VsMO-_M5Mr2N1xNR_T4EJw-1; Wed, 24 Sep 2025 08:15:11 -0400
+X-MC-Unique: VsMO-_M5Mr2N1xNR_T4EJw-1
+X-Mimecast-MFC-AGG-ID: VsMO-_M5Mr2N1xNR_T4EJw_1758716110
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-46e1ac7110eso16141985e9.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 05:15:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758716058; x=1759320858;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UYsB8Eri/EE7M3fVD2dzBWmjHjSazmhrYsNLnMAEpCI=;
- b=ehG6/95dnsKL8dDJ8GKhT5mXdjO0YHtSV9FpxAmISlE2oyfM3oGXeNrojLAyLEWCJm
- SH6O+Em9OJV8D6Jz6RZ2TTxD+WOI2ieSFDjEQpA4pq2WvtBiRtDHJzAACkyhbhAVLOxk
- iTil/KPADhbhYNEpu7oB11PRniyT7+nI2l7pG9LxJZUS9HOYMCwalEoY7BcXACEXzJyH
- XiPlSJHqS9OzX6oa1ZAfUfobDDSysnftbvokDu+LFVVyK04lIQ/kWkLZ9jEErKt6eNEH
- 77SRiVB1rUbD97bW+TDlfZGzR/FQSGGVv52X9Ar73oshR/StYdYAIVT38VxkOi5iiJag
- d96A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIg8TixRV6tWmPyDT6sgA0AgDVzTgumG/hDzYOeorN9m8wNcUA0txME9JFMiOgVEjuzI5akvW1BHJs@nongnu.org
-X-Gm-Message-State: AOJu0Yxxxrk5UOqAfNRrtOhh5ewcIRFLIldrxjCkUvZuI9Vbuu5LRmF9
- WS92WYWROd5ZzGPS7rIdB3WWWN/h2pA9cdsa/AI9Xe/P7/6gut0kP4FQaGK1kzqGY60+buVBkBy
- 8k3SyqWewpQ==
-X-Gm-Gg: ASbGnctUlxfbiUMp0rnOLMh8Uly+JjRBpNdmuSVWye2qAEid+cRl2FCsf1WPIdrY6cs
- fu12FvgYcUqj81g0L9cbBzMS4Y7H/5jECWLI3B+GYebNBPpu6Q5yZUbXMUfS0MLPiIK4B2kmr/h
- bR1DZDHHS+YQyP22ebH45rN+ONMDwonV3CugdKruBD5LdVuQUAzIbqrW23jcaWckmwNabVR8Ffg
- C+n8XG//Hl6TSPVQIZHKUSZ+CpwDK+qkhln0LCYD7nWkxT00JHQxf+4aGyQawKtCztBEHP25xOz
- OGGqFHq00FjrD6AK1DPfXL+h/rrXR+LKvDwWWS5Gdx6/YlQDMjdk02eOcF1P5jn9zODtOjTQTmq
- YcVjrECqhEUoGv9wzmQCBcR3n3zl5foZGy+ygQtUFaen5CGeHbfTBeZVynWVBjddNPw==
-X-Google-Smtp-Source: AGHT+IESa5o1x3Y4x8p09nQ3EU99+mUIvaOF7WGh1z9ASs1ZyYa08fjvbCaieadQIoIRWjfz7xxpsA==
-X-Received: by 2002:a05:600c:4e88:b0:45b:615c:cd2 with SMTP id
- 5b1f17b1804b1-46e1d973c78mr76941825e9.8.1758716057686; 
- Wed, 24 Sep 2025 05:14:17 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2a9ac5basm37056605e9.7.2025.09.24.05.14.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 05:14:17 -0700 (PDT)
-Message-ID: <6ef7e6e1-9ac1-466d-b4bc-332e135c258e@linaro.org>
-Date: Wed, 24 Sep 2025 14:14:16 +0200
+ d=1e100.net; s=20230601; t=1758716110; x=1759320910;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+VJ81iI/BYOgcd30DJXdVmgjY7sz2jQMQ3ox4YPssAo=;
+ b=gQ18s2sLMPEbTgt++xhMF8CwG4eIvKjxuyxBdfy8/QIyNREFBFIbGMZAiHYBmiWad9
+ kbuGy3FGpjrVvMYFqT7BYpIz5sjP1pl14NisdshS3ERNAuHMN/rxmU6hRAih4+xocJEz
+ oJHJv4+6Qb+27fBpBOhvOWsOejAZVOIX6BQ+tgeZCE+LktabJwZFQoONKJIOXtFbPNnC
+ f15wkVdS0+ZdYdszAdtvZCA02nSphUNo4P9MNHOn2QHHnkQM3UN85dMeK9hNZa3NdxaN
+ Pm80wLnfVV5vQAfbyjtAKnS86dwutFvM7DgM5QiA7viJmq7TfR6V/G1vdfibJ3kUfHZO
+ WXbw==
+X-Gm-Message-State: AOJu0YzTre8NmYXec1DueR5d2s3fmzlBYHf8vwtrSAv6cwrcIarF5GWD
+ u3alK7QIy8/hTMlgQNMV1RddnD8mThTYQ6a/DfdtVP3E8dI02ELCoY/MESg/nh3r8Nnc+U/cLFt
+ ejT6shfyiU8kmiTC2+zvXJYb0pELiFZ9/kk1cqxoyR0bjK88FlKgjWg5fyna6qw7XuBkkQehAz1
+ IjLhcYh3w+OlYVxNIM0mjA0p3OjWvFwwM=
+X-Gm-Gg: ASbGncstYO0tXUeY0VQC2VpE1gU4Qp4nixDLdtwacLf2VocoNRO+iZwyQSWumVEcBc4
+ ybfeK0dhPPZj8wxrqiJrb9Qi8AJ15qXVLnOnF+EWLX+sxsrJTfw/0CjZBtxakWgmdf9d1BHV/HR
+ cwth0tTdrAwOWtQq7A8AZCeCElrp8pOO7MTL2w3rKlHWl1RSeHtdLvtO0qv8czQV7j7sma9voC7
+ OJ+79GGm8WP0DBqcKY0cBycVjs=
+X-Received: by 2002:a05:600c:8b35:b0:46c:adf8:c845 with SMTP id
+ 5b1f17b1804b1-46e1d98cba8mr80830705e9.16.1758716109709; 
+ Wed, 24 Sep 2025 05:15:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErRZSiHTOP3DZFlZz6QshcgI3XGibhpRXmjJP3YhkUw+ylIvbciUri+i/BfIy5ypo5QfAJGkuRxmsxPPZfoHo=
+X-Received: by 2002:a05:600c:8b35:b0:46c:adf8:c845 with SMTP id
+ 5b1f17b1804b1-46e1d98cba8mr80830405e9.16.1758716109307; Wed, 24 Sep 2025
+ 05:15:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] accel/tcg: Improve tb_flush usage
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250923215425.3685950-1-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923215425.3685950-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250920142958.181910-1-pbonzini@redhat.com>
+ <20250920142958.181910-2-pbonzini@redhat.com>
+ <aNK44f/1+VEiOUQs@intel.com>
+In-Reply-To: <aNK44f/1+VEiOUQs@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 24 Sep 2025 14:14:58 +0200
+X-Gm-Features: AS18NWCvW4P7x8NNkHbSZh_nqku4dMTJINVfzdBa5v5Z4kHTVmaag5Hci95STkA
+Message-ID: <CABgObfZ-+Og8pJ02Dz7Wfk9_o=c-Wv60JAJjw-cX7a3du6yjkg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] rust: bql: add BqlRefCell::get_mut()
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
+ Emmanouil Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000f4d888063f8b000a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/9/25 23:54, Richard Henderson wrote:
-> It is too easy to mis-use tb_flush().  For instance, because of
-> the cpu argument, some parts assumed that it needed to call the
-> global flush function for every cpu.  It is easy to forget that
-> the flush is not complete when the call returns: we have merely
-> queued work to the cpu run loop.  So: remove tb_flush and expose
-> only the core as tb_flush__exclusive, to be used only when we
-> are already within an exclusive context.
-> 
-> In some cases (gdbstub, alpha, riscv, ppc spapr),
-> we can eliminate the need for tb_flush completely.
-> 
-> Changes for v3:
->    - Rename to tb_flush__exclusive_or_serial; retain the serial
->      check within, not updating to exclusive only.
->    - Rename the existing tb_flush to queue_tb_flush; retain the
->      sequence number check for duplicated flushes.
->    - Drop EXCP_TB_FLUSH.
+--000000000000f4d888063f8b000a
+Content-Type: text/plain; charset="UTF-8"
 
-When using my split-accel branch, I had good results with v2.
+On Tue, Sep 23, 2025, 16:50 Zhao Liu <zhao1.liu@intel.com> wrote:
 
-I'm getting crashes with v3:
+> > +    pub const fn get_mut(&mut self) -> &mut T {
+> > +        // SAFETY: there cannot be any outstanding borrow,
+> > +        // since `self` is mutably owned.
+> > +        unsafe { &mut *self.as_ptr() }
+>
+> Why not use UnsafeCell::get_mut?
+>
+> self.value.get_mut()
+>
 
-Termination Reason:    Namespace SIGNAL, Code 4 Illegal instruction: 4
+Uh, of course. I thought it was too new, but it's even available as const
+in 1.83.
 
-Thread 4 Crashed:
-0   ???                           	       0x34400fb00 ???
-1   qemu-system-aarch64-unsigned  	       0x100fd74dc cpu_tb_exec + 160 (cpu-exec.c:441)
-2   qemu-system-aarch64-unsigned  	       0x100fd829c cpu_loop_exec_tb + 32 (cpu-exec.c:897) [inlined]
-3   qemu-system-aarch64-unsigned  	       0x100fd829c cpu_exec_loop + 904 (cpu-exec.c:1009)
-4   qemu-system-aarch64-unsigned  	       0x100fd7a30 cpu_exec_setjmp + 48 (cpu-exec.c:1026)
-5   qemu-system-aarch64-unsigned  	       0x100fd7954 cpu_exec + 496 (cpu-exec.c:1052)
-6   qemu-system-aarch64-unsigned  	       0x100ff9bc4 tcg_cpu_exec + 44 (tcg-accel-ops.c:97)
-7   qemu-system-aarch64-unsigned  	       0x100ffa4c4 mttcg_cpu_exec + 28 (tcg-accel-ops-mttcg.c:146)
-8   qemu-system-aarch64-unsigned  	       0x10140bdac split_cpu_thread_routine + 540 (split-accel-ops.c:87)
-9   qemu-system-aarch64-unsigned  	       0x10158f7e0 qemu_thread_start + 132 (qemu-thread-posix.c:393)
+Paolo
 
-Thread 5:
-0   qemu-system-aarch64-unsigned  	       0x100fb04e0 tcg_out_ld + 160 (tcg-target.c.inc:1268)
-1   qemu-system-aarch64-unsigned  	       0x100fab3f8 tcg_reg_alloc_op + 240 [inlined]
-2   qemu-system-aarch64-unsigned  	       0x100fab3f8 tcg_gen_code + 7932 (tcg.c:7018)
-3   qemu-system-aarch64-unsigned  	       0x100fe9e88 setjmp_gen_code + 184 (translate-all.c:257)
-4   qemu-system-aarch64-unsigned  	       0x100fe9780 tb_gen_code + 364 (translate-all.c:324)
-5   qemu-system-aarch64-unsigned  	       0x100fd8138 cpu_exec_loop + 548 (cpu-exec.c:980)
-6   qemu-system-aarch64-unsigned  	       0x100fd7a30 cpu_exec_setjmp + 48 (cpu-exec.c:1026)
-7   qemu-system-aarch64-unsigned  	       0x100fd7954 cpu_exec + 496 (cpu-exec.c:1052)
-8   qemu-system-aarch64-unsigned  	       0x100ff9bc4 tcg_cpu_exec + 44 (tcg-accel-ops.c:97)
-9   qemu-system-aarch64-unsigned  	       0x100ffa4c4 mttcg_cpu_exec + 28 (tcg-accel-ops-mttcg.c:146)
-10  qemu-system-aarch64-unsigned  	       0x10140bdac split_cpu_thread_routine + 540 (split-accel-ops.c:87)
-11  qemu-system-aarch64-unsigned  	       0x10158f7e0 qemu_thread_start + 132 (qemu-thread-posix.c:393)
+Regards,
+> Zhao
+>
+>
+
+--000000000000f4d888063f8b000a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 23, 2025, 16:50 Zhao=
+ Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt;=
+ wrote:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 pub const fn get_mut(&amp;mut self) -&gt; &amp;mut T {<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 // SAFETY: there cannot be any outstandin=
+g borrow,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 // since `self` is mutably owned.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe { &amp;mut *self.as_ptr() }<br>
+<br>
+Why not use UnsafeCell::get_mut?<br>
+<br>
+self.value.get_mut()<br></blockquote></div></div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">Uh, of course. I thought it was too new, but it&#39;s e=
+ven available as const in 1.83.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
+ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+Regards,<br>
+Zhao<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000f4d888063f8b000a--
 
 
