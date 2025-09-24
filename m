@@ -4,94 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F8BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 18:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A35CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 18:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1TsC-0006sy-Bq; Wed, 24 Sep 2025 14:05:48 -0400
+	id 1v1Tx1-0000ep-H9; Wed, 24 Sep 2025 14:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ts6-0006qi-Fn
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:05:43 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Trs-0000Ek-VE
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:05:39 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-323266cdf64so133936a91.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 11:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758737120; x=1759341920; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RR6c7z/907+Ux+dKjvLVHtysJ2mXizG1JgKCx3kPjvE=;
- b=UuF3l3qTzRmpXJ3ZVGjpSti+pkTJU5d+od9aahXdvDYi9/vIrJAORjVzuu1mX0B8TY
- 1ew1mlHW1M09iFaPrkuh1i0KAj2IDheErGqbkn1v1+BY7gZBCPH9pYyhZjhiohBu0dWD
- 5o5cG7IcUy2rfyJgvMotJoQENcr1ivhmZICjpPcvfQtf7w5r5gvnbYOXCnjEbAwPyUGx
- iOJMV4FfjiqmLvAtMzc6Yu/HrK+nnwyh5lBiA/JaC9rhvO4/+LEaF/YWPi19qWo2O1HL
- YLKvO4zyxX3b40iFZCDDdGTrjaYoUN5/F09CbqmAkMZ51GTZ2b50u1CkKauucxP+srRR
- B9ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758737120; x=1759341920;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RR6c7z/907+Ux+dKjvLVHtysJ2mXizG1JgKCx3kPjvE=;
- b=OJW/SP39zRz6j3RnS4fZShDho/oOQQzPQqzmQu5onhNQeKXTWePVf4BdgcXAlgqiO7
- BGEgbeRSWkP7sD8gjcwWQZffrw8aUxVJ/e4Zv+BEVjJiNJGO3QBS/XuwwRXePdwvWqxy
- EEV1tbbh3hdNWGvsXEtntAVb1pWeRPX+BJ59w7Ril4VAC1p6Chws5nfnvRgNyN4mtEnH
- YF8BQ9TFqScvS+yGquFooyIJK4GvyV8WH4lTbGf1R1mSFBtzI04BCnkxbb7HCfM5yAIH
- enLTL4D/iLARthr3oGl5UTAMQMKgt/+M0MkVl0qbw/N1zxuUB/O8jFe7roPE0+CYnIEq
- gPZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4j/67KR/weidq3yOGQ1xMe26E55jv8mbvOkJjY2RQgmd63n0IUwnzCNyVVa6l5V1LjS/eDwEiPlUG@nongnu.org
-X-Gm-Message-State: AOJu0YwbZBefuFPEvzWoXaLtWu2lhx7cRie42emndez7WojWG4otos0m
- 1eAVOgfccqwLPHqgHlBIFhkVpmwZEiaA7SJB6zCYlkJPu0Ja4x4W2lfVLi2o9Sr70Mg=
-X-Gm-Gg: ASbGncvbJOnvvFIg0TcfpuYfqKgwxAZeXDqyAKUdqvuimKAu8kC0tTyzkq6j/t8sDAd
- 8zTaYufON6wM9P5iVXGhhob6ZQH60sSiSCNQubXSVq/6nA3EQSROQ2tLUxIOQfuS0Keh33dbQ/6
- 0OEDDGpmKbLkcyqjkMi0Ph0+vAW6Tj/gIGFwyZk+c1yBQjCeFzsCsRlCfF52YK2p72PPN/eyCHp
- UWwLUn4ilvxnt7/FJ/R+DKIWZoaUxvsx610molZKpUKyfnuP906oWq6RaiWkPj3YMrMnCLBVRp7
- KNMD6qKOp/5nwZSqLvreoqvL3fNc2JQyXB4XGVXcAJNrcD8ttxIAaIYLGEiWAuRBcYwe6zNrY2S
- 5/YPWyG4OasUi/R0XtBO8zlAYG3+ge8b6uHK/
-X-Google-Smtp-Source: AGHT+IHhuYallVNF0EV1yHyDwLuuYFWsxB6/ZsL08oXL/Z0Q2IOMa8S/4TXLJhlpwo2+6krkyoBMWw==
-X-Received: by 2002:a17:90b:33c7:b0:327:ba77:a47 with SMTP id
- 98e67ed59e1d1-3342a28b8a3mr644242a91.15.1758737119653; 
- Wed, 24 Sep 2025 11:05:19 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.157.132])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b55156734a4sm15673071a12.4.2025.09.24.11.05.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 11:05:19 -0700 (PDT)
-Message-ID: <e1429df0-72ff-4897-9f48-e7bed057aa92@linaro.org>
-Date: Wed, 24 Sep 2025 11:05:17 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v1Twx-0000eV-I9
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:10:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1v1Twr-0001ah-2s
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:10:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758737430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oB5S7zxoTpmKsw54HjwSOc2fBSbL6GF/Mfg/lQF1PF8=;
+ b=d94H9ny4MJFQFHjYvLk1yh++vR95BFnxFjaZy77kO+LybT2OIoDzkZikc5IQMPFBkhAXBG
+ w1a6YuHp0f6QRkn58aTtSUXsPqDl8WWV4Ew2Zz1zOjAh2lPdTimLhB2dGQ1eUZfYtSI14L
+ k0kXHm2ERng7/bSqyNpoJsbC0XxuWSM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-5ZV6OmCOODmgBSXXSDw6Jg-1; Wed,
+ 24 Sep 2025 14:10:27 -0400
+X-MC-Unique: 5ZV6OmCOODmgBSXXSDw6Jg-1
+X-Mimecast-MFC-AGG-ID: 5ZV6OmCOODmgBSXXSDw6Jg_1758737426
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFB8F19560B1; Wed, 24 Sep 2025 18:10:25 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.176])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 42B3D300018D; Wed, 24 Sep 2025 18:10:25 +0000 (UTC)
+Date: Wed, 24 Sep 2025 14:10:24 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Tanish Desai <tanishdesai37@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
+Message-ID: <20250924181024.GB6015@fedora>
+References: <20250919112536.141782-1-pbonzini@redhat.com>
+ <20250919112536.141782-9-pbonzini@redhat.com>
+ <20250923192354.GL509965@fedora>
+ <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/ppc: Re-use gen_pause() in gen_wait()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, Nicholas Piggin
- <npiggin@gmail.com>, bharata.rao@gmail.com, benh@kernel.crashing.org,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-References: <20250924173028.53658-1-philmd@linaro.org>
- <20250924173028.53658-4-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250924173028.53658-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="0eB/xxbpwEBxTWWE"
+Content-Disposition: inline
+In-Reply-To: <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +91,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 10:30, Philippe Mathieu-Daudé wrote:
-> Avoid open-coding gen_pause() in gen_wait().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/ppc/translate.c | 13 +++++--------
->   1 file changed, 5 insertions(+), 8 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+--0eB/xxbpwEBxTWWE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Sep 24, 2025 at 09:13:15AM +0200, Paolo Bonzini wrote:
+> On 9/23/25 21:23, Stefan Hajnoczi wrote:
+> > > +    out('// SPDX-License-Identifier: GPL-2.0-or-later',
+> > > +        '// This file is @generated by tracetool, do not edit.',
+> > > +        '',
+> > > +        '#[allow(unused_imports)]',
+> > > +        'use std::ffi::c_char;',
+> > > +        '#[allow(unused_imports)]',
+> > > +        'use util::bindings;',
+> > > +        '',
+> > > +        '#[inline(always)]',
+> > > +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
+> > > +        '    unsafe { (trace_events_enabled_count !=3D 0) && (_id !=
+=3D 0) }',
+> > > +        '}',
+> >=20
+> > This was translated to Rust from:
+> >=20
+> >    /* it's on fast path, avoid consistency checks (asserts) */
+> >    #define trace_event_get_state_dynamic_by_id(id) \
+> >        (unlikely(trace_events_enabled_count) && _ ## id ## _DSTATE)
+> >=20
+> > The _id !=3D 0 expression is incorrect. The purpose was to check whether
+> > the trace event is currently enabled (i.e. dynamically at runtime).
+>=20
+> The expression is correct, but the function and argument names are not. It
+> should be
+>=20
+> fn trace_event_state_is_enabled(dstate: u16) -> bool {
+>      unsafe { trace_events_enabled_count } !=3D 0 && dstate !=3D 0
+> }
 
-r~
+The generated code is missing DTrace's SDT semaphore (see
+generate_h_backend_dstate() in scripts/tracetool/backend/dtrace.py). The
+conditional must be taken when a tool like SystemTap or GDB sets the SDT
+semaphore. Right now it will not be taken because the conditional only
+looks at _ ## id ## _DSTATE and not the SDT semaphore.
+
+Stefan
+
+--0eB/xxbpwEBxTWWE
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjUNBAACgkQnKSrs4Gr
+c8jytQf/Zf1cLvAmyM8YgtlQLYMevxz8WiWTRYkYMHh8MY+Il18whneNPwuWgpOz
+jzPYnFpZWLEqoc9TdR38tRwms9ZvciV6yGDc6yZSr5ltaIVues/b+cowa24osEKr
+WMHwjLkurIiPfKN7v/2mhlhCz1TTWzsvzJstGc0+KG5Jbcom2RGr8ULUh54nZCQD
+ruPnTollGgsxDoScmK9S1ydmdfTSVWgKPmkjBjAGmmbck3HrduMFb4B07JSparnf
+JYgEgVEqRO9v+gpxOzX5R9GUoVWL2QUPusDrVRyXbCF8UU9P3jCF6iiOArVgPwLC
+8xMao3Unj78l/xeEF6f6v+IzuBwqow==
+=L1kG
+-----END PGP SIGNATURE-----
+
+--0eB/xxbpwEBxTWWE--
 
 
