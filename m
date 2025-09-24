@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE4ACAC5B5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 15:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5366ACAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 15:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1QyI-000864-7i; Wed, 24 Sep 2025 10:59:54 -0400
+	id 1v1R4J-0000zr-GU; Wed, 24 Sep 2025 11:06:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v1QyF-00085F-3j; Wed, 24 Sep 2025 10:59:51 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1v1R4E-0000zO-N6; Wed, 24 Sep 2025 11:06:03 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1v1Qy5-0001NM-VF; Wed, 24 Sep 2025 10:59:49 -0400
+ id 1v1R44-0002Lv-Cz; Wed, 24 Sep 2025 11:06:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758725982; x=1790261982;
+ t=1758726352; x=1790262352;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=rOXY819Wgt9Lpauwown9+ZsR16/omkh1nC1gq7ttzLI=;
- b=dOzyHZb9QJntAOlUBFoDUiwl3eoK64vj8HuCNrXv95byAbL6yAJ1K8LB
- nzhG6Sz+x6If11HI+q+YXSDGVPBQblB26reJ3IHkupuQyC5HEmCSEDOQV
- uS9/bCuXQD/KUymTEya1kTSCGTvMTd56lgzc65WcNG6ZsiJzaV2EOfLrf
- hHmv3ehrZEsWfKL+BtOS4p5k4km5vplaACnC6/+dvRoF1P25HHbIliVSo
- dXwbx7RnBttVbasrRW0rqlwk+6gMj12eEqLs2v6C0W4X+nvGGWLRPOBYh
- BgkboJqDJlm9C0oOQh0fz+vPOft6TpOBnhj0TrO1JIMNNC8Jqp33CI0hD Q==;
-X-CSE-ConnectionGUID: Ok/E/4tpQgKA8QH7JLfQHQ==
-X-CSE-MsgGUID: 9kzaXrcXTnaZTMj+bc0Xvg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11563"; a="60727627"
-X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="60727627"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Sep 2025 07:59:34 -0700
-X-CSE-ConnectionGUID: sK3syfCjRqyz8oVm9GRLKQ==
-X-CSE-MsgGUID: ieb04+yEQAeiEOdlRoqQsw==
+ bh=b4IU1Zp4QVjxpkpgWOQnCqHajAF15dVkPgaL0QC0SVo=;
+ b=Y0C7dZQSmZ5BD7mHzMWvGQ2cRWIPdJ2eUwX/n/0MF/vQQHMLCgQmqZrN
+ lIKEKUzLiWQhFWgOWXiKBfXCSIHxHiOLXcIQGymNmQYR48yxKRMO3qJ0Q
+ 499/Ea3n9IlJAYmIGhzLB74NMsGGwOikzn2cUD4f3J7iEwhu0zEdJwld7
+ 1vAsPAH3nUgE3FpNRU3N53EoBk9xmTYuLaS08bZkPFWNPiDhahH8zdOzd
+ P5o5M0a08C6NGIUlvUj56Zirq9ot+Ndq/l6jxL3/6vj38BVZ0JjUJ8Ew4
+ 5VNHjvYzxFUavs6X30NHXa4VRtd3ToJXFfJnvPI+JBqiq4KDTdz7Lzh5u w==;
+X-CSE-ConnectionGUID: 4RkqoC07TXK+c4nJmd2afg==
+X-CSE-MsgGUID: 3wlSyzOASOeMKCCj2Y4qyA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11563"; a="71703706"
+X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="71703706"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Sep 2025 08:05:45 -0700
+X-CSE-ConnectionGUID: CLHtW1MbRKSSxhjs04TY1g==
+X-CSE-MsgGUID: e+JJVQPmTfqIVQnObKBWGg==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="214184546"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 24 Sep 2025 07:59:33 -0700
-Date: Wed, 24 Sep 2025 23:21:30 +0800
+ by orviesa001.jf.intel.com with ESMTP; 24 Sep 2025 08:05:43 -0700
+Date: Wed, 24 Sep 2025 23:27:40 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, manos.pitsidianakis@linaro.org
 Subject: Re: [PATCH 3/7] rust: migration: extract vmstate_fields_ref
-Message-ID: <aNQMekqSqG7DjmPX@intel.com>
+Message-ID: <aNQN7Nt7jKiA/rn1@intel.com>
 References: <20250920142958.181910-1-pbonzini@redhat.com>
  <20250920142958.181910-4-pbonzini@redhat.com>
+ <aNQMekqSqG7DjmPX@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250920142958.181910-4-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <aNQMekqSqG7DjmPX@intel.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
@@ -80,123 +82,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+> Considerring the idea about returing &'static [VMStateField], I think at
+> least we could return `_FIELDS.as_ptr()` directly from vmstate_fields!,
+                         ^^^^^^^^^^^^^^^^
+Sorry for copy error :(,  s/_FIELDS.as_ptr()/_FIELDS/
 
-On Sat, Sep 20, 2025 at 04:29:54PM +0200, Paolo Bonzini wrote:
-> Date: Sat, 20 Sep 2025 16:29:54 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 3/7] rust: migration: extract vmstate_fields_ref
-> X-Mailer: git-send-email 2.51.0
-> 
-> This is useful when building a VMState for generic structs, because you have
-> to avoid nested statics.  Using vmstate_fields! will fail in the likely case
-> where the _FIELDS static uses Self from an outer item, because that is
-> forbidden.
-
-vmstate_fields_ref is good for me.
-
-> I also looked into returning a &'static [VMStateField] from vmstate_fields!,
-> but that also fails; the fields are not promoted to static, which is
-> unfortunate but intentional (https://github.com/rust-lang/rust/issues/60502):
-> 
-> error[E0716]: temporary value dropped while borrowed
->    --> rust/hw/char/pl011/libpl011.rlib.p/structured/device.rs:743:17
->     |
-> 738 | /      VMStateDescriptionBuilder::<PL011State>::new()
-> 739 | |          .name(c"pl011/clock")
-> 740 | |          .version_id(1)
-> 741 | |          .minimum_version_id(1)
-> 742 | |          .needed(&PL011State::clock_needed)
-> 743 | |          .fields(vmstate_fields! {
->     | | _________________^
-> 744 | ||              vmstate_of!(PL011State, clock),
-> 745 | ||         })
->     | ||_________^- argument requires that borrow lasts for `'static`
->     |  |_________|
->     |            creates a temporary value which is freed while still in use
-> 746 |            .build();
->     |                   - temporary value is freed at the end of this statement
-
-And I'm curious what change caused this error... I guess you're
-indicating the following case?
-
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index c05c4a1fd665..bff6ba502e02 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -417,14 +417,13 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
- #[macro_export]
- macro_rules! vmstate_fields {
-     ($($field:expr),*$(,)*) => {{
--        static _FIELDS: &[$crate::bindings::VMStateField] = &[
-+        &[
-             $($field),*,
-             $crate::bindings::VMStateField {
-                 flags: $crate::bindings::VMStateFlags::VMS_END,
-                 ..::common::zeroable::Zeroable::ZERO
-             }
--        ];
--        _FIELDS.as_ptr()
-+        ]
-     }}
- }
-
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/migration/src/vmstate.rs | 23 +++++++++++++++++------
->  1 file changed, 17 insertions(+), 6 deletions(-)
-> 
-> diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-> index 05a833a8b7d..421a236194d 100644
-> --- a/rust/migration/src/vmstate.rs
-> +++ b/rust/migration/src/vmstate.rs
-> @@ -413,19 +413,30 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
->      }};
->  }
->  
-> +/// Add a terminator to the fields in the arguments, and return
-> +/// a reference to the resulting array of values.
-> +#[macro_export]
-> +macro_rules! vmstate_fields_ref {
-> +    ($($field:expr),*$(,)*) => {
-> +        &[
-> +            $($field),*,
-> +            $crate::bindings::VMStateField {
-> +                flags: $crate::bindings::VMStateFlags::VMS_END,
-> +                ..::common::zeroable::Zeroable::ZERO
-> +            }
-> +        ]
-> +    }
-> +}
-> +
->  /// Helper macro to declare a list of
->  /// ([`VMStateField`](`crate::bindings::VMStateField`)) into a static and return
->  /// a pointer to the array of values it created.
->  #[macro_export]
->  macro_rules! vmstate_fields {
->      ($($field:expr),*$(,)*) => {{
-> -        static _FIELDS: &[$crate::bindings::VMStateField] = &[
-> +        static _FIELDS: &[$crate::bindings::VMStateField] = $crate::vmstate_fields_ref!(
->              $($field),*,
-> -            $crate::bindings::VMStateField {
-> -                flags: $crate::bindings::VMStateFlags::VMS_END,
-> -                ..::common::zeroable::Zeroable::ZERO
-> -            }
-> -        ];
-> +        );
->          _FIELDS.as_ptr()
-
-Considerring the idea about returing &'static [VMStateField], I think at
-least we could return `_FIELDS.as_ptr()` directly from vmstate_fields!,
-and convert &'static [VMStateField] to *const [VMStateField] in
-fields(), just like subsections() did.
-
-Thanks,
-Zhao
-
->      }}
->  }
-> -- 
-> 2.51.0
-> 
+> and convert &'static [VMStateField] to *const [VMStateField] in
+> fields(), just like subsections() did.
 
