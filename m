@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A35CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 18:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11953CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 18:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Tx1-0000ep-H9; Wed, 24 Sep 2025 14:10:47 -0400
+	id 1v1Txf-0000sj-TH; Wed, 24 Sep 2025 14:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1Twx-0000eV-I9
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:10:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1Twr-0001ah-2s
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:10:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758737430;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oB5S7zxoTpmKsw54HjwSOc2fBSbL6GF/Mfg/lQF1PF8=;
- b=d94H9ny4MJFQFHjYvLk1yh++vR95BFnxFjaZy77kO+LybT2OIoDzkZikc5IQMPFBkhAXBG
- w1a6YuHp0f6QRkn58aTtSUXsPqDl8WWV4Ew2Zz1zOjAh2lPdTimLhB2dGQ1eUZfYtSI14L
- k0kXHm2ERng7/bSqyNpoJsbC0XxuWSM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-5ZV6OmCOODmgBSXXSDw6Jg-1; Wed,
- 24 Sep 2025 14:10:27 -0400
-X-MC-Unique: 5ZV6OmCOODmgBSXXSDw6Jg-1
-X-Mimecast-MFC-AGG-ID: 5ZV6OmCOODmgBSXXSDw6Jg_1758737426
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFB8F19560B1; Wed, 24 Sep 2025 18:10:25 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.176])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 42B3D300018D; Wed, 24 Sep 2025 18:10:25 +0000 (UTC)
-Date: Wed, 24 Sep 2025 14:10:24 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Tanish Desai <tanishdesai37@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
-Message-ID: <20250924181024.GB6015@fedora>
-References: <20250919112536.141782-1-pbonzini@redhat.com>
- <20250919112536.141782-9-pbonzini@redhat.com>
- <20250923192354.GL509965@fedora>
- <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1v1Txd-0000rz-Te
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:11:26 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1v1TxW-0001mh-2t
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 14:11:25 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-77f32d99a97so133765b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 11:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1758737472; x=1759342272; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oc8g9sEbIuJUY49r2NiT6W2ot/ONcAg0Dqf022GHF1E=;
+ b=PeNff4jk/UZrqI2PMhEBbvPinj+GMbBz6idSZSsTjpjR2gPr+S9sMUprb8ndo3hPf3
+ m78o+CYp9RhbJBbNgidiEsEaQ6OV4EGGlG7x0xRch/2JQenWbQ/lgo7bmn7PPjMbs43b
+ A7rjxt4QK7YvZO4FWoc0TD+aHTcf9SLubqTgncf6YyQ/0sIqmxoMmrnwfasUPDsdQqNj
+ xlYUJPvAaGXdsxci7AQykucwlKDJn//IC7DjmSP2eqYL9vA0zb2zeRmjcO/SBip9n9Th
+ MRsVcaN9FvYsguW5lTs6WnXfJPhdBBCRHXa79LzJ19xeM6jKOWQ9y8U+mHi+HYNpba0B
+ Dr5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1758737472; x=1759342272;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oc8g9sEbIuJUY49r2NiT6W2ot/ONcAg0Dqf022GHF1E=;
+ b=Jp1xJyrDoalr1fQJrS1UyjY3rgmt5tC3/gpeLI2IF2gPYvGtu7tXGfLnw2B5JGX4F5
+ hPXzp+iv7BiZWQFdAyjvJQL1s12zs2uNV/dFzjzHWWtKYGwO1sTAwNGyF/wg2PZwm8Xl
+ lcsarpI23uOfPw4Rp3yu+ST65Ui3z2P1I3IFjjiLHayh4dH7JWSlWodfh6+DkdOeahml
+ 7/Iq2W85pvDVOlIqBftHsSPwEUQoHSRIXquEgo+PBr8wtKnaDfao0xeglPf0nOGQNHO0
+ JRjYdzXwgLhozpfURETM5LcGVI7/0xG521fKoy3YJGSHv+Y+2pTexBUOvRDo9RCLvnIx
+ 6Fcg==
+X-Gm-Message-State: AOJu0YwMVf6LEny9j3OuF8+dIeBLlHP+D8pyUUtG7Qv7NVL2/PMWjouT
+ Uj329zUD2AU2EOQICugT5nuSSUXWs8tX6mGhpNY8i7+k/oDk9rAC8oZ42raGgVdxsSZ1vEHBph+
+ 0UBaaIVtM3ymBMq1VbEqgCIuypsX57i1PEA==
+X-Gm-Gg: ASbGncu+7YxFpwtQ53vu3VvwDFDAQxQZGMZ9eCB4w28TNels/9PX5Ez88RYwPNOZBnU
+ G3jpk25Q0uQelRTvJRRk2oT5JENjCeSI70/auFS5OJIxaZEu3RG/cyO5PnfgMQlQPqZXBYnOrfu
+ GFn7x1vVjb7Gh2ZzZTlaR1IzQwLnZ3JL21oaMoQSnChbmIFCQwdLfJlAC9bXs/fX+HdXG8YnwcY
+ Djpon1ef2UT4rK74iM6UYYhL7pzBtsT6RNEYoI=
+X-Google-Smtp-Source: AGHT+IFdiNdWmFQQgZeD+GFyDilirfISXcGikX2OL5katfTaQFUS0R9dhj1d9EpUp8t5gqIdniSugs3phorneaV14GI=
+X-Received: by 2002:a17:90b:1c04:b0:332:2773:e7bf with SMTP id
+ 98e67ed59e1d1-3342a2b9566mr576154a91.18.1758737471631; Wed, 24 Sep 2025
+ 11:11:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="0eB/xxbpwEBxTWWE"
-Content-Disposition: inline
-In-Reply-To: <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250924174045.54241-1-philmd@linaro.org>
+In-Reply-To: <20250924174045.54241-1-philmd@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Wed, 24 Sep 2025 11:11:00 -0700
+X-Gm-Features: AS18NWCijtoIxKye-jK2nK4ZJQ8tixwxNAOEwPkGPbhu-oIOQrG4Eil2fsL4C0A
+Message-ID: <CAMo8BfLjU3w+Bkgb-Poa9+68i2u2BEJaQkVdBwTyF0JrJOBt4A@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/xtensa: Replace CPUXtensa:runstall by
+ CPUState:start_powered_off
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,67 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Sep 24, 2025 at 10:40=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+> CPUXtensa::runstall and CPUState::start_powered_off are
+> semantically equivalent. Replace the target specific field
+> by the generic one.
 
---0eB/xxbpwEBxTWWE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+xtensa runstall is not about powering on the CPU, it's about stalling
+its pipeline. Also it can be applied at any time to a running CPU
+to hold it, deasserting it will let the CPU continue running.
 
-On Wed, Sep 24, 2025 at 09:13:15AM +0200, Paolo Bonzini wrote:
-> On 9/23/25 21:23, Stefan Hajnoczi wrote:
-> > > +    out('// SPDX-License-Identifier: GPL-2.0-or-later',
-> > > +        '// This file is @generated by tracetool, do not edit.',
-> > > +        '',
-> > > +        '#[allow(unused_imports)]',
-> > > +        'use std::ffi::c_char;',
-> > > +        '#[allow(unused_imports)]',
-> > > +        'use util::bindings;',
-> > > +        '',
-> > > +        '#[inline(always)]',
-> > > +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
-> > > +        '    unsafe { (trace_events_enabled_count !=3D 0) && (_id !=
-=3D 0) }',
-> > > +        '}',
-> >=20
-> > This was translated to Rust from:
-> >=20
-> >    /* it's on fast path, avoid consistency checks (asserts) */
-> >    #define trace_event_get_state_dynamic_by_id(id) \
-> >        (unlikely(trace_events_enabled_count) && _ ## id ## _DSTATE)
-> >=20
-> > The _id !=3D 0 expression is incorrect. The purpose was to check whether
-> > the trace event is currently enabled (i.e. dynamically at runtime).
->=20
-> The expression is correct, but the function and argument names are not. It
-> should be
->=20
-> fn trace_event_state_is_enabled(dstate: u16) -> bool {
->      unsafe { trace_events_enabled_count } !=3D 0 && dstate !=3D 0
-> }
-
-The generated code is missing DTrace's SDT semaphore (see
-generate_h_backend_dstate() in scripts/tracetool/backend/dtrace.py). The
-conditional must be taken when a tool like SystemTap or GDB sets the SDT
-semaphore. Right now it will not be taken because the conditional only
-looks at _ ## id ## _DSTATE and not the SDT semaphore.
-
-Stefan
-
---0eB/xxbpwEBxTWWE
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmjUNBAACgkQnKSrs4Gr
-c8jytQf/Zf1cLvAmyM8YgtlQLYMevxz8WiWTRYkYMHh8MY+Il18whneNPwuWgpOz
-jzPYnFpZWLEqoc9TdR38tRwms9ZvciV6yGDc6yZSr5ltaIVues/b+cowa24osEKr
-WMHwjLkurIiPfKN7v/2mhlhCz1TTWzsvzJstGc0+KG5Jbcom2RGr8ULUh54nZCQD
-ruPnTollGgsxDoScmK9S1ydmdfTSVWgKPmkjBjAGmmbck3HrduMFb4B07JSparnf
-JYgEgVEqRO9v+gpxOzX5R9GUoVWL2QUPusDrVRyXbCF8UU9P3jCF6iiOArVgPwLC
-8xMao3Unj78l/xeEF6f6v+IzuBwqow==
-=L1kG
------END PGP SIGNATURE-----
-
---0eB/xxbpwEBxTWWE--
-
+--=20
+Thanks.
+-- Max
 
