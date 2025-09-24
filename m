@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C529CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB86CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Upd-0001XX-HE; Wed, 24 Sep 2025 15:07:13 -0400
+	id 1v1UqM-0002Kl-Bb; Wed, 24 Sep 2025 15:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Um0-0006ww-Es
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:32 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1v1UmB-00070w-Ma
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:42 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ujz-0007r3-Iv
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:26 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-33292adb180so155767a91.3
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:19 -0700 (PDT)
+ id 1v1Uk8-0007vS-9D
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:35 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-26f0c5455e2so1122565ad.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758740478; x=1759345278; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758740488; x=1759345288; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4zu8R6LKwQ6lOrIKQecK3A2J+NyHWCkSHewciWwmNMc=;
- b=qfuD3M7YRcOAqhnHWaki/MG6LGUd8PgNQLnupz9ryFonll9H+J7Vl8emGDUhm5zINq
- oJTSXlhnBmbFBvguhkE++7PpsvNmdl33nLxUGwPuFvcUK2G44hpcumvwgS7X/tSwMMDR
- 09YAAS6rrNVpeIKRrurTnKq7kCPlRtZAOqzq1nSK6MitCvBHvYz1/bV/b50R+N2CEmQd
- jX4gnWSgevWsHFkKmL6zip+YHyS555nrhsnWw768dryLZ7kPc8bi6+pZCaUaSsHkQ5UH
- AJaichmyL7q1DHbX0BMpRrsuWUy6z0isKP4HP+qJi/SYie5kT+aQkJzxApSjQrEupqf/
- wt0A==
+ bh=kC+jJzU7oKqcXeHFjuuS9plD7f1CcqeywF5Lpqo3jg4=;
+ b=v1ftuBPbN0NNw9/ossfmq/w3NqXBk3rGns7I9esxvieIDJBpn8eeuNYneqpTGhctJG
+ OTxHNiGXYXQU6CFLUClASHtDu4mrbwNXqxD2vAfmVTKNXEUFlSIqLZFZ0gLLRgQcSikv
+ vEdU5bnxHyKK73647CmhJIpdHGOwU9APQ/fXuWHFota/qU0t5RXEUY8sKfxMyOiEkTaw
+ U4uf4nhHNBcLnoQ2ul2TOisNlf7lHrFExjtjHCyiM1qtUWl4oalHSe185u7DOGvOoUpp
+ QXvik3GakPHYqzDytPmzsAfKnaZR2DSEByAun7njY/YJv6JObQLk1rq2aKenOQB1tGwh
+ lBVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758740478; x=1759345278;
+ d=1e100.net; s=20230601; t=1758740488; x=1759345288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4zu8R6LKwQ6lOrIKQecK3A2J+NyHWCkSHewciWwmNMc=;
- b=TjzuUWh0iSoYm8VT9U2xIbdSnDoVsnEh13idaMkZw+bfqPSBO3DXq9+fxhXlFWUsLt
- 372JhBBJEADwfxq+DrW9FjYBvvswZLVkMjec2AD3Cu/gXgH7Hd3okejd9Z6cn50J1IzB
- cXbGstpSiUSrvVwbX56oAMA72I6uW+qHCwAZIB/sQiIapwCN/VDm5H/7TM9PBbzFvCIz
- vXMKRjnpDUCAM+Ez0XKktUCAB0d7kd2o2jzlmaossXkgTc1KR1W0fhPZZUbxGPAxAlhi
- EhUXWpFQ1HEjMXTblVvh5baxMPZCd1mgFToC2x3yurS9G06tuUnqq0zvPH7n5T/oinw/
- nR8A==
-X-Gm-Message-State: AOJu0YyhZgvXHfFvvGt5lH2YYHPMXoPbeaRWAJ2zsU+xjqQRQEq0DO35
- ZzHyR+LdeeyfOTZapjhDoWzW5RxZi0CtR80CWiB4tmsT5RENPKJgTdsCEObyZ5qNA+vhx7jAiSX
- Ug/TF
-X-Gm-Gg: ASbGncuYp+yP5tOT+Mg4U/CCXfty7j7RzMNDWDpTxMfh32AVUSLetuJshDyVjOLIjqy
- /oGWIHof5SqzcXd36FVYFThGPx8TUv/IQS5m6F8sYbLQgU2qGKUNJr9vyNMYUyGJL0oTQIpDa8v
- xaEUA4ytzS9E+7ElLd4FlPKLceAHgdV9BtXeHQ2KvQ9Zs0bk8B87+rUwARFcuOPwT4vH8p8h6kW
- SxkftrNeXpD9l56mAAMioCqkwe1g9X4pO+H/bNA9tK5tFe2so/H3PZSBiUD62U5iplDiBjj3+BO
- 1Is4jaxT6+F5ZR7tF307sUyflG6QWSWZmofphHWiGTfojMEIRAyc4lEqvVjeZ68f+4IAQSdLwjn
- sKqV0rx9ImPySTVJjxS1KWTyL5LSdQDMMQCE47CA=
-X-Google-Smtp-Source: AGHT+IEadd3X811FAaXgH/d96fYSTO/P7z296cG6vhNihw2ageBcE7u+w2Nf7YAvLJC/x+ynTwTf1Q==
-X-Received: by 2002:a17:90b:380f:b0:32e:32e4:9789 with SMTP id
- 98e67ed59e1d1-3342a257486mr797233a91.3.1758740477679; 
- Wed, 24 Sep 2025 12:01:17 -0700 (PDT)
+ bh=kC+jJzU7oKqcXeHFjuuS9plD7f1CcqeywF5Lpqo3jg4=;
+ b=Cz2tDLSyrqML1JYHGZQepBVEY5RHrhpWI6LjkWZ91grjW7gIB2KG0PhNSO5V66Vvll
+ u+cOOnNsz+iiCkKC/m7CLYoJqHfWLX4K/vGMIAVE1mhN0UBr38Svxg9VbBr59PW1LVYL
+ 9YUXhWPKzlPydV/dRS7J4dDNLeVv8p5qqN4SOQtAVxU3a8gmdm1sajUGQSbAFimNfS+s
+ 9Vc0R2qbbZ7xMbTISi+a/fCtF24Skx8TsuytBGlEJ/RMhjFSHCZOA+EAEcYscKnaXxgc
+ Q0DD5dfHhjuDOIfakwZyNZ0Hi2viMLKTu/rYMuXoIqE8KMXyX7nxz16AzcM/Nof8iNTW
+ CmJQ==
+X-Gm-Message-State: AOJu0YwKRCLrHMoHcOSgVZboCXn3UxMbx50kfWB6Cod/bI9GQMi5n/J+
+ V+MM8vbKJ/0iSpeB8TPbhoMa/EYHvVUYBGHMh0MM+N/czjlA0q6JCBP1ryAgY9SMGw7flRaIRqD
+ EOHL/
+X-Gm-Gg: ASbGncuzledm6fmibUaW4KXBf4PQkw4sO1uLd6QXDaBOOdFkQLiggwzN3zd0hrfz0Nl
+ 9oUews/80qVOSfvQDeY6zMBun6dpZYblytDs0yxMQDetSemIHqDFl3oizKYovvG8aoGHX7Wp7TM
+ DMHLXNnJFsUZfy5tYrIAU6wQd/Y/0OLuQq1/FhveYjxDC8AblokyM6uDu8NbixWNOmv6qY2EQZt
+ Pq71VHnOZjP5zZCpfQftfS7iwS33apJDH509zNpoWjFs5cP0qvBFtG22JfMcjaRGrKNbj6zBlYY
+ doNUV0276i1A+GRCGbrJHuV95CIyRcc1rYgfjEAlOKoME8FP7JAnEIzUyobDblB4f9ADykuPm3U
+ oXsRw34SVPfJu4Hms+0SmSgZzFP3u
+X-Google-Smtp-Source: AGHT+IEOztd2LpTu+Gn03FqnNatyjb0YoR6EboYZZNIlzvAvznR4SuqWaKSXD8/TzYNdFljKawrwow==
+X-Received: by 2002:a17:903:37c5:b0:246:de71:1839 with SMTP id
+ d9443c01a7336-27ed4a6078emr6327135ad.50.1758740488391; 
+ Wed, 24 Sep 2025 12:01:28 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.17
+ 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 12:01:17 -0700 (PDT)
+ Wed, 24 Sep 2025 12:01:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: WANG Rui <wangrui@loongson.cn>
-Subject: [PULL 14/32] tcg/optimize: Fix folding of vector bitsel
-Date: Wed, 24 Sep 2025 12:00:47 -0700
-Message-ID: <20250924190106.7089-15-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 28/32] linux-user: Split out begin_parallel_context
+Date: Wed, 24 Sep 2025 12:01:01 -0700
+Message-ID: <20250924190106.7089-29-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
 References: <20250924190106.7089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,50 +92,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: WANG Rui <wangrui@loongson.cn>
+Move the test/flush/set block to a new function.
+Use tb_flush__exclusive_or_serial while we're at it.
 
-It looks like a typo. When the false value (C) is the constant -1, the
-correct fold should be: R = B | ~A
-
-Reproducer (LoongArch64 assembly):
-
-     .text
-     .globl  _start
- _start:
-     vldi    $vr1, 3073
-     vldi    $vr2, 1023
-     vbitsel.v       $vr0, $vr2, $vr1, $vr2
-     vpickve2gr.d    $a1, $vr0, 1
-     xori    $a0, $a1, 1
-     li.w    $a7, 93
-     syscall 0
-
-Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
-Link: https://github.com/llvm/llvm-project/issues/159610
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250919124901.2756538-1-wangrui@loongson.cn>
 ---
- tcg/optimize.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ linux-user/user-internals.h | 16 ++++++++++++++++
+ linux-user/mmap.c           | 13 ++-----------
+ linux-user/syscall.c        |  7 +------
+ 3 files changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 3638ab9fea..f69702b26e 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
-             return fold_and(ctx, op);
-         }
-         if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-+            TCGArg ta = op->args[2];
-             op->opc = INDEX_op_orc_vec;
-             op->args[2] = op->args[1];
--            op->args[1] = op->args[3];
-+            op->args[1] = ta;
-             return fold_orc(ctx, op);
-         }
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 691b9a1775..7099349ec8 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -20,6 +20,8 @@
+ 
+ #include "user/thunk.h"
+ #include "qemu/log.h"
++#include "exec/tb-flush.h"
++#include "exec/translation-block.h"
+ 
+ extern char *exec_path;
+ void init_task_state(TaskState *ts);
+@@ -172,6 +174,20 @@ static inline int regpairs_aligned(CPUArchState *cpu_env, int num) { return 0; }
+  */
+ void preexit_cleanup(CPUArchState *env, int code);
+ 
++/**
++ * begin_parallel_context
++ * @cs: the CPU context
++ *
++ * Called when starting the second vcpu, or joining shared memory.
++ */
++static inline void begin_parallel_context(CPUState *cs)
++{
++    if (!tcg_cflags_has(cs, CF_PARALLEL)) {
++        tb_flush__exclusive_or_serial();
++        tcg_cflags_set(cs, CF_PARALLEL);
++    }
++}
++
+ /*
+  * Include target-specific struct and function definitions;
+  * they may need access to the target-independent structures
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 002e1e668e..847092a28a 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -22,8 +22,6 @@
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+-#include "exec/tb-flush.h"
+-#include "exec/translation-block.h"
+ #include "qemu.h"
+ #include "user/page-protection.h"
+ #include "user-internals.h"
+@@ -1007,11 +1005,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+      * be atomic with respect to an external process.
+      */
+     if (ret != -1 && (flags & MAP_TYPE) != MAP_PRIVATE) {
+-        CPUState *cpu = thread_cpu;
+-        if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-            tcg_cflags_set(cpu, CF_PARALLEL);
+-            tb_flush(cpu);
+-        }
++        begin_parallel_context(thread_cpu);
      }
+ 
+     return ret;
+@@ -1448,10 +1442,7 @@ abi_ulong target_shmat(CPUArchState *cpu_env, int shmid,
+      * supported by the host -- anything that requires EXCP_ATOMIC will not
+      * be atomic with respect to an external process.
+      */
+-    if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-        tcg_cflags_set(cpu, CF_PARALLEL);
+-        tb_flush(cpu);
+-    }
++    begin_parallel_context(cpu);
+ 
+     if (qemu_loglevel_mask(CPU_LOG_PAGE)) {
+         FILE *f = qemu_log_trylock();
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 9098cdb9fa..1a5f2a03f9 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -27,8 +27,6 @@
+ #include "target_mman.h"
+ #include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+-#include "exec/tb-flush.h"
+-#include "exec/translation-block.h"
+ #include <elf.h>
+ #include <endian.h>
+ #include <grp.h>
+@@ -6667,10 +6665,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+          * generate code for parallel execution and flush old translations.
+          * Do this now so that the copy gets CF_PARALLEL too.
+          */
+-        if (!tcg_cflags_has(cpu, CF_PARALLEL)) {
+-            tcg_cflags_set(cpu, CF_PARALLEL);
+-            tb_flush(cpu);
+-        }
++        begin_parallel_context(cpu);
+ 
+         /* we create a new CPU instance. */
+         new_env = cpu_copy(env);
 -- 
 2.43.0
 
