@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCE3CAC5B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86604CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1JBe-0002fd-B6; Wed, 24 Sep 2025 02:41:10 -0400
+	id 1v1JAu-0002UA-Dw; Wed, 24 Sep 2025 02:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JB5-0002Wd-HF
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAr-0002Tt-I4
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAn-0006iw-Ek
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAh-0006ho-A8
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758696016;
+ s=mimecast20190719; t=1758696008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=io+NV+Ev+q4WrO5LChFMvPvsyJ+x/EqfXtbfwMi7ajU=;
- b=aztj5SDJZLuYvCofs2mvrW5lkrZN17IxItBuUiAwIyIOe5VsOG1tKqAxudAjFR3Gh10iEL
- QSbIa6e0N8dn4Ad9S5w1Vkhh1psAiQWgJGGqbvQhKGlTvnk1A0qdJWtgEQFLiN9xewqPlY
- gaGcOraQPgTS0ng0VcwYedH1UuQG6ak=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=JBRmuVpLJ3m0aks1MPvEMgz6IPDXFlW9qQuRyAUlJgs=;
+ b=G/Gd5XUADFQ+I0A62TVy5Sn8YnPS4yorqz6mKCS4IMk9rc7ZqQvVIDZJ3oyAWGuJXQ/IUN
+ vSuAKHS8o9UxPwwCY0lVJ9WpEw44awPQ08XcDvwmbYXcQNBf9JsYYTORGS4o/Kii7u5r/H
+ otGDBBrRzDhEmVncY5lmr1oob3DnpOs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-X-o0bXckONmzPXv_Dmy0lg-1; Wed,
- 24 Sep 2025 02:40:12 -0400
-X-MC-Unique: X-o0bXckONmzPXv_Dmy0lg-1
-X-Mimecast-MFC-AGG-ID: X-o0bXckONmzPXv_Dmy0lg_1758696011
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-NpllkZugNPizCFvMDUJPfA-1; Wed,
+ 24 Sep 2025 02:40:03 -0400
+X-MC-Unique: NpllkZugNPizCFvMDUJPfA-1
+X-Mimecast-MFC-AGG-ID: NpllkZugNPizCFvMDUJPfA_1758696002
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70C4F19560AF; Wed, 24 Sep 2025 06:40:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B46D31800447; Wed, 24 Sep 2025 06:40:02 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 58F3E1955F22; Wed, 24 Sep 2025 06:40:10 +0000 (UTC)
+ id 932D91955F19; Wed, 24 Sep 2025 06:40:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 07/12] tests/functional: use self.log for all logging
-Date: Wed, 24 Sep 2025 08:39:51 +0200
-Message-ID: <20250924063956.519792-8-thuth@redhat.com>
+ Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 02/12] tests/functional/s390x/test_pxelinux: Fix warnings from
+ pylint
+Date: Wed, 24 Sep 2025 08:39:46 +0200
+Message-ID: <20250924063956.519792-3-thuth@redhat.com>
 In-Reply-To: <20250924063956.519792-1-thuth@redhat.com>
 References: <20250924063956.519792-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,230 +84,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Some tests are creating their on logger category which means any
-output they log is not captured in base.log.
+pylint complains about wrong indentation in one of the lines and
+that the pxelinux_cfg_contents is a constant that should be written
+with capital letters. While we're at it, also add the missing doc
+strings.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-[thuth: drop changes to reverse_debugging.py (it's WIP in other patches)]
-Message-ID: <20250912182200.643909-7-berrange@redhat.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250912085251.274294-1-thuth@redhat.com>
 ---
- tests/functional/aarch64/test_virt.py     |  4 +--
- tests/functional/arm/test_integratorcp.py |  3 +--
- tests/functional/mips64el/test_malta.py   |  3 +--
- tests/functional/replay_kernel.py         | 16 +++++-------
- tests/functional/x86_64/test_acpi_bits.py | 31 +++++++++++------------
- 5 files changed, 25 insertions(+), 32 deletions(-)
+ tests/functional/s390x/test_pxelinux.py | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/tests/functional/aarch64/test_virt.py b/tests/functional/aarch64/test_virt.py
-index 4d0ad90ff89..63071f9b517 100755
---- a/tests/functional/aarch64/test_virt.py
-+++ b/tests/functional/aarch64/test_virt.py
-@@ -72,8 +72,6 @@ def common_aarch64_virt(self, machine):
-         self.set_machine('virt')
-         self.require_accelerator("tcg")
+diff --git a/tests/functional/s390x/test_pxelinux.py b/tests/functional/s390x/test_pxelinux.py
+index 4fc33b8c46d..c00cce6a5a4 100755
+--- a/tests/functional/s390x/test_pxelinux.py
++++ b/tests/functional/s390x/test_pxelinux.py
+@@ -1,10 +1,11 @@
+ #!/usr/bin/env python3
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+-#
+-# Functional test that checks the pxelinux.cfg network booting of a s390x VM
+-# (TFTP booting without config file is already tested by the pxe qtest, so
+-#  we don't repeat that here).
++'''
++Functional test that checks the pxelinux.cfg network booting of a s390x VM
++(TFTP booting without config file is already tested by the pxe qtest, so
++we don't repeat that here).
++'''
  
--        logger = logging.getLogger('aarch64_virt')
--
-         kernel_path = self.ASSET_KERNEL.fetch()
+ import os
+ import shutil
+@@ -12,7 +13,7 @@
+ from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
  
-         self.vm.set_console()
-@@ -91,7 +89,7 @@ def common_aarch64_virt(self, machine):
-                          'rng-random,id=rng0,filename=/dev/urandom')
  
-         # Also add a scratch block device
--        logger.info('creating scratch qcow2 image')
-+        self.log.info('creating scratch qcow2 image')
-         image_path = self.scratch_file('scratch.qcow2')
-         qemu_img = get_qemu_img(self)
-         check_call([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'],
-diff --git a/tests/functional/arm/test_integratorcp.py b/tests/functional/arm/test_integratorcp.py
-index 4f00924aa03..23ae919359d 100755
---- a/tests/functional/arm/test_integratorcp.py
-+++ b/tests/functional/arm/test_integratorcp.py
-@@ -77,7 +77,6 @@ def test_framebuffer_tux_logo(self):
-                           command_line='screendump %s' % screendump_path)
-         if 'unknown command' in res:
-             self.skipTest('screendump not available')
--        logger = logging.getLogger('framebuffer')
+-pxelinux_cfg_contents='''# pxelinux.cfg style config file
++PXELINUX_CFG_CONTENTS='''# pxelinux.cfg style config file
+ default Debian
+ label Nonexisting
+ kernel kernel.notavailable
+@@ -26,6 +27,10 @@
+ '''
  
-         cpu_count = 1
-         match_threshold = 0.92
-@@ -88,7 +87,7 @@ def test_framebuffer_tux_logo(self):
-         loc = np.where(result >= match_threshold)
-         tux_count = 0
-         for tux_count, pt in enumerate(zip(*loc[::-1]), start=1):
--            logger.debug('found Tux at position [x, y] = %s', pt)
-+            self.log.debug('found Tux at position [x, y] = %s', pt)
-         self.assertGreaterEqual(tux_count, cpu_count)
+ class S390PxeLinux(QemuSystemTest):
++    '''
++    Test various ways of booting via a pxelinux.cfg file, for details see:
++    https://wiki.syslinux.org/wiki/index.php?title=PXELINUX#Configuration
++    '''
  
- if __name__ == '__main__':
-diff --git a/tests/functional/mips64el/test_malta.py b/tests/functional/mips64el/test_malta.py
-index 8fdc49b3005..170147bfcc2 100755
---- a/tests/functional/mips64el/test_malta.py
-+++ b/tests/functional/mips64el/test_malta.py
-@@ -159,7 +159,6 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
-                           command_line='screendump %s' % screendump_path)
-         if 'unknown command' in res:
-             self.skipTest('screendump not available')
--        logger = logging.getLogger('framebuffer')
+     ASSET_DEBIAN_KERNEL = Asset(
+         ('https://snapshot.debian.org/archive/debian/'
+@@ -46,6 +51,7 @@ class S390PxeLinux(QemuSystemTest):
+         '480859574f3f44caa6cd35c62d70e1ac0609134e22ce2a954bbed9b110c06e0b')
  
-         match_threshold = 0.95
-         screendump_bgr = cv2.imread(screendump_path, cv2.IMREAD_COLOR)
-@@ -171,7 +170,7 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
-         h, w = tuxlogo_bgr.shape[:2]
-         debug_png = os.getenv('QEMU_TEST_CV2_SCREENDUMP_PNG_PATH')
-         for tuxlogo_count, pt in enumerate(zip(*loc[::-1]), start=1):
--            logger.debug('found Tux at position (x, y) = %s', pt)
-+            self.log.debug('found Tux at position (x, y) = %s', pt)
-             cv2.rectangle(screendump_bgr, pt,
-                           (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
-         if debug_png:
-diff --git a/tests/functional/replay_kernel.py b/tests/functional/replay_kernel.py
-index 80795eb0520..acb1d29a1b5 100644
---- a/tests/functional/replay_kernel.py
-+++ b/tests/functional/replay_kernel.py
-@@ -32,15 +32,14 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
-         # icount requires TCG to be available
-         self.require_accelerator('tcg')
+     def pxelinux_launch(self, pl_name='default', extra_opts=None):
++        '''Create a pxelinux.cfg file in the right location and launch QEMU'''
+         self.require_netdev('user')
+         self.set_machine('s390-ccw-virtio')
  
--        logger = logging.getLogger('replay')
-         start_time = time.time()
-         vm = self.get_vm(name='recording' if record else 'replay')
-         vm.set_console()
-         if record:
--            logger.info('recording the execution...')
-+            self.log.info('recording the execution...')
-             mode = 'record'
-         else:
--            logger.info('replaying the execution...')
-+            self.log.info('replaying the execution...')
-             mode = 'replay'
-         vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
-                     (shift, mode, replay_path),
-@@ -54,15 +53,15 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
-         self.wait_for_console_pattern(console_pattern, vm)
-         if record:
-             vm.shutdown()
--            logger.info('finished the recording with log size %s bytes'
-+            self.log.info('finished the recording with log size %s bytes'
-                         % os.path.getsize(replay_path))
-             self.run_replay_dump(replay_path)
--            logger.info('successfully tested replay-dump.py')
-+            self.log.info('successfully tested replay-dump.py')
-         else:
-             vm.wait()
--            logger.info('successfully finished the replay')
-+            self.log.info('successfully finished the replay')
-         elapsed = time.time() - start_time
--        logger.info('elapsed time %.2f sec' % elapsed)
-+        self.log.info('elapsed time %.2f sec' % elapsed)
-         return elapsed
+@@ -66,11 +72,11 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
  
-     def run_replay_dump(self, replay_path):
-@@ -80,5 +79,4 @@ def run_rr(self, kernel_path, kernel_command_line, console_pattern,
-                          True, shift, args, replay_path)
-         t2 = self.run_vm(kernel_path, kernel_command_line, console_pattern,
-                          False, shift, args, replay_path)
--        logger = logging.getLogger('replay')
--        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
-+        self.log.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
-diff --git a/tests/functional/x86_64/test_acpi_bits.py b/tests/functional/x86_64/test_acpi_bits.py
-index 8e0563a97b1..9a2816533d6 100755
---- a/tests/functional/x86_64/test_acpi_bits.py
-+++ b/tests/functional/x86_64/test_acpi_bits.py
-@@ -121,10 +121,10 @@ def __init__(self, *args, **kwargs):
-         self._debugcon_log = 'debugcon-log.txt'
+         cfg_fname = self.scratch_file('tftp', 'pxelinux.cfg', pl_name)
+         with open(cfg_fname, 'w', encoding='utf-8') as f:
+-            f.write(pxelinux_cfg_contents)
++            f.write(PXELINUX_CFG_CONTENTS)
  
-     def _print_log(self, log):
--        self.logger.info('\nlogs from biosbits follows:')
--        self.logger.info('==========================================\n')
--        self.logger.info(log)
--        self.logger.info('==========================================\n')
-+        self.log.info('\nlogs from biosbits follows:')
-+        self.log.info('==========================================\n')
-+        self.log.info(log)
-+        self.log.info('==========================================\n')
+         virtio_net_dev = 'virtio-net-ccw,netdev=n1,bootindex=1'
+         if extra_opts:
+-                virtio_net_dev += ',' + extra_opts
++            virtio_net_dev += ',' + extra_opts
  
-     def copy_bits_config(self):
-         """ copies the bios bits config file into bits.
-@@ -138,8 +138,8 @@ def copy_bits_config(self):
-         self.assertTrue(os.path.exists(bits_config_file))
-         self.assertTrue(os.path.exists(target_config_dir))
-         shutil.copy2(bits_config_file, target_config_dir)
--        self.logger.info('copied config file %s to %s',
--                         bits_config_file, target_config_dir)
-+        self.log.info('copied config file %s to %s',
-+                      bits_config_file, target_config_dir)
+         self.vm.add_args('-m', '384',
+                          '-netdev', f'user,id=n1,tftp={tftpdir}',
+@@ -80,6 +86,7 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
  
-     def copy_test_scripts(self):
-         """copies the python test scripts into bits. """
-@@ -163,8 +163,8 @@ def copy_test_scripts(self):
-                 newfilename = os.path.splitext(filename)[0] + '.py'
-                 shutil.copy2(os.path.join(bits_test_dir, filename),
-                              os.path.join(target_test_dir, newfilename))
--                self.logger.info('copied test file %s to %s',
--                                 filename, target_test_dir)
-+                self.log.info('copied test file %s to %s',
-+                              filename, target_test_dir)
  
-                 # now remove the pyc test file if it exists, otherwise the
-                 # changes in the python test script won't be executed.
-@@ -172,9 +172,9 @@ def copy_test_scripts(self):
-                 if os.access(os.path.join(target_test_dir, testfile_pyc),
-                              os.F_OK):
-                     os.remove(os.path.join(target_test_dir, testfile_pyc))
--                    self.logger.info('removed compiled file %s',
--                                     os.path.join(target_test_dir,
--                                     testfile_pyc))
-+                    self.log.info('removed compiled file %s',
-+                                  os.path.join(target_test_dir,
-+                                               testfile_pyc))
+     def test_default(self):
++        '''Check whether the guest uses the "default" file name'''
+         self.pxelinux_launch()
+         # The kernel prints its arguments to the console, so we can use
+         # this to check whether the kernel parameters are correctly handled:
+@@ -89,11 +96,13 @@ def test_default(self):
+         wait_for_console_pattern(self, 'Run /init as init process')
  
-     def fix_mkrescue(self, mkrescue):
-         """ grub-mkrescue is a bash script with two variables, 'prefix' and
-@@ -216,7 +216,7 @@ def generate_bits_iso(self):
+     def test_mac(self):
++        '''Check whether the guest uses file name based on its MAC address'''
+         self.pxelinux_launch(pl_name='01-02-ca-fe-ba-be-42',
+                              extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3')
+         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
  
-         self.fix_mkrescue(mkrescue_script)
+     def test_uuid(self):
++        '''Check whether the guest uses file name based on its UUID'''
+         # Also add a non-bootable disk to check the fallback to network boot:
+         self.vm.add_args('-blockdev', 'null-co,size=65536,node-name=d1',
+                          '-device', 'virtio-blk,drive=d1,bootindex=0,loadparm=1',
+@@ -102,11 +111,13 @@ def test_uuid(self):
+         wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
  
--        self.logger.info('using grub-mkrescue for generating biosbits iso ...')
-+        self.log.info('using grub-mkrescue for generating biosbits iso ...')
+     def test_ip(self):
++        '''Check whether the guest uses file name based on its IP address'''
+         self.vm.add_args('-M', 'loadparm=3')
+         self.pxelinux_launch(pl_name='0A00020F')
+         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
  
-         try:
-             if os.getenv('V') or os.getenv('BITS_DEBUG'):
-@@ -225,7 +225,7 @@ def generate_bits_iso(self):
-                                       stdout=subprocess.PIPE,
-                                       stderr=subprocess.STDOUT,
-                                       check=True)
--                self.logger.info("grub-mkrescue output %s" % proc.stdout)
-+                self.log.info("grub-mkrescue output %s" % proc.stdout)
-             else:
-                 subprocess.check_call([mkrescue_script, '-o',
-                                       iso_file, bits_dir],
-@@ -238,11 +238,10 @@ def generate_bits_iso(self):
- 
-         self.assertTrue(os.access(iso_file, os.R_OK))
- 
--        self.logger.info('iso file %s successfully generated.', iso_file)
-+        self.log.info('iso file %s successfully generated.', iso_file)
- 
-     def setUp(self): # pylint: disable=arguments-differ
-         super().setUp()
--        self.logger = self.log
- 
-         prebuiltDir = self.scratch_file('prebuilt')
-         if not os.path.isdir(prebuiltDir):
-@@ -333,7 +332,7 @@ def test_acpi_smbios_bits(self):
-         # in batch mode and then automatically initiate a vm shutdown.
-         self._vm.event_wait('SHUTDOWN', timeout=BITS_TIMEOUT)
-         self._vm.wait(timeout=None)
--        self.logger.debug("Checking console output ...")
-+        self.log.debug("Checking console output ...")
-         self.parse_log()
- 
- if __name__ == '__main__':
+     def test_menu(self):
++        '''Check whether the boot menu works for pxelinux.cfg booting'''
+         self.vm.add_args('-boot', 'menu=on,splash-time=10')
+         self.pxelinux_launch(pl_name='0A00')
+         wait_for_console_pattern(self, '[1] Nonexisting')
 -- 
 2.51.0
 
