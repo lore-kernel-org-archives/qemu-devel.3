@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C518BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 21:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36940CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 21:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Wqx-00086c-Ag; Wed, 24 Sep 2025 17:16:43 -0400
+	id 1v1X0A-0003eL-3E; Wed, 24 Sep 2025 17:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Wqv-00085z-W0
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:16:42 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1v1X07-0003dx-OC
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:26:11 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Wqt-0003fG-Jp
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:16:41 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-78100be28easo131613b3a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 14:16:37 -0700 (PDT)
+ id 1v1Wzz-0006hn-EJ
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:26:11 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-26e68904f0eso3479965ad.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 14:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758748595; x=1759353395; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x7l5OkWQHHBC1ibrlJ4GGeymVbrOVOaCD3M0iStUu8M=;
- b=SHEmIyG14H12YPNA38Lz8uie1Kasuf34d2igbh8DxOacGOi5hRHJK38z4Zevh75Szk
- /mgJ586QVjTskWCZSU5ILBDFbURA8xgWub6ay2fn+SFjSwCVCJAff0FiT5bptJMPb4tM
- VBjIwe6RzBc0DLNxuQeZTZv46+bVq42SJENSc+pSuPzpeji4xNrKFXZkx0q8lNAECSYU
- 7jPBQn4FXpqxRrGw8f76EqGAWfNqIvbZJfLX6i9Yl764ws3q6QzdmOvPbJOeQW9TwlwZ
- LwnLriKx05pWa00bZY6YYDTAPXthAH80i1YWout2Z31vYFu09r07HcMElUloknxgJdFK
- D/Ag==
+ d=linaro.org; s=google; t=1758749159; x=1759353959; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x1OEoNUQljVf/MrsVaQKnTnhbs2FNKF/KpQR23lYfjE=;
+ b=V7h0TD56wkFnV/9BaIyk6KZRAS+Ge0frM0XxXMa2SuX6Ux2HjC2BVUFxzTQhd8lCpn
+ czgUhdg55TzKzEXdzXaQGmOyCZuZQWTp3lHRR5I8YhTxG9qEDdFbitxzcKHoT5rDKltP
+ k4f8hkLnEXhx5bysNKwCy/Nuy8O+d1to8k02HXWD3J+WF9SOt849rR4TXpBObHdva1+1
+ qu6MXu9fp/YN4boVHFDbaI8y10N2Hvn+szhdeK1JaOd/t1jt6Mz4kjV0uLlDuXuBf28E
+ u+kuOE3r+GAzKg9dTn8/HVENdG/KT9o1eJf0yoEgpzKxrw/jD34HWs/eEYcjCrwTjM3T
+ cbgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758748595; x=1759353395;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1758749159; x=1759353959;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x7l5OkWQHHBC1ibrlJ4GGeymVbrOVOaCD3M0iStUu8M=;
- b=j9VkDTw0mrhtiLbVmdAAyDaaV3q6cKMYbBTVitmVauMhqVeo3e1FeXEaISdqrMCW1Z
- vFB+/9VSAcnsOmWIK4rKA6IEa0Z7Hf8XOVJlSrrDdCboeMDuLG6nj1vAUV1o6BLHmiHS
- +9IiFtcxtcDhCuPcbpYsfK0wFI85ZubCsjf4ycu7plsMRDz9HWDBZBFYk0j30Bs0VWon
- nCIBAal2rco8I2S3nyPgsER79+RrlRLvvFqYtWdC0YDKB+BcRscj2as2GW5ezYkVI3F/
- JXm3uKAwJjDEwUO0HRbiI+cxNQEHarwj3/0rKU0B87AnCoMKO/FJQY5RBBxPpxbx95Fv
- kp8g==
-X-Gm-Message-State: AOJu0YwpHCek9C6Xa2h8Hdb1CM+uevVv9aGpD0jE1SFyHwYQJpjhfu+H
- PvWdgI6a9EQQPr89V5BeNtBcU62KXyFJXWVQA7iO+CGEUApc63Q7n+Pu4lHtidFX3l0NvSp0ROJ
- tUEME
-X-Gm-Gg: ASbGncufr8araBKtlxhrGGsamLq6Ug9yelSCexbvq6fSU4JuiO3U/hgxOMeAhRRuWq7
- +Ck2m3kdP1JN2K6MNm8D9PKdELmdMnrSFowwngFESjECmBDS80C1dLlTGIj0J5L1PIx2NOqICxC
- fxzhAEUZrOX0fEYY5WcMTMAZzc65/hBmN9pLuGcCCQ4DRKH5VYu+J9Awi1rOoJlN4Lr5Kad1EY6
- LzqzNSZBoVsGIQPXRPBaAIys2pO4P1mk7PxLHEqXxP4DHZTi+/0+KuJ/8vXoHUJAVWCpExBfWQO
- 7q9NulN0uDkBHhVaAlnFkls7o5W0cuDOF6S46KagG9CJYT/jp53rAbGG7BHsawXGSQ0Mf1AY/vd
- RzUfpxRMGEVZD40Dblzm4vee5V+YNoUvu4Xv/
-X-Google-Smtp-Source: AGHT+IHOSJWtv1tjVwxORWrQ4KuHuxz1fyyxA8/L+tVBS1nV9ACAIZtjg+RN6t54T6amxuqSk5dLIQ==
-X-Received: by 2002:a05:6a20:3946:b0:249:3006:7573 with SMTP id
- adf61e73a8af0-2e7be8095f2mr1307947637.5.1758748595119; 
- Wed, 24 Sep 2025 14:16:35 -0700 (PDT)
+ bh=x1OEoNUQljVf/MrsVaQKnTnhbs2FNKF/KpQR23lYfjE=;
+ b=Ll2687j0q8nicMbFUk7wAi7txi6bYGOvBauRuapph/9TGNHI0C7uyK7BnA0vBPpSfF
+ rcajEvxbrz2aa1Om+4wZKJWKBgkynV028fFjAn7Wtb7/xln9csZEZhuvgd7ruGWV4aeE
+ OMUhq7WEVp3L73vk3q1WG/WT3dWAK47zpE+hEaF3fQGmLq5wvBYGybU7k8HYm2cnr8tx
+ qA6mWV27hVSoF47dmJ/DWMqsQV0e3polHB9Lp35OKLKZ2LKcV60x2n/Kl5vmyBJGIwQ7
+ 5Xjal4mxQRQBkwlj8B2TXiBpOlJhVIYCPXWhh3rXbMqwKBV4S+Wn3TaLUKplA4n65IGF
+ eldg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXujeXT9etU/jORn9fdJxshr9RSg07p2hpR1fVeNWXvdgG33yVSoaovn9nnrHBrHHc60Fy003yzLvKD@nongnu.org
+X-Gm-Message-State: AOJu0YxvvWH10Oe85Ysa7MzSoPpo6zFXxOaMGpiWoIZU4enbWkNX6uG0
+ k/+oY6qr6zQ4DBHOWfxMNHRLTo/rBL64wrvVyv6KduuhiUfFBD7oPxnNgWiU5Qrubns=
+X-Gm-Gg: ASbGnctUVeKpAL9pmf1B4hmj4Ea31xv0QJe5kAIjg4RQvirvioWI/Ogla7XgGxDbMYL
+ 6sEjdpLIYvt6SIQ7CsIt4HBhrGJWi5VYzN0Y3+Dy0aZCy9OtFpl6b6zmkCzVUoBmvDbduCImlJp
+ S20e0zH8hs1l+7g22ShK4TeNxGiEjcEgKbQrpg0R9x86pgOsnZ04REWRQqbNADkrZshBs3KehxG
+ NRVgVgZ11GJAffbKfeIprtRoFLw6itoiCepBtHxBxWtNSpFNFntGslbFFRpN7L2UmLMZt+n54xe
+ 12pUlOLecQ3gLpfW6X1IPxAviOjL3qafQrv95ClSOVJ40EcLUj99icGpmSWhgCvwjyASmMRgc22
+ Lj2DtozIHMYaQfAkQAtj2aG8VIsTUKa8qQC3hCrYIl4ZbaVQ=
+X-Google-Smtp-Source: AGHT+IHbFDrOjWIQ37gGklCImnnJl61Qvgk5wFMt0y9cANpu5GBKWLIWcsHD3ZxHnsWgyitmjyOTZA==
+X-Received: by 2002:a17:902:f70b:b0:268:5892:6a2e with SMTP id
+ d9443c01a7336-27ed4abbd05mr12114545ad.56.1758749159570; 
+ Wed, 24 Sep 2025 14:25:59 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7810238e6fasm4270b3a.1.2025.09.24.14.16.34
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-27ed6882232sm2119215ad.92.2025.09.24.14.25.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 14:16:34 -0700 (PDT)
-Message-ID: <806850bc-32aa-44db-ad89-3d25ad263132@linaro.org>
-Date: Wed, 24 Sep 2025 14:16:33 -0700
+ Wed, 24 Sep 2025 14:25:59 -0700 (PDT)
+Message-ID: <667f6af8-cb22-4cc5-bf07-83efff3f870e@linaro.org>
+Date: Wed, 24 Sep 2025 14:25:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/32] misc patch queue (tcg, linux-user, sparc)
+Subject: Re: [PATCH v2 0/7] target/sparc: Relax some decode for v7/v8
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250905115128.376295-1-richard.henderson@linaro.org>
+ <9ef5c891-c31f-476d-b297-ff4262d3b53f@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20250924190106.7089-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
+In-Reply-To: <9ef5c891-c31f-476d-b297-ff4262d3b53f@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,34 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/25 12:00, Richard Henderson wrote:
-> The following changes since commit ab8008b231e758e03c87c1c483c03afdd9c02e19:
+On 9/24/25 13:25, Michael Tokarev wrote:
+> On 05.09.2025 14:51, Richard Henderson wrote:
+>> Hi Mark,
+>>
+>> I noticed a few other places where we probably want to
+>> allow unused bits to be set and ignored for pre-v9.
+>>
+>> Changes for v2:
+>>    - Use TRANS() in the STBAR and RDY patches.
+>>    - Apply the same relaxation for RDPSR, RDWIM, RDTBR.
+>>    - Do not report illegal_instruction when unused bits
+>>      are set in the rs2_or_imm field.
+>>
+>> r~
+>>
+>>
+>> Supercedes: 20250905051936.92815-1-richard.henderson@linaro.org
+>>
+>> Richard Henderson (7):
+>>    target/sparc: Allow TRANS macro with no extra arguments
+>>    target/sparc: Loosen decode of STBAR for v8
+>>    target/sparc: Loosen decode of RDY for v7
+>>    target/sparc: Loosen decode of RDPSR for v7
+>>    target/sparc: Loosen decode of RDWIM for v7
+>>    target/sparc: Loosen decode of RDTBR for v7
+>>    target/sparc: Relax decode of rs2_or_imm for v7
 > 
->    Merge tag 'pull-9p-20250918' ofhttps://github.com/cschoenebeck/qemu into staging (2025-09-19 12:21:35 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-misc-20250924
-> 
-> for you to fetch changes up to f6f7fdd68e6fbfafae828e504de544b5659bc4bd:
-> 
->    accel/tcg: Remove cpu_loop_exit_restore() stub (2025-09-24 10:29:43 -0700)
-> 
-> ----------------------------------------------------------------
-> hw/pci-host/{dino,astro}: Don't call pci_register_root_bus() in init
-> target/sparc: Loosen various decode for v7
-> linux-user: Add syscall dispatch support
-> tcg/optimize: Fix folding of vector bitsel
-> include/hw/core/cpu: Introduce MMUIdxMap
-> include/hw/core/cpu: Introduce cpu_tlb_fast
-> include/hw/core/cpu: Invert the indexing into CPUTLBDescFast
-> accel/tcg: Remove dead mmap_unlock() call in invalidate_phys_page_range
-> accel/tcg: Remove cpu_loop_exit_restore() stub
-> accel/tcg: Properly unlink a TB linked to itself
-> accel/tcg: Introduce and use tb_flush__exclusive_or_serial
+> This might also be good candidate for stable series (10.0 and 10.1
+> at least).  Dunno if it is worth the effort though, but the effort
+> is minimal so why not.
 
+Yes, since it's easy.  Especially the second patch is needed for Solaris 8.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
 
