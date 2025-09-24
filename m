@@ -4,98 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441C5CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05EC3CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1LQL-0007na-0Y; Wed, 24 Sep 2025 05:04:29 -0400
+	id 1v1LRN-0007zV-8m; Wed, 24 Sep 2025 05:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v1LQI-0007nP-Cf
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:04:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1LRL-0007zM-Kd
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:05:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1v1LQ9-0001JJ-Sb
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:04:25 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1LRF-0001Xp-UQ
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:05:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758704649;
+ s=mimecast20190719; t=1758704722;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dKC6/dwnXYAYIrOBVS6aVJM61MYv66umq/nc4ezfraA=;
- b=c6VAXTLMq7gZ5WpFBKit/PTlOXUgKUBW9rZ5JTwjA2CKQys/s9YhGl3X6Bv6VTVMddPC/u
- sNidA5fucP17A5U1aTFYN6UlqyHvZ3V+jCBWhPTD4l52U53V88r39VJMo1jbAqoVRc4Ob9
- /G+feIPB05kezW4gBF4EvqhqetVAzRw=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-vu_vo378PFOt568IZSIOfw-1; Wed, 24 Sep 2025 05:04:08 -0400
-X-MC-Unique: vu_vo378PFOt568IZSIOfw-1
-X-Mimecast-MFC-AGG-ID: vu_vo378PFOt568IZSIOfw_1758704647
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b2f989de76eso71101166b.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:04:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758704647; x=1759309447;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dKC6/dwnXYAYIrOBVS6aVJM61MYv66umq/nc4ezfraA=;
- b=mbZGepAbQAMfex+7qSbvgrhKf7ogvLU4yzoVp3rkbuqZbR0tBZU4v/YXN5t41dYyWr
- GYk5rdrzumR4bU+nE2YcKT1b2L2gsD+GSGrtegaLWFeRKQBCRik40QhiUidsIohJjYbv
- s/Xfh2Bp+pshiqywreSCH/umUvsboCIqayyWMtMmSTAnYxIFYJWFGSQTYH7N5koJBhdV
- K+DooSqO5kYzLgobSZnKoxqY8X1FrjD5foNmI8PIqBiPpRlWHKrWnYDO8XP1pwyh3+bi
- NRXgKG2GHTKHYZKPUFsuhNekGMO35HYK5dh8gl4oZxWND7+OL3xcI8WwSCos3EFCnf6C
- 91Pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYMKUV9Hl8dmWpXl8qi3UOmWYtG7UwautF0ZLJLVUksT3BRRawW0uPKzBzCuPvkRT7AHebZcgGsZ7e@nongnu.org
-X-Gm-Message-State: AOJu0YxYAmLR20nJAjP1oeL9zqyVEQHSOcZxd1Hv1Pu2Sbu1JL5WEAt/
- +kqjmOuZTwIX2kzn+fg+d9cuePNS4TXYssxhVyEwXDZt144vXcM+KnEPGBsR5hQeG+FViC5RaAW
- kShoT1Cea688yWVxYkbXaN2PdchtsjJaUXRFON/heyyzZo8rU3G4ArR64
-X-Gm-Gg: ASbGncuaZtb2hpEjDGftIL6VtU5HgalsSWq/qRXihH68mUFn17/x36SZ4LbWMdy0Vn2
- TZiDKWbHLSs/snaW9u1uldH6jc+d1iZljGb8cycxU0n23pv7++lGIhodvz44QPqApLdoLMTiuad
- 2/vjfCtO1gBLt2LlCq1Zm0G8rqnG1CDe8QXjzzGtKjUXJU+88WI+o/td6Y1GyLpdED6K7FaDKv2
- mlIiHaN+3HeZnkGI0kZbwh92wh6Nt0k60+diHsj3+wd6Fh9dCLboqS55eKtRHKrjX8LezB4oV1A
- GXupbmi4teO2LGbK2BGW8YHCGX63
-X-Received: by 2002:a17:907:3d86:b0:b2e:13a:8d7a with SMTP id
- a640c23a62f3a-b32cbe865fdmr190406266b.31.1758704646936; 
- Wed, 24 Sep 2025 02:04:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFe0uLYtec8MDYgCpSJYCf1eyzPeW6qMI8xdRWsnLd/8hp9xmhrfsNL+Zt74VpudldkTCoJ6w==
-X-Received: by 2002:a17:907:3d86:b0:b2e:13a:8d7a with SMTP id
- a640c23a62f3a-b32cbe865fdmr190402666b.31.1758704646330; 
- Wed, 24 Sep 2025 02:04:06 -0700 (PDT)
-Received: from redhat.com ([31.187.78.57]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b2890e04727sm976046966b.4.2025.09.24.02.04.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:04:05 -0700 (PDT)
-Date: Wed, 24 Sep 2025 05:04:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, WANG Xuerui <git@xen0n.name>,
+ bh=1rx9oExJqcQwxeQjrNCXXi25qlxwjO+98xOS1J8+lOk=;
+ b=BW/wYW7+RrisFEVjWzHg46LmDxHZtwCOjmuSE71afWnfvN0JXsEPG8h1E8kxm7JlMwvvs1
+ QUEt9wed376YaanzsdkRA2HeQP0hG0LpOwBY7anbtxw9TBrl6qnffxce0H1ki4krtUfDZj
+ bXj//pW3KeVJktK9OJnDT0eyLJmCdkQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-rlU5vzfVPQaAlnZ8Uk_Ajw-1; Wed,
+ 24 Sep 2025 05:05:18 -0400
+X-MC-Unique: rlU5vzfVPQaAlnZ8Uk_Ajw-1
+X-Mimecast-MFC-AGG-ID: rlU5vzfVPQaAlnZ8Uk_Ajw_1758704717
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A47E61800365; Wed, 24 Sep 2025 09:05:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.13])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3040300018D; Wed, 24 Sep 2025 09:05:15 +0000 (UTC)
+Date: Wed, 24 Sep 2025 11:05:13 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, eblake@redhat.com,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] tests/data/acpi/loongarch64: Update expected DSDT.*
-Message-ID: <20250924050304-mutt-send-email-mst@kernel.org>
-References: <20250923143542.2391576-1-chenhuacai@kernel.org>
- <20250923143542.2391576-4-chenhuacai@kernel.org>
- <08a40419-c56e-4944-2a8e-045f0512fe04@loongson.cn>
+Subject: Re: [PATCH 1/2] block: Expose block limits for images in QMP
+Message-ID: <aNO0SZalsYn-AYCW@redhat.com>
+References: <20250923163735.378254-1-kwolf@redhat.com>
+ <20250923163735.378254-2-kwolf@redhat.com>
+ <87o6r05qkf.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <08a40419-c56e-4944-2a8e-045f0512fe04@loongson.cn>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <87o6r05qkf.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,103 +84,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 24, 2025 at 03:26:13PM +0800, Bibo Mao wrote:
-> Add Michael
+Am 24.09.2025 um 08:10 hat Markus Armbruster geschrieben:
+> Kevin Wolf <kwolf@redhat.com> writes:
 > 
-> On 2025/9/23 下午10:35, Huacai Chen wrote:
-> > DSDT diffs from "iasl -d":
-> > 
-> > @@ -11,7 +11,7 @@
-> >    *     Signature        "DSDT"
-> >    *     Length           0x000011FB (4603)
-> >    *     Revision         0x01 **** 32-bit table (V1), no 64-bit math support
-> > - *     Checksum         0x5D
-> > + *     Checksum         0x5B
-> >    *     OEM ID           "BOCHS "
-> >    *     OEM Table ID     "BXPC    "
-> >    *     OEM Revision     0x00000001 (1)
-> > @@ -1426,11 +1426,11 @@
-> >               Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-> >               {
-> >                   Memory32Fixed (ReadWrite,
-> > -                    0x100E001F,         // Address Base
-> > +                    0x100E0020,         // Address Base
-> >                       0x0000000C,         // Address Length
-> >                       )
-> >               })
-> > -            OperationRegion (PRST, SystemMemory, 0x100E001F, 0x0C)
-> > +            OperationRegion (PRST, SystemMemory, 0x100E0020, 0x0C)
-> >               Field (PRST, ByteAcc, NoLock, WriteAsZeros)
-> >               {
-> >                   Offset (0x04),
-> > 
-> > Signed-off-by: Huacai Chen <chenhuacai@kernel.org>
-
-
-this does what the patch says it does
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-up to maintainers to figure out if it's TRT
-
+> > This information can be useful both for debugging and for management
+> > tools trying to configure guest devices with the optimal limits
+> > (possibly across multiple hosts). There is no reason not to make it
+> > available, so just add it to BlockNodeInfo.
+> >
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > > ---
-> >   tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4603 bytes
-> >   tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5824 bytes
-> >   tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4609 bytes
-> >   .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4905 bytes
-> >   tests/qtest/bios-tables-test-allowed-diff.h   |   4 ----
-> >   5 files changed, 4 deletions(-)
-> > 
-> > diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
-> > index b31841aec6ed296f10ea1695a67ead38f45424d5..55aa34f988d6ef69293e91c5fe45bee0a02bc5f1 100644
-> > GIT binary patch
-> > delta 44
-> > zcmeyZ{9BpJCD<k8w;%%pWAsL@BfP>2415AS3=9mF4ABh%LBSymJPMm1@=CD)02#3h
-> > APXGV_
-> > 
-> > delta 44
-> > zcmeyZ{9BpJCD<k8w;%%pW9&w*BfP@$415AS3=9mF4ABh%LBSymJo1|#@=CD)02$8<
-> > APXGV_
-> > 
-> > diff --git a/tests/data/acpi/loongarch64/virt/DSDT.memhp b/tests/data/acpi/loongarch64/virt/DSDT.memhp
-> > index e291200fc91caa3d93dcd6ec4736f7340f5e3f65..c0955eb60448cc5f4d38d410abc260ae54ea2e9a 100644
-> > GIT binary patch
-> > delta 44
-> > zcmX@0dq9`VCD<k8fEWV<W5PzRW+7n(20j5E1_p*ohUkWXpx_V&9)-;dgcMi+`vnS0
-> > 
-> > delta 44
-> > zcmX@0dq9`VCD<k8fEWV<W70;hW+7pD20j5E1_p*ohUkWXpx_V&9{J4+gcMi+`y&cU
-> > 
-> > diff --git a/tests/data/acpi/loongarch64/virt/DSDT.numamem b/tests/data/acpi/loongarch64/virt/DSDT.numamem
-> > index 07923ac39584c5a5e73c9556d251814ce10de6cc..61e47e7252155dcf9c76879c4f60f4b3eef63f86 100644
-> > GIT binary patch
-> > delta 44
-> > zcmZovX;k5I33dr#6k=dte72G62(PdL1D^m70|P@PLv%wxP;dwXkHY4Myb3G;-$V)Z
-> > 
-> > delta 44
-> > zcmZovX;k5I33dr#6k=dte6f-12(Pd_1D^m70|P@PLv%wxP;dwXkNoC`yb3G;-(m^%
-> > 
-> > diff --git a/tests/data/acpi/loongarch64/virt/DSDT.topology b/tests/data/acpi/loongarch64/virt/DSDT.topology
-> > index 6dfbb495f88b74b87849b58473e46717bc588a56..b2afebc938ce45d798c8aa5f45a463f1617e257e 100644
-> > GIT binary patch
-> > delta 44
-> > zcmZ3fwo;ADCD<iIQ<#B)@!UqPBfP>2415AS3=9mF4ABh%LBSymJPMm1@_MiW0PuGT
-> > Ag8%>k
-> > 
-> > delta 44
-> > zcmZ3fwo;ADCD<iIQ<#B)@xn%~BfP@$415AS3=9mF4ABh%LBSymJo1|#@_MiW0PvLx
-> > Ag8%>k
-> > 
-> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> > index 2ed837faee..dfb8523c8b 100644
-> > --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> > @@ -1,5 +1 @@
-> >   /* List of comma-separated changed AML files to ignore */
-> > -"tests/data/acpi/loongarch64/virt/DSDT",
-> > -"tests/data/acpi/loongarch64/virt/DSDT.memhp",
-> > -"tests/data/acpi/loongarch64/virt/DSDT.numamem",
-> > -"tests/data/acpi/loongarch64/virt/DSDT.topology",
-> > 
+> >  qapi/block-core.json             | 59 ++++++++++++++++++++++++++++++++
+> >  block/qapi.c                     | 34 ++++++++++++++++--
+> >  tests/qemu-iotests/184           |  3 +-
+> >  tests/qemu-iotests/184.out       |  8 -----
+> >  tests/qemu-iotests/common.filter |  3 +-
+> >  5 files changed, 94 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index dc6eb4ae23..eda041ac1c 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -275,6 +275,62 @@
+> >        'file': 'ImageInfoSpecificFileWrapper'
+> >    } }
+> >  
+> > +##
+> > +# @BlockLimitsInfo:
+> > +#
+> > +# @request-alignment: Alignment requirement, in bytes, for offset/length of I/O
+> > +#     requests.
+> > +#
+> > +# @max-discard: Maximum number of bytes that can be discarded at once. If not
+> > +#     present, there is no specific maximum.
+> > +#
+> > +# @discard-alignment: Optimal alignment for discard requests in bytes. A power
+> > +#     of 2 is best, but not mandatory. If not present, discards don't have a
+> > +#     alignment requirement different from @request-alignment.
+> 
+> What does the second sentence try to convey?  As far as I can tell, QMP
+> has BlockLimitsInfo is only in the result of query-block and
+> query-named-block-nodes, i.e. it's not something the user picks.
+
+I copied these descriptions from the comments in struct BlockLimits,
+just leaving out things that are clearly internal. Their nature is the
+same there, we never configure block limits, we only detect them.
+
+What I think this sentence wants to tell us is that while you may
+intuitively expect power-of-two limits, you shouldn't be surprised to
+occasionally find other numbers here, too.
+
+Maybe "Note that this doesn't have to be a power of two" instead? Both
+in QAPI and the struct definition.
+
+> > +#
+> > +# @max-write-zeroes: Maximum number of bytes that can be zeroed out at once. If
+> > +#     not present, there is no specific maximum.
+> > +#
+> > +# @write-zeroes-alignment: Optimal alignment for write_zeroes requests in
+> > +#     bytes. A power of 2 is best, but not mandatory. If not present,
+> > +#     write_zeroes doesn't have a alignment requirement different from
+> > +#     @request-alignment.
+> 
+> Likewise.
+> 
+> > +#
+> > +# @opt-transfer: Optimal transfer length in bytes. If not present, there is no
+> > +#     preferred size.
+> > +#
+> > +# @max-transfer: Maximal transfer length in bytes. If not present, there is no
+> > +#     specific maximum.
+> > +#
+> > +# @max-hw-transfer: Maximal hardware transfer length in bytes.  Applies
+> > +#     whenever transfers to the device bypass the kernel I/O scheduler, for
+> > +#     example with SG_IO. If not present, there is no specific maximum.
+> > +#
+> > +# @max-iov: Maximum number of scatter/gather elements
+> > +#
+> > +# @max-hw-iov: Maximal number of scatter/gather elements allowed by the hardware.
+> 
+> Maximum number
+> 
+> > +#     Applies whenever transfers to the device bypass the kernel I/O scheduler,
+> > +#     for example with SG_IO. If not present, the hardware limits is unknown
+> > +#     and @max-iov is always used.
+> > +#
+> > +# @min-mem-alignment: memory alignment in bytes so that no bounce buffer is needed
+> > +#
+> > +# @opt-mem-alignment: memory alignment in bytes that is used for bounce buffers
+> 
+> Why is this "opt"?  I guess it means "optimal".
+
+Yes, I think so. How about this:
+
+@min-mem-alignment: Minimal required memory alignment in bytes for
+zero-copy I/O to succeed. For unaligned requrests, a bounce buffer will
+be used.
+
+@opt-mem-alignment: Optimal memory alignment in bytes. This is the
+alignment used for any buffer allocations QEMU performs internally.
+
+> > +##
+> > +{ 'struct': 'BlockLimitsInfo',
+> > +  'data': { 'request-alignment': 'uint32',
+> > +            '*max-discard': 'uint64',
+> > +            '*discard-alignment': 'uint32',
+> > +            '*max-write-zeroes': 'uint64',
+> > +            '*write-zeroes-alignment': 'uint32',
+> > +            '*opt-transfer': 'uint32',
+> > +            '*max-transfer': 'uint32',
+> > +            '*max-hw-transfer': 'uint32',
+> > +            'max-iov': 'int',
+> > +            '*max-hw-iov': 'int',
+> > +            'min-mem-alignment': 'size',
+> > +            'opt-mem-alignment': 'size' } }
+> > +
+> >  ##
+> >  # @BlockNodeInfo:
+> >  #
+> > @@ -304,6 +360,8 @@
+> >  #
+> >  # @snapshots: list of VM snapshots
+> >  #
+> > +# @limits: block limits that are used for I/O on the node (Since 10.2)
+> > +#
+> >  # @format-specific: structure supplying additional format-specific
+> >  #     information (since 1.7)
+> >  #
+> > @@ -315,6 +373,7 @@
+> >             '*cluster-size': 'int', '*encrypted': 'bool', '*compressed': 'bool',
+> >             '*backing-filename': 'str', '*full-backing-filename': 'str',
+> >             '*backing-filename-format': 'str', '*snapshots': ['SnapshotInfo'],
+> > +           '*limits': 'BlockLimitsInfo',
+> >             '*format-specific': 'ImageInfoSpecific' } }
+> >  
+> >  ##
+> 
+> docs/devel/qapi-code-gen.rst:
+> 
+>     For legibility, wrap text paragraphs so every line is at most 70
+>     characters long.
+> 
+>     Separate sentences with two spaces.
+
+It would be better to use a uniform text width across the project that
+can be trivially configured in every editor than wasting our brain
+cycles on manually enforcing an idiosyncratic style in certain parts of
+certain files.
+
+I'll make the change for this patch, but without tool support, I'm
+almost sure that this will happen again and again.
+
+Kevin
 
 
