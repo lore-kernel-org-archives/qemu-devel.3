@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535D0CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356EFCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1PxK-0000li-Cf; Wed, 24 Sep 2025 09:54:56 -0400
+	id 1v1Py4-0001JA-Ib; Wed, 24 Sep 2025 09:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1PxG-0000el-Ck
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:54:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1PxS-0000sL-0B
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:55:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1Px9-00070A-1h
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:54:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1v1PxJ-000715-E3
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:54:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758722073;
+ s=mimecast20190719; t=1758722084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jE/RKAMQ2ewJS/yLJOL8KLu2yT3yGPC4uvIcBRDtm24=;
- b=fYKrlFhAbn52t4aNM3xcoc/YF1DpUynzoDuqH/HV/cxYAl3GNZhAbq6C5iJBTuzpX4SqLm
- hG5pJkNlVqpnLL9NgzlNuA+Nonw83B8bcK9zsWzoq2SIaOGOV8L/rqXTXNQypIkBFckMlf
- /C09odNzUshAcJO2fuhuJBdn5xCHQv0=
+ bh=nJ/2JT582hMYn0+hcFqPx8iBXdax2W7m4x+KjU+55Kw=;
+ b=LKGHsMeySntkDPrzbKYPBlF4Xr7PLEbjFT/YbQ6evA4NQyvxNXpFgISy1TQpTrWQuExiMO
+ JY1i6cZ0Jspx/IiEibu45Fk6uburQFmVHDW+qAOb0BcuawQWocmPJVPvGjMq1n21O5e3Hi
+ obxyGJe209yAEkLcj7ljpHCEQ5ObVRs=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-8ES86QztNuSz6JsuoCSI-g-1; Wed, 24 Sep 2025 09:54:31 -0400
-X-MC-Unique: 8ES86QztNuSz6JsuoCSI-g-1
-X-Mimecast-MFC-AGG-ID: 8ES86QztNuSz6JsuoCSI-g_1758722070
+ us-mta-13-o2Bn7mPOOtq0TF6irhW3Ag-1; Wed, 24 Sep 2025 09:54:43 -0400
+X-MC-Unique: o2Bn7mPOOtq0TF6irhW3Ag-1
+X-Mimecast-MFC-AGG-ID: o2Bn7mPOOtq0TF6irhW3Ag_1758722082
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45f2b9b99f0so6469385e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 06:54:31 -0700 (PDT)
+ 5b1f17b1804b1-46e1b906bf3so23020185e9.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 06:54:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758722070; x=1759326870;
+ d=1e100.net; s=20230601; t=1758722082; x=1759326882;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jE/RKAMQ2ewJS/yLJOL8KLu2yT3yGPC4uvIcBRDtm24=;
- b=hoMIRFTo7oOXAuDReUX1AHsKkbQz+DsUAcs07/HwospL+6xqCgUVsVzqfu8CNYvL3C
- pid/h4x8mupVY1yyaZoNheXtVYLK65JeoQmAVUX6ew2g1Sw+LnRBMp+boJLOaP8+/gOZ
- QmeeRwNrzmlMsiyG+EhK40x1YT+LAItWkNZfPVg6fDXwm+6J/VuFC5FxI1OoPGIscwNC
- PSXI76do0PMv5kWV12JePLXNnpi/YoBU/FDZiQYbeoguFs08ELbq/GPT2+KdOdK8jMMn
- RCeg/ZhuoPHxnPs90qC+Z2x4JVRcE4m69SF4E+28vkcdOGJnMeqlQGoo+3+HT6d3sUGz
- bXGg==
+ bh=nJ/2JT582hMYn0+hcFqPx8iBXdax2W7m4x+KjU+55Kw=;
+ b=qNWGlrJuvrTYbatNoH89Vb0TFcJUtEkTYYkQTTtcGBi1YPqIg61pY2kX2GM23dzHzK
+ 7ZSkyEL/TEfBDsKcXAZLZi5/5iRdLVoOV2IErWbDiq0/FrRwtnQQk72b0PQYR7atq/Tx
+ 2FDb4DkwZIGEZRF/1LnxkKnYocPMYMDV5mvyrWVmg5TtFQAHSgsh5XAyNAfceypVATPl
+ 2RmnWaMY1v4lsVuVBZafd7l1Qxx7irsynZ2WQ59vNF5KZe9ilevAeT90he7P9ofhpVsP
+ TY80xRC//cAuCIQ8jkj5FyxsNFJSNzyk3annF9zWelvwQkQs78uSxdXZTKGbh5RBzqc8
+ CWcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXk0VxIWfBRR0O7OkfDpMenCvxutNMzHNMMpwbw4YBEycW0NxGOlcmNI59+Oben2Xedmysc3z1L37iy@nongnu.org
-X-Gm-Message-State: AOJu0Yxsk66avahvjhrpm/sP6+Ynnnh4FajKyFHlT95joBWqW2YxROT2
- p6mv3adUpH2SGhKTnnqh1tqmgzfpTfadhxNDTd2mqMf60BO0/5jGBeLWEgB1ywQrj8xRO6TaNRe
- 1YdxROYSni1xmjd+L6n2B/2Pxbb4wX8KtBhgRY5hvd1ykAaVT6ptkQdMb
-X-Gm-Gg: ASbGncss2m1vVIz9TNMvIwCgCh/gF+s7aPdV6nXkl+zFjHODpsHVh4O2LScbsa78kKU
- 31OPFCJd2prYlXJ5xAUZXRJEe7xnvsr9QOuFJzrxiy/ePFa/KFFpPNRZ9Mm8y6xFB+lxJkr967I
- G+8WREeGeSvIuAOVZKhvWAl8GNvHrMDvmqtKNgN0ElwV62FYeNinCqJZaXLhKn9xAElVzXmzhIA
- AX037ehxyXBmFSwoS1UzZapXOSJfuwEMT1RmW3ruMPXg5c5p0AR1yj4yPKvqONcw0a3JVsBfIru
- EB+n7qvsPz1gn/McsV8U7oqHkCbf157n+lJJpXMn9p/QBrNtWXZlezeKzC69IsV+FKfiDs79eSh
- uTsE=
-X-Received: by 2002:a05:600c:2ed2:b0:45b:92a6:63e3 with SMTP id
- 5b1f17b1804b1-46e2b584fc8mr16741475e9.9.1758722070020; 
- Wed, 24 Sep 2025 06:54:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAeMqMfTgCKyIVpFIXE3Vie+PNnI6DigkuCmtsquVoj8tLvA/I2WilVCCYvzyIUB6bA5FSgg==
-X-Received: by 2002:a05:600c:2ed2:b0:45b:92a6:63e3 with SMTP id
- 5b1f17b1804b1-46e2b584fc8mr16741315e9.9.1758722069636; 
- Wed, 24 Sep 2025 06:54:29 -0700 (PDT)
+ AJvYcCVMrbWFD4PMmIv3IM8XuPEmCHgltMj63MKRFdoa3Nym0aVXUOChI9rQtOF0eRmuV3+0IAaYLzP29mYP@nongnu.org
+X-Gm-Message-State: AOJu0YxL1X0SowGSe4V3EAxaL1QlnUfFDpQ1lXcb77jEb4Lm4OvoxXwA
+ Xaqj//RcHywiH2p4nx6b/TeQq4RyxrlYzPkgwwWB5gFVuDOINkP0qQyOuxcdSbvy1460/TNB3d+
+ hekGRT93bkxCRw+IQfyjBCVH3SBXHt5Eyrkhs4qfFtwMVokDfwZ3JW6d5
+X-Gm-Gg: ASbGncvgfpEwDV2B9MyqcrlzhMcAxa428xqeYrgDSk/dOBxXO15rAbo7L7ebcHnLuNX
+ xNgqLgePSpQYRH3CAxzoDO2yjFHTrnrIgzelIabG5P0ue8UmDztp0yAv9LaUS/lDY9xh7CZlMDd
+ UwH505+ZdG8UlMPGesPWZToSZjBYe/dTshQHMdv92NTiVAcpqZdJnqCJWUDMS38IB2pbJpI2/8R
+ a8+lw/vzRRxEuiT/YQccKSnsxnrrcU672RzeY9tz+FEExXNlMGhkOQNdv8/5OeWb0FkoBuTWnlx
+ M8qw4mKi5GBvLkXwi3Iqh/G8/BH7jOU/SWl6509W5ohTh56uhv5sJGhJUsi2rLB5y4UfR5pCLM7
+ LLA0=
+X-Received: by 2002:a05:600c:1c0b:b0:46e:27fb:17ff with SMTP id
+ 5b1f17b1804b1-46e27fb1972mr35953225e9.2.1758722082053; 
+ Wed, 24 Sep 2025 06:54:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEDVWc+LiD9JKfTlvkwKPesVz5D+/OQP5i0g5d0EsVra4STIypvANlGi38nOVsprTcdhjejZA==
+X-Received: by 2002:a05:600c:1c0b:b0:46e:27fb:17ff with SMTP id
+ 5b1f17b1804b1-46e27fb1972mr35953015e9.2.1758722081667; 
+ Wed, 24 Sep 2025 06:54:41 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2aaca1eesm33152795e9.14.2025.09.24.06.54.28
+ 5b1f17b1804b1-46e2a9be58bsm33908235e9.12.2025.09.24.06.54.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 06:54:29 -0700 (PDT)
-Message-ID: <01f4fe11-b5d7-4ac7-882c-2cfd4b70d49e@redhat.com>
-Date: Wed, 24 Sep 2025 15:54:28 +0200
+ Wed, 24 Sep 2025 06:54:41 -0700 (PDT)
+Message-ID: <2c30999a-43c8-443d-806b-18cbdda003eb@redhat.com>
+Date: Wed, 24 Sep 2025 15:54:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/27] include/hw/vfio/vfio-container-base.h: rename file
- to vfio-container.h
+Subject: Re: [PATCH 05/27] hw/vfio/container.c: rename file to
+ container-legacy.c
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  harshpb@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com, thuth@redhat.com,
@@ -87,7 +87,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  alex.williamson@redhat.com, steven.sistare@oracle.com, qemu-ppc@nongnu.org,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 References: <20250923135352.1157250-1-mark.caveayland@nutanix.com>
- <20250923135352.1157250-5-mark.caveayland@nutanix.com>
+ <20250923135352.1157250-6-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,17 +133,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250923135352.1157250-5-mark.caveayland@nutanix.com>
+In-Reply-To: <20250923135352.1157250-6-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001,
  T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
@@ -163,19 +163,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/23/25 15:53, Mark Cave-Ayland wrote:
-> With the rename of VFIOContainerBase to VFIOContainer, the vfio-container-base.h
-> header file containing the struct definition is misleading. Rename it from
-> vfio-container-base.h to vfio-container.h accordingly.
+> This file is mostly concerned with the VFIOLegacyContainer implementation so
+> rename it to reflect the previous rename of VFIOContainer to
+> VFIOLegacyContainer.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
 
 
 
