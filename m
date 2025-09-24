@@ -4,57 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0296CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8635BCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1P4c-00035r-9I; Wed, 24 Sep 2025 08:58:18 -0400
+	id 1v1P5l-0003MF-9s; Wed, 24 Sep 2025 08:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1P4Z-00035I-0w
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:58:15 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1v1P5T-0003Ee-Bs
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:59:15 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1P4T-0006RL-Er
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:58:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=9eoNgbBqf+lW3hFmhhNUmtf2xELt+bIOMZDxpteIVpE=; b=lI5rNTmhkljmKSy
- ecSNdDse1HeZuekzwEI+FnzjIez1f51f2DSuM4ekb1I9GwtvuZxbPbOgy58XQTCWMl5obZXUJ8JkW
- oO3Un+3M4lE34aQDrnphJqdcOTsxiXkdlHZOvDuD9pxo9rS7qHyvS0zog2AIL3Tki7nZawd2h3Auk
- MY=;
-Date: Wed, 24 Sep 2025 15:00:34 +0200
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org, 
- alistair.francis@wdc.com, palmer@dabbelt.com
-Subject: Re: [RFC PATCH 01/34] target/riscv: Use 32 bits for misa extensions
-Message-ID: <b7356hmczc7qhofbuo7jevrwnev76epqpe2yni5qh7npigei26@ar4frawtml42>
-References: <20250924072124.6493-1-anjo@rev.ng>
- <20250924072124.6493-2-anjo@rev.ng>
- <551c2907-32a1-401b-9ad6-2994bbbbe6cf@linaro.org>
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1v1P4z-0006aW-AR
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:59:08 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 3F298809BF;
+ Wed, 24 Sep 2025 15:58:31 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c4e::1:9] (unknown [2a02:6bf:8080:c4e::1:9])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id TwXAfd0FwOs0-jRwS10BC; Wed, 24 Sep 2025 15:58:30 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1758718710;
+ bh=hpoEGKAIvrIzESVCsDfWUw9k5C7ZcMSXe6EedTDTPQc=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=S0+zXar6xbqLYVSg2lSkY+VMa85mv1Vz45OPg+mGu4XZSABfxsqQoHPl2LOrZ316e
+ Oilx5cP4inwQ1bKCdpOF5R9onbcmsSrpO9Qh8q6Fxf1vPbEp0sSke3tSOgTvVM7tVg
+ CNX1fnpHm1pUzLuoF+AhkumZQnAHikkcGBWRUdGc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3c65f352-7fc4-4ee0-8bdd-d6be6f5d03cb@yandex-team.ru>
+Date: Wed, 24 Sep 2025 15:58:29 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <551c2907-32a1-401b-9ad6-2994bbbbe6cf@linaro.org>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] chardev: remove deprecated 'reconnect' option
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, armbru@redhat.com
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, jasowang@redhat.com,
+ devel@lists.libvirt.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ yc-core@yandex-team.ru
+References: <20250924124406.320704-1-vsementsov@yandex-team.ru>
+ <20250924124406.320704-2-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+In-Reply-To: <20250924124406.320704-2-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -63,42 +75,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/09/25, Philippe Mathieu-Daudé wrote:
-> On 24/9/25 09:20, Anton Johansson wrote:
-> > uint32_t is already in use in most places storing misa extensions such
-> > as CPUArchState::misa_exts, RISCVCPUProfile::misa_exts,
-> > RISCVImpliedExtsRule::implied_misa_exts, etc.
-> 
-> Also, the field is migrated as 32-bit:
-> 
->   VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+On 9/24/25 3:44 PM, Vladimir Sementsov-Ogievskiy wrote:
 
-Ah right!
+> It was deprecated in 9.2, time to remove.
+>
+> Note, that (which become obvious with this commit) we forget to do some
+> checks for reconnect-ms options, for example, it was silently ignored
+> for listening server, instead of error-out. The commit fixes this, as
+> now we use reconnect_ms everywhere.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>   chardev/char-socket.c           | 20 +++-----------------
+>   chardev/char.c                  |  3 ---
+>   docs/about/deprecated.rst       |  6 ------
+>   docs/about/removed-features.rst | 12 ++++++++++++
+>   qapi/char.json                  | 11 -----------
+>   5 files changed, 15 insertions(+), 37 deletions(-)
+>
+> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+> index cb4ec78ebe..5cc7fc3f20 100644
+> --- a/chardev/char-socket.c
+> +++ b/chardev/char-socket.c
+> @@ -1296,7 +1296,7 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+>       /* Validate any options which have a dependency on address type */
+>       switch (addr->type) {
+>       case SOCKET_ADDRESS_TYPE_FD:
+> -        if (sock->has_reconnect) {
+> +        if (sock->has_reconnect_ms) {
+>               error_setg(errp,
+>                          "'reconnect' option is incompatible with "
 
-> > 
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >   target/riscv/cpu.h | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 4a862da615..a0b2ef1cc1 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -50,7 +50,7 @@ typedef struct CPUArchState CPURISCVState;
-> >    */
-> >   #define RISCV_UW2_ALWAYS_STORE_AMO 1
-> > -#define RV(x) ((target_ulong)1 << (x - 'A'))
-> > +#define RV(x) ((uint32_t)1 << (x - 'A'))
-> 
-> 1u, or simply using BIT():
-> 
->   #define RV(x) BIT(x - 'A')
+The error string should probably be changed to 'reconnect-ms' as well now.
 
-I'll go for BIT() thanks:)
+>                          "'fd' address type");
+> @@ -1342,7 +1342,7 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+>   
+>       /* Validate any options which have a dependency on client vs server */
+>       if (!sock->has_server || sock->server) {
+> -        if (sock->has_reconnect) {
+> +        if (sock->has_reconnect_ms) {
+>               error_setg(errp,
+>                          "'reconnect' option is incompatible with "
+>                          "socket in server listen mode");
+> @@ -1361,12 +1361,6 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
+>           }
+>       }
+>   
+> -    if (sock->has_reconnect_ms && sock->has_reconnect) {
+> -        error_setg(errp,
+> -            "'reconnect' and 'reconnect-ms' are mutually exclusive");
+> -        return false;
+> -    }
+> -
+>       return true;
+>   }
+>   
+> @@ -1384,7 +1378,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
+>       bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
+>       bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
+>       bool is_websock     = sock->has_websocket ? sock->websocket : false;
+> -    int64_t reconnect_ms = 0;
+> +    int64_t reconnect_ms = sock->has_reconnect_ms ? sock->reconnect_ms : 0;
+>       SocketAddress *addr;
+>   
+>       s->is_listen = is_listen;
+> @@ -1456,12 +1450,6 @@ static void qmp_chardev_open_socket(Chardev *chr,
+>               return;
+>           }
+>       } else {
+> -        if (sock->has_reconnect) {
+> -            reconnect_ms = sock->reconnect * 1000ULL;
+> -        } else if (sock->has_reconnect_ms) {
+> -            reconnect_ms = sock->reconnect_ms;
+> -        }
+> -
+>           if (qmp_chardev_open_socket_client(chr, reconnect_ms, errp) < 0) {
+>               return;
+>           }
+> @@ -1526,8 +1514,6 @@ static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
+>        */
+>       sock->has_wait = qemu_opt_find(opts, "wait") || sock->server;
+>       sock->wait = qemu_opt_get_bool(opts, "wait", true);
+> -    sock->has_reconnect = qemu_opt_find(opts, "reconnect");
+> -    sock->reconnect = qemu_opt_get_number(opts, "reconnect", 0);
+>       sock->has_reconnect_ms = qemu_opt_find(opts, "reconnect-ms");
+>       sock->reconnect_ms = qemu_opt_get_number(opts, "reconnect-ms", 0);
+>   
+> diff --git a/chardev/char.c b/chardev/char.c
+> index bbebd246c3..a43b7e5481 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -892,9 +892,6 @@ QemuOptsList qemu_chardev_opts = {
+>           },{
+>               .name = "nodelay",
+>               .type = QEMU_OPT_BOOL,
+> -        },{
+> -            .name = "reconnect",
+> -            .type = QEMU_OPT_NUMBER,
+>           },{
+>               .name = "reconnect-ms",
+>               .type = QEMU_OPT_NUMBER,
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index aa300bbd50..ba0be97513 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -438,12 +438,6 @@ Backend ``memory`` (since 9.0)
+>   
+>   ``memory`` is a deprecated synonym for ``ringbuf``.
+>   
+> -``reconnect`` (since 9.2)
+> -^^^^^^^^^^^^^^^^^^^^^^^^^
+> -
+> -The ``reconnect`` option only allows specifying second granularity timeouts,
+> -which is not enough for all types of use cases, use ``reconnect-ms`` instead.
+> -
+>   
+>   Net device options
+>   ''''''''''''''''''
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index a5338e44c2..d67928956a 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -1361,4 +1361,16 @@ The ``blacklist`` config file option has been renamed to ``block-rpcs``
+>   (to be in sync with the renaming of the corresponding command line
+>   option).
+>   
+> +Device options
+> +--------------
+> +
+> +Character device options
+> +''''''''''''''''''''''''
+> +
+> +``reconnect`` (removed in 10.2)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +The ``reconnect`` has been replaced by ``reconnect-ms``, which provides
+> +better precision.
+> +
+>   .. _Intel discontinuance notification: https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
+> diff --git a/qapi/char.json b/qapi/char.json
+> index f0a53f742c..8f24273bb6 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -269,22 +269,12 @@
+>   # @websocket: enable websocket protocol on server sockets
+>   #     (default: false) (Since: 3.1)
+>   #
+> -# @reconnect: For a client socket, if a socket is disconnected, then
+> -#     attempt a reconnect after the given number of seconds.  Setting
+> -#     this to zero disables this function.  The use of this member is
+> -#     deprecated, use @reconnect-ms instead.  (default: 0) (Since: 2.2)
+> -#
+>   # @reconnect-ms: For a client socket, if a socket is disconnected,
+>   #     then attempt a reconnect after the given number of milliseconds.
+>   #     Setting this to zero disables this function.  This member is
+>   #     mutually exclusive with @reconnect.
+>   #     (default: 0) (Since: 9.2)
+>   #
+> -# Features:
+> -#
+> -# @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
+> -#     instead.
+> -#
+>   # Since: 1.4
+>   ##
+>   { 'struct': 'ChardevSocket',
+> @@ -297,7 +287,6 @@
+>               '*telnet': 'bool',
+>               '*tn3270': 'bool',
+>               '*websocket': 'bool',
+> -            '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
+>               '*reconnect-ms': 'int' },
+>     'base': 'ChardevCommon' }
+>   
 
