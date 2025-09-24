@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23942CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4981CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Gj1-00050D-LS; Wed, 24 Sep 2025 00:03:28 -0400
+	id 1v1Gl5-0005ko-DK; Wed, 24 Sep 2025 00:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gir-0004zJ-Q4
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:03:19 -0400
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gl4-0005kL-B5
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:05:34 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gim-0001LS-N0
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:03:17 -0400
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-3e8ef75b146so5817382f8f.0
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 21:03:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Gkv-0001s2-So
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 00:05:34 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3f0ae439bc3so2371999f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 21:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758686588; x=1759291388; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758686718; x=1759291518; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5QGctKIHVWhra1SN7ty393fx2eXvL8dHbcAzcFxQqhM=;
- b=zwrzNt/YsE+HNG0UwOrwUFNyMYEdCUCEgqDT0knImfOlzOFaMrLJBQUMxZQr5Tf27q
- RkCPeqiaEA6S5uU1d/X2kLk3AwI9eP2FDwXjX5ul4VovTyIg8DakeneYZT3zfNgZVehp
- iZPZ8eTP0Tp7nGdI1o/0H0/eZ3RUCmnDmcPTx3UAgFUasoWu8heN5HelH9XaWqDdxbHy
- JMenb7W7aEJt70tp6y6kPKdvrEp1hMNqiDaz0sI62NRoGcDzNyZWMaD8vyMz/GjNkCkR
- idErWmYfYCu7vXWZPhI1Tcijx5UBPJ0o7Ajf8IGGZqZNz+63LWNQwJ2QjhM+IJEuYyIM
- A6SA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=h4zS7oifCFvlyUs1tvRmphy/sUcSZy9ynMvWmlsHyug=;
+ b=BZxXE+GwtFF6523TpWB5g9cftZd8hltZLOTvhdVeZ0RtYEp1ow2FKVU6NjrPwqyBGz
+ XNpidiVoVWNHJEbYyTSGWe8qEMPOlDjIyi1sQ/rpmNbDDG3OYoqY01hN35XYL9PPOcRY
+ /oUYy+fqOCvLQU5lvE8sEkdRDfWvbiwY6qvxIpwxFuP1kiBW6pFl6FgIAX7YnjZiag6X
+ ZolTHnRkkn28Sybx9kTB1YKSspPdIdIi307EFgYaBqOOLVVJo7B4qeJnc6VAACGSyh3t
+ KS5GxqdNeE3uajJ38T4cVrbrGGg+MmcyvuzLULvApkalHCMIxPLodod5LRQzSzVU9rdj
+ BN6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758686588; x=1759291388;
+ d=1e100.net; s=20230601; t=1758686718; x=1759291518;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5QGctKIHVWhra1SN7ty393fx2eXvL8dHbcAzcFxQqhM=;
- b=hrDS0tRHOaA162z/ya1gl+Oc0iqw1bdF6r2GowVl2Y90pL3DkINGBWBuI1crsZGIjS
- pGqqyH/keEpGtNmoFHaShfq12tCAQU8PVL6GT3+BRiENsEpZH/cqZzQFx73OsYjW16d5
- vlcGV82NqvspjNGTAco8PsE5wZ3b/OXy9m5FmCDelePVzKyA1wa7RNPfTCjlqr8JjV/U
- xm9ePE2WnLt9ZJAcGVVl8/4Y3y0Dyv52bh/McXK0G4T1+n+oED/iP8K8SM8O6POynIKp
- ytls5YXSMOu5RvX0oy5jMOpS2lj9C1DrdQeOiEoHREnOB0+okbkLUzo0/ATbm5Hm2pU5
- gnLA==
-X-Gm-Message-State: AOJu0YzLwkxw8oPoaUPuu8sXLvbNdPTZto0Tgb83n3aerv67MjDeCljy
- zuEeq5y7cGoLOFWHIq5Areai1H70v7Hv4/lZzWBsy2WikSV7aye3WcWZAq9KJOtCfSs=
-X-Gm-Gg: ASbGncsICz2nEOAFEJd/woxlBJHNKTiDGc1YACBesOfZTHDlh9iJ0WazQj0gAv0PBw1
- /pCP4x8tRYgbFcMYoP83eEr7RYWP3vagEMqG2ahBlB1oECqQU4N0PmZt8eV60X2qtkdHJR3EPno
- +25Ci4Wsf+HZK3bh2KiWeXKiOyRV86W1udT10F8ydBDO2qm6xnvVead/xT79y7DyxTjKqjRF9hJ
- xRPJs4Ohof+V2jeMUBJDBhN1pHY1CSYabdmGH+NAC8CoO7pzYB4+WtzNbRsp3x0oHIr/L7DX55J
- B80MiTDZZIvxwUCnIpoZe6Jm7JfK0cFiSYWUuaOtrdA4zutEBfMjZn4G7s4LclcH6S/JQ1mCqUL
- iolXIwuahDCiUsaqbJMDfwQR3X/1rcEci2kVp9S/zBlU+w00aEgnBExGXCA36w+o82w==
-X-Google-Smtp-Source: AGHT+IGuM/8bN+bSoU36irWwiqvmsLWVSOTz37jsELLMh2+XrN/g73x6H5wjiZEcGsh3uaVvFoN5ZQ==
-X-Received: by 2002:a05:6000:200e:b0:3eb:df84:60f with SMTP id
- ffacd0b85a97d-405cb7bb881mr4117908f8f.48.1758686588459; 
- Tue, 23 Sep 2025 21:03:08 -0700 (PDT)
+ bh=h4zS7oifCFvlyUs1tvRmphy/sUcSZy9ynMvWmlsHyug=;
+ b=avKcO+uQwHo9PjjVVBrZCNXpKeq/frMkZRDOa+LKKFbqWD2oTJvo8S9hM694YBDNJF
+ Dy+01oggbQ5vjMJ8CiwUCiC1NYrF2F69szfJ7B2g+b0+7BBih91pzWJl8M1g/007waQm
+ JmZGIFKEaVXBMEZFr8bGyA0DjGL39fAflbP3h0kzVTykEbUR1k1XwJj4ur5Ju46GESMK
+ 0PoWFTtuEiPQylsfhYT8Lps+3L3KvPDDLffKE5Q1Tz3CFk2cyRZoTXKI++mR4LuzXMNf
+ mtCG2D2c4l+vkbSzZIX76ln9ob/O6eMTUmaUDkwBKTqc1sG+Dsj4p8fhBPckBNuAYaKi
+ RtLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRUukQMaMbRztzYsL3LVok+gMY8/zCnPHlFpEOmR2fSLi0L9coSULIpiO2NWTXkGWGtD6F7YVomFZR@nongnu.org
+X-Gm-Message-State: AOJu0Yyf0sZ60UYGEacSW0DiK4OtPv9S3lewTFQBGuPCUawJitxDNLAW
+ OGVFNrNdjlB7htjUi942Vmvr4NNrViLI6aoDjO5GMVRqa6vSlEaX+g6fSAaS3kQfXEmUBAIeeON
+ qlP86oPNFJw==
+X-Gm-Gg: ASbGncsdF+Zkq87zbE6sA4FF7MAIKC1/D5LyR5ad3rkY3dNrUJZiIACrKaCRSxLstxT
+ 8ny7oCMaNTNEii2DDRgHonVYnfd+PJN4pqez1D4cLYKOutld67+GIIf8xN7ES86pm6HQ07ibqjU
+ Z18fYk0B3k/2+dOvbgnPkpI2V/Z8MREmbA5fxAOMyyCeEbhNoEfrPFcH+zBFrEKr2aG7Ko/R3NF
+ E4kG9HBrnIOfTRG2VBBjSolhFaCX5CzvuLkCgDeiVvnw1inTpX7eIDjv4BXu16i0A+Zy1wUUR/K
+ X6akWYZAtyTfl+xgJdYtA8x14vCu+OAYyMvufdMRhz+MaI5o5mee+rZAQFH2PFMVvLhuY1/WK0/
+ BIlfFjs9hgfwNNI3J1neufmy8w3mVeNB4OWRREstt93ZxDIGQYZ6FAmx1s8Ry8lt2YA==
+X-Google-Smtp-Source: AGHT+IGWE/XjyQozgv+wQxz+otjx+/rcJ086sYNAiPBm+3EV8qZPZKSYwtIDkYJM3EgXxI8tHScDlw==
+X-Received: by 2002:a05:6000:1789:b0:3fe:34ec:2fab with SMTP id
+ ffacd0b85a97d-405cb3e61a9mr3996306f8f.63.1758686717909; 
+ Tue, 23 Sep 2025 21:05:17 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3ee0fbf1d35sm28223843f8f.55.2025.09.23.21.03.06
+ ffacd0b85a97d-3fcdbc4374csm11816889f8f.13.2025.09.23.21.05.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 21:03:07 -0700 (PDT)
-Message-ID: <c0fc38df-9c52-406f-8d8b-f2496b4e410f@linaro.org>
-Date: Wed, 24 Sep 2025 06:03:06 +0200
+ Tue, 23 Sep 2025 21:05:16 -0700 (PDT)
+Message-ID: <6691efc6-d79e-46c6-8b83-924a9a5940a3@linaro.org>
+Date: Wed, 24 Sep 2025 06:05:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/optimize: Fix folding of vector bitsel
-To: WANG Rui <wangrui@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu@hev.cc
-References: <20250919124901.2756538-1-wangrui@loongson.cn>
+Subject: Re: [PATCH v2 1/2] target/arm: Move ID register field defs to
+ cpu-features.h
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250923175751.966795-1-peter.maydell@linaro.org>
+ <20250923175751.966795-2-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250919124901.2756538-1-wangrui@loongson.cn>
+In-Reply-To: <20250923175751.966795-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/9/25 14:49, WANG Rui wrote:
-> It looks like a typo.
-
-Likely from the TCG_TARGET_HAS_andc_vec case.
-
-> When the false value (C) is the constant -1, the
-> correct fold should be: R = B | ~A
+On 23/9/25 19:57, Peter Maydell wrote:
+> Currently we define constants for the ID register fields in cpu.h.
+> This means they're defined for a lot more code in QEMU than actually
+> needs them.  Move them to cpu-features.h, which is where we define
+> the feature functions that test fields in these registers.
 > 
-> Reproducer (LoongArch64 assembly):
+> There's only one place where we need to use some of these macro
+> definitions that we weren't already including cpu-features.h:
+> linux-user/arm/target_proc.h.  Otherwise this patch is a pure
+> movement of code from one file to the other.
 > 
->       .text
->       .globl  _start
->   _start:
->       vldi    $vr1, 3073
->       vldi    $vr2, 1023
->       vbitsel.v       $vr0, $vr2, $vr1, $vr2
->       vpickve2gr.d    $a1, $vr0, 1
->       xori    $a0, $a1, 1
->       li.w    $a7, 93
->       syscall 0
-> 
-> Fixes: e58b977238e3 ("tcg/optimize: Optimize bitsel_vec")
-> Link: https://github.com/llvm/llvm-project/issues/159610
-> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tcg/optimize.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index 3638ab9fea..f69702b26e 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -1568,9 +1568,10 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp *op)
->               return fold_and(ctx, op);
->           }
->           if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-> +            TCGArg ta = op->args[2];
->               op->opc = INDEX_op_orc_vec;
->               op->args[2] = op->args[1];
-> -            op->args[1] = op->args[3];
-> +            op->args[1] = ta;
->               return fold_orc(ctx, op);
->           }
->       }
-Looks correct, but I don't understand the swap. Can't we justkeep the 
-same argument order for an ORC opcode? I'd have done:
+>   linux-user/arm/target_proc.h |   2 +
+>   target/arm/cpu-features.h    | 410 +++++++++++++++++++++++++++++++++++
+>   target/arm/cpu.h             | 410 -----------------------------------
+>   3 files changed, 412 insertions(+), 410 deletions(-)
 
--- >8 --
-@@ -1569,8 +1569,6 @@ static bool fold_bitsel_vec(OptContext *ctx, TCGOp 
-*op)
-          }
-          if (fv == -1 && TCG_TARGET_HAS_orc_vec) {
-              op->opc = INDEX_op_orc_vec;
--            op->args[2] = op->args[1];
--            op->args[1] = op->args[3];
-              return fold_orc(ctx, op);
-          }
-      }
----
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
