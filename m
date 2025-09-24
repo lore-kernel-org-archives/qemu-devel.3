@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86604CAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C531ECAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1JAu-0002UA-Dw; Wed, 24 Sep 2025 02:40:24 -0400
+	id 1v1JBT-0002af-9l; Wed, 24 Sep 2025 02:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAr-0002Tt-I4
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JB5-0002We-HN
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAh-0006ho-A8
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAv-0006l0-Gw
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758696008;
+ s=mimecast20190719; t=1758696024;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JBRmuVpLJ3m0aks1MPvEMgz6IPDXFlW9qQuRyAUlJgs=;
- b=G/Gd5XUADFQ+I0A62TVy5Sn8YnPS4yorqz6mKCS4IMk9rc7ZqQvVIDZJ3oyAWGuJXQ/IUN
- vSuAKHS8o9UxPwwCY0lVJ9WpEw44awPQ08XcDvwmbYXcQNBf9JsYYTORGS4o/Kii7u5r/H
- otGDBBrRzDhEmVncY5lmr1oob3DnpOs=
+ bh=VKo4j4sky3XpQsKkltQTkes5SSJvSvQPQAlXHalioug=;
+ b=BoV7KdOcrqrfeHHG+tpL+OUjRIyQgQzP5hWKiEkn+Oc8DLqPD2kC6wn+SL+VpGRWoII0k2
+ shFghwg6mw/v5wXowi7VvkMkx+tNzjbcz+Vkw4XDq4jHXtrujK5aE1T1KxFqchH7freGV6
+ SypECxgDH+IVn0kaklFfhsgpCDVs1w8=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-NpllkZugNPizCFvMDUJPfA-1; Wed,
- 24 Sep 2025 02:40:03 -0400
-X-MC-Unique: NpllkZugNPizCFvMDUJPfA-1
-X-Mimecast-MFC-AGG-ID: NpllkZugNPizCFvMDUJPfA_1758696002
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-nYHQBDvNM8O1hJPAoUKKWw-1; Wed,
+ 24 Sep 2025 02:40:19 -0400
+X-MC-Unique: nYHQBDvNM8O1hJPAoUKKWw-1
+X-Mimecast-MFC-AGG-ID: nYHQBDvNM8O1hJPAoUKKWw_1758696018
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B46D31800447; Wed, 24 Sep 2025 06:40:02 +0000 (UTC)
+ id D24E81800447; Wed, 24 Sep 2025 06:40:18 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 932D91955F19; Wed, 24 Sep 2025 06:40:01 +0000 (UTC)
+ id B9F961955F19; Wed, 24 Sep 2025 06:40:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 02/12] tests/functional/s390x/test_pxelinux: Fix warnings from
- pylint
-Date: Wed, 24 Sep 2025 08:39:46 +0200
-Message-ID: <20250924063956.519792-3-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 11/12] tests/functional: retry when seeing ConnectionError
+ exception
+Date: Wed, 24 Sep 2025 08:39:55 +0200
+Message-ID: <20250924063956.519792-12-thuth@redhat.com>
 In-Reply-To: <20250924063956.519792-1-thuth@redhat.com>
 References: <20250924063956.519792-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,118 +85,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-pylint complains about wrong indentation in one of the lines and
-that the pxelinux_cfg_contents is a constant that should be written
-with capital letters. While we're at it, also add the missing doc
-strings.
+This base class is used for many different socket connection
+errors, corresponding to ECONNRESET, ECONNREFUSED, ECONNABORTED
+and more. Most of these are things you might expect to see every
+now and then as transient flaws. We should thus retry the asset
+download when seeing them.
 
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250918125746.1165658-2-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250912085251.274294-1-thuth@redhat.com>
 ---
- tests/functional/s390x/test_pxelinux.py | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ tests/functional/qemu_test/asset.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tests/functional/s390x/test_pxelinux.py b/tests/functional/s390x/test_pxelinux.py
-index 4fc33b8c46d..c00cce6a5a4 100755
---- a/tests/functional/s390x/test_pxelinux.py
-+++ b/tests/functional/s390x/test_pxelinux.py
-@@ -1,10 +1,11 @@
- #!/usr/bin/env python3
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
--#
--# Functional test that checks the pxelinux.cfg network booting of a s390x VM
--# (TFTP booting without config file is already tested by the pxe qtest, so
--#  we don't repeat that here).
-+'''
-+Functional test that checks the pxelinux.cfg network booting of a s390x VM
-+(TFTP booting without config file is already tested by the pxe qtest, so
-+we don't repeat that here).
-+'''
- 
- import os
- import shutil
-@@ -12,7 +13,7 @@
- from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
- 
- 
--pxelinux_cfg_contents='''# pxelinux.cfg style config file
-+PXELINUX_CFG_CONTENTS='''# pxelinux.cfg style config file
- default Debian
- label Nonexisting
- kernel kernel.notavailable
-@@ -26,6 +27,10 @@
- '''
- 
- class S390PxeLinux(QemuSystemTest):
-+    '''
-+    Test various ways of booting via a pxelinux.cfg file, for details see:
-+    https://wiki.syslinux.org/wiki/index.php?title=PXELINUX#Configuration
-+    '''
- 
-     ASSET_DEBIAN_KERNEL = Asset(
-         ('https://snapshot.debian.org/archive/debian/'
-@@ -46,6 +51,7 @@ class S390PxeLinux(QemuSystemTest):
-         '480859574f3f44caa6cd35c62d70e1ac0609134e22ce2a954bbed9b110c06e0b')
- 
-     def pxelinux_launch(self, pl_name='default', extra_opts=None):
-+        '''Create a pxelinux.cfg file in the right location and launch QEMU'''
-         self.require_netdev('user')
-         self.set_machine('s390-ccw-virtio')
- 
-@@ -66,11 +72,11 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
- 
-         cfg_fname = self.scratch_file('tftp', 'pxelinux.cfg', pl_name)
-         with open(cfg_fname, 'w', encoding='utf-8') as f:
--            f.write(pxelinux_cfg_contents)
-+            f.write(PXELINUX_CFG_CONTENTS)
- 
-         virtio_net_dev = 'virtio-net-ccw,netdev=n1,bootindex=1'
-         if extra_opts:
--                virtio_net_dev += ',' + extra_opts
-+            virtio_net_dev += ',' + extra_opts
- 
-         self.vm.add_args('-m', '384',
-                          '-netdev', f'user,id=n1,tftp={tftpdir}',
-@@ -80,6 +86,7 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
- 
- 
-     def test_default(self):
-+        '''Check whether the guest uses the "default" file name'''
-         self.pxelinux_launch()
-         # The kernel prints its arguments to the console, so we can use
-         # this to check whether the kernel parameters are correctly handled:
-@@ -89,11 +96,13 @@ def test_default(self):
-         wait_for_console_pattern(self, 'Run /init as init process')
- 
-     def test_mac(self):
-+        '''Check whether the guest uses file name based on its MAC address'''
-         self.pxelinux_launch(pl_name='01-02-ca-fe-ba-be-42',
-                              extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3')
-         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
- 
-     def test_uuid(self):
-+        '''Check whether the guest uses file name based on its UUID'''
-         # Also add a non-bootable disk to check the fallback to network boot:
-         self.vm.add_args('-blockdev', 'null-co,size=65536,node-name=d1',
-                          '-device', 'virtio-blk,drive=d1,bootindex=0,loadparm=1',
-@@ -102,11 +111,13 @@ def test_uuid(self):
-         wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
- 
-     def test_ip(self):
-+        '''Check whether the guest uses file name based on its IP address'''
-         self.vm.add_args('-M', 'loadparm=3')
-         self.pxelinux_launch(pl_name='0A00020F')
-         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
- 
-     def test_menu(self):
-+        '''Check whether the boot menu works for pxelinux.cfg booting'''
-         self.vm.add_args('-boot', 'menu=on,splash-time=10')
-         self.pxelinux_launch(pl_name='0A00')
-         wait_for_console_pattern(self, '[1] Nonexisting')
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 2dd32bf28d9..f8b87d21538 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -179,6 +179,13 @@ def fetch(self):
+                                self.url, e.reason)
+                 raise AssetError(self, "Unable to download: URL error %s" %
+                                  e.reason, transient=True)
++            except ConnectionError as e:
++                # A socket connection failure, such as dropped conn
++                # or refused conn
++                tmp_cache_file.unlink()
++                self.log.error("Unable to download %s: Connection error %s",
++                               self.url, e)
++                continue
+             except Exception as e:
+                 tmp_cache_file.unlink()
+                 raise AssetError(self, "Unable to download: %s" % e)
 -- 
 2.51.0
 
