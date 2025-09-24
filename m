@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BF2CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9555DCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1UpQ-0001Ek-Ln; Wed, 24 Sep 2025 15:07:07 -0400
+	id 1v1Uno-0008CF-QC; Wed, 24 Sep 2025 15:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Um5-0006zK-AV
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:39 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1v1Uly-0006vy-0l
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:29 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Uk3-0007t3-GT
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:30 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-323266cdf64so179735a91.0
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:23 -0700 (PDT)
+ id 1v1Ujw-0007pH-JC
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:21 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-77c1814ca1dso140254b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758740481; x=1759345281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758740474; x=1759345274; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
- b=xfnaMd3GCxto7S+RXW5e8h/hiVZboKUHj1LOSvPxBih0xNPBOEVY7B1TdZ/4MCUZf4
- GHRLrrbV+QoABilPxVmRLuOX6L8IIVgAOWGgQSnUOC64mhUzSNKEwomKA1iP5PK4T9dc
- T6cTUYxN6TKGKRee5YJjrxbg3Y0py982RzbVfS1HDcBeIJrNAWRELMaasRnFdVt58QB8
- npJTgKqeNSUq2KvQ/Honpqi+YTFp6nju1+lY+4bwh0up4e6haRKnycKOi8QN6Te/v9rs
- ZXX+He0uDO0Ro6lVbDMlc+HUwXh8PP1jIDonhyy+mpmgyV4Aw3dL5bLV3buZ1dJAjZdU
- u1fA==
+ bh=kCTrGX3KmloALN2paC3qrevC6P0gXZ2hKVt4HdoqLUQ=;
+ b=Fol2lc3b4xKgJRev8tbm4rwmyUvUfVr9rfiQ2P4Y22uZT3ZqLlx4p37d32uyMYw1PU
+ nrnGcYnliR2RXJ/2NpZnmLHbNk+AeGGa1zgvromRDfSmzbaajvaoVlSggAG9TSh3HSr0
+ 7gT2IrE6jXchqAtPWFnlVjOxqsLwXX50kSS/J1uN9jI/8O794+IAVLw5hIiTutQyxjwB
+ r+j5iZzDxTw7K0TiEr4VfLfX8dXrjbEKU5ro5T8fz6vDSK5spIVTb5Elw7K3rofBRsQJ
+ iINL8CVAPofRThehCRyNtCDpPA2XGKJmq+jkXDSsYyBjpprZAN2QY848vZ5jagbzWnOq
+ saxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758740481; x=1759345281;
+ d=1e100.net; s=20230601; t=1758740474; x=1759345274;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
- b=sbrHiNa0T4L7mB1th9wFTGI2JhFjNGvr6I1F8Rs3fwqvmZG8T+N0CATmcs6mN3mCw0
- RkDaMsaY2Wh8a25M44MfAkapsmp6/tMHfvTcf+W7OYFr3IeitLiHb/yOrfzR7p184GqF
- Mc1r8GntnIbMsJzpnXjmW6c1knNkAYOM30aRdJqjx02kUUCektdUb0G9x05EKHGEenKl
- jncF2Y9v6nmh1axlcMtNxG87GHwqG5rQlqomX7pQDvMA9krYFX+OLVK5EHQUXBRL+T6w
- qaUvKsHkbccnHfxpXerlN1VIT4p0vOQ+nP/DR0HEWoKiAV3wIcvVMa/O75Bjmi8MsdE2
- Wzzg==
-X-Gm-Message-State: AOJu0Yx2DcNi+4Z3ZcF8lWxPpvdI5Di5N87OchxJPH+BLw3kKm+0ZJvh
- 27hH7V5ox5s52enpKKX7zzbpF+CTMBdlJldiP3rwrIBcwO2WFS7joatuwVSWZxpJgzcdvHiuEMn
- gs+/j
-X-Gm-Gg: ASbGncuz1gGDEDNfimoEH9mX0p4mFuFL9u22BdPqfW+d1781y0qqGfIqev0o/uE4qCR
- vOlExwkCv8kaqjUjLCLJmg8hpbPOSJ+Iwj5DBwLOk6luU4jA4RagSiwTLxteJKcOB4oGqWkRE0d
- aQcnvWF9LOI2xsRLpJ9lfoMQdFHY1Y6hDo0iddSe7sK0iadkW8DxRoljv/MqvwEwfSD2242rxAL
- Lu1HyLLtDdG2lSVZ60l5E6ZvUHejGxwCffWEn13r4vbTRQ7aXabtBM97L7JmAyaiVlTpe4jpnUA
- CRpXp6B/5KrLk280wwDFMjDCCN4dkOru+UtaiuvkmacjvKjuxm1XcpzqS1qYxic9wSt5WQhcO7U
- Gxblsm6fEsFl3byYFrMo9TJ9HGOCb
-X-Google-Smtp-Source: AGHT+IEwTKwIF0DYcR58coJaWifqQY7QeFWtGS1L5IVqv4V/HjE0YH+dMYvEWsZ3CyBC6HhnEHKu8w==
-X-Received: by 2002:a17:90b:17ca:b0:32e:b36b:3711 with SMTP id
- 98e67ed59e1d1-3342a30c997mr674793a91.28.1758740480926; 
- Wed, 24 Sep 2025 12:01:20 -0700 (PDT)
+ bh=kCTrGX3KmloALN2paC3qrevC6P0gXZ2hKVt4HdoqLUQ=;
+ b=N5uCBvJajndXZEw9OXoTDELEkxNCWDENApCF+3w4r2Lgj7LfyVyVfSqSbmZnYTBF26
+ PdDCC9lKgQ3fSLdB1Rl9/Y3fOPYzcsXCpa61l92LKxet7w6I67Ur0/JbNxK4/vRfshDj
+ iwfLS+BMsY6ye0UCnEwGuFOlOPYC9PshSIlJtThMw54qSiVdafMx3/o5zhWbG+FCQSAb
+ wzhgg/FRLB85mz9VMaZvAxfB/WDSTAEaJbAoD4+RC0kQL1sfcgPHd0LnOcyyX3qCWAyZ
+ t/FW5PVzppaZ9TD0IGZ+8FUSgoXsxhgR4B/XHmY2u/45wx3im/YH2pFsnBDEjZ4HtH7z
+ 03EA==
+X-Gm-Message-State: AOJu0YxlutD7EzmwF0IGFAVm+YBLWsYTXXytYavktUE3zLS+R1Y/qT/t
+ ll4hRb/Uy/5aZeTOOJoxHITKZFgv3C7WfA8CTy7T2sinHwWhm1GPEtfDasEbDj6KnWJ3u6gBDrL
+ P/apM
+X-Gm-Gg: ASbGnctKAG8Wh7xkY3oE/ViAwQqYSf8zT7Xha9zDAhbbgSqIrYm6AicKTldNuuFvRPL
+ SoXp0HJYPF1+mVBYY+G4s5X/ponQMPoGmfg954ssGNzOUpf82Q2vmx0Gdi1Y4OfZETGDSRWhTbq
+ 7lzWLlODIyrbchXNY9muvXXd0PHBNcrWJDajCSHxW8FOjjRrUY68lmCKQhPsYBRynlIDspYQwkv
+ bUEowweZGxTl5b29E69YKXqhu6s6IfOV84FJyTj+UWvNECWnGVr9aExNMuNVYptNMjXn/er1pE5
+ p08XiO0unkVVfmdBBz5mqZaW/RNUCzzKpwWQqYmJwup/csO9XwVp0eGcA3ZHXip1z6G3P5ATWQ/
+ 4Q3W58q26vr+jOEbbVVTDuSe1kS6y
+X-Google-Smtp-Source: AGHT+IEuXC1uuJ/x9a8YgxJ3iAQ4zKOBy+HLE3cv7oFbezhXupBrFAFEtiR2Lov02ZuQCD39w5hgQw==
+X-Received: by 2002:a17:90b:1f8c:b0:330:797a:f4ea with SMTP id
+ 98e67ed59e1d1-3342a2e73d7mr766688a91.29.1758740473971; 
+ Wed, 24 Sep 2025 12:01:13 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.20
+ 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 12:01:20 -0700 (PDT)
+ Wed, 24 Sep 2025 12:01:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 18/32] target/hppa: Adjust mmu indexes to begin with 0
-Date: Wed, 24 Sep 2025 12:00:51 -0700
-Message-ID: <20250924190106.7089-19-richard.henderson@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 09/32] target/sparc: Loosen decode of RDWIM for v7
+Date: Wed, 24 Sep 2025 12:00:42 -0700
+Message-ID: <20250924190106.7089-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
 References: <20250924190106.7089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,58 +91,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a logical reversion of 2ad04500543, though
-there have been additions to the set of mmu indexes
-since then.  The impetus to that original patch,
-"9-15 will use shorter assembler instructions when
-run on a x86-64 host" is now handled generically.
+For v7, bits [18:0] are ignored.
+For v8, bits [18:14] are reserved and bits [13:0] are ignored.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fixes: 5d617bfba07 ("target/sparc: Move RDWIM, RDPR to decodetree")
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ target/sparc/insns.decode | 40 ++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 11d59d11ca..672ab3750c 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -29,21 +29,21 @@
- #include "qemu/interval-tree.h"
- #include "hw/registerfields.h"
+diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+index 1c6403ad8a..77b2f54fdf 100644
+--- a/target/sparc/insns.decode
++++ b/target/sparc/insns.decode
+@@ -180,26 +180,28 @@ RESTORED            10 00001 110001 00000 0 0000000000000
+ # UA2005 INVALW
  
--#define MMU_ABS_W_IDX     6
--#define MMU_ABS_IDX       7
--#define MMU_KERNEL_IDX    8
--#define MMU_KERNEL_P_IDX  9
--#define MMU_PL1_IDX       10
--#define MMU_PL1_P_IDX     11
--#define MMU_PL2_IDX       12
--#define MMU_PL2_P_IDX     13
--#define MMU_USER_IDX      14
--#define MMU_USER_P_IDX    15
-+#define MMU_KERNEL_IDX    0
-+#define MMU_KERNEL_P_IDX  1
-+#define MMU_PL1_IDX       2
-+#define MMU_PL1_P_IDX     3
-+#define MMU_PL2_IDX       4
-+#define MMU_PL2_P_IDX     5
-+#define MMU_USER_IDX      6
-+#define MMU_USER_P_IDX    7
-+#define MMU_ABS_IDX       8
-+#define MMU_ABS_W_IDX     9
+ {
+-  RDWIM             10 rd:5  101010 00000 0 0000000000000
+-  RDPR_tpc          10 rd:5  101010 00000 0 0000000000000
++  [
++    RDPR_tpc            10 rd:5  101010 00000 0 0000000000000
++    RDPR_tnpc           10 rd:5  101010 00001 0 0000000000000
++    RDPR_tstate         10 rd:5  101010 00010 0 0000000000000
++    RDPR_tt             10 rd:5  101010 00011 0 0000000000000
++    RDPR_tick           10 rd:5  101010 00100 0 0000000000000
++    RDPR_tba            10 rd:5  101010 00101 0 0000000000000
++    RDPR_pstate         10 rd:5  101010 00110 0 0000000000000
++    RDPR_tl             10 rd:5  101010 00111 0 0000000000000
++    RDPR_pil            10 rd:5  101010 01000 0 0000000000000
++    RDPR_cwp            10 rd:5  101010 01001 0 0000000000000
++    RDPR_cansave        10 rd:5  101010 01010 0 0000000000000
++    RDPR_canrestore     10 rd:5  101010 01011 0 0000000000000
++    RDPR_cleanwin       10 rd:5  101010 01100 0 0000000000000
++    RDPR_otherwin       10 rd:5  101010 01101 0 0000000000000
++    RDPR_wstate         10 rd:5  101010 01110 0 0000000000000
++    RDPR_gl             10 rd:5  101010 10000 0 0000000000000
++    RDPR_strand_status  10 rd:5  101010 11010 0 0000000000000
++    RDPR_ver            10 rd:5  101010 11111 0 0000000000000
++  ]
++  RDWIM                 10 rd:5  101010 ----- - -------------
+ }
+-RDPR_tnpc           10 rd:5  101010 00001 0 0000000000000
+-RDPR_tstate         10 rd:5  101010 00010 0 0000000000000
+-RDPR_tt             10 rd:5  101010 00011 0 0000000000000
+-RDPR_tick           10 rd:5  101010 00100 0 0000000000000
+-RDPR_tba            10 rd:5  101010 00101 0 0000000000000
+-RDPR_pstate         10 rd:5  101010 00110 0 0000000000000
+-RDPR_tl             10 rd:5  101010 00111 0 0000000000000
+-RDPR_pil            10 rd:5  101010 01000 0 0000000000000
+-RDPR_cwp            10 rd:5  101010 01001 0 0000000000000
+-RDPR_cansave        10 rd:5  101010 01010 0 0000000000000
+-RDPR_canrestore     10 rd:5  101010 01011 0 0000000000000
+-RDPR_cleanwin       10 rd:5  101010 01100 0 0000000000000
+-RDPR_otherwin       10 rd:5  101010 01101 0 0000000000000
+-RDPR_wstate         10 rd:5  101010 01110 0 0000000000000
+-RDPR_gl             10 rd:5  101010 10000 0 0000000000000
+-RDPR_strand_status  10 rd:5  101010 11010 0 0000000000000
+-RDPR_ver            10 rd:5  101010 11111 0 0000000000000
  
--#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) < MMU_KERNEL_IDX)
--#define MMU_IDX_TO_PRIV(MIDX)       (((MIDX) - MMU_KERNEL_IDX) / 2)
--#define MMU_IDX_TO_P(MIDX)          (((MIDX) - MMU_KERNEL_IDX) & 1)
--#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P) + MMU_KERNEL_IDX)
-+#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) >= MMU_ABS_IDX)
-+#define MMU_IDX_TO_PRIV(MIDX)       ((MIDX) / 2)
-+#define MMU_IDX_TO_P(MIDX)          ((MIDX) & 1)
-+#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P))
- 
- #define PRIV_KERNEL       0
- #define PRIV_USER         3
+ {
+   WRWIM             10 00000 110010 ..... . .............  @n_r_ri
 -- 
 2.43.0
 
