@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7A1CAC5AE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57159CAC59A
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1JXB-0005tV-Hl; Wed, 24 Sep 2025 03:03:25 -0400
+	id 1v1JXA-0005t9-N6; Wed, 24 Sep 2025 03:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v1JX3-0005sO-I7
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:03:19 -0400
+ id 1v1JX1-0005sN-LV
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:03:17 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1v1JWw-0001S3-0U
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:03:16 -0400
+ id 1v1JWx-0001S7-5T
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:03:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1758697390; x=1790233390;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=yZqiSNdpDOmaSmSgKp1gIl/Mh9K7OY1nVmqCALvc5m4=;
- b=F5v5lnd14YgaRUzGXj9jDRCE9vlNYTL/6umvxIISiRljikmHNZVhkkFO
- d1UYImCHCEACZOZs2C0f6uWwZm2t7dBcc8Etd0Agu7q8CkyUAeGND4ncC
- HkHr9W+RQpt4b/6stZVrBJp4fJQJlewEnZ2E9sfgponTY0ZJCIvcvpikH
- C4Z164aMVIwZPD3VOAPKFAwbP7+tR27DdcRQIGh8RvVYlnT9XBI71qfoB
- fpc0UfJcJwL3ZHb/JfFfRdx+ex/6A0MD8tR1iekrQm4DtTEvvoBJsIIJs
- Pz23i/04/y/63ehxAUaSVsjT3w4x0TXAb5WDdBg4RWtuTqGKKqFE7mEDt Q==;
-X-CSE-ConnectionGUID: bSGmJa0ZTiy7JBu7LlZ4Nw==
-X-CSE-MsgGUID: 2k7IoXFaQuWRjgM64nfsIQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11561"; a="86429765"
-X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="86429765"
+ t=1758697391; x=1790233391;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=dNcmfdsvuX6aE7sSUXiD+CERBr4qGcYNFF6mFluxEvg=;
+ b=FgrZJ59qx+CtO4yTF8UJm85XTTls/T8wPVaQGVd7TvOoOJ96A2rVK1gQ
+ SRa1CPlWeeu9H3Re2eieDr1JZroBPeLPXTGK/yRzoR0BcPH3zPONpdQHf
+ r3QaemXo44N3aaEK/wWMkuAg+0h3CA0w8KMj/Q+LcYnzMYDU6cMMrgtEJ
+ p4a8gbjHzNhSmPogrQQE5bJF9GYxbW4sypqZuEmxo8NjKpxmIMbmiPER6
+ OcVMDBlwF/JK3ntPzYbc9LwLGzHPougWrAvaAgWwAKrVAOdHwBSvTJDTw
+ 0yxFcphPSfYEoigkn7AhqLT61Jd1qa5MZn+lwEw/NvKIBVnVC1rOe5qX9 A==;
+X-CSE-ConnectionGUID: gv2svaqES9+dUSjSMXtiMQ==
+X-CSE-MsgGUID: OO37tzm1Tq6p7lL6HhI8MQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11561"; a="86429768"
+X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="86429768"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Sep 2025 00:03:03 -0700
-X-CSE-ConnectionGUID: 9W6FRImfQLGlotGUhkwuSw==
-X-CSE-MsgGUID: 9IxeGwi8TVqbn1KSSo8qbg==
+ 24 Sep 2025 00:03:05 -0700
+X-CSE-ConnectionGUID: YNarnhuqTG2F/qkmiNqcQA==
+X-CSE-MsgGUID: 2yjNTUDLRVOJ0rY7/5SwcQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="180975701"
+X-IronPort-AV: E=Sophos;i="6.18,290,1751266800"; d="scan'208";a="180975709"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Sep 2025 00:03:01 -0700
+ 24 Sep 2025 00:03:03 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 0/2] Optimize unmap_all with one ioctl()
-Date: Wed, 24 Sep 2025 03:02:52 -0400
-Message-ID: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
+Subject: [PATCH 1/2] vfio/container: Support unmap all in one ioctl()
+Date: Wed, 24 Sep 2025 03:02:53 -0400
+Message-ID: <20250924070254.1550014-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
+References: <20250924070254.1550014-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7;
@@ -81,56 +83,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently unmap_all is split into two ioctl() with each unmap half of
-the whole iova space.
+VFIO type1 kernel uAPI supports unmapping whole address space in one call
+since commit c19650995374 ("vfio/type1: implement unmap all"). use the
+unmap_all variant whenever it's supported in kernel.
 
-IOMMUFD supports unmap_all ioctl() from beginning, after kernel commit
-c19650995374 ("vfio/type1: implement unmap all") added same support
-for VFIO type1, the split becomes unnecessary.
-
-So optimize the code to only do one ioctl() to unmap_all for both
-backends.
-
-Test:
-In order to trigger unmap_all request, made below trick, during emergency
-reset in guest, memory region [0xfef00000 - 0xffffffffffffffff] is
-deleted, I fake it to be a unmap_all request.
-
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -714,8 +714,10 @@ static void vfio_listener_region_del(MemoryListener *listener,
-     if (try_unmap) {
-         bool unmap_all = false;
-
--        if (int128_eq(llsize, int128_2_64())) {
-+        if (int128_eq(llsize, int128_2_64()) ||
-+            iova == 0xfef00000) {
-             unmap_all = true;
-+            iova = 0;
-             llsize = int128_zero();
-         }
-
-The log shows ioctl() succeed on the whole iova space:
-
-vfio_listener_region_del region_del 0xfef00000 - 0xffffffffffffffff
-iommufd_backend_unmap_dma  iommufd=10 ioas=5 iova=0x0 size=0xffffffffffffffff (0)
-
-Same result for legacy VFIO.
-
-Maybe it's easy to trigger unmap_all with other arch, e.g., arm smmu, but for x86,
-iommu memory region is split by iommu_ir, unmap_all isn't triggered.
-
-Thanks
-Zhenzhong
-
-Zhenzhong Duan (2):
-  vfio/container: Support unmap all in one ioctl()
-  vfio/iommufd: Support unmap all in one ioctl()
-
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
  hw/vfio/container.c | 33 ++++++++++++++++++++-------------
- hw/vfio/iommufd.c   | 16 ++--------------
- 2 files changed, 22 insertions(+), 27 deletions(-)
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 030c6d3f89..2e13f04803 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -122,12 +122,12 @@ unmap_exit:
+ 
+ static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
+                                      hwaddr iova, ram_addr_t size,
+-                                     IOMMUTLBEntry *iotlb)
++                                     uint32_t flags, IOMMUTLBEntry *iotlb)
+ {
+     const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+     struct vfio_iommu_type1_dma_unmap unmap = {
+         .argsz = sizeof(unmap),
+-        .flags = 0,
++        .flags = flags,
+         .iova = iova,
+         .size = size,
+     };
+@@ -187,25 +187,32 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+                                  hwaddr iova, ram_addr_t size,
+                                  IOMMUTLBEntry *iotlb, bool unmap_all)
+ {
++    uint32_t flags = 0;
+     int ret;
+ 
+     if (unmap_all) {
+-        /* The unmap ioctl doesn't accept a full 64-bit span. */
+-        Int128 llsize = int128_rshift(int128_2_64(), 1);
++        const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+ 
+-        ret = vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsize),
+-                                        iotlb);
++        assert(!iova && !size);
+ 
+-        if (ret == 0) {
+-            ret = vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsize),
+-                                            int128_get64(llsize), iotlb);
+-        }
++        ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
++        if (ret) {
++            flags = VFIO_DMA_UNMAP_FLAG_ALL;
++        } else {
++            /* The unmap ioctl doesn't accept a full 64-bit span. */
++            Int128 llsize = int128_rshift(int128_2_64(), 1);
++            size = int128_get64(llsize);
++
++            ret = vfio_legacy_dma_unmap_one(bcontainer, 0, size, flags, iotlb);
++            if (ret) {
++                return ret;
++            }
+ 
+-    } else {
+-        ret = vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
++            iova = size;
++        }
+     }
+ 
+-    return ret;
++    return vfio_legacy_dma_unmap_one(bcontainer, iova, size, flags, iotlb);
+ }
+ 
+ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
 -- 
 2.47.1
 
