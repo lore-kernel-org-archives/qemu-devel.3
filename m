@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E8FCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A224CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1JnN-0005b2-1v; Wed, 24 Sep 2025 03:20:09 -0400
+	id 1v1JnQ-0005e5-FI; Wed, 24 Sep 2025 03:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnK-0005Zo-A2
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:06 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnN-0005bP-NA
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:09 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnB-0003Q5-Aw
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:05 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnJ-0003RG-NO
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=jS+5jUWqLf8DzdZREyGhxtYoH1mze7wS+V8aFfit5jY=; b=nYiH3bSWuOzhYQs
- a/p0bGupwL6BxQAOZyQCJEhxWp8nkMHQ/H7qZJswOjcTE7DZ9Oj6P45gR2ZXqdWrgVBj9hJyanY/Q
- bglAMc0mD72PqWgk1wxrbEMiaY5SrOCrWWtgXSeapwtJCq7DNtHLUeEM1HRvyu8M1rXDNUkxvV6ZE
- 3E=;
+ List-Help; bh=OZO8hLRD1il0/T6biuW8RyclBm1fgAOzTgPsI/lBN/U=; b=iytIu81qpqAQpS/
+ SLRkl//jyRedQlHsNIgLabNM3SJ91IBHZ5/LG+xBHNt0NdNprjN/3cRi/AwjSNIZhoTeFD1RODlko
+ 9eGmsXMnOtQexs+/LLF0+1S36lgYWBRT4diZoQ4QpcaxzcO01aUcrlfMt4taxgHiXj4XCukSLA3Gg
+ Bk=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [RFC PATCH 13/34] target/riscv: Fix size of frm and fflags
-Date: Wed, 24 Sep 2025 09:21:03 +0200
-Message-ID: <20250924072124.6493-14-anjo@rev.ng>
+Subject: [RFC PATCH 18/34] target/riscv: Fix size of ssp
+Date: Wed, 24 Sep 2025 09:21:08 +0200
+Message-ID: <20250924072124.6493-19-anjo@rev.ng>
 In-Reply-To: <20250924072124.6493-1-anjo@rev.ng>
 References: <20250924072124.6493-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -45,8 +45,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,96 +64,96 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the unprivileged specification the frm
-field of fcsr is 3-bits in size, fix it to 8-bits.  Similarly fflags is
-5 bits, fix to 8.
+As ssp holds a pointer, fix to 64 bits in size and make sure stores from
+TCG use the correct size to avoid problems on big endian hosts.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h        | 6 +++---
- target/riscv/csr.c        | 4 ++++
- target/riscv/fpu_helper.c | 6 +++---
- target/riscv/machine.c    | 2 +-
- 4 files changed, 11 insertions(+), 7 deletions(-)
+ target/riscv/cpu.h                            |  2 +-
+ target/riscv/machine.c                        |  2 +-
+ target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 01ca3e781d..cf10662b3a 100644
+index ffc2c1b424..1c544bc260 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -230,7 +230,7 @@ struct CPUArchState {
- 
-     /* Floating-Point state */
-     uint64_t fpr[32]; /* assume both F and D extensions */
--    target_ulong frm;
-+    uint8_t frm;
-     float_status fp_status;
- 
-     target_ulong badaddr;
-@@ -663,8 +663,8 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-                                       RISCVException exception,
-                                       uintptr_t pc);
- 
--target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
--void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
-+uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
-+void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
- 
- FIELD(TB_FLAGS, MEM_IDX, 0, 3)
- FIELD(TB_FLAGS, FS, 3, 2)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index f29a3c9991..a471e59f2d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -895,6 +895,10 @@ static RISCVException write_frm(CPURISCVState *env, int csrno,
- static RISCVException read_fcsr(CPURISCVState *env, int csrno,
-                                 target_ulong *val)
- {
-+    /*
-+     * This is an 8-bit operation, fflags make up the lower 5 bits and
-+     * frm the upper 3 bits of fcsr.
-+     */
-     *val = (riscv_cpu_get_fflags(env) << FSR_AEXC_SHIFT)
-         | (env->frm << FSR_RD_SHIFT);
-     return RISCV_EXCP_NONE;
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-index af40561b31..db64fca622 100644
---- a/target/riscv/fpu_helper.c
-+++ b/target/riscv/fpu_helper.c
-@@ -23,10 +23,10 @@
- #include "fpu/softfloat.h"
- #include "internals.h"
- 
--target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
-+uint8_t riscv_cpu_get_fflags(CPURISCVState *env)
- {
-     int soft = get_float_exception_flags(&env->fp_status);
--    target_ulong hard = 0;
-+    uint8_t hard = 0;
- 
-     hard |= (soft & float_flag_inexact) ? FPEXC_NX : 0;
-     hard |= (soft & float_flag_underflow) ? FPEXC_UF : 0;
-@@ -37,7 +37,7 @@ target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
-     return hard;
- }
- 
--void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong hard)
-+void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t hard)
- {
-     int soft = 0;
- 
+@@ -255,7 +255,7 @@ struct CPUArchState {
+     /* elp state for zicfilp extension */
+     bool      elp;
+     /* shadow stack register for zicfiss extension */
+-    target_ulong ssp;
++    uint64_t ssp;
+     /* env place holder for extra word 2 during unwind */
+     target_ulong excp_uw2;
+     /* sw check code for sw check exception */
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 405a960f28..d38243b278 100644
+index 9a2fd3267d..b95d432e0e 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -411,7 +411,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.pc, RISCVCPU),
-         VMSTATE_UINT64(env.load_res, RISCVCPU),
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
--        VMSTATE_UINTTL(env.frm, RISCVCPU),
-+        VMSTATE_UINT8(env.frm, RISCVCPU),
-         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
-         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+@@ -393,7 +393,7 @@ static const VMStateDescription vmstate_ssp = {
+     .minimum_version_id = 1,
+     .needed = ssp_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.ssp, RISCVCPU),
++        VMSTATE_UINT64(env.ssp, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index b0096adcd0..4333854979 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     TCGLabel *skip = gen_new_label();
+     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
+     TCGv data = tcg_temp_new();
+-    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
++    TCGv_i64 wide_addr = tcg_temp_new_i64();
++    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_trunc_i64_tl(addr, wide_addr);
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
+                        mxl_memop(ctx) | MO_ALIGN);
+@@ -44,7 +46,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+     gen_set_label(skip);
+     tcg_gen_addi_tl(addr, addr, tmp);
+-    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_ext_tl_i64(wide_addr, addr);
++    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+ 
+     return true;
+ }
+@@ -58,12 +61,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
+     TCGv addr = tcg_temp_new();
+     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
+     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
++    TCGv_i64 wide_addr = tcg_temp_new_i64();
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+-    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_trunc_i64_tl(addr, wide_addr);
+     tcg_gen_addi_tl(addr, addr, tmp);
+     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
+                        mxl_memop(ctx) | MO_ALIGN);
+-    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_ext_tl_i64(wide_addr, addr);
++    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
+ 
+     return true;
+ }
+@@ -75,7 +81,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
+     }
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+-    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
++    TCGv_i64 wide_addr = tcg_temp_new_i64();
++    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
++    tcg_gen_trunc_i64_tl(dest, wide_addr);
+     gen_set_gpr(ctx, a->rd, dest);
+ 
+     return true;
 -- 
 2.51.0
 
