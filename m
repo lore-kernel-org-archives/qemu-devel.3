@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EF65CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E399DCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 12:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1OI5-0003c4-Vr; Wed, 24 Sep 2025 08:08:10 -0400
+	id 1v1OGy-0001jX-8K; Wed, 24 Sep 2025 08:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v1OGy-0001kq-L8
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:07:00 -0400
+ id 1v1OGl-0001Sx-II
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:06:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1v1OGs-0006B7-2f
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:07:00 -0400
+ id 1v1OGW-00068J-8x
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 08:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758715611;
+ s=mimecast20190719; t=1758715586;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W2zWiTcBTgQl3kPhOmv9jfUu9OPU2tMxZku8XOn9htI=;
- b=DXfpOIrVOgvq4A8Ab+qZMFwOU0GPwQudhqPh5kJX18ir5xlTaNPB5IRmxH+0YFM0yWSjE0
- AjtpuIf93Dk+MHuLEdR/GUiefChI7nfDdX5gatVXTbs1Y6ywdq+v2ou2wrShXtD0hfztgm
- KRtocIwtheWUM/69wDYAWvJC4+7ewUo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=widcJIkDu1eiKWUdx7nXVmBVUiLVGtf7B2PqyVC4c78=;
+ b=UoKI5tmavXlcXnNuqX8mMkTPjLGzmtno7OzMel/km/Q6AVRpRfEzz3L4GjQoJ2ImMLhPjM
+ 1jo3E7LaaWZ5y4uU9sOhmahoptCeW4JZRKA7hA/btBpOBZ7VxjgzJll7BDdjJw90OHrrto
+ IPsvm1HF02gzh4K6myBll5m9Z43wnyQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-wOjm4Y6qNGeOQDLvF1bTkw-1; Wed,
- 24 Sep 2025 08:06:47 -0400
-X-MC-Unique: wOjm4Y6qNGeOQDLvF1bTkw-1
-X-Mimecast-MFC-AGG-ID: wOjm4Y6qNGeOQDLvF1bTkw_1758715605
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-zaGN0vVSMMSm1K2VCS99VQ-1; Wed,
+ 24 Sep 2025 08:06:19 -0400
+X-MC-Unique: zaGN0vVSMMSm1K2VCS99VQ-1
+X-Mimecast-MFC-AGG-ID: zaGN0vVSMMSm1K2VCS99VQ_1758715576
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC10A195609F; Wed, 24 Sep 2025 12:06:45 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAAC2195605A; Wed, 24 Sep 2025 12:06:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.38])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C3CB330001B5; Wed, 24 Sep 2025 12:06:43 +0000 (UTC)
+ id 9CA78300018D; Wed, 24 Sep 2025 12:06:15 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
@@ -61,9 +61,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  devel@lists.libvirt.org, qemu-rust@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: [PATCH v2 18/27] tests/lcitool: enable rust & refresh
-Date: Wed, 24 Sep 2025 16:04:15 +0400
-Message-ID: <20250924120426.2158655-19-marcandre.lureau@redhat.com>
+Subject: [PATCH v2 14/27] lcitool/alpine: workaround bindgen issue
+Date: Wed, 24 Sep 2025 16:04:11 +0400
+Message-ID: <20250924120426.2158655-15-marcandre.lureau@redhat.com>
 In-Reply-To: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
 References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -98,225 +98,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Enable Rust on various distro images: alpine, centos, debian, fedora,
-opensuse.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/docker/dockerfiles/alpine.docker             |  2 ++
- tests/docker/dockerfiles/centos9.docker            |  2 ++
- tests/docker/dockerfiles/debian-amd64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-arm64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-armhf-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-i686-cross.docker  |  2 ++
- .../dockerfiles/debian-mips64el-cross.docker       |  2 ++
- .../docker/dockerfiles/debian-mipsel-cross.docker  |  2 ++
- .../docker/dockerfiles/debian-ppc64el-cross.docker |  2 ++
- .../docker/dockerfiles/debian-riscv64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-s390x-cross.docker |  2 ++
- tests/docker/dockerfiles/debian.docker             |  2 ++
- .../docker/dockerfiles/fedora-rust-nightly.docker  |  2 ++
- tests/docker/dockerfiles/fedora.docker             |  2 ++
- tests/docker/dockerfiles/opensuse-leap.docker      |  2 ++
- tests/lcitool/refresh                              | 14 +++++++++++---
- 16 files changed, 41 insertions(+), 3 deletions(-)
+ tests/docker/dockerfiles/alpine.docker | 2 ++
+ tests/lcitool/refresh                  | 8 +++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index b50fbc3dba..52adf9ccbb 100644
+index bd1ef5505d..b50fbc3dba 100644
 --- a/tests/docker/dockerfiles/alpine.docker
 +++ b/tests/docker/dockerfiles/alpine.docker
-@@ -138,3 +138,5 @@ ARG USER
+@@ -131,6 +131,8 @@ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+ ENV PYTHON "/usr/bin/python3"
++# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463
++RUN apk add clang19-libclang
+ # As a final step configure the user (if env is defined)
+ ARG USER
  ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index e7fc688ee9..0674d77826 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -142,3 +142,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 08621879dd..7f4674400d 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -188,3 +188,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index 725cccbee1..c7cd54ee5c 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -187,3 +187,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index 50f7e0e986..627d41c6de 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -184,3 +184,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f53b77cb62..4e8b3a8293 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -184,3 +184,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index cca04a4594..6e88777f76 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -183,3 +183,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-index 59c6f92248..5f4e3fa963 100644
---- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
-@@ -183,3 +183,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 09de265c26..dfa690616d 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -186,3 +186,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-index 79ec37616d..1c3f597340 100644
---- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-@@ -89,3 +89,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index d7b2ca99ce..09a78c15ba 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -185,3 +185,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 2696cf2167..8dd893be4b 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -175,3 +175,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 167246f0f5..7d31c9f406 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -185,3 +185,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 56a1ad8a18..891a740fcb 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -162,3 +162,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index d71dbc30c7..75e1747780 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -148,3 +148,5 @@ ARG USER
- ARG UID
- RUN if [ "${USER}" ]; then \
-   id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-+
-+ENV ENABLE_RUST 1
 diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index f4d2721178..34381dac8f 100755
+index f49eb638f8..6f98a91277 100755
 --- a/tests/lcitool/refresh
 +++ b/tests/lcitool/refresh
-@@ -63,7 +63,8 @@ add_user_mapping = [
-     "  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi\n"
- ]
- 
--def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None):
-+def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
-+                        enable_rust=True):
-     filename = Path(src_dir, "tests", "docker", "dockerfiles", host + ".docker")
-     cmd = lcitool_cmd + ["dockerfile"]
-     if cross is not None:
-@@ -75,6 +76,8 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None):
-     else:
-         trailer = "\n".join(add_user_mapping)
- 
-+    if enable_rust:
-+        trailer += "\nENV ENABLE_RUST 1\n"
+@@ -97,6 +97,11 @@ def generate_yaml(os, target, arch, trailer=None):
      generate(filename, cmd, trailer)
  
  
-@@ -180,7 +183,9 @@ try:
-     generate_dockerfile("fedora", "fedora-41")
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
-     generate_dockerfile("ubuntu2204", "ubuntu-2204",
--                        trailer="".join(ubuntu2204_rust_extras))
-+                        trailer="".join(ubuntu2204_rust_extras),
-+                        # https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318
-+                        enable_rust=False)
- 
++alpine_extras = [
++    "# https://gitlab.alpinelinux.org/alpine/aports/-/issues/17463\n",
++    "RUN apk add clang19-libclang\n",
++]
++
+ # Netmap still needs to be manually built as it is yet to be packaged
+ # into a distro. We also add cscope and gtags which are used in the CI
+ # test
+@@ -167,7 +172,8 @@ try:
      #
-     # Non-fatal Rust-enabled build
-@@ -249,7 +254,10 @@ try:
-                         project='qemu,qemu-win-installer',
-                         cross="mingw64",
-                         trailer=cross_build("x86_64-w64-mingw32-",
--                                            "x86_64-softmmu"))
-+                                            "x86_64-softmmu"),
-+                        # linking with rust is buggy:
-+                        # https://github.com/mesonbuild/meson/pull/14991
-+                        enable_rust=False)
- 
+     # Standard native builds
      #
-     # Cirrus packages lists for GitLab
+-    generate_dockerfile("alpine", "alpine-321")
++    generate_dockerfile("alpine", "alpine-321",
++                        trailer="".join(alpine_extras))
+     generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-12",
+                         trailer="".join(debian12_extras))
 -- 
 2.51.0
 
