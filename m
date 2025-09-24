@@ -4,86 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F14CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABACCCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 13:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Pf0-0006Dv-UX; Wed, 24 Sep 2025 09:35:55 -0400
+	id 1v1PhD-0006zx-L7; Wed, 24 Sep 2025 09:38:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1Pey-0006Bk-4I
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:35:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1v1PhB-0006zb-2M
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:38:09 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1Pes-0004jL-LR
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:35:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758720941;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bag7Ptn4J5Y/1DWF7VKOZgfEh15GMqlPJfGBL0E4bLw=;
- b=E0quDb9+ayB/aIiXAlNK+b3upOBenI5Teiw9ICCT7hSqLziKRPOrap26eu2C53KEuNMhO3
- rzz9204aZvtQCOPgfbkma4bcCuD1gNDqlNYXxOFwR//K4A9XzbN+IHcmQSqoxluJGQz6Eu
- mou9iIqDiG6Nv9lcfJVe6EL/vdvZPYs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-8LYYRJ2xObq8va08EsbTiA-1; Wed,
- 24 Sep 2025 09:35:36 -0400
-X-MC-Unique: 8LYYRJ2xObq8va08EsbTiA-1
-X-Mimecast-MFC-AGG-ID: 8LYYRJ2xObq8va08EsbTiA_1758720934
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B844718002C0; Wed, 24 Sep 2025 13:35:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.136])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D7153000198; Wed, 24 Sep 2025 13:35:27 +0000 (UTC)
-Date: Wed, 24 Sep 2025 14:35:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Yonggang Luo <luoyonggang@gmail.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Warner Losh <imp@bsdimp.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Ed Maste <emaste@freebsd.org>, devel@lists.libvirt.org,
- qemu-rust@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: Re: [PATCH v2 11/27] build-sys: cfi_debug and safe_stack are not
- compatible
-Message-ID: <aNPznNG2e5x94Xts@redhat.com>
-References: <20250924120426.2158655-1-marcandre.lureau@redhat.com>
- <20250924120426.2158655-12-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1v1Ph3-0004tV-Cj
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 09:38:08 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 0264D60007;
+ Wed, 24 Sep 2025 13:37:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FA5C4CEE7;
+ Wed, 24 Sep 2025 13:37:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1758721077;
+ bh=E4ixhkY8HwW7iTS5Si12737ldgLwAXbST4HbN3m8JQ8=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=rlp71cpNyDWxFZcNHMebg7CHBETrkBT/z2q4nKtjHX0YD9Yo1DW7ERFJez3fkG1EQ
+ hnBk4u6RYsLp65YY5FDei4pqUi8bBls5niTU+/ENorFrm3RJXZlEyv/xqiiUymlm8i
+ qsU1xsFfnb+mtxl+WBawJY123Gad2gkrvB2tP3p/PBv2dhdouoY9Xcce4v2G3UmWt0
+ sL4nLdLJY+0OvEnMDjEs6wRYrqxYbQFZCDUUlzUnkkVpUdZQyUH82ctW7IDlouhpPd
+ zxaMgn2vFf1fBwVqN2rurNJ1zNuftf0AMvJsGsgkvWGOvTH8fFtRqp39+eFXNpb0Ra
+ oH5RQzQZRP1hw==
+Date: Wed, 24 Sep 2025 18:59:35 +0530
+From: Naveen N Rao <naveen@kernel.org>
+To: "Nikunj A. Dadhania" <nikunj@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, kvm@vger.kernel.org,
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>, 
+ Michael Roth <michael.roth@amd.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>
+Subject: Re: [PATCH 8/8] target/i386: SEV: Add support for setting TSC
+ frequency for Secure TSC
+Message-ID: <swnray4zt34wzfyarg5np4ykfpxnwa6psaoghkis4wxxdi3ybx@mptfzf4633fs>
+References: <cover.1758189463.git.naveen@kernel.org>
+ <6a9b3e02d1a1eb903bd3e7c9596dfe00029de01e.1758189463.git.naveen@kernel.org>
+ <412fce46-e143-4b71-b5ac-24f4f5ae230f@amd.com>
+ <4f3f7b7d-f6bf-49de-8c3a-96876e298ad5@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250924120426.2158655-12-marcandre.lureau@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <4f3f7b7d-f6bf-49de-8c3a-96876e298ad5@amd.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,39 +74,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 24, 2025 at 04:04:08PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Tue, Sep 23, 2025 at 09:48:07AM +0530, Nikunj A. Dadhania wrote:
 > 
-> It fails to link on fedora >= 41:
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memcpy':
-> (.text.__sanitizer_internal_memcpy+0x0): multiple definition of `__sanitizer_internal_memcpy'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memcpy+0x0): first defined here
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memmove':
-> (.text.__sanitizer_internal_memmove+0x0): multiple definition of `__sanitizer_internal_memmove'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memmove+0x0): first defined here
-> /usr/bin/ld: /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.safestack.a(safestack.cpp.o): in function `__sanitizer_internal_memset':
-> (.text.__sanitizer_internal_memset+0x0): multiple definition of `__sanitizer_internal_memset'; /usr/bin/../lib/clang/20/lib/x86_64-redhat-linux-gnu/libclang_rt.ubsan_standalone.a(sanitizer_libc.cpp.o):(.text.__sanitizer_internal_memset+0x0): first defined here
 > 
-> cfi_debug seems to pull ubsan which has conflicting symbols with safe_stack.
-> 
-> See also: https://bugzilla.redhat.com/show_bug.cgi?id=2397265
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  meson.build                | 3 +++
->  .gitlab-ci.d/buildtest.yml | 6 +++---
->  2 files changed, 6 insertions(+), 3 deletions(-)
+> On 9/20/2025 3:36 AM, Tom Lendacky wrote:
+> > On 9/18/25 05:27, Naveen N Rao (AMD) wrote:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+<snip>
+
+> > 
+> > And does KVM_SET_TSC_KHZ have to be called if "tsc-frequency" wasn't set?
+> No, this is not required. This patch has changed a bit from my original version, we should have something like below: 
+> 
+> if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC) && sev_snp_guest->stsc_khz) {
+> ...
+> }
+
+Right, I suppose I relied on KVM using the default TSC frequency if the 
+VMM does KVM_SET_TSC_KHZ with a TSC frequency of zero, which is totally 
+unnecessary. I will update this.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks,
+Naveen
 
 
