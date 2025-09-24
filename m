@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBDDACAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC1FCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1UqH-00029I-Nx; Wed, 24 Sep 2025 15:07:54 -0400
+	id 1v1UnW-0007yA-15; Wed, 24 Sep 2025 15:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1UmC-00070W-Kl
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:42 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1v1Ult-0006uw-TK
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:25 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Uk8-0007uO-9C
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:35 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-32ec291a325so157954a91.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:26 -0700 (PDT)
+ id 1v1Ujq-0007nQ-R4
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:15 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-77f2e621ef8so243136b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758740485; x=1759345285; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758740470; x=1759345270; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZamIB9qOqLDXfHWztLFTsDY1Wf4aDJfUVKiJDrru8TA=;
- b=aH/PiVsipMaHhj+o+ok+FePadXftrIY0Ih9XsrlPfQFsvQRJpStqv0WrdTZVeAhq+/
- Vg9YV4DBqW2CIqRgGRZ/T6UC2MhcXPWcGxCex/qQuYr5meYzuAfEGRA2d7xYACu/xRLw
- ClA0ZjD/DC2ymRoAtoSol2nxwHuSiPk9Q3wlzwfCSnLZAd6ZeNskxM+22dwsUUlm/lGY
- z1ltw9usa5xo17/udqlRydtizqvK12wQ/wdiQyydMjshR4SFfkKYDDoFv62qmKnFmFqp
- dBjetFAbHSPURt4AjGdXIF/5KgJjHKhnqWgA/AQ3P2CRinJ0S4u18rz1/sFC7DEDLUnL
- QFCg==
+ bh=hlkqS35JxZy3ncaxHOMPx7RygOfL9wEkWQNVBqkOmNg=;
+ b=S2S87yJLAJWUI4jrX96gA3E3275YPGhpX6Jd8RxabnhQSrwk0hw0mJOrIYKUcYQh7F
+ B6ZYyzwNXh2k6PYPj274YbAP+rgxtMDkrZVx2epmgR3kB73SI3DMMyxW29yJ6Odp5+Eu
+ kZPQvz3KXWq2KD0YGKVP4hdg5MQtHDHpR1qpePOcA00nCDvBlArnJdbGAY/JuQcA2TDM
+ W/FJDxrk3Z8ilEpMzmTA8OOvQCLLVlB2Zs+G3woIL+Bh+Se2men6JyZfog8D6rKzNbys
+ joM586j97NMBV9GGJpqH8C0JupLuxgRCJDw9xZ42DaHZKBbWaZuReT2rIxQqfPxCPFYE
+ 6ftg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758740485; x=1759345285;
+ d=1e100.net; s=20230601; t=1758740470; x=1759345270;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZamIB9qOqLDXfHWztLFTsDY1Wf4aDJfUVKiJDrru8TA=;
- b=HBBwd6ibCKk1qAmSqixznTo14h/9NedaUwTPOgaggZHMKMYNt8vpH0dw1HW+sFd7aQ
- jvnThvat7tdfqF2hjH/t2RaawXbRg81hLZ8QIuVrxd2mrP7tbk6E2aA2gdmtv8QL/Gbk
- zkvA3nFZcr8qouzJ76dkNVjNvk8emJNl/uPIPeHt0tCeQTWRAExrLIoMAL0UmHJd6j3w
- YQJD+URuph44hMRewFmS0f6C/lmFCCLjk8m3XsJy/n8H24uP6l3fJ0+9Tf982DUjaj9Q
- erLkilCvWtBN/elfxe4vAG7xsRI5BjJrfp3CLCYBvSGX2KpA6k+hdrD92erxK6+p8IFJ
- Cpww==
-X-Gm-Message-State: AOJu0YwJ/R0LnYcQxxHIB12FAHwFsn+wLhiLmBJlzyUzop5Svu7bIjw1
- EmREd0RvNzF/EDLaZzzHualcKE100fEDaYIOcLEUgTzgMayvFiQtBkj6nhXMBUof8GC++FM2MXf
- vE5Z4
-X-Gm-Gg: ASbGncscQZD2anjSkGoi8Ptlp1NiJrlHNZivmrI5xLgIGyziiFmFEN96AvYLlLiJmVi
- pih1xA5mZujgdzdJLabmw2h2FtOHvvMtRqag1Hz9RUS/QBq8M6aikHhvZFOjhmKFdaUTvxQYqqj
- dQGOJsLwewbHmEKr0KUlzCViYHS/X1BM5F7AggkGTTFSsNMFHDhCWoc+cSflJ6E1o+eERVvACNP
- cRaPUF0P98QRvk63hkzAbOHesILtMkH7cW6uyRXPvXk/uUd7vH/Chqhl9YKpEVgOqm9IupjAdVW
- KLnFiypiqjlNfJnB5ZAL0E/0/8Oq6av5lhPW1ElHFq32GBzds8fEtpLZuuio7Z0FqcesMv5XhQr
- r4kZgRXhfEC2pmaLIIyNuZtGPLSc0
-X-Google-Smtp-Source: AGHT+IFv45f/OnNP+Iysqh/993rV03KXDoq/W52sw5GObjCaPNWjtMIXmX5qcAT4xz0gXbn7D2a18g==
-X-Received: by 2002:a17:90b:4d88:b0:32e:38bc:f5a9 with SMTP id
- 98e67ed59e1d1-3342a260f75mr720522a91.9.1758740483853; 
- Wed, 24 Sep 2025 12:01:23 -0700 (PDT)
+ bh=hlkqS35JxZy3ncaxHOMPx7RygOfL9wEkWQNVBqkOmNg=;
+ b=vRf9eMQYVkziFXQ4tFtLDB5a8n6fJxGMktuKV6KhIFwzL/MntjpWJZwXshe9zknr2L
+ gL2bADaFBjPxJ8PxC8q26RmBdIgCuEHCOKSrygtaWxb91CYPMeFdVLNRsOdz4reho73S
+ UIFX5iDEc3M6nYlPITCxoTLxPI3AVBNzUXViru743uEvy9wlgCfyLgBwQYSylYEMZ+8e
+ 9MYskRVgFY+c9sKuw0UI18kAf/S7a7UD1VN8Wep5w0lSjEmATX8Hq1NBKCNYZV9JeJ/v
+ 1AeexTwG5/vp4MerW5mkxxc1bpjgrwMxG2G5h5RHvbIMpit5tAJRju0Rq9Rz7QVU+wXs
+ g/PA==
+X-Gm-Message-State: AOJu0YzjIo/sLt9suG1O9jhx7iVzXeafz4hIq0dR6HZK+ECyPsGZeMYQ
+ MNNpkolAYKeVThrninxPCZ669ZUY+GsavfIaT7Ua58HGbd2hsgulkQmeUAKkOF5h36No5mVQr/3
+ 7/U6Q
+X-Gm-Gg: ASbGncv3E8bwK2MDA/1fM2135q5wXM+owyu0E30nxVCw8FF9jXT8HLDq2/y0EO+d/CK
+ D5XMtZBT0s4V/vIQemGsedaatAyNjUwTbV3ohmOW3VLybGmUbfV/vPbt9xhlx+E9/OsQg36T/4o
+ M0GLWPa7pYeecmFSdoTfxQffzTvqEtrJj5z2bq7dAKyHSF91N5sSbjrawwgXiVDc4Ip0yAseZQe
+ vytG4D8fkOT/su9WYGkTuQGk0leW8QNd79MFMpEQs5U8x6Hb2HYrgaceaJx1/xtbuUs62H1ufpX
+ GAjz2zCb8cw4eKrzSzRjDyJEMsjsMwGoxkvucrfKxdyU6U7rUz0mPv1cvWh7VUwZx9j+dQOw7g2
+ l0Pxjp8wjx6KzIPDqIurY6tpzDGEJ
+X-Google-Smtp-Source: AGHT+IFDNmUegVgKnuoYzOCJEJEFrZUCkR4mmeLdNJMuYashXkYvOjQ0iAUVYlGpGa48duP2dRs8Yw==
+X-Received: by 2002:a17:90b:3a91:b0:332:793e:c2d1 with SMTP id
+ 98e67ed59e1d1-3342a2e560cmr702895a91.36.1758740470090; 
+ Wed, 24 Sep 2025 12:01:10 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.23
+ 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 12:01:23 -0700 (PDT)
+ Wed, 24 Sep 2025 12:01:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/32] target/alpha: Simplify call_pal implementation
-Date: Wed, 24 Sep 2025 12:00:55 -0700
-Message-ID: <20250924190106.7089-23-richard.henderson@linaro.org>
+Cc: Arusekk <floss@arusekk.pl>
+Subject: [PULL 04/32] linux-user: Add syscall dispatch support
+Date: Wed, 24 Sep 2025 12:00:37 -0700
+Message-ID: <20250924190106.7089-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
 References: <20250924190106.7089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,131 +91,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since 288a5fe980f, we don't link translation blocks
-directly to palcode entry points.  If we load palbr
-from env instead of encoding the constant, we avoid
-all need for tb_flush().
+From: Arusekk <floss@arusekk.pl>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This commit adds support for the `prctl(PR_SET_SYSCALL_USER_DISPATCH)`
+function in the Linux userspace emulator.
+
+It is implemented as a fully host-independent function, by forcing
+a SIGSYS early during syscall handling, if the PC is outside the
+allowed range.
+
+Since disabled SUD is indistinguishable from enabled SUD with
+always-allowed region length == ~0, this encoding is used
+instead of introducing a new flag.
+
+Tested on [uglendix][1], will probably also apply to software like
+tiny-wine, rpcsx, limbo, lazypoline, vicar, sysfail and endokernel,
+to name a few.
+
+[1]: https://sr.ht/~arusekk/uglendix
+
+Signed-off-by: Arusekk <floss@arusekk.pl>
+Message-ID: <20250711225226.14652-1-floss@arusekk.pl>
+[rth: Split out is_vdso_sigreturn region matching and other minor tweaks.]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/helper.h       |  1 -
- linux-user/alpha/cpu_loop.c |  5 -----
- target/alpha/sys_helper.c   |  6 ------
- target/alpha/translate.c    | 21 ++++++---------------
- 4 files changed, 6 insertions(+), 27 deletions(-)
+ linux-user/qemu.h          |  5 +++
+ linux-user/signal-common.h |  5 +++
+ linux-user/syscall_defs.h  |  6 +++
+ linux-user/main.c          |  2 +
+ linux-user/syscall.c       | 76 +++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 93 insertions(+), 1 deletion(-)
 
-diff --git a/target/alpha/helper.h b/target/alpha/helper.h
-index d60f208703..788d2fbf28 100644
---- a/target/alpha/helper.h
-+++ b/target/alpha/helper.h
-@@ -90,7 +90,6 @@ DEF_HELPER_FLAGS_2(ieee_input_s, TCG_CALL_NO_WG, void, env, i64)
- #if !defined (CONFIG_USER_ONLY)
- DEF_HELPER_FLAGS_1(tbia, TCG_CALL_NO_RWG, void, env)
- DEF_HELPER_FLAGS_2(tbis, TCG_CALL_NO_RWG, void, env, i64)
--DEF_HELPER_FLAGS_1(tb_flush, TCG_CALL_NO_RWG, void, env)
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index e4dca0c20f..cabb7bd6a8 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -155,6 +155,11 @@ struct TaskState {
+     /* This thread's sigaltstack, if it has one */
+     struct target_sigaltstack sigaltstack_used;
  
- DEF_HELPER_1(halt, void, i64)
++    /* This thread's SYSCALL_USER_DISPATCH state, len=~0 means disabled */
++    vaddr sys_dispatch;
++    vaddr sys_dispatch_selector;
++    abi_ulong sys_dispatch_len;
++
+     /* Start time of task after system boot in clock ticks */
+     uint64_t start_boottime;
+ };
+diff --git a/linux-user/signal-common.h b/linux-user/signal-common.h
+index 0b04868727..8a44714251 100644
+--- a/linux-user/signal-common.h
++++ b/linux-user/signal-common.h
+@@ -28,6 +28,11 @@ extern abi_ulong default_rt_sigreturn;
+ extern abi_ulong vdso_sigreturn_region_start;
+ extern abi_ulong vdso_sigreturn_region_end;
  
-diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
-index bb8346b509..f93597c400 100644
---- a/linux-user/alpha/cpu_loop.c
-+++ b/linux-user/alpha/cpu_loop.c
-@@ -94,11 +94,6 @@ void cpu_loop(CPUAlphaState *env)
-                 break;
-             case 0x86:
-                 /* IMB */
--                /* ??? We can probably elide the code using page_unprotect
--                   that is checking for self-modifying code.  Instead we
--                   could simply call tb_flush here.  Until we work out the
--                   changes required to turn off the extra write protection,
--                   this can be a no-op.  */
-                 break;
-             case 0x9E:
-                 /* RDUNIQUE */
-diff --git a/target/alpha/sys_helper.c b/target/alpha/sys_helper.c
-index 51e3254428..87e37605c1 100644
---- a/target/alpha/sys_helper.c
-+++ b/target/alpha/sys_helper.c
-@@ -20,7 +20,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
--#include "exec/tb-flush.h"
- #include "exec/helper-proto.h"
- #include "system/runstate.h"
- #include "system/system.h"
-@@ -38,11 +37,6 @@ void helper_tbis(CPUAlphaState *env, uint64_t p)
-     tlb_flush_page(env_cpu(env), p);
++static inline bool is_vdso_sigreturn(abi_ulong pc)
++{
++    return pc >= vdso_sigreturn_region_start && pc < vdso_sigreturn_region_end;
++}
++
+ void setup_sigtramp(abi_ulong tramp_page);
+ 
+ int on_sig_stack(unsigned long sp);
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index df26a2d28f..cd9ff709b8 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -689,6 +689,12 @@ typedef struct target_siginfo {
+ #define TARGET_TRAP_HWBKPT      (4)     /* hardware breakpoint/watchpoint */
+ #define TARGET_TRAP_UNK         (5)     /* undiagnosed trap */
+ 
++/*
++ * SIGSYS si_codes
++ */
++#define TARGET_SYS_SECCOMP       (1)  /* seccomp triggered */
++#define TARGET_SYS_USER_DISPATCH (2)  /* syscall user dispatch triggered */
++
+ /*
+  * SIGEMT si_codes
+  */
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 4ddfc9a619..db751c0757 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -228,6 +228,8 @@ void init_task_state(TaskState *ts)
+         ts->start_boottime += bt.tv_nsec * (uint64_t) ticks_per_sec /
+                               NANOSECONDS_PER_SECOND;
+     }
++
++    ts->sys_dispatch_len = -1;
  }
  
--void helper_tb_flush(CPUAlphaState *env)
--{
--    tb_flush(env_cpu(env));
--}
--
- void helper_halt(uint64_t restart)
- {
-     if (restart) {
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index cebab0318c..f11b382438 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -48,8 +48,6 @@ struct DisasContext {
- 
- #ifdef CONFIG_USER_ONLY
-     MemOp unalign;
--#else
--    uint64_t palbr;
+ CPUArchState *cpu_copy(CPUArchState *env)
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 91360a072c..9098cdb9fa 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6344,6 +6344,10 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
  #endif
-     uint32_t tbflags;
-     int mem_idx;
-@@ -1155,7 +1153,6 @@ static DisasJumpType gen_call_pal(DisasContext *ctx, int palcode)
- #else
-     {
-         TCGv tmp = tcg_temp_new();
--        uint64_t entry;
+ #ifndef PR_SET_SYSCALL_USER_DISPATCH
+ # define PR_SET_SYSCALL_USER_DISPATCH 59
++# define PR_SYS_DISPATCH_OFF 0
++# define PR_SYS_DISPATCH_ON 1
++# define SYSCALL_DISPATCH_FILTER_ALLOW 0
++# define SYSCALL_DISPATCH_FILTER_BLOCK 1
+ #endif
+ #ifndef PR_SME_SET_VL
+ # define PR_SME_SET_VL  63
+@@ -6398,6 +6402,36 @@ static abi_long do_prctl_inval1(CPUArchState *env, abi_long arg2)
+ #define do_prctl_sme_set_vl do_prctl_inval1
+ #endif
  
-         gen_pc_disp(ctx, tmp, 0);
-         if (ctx->tbflags & ENV_FLAG_PAL_MODE) {
-@@ -1165,12 +1162,11 @@ static DisasJumpType gen_call_pal(DisasContext *ctx, int palcode)
-         }
-         tcg_gen_st_i64(tmp, tcg_env, offsetof(CPUAlphaState, exc_addr));
++static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
++                                               abi_ulong arg2, abi_ulong arg3,
++                                               abi_ulong arg4, abi_ulong arg5)
++{
++    CPUState *cpu = env_cpu(env);
++    TaskState *ts = get_task_state(cpu);
++
++    switch (arg2) {
++    case PR_SYS_DISPATCH_OFF:
++        if (arg3 || arg4 || arg5) {
++            return -TARGET_EINVAL;
++        }
++        ts->sys_dispatch_len = -1;
++        return 0;
++    case PR_SYS_DISPATCH_ON:
++        if (arg3 && arg3 + arg4 <= arg3) {
++            return -TARGET_EINVAL;
++        }
++        if (arg5 && !access_ok(cpu, VERIFY_READ, arg5, 1)) {
++            return -TARGET_EFAULT;
++        }
++        ts->sys_dispatch = arg3;
++        ts->sys_dispatch_len = arg4;
++        ts->sys_dispatch_selector = arg5;
++        return 0;
++    default:
++        return -TARGET_EINVAL;
++    }
++}
++
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -6473,6 +6507,9 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+     case PR_SET_UNALIGN:
+         return do_prctl_set_unalign(env, arg2);
  
--        entry = ctx->palbr;
--        entry += (palcode & 0x80
--                  ? 0x2000 + (palcode - 0x80) * 64
--                  : 0x1000 + palcode * 64);
--
--        tcg_gen_movi_i64(cpu_pc, entry);
-+        tcg_gen_ld_i64(cpu_pc, tcg_env, offsetof(CPUAlphaState, palbr));
-+        tcg_gen_addi_i64(cpu_pc, cpu_pc,
-+                         palcode & 0x80
-+                         ? 0x2000 + (palcode - 0x80) * 64
-+                         : 0x1000 + palcode * 64);
-         return DISAS_PC_UPDATED;
++    case PR_SET_SYSCALL_USER_DISPATCH:
++        return do_prctl_syscall_user_dispatch(env, arg2, arg3, arg4, arg5);
++
+     case PR_CAP_AMBIENT:
+     case PR_CAPBSET_READ:
+     case PR_CAPBSET_DROP:
+@@ -6527,7 +6564,6 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+     case PR_SET_MM:
+     case PR_GET_SECCOMP:
+     case PR_SET_SECCOMP:
+-    case PR_SET_SYSCALL_USER_DISPATCH:
+     case PR_GET_THP_DISABLE:
+     case PR_SET_THP_DISABLE:
+     case PR_GET_TSC:
+@@ -13897,12 +13933,46 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     return ret;
+ }
+ 
++static bool sys_dispatch(CPUState *cpu, TaskState *ts)
++{
++    abi_ptr pc;
++
++    if (likely(ts->sys_dispatch_len == -1)) {
++        return false;
++    }
++
++    pc = cpu->cc->get_pc(cpu);
++    if (likely(pc - ts->sys_dispatch < ts->sys_dispatch_len)) {
++        return false;
++    }
++    if (unlikely(is_vdso_sigreturn(pc))) {
++        return false;
++    }
++    if (likely(ts->sys_dispatch_selector)) {
++        uint8_t sb;
++        if (get_user_u8(sb, ts->sys_dispatch_selector)) {
++            force_sig(TARGET_SIGSEGV);
++            return true;
++        }
++        if (likely(sb == SYSCALL_DISPATCH_FILTER_ALLOW)) {
++            return false;
++        }
++        if (unlikely(sb != SYSCALL_DISPATCH_FILTER_BLOCK)) {
++            force_sig(TARGET_SIGSYS);
++            return true;
++        }
++    }
++    force_sig_fault(TARGET_SIGSYS, TARGET_SYS_USER_DISPATCH, pc);
++    return true;
++}
++
+ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+                     abi_long arg2, abi_long arg3, abi_long arg4,
+                     abi_long arg5, abi_long arg6, abi_long arg7,
+                     abi_long arg8)
+ {
+     CPUState *cpu = env_cpu(cpu_env);
++    TaskState *ts = get_task_state(cpu);
+     abi_long ret;
+ 
+ #ifdef DEBUG_ERESTARTSYS
+@@ -13919,6 +13989,10 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
      }
  #endif
-@@ -1292,11 +1288,7 @@ static DisasJumpType gen_mtpr(DisasContext *ctx, TCGv vb, int regno)
-     case 7:
-         /* PALBR */
-         tcg_gen_st_i64(vb, tcg_env, offsetof(CPUAlphaState, palbr));
--        /* Changing the PAL base register implies un-chaining all of the TBs
--           that ended with a CALL_PAL.  Since the base register usually only
--           changes during boot, flushing everything works well.  */
--        gen_helper_tb_flush(tcg_env);
--        return DISAS_PC_STALE;
-+        break;
  
-     case 32 ... 39:
-         /* Accessing the "non-shadow" general registers.  */
-@@ -2874,7 +2866,6 @@ static void alpha_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     ctx->ir = cpu_std_ir;
-     ctx->unalign = (ctx->tbflags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
- #else
--    ctx->palbr = env->palbr;
-     ctx->ir = (ctx->tbflags & ENV_FLAG_PAL_MODE ? cpu_pal_ir : cpu_std_ir);
- #endif
++    if (sys_dispatch(cpu, ts)) {
++        return -QEMU_ESIGRETURN;
++    }
++
+     record_syscall_start(cpu, num, arg1,
+                          arg2, arg3, arg4, arg5, arg6, arg7, arg8);
  
 -- 
 2.43.0
