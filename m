@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D189FCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88714CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1M6I-0006fN-ID; Wed, 24 Sep 2025 05:47:50 -0400
+	id 1v1M6b-0006iU-Dg; Wed, 24 Sep 2025 05:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1M6G-0006ex-TY
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:47:48 -0400
-Received: from 7.mo552.mail-out.ovh.net ([188.165.59.253])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1M6Z-0006hv-I1
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:48:07 -0400
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1M6E-0007US-3g
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:47:48 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.54])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4cWsTR5wGQz6V3l;
- Wed, 24 Sep 2025 09:47:39 +0000 (UTC)
-Received: from kaod.org (37.59.142.112) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1v1M6P-0007WI-SA
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:48:07 -0400
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.179])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4cWsTh6GxBz5w6K;
+ Wed, 24 Sep 2025 09:47:52 +0000 (UTC)
+Received: from kaod.org (37.59.142.108) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.59; Wed, 24 Sep
- 2025 11:47:38 +0200
+ 2025 11:47:51 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-112S006ad482f48-c741-4c5c-a671-66310630e2ef,
+ (GARM-108S002e4864947-a02d-4e66-9429-9c4fc422bf1f,
  FFBB6E977D22EB3F6A0A3CEA11E4CFA931BEF3A6) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <10ff9bc6-9ca0-44b5-ac01-3ccd8f3356eb@kaod.org>
-Date: Wed, 24 Sep 2025 11:47:37 +0200
+Message-ID: <b134e567-3640-490a-add4-bb36ba0c9272@kaod.org>
+Date: Wed, 24 Sep 2025 11:47:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] hw/arm/aspeed: Move aspeed_install_boot_rom to
- common SoC code
+Subject: Re: [PATCH v2 4/7] hw/arm/aspeed: Move aspeed_load_vbootrom to common
+ SoC code
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
@@ -42,7 +42,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>
 References: <20250924055602.294857-1-jamin_lin@aspeedtech.com>
- <20250924055602.294857-4-jamin_lin@aspeedtech.com>
+ <20250924055602.294857-5-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,35 +87,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250924055602.294857-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250924055602.294857-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.112]
-X-ClientProxiedBy: DAG9EX1.mxp5.local (172.16.2.81) To DAG8EX2.mxp5.local
+X-Originating-IP: [37.59.142.108]
+X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 818facdf-ce91-4691-8878-966ca1053903
-X-Ovh-Tracer-Id: 13707549894809586479
+X-Ovh-Tracer-GUID: bbf3c8ce-2e5a-495c-a764-268be76ca793
+X-Ovh-Tracer-Id: 13711209066548333359
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGIgXrVyMJYhEFmDIOmOvOeAV736Vp1QzgF4Uy6f5WAmXoys+z9OhSOMqR7htJhq4fyqwlc4UHnj1Y7Z7bTLfdcNUSrM47cm8rV6JNbii2oxCT9DDeNZ2ceP1xK/L98lJ9NlZtAUE58ZiAjdxc7Uo1k85tTEl7/wHVALgV4JQKPkuXmsOogHjD6X+F4hhZKGV94Dv3EkX/aGG8R3T/kTBj2f/XczLbO23L9G1gsIPpCtXqEOtSK2eKUTCH243sgwqjdKaESTbiH+/u/ZlxJI7t6TJ/EfJDe388uhPtpkA0TuHsIlpQpW3Lfykpb0HjWupVfHZzQ9+migmGa/x351IMYeNIwpxB3vWPw+YN7gWI13PUh4oSQlpmveU9A6nNuz1xLwYaF5UnIPB9FBf7shvAOQIdefkIRgnnfPtwypQj9CrMjcIDixI3SUXXcT4gbNLAB2VZOGwowfVsTw2YKwuVIBqdKL2eA5MNd7E1PEBWYJEvt+FZck3FsXiVffi2PpauHnooBs7i0kyina2DRVb5sx02iGDab5RmcltIgLeaxWe2FxX2yeWzAUfku34ilYloyjJXHvlYQhKmr5S1s2y1bw9h55cNUD5n3lOmaKQV6wbbCYsVh7oSvghweY2or7H9prVmKHLfy5C7v/SpGZGYPkcneiQ6npk432tJF2WX1zw
-DKIM-Signature: a=rsa-sha256; bh=o/fMiaB5CZNEYMnAk42YPyp0fs7+F/TNQ/Wu3FqBzxk=; 
+X-VR-SPAMCAUSE: dmFkZTGH5VBLOuSKlD5f33Xct79dsDOs8kr/nVfOh53MRWnj9rBlccBZJxqpnu2wq9eD19mcQaqBlB01Rjk34EY7uk2kjJWXc5wMBn6N45fpnGM/XAP213fzAIr++PTg9ipLpQsNVeaecueHuQa+r6y7xXub1n63qTe7/2bASjXrg6R3vAtpTM/csn3bSw8nsTNG3dAOS3yWn61uc2MljZG89cBs/UaXeQa1cdm9GksB2R0D2lNgy06d0jAscQYiO6CqJwnYaovU0djwaaW7jbxn5bLdlrqQJ6IYFVk0NExjMGVwIoEhu330gt/cP2+17cw19O0ieizzITCWfd5eK24DgElGCEGVNoHBbbeCBc6aPcnbOmTmpb9mCXan7/YMI2eCKOlkbfp7oa1wU7T6S7QeXjRNh1iaApFPMSHViu26LolsxUQHxZsf1UcKrMjdr1I0QlFMr8IQLD6wevo4g53oFu+meMYxzZwnbFUOgSQjGqu9lg73Fd0XyTjOSGjniGlrswG5tuPbuLRxjO8bNY5yE362Tx5kU0/u5Frkxbyu/QpqczNjRbXOPdMqeFMfdhlvQduxC+0r2uQqdABSjp0y64Et6GZw7oUi8l8UBToMN/dsAtu4U+9w5SX4SseG+WL0ohfA3RFjFWcziuRX+0kSLMlk6IaNuMiFtGh6/gU7SkyFvw
+DKIM-Signature: a=rsa-sha256; bh=o1/CcvNvGikq50UbbY/4egc04q9xFGQ97KBxh8mPnIM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1758707261; v=1;
- b=AeVHJ5GcZOpyR4s5hhSplb1VjNl8G5SEKxui4xwN73JENHoiGmoKXx6lJsaeDudFgmNWpRST
- CfDmI3OUYGjavGEM9ENUEsmEuaJicT8X6sJ4aUi8iINZ5ieTbSXlssBoG35tv9aHW726TgIKP56
- +aEpv+DL0kNXyWJwmx/lllyeUFjJkqHsXBU8RpedXH4hSZ5p8h8mxZksa9xp+MUsYwmH+B5+yDX
- MwwodwnoNau2vTRuKskcJ2m6gyKA4cNElGzLnK937M19ozS8NAkIJ6gN47pB5n0FBeBerNn1HZX
- pAQAp4tIPEakv/BgIDxw6wqtv/tq+JKg89uYWZefh7+/g==
-Received-SPF: pass client-ip=188.165.59.253; envelope-from=clg@kaod.org;
- helo=7.mo552.mail-out.ovh.net
+ t=1758707273; v=1;
+ b=MpnHIegVUBjLUq66mdVWMzq2b4T/p66GKSpe/Cg0IHkb8g4PIbabpTSl3Y1A0WNFZtHsua60
+ 8zAoSZU31tR2JJBd0Brd6NK3LMojg1P4eOBX/87hRHjborkrK5Jok4eSKcXBs4Oi+rY/KIONX81
+ XXO6lM8TdjBPwFh0y4VWa41HlQRyIG/W+56qAPf8ZKocXLwcPfRpJjNIoKfSEFhApOccNKb7MD2
+ pFwDRXX+nH/PsheoTPiQbSpmXAZKQQQZDkdhpH0ipu/e1tDM/lJlqc4iA6HttugcPdt4/r3dRC+
+ 7ls1NPZaFcusKjwYItooKBT8wRTOBxybfASGWarI9lZzg==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,15 +132,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/24/25 07:55, Jamin Lin wrote:
-> Move the boot ROM install helper into common SoC code so it can be reused
+> Move the vbootrom loader helper into common SoC code so it can be reused
 > by all ASPEED boards, and decouple the API from AspeedMachineState.
 > 
 > Specifically:
->   - Move aspeed_install_boot_rom() to hw/arm/aspeed_soc_common.c and
->     declare it in include/hw/arm/aspeed_soc.h.
->   - Change the helper’s signature to take AspeedSoCState * and a
->     MemoryRegion * provided by the caller, instead of AspeedMachineState *.
->   - Update aspeed_machine_init() call sites accordingly.
+> - Move aspeed_load_vbootrom() to hw/arm/aspeed_soc_common.c and
+> declare it in include/hw/arm/aspeed_soc.h.
+> - Change the helper’s signature to take AspeedSoCState * instead of
+> AspeedMachineState *.
+> - Update aspeed_machine_init() call sites accordingly.
 > 
 > No functional change.
 > 
@@ -155,89 +155,128 @@ C.
 
 
 > ---
->   include/hw/arm/aspeed_soc.h |  2 ++
->   hw/arm/aspeed.c             | 23 +++--------------------
->   hw/arm/aspeed_soc_common.c  | 17 +++++++++++++++++
->   3 files changed, 22 insertions(+), 20 deletions(-)
+>   include/hw/arm/aspeed_soc.h |  4 ++++
+>   hw/arm/aspeed.c             | 31 +------------------------------
+>   hw/arm/aspeed_soc_common.c  | 25 +++++++++++++++++++++++++
+>   3 files changed, 30 insertions(+), 30 deletions(-)
 > 
 > diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 5567bdcb69..aea210a8e2 100644
+> index aea210a8e2..ed32efb543 100644
 > --- a/include/hw/arm/aspeed_soc.h
 > +++ b/include/hw/arm/aspeed_soc.h
-> @@ -314,6 +314,8 @@ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
->                                  unsigned int count, int unit0);
->   void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+> @@ -43,6 +43,8 @@
+>   #include "hw/char/serial-mm.h"
+>   #include "hw/intc/arm_gicv3.h"
+>   
+> +#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+> +
+>   #define ASPEED_SPIS_NUM  3
+>   #define ASPEED_EHCIS_NUM 4
+>   #define ASPEED_WDTS_NUM  8
+> @@ -316,6 +318,8 @@ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
 >                              Error **errp);
-> +void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
-> +                             MemoryRegion *boot_rom, uint64_t rom_size);
+>   void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
+>                                MemoryRegion *boot_rom, uint64_t rom_size);
+> +void aspeed_load_vbootrom(AspeedSoCState *soc, const char *bios_name,
+> +                          Error **errp);
 >   
 >   static inline int aspeed_uart_index(int uart_dev)
 >   {
 > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index 4d0d935836..429f4c6d77 100644
+> index 429f4c6d77..6046ec0bb2 100644
 > --- a/hw/arm/aspeed.c
 > +++ b/hw/arm/aspeed.c
-> @@ -263,24 +263,6 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
+> @@ -26,9 +26,7 @@
+>   #include "hw/qdev-properties.h"
+>   #include "system/block-backend.h"
+>   #include "system/reset.h"
+> -#include "hw/loader.h"
+>   #include "qemu/error-report.h"
+> -#include "qemu/datadir.h"
+>   #include "qemu/units.h"
+>   #include "hw/qdev-clock.h"
+>   #include "system/system.h"
+> @@ -263,33 +261,6 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
 >       cpu_set_pc(cs, info->smp_loader_start);
 >   }
 >   
-> -/*
-> - * Create a ROM and copy the flash contents at the expected address
-> - * (0x0). Boots faster than execute-in-place.
-> - */
-> -static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
-> -                                    uint64_t rom_size)
-> -{
-> -    AspeedSoCState *soc = bmc->soc;
-> -    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+> -#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
 > -
-> -    memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
-> -                           &error_abort);
-> -    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
-> -                                        &bmc->boot_rom, 1);
-> -    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
-> -                          &error_abort);
+> -/*
+> - * This function locates the vbootrom image file specified via the command line
+> - * using the -bios option. It loads the specified image into the vbootrom
+> - * memory region and handles errors if the file cannot be found or loaded.
+> - */
+> -static void aspeed_load_vbootrom(AspeedMachineState *bmc, const char *bios_name,
+> -                                 Error **errp)
+> -{
+> -    g_autofree char *filename = NULL;
+> -    AspeedSoCState *soc = bmc->soc;
+> -    int ret;
+> -
+> -    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+> -    if (!filename) {
+> -        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
+> -        return;
+> -    }
+> -
+> -    ret = load_image_mr(filename, &soc->vbootrom);
+> -    if (ret < 0) {
+> -        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
+> -        return;
+> -    }
 > -}
 > -
->   #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+>   static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
+>                                  bool boot_emmc)
+>   {
+> @@ -451,7 +422,7 @@ static void aspeed_machine_init(MachineState *machine)
 >   
->   /*
-> @@ -460,9 +442,10 @@ static void aspeed_machine_init(MachineState *machine)
->   
->           if (fmc0 && !boot_emmc) {
->               uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
-> -            aspeed_install_boot_rom(bmc, fmc0, rom_size);
-> +            aspeed_install_boot_rom(bmc->soc, fmc0, &bmc->boot_rom, rom_size);
->           } else if (emmc0) {
-> -            aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
-> +            aspeed_install_boot_rom(bmc->soc, blk_by_legacy_dinfo(emmc0),
-> +                                    &bmc->boot_rom, 64 * KiB);
->           }
+>       if (amc->vbootrom) {
+>           bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
+> -        aspeed_load_vbootrom(bmc, bios_name, &error_abort);
+> +        aspeed_load_vbootrom(bmc->soc, bios_name, &error_abort);
 >       }
 >   
+>       arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
 > diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-> index d0a400725f..7f104f8de5 100644
+> index 7f104f8de5..bc70e864fb 100644
 > --- a/hw/arm/aspeed_soc_common.c
 > +++ b/hw/arm/aspeed_soc_common.c
-> @@ -178,6 +178,23 @@ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
->       rom_add_blob_fixed("aspeed.boot_rom", storage, rom_size, addr);
+> @@ -19,6 +19,7 @@
+>   #include "system/blockdev.h"
+>   #include "system/block-backend.h"
+>   #include "hw/loader.h"
+> +#include "qemu/datadir.h"
+>   
+>   
+>   const char *aspeed_soc_cpu_type(AspeedSoCClass *sc)
+> @@ -195,6 +196,30 @@ void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
+>                             &error_abort);
 >   }
 >   
 > +/*
-> + * Create a ROM and copy the flash contents at the expected address
-> + * (0x0). Boots faster than execute-in-place.
+> + * This function locates the vbootrom image file specified via the command line
+> + * using the -bios option. It loads the specified image into the vbootrom
+> + * memory region and handles errors if the file cannot be found or loaded.
 > + */
-> +void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
-> +                             MemoryRegion *boot_rom, uint64_t rom_size)
+> +void aspeed_load_vbootrom(AspeedSoCState *soc, const char *bios_name,
+> +                          Error **errp)
 > +{
-> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+> +    g_autofree char *filename = NULL;
+> +    int ret;
 > +
-> +    memory_region_init_rom(boot_rom, NULL, "aspeed.boot_rom", rom_size,
-> +                           &error_abort);
-> +    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
-> +                                        boot_rom, 1);
-> +    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
-> +                          &error_abort);
+> +    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+> +    if (!filename) {
+> +        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
+> +        return;
+> +    }
+> +
+> +    ret = load_image_mr(filename, &soc->vbootrom);
+> +    if (ret < 0) {
+> +        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
+> +        return;
+> +    }
 > +}
 > +
 >   static void aspeed_soc_realize(DeviceState *dev, Error **errp)
