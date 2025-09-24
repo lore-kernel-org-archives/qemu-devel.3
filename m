@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1ECCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E08CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 04:41:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1HIS-0006RF-2v; Wed, 24 Sep 2025 00:40:04 -0400
+	id 1v1HId-0006Zs-MX; Wed, 24 Sep 2025 00:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HI7-0006LQ-UN; Wed, 24 Sep 2025 00:39:43 -0400
+ id 1v1HIJ-0006PQ-Fq; Wed, 24 Sep 2025 00:39:57 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1v1HI3-0006QO-Ho; Wed, 24 Sep 2025 00:39:43 -0400
+ id 1v1HI3-0006Qe-T5; Wed, 24 Sep 2025 00:39:47 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSmu091795
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 58O4bSmt091795
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Wed, 24 Sep 2025 13:37:39 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jWpLp8n23CdClF2nwSY2mTKMJfX9C2XmSiyVTvW4DxU=; 
+DKIM-Signature: a=rsa-sha256; bh=stt1PYHjZPmmH11DgDaK1e3bftbIHLz7TmtRdVRF/9A=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1758688660; v=1;
- b=Z/ywqlxOJlUU34+E0osmWrMy3ELkCuh2OmBTrboInpXjOqD4SffZwY/4CYZU9EMl
- Dzx+hMFZXJ69msVRzYu3/rva7z862cW0LJjoo/7a+OQagfk8KQoAs9iIRpTaSSa0
- pt61xjJaSVVPqRurq0vu8rPC19jEuObo8buUpNjAPokMhv64OcpL5QB9Y95TzlPO
- DlIeieX9/8KQLvSGtaM+M1bC9SwqmIQfS3fxvyYmqXzx7aCq3R7AM6yqLJEfDQ+v
- CJWE+1FHrkF22D4QuYAryKLCEdfm+xmGbKGgorUxyLRleupCLTsp+J1Kg+Ny5fWK
- 7e33gFmpWCJMRvhjM4Rrxw==
+ s=rs20250326; t=1758688659; v=1;
+ b=lKHDilw5Fq1/cnZFtWrkLQsf0wSND4A4CU0I4JhwbBbzg1lFKYlm5Q6wiWuBCtxG
+ CBRYgMu6tQ2BVB7pBZ4GKpjKjWSZFTvVUm0oTmudZfXEsN8GNwYfzHYCC7V2sEjn
+ SWwyuMCezPLlRWJoNUlfxXyyK+NclfnGNRTrHEZnjUWn2czlf+auXXMRtpwS0RGD
+ 0eOCj+jtWsvogScD6U0vQbVzanTlRUywY+cLXorEA1hhfKVYP1sH1Uj43IJdxQUo
+ kvY6GCE+/eIZjhpVu+LCvIvEwMqhx+YtYzSwQh4kYV8v9fTB/B5MDHg2SQtUp3+c
+ sOnfgKokiFWh2MNIuOFJvA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 24 Sep 2025 13:37:21 +0900
-Subject: [PATCH v4 2/7] vfio/pci: Do not unparent in instance_finalize()
+Date: Wed, 24 Sep 2025 13:37:20 +0900
+Subject: [PATCH v4 1/7] docs/devel: Do not unparent in instance_finalize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250924-use-v4-2-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250924-use-v4-1-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250924-use-v4-0-07c6c598f53d@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -91,8 +91,7 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,39 +111,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Children are automatically unparented so manually unparenting is
 unnecessary.
 
-Worse, automatic unparenting happens before the insntance_finalize()
+Worse, automatic unparenting happens before the instance_finalize()
 callback of the parent gets called, so object_unparent() calls in
 the callback will refer to objects that are already unparented, which
 is semantically incorrect.
 
+Remove the instruction to call object_unparent(), and the exception
+of the "do not call object_unparent()" rule for instance_finalize().
+
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/vfio/pci.c | 4 ----
- 1 file changed, 4 deletions(-)
+ docs/devel/memory.rst | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d14e96b2f82d..bc0b4c4d562b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2025,7 +2025,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
-         vfio_region_finalize(&bar->region);
-         if (bar->mr) {
-             assert(bar->size);
--            object_unparent(OBJECT(bar->mr));
-             g_free(bar->mr);
-             bar->mr = NULL;
-         }
-@@ -2033,9 +2032,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 42d3ca29c431..11858543f256 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -165,17 +165,14 @@ and finalized one by one.  The order in which memory regions will be
+ finalized is not guaranteed.
  
-     if (vdev->vga) {
-         vfio_vga_quirk_finalize(vdev);
--        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
--            object_unparent(OBJECT(&vdev->vga->region[i].mem));
--        }
-         g_free(vdev->vga);
-     }
- }
+ If however the memory region is part of a dynamically allocated data
+-structure, you should call object_unparent() to destroy the memory region
+-before the data structure is freed.  For an example see VFIOMSIXInfo
+-and VFIOQuirk in hw/vfio/pci.c.
++structure, you should free the memory region in the instance_finalize
++callback.  For an example see VFIOMSIXInfo and VFIOQuirk in
++hw/vfio/pci.c.
+ 
+ You must not destroy a memory region as long as it may be in use by a
+ device or CPU.  In order to do this, as a general rule do not create or
+-destroy memory regions dynamically during a device's lifetime, and only
+-call object_unparent() in the memory region owner's instance_finalize
+-callback.  The dynamically allocated data structure that contains the
+-memory region then should obviously be freed in the instance_finalize
+-callback as well.
++destroy memory regions dynamically during a device's lifetime, and must
++never call object_unparent().
+ 
+ If you break this rule, the following situation can happen:
+ 
+@@ -201,9 +198,7 @@ this exception is rarely necessary, and therefore it is discouraged,
+ but nevertheless it is used in a few places.
+ 
+ For regions that "have no owner" (NULL is passed at creation time), the
+-machine object is actually used as the owner.  Since instance_finalize is
+-never called for the machine object, you must never call object_unparent
+-on regions that have no owner, unless they are aliases or containers.
++machine object is actually used as the owner.
+ 
+ 
+ Overlapping regions and priority
 
 -- 
 2.51.0
