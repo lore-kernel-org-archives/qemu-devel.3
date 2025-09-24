@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47EEFCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33658CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1KFO-0000uu-DX; Wed, 24 Sep 2025 03:49:06 -0400
+	id 1v1KHh-0003Vo-57; Wed, 24 Sep 2025 03:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v1KFJ-0000tZ-J1
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:49:02 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1v1KFC-0007dz-6h
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:49:01 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2698d47e776so48064215ad.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 00:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1758700127; x=1759304927; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ojdUEYl9Lbk4rUbClRXCfBPwqK3RCWoKxJJxNd/cr2s=;
- b=PBR5+1aE/dZF03ocNTuTAOs0w9KXqQp5Sr8CcrDO7muT7jGzzLRwhsAYXQWyPKuP3r
- 0nbDi0HFVn3QdmIXt4uvXT5LQFhFSGEl07+90T7IRQA1RjDZXJUA80Row5EIDFSQXx3w
- gRvdUTHRRaMF1W1A718DqzwcRcFIkmgFxBMWOzFjHcaa53T1DPwFvNDcVw1ZeoT3sC7E
- auxThna8GqWkWJGH3ljy5vDJ24KDAxkXjZpFi73+xWdPXtCc6nGAcOlckpuy9fgpAt0h
- Bd2GOPMYr8L0IHbEtRrtTF7soXTXcR8tVBQ2esu2KnKwquFX14Ywwxz/seT83Kh4pttN
- nqaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758700127; x=1759304927;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ojdUEYl9Lbk4rUbClRXCfBPwqK3RCWoKxJJxNd/cr2s=;
- b=iIl4qLxBDUHTaw8hVbdUDs7tiKz0vfQYbmhlSA+M+nVICjbSFWjsBb7jDFWDKblhpk
- hq8Fe34KHufePL/b5r1xZ3F81QgqIzftKvNTHLBX2ET/4zOPBprV5tJ2twI+nKmTEzh0
- ZeRplO2rcsF/WCQlqSJK1jxe3/JpvdtwWMrDDybPckCVMKpto9Z0vzQOh5YRwBHPQQfx
- uqgACfc+HPVqa599fcQ45YuhR5ErMVU68fZYwKbuQONjmBCcilVIXNOem6Dwvxo5EBwG
- iCwfBDXjtpYV4aT70Cfd3bvuOXyG8kMzQQSnd7bcGDfPLsLtM+IqGBxBy9iEvnp4gkg0
- KC5g==
-X-Gm-Message-State: AOJu0YzgyB+HE4SUuz4CXEtwNQL9aZ7LE5uwJ4P2B2oxUQ+zk4wHXloi
- dbpMtFcO6BhMRblh+QQlP/YlyhszZPTja1McBsp+CFFo+a6UNrVeK5/onXxGUE41iaIJjadnC2p
- zzdeaTNycpC1Ob0eBdnj6pfYXOx3msLDDlef9C4N5PPikH2mQOKjiJBAlEfeR8xhR3T//sgB54U
- LL3fZFH0DD/oGHtSgEMyCdYzolwuPMGGR1pC7gmA==
-X-Gm-Gg: ASbGncv5lIctRAANiOOBynH89+jrS/BVsBUAfz4EATGblqZVl7prDTPTeRW6PMOXZkG
- WXbJ/wj5ujtfIr+GLxegVO6h5ha8opsxtwbmCKzPCuDCf2DiHrt/w1+4uoROS0XSGdHuyOuHyx7
- QzVg++NafWYvhC/edXoIjlBKOl/M6NLfmfR2XkYTqUBzsF5fmdoXjRDZ2iUhl6XpYeAgHdxOpH6
- XKEWVd91WDa1Hx/57C4EdfaV2cIvPzJloJkBiJTrXzA/rTstxioWHL+w5l88owZtKO11DmJM7SS
- sOpMR08JNByoJx0I6YwtsRhAgdKB2VSnjtLMfKhZD1lSnyN+mnIeh4WmGqKvEpBOawwvdJuAiKC
- xhtvGLk6zRmCligktvcQTLAHEhECTyUVElHunSMzzmZvm
-X-Google-Smtp-Source: AGHT+IH/1pYoQAma4pPmBTo3WalDFbmbrpkTdz+H3LWfkBXZsc4ls0A7feq/6dzkiQ51t16jgFUe1Q==
-X-Received: by 2002:a17:903:32c8:b0:24c:7b94:2f87 with SMTP id
- d9443c01a7336-27cc156e18dmr69369035ad.14.1758700126617; 
- Wed, 24 Sep 2025 00:48:46 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b5541f0374csm8778502a12.49.2025.09.24.00.48.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 00:48:46 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v1 3/3] target/riscv: Fix ssamoswap error handling
-Date: Wed, 24 Sep 2025 15:48:18 +0800
-Message-ID: <20250924074818.230010-4-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250924074818.230010-1-jim.shu@sifive.com>
-References: <20250924074818.230010-1-jim.shu@sifive.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1KHf-0003VS-2S
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:51:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1v1KHW-00089a-MU
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:51:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758700274;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=73d/wZ7xEWGgnx4kVzas8SReppHLDlBhfyt7wa+SIQk=;
+ b=N7zWvoh0tN5OO+A4W4Hslv7WgjNW3WXvRM2mni9Hz7O5rcB/5U9plAD9NskcAJDXywu5XY
+ dBTLjLCgz07UD3AAlzDEqRpGvaqhsf33Rq3pMrUxjBHmoC45WDPM5zQjRM4/atuT2M+CI6
+ 9V9Z2NdIob5C7SOZ+4FOYzmnckNsM1g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-b-6Ip7kPPcCC2zBKh5t_Ew-1; Wed,
+ 24 Sep 2025 03:51:08 -0400
+X-MC-Unique: b-6Ip7kPPcCC2zBKh5t_Ew-1
+X-Mimecast-MFC-AGG-ID: b-6Ip7kPPcCC2zBKh5t_Ew_1758700267
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D94219560B4; Wed, 24 Sep 2025 07:51:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.44])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CB141955F19; Wed, 24 Sep 2025 07:51:03 +0000 (UTC)
+Date: Wed, 24 Sep 2025 08:50:59 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Tanish Desai <tanishdesai37@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH 08/16] tracetool: Add Rust format support
+Message-ID: <aNOi40MRaGEL0df3@redhat.com>
+References: <20250919112536.141782-1-pbonzini@redhat.com>
+ <20250919112536.141782-9-pbonzini@redhat.com>
+ <20250923192354.GL509965@fedora>
+ <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <85ebee67-3c30-4f14-93ca-d9cf65708619@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,121 +87,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the RISC-V CFI v1.0 spec [1] to fix the exception type
-when ssamoswap is disabled by xSSE.
+On Wed, Sep 24, 2025 at 09:13:15AM +0200, Paolo Bonzini wrote:
+> On 9/23/25 21:23, Stefan Hajnoczi wrote:
+> > > +    out('// SPDX-License-Identifier: GPL-2.0-or-later',
+> > > +        '// This file is @generated by tracetool, do not edit.',
+> > > +        '',
+> > > +        '#[allow(unused_imports)]',
+> > > +        'use std::ffi::c_char;',
+> > > +        '#[allow(unused_imports)]',
+> > > +        'use util::bindings;',
+> > > +        '',
+> > > +        '#[inline(always)]',
+> > > +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
+> > > +        '    unsafe { (trace_events_enabled_count != 0) && (_id != 0) }',
+> > > +        '}',
+> > 
+> > This was translated to Rust from:
+> > 
+> >    /* it's on fast path, avoid consistency checks (asserts) */
+> >    #define trace_event_get_state_dynamic_by_id(id) \
+> >        (unlikely(trace_events_enabled_count) && _ ## id ## _DSTATE)
+> > 
+> > The _id != 0 expression is incorrect. The purpose was to check whether
+> > the trace event is currently enabled (i.e. dynamically at runtime).
+> 
+> The expression is correct, but the function and argument names are not. It
+> should be
+> 
+> fn trace_event_state_is_enabled(dstate: u16) -> bool {
+>      unsafe { trace_events_enabled_count } != 0 && dstate != 0
+> }
+> 
+> > > +    # static state
+> > > +    for e in events:
+> > > +        if 'disable' in e.properties:
+> > > +            enabled = "false"
+> > > +        else:
+> > > +            enabled = "true"
+> > 
+> > What is the purpose of this loop? The variable enabled is unused so I
+> > think it can be deleted.
+> 
+> The Rust code generator is not emitting any code for disabled tracepoints.
+> Unlike C, where the disabled tracepoints can produce e.g. -Wformat warnings,
+> there's no real benefit here.
+> 
+> In the RFC the "enabled" variable was used to produce a const for the static
+> state; it had no user so I removed it, but I left behind this dead Python
+> code.  Sorry about that!
 
-[1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
+Is the concept of build time 'disabled' tracepoints actually useful to
+still support ? AFAICT we use it in only places, which doesn't make it
+sound too compelling:
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
----
- target/riscv/helper.h                         |  5 ++
- target/riscv/insn_trans/trans_rvzicfiss.c.inc |  8 +++
- target/riscv/op_helper.c                      | 49 +++++++++++++++++++
- 3 files changed, 62 insertions(+)
+$ find -name trace-events | xargs grep '^disable'
+./target/hppa/trace-events:disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%lx"
+./target/hppa/trace-events:disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%lx"
+./target/hppa/trace-events:disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
+...snip...
+./target/hppa/trace-events:disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
+./target/hppa/trace-events:disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
+./target/hppa/trace-events:disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
+./hw/display/trace-events:disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index f712b1c368..c82bacdc39 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1284,3 +1284,8 @@ DEF_HELPER_4(vgmul_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_5(vsm4k_vi, void, ptr, ptr, i32, env, i32)
- DEF_HELPER_4(vsm4r_vv, void, ptr, ptr, env, i32)
- DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
-+
-+/* CFI (zicfiss) helpers */
-+#ifndef CONFIG_USER_ONLY
-+DEF_HELPER_1(ssamoswap_disabled, void, env)
-+#endif
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 45686af4d6..f4a1c12ca0 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -91,7 +91,11 @@ static bool trans_ssamoswap_w(DisasContext *ctx, arg_amoswap_w *a)
-     }
- 
-     if (!ctx->bcfi_enabled) {
-+#ifndef CONFIG_USER_ONLY
-+        gen_helper_ssamoswap_disabled(tcg_env);
-+#else
-         return false;
-+#endif
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-@@ -116,7 +120,11 @@ static bool trans_ssamoswap_d(DisasContext *ctx, arg_amoswap_w *a)
-     }
- 
-     if (!ctx->bcfi_enabled) {
-+#ifndef CONFIG_USER_ONLY
-+        gen_helper_ssamoswap_disabled(tcg_env);
-+#else
-         return false;
-+#endif
-     }
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 110292e84d..8382aa94cb 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -717,4 +717,53 @@ target_ulong helper_hyp_hlvx_wu(CPURISCVState *env, target_ulong addr)
-     return cpu_ldl_code_mmu(env, addr, oi, ra);
- }
- 
-+void helper_ssamoswap_disabled(CPURISCVState *env)
-+{
-+    int exception = RISCV_EXCP_ILLEGAL_INST;
-+
-+    /*
-+     * Here we follow the RISC-V CFI spec [1] to implement the exception type
-+     * of ssamoswap* instruction.
-+     *
-+     * [1] RISC-V CFI spec v1.0, ch2.7 Atomic Swap from a Shadow Stack Location
-+     *
-+     * Note: We have already checked some conditions in trans_* functions:
-+     *   1. The effective priv mode is not M-mode.
-+     *   2. The xSSE specific to the effictive priv mode is disabled.
-+     */
-+    if (!get_field(env->menvcfg, MENVCFG_SSE)) {
-+        /*
-+         * Disabled M-mode SSE always trigger illegal instruction when
-+         * current priv mode is not M-mode.
-+         */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    }
-+
-+    if (!riscv_has_ext(env, RVS)) {
-+        /* S-mode is not implemented */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    } else if (env->virt_enabled) {
-+        /*
-+         * VU/VS-mode with disabled xSSE will trigger the virtual instruction
-+         * exception.
-+         */
-+        exception = RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-+        goto done;
-+    } else {
-+        /*
-+         * U-mode with disabled S-mode SSE will trigger the illegal instruction
-+         * exception.
-+         *
-+         * Note: S-mode is already handled in the disabled M-mode SSE case.
-+         */
-+        exception = RISCV_EXCP_ILLEGAL_INST;
-+        goto done;
-+    }
-+
-+done:
-+    riscv_raise_exception(env, exception, GETPC());
-+}
-+
- #endif /* !CONFIG_USER_ONLY */
+
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
