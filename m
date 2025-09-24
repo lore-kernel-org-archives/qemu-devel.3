@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFA2CAC5B5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 05:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6352CAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 05:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1IUq-00042v-0l; Wed, 24 Sep 2025 01:56:56 -0400
+	id 1v1IUo-0003x2-8F; Wed, 24 Sep 2025 01:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1IUh-0003gZ-3c; Wed, 24 Sep 2025 01:56:52 -0400
+ id 1v1IUV-0003Dp-G7; Wed, 24 Sep 2025 01:56:36 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1v1IUc-0000It-48; Wed, 24 Sep 2025 01:56:45 -0400
+ id 1v1IUS-0000It-LF; Wed, 24 Sep 2025 01:56:34 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 24 Sep
- 2025 13:56:04 +0800
+ 2025 13:56:03 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 24 Sep 2025 13:56:04 +0800
+ Transport; Wed, 24 Sep 2025 13:56:03 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 5/7] hw/arm/aspeed_ast27x0-fc: Replace error_abort with
- local errp
-Date: Wed, 24 Sep 2025 13:55:59 +0800
-Message-ID: <20250924055602.294857-6-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 3/7] hw/arm/aspeed: Move aspeed_install_boot_rom to common
+ SoC code
+Date: Wed, 24 Sep 2025 13:55:57 +0800
+Message-ID: <20250924055602.294857-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924055602.294857-1-jamin_lin@aspeedtech.com>
 References: <20250924055602.294857-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -66,134 +66,108 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch introduces a local Error **errp = NULL and
-replaces error_abort with errp in these paths.
+Move the boot ROM install helper into common SoC code so it can be reused
+by all ASPEED boards, and decouple the API from AspeedMachineState.
 
-This makes error handling more consistent with QEMU guidelines and avoids
-using error_abort in cases where failure should not be treated as a
-programming error.
+Specifically:
+ - Move aspeed_install_boot_rom() to hw/arm/aspeed_soc_common.c and
+   declare it in include/hw/arm/aspeed_soc.h.
+ - Change the helper’s signature to take AspeedSoCState * and a
+   MemoryRegion * provided by the caller, instead of AspeedMachineState *.
+ - Update aspeed_machine_init() call sites accordingly.
 
-Discussion:
-object_property_set_link() can return false only when it fails, and it
-sets an error when it fails. Since passing &error_abort causes an abort,
-the function never returns false, and the return statement is effectively
-dead code. If failure is considered a programming error, using
-&error_abort is correct. However, if failure is not a programming error,
-passing &error_abort is wrong, and errp should be used instead. This
-patch follows the latter approach by replacing error_abort with errp.
-https://patchwork.kernel.org/project/qemu-devel/patch/20250717034054.1903991-3-jamin_lin@aspeedtech.com/#26540626
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ include/hw/arm/aspeed_soc.h |  2 ++
+ hw/arm/aspeed.c             | 23 +++--------------------
+ hw/arm/aspeed_soc_common.c  | 17 +++++++++++++++++
+ 3 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 7087be4288..b15cb94c39 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -61,6 +61,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
-     Ast2700FCState *s = AST2700A1FC(machine);
-     AspeedSoCState *soc;
-     AspeedSoCClass *sc;
-+    Error **errp = NULL;
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 5567bdcb69..aea210a8e2 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -314,6 +314,8 @@ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+                                unsigned int count, int unit0);
+ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+                            Error **errp);
++void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
++                             MemoryRegion *boot_rom, uint64_t rom_size);
  
-     object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-     soc = ASPEED_SOC(&s->ca35);
-@@ -71,20 +72,20 @@ static void ast2700fc_ca35_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
+ static inline int aspeed_uart_index(int uart_dev)
+ {
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 4d0d935836..429f4c6d77 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -263,24 +263,6 @@ static void aspeed_reset_secondary(ARMCPU *cpu,
+     cpu_set_pc(cs, info->smp_loader_start);
+ }
  
-     if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
--                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+                                AST2700FC_BMC_RAM_SIZE, errp)) {
-         return;
-     }
-     if (!object_property_set_link(OBJECT(&s->ca35), "memory",
-                                   OBJECT(&s->ca35_memory),
--                                  &error_abort)) {
-+                                  errp)) {
-         return;
-     };
-     if (!object_property_set_link(OBJECT(&s->ca35), "dram",
--                                  OBJECT(&s->ca35_dram), &error_abort)) {
-+                                  OBJECT(&s->ca35_dram), errp)) {
-         return;
-     }
-     if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
--                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+                                 AST2700FC_BMC_RAM_SIZE, errp)) {
-         return;
-     }
+-/*
+- * Create a ROM and copy the flash contents at the expected address
+- * (0x0). Boots faster than execute-in-place.
+- */
+-static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+-                                    uint64_t rom_size)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+-
+-    memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
+-                           &error_abort);
+-    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+-                                        &bmc->boot_rom, 1);
+-    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
+-                          &error_abort);
+-}
+-
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
  
-@@ -95,15 +96,15 @@ static void ast2700fc_ca35_init(MachineState *machine)
+ /*
+@@ -460,9 +442,10 @@ static void aspeed_machine_init(MachineState *machine)
+ 
+         if (fmc0 && !boot_emmc) {
+             uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
+-            aspeed_install_boot_rom(bmc, fmc0, rom_size);
++            aspeed_install_boot_rom(bmc->soc, fmc0, &bmc->boot_rom, rom_size);
+         } else if (emmc0) {
+-            aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
++            aspeed_install_boot_rom(bmc->soc, blk_by_legacy_dinfo(emmc0),
++                                    &bmc->boot_rom, 64 * KiB);
          }
      }
-     if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
--                                 AST2700FC_HW_STRAP1, &error_abort)) {
-+                                 AST2700FC_HW_STRAP1, errp)) {
-         return;
-     }
-     if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
--                                 AST2700FC_HW_STRAP2, &error_abort)) {
-+                                 AST2700FC_HW_STRAP2, errp)) {
-         return;
-     }
-     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
--    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
-+    if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {
-         return;
-     }
  
-@@ -125,6 +126,8 @@ static void ast2700fc_ssp_init(MachineState *machine)
- {
-     AspeedSoCState *soc;
-     Ast2700FCState *s = AST2700A1FC(machine);
-+    Error **errp = NULL;
-+
-     s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-     clock_set_hz(s->ssp_sysclk, 200000000ULL);
- 
-@@ -134,13 +137,13 @@ static void ast2700fc_ssp_init(MachineState *machine)
- 
-     qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
-     if (!object_property_set_link(OBJECT(&s->ssp), "memory",
--                                  OBJECT(&s->ssp_memory), &error_abort)) {
-+                                  OBJECT(&s->ssp_memory), errp)) {
-         return;
-     }
- 
-     soc = ASPEED_SOC(&s->ssp);
-     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
--    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
-+    if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
-         return;
-     }
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index d0a400725f..7f104f8de5 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -178,6 +178,23 @@ void aspeed_write_boot_rom(BlockBackend *blk, hwaddr addr, size_t rom_size,
+     rom_add_blob_fixed("aspeed.boot_rom", storage, rom_size, addr);
  }
-@@ -149,6 +152,8 @@ static void ast2700fc_tsp_init(MachineState *machine)
- {
-     AspeedSoCState *soc;
-     Ast2700FCState *s = AST2700A1FC(machine);
-+    Error **errp = NULL;
+ 
++/*
++ * Create a ROM and copy the flash contents at the expected address
++ * (0x0). Boots faster than execute-in-place.
++ */
++void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
++                             MemoryRegion *boot_rom, uint64_t rom_size)
++{
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
 +
-     s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-     clock_set_hz(s->tsp_sysclk, 200000000ULL);
- 
-@@ -158,13 +163,13 @@ static void ast2700fc_tsp_init(MachineState *machine)
- 
-     qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
-     if (!object_property_set_link(OBJECT(&s->tsp), "memory",
--                                  OBJECT(&s->tsp_memory), &error_abort)) {
-+                                  OBJECT(&s->tsp_memory), errp)) {
-         return;
-     }
- 
-     soc = ASPEED_SOC(&s->tsp);
-     aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
--    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
-+    if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
-         return;
-     }
- }
++    memory_region_init_rom(boot_rom, NULL, "aspeed.boot_rom", rom_size,
++                           &error_abort);
++    memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
++                                        boot_rom, 1);
++    aspeed_write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT], rom_size,
++                          &error_abort);
++}
++
+ static void aspeed_soc_realize(DeviceState *dev, Error **errp)
+ {
+     AspeedSoCState *s = ASPEED_SOC(dev);
 -- 
 2.43.0
 
