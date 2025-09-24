@@ -4,65 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159A2CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829B7CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 06:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1JB0-0002VC-70; Wed, 24 Sep 2025 02:40:31 -0400
+	id 1v1JBe-0002f1-PJ; Wed, 24 Sep 2025 02:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAx-0002Ua-L1
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JB6-0002Wp-NV
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAh-0006hj-IL
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:26 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1v1JAx-0006lM-FH
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 02:40:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758696007;
+ s=mimecast20190719; t=1758696025;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=QvctvtOOKhapFr6/WqYxgGhqMLMuWcjQvA2OEyQGX8E=;
- b=iGBDyfRpXtixi1SmcpeB6JgHH13JLabx2/UkadNhL7v9Fug3Q02i0sUpVu26324GesI7D0
- +95xbpYomA55SDg99t1OkjPWCQ3L/fwV0mT0p9kyR+CmXFSgDP7h2x0ZBA3udUr9IW0p3G
- DP1XrfniYaySECszonCW4bXgeoC4bUw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BsKu+Wcud8wrEkXoVL4LUsLkjAKPThLezpUFrMINx8c=;
+ b=R655V3Lk4oVio6PFVRpIrwPU4Y0MGTq6d6BGhVRpIKFTBYN7jsXvxRKkvqYhxi8VP9Ch1B
+ 5Npr0tpijGOLmXNaVd8kDieoFLrn/nsaTA1A0p2RzS/Ny/S5grhec+gRPzmqDeARXc3aSq
+ rvXe7C25L5ZYNlz4uftH+fcRTgvz83I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-NikKt0e3PmKtWrMN1l7JxA-1; Wed,
- 24 Sep 2025 02:40:00 -0400
-X-MC-Unique: NikKt0e3PmKtWrMN1l7JxA-1
-X-Mimecast-MFC-AGG-ID: NikKt0e3PmKtWrMN1l7JxA_1758695999
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-obhZoyxWMtWLvD0Cp5rLHA-1; Wed,
+ 24 Sep 2025 02:40:21 -0400
+X-MC-Unique: obhZoyxWMtWLvD0Cp5rLHA-1
+X-Mimecast-MFC-AGG-ID: obhZoyxWMtWLvD0Cp5rLHA_1758696020
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3992A1956086; Wed, 24 Sep 2025 06:39:59 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5946718002C2; Wed, 24 Sep 2025 06:40:20 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4BA411955F19; Wed, 24 Sep 2025 06:39:57 +0000 (UTC)
+ id 41DD81955F19; Wed, 24 Sep 2025 06:40:19 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 00/12] Functional test patches
-Date: Wed, 24 Sep 2025 08:39:44 +0200
-Message-ID: <20250924063956.519792-1-thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 12/12] tests/functional: treat unknown exceptions as transient
+ faults
+Date: Wed, 24 Sep 2025 08:39:56 +0200
+Message-ID: <20250924063956.519792-13-thuth@redhat.com>
+In-Reply-To: <20250924063956.519792-1-thuth@redhat.com>
+References: <20250924063956.519792-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,83 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Richard!
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The following changes since commit ab8008b231e758e03c87c1c483c03afdd9c02e19:
+To maximise the robustness of the functional tests we want to treat most
+asset download failures as non-fatal to the test suite. Instead it
+should just skip the tests which need that particular asset. The only
+time aim to make it fatal is for 404 errors which are highly likely to
+reflect genuine problems to be fixed.
 
-  Merge tag 'pull-9p-20250918' of https://github.com/cschoenebeck/qemu into staging (2025-09-19 12:21:35 -0700)
+We catch certain exception classes and handle them as transient errors,
+but unfortunately it is proving difficult to predict what exception
+classes urlopen() is capable of raising, with new possibilities being
+discovered.
 
-are available in the Git repository at:
+To provide a fail-safe, treat the generic Exception class as being a
+transient error too. This may well mask certain genuine bugs, but it is
+preferrable to prioritize running the test suite to the greatest extent
+practical.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-09-24
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250918125746.1165658-3-berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/functional/qemu_test/asset.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-for you to fetch changes up to 097bbfc5e0ba889ce17106ef941a56111c3de270:
-
-  tests/functional: treat unknown exceptions as transient faults (2025-09-24 08:26:11 +0200)
-
-----------------------------------------------------------------
-* New functional tests to check via the vmstate-static-checker.py script
-* New functional tests for CD-ROM boot on hppa
-* Skip functional tests on more exotic network errors, too
-* Fix another issue with htags in the gitlab CI
-* Some additional minor fixes to various functional tests
-
-----------------------------------------------------------------
-Daniel P. Berrangé (3):
-      tests/functional: use self.log for all logging
-      tests/functional: retry when seeing ConnectionError exception
-      tests/functional: treat unknown exceptions as transient faults
-
-Peter Maydell (1):
-      .gitlab-ci.d/buildtest.yml: Unset CI_COMMIT_DESCRIPTION for htags
-
-Thomas Huth (8):
-      tests/functional/m68k: Use proper polling in the next-cube test
-      tests/functional/s390x/test_pxelinux: Fix warnings from pylint
-      tests: Move the old vmstate-static-checker files to tests/data/
-      tests/functional: Test whether the vmstate-static-checker script works fine
-      tests/data/vmstate-static-checker: Add dump files from QEMU 7.2.17
-      tests/functional: Use vmstate-static-checker.py to test data from v7.2
-      tests/functional/hppa: Add a CD-ROM boot test for qemu-system-hppa
-      tests: Fix "make check-functional" for targets without thorough tests
-
- MAINTAINERS                                        |    6 +-
- .gitlab-ci.d/buildtest.yml                         |    2 +-
- tests/Makefile.include                             |    3 +
- .../vmstate-static-checker/aarch64/virt-7.2.json   | 2571 +++++++++++++++
- .../vmstate-static-checker}/dump1.json             |    0
- .../vmstate-static-checker}/dump2.json             |    0
- .../data/vmstate-static-checker/m68k/virt-7.2.json | 2936 +++++++++++++++++
- .../vmstate-static-checker/ppc64/pseries-7.2.json  | 1068 +++++++
- .../s390x/s390-ccw-virtio-7.2.json                 |  475 +++
- .../vmstate-static-checker/x86_64/pc-q35-7.2.json  | 3297 ++++++++++++++++++++
- tests/functional/aarch64/meson.build               |    1 +
- tests/functional/aarch64/test_virt.py              |    4 +-
- tests/functional/arm/test_integratorcp.py          |    3 +-
- tests/functional/generic/test_vmstate.py           |   67 +
- tests/functional/hppa/meson.build                  |    4 +
- tests/functional/hppa/test_cdboot.py               |   38 +
- tests/functional/m68k/meson.build                  |    4 +
- tests/functional/m68k/test_nextcube.py             |   17 +-
- tests/functional/mips64el/test_malta.py            |    3 +-
- tests/functional/ppc64/meson.build                 |    1 +
- tests/functional/qemu_test/asset.py                |   10 +-
- tests/functional/replay_kernel.py                  |   16 +-
- tests/functional/s390x/meson.build                 |    4 +
- tests/functional/s390x/test_pxelinux.py            |   25 +-
- tests/functional/x86_64/meson.build                |    4 +-
- tests/functional/x86_64/test_acpi_bits.py          |   31 +-
- tests/functional/x86_64/test_bad_vmstate.py        |   58 +
- 27 files changed, 10599 insertions(+), 49 deletions(-)
- create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
- rename tests/{vmstate-static-checker-data => data/vmstate-static-checker}/dump1.json (100%)
- rename tests/{vmstate-static-checker-data => data/vmstate-static-checker}/dump2.json (100%)
- create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
- create mode 100644 tests/data/vmstate-static-checker/ppc64/pseries-7.2.json
- create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
- create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
- create mode 100755 tests/functional/generic/test_vmstate.py
- create mode 100755 tests/functional/hppa/test_cdboot.py
- create mode 100755 tests/functional/x86_64/test_bad_vmstate.py
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index f8b87d21538..2971a989d1e 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -188,7 +188,8 @@ def fetch(self):
+                 continue
+             except Exception as e:
+                 tmp_cache_file.unlink()
+-                raise AssetError(self, "Unable to download: %s" % e)
++                raise AssetError(self, "Unable to download: %s" % e,
++                                 transient=True)
+ 
+         if not os.path.exists(tmp_cache_file):
+             raise AssetError(self, "Download retries exceeded", transient=True)
+-- 
+2.51.0
 
 
