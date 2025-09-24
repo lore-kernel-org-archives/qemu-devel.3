@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3FECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 02:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E412CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 02:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Evf-00038p-HC; Tue, 23 Sep 2025 22:08:23 -0400
+	id 1v1Ezi-0007yj-JP; Tue, 23 Sep 2025 22:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Evd-00037u-5t
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:08:21 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Evb-0002e2-7k
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:08:20 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-77d94c6562fso6292998b3a.2
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 19:08:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758679697; x=1759284497; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JpDWwmGB3FDcx3IksRaylh4MrMqkVjqSJs30QhIpAxg=;
- b=uQvw/9ESLMKiSMbhCF3/rtAmQn+coYU+sMJa/rziAxt7ZDLQaMWqwWAXKZgoRTPT7L
- X3ojBzeXTfYFc8TzFKZrZvt4WESe8iRxGHdqi3yVJVLhAXTvOBzwSyCijpPKyngZ1m85
- YNoUcnHvRrIRdco+fxJTEUU85O2peBaIOdZp3q83bDMVOFIiOqutPSHTtTqj4NTzMZBC
- mip8VRCw205N2krmPDqPOVDSfRKZu9i89gyBNVjBZF+Rq1WhfJ1Kx9FrZtvxZApHwqMw
- JrqXKaUFYpw0V+bSUR3sg1uep5RogON+Gz6FtN37Q0xX5N5UfXPCpwLGVPMV2kfE0Njp
- zY9g==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1v1Ezb-0007wF-Oz
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:12:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1v1EzY-00047t-R9
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:12:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758679939;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5tG8+Q0mK8WFYaWUVvWh8FCZsaEy0/XeTMpTXVBOJaI=;
+ b=LlAbj02nHWYdm2ZFqX0o1IEdy2YzAsyaIrrrEkGR4IBYA5AdCc6wHZ0iVCfN8MonBB9wVM
+ 44gH3NAsNLenM1S5+tlTmooD+DcRuMzQ/b1CRByuAikI2RkyYD6oKoA5UAI+6/cI0pUwuD
+ UdwNYGFScajB9Pd7EbfXn0P7x/+I0ec=
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-BXBAf9BJMsyoyaxDUh94EA-1; Tue, 23 Sep 2025 22:11:05 -0400
+X-MC-Unique: BXBAf9BJMsyoyaxDUh94EA-1
+X-Mimecast-MFC-AGG-ID: BXBAf9BJMsyoyaxDUh94EA_1758679864
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-50f8bf67fbbso3676816137.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 19:11:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758679697; x=1759284497;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1758679864; x=1759284664;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JpDWwmGB3FDcx3IksRaylh4MrMqkVjqSJs30QhIpAxg=;
- b=muhqvANPOzorRDbklc/qOfbkwrX2AXUGR4MS0/iQC/GxzIshxe5JTb7uIqSV+q6E8u
- koOFgGTu32eTaU/9tlXYL9RjmnFO8teSxHyhiwb3OVd58qXvLCiIiTySQsebNDxNTOM4
- Pt+ZTB/f8Ob0u5OzTC1Fj0U6TPD6RFzyDGLjrRqaHORCyk0dWGa91++rWJpvTvSd4F/9
- BIYEeCD4KHJBwa11wNRzIqkZAFJ+de7CyNB4e2G/3GPJV6vx81X5DBgjTO7kWXeF+hz0
- kjYYAdwfIZQSfSOq+QY/+6aPoFV723ttaBqVFmI6/HE4lRDNtff/WcVqdeC2jl5yF89O
- bD7A==
-X-Gm-Message-State: AOJu0YwVay1HaDwncFtxUAh4mMUKjrZ/lKOkLRxSz0UZpYL3UySsOG/y
- /MMYrzYsJD3pRFM2cxZV3rPctK3mXtHrdUoTdaDWfh99mIiGer85QJehOhKwBUSBK0D60YS4Rt4
- cbVeF
-X-Gm-Gg: ASbGncvleVhknUJVevA3ryYbdFVj2bvQHvvjSkjovxmUkdIiw5bN1LaBcRnwEvaReYk
- gM+uJWBCUsQ3eCfJokQSJyrc8kHuByHd0yAcvH59rZAEtr30Vtu3TfHppognEK0ddQitDQBPTcc
- tpu8MIPeUSj4CA2XnoMwxHU3yYb8GPCg/S7RSft3uz93ow2/dLJeMk3zxuZLoQqTLBgzJP21/bj
- Sc9my2mnufL7JhnCrYeNggFtzLprAfMR/ymhYxKr+HMyQ6QOzyR+hkkZK8sAM68k5BBE++MsnZg
- NuHsEwkgOu+GmVSKeZRcj0qfmH/tfOhQZTK0ix+ser5juzS7BGtLAiPYyfduTVxjfS+CePMJ0t1
- wE6tQK0eoBidfCpRXDV7vvEBTzrKp
-X-Google-Smtp-Source: AGHT+IHTpJEH5+aN3OlfIsrxQV5OWGFwyEgajXBJiTsfggLwyDsOwSuIfiSLedJHCTtZ9O8w+B8nxw==
-X-Received: by 2002:a05:6a00:889:b0:77f:3f06:1f69 with SMTP id
- d2e1a72fcca58-77f538e1402mr5382626b3a.12.1758679697274; 
- Tue, 23 Sep 2025 19:08:17 -0700 (PDT)
-Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77d8c3adfd4sm15929130b3a.82.2025.09.23.19.08.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Sep 2025 19:08:16 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: jonwilson030981@googlemail.com,
-	Jon Wilson <jonwilson030981@gmail.com>
-Subject: [PATCH 2/2] linux-user: Support MADV_DONTDUMP, MADV_DODUMP
-Date: Tue, 23 Sep 2025 19:08:13 -0700
-Message-ID: <20250924020813.3909287-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250924020813.3909287-1-richard.henderson@linaro.org>
-References: <20250924020813.3909287-1-richard.henderson@linaro.org>
+ bh=5tG8+Q0mK8WFYaWUVvWh8FCZsaEy0/XeTMpTXVBOJaI=;
+ b=nUB8G9uaU/qqnCUpmgbTw+fZDbc+dwQJvgOkKWcCYg2GwCJhn40I3HxdmfodYeLm6v
+ Zx+gWJOGWLoz2F6EFI0f2IonEVzV1iLgEWVknMvLG5Gh5EV1n3O0z8Bn2pjYi+CWcQaj
+ J0gcFkmkzzNIyJqFyaR6RkTtD84zuYyPPOxxNj6WQHv6ZMtWhqsXRWQGTufDAPvkXiEr
+ yl/oR7lOU7cqxLvJK5s5GtzqHi7d0yJ/MA5refEis054MGuxjL0QPpDHNz2Pn9IXT3YN
+ fb7eDnG6f4GhAaFstgSeuIvzgKSqz6/GwxpbouCjSdEK7unuSOUoY92i1/nZldEVYItR
+ WX1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTrZ9QCxKCf1N4MlE4tEOfUDhlao1Ng+tCmKqzOM4VMERUt88at1M8W9V/eSru1YJyH/oNl61YLO4z@nongnu.org
+X-Gm-Message-State: AOJu0YwCpdvfQzh/ijDsoD59vULIvt+LLJGS7G3gLjIsJY9b7UycO6PV
+ 9R4yCDNJAzHpPwNojLyojbyGqZ0DltyjYZppVer+UnRAnBKkuVrdAclM8WThUOx2QWNDW8RUzpZ
+ bu1bHFpqZVzVGVWVJJMyu7W0oVdo17WitGzxOt788FM1xl/Zn/RmLbldVt5xIK9XWzJQQvidQnW
+ 51ixHg0VQ5aEliFgIrfRe1iuPnjJtvdPA=
+X-Gm-Gg: ASbGncveUOEJw9u3rDZS+xznEFNiZINrdAZpMUevfHwmaH0a1XEzNqioIsivoecAyNA
+ d4o+BbPCjJjOjZ8sqjPfWp81c/sgS+3m1xxZNqDqF1YA6w+VRPMVJOBSfjOU6f6SHoZYU52avah
+ nHB1g+3YzfgNR2cmcTjE2Gsw==
+X-Received: by 2002:a05:6102:2c0c:b0:59c:6e9d:23bb with SMTP id
+ ada2fe7eead31-5a58118f848mr2215622137.17.1758679864379; 
+ Tue, 23 Sep 2025 19:11:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFz1FjLH9iWswqxUT3gpWdxWDMCjcUxZDY8VWCeOLjddCDHAHdQsVfqTRlH3z6P040em/r6ZUvr/cRC/GR64ZE=
+X-Received: by 2002:a05:6102:2c0c:b0:59c:6e9d:23bb with SMTP id
+ ada2fe7eead31-5a58118f848mr2215615137.17.1758679864098; Tue, 23 Sep 2025
+ 19:11:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <B01AB465-37DF-468F-9B76-2FC3D59E4749@baidu.com>
+In-Reply-To: <B01AB465-37DF-468F-9B76-2FC3D59E4749@baidu.com>
+From: Cindy Lu <lulu@redhat.com>
+Date: Wed, 24 Sep 2025 10:10:25 +0800
+X-Gm-Features: AS18NWDlEo-ApBwRGVLDnPNQeNlP_w4a1TP_oivRx0GBU9y6elv6dgGjI6sdpKw
+Message-ID: <CACLfguXqsjbHaP=OZ+zJDPFdvdr+7ac3bok=qgh5M9m2h9L4hg@mail.gmail.com>
+Subject: Re: [PATCH] vhost: Do not actively send a config interrupt
+To: "Li,Zhaoxin(ACG CCN)" <lizhaoxin04@baidu.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,69 +104,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jon Wilson <jonwilson030981@gmail.com>
+On Tue, Sep 23, 2025 at 7:48=E2=80=AFPM Li,Zhaoxin(ACG CCN)
+<lizhaoxin04@baidu.com> wrote:
+>
+> On 2025/9/23 17:06=EF=BC=8C=E2=80=9CStefano Garzarella=E2=80=9D<sgarzare@=
+redhat.com <mailto:sgarzare@redhat.com>> wrote:
+>
+> >CCing Cindy since she introduced this code with commit
+> >f9a09ca3ea ("vhost: add support for configure interrupt"), so she can
+> >help to review this, since I don't really get this change.
+>
+> >On Mon, Sep 22, 2025 at 11:19:32PM +0800, Li Zhaoxin wrote:
+> >>From: lizhaoxin <lizhaoxin04@baidu.com <mailto:lizhaoxin04@baidu.com>>
+> >>
+> >>After the VM is suspended/resumed or live-migrated,
+> >>we do not want the guest to output information such as
+> >>the capacity of the block device, as this is noticeable to the tenant.
+> >>Also, there is no need to immediately send a config notifier
+> >>for the virtio device after vhost_dev_start.
+>
+> >Can you explain more clearly what your problem is and why this patch
+> >solves it?
+>
+> >Thanks,
+> >Stefano
+>
+> Hi Stefano and Cindy,
+>
+> In the vhost-vdpa scenario, after executing virsh suspend vm followed by =
+virsh resume vm, or when live migrating the VM to the destination host, the=
+ guest kernel will output the following additional logs:
+>
+> [Tue Sep 23 19:07:04 2025] virtio_blk virtio1: [vda] new size: 20971520 5=
+12-byte logical blocks (10.7 GB/10.0 GiB)
+> [Tue Sep 23 19:07:04 2025] virtio_blk virtio3: [vdb] new size: 20971520 5=
+12-byte logical blocks (10.7 GB/10.0 GiB)
+>
+> This occurs because when the vhost device is started, the sequence vhost_=
+dev_start -> vhost_start_config_intr -> event_notifier_set(&dev->vdev->conf=
+ig_notifier) is triggered, which sends a configuration change notification =
+(config notification) to the guest. However, it appears that actively sendi=
+ng this notification is currently unnecessary, and no additional processing=
+ is performed in the event of a sending failure. So, we removed the call to=
+ event_notifier_set(&dev->vdev->config_notifier).
+>
+> Thanks,
+> Li Zhaoxin
+>
+Hi Zhaoxin
 
-Set and clear PAGE_DONTDUMP, and honor that in vma_dump_size.
+this function tests and prevents event loss, I  think maybe we should
+not remove it simply
+maybe you can do something while it print the log?
+Thanks
+cindy
 
-Signed-off-by: Jon Wilson <jonwilson030981@gmail.com>
-[rth: Use new page_set_flags semantics; also handle DODUMP]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/exec/page-protection.h | 6 +++++-
- linux-user/elfload.c           | 4 ++--
- linux-user/mmap.c              | 6 ++++++
- 3 files changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-index 5a18f98a3a..c50ce57d15 100644
---- a/include/exec/page-protection.h
-+++ b/include/exec/page-protection.h
-@@ -30,7 +30,11 @@
- #define PAGE_PASSTHROUGH 0x40
- /* For linux-user, indicates that the page is MAP_ANON. */
- #define PAGE_ANON      0x0080
--
-+/*
-+ * For linux-user, indicates that the page should not be
-+ * included in a core dump.
-+ */
-+#define PAGE_DONTDUMP  0x0100
- /* Target-specific bits that will be used via page_get_flags().  */
- #define PAGE_TARGET_1  0x0200
- #define PAGE_TARGET_2  0x0400
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 26c090c95d..b213f1a35b 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2120,8 +2120,8 @@ static void bswap_note(struct elf_note *en)
-  */
- static size_t vma_dump_size(vaddr start, vaddr end, int flags)
- {
--    /* The area must be readable. */
--    if (!(flags & PAGE_READ)) {
-+    /* The area must be readable and dumpable. */
-+    if (!(flags & PAGE_READ) || (flags & PAGE_DONTDUMP)) {
-         return 0;
-     }
- 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 0b69efe54c..35698c413c 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1254,6 +1254,12 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-      */
-     mmap_lock();
-     switch (advice) {
-+    case MADV_DONTDUMP:
-+        page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
-+        break;
-+    case MADV_DODUMP:
-+        page_set_flags(start, start + len - 1, 0, PAGE_DONTDUMP);
-+        break;
-     case MADV_WIPEONFORK:
-     case MADV_KEEPONFORK:
-         ret = -EINVAL;
--- 
-2.43.0
+> >>
+> >>Co-developed-by: Gao Shiyuan <gaoshiyuan@baidu.com <mailto:gaoshiyuan@b=
+aidu.com>>
+> >>Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com <mailto:gaoshiyuan@bai=
+du.com>>
+> >>Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com <mailto:lizhaoxin04@ba=
+idu.com>>
+> >>---
+> >> hw/virtio/vhost.c | 7 +------
+> >> 1 file changed, 1 insertion(+), 6 deletions(-)
+> >>
+> >>diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> >>index 6557c58d12..1f8a495ef8 100644
+> >>--- a/hw/virtio/vhost.c
+> >>+++ b/hw/virtio/vhost.c
+> >>@@ -1847,15 +1847,10 @@ static void vhost_stop_config_intr(struct vhost=
+_dev *dev)
+> >>
+> >> static void vhost_start_config_intr(struct vhost_dev *dev)
+> >> {
+> >>- int r;
+> >>-
+> >> assert(dev->vhost_ops);
+> >> int fd =3D event_notifier_get_fd(&dev->vdev->config_notifier);
+> >> if (dev->vhost_ops->vhost_set_config_call) {
+> >>- r =3D dev->vhost_ops->vhost_set_config_call(dev, fd);
+> >>- if (!r) {
+> >>- event_notifier_set(&dev->vdev->config_notifier);
+> >>- }
+> >>+ dev->vhost_ops->vhost_set_config_call(dev, fd);
+> >> }
+> >> }
+> >>
+> >>--
+> >>2.34.1
+> >>
+>
+>
+>
+>
+>
 
 
