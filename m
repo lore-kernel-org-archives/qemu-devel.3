@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A75F5CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C66CAC5B3
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Lp4-0005LX-KL; Wed, 24 Sep 2025 05:30:02 -0400
+	id 1v1LoQ-0004d0-Cz; Wed, 24 Sep 2025 05:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1Lp1-0005JC-Mp
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:59 -0400
+ id 1v1LoM-0004bb-IX
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1Lot-0004pj-0y
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:59 -0400
+ id 1v1LoB-0004lR-9D
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758706189;
+ s=mimecast20190719; t=1758706145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iIHJDm7aNxFUbTsEnGeRE1qG811mxITS7dOJUdDzhCI=;
- b=Cw+uy1P6DeLeyV2sy8tlfpDv+Oz3aoIoRIbxOeUtCfBt//gqDCSu4FxkwUaYIubou13Z22
- RPlCfFLwl0pZ+6icmbkaChlBICmtHCfzfW8Ovvfz8VQQSWTLHbQkllQFihWQMvGJNvNQrZ
- F3C0q8KlQ+A2NWqzJljQos+or42Aug4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/mGe1RNZOMFuiqKM/TEXFkBBUfbfbrXn7gTWkrNC4UA=;
+ b=Ybk0pX1Z6SvjcEiqXgxO9A3aQj61yzXlZrzXUgp+utsb3qmzsfuRZDIdBQI/Al6sUas1c5
+ syYCoZBRHcnUuSXFuJ6jsvNouZUpesoLYYj2Cj8GfrOm8bRdpEN0ZAGQVnF2RTutyUStFX
+ MMPSNmMAIXYaGXREZveZ3uHfvEHJMeo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-355-gOnjK2UxOay9E7HwvAUFFg-1; Wed, 24 Sep 2025 05:29:48 -0400
-X-MC-Unique: gOnjK2UxOay9E7HwvAUFFg-1
-X-Mimecast-MFC-AGG-ID: gOnjK2UxOay9E7HwvAUFFg_1758706187
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b2d604db3easo267300566b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:47 -0700 (PDT)
+ us-mta-381-Msg-lM61MhiHBs2frcFGTA-1; Wed, 24 Sep 2025 05:29:04 -0400
+X-MC-Unique: Msg-lM61MhiHBs2frcFGTA-1
+X-Mimecast-MFC-AGG-ID: Msg-lM61MhiHBs2frcFGTA_1758706143
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b2fca156551so75321266b.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758706186; x=1759310986;
+ d=1e100.net; s=20230601; t=1758706142; x=1759310942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iIHJDm7aNxFUbTsEnGeRE1qG811mxITS7dOJUdDzhCI=;
- b=YV3QZXWcuTYR8iLZH+oR375DRTX+3C3asR10ATqBeCq2V1+ZtioiImyNIi3dzTMGpz
- 2Sxg0nY+meGxqCXJQJ/LPFp6M+hrP2IgLFE7UTYdGkVk9Wx+x342nJLl8+jn9xJdpnwG
- GRVWfSjp4W227uqDbSETCDbcjOjUYDSLuOwsqdNn/6lN+qkssBl5ZiCl5iYIqSRYMk32
- 5MP+WI1PxzLtMcPDMtxscJN4epTIEXx+MGbhjiuOyqlRLgy5rcvAZcacptp/86MPkwX6
- FxGtLJQY//L7iNCwG2xtblJoHmnlYkR8+QlAzj0jqWMH07/yWWjjw1hlavXF8eDDw0NR
- lJ/w==
-X-Gm-Message-State: AOJu0YwVe3KLwO9mLfQ19RrNLZdz8qSjiBZs6W900Go6BhWblyJpd87i
- yaae01Rhh165tE6BoobBnKVDItzus0mB6qDE/freiK0cnZI/5sgIpjGMKWTirBbgqMpIB8bDjEE
- yDeVdp37ofWh9SpGUPc7c1pWnFveDcXasNgGW6EMQLWGLWPIEsq7CAsvOceXjTTXEYINjZHryzb
- yYeIcQ5jqIBP6upoMnkz7yxVAn1nrkiJw0MBj3dZK/
-X-Gm-Gg: ASbGncvfDXB/tX0m2YVSMvCtMUV2i3krr+cV9EWsuJeuNsNgELI7TlZaNsT8aTgMyLW
- imGjgbBDvjvXH5bVhjXrAus5UI3rCY88zzuzr3KTtVRrGmnBJcxxhysQAoha/pmuwaPVo5ZuKF1
- tJCLmz6jJfwS8ERIxJSlc14bBGI8OUKqy4oA0UIF5ON7YRK01G7kwvgsLHTXd1sHnNfFBybMrjW
- +HPUmRMNTtnDiLys5h0o+heVulcGOss5uNXUVF5yzI6WsiExQRzNN7y1FxFZHNRnrBBRX+iEolU
- nliP0JKF+58IwZZwjlyxX70iYsvP8It9qnqi5uZuHor6hw4LrlbaPCwA/Qb3c8A1vYDAuga2liE
- nAc+lJBELsffphstCy2+cOyD9kaq5ExKDeUsMtk5Hk4vFwA==
-X-Received: by 2002:a17:907:7f9f:b0:b2f:963:1d2f with SMTP id
- a640c23a62f3a-b302b2245c1mr588086266b.51.1758706186319; 
- Wed, 24 Sep 2025 02:29:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmoP3C/NHDS4xRr4gqAP8qX1UBKgqfm2XW05R9uIlJdS1Od78xbxBKY9m2d+9zBVQP43lM7A==
-X-Received: by 2002:a17:907:7f9f:b0:b2f:963:1d2f with SMTP id
- a640c23a62f3a-b302b2245c1mr588084166b.51.1758706185893; 
- Wed, 24 Sep 2025 02:29:45 -0700 (PDT)
+ bh=/mGe1RNZOMFuiqKM/TEXFkBBUfbfbrXn7gTWkrNC4UA=;
+ b=uUI4f4uHdcWvKUF1dIoPvZPds+uUyc502A/D83FFWxq5cBW8r2B/vWDDlKzPsWVH8x
+ /NIKfyzsMlGCwN4gXU+Ul0t3F5SVgd05uqpfQ+S4obBkqTxyUCLvxHBKToomp4Aztj75
+ tNU9sfQJGJsQqMOAFB3frfp2bINaCa1fZ/FApl9uivcx3Atof0GrdX8rz42eFyZ1lvrV
+ 1cjarAITCGjBGWCk0rTO5xT91Q49d5db7tgIuzjQ4pq7DzmcWHBQSgnpH1WK1J5vf4K9
+ Lk6Tk9dfNH853q0SIS8t5I/kPitTCNajGZ2eT6QF7Jd6lY3mtJY+tLSS4w3MR8MBPBVq
+ f1xw==
+X-Gm-Message-State: AOJu0YwOVppIufYKsT7qmaIITQ9ksod88IMIOfCXaAblVFhnwTZg9xDM
+ XhOYxLgmCSN7FZyFGJl0aCYKgetOp5RUkEqCAPtvp1y7I1c5s3K9DHZgWrx5fwDcMHuflcX14iI
+ BH489qFsK5TBWCIwhZijRUPYI8u7mPrJJU9mduh6uvOkLF3CsxSIbtl3x67qvGEFh1/RkujNjyc
+ z7ZFSiyjGtZ1BtLv5PeT7kiMSr1OQ/ZCR/AFaLWcD3
+X-Gm-Gg: ASbGnctWtExwr/sZp3TrN/F+HpvkelNRpRawPPSGbd6QB/JdU4/BSr0aKlzmPuELAA6
+ Ec3Fo7HFZEhIYS+4fjMtU9U0Ok1MeRDg3lNJD0SUBQT1UYaeo+lwOJSDfDTOetsnhaQ92RPdECN
+ L04GFPPH8u7UFAvUbpqa4iEBp68uQ4atWhpyzpMyZrKZmEM22G3AC+91Z6HakSobBenzTD0Xp+F
+ MftIjCxl4OXP2fXaJyTaleadS0cstCT1FI0YMZmHOMIqmSvg+1PmvpJGS7XKn1/MdwhwniIjQQq
+ 68rn/vlhy0eiMk02chUFe+wJzrDwnP7hd4+EzFuco7eUz+ROnvPbx57faYSwxLtBXDQcwI9golb
+ A2BdEr1KEvD/9dRFAjzgFDEoz8Vv5dV2pUpx0dE6K9e7C3A==
+X-Received: by 2002:a17:906:7953:b0:b2a:47c9:8ff5 with SMTP id
+ a640c23a62f3a-b32c9898862mr206071666b.10.1758706142207; 
+ Wed, 24 Sep 2025 02:29:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnFUqr714rN43b87P1Pk5M6M0dHEWb7no3YtufmOcSFtpQIFVGypgmJPP3vB0WNKLpL/B5bw==
+X-Received: by 2002:a17:906:7953:b0:b2a:47c9:8ff5 with SMTP id
+ a640c23a62f3a-b32c9898862mr206068366b.10.1758706141716; 
+ Wed, 24 Sep 2025 02:29:01 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b2a2a5f6cb9sm834859966b.36.2025.09.24.02.29.44
+ a640c23a62f3a-b2713332a68sm1096623066b.99.2025.09.24.02.29.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:29:44 -0700 (PDT)
+ Wed, 24 Sep 2025 02:29:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 18/29] rust/qdev: Drop declare_properties & define_property
- macros
-Date: Wed, 24 Sep 2025 11:28:38 +0200
-Message-ID: <20250924092850.42047-19-pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 04/29] rust: build: remove "protocol: rust: from doctests
+Date: Wed, 24 Sep 2025 11:28:24 +0200
+Message-ID: <20250924092850.42047-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250924092850.42047-1-pbonzini@redhat.com>
 References: <20250924092850.42047-1-pbonzini@redhat.com>
@@ -111,86 +109,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
-
-After HPET's #property conversion, there's no use case for
-declare_properties & define_property. So get rid of them for now.
-
-In future, if there's something that #property really cannot resolve,
-they can be brought back.
+It is added already by rust.doctest.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20250920160520.3699591-13-zhao1.liu@intel.com
 ---
- rust/hw/core/src/qdev.rs | 53 ----------------------------------------
- 1 file changed, 53 deletions(-)
+ rust/bql/meson.build       | 1 -
+ rust/common/meson.build    | 1 -
+ rust/migration/meson.build | 1 -
+ rust/qom/meson.build       | 1 -
+ rust/util/meson.build      | 1 -
+ 5 files changed, 5 deletions(-)
 
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index 9c82e1716c5..a4493dbf011 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -248,59 +248,6 @@ pub fn class_init<T: DeviceImpl>(&mut self) {
-     }
- }
- 
--#[macro_export]
--macro_rules! define_property {
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, bit = $bitnr:expr, default = $defval:expr$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            bitnr: $bitnr,
--            set_default: true,
--            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            set_default: true,
--            defval: $crate::bindings::Property__bindgen_ty_1 { u: $defval as u64 },
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty$(,)*) => {
--        $crate::bindings::Property {
--            // use associated function syntax for type checking
--            name: ::std::ffi::CStr::as_ptr($name),
--            info: $prop,
--            offset: ::std::mem::offset_of!($state, $field) as isize,
--            set_default: false,
--            ..::common::zeroable::Zeroable::ZERO
--        }
--    };
--}
--
--#[macro_export]
--macro_rules! declare_properties {
--    ($ident:ident, $($prop:expr),*$(,)*) => {
--        pub static $ident: [$crate::bindings::Property; {
--            let mut len = 0;
--            $({
--                _ = stringify!($prop);
--                len += 1;
--            })*
--            len
--        }] = [
--            $($prop),*,
--        ];
--    };
--}
--
- unsafe impl ObjectType for DeviceState {
-     type Class = DeviceClass;
-     const TYPE_NAME: &'static CStr =
+diff --git a/rust/bql/meson.build b/rust/bql/meson.build
+index f369209dfdd..7214d944089 100644
+--- a/rust/bql/meson.build
++++ b/rust/bql/meson.build
+@@ -47,6 +47,5 @@ bql_rs = declare_dependency(link_with: [_bql_rs],
+ # in a separate suite that is run by the "build" CI jobs rather than "check".
+ rust.doctest('rust-bql-rs-doctests',
+      _bql_rs,
+-     protocol: 'rust',
+      dependencies: bql_rs,
+      suite: ['doc', 'rust'])
+diff --git a/rust/common/meson.build b/rust/common/meson.build
+index 07d073182ed..aff601d1df2 100644
+--- a/rust/common/meson.build
++++ b/rust/common/meson.build
+@@ -32,6 +32,5 @@ rust.test('rust-common-tests', _common_rs,
+ # in a separate suite that is run by the "build" CI jobs rather than "check".
+ rust.doctest('rust-common-doctests',
+      _common_rs,
+-     protocol: 'rust',
+      dependencies: common_rs,
+      suite: ['doc', 'rust'])
+diff --git a/rust/migration/meson.build b/rust/migration/meson.build
+index 5e820d43f50..2a49bd1633e 100644
+--- a/rust/migration/meson.build
++++ b/rust/migration/meson.build
+@@ -48,6 +48,5 @@ migration_rs = declare_dependency(link_with: [_migration_rs],
+ # in a separate suite that is run by the "build" CI jobs rather than "check".
+ rust.doctest('rust-migration-rs-doctests',
+      _migration_rs,
+-     protocol: 'rust',
+      dependencies: migration_rs,
+      suite: ['doc', 'rust'])
+diff --git a/rust/qom/meson.build b/rust/qom/meson.build
+index 40c51b71b23..21e12148da4 100644
+--- a/rust/qom/meson.build
++++ b/rust/qom/meson.build
+@@ -38,6 +38,5 @@ qom_rs = declare_dependency(link_with: [_qom_rs], dependencies: [qemu_macros, qo
+ # in a separate suite that is run by the "build" CI jobs rather than "check".
+ rust.doctest('rust-qom-rs-doctests',
+      _qom_rs,
+-     protocol: 'rust',
+      dependencies: qom_rs,
+      suite: ['doc', 'rust'])
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 96330504459..7ca69939ce5 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -53,7 +53,6 @@ rust.test('rust-util-tests', _util_rs,
+ # in a separate suite that is run by the "build" CI jobs rather than "check".
+ rust.doctest('rust-util-rs-doctests',
+      _util_rs,
+-     protocol: 'rust',
+      dependencies: util_rs,
+      suite: ['doc', 'rust']
+ )
 -- 
 2.51.0
 
