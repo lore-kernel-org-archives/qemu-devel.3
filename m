@@ -4,98 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B456CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D461CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1LqA-0006Mh-Aj; Wed, 24 Sep 2025 05:31:11 -0400
+	id 1v1Lr0-0000r7-1P; Wed, 24 Sep 2025 05:32:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1LpX-0005wF-TS
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:30:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1LpO-000562-VM
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:30:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758706219;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TF+uRkbdU4sqmkTEUKCHp2+nyTo8mJw1hvaCWSytbjg=;
- b=PbPrcXTxjKmXx/Sq3kF1yVfRWUlz2+ZlOwlNBDb2Ol0faoRuIt2FAhOySCnSQjXW/7oBBq
- ideowLHc6tdv03usr2ZvCgo5IeEskDm0u/E7Lv1jlfuxbCmUha+sqYIm4vpYlLBnmfw+rO
- IB2VoQ8vy9sNX1WljXKudM+mNhmszBY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-u21SsSdRM_u8nr29JppqZw-1; Wed, 24 Sep 2025 05:30:18 -0400
-X-MC-Unique: u21SsSdRM_u8nr29JppqZw-1
-X-Mimecast-MFC-AGG-ID: u21SsSdRM_u8nr29JppqZw_1758706217
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b311b7aa78fso136822366b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:30:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758706217; x=1759311017;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TF+uRkbdU4sqmkTEUKCHp2+nyTo8mJw1hvaCWSytbjg=;
- b=FKJf+sR/c47bPCCT6SWEa6+Pkso3ZnZXogECzpBjK1HaqWCPV37t0VGxwzltPDxqGA
- dFnLPzlSUhz2r9j0MEhIuefwpoyBMRbbzeAOiwkDQnvO4hjL0Vafup+Q9o43nRt+7Yse
- wwk+S/bFPKc7FdVhrt/z+xjLgLD5Roy8t2IlYV6GQX8IiduXyvOHbI1nZRcoDTM01DHd
- b5GN2MoHliCM4Cx5yhminh6BDx4lPoEUm+x8TpDuRYiTVO+XH9eGAA68F1GCGmwiWtOo
- jso3TDs/yd915cR7xyYPiHbQTxK9utI1Rk/zNulOu54ZBeCOCXKhy0wh8bNyOr31HwjC
- 9tYg==
-X-Gm-Message-State: AOJu0YxDZn6OeaQblOhum1cbWuJgZ5ijpReGcgFyeWz49NaHYUj9Y7BN
- p1hHYY1HnJXft/LIlBDOeRf4yksEkJ6XP+91Nq6OC4TDaiHL2BAa3HVy/GdmOtpR5wO0Oe8yG4U
- ScPCf8C167AJBbCzSXucLJxbDqgsesmw1IpbH3XJ8Jg+Xtm07BsPXNqF28xTl0yrj7MIAkJNrww
- TTJye4s1/KpqZbmYEeFRWzS7RyyHnAy6tN0FrYbN5p
-X-Gm-Gg: ASbGncvTvBvZGtn3GstXDM1t9Ki59jxGqc+j2Pokqwu2AoaG+hIKqQVJHhesrE8QVLb
- zf7S+3WJmLothiVnKrJ9uNry3IdnIplLZey9YRa2xAdepwIxqTIPDko9RKOwmIXFyMFc71EAVha
- d7cEueZf7lPIJtuszZXU1gbVA1Xnmwb6ZWdPbV89wQns/OBHConacCCCOFl5bU2HcjSic2I/uu5
- 7C0eetxJsgtYlkc7+DlHtIGImhqWdadjKC52l49kfmMCyX1gHTQ5y/d4qqxLpOcWAvY+UffEWL2
- xXz/LDJCT2yqxUpax087q19c+jpxxI2vvYWv6yNrMg7dhIO+eyJ2isRISYiH1f9P7+5Y3sI/KMW
- yYVfGVlwSaqeyY09aC781swwBUnMnMbVzLcCDe6Z+FnIT+Q==
-X-Received: by 2002:a17:907:3f2a:b0:b32:b055:949a with SMTP id
- a640c23a62f3a-b32b0559c0emr209611166b.33.1758706216622; 
- Wed, 24 Sep 2025 02:30:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnhaSUFNJb9H7tB3abHwb6xuv5TRziTs6lTGe9LpUqrw86umi8ccwvv138ZeOgw9sLGCVT8g==
-X-Received: by 2002:a17:907:3f2a:b0:b32:b055:949a with SMTP id
- a640c23a62f3a-b32b0559c0emr209608066b.33.1758706216152; 
- Wed, 24 Sep 2025 02:30:16 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.127.188])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b26847ba016sm1136962266b.21.2025.09.24.02.30.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:30:14 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 29/29] docs/code-provenance: AI exceptions are in addition to
- DCO
-Date: Wed, 24 Sep 2025 11:28:49 +0200
-Message-ID: <20250924092850.42047-30-pbonzini@redhat.com>
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v1Lqx-0000bg-0X
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:31:59 -0400
+Received: from m204-227.eu.mailgun.net ([161.38.204.227])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
+ id 1v1Lqs-0005Jz-11
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:31:56 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
+ s=email; t=1758706305; x=1758713505; 
+ h=Content-Transfer-Encoding: MIME-Version: References: In-Reply-To:
+ Message-ID: Date: Subject: Subject: Cc: To: To: From: From: Sender: Sender; 
+ bh=zgVAUJj5Z4q6C9ZqO0rq/kxl0ZQ0bFrXg2qcUVtHtAE=;
+ b=XDKEk8wIWhV1zwQwY+X/EnoIK9MuaX1NjM9txJqmmXFrbDOKs7ZBlCUb3nrGeASIl/bj/v8yDez2YC7ckazqJkUEH22WfSDD48WIlU6WMQLn4gPFohVjsPPF8eB4NsZuxS1LMHwKomy+no9E7pppkLXDrVw4/nrezqc1Er1y7Z67r4Fnag0JKbH5CaorzWYogTSVGFmg47eWRtWbAuMtkRl5gSfG9lyRhlXNExrUlRsnXGGM0JWHttgnPbmXh/N8UAh3/+FoXV+yLUEyZcpP63pO3louJ4mhrctfJ1acOIAgJTGKvESGwHeOsQO4cA+Q6ISg0vJ287oaPc5pzLcMVw==
+X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
+Received: from fedora (pub082136115007.dh-hfc.datazug.ch [82.136.115.7]) by
+ 3410bf604baf3b1186e1b7c3ddb9946731989e4e31ae93aebc8156634f8d87f1 with SMTP id
+ 68d3ba80ccb80735fe678ef9; Wed, 24 Sep 2025 09:31:44 GMT
+X-Mailgun-Sending-Ip: 161.38.204.227
+From: Alessandro Ratti <alessandro@0x65c.net>
+To: berrange@redhat.com
+Cc: alessandro.ratti@gmail.com, alessandro@0x65c.net, alex.bennee@linaro.org,
+ armbru@redhat.com, mst@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v3] virtio: improve virtqueue mapping error messages
+Date: Wed, 24 Sep 2025 11:14:04 +0200
+Message-ID: <20250924093138.559872-2-alessandro@0x65c.net>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250924092850.42047-1-pbonzini@redhat.com>
-References: <20250924092850.42047-1-pbonzini@redhat.com>
+In-Reply-To: <20250924093138.559872-1-alessandro@0x65c.net>
+References: <aNLIHOwcGB47qbUY@redhat.com>
+ <20250924093138.559872-1-alessandro@0x65c.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=161.38.204.227;
+ envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
+ helo=m204-227.eu.mailgun.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,38 +72,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using phrasing from https://openinfra.org/legal/ai-policy (with just
-"commit" replaced by "submission", because we do not submit changes
-as commits but rather emails), clarify that the contributor remains
-responsible for its copyright or license status.
+Improve error reporting when virtqueue ring mapping fails by including a
+device identifier in the error message.
 
-[This is not my preferred phrasing.  I would prefer something lighter
-like "the "Signed-off-by" label in the contribution gives the author
-responsibility".  But for the sake of not reinventing the wheel I am
-keeping the exact words from the OpenInfra policy.]
+Introduce a helper qdev_get_printable_name() in qdev-core, which returns
+either:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+ - the device ID, if explicitly provided (e.g. -device ...,id=foo)
+ - the QOM path from qdev_get_dev_path(dev) otherwise
+ - "<unknown device>" as a fallback when no identifier is present
+
+This makes it easier to identify which device triggered the error in
+multi-device setups or when debugging complex guest configurations.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
 ---
- docs/devel/code-provenance.rst | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/core/qdev.c         | 29 +++++++++++++++++++++++++++++
+ hw/virtio/virtio.c     | 15 ++++++++++++---
+ include/hw/qdev-core.h |  1 +
+ 3 files changed, 42 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index 6968d54be8a..8cdc56f6649 100644
---- a/docs/devel/code-provenance.rst
-+++ b/docs/devel/code-provenance.rst
-@@ -341,3 +341,9 @@ or more general revisions. This can be done by contacting the qemu-devel
- mailing list with details of a proposed tool, model, usage scenario, etc.
- that is beneficial to QEMU, while still mitigating issues around compliance
- with the DCO.  After discussion, any exception will be listed below.
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index f600226176..fab42a7270 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -411,6 +411,35 @@ char *qdev_get_dev_path(DeviceState *dev)
+     return NULL;
+ }
+ 
++const char *qdev_get_printable_name(DeviceState *vdev)
++{
++    /*
++     * Return device ID if explicity set
++     * (e.g. -device virtio-blk-pci,id=foo)
++     * This allows users to correlate errors with their custom device
++     * names.
++     */
++    if (vdev->id) {
++        return vdev->id;
++    }
++    /*
++     * Fall back to the canonical QOM device path (eg. ID for PCI
++     * devices).
++     * This ensures the device is still uniquely and meaningfully
++     * identified.
++     */
++    const char *path = qdev_get_dev_path(vdev);
++    if (path) {
++        return path;
++    }
 +
-+Exceptions do not remove the need for authors to comply with all other
-+requirements for contribution.  In particular, the "Signed-off-by"
-+label in a patch submission is a statement that the author takes
-+responsibility for the entire contents of the patch, including any parts
-+that were generated or assisted by AI tools or other tools.
++    /*
++     * Final fallback: if all else fails, return a placeholder string.
++     * This ensures the error message always contains a valid string.
++     */
++    return "<unknown device>";
++}
++
+ void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
+ {
+     dev->unplug_blockers = g_slist_prepend(dev->unplug_blockers, reason);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 9a81ad912e..0caea5b8ce 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -256,7 +256,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
+     len = address_space_cache_init(&new->desc, vdev->dma_as,
+                                    addr, size, packed);
+     if (len < size) {
+-        virtio_error(vdev, "Cannot map desc");
++        virtio_error(vdev,
++                "Failed to map descriptor ring for device %s: "
++                "invalid guest physical address or corrupted queue setup",
++                qdev_get_printable_name(DEVICE(vdev)));
+         goto err_desc;
+     }
+ 
+@@ -264,7 +267,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
+     len = address_space_cache_init(&new->used, vdev->dma_as,
+                                    vq->vring.used, size, true);
+     if (len < size) {
+-        virtio_error(vdev, "Cannot map used");
++        virtio_error(vdev,
++                "Failed to map used ring for device %s: "
++                "possible guest misconfiguration or insufficient memory",
++                qdev_get_printable_name(DEVICE(vdev)));
+         goto err_used;
+     }
+ 
+@@ -272,7 +278,10 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
+     len = address_space_cache_init(&new->avail, vdev->dma_as,
+                                    vq->vring.avail, size, false);
+     if (len < size) {
+-        virtio_error(vdev, "Cannot map avail");
++        virtio_error(vdev,
++                "Failed to map avalaible ring for device %s: "
++                "possible queue misconfiguration or overlapping memory region",
++                qdev_get_printable_name(DEVICE(vdev)));
+         goto err_avail;
+     }
+ 
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 530f3da702..a7bfb10dc7 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -1064,6 +1064,7 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp);
+ extern bool qdev_hot_removed;
+ 
+ char *qdev_get_dev_path(DeviceState *dev);
++const char *qdev_get_printable_name(DeviceState *dev);
+ 
+ void qbus_set_hotplug_handler(BusState *bus, Object *handler);
+ void qbus_set_bus_hotplug_handler(BusState *bus);
 -- 
-2.51.0
+2.39.5
 
 
