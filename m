@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05782CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD8CCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Jnq-0005tl-Dq; Wed, 24 Sep 2025 03:20:38 -0400
+	id 1v1Jn1-0005PH-Cl; Wed, 24 Sep 2025 03:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jnm-0005rj-EA
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:34 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jmy-0005O8-6q
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:19:44 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jnf-0003gx-EN
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:33 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jmq-0003O5-WE
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:19:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=I1gMG2L8YpYilfMkG81ggclFtIPYKdFhhQ3xAqN8STs=; b=IOUmdr9QyRikf8H
- FZgPpE3KDNvh+WCWEqNkgPUem40lB/LD1NZTHWTtfRPX4gE8VxDkEwTL9NdfZ8ZKvhgjSoAbM86D/
- nlAPZuN39NmHsahMxMJ3wSj9FBwkAU48nhxOojRml+vaqm5/4Iehc4TX4qStRsKAwRNMqxdG2q1AW
- 4w=;
+ List-Help; bh=XM/Bwlfn1Sl226Bvx3vx+HDk47D8PqIg+tFiODBQbEA=; b=qWfrERk1wZVM4Vp
+ fdW5MZdYgUq1ES230Gqqsa/Q320qEAmALmwa++hRPro/ITm9YsN5IYNi8d5EwjANQwDUR8tkrCzPT
+ dBCqIH5pDkZzzsWm3sKQccoOJURfkbLJJkM9WqvFOpgz38LxTxHl3KwAqyg6h2W120sNZ55W24l8p
+ PU=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [RFC PATCH 31/34] target/riscv: Move debug.h include away from cpu.h
-Date: Wed, 24 Sep 2025 09:21:21 +0200
-Message-ID: <20250924072124.6493-32-anjo@rev.ng>
+Subject: [RFC PATCH 04/34] target/riscv: Fix size of mhartid
+Date: Wed, 24 Sep 2025 09:20:54 +0200
+Message-ID: <20250924072124.6493-5-anjo@rev.ng>
 In-Reply-To: <20250924072124.6493-1-anjo@rev.ng>
 References: <20250924072124.6493-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,106 +64,68 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All debug.h definitions except for RV_MAX_TRIGGERS are internal to
-target/riscv.  Move RV_MAX_TRIGGERS to cpu.h and include debug.h from
-all translation units which relied on the cpu.h include.
+and update formatting in log.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h         | 4 ++--
- target/riscv/debug.h       | 2 --
- target/riscv/cpu.c         | 3 +++
- target/riscv/csr.c         | 3 +++
- target/riscv/debug.c       | 1 +
- target/riscv/tcg/tcg-cpu.c | 1 +
- 6 files changed, 10 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h         | 2 +-
+ target/riscv/cpu_helper.c  | 2 +-
+ target/riscv/machine.c     | 2 +-
+ target/riscv/tcg/tcg-cpu.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 4c90b8b035..2fe5cb211a 100644
+index 32e30a36ac..f94f773a84 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -177,14 +177,14 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #define MAX_RISCV_PMPS (64)
- #define OLD_MAX_RISCV_PMPS (16)
+@@ -279,7 +279,7 @@ struct CPUArchState {
+     target_ulong geilen;
+     uint64_t resetvec;
  
--#if !defined(CONFIG_USER_ONLY)
-+#if !defined(CONFIG_LINUX_USER)
- #include "pmp.h"
--#include "debug.h"
- #endif
+-    target_ulong mhartid;
++    uint64_t mhartid;
+     /*
+      * For RV32 this is 32-bit mstatus and 32-bit mstatush.
+      * For RV64 this is a 64-bit mstatus.
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 3479a62cc7..9d0683f200 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2278,7 +2278,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                      riscv_cpu_get_trap_name(cause, async));
  
- #define RV_VLEN_MAX 1024
- #define RV_MAX_MHPMEVENTS 32
- #define RV_MAX_MHPMCOUNTERS 32
-+#define RV_MAX_TRIGGERS 2
- 
- FIELD(VTYPE, VLMUL, 0, 3)
- FIELD(VTYPE, VSEW, 3, 3)
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index f76b8f944a..d3aae619db 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -24,8 +24,6 @@
- 
- #include "exec/breakpoint.h"
- 
--#define RV_MAX_TRIGGERS         2
--
- /* register index of tdata CSRs */
- enum {
-     TDATA1 = 0,
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5206abe640..246ec81beb 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -37,6 +37,9 @@
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
- #include "tcg/tcg.h"
-+#if !defined(CONFIG_USER_ONLY)
-+#include "debug.h"
-+#endif
- 
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index f73dfbe78b..b3c5b75aac 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -33,6 +33,9 @@
- #include "qapi/error.h"
- #include "tcg/insn-start-words.h"
- #include "internals.h"
-+#if !defined(CONFIG_USER_ONLY)
-+#include "debug.h"
-+#endif
- #include <stdbool.h>
- 
- /* CSR function table public API */
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..f5b2043405 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -27,6 +27,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "debug.h"
- #include "trace.h"
- #include "exec/helper-proto.h"
- #include "exec/watchpoint.h"
+     qemu_log_mask(CPU_LOG_INT,
+-                  "%s: hart:"TARGET_FMT_ld", async:%d, cause:"TARGET_FMT_lx", "
++                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
+                   "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
+                   __func__, env->mhartid, async, cause, env->pc, tval,
+                   riscv_cpu_get_trap_name(cause, async));
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 438c44dbb0..32cc94858d 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -425,7 +425,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINTTL(env.priv, RISCVCPU),
+         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+         VMSTATE_UINT64(env.resetvec, RISCVCPU),
+-        VMSTATE_UINTTL(env.mhartid, RISCVCPU),
++        VMSTATE_UINT64(env.mhartid, RISCVCPU),
+         VMSTATE_UINT64(env.mstatus, RISCVCPU),
+         VMSTATE_UINT64(env.mip, RISCVCPU),
+         VMSTATE_UINT64(env.miclaim, RISCVCPU),
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index f90abbc594..8e0e929aaa 100644
+index 78fb279184..f90abbc594 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -37,6 +37,7 @@
- #include "hw/boards.h"
- #include "system/tcg.h"
- #include "exec/icount.h"
-+#include "debug.h"
- #endif
- 
- /* Hash that stores user set extensions */
+@@ -471,7 +471,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
+                 continue;
+             }
+ #ifndef CONFIG_USER_ONLY
+-            warn_report("disabling %s extension for hart 0x" TARGET_FMT_lx
++            warn_report("disabling %s extension for hart 0x%" PRIx64
+                         " because privilege spec version does not match",
+                         edata->name, env->mhartid);
+ #else
 -- 
 2.51.0
 
