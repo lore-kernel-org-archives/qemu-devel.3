@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A43CCAC5A5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECFACAC59A
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 07:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Jn6-0005SX-BF; Wed, 24 Sep 2025 03:19:52 -0400
+	id 1v1Jno-0005sW-IM; Wed, 24 Sep 2025 03:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jn1-0005Pa-Dr
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:19:47 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnZ-0005lQ-K6
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:23 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1Jms-0003Om-8S
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:19:47 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1v1JnN-0003SB-Ta
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 03:20:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Y8Je5iZVgc2ycYZL2Dvu1grRMVwIH4xKSbz9INjaPno=; b=AZF4YpIauyDZuXF
- oqZI2MHtpbE8YA7PpfQ9CJ/FUlk5LkTNdxpoqvk1YTbVzdhc/3mkd48nUAcPU7lQmedXywSTr+6nh
- s/uaF9kPlzlQOzPcOCA9YUq9hk7DkFCK2AMdZ0V86md0xp8ZfD6VQ5wEcAeJ0szMMNXujbGaw9RCf
- /Y=;
+ List-Help; bh=MBXCoD120HOdlwDPHxjFmfthOrVMD9EoNaDraMOZfI0=; b=Lw1qUnQALqyfhwy
+ uPFpMpLq5Oytv+/QoBFhfzEEXows6KEwI8vSdVhkskagN7hyRgbHrI2bXSmmq9zml0+YasGkgan7k
+ v3Dao03dfbQQv2BPVYJr5cFJ6eq4j/6WyZhuZbm3IpJstz7eZ7uymutp9wD/bRQBXQ4DpKA0NglsX
+ SE=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  palmer@dabbelt.com
-Subject: [RFC PATCH 08/34] target/riscv: Combine minstretcfg and minstretcfgh
-Date: Wed, 24 Sep 2025 09:20:58 +0200
-Message-ID: <20250924072124.6493-9-anjo@rev.ng>
+Subject: [RFC PATCH 21/34] target/riscv: Fix size of priv
+Date: Wed, 24 Sep 2025 09:21:11 +0200
+Message-ID: <20250924072124.6493-22-anjo@rev.ng>
 In-Reply-To: <20250924072124.6493-1-anjo@rev.ng>
 References: <20250924072124.6493-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,92 +64,113 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the privileged specification,
-minstretcfg is a 64-bit register and minstretcfgh refers to the top
-32 bits of this register when XLEN == 32.  No real advantage is
-gained by keeping them separate, and combining them allows for slight
-simplification.
+The priv field of CPUArchState only stores values in the range [0,3],
+fix to 8 bits in size and update relevant function arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/cpu.h |  3 +--
- target/riscv/csr.c | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ target/riscv/cpu.h        |  8 ++++----
+ target/riscv/cpu_helper.c | 10 +++++-----
+ target/riscv/machine.c    |  2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 4b80daf117..81719813cf 100644
+index 6a60e3a6e6..d484da20b5 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -420,8 +420,7 @@ struct CPUArchState {
+@@ -264,7 +264,7 @@ struct CPUArchState {
+     uint32_t elf_flags;
+ #endif
  
-     /* PMU cycle & instret privilege mode filtering */
-     uint64_t mcyclecfg;
--    target_ulong minstretcfg;
--    target_ulong minstretcfgh;
-+    uint64_t minstretcfg;
+-    target_ulong priv;
++    uint8_t priv;
+     /* CSRs for execution environment configuration */
+     uint64_t menvcfg;
+     uint64_t senvcfg;
+@@ -649,10 +649,10 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+ #endif /* !CONFIG_USER_ONLY */
  
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 867f8efe83..4d232b062b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1116,7 +1116,8 @@ static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
++void riscv_cpu_set_mode(CPURISCVState *env, uint8_t newpriv, bool virt_en);
+ 
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong prev_priv, bool prev_virt);
++    enum CTRType type, uint8_t prev_priv, bool prev_virt);
+ void riscv_ctr_clear(CPURISCVState *env);
+ 
+ void riscv_translate_init(void);
+@@ -723,7 +723,7 @@ static inline int cpu_address_mode(CPURISCVState *env)
+     return mode;
+ }
+ 
+-static inline RISCVMXL cpu_get_xl(CPURISCVState *env, target_ulong mode)
++static inline RISCVMXL cpu_get_xl(CPURISCVState *env, uint8_t mode)
  {
--    *val = env->minstretcfg;
-+    bool rv32 = riscv_cpu_mxl(env) == MXL_RV32;
-+    *val = extract64(env->minstretcfg, 0, rv32 ? 32 : 64);
-     return RISCV_EXCP_NONE;
+     RISCVMXL xl = env->misa_mxl;
+     /*
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index c9594b8719..a57f33b3cb 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -799,7 +799,7 @@ void riscv_ctr_clear(CPURISCVState *env)
+     memset(env->ctr_data, 0x0, sizeof(env->ctr_data));
  }
  
-@@ -1143,7 +1144,7 @@ static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
- static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
-                                         target_ulong *val)
+-static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
++static uint64_t riscv_ctr_priv_to_mask(uint8_t priv, bool virt)
  {
--    *val = env->minstretcfgh;
-+    *val = extract64(env->minstretcfg, 32, 32);
-     return RISCV_EXCP_NONE;
+     switch (priv) {
+     case PRV_M:
+@@ -819,7 +819,7 @@ static uint64_t riscv_ctr_priv_to_mask(target_ulong priv, bool virt)
+     g_assert_not_reached();
  }
  
-@@ -1160,7 +1161,8 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MINSTRETCFGH_BIT_VSINH : 0;
- 
--    env->minstretcfgh = val & inh_avail_mask;
-+    env->minstretcfg = deposit64(env->minstretcfg, 32, 32,
-+                                 val & inh_avail_mask);
-     return RISCV_EXCP_NONE;
+-static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
++static uint64_t riscv_ctr_get_control(CPURISCVState *env, uint8_t priv,
+                                       bool virt)
+ {
+     switch (priv) {
+@@ -841,7 +841,7 @@ static uint64_t riscv_ctr_get_control(CPURISCVState *env, target_long priv,
+  * and src privilege is less than target privilege. This includes the virtual
+  * state as well.
+  */
+-static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
++static bool riscv_ctr_check_xte(CPURISCVState *env, uint8_t src_prv,
+                                 bool src_virt)
+ {
+     target_long tgt_prv = env->priv;
+@@ -930,7 +930,7 @@ static bool riscv_ctr_check_xte(CPURISCVState *env, target_long src_prv,
+  *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
+  */
+ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+-    enum CTRType type, target_ulong src_priv, bool src_virt)
++    enum CTRType type, uint8_t src_priv, bool src_virt)
+ {
+     bool tgt_virt = env->virt_enabled;
+     uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
+@@ -1028,7 +1028,7 @@ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
+     env->sctrstatus = set_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK, head);
  }
  
-@@ -1250,8 +1252,7 @@ static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-     if (counter_idx == 0) {
-         cfg_val = env->mcyclecfg;
-     } else if (counter_idx == 2) {
--        cfg_val = rv32 ? ((uint64_t)env->minstretcfgh << 32) :
--                  env->minstretcfg;
-+        cfg_val = env->minstretcfg;
-     } else {
-         cfg_val = env->mhpmevent_val[counter_idx];
-         cfg_val &= MHPMEVENT_FILTER_MASK;
-@@ -1573,12 +1574,13 @@ static int rmw_cd_ctr_cfgh(CPURISCVState *env, int cfg_index, target_ulong *val,
-         }
-         break;
-     case 2:          /* INSTRETCFGH */
-+        cfgh = extract64(env->minstretcfg, 32, 32);
-         if (wr_mask) {
-             wr_mask &= ~MINSTRETCFGH_BIT_MINH;
--            env->minstretcfgh = (new_val & wr_mask) |
--                                (env->minstretcfgh & ~wr_mask);
-+            cfgh = (new_val & wr_mask) | (cfgh & ~wr_mask);
-+            env->minstretcfg = deposit64(env->minstretcfg, 32, 32, cfgh);
-         } else {
--            *val = env->minstretcfgh;
-+            *val = cfgh;
-         }
-         break;
-     default:
+-void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
++void riscv_cpu_set_mode(CPURISCVState *env, uint8_t newpriv, bool virt_en)
+ {
+     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index b95d432e0e..a3d5811653 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -420,7 +420,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
+         VMSTATE_UINT32(env.misa_ext_mask, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv, RISCVCPU),
++        VMSTATE_UINT8(env.priv, RISCVCPU),
+         VMSTATE_BOOL(env.virt_enabled, RISCVCPU),
+         VMSTATE_UINT64(env.resetvec, RISCVCPU),
+         VMSTATE_UINT64(env.mhartid, RISCVCPU),
 -- 
 2.51.0
 
