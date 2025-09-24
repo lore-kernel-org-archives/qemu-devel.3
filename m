@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C36CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 02:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7F7CAC5AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 02:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1EvA-00030R-NI; Tue, 23 Sep 2025 22:07:52 -0400
+	id 1v1Evc-00037L-Nn; Tue, 23 Sep 2025 22:08:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ev9-0002zt-G5
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:07:51 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1v1Evb-000364-5j
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:08:19 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ev1-0002c1-QW
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:07:51 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-33082c95fd0so5526671a91.1
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 19:07:43 -0700 (PDT)
+ id 1v1EvZ-0002dt-8F
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 22:08:18 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-77c1814ca1dso4822043b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 19:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758679662; x=1759284462; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JpDWwmGB3FDcx3IksRaylh4MrMqkVjqSJs30QhIpAxg=;
- b=VppkE6KNC02/Ir9Je6Q5Yj9xEXHIIj6lK2lxtDjUxLF6ooigO9VdTT1Vq7YhMlkEeE
- mu1MTOuPYIn+ehz+BUB/74YbDN9eXPn3T4yimdRfveNtXQdhu5BDbU8TwpyF7m+uefPh
- 7MDS8WbgN2gqHl2COnrh0qk/RosUqbR/qgMzkhRURTAuXQogvfxvomG6pwqvxOVnlIi/
- Bu1GNDqfvd+6qOsD9mNxxWyUdDBSuuTRVEiDOzIZ+5dVrI5uI7FhAAgZJ40e7ASNFlFo
- kM7X0KoXnHFsM7sxGe7totj6wfHs7tkp9332JlRmb+yz6PY6QRAo06lgn/JsB7/hpQgu
- iseA==
+ d=linaro.org; s=google; t=1758679695; x=1759284495; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7IKE+UgQbwjYQbDe2+KyzEk5pzBNRctV0JxsiSB+t8k=;
+ b=XG0SFd6VykRdW/pPL+gT/hcNfK1Pxg0g0ur3N+NvJu4Yi8MeXo8+9sU3W4q1IzZbCa
+ QO48Oa0EXQwxCZJsigCDNYlln7dTNf/tNtOxsoe8468ueRP1asr69cJJahYr8QWQkwur
+ pCyDFzwHd9txsd/ZzHHzcsjimzX0JrnzYMvh9YyIyUja7mdCSNTBtM3J0+oVTELQq8HH
+ Qlc6vrismruTuM5F/v6ElIlM5VSO746jtsQB+EHsh3op7gGtEp73POuzfEJmjNRfAH6K
+ nDDI4Vt/D0NxQDnpw/iQ9cgpXrI0jn9PwW8Ovmw7HpOKMCrIV56gU5A2Je8ZPROUd/k1
+ 96pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758679662; x=1759284462;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JpDWwmGB3FDcx3IksRaylh4MrMqkVjqSJs30QhIpAxg=;
- b=kSLC10Gtdq+AKSriFd8kOntZS05t3I840aA/X3h7QJoC5Wc3rhDStcgyp9nTC3QRHe
- mG2TrjK5dKh8jtsXAeclUk3Ho3B9WbcPmkw7Vb0/ew4He3QzA2aSTn0yiMnAQGt2akTM
- 6ed1nciQszpo2OQDa7wJIESVAORIAg5vpuo4FKbg2vMXIeGZTvkXS1zYWIgllD77Nz0M
- rZCzduD09rE2r8hjzfRzxwdt8K5OMrNvUWC5AnlYk+06dguCynECCSI6AZgQgmkWUspe
- 6aTjfsoAN06oQjj5uK8srZjoC7RH8HcsznKoBMJE0+Qd97oEyKWJpTDrwbqX2Lwx0Kep
- dfhA==
-X-Gm-Message-State: AOJu0Ywyb2nGg0gZskfV9hILQwDytBmuSslvvbMdZxdqj1FrR91Mr2Fq
- k6nX5VGGue+t/c+lcjyIBad0WTIa/2qc+yClShMDWD3k+zEx0Yg2dshyKH3VPlvjww/GX8PTb0j
- Zdkmw
-X-Gm-Gg: ASbGncuvFXBx7g2wLe7CgKBtd/MKCJUcjg262MA7TWp1p1CPiq44Bci8ygoy+KhcvGy
- 7ZzqIuSMPLGel7z9+B97d0WOExZPc00BqZ10rXYF3LBzr2V27y+t4xHynkWpXOwwpRzWksgMS5D
- o794VvAy7u5pk2xjJf4kjPIUAPGaUbmsdchSdXmE64AJ1XwnUxX2Q32qLIL/uYaquV2K52QPFlu
- /GVR5h4LKQEYNeayc/elP+AkYRfiN354aXFemZwdOwEUqagIaE3ILfoUnql0bIvRD9IVJOsXwk3
- uRp91kQ86zgkPcRk2l3qPnWBKnUl7668tXXohsfEhXShCI8iUoirQ1P5JVl40nb8NGviBfxlWEq
- PM7AfV7FOAZiFNbFy2x8J/zh7avpnqbfxvW9OvC4=
-X-Google-Smtp-Source: AGHT+IEV9YOSi1IisUEgR8K0mA2ffn94YvICW/k2Jx1BIJdgz//uM5/Le8u4Q8s001D17q1kTOPC4Q==
-X-Received: by 2002:a17:90b:394a:b0:32f:469:954c with SMTP id
- 98e67ed59e1d1-332a96fb67fmr4816850a91.34.1758679661859; 
- Tue, 23 Sep 2025 19:07:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1758679695; x=1759284495;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7IKE+UgQbwjYQbDe2+KyzEk5pzBNRctV0JxsiSB+t8k=;
+ b=qcb5efhuf/n7N2o/2JPE9l8oscDM/weCAqlELvsUI4T9JMLk9/cJ1LTuGzgYphIGi5
+ EHqfGCiFxDQ05GpbtWxgx8lH8Q+8XUMPxnYoias+/ZNlHRBLa+6y97OYiML2ptIOwbqZ
+ Sf5t80Wm9r4OPf2PRg4CgkTYamzDBCulQiWXhbj5ZVgGT6cEq8XyjuSbw2e4D9/K33ii
+ ovx4F+Z7rhvYU6GR269nLybOvKd9fJqt+C9boAMUowEdsxJ4Pkzz0ZjG8LX6t4ITGMBa
+ kBTRGGCGfy3duIloZUjYZfe4tzcj1lXlcVaJUB5dibUm64IHflJ50fFgpiyxL+dAjV20
+ FKDA==
+X-Gm-Message-State: AOJu0YwIK3NseyeDzKmH72/J3+i9Tx6Lemod/cARHt/0RqtOFx8M2oqh
+ kc4jHBqSAdqp0tmcsaGITWw/ZHzvmsk6Xv4JKhM9kjvCCj9lQQZjIc38p4K2U3TmSEpEpSI4NQI
+ tt99p
+X-Gm-Gg: ASbGncsjICOyZaEBoknfOiu5kZZi8Uw5Xo0FcJLXwQqPLkjtgQY1j3Xs8RIdOv647eI
+ U49b3h8zDDSQTCurxNhvU4onv2+U21gxNCJppE09mHgzJWmLgUENddrCThj+jWNVTTjSc2SWO/H
+ xUMhGfkxd7L/qgcAevKRpnPvVfIRlnPhc9xKVeK3EW3AlXDDxoKQ2it+35Zma9XU09h/oH1jpID
+ 4htIvCWU2Uz/Vh2kvZXrSF0KJNvJLsTsgnC9G0fH90zL8xBcU1zZyMhrGkk+8FXOkR2QC451xw/
+ 7bOdAwus9elbeb2DIx1cFRVXCADKjvPbrT2GhZaFwDra/9O7pivn39bN4/JvEi1+BUPLCTPcEfx
+ ki564zQ/0hoLftPa1BU/kkP2Gp9TC
+X-Google-Smtp-Source: AGHT+IHzFmhEv/pSx4mK7XX9frXlwNcFSFxIY7ZQvq43xe8+7BXDUCSkLERi+esm2ozv62TP5IHTuA==
+X-Received: by 2002:a05:6a20:158c:b0:250:997d:409d with SMTP id
+ adf61e73a8af0-2cffede02c7mr6979032637.60.1758679695086; 
+ Tue, 23 Sep 2025 19:08:15 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3341bcd9afbsm565664a91.0.2025.09.23.19.07.41
+ d2e1a72fcca58-77d8c3adfd4sm15929130b3a.82.2025.09.23.19.08.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Sep 2025 19:07:41 -0700 (PDT)
+ Tue, 23 Sep 2025 19:08:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: jonwilson030981@googlemail.com,
-	Jon Wilson <jonwilson030981@gmail.com>
-Subject: [PATCH 2/2] linux-user: Support MADV_DONTDUMP, MADV_DODUMP
-Date: Tue, 23 Sep 2025 19:07:35 -0700
-Message-ID: <20250924020735.3909216-4-richard.henderson@linaro.org>
+Cc: jonwilson030981@googlemail.com
+Subject: [RESEND PATCH 0/2] linux-user: Support MADV_DONTDUMP, MADV_DODUMP
+Date: Tue, 23 Sep 2025 19:08:11 -0700
+Message-ID: <20250924020813.3909287-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250924020735.3909216-1-richard.henderson@linaro.org>
-References: <20250924020735.3909216-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,68 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jon Wilson <jonwilson030981@gmail.com>
+This is a refresh of
 
-Set and clear PAGE_DONTDUMP, and honor that in vma_dump_size.
+  20250506173423.1312788-1-jonwilson030981@gmail.com
+  [PATCH v4] Support madvise(MADV_DONTDUMP) when creating core \
+  dumps for qemu-user
 
-Signed-off-by: Jon Wilson <jonwilson030981@gmail.com>
-[rth: Use new page_set_flags semantics; also handle DODUMP]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/exec/page-protection.h | 6 +++++-
- linux-user/elfload.c           | 4 ++--
- linux-user/mmap.c              | 6 ++++++
- 3 files changed, 13 insertions(+), 3 deletions(-)
+using my suggestion of expanding the interface of page_set_flags.
 
-diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-index 5a18f98a3a..c50ce57d15 100644
---- a/include/exec/page-protection.h
-+++ b/include/exec/page-protection.h
-@@ -30,7 +30,11 @@
- #define PAGE_PASSTHROUGH 0x40
- /* For linux-user, indicates that the page is MAP_ANON. */
- #define PAGE_ANON      0x0080
--
-+/*
-+ * For linux-user, indicates that the page should not be
-+ * included in a core dump.
-+ */
-+#define PAGE_DONTDUMP  0x0100
- /* Target-specific bits that will be used via page_get_flags().  */
- #define PAGE_TARGET_1  0x0200
- #define PAGE_TARGET_2  0x0400
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 26c090c95d..b213f1a35b 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2120,8 +2120,8 @@ static void bswap_note(struct elf_note *en)
-  */
- static size_t vma_dump_size(vaddr start, vaddr end, int flags)
- {
--    /* The area must be readable. */
--    if (!(flags & PAGE_READ)) {
-+    /* The area must be readable and dumpable. */
-+    if (!(flags & PAGE_READ) || (flags & PAGE_DONTDUMP)) {
-         return 0;
-     }
- 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 0b69efe54c..35698c413c 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1254,6 +1254,12 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-      */
-     mmap_lock();
-     switch (advice) {
-+    case MADV_DONTDUMP:
-+        page_set_flags(start, start + len - 1, PAGE_DONTDUMP, 0);
-+        break;
-+    case MADV_DODUMP:
-+        page_set_flags(start, start + len - 1, 0, PAGE_DONTDUMP);
-+        break;
-     case MADV_WIPEONFORK:
-     case MADV_KEEPONFORK:
-         ret = -EINVAL;
+
+r~
+
+
+Jon Wilson (1):
+  linux-user: Support MADV_DONTDUMP, MADV_DODUMP
+
+Richard Henderson (1):
+  accel/tcg: Add clear_flags argument to page_set_flags
+
+ bsd-user/bsd-mem.h             |   7 +-
+ include/exec/page-protection.h |  21 +++---
+ include/user/page-protection.h |   9 ++-
+ target/arm/cpu.h               |   1 -
+ accel/tcg/user-exec.c          | 114 +++++++++------------------------
+ bsd-user/mmap.c                |   6 +-
+ linux-user/arm/elfload.c       |   2 +-
+ linux-user/elfload.c           |   4 +-
+ linux-user/hppa/elfload.c      |   2 +-
+ linux-user/mmap.c              |  38 +++++++----
+ linux-user/x86_64/elfload.c    |   2 +-
+ 11 files changed, 85 insertions(+), 121 deletions(-)
+
 -- 
 2.43.0
 
