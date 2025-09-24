@@ -4,89 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB0CCAC5A7
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E3ECAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 08:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Kap-0001XA-Iw; Wed, 24 Sep 2025 04:11:15 -0400
+	id 1v1Kei-0002JN-Rh; Wed, 24 Sep 2025 04:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1v1Kam-0001Wq-TN
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:11:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1Kei-0002JF-6K
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:15:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1v1Kad-0002aR-0G
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:11:12 -0400
+ (Exim 4.90_1) (envelope-from <hzuo@redhat.com>) id 1v1Kee-0003AG-FQ
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 04:15:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758701457;
+ s=mimecast20190719; t=1758701708;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e++uruiGGoLoo/au/ZQfOsDB3Z2Da5LeJqtER17d8HM=;
- b=WgzER0oLbGKgF8McvbBcA8NxraWY/pyLN0A8zrGKwj4n5Hn4f4nS10ICTcSJKVHi9qNdER
- Lk/zmc34tMTP1pEsnWaVLsEs7SwujhRVH43Ghw+uo1DkgxiSXBjGHh6ftAx2h7qITUrK4t
- 2C578Kq6jWZ1GWK7dnENYdCUHmBLSI8=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-BXG4bAa-PYCY4a60a1fHFw-1; Wed, 24 Sep 2025 04:10:56 -0400
-X-MC-Unique: BXG4bAa-PYCY4a60a1fHFw-1
-X-Mimecast-MFC-AGG-ID: BXG4bAa-PYCY4a60a1fHFw_1758701455
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-78f3a8ee4d8so106812166d6.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 01:10:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758701455; x=1759306255;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=e++uruiGGoLoo/au/ZQfOsDB3Z2Da5LeJqtER17d8HM=;
- b=nnij+1jjvr0hB5u68wFggpwrgC3MTLfi4rhQv5GSn+ZfztM9fDjHXstazGlR7Joxss
- /dEfg481QkzJPnQwratn7QImy78PlEa7ktTvrOwJ4Jhjl5I8HM6s/CDf6iNtN3l++aIb
- ciIPKNIfaWJKUFttWLbJajfYLtySjUu1UETcWIXB/iVkY+0bgUggIcUlkc8FzOejsTGq
- mJPfcQxd5mKIlvr3E0CjlUbA4bC8ZW6hvcgjJqcJecVvi1fx6RfXxQBtoQUxPsDLT3eh
- ZBrxkcD3gNf7SAr4Yh4DkDpzNldfdUZE09XACoLaC2zBu66H1ChEX7UdI4rIxJmXkCCM
- yOjw==
-X-Gm-Message-State: AOJu0YzccRQuADmb2sPeh590N+bGcqRmFjl2QSgONE4d7Ry5bUwZf+dV
- 3PP7rbXfh5cqZEQJY/awUFrLZ2auRpB3fl43gDomLTn6O2GIshPrfJLihH876s0EEUSVo6oI1F1
- xbvMf+VtOK8lYEohfUkQr4wRUokRxytlvhCFlh2iXMMaxiCMvYtSsJo5+m+NmM8rV7OE8BP7k0N
- fRUKBy2dgIRsJaBSWvedSnilERCEzS+fU=
-X-Gm-Gg: ASbGncsWic2M/TNlDEcaO56NcDKLpaOMz8Ah05JmVOnToXaYVW1byCU8Dgikb6BpOYj
- 9Yk04XF5e91AYl2J2j1KnyY9jB69QBzZjRgS6KhOGXRNVR1br+P2ySLWfTuGfG75O5xxzvDCKKS
- VfTJJIUWIyTsA7UlVxhKMFQwU=
-X-Received: by 2002:ad4:5ce1:0:b0:785:ec25:8fc2 with SMTP id
- 6a1803df08f44-7e7198623b5mr69927256d6.58.1758701455368; 
- Wed, 24 Sep 2025 01:10:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERiM7x+12gyVLzPd4HwqdeherkV3XIzMc8MZvE1JUBdMrXLBzRFvg4xx6LenDSehvf3Tt/RqgtfTj/UTm33Is=
-X-Received: by 2002:ad4:5ce1:0:b0:785:ec25:8fc2 with SMTP id
- 6a1803df08f44-7e7198623b5mr69927066d6.58.1758701455036; Wed, 24 Sep 2025
- 01:10:55 -0700 (PDT)
+ bh=TAxWOjsl3C6My/s7pYgpUW95wZHLjuxDiEHcJnMekN4=;
+ b=OMsNWslKHK3Pwihfpzasj+EO2caZ/nqEF4/6cwbCb1Hkqmckro1RpMb21eLZ+lJ0g6ubSz
+ 9RYf7Id3Np78ZdahF7SB5icEXot/t53vVxj8YpwMZKel8fw25Fu9dRBaXP5TA4ZZnq7CFL
+ V4hoLdPIwFq+UdBie3NGJ2MHoUk7+ck=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-nNo9sZFLNRaYKtXWjj8vCg-1; Wed,
+ 24 Sep 2025 04:15:06 -0400
+X-MC-Unique: nNo9sZFLNRaYKtXWjj8vCg-1
+X-Mimecast-MFC-AGG-ID: nNo9sZFLNRaYKtXWjj8vCg_1758701705
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59C3C195608C
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 08:15:05 +0000 (UTC)
+Received: from localhost.localdomain.com (unknown [10.72.116.111])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AE8371955F19; Wed, 24 Sep 2025 08:15:02 +0000 (UTC)
+From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Subject: [PATCH v2] net/tap-linux.c: avoid abort when setting invalid fd
+Date: Wed, 24 Sep 2025 16:14:51 +0800
+Message-ID: <20250924081451.1807505-1-hzuo@redhat.com>
+In-Reply-To: <20250924062831.1788305-1-hzuo@redhat.com>
+References: <20250924062831.1788305-1-hzuo@redhat.com>
 MIME-Version: 1.0
-References: <20250916122111.36019-1-f.ebner@proxmox.com>
-In-Reply-To: <20250916122111.36019-1-f.ebner@proxmox.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 24 Sep 2025 11:10:43 +0300
-X-Gm-Features: AS18NWAImA8tVujOkAiGmD4ZNy55qec0NfBYb8POP1rJgzYVaNs771A-0Inp72o
-Message-ID: <CAPMcbCr+f-aCvwZKo5Ds+fWFtAWSUDw3jqXHqi2Fd0eC8OFkEQ@mail.gmail.com>
-Subject: Re: [PATCH] scripts/qemu-guest-agent/fsfreeze-hook: improve script
- description
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="0000000000007e71ac063f87978d"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hzuo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,137 +83,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007e71ac063f87978d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+When QEMU creates a tap device automatically and the tap device is
+manually removed from the host while the guest is running, the tap
+device file descriptor becomes invalid. Later, when the guest executes
+shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
+abort QEMU with a core dump when attempting to use the invalid fd.
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+This patch removes many abort() calls in this file. If the fd is found
+to be in a bad state (e.g., EBADFD or ENODEV), the related function
+will print an error message.
 
-Best Regards,
-Kostiantyn Kostiuk.
+The expected behavior for this negative test case is that QEMU should
+report an error but continue running rather than aborting.
 
+Testing:
+- Start QEMU with automatically created tap device
+- Manually remove the tap device on the host
+- Execute shutdown in the guest
+- Verify QEMU reports an error but does not abort
 
-On Tue, Sep 16, 2025 at 3:22=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
-rote:
+(gdb) bt full
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+        tid = <optimized out>
+        ret = 0
+        pd = <optimized out>
+        old_mask = {__val = {10}}
+        ret = <optimized out>
+#1  0x00007f1710b6bff3 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:78
+#2  0x00007f1710b15f56 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+        ret = <optimized out>
+#3  0x00007f1710afd8fa in __GI_abort () at abort.c:79
+        save_stage = 1
+        act = {__sigaction_handler = {sa_handler = 0x20, sa_sigaction = 0x20}, sa_mask = {__val = {16929458408262392576, 18446744073709550848, 139737042419943, 139737042419943, 0, 94049703655600, 139737042419943, 139737042670528, 18446744073709550328, 77, 139705603579344, 18446744073709551615, 139737041472378, 139705595179568, 16929458408262392576, 94049679794864}}, sa_flags = 281695456, sa_restorer = 0xa}
+#4  0x000055899a71de58 in tap_fd_set_vnet_hdr_len (fd=<optimized out>, len=10) at ../net/tap-linux.c:204
+#5  tap_set_vnet_hdr_len (nc=<optimized out>, len=10) at ../net/tap.c:269
+        s = <optimized out>
+#6  0x000055899a8be67f in qemu_set_vnet_hdr_len (nc=0x2956, len=10588) at ../net/net.c:573
+#7  virtio_net_set_mrg_rx_bufs (n=0x5589a72cfa10, mergeable_rx_bufs=<optimized out>, version_1=<error reading variable: Incompatible types on DWARF stack>, hash_report=<optimized out>) at ../hw/net/virtio-net.c:664
+        i = 0
+        nc = 0x5589a730ab28
+#8  virtio_net_set_features (vdev=0x5589a72cfa10, features=0) at ../hw/net/virtio-net.c:897
+        n = 0x5589a72cfa10
+        err = 0x0
+        i = 0
+#9  0x000055899a8e4eaa in virtio_set_features_nocheck (vdev=0x5589a72cfa10, val=0) at ../hw/virtio/virtio.c:3079
+        k = <optimized out>
+        bad = <optimized out>
+#10 virtio_reset (opaque=0x5589a72cfa10) at ../hw/virtio/virtio.c:3184
+        vdev = 0x5589a72cfa10
+        k = 0x5589a5c162b0
+        i = 0
+#11 0x000055899a630d2b in virtio_bus_reset (bus=0x5589a72cf990) at ../hw/virtio/virtio-bus.c:109
+        vdev = <optimized out>
+#12 virtio_pci_reset (qdev=0x5589a72c7470) at ../hw/virtio/virtio-pci.c:2311
+        proxy = 0x5589a72c7470
+        i = 0
+        bus = 0x5589a72cf990
+#13 0x000055899a686ded in memory_region_write_accessor (mr=<optimized out>, addr=<optimized out>, value=<optimized out>, size=<optimized out>, shift=<optimized out>, mask=<optimized out>, attrs=...) at ../system/memory.c:490
+        tmp = <optimized out>
+#14 0x000055899a686cbc in access_with_adjusted_size (addr=20, value=0x7f0fbedfde00, size=1, access_size_min=<optimized out>, access_size_max=<optimized out>, access_fn=0x55899a686d30 <memory_region_write_accessor>, mr=0x5589a72c8040, attrs=...) at ../system/memory.c:566
+        print_once_ = false
+        access_mask = 255
+        access_size = 1
+        i = 0
+        r = 0
+        reentrancy_guard_applied = <optimized out>
+#15 0x000055899a686ac5 in memory_region_dispatch_write (mr=<optimized out>, addr=20, data=<optimized out>, op=<optimized out>, attrs=...) at ../system/memory.c:1545
+        size = <optimized out>
+#16 0x000055899a69f7da in flatview_write_continue_step (attrs=..., buf=0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>, len=<optimized out>, mr_addr=20, l=0x7f0fbedfde28, mr=0x5589a72c8040) at ../system/physmem.c:2972
+        val = 6
+        result = 0
+        release_lock = <optimized out>
+#17 0x000055899a697c15 in flatview_write_continue (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., ptr=0x7f1711da6028, len=1, mr_addr=6, l=1, mr=0x0) at ../system/physmem.c:3002
+        result = 0
+        buf = 0x7f1711da6028 <error: Cannot access memory at address 0x7f1711da6028>
+#18 flatview_write (fv=0x7f0f6c124d90, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3033
+--Type <RET> for more, q to quit, c to continue without paging--
+        l = <optimized out>
+        mr_addr = 6
+        mr = 0x0
+#19 0x000055899a697a91 in address_space_write (as=0x55899bceeba0 <address_space_memory>, addr=61675730370580, attrs=..., buf=0x7f1711da6028, len=1) at ../system/physmem.c:3153
+        _rcu_read_auto = 0x1
+        result = 0
+        fv = 0x2956
+#20 0x000055899a91159b in address_space_rw (addr=10588, attrs=..., buf=0x7f1711da6028, len=0, as=<optimized out>, is_write=<optimized out>) at ../system/physmem.c:3163
+#21 kvm_cpu_exec (cpu=0x5589a5d68b40) at ../accel/kvm/kvm-all.c:3255
+        attrs = {secure = 0, space = 0, user = 0, memory = 0, debug = 0, requester_id = 0, pid = 0, address_type = 0, unspecified = false, _reserved1 = 0 '\000', _reserved2 = 0}
+        run = 0x7f1711da6000
+        ret = <optimized out>
+        run_ret = <optimized out>
+#22 0x000055899a9189ca in kvm_vcpu_thread_fn (arg=0x5589a5d68b40) at ../accel/kvm/kvm-accel-ops.c:51
+        r = <optimized out>
+        cpu = <optimized out>
+#23 0x000055899aba817a in qemu_thread_start (args=0x5589a5d72580) at ../util/qemu-thread-posix.c:393
+        __clframe = {__cancel_routine = <optimized out>, __cancel_arg = 0x0, __do_it = 1, __cancel_type = <optimized out>}
+        qemu_thread_args = 0x5589a5d72580
+        start_routine = 0x55899a918850 <kvm_vcpu_thread_fn>
+        arg = 0x5589a5d68b40
+        r = 0x0
+#24 0x00007f1710b6a128 in start_thread (arg=<optimized out>) at pthread_create.c:448
+        ret = <optimized out>
+        pd = <optimized out>
+        out = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {32, 8894544057743421332, -1288, 0, 140726164742416, 140726164742679, -8831356496486092908, -8844535456800460908}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+        not_first_call = <optimized out>
+#25 0x00007f1710bda924 in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:100
 
-> With the current wording, users might think that the -F option is not
-> required as long as the script is placed in the default path. Be clear
-> that the option is always required. Also includes some minor language
-> improvements in the rest of the comment.
->
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->  scripts/qemu-guest-agent/fsfreeze-hook | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
->
-> diff --git a/scripts/qemu-guest-agent/fsfreeze-hook
-> b/scripts/qemu-guest-agent/fsfreeze-hook
-> index c1feb6f5ce..5b915af017 100755
-> --- a/scripts/qemu-guest-agent/fsfreeze-hook
-> +++ b/scripts/qemu-guest-agent/fsfreeze-hook
-> @@ -1,11 +1,12 @@
->  #!/bin/sh
->
-> -# This script is executed when a guest agent receives fsfreeze-freeze an=
-d
-> -# fsfreeze-thaw command, if it is specified in --fsfreeze-hook (-F)
-> -# option of qemu-ga or placed in default path (/etc/qemu/fsfreeze-hook).
-> -# When the agent receives fsfreeze-freeze request, this script is issued
-> with
-> -# "freeze" argument before the filesystem is frozen. And for fsfreeze-th=
-aw
-> -# request, it is issued with "thaw" argument after filesystem is thawed.
-> +# This script is executed when the guest agent receives fsfreeze-freeze
-> and
-> +# fsfreeze-thaw commands, provided that the --fsfreeze-hook (-F) option =
-of
-> +# qemu-ga is specified and the script is placed in
-> /etc/qemu/fsfreeze-hook or in
-> +# the path specified together with -F. When the agent receives
-> fsfreeze-freeze
-> +# requests, this script is called with "freeze" as its argument before t=
-he
-> +# filesystem is frozen. And for fsfreeze-thaw requests, it is called wit=
-h
-> "thaw"
-> +# as its argument after the filesystem is thawed.
->
->  LOGFILE=3D/var/log/qga-fsfreeze-hook.log
->  FSFREEZE_D=3D$(dirname -- "$0")/fsfreeze-hook.d
-> --
-> 2.47.2
->
->
->
->
+Fixes: 0caed25cd171c611781589b5402161d27d57229c virtio: Call set_features during reset
 
---0000000000007e71ac063f87978d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+---
+ net/tap-linux.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-<div dir=3D"ltr"><div>Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto=
-:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><d=
-iv><br></div><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=
-=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</div><div>Kostiant=
-yn Kostiuk.</div></div></div></div><br></div><br><div class=3D"gmail_quote =
-gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 16=
-, 2025 at 3:22=E2=80=AFPM Fiona Ebner &lt;<a href=3D"mailto:f.ebner@proxmox=
-.com">f.ebner@proxmox.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">With the current wording, users might think that t=
-he -F option is not<br>
-required as long as the script is placed in the default path. Be clear<br>
-that the option is always required. Also includes some minor language<br>
-improvements in the rest of the comment.<br>
-<br>
-Signed-off-by: Fiona Ebner &lt;<a href=3D"mailto:f.ebner@proxmox.com" targe=
-t=3D"_blank">f.ebner@proxmox.com</a>&gt;<br>
----<br>
-=C2=A0scripts/qemu-guest-agent/fsfreeze-hook | 13 +++++++------<br>
-=C2=A01 file changed, 7 insertions(+), 6 deletions(-)<br>
-<br>
-diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-ag=
-ent/fsfreeze-hook<br>
-index c1feb6f5ce..5b915af017 100755<br>
---- a/scripts/qemu-guest-agent/fsfreeze-hook<br>
-+++ b/scripts/qemu-guest-agent/fsfreeze-hook<br>
-@@ -1,11 +1,12 @@<br>
-=C2=A0#!/bin/sh<br>
-<br>
--# This script is executed when a guest agent receives fsfreeze-freeze and<=
-br>
--# fsfreeze-thaw command, if it is specified in --fsfreeze-hook (-F)<br>
--# option of qemu-ga or placed in default path (/etc/qemu/fsfreeze-hook).<b=
-r>
--# When the agent receives fsfreeze-freeze request, this script is issued w=
-ith<br>
--# &quot;freeze&quot; argument before the filesystem is frozen. And for fsf=
-reeze-thaw<br>
--# request, it is issued with &quot;thaw&quot; argument after filesystem is=
- thawed.<br>
-+# This script is executed when the guest agent receives fsfreeze-freeze an=
-d<br>
-+# fsfreeze-thaw commands, provided that the --fsfreeze-hook (-F) option of=
-<br>
-+# qemu-ga is specified and the script is placed in /etc/qemu/fsfreeze-hook=
- or in<br>
-+# the path specified together with -F. When the agent receives fsfreeze-fr=
-eeze<br>
-+# requests, this script is called with &quot;freeze&quot; as its argument =
-before the<br>
-+# filesystem is frozen. And for fsfreeze-thaw requests, it is called with =
-&quot;thaw&quot;<br>
-+# as its argument after the filesystem is thawed.<br>
-<br>
-=C2=A0LOGFILE=3D/var/log/qga-fsfreeze-hook.log<br>
-=C2=A0FSFREEZE_D=3D$(dirname -- &quot;$0&quot;)/fsfreeze-hook.d<br>
--- <br>
-2.47.2<br>
-<br>
-<br>
-<br>
-</blockquote></div>
-
---0000000000007e71ac063f87978d--
+diff --git a/net/tap-linux.c b/net/tap-linux.c
+index e832810665..140305d406 100644
+--- a/net/tap-linux.c
++++ b/net/tap-linux.c
+@@ -206,7 +206,6 @@ void tap_fd_set_vnet_hdr_len(int fd, int len)
+     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
+         fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
+                 strerror(errno));
+-        abort();
+     }
+ }
+ 
+@@ -224,7 +223,6 @@ int tap_fd_set_vnet_le(int fd, int is_le)
+     }
+ 
+     error_report("TUNSETVNETLE ioctl() failed: %s.", strerror(errno));
+-    abort();
+ }
+ 
+ int tap_fd_set_vnet_be(int fd, int is_be)
+@@ -241,7 +239,6 @@ int tap_fd_set_vnet_be(int fd, int is_be)
+     }
+ 
+     error_report("TUNSETVNETBE ioctl() failed: %s.", strerror(errno));
+-    abort();
+ }
+ 
+ void tap_fd_set_offload(int fd, int csum, int tso4,
+-- 
+2.47.3
 
 
