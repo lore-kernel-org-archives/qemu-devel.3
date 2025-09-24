@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A4DCAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 625FBCAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1UpJ-00018e-09; Wed, 24 Sep 2025 15:06:56 -0400
+	id 1v1UqF-00029K-9s; Wed, 24 Sep 2025 15:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Uly-0006w2-17
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:29 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1v1UmC-00070X-Ki
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:42 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1Ujv-0007pp-5G
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:20 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-77db1bcf4d3so145237b3a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:16 -0700 (PDT)
+ id 1v1UkA-0007sg-KR
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:36 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-32eb76b9039so184112a91.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758740475; x=1759345275; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758740480; x=1759345280; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZCvMLg3PXpeXqCZXKGOBJu95mWvD2ZHjZee8a5dbELg=;
- b=FIocC7IwHbK1ZeQpebZVk7XQJJNN7DZ5YzsK/PPPBYT5Ll86/t3nndBfqSpzHryLm8
- /m6P4DZh79tnpcMZAec5yM4df0O9E5R6jOvujssc/DSQ23UfuoncrGodskrs179gE0y9
- URjrpKUhOcpArLkzKlpOnLgIBGkYT1NswhJuWoqTAnQMf0Cul6/TYTh0/tpgHEXsWQEc
- J/WBQSY8gZqUyVhvOzM0BBDYFHdI+aITtuk5z7PbT60LT/kGUD3Tzwi7k+2J/CAkSy89
- 10VHjN2n+0RSFn2Oix0xLo8m43xkP72Meqoigp1C2Q5GBF8z3HrMGRitWOEypbn49KD7
- VNIQ==
+ bh=HJiaoiqB2SYQYYaP+V4AKhL/433rJSvOrhZgOKxZ4EQ=;
+ b=bANoZF1Z8ktlPzVNcA7mUPUOPzAIE94D6J/eRFbG+qVHXPJ+tDzlRFXiEpUK6lVdnW
+ mthc/I2y242OO3HY79xVfWAcMIaGJHjahdcZy+tQgKPds0+s+hNsv66KNkZTpru5MrGU
+ z+Z+dbeBdM6hZ32bk8ctNuUbRbxsaFKc7yJVR3VI6ANRP4snTQfcv+TEc++txneA6wyg
+ lQhBRcHtgOrcPKLF9HCFdBxKxymIKmgdh63HLXZ7jk5GkRMxkNbjefD7Pxgp4qLX6b53
+ oXR792O8Wte497K3ALct5AeyGQOtr/DLjp9h3Ft3llL9YP10oHbNjP7sdleBCFtrNFUC
+ Zbnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758740475; x=1759345275;
+ d=1e100.net; s=20230601; t=1758740480; x=1759345280;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZCvMLg3PXpeXqCZXKGOBJu95mWvD2ZHjZee8a5dbELg=;
- b=AOOQB+M6whxj6+whjef/QQ2M4czPqkIlGbyMaLM/xxSQQOygovJ89wGIS+jh33YXfJ
- NudaSoKy74T7LitE3yb0MkRfBzbc/oI7kpM+NlC5qjslkjH6f6HMJNl+82VyEeDqeW2c
- gIVbpIz3Ky+HhJIM0P8IlvyaigjIzG8zF9TB4ARyt4EdyK9OYUuX4Tk8nWQMLqiChW1F
- yGwYVQlsfmbv+YuMlJ2Ooad+I7mUFGrCdCVqdwZe2regiigbKgcdOkGfK8E9GUf1TePM
- 80zPN77GxF5V7RKdXHg/1tMjlLoa7aWt1GPrxH2nxvKv8FD0Dm0q9DPJrcfn3EmztUSM
- dC5w==
-X-Gm-Message-State: AOJu0YzJw+vmfvtHpW/gZZocqaDtHUT4ND3tTsnwU33bNMi08UCve4DC
- aflCiQHQ1ckTELfHDB8I+NPo5kWh2+CxIlynyYc72M+AMeFgXb5JQtGGeU5jlYlmC5Q7pCa5h0+
- t2Ygk
-X-Gm-Gg: ASbGncvJiz8xcxUmoirSvDeZlbbU4SEUxBd6TFRpT+kE/2bKfV2/YpgMT/4fGJl8xZT
- z1KJ6gAnbb4UNXQUQT6+ZCFDqDg9/RLNuVL+ZDs3mzlS0HgXqnIaq1S7HJjzUbmGoXNUjpcOW5I
- v/C5UGKn1eK0gr0j811vtvBPB0xZLHEckA/atEm3tn/88LsbPiKjPROriqQKODtAaW8oI+badmR
- 4vX8B4zo/s5p+0NXgAOEyAJ2W9oofwWkgrRtW9vWdvYuEz1mV1FNce3sxwpbYbdYy/j7r+JcMOz
- ScYQPWWzUeE2oIaainowcdUZd13M2C4/eqCsw6w5roqXo77OVokHSdqH6buCIBWgOMb5P23y3wo
- TGzTP0YNoLcTN5HHwNhk5ax9HBDJY
-X-Google-Smtp-Source: AGHT+IFR+dN1DApRGTduExcQrc7bmdjn9qSrmG4IXmd2SWoZ8xN/moDkMrO9XzZICtI9FeMXM5aHLg==
-X-Received: by 2002:a17:90b:2786:b0:327:e59d:2cc2 with SMTP id
- 98e67ed59e1d1-3342a24776cmr904658a91.10.1758740475395; 
- Wed, 24 Sep 2025 12:01:15 -0700 (PDT)
+ bh=HJiaoiqB2SYQYYaP+V4AKhL/433rJSvOrhZgOKxZ4EQ=;
+ b=udeeM25jV55A+rCWXdrF7pf9kdgZzjJZ9FyGQpogjEUMaUhgGPLmHzUqVF6JghtHlp
+ 1nmxYqNsdMJb0SwNM7y/TP9KmkhpTZ4euBIeHpNj7qf4ix1oRyV2izcVxMxKbg5u9zZm
+ dqE23meN0C+wbUsFuY+8VuyrZSHpIV+S2dVFisKv/D6cRv6LB3+/ZAPty4Fmj8joPqcm
+ Mlj1wBOFrhyui4CdnScAX4mF2P14ZqDc32w1J4vATr9E0mHehZ+Ebz7RxR44tsOJA/zl
+ 9Am/KExxGB3DCTyzKBHjNNGvTVAP3yq6TVr++IgCy0QbjcZrCCtjsPjmncHXB9Lvagxv
+ sXtQ==
+X-Gm-Message-State: AOJu0YzueOOcUGSE1GNrd0NG4yXAGvuwn6xA6uvx3P73hbEKLg+ZrjE+
+ YH/gGQoNThPwdWnbp+9xJbPVpa8uao2XA4/BFh8G5s1pHaHT521kID8pXliP5EzA15CLbfv3cHL
+ RqFcX
+X-Gm-Gg: ASbGncvsjrGmFuUQCDi+rpF+qGrcUYAldxYTXlLLt+uWXbXRWYL/4cG8W8IHGWGxrlj
+ xSt3GJum0D18ZRqlf4tvp65+YVWSs7hHysqL39PxvorCDcG0QD3LnRpXP/0BjjqdXExP9nEXSYS
+ F3UZkrrXlQ86kVYzBls+L1IycieBNTN+VoYLXPFpBlF38JPyyGslfKI9Qno0JflF5EdlEp8cxcc
+ 1r+mg86RCKrSA838WEGk8UbKXB9y7tOH0tfzxpSmEeM2E0ift5T5maIolrTEArlsVC+JNoNREBV
+ LR6P58aAeP66c3u2hvFbGBsKiYPGxG7FmsJGbeRkiCNUHjF3bft22r9ku0GJy8WzYdJU7feGKOm
+ vCnt2ctzSpncgDkr82o7Y3IBZy2J2
+X-Google-Smtp-Source: AGHT+IGOtfGLm1AAQEYSWx2W3wEU/zbxLQIBDr16Vp2u1hDDlJMG/ThWuOBtHSZwv+HCqOTNz7/Itg==
+X-Received: by 2002:a17:90b:3911:b0:330:6d5e:f174 with SMTP id
+ 98e67ed59e1d1-3342a2b1263mr782271a91.20.1758740480141; 
+ Wed, 24 Sep 2025 12:01:20 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.14
+ 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 12:01:15 -0700 (PDT)
+ Wed, 24 Sep 2025 12:01:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 11/32] target/sparc: Relax decode of rs2_or_imm for v7
-Date: Wed, 24 Sep 2025 12:00:44 -0700
-Message-ID: <20250924190106.7089-12-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 17/32] include/hw/core/cpu: Invert the indexing into
+ CPUTLBDescFast
+Date: Wed, 24 Sep 2025 12:00:50 -0700
+Message-ID: <20250924190106.7089-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
 References: <20250924190106.7089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,146 +94,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For v7, bits [12:5] are ignored for !imm.
-For v8, those same bits are reserved, but are not trapped.
+This array is within CPUNegativeOffsetState, which means the
+last element of the array has an offset from env with the
+smallest magnitude.  This can be encoded into fewer bits
+when generating TCG fast path memory references.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+When we changed the NB_MMU_MODES to be a global constant,
+rather than a per-target value, we pessimized the code
+generated for targets which use only a few mmu indexes.
+By inverting the array index, we counteract that.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/translate.c | 56 ++++++++++++++++++++++++++--------------
- 1 file changed, 37 insertions(+), 19 deletions(-)
+ include/hw/core/cpu.h | 11 ++++++++++-
+ tcg/tcg.c             |  3 ++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index cfdd9c1ce4..810e2491a6 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -2526,6 +2526,32 @@ static int extract_qfpreg(DisasContext *dc, int x)
- # define avail_VIS4(C)    false
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 22a78c9ee1..c9f40c2539 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -603,9 +603,18 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
+ }
+ 
+ #ifdef CONFIG_TCG
++/*
++ * Invert the index order of the CPUTLBDescFast array so that lower
++ * mmu_idx have offsets from env with smaller magnitude.
++ */
++static inline int mmuidx_to_fast_index(int mmu_idx)
++{
++    return NB_MMU_MODES - 1 - mmu_idx;
++}
++
+ static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
+ {
+-    return &cpu->neg.tlb.f[mmu_idx];
++    return &cpu->neg.tlb.f[mmuidx_to_fast_index(mmu_idx)];
+ }
  #endif
  
-+/*
-+ * We decoded bit 13 as imm, and bits [12:0] as rs2_or_imm.
-+ * For v9, if !imm, then the unused bits [12:5] must be zero.
-+ * For v7 and v8, the unused bits are ignored; clear them here.
-+ */
-+static bool check_rs2(DisasContext *dc, int *rs2)
-+{
-+    if (unlikely(*rs2 & ~0x1f)) {
-+        if (avail_64(dc)) {
-+            return false;
-+        }
-+        *rs2 &= 0x1f;
-+    }
-+    return true;
-+}
-+
-+static bool check_r_r_ri(DisasContext *dc, arg_r_r_ri *a)
-+{
-+    return a->imm || check_rs2(dc, &a->rs2_or_imm);
-+}
-+
-+static bool check_r_r_ri_cc(DisasContext *dc, arg_r_r_ri_cc *a)
-+{
-+    return a->imm || check_rs2(dc, &a->rs2_or_imm);
-+}
-+
- /* Default case for non jump instructions. */
- static bool advance_pc(DisasContext *dc)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index afac55a203..294762c283 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -425,7 +425,8 @@ static uintptr_t G_GNUC_UNUSED get_jmp_target_addr(TCGContext *s, int which)
+ static int __attribute__((unused))
+ tlb_mask_table_ofs(TCGContext *s, int which)
  {
-@@ -3249,8 +3275,7 @@ static bool do_wr_special(DisasContext *dc, arg_r_r_ri *a, bool priv,
- {
-     TCGv src;
- 
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && (a->rs2_or_imm & ~0x1f)) {
-+    if (!check_r_r_ri(dc, a)) {
-         return false;
-     }
-     if (!priv) {
-@@ -3693,8 +3718,7 @@ static bool do_arith_int(DisasContext *dc, arg_r_r_ri_cc *a,
- {
-     TCGv dst, src1;
- 
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && a->rs2_or_imm & ~0x1f) {
-+    if (!check_r_r_ri_cc(dc, a)) {
-         return false;
-     }
- 
-@@ -3778,11 +3802,11 @@ static bool trans_OR(DisasContext *dc, arg_r_r_ri_cc *a)
- {
-     /* OR with %g0 is the canonical alias for MOV. */
-     if (!a->cc && a->rs1 == 0) {
-+        if (!check_r_r_ri_cc(dc, a)) {
-+            return false;
-+        }
-         if (a->imm || a->rs2_or_imm == 0) {
-             gen_store_gpr(dc, a->rd, tcg_constant_tl(a->rs2_or_imm));
--        } else if (a->rs2_or_imm & ~0x1f) {
--            /* For simplicity, we under-decoded the rs2 form. */
--            return false;
-         } else {
-             gen_store_gpr(dc, a->rd, cpu_regs[a->rs2_or_imm]);
-         }
-@@ -3799,8 +3823,7 @@ static bool trans_UDIV(DisasContext *dc, arg_r_r_ri *a)
-     if (!avail_DIV(dc)) {
-         return false;
-     }
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && a->rs2_or_imm & ~0x1f) {
-+    if (!check_r_r_ri(dc, a)) {
-         return false;
-     }
- 
-@@ -3851,8 +3874,7 @@ static bool trans_UDIVX(DisasContext *dc, arg_r_r_ri *a)
-     if (!avail_64(dc)) {
-         return false;
-     }
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && a->rs2_or_imm & ~0x1f) {
-+    if (!check_r_r_ri(dc, a)) {
-         return false;
-     }
- 
-@@ -3889,8 +3911,7 @@ static bool trans_SDIVX(DisasContext *dc, arg_r_r_ri *a)
-     if (!avail_64(dc)) {
-         return false;
-     }
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && a->rs2_or_imm & ~0x1f) {
-+    if (!check_r_r_ri(dc, a)) {
-         return false;
-     }
- 
-@@ -4186,8 +4207,7 @@ TRANS(SRA_i, ALL, do_shift_i, a, false, false)
- 
- static TCGv gen_rs2_or_imm(DisasContext *dc, bool imm, int rs2_or_imm)
- {
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!imm && rs2_or_imm & ~0x1f) {
-+    if (!imm && !check_rs2(dc, &rs2_or_imm)) {
-         return NULL;
-     }
-     if (imm || rs2_or_imm == 0) {
-@@ -4250,8 +4270,7 @@ static bool do_add_special(DisasContext *dc, arg_r_r_ri *a,
- {
-     TCGv src1, sum;
- 
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!a->imm && a->rs2_or_imm & ~0x1f) {
-+    if (!check_r_r_ri(dc, a)) {
-         return false;
-     }
- 
-@@ -4369,8 +4388,7 @@ static TCGv gen_ldst_addr(DisasContext *dc, int rs1, bool imm, int rs2_or_imm)
- {
-     TCGv addr, tmp = NULL;
- 
--    /* For simplicity, we under-decoded the rs2 form. */
--    if (!imm && rs2_or_imm & ~0x1f) {
-+    if (!imm && !check_rs2(dc, &rs2_or_imm)) {
-         return NULL;
-     }
+-    return (offsetof(CPUNegativeOffsetState, tlb.f[which]) -
++    int fi = mmuidx_to_fast_index(which);
++    return (offsetof(CPUNegativeOffsetState, tlb.f[fi]) -
+             sizeof(CPUNegativeOffsetState));
+ }
  
 -- 
 2.43.0
