@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0248ECAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 21:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0526DCAC5AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 21:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1XAG-0005nG-Ng; Wed, 24 Sep 2025 17:36:41 -0400
+	id 1v1XBW-0006D5-M3; Wed, 24 Sep 2025 17:37:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1XAC-0005lB-SR
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:36:37 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1v1XBU-0006Ce-O2
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:37:56 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1XA9-000119-0b
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:36:36 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-77f0efd84abso311616b3a.3
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 14:36:30 -0700 (PDT)
+ id 1v1XBN-0001NJ-Hn
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 17:37:56 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b55640a2e33so242102a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 14:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758749788; x=1759354588; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758749865; x=1759354665; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JjUHpX49DBfp5s1oS/u8Nqx0j0b15dM2PC2rC/Aokwk=;
- b=uClt4jR0JkUQsBP2LggG87ZAiTNb4P9enaxotydRw1aWCBh10BsbvInD6uG/ABlopD
- 9OFUdnAtXUtSTYWfXe/PCL5gb67H8LEjG8aYjKfDvT/hGj8oMqg2c6AjiyojDYZ+zeZ2
- Tt5XZw5isn/EedRsNMSPpXr5zSKpF5SiqgFg00ZjF/uJob8NewjaksrybPInkMkxmy/1
- 8cu8ITtCWG0IKcAbd2XdGsDCwKohDx/9r/b10XrEf3VdFIeiqOJ9JU8wljl+UfkY1w3I
- vDR3s2Y1dp3nSH7mEQhIfKvmXENGiL44m9aMkAAwl5dZSI6FUVgm75QxfNYnknxMYKwz
- daLg==
+ bh=7QpJKYrqpl5/ULp5yHG2rA1X3a4wp6apvg1slx4xWAE=;
+ b=vngny1NWofIr87Non9jzmg8Kn8YMxcUJ6OEL2KT1+x96buHW7kf/QsBBYUU5YdU4Og
+ IrDK41zML/Ohexox4BtkAAPUKPYHPo5TIUtKNwZf5fr3wX+kDQewtSgwtu4wW8TAkig2
+ UaYs0Wolxg4R2wN/noTNMHNTCNAgEVgt13Xy3JOjN8KEgV1T0SpYzwamhg5ES1bmFLzJ
+ 4E0mX0eK6EfClkxcm3oTq7/NGydfS8Nj+VUe19w6fYSqGTS8cJiqEWqp2qFx1Skg2FQq
+ nM8UxmNYmAb9ArtYiZPni4xICI5J8GS/Yk1ApT5caR30oqrA4vsKrdwPin3/XtoNcFoY
+ Iw2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758749788; x=1759354588;
+ d=1e100.net; s=20230601; t=1758749865; x=1759354665;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JjUHpX49DBfp5s1oS/u8Nqx0j0b15dM2PC2rC/Aokwk=;
- b=VQRphfNsrKC7Rl9QYGV+BmzBHdhbGD/sD2GipVDP4hRF6P/EAMi//COcrO++Asat+F
- dKs9FTIqn296Xsxv7F7yTgW/2acE6p9ACQSESKWyGINuTCavyQwpmjB5a/WcWdGkmqLg
- EKaIMNG+D/n7D+3nrRVr8cL++0315uzW696pcr9nMNWdb5VYOyWobZzA5bR3oUumVD07
- kvAd0nH5qlATP7tnag8w2KIbHuy7WJO2vD2jtIiJfRMK8CVydCBq5Lpu5Y2QIZ98Z/Zs
- 86QxpMnGDpeOdDuZN33W26FTpdG5jSLboIFC1rYmMBkC1xYj+Raq93hX3FiEBdRcwxY5
- xcRQ==
-X-Gm-Message-State: AOJu0Yy9H7MrTIzGrPzs3+eaYSSVZ8DsKcMPYDt2FI/Q2Tckf1W55leH
- P1nzCGTfdfriaNHADdDva+t5tYuhoDhADqkjJ0AF0RgahD4pbiLZyApamZau+vJBHgOEde0TbFw
- mP1ZG
-X-Gm-Gg: ASbGncv/mB179J+IRWqConp4JhvoNw1r46pkrwmbRzRkTiBoexWA/jYJOxTnaeh/6Bs
- j36LAJCojkjgz8Bd5FZlH2E4TLTrh3D6ScIYJJmaUICjC8BvENB2F3lZPwFS60pKTy/3txDNf+i
- Yi6AwaBPiAd0ye+w1/+WOxG6IMr6p3lb2xNsC7xPfxgSsh4gEA3+F3/YCh90LBLLzo4rpLxg/Hl
- ckdnYMTcKC30g1JdHNMkwNpuL/TsQ5jsoIUx8FONvD5Vu6dPfkpotJl9ETSz2iMn3Ga1dxFdDJT
- 3WoyqwQNXygUx/RbFAiK0Nh7WfaWqt5Y16lGfQoqo4TGJlDFUQ7VPPY8nV2ExG9O9jrHIxL+w/5
- tGUeb0ltNAVINe+FJzmfC1oS3IjqukD8VNC3A
-X-Google-Smtp-Source: AGHT+IGjjwyOhcyJulOHVsSH7sFbt+c+/L1o6unbJhHk7EZQxryfENnd7w3+j3RnHsN5WckWVG5dhA==
-X-Received: by 2002:a05:6a20:a127:b0:263:b3:d8d4 with SMTP id
- adf61e73a8af0-2e7bf47c155mr1351462637.12.1758749787993; 
- Wed, 24 Sep 2025 14:36:27 -0700 (PDT)
+ bh=7QpJKYrqpl5/ULp5yHG2rA1X3a4wp6apvg1slx4xWAE=;
+ b=j+setL1fQmhll7CVpSXr7hMjrgaUcD3KUDwNw+JKsmcxcppQUEfDjYBsPmLUxMYJhm
+ Mrq0N8ZHpVupsOjttEPhNNPp8OAbizcLpC/ZvTx5SWhO2U0TsoxaNTZgC/oDYw2/l0d1
+ tb0Vbs5R6Ziyg85sWIiVZpHPy4So52z+dFw/41R00PUzeVUd3zKUKDYCJUX1w3GLHeTu
+ vmpl6MIaW3aPGkGdnf5nMSpdp/53GsdjB2GneKdRWY0NGD/MOba2uRG1tBF3rY5UITub
+ jIsxy9sj+q817JE40IF3Pf8EN51Ckb8igew2vGuMXgKmsFwXbgdLHw2gxzBX7UqBn+m6
+ RocA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGAJ4RYSjbO+/W8PUFePNr/lxP2PsOlu9yTet4GSeijCapcrkraLJRV6osyeGdknoqys/rAUs3C5aq@nongnu.org
+X-Gm-Message-State: AOJu0Yyy5Fho9GU3DVFEHNKtRoRCCZPJsFz0yhasqEiuan9rwoAU5znB
+ oiLmHbvy5OjKj56Ewzl8y5y2mtEDZnkDCYpSS0PZ0mq4XxvpxMMzjxNY9tSWu5Z4/Kv7HX4Wvtj
+ 6jpMJ
+X-Gm-Gg: ASbGncucwkY98w3JA4ndYDoVlIwRscOlrABJhdMPjwnin51/P+TMb1eAFaAsywlnIMd
+ 4s6yJgwR34yXNNDtvcmHx2bAslgJySsRdMjtNhIx0CdruWWjPzhTImVqGAcp1DNZe+hWo79KJ1y
+ 24oMXGkNU7RpQAztjB9kSIp9fvfCDsEnuTmtVBI2pwHF4HNRbfQcpLF++79McKzzqYDx/G1nRlb
+ JaZNkTL23Fbt3zvMdUTC/rm9W3CLCQI3zEcgMTsR+wBFA+MmMOFUhMl1XYgfv7wBUc99UOjc9qk
+ VgUhvC8/k1VF9V0t2gGPkMhgHkNh+aOMykBnimEGyI1tyakFmfza5IBfnSn37uwCeE+xRoHTa7/
+ 8S17OzhD7q6PisY2MpyPmQflT9xwjXlI5uzcC
+X-Google-Smtp-Source: AGHT+IH2KhBiv36whfTwEx//GX2ZV3PPqbitpCOtZFXmx0zxJQff5XWuGjya5pr1P8G/t9EuX8NasA==
+X-Received: by 2002:a17:902:ebc8:b0:271:6af4:15c with SMTP id
+ d9443c01a7336-27ed4a91a97mr13813075ad.36.1758749865110; 
+ Wed, 24 Sep 2025 14:37:45 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.157.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-781023ec6aasm32313b3a.46.2025.09.24.14.36.27
+ 98e67ed59e1d1-3341be148e8sm3425602a91.16.2025.09.24.14.37.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 14:36:27 -0700 (PDT)
-Message-ID: <63d16a48-f5ad-4357-a33b-09a157d33826@linaro.org>
-Date: Wed, 24 Sep 2025 14:36:26 -0700
+ Wed, 24 Sep 2025 14:37:44 -0700 (PDT)
+Message-ID: <d78f6956-0800-4a7f-9cc0-7c2d9935dc3e@linaro.org>
+Date: Wed, 24 Sep 2025 14:37:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 02/34] target/riscv: Fix size of trivial CPUArchState
- fields
-To: qemu-devel@nongnu.org, "anjo@rev.ng" <anjo@rev.ng>
+Subject: Re: [RFC PATCH 03/34] target/riscv: Fix size of mcause
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 References: <20250924072124.6493-1-anjo@rev.ng>
- <20250924072124.6493-3-anjo@rev.ng>
+ <20250924072124.6493-4-anjo@rev.ng>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250924072124.6493-3-anjo@rev.ng>
+In-Reply-To: <20250924072124.6493-4-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +105,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/24/25 00:20, Anton Johansson via wrote:
-> +++ b/target/riscv/machine.c
-> @@ -84,13 +84,13 @@ static const VMStateDescription vmstate_hyper = {
->       .minimum_version_id = 4,
->       .needed = hyper_needed,
->       .fields = (const VMStateField[]) {
-> -        VMSTATE_UINTTL(env.hstatus, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
-> +        VMSTATE_UINT64(env.hstatus, RISCVCPU),
-> +        VMSTATE_UINT64(env.hedeleg, RISCVCPU),
+> and update formatting in logs.
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/riscv/cpu.h     | 2 +-
+>   target/riscv/machine.c | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
-You can't change these sizes without bumping the version id.
-
-I don't know if riscv really cares about migration stability yet.
-If it does, then you have to jump through more hoops.
-
+There is no updating of logs.  Incorrectly split patch?
+Cut and paste error on the commit message?
 
 r~
+
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 8c8d34f3ac..32e30a36ac 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -323,7 +323,7 @@ struct CPUArchState {
+>   
+>       uint64_t mtvec;
+>       uint64_t mepc;
+> -    target_ulong mcause;
+> +    uint64_t mcause;
+>       uint64_t mtval;  /* since: priv-1.10.0 */
+>   
+>       uint64_t mctrctl;
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index f42be027e3..438c44dbb0 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -442,7 +442,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+>           VMSTATE_UINT64(env.scause, RISCVCPU),
+>           VMSTATE_UINT64(env.mtvec, RISCVCPU),
+>           VMSTATE_UINT64(env.mepc, RISCVCPU),
+> -        VMSTATE_UINTTL(env.mcause, RISCVCPU),
+> +        VMSTATE_UINT64(env.mcause, RISCVCPU),
+>           VMSTATE_UINT64(env.mtval, RISCVCPU),
+>           VMSTATE_UINTTL(env.miselect, RISCVCPU),
+>           VMSTATE_UINTTL(env.siselect, RISCVCPU),
+
 
