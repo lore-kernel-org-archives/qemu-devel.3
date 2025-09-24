@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7691CAC5AE
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 15:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0732CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 16:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Rni-00039D-1T; Wed, 24 Sep 2025 11:53:02 -0400
+	id 1v1S0x-00082q-63; Wed, 24 Sep 2025 12:06:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1RnZ-00038d-LR
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:52:54 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1S0o-00081D-M8
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:06:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1v1RnS-0001rW-Bq
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 11:52:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1v1S0h-00043i-7Z
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 12:06:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758729163;
+ s=mimecast20190719; t=1758729980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=u7lXuePxzOzYt4UWtbo1RmvyGupM6Ucgui12K9Ck/i0=;
- b=cr/nkHybcCfJEe/wzBqTlyoHZVwwTr1O8ykJDg6lwCLjFtTGnADYMFWnQHHIkBJZmx/N8d
- iwHzBFNt30VVPh3UfCoaZE0+Ly4S/MRPNReGPm3Q95eASEml2hlW0Rr/LgNAojM+qFPhHv
- RY/XVw83SkVEGnaeaEKoKeRJp8HnxgI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zUc5KtmLZMp25JLBlZyxCwe3gaMoronpF90fItmD7Ow=;
+ b=NX1tnYcvICHQu6Fjw+rI6iLpjDePWnHik+2xtXs33ALhiWG3vjMvfcqSj1EhqqSmUigv5s
+ Tt8WFdqqk1EGV9IgYsUDMrL1+p+E2aL1HmPyGrwGqWbavmjZXn63ZJZ7boo1uVOXWPj9Cr
+ 9UOLEcxRDdh02oq6nZvVgsAipAWNP+U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-0p8kFn9bP0eibMMyZIg5mA-1; Wed,
- 24 Sep 2025 11:52:38 -0400
-X-MC-Unique: 0p8kFn9bP0eibMMyZIg5mA-1
-X-Mimecast-MFC-AGG-ID: 0p8kFn9bP0eibMMyZIg5mA_1758729157
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-MSfDoYaIPEmt5uDz9YzzkQ-1; Wed,
+ 24 Sep 2025 12:06:12 -0400
+X-MC-Unique: MSfDoYaIPEmt5uDz9YzzkQ-1
+X-Mimecast-MFC-AGG-ID: MSfDoYaIPEmt5uDz9YzzkQ_1758729971
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2268519560AB; Wed, 24 Sep 2025 15:52:37 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.207])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 339011955F22; Wed, 24 Sep 2025 15:52:35 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Qing Wang <qinwang@redhat.com>
-Subject: [PATCH] pcie_sriov: make pcie_sriov_pf_exit() safe on non-SR-IOV
- devices
-Date: Wed, 24 Sep 2025 11:51:53 -0400
-Message-ID: <20250924155153.579495-1-stefanha@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B6491956055; Wed, 24 Sep 2025 16:06:11 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.13])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1107C300018D; Wed, 24 Sep 2025 16:06:08 +0000 (UTC)
+Date: Wed, 24 Sep 2025 18:06:06 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] block: remove 'detached-header' option from opts after use
+Message-ID: <aNQW7jdz6pkI2RTq@redhat.com>
+References: <20250919103810.1513109-1-berrange@redhat.com>
+ <7okqs3bzbm7pof2cvym4mmeoed5alrap7kfy7ygqeevzmqi4ul@hibkvzgs5itm>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <7okqs3bzbm7pof2cvym4mmeoed5alrap7kfy7ygqeevzmqi4ul@hibkvzgs5itm>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -85,58 +86,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 3f9cfaa92c96 ("virtio-pci: Implement SR-IOV PF") added an
-unconditional call from virtio_pci_exit() to pcie_sriov_pf_exit().
+Am 22.09.2025 um 14:37 hat Eric Blake geschrieben:
+> On Fri, Sep 19, 2025 at 11:38:10AM +0100, Daniel P. Berrangé wrote:
+> > The code for creating LUKS devices references a 'detached-header'
+> > option in the QemuOpts  data, but does not consume (remove) the
+> > option.
+> > 
+> > Thus when the code later tries to convert the remaining unused
+> > QemuOpts into a QCryptoBlockCreateOptions struct, an error is
+> > reported by the QAPI code that 'detached-header' is not a valid
+> > field.
+> > 
+> > This fixes a regression caused by
+> > 
+> >   commit e818c01ae6e7c54c7019baaf307be59d99ce80b9
+> >   Author: Daniel P. Berrangé <berrange@redhat.com>
+> >   Date:   Mon Feb 19 15:12:59 2024 +0000
+> > 
+> >     qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
+> > 
+> > which identified that the QAPI field was unused, but failed to
+> > realize the QemuOpts -> QCryptoBlockCreateOptions conversion
+> > was seeing the left-over 'detached-header' optino which had not
+> 
+> option
+> 
+> > been removed from QemuOpts.
+> > 
+> > This problem was identified by the 'luks-detached-header' I/O
+> > test, but unfortunate I/O tests are not run regularly for the
 
-pcie_sriov_pf_exit() reads from the SR-IOV Capability in Configuration
-Space:
+I assume this should be "unfortunately".
 
-  uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-  ...
-  unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > LUKS format.
+> > 
+> > Fixes: e818c01ae6e7c54c7019baaf307be59d99ce80b9
+> > Reported-by: Thomas Huth <thuth@redhat.com>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  block/crypto.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Reviewed-by: Eric Blake <eblake@redhat.com>
 
-This results in undefined behavior when dev->exp.sriov_cap is 0 because
-this is not an SR-IOV device. For example, unparent_vfs() segfaults when
-total_vfs happens to be non-zero.
+Thanks, applied to the block branch.
 
-Fix this by returning early from pcie_sriov_pf_exit() when
-dev->exp.sriov_cap is 0 because this is not an SR-IOV device.
-
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Reported-by: Qing Wang <qinwang@redhat.com>
-Buglink: https://issues.redhat.com/browse/RHEL-116443
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/pci/pcie_sriov.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 8a4bf0d6f7..cf1b5b5c05 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -195,7 +195,9 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
- 
- void pcie_sriov_pf_exit(PCIDevice *dev)
- {
--    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-+    if (dev->exp.sriov_cap == 0) {
-+        return;
-+    }
- 
-     if (dev->exp.sriov_pf.vf_user_created) {
-         uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
-@@ -211,6 +213,8 @@ void pcie_sriov_pf_exit(PCIDevice *dev)
-             pci_config_set_device_id(dev->exp.sriov_pf.vf[i]->config, vf_dev_id);
-         }
-     } else {
-+        uint8_t *cfg = dev->config + dev->exp.sriov_cap;
-+
-         unparent_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
-     }
- }
--- 
-2.51.0
+Kevin
 
 
