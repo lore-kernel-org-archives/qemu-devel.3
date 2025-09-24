@@ -4,89 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2119BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 10:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8C1CAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 10:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Myh-0005AI-Vw; Wed, 24 Sep 2025 06:44:04 -0400
+	id 1v1Mye-00058y-56; Wed, 24 Sep 2025 06:44:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Myg-00059p-4Y
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 06:44:02 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1Myc-0008T4-Q3
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 06:44:01 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-46dfd711172so25815855e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 03:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758710634; x=1759315434; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nji9yyYky8rAiTvrwcFVWvAZRmkN9aZ2dHZq9spdqps=;
- b=SuAYnI7iyTCK9SnwK/97Y3T+aQD039xRfP/9oCM2Co/nhi1Z+UOZGhn7Yw5NhByPCv
- j4j1MIE/YfdZ3VM56abyeLVOHkp5p4YeCP2g95AF6mq31vBO+rBtgS1h5UUWSmmCCE63
- wk6sAo6CQeJfyjJxUR5vXr7PJ2WPjdDuJfGjAfUX5HpKdn+nd3QQEtOC4WNUGZkxFjUC
- NbcwuUgN6N5L0/xwRbJfT+siy+z9G5btfZtDG7qHQE5J++w/sQt5upZtMQQVH0j5lINU
- ItE3X1QZZBqiJn+NNp02HiTk1Sfja8G3Qqy3w88SKQp6A+v/YUkdI//6rMjltxCZtD9H
- 08vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758710634; x=1759315434;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nji9yyYky8rAiTvrwcFVWvAZRmkN9aZ2dHZq9spdqps=;
- b=ow9pTV65Gv6ubVZstUSCPa9cXcUaopDGOjvyvSK3vdj8bGy/EBtdkErm6l+4SB8JWT
- 3VF5TbXA8+2tmHMHaMe9M2LEYFBnxmGYCAx14lY0XPDsj2nnaWkdHce1x4qfbCLO7gqC
- Z5IbEfZRnhF0R3Hsmdh++VUQwPmh+OJZklokimpqeXa0A91FNIOWmFbTRV6r5VCKA9iy
- yILayMVHENAfhpJcY4rcza4OnH4XX/qnY1eGAMs+svg3p5YEPGm4nv5XDX/aKlBnFyqP
- 8V6upHm2CySPk/bF+aIw4ezkLhefWigDSmkVSVlnyjy4d9ZvM+Z5VxQO1QJZOBdXlwrJ
- sG+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVyQM5zM3UOngwcEZpj0lwW5/AQq/RGIZ3DVrFvXLJEFqfIsH5ugkQm2k3xuzPF1m46anFzyV7fcFsC@nongnu.org
-X-Gm-Message-State: AOJu0YwOB/L/K9YdOjfp+1ebVLi/EtoyznNiP6W7LQxlJioBqE1KdzMC
- JPoQ5OtxWXXdW8imaB0Nqv+xUJqr4iYL02ATp9QVmyBmkxYTNGxVAeTlfu8VGg1ulck=
-X-Gm-Gg: ASbGncv0JG6Rg0DiBRW3BwvdzdLHHaffJjJRR3S/Ai4VMUDfgimfbSssA0NZfCB1Utb
- U7FBU0/qltxrRGhlu1Oj1lQxWjYYyFmo7lX83Kpm+HroXhEYFPKgeoGIdyhBjZL0GxB4PSls5+g
- ZxDMxhtgTL45z2sKNcDwpnxFvcczXqZ8/RVg4yyG1svecRmmwY0Ni5KMmmDpw1Y32/YNjyIR+tx
- 1EQlsAc8USVHTMWWuFtble5AA8HEKFjPkcmtcbWjPvHZxio6W7K9Xpdw4L2FkY1CvZch2HmSLdq
- MV8y0OdvXmdFW2onJVdYYGSV0kIGaI8TR0nBxg5iYKnTed9i4LHLxNeZ04FWY+33l8CKAVXaFGj
- MXg3Jg9F4imKf9ayrD7WKqRr1Kuyj1NGavp1TQQirRUlHPuqAqfIJcg4c0jL6/VJ6rA==
-X-Google-Smtp-Source: AGHT+IHPYrektlnhZfomQXYmLob7r1Z7oSdIj7Hy6E4JyNEwU1Cu01uEqwI4WLwi9bmNQ0QliPfibg==
-X-Received: by 2002:a05:600c:322a:b0:46e:1deb:fcb7 with SMTP id
- 5b1f17b1804b1-46e1debfe32mr34177245e9.11.1758710633672; 
- Wed, 24 Sep 2025 03:43:53 -0700 (PDT)
-Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-46e2a998314sm31315315e9.3.2025.09.24.03.43.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Sep 2025 03:43:52 -0700 (PDT)
-Message-ID: <551c2907-32a1-401b-9ad6-2994bbbbe6cf@linaro.org>
-Date: Wed, 24 Sep 2025 12:43:51 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v1Myd-00058m-64
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 06:43:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1v1MyW-0008SG-Aw
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 06:43:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1758710627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=q0e1wHU5VzOMqpwJCzrLVk1l0oeaYv9MFOEBaJu7UHg=;
+ b=X5bS6JKEfiV0OhnetdgKX7CkvU9Q7irNTJ0DKk6o69jeHP+HFtpYKUpzC97AvTv9mPstQD
+ 92y8quNAvJDFcuXnUNQ/TGOPUDaKpdKD4AeDwTcXgEsAzdxJToRqlq9rAj2pSk+SjzOiYu
+ 42naR+qMh/ZzkqygZHJJUQytFUxpBEQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-HM_9uTkSPq61gmoiMNUvyA-1; Wed,
+ 24 Sep 2025 06:43:43 -0400
+X-MC-Unique: HM_9uTkSPq61gmoiMNUvyA-1
+X-Mimecast-MFC-AGG-ID: HM_9uTkSPq61gmoiMNUvyA_1758710623
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEBBF180057F; Wed, 24 Sep 2025 10:43:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.33])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DEAA1955F22; Wed, 24 Sep 2025 10:43:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4EEF721E6A27; Wed, 24 Sep 2025 12:43:39 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org,  hreitz@redhat.com,  eblake@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] block: Expose block limits for images in QMP
+In-Reply-To: <aNO0SZalsYn-AYCW@redhat.com> (Kevin Wolf's message of "Wed, 24
+ Sep 2025 11:05:13 +0200")
+References: <20250923163735.378254-1-kwolf@redhat.com>
+ <20250923163735.378254-2-kwolf@redhat.com>
+ <87o6r05qkf.fsf@pond.sub.org> <aNO0SZalsYn-AYCW@redhat.com>
+Date: Wed, 24 Sep 2025 12:43:39 +0200
+Message-ID: <87a52k2kro.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 01/34] target/riscv: Use 32 bits for misa extensions
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20250924072124.6493-1-anjo@rev.ng>
- <20250924072124.6493-2-anjo@rev.ng>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250924072124.6493-2-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +87,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/9/25 09:20, Anton Johansson wrote:
-> uint32_t is already in use in most places storing misa extensions such
-> as CPUArchState::misa_exts, RISCVCPUProfile::misa_exts,
-> RISCVImpliedExtsRule::implied_misa_exts, etc.
+Kevin Wolf <kwolf@redhat.com> writes:
 
-Also, the field is migrated as 32-bit:
+> Am 24.09.2025 um 08:10 hat Markus Armbruster geschrieben:
+>> Kevin Wolf <kwolf@redhat.com> writes:
+>> 
+>> > This information can be useful both for debugging and for management
+>> > tools trying to configure guest devices with the optimal limits
+>> > (possibly across multiple hosts). There is no reason not to make it
+>> > available, so just add it to BlockNodeInfo.
+>> >
+>> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>> > ---
+>> >  qapi/block-core.json             | 59 ++++++++++++++++++++++++++++++++
+>> >  block/qapi.c                     | 34 ++++++++++++++++--
+>> >  tests/qemu-iotests/184           |  3 +-
+>> >  tests/qemu-iotests/184.out       |  8 -----
+>> >  tests/qemu-iotests/common.filter |  3 +-
+>> >  5 files changed, 94 insertions(+), 13 deletions(-)
+>> >
+>> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> > index dc6eb4ae23..eda041ac1c 100644
+>> > --- a/qapi/block-core.json
+>> > +++ b/qapi/block-core.json
+>> > @@ -275,6 +275,62 @@
+>> >        'file': 'ImageInfoSpecificFileWrapper'
+>> >    } }
+>> >  
+>> > +##
+>> > +# @BlockLimitsInfo:
+>> > +#
+>> > +# @request-alignment: Alignment requirement, in bytes, for offset/length of I/O
+>> > +#     requests.
+>> > +#
+>> > +# @max-discard: Maximum number of bytes that can be discarded at once. If not
+>> > +#     present, there is no specific maximum.
+>> > +#
+>> > +# @discard-alignment: Optimal alignment for discard requests in bytes. A power
+>> > +#     of 2 is best, but not mandatory. If not present, discards don't have a
+>> > +#     alignment requirement different from @request-alignment.
+>> 
+>> What does the second sentence try to convey?  As far as I can tell, QMP
+>> has BlockLimitsInfo is only in the result of query-block and
+>> query-named-block-nodes, i.e. it's not something the user picks.
+>
+> I copied these descriptions from the comments in struct BlockLimits,
+> just leaving out things that are clearly internal. Their nature is the
+> same there, we never configure block limits, we only detect them.
+>
+> What I think this sentence wants to tell us is that while you may
+> intuitively expect power-of-two limits, you shouldn't be surprised to
+> occasionally find other numbers here, too.
 
-   VMSTATE_UINT32(env.misa_ext, RISCVCPU),
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   target/riscv/cpu.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 4a862da615..a0b2ef1cc1 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -50,7 +50,7 @@ typedef struct CPUArchState CPURISCVState;
->    */
->   #define RISCV_UW2_ALWAYS_STORE_AMO 1
->   
-> -#define RV(x) ((target_ulong)1 << (x - 'A'))
-> +#define RV(x) ((uint32_t)1 << (x - 'A'))
+Well, I would be surprised, so having the doc mention it makes sense.
 
-1u, or simply using BIT():
+> Maybe "Note that this doesn't have to be a power of two" instead? Both
+> in QAPI and the struct definition.
 
-   #define RV(x) BIT(x - 'A')
+Works for me.
 
->   
->   /*
->    * Update misa_bits[], misa_ext_info_arr[] and misa_ext_cfgs[]
-> @@ -582,7 +582,7 @@ struct RISCVCPUClass {
->       RISCVCPUDef *def;
->   };
->   
-> -static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
-> +static inline int riscv_has_ext(CPURISCVState *env, uint32_t ext)
->   {
->       return (env->misa_ext & ext) != 0;
->   }
+>> > +#
+>> > +# @max-write-zeroes: Maximum number of bytes that can be zeroed out at once. If
+>> > +#     not present, there is no specific maximum.
+>> > +#
+>> > +# @write-zeroes-alignment: Optimal alignment for write_zeroes requests in
+>> > +#     bytes. A power of 2 is best, but not mandatory. If not present,
+>> > +#     write_zeroes doesn't have a alignment requirement different from
+>> > +#     @request-alignment.
+>> 
+>> Likewise.
+>> 
+>> > +#
+>> > +# @opt-transfer: Optimal transfer length in bytes. If not present, there is no
+>> > +#     preferred size.
+>> > +#
+>> > +# @max-transfer: Maximal transfer length in bytes. If not present, there is no
+>> > +#     specific maximum.
+>> > +#
+>> > +# @max-hw-transfer: Maximal hardware transfer length in bytes.  Applies
+>> > +#     whenever transfers to the device bypass the kernel I/O scheduler, for
+>> > +#     example with SG_IO. If not present, there is no specific maximum.
+>> > +#
+>> > +# @max-iov: Maximum number of scatter/gather elements
+>> > +#
+>> > +# @max-hw-iov: Maximal number of scatter/gather elements allowed by the hardware.
+>> 
+>> Maximum number
+>> 
+>> > +#     Applies whenever transfers to the device bypass the kernel I/O scheduler,
+>> > +#     for example with SG_IO. If not present, the hardware limits is unknown
+>> > +#     and @max-iov is always used.
+>> > +#
+>> > +# @min-mem-alignment: memory alignment in bytes so that no bounce buffer is needed
+>> > +#
+>> > +# @opt-mem-alignment: memory alignment in bytes that is used for bounce buffers
+>> 
+>> Why is this "opt"?  I guess it means "optimal".
+>
+> Yes, I think so. How about this:
+>
+> @min-mem-alignment: Minimal required memory alignment in bytes for
+> zero-copy I/O to succeed. For unaligned requrests, a bounce buffer will
+
+requests
+
+> be used.
+>
+> @opt-mem-alignment: Optimal memory alignment in bytes. This is the
+> alignment used for any buffer allocations QEMU performs internally.
+
+Good!
+
+[...]
 
 
