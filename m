@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02493CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF3FCAC5B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 09:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1Lof-0004p7-IQ; Wed, 24 Sep 2025 05:29:37 -0400
+	id 1v1Lp0-0005H3-8c; Wed, 24 Sep 2025 05:29:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1Loc-0004n3-Bf
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:34 -0400
+ id 1v1Loy-0005FF-4s
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1v1LoW-0004nQ-Hq
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:34 -0400
+ id 1v1Los-0004pX-2t
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 05:29:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758706167;
+ s=mimecast20190719; t=1758706185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6U2o/f653CpyKtbmcaZXYBHLnD9ktRk3jYJpmo8H640=;
- b=LcV5gbQ2m946vRAOmHTLGmFZ2BGdBdcDs9Cxyn4RV4oGG/QEFEwPel1G3RjEgiSuZrsFo3
- 8if/eDIgv8c92W9P31VCSOC2eCXvyFn939S6z1+it9d1EsV+hN49QImVKZyMXLm1CHqUNb
- OqUGHZQ/Cdjr3QBAYF7lKh8PHSjcLbA=
+ bh=cGRXr7IOuXBD087dAOWEFFsD7KAtBeiyHVV7B7Xyq60=;
+ b=OwXzWETmDs1xmyc5QZnWBqpiB2JDhm3XJJgimoprp0/Q8keHkN+m45H2S4jVdY5JAy7XDc
+ K5yaI+CwKylKMa47qBeWHyG1r1obZ2Rm+O09pCiMOx9JnOrgLBG09gTq67MAHjXl8yXe+H
+ xeaO9wNUqx+w9JV8jDj6k5BVe/E7TNE=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-iECyiTw-M0eI0HpS_fra-g-1; Wed, 24 Sep 2025 05:29:25 -0400
-X-MC-Unique: iECyiTw-M0eI0HpS_fra-g-1
-X-Mimecast-MFC-AGG-ID: iECyiTw-M0eI0HpS_fra-g_1758706164
+ us-mta-228-ME0kMPCAMB6hPOZEXzEo_Q-1; Wed, 24 Sep 2025 05:29:43 -0400
+X-MC-Unique: ME0kMPCAMB6hPOZEXzEo_Q-1
+X-Mimecast-MFC-AGG-ID: ME0kMPCAMB6hPOZEXzEo_Q_1758706182
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-afe7b40b15fso236849166b.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:25 -0700 (PDT)
+ a640c23a62f3a-afe7b40b15fso236869866b.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 02:29:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758706163; x=1759310963;
+ d=1e100.net; s=20230601; t=1758706182; x=1759310982;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6U2o/f653CpyKtbmcaZXYBHLnD9ktRk3jYJpmo8H640=;
- b=KSEDpDTtN3wyHFs3niJgmX54QYsqxWXSPQfLgRvMfCVndbHA7hCuH6ZGKIVttwPPvA
- pQwsWzXUivHnUq7SdZ3RH40vDV8vcOiF1vQlkGItHuUnOtadhWNlHgdGO2AMYvfFzMFa
- NiJAxCWM92PkfRIVvqnHKPmpeV/q/mOPEbM1V0VbJ45PwETkWdPAE3K/MgyQr+FWn7kO
- NTKQjhTygQDfoSoRjvDXY3Feepj3jAl5xsWoxQ3fzkK2cnjTL+2pS/8Ixx5VtnFM2Eb7
- NJQq94UOGbOgFIRhFbuU2cvr8tdNWeOo4PpICHlxf1doL0oJFfDNxXX/CGgeawj8zQDu
- 54Rg==
-X-Gm-Message-State: AOJu0YxdmFmX/rUz86j+nOMmUWpy+wHXpa8OFdLF1S71jnVoW4+IYEhd
- w9mWRoIFQYoQAYXJEqvr8hMScnkxkLLn86zghs2DrfV8YBraZshvf0e+VRVdo5Bz84Oc5v3giGo
- LDnsaoazzoqhMTOaDanou7/2WiJkDlLq+CSrleChygq9Kq3JxuyrwdmvTMpfsVBtJjVQzLSYVDl
- LCOKI+S67Sva94sh2CJr9DsFbXPycvSLaX1V6AdwHz
-X-Gm-Gg: ASbGncsOxfo2qazkbw7EKcqzURgpxyKK0VwTOzmfpf+K66adA0Mmi8gTJGKB5F1MVaY
- vftrxPAwz8v5CxavQh8hSLuq/vYfW/qbg6gLU5WqlOKK4Ho0Ynebx1o/KamySV3KbQcOKrxrh5e
- 8ni6l9sCkWuahZWyjrfGHc8q0Mz1jrXgRwCB5xTsKdj4NFKadpvMk4jTQaiDlK/uBJUJTyGMEoa
- g0u6wgaRAJ09vAf3HdJEnOooPUn7trM9o3IRfl6gqtwah0zqoNz8EbpaWYX3MRAIsVA8aAFpG8C
- +pcWTzL49uGqz8hbC1/Hn0Vsxmo30bOkPDImFX4Weeyo6FX4oz3UJA1qGYr+DtAaSXsqg6ic6lY
- Te9sLcj8NKS6m0BpO82BteuhCidpoOWmj+DBotgY9DS30Ag==
-X-Received: by 2002:a17:907:1ca5:b0:aff:9906:e452 with SMTP id
- a640c23a62f3a-b302ab33e68mr621581866b.31.1758706163529; 
- Wed, 24 Sep 2025 02:29:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiEf3wvV027g/ng3yXV4a5RdBmNcS2Pel/HMB2YYHKR+j8wiu4EcqoaqGKu2yxCQRNZLDIPA==
-X-Received: by 2002:a17:907:1ca5:b0:aff:9906:e452 with SMTP id
- a640c23a62f3a-b302ab33e68mr621579766b.31.1758706163079; 
- Wed, 24 Sep 2025 02:29:23 -0700 (PDT)
+ bh=cGRXr7IOuXBD087dAOWEFFsD7KAtBeiyHVV7B7Xyq60=;
+ b=aSjgmqcE3QE9gVrHJET56m9ig3sc6JREw0LNdS/RVU52mkXD/7IMpbhuaLqODavZIn
+ TQkrPcgJZBT97mfOYJ4IqUyXbaiFuC6Kvi8KkNe9+YNgrJRzoG1t5GFBnXwOXq56wIu0
+ T9cjF8eOTtKUJEsXx/61KnDXidytI/W5gvdOQkFjq3Jo0yEyNFBsowW0GUHweI90EzJ5
+ fuRo0cprbuLSFzDcIoGPpRYmpHpYmkFkIdmhvYkHtre3TS0eKn1m4qKd9IuhgToBA41D
+ e6beTE5zZ944HUdQFO/VrYPkLF02bwO2r1KeSLtXxlihj0NySYb/iELuENMQrx8due7g
+ TQJw==
+X-Gm-Message-State: AOJu0Yz3GEFLr97w6WZ5eYYwFsJA8SDw35kF/jCnDPwpXdE9+jC9vk23
+ B76N/sKiFblckIYJh9Y5EG6TnifEHwLe+Rp43JLHua+/2u82IJCSUcJs359u2P49rX34ht3DHBJ
+ JCW65m1m3ZpUt6kONtTi+nyHn3azPbynMwjPYLUyAT41s389hi2mE+jlRPwLiqcuCv19AzKxCuS
+ 8/4D8bn0oFFM/Pe+FOFTKAoPxrZeIdnk4PHZiUU9rY
+X-Gm-Gg: ASbGncuf8KD2VoQKszoVh3DC4rJVjtEAcKxZjQ2Q9yKuzsOX1T8xRYoyHQnhWKidUf7
+ S/kZS9Ok8ngaO03eBA6tVVxmbIGcyIVvHJg5LSw2RUlbYugQyf4nKbdR+HKULlYZWpVha0lsJQR
+ UTX5cixzjJ1+mJJLkIxjd/vWiamtFz4Kae3ABVxtHj/5JWGKS8F9h29ahATptwH5xpM3gBdWOyu
+ Ms92E/SELx6wrozQVmG4EH78K82pF3JITuPw+5ATKIEuIEw1tBnjsNwFCo+cuyfvsN6X/Y47KWj
+ /2Zaqq2aEQjEOnsgSjnfvFjTsfwOTEeujunhn8UEsp24oqVcL+Eec9INdab3yDatpTJ2zHVsmY9
+ 2Fl2Gg7ZNVLdxUMF+1gtUFBFNw3bNeR/JEY/8V6FiFEoBJw==
+X-Received: by 2002:a17:906:f590:b0:b2e:51cc:9b9 with SMTP id
+ a640c23a62f3a-b3027d3e5a8mr550345266b.24.1758706181686; 
+ Wed, 24 Sep 2025 02:29:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaStrNEzvYEI+nuTAoiuUJXSw+KmgVILcCMs/tlOlHpHDm7XCGBgLOKCZHhibWfuojAtb4cQ==
+X-Received: by 2002:a17:906:f590:b0:b2e:51cc:9b9 with SMTP id
+ a640c23a62f3a-b3027d3e5a8mr550342966b.24.1758706181206; 
+ Wed, 24 Sep 2025 02:29:41 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.127.188])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b2a3fb3ff84sm837246266b.49.2025.09.24.02.29.21
+ a640c23a62f3a-b29abf51da3sm907646666b.75.2025.09.24.02.29.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 02:29:21 -0700 (PDT)
+ Wed, 24 Sep 2025 02:29:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 10/29] rust/common/uninit: Fix Clippy's complaints about
- lifetime
-Date: Wed, 24 Sep 2025 11:28:30 +0200
-Message-ID: <20250924092850.42047-11-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 16/29] rust/hpet: Clean up type mismatch for num_timers property
+Date: Wed, 24 Sep 2025 11:28:36 +0200
+Message-ID: <20250924092850.42047-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250924092850.42047-1-pbonzini@redhat.com>
 References: <20250924092850.42047-1-pbonzini@redhat.com>
@@ -95,7 +93,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.442,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,68 +111,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Clippy complains about the following cases and following its suggestion
-to fix these warnings.
+Now `num_timers` is `usize` other than `u8`. Although the type field in
+`declare_properties` macro hasn't been used, it's better to explicitly
+point this out and clean up this before doing other property work.
 
-warning: the following explicit lifetimes could be elided: 'a
-  --> common/src/uninit.rs:38:6
-   |
-38 | impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-   |      ^^                                   ^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-   = note: `#[warn(clippy::needless_lifetimes)]` on by default
-help: elide the lifetimes
-   |
-38 - impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-38 + impl<T, U> Deref for MaybeUninitField<'_, T, U> {
-   |
-
-warning: the following explicit lifetimes could be elided: 'a
-  --> common/src/uninit.rs:49:6
-   |
-49 | impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-   |      ^^                                      ^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_lifetimes
-help: elide the lifetimes
-   |
-49 - impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-49 + impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
-   |
-
-warning: `common` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p common` to apply 2 suggestions)
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20250920160520.3699591-5-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20250920160520.3699591-11-zhao1.liu@intel.com
 ---
- rust/common/src/uninit.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/common/src/uninit.rs b/rust/common/src/uninit.rs
-index e7f9fcd2e3f..8d021b1dfc6 100644
---- a/rust/common/src/uninit.rs
-+++ b/rust/common/src/uninit.rs
-@@ -35,7 +35,7 @@ pub const fn parent_mut(f: &mut Self) -> *mut T {
-     }
- }
- 
--impl<'a, T, U> Deref for MaybeUninitField<'a, T, U> {
-+impl<T, U> Deref for MaybeUninitField<'_, T, U> {
-     type Target = MaybeUninit<U>;
- 
-     fn deref(&self) -> &MaybeUninit<U> {
-@@ -46,7 +46,7 @@ fn deref(&self) -> &MaybeUninit<U> {
-     }
- }
- 
--impl<'a, T, U> DerefMut for MaybeUninitField<'a, T, U> {
-+impl<T, U> DerefMut for MaybeUninitField<'_, T, U> {
-     fn deref_mut(&mut self) -> &mut MaybeUninit<U> {
-         // SAFETY: self.child was obtained by dereferencing a valid mutable
-         // reference; the content of the memory may be invalid or uninitialized
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 3cfbe9c32bb..fce75415579 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -909,7 +909,7 @@ impl ObjectImpl for HPETState {
+         HPETState,
+         num_timers,
+         unsafe { &qdev_prop_usize },
+-        u8,
++        usize,
+         default = HPET_MIN_TIMERS
+     ),
+     define_property!(
 -- 
 2.51.0
 
