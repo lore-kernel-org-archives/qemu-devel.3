@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E1CCAC59A
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 03:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 169C0CAC59A
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 03:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1G6d-0002nP-EH; Tue, 23 Sep 2025 23:23:47 -0400
+	id 1v1G9Q-0003oU-9A; Tue, 23 Sep 2025 23:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1G6a-0002n6-T0
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:23:45 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1G9O-0003oA-FO
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:26:38 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1G6U-00010o-4M
- for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:23:44 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3f3a47b639aso2183233f8f.2
- for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 20:23:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1v1G9F-00024c-Sk
+ for qemu-devel@nongnu.org; Tue, 23 Sep 2025 23:26:38 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3ee64bc6b90so3130608f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Sep 2025 20:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758684213; x=1759289013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758684386; x=1759289186; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=84golSrtDN1xCxvCo3p+wOX6I4RQ/i76j8MkRG4TPDY=;
- b=uc60wexTxcGS3DFp1/aYVyEHGXicijACWJOE6nymhkIwk8ToQPEJeIzNd6Q+g3xnhW
- iDn9TfLmqL+LDxnNGOLsJZtOnHtjLUp1nB1ZRXcducscjGqIW+NwOomOXyPNHjeMeZE7
- SQBhbJ2B7QXXKjUZe5IV2QUGsfmDH2j2N/fep4Yl6rYk7T6srlTqcBVxTLioNvDKvE47
- mmfbAkgXlYR0QSSrXrUNtdqpyIFlQVWT/TU0wtp0PvTmbmSQGTZZSAYAjAKG4mXxo4Ac
- ITjOpM4439zBW5EDDIMBFX5ZwPasrPtruLQqbGwwz+05h2bB6mR5Rcji+Tea0mH6OXAI
- xF0w==
+ bh=lFWmLhJxelSKefaPFx7G66Qkm8U/sh1IdlhduMVcPoY=;
+ b=utyuFmrPhDj670KUDkE/04P8oyfjc3ePJHQePoU56ZNl1A1dV9sXlAQMoNMy3HeXmG
+ xMx/1hWOzPnVEKOov9M3A7cJbJV5vWHZznDiJgJ0WiCAOoJj9yaJShUXdlV27MP0wB2b
+ d6ZTV4Nwts9GLFdpRhvc5w5p7k8iPVXBlNfxWrhr/afWa0s1zEo8PjQR3PjD83z011tA
+ 6bWtHTO6i2PQPVjMLNvPfDFoLRLlQSN2DRHagZA/GceECCg+IM3TSIaC7n8Rn6anlEnq
+ zJyb8LtDkWlvrbY5JgJg2zUWmnR6BwAu/uPFAdNP5/ilUWTuNAxW4m6R5ar7DPpTgRH1
+ FJTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758684213; x=1759289013;
+ d=1e100.net; s=20230601; t=1758684386; x=1759289186;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=84golSrtDN1xCxvCo3p+wOX6I4RQ/i76j8MkRG4TPDY=;
- b=HFEiQ5Jdvh5gdZGr+cUGAty1dxLdROktZhKY/N+Jxor4rrQf5KUZqsZjBe75T1KdU+
- TFx0CWmwLDwkvltZMX0myNk3PejmYM5WHfLuywKFZcEK08AtBfrygSzCGjegacRYp5HF
- XO14+agQcJbZYq7xsHMwek3wLTM30DGKeXOJtZWtrZtlTB1SU2dGwzvWkyKsSeUWNol2
- XhOCtAQP6AE+LE/QCbhyHJIFlrERQftgeTp3BFDZozBIzvlJsfuFmZbl39lOOcGfZuRt
- DunvG7CbkCarU5psRD6Z1BB3+g8Z7RllenXHObBkOIMQFznayuRbCef14Mtm2AsqiPvU
- uxiw==
+ bh=lFWmLhJxelSKefaPFx7G66Qkm8U/sh1IdlhduMVcPoY=;
+ b=NJmCdULyO/2m/aqnCg8kf56JG5eCG1DFAnWC8k6j6tFNKqpyfc0i4rcn9jMpsHKTrL
+ XaZMNGaRR8jmI7QNB1XBFZhLVRggGG3dgwZbCqWKqiDYqkUwyNfj5g/+10Th5E6XyRu8
+ GXVH5tchVpxrUh3SSKxD/+eQ4G2TZ+TnY45stsven4inUhNJkzVq1bnrCiDZ+WPofH9s
+ NTt6zDF95NX74URn4hcE9iU6fa2pbeczoBShyScRcvNC9xxgJyK7K7qNWJfmgKOKxPGx
+ j++0pAp5/LfI/S2R9negypekxTuBNxOgxjfdZo7N82WUB7z0jhL7Mb8KPiTzzj5ccjDR
+ AOiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5fX+hgkQ7wAPr28/G+dFeM8v3Q+6vwTIivWCqcaB/d+j5W8MGERSO8mungU3hUbEezj6praNvwJDs@nongnu.org
-X-Gm-Message-State: AOJu0YzB6FKS37N6ALTrPcDJTWteDTxp5BX6r8rahWoqYvZAf6Ze8AdL
- wnETUQQjVg7337q4g+rweROI12nBKW4zHM0Exije5eTFFriAzGgoGwVYTwBpkg6l8GI=
-X-Gm-Gg: ASbGncth+cyW3qgTytq93VSFqT2hHHm5YEatx9Ara2L8nlfj6l3PtFbHcw3Wrmdna+J
- W/WzdPBWRcye9kpY0Pd9SYHa5IOfQMgn6QBJKW/5XRxcw9FT7RqlFEFi2zEqutrx0JXT2QnFd3i
- ZJj9SUN5gwkSMd2cSHHLaQuvEgrmny29DyA7AESOVnnFpWsxmgVT41b0VXMH9JiCLRiq+ieELew
- k93StDBfynPvnnDzPWh0H7E72uXpzzx/EhLqOymvrhfAx+14rJXEeLXIy+Rkp2eq5Brssw427ab
- mKeOIgQK5HMDcU2k8GbL6vk3U57MtylXLUtmRgCbcHQTh+tyfQXHSP+/+V0E0WEx1v1TpupcTNF
- H+VTRb/lKueVERhjxHCKM/DMT+AHP7bmcLvFmTsjwRvO+GSP8zEifMWtxCj1widcgiUsGpoTXV8
- Rs
-X-Google-Smtp-Source: AGHT+IG+vL/t6Z8dGe8bYGjgP8lSHUJL2XFsOMMIBPUxxCch61e1vGt/BbXim8MqjhkoYaljkH87aA==
-X-Received: by 2002:a05:6000:26c9:b0:3ea:c893:95c6 with SMTP id
- ffacd0b85a97d-405c6d102a3mr3763628f8f.18.1758684213327; 
- Tue, 23 Sep 2025 20:23:33 -0700 (PDT)
+ AJvYcCUc68wva2Skq4U0yFnbvsR15KyOKirnxU6QKeFmnU0SyVrQ6IqS6uWrfXNhy++uIthRdqIVevmubCZS@nongnu.org
+X-Gm-Message-State: AOJu0YzA+NSG9eriIIebEM3MIfxkIfDiTM5Beml6kV9L+pb0wN9BZQJM
+ O9uNlu2bscCOZBgyXpSnEZXUYPa4Jkjo22q2d7XkJiwtJrdkB8ibIVSp/K3hMPn2X1o=
+X-Gm-Gg: ASbGncsUf+L2QhlCE636XLqJCLjm6W7UauA7nxDQ7s+AzsSd0WlyyaAvm6wOADzUpGY
+ /7Q2z0cJW8XjRC2gcjS901s84JdRA17D34y7hNAlEmEg+x1Em+DIyUNiBzQPeg6LKGaFMcEakbZ
+ D29TzegwI4FnXrcdlh7F45rrrL0tq/YEdzupu//VLuapYEBuq9QlaTew0cOvQfjEiKiQTNhY/5f
+ E4LfMPWWprrDEEUcdeCIefnFbk8WxGzU07l81B2FfBQF+V5WBiMiR22clu7UE5lv0N9N5TGL8v9
+ kIhYm69z1gIi/fIy4Zj6D8Mps8ujpONR0mSTYdYB3izxf8bwjErGFH/rwWBQQgOSjxSCvSfqsu6
+ N1iAOYC188e34/G4c+sJ1QKEptVpaAaewTCE4Zf2lyNvKAgz15LUa1L4HjeUlUVj57A==
+X-Google-Smtp-Source: AGHT+IGczWbQlTJfnHYOy1q1S53mpomYWglUfpyQ6jKwM1WjbGSBlTcd8KMQPTj958qYDEy9+HHp6w==
+X-Received: by 2002:a05:6000:40cb:b0:3ec:db8b:cbf1 with SMTP id
+ ffacd0b85a97d-405c73c4504mr4582003f8f.24.1758684386527; 
+ Tue, 23 Sep 2025 20:26:26 -0700 (PDT)
 Received: from [192.168.69.221] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-402188ef7b2sm7757907f8f.34.2025.09.23.20.23.32
+ ffacd0b85a97d-3ee07411f4dsm25880820f8f.26.2025.09.23.20.26.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Sep 2025 20:23:32 -0700 (PDT)
-Message-ID: <8ace011a-eb3f-4c90-a63f-18eb1816ba6d@linaro.org>
-Date: Wed, 24 Sep 2025 05:23:32 +0200
+ Tue, 23 Sep 2025 20:26:25 -0700 (PDT)
+Message-ID: <54d12265-0bfd-4ab8-a5b8-20ed34374fba@linaro.org>
+Date: Wed, 24 Sep 2025 05:26:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/10] linux-user: Split out begin_parallel_context
+Subject: Re: [PATCH v3 09/10] accel/tcg: Create queue_tb_flush from tb_flush
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250923215425.3685950-1-richard.henderson@linaro.org>
- <20250923215425.3685950-9-richard.henderson@linaro.org>
+ <20250923215425.3685950-10-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250923215425.3685950-9-richard.henderson@linaro.org>
+In-Reply-To: <20250923215425.3685950-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +102,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/9/25 23:54, Richard Henderson wrote:
-> Move the test/flush/set block to a new function.
-> Use tb_flush__exclusive_or_serial while we're at it.
+> Rename the function and remove the path which
+> performs the flush immediately.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   linux-user/user-internals.h | 16 ++++++++++++++++
->   linux-user/mmap.c           | 13 ++-----------
->   linux-user/syscall.c        |  7 +------
->   3 files changed, 19 insertions(+), 17 deletions(-)
+>   include/exec/tb-flush.h   | 17 ++++++-----------
+>   accel/tcg/tb-maint.c      | 11 +++--------
+>   accel/tcg/translate-all.c |  2 +-
+>   3 files changed, 10 insertions(+), 20 deletions(-)
+> 
+> diff --git a/include/exec/tb-flush.h b/include/exec/tb-flush.h
+> index 090ffc8818..e971d4ba6d 100644
+> --- a/include/exec/tb-flush.h
+> +++ b/include/exec/tb-flush.h
+> @@ -24,19 +24,14 @@
+>   void tb_flush__exclusive_or_serial(void);
+>   
+>   /**
+> - * tb_flush() - flush all translation blocks
+> - * @cs: CPUState (must be valid, but treated as anonymous pointer)
+> + * queue_tb_flush() - add flush to the cpu work queue
+> + * @cs: CPUState
+>    *
+> - * Used to flush all the translation blocks in the system. Sometimes
+> - * it is simpler to flush everything than work out which individual
+> - * translations are now invalid and ensure they are not called
+> - * anymore.
+> - *
+> - * tb_flush() takes care of running the flush in an exclusive context
+> - * if it is not already running in one. This means no guest code will
+> - * run until this complete.
+> + * Flush all translation blocks the next time @cs processes the work queue.
+> + * This should generally be followed by cpu_loop_exit(), so that the work
+> + * queue is processed promptly.
+>    */
+> -void tb_flush(CPUState *cs);
+> +void queue_tb_flush(CPUState *cs);
+>   
+>   void tcg_flush_jmp_cache(CPUState *cs);
+
+Preferably rename as tcg_queue_tb_flush(), regardless:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
