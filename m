@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 625FBCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41DDCAC5B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Sep 2025 19:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1UqF-00029K-9s; Wed, 24 Sep 2025 15:07:52 -0400
+	id 1v1Uqs-0002wG-L4; Wed, 24 Sep 2025 15:08:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1UmC-00070X-Ki
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:42 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1v1UmD-000726-Nw
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:44 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1v1UkA-0007sg-KR
- for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:36 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-32eb76b9039so184112a91.1
- for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:22 -0700 (PDT)
+ id 1v1UkC-0007wC-IG
+ for qemu-devel@nongnu.org; Wed, 24 Sep 2025 15:03:40 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-33226dc4fc9so196508a91.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Sep 2025 12:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1758740480; x=1759345280; darn=nongnu.org;
+ d=linaro.org; s=google; t=1758740491; x=1759345291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HJiaoiqB2SYQYYaP+V4AKhL/433rJSvOrhZgOKxZ4EQ=;
- b=bANoZF1Z8ktlPzVNcA7mUPUOPzAIE94D6J/eRFbG+qVHXPJ+tDzlRFXiEpUK6lVdnW
- mthc/I2y242OO3HY79xVfWAcMIaGJHjahdcZy+tQgKPds0+s+hNsv66KNkZTpru5MrGU
- z+Z+dbeBdM6hZ32bk8ctNuUbRbxsaFKc7yJVR3VI6ANRP4snTQfcv+TEc++txneA6wyg
- lQhBRcHtgOrcPKLF9HCFdBxKxymIKmgdh63HLXZ7jk5GkRMxkNbjefD7Pxgp4qLX6b53
- oXR792O8Wte497K3ALct5AeyGQOtr/DLjp9h3Ft3llL9YP10oHbNjP7sdleBCFtrNFUC
- Zbnw==
+ bh=EWpjv9GI/QcYKrSXjmbz+gtPiqHOCxvaKaD3QdcWnls=;
+ b=J6UXil8crpJc7TvE4CwIEJoOn5aSFzG0Rqk9qMlE3V3j2fV5llfqTVnEU1DFgGFOxs
+ rbjyukRAhTdJjv/BxOF/Eul7bYcoW7QZM3In5IIaHbWcfyF4d1B5A0mqAgX1eyeFgK6u
+ ewarpT4ZF9A9a7TwCTkkc5MUc1qWYlCOc/0xvBfdHorxKSb9FDUFF26TTyvaEAUl+a1z
+ lV3Y034/DPAjjQgAutBAHl/b6YZQPDeg2s5bnpeJpnI7Y+NQKjp7YDndIS/lP8tC/OQ7
+ q85ySuFZt15jKgn2qNqgMRP/gzKilUVsZeQbZoJYZrEl4z2a3wqMK3QVpn2OaYF4M2+G
+ fpqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1758740480; x=1759345280;
+ d=1e100.net; s=20230601; t=1758740491; x=1759345291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HJiaoiqB2SYQYYaP+V4AKhL/433rJSvOrhZgOKxZ4EQ=;
- b=udeeM25jV55A+rCWXdrF7pf9kdgZzjJZ9FyGQpogjEUMaUhgGPLmHzUqVF6JghtHlp
- 1nmxYqNsdMJb0SwNM7y/TP9KmkhpTZ4euBIeHpNj7qf4ix1oRyV2izcVxMxKbg5u9zZm
- dqE23meN0C+wbUsFuY+8VuyrZSHpIV+S2dVFisKv/D6cRv6LB3+/ZAPty4Fmj8joPqcm
- Mlj1wBOFrhyui4CdnScAX4mF2P14ZqDc32w1J4vATr9E0mHehZ+Ebz7RxR44tsOJA/zl
- 9Am/KExxGB3DCTyzKBHjNNGvTVAP3yq6TVr++IgCy0QbjcZrCCtjsPjmncHXB9Lvagxv
- sXtQ==
-X-Gm-Message-State: AOJu0YzueOOcUGSE1GNrd0NG4yXAGvuwn6xA6uvx3P73hbEKLg+ZrjE+
- YH/gGQoNThPwdWnbp+9xJbPVpa8uao2XA4/BFh8G5s1pHaHT521kID8pXliP5EzA15CLbfv3cHL
- RqFcX
-X-Gm-Gg: ASbGncvsjrGmFuUQCDi+rpF+qGrcUYAldxYTXlLLt+uWXbXRWYL/4cG8W8IHGWGxrlj
- xSt3GJum0D18ZRqlf4tvp65+YVWSs7hHysqL39PxvorCDcG0QD3LnRpXP/0BjjqdXExP9nEXSYS
- F3UZkrrXlQ86kVYzBls+L1IycieBNTN+VoYLXPFpBlF38JPyyGslfKI9Qno0JflF5EdlEp8cxcc
- 1r+mg86RCKrSA838WEGk8UbKXB9y7tOH0tfzxpSmEeM2E0ift5T5maIolrTEArlsVC+JNoNREBV
- LR6P58aAeP66c3u2hvFbGBsKiYPGxG7FmsJGbeRkiCNUHjF3bft22r9ku0GJy8WzYdJU7feGKOm
- vCnt2ctzSpncgDkr82o7Y3IBZy2J2
-X-Google-Smtp-Source: AGHT+IGOtfGLm1AAQEYSWx2W3wEU/zbxLQIBDr16Vp2u1hDDlJMG/ThWuOBtHSZwv+HCqOTNz7/Itg==
-X-Received: by 2002:a17:90b:3911:b0:330:6d5e:f174 with SMTP id
- 98e67ed59e1d1-3342a2b1263mr782271a91.20.1758740480141; 
- Wed, 24 Sep 2025 12:01:20 -0700 (PDT)
+ bh=EWpjv9GI/QcYKrSXjmbz+gtPiqHOCxvaKaD3QdcWnls=;
+ b=lsIX3opvTJwsAcmWwDZwPUcF6zV14p4PIcz78zNsaJVq1ndZPS9TnA725CgiNMpCFY
+ tDmgBvxRTdKr/QPBCDu9gJ3JMrmVXRbZdt4cfgJcVssrIhDZLs8Qid8WqoA3pJEi0c16
+ vex0w15cavqAVXHPy5XT3ixPEIQuE8jCizDG98kF0O58vPh8myWRIA0ksIF1QsMxLuoF
+ d6TDAKA30X/l3KUeRVftAfnin5M1kEQwl1PJHqAQByP3/z3Gw/h3/HCgpBLtCd0YBPuF
+ nbo4GnDcVJqm6GaUWh8no4NuR62bAgsANbNtfXbPFhEvvojgI5sW+yQQeuBFMMElZiY1
+ ptDA==
+X-Gm-Message-State: AOJu0YwUBhXiuL5GebJ8BiQZ2p9V7lox1iQG+sXgTVPltvv5TZKyX4ka
+ 6pc45e4ua5AoFWi7+t/CNiUbvhuZI5kh4vBHv7OsVwM0cez3W6g+aVnhyEPIAXRiS6wiLulPiSV
+ fwznc
+X-Gm-Gg: ASbGncsro4YMrBwRrJYNAr+xjOQwpXKaSycoxVe4k32e1J9/GovIEMgWaVItLQMXb7j
+ fpZ9lRj1qvz4PdL4P1QPV+ZCEFKR3MPPkhnAI0KGb9wv1NTAUxXG4m7EC88uwKOpxehEPVej0DR
+ NJfA90oxDzNF+OINiGMx0kQnbzZ1SG4xDerDmls3zIur1KjN+ioq09SBURa7ugZrAiyB6rrRzDD
+ UTuDwuojlsrCN1oqeqde0HeDNFFzaRsmz/NVGXg+KFNegR3uAE27452n67G90NNiqKhij5qD7U4
+ 5r+wDOrftUK34aTPXzi7+mbu/0ewyRFrOdtM4x3JkyPNeRqxL1V8hLhHArxjvllH2hSEvblOgs+
+ H9yucedtivnQX+2jHj6gDxetflMnT
+X-Google-Smtp-Source: AGHT+IH4t1l1FxD7en8CT8OaB7noklm8NxOja7qPpYc1iibcr5gEjxntXMYJvMW33xP7b+eyuOX+0w==
+X-Received: by 2002:a17:90b:2249:b0:32e:59e7:c37f with SMTP id
+ 98e67ed59e1d1-3342a24778bmr957160a91.12.1758740490760; 
+ Wed, 24 Sep 2025 12:01:30 -0700 (PDT)
 Received: from stoup.. ([71.212.157.132]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.19
+ 98e67ed59e1d1-33439103461sm63221a91.8.2025.09.24.12.01.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Sep 2025 12:01:19 -0700 (PDT)
+ Wed, 24 Sep 2025 12:01:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 17/32] include/hw/core/cpu: Invert the indexing into
- CPUTLBDescFast
-Date: Wed, 24 Sep 2025 12:00:50 -0700
-Message-ID: <20250924190106.7089-18-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 31/32] accel/tcg: Remove dead mmap_unlock() call in
+ invalidate_phys_page_range
+Date: Wed, 24 Sep 2025 12:01:04 -0700
+Message-ID: <20250924190106.7089-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250924190106.7089-1-richard.henderson@linaro.org>
 References: <20250924190106.7089-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,62 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This array is within CPUNegativeOffsetState, which means the
-last element of the array has an offset from env with the
-smallest magnitude.  This can be encoded into fewer bits
-when generating TCG fast path memory references.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-When we changed the NB_MMU_MODES to be a global constant,
-rather than a per-target value, we pessimized the code
-generated for targets which use only a few mmu indexes.
-By inverting the array index, we counteract that.
+Since commit a97d5d2c8be ("accel/tcg: Use interval tree for TBs in
+user-only mode") this code is guarded with #ifdef'ry and only build
+for system emulation where mmap_unlock() is meaningless. Remove the
+call.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250924164824.51971-1-philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 11 ++++++++++-
- tcg/tcg.c             |  3 ++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ accel/tcg/tb-maint.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 22a78c9ee1..c9f40c2539 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -603,9 +603,18 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index c45fd42366..5a8d0784e7 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -1168,7 +1168,6 @@ tb_invalidate_phys_page_range__locked(CPUState *cpu,
+         page_collection_unlock(pages);
+         /* Force execution of one insn next time.  */
+         cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
+-        mmap_unlock();
+         cpu_loop_exit_noexc(cpu);
+     }
  }
- 
- #ifdef CONFIG_TCG
-+/*
-+ * Invert the index order of the CPUTLBDescFast array so that lower
-+ * mmu_idx have offsets from env with smaller magnitude.
-+ */
-+static inline int mmuidx_to_fast_index(int mmu_idx)
-+{
-+    return NB_MMU_MODES - 1 - mmu_idx;
-+}
-+
- static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
- {
--    return &cpu->neg.tlb.f[mmu_idx];
-+    return &cpu->neg.tlb.f[mmuidx_to_fast_index(mmu_idx)];
- }
- #endif
- 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index afac55a203..294762c283 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -425,7 +425,8 @@ static uintptr_t G_GNUC_UNUSED get_jmp_target_addr(TCGContext *s, int which)
- static int __attribute__((unused))
- tlb_mask_table_ofs(TCGContext *s, int which)
- {
--    return (offsetof(CPUNegativeOffsetState, tlb.f[which]) -
-+    int fi = mmuidx_to_fast_index(which);
-+    return (offsetof(CPUNegativeOffsetState, tlb.f[fi]) -
-             sizeof(CPUNegativeOffsetState));
- }
- 
 -- 
 2.43.0
 
