@@ -4,74 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECE9CAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 12:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B925CAC5A5
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 12:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1lJD-000308-1p; Thu, 25 Sep 2025 08:42:51 -0400
+	id 1v1lSb-0005wu-5F; Thu, 25 Sep 2025 08:52:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v1lJ8-0002zo-Us
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 08:42:48 -0400
-Received: from mailgate01.uberspace.is ([2001:1a50:11:0:c83f:a8ff:fea6:c8da])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1v1lJ4-0002hy-Sj
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 08:42:46 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate01.uberspace.is (Postfix) with ESMTPS id EB06460B3B
- for <qemu-devel@nongnu.org>; Thu, 25 Sep 2025 14:42:35 +0200 (CEST)
-Received: (qmail 22347 invoked by uid 990); 25 Sep 2025 12:42:35 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Thu, 25 Sep 2025 14:42:35 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v1lSX-0005wG-9h; Thu, 25 Sep 2025 08:52:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1v1lSM-00043g-3p; Thu, 25 Sep 2025 08:52:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9VRdX008650;
+ Thu, 25 Sep 2025 12:52:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GDPak2
+ OH9WUAEfzX1MXIBwYw5iCngR34ohOL1TGZJuI=; b=DoENV1f8OXKrl+9dNN3xdx
+ LJHjRppkVpanvXRAepQUBtYlhNvEFp5z/h9oKEcngVoQpI8LjsiZLz3xh7H6xIDo
+ 1Txsz4rGBxudX0poUqZEcN8Y3ZD9uuDabo7O587nGJvKVmHzEDX1Q9HbEUo8D+HZ
+ 1Q64cGBDmbH2rY6pwWzC/8l8WFKeKdHBC/Uc3pm3CH+2MW73ODeQc4fa5x+KelCy
+ 5eK1DXf71kZRIFSsvfekYM29t2XLhjbG92VD9+KcFLBSAxKIoQiinEipCPpzuF6c
+ UYZp2pLRrpCuNn5PLEifyMNMaeDjzDqyaKttLrphCfJo//77epWSg0joCgFF/7Ow
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499kwyvunb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 12:52:08 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 58PClvag002516;
+ Thu, 25 Sep 2025 12:52:08 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 499kwyvun8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 12:52:08 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 58PAOGeT013638;
+ Thu, 25 Sep 2025 12:52:07 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 49a8tjnpe1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 25 Sep 2025 12:52:07 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 58PCq3sX41288058
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 25 Sep 2025 12:52:03 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A1E9020043;
+ Thu, 25 Sep 2025 12:52:03 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3B7F820040;
+ Thu, 25 Sep 2025 12:52:01 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.109.199.210])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 25 Sep 2025 12:52:01 +0000 (GMT)
+Date: Thu, 25 Sep 2025 18:21:59 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Ganesh G R <ganeshgr@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
+ gautam@linux.ibm.com
+Subject: Re: Access to remote XIVE2 units (was Re: [PATCH v9 0/7] Power11
+ support for QEMU [PowerNV])
+Message-ID: <of64frvhccos2fbzufdrqze4vqt6tr7qu322mryhvqakkcrzlc@ysvmkca3owoz>
+References: <20250808115929.1073910-1-adityag@linux.ibm.com>
+ <baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com>
+ <yo6uk5z6dlq4jlk5hsaoyhymozdpo6ijpq5bz4fipkf5ftws4b@um57vsttgf65>
+ <wdkarichs5jrmpz3k4gxosw42dt6qxwodnc6t6tcuecsmxgqcd@km4q644fiixb>
+ <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
+ <utzcz3bpixqmviolacg7qv2f526tedqovvx6wcrl6ypk3v4v7w@nmjtwot6lhjs>
+ <3456f764-616b-412c-839c-aaef4bf1e47c@redhat.com>
+ <f22953e3-5e87-4c86-844a-aba5c35ca3ca@linux.ibm.com>
+ <900db31c-54d5-410d-934e-347ca0b22ec2@redhat.com>
 MIME-Version: 1.0
-Date: Thu, 25 Sep 2025 12:42:35 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <232880215edf63a01d026de5f2dac8bf4b06fb85@nut.email>
-TLS-Required: No
-Subject: Re: [PATCH v6 23/25] tests: add plugin asserting correctness of
- discon event's to_pc
-To: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
- "Alexandre Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour"
- <ma.mandourr@gmail.com>, "Richard Henderson" <richard.henderson@linaro.org>
-In-Reply-To: <87bjmyke52.fsf@draig.linaro.org>
-References: <cover.1757018626.git.neither@nut.email>
- <073cad7dd8ae509ff64a2835fd146833b60c1f60.1757018626.git.neither@nut.email>
- <87segf69f6.fsf@draig.linaro.org>
- <51342318ee32c932dc2a867c808989ea627d874f@nut.email>
- <f7f5cfabe46ede28ea57e49ce36c617aa774ec0b@skiff.uberspace.de>
- <359dc52bc7ebe3ea8a3d549f23d42a592066d685@nut.email>
- <87bjmyke52.fsf@draig.linaro.org>
-X-Rspamd-Bar: +
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.379054) MIME_GOOD(-0.1)
-X-Rspamd-Score: 1.020945
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=Qid2UbzyzKRHTGEYkRzxPjvoFmQcQUmR8wt0Y4KJbAE=;
- b=GhI1kVehWhzTO1R2ktljHHpgfM9ro5DudfII8pMrzfiy5qfuIkCwe5JW0kwMWXYcJ9/tLp6YNR
- uMvUzouCgrfx/+EuNGRgAO+gLUkfYau/KZpDZt2pgGOCcuEFJRg4BOdhKRywEN3yUyU9vYab8wP2
- JfPvvuahNFimn4yETTJrBkLTRbdRE3I3OIPRtuu+EyLLebGMkLG3OMuXdeiWipSr/4qtp9CjmbzQ
- P0RFmmdQ7D2DmM1YrdDGHFmNAPsaUNFjAF44+OvF1JP+XGR/n+9H6yPnEWAM3cej8rvWLq3ZYuUQ
- ivdKdTmIGFjjL3tfBr5/SdGH+k430OIosIMJpZJrIBpioljLiyK9Ebgzl2pJRTwM9MIsOE+NwHii
- AYjO0+/I1uCzAgKYIs4L1Yojf/A1j1hzqjed742984C539YFp/Po/1H651ptw8qHRkc+HCyt9mjK
- i0ejx03Q2/9Li1pSnieE5ynvLYiwrnyFVhRJcUTdkeVbt/8gEPBzx3VXjGqF2TgTQ712RH3hs7z/
- gOJVWxZqKQ7KDshAFXEJUle7LnyzGLIgPiYMdqgRA9etGkleyfu2SL9ygpo6VP+MDq9eVIUGp/vU
- N8yI+L3zq//Hydc2l1QruAYry+OgxTa7Mbo9Kz7kA142oRNYVLqA6wbjBSohlLJ0Vd1d7xQhmWg+
- s=
-Received-SPF: pass client-ip=2001:1a50:11:0:c83f:a8ff:fea6:c8da;
- envelope-from=neither@nut.email; helo=mailgate01.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <900db31c-54d5-410d-934e-347ca0b22ec2@redhat.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=J5Cq7BnS c=1 sm=1 tr=0 ts=68d53af8 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=gDPyuUbt8ubQmREcO3oA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 3y21MwkdDJrmA_8fzc0qtkRrSZZaFCQ2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxNSBTYWx0ZWRfX+wKPbJD+2ah2
+ 6Tj2akHH7Ys4XO9jLXBk9kijgMahiPT8sxiXqKNXgni+k7KF6MVR/GdAAm4MXqulDG0yhA3Nsc2
+ 54cxqo4WljN3A4/Jq8ks1mYriyzLI4QmGVAxp4MQZvgW9yc6tDJbh6VQp+HY/gHyvumpPfFP1NN
+ TAuRsQ3U37wsWTY9Xu9jb9f/Szx+uZB4p+v6GhgU2lr/5jtrFHYbK/Mp2A6pfLuoGlrrDhTUhLD
+ PcTyX22DyhlcmZuPjOKIQ8YPCGgRLmfgVXY4xo4KUwjfjifMeFtreLrcPA8qRbyAOgMet3jbZ2I
+ cjf5uAtt9hQ4VZkRstxYihnuUUHjKz7UVrewAf+lO2n7l37ZQPQ7gIEx3PoaTcWrnB9xD+4oI+X
+ rqYqK0y5
+X-Proofpoint-ORIG-GUID: 9X4eV-dT1lAoZTxJ0B_DoOx1uMWZOIXK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ phishscore=0 clxscore=1015 adultscore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509200015
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,96 +138,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On 25/09/25 08:38AM, Cédric Le Goater wrote:
+> On 9/24/25 14:14, Ganesh G R wrote:
+> > 
+> > On 8/29/25 3:19 AM, Cédric Le Goater wrote:
+> > > On 8/28/25 14:04, Aditya Gupta wrote:
+> > > > + Ganesh
+> > > > 
+> > > > On 25/08/10 02:46PM, Cédric Le Goater wrote:
+> > > > > + Glenn
+> > > > > + Gautam
+> > > > > 
+> > > > > On 8/10/25 12:45, Aditya Gupta wrote:
+> > > > > > On 25/08/10 12:26PM, Aditya Gupta wrote:
+> > > > > > > > <...snip...>
+> > > > > > > 
+> > > > > > > About the error, seems xive2 always expecting powernv10 chip, I will
+> > > > > > > have to rethink how should I use the same xive2 for powernv11.
+> > > > > > > 
+> > > > > > 
+> > > > > > There's a type cast to Pnv10Chip in 'pnv_xive2_get_remote'.
+> > > > > > The cast is only temporarily used to get the 'PnvXive2' object in the
+> > > > > > Pnv10Chip.
+> > > > > > It's the only place in hw/intc/pnv_xive2.c assuming Pnv10Chip object.
+> > > > > > 
+> > > > > > Thinking to have a helper function to just return the 'PnvXive2' object
+> > > > > > inside the chip, given a 'PnvChip'.
+> > > > > > 
+> > > > > > Or the below change where we are adding another pointer in PnvChipClass:
+> > > > > > 
+> > > > > >       diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> > > > > >       index e019cad5c14c..9832be5fd297 100644
+> > > > > >       --- a/hw/intc/pnv_xive2.c
+> > > > > >       +++ b/hw/intc/pnv_xive2.c
+> > > > > >       @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+> > > > > >            int i;
+> > > > > >            for (i = 0; i < pnv->num_chips; i++) {
+> > > > > >       -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+> > > > > >       -        PnvXive2 *xive = &chip10->xive;
+> > > > > >       +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
+> > > > > >       +        PnvXive2 *xive = k->intc_get(pnv->chips[i]);
+> > > > > >                /*
+> > > > > >                 * Is this the XIVE matching the forwarded VSD address is for this
+> > > > > > 
+> > > > > > Which one do you suggest ? Or should I look for another way ?
+> > > > > > 
+> > > > > > I am preferring the first way to have a helper, but both ways look hacky.
+> > > > > 
+> > > > > Any call to qdev_get_machine() in device model is at best
+> > > > > a modeling shortcut, most likely it is a hack :
+> > > > > 
+> > > > >    /*
+> > > > >     * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
+> > > > >     * scan of all the chips INT controller is good enough.
+> > > > >     */
+> > > > > 
+> > > > > So all these calls are suspicious :
+> > > > > 
+> > > > >    $ git grep qdev_get_machine hw/*/*pnv*
+> > > > >    hw/intc/pnv_xive2.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/pci-host/pnv_phb.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/pci-host/pnv_phb3.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > >    hw/ppc/pnv_lpc.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> > > > > 
+> > > > > In the particular case of XIVE2, the solution is to rework
+> > > > > pnv_xive2_get_remote() like it was for P9. See b68147b7a5bf
+> > > > > ("ppc/xive: Add support for the PC MMIOs").
+> > > > > 
+> > > > 
+> > > > Hi Cedric,
+> > > > 
+> > > > While I am working with XIVE engineers to get the pnv_xive2_get_remote()
+> > > > reworked as suggested (since it's a bit more work due to multiple cases
+> > > > of indirect/direct vst, nvg/nvc types in case of XIVE2), I would like
+> > > > to propose below patch to have as an interim solution to unblock
+> > > > the PowerNV11 support patches.
+> > > 
+> > > pHyp is an unknown FW implementation for opensource. Until an image
+> > > is released somewhere (please think about it), QEMU has nothing to
+> > > worry about other than supporting OPAL.
+> > > 
+> > > For now, let's forget about the grouping aspect of XIVE2, simply
+> > > rework pnv_xive2_get_remote() as it was done in b68147b7a5bf for
+> > > XIVE. This shouldn't take long. And, for the nvg/nvc types, report
+> > > an error of some sort and add a TODO in the code.
+> > > 
+> > A similar change cannot be done to XIVE2, because Fredric’s commit (96a2132ce95) has introduced modifications to the NVPG and NVC MMIO callbacks in order to support backlog counter operations.
+> 
+> Thanks for looking.
+> 
+> Indeed. So I guess Aditya's proposal adding a new PnvChipClass handler
+> is then the best alternative :
+> 
+> @@ -170,6 +170,7 @@ struct PnvChipClass {
+>      void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+>      void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+>      void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
+> +    void* (*intc_get)(PnvChip *chip);
+>      ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+>      void (*dt_populate)(PnvChip *chip, void *fdt);
+>      void (*pic_print_info)(PnvChip *chip, GString *buf);
+> 
+> Aditya,
+> 
+> Could you please resend the whole powernv11 series including this
+> new patch for xive2 ?
 
-September 25, 2025 at 12:41 PM, "Alex Benn=C3=A9e" wrote:
-> "Julian Ganz" <neither@nut.email> writes:
-> > September 23, 2025 at 10:29 PM, "Julian Ganz" wrote:
-> > > September 22, 2025 at 12:11 PM, "Julian Ganz" wrote:
-> > > > (gdb) p report->str
-> > >  > $2 =3D (gchar *) 0x51100001fbc0 "Discon target PC mismatch on VC=
-PU 0\nExpected: 8057369\nEncountered: 805736b\nExecuted Last: 805736b\nEv=
-ent type: exception\n"
-> > >  > (gdb)=20
->=20> >  >=20
->=20> >  > I think this is where it is going wrong:
-> > >  >=20
->=20> >  > IN: _dl_early_allocate
-> > >  > 0x0805736b: 89 c2 movl %eax, %edx
-> > >  > 0x0805736d: 8d 1c 28 leal (%eax, %ebp), %ebx
-> > >  > 0x08057370: 89 c8 movl %ecx, %eax
-> > >  > 0x08057372: cd 80 int $0x80
-> > >  >=20
->=20> >  > Thanks! I'll have a closer look.
-> > >  >=20
->=20> >  I probably didn't configure the target I need for this test on m=
-y
-> > >  private machine (which uses musl, so some targets are awkward).
-> > >=20
->=20>  Turned out I just ran `make` in the wrong directory.
-> >=20
->=20> >=20
->=20> > Could it
-> > >  be that this doesn't run in system emulation mode and the exceptio=
-n is
-> > >  somehow handled natively? I did not account for that possibility a=
-nd I
-> > >  don't think I'll get the testing plugin to do anything meaningful
-> > >  outside system emulation.
-> > >=20
->=20>  As expected the plugin ran in a qemu configuration in which the AP=
-I does
-> >  not behave as expected. Which I could have figured out by the logs A=
-lex
-> >  provided if I paid attention. Sorry for the noise.
-> >=20
->=20>  I added a check to the plugin that bails out if qemu does not run =
-in
-> >  system emulation mode (which I thought I did, but that was only for =
-the
-> >  contrib plugin).
-> >=20
->=20>  Even if we cannot test the API for user mode, it may still provide=
- some
-> >  utility, so I suggest _just_ letting the testing plugin do nothing i=
-n
-> >  that case. In fact, I'm considering removing the check from the cont=
-rib
-> >  "traps" plugin now that I saw that the API _is_ triggered in user
-> >  mode.
-> >=20
->=20Is this just because we are missing the hooks into the linux-user
-> run-loop? I assume int $0x80 is a syscall so we should report an
-> exception type at that point?
+Sure, will post v10 today.
 
-We _do_ observe the exception occuring, we just don't observe it being
-handled. Instead we observe the result after the trap handler returned.
-And that's probably what we want for user-mode emulation where we don't
-have any introspection into the trap handler's execution.
+Thanks Cedric !
 
-What trips the testing plugin is that it expects observing the trap
-handler, and there's currently nothing we can do here instead of just
-giving up when running user-mode emulation. We can introduce actual tests
-for user-mode emulation again in the future, should we introduce a
-discontinuity type for trap handler return (e.g. for RISC-V's `mret`).
-
-> In fact I think you could probably generate the event at
-> qemu_plugin_vcpu_syscall()?
-
-I could, but that would be somewhat separate from the trap related
-stuff. Syscalls would likely qualify as a separate, new discontinuity
-type similar to host calls.
-
-> force_sig_fault() and force_sig() might be the other places that should
-> be hooked. Or possibly handle_pending_signal() where all the other
-> signals affect the code flow.
->
-> I think that can avoid patching every arches run loop.
-
-I still need to distinguish between discontinuity types, and that does
-(currently) require target specific knowledge. Or maybe I misunderstood
-what you were trying to say?
-
-Regards,
-Julian
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
 
