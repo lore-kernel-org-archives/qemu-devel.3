@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F7BCAC5A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 09:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9856CAC5A7
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Sep 2025 09:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1v1iYG-000176-Pv; Thu, 25 Sep 2025 05:46:12 -0400
+	id 1v1iYC-00014v-SA; Thu, 25 Sep 2025 05:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1iYF-00016C-CA
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:46:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1v1iY2-0000xS-TH
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:45:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1v1iXm-0001Yz-3K
- for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:46:09 -0400
+ id 1v1iXc-0001UV-C2
+ for qemu-devel@nongnu.org; Thu, 25 Sep 2025 05:45:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1758793540;
+ s=mimecast20190719; t=1758793524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rMBZcWU4PJxmzuxZd6HMdIzoFn+S9YCttgs9zCAJA9A=;
- b=P0D6mCuT/WDIhBkeRqKEvOD5HlX2W1850H9o//ddTFmmm8Yx2pQw0SdnwaNeACDvivNcGb
- +rszBIjrLoIofcBr5vNS0XV+cyL9x4xZ12KCtIbBmN2NQ2YAh7xIe52Robyvecp3gw2MYE
- dhpFX3aT7R6V6bQev2rostLIZ3Qmcc0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=0e0TFv/CGlxU/vse5VywmrVZx48lnld4r/92cQWi2Vk=;
+ b=Kajh+qS8937lygk/AC2aDiOyKdOAq9kPD6baY48tshiRRxVbeBfMu0UlVrW45zxdkTazR+
+ 1P7qinKxmOkhvx1YGuFVc1aYkMQomeDYTtyoRjabGpbAOE8lfHmLXN521gO6I+6QaLGme+
+ 5h4XrD/m/u38b+nghme3seUCTkuxS9o=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-VsyeuCqDP_662C8ebuQGqQ-1; Thu,
- 25 Sep 2025 05:45:32 -0400
-X-MC-Unique: VsyeuCqDP_662C8ebuQGqQ-1
-X-Mimecast-MFC-AGG-ID: VsyeuCqDP_662C8ebuQGqQ_1758793530
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-agWRH4J8NPuSGuIukX37eg-1; Thu,
+ 25 Sep 2025 05:45:21 -0400
+X-MC-Unique: agWRH4J8NPuSGuIukX37eg-1
+X-Mimecast-MFC-AGG-ID: agWRH4J8NPuSGuIukX37eg_1758793519
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48F32180035C; Thu, 25 Sep 2025 09:45:30 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6723019560B0; Thu, 25 Sep 2025 09:45:19 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.163])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6BE8F300021A; Thu, 25 Sep 2025 09:45:25 +0000 (UTC)
+ id 4C70830002D0; Thu, 25 Sep 2025 09:45:13 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -62,25 +62,25 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, devel@lists.libvirt.org,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 07/23] util: add API to fetch the current thread name
-Date: Thu, 25 Sep 2025 10:44:25 +0100
-Message-ID: <20250925094441.1651372-8-berrange@redhat.com>
+Subject: [PATCH v4 05/23] audio: make jackaudio use qemu_thread_set_name
+Date: Thu, 25 Sep 2025 10:44:23 +0100
+Message-ID: <20250925094441.1651372-6-berrange@redhat.com>
 In-Reply-To: <20250925094441.1651372-1-berrange@redhat.com>
 References: <20250925094441.1651372-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,205 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be used to include the thread name in error reports
-in a later patch. It returns a const string stored in a thread
-local to avoid memory allocation when it is called repeatedly
-in a single thread. The thread name should be set at the very
-start of the thread execution, which is the case when using
-qemu_thread_create.
+This has greater portability than directly call pthread_setname_np,
+which is only 1 out of 3 possible functions for pthreads that can
+set the name.
 
+The new API requires a trampoline function, since it can only set
+the name of the current thread.
+
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/thread.h    |  1 +
- meson.build              | 21 +++++++++++++++++
- util/qemu-thread-posix.c | 33 ++++++++++++++++++++++++++-
- util/qemu-thread-win32.c | 49 ++++++++++++++++++++++++++++++++++++----
- 4 files changed, 99 insertions(+), 5 deletions(-)
+ audio/jackaudio.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index 27b888ab0a..98cc5c41ac 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -216,6 +216,7 @@ void qemu_thread_get_self(QemuThread *thread);
- bool qemu_thread_is_self(QemuThread *thread);
- G_NORETURN void qemu_thread_exit(void *retval);
- void qemu_thread_set_name(const char *name);
-+const char *qemu_thread_get_name(void);
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index 974a3caad3..69dce3f302 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -629,18 +629,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
+     ji->c.enabled = enable;
+ }
  
- struct Notifier;
- /**
-diff --git a/meson.build b/meson.build
-index 72da97829a..0893005919 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2912,6 +2912,27 @@ config_host_data.set('CONFIG_PTHREAD_SET_NAME_NP', cc.links(osdep_prefix + '''
-     pthread_set_name_np(thread, "QEMU");
-     return 0;
-   }''', dependencies: threads))
+-#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++#if !defined(WIN32)
++struct QJackThreadData {
++    void *(*function)(void *);
++    void *arg;
++};
 +
-+config_host_data.set('CONFIG_PTHREAD_GETNAME_NP', cc.links(osdep_prefix + '''
-+  #include <pthread.h>
++static void *qjack_thread_trampoline(void *targ)
++{
++    struct QJackThreadData *data = targ;
++    void *(*function)(void *) = data->function;
++    void *arg = data->arg;
 +
-+  int main(void)
-+  {
-+    char buf[16];
-+    pthread_getname_np(pthread_self(), buf, sizeof(buf));
-+    return 0;
-+  }''', dependencies: threads))
-+config_host_data.set('CONFIG_PTHREAD_GET_NAME_NP', cc.links(osdep_prefix + '''
-+  #include <pthread.h>
-+  #include <pthread_np.h>
++    g_free(data);
++    qemu_thread_set_name("jack-client");
 +
-+  int main(void)
-+  {
-+    char buf[16];
-+    pthread_get_name_np(pthread_self(), buf, sizeof(buf));
-+    return 0;
-+  }''', dependencies: threads))
++    return function(arg);
++}
 +
- config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix + '''
-   #include <pthread.h>
- 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index afeac9ecad..05c7ea4c00 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -18,7 +18,7 @@
- #include "qemu/tsan.h"
- #include "qemu/bitmap.h"
- 
--#ifdef CONFIG_PTHREAD_SET_NAME_NP
-+#if defined(CONFIG_PTHREAD_SET_NAME_NP) || defined(CONFIG_PTHREAD_GET_NAME_NP)
- #include <pthread_np.h>
- #endif
- 
-@@ -532,3 +532,34 @@ void *qemu_thread_join(QemuThread *thread)
+ static int qjack_thread_creator(jack_native_thread_t *thread,
+     const pthread_attr_t *attr, void *(*function)(void *), void *arg)
+ {
+-    int ret = pthread_create(thread, attr, function, arg);
++    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
++    data->function = function;
++    data->arg = arg;
++    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
+     if (ret != 0) {
++        g_free(data);
+         return ret;
      }
+ 
+-    /* set the name of the thread */
+-    pthread_setname_np(*thread, "jack-client");
+-
      return ret;
  }
-+
-+/*
-+ * This is not defined on Linux, but the man page indicates
-+ * the buffer must be at least 16 bytes, including the NUL
-+ * terminator
-+ */
-+#ifndef PTHREAD_MAX_NAMELEN_NP
-+#define PTHREAD_MAX_NAMELEN_NP 16
-+#endif
-+
-+static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
-+
-+const char *qemu_thread_get_name(void)
-+{
-+    int rv;
-+    if (namebuf[0] != '\0') {
-+        return namebuf;
-+    }
-+
-+# if defined(CONFIG_PTHREAD_GETNAME_NP)
-+    rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
-+# elif defined(CONFIG_PTHREAD_GET_NAME_NP)
-+    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+# else
-+    rv = -1;
-+# endif
-+    if (rv != 0) {
-+        strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-+    }
-+    return namebuf;
-+}
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 8ca6429ad3..20165c6f95 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -19,7 +19,10 @@
- 
- typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
-                                                  PCWSTR lpThreadDescription);
-+typedef HRESULT (WINAPI *pGetThreadDescription) (HANDLE hThread,
-+                                                 PWSTR *lpThreadDescription);
- static pSetThreadDescription SetThreadDescriptionFunc;
-+static pGetThreadDescription GetThreadDescriptionFunc;
- static HMODULE kernel32_module;
- 
- static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-@@ -28,7 +31,7 @@ qemu_thread_init(void)
-     qemu_thread_set_name("main");
- }
- 
--static bool load_set_thread_description(void)
-+static bool load_thread_description(void)
+ #endif
+@@ -696,7 +714,7 @@ static void register_audio_jack(void)
  {
-     static gsize _init_once = 0;
- 
-@@ -38,14 +41,17 @@ static bool load_set_thread_description(void)
-             SetThreadDescriptionFunc =
-                 (pSetThreadDescription)GetProcAddress(kernel32_module,
-                                                       "SetThreadDescription");
--            if (!SetThreadDescriptionFunc) {
-+            GetThreadDescriptionFunc =
-+                (pGetThreadDescription)GetProcAddress(kernel32_module,
-+                                                      "GetThreadDescription");
-+            if (!SetThreadDescriptionFunc || !GetThreadDescriptionFunc) {
-                 FreeLibrary(kernel32_module);
-             }
-         }
-         g_once_init_leave(&_init_once, 1);
-     }
- 
--    return !!SetThreadDescriptionFunc;
-+    return !!(SetThreadDescriptionFunc && GetThreadDescriptionFunc);
- }
- 
- static void error_exit(int err, const char *msg)
-@@ -331,7 +337,7 @@ void qemu_thread_set_name(const char *name)
- {
-     g_autofree wchar_t *namew = NULL;
- 
--    if (!load_set_thread_description()) {
-+    if (!load_thread_description()) {
-         return;
-     }
- 
-@@ -415,3 +421,38 @@ bool qemu_thread_is_self(QemuThread *thread)
- {
-     return GetCurrentThreadId() == thread->tid;
- }
-+
-+static __thread char namebuf[64];
-+
-+const char *qemu_thread_get_name(void)
-+{
-+    HRESULT hr;
-+    wchar_t *namew = NULL;
-+    g_autofree char *name = NULL;
-+
-+    if (namebuf[0] != '\0') {
-+        return namebuf;
-+    }
-+
-+    if (!load_thread_description()) {
-+        goto error;
-+    }
-+
-+    hr = GetThreadDescriptionFunc(GetCurrentThread(), &namew);
-+    if (!SUCCEEDED(hr)) {
-+        goto error;
-+    }
-+
-+    name = g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
-+    LocalFree(namew);
-+    if (!name) {
-+        goto error;
-+    }
-+
-+    g_strlcpy(namebuf, name, G_N_ELEMENTS(namebuf));
-+    return namebuf;
-+
-+ error:
-+    g_strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-+    return namebuf;
-+}
+     qemu_mutex_init(&qjack_shutdown_lock);
+     audio_driver_register(&jack_driver);
+-#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++#if !defined(WIN32)
+     jack_set_thread_creator(qjack_thread_creator);
+ #endif
+     jack_set_error_function(qjack_error);
 -- 
 2.50.1
 
